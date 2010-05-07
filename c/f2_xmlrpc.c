@@ -163,17 +163,22 @@ boolean_t funk2_xmlrpc__call_test(char* url) {
       xmlrpc_server_info_free(serverInfoP);
     }
     
-    // Get our sum and print it out.
-    xmlrpc_read_int(&env, resultP, &sum);
     if (env.fault_occurred) {
       xmlrpc_print_fault_status(&env);
     } else {
-      printf("The sum is %d\n", sum);
-      success = boolean__true;
+      
+      // Get our sum and print it out.
+      xmlrpc_read_int(&env, resultP, &sum);
+      if (env.fault_occurred) {
+	xmlrpc_print_fault_status(&env);
+      } else {
+	printf("The sum is %d\n", sum);
+	success = boolean__true;
+      }
+      
+      // Dispose of our result value.
+      xmlrpc_DECREF(resultP);
     }
-    
-    // Dispose of our result value.
-    xmlrpc_DECREF(resultP);
     
     // Clean up our error-handling environment.
     xmlrpc_env_clean(&env);

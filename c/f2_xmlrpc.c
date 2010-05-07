@@ -202,6 +202,107 @@ xmlrpc_value* funk2_xmlrpc__create_xmlrpc_value_from_exp(xmlrpc_env* env, f2ptr 
   }
 }
 
+f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlrpc_value* value) {
+  xmlrpc_type type = xmlrpc_value_type(value);
+  switch(type) {
+  case xmlrpc_type_none:     // not a value
+    return f2larva__new(cause, 1, nil);
+  case xmlrpc_type_empty:    // empty value, eg NULL
+    return nil;
+  case xmlrpc_type_base64: { // base64 value, eg binary data
+    unsigned int   value__length;
+    unsigned char* value__str;
+    xmlrpc_read_base64(env,
+		       value,
+		       &value__length,
+		       &value__str);
+    f2ptr new_chunk = f2chunk__new(cause, value__length, value__str);
+    free(value__str);
+    return new_chunk;
+  }
+  case xmlrpc_type_boolean: {// boolean  [0 | 1]
+    xmlrpc_bool bool_value;
+    xmlrpc_read_bool(env, value, &bool_value);
+    return f2bool__new(bool_value);
+  }
+  case xmlrpc_type_datetime: { // datetime [ISO8601 | time_t]
+    time_t seconds_since_1970;
+    xmlrpc_read_datetime_sec(env, value, &seconds_since_1970);
+    u64 nanoseconds_since_1970 = ((u64)seconds_since_1970) * nanoseconds_per_second;
+    return f2time__new(cause, f2integer__new(cause, nanoseconds_since_1970));
+  }
+  case xmlrpc_type_double: { // double / floating point
+    xmlrpc_double double_value;
+    xmlrpc_read_double(env, value, &double_value);
+    double d = (double)double_value;
+    return f2double__new(cause, d);
+  }
+  case xmlrpc_type_int: {    // integer
+    s64 i;
+#if defined(XMLRPC_HAVE_I8)
+    long long i8_value;
+    xmlrpc_read_i8(env, value, &i8_value);
+    i = (s64)i8_value;
+#else
+    int int_value;
+    xmlrpc_read_int(env, value, &int_value);
+    i = (s64)int_value;
+#endif // XMLRPC_HAVE_I8
+    return f2integer__new(cause, i);
+  }
+  case xmlrpc_type_string: { // string
+    size_t string__length;
+    char*  string__str;
+    xmlrpc_read_string_lp(env, value, &string__length, &string__str);
+    f2ptr new_string = f2string__new(cause, string__length, string__str);
+    free(string__str);
+    return new_string;
+  }
+  case xmlrpc_type_array: {  // vector array
+    int array__size;
+    array__size = xmlrpc_array_size(env, value);
+    f2ptr new_array = raw__array__new(cause, array__size);
+    {
+      int index;
+      for (index = 0; index < array__size; index ++) {
+	xmlrpc_value* subexp;
+	xmlrpc_array_read_item(env, value, index, &subexp);
+	f2ptr new_subexp = funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, subexp);
+	if (raw__larva__is_type(cause, new_subexp)) {
+	  return new_subexp;
+	}
+	raw__array__elt__set(cause, new_array, index, new_subexp);
+      }
+    }
+    return new_array;
+  }
+  case xmlrpc_type_mixed:    // vector mixed
+    return f2larva__new(cause, 1, nil);
+  case xmlrpc_type_struct: { // vector struct
+    int struct__size = xmlrpc_struct_size(env, value);
+    f2ptr new_frame = f2__frame__new(cause);
+    {
+      int index;
+      for (index = 0; index < struct__size; index ++) {
+	xmlrpc_value* member_key;
+	xmlrpc_value* member_value;
+	xmlrpc_struct_read_member(env, value, index, &member_key, &member_value);
+	f2ptr new_key    = funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, member_key);
+	if (raw__larva__is_type(cause, new_key)) {
+	  return new_key;
+	}
+	f2ptr new_member = funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, member_key);
+	if (raw__larva__is_type(cause, new_member)) {
+	  return new_member;
+	}
+	f2__frame__add_var_value(cause, new_frame, new_key, new_value);
+      }
+    }
+    return new_frame;
+  }
+  }
+}
+
 f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments) {
   if ((! raw__string__is_type(cause, url)) ||
       ((! raw__string__is_type(cause, funkname)) && (! raw__symbol__is_type(cause, funkname)))) {
@@ -233,7 +334,8 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
   xmlrpc_client* clientP;
   xmlrpc_value*  resultP;
   int            sum;
-  boolean_t      success = boolean__false;
+  boolean_t      success      = boolean__false;
+  f2ptr          return_value = nil;
   
   // Initialize our error-handling environment.
   xmlrpc_env_init(&env);
@@ -285,14 +387,7 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
     }
     
     if (call_successful_so_far) {
-      // Get our sum and print it out.
-      xmlrpc_read_int(&env, resultP, &sum);
-      if (env.fault_occurred) {
-	xmlrpc_print_fault_status(&env);
-      } else {
-	printf("The sum is %d\n", sum);
-	success = boolean__true;
-      }
+      return_value = funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, resultP);
       
       // Dispose of our result value.
       xmlrpc_DECREF(resultP);
@@ -305,7 +400,11 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
   }
   
   xmlrpc_client_teardown_global_const();
-  return f2bool__new(success);
+  
+  if (! success) {
+    return f2larva__new(cause, 5533, nil);
+  }
+  return return_value;
 }
 
 #endif // F2__XMLRPC_SUPPORTED

@@ -383,7 +383,7 @@ f2ptr f2__xmlrpc__create_new_server(f2ptr cause, f2ptr port_num) {
 def_pcfunk1(xmlrpc__create_new_server, port_num, return f2__xmlrpc__create_new_server(this_cause, port_num));
 
 
-def_pcfunk1(xmlrpc__apply, url, funkname, arguments, return f2__xmlrpc__apply(this_cause, url, funkname, arguments));
+def_pcfunk3(xmlrpc__apply, url, funkname, arguments, return f2__xmlrpc__apply(this_cause, url, funkname, arguments));
 
 
 // **

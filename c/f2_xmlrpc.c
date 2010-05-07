@@ -119,11 +119,12 @@ void xmlrpc_print_fault_status(xmlrpc_env* env) {
   status("xmlrpc error: %s (%d)", env->fault_string, env->fault_code);
 }
 
-void funk2_xmlrpc_client(char* url) {
+boolean_t funk2_xmlrpc__call_test(char* url) {
   xmlrpc_env     env;
   xmlrpc_client* clientP;
   xmlrpc_value*  resultP;
   int            sum;
+  boolean_t      success = boolean__false;
   
   // Initialize our error-handling environment.
   xmlrpc_env_init(&env);
@@ -168,6 +169,7 @@ void funk2_xmlrpc_client(char* url) {
       xmlrpc_print_fault_status(&env);
     } else {
       printf("The sum is %d\n", sum);
+      success = boolean__true;
     }
     
     // Dispose of our result value.
@@ -180,10 +182,7 @@ void funk2_xmlrpc_client(char* url) {
   }
   
   xmlrpc_client_teardown_global_const();
-}
-
-void funk2_xmlrpc_client__main() {
-  funk2_xmlrpc_client("http:/localhost:8080/RPC2");
+  return success;
 }
 
 #endif // F2__XMLRPC_SUPPORTED
@@ -261,6 +260,28 @@ f2ptr f2__xmlrpc__create_new_server(f2ptr cause, f2ptr port_num) {
 }
 def_pcfunk1(xmlrpc__create_new_server, port_num, return f2__xmlrpc__create_new_server(this_cause, port_num));
 
+
+boolean_t raw__xmlrpc__call_test(f2ptr cause, f2ptr url) {
+#if defined(F2__XMLRPC_SUPPORTED)
+  u64 url__length = raw__string__length(cause, url);
+  u8* url__str    = (u8*)alloca(url__length + 1);
+  raw__string__copy_str(cause, url, url__str);
+  url__str[url__length] = 0;
+  return funk2_xmlrpc__call_test(cause, url__str);
+#else
+  status(  "funk2 warning: XMLRPC support is not compiled in this install of funk2.");
+  printf("\nfunk2 warning: XMLRPC support is not compiled in this install of funk2."); fflush(stdout);
+  return boolean__false; // failure
+#endif // F2__XMLRPC_SUPPORTED
+}
+
+f2ptr f2__xmlrpc__call_test(f2ptr cause, f2ptr url) {
+  if (! raw__string__is_type(cause, url)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2bool__new(raw__xmlrpc__call_test(cause, url));
+}
+def_pcfunk1(xmlrpc__call_test, url, return f2__xmlrpc__call_test(cause, url));
 
 
 // **

@@ -54,33 +54,6 @@ void                      xmlrpc__request_shutdown(xmlrpc_env* const envP, void*
   *terminationRequestedP = 1;
 }
 
-// This code is basically ServerInit from libabyss, but doesn't call exit(1) on failure.
-boolean_t my_abyss_server_init(TServer* const serverP) {
-  struct _TServer * const srvP = serverP->srvP;
-  abyss_bool success;
-  
-  if (!srvP->serverAcceptsConnections) {
-    TraceMsg("ServerInit() is not valid on a server that doesn't "
-	     "accept connections "
-	     "(i.e. created with ServerCreateNoAccept)");
-    success = FALSE;
-  } else {
-    if (!srvP->socketBound) {
-      createAndBindSocket(srvP);
-    }
-    if (srvP->socketBound) {
-      success = SocketListen(srvP->listenSocketP, MAX_CONN);
-      
-      if (!success) {
-	TraceMsg("Failed to listen on bound socket.");
-      }
-    } else {
-      success = FALSE;
-    }
-  }
-  return success ? boolean__true : boolean__false;
-}
-
 boolean_t funk2_xmlrpc_server__init(funk2_xmlrpc_server_t* this, int port_num) {
   this->port_num         = port_num;
   this->processor_thread = NULL;
@@ -99,9 +72,8 @@ boolean_t funk2_xmlrpc_server__init(funk2_xmlrpc_server_t* this, int port_num) {
   
   xmlrpc_server_abyss_set_handlers(&(this->abyssServer), this->registryP);
   
-  if (! my_abyss_server_init(&(this->abyssServer))) {
-    return boolean__true; // failure
-  }
+  // DANGER: ServerInit calls exit(1) on failure to open a port.  This exits the entire process.  (We may need to include our own hacked abyss server if we want to avoid this behavior.)
+  ServerInit(&(this->abyssServer));
   
   this->termination_requested = 0;
   
@@ -141,6 +113,77 @@ void* funk2_xmlrpc_server__start_handler_thread__helper(void* ptr) {
 
 void funk2_xmlrpc_server__start_handler_thread(funk2_xmlrpc_server_t* this) {
   this->processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), &funk2_xmlrpc_server__start_handler_thread__helper, (void*)this);
+}
+
+void xmlrpc_print_fault_status(xmlrpc_env* env) {
+  status("xmlrpc error: %s (%d)", env->fault_string, env->fault_code);
+}
+
+void funk2_xmlrpc_client(char* url) {
+  xmlrpc_env     env;
+  xmlrpc_client* clientP;
+  xmlrpc_value*  resultP;
+  int            sum;
+  
+  // Initialize our error-handling environment.
+  xmlrpc_env_init(&env);
+  
+  xmlrpc_client_setup_global_const(&env);
+  
+  xmlrpc_client_create(&env, XMLRPC_CLIENT_NO_FLAGS, "Funk2 XML-RPC Client", "2.11.0", NULL, 0,
+		       &clientP);
+  if (env.fault_occurred) {
+    xmlrpc_print_fault_status(&env);
+  } else {
+    
+    {
+      xmlrpc_server_info* serverInfoP;
+      xmlrpc_value*       paramArrayP;
+      
+      serverInfoP = xmlrpc_server_info_new(&env, url);
+      
+      paramArrayP = xmlrpc_array_new(&env);
+      
+      {
+	xmlrpc_value* addend1P = xmlrpc_int_new(&env, 5);
+	xmlrpc_value* addend2P = xmlrpc_int_new(&env, 7);
+	
+	xmlrpc_array_append_item(&env, myArrayP, addend1P);
+	xmlrpc_array_append_item(&env, myArrayP, addend2P);
+	
+	xmlrpc_DECREF(addend1P);
+	xmlrpc_DECREF(addend2P);
+      }
+      
+      xmlrpc_client_call2(&env, clientP, serverInfoP, "sample.add",
+			  paramArrayP, &resultP);
+      
+      xmlrpc_DECREF(paramArrayP);
+      xmlrpc_server_info_free(serverInfoP);
+    }
+    
+    // Get our sum and print it out.
+    xmlrpc_read_int(&env, resultP, &sum);
+    if (env.fault_occurred) {
+      xmlrpc_print_fault_status(&env);
+    } else {
+      printf("The sum is %d\n", sum);
+    }
+    
+    // Dispose of our result value.
+    xmlrpc_DECREF(resultP);
+    
+    // Clean up our error-handling environment.
+    xmlrpc_env_clean(&env);
+    
+    xmlrpc_client_destroy(clientP);
+  }
+  
+  xmlrpc_client_teardown_global_const();
+}
+
+void funk2_xmlrpc_client__main() {
+  funk2_xmlrpc_client("http:/localhost:8080/RPC2");
 }
 
 #endif // F2__XMLRPC_SUPPORTED

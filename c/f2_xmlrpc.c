@@ -210,7 +210,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
   case XMLRPC_TYPE_NIL:    // empty value, eg NULL
     return nil;
   case XMLRPC_TYPE_BASE64: { // base64 value, eg binary data
-    unsigned int   value__length;
+    size_t         value__length;
     unsigned char* value__str;
     xmlrpc_read_base64(env,
 		       value,

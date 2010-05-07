@@ -119,7 +119,111 @@ void xmlrpc_print_fault_status(xmlrpc_env* env) {
   status("xmlrpc error: %s (%d)", env->fault_string, env->fault_code);
 }
 
-boolean_t funk2_xmlrpc__call_test(char* url) {
+xmlrpc_value* funk2_xmlrpc__create_xmlrpc_value_from_exp(xmlrpc_env* env, f2ptr cause, f2ptr exp) {
+  if (exp == nil) {
+    return xmlrpc_nil_new(env);
+  } else if (raw__integer__is_type(cause, exp)) {
+    s64 i = f2integer__i(exp, cause);
+    if ((i & 0xffffffff00000000) == 0) {
+      // can be represented in 32 bits.
+      s32 i32 = (s32)i;
+      return xmlrpc_int_new(env, i32);
+    } else {
+      // requires full 64 bits precision.
+      return xmlrpc_i8_new(env, i);
+    }
+  } else if (raw__double__is_type(cause, exp)) {
+    double d = f2double__d(exp, cause);
+    return xmlrpc_double_new(env, d);
+  } else if (raw__float__is_type(cause, exp)) {
+    float  f = f2float__f(exp, cause);
+    double d = (double)f;
+    return xmlrpc_double_new(env, d);
+  } else if (raw__symbol__new(cause, exp)) {
+    u64 exp__length = f2symbol__length(exp, cause);
+    u8* exp__str    = (u8*)alloca(exp__length + 1);
+    raw__symbol__str_copy(cause, exp, exp__str);
+    exp__str[exp__length] = 0;
+    return xmlrpc_string_new_lp(env, exp__str, exp__length);
+  } else if (raw__string__new(cause, exp)) {
+    u64 exp__length = f2string__length(exp, cause);
+    u8* exp__str    = (u8*)alloca(exp__length + 1);
+    raw__string__str_copy(cause, exp, exp__str);
+    exp__str[exp__length] = 0;
+    return xmlrpc_string_new_lp(env, exp__str, exp__length);
+  } else if (raw__time__is_type(cause, exp)) {
+    f2ptr  nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, exp);
+    u64    nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
+    u64    seconds_since_1970        = nanoseconds_since_1970__i / nanoseconds_per_second;
+    time_t seconds_since_1970__time  = (time_t)seconds_since_1970;
+    return xmlrpc_datetime_new_sec(env, seconds_since_1970__time);
+  } else if (raw__ptypehash__is_type(cause, exp)) {
+    xmlrpc_value* new_struct = xmlrpc_struct_new(env);
+    ptypehash__iteration(cause, exp, key, value,
+			 xmlrpc_value* new_key   = funk2_xmlrpc__create_xmlrpc_value_from_exp(env, cause, key);
+			 if (new_key == NULL) {
+			   xmlrpc_DECREF(new_struct);
+			   return NULL;
+			 }
+			 xmlrpc_value* new_value = funk2_xmlrpc__create_xmlrpc_value_from_exp(env, cause, value);
+			 if (new_value == NULL) {
+			   xmlrpc_DECREF(new_struct);
+			   return NULL;
+			 }
+			 xmlrpc_struct_set_value_v(env, new_struct, new_key, new_value);
+			 xmlrpc_DECREF(new_key);
+			 xmlrpc_DECREF(new_valuey);
+			 );
+    return new_struct;
+  } else if (raw__array__is_type(cause, exp)) {
+    xmlrpc_value* new_array = xmlrpc_array_new(env);
+    u64 exp__length = raw__array__length(cause, exp);
+    {
+      u64 index;
+      for (index = 0; index < exp__length; index ++) {
+	f2ptr         subexp     = raw__array__elt(cause, exp, index);
+	xmlrpc_value* new_subexp = funk2_xmlrpc__create_xmlrpc_value_from_exp(env, cause, subexp);
+	if (new_subexp == NULL) {
+	  xmlrpc_DECREF(new_array);
+	  return NULL;
+	}
+	xmlrpc_array_append_item(env, new_array, new_subexp);
+	xmlrpc_DECREF(new_subexp);
+      }
+    }
+    return new_array;
+  } else {
+    return NULL;
+  }
+}
+
+f2ptr funk2_xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments) {
+  if ((! raw__string__is_type(cause, url)) ||
+      ((! raw__string__is_type(cause, funkname)) && (! raw__symbol__is_type(cause, funkname)))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  
+  u64 url__length = raw__string__length(cause, url);
+  u8* url__str    = (u8*)alloca(url__length + 1);
+  raw__string__str_copy(cause, url, url__str);
+  url__str[url__length] = 0;
+  
+  u64 funkname__length;
+  u8* funkname__str;
+  if (raw__string__is_type(cause, funkname)) {
+    funkname__length = raw__string__length(cause, funkname);
+    funkname__str    = (u8*)alloca(funkname__length + 1);
+    raw__string__str_copy(cause, funkname, funkname__str);
+    funkname__str[funkname__length] = 0;
+  } else if (raw__symbol__is_type(cause, funkname)) {
+    funkname__length = raw__symbol__length(cause, funkname);
+    funkname__str    = (u8*)alloca(funkname__length + 1);
+    raw__symbol__str_copy(cause, funkname, funkname__str);
+    funkname__str[funkname__length] = 0;
+  } else {
+    error(nil, "shouldn't get here because of type checking above.");
+  }
+  
   xmlrpc_env     env;
   xmlrpc_client* clientP;
   xmlrpc_value*  resultP;
@@ -137,36 +241,45 @@ boolean_t funk2_xmlrpc__call_test(char* url) {
     xmlrpc_print_fault_status(&env);
   } else {
     
+    boolean_t call_successful_so_far = boolean__true;
     {
       xmlrpc_server_info* serverInfoP;
-      xmlrpc_value*       paramArrayP;
+      xmlrpc_value*       argument_array;
       
-      serverInfoP = xmlrpc_server_info_new(&env, url);
+      serverInfoP = xmlrpc_server_info_new(&env, url__str);
       
-      paramArrayP = xmlrpc_array_new(&env);
+      argument_array = xmlrpc_array_new(&env);
       
       {
-	xmlrpc_value* addend1P = xmlrpc_int_new(&env, 5);
-	xmlrpc_value* addend2P = xmlrpc_int_new(&env, 7);
-	
-	xmlrpc_array_append_item(&env, paramArrayP, addend1P);
-	xmlrpc_array_append_item(&env, paramArrayP, addend2P);
-	
-	xmlrpc_DECREF(addend1P);
-	xmlrpc_DECREF(addend2P);
+	f2ptr iter = arguments;
+	while (iter && call_successful_so_far) {
+	  f2ptr exp = f2__first(cause, iter);
+	  {
+	    xmlrpc_value* new_exp = funk2_xmlrpc__create_xmlrpc_value_from_exp(&env, cause, exp);
+	    if (new_exp == NULL) {
+	      call_successful_so_far = boolean__false;
+	    } else {
+	      xmlrpc_array_append_item(&env, argument_array, new_exp);
+	      xmlrpc_DECREF(new_exp);
+	    }
+	  }
+	  iter = f2__next(cause, iter);
+	}
       }
-      
-      xmlrpc_client_call2(&env, clientP, serverInfoP, "sample.add",
-			  paramArrayP, &resultP);
-      
-      xmlrpc_DECREF(paramArrayP);
+      if (call_successful_so_far) {
+	xmlrpc_client_call2(&env, clientP, serverInfoP, funkname__str,
+			    argument_array, &resultP);
+	
+	if (env.fault_occurred) {
+	  xmlrpc_print_fault_status(&env);
+	  call_successful_so_far = boolean__false;
+	}
+      }
+      xmlrpc_DECREF(argument_array);
       xmlrpc_server_info_free(serverInfoP);
     }
     
-    if (env.fault_occurred) {
-      xmlrpc_print_fault_status(&env);
-    } else {
-      
+    if (call_successful_so_far) {
       // Get our sum and print it out.
       xmlrpc_read_int(&env, resultP, &sum);
       if (env.fault_occurred) {
@@ -187,7 +300,7 @@ boolean_t funk2_xmlrpc__call_test(char* url) {
   }
   
   xmlrpc_client_teardown_global_const();
-  return success;
+  return f2bool__new(success);
 }
 
 #endif // F2__XMLRPC_SUPPORTED

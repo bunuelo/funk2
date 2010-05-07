@@ -281,7 +281,7 @@ f2ptr f2__xmlrpc__call_test(f2ptr cause, f2ptr url) {
   }
   return f2bool__new(raw__xmlrpc__call_test(cause, url));
 }
-def_pcfunk1(xmlrpc__call_test, url, return f2__xmlrpc__call_test(cause, url));
+def_pcfunk1(xmlrpc__call_test, url, return f2__xmlrpc__call_test(this_cause, url));
 
 
 // **
@@ -297,5 +297,6 @@ void f2__xmlrpc__initialize() {
   f2__xmlrpc__reinitialize_globalvars();
   
   f2__primcfunk__init__1(xmlrpc__create_new_server, port_num, "creates a test xmlrpc server with a sample.add RPC function that takes two integers as arguments.");
+  f2__primcfunk__init__1(xmlrpc__call_test,         url,      "calls a test xmlrpc server with a sample.add RPC function that takes two integers as arguments.");
 }
 

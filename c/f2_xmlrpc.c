@@ -267,7 +267,7 @@ boolean_t raw__xmlrpc__call_test(f2ptr cause, f2ptr url) {
   u8* url__str    = (u8*)alloca(url__length + 1);
   raw__string__str_copy(cause, url, url__str);
   url__str[url__length] = 0;
-  return funk2_xmlrpc__call_test(cause, url__str);
+  return funk2_xmlrpc__call_test(url__str);
 #else
   status(  "funk2 warning: XMLRPC support is not compiled in this install of funk2.");
   printf("\nfunk2 warning: XMLRPC support is not compiled in this install of funk2."); fflush(stdout);

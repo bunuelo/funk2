@@ -387,7 +387,7 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
     }
     
     if (call_successful_so_far) {
-      return_value = funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, resultP);
+      return_value = funk2_xmlrpc__new_exp_from_xmlrpc_value(&env, cause, resultP);
       
       // Dispose of our result value.
       xmlrpc_DECREF(resultP);

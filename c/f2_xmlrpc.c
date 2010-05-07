@@ -205,11 +205,11 @@ xmlrpc_value* funk2_xmlrpc__create_xmlrpc_value_from_exp(xmlrpc_env* env, f2ptr 
 f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlrpc_value* value) {
   xmlrpc_type type = xmlrpc_value_type(value);
   switch(type) {
-  case xmlrpc_type_none:     // not a value
+  case XMLRPC_TYPE_DEAD:    // not a value
     return f2larva__new(cause, 1, nil);
-  case xmlrpc_type_empty:    // empty value, eg NULL
+  case XMLRPC_TYPE_NIL:    // empty value, eg NULL
     return nil;
-  case xmlrpc_type_base64: { // base64 value, eg binary data
+  case XMLRPC_TYPE_BASE64: { // base64 value, eg binary data
     unsigned int   value__length;
     unsigned char* value__str;
     xmlrpc_read_base64(env,
@@ -220,24 +220,24 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
     free(value__str);
     return new_chunk;
   }
-  case xmlrpc_type_boolean: {// boolean  [0 | 1]
+  case XMLRPC_TYPE_BOOL: {// boolean  [0 | 1]
     xmlrpc_bool bool_value;
     xmlrpc_read_bool(env, value, &bool_value);
     return f2bool__new(bool_value);
   }
-  case xmlrpc_type_datetime: { // datetime [ISO8601 | time_t]
+  case XMLRPC_TYPE_DATETIME: { // datetime [ISO8601 | time_t]
     time_t seconds_since_1970;
     xmlrpc_read_datetime_sec(env, value, &seconds_since_1970);
     u64 nanoseconds_since_1970 = ((u64)seconds_since_1970) * nanoseconds_per_second;
     return f2time__new(cause, f2integer__new(cause, nanoseconds_since_1970));
   }
-  case xmlrpc_type_double: { // double / floating point
+  case XMLRPC_TYPE_DOUBLE: { // double / floating point
     xmlrpc_double double_value;
     xmlrpc_read_double(env, value, &double_value);
     double d = (double)double_value;
     return f2double__new(cause, d);
   }
-  case xmlrpc_type_int: {    // integer
+  case XMLRPC_TYPE_INT: {    // integer
     s64 i;
 #if defined(XMLRPC_HAVE_I8)
     long long i8_value;
@@ -250,7 +250,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
 #endif // XMLRPC_HAVE_I8
     return f2integer__new(cause, i);
   }
-  case xmlrpc_type_string: { // string
+  case XMLRPC_TYPE_STRING: { // string
     size_t string__length;
     char*  string__str;
     xmlrpc_read_string_lp(env, value, &string__length, &string__str);
@@ -258,7 +258,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
     free(string__str);
     return new_string;
   }
-  case xmlrpc_type_array: {  // vector array
+  case XMLRPC_TYPE_ARRAY: {  // vector array
     int array__size;
     array__size = xmlrpc_array_size(env, value);
     f2ptr new_array = raw__array__new(cause, array__size);
@@ -276,9 +276,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
     }
     return new_array;
   }
-  case xmlrpc_type_mixed:    // vector mixed
-    return f2larva__new(cause, 1, nil);
-  case xmlrpc_type_struct: { // vector struct
+  case XMLRPC_TYPE_STRUCT: { // vector struct
     int struct__size = xmlrpc_struct_size(env, value);
     f2ptr new_frame = f2__frame__new(cause);
     {
@@ -300,6 +298,8 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
     }
     return new_frame;
   }
+  case XMLRPC_TYPE_C_PTR:
+    return f2larva__new(cause, 12, nil);
   }
 }
 

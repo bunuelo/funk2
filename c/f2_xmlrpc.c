@@ -285,12 +285,12 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
 	xmlrpc_value* member_key;
 	xmlrpc_value* member_value;
 	xmlrpc_struct_read_member(env, value, index, &member_key, &member_value);
-	f2ptr new_key    = funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, member_key);
+	f2ptr new_key = funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, member_key);
 	if (raw__larva__is_type(cause, new_key)) {
 	  return new_key;
 	}
-	f2ptr new_member = funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, member_key);
-	if (raw__larva__is_type(cause, new_member)) {
+	f2ptr new_value = funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, member_value);
+	if (raw__larva__is_type(cause, new_value)) {
 	  return new_member;
 	}
 	f2__frame__add_var_value(cause, new_frame, new_key, new_value);

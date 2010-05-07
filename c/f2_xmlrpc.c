@@ -210,12 +210,12 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
   case XMLRPC_TYPE_NIL:    // empty value, eg NULL
     return nil;
   case XMLRPC_TYPE_BASE64: { // base64 value, eg binary data
-    size_t               value__length;
-    const unsigned char* value__str;
+    size_t         value__length;
+    unsigned char* value__str;
     xmlrpc_read_base64(env,
 		       value,
 		       &value__length,
-		       &value__str);
+		       (const unsigned char**)&value__str);
     f2ptr new_chunk = f2chunk__new(cause, value__length, value__str);
     free(value__str);
     return new_chunk;

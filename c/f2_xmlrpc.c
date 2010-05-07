@@ -333,7 +333,6 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
   xmlrpc_env     env;
   xmlrpc_client* clientP;
   xmlrpc_value*  resultP;
-  int            sum;
   boolean_t      success      = boolean__false;
   f2ptr          return_value = nil;
   

@@ -176,7 +176,7 @@ xmlrpc_value* funk2_xmlrpc__create_xmlrpc_value_from_exp(xmlrpc_env* env, f2ptr 
 			 }
 			 xmlrpc_struct_set_value_v(env, new_struct, new_key, new_value);
 			 xmlrpc_DECREF(new_key);
-			 xmlrpc_DECREF(new_valuey);
+			 xmlrpc_DECREF(new_value);
 			 );
     return new_struct;
   } else if (raw__array__is_type(cause, exp)) {

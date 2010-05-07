@@ -291,7 +291,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
 	}
 	f2ptr new_value = funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, member_value);
 	if (raw__larva__is_type(cause, new_value)) {
-	  return new_member;
+	  return new_value;
 	}
 	f2__frame__add_var_value(cause, new_frame, new_key, new_value);
       }

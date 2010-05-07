@@ -143,7 +143,7 @@ xmlrpc_value* funk2_xmlrpc__create_xmlrpc_value_from_exp(xmlrpc_env* env, f2ptr 
     float  f = f2float__f(exp, cause);
     double d = (double)f;
     return xmlrpc_double_new(env, d);
-  } else if (raw__symbol__new(cause, exp)) {
+  } else if (raw__symbol__is_type(cause, exp)) {
     u64 exp__length = f2symbol__length(exp, cause);
     u8* exp__str    = (u8*)alloca(exp__length + 1);
     raw__symbol__str_copy(cause, exp, exp__str);

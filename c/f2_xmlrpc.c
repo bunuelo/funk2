@@ -124,7 +124,8 @@ xmlrpc_value* funk2_xmlrpc__create_xmlrpc_value_from_exp(xmlrpc_env* env, f2ptr 
     return xmlrpc_nil_new(env);
   } else if (raw__integer__is_type(cause, exp)) {
     s64 i = f2integer__i(exp, cause);
-    if ((i & 0xffffffff00000000) == 0) {
+    if ((i <   0x100000000) &&
+	(i >= -0x100000000)) {
       // can be represented in 32 bits.
       s32 i32 = (s32)i;
       return xmlrpc_int_new(env, i32);

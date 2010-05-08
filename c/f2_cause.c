@@ -76,7 +76,7 @@ f2ptr f2__cause__new(f2ptr cause,
   //printf("\nnew cause: " u64__fstr ".\n", this); fflush(stdout);
   return this;
 }
-def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil));
+def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil));
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   if (source && (! raw__cause__is_type(cause, source))) {

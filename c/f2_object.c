@@ -93,6 +93,9 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
     if (! result) {
       f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("integer"), (u8*)"integer"));
       result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+      if (! result) {
+	result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
+      }
     }
     return result;
   }
@@ -101,6 +104,9 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
     if (! result) {
       f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("double"), (u8*)"double"));
       result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+      if (! result) {
+	result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
+      }
     }
     return result;
   }
@@ -109,6 +115,9 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
     if (! result) {
       f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("float"), (u8*)"float"));
       result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+      if (! result) {
+	result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
+      }
     }
     return result;
   }
@@ -117,6 +126,9 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
     if (! result) {
       f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("pointer"), (u8*)"pointer"));
       result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+      if (! result) {
+	result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
+      }
     }
     return result;
   }
@@ -125,6 +137,9 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
     if (! result) {
       f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("gfunkptr"), (u8*)"gfunkptr"));
       result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+      if (! result) {
+	result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
+      }
     }
     return result;
   }
@@ -133,6 +148,9 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
     if (! result) {
       f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("mutex"), (u8*)"mutex"));
       result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+      if (! result) {
+	result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
+      }
     }
     return result;
   }
@@ -141,6 +159,9 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
     if (! result) {
       f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("char"), (u8*)"char"));
       result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+      if (! result) {
+	result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
+      }
     }
     return result;
   }
@@ -149,6 +170,9 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
     if (! result) {
       f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("string"), (u8*)"string"));
       result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+      if (! result) {
+	result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
+      }
     }
     return result;
   }
@@ -157,6 +181,9 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
     if (! result) {
       f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("symbol"), (u8*)"symbol"));
       result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+      if (! result) {
+	result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
+      }
     }
     return result;
   }
@@ -165,6 +192,9 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
     if (! result) {
       f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("chunk"), (u8*)"chunk"));
       result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+      if (! result) {
+	result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
+      }
     }
     return result;
   }
@@ -188,7 +218,11 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 	return nil;
       }
       //printf("\nprimobject_type: "); f2__print(cause, primobject_type); fflush(stdout);
-      return f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+      f2ptr result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+      if (! result) {
+	result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
+      }
+      return result;
     } else {
       if (ptype == ptype_simple_array) {
 	f2ptr result = f2__simple_array__slot__type_funk(cause, this, slot_type, slot_name);
@@ -202,6 +236,9 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 	if (! result) {
 	  f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("traced_array"), (u8*)"traced_array"));
 	  result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+	  if (! result) {
+	    result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
+	  }
 	}
 	return result;
       }
@@ -213,6 +250,9 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
     if (! result) {
       f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("larva"), (u8*)"larva"));
       result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+      if (! result) {
+	result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
+      }
     }
     return result;
   }

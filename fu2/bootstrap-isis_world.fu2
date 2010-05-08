@@ -46,5 +46,5 @@
 [deftypefunk isis_world_client execute drop_from_left_hand     []                   [xmlrpc-funkall [get this xmlrpc_url] `do `drop_from_left_hand]]
 [deftypefunk isis_world_client execute use                     [object with_object] [xmlrpc-funkall [get this xmlrpc_url] `do `use                     [frame object object with_object with_object]]]
 [deftypefunk isis_world_client execute say                     [message]            [xmlrpc-funkall [get this xmlrpc_url] `do `say                     [frame message message]]]
-[deftypefunk isis_world_client execute step_simulation         [seconds]            [xmlrpc-funkall [get this xmlrpc_url] `do `say                     [frame seconds seconds]]]
+[deftypefunk isis_world_client execute step_simulation         [seconds]            [xmlrpc-funkall [get this xmlrpc_url] `do `step_simulation         [frame seconds seconds]]]
 

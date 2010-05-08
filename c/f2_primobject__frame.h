@@ -142,6 +142,10 @@ f2ptr f2frame__primobject_type__new(f2ptr cause);
                        ptypehash__iteration(cause, type_slot_ptypehash, slot_name, slot_value, \
                        code;))
 
+#define frame__var__iteration(cause, this, slot_name, slot_value, code) \
+  ptypehash__iteration(cause, f2__frame__type_ptypehash(cause, __funk2.primobject__frame.variable__symbol), slot_name, slot_value, \
+                       code;)
+
 // **
 
 void f2__primobject_frame__reinitialize_globalvars();

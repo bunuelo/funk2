@@ -134,6 +134,7 @@ xmlrpc_value* funk2_xmlrpc__create_xmlrpc_value_from_exp(xmlrpc_env* env, f2ptr 
 #if defined(XMLRPC_HAVE_I8)
       return xmlrpc_i8_new(env, i);
 #else
+      status("xmlrpc cannot translate large integer value because this version of xmlrpc-c does not support 64 bit integers.");
       return NULL;
 #endif // XMLRPC_HAVE_I8
     }
@@ -162,23 +163,24 @@ xmlrpc_value* funk2_xmlrpc__create_xmlrpc_value_from_exp(xmlrpc_env* env, f2ptr 
     u64    seconds_since_1970        = nanoseconds_since_1970__i / nanoseconds_per_second;
     time_t seconds_since_1970__time  = (time_t)seconds_since_1970;
     return xmlrpc_datetime_new_sec(env, seconds_since_1970__time);
-  } else if (raw__ptypehash__is_type(cause, exp)) {
+  } else if (raw__frame__is_type(cause, exp)) {
     xmlrpc_value* new_struct = xmlrpc_struct_new(env);
-    ptypehash__iteration(cause, exp, key, value,
-			 xmlrpc_value* new_key   = funk2_xmlrpc__create_xmlrpc_value_from_exp(env, cause, key);
-			 if (new_key == NULL) {
-			   xmlrpc_DECREF(new_struct);
-			   return NULL;
-			 }
-			 xmlrpc_value* new_value = funk2_xmlrpc__create_xmlrpc_value_from_exp(env, cause, value);
-			 if (new_value == NULL) {
-			   xmlrpc_DECREF(new_struct);
-			   return NULL;
-			 }
-			 xmlrpc_struct_set_value_v(env, new_struct, new_key, new_value);
-			 xmlrpc_DECREF(new_key);
-			 xmlrpc_DECREF(new_value);
-			 );
+    frame__var__iteration(cause, exp, key, value,
+			  xmlrpc_value* new_key   = funk2_xmlrpc__create_xmlrpc_value_from_exp(env, cause, key);
+			  if (new_key == NULL) {
+			    xmlrpc_DECREF(new_struct);
+			    status("xmlrpc had trouble translating key in ptypehash.");
+			    return NULL;
+			  }
+			  xmlrpc_value* new_value = funk2_xmlrpc__create_xmlrpc_value_from_exp(env, cause, value);
+			  if (new_value == NULL) {
+			    xmlrpc_DECREF(new_struct);
+			    return NULL;
+			  }
+			  xmlrpc_struct_set_value_v(env, new_struct, new_key, new_value);
+			  xmlrpc_DECREF(new_key);
+			  xmlrpc_DECREF(new_value);
+			  );
     return new_struct;
   } else if (raw__array__is_type(cause, exp)) {
     xmlrpc_value* new_array = xmlrpc_array_new(env);

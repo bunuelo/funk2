@@ -137,21 +137,5 @@
   [fiber &start-tracers nil]
   []]
 
-[deftypefunk cause execute trace []
-  [print 'hi']
-  [let [[funks [get this bytecode_funk_funks]]]
-    [print 'hi']
-    [set this bytecode_funk_funks
-	 [cons &bytecode_funk_callback-create_and_trace_event
-	       funks]]]
-  [print 'hi']
-  [let [[funks [get this bytecode_endfunk_funks]]]
-    [print 'hi']
-    [set this bytecode_endfunk_funks
-	 [cons &bytecode_endfunk_callback-finish_and_abstract_event
-	       funks]]]
-  [print 'hi']
-  nil]
-
 
 

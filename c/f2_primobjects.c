@@ -398,18 +398,10 @@ def_pcfunk0(processor__new, return f2__processor__new(this_cause));
 
 // scheduler
 
-def_primobject_5_slot(scheduler, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer);
+def_primobject_1_slot(scheduler, processors);
 
-f2ptr f2__scheduler__new(f2ptr cause, f2ptr processors, f2ptr event_subscribers_mutex, f2ptr event_subscribers, f2ptr event_buffer_mutex, f2ptr event_buffer) {return f2scheduler__new(cause, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer);}
-def_pcfunk5(scheduler__new, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer, return f2__scheduler__new(this_cause, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer));
-
-
-// event_subscriber
-
-def_primobject_5_slot(event_subscriber, event_types, fiber, funkable, event_buffer, event_buffer_mutex);
-
-f2ptr f2__event_subscriber__new(f2ptr cause, f2ptr event_types, f2ptr fiber, f2ptr funkable, f2ptr event_buffer, f2ptr event_buffer_mutex) {return f2event_subscriber__new(cause, event_types, fiber, funkable, event_buffer, event_buffer_mutex);}
-def_pcfunk5(event_subscriber__new, event_types, fiber, funkable, event_buffer, event_buffer_mutex, return f2__event_subscriber__new(this_cause, event_types, fiber, funkable, event_buffer, event_buffer_mutex));
+f2ptr f2__scheduler__new(f2ptr cause, f2ptr processors) {return f2scheduler__new(cause, processors);}
+def_pcfunk1(scheduler__new, processors, return f2__scheduler__new(this_cause, processors));
 
 
 // transframe
@@ -558,7 +550,6 @@ void f2__primobjects__reinitialize_globalvars() {
   __fiber__symbol            = new__symbol(cause, "fiber");
   __processor__symbol        = new__symbol(cause, "processor");
   __scheduler__symbol        = new__symbol(cause, "scheduler");
-  __event_subscriber__symbol = new__symbol(cause, "event_subscriber");
   __transframe__symbol       = new__symbol(cause, "transframe");
   __bug__symbol              = new__symbol(cause, "bug");
   __time__symbol             = new__symbol(cause, "time");
@@ -659,11 +650,7 @@ void f2__primobjects__initialize() {
   
   // scheduler
   
-  initialize_primobject_5_slot(scheduler, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer);
-  
-  // event_subscriber
-  
-  initialize_primobject_5_slot(event_subscriber, event_types, fiber, funkable, event_buffer, event_buffer_mutex);
+  initialize_primobject_1_slot(scheduler, processors);
   
   // transframe
   

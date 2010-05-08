@@ -499,9 +499,7 @@ void f2__scheduler__initialize() {
   
   f2ptr processors = raw__array__new(cause, scheduler_processor_num);
   
-  f2ptr event_buffer = raw__circular_buffer__new_empty(cause, 1024);
-  
-  f2ptr scheduler = f2scheduler__new(cause, processors, f2mutex__new(cause), nil, f2mutex__new(cause), event_buffer);
+  f2ptr scheduler = f2scheduler__new(cause, processors);
   
   int i;
   for (i = 0; i < scheduler_processor_num; i ++) {

@@ -1360,67 +1360,7 @@ f2ptr f2__funkable__parent_env(f2ptr cause, f2ptr funkable) {
   }
 }
 
-// events
-
-f2ptr f2__event_subscriber(f2ptr cause, f2ptr parent_fiber, f2ptr event_type, f2ptr funkable) {
-  /*
-  f2ptr parent_env         = f2__funkable__parent_env(cause, funkable);
-  f2ptr fiber             = f2fiber__new(cause,
-					   nil,
-					   nil,
-					   nil,
-					   parent_env,
-					   nil,
-					   nil,
-					   nil,
-					   nil,
-					   nil,
-					   cause,
-					   __funk2.globalenv.true__symbol,
-					   nil,
-					   parent_fiber,
-					   parent_env,
-					   f2mutex__new(cause),
-					   nil,
-					   nil,
-					   nil);
-  f2ptr event_buffer       = raw__circular_buffer__new_empty(cause, 1024);
-  f2ptr event_buffer_mutex = f2mutex__new(cause);
-  f2ptr subscriber         = f2event_subscriber__new(cause, event_type, fiber, funkable, event_buffer, event_buffer_mutex);
-  return subscriber;
-  */
-  return nil;
-}
-def_pcfunk2(event_subscriber, event_type, funkable, return f2__event_subscriber(this_cause, simple_fiber, event_type, funkable));
-
-f2ptr f2__subscribe(f2ptr cause, f2ptr fiber, f2ptr event_types, f2ptr funkable) {
-  if (! raw__cons__is_type(cause, event_types)) {
-    event_types = f2cons__new(cause, event_types, nil);
-  }
-  f2ptr event_subscriber = f2__event_subscriber(cause, fiber, event_types, funkable);
-  if (cause && (! raw__cause__is_type(cause, cause))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  {
-    f2ptr subscribers_mutex = f2cause__subscribers_mutex(cause, cause);
-    f2mutex__lock(subscribers_mutex, cause);
-    f2ptr subscribers = f2cause__subscribers(cause, cause);
-    f2ptr new_cons = f2cons__new(cause, event_subscriber, subscribers);
-    f2cause__subscribers__set(cause, cause, new_cons);
-    f2mutex__unlock(subscribers_mutex, cause);
-  }
-  {
-    f2ptr subscribers_mutex = f2scheduler__event_subscribers_mutex(__funk2.operating_system.scheduler, cause);
-    f2mutex__lock(subscribers_mutex, cause);
-    f2ptr subscribers = f2scheduler__event_subscribers(__funk2.operating_system.scheduler, cause);
-    f2ptr new_cons = f2cons__new(cause, event_subscriber, subscribers);
-    f2scheduler__event_subscribers__set(__funk2.operating_system.scheduler, cause, new_cons);
-    f2mutex__unlock(subscribers_mutex, cause);
-  }
-  //f2__print(cause, cause);
-  return nil;
-}
-def_pcfunk2(subscribe, event_type, funkable, return f2__subscribe(this_cause, simple_fiber, event_type, funkable));
+// abstract sequence getters and setters (first, next, prev)
 
 f2ptr f2__first(f2ptr cause, f2ptr exp) {
   if (raw__cons__is_type(cause, exp)) {
@@ -1901,9 +1841,6 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(system__gethostname, "");
   
   f2__funktional_primcfunk__init(larva, "");
-  
-  f2__primcfunk__init(event_subscriber, "");
-  f2__primcfunk__init(subscribe, "");
   
   f2__funktional_primcfunk__init(first, "");
   f2__funktional_primcfunk__init(first__set, "");

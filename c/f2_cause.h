@@ -27,15 +27,13 @@
 // cause
 
 typedef struct funk2_object_type__cause__slot_s funk2_object_type__cause__slot_t;
-declare_object_type_15_slot(cause,
+declare_object_type_13_slot(cause,
 			    fibers_mutex,
 			    fibers,
 			    frame,
 			    allocate_traced_arrays,
 			    bytecode_tracing_on,
 			    memory_tracing_on,
-			    subscribers_mutex,
-			    subscribers,
 			    imagination_stack,
 			    bytecode_branch_funks,
 			    bytecode_funk_funks,
@@ -68,15 +66,13 @@ declare_object_type_15_slot(cause,
 
 #define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
 
-declare_primobject_15_slot(cause,
+declare_primobject_13_slot(cause,
 			   fibers_mutex,
 			   fibers,
 			   frame,
 			   allocate_traced_arrays,
 			   bytecode_tracing_on,
 			   memory_tracing_on,
-			   subscribers_mutex,
-			   subscribers,
 			   imagination_stack,
 			   bytecode_branch_funks,
 			   bytecode_funk_funks,

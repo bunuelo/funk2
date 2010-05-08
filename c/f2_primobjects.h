@@ -36,7 +36,6 @@ typedef struct funk2_object_type__bytecode__slot_s         funk2_object_type__by
 typedef struct funk2_object_type__fiber__slot_s            funk2_object_type__fiber__slot_t;
 typedef struct funk2_object_type__processor__slot_s        funk2_object_type__processor__slot_t;
 typedef struct funk2_object_type__scheduler__slot_s        funk2_object_type__scheduler__slot_t;
-typedef struct funk2_object_type__event_subscriber__slot_s funk2_object_type__event_subscriber__slot_t;
 typedef struct funk2_object_type__transframe__slot_s       funk2_object_type__transframe__slot_t;
 typedef struct funk2_object_type__time__slot_s             funk2_object_type__time__slot_t;
 typedef struct funk2_object_type__size_2d__slot_s          funk2_object_type__size_2d__slot_t;
@@ -1166,12 +1165,7 @@ declare_primobject_11_slot(processor, scheduler, processor_thread, active_fibers
 
 // scheduler
 
-declare_primobject_5_slot(scheduler, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer);
-
-
-// event_subscriber
-
-declare_primobject_5_slot(event_subscriber, event_types, fiber, funkable, event_buffer, event_buffer_mutex);
+declare_primobject_1_slot(scheduler, processors);
 
 
 // transframe
@@ -1479,11 +1473,7 @@ declare_object_type_11_slot(processor, scheduler, processor_thread, active_fiber
 
 // scheduler
 
-declare_object_type_5_slot(scheduler, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer, );
-
-// event_subscriber
-
-declare_object_type_5_slot(event_subscriber, event_types, fiber, funkable, event_buffer, event_buffer_mutex, );
+declare_object_type_5_slot(scheduler, processors, );
 
 // transframe
 

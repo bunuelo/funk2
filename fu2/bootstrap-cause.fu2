@@ -150,6 +150,7 @@
     [set [this-cause] bytecode_branch_funks [cons [object-execute-funk [this-cause] `add_graph_event-branch]
 						  funks]]
     nil]
+  [globalize fast_tracer_graph [get [this-cause] event_graph]]
   nil]
 
 [defunk test-fast_tracers []

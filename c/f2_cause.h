@@ -45,7 +45,7 @@ declare_object_type_18_slot(cause,
 			    bytecode_funk_funks,
 			    bytecode_tracer_funks,
 			    bytecode_endfunk_funks,
-			    event_trace,
+			    event_graph,
 			    
 			    f2ptr define__symbol;
 			    f2ptr define__funk;
@@ -89,7 +89,7 @@ declare_primobject_18_slot(cause,
 			   bytecode_funk_funks,
 			   bytecode_tracer_funks,
 			   bytecode_endfunk_funks,
-			   event_trace
+			   event_graph
 			   );
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source);

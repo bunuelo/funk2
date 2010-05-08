@@ -35,7 +35,6 @@
 [load 'fu2/bootstrap-blocks_world.fu2']
 [load 'fu2/bootstrap-semantic_graph.fu2']
 [load 'fu2/bootstrap-critics-reactive.fu2']
-[load 'fu2/bootstrap-action.fu2']
 [load 'fu2/bootstrap-string.fu2']
 [load 'fu2/bootstrap-apropos.fu2']
 [load 'fu2/bootstrap-sort.fu2']

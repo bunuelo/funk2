@@ -102,7 +102,7 @@ defprimobject__static_slot__prototype(frame__type_ptypehash);
 #define f2frame__type_ptypehash__trace(     this, cause)        primobject__static_slot__trace(     this, frame__type_ptypehash, cause)
 #define f2frame__type_ptypehash__cause(     this, cause)        primobject__static_slot__cause(     this, frame__type_ptypehash, cause)
 
-f2ptr  f2__frame__new                            (f2ptr cause);
+f2ptr  f2__frame__new                            (f2ptr cause, f2ptr slot_value_pairs);
 f2ptr  f2__frame__add_type_var_value             (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 f2ptr  f2__frame__var_ptypehash                  (f2ptr cause, f2ptr this);
 f2ptr  f2__frame__funkvar_ptypehash              (f2ptr cause, f2ptr this);

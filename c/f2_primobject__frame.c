@@ -80,7 +80,6 @@ f2ptr f2__frame__new(f2ptr cause, f2ptr slot_value_pairs) {
       f2ptr key = f2__first(cause, iter);
       iter = f2__next(cause, iter);
       if (iter) {
-	iter = f2__next(cause, iter);
 	f2ptr value = f2__first(cause, iter);
 	f2__frame__add_var_value(cause, this, key, value);
       } else {

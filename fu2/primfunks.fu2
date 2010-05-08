@@ -237,7 +237,6 @@
 
 `[globalize-funk larva                                       &primfunk:larva]
 
-[globalize-funk publish_event                               &primfunk:publish_event]
 [globalize-funk event_subscriber                            &primfunk:event_subscriber]
 [globalize-funk subscribe                                   &primfunk:subscribe]
 

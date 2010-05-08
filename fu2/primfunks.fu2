@@ -71,6 +71,8 @@
 [globalize-funk eq                                          &primfunk:eq]
 [globalize-funk contains                                    &primfunk:contains]
 
+[globalize-funk reverse                                     &primfunk:reverse]
+
 [globalize-funk exp-print                                   &primfunk:exp__print]
 [globalize-funk write                                       &primfunk:write]
 [globalize-funk fwrite                                      &primfunk:fwrite]

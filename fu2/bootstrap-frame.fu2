@@ -31,3 +31,18 @@
 [deftypefunk frame get slots []
   [get this type_var-slot_names `variable]]
 
+[defmetro frame [:rest slot_value_pairs]
+  `[new frame @[let [[iter          slot_value_pairs]
+		     [reverse_codes nil]]
+		 [while iter
+		   [let [[key [car iter]]]
+		     [= iter [cdr iter]]
+		     [let [[value [car iter]]]
+		       [= reverse_codes [cons  value       reverse_codes]]
+		       [= reverse_codes [cons `[quote key] reverse_codes]]]]
+		   [= iter [cdr iter]]]
+		 [reverse reverse_codes]]]]
+
+
+		 
+		       

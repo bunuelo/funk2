@@ -709,6 +709,22 @@ f2ptr f2__elt(f2ptr cause, f2ptr this, f2ptr index) {
   return raw__elt(cause, this, raw_index);
 }
 
+f2ptr f2__reverse(f2ptr cause, f2ptr this) {
+  if (raw__cons__is_type(cause, this)) {
+    f2ptr new_seq = nil;
+    f2ptr iter    = this;
+    while (iter) {
+      f2ptr exp = f2__cons__car(cause, iter);
+      new_seq   = f2cons__new(cause, exp, new_seq);
+      iter      = f2__cons__cdr(cause, iter);
+    }
+    return new_seq;
+  } else {
+    return f2larva__new(cause, 1, nil);
+  }
+}
+def_pcfunk1(reverse, this, return f2__reverse(this_cause, this));
+
 // deprecated and should be removed
 f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause) {
   return f2__elt(cause, this, index);
@@ -1730,6 +1746,8 @@ void f2__primcfunks__initialize() {
   
   f2__funktional_primcfunk__init__2(eq,                         x, y, "");
   f2__primcfunk__init__2(contains, this, element, "");
+  
+  f2__primcfunk__init__1(reverse, this, "reverses elements in a list.");
   
   f2__primcfunk__init__1(exp__print, exp, "");
   f2__primcfunk__init(write, "");

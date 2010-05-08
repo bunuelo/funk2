@@ -43,7 +43,6 @@
 #include "f2_cpu.h"
 #include "f2_dlfcn.h"
 #include "f2_dptr.h"
-#include "f2_event_router.h"
 #include "f2_fiber.h"
 #include "f2_fileio.h"
 #include "f2_frame_objects.h"
@@ -153,7 +152,6 @@ typedef struct funk2_s {
   funk2_node_handler_t                node_handler;
   funk2_status_t                      status;
   funk2_locale_t                      locale;
-  funk2_event_router_t                event_router;
   funk2_primobject_circular_buffer_t  primobject__circular_buffer;
   funk2_processor_thread_handler_t    processor_thread_handler;
   funk2_primobject_type_handler_t     primobject_type_handler;

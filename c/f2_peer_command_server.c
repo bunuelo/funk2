@@ -291,21 +291,6 @@ void funk2_peer_command_server_client__execute_request(funk2_peer_command_server
     //char temp_hostname[1024];
     //snprintf(temp_hostname, 1024, "%d.%d.%d.%d", ip_addr[0], ip_addr[1], ip_addr[2], ip_addr[3]);
   } break;
-  case funk2_packet_type__pcs_request__know_of_event: {
-    if (this) {
-      pcs_request__know_of_event_t* request = (pcs_request__know_of_event_t*)packet;
-      if (! (this->registered_funk2_node)) {
-	error(nil, "this->registered_funk2_node == NULL");
-      }
-      funk2_node_t* funk2_node = this->registered_funk2_node;
-      f2ptr      event_cause = rf2_to_lf2(request->payload.event_cause);
-      node_id_t  node_id     = request->payload.node_id;
-      event_id_t event_id    = request->payload.event_id;
-      f2ptr      type        = rf2_to_lf2(request->payload.type);
-      f2ptr      data        = rf2_to_lf2(request->payload.data);
-      funk2_event_router__know_of_event(&(__funk2.event_router), event_cause, node_id, event_id, type, data);
-    }
-  } break;
   case funk2_packet_type__pcs_request__register_peer: {
     pcs_request__register_peer_t* request = (pcs_request__register_peer_t*)packet;
     node_id_t node_id  = request->payload.node_id;

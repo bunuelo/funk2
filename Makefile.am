@@ -226,7 +226,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_cpu.c \
   c/f2_dlfcn.c \
   c/f2_dptr.c \
-  c/f2_event_router.c \
   c/f2_garbage_collector.c \
   c/f2_garbage_collector_pool.c \
   c/f2_globalenv.c \

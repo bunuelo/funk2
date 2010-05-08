@@ -1350,21 +1350,6 @@ f2ptr f2__larva(f2ptr cause, f2ptr type) {
 
 def_pcfunk1(larva, type, return f2__larva(this_cause, type));
 
-// events
-
-f2ptr f2__publish_event(f2ptr cause, f2ptr type, f2ptr data) {
-  funk2_processor_mutex__user_lock(&(__funk2.event_id_mutex));
-  event_id_t event_id = __funk2.event_id;
-  __funk2.event_id ++;
-  funk2_processor_mutex__unlock(&(__funk2.event_id_mutex));
-  circular_buffer__write_result_t result = funk2_event_router__know_of_event(&(__funk2.event_router), cause, __funk2.node_id, event_id, type, data);
-  if (result != circular_buffer__write_result__success) {
-    return f2larva__new(cause, 13, nil);
-  }
-  return nil;
-}
-def_pcfunk2(publish_event, type, data, return f2__publish_event(this_cause, type, data));
-
 f2ptr f2__funkable__parent_env(f2ptr cause, f2ptr funkable) {
   if (raw__cfunk__is_type(cause, funkable)) {
     return f2cfunk__env(funkable, cause);
@@ -1374,6 +1359,8 @@ f2ptr f2__funkable__parent_env(f2ptr cause, f2ptr funkable) {
     return f2larva__new(cause, 1, nil);
   }
 }
+
+// events
 
 f2ptr f2__event_subscriber(f2ptr cause, f2ptr parent_fiber, f2ptr event_type, f2ptr funkable) {
   /*

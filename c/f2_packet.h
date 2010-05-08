@@ -38,9 +38,6 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__remote_computer_id_to_node_id             ,
   // end p2p network layer abstraction packets
   
-  // causal event packets
-  funk2_packet_type__pcs_request__know_of_event                              ,
-  
   // begin funk2 accessible packets
   funk2_packet_type__pcs_request__client_request_received                    , // internal router packet wrapper packet
   funk2_packet_type__pcs_request__system__environment                        ,
@@ -290,30 +287,6 @@ typedef struct pcs_respond__remote_computer_id_to_node_id_s pcs_respond__remote_
 
 void send_packet__request__remote_computer_id_to_node_id(funk2_node_t* funk2_node, computer_id_t computer_id);
 void send_packet__respond__remote_computer_id_to_node_id(funk2_node_t* funk2_node, node_id_t node_id, computer_id_t requester_computer_id);
-
-
-//  funk2_packet_type__pcs_request__know_of_event
-
-// request know_of_event
-
-struct pcs_packet_payload_request__know_of_event_s {
-  funk2_packet_payload_header_t payload_header;
-  f2ptr                         event_cause;
-  node_id_t                     node_id;
-  event_id_t                    event_id;
-  f2ptr                         type;
-  f2ptr                         data;
-} __attribute__((__packed__));
-typedef struct pcs_packet_payload_request__know_of_event_s pcs_packet_payload_request__know_of_event_t;
-
-struct pcs_request__know_of_event_s {
-  funk2_packet_header_t                       header;
-  pcs_packet_payload_request__know_of_event_t payload;
-} __attribute__((__packed__));
-typedef struct pcs_request__know_of_event_s pcs_request__know_of_event_t;
-
-void                   send_packet__request__know_of_event(f2ptr cause, funk2_node_t* funk2_node, f2ptr event_cause, node_id_t node_id, event_id_t event_id, f2ptr type, f2ptr data);
-void rpc_socket_layer__send_packet__request__know_of_event(             funk2_node_t* funk2_node, f2ptr event_cause, node_id_t node_id, event_id_t event_id, f2ptr type, f2ptr data);
 
 
 // client_request_received (internal router packet wrapper packet)

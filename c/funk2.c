@@ -166,8 +166,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_bytecode__init(&(this->bytecode));
   funk2_operating_system__init(&(this->operating_system));
   funk2_locale__init(&(this->locale));
-  int event_buffer__byte_num = 32768;
-  funk2_event_router__init(&(this->event_router), event_buffer__byte_num);
   funk2_processor_thread_handler__init(&(this->processor_thread_handler));
   funk2_primobject_type_handler__init(&(this->primobject_type_handler));
   funk2_scheduler_thread_controller__init(&(this->scheduler_thread_controller));
@@ -332,7 +330,6 @@ void funk2__destroy(funk2_t* this) {
   funk2_memory__print_gc_stats(&(this->memory));
   
   funk2_primobject_type_handler__destroy(&(this->primobject_type_handler));
-  funk2_event_router__destroy(&(this->event_router));
   funk2_locale__destroy(&(this->locale));
   funk2_operating_system__destroy(&(this->operating_system));
   funk2_bytecode__destroy(&(this->bytecode));
@@ -376,7 +373,6 @@ boolean_t funk2__handle(funk2_t* this) {
   //status("funk2-handle: handling xmlrpc interface.");
   funk2_xmlrpc__handle(&(this->xmlrpc));
   
-  //funk2_event_router__handle_input_events(&(this->event_router));
   //printf("\nYour parent is here."); fflush(stdout);
   // very primitive global reflection might go here if necessary... (maybe handle global process signals?)
   //status("funk2-handle: done handling.");

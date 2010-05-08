@@ -503,39 +503,6 @@ void rpc_socket_layer__send_packet__request__register_peer(funk2_node_t* funk2_n
 // * 
 // * 
 
-// funk2 execution only
-void send_packet__request__know_of_event(f2ptr cause, funk2_node_t* funk2_node, f2ptr event_cause, node_id_t node_id, event_id_t event_id, f2ptr type, f2ptr data) {
-  packet_status("send_packet__request__know_of_event: executing.");
-  pcs_request__know_of_event_t packet;
-  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
-  packet.payload.payload_header.type = funk2_packet_type__pcs_request__know_of_event;
-  packet.payload.event_cause         = event_cause;
-  packet.payload.node_id             = node_id;
-  packet.payload.event_id            = event_id;
-  packet.payload.type                = type;
-  packet.payload.data                = data;
-  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
-}
-
-// rpc_socket_layer execution only
-void rpc_socket_layer__send_packet__request__know_of_event(funk2_node_t* funk2_node, f2ptr event_cause, node_id_t node_id, event_id_t event_id, f2ptr type, f2ptr data) {
-  packet_status("rpc_socket_layer__send_packet__request__know_of_event: executing.");
-  pcs_request__know_of_event_t packet;
-  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
-  packet.payload.payload_header.type = funk2_packet_type__pcs_request__know_of_event;
-  packet.payload.event_cause         = event_cause;
-  packet.payload.node_id             = node_id;
-  packet.payload.event_id            = event_id;
-  packet.payload.type                = type;
-  packet.payload.data                = data;
-  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
-}
-
-
-// ******************************************************
-// * 
-// * 
-
 // socket_rpc_layer execution only
 void send_packet__request__remote_computer_id_to_node_id(funk2_node_t* funk2_node, computer_id_t computer_id) {
   packet_status("send_packet__request__remote_computer_id_to_node_id: executing.");

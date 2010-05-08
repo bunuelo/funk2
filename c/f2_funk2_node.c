@@ -423,40 +423,6 @@ boolean_t funk2_node_handler__node_event_id_is_known(funk2_node_handler_t* this,
   return boolean__false;
 }
 
-boolean_t funk2_node_handler__know_of_node_event(funk2_node_handler_t* this, f2ptr event_cause, node_id_t node_id, event_id_t event_id, f2ptr type, f2ptr data) {
-  funk2_node_t* event_node = funk2_node_handler__lookup_node_by_node_id(this, node_id);
-  if (! event_node) {
-    error(nil, "funk2_node_handler__already_know_of_node_event error: invalid node_id.");
-  }
-  if (event_id <= event_node->last_known_event) {
-    return boolean__true;
-  }
-  // so that we don't skip events... (this may cause us to find duplicate events as new, but better than missing events...)
-  if (event_id == event_node->last_known_event + 1) {
-    event_node->last_known_event = event_id;
-  }
-  funk2_node_list_t* iter = this->node_list;
-  
-  pcs_request__know_of_event_t packet;
-  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
-  packet.payload.payload_header.type = funk2_packet_type__pcs_request__know_of_event;
-  packet.payload.event_cause         = event_cause;
-  packet.payload.node_id             = node_id;
-  packet.payload.event_id            = event_id;
-  packet.payload.type                = type;
-  packet.payload.data                = data;
-  
-  while (iter) {
-    funk2_node_t* node = &(iter->node);
-    if (node != event_node) {
-      socket_rpc_layer__funk2_node__send_packet(node, (funk2_packet_t*)&packet);
-    }
-    iter = iter->next;
-  }
-  return boolean__false;
-}
-
-
 // **
 
 f2ptr f2__ip_addr__new(f2ptr cause, f2ptr b0, f2ptr b1, f2ptr b2, f2ptr b3) {

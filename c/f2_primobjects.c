@@ -64,7 +64,7 @@ def_pcfunk2(primobject__dynamic_slots__set, this, value, return f2__primobject__
 
 // not thread safe (use appropriately, it would create too much of a slowdown to create a new mutex for every primitive object)
 f2ptr f2__primobject__create_new_dynamic_slots_frame(f2ptr cause, f2ptr this) {
-  f2ptr dynamic_slots = f2__frame__new(cause);
+  f2ptr dynamic_slots = f2__frame__new(cause, nil);
   f2primobject__dynamic_slots__set(this, cause, dynamic_slots);
   return dynamic_slots;
 }
@@ -126,7 +126,7 @@ def_pcfunk1(place__new, thing, return f2__place__new(this_cause, thing));
 def_primobject_3_slot(compound_object, compound_object_type, frame, part_frame);
 
 f2ptr f2__compound_object__new(f2ptr cause, f2ptr compound_object_type) {
-  return f2compound_object__new(cause, compound_object_type, f2__frame__new(cause), f2__frame__new(cause));
+  return f2compound_object__new(cause, compound_object_type, f2__frame__new(cause, nil), f2__frame__new(cause, nil));
 }
 def_pcfunk1(compound_object__new, compound_object_type, return f2__compound_object__new(this_cause, compound_object_type));
 

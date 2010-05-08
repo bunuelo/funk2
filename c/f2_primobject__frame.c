@@ -352,7 +352,7 @@ void raw__frame__part_not_contained_by__map_funk(f2ptr cause, f2ptr slot_name, f
 }
 
 f2ptr f2__frame__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr frame    = f2__frame__new(cause);
+  f2ptr frame    = f2__frame__new(cause, nil);
   f2ptr aux_data = raw__array__new(cause, 3);
   raw__array__elt__set(cause, aux_data, 0, this);
   raw__array__elt__set(cause, aux_data, 1, that);

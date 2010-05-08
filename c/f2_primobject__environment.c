@@ -54,7 +54,7 @@ f2ptr f2__environment__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw_
 def_pcfunk1(environment__is_type, exp, return f2__environment__is_type(this_cause, exp));
 
 f2ptr f2__environment__new(f2ptr cause, f2ptr parent_env, f2ptr desc) {
-  return f2environment__new(cause, f2__frame__new(cause), parent_env, desc);
+  return f2environment__new(cause, f2__frame__new(cause, nil), parent_env, desc);
 }
 def_pcfunk2(environment__new, parent_env, desc, return f2__environment__new(this_cause, parent_env, desc));
 
@@ -168,7 +168,7 @@ void f2__primobject_environment__reinitialize_globalvars() {
 void f2__primobject_environment__initialize() {
   f2__primobject_environment__reinitialize_globalvars();
   
-  global_environment__set(f2environment__new(initial_cause(), f2__frame__new(initial_cause()),
+  global_environment__set(f2environment__new(initial_cause(), f2__frame__new(initial_cause(), nil),
 					     nil,
 					     f2symbol__new(initial_cause(), strlen("global_environment"), (u8*)"global_environment")));
   

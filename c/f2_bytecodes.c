@@ -1659,7 +1659,7 @@ int f2__fiber__bytecode__newenv(f2ptr fiber, f2ptr bytecode) {
   
   f2ptr parent_env = f2fiber__env(fiber, cause);
   f2ptr new_env    = f2environment__new(cause,
-					f2__frame__new(cause),
+					f2__frame__new(cause, nil),
 					parent_env,
 					f2symbol__new(cause, strlen("push-env"), (u8*)"push-env"));
   release__assert(new_env, fiber, "new_env is nil");

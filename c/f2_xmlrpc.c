@@ -278,7 +278,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
   }
   case XMLRPC_TYPE_STRUCT: { // vector struct
     int struct__size = xmlrpc_struct_size(env, value);
-    f2ptr new_frame = f2__frame__new(cause);
+    f2ptr new_frame = f2__frame__new(cause, nil);
     {
       int index;
       for (index = 0; index < struct__size; index ++) {

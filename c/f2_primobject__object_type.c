@@ -40,7 +40,7 @@ boolean_t raw__object_type__is_type(f2ptr cause, f2ptr this) {return raw__array_
 f2ptr f2__object_type__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__object_type__is_type(cause, this));}
 
 f2ptr object_type__new(f2ptr cause) {
-  return f2__object_type__new(cause, nil, f2__frame__new(cause));
+  return f2__object_type__new(cause, nil, f2__frame__new(cause, nil));
 }
 
 def_pcfunk0(object_type__new, return object_type__new(this_cause));

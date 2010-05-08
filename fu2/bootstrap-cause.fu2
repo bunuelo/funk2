@@ -154,7 +154,7 @@
   nil]
 
 [defunk test-fast_tracers []
-  [fiber &start-fast_tracers nil]
+  [shelter [start-fast_tracers]]
   nil]
 
 

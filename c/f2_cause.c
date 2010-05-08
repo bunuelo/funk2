@@ -48,25 +48,27 @@ f2ptr f2__cause__new(f2ptr cause,
 		     f2ptr bytecode_funk_funks,
 		     f2ptr bytecode_tracer_funks,
 		     f2ptr bytecode_endfunk_funks) {
-  f2ptr fibers_mutex         = f2mutex__new(cause);
-  f2ptr fibers               = nil;
-  f2ptr frame                = f2__frame__new(cause, nil);
-  f2ptr event_graph_mutex    = f2mutex__new(cause);
-  f2ptr event_graph          = nil;
-  f2ptr this                 = f2cause__new(cause,
-					    fibers_mutex,
-					    fibers,
-					    frame,
-					    allocate_traced_arrays,
-					    bytecode_tracing_on,
-					    memory_tracing_on,
-					    imagination_name,
-					    bytecode_branch_funks,
-					    bytecode_funk_funks,
-					    bytecode_tracer_funks,
-					    bytecode_endfunk_funks,
-					    event_graph_mutex,
-					    event_graph);
+  f2ptr fibers_mutex           = f2mutex__new(cause);
+  f2ptr fibers                 = nil;
+  f2ptr frame                  = f2__frame__new(cause, nil);
+  f2ptr event_graph_mutex      = f2mutex__new(cause);
+  f2ptr event_graph            = nil;
+  f2ptr event_graph_last_event = nil;
+  f2ptr this                   = f2cause__new(cause,
+					      fibers_mutex,
+					      fibers,
+					      frame,
+					      allocate_traced_arrays,
+					      bytecode_tracing_on,
+					      memory_tracing_on,
+					      imagination_name,
+					      bytecode_branch_funks,
+					      bytecode_funk_funks,
+					      bytecode_tracer_funks,
+					      bytecode_endfunk_funks,
+					      event_graph_mutex,
+					      event_graph,
+					      event_graph_last_event);
   //printf("\nnew cause: " u64__fstr ".\n", this); fflush(stdout);
   return this;
 }

@@ -27,7 +27,7 @@
 // cause
 
 typedef struct funk2_object_type__cause__slot_s funk2_object_type__cause__slot_t;
-declare_object_type_13_slot(cause,
+declare_object_type_14_slot(cause,
 			    fibers_mutex,
 			    fibers,
 			    frame,
@@ -41,6 +41,7 @@ declare_object_type_13_slot(cause,
 			    bytecode_endfunk_funks,
 			    event_graph_mutex,
 			    event_graph,
+			    event_graph_last_event,
 			    
 			    f2ptr define__symbol;
 			    f2ptr define__funk;
@@ -66,7 +67,7 @@ declare_object_type_13_slot(cause,
 
 #define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
 
-declare_primobject_13_slot(cause,
+declare_primobject_14_slot(cause,
 			   fibers_mutex,
 			   fibers,
 			   frame,
@@ -79,7 +80,8 @@ declare_primobject_13_slot(cause,
 			   bytecode_tracer_funks,
 			   bytecode_endfunk_funks,
 			   event_graph_mutex,
-			   event_graph
+			   event_graph,
+			   event_graph_last_event
 			   );
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source);

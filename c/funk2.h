@@ -180,6 +180,7 @@ typedef struct funk2_s {
   funk2_surrogate_parent_t            surrogate_parent;
   funk2_graph_t                       graph;
   funk2_xmlrpc_t                      xmlrpc;
+  funk2_trace_t                       trace;
 } funk2_t;
 
 void      funk2__init(   funk2_t* this, int argc, char** argv);

@@ -54,8 +54,9 @@
 f2ptr f2tracenode__find_prev__primobject_of_type(f2ptr tracenode, f2ptr cause, f2ptr type);
 f2ptr f2tracenode__find_next__primobject_of_type(f2ptr tracenode, f2ptr cause, f2ptr type);
 
-
-extern f2ptr __do_not_remember__symbol;
+typedef struct funk2_trace_s {
+  f2ptr do_not_remember__symbol;
+} funk2_trace_t;
 
 f2ptr raw__trace__remember__nanoseconds_since_1970(f2ptr cause, f2ptr this, u64 nanoseconds_since_1970, f2ptr* remember_value);
 f2ptr raw__array__elt__remember__nanoseconds_since_1970(f2ptr cause, f2ptr this, uint index, u64 nanoseconds_since_1970);

@@ -51,6 +51,12 @@ declare_object_type_18_slot(cause,
 			    f2ptr define__funk;
 			    f2ptr define__funk__symbol;
 			    f2ptr define__funk__funk;
+			    f2ptr add_graph_event__funk__symbol;
+			    f2ptr add_graph_event__funk__funk;
+			    f2ptr add_graph_event__endfunk__symbol;
+			    f2ptr add_graph_event__endfunk__funk;
+			    f2ptr add_graph_event__branch__symbol;
+			    f2ptr add_graph_event__branch__funk;
 			    );
 
 // funk_event

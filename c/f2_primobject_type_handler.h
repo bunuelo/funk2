@@ -115,7 +115,6 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__object_lattice_node__slot_t    primobject_type_object_lattice_node;
   funk2_object_type__hash__slot_t                   primobject_type_hash;
   funk2_object_type__cause__slot_t                  primobject_type_cause;
-  funk2_object_type__funk_event__slot_t             primobject_type_funk_event;
   funk2_object_type__graph_node__slot_t             primobject_type_graph_node;
   funk2_object_type__graph_edge__slot_t             primobject_type_graph_edge;
   funk2_object_type__graph_edge_type__slot_t        primobject_type_graph_edge_type;

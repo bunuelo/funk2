@@ -223,72 +223,33 @@ f2ptr f2__cause(f2ptr cause) {
 }
 def_pcfunk0(cause, return f2__cause(this_cause));
 
+f2ptr f2__cause__add_graph_event__funk(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr funk, f2ptr args) {
+  return nil;
+}
+def_pcfunk5(cause__add_graph_event__funk, this, fiber, bytecode, funk, args, return f2__cause__add_graph_event__funk(this_cause, this, fiber, bytecode, funk, args));
+
+f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr value, f2ptr funk) {
+  return nil;
+}
+def_pcfunk5(cause__add_graph_event__endfunk, this, fiber, bytecode, value, funk, return f2__cause__add_graph_event__endfunk(this_cause, this, fiber, bytecode, value, funk));
+
+f2ptr f2__cause__add_graph_event__branch(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr program_counter, f2ptr branch_program_counter, f2ptr value) {
+  return nil;
+}
+def_pcfunk6(cause__add_graph_event__branch, this, fiber, bytecode, program_counter, branch_program_counter, value, return f2__cause__add_graph_event__branch(this_cause, this, fiber, bytecode, program_counter, branch_program_counter, value));
+
 
 f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2cause__primobject_type__new(cause);
-  {char* slot_name = "define";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk);}
-  {char* slot_name = "define-funk"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__funk);}
+  {char* slot_name = "define";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk);}
+  {char* slot_name = "define-funk";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__funk);}
+  {char* slot_name = "add_graph_event-funk";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__funk__funk);}
+  {char* slot_name = "add_graph_event-endfunk"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__endfunk__funk);}
+  {char* slot_name = "add_graph_event-branch";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__branch__funk);}
   return this;
 }
 
 
-f2ptr f2__bytecode_funk_callback__create_and_trace_event(f2ptr cause, f2ptr object_cause, f2ptr fiber, f2ptr bytecode, f2ptr funk, f2ptr args) {
-  f2ptr start_time       = f2__time(cause);
-  f2ptr end_time         = nil;
-  f2ptr funk_bytecode    = bytecode;
-  f2ptr endfunk_bytecode = nil;
-  f2ptr value            = nil;
-  f2ptr funk_event = f2__funk_event__new(cause, object_cause, funk, start_time, end_time, fiber, funk_bytecode, args, endfunk_bytecode, value);
-  if (object_cause) {
-    f2ptr event_trace = f2__cause__event_trace(cause, object_cause);
-    f2ptr doublelink = f2__doublelink__new(cause, event_trace, nil, funk_event);
-    f2__doublelink__next__set(cause, event_trace, doublelink);
-    f2__cause__event_trace__set(cause, object_cause, doublelink);
-  }
-  return nil;
-}
-def_pcfunk5(bytecode_funk_callback__create_and_trace_event, object_cause, fiber, bytecode, funk, args, return f2__bytecode_funk_callback__create_and_trace_event(this_cause, object_cause, fiber, bytecode, funk, args));
-
-f2ptr f2__bytecode_endfunk_callback__finish_and_abstract_event(f2ptr cause, f2ptr object_cause, f2ptr fiber, f2ptr bytecode, f2ptr value, f2ptr funk) {
-  if (object_cause) {
-    f2ptr event_trace = f2__cause__event_trace(cause, object_cause);
-    f2ptr iter = event_trace;
-    while (iter) {
-      f2ptr prev = f2__doublelink__prev(cause, iter);
-      f2ptr funk_event = f2__doublelink__value(cause, iter);
-      f2ptr funk_event__funk = f2__funk_event__funk(cause, funk_event);
-      if (raw__eq(cause, funk, funk_event__funk)) {
-	f2ptr end_time         = f2__time(cause);
-	f2ptr endfunk_bytecode = bytecode;
-	f2__funk_event__end_time__set(        cause, funk_event, end_time);
-	f2__funk_event__endfunk_bytecode__set(cause, funk_event, endfunk_bytecode);
-	f2__funk_event__value__set(           cause, funk_event, value);
-      }
-      iter = prev;
-    }
-  }
-  return nil;
-}
-def_pcfunk5(bytecode_endfunk_callback__finish_and_abstract_event, object_cause, fiber, bytecode, value, funk, return f2__bytecode_endfunk_callback__finish_and_abstract_event(this_cause, object_cause, fiber, bytecode, value, funk));
-
-
-// funk2_event
-
-def_primobject_9_slot(funk_event,
-		      object_cause,
-		      funk,
-		      start_time,
-		      end_time,
-		      fiber,
-		      funk_bytecode,
-		      args,
-		      endfunk_bytecode,
-		      value);
-
-f2ptr f2__funk_event__new(f2ptr cause, f2ptr object_cause, f2ptr funk, f2ptr start_time, f2ptr end_time, f2ptr fiber, f2ptr funk_bytecode, f2ptr args, f2ptr endfunk_bytecode, f2ptr value) {
-  return f2funk_event__new(cause, object_cause, funk, start_time, end_time, fiber, funk_bytecode, args, endfunk_bytecode, value);
-}
-def_pcfunk0(funk_event__new, return f2__funk_event__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil));
 
 
 // **
@@ -329,26 +290,17 @@ void f2__cause__initialize() {
 				event_trace);
   
   {char* symbol_str = "define"; __funk2.globalenv.object_type.primobject.primobject_type_cause.define__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__define, this, var, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__define, this, var, value, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk = never_gc(cfunk);}
   {char* symbol_str = "define-funk"; __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__define__funk, this, var, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__define__funk, this, var, value, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__funk = never_gc(cfunk);}
+  {char* symbol_str = "add_graph_event-funk"; __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__funk__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__5_arg(cause__add_graph_event__funk, this, fiber, bytecode, funk, args, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__funk__funk = never_gc(cfunk);}
+  {char* symbol_str = "add_graph_event-endfunk"; __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__endfunk__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__5_arg(cause__add_graph_event__endfunk, this, fiber, bytecode, value, funk, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__endfunk__funk = never_gc(cfunk);}
+  {char* symbol_str = "add_graph_event-branch"; __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__branch__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__6_arg(cause__add_graph_event__branch, this, fiber, bytecode, program_counter, branch_program_counter, value, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__branch__funk = never_gc(cfunk);}
   
   f2__primcfunk__init__0(cause, "Sets the current cause to be a new cause.  Properties are inherited from the previous cause.");
   
-  f2__primcfunk__init__5(bytecode_funk_callback__create_and_trace_event, object_cause, fiber, bytecode, funk, args, "(cfunk defined in f2_cause.c)");
-  f2__primcfunk__init__5(bytecode_endfunk_callback__finish_and_abstract_event, object_cause, fiber, bytecode, value, funk, "(cfunk defined in f2_cause.c)");
-  
-  // funk_event
-  
-  initialize_primobject_9_slot(funk_event,
-			       object_cause,
-			       funk,
-			       start_time,
-			       end_time,
-			       fiber,
-			       funk_bytecode,
-			       args,
-			       endfunk_bytecode,
-			       value);
 }
 

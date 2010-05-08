@@ -24,7 +24,7 @@
 
 // cause
 
-def_primobject_18_slot(cause,
+def_primobject_19_slot(cause,
 		       fibers_mutex,
 		       fibers,
 		       frame,
@@ -42,6 +42,7 @@ def_primobject_18_slot(cause,
 		       bytecode_funk_funks,
 		       bytecode_tracer_funks,
 		       bytecode_endfunk_funks,
+		       event_graph_mutex,
 		       event_graph);
 
 f2ptr f2__cause__new(f2ptr cause,
@@ -62,7 +63,8 @@ f2ptr f2__cause__new(f2ptr cause,
   f2ptr frame                = f2__frame__new(cause, nil);
   f2ptr subscribers_mutex    = f2mutex__new(cause);
   f2ptr current_events_mutex = f2mutex__new(cause);
-  f2ptr event_graph          = f2__graph__new(cause);
+  f2ptr event_graph_mutex    = f2mutex__new(cause);
+  f2ptr event_graph          = nil;
   f2ptr this                 = f2cause__new(cause,
 					    fibers_mutex,
 					    fibers,
@@ -268,7 +270,7 @@ void f2__cause__initialize() {
   
   // cause
   
-  initialize_primobject_18_slot(cause,
+  initialize_primobject_19_slot(cause,
 				fibers_mutex,
 				fibers,
 				frame,
@@ -286,6 +288,7 @@ void f2__cause__initialize() {
 				bytecode_funk_funks,
 				bytecode_tracer_funks,
 				bytecode_endfunk_funks,
+				event_graph_mutex,
 				event_graph);
   
   {char* symbol_str = "define"; __funk2.globalenv.object_type.primobject.primobject_type_cause.define__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

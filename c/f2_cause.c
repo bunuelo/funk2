@@ -206,9 +206,17 @@ f2ptr f2__cause__get_event_graph__thread_unsafe(f2ptr cause, f2ptr this) {
 f2ptr f2__cause__add_graph_event__funk(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr funk, f2ptr args) {
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
-  f2ptr event_graph = f2__cause__get_event_graph__thread_unsafe(cause, this);
   {
-    //f2ptr event_frame = f2__frame__new(cause);
+    f2ptr event_graph            = f2__cause__get_event_graph__thread_unsafe(cause, this);
+    f2ptr event_graph_last_event = f2__graph__event_graph_last_event(cause, this);
+    f2ptr event_frame            = f2__frame__new(cause);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "event_type"), new__symbol(cause, "funk"));
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "fiber"),      fiber);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "bytecode"),   bytecode);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "funk"),       funk);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "args"),       args);
+    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "happens-after"), event_graph_last_event, event_frame);
+    f2__graph__event_graph_last_event__set(cause, this, event_frame);
   }
   raw__mutex__unlock(cause, event_graph_mutex);
   return nil;
@@ -218,8 +226,18 @@ def_pcfunk5(cause__add_graph_event__funk, this, fiber, bytecode, funk, args, ret
 f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr value, f2ptr funk) {
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
-  f2ptr event_graph = f2__cause__get_event_graph__thread_unsafe(cause, this);
-  
+  {
+    f2ptr event_graph            = f2__cause__get_event_graph__thread_unsafe(cause, this);
+    f2ptr event_graph_last_event = f2__graph__event_graph_last_event(cause, this);
+    f2ptr event_frame            = f2__frame__new(cause);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "event_type"), new__symbol(cause, "endfunk"));
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "fiber"),      fiber);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "bytecode"),   bytecode);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "value"),      value);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "funk"),       funk);
+    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "happens-after"), event_graph_last_event, event_frame);
+    f2__graph__event_graph_last_event__set(cause, this, event_frame);
+  }
   raw__mutex__unlock(cause, event_graph_mutex);
   return nil;
 }
@@ -228,8 +246,19 @@ def_pcfunk5(cause__add_graph_event__endfunk, this, fiber, bytecode, value, funk,
 f2ptr f2__cause__add_graph_event__branch(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr program_counter, f2ptr branch_program_counter, f2ptr value) {
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
-  f2ptr event_graph = f2__cause__get_event_graph__thread_unsafe(cause, this);
-  
+  {
+    f2ptr event_graph            = f2__cause__get_event_graph__thread_unsafe(cause, this);
+    f2ptr event_graph_last_event = f2__graph__event_graph_last_event(cause, this);
+    f2ptr event_frame            = f2__frame__new(cause);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "event_type"),             new__symbol(cause, "branch"));
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "fiber"),                  fiber);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "bytecode"),               bytecode);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "program_counter"),        program_counter);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "branch_program_counter"), branch_program_counter);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "value"),                  value);
+    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "happens-after"), event_graph_last_event, event_frame);
+    f2__graph__event_graph_last_event__set(cause, this, event_frame);
+  }
   raw__mutex__unlock(cause, event_graph_mutex);
   return nil;
 }

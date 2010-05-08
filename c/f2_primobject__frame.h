@@ -143,7 +143,7 @@ f2ptr f2frame__primobject_type__new(f2ptr cause);
                        code;))
 
 #define frame__var__iteration(cause, this, slot_name, slot_value, code) \
-  ptypehash__iteration(cause, f2__frame__type_ptypehash(cause, __funk2.primobject__frame.variable__symbol), slot_name, slot_value, \
+  ptypehash__iteration(cause, f2__ptypehash__lookup(cause, f2frame__type_ptypehash(this, cause), __funk2.primobject__frame.variable__symbol), slot_name, slot_value, \
                        code;)
 
 // **

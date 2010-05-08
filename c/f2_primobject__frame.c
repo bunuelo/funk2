@@ -72,8 +72,25 @@ f2ptr f2frame__new(f2ptr cause) {
   return f2frame__new__raw(cause, f2mutex__new(cause), f2__ptypehash__new(cause));
 }
 
-f2ptr f2__frame__new(f2ptr cause) {return f2frame__new(cause);}
-def_pcfunk0(frame__new, return f2__frame__new(this_cause));
+f2ptr f2__frame__new(f2ptr cause, f2ptr slot_value_pairs) {
+  f2ptr this = f2frame__new(cause);
+  {
+    f2ptr iter = slot_value_pairs;
+    while (iter) {
+      f2ptr key = f2__first(cause, iter);
+      iter = f2__next(cause, iter);
+      if (iter) {
+	iter = f2__next(cause, iter);
+	f2ptr value = f2__first(cause, iter);
+	f2__frame__add_var_value(cause, this, key, value);
+      } else {
+	return f2larva__new(cause, 3, nil);
+      }
+    }
+  }
+  return this;
+}
+def_pcfunk0_and_rest(frame__new, slot_value_pairs, return f2__frame__new(this_cause, slot_value_pairs));
 
 boolean_t raw__frame__is_type(f2ptr cause, f2ptr x) {return (raw__primobject__is_type(cause, x) && f2primobject__is_frame(x, cause));}
 f2ptr f2__frame__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__frame__is_type(cause, x));}

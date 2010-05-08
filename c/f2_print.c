@@ -1028,7 +1028,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 				   int subexp_size[2];
 				   f2__write_pretty(cause, fiber, nil, type_ptypehash__key, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode);
 				   int exp_width  = subexp_size[0];
-				   int exp_height = subexp_size[1];
+				   //int exp_height = subexp_size[1];
 				   type_key__length = exp_width;
 				 }
 				 
@@ -1054,7 +1054,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 							int subexp_size[2];
 							f2__write_pretty(cause, fiber, nil, slot_name, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode);
 							int exp_width  = subexp_size[0];
-							int exp_height = subexp_size[1];
+							//int exp_height = subexp_size[1];
 							slot_name__length = exp_width;
 						      }
 						      
@@ -1087,7 +1087,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 				   int subexp_size[2];
 				   f2__write_pretty(cause, fiber, nil, type_keyvalue_pair__key, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode);
 				   int exp_width  = subexp_size[0];
-				   int exp_height = subexp_size[1];
+				   //int exp_height = subexp_size[1];
 				   type_key__length = exp_width;
 				 }
 				 
@@ -1102,7 +1102,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 							int subexp_size[2];
 							f2__write_pretty(cause, fiber, nil, keyvalue_pair__key, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode);
 							int exp_width  = subexp_size[0];
-							int exp_height = subexp_size[1];
+							//int exp_height = subexp_size[1];
 							key__length = exp_width;
 						      }
 						      

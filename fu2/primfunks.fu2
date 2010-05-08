@@ -237,9 +237,6 @@
 
 `[globalize-funk larva                                       &primfunk:larva]
 
-[globalize-funk event_subscriber                            &primfunk:event_subscriber]
-[globalize-funk subscribe                                   &primfunk:subscribe]
-
 `[globalize-funk fiber-subversion_cause                     &primfunk:fiber__subversion_cause]
 
 [globalize-funk first                                       &primfunk:first]

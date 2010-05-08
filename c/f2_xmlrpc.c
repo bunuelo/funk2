@@ -278,6 +278,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
   }
   case XMLRPC_TYPE_STRUCT: { // vector struct
     int struct__size = xmlrpc_struct_size(env, value);
+    printf("\nstruct__size = %d", struct__size);
     f2ptr new_frame = f2__frame__new(cause);
     {
       int index;
@@ -342,8 +343,7 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
   
   xmlrpc_client_setup_global_const(&env);
   
-  xmlrpc_client_create(&env, XMLRPC_CLIENT_NO_FLAGS, "Funk2 XML-RPC Client", "2.11.0", NULL, 0,
-		       &clientP);
+  xmlrpc_client_create(&env, XMLRPC_CLIENT_NO_FLAGS, "Funk2 XML-RPC Client", "2.11.0", NULL, 0, &clientP);
   if (env.fault_occurred) {
     xmlrpc_print_fault_status(&env);
   } else {

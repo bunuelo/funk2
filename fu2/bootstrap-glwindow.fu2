@@ -19,9 +19,18 @@
  rights to redistribute these changes.
 '
 
-[defunk glwindow-add_physical_object [physical_object]
-  [set glwindow_value physical_objects [cons physical_object [get glwindow_value physical_objects]]]
-  nil]
+[defunk glwindow-display_in_serial_with_params [title width height depth fullscreen]
+  [if [not [glwindow-supported]]
+      [error `run-time `[glwindow not-supported]]]
+  [set glwindow_value physical_things nil]
+  [glwindow-create title width height depth fullscreen]
+  [while [not [glwindow-handle_events]]
+    [microsleep 100000]]
+  [glwindow-destroy]]
+
+[defunk glwindow-display []
+  [fiber [funk [] [glwindow-display_in_serial_with_params 'Funk2 Display' 640 480 24 nil]] nil]]
+
 
 
 

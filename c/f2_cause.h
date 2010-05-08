@@ -27,7 +27,7 @@
 // cause
 
 typedef struct funk2_object_type__cause__slot_s funk2_object_type__cause__slot_t;
-declare_object_type_19_slot(cause,
+declare_object_type_17_slot(cause,
 			    fibers_mutex,
 			    fibers,
 			    frame,
@@ -39,8 +39,6 @@ declare_object_type_19_slot(cause,
 			    imagination_stack,
 			    event_buffer_first,
 			    event_buffer_last,
-			    current_events_mutex,
-			    current_events,
 			    bytecode_branch_funks,
 			    bytecode_funk_funks,
 			    bytecode_tracer_funks,
@@ -72,7 +70,7 @@ declare_object_type_19_slot(cause,
 
 #define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
 
-declare_primobject_19_slot(cause,
+declare_primobject_17_slot(cause,
 			   fibers_mutex,
 			   fibers,
 			   frame,
@@ -84,8 +82,6 @@ declare_primobject_19_slot(cause,
 			   imagination_stack,
 			   event_buffer_first,
 			   event_buffer_last,
-			   current_events_mutex,
-			   current_events,
 			   bytecode_branch_funks,
 			   bytecode_funk_funks,
 			   bytecode_tracer_funks,

@@ -872,14 +872,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	      {f2__write_pretty__slot_key_and_value("imagination_stack",      22, cause, fiber, stream, f2cause__imagination_stack(exp, cause),    f2cause__imagination_stack__tracing_on(exp, cause), f2cause__imagination_stack__trace(exp, cause), f2cause__imagination_stack__imagination_frame(exp, cause),
 						    ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	      if (! brief_mode) {
-		if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-		{f2__write_pretty__slot_key_and_value("current_events_mutex",   22, cause, fiber, stream, f2cause__current_events_mutex(exp, cause),    f2cause__current_events_mutex__tracing_on(exp, cause), f2cause__current_events_mutex__trace(exp, cause), f2cause__current_events_mutex__imagination_frame(exp, cause),
-						      ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-		if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-		{f2__write_pretty__slot_key_and_value("current_events",       22, cause, fiber, stream, f2cause__current_events(exp, cause),    f2cause__current_events__tracing_on(exp, cause), f2cause__current_events__trace(exp, cause), f2cause__current_events__imagination_frame(exp, cause),
-						      ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	      }
 	      //bytecode_branch_funks,
 	      //bytecode_funk_funks,
 	      //bytecode_tracer_funks,

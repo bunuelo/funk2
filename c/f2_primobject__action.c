@@ -81,10 +81,6 @@ f2ptr f2__action__begin(f2ptr cause, f2ptr this) {
       return f2larva__new(cause, 1, nil);
     }
     f2ptr action_event         = f2action_event__new(cause, this, time, nil);
-    f2ptr current_events_mutex = f2cause__current_events_mutex(cause, cause);
-    f2mutex__lock(current_events_mutex, cause);
-    f2cause__current_events__set(cause, cause, f2cons__new(cause, action_event, f2cause__current_events(cause, cause)));
-    f2mutex__unlock(current_events_mutex, cause);
   }
   return nil;
 }
@@ -98,27 +94,6 @@ f2ptr f2__action__end(f2ptr cause, f2ptr this) {
     }
     f2ptr finished_action_event = nil;
     {
-      f2ptr current_events_mutex = f2cause__current_events_mutex(cause, cause);
-      f2mutex__lock(current_events_mutex, cause);
-      f2ptr current_events_prev = nil;
-      f2ptr current_events_iter = f2cause__current_events(cause, cause);
-      while (current_events_iter) {
-	f2ptr action_event = f2cons__car(current_events_iter, cause);
-	f2ptr action       = f2action_event__action(action_event, cause);
-	if (action == this) {
-	  if (current_events_prev) {
-	    f2cons__cdr__set(current_events_prev, cause, f2cons__cdr(current_events_iter, cause));
-	  } else {
-	    f2cause__current_events__set(cause, cause, f2cons__cdr(current_events_iter, cause));
-	  }
-	  f2action_event__end_time__set(action_event, cause, time);
-	  finished_action_event = action_event;
-	  break;
-	}
-	current_events_prev = current_events_iter;
-	current_events_iter = f2cons__cdr(current_events_iter, cause);
-      }
-      f2mutex__unlock(current_events_mutex, cause);
     }
     {
       f2ptr success_events_mutex = f2action__success_events_mutex(this, cause);

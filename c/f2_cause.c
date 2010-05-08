@@ -208,7 +208,7 @@ f2ptr f2__cause__add_graph_event__funk(f2ptr cause, f2ptr this, f2ptr fiber, f2p
   raw__mutex__lock(cause, event_graph_mutex);
   {
     f2ptr event_graph            = f2__cause__get_event_graph__thread_unsafe(cause, this);
-    f2ptr event_graph_last_event = f2__graph__event_graph_last_event(cause, this);
+    f2ptr event_graph_last_event = f2__cause__event_graph_last_event(cause, this);
     f2ptr event_frame            = f2__frame__new(cause);
     f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "event_type"), new__symbol(cause, "funk"));
     f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "fiber"),      fiber);
@@ -228,7 +228,7 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
   raw__mutex__lock(cause, event_graph_mutex);
   {
     f2ptr event_graph            = f2__cause__get_event_graph__thread_unsafe(cause, this);
-    f2ptr event_graph_last_event = f2__graph__event_graph_last_event(cause, this);
+    f2ptr event_graph_last_event = f2__cause__event_graph_last_event(cause, this);
     f2ptr event_frame            = f2__frame__new(cause);
     f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "event_type"), new__symbol(cause, "endfunk"));
     f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "fiber"),      fiber);
@@ -248,7 +248,7 @@ f2ptr f2__cause__add_graph_event__branch(f2ptr cause, f2ptr this, f2ptr fiber, f
   raw__mutex__lock(cause, event_graph_mutex);
   {
     f2ptr event_graph            = f2__cause__get_event_graph__thread_unsafe(cause, this);
-    f2ptr event_graph_last_event = f2__graph__event_graph_last_event(cause, this);
+    f2ptr event_graph_last_event = f2__cause__event_graph_last_event(cause, this);
     f2ptr event_frame            = f2__frame__new(cause);
     f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "event_type"),             new__symbol(cause, "branch"));
     f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "fiber"),                  fiber);

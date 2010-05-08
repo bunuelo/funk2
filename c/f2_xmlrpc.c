@@ -278,7 +278,6 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
   }
   case XMLRPC_TYPE_STRUCT: { // vector struct
     int struct__size = xmlrpc_struct_size(env, value);
-    printf("\nstruct__size = %d", struct__size);
     f2ptr new_frame = f2__frame__new(cause);
     {
       int index;
@@ -295,7 +294,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
 	  return new_value;
 	}
 	if (raw__string__is_type(cause, new_key)) {
-	  new_key = f2__colonize(cause, raw__string__as__symbol(cause, new_key));
+	  new_key = raw__string__as__symbol(cause, new_key);
 	}
 	f2__frame__add_var_value(cause, new_frame, new_key, new_value);
       }

@@ -53,7 +53,6 @@ void f2__initialize() {
   // **********************************************************************************************************************************************************************************
   
   f2__primobjects__initialize();
-  f2__primobject__action__initialize();
   f2__primobject_tensor__initialize();
   f2__primobject_object__initialize();
   f2__primobject_object_type__initialize();

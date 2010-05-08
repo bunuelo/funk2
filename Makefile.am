@@ -257,7 +257,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_physical_objects.c \
   c/f2_primes.c \
   c/f2_primobjects.c \
-  c/f2_primobject__action.c \
   c/f2_primobject__boolean.c \
   c/f2_primobject__char_pointer.c \
   c/f2_primobject__circular_buffer.c \

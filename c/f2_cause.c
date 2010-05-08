@@ -24,7 +24,7 @@
 
 // cause
 
-def_primobject_13_slot(cause,
+def_primobject_14_slot(cause,
 		       fibers_mutex,
 		       fibers,
 		       frame,
@@ -37,7 +37,8 @@ def_primobject_13_slot(cause,
 		       bytecode_tracer_funks,
 		       bytecode_endfunk_funks,
 		       event_graph_mutex,
-		       event_graph);
+		       event_graph,
+		       event_graph_last_event);
 
 f2ptr f2__cause__new(f2ptr cause,
 		     f2ptr allocate_traced_arrays,
@@ -264,7 +265,7 @@ void f2__cause__initialize() {
   
   // cause
   
-  initialize_primobject_13_slot(cause,
+  initialize_primobject_14_slot(cause,
 				fibers_mutex,
 				fibers,
 				frame,
@@ -277,7 +278,8 @@ void f2__cause__initialize() {
 				bytecode_tracer_funks,
 				bytecode_endfunk_funks,
 				event_graph_mutex,
-				event_graph);
+				event_graph,
+				event_graph_last_event);
   
   {char* symbol_str = "define"; __funk2.globalenv.object_type.primobject.primobject_type_cause.define__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__define, this, var, value, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk = never_gc(cfunk);}

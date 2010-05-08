@@ -1570,8 +1570,7 @@ int raw__cause__call_all_endfunks(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr by
 	  f2ptr bytecode_endfunk_funks_next = f2cons__cdr(bytecode_endfunk_funks_iter, cause);
 	  f2ptr bytecode_endfunk_funk       = f2cons__car(bytecode_endfunk_funks_iter, cause);
 	  {
-	    f2ptr reflective_cause = nil;
-	    f2ptr reflective_value = f2__bytecode_endfunk_funk__call_with_event(reflective_cause, bytecode_endfunk_funk, cause, fiber, bytecode, value, funk);
+	    f2ptr reflective_value = f2__bytecode_endfunk_funk__call_with_event(cause, bytecode_endfunk_funk, this, fiber, bytecode, value, funk);
 	    if (raw__larva__is_type(cause, reflective_value)) {
 	      f2fiber__value__set(fiber, cause, reflective_value);
 	      return 1;

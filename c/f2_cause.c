@@ -83,6 +83,7 @@ f2ptr f2__cause__new(f2ptr cause,
 					    bytecode_funk_funks,
 					    bytecode_tracer_funks,
 					    bytecode_endfunk_funks,
+					    event_graph_mutex,
 					    event_graph);
   //printf("\nnew cause: " u64__fstr ".\n", this); fflush(stdout);
   return this;

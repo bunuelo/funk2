@@ -710,6 +710,9 @@ f2ptr f2__elt(f2ptr cause, f2ptr this, f2ptr index) {
 }
 
 f2ptr f2__reverse(f2ptr cause, f2ptr this) {
+  if (this == nil) {
+    return this;
+  }
   if (raw__cons__is_type(cause, this)) {
     f2ptr new_seq = nil;
     f2ptr iter    = this;

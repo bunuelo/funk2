@@ -169,7 +169,7 @@ f2ptr f2__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
 }
 def_pcfunk2(ptypehash__remove, this, key, return f2__ptypehash__remove(this_cause, this, key));
 
-f2ptr f2__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
+f2ptr raw__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__lookup_keyvalue_pair assert failed: f2__ptypehash__valid(this)");
   //status("ptypehash (" u64__fstr ") attempting to lock write mutex.", this);
   f2mutex__lock(f2ptypehash__write_mutex(this, cause), cause);
@@ -195,7 +195,14 @@ f2ptr f2__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   return nil;
 }
 
-f2ptr f2__ptypehash__lookup(f2ptr cause, f2ptr this, f2ptr key) {
+f2ptr f2__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
+  if (! raw__ptypehash__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__ptypehash__lookup_keyvalue_pair(cause, this, key);
+}
+
+f2ptr raw__ptypehash__lookup(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__lookup assert failed: f2__ptypehash__valid(this)");
   f2ptr keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, this, key);
   if (keyvalue_pair) {
@@ -203,6 +210,13 @@ f2ptr f2__ptypehash__lookup(f2ptr cause, f2ptr this, f2ptr key) {
     return retval;
   }
   return nil;
+}
+
+f2ptr f2__ptypehash__lookup(f2ptr cause, f2ptr this, f2ptr key) {
+  if (! raw__ptypehash__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__ptypehash__lookup(cause, this, key);
 }
 def_pcfunk2(ptypehash__lookup, this, slot_name, return f2__ptypehash__lookup(this_cause, this, slot_name));
 

@@ -55,7 +55,9 @@ f2ptr     raw__ptypehash__add                       (f2ptr cause, f2ptr this, f2
 f2ptr      f2__ptypehash__add                       (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
 boolean_t raw__ptypehash__remove                    (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__ptypehash__remove                    (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr     raw__ptypehash__lookup_keyvalue_pair      (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__ptypehash__lookup_keyvalue_pair      (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr     raw__ptypehash__lookup                    (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__ptypehash__lookup                    (f2ptr cause, f2ptr this, f2ptr key);
 boolean_t raw__ptypehash__contains                  (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this);

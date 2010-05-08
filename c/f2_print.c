@@ -1152,7 +1152,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 							f2__write_pretty(cause, fiber, stream, keyvalue_pair__key, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 							if (! try_wide) {
 							  int i;
-							  for (i = key__length; i <= max_slot_name_length; i ++) {
+							  for (i = key__length; i < max_slot_name_length; i ++) {
 							    f2__write__space(cause, stream, use_html); width ++;
 							  }
 							}

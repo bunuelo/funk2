@@ -1645,16 +1645,51 @@ def_pcfunk1(mutex__type, x, return f2__mutex__type(this_cause, x));
 f2ptr f2__mutex__new(f2ptr cause) {return f2mutex__new(cause);}
 def_pcfunk0(mutex__new, return f2__mutex__new(this_cause));
 
-f2ptr f2__mutex__is_locked(f2ptr cause, f2ptr x) {f2mutex__is_locked(x, cause); return nil;}
+boolean_t raw__mutex__is_locked(f2ptr cause, f2ptr this) {
+  return f2mutex__is_locked(this, cause);
+}
+
+f2ptr f2__mutex__is_locked(f2ptr cause, f2ptr this) {
+  if (! raw__mutex__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2bool__new(raw__mutex__is_locked(cause, this));
+}
 def_pcfunk1(mutex__is_locked, this, return f2__mutex__is_locked(this_cause, this));
 
-f2ptr f2__mutex__lock(f2ptr cause, f2ptr x) {f2mutex__lock(x, cause); return nil;}
+void raw__mutex__lock(f2ptr cause, f2ptr this) {
+  f2mutex__lock(this, cause);
+}
+
+f2ptr f2__mutex__lock(f2ptr cause, f2ptr this) {
+  if (raw__mutex__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__mutex__lock(cause, this);
+  return nil;
+}
 def_pcfunk1(mutex__lock, this, return f2__mutex__lock(this_cause, this));
 
-f2ptr f2__mutex__unlock(f2ptr cause, f2ptr x) {f2mutex__unlock(x, cause); return nil;}
+void raw__mutex__unlock(f2ptr cause, f2ptr this) {
+  f2mutex__unlock(this, cause);
+}
+
+f2ptr f2__mutex__unlock(f2ptr cause, f2ptr this) {
+  if (! raw__mutex__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__mutex__unlock(cause, this);
+  return nil;
+}
 def_pcfunk1(mutex__unlock, this, return f2__mutex__unlock(this_cause, this));
 
-f2ptr f2__mutex__trylock(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2mutex__trylock(x, cause));}
+boolean_t raw__mutex__trylock(f2ptr cause, f2ptr this) {
+  return (f2mutex__trylock(this, cause) != 0) ? boolean__true : boolean__false;
+}
+
+f2ptr f2__mutex__trylock(f2ptr cause, f2ptr this) {
+  return f2bool__new(raw__mutex__trylock(cause, this));
+}
 def_pcfunk1(mutex__trylock, this, return f2__mutex__trylock(this_cause, this));
 
 boolean_t raw__mutex__eq(f2ptr cause, f2ptr this, f2ptr that) {

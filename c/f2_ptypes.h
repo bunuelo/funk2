@@ -242,10 +242,14 @@ int              pfunk2__f2mutex__trylock(f2ptr this, f2ptr cause);
 
 f2ptr f2mutex__primobject_type__new(f2ptr cause);
 
-//f2ptr  f2__mutex(f2ptr cause);
-f2ptr  f2__mutex__lock(f2ptr cause, f2ptr x);
-f2ptr  f2__mutex__unlock(f2ptr cause, f2ptr x);
-f2ptr  f2__mutex__trylock(f2ptr cause, f2ptr x);
+boolean_t raw__mutex__is_locked(f2ptr cause, f2ptr this);
+f2ptr      f2__mutex__is_locked(f2ptr cause, f2ptr this);
+void      raw__mutex__lock(f2ptr cause, f2ptr this);
+f2ptr      f2__mutex__lock(f2ptr cause, f2ptr this);
+void      raw__mutex__unlock(f2ptr cause, f2ptr this);
+f2ptr      f2__mutex__unlock(f2ptr cause, f2ptr this);
+boolean_t raw__mutex__trylock(f2ptr cause, f2ptr this);
+f2ptr      f2__mutex__trylock(f2ptr cause, f2ptr this);
 
 boolean_t raw__mutex__is_type(f2ptr cause, f2ptr exp);
 f2ptr      f2__mutex__is_type(f2ptr cause, f2ptr exp);

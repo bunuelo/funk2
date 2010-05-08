@@ -137,5 +137,25 @@
   [fiber &start-tracers nil]
   []]
 
+[defunk start-fast_tracers []
+  [let [[funks [get [this-cause] bytecode_funk_funks]]]
+    [set [this-cause] bytecode_funk_funks [cons [object-execute-funk [this-cause] `add_graph_event-funk]
+						funks]]
+    ]
+  [let [[funks [get [this-cause] bytecode_endfunk_funks]]]
+    [set [this-cause] bytecode_endfunk_funks [cons [object-execute-funk [this-cause] `add_graph_event-endfunk]
+						   funks]]
+    nil]
+  [let [[funks [get [this-cause] bytecode_branch_funks]]]
+    [set [this-cause] bytecode_branch_funks [cons [object-execute-funk [this-cause] `add_graph_event-branch]
+						  funks]]
+    nil]
+  nil]
+
+[defunk test-fast_tracers []
+  [fiber &start-fast_tracers nil]
+  nil]
+
+
 
 

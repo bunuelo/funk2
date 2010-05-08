@@ -282,8 +282,12 @@
 [defmetro execute-apply [exp slot_name args]
   `[object-execute ,exp [quote ,slot_name] [conslist @args]]]
 
-[globalize-funk have       &execute]
-[globalize-funk have-apply &execute-apply]
+[defmetro have [this slot_name :rest args]
+  `[execute ,this ,slot_name ,this @args]]
+
+[defmetro have-apply [this slot_name args]
+  `[execute-apply ,this ,slot_name ,this [conslist @args]]]
+
 
 [globalize-funk type &object-type]
 

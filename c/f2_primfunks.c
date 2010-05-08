@@ -1902,7 +1902,6 @@ void f2__primcfunks__initialize() {
   
   f2__funktional_primcfunk__init(larva, "");
   
-  f2__primcfunk__init(publish_event, "");
   f2__primcfunk__init(event_subscriber, "");
   f2__primcfunk__init(subscribe, "");
   

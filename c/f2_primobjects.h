@@ -1473,7 +1473,7 @@ declare_object_type_11_slot(processor, scheduler, processor_thread, active_fiber
 
 // scheduler
 
-declare_object_type_5_slot(scheduler, processors, );
+declare_object_type_1_slot(scheduler, processors, );
 
 // transframe
 

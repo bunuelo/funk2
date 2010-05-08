@@ -23,7 +23,9 @@
   [set this xmlrpc_client [new xmlrpc_client xmlrpc_url]]
   this]
 
-[deftypefunk isis_world_client call [:rest args] [have-apply [get this xmlrpc_client] call args]]
+[deftypefunk isis_world_client execute call [:rest args] [have-apply [get this xmlrpc_client] call args]]
+
+'isis_world specific funks below.'
 
 [deftypefunk isis_world_client execute sense                   []                   [have this call `do `sense]]
 [deftypefunk isis_world_client execute turn_left-start         []                   [have this call `do `turn_left-start]]

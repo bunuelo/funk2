@@ -215,15 +215,14 @@ f2ptr f2__cause__add_graph_event__funk(f2ptr cause, f2ptr this, f2ptr fiber, f2p
   {
     f2ptr event_graph            = f2__cause__get_event_graph__thread_unsafe(cause, this);
     f2ptr event_graph_last_event = f2__cause__event_graph_last_event(cause, this);
-    f2ptr event_gensym           = f2__gensym(cause);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "type"),       event_gensym, new__symbol(cause, "event"));
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "event_type"), event_gensym, new__symbol(cause, "funk"));
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "fiber"),      event_gensym, fiber);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "bytecode"),   event_gensym, bytecode);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "funk"),       event_gensym, funk);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "args"),       event_gensym, args);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, event_gensym);
-    f2__cause__event_graph_last_event__set(cause, this, event_gensym);
+    f2ptr event_frame            = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "event_type"), new__symbol(cause, "funk"));
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "fiber"),      fiber);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "bytecode"),   bytecode);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "funk"),       funk);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "args"),       args);
+    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, event_frame);
+    f2__cause__event_graph_last_event__set(cause, this, event_frame);
   }
   raw__mutex__unlock(cause, event_graph_mutex);
   return nil;
@@ -239,15 +238,14 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
   {
     f2ptr event_graph            = f2__cause__get_event_graph__thread_unsafe(cause, this);
     f2ptr event_graph_last_event = f2__cause__event_graph_last_event(cause, this);
-    f2ptr event_gensym           = f2__gensym(cause);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "type"),       event_gensym, new__symbol(cause, "event"));
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "event_type"), event_gensym, new__symbol(cause, "endfunk"));
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "fiber"),      event_gensym, fiber);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "bytecode"),   event_gensym, bytecode);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "value"),      event_gensym, value);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "funk"),       event_gensym, funk);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, event_gensym);
-    f2__cause__event_graph_last_event__set(cause, this, event_gensym);
+    f2ptr event_frame            = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "event_type"), new__symbol(cause, "endfunk"));
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "fiber"),      fiber);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "bytecode"),   bytecode);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "value"),      value);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "funk"),       funk);
+    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, event_frame);
+    f2__cause__event_graph_last_event__set(cause, this, event_frame);
   }
   raw__mutex__unlock(cause, event_graph_mutex);
   return nil;
@@ -263,16 +261,15 @@ f2ptr f2__cause__add_graph_event__branch(f2ptr cause, f2ptr this, f2ptr fiber, f
   {
     f2ptr event_graph            = f2__cause__get_event_graph__thread_unsafe(cause, this);
     f2ptr event_graph_last_event = f2__cause__event_graph_last_event(cause, this);
-    f2ptr event_gensym           = f2__gensym(cause);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "type"),                   event_gensym, new__symbol(cause, "event"));
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "event_type"),             event_gensym, new__symbol(cause, "branch"));
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "fiber"),                  event_gensym, fiber);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "bytecode"),               event_gensym, bytecode);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "program_counter"),        event_gensym, program_counter);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "branch_program_counter"), event_gensym, branch_program_counter);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "value"),                  event_gensym, value);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, event_gensym);
-    f2__cause__event_graph_last_event__set(cause, this, event_gensym);
+    f2ptr event_frame            = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "event_type"),             new__symbol(cause, "branch"));
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "fiber"),                  fiber);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "bytecode"),               bytecode);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "program_counter"),        program_counter);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "branch_program_counter"), branch_program_counter);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "value"),                  value);
+    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, event_frame);
+    f2__cause__event_graph_last_event__set(cause, this, event_frame);
   }
   raw__mutex__unlock(cause, event_graph_mutex);
   return nil;

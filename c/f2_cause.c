@@ -257,7 +257,6 @@ f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
 void f2__cause__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   __cause__symbol      = new__symbol(cause, "cause");
-  __funk_event__symbol = new__symbol(cause, "funk_event");
 }
 
 void f2__cause__initialize() {

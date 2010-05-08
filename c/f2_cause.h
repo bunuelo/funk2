@@ -59,21 +59,6 @@ declare_object_type_18_slot(cause,
 			    f2ptr add_graph_event__branch__funk;
 			    );
 
-// funk_event
-
-typedef struct funk2_object_type__funk_event__slot_s funk2_object_type__funk_event__slot_t;
-declare_object_type_9_slot(funk_event,
-			   object_cause,
-			   funk,
-			   start_time,
-			   end_time,
-			   fiber,
-			   funk_bytecode,
-			   args,
-			   endfunk_bytecode,
-			   value,
-			   );
-
 #endif // F2__CAUSE__TYPES__H
 
 
@@ -118,22 +103,6 @@ void  raw__cause__event_buffer__add(f2ptr cause, f2ptr event);
 f2ptr  f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
 
 f2ptr f2cause__primobject_type__new_aux(f2ptr cause);
-
-// funk_event
-
-declare_primobject_9_slot(funk_event,
-			  object_cause,
-			  funk,
-			  start_time,
-			  end_time,
-			  fiber,
-			  funk_bytecode,
-			  args,
-			  endfunk_bytecode,
-			  value
-			  );
-
-f2ptr f2__funk_event__new(f2ptr cause, f2ptr object_cause, f2ptr funk, f2ptr start_time, f2ptr end_time, f2ptr fiber, f2ptr funk_bytecode, f2ptr args, f2ptr endfunk_bytecode, f2ptr value);
 
 // **
 

@@ -195,6 +195,9 @@ f2ptr f2__cause(f2ptr cause) {
 def_pcfunk0(cause, return f2__cause(this_cause));
 
 f2ptr f2__cause__get_event_graph__thread_unsafe(f2ptr cause, f2ptr this) {
+  if (cause == nil) {
+    return f2larva__new(cause, 1, nil);
+  }
   f2ptr event_graph = f2__cause__event_graph(cause, this);
   if (event_graph == nil) {
     event_graph = f2__graph__new(cause);
@@ -204,6 +207,9 @@ f2ptr f2__cause__get_event_graph__thread_unsafe(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__cause__add_graph_event__funk(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr funk, f2ptr args) {
+  if (cause == nil) {
+    return nil;
+  }
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
   {
@@ -224,6 +230,9 @@ f2ptr f2__cause__add_graph_event__funk(f2ptr cause, f2ptr this, f2ptr fiber, f2p
 def_pcfunk5(cause__add_graph_event__funk, this, fiber, bytecode, funk, args, return f2__cause__add_graph_event__funk(this_cause, this, fiber, bytecode, funk, args));
 
 f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr value, f2ptr funk) {
+  if (cause == nil) {
+    return nil;
+  }
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
   {
@@ -244,6 +253,9 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
 def_pcfunk5(cause__add_graph_event__endfunk, this, fiber, bytecode, value, funk, return f2__cause__add_graph_event__endfunk(this_cause, this, fiber, bytecode, value, funk));
 
 f2ptr f2__cause__add_graph_event__branch(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr program_counter, f2ptr branch_program_counter, f2ptr value) {
+  if (cause == nil) {
+    return nil;
+  }
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
   {

@@ -245,7 +245,7 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
     f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "value"),      value);
     f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "funk"),       funk);
     f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, event_frame);
-    f2ptr and_then__symbol = new__symbol(cause, "and-then")
+    f2ptr and_then__symbol = new__symbol(cause, "and-then");
     {
       f2ptr iter = event_graph_last_event;
       while (iter) {

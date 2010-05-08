@@ -667,6 +667,37 @@ boolean_t raw__graph__is_rooted(f2ptr cause, f2ptr this) {
   return (f2__graph__root_node(cause, this) != nil);
 }
 
+
+f2ptr raw__graph__right_node__an_arbitrary_left_node(f2ptr cause, f2ptr this, f2ptr right_node_label, f2ptr edge_label) {
+  f2ptr node_label_hash                = f2__graph__node_label_hash(cause, this);
+  f2ptr right_node                     = raw__ptypehash__lookup(cause, node_label_hash, right_node_label);
+  f2ptr edges_left_node_hash_edge_hash = f2__graph_node__edges_left_node_hash_edge_hash(cause, right_node);
+  f2ptr edges_left_node_hash           = raw__ptypehash__lookup(cause, edges_left_node_hash_edge_hash, edge_label);
+  return f2__ptypehash__an_arbitrary_key(cause, edges_left_node_hash);
+}
+
+f2ptr f2__graph__right_node__an_arbitrary_left_node(f2ptr cause, f2ptr this, f2ptr right_node_label, f2ptr edge_label) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__right_node__an_arbitrary_left_node(cause, this, right_node_label, edge_label);
+}
+
+f2ptr raw__graph__left_node__an_arbitrary_right_node(f2ptr cause, f2ptr this, f2ptr left_node_label, f2ptr edge_label) {
+  f2ptr node_label_hash                 = f2__graph__node_label_hash(cause, this);
+  f2ptr left_node                       = raw__ptypehash__lookup(cause, node_label_hash, left_node_label);
+  f2ptr edges_right_node_hash_edge_hash = f2__graph_node__edges_right_node_hash_edge_hash(cause, left_node);
+  f2ptr edges_right_node_hash           = raw__ptypehash__lookup(cause, edges_right_node_hash_edge_hash, edge_label);
+  return f2__ptypehash__an_arbitrary_key(cause, edges_right_node_hash);
+}
+
+f2ptr f2__graph__left_node__an_arbitrary_right_node(f2ptr cause, f2ptr this, f2ptr left_node_label, f2ptr edge_label) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__left_node__an_arbitrary_right_node(cause, this, left_node_label, edge_label);
+}
+
 // rooted graph
 
 boolean_t raw__rooted_graph__is_type(f2ptr cause, f2ptr this) {
@@ -746,6 +777,7 @@ f2ptr f2__rooted_graph__as__frame(f2ptr cause, f2ptr this) {
   return raw__rooted_graph__as__frame(cause, this);
 }
 def_pcfunk1(rooted_graph__as__frame, this, return f2__rooted_graph__as__frame(this_cause, this));
+
 
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2graph__primobject_type__new(cause);

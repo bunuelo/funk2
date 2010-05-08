@@ -40,7 +40,7 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
     return f2larva__new(cause, 1, nil);
   }
   
-  f2ptr match_frame = f2__frame__new(cause);
+  f2ptr match_frame = f2__frame__new(cause, nil);
   f2ptr frame       = f2environment__frame(this, cause);
   
   frame__iteration(cause, frame, type_slot_name, slot_name, slot_value,

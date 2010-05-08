@@ -85,6 +85,7 @@ f2ptr f2__frame__new(f2ptr cause, f2ptr slot_value_pairs) {
       } else {
 	return f2larva__new(cause, 3, nil);
       }
+      iter = f2__next(cause, iter);
     }
   }
   return this;

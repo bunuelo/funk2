@@ -29,9 +29,6 @@
 	[[is-type `cons   this] [second this]]
 	[t                      [error `deframe `[compound-slotdef-value ,this]]]]]
 
-[defmetro have [this slot_name :rest args]
-  `[execute ,this ,slot_name ,this @args]]
-
 [defunk type-has_parent [type_name parent_name]
   [primobject_type-is_type_or_has_parent_type [lookup_type type_name] parent_name]]
 

@@ -267,11 +267,23 @@
 [defmetro get [exp slot_name :rest args]
   `[object-get ,exp [quote ,slot_name] @args]]
 
+[defmetro get-apply [exp slot_name args]
+  `[object-get ,exp [quote ,slot_name] [conslist @args]]]
+
 [defmetro set [exp slot_name :rest value_args]
   `[object-set ,exp [quote ,slot_name] @value_args]]
 
+[defmetro set-apply [exp slot_name value_args]
+  `[object-set ,exp [quote ,slot_name] [conslist @value_args]]]
+
 [defmetro execute [exp slot_name :rest args]
   `[object-execute ,exp [quote ,slot_name] @args]]
+
+[defmetro execute-apply [exp slot_name args]
+  `[object-execute ,exp [quote ,slot_name] [conslist @args]]]
+
+[globalize-funk have       &execute]
+[globalize-funk have-apply &execute-apply]
 
 [globalize-funk type &object-type]
 

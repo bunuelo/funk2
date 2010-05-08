@@ -24,7 +24,7 @@
 
 // cause
 
-def_primobject_17_slot(cause,
+def_primobject_15_slot(cause,
 		       fibers_mutex,
 		       fibers,
 		       frame,
@@ -34,8 +34,6 @@ def_primobject_17_slot(cause,
 		       subscribers_mutex,
 		       subscribers,
 		       imagination_stack,
-		       event_buffer_first,
-		       event_buffer_last,
 		       bytecode_branch_funks,
 		       bytecode_funk_funks,
 		       bytecode_tracer_funks,
@@ -49,8 +47,6 @@ f2ptr f2__cause__new(f2ptr cause,
 		     f2ptr memory_tracing_on,
 		     f2ptr subscribers,
 		     f2ptr imagination_name,
-		     f2ptr event_buffer_first,
-		     f2ptr event_buffer_last,
 		     f2ptr bytecode_branch_funks,
 		     f2ptr bytecode_funk_funks,
 		     f2ptr bytecode_tracer_funks,
@@ -71,8 +67,6 @@ f2ptr f2__cause__new(f2ptr cause,
 					    subscribers_mutex,
 					    subscribers,
 					    imagination_name,
-					    event_buffer_first,
-					    event_buffer_last,
 					    bytecode_branch_funks,
 					    bytecode_funk_funks,
 					    bytecode_tracer_funks,
@@ -114,8 +108,6 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
 			memory_tracing_on,
 			subscribers,
 			imagination_stack,
-			nil, // event_buffer_first
-			nil, // event_buffer_last
 			bytecode_branch_funks,
 			bytecode_funk_funks,
 			bytecode_tracer_funks,
@@ -160,17 +152,6 @@ f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name) {
   f2ptr new_cause = f2__cause__new_with_inherited_properties(cause, cause);
   f2cause__imagination_stack__set(new_cause, cause, f2cons__new(cause, imagination_name, f2cause__imagination_stack(cause, new_cause)));
   return new_cause;
-}
-
-void raw__cause__event_buffer__add(f2ptr cause, f2ptr event) {
-  f2ptr event_buffer_last     = f2cause__event_buffer_last(cause, cause);
-  f2ptr new_event_buffer_node = f2doublelink__new(cause, event_buffer_last, nil, event);
-  if (event_buffer_last == nil) {
-    f2cause__event_buffer_first__set(cause, cause, new_event_buffer_node);
-  } else {
-    f2doublelink__next__set(event_buffer_last, cause, new_event_buffer_node);
-  }
-  f2cause__event_buffer_last__set(cause, cause, new_event_buffer_node);
 }
 
 f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
@@ -290,7 +271,7 @@ void f2__cause__initialize() {
   
   // cause
   
-  initialize_primobject_17_slot(cause,
+  initialize_primobject_15_slot(cause,
 				fibers_mutex,
 				fibers,
 				frame,
@@ -300,8 +281,6 @@ void f2__cause__initialize() {
 				subscribers_mutex,
 				subscribers,
 				imagination_stack,
-				event_buffer_first,
-				event_buffer_last,
 				bytecode_branch_funks,
 				bytecode_funk_funks,
 				bytecode_tracer_funks,

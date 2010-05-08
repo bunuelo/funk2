@@ -1,0 +1,50 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[deframe isis_world_client [frame] [xmlrpc_url]]
+
+[deftypeconstruct isis_world_client [xmlrpc_url]
+  [set this xmlrpc_url xmlrpc_url]
+  this]
+
+[deftypefunk isis_world_client execute sense                   []                   [xmlrpc-funkall [get this xmlrpc_url] `do `sense]]
+[deftypefunk isis_world_client execute turn_left-start         []                   [xmlrpc-funkall [get this xmlrpc_url] `do `turn_left-start]]
+[deftypefunk isis_world_client execute turn_left-stop          []                   [xmlrpc-funkall [get this xmlrpc_url] `do `turn_left-stop]]
+[deftypefunk isis_world_client execute turn_right-start        []                   [xmlrpc-funkall [get this xmlrpc_url] `do `turn_right-start]]
+[deftypefunk isis_world_client execute turn_right-stop         []                   [xmlrpc-funkall [get this xmlrpc_url] `do `turn_right-stop]]
+[deftypefunk isis_world_client execute move_forward-start      []                   [xmlrpc-funkall [get this xmlrpc_url] `do `move_forward-start]]
+[deftypefunk isis_world_client execute move_forward-stop       []                   [xmlrpc-funkall [get this xmlrpc_url] `do `move_forward-stop]]
+[deftypefunk isis_world_client execute move_backward-start     []                   [xmlrpc-funkall [get this xmlrpc_url] `do `move_backward-start]]
+[deftypefunk isis_world_client execute move_backward-stop      []                   [xmlrpc-funkall [get this xmlrpc_url] `do `move_backward-stop]]
+[deftypefunk isis_world_client execute look_left-start         []                   [xmlrpc-funkall [get this xmlrpc_url] `do `look_left-start]]
+[deftypefunk isis_world_client execute look_left-stop          []                   [xmlrpc-funkall [get this xmlrpc_url] `do `look_left-stop]]
+[deftypefunk isis_world_client execute look_right-start        []                   [xmlrpc-funkall [get this xmlrpc_url] `do `look_right-start]]
+[deftypefunk isis_world_client execute look_right-stop         []                   [xmlrpc-funkall [get this xmlrpc_url] `do `look_right-stop]]
+[deftypefunk isis_world_client execute look_up-start           []                   [xmlrpc-funkall [get this xmlrpc_url] `do `look_up-start]]
+[deftypefunk isis_world_client execute look_up-stop            []                   [xmlrpc-funkall [get this xmlrpc_url] `do `look_up-stop]]
+[deftypefunk isis_world_client execute look_down-start         []                   [xmlrpc-funkall [get this xmlrpc_url] `do `look_down-start]]
+[deftypefunk isis_world_client execute look_down-stop          []                   [xmlrpc-funkall [get this xmlrpc_url] `do `look_down-stop]]
+[deftypefunk isis_world_client execute pick_up_with_right_hand [object]             [xmlrpc-funkall [get this xmlrpc_url] `do `pick_up_with_right_hand [frame object object]]]
+[deftypefunk isis_world_client execute pick_up_with_left_hand  [object]             [xmlrpc-funkall [get this xmlrpc_url] `do `pick_up_with_left_hand  [frame object object]]]
+[deftypefunk isis_world_client execute drop_from_right_hand    []                   [xmlrpc-funkall [get this xmlrpc_url] `do `drop_from_right_hand]]
+[deftypefunk isis_world_client execute drop_from_left_hand     []                   [xmlrpc-funkall [get this xmlrpc_url] `do `drop_from_left_hand]]
+[deftypefunk isis_world_client execute use                     [object with_object] [xmlrpc-funkall [get this xmlrpc_url] `do `use                     [frame object object with_object with_object]]]
+[deftypefunk isis_world_client execute say                     [message]            [xmlrpc-funkall [get this xmlrpc_url] `do `say                     [frame message message]]]
+[deftypefunk isis_world_client execute step_simulation         [seconds]            [xmlrpc-funkall [get this xmlrpc_url] `do `say                     [frame seconds seconds]]]
+

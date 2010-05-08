@@ -54,6 +54,7 @@
 [load 'fu2/bootstrap-surrogate_parent.fu2']
 [load 'fu2/bootstrap-redblacktree.fu2']
 [load 'fu2/bootstrap-xmlrpc.fu2']
+[load 'fu2/bootstrap-isis_world.fu2']
 
 [load 'fu2/time.fu2']
 

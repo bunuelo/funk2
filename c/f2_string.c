@@ -254,15 +254,19 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
 }
 def_pcfunk1(exp__as__string, exp, return f2__exp__as__string(this_cause, exp));
 
-f2ptr f2__string__as__symbol(f2ptr cause, f2ptr this) {
-  if (! raw__string__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+f2ptr raw__string__as__symbol(f2ptr cause, f2ptr this) {
   u64 this__length = f2string__length(this, cause);
   u8* temp_str = alloca(this__length);
   f2string__str_copy(this, cause, temp_str);
   f2ptr new_symbol = f2symbol__new(cause, this__length, temp_str);
   return new_symbol;
+}
+
+f2ptr f2__string__as__symbol(f2ptr cause, f2ptr this) {
+  if (! raw__string__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__string__as__symbol(cause, this);
 }
 def_pcfunk1(string__as__symbol, this, return f2__string__as__symbol(this_cause, this));
 

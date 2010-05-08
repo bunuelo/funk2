@@ -294,10 +294,10 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
 	if (raw__larva__is_type(cause, new_value)) {
 	  return new_value;
 	}
-	f2__print(cause, new_key);
-	f2__print(cause, new_value);
+	if (raw__string__is_type(cause, new_key)) {
+	  new_key = raw__string__as__symbol(cause, new_key);
+	}
 	f2__frame__add_var_value(cause, new_frame, new_key, new_value);
-	f2__print(cause, new_frame);
       }
     }
     return new_frame;

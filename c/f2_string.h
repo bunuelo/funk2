@@ -31,7 +31,8 @@ f2ptr f2__stringlist__rawcode                      (f2ptr cause, f2ptr this);
 
 f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp);
 
-f2ptr      f2__string__to_symbol(f2ptr cause, f2ptr this);
+f2ptr     raw__string__as__symbol(f2ptr cause, f2ptr this);
+f2ptr      f2__string__as__symbol(f2ptr cause, f2ptr this);
 f2ptr      f2__string__save     (f2ptr cause, f2ptr this, f2ptr filename);
 f2ptr      f2__string__load     (f2ptr cause, f2ptr filename);
 f2ptr      f2__string__split    (f2ptr cause, f2ptr this, f2ptr token);

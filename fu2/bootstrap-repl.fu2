@@ -298,10 +298,12 @@
   `[object-execute-apply ,exp [quote ,slot_name] ,args]]
 
 [defmetro have [this slot_name :rest args]
-  `[execute ,this ,slot_name ,this @args]]
+  `[let [[this ,this]]
+     [execute this ,slot_name this @args]]]
 
 [defmetro have-apply [this slot_name args]
-  `[execute-apply ,this ,slot_name ,this ,args]]
+  `[let [[this ,this]]
+     [execute-apply this ,slot_name [cons this ,args]]]]
 
 
 [globalize-funk type &object-type]

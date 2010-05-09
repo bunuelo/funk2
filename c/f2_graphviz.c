@@ -119,12 +119,13 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
 def_pcfunk1(graphviz__exp__as__label, exp, return f2__graphviz__exp__as__label(this_cause, exp));
 
 f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
-  f2ptr pointer = f2integer__new(cause, exp);
-  return f2__exp__as__string(cause, pointer);
+  return f2__stringlist__concat(cause, f2list2__new(cause,
+						    new__string(cause, "ptr_"),
+						    f2__exp__as__string(cause, f2integer__new(cause, exp))));
   /*
-  if (exp == nil) {
+    if (exp == nil) {
     return new__string(cause, "nil");
-  }
+    }
   f2ptr string;
   if (raw__string__is_type(cause, exp)) {
     if (f2string__length(exp, cause) == 0) {

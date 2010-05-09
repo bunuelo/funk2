@@ -268,6 +268,7 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
 	// first try jumping by subfunk-spans if one exists.
 	f2ptr try_before_subfunk_span = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, new__symbol(cause, "subfunk-span"));
 	if (try_before_subfunk_span != nil) {
+	  printf("\njumping by subfunk-span!");
 	  iter = try_before_subfunk_span;
 	}
 	// then, just go to the previous event.

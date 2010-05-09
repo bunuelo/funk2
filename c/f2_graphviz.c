@@ -87,6 +87,9 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
   if (raw__cons__is_type(cause, exp)) {
     return f2__exp__as__string(cause, exp);
   }
+  if (raw__frame__is_type(cause, exp)) {
+    return f2__exp__as__string(cause, exp);
+  }
   if (raw__list__is_type(cause, exp)) {
     return f2__exp__as__string(cause, exp);
   }

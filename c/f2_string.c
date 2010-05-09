@@ -220,7 +220,7 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
 	f2ptr iter            = exp;
 	while (iter) {
 	  f2ptr element = f2__cons__car(cause, iter);
-	  f2ptr new_cons = f2cons__new(cause, f2__graphviz__exp__as__label(cause, element), nil);
+	  f2ptr new_cons = f2cons__new(cause, f2__exp__as__string(cause, element), nil);
 	  if (stringlist_iter) {
 	    f2__cons__cdr__set(cause, stringlist_iter, new_cons);
 	  } else {
@@ -240,7 +240,7 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
 	f2ptr stringlist_iter = nil;
 	frame__var__iteration(cause, exp, slot_name, slot_value,
 			      {
-				f2ptr new_cons = f2cons__new(cause, f2__graphviz__exp__as__label(cause, slot_name), nil);
+				f2ptr new_cons = f2cons__new(cause, f2__exp__as__string(cause, slot_name), nil);
 				if (stringlist_iter) {
 				  f2__cons__cdr__set(cause, stringlist_iter, new_cons);
 				} else {
@@ -249,7 +249,7 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
 				stringlist_iter = new_cons;
 			      }
 			      {
-				f2ptr new_cons = f2cons__new(cause, f2__graphviz__exp__as__label(cause, slot_value), nil);
+				f2ptr new_cons = f2cons__new(cause, f2__exp__as__string(cause, slot_value), nil);
 				if (stringlist_iter) {
 				  f2__cons__cdr__set(cause, stringlist_iter, new_cons);
 				} else {
@@ -259,7 +259,7 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
 			      }
 			      );
       }
-      stringlist = f2cons__new(cause, new__symbol(cause, "frame"), stringlist);
+      stringlist = f2cons__new(cause, new__string(cause, "frame"), stringlist);
       return f2__stringlist__concat(cause, f2list3__new(cause,
 							new__string(cause, "["),
 							f2__stringlist__intersperse(cause, stringlist, new__string(cause, " ")),

@@ -72,38 +72,49 @@ f2ptr f2__graphviz__edge(f2ptr cause, f2ptr from_node, f2ptr to_node, f2ptr colo
 def_pcfunk3(graphviz__edge, from_node, to_node, color, return f2__graphviz__edge(this_cause, from_node, to_node, color));
 
 f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
+  f2ptr string = nil;
   if (exp == nil) {
-    return new__string(cause, "[]");
+    string = new__string(cause, "[]");
+  } else if (raw__string__is_type(cause, exp)) {
+    string = exp;
+  } else if (raw__symbol__is_type(cause, exp)) {
+    string =f2__exp__as__string(cause, exp);
+  } else if (raw__integer__is_type(cause, exp)) {
+    string = f2__exp__as__string(cause, exp);
+  } else if (raw__cons__is_type(cause, exp)) {
+    string = f2__exp__as__string(cause, exp);
+  } else if (raw__frame__is_type(cause, exp)) {
+    string = f2__exp__as__string(cause, exp);
+  } else if (raw__list__is_type(cause, exp)) {
+    string = f2__exp__as__string(cause, exp);
+  } else if (raw__graph_variable__is_type(cause, exp)) {
+    string = f2__stringlist__concat(cause, f2list3__new(cause,
+							new__string(cause, "<font color=\"#CF0000\">?"),
+							f2__graphviz__exp__as__label(cause, f2__graph_variable__name(cause, exp)),
+							new__string(cause, "</font>")));
+  } else {
+    f2ptr type = f2__object__type(cause, exp);
+    string = f2__stringlist__concat(cause, f2list3__new(cause,
+							f2__exp__as__string(cause, type),
+							new__string(cause, "_"),
+							f2__exp__as__string(cause, f2__pointer(cause, exp))));
   }
-  if (raw__string__is_type(cause, exp)) {
-    return exp;
+  char* replacement_pairs[][2] = {{"\"", "&quot"},
+				  {"'", "&apos"},
+				  {"<", "&lt"},
+				  {">", "&gt"},
+				  {"&", "&amp"},
+				  {NULL, NULL}};
+  {
+    int index;
+    for (index = 0; replacement_pairs[index][0] != NULL; index ++) {
+      f2ptr token = new__string(cause, replacement_pairs[index][0]);
+      if (raw__string__contains(cause, string, token)) {
+	string = f2__string__replace_all(cause, string, token, new__string(cause, replacement_pairs[index][1]));
+      }
+    }
   }
-  if (raw__symbol__is_type(cause, exp)) {
-    return f2__exp__as__string(cause, exp);
-  }
-  if (raw__integer__is_type(cause, exp)) {
-    return f2__exp__as__string(cause, exp);
-  }
-  if (raw__cons__is_type(cause, exp)) {
-    return f2__exp__as__string(cause, exp);
-  }
-  if (raw__frame__is_type(cause, exp)) {
-    return f2__exp__as__string(cause, exp);
-  }
-  if (raw__list__is_type(cause, exp)) {
-    return f2__exp__as__string(cause, exp);
-  }
-  if (raw__graph_variable__is_type(cause, exp)) {
-    return f2__stringlist__concat(cause, f2list3__new(cause,
-						      new__string(cause, "<font color=\"#CF0000\">?"),
-						      f2__graphviz__exp__as__label(cause, f2__graph_variable__name(cause, exp)),
-						      new__string(cause, "</font>")));
-  }
-  f2ptr type = f2__object__type(cause, exp);
-  return f2__stringlist__concat(cause, f2list3__new(cause,
-						    f2__exp__as__string(cause, type),
-						    new__string(cause, "_"),
-						    f2__exp__as__string(cause, f2__pointer(cause, exp))));
+  return string;
 }
 def_pcfunk1(graphviz__exp__as__label, exp, return f2__graphviz__exp__as__label(this_cause, exp));
 

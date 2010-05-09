@@ -249,7 +249,7 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
     {
       f2ptr prev_iter = event_frame; // we're going backwards
       f2ptr iter      = event_graph_last_event;
-      while (iter) {
+      while (iter && (! raw__larva__is_type(cause, iter))) {
 	printf("\nscanning backwards."); fflush(stdout);
 	f2ptr iter_event_frame       = iter;
 	f2ptr iter_event_frame__funk = f2__frame__lookup_var_value(cause, iter_event_frame, new__symbol(cause, "funk"), nil);

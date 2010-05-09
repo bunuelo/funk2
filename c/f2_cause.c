@@ -255,13 +255,16 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
 	f2ptr iter_event_frame__funk = f2__frame__lookup_var_value(cause, iter_event_frame, new__symbol(cause, "funk"), nil);
 	if (raw__eq(cause, funk, iter_event_frame__funk)) {
 	  printf("\nfound my funk!"); fflush(stdout);
-	  f2__graph__add_edge(cause, event_graph, new__symbol(cause, "until"), iter_event_frame, event_frame);
-	  f2__graph__remove_edge(cause, event_graph, new__symbol(cause, "and-then"), iter, prev_iter);
-	  f2__graph__remove_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, event_frame);
+	  f2__graph__add_edge(cause, event_graph, new__symbol(cause, "subfunk-span"), iter_event_frame, event_frame);
 	  break;
 	}
 	prev_iter = iter;
-	iter      = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, and_then__symbol);
+	// first try jumping by subfunk-spans if one exists.
+	iter = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, new__symbol(cause, "subfunk-span"));
+	if (iter == nil) {
+	  // otherwise, just go to the previous event.
+	  iter = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, and_then__symbol);
+	}
       }
     }
     f2__cause__event_graph_last_event__set(cause, this, event_frame);

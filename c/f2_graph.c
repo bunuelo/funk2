@@ -672,12 +672,12 @@ f2ptr raw__graph__right_node__an_arbitrary_left_node(f2ptr cause, f2ptr this, f2
   f2ptr node_label_hash                = f2__graph__node_label_hash(cause, this);
   f2ptr right_node                     = raw__ptypehash__lookup(cause, node_label_hash, right_node_label);
   if (! raw__graph_node__is_type(cause, right_node)) {
-    return f2larva__new(cause, 462, nil);
+    return nil;
   }
   f2ptr edges_left_node_hash_edge_hash = f2__graph_node__edges_left_node_hash_edge_hash(cause, right_node);
   f2ptr edges_left_node_hash           = raw__ptypehash__lookup(cause, edges_left_node_hash_edge_hash, edge_label);
   if (! raw__ptypehash__is_type(cause, edges_left_node_hash)) {
-    return f2larva__new(cause, 463, nil);
+    return nil;
   }
   return f2__ptypehash__an_arbitrary_key(cause, edges_left_node_hash);
 }
@@ -693,12 +693,12 @@ f2ptr raw__graph__left_node__an_arbitrary_right_node(f2ptr cause, f2ptr this, f2
   f2ptr node_label_hash                 = f2__graph__node_label_hash(cause, this);
   f2ptr left_node                       = raw__ptypehash__lookup(cause, node_label_hash, left_node_label);
   if (! raw__graph_node__is_type(cause, left_node)) {
-    return f2larva__new(cause, 462, nil);
+    return nil;
   }
   f2ptr edges_right_node_hash_edge_hash = f2__graph_node__edges_right_node_hash_edge_hash(cause, left_node);
   f2ptr edges_right_node_hash           = raw__ptypehash__lookup(cause, edges_right_node_hash_edge_hash, edge_label);
   if (! raw__ptypehash__is_type(cause, edges_right_node_hash)) {
-    return f2larva__new(cause, 463, nil);
+    return nil;
   }
   return f2__ptypehash__an_arbitrary_key(cause, edges_right_node_hash);
 }

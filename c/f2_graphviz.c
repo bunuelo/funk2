@@ -99,11 +99,11 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
 							new__string(cause, "_"),
 							f2__exp__as__string(cause, f2__pointer(cause, exp))));
   }
-  char* replacement_pairs[][2] = {{"\"", "&quot"},
-				  {"'", "&apos"},
-				  {"<", "&lt"},
-				  {">", "&gt"},
-				  {"&", "&amp"},
+  char* replacement_pairs[][2] = {{"&",  "&amp;"},
+				  {"\"", "&quot;"},
+				  {"'",  "&apos;"},
+				  {"<",  "&lt;"},
+				  {">",  "&gt;"},
 				  {NULL, NULL}};
   {
     int index;

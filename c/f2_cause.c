@@ -233,6 +233,7 @@ def_pcfunk5(cause__add_graph_event__funk, this, fiber, bytecode, funk, args, ret
 
 f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr value, f2ptr funk) {
   printf("\nendfunk");
+  f2__print(cause, funk);
   if (this == nil) {
     printf("\n  this = nil");
     return nil;
@@ -255,12 +256,12 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
       f2ptr iter = event_graph_last_event;
       while (iter && (! raw__larva__is_type(cause, iter))) {
 	printf("\nscanning backwards."); fflush(stdout);
-	f2__print(cause, iter);
 	if (raw__frame__is_type(cause, iter)) {
 	  f2ptr iter_event_frame = iter;
 	  f2ptr event_type       = f2__frame__lookup_var_value(cause, iter_event_frame, new__symbol(cause, "event_type"), nil);
 	  if (raw__eq(cause, event_type, new__symbol(cause, "funk"))) {
 	    f2ptr iter_event_frame__funk = f2__frame__lookup_var_value(cause, iter_event_frame, new__symbol(cause, "funk"), nil);
+	    f2__print(cause, iter_event_frame__funk);
 	    if (raw__eq(cause, funk, iter_event_frame__funk)) {
 	      found_my_funk = boolean__true;
 	      f2__graph__add_edge(cause, event_graph, new__symbol(cause, "subfunk-span"), iter_event_frame, event_frame);

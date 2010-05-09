@@ -274,9 +274,10 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
 	if (try_before_subfunk_span != nil) {
 	  printf("\njumping by subfunk-span!");
 	  iter = try_before_subfunk_span;
+	} else {
+	  // then, just go to the previous event.
+	  iter = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, and_then__symbol);
 	}
-	// then, just go to the previous event.
-	iter = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, and_then__symbol);
       }
     }
     if (found_my_funk) {

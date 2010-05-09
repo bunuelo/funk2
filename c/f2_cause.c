@@ -252,10 +252,10 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
     f2ptr and_then__symbol = new__symbol(cause, "and-then");
     boolean_t found_my_funk = boolean__false;
     {
-      f2ptr prev_iter = event_frame; // we're going backwards
-      f2ptr iter      = event_graph_last_event;
+      f2ptr iter = event_graph_last_event;
       while (iter && (! raw__larva__is_type(cause, iter))) {
 	printf("\nscanning backwards."); fflush(stdout);
+	f2__print(cause, iter);
 	if (raw__frame__is_type(cause, iter)) {
 	  f2ptr iter_event_frame = iter;
 	  f2ptr event_type       = f2__frame__lookup_var_value(cause, iter_event_frame, new__symbol(cause, "event_type"), nil);
@@ -268,16 +268,14 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
 	    }
 	  }
 	}
-	prev_iter = iter;
 	// first try jumping by subfunk-spans if one exists.
 	f2ptr try_before_subfunk_span = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, new__symbol(cause, "subfunk-span"));
 	if (try_before_subfunk_span != nil) {
 	  printf("\njumping by subfunk-span!");
 	  iter = try_before_subfunk_span;
-	} else {
-	  // then, just go to the previous event.
-	  iter = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, and_then__symbol);
 	}
+	// then, just go to the previous event.
+	iter = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, and_then__symbol);
       }
     }
     if (found_my_funk) {

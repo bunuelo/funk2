@@ -119,6 +119,9 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
 def_pcfunk1(graphviz__exp__as__label, exp, return f2__graphviz__exp__as__label(this_cause, exp));
 
 f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
+  f2ptr pointer = f2integer__new(cause, exp);
+  return f2__exp__as__string(cause, pointer);
+  /*
   if (exp == nil) {
     return new__string(cause, "nil");
   }
@@ -157,6 +160,7 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
     }
   }
   return string;
+  */
 }
 def_pcfunk1(graphviz__exp__as__name, exp, return f2__graphviz__exp__as__name(this_cause, exp));
 

@@ -246,6 +246,7 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
     f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "funk"),       funk);
     f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, event_frame);
     f2ptr and_then__symbol = new__symbol(cause, "and-then");
+    boolean_t found_my_funk = boolean__false;
     {
       f2ptr prev_iter = event_frame; // we're going backwards
       f2ptr iter      = event_graph_last_event;
@@ -257,7 +258,7 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
 	  if (raw__eq(cause, event_type, new__symbol(cause, "funk"))) {
 	    f2ptr iter_event_frame__funk = f2__frame__lookup_var_value(cause, iter_event_frame, new__symbol(cause, "funk"), nil);
 	    if (raw__eq(cause, funk, iter_event_frame__funk)) {
-	      printf("\nfound my funk!"); fflush(stdout);
+	      found_my_funk = boolean__true;
 	      f2__graph__add_edge(cause, event_graph, new__symbol(cause, "subfunk-span"), iter_event_frame, event_frame);
 	      break;
 	    }
@@ -265,12 +266,18 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
 	}
 	prev_iter = iter;
 	// first try jumping by subfunk-spans if one exists.
-	iter = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, new__symbol(cause, "subfunk-span"));
-	if (iter == nil) {
-	  // otherwise, just go to the previous event.
-	  iter = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, and_then__symbol);
+	f2ptr try_before_subfunk_span = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, new__symbol(cause, "subfunk-span"));
+	if (try_before_subfunk_span != nil) {
+	  iter = try_before_subfunk_span;
 	}
+	// then, just go to the previous event.
+	iter = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, and_then__symbol);
       }
+    }
+    if (found_my_funk) {
+      printf("\nfound my funk!"); fflush(stdout);
+    } else {
+      printf("\ncouldn't find my funk!"); fflush(stdout);
     }
     f2__cause__event_graph_last_event__set(cause, this, event_frame);
   }

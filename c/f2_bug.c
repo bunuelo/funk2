@@ -25,7 +25,7 @@
 
 // bug
 
-def_primobject_2_slot(bug, bug_type);
+def_primobject_1_slot(bug, bug_type);
 
 f2ptr f2__bug__new(f2ptr cause, f2ptr type) {return f2bug__new(cause, type);}
 def_pcfunk1(bug__new, type, return f2__bug__new(this_cause, type));

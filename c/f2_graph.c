@@ -1461,8 +1461,9 @@ f2ptr f2__graph__without_duplicate_edges(f2ptr cause, f2ptr this) {
 			       f2__ptypehash__add(cause, edge_right_hash, edge__right_node__label, edge_hash);
 			     }
 			     {
-			       f2ptr edge__old_label = f2__ptypehash__lookup(cause, edge_hash, edge__label);
-			       if (edge__old_label == nil) {
+			       f2ptr edge__label_exists = f2__ptypehash__lookup(cause, edge_hash, edge__label);
+			       if (edge__label_exists == nil) {
+				 f2__ptypehash__add(cause, edge_hash, __funk2.globalenv.true__symbol);
 				 f2__graph__add_edge(cause, new_graph, edge__label, edge__left_node__label, edge__right_node__label);
 			       }
 			     }

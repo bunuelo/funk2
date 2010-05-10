@@ -1350,11 +1350,25 @@ f2ptr f2__larva(f2ptr cause, f2ptr type) {
 
 def_pcfunk1(larva, type, return f2__larva(this_cause, type));
 
-f2ptr f2__funkable__parent_env(f2ptr cause, f2ptr funkable) {
-  if (raw__cfunk__is_type(cause, funkable)) {
-    return f2cfunk__env(funkable, cause);
-  } else if (raw__funk__is_type(cause, funkable)) {
-    return f2funk__env(funkable, cause);
+f2ptr f2__funkable__env(f2ptr cause, f2ptr this) {
+  if (raw__cfunk__is_type(cause, this)) {
+    return f2cfunk__env(this, cause);
+  } else if (raw__funk__is_type(cause, this)) {
+    return f2funk__env(this, cause);
+  } else if (raw__metro__is_type(cause, this)) {
+    return f2metro__env(this, cause);
+  } else {
+    return f2larva__new(cause, 1, nil);
+  }
+}
+
+f2ptr f2__funkable__name(f2ptr cause, f2ptr this) {
+  if (raw__cfunk__is_type(cause, this)) {
+    return f2cfunk__name(this, cause);
+  } else if (raw__funk__is_type(cause, this)) {
+    return f2funk__name(this, cause);
+  } else if (raw__metro__is_type(cause, this)) {
+    return f2metro__name(this, cause);
   } else {
     return f2larva__new(cause, 1, nil);
   }

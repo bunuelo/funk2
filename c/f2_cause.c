@@ -50,8 +50,7 @@ f2ptr f2__cause__new(f2ptr cause,
 		     f2ptr bytecode_funk_funks,
 		     f2ptr bytecode_tracer_funks,
 		     f2ptr bytecode_endfunk_funks,
-		     f2ptr complete_funk_funks,
-		     ) {
+		     f2ptr complete_funk_funks) {
   f2ptr fibers_mutex           = f2mutex__new(cause);
   f2ptr fibers                 = nil;
   f2ptr frame                  = f2__frame__new(cause, nil);

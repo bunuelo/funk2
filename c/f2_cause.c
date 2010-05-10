@@ -296,6 +296,7 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
 	  complete_funk__occurred       = boolean__true;
 	  complete_funk__funk           = funk;
 	  complete_funk__args           = matching_funk_event__args;
+	  complete_funk__value          = value;
 	  complete_funk__first_subevent = matching_funk_event;
 	  complete_funk__last_subevent  = event_frame;
 	  // call complete_funk callback

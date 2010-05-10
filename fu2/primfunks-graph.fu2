@@ -51,6 +51,7 @@ All rights reserved.
 [globalize-funk graph-bind_variable                 &primfunk:graph__bind_variable]
 [globalize-funk graph-as-dot_code                   &primfunk:graph__as__dot_code]
 [globalize-funk graph-find_common_variable_subgraph &primfunk:graph__find_common_variable_subgraph]
+[globalize-funk graph-abstract_frame_node_slot      &primfunk:graph__abstract_frame_node_slot]
 
 [globalize-funk trans-part_not_contained_by &primfunk:trans__part_not_contained_by]
 

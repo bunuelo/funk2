@@ -1342,6 +1342,40 @@ f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(graph__as__dot_code, this, return f2__graph__as__dot_code(this_cause, this));
 
+
+f2ptr f2__graph__abstract_frame_node_slot(f2ptr cause, f2ptr this, f2ptr slot_name) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  f2ptr new_graph = f2__graph__new(cause);
+  graph__node__iteration(cause, this, node,
+			 if (raw__frame__is_type(cause, node)) {
+			   f2ptr node__slot_value = f2__frame__lookup_var_value(cause, node, slot_name, __funk2.primobject__frame.type_variable_not_defined__symbol);
+			   if (! raw__eq(cause, node__slot_value, __funk2.primobject__frame.type_variable_not_defined__symbol)) {
+			     f2__graph__add_node(cause, new_graph, node__slot_value);
+			   }
+			 }
+			 );
+  graph__edge__iteration(cause, this, edge,
+			 f2ptr edge__label      = f2__graph_edge__label(cause, edge);
+			 f2ptr edge__left_node  = f2__graph_edge__left_node(cause, edge);
+			 f2ptr edge__right_node = f2__graph_edge__left_node(cause, edge);
+			 if (raw__frame__is_type(cause, edge__left_node)) {
+			   f2ptr edge__left_node__slot_value = f2__frame__lookup_var_value(cause, edge__left_node, slot_name, __funk2.primobject__frame.type_variable_not_defined__symbol);
+			   if (! raw__eq(cause, edge__left_node__slot_value, __funk2.primobject__frame.type_variable_not_defined__symbol)) {
+			     if (raw__frame__is_type(cause, edge__right_node)) {
+			       f2ptr edge__right_node__slot_value = f2__frame__lookup_var_value(cause, edge__right_node, slot_name, __funk2.primobject__frame.type_variable_not_defined__symbol);
+			       if (! raw__eq(cause, edge__right_node__slot_value, __funk2.primobject__frame.type_variable_not_defined__symbol)) {
+				 f2__graph__add_edge(cause, new_graph, edge__label, edge__left_node__slot_value, edge__right_node__slot_value);
+			       }
+			     }
+			   }
+			 }
+			 );
+  return new_graph;
+}
+def_pcfunk2(graph__abstract_frame_node_slot, this, slot_name, return f2__graph__abstract_frame_node_slot(this_cause, this, slot_name));
+
 // trans
 
 def_primobject_2_slot(trans, remove, add);
@@ -1772,6 +1806,7 @@ void f2__graph__initialize() {
     {f2__primcfunk__init__with_c_cfunk_var__2_arg(common_variable_subgraph_possibility__compare, this, that, cfunk, 0,              "Internal part of graph-find_common_variable_subgraph.  Should not be end-user-accessible."); __funk2.graph.common_variable_subgraph_possibility__compare__funk = never_gc(cfunk);}
     f2__primcfunk__init__2(graph__find_common_variable_subgraph, this, that,                                                        "return the largest common variable subgraph shared by two graphs.");
   }
+  f2__primcfunk__init__2(graph__abstract_frame_node_slot, this, slot_name, "For all nodes that are frames, lookup the slot_name and create a new graph based on these slot values.");
   
   // trans
   initialize_primobject_2_slot(trans, remove, add);

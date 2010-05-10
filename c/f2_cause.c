@@ -319,9 +319,6 @@ f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
   return this;
 }
 
-
-
-
 // **
 
 void f2__cause__reinitialize_globalvars() {

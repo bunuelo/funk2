@@ -421,9 +421,9 @@ f2ptr f2__cause__add_graph_event__read_other_memory(f2ptr cause, f2ptr this, f2p
     f2ptr event_graph             = f2__cause__get_event_graph__thread_unsafe(cause, this);
     f2ptr event_graph_last_event  = f2__cause__event_graph_last_event(cause, this);
     f2ptr read_other_memory_event = f2__frame__new(cause, nil);
-    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "event_type"), new__symbol(cause, "read_other_memory"));
-    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "array"),      array);
-    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "index"),      index);
+    f2__frame__add_var_value(cause, read_other_memory_event, new__symbol(cause, "event_type"), new__symbol(cause, "read_other_memory"));
+    f2__frame__add_var_value(cause, read_other_memory_event, new__symbol(cause, "array"),      array);
+    f2__frame__add_var_value(cause, read_other_memory_event, new__symbol(cause, "index"),      index);
     f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, read_other_memory_event);
     f2__cause__event_graph_last_event__set(cause, this, read_other_memory_event);
   }
@@ -442,10 +442,10 @@ f2ptr f2__cause__add_graph_event__write_other_memory(f2ptr cause, f2ptr this, f2
     f2ptr event_graph             = f2__cause__get_event_graph__thread_unsafe(cause, this);
     f2ptr event_graph_last_event  = f2__cause__event_graph_last_event(cause, this);
     f2ptr write_other_memory_event = f2__frame__new(cause, nil);
-    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "event_type"), new__symbol(cause, "write_other_memory"));
-    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "array"),      array);
-    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "index"),      index);
-    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "old_value"),  old_value);
+    f2__frame__add_var_value(cause, write_other_memory_event, new__symbol(cause, "event_type"), new__symbol(cause, "write_other_memory"));
+    f2__frame__add_var_value(cause, write_other_memory_event, new__symbol(cause, "array"),      array);
+    f2__frame__add_var_value(cause, write_other_memory_event, new__symbol(cause, "index"),      index);
+    f2__frame__add_var_value(cause, write_other_memory_event, new__symbol(cause, "old_value"),  old_value);
     f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, write_other_memory_event);
     f2__cause__event_graph_last_event__set(cause, this, write_other_memory_event);
   }

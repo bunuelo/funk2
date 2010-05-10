@@ -97,6 +97,8 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   f2ptr bytecode_tracer_funks    = nil;
   f2ptr bytecode_endfunk_funks   = nil;
   f2ptr complete_funk_funks      = nil;
+  f2ptr read_other_memory_funks  = nil;
+  f2ptr write_other_memory_funks = nil;
   if (source) {
     allocate_traced_arrays   = f2__cause__allocate_traced_arrays(  cause, source);
     bytecode_tracing_on      = f2__cause__bytecode_tracing_on(     cause, source);

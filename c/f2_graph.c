@@ -1349,24 +1349,27 @@ f2ptr f2__graph__abstract_frame_node_slot(f2ptr cause, f2ptr this, f2ptr slot_na
   }
   f2ptr new_graph = f2__graph__new(cause);
   graph__node__iteration(cause, this, node,
-			 if (raw__frame__is_type(cause, node)) {
-			   f2ptr node__slot_value = f2__frame__lookup_var_value(cause, node, slot_name, __funk2.primobject__frame.type_variable_not_defined__symbol);
+			 f2ptr node__label = f2__graph_node__label(cause, node);
+			 if (raw__frame__is_type(cause, node__label)) {
+			   f2ptr node__slot_value = f2__frame__lookup_var_value(cause, node__label, slot_name, __funk2.primobject__frame.type_variable_not_defined__symbol);
 			   if (! raw__eq(cause, node__slot_value, __funk2.primobject__frame.type_variable_not_defined__symbol)) {
 			     f2__graph__add_node(cause, new_graph, node__slot_value);
 			   }
 			 }
 			 );
   graph__edge__iteration(cause, this, edge,
-			 f2ptr edge__label      = f2__graph_edge__label(cause, edge);
-			 f2ptr edge__left_node  = f2__graph_edge__left_node(cause, edge);
-			 f2ptr edge__right_node = f2__graph_edge__left_node(cause, edge);
-			 if (raw__frame__is_type(cause, edge__left_node)) {
-			   f2ptr edge__left_node__slot_value = f2__frame__lookup_var_value(cause, edge__left_node, slot_name, __funk2.primobject__frame.type_variable_not_defined__symbol);
-			   if (! raw__eq(cause, edge__left_node__slot_value, __funk2.primobject__frame.type_variable_not_defined__symbol)) {
-			     if (raw__frame__is_type(cause, edge__right_node)) {
-			       f2ptr edge__right_node__slot_value = f2__frame__lookup_var_value(cause, edge__right_node, slot_name, __funk2.primobject__frame.type_variable_not_defined__symbol);
-			       if (! raw__eq(cause, edge__right_node__slot_value, __funk2.primobject__frame.type_variable_not_defined__symbol)) {
-				 f2__graph__add_edge(cause, new_graph, edge__label, edge__left_node__slot_value, edge__right_node__slot_value);
+			 f2ptr edge__label             = f2__graph_edge__label(cause, edge);
+			 f2ptr edge__left_node         = f2__graph_edge__left_node(cause, edge);
+			 f2ptr edge__left_node__label  = f2__graph_node__label(cause, edge__left_node);
+			 f2ptr edge__right_node        = f2__graph_edge__left_node(cause, edge);
+			 f2ptr edge__right_node__label = f2__graph_node__label(cause, edge__right_node);
+			 if (raw__frame__is_type(cause, edge__left_node__label)) {
+			   f2ptr edge__left_node__label__slot_value = f2__frame__lookup_var_value(cause, edge__left_node__label, slot_name, __funk2.primobject__frame.type_variable_not_defined__symbol);
+			   if (! raw__eq(cause, edge__left_node__label__slot_value, __funk2.primobject__frame.type_variable_not_defined__symbol)) {
+			     if (raw__frame__is_type(cause, edge__right_node__label)) {
+			       f2ptr edge__right_node__label__slot_value = f2__frame__lookup_var_value(cause, edge__right_node__label, slot_name, __funk2.primobject__frame.type_variable_not_defined__symbol);
+			       if (! raw__eq(cause, edge__right_node__label__slot_value, __funk2.primobject__frame.type_variable_not_defined__symbol)) {
+				 f2__graph__add_edge(cause, new_graph, edge__label, edge__left_node__label__slot_value, edge__right_node__label__slot_value);
 			       }
 			     }
 			   }

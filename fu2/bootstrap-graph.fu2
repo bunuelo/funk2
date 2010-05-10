@@ -45,6 +45,7 @@
 [deftypefunk graph execute bind_variable                 [variable_name value]                                        [graph-bind_variable                 this variable_name value]]
 [deftypefunk graph execute find_common_variable_subgraph [that]                                                       [graph-find_common_variable_subgraph this that]]
 [deftypefunk graph execute abstract_frame_node_slot      [slot_name]                                                  [graph-abstract_frame_node_slot      this slot_name]]
+[deftypefunk graph execute node_map                      [map_funk]                                                   [graph-node_map                      this map_funk]]
 
 [deftypefunk graph_variable get is_wildcard [] [graph_variable-is_wildcard this]]
 

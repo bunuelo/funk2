@@ -1379,6 +1379,35 @@ f2ptr f2__graph__abstract_frame_node_slot(f2ptr cause, f2ptr this, f2ptr slot_na
 }
 def_pcfunk2(graph__abstract_frame_node_slot, this, slot_name, return f2__graph__abstract_frame_node_slot(this_cause, this, slot_name));
 
+f2ptr f2__graph__node_map(f2ptr cause, f2ptr this, f2ptr map_funk) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  f2ptr fiber     = f2__this__fiber(cause);
+  f2ptr new_graph = f2__graph__new(cause);
+  f2ptr node_hash = f2__ptypehash__new(cause);
+  graph__node__iteration(cause, this, node,
+			 f2ptr node__label = f2__graph_node__label(cause, node);
+			 f2ptr node__new_label = f2__force_funk_apply(cause, fiber, map_funk, f2cons__new(cause, node__label, nil));
+			 f2__ptypehash__add(cause, node_hash, node__label, node__new_label);
+			 f2__graph__add_node(cause, new_graph, node__new_label);
+			 );
+  graph__edge__iteration(cause, this, edge,
+			 f2ptr edge__label                 = f2__graph_edge__label(cause, edge);
+			 f2ptr edge__left_node             = f2__graph_edge__left_node(cause, edge);
+			 f2ptr edge__left_node__label      = f2__graph_node__label(cause, edge__left_node);
+			 f2ptr edge__left_node__new_label  = f2__ptypehash__lookup(cause, node_hash, edge__left_node__label);
+			 f2ptr edge__right_node            = f2__graph_edge__right_node(cause, edge);
+			 f2ptr edge__right_node__label     = f2__graph_node__label(cause, edge__right_node);
+			 f2ptr edge__right_node__new_label = f2__ptypehash__lookup(cause, node_hash, edge__right_node__label);
+			 f2__graph__add_edge(cause, new_graph, edge__label, edge__left_node__new_label, edge__right_node__new_label);
+			 );
+  return new_graph;
+}
+def_pcfunk2(graph__node_map, this, map_funk, return f2__graph__node_map(this_cause, this, map_funk));
+
+
+
 // trans
 
 def_primobject_2_slot(trans, remove, add);
@@ -1810,6 +1839,7 @@ void f2__graph__initialize() {
     f2__primcfunk__init__2(graph__find_common_variable_subgraph, this, that,                                                        "return the largest common variable subgraph shared by two graphs.");
   }
   f2__primcfunk__init__2(graph__abstract_frame_node_slot, this, slot_name, "For all nodes that are frames, lookup the slot_name and create a new graph based on these slot values.");
+  f2__primcfunk__init__2(graph__node_map, this, map_funk, "Creates a new graph that filters all node labels through the user supplied map_funk.");
   
   // trans
   initialize_primobject_2_slot(trans, remove, add);

@@ -280,7 +280,7 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
       }
       if (matching_funk_event != nil) {
 	// create complete_funk event
-	f2ptr matching_funk_event__args = f2__frame__lookup_var_value(cause, matching_funk_event, new__symbol(cause, "args"));
+	f2ptr matching_funk_event__args = f2__frame__lookup_var_value(cause, matching_funk_event, new__symbol(cause, "args"), nil);
 	f2ptr complete_funk_event       = f2__frame__new(cause);
 	f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "event_type"), new__symbol(cause, "complete-funk"));
 	f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "funk"),       funk);

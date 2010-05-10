@@ -231,6 +231,10 @@ f2ptr f2__cause__add_graph_event__funk(f2ptr cause, f2ptr this, f2ptr fiber, f2p
 }
 def_pcfunk5(cause__add_graph_event__funk, this, fiber, bytecode, funk, args, return f2__cause__add_graph_event__funk(this_cause, this, fiber, bytecode, funk, args));
 
+void debug_break_here() {
+  printf("\ndebug_break_here.");
+}
+
 f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr value, f2ptr funk) {
   printf("\nendfunk");
   f2__print(cause, funk);
@@ -265,6 +269,7 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
 	    f2__print(cause, funk);
 	    printf("\n  iter_event_frame__funk:");
 	    f2__print(cause, iter_event_frame__funk);
+	    debug_break_here();
 	    if (raw__eq(cause, funk, iter_event_frame__funk)) {
 	      printf("  note: found funk.");
 	      found_my_funk = boolean__true;

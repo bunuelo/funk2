@@ -286,6 +286,8 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
 	f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "funk"),       funk);
 	f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "args"),       matching_funk_event__args);
 	f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "value"),      value);
+	f2__graph__add_edge(cause, event_graph, new__symbol(cause, "first-subevent"), complete_funk_event, matching_funk_event);
+	f2__graph__add_edge(cause, event_graph, new__symbol(cause, "last-subevent"),  complete_funk_event, event_frame);
 	// scan forward adding subevent relations
 	f2ptr iter = matching_funk_event;
 	while (iter) {

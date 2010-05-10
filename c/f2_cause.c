@@ -385,7 +385,7 @@ f2ptr f2__cause__add_graph_event__complete_funk(f2ptr cause, f2ptr this, f2ptr f
 	  }
 	}
 	// then, just go to the next event.
-	iter = raw__graph__left_node__an_arbitrary_right_node(cause, event_graph, iter, and_then__symbol);
+	iter = raw__graph__left_node__an_arbitrary_right_node(cause, event_graph, iter, new__symbol(cause, "and-then"));
       }
     }
   }

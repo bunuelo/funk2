@@ -1361,7 +1361,7 @@ f2ptr f2__graph__abstract_frame_node_slot(f2ptr cause, f2ptr this, f2ptr slot_na
 			 f2ptr edge__label             = f2__graph_edge__label(cause, edge);
 			 f2ptr edge__left_node         = f2__graph_edge__left_node(cause, edge);
 			 f2ptr edge__left_node__label  = f2__graph_node__label(cause, edge__left_node);
-			 f2ptr edge__right_node        = f2__graph_edge__left_node(cause, edge);
+			 f2ptr edge__right_node        = f2__graph_edge__right_node(cause, edge);
 			 f2ptr edge__right_node__label = f2__graph_node__label(cause, edge__right_node);
 			 if (raw__frame__is_type(cause, edge__left_node__label)) {
 			   f2ptr edge__left_node__label__slot_value = f2__frame__lookup_var_value(cause, edge__left_node__label, slot_name, __funk2.primobject__frame.type_variable_not_defined__symbol);

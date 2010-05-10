@@ -289,14 +289,17 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
 	// scan forward adding subevent relations
 	f2ptr iter = matching_funk_event;
 	while (iter) {
-	  f2__graph__add_edge(cause, event_graph, new__symbol(cause, "subevent"), matching_funk_event, iter);
+	  f2__graph__add_edge(cause, event_graph, new__symbol(cause, "subevent"), complete_funk_event, iter);
 	  if (iter == event_frame) {
 	    iter = nil;
 	  } else {
-	    // first try jumping by subfunk-span if one exists.
-	    f2ptr try_subfunk_span = raw__graph__left_node__an_arbitrary_right_node(cause, event_graph, iter, new__symbol(cause, "subfunk-span"));
-	    if (try_subfunk_span != nil) {
-	      iter = try_subfunk_span;
+	    // don't try jumping if we're at the beginning of our own funktion because that will just take us to the end and we won't mark any subevents at all!
+	    if (iter != matching_funk_event) {
+	      // first try jumping by subfunk-span if one exists.
+	      f2ptr try_subfunk_span = raw__graph__left_node__an_arbitrary_right_node(cause, event_graph, iter, new__symbol(cause, "subfunk-span"));
+	      if (try_subfunk_span != nil) {
+		iter = try_subfunk_span;
+	      }
 	    }
 	    // then, just go to the next event.
 	    iter = raw__graph__left_node__an_arbitrary_right_node(cause, event_graph, iter, and_then__symbol);

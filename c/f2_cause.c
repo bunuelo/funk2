@@ -261,6 +261,9 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
 	  f2ptr event_type       = f2__frame__lookup_var_value(cause, iter_event_frame, new__symbol(cause, "event_type"), nil);
 	  if (raw__eq(cause, event_type, new__symbol(cause, "funk"))) {
 	    f2ptr iter_event_frame__funk = f2__frame__lookup_var_value(cause, iter_event_frame, new__symbol(cause, "funk"), nil);
+	    printf("\n  funk:");
+	    f2__print(cause, funk);
+	    printf("\n  iter_event_frame__funk:");
 	    f2__print(cause, iter_event_frame__funk);
 	    if (raw__eq(cause, funk, iter_event_frame__funk)) {
 	      found_my_funk = boolean__true;

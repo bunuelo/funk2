@@ -1419,13 +1419,13 @@ f2ptr f2__graph__without_self_loops(f2ptr cause, f2ptr this) {
 			 f2__graph__add_node(cause, new_graph, node__label);
 			 );
   graph__edge__iteration(cause, this, edge,
-			 f2ptr edge__label                 = f2__graph_edge__label(cause, edge);
-			 f2ptr edge__left_node             = f2__graph_edge__left_node(cause, edge);
-			 f2ptr edge__left_node__label      = f2__graph_node__label(cause, edge__left_node);
-			 f2ptr edge__right_node            = f2__graph_edge__right_node(cause, edge);
-			 f2ptr edge__right_node__label     = f2__graph_node__label(cause, edge__right_node);
+			 f2ptr edge__label             = f2__graph_edge__label(cause, edge);
+			 f2ptr edge__left_node         = f2__graph_edge__left_node(cause, edge);
+			 f2ptr edge__left_node__label  = f2__graph_node__label(cause, edge__left_node);
+			 f2ptr edge__right_node        = f2__graph_edge__right_node(cause, edge);
+			 f2ptr edge__right_node__label = f2__graph_node__label(cause, edge__right_node);
 			 if (! raw__eq(cause, edge__left_node__label, edge__right_node__label)) {
-			   f2__graph__add_edge(cause, new_graph, edge__label, edge__left_node__new_label, edge__right_node__new_label);
+			   f2__graph__add_edge(cause, new_graph, edge__label, edge__left_node__label, edge__right_node__label);
 			 }
 			 );
   return new_graph;

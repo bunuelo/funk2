@@ -358,6 +358,8 @@ f2ptr f2__cause__add_graph_event__complete_funk(f2ptr cause, f2ptr this, f2ptr f
   if (this == nil) {
     return nil;
   }
+  printf("\ncomplete_funk");
+  f2__print(cause, funk);
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
   {

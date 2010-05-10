@@ -54,6 +54,8 @@ declare_object_type_15_slot(cause,
 			    f2ptr add_graph_event__endfunk__funk;
 			    f2ptr add_graph_event__branch__symbol;
 			    f2ptr add_graph_event__branch__funk;
+			    f2ptr add_graph_event__complete_funk__symbol;
+			    f2ptr add_graph_event__complete_funk__funk;
 			    );
 
 #endif // F2__CAUSE__TYPES__H

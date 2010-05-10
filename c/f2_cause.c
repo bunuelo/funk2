@@ -371,14 +371,14 @@ f2ptr f2__cause__add_graph_event__complete_funk(f2ptr cause, f2ptr this, f2ptr f
     f2__graph__add_edge(cause, event_graph, new__symbol(cause, "first_subevent"), complete_funk_event, first_subevent);
     f2__graph__add_edge(cause, event_graph, new__symbol(cause, "last_subevent"),  complete_funk_event, last_subevent);
     // scan forward adding subevent relations
-    f2ptr iter = matching_funk_event;
+    f2ptr iter = first_subevent;
     while (iter) {
       f2__graph__add_edge(cause, event_graph, new__symbol(cause, "subevent"), complete_funk_event, iter);
-      if (iter == event_frame) {
+      if (iter == last_subevent) {
 	iter = nil;
       } else {
 	// don't try jumping if we're at the beginning of our own funktion because that will just take us to the end and we won't mark any subevents at all!
-	if (iter != matching_funk_event) {
+	if (iter != first_subevent) {
 	  // first try jumping by subfunk-span if one exists.
 	  f2ptr try_subfunk_span = raw__graph__left_node__an_arbitrary_right_node(cause, event_graph, iter, new__symbol(cause, "subfunk-span"));
 	  if (try_subfunk_span != nil) {

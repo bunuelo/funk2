@@ -58,6 +58,10 @@ declare_object_type_17_slot(cause,
 			    f2ptr add_graph_event__branch__funk;
 			    f2ptr add_graph_event__complete_funk__symbol;
 			    f2ptr add_graph_event__complete_funk__funk;
+			    f2ptr add_graph_event__read_other_memory__symbol;
+			    f2ptr add_graph_event__read_other_memory__funk;
+			    f2ptr add_graph_event__write_other_memory__symbol;
+			    f2ptr add_graph_event__write_other_memory__funk;
 			    );
 
 #endif // F2__CAUSE__TYPES__H

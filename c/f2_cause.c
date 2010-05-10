@@ -375,13 +375,14 @@ f2ptr f2__cause__add_graph_event__complete_funk(f2ptr cause, f2ptr this, f2ptr f
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
   {
-    f2ptr event_graph = f2__cause__get_event_graph__thread_unsafe(cause, this);
-    // create complete_funk event
-    f2ptr complete_funk_event = f2__frame__new(cause, nil);
+    f2ptr event_graph            = f2__cause__get_event_graph__thread_unsafe(cause, this);
+    f2ptr event_graph_last_event = f2__cause__event_graph_last_event(cause, this);
+    f2ptr complete_funk_event    = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "event_type"), new__symbol(cause, "complete-funk"));
     f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "funk"),       funk);
     f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "args"),       args);
     f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "value"),      value);
+    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, complete_funk_event);
     f2__graph__add_edge(cause, event_graph, new__symbol(cause, "first_subevent"), complete_funk_event, first_subevent);
     f2__graph__add_edge(cause, event_graph, new__symbol(cause, "last_subevent"),  complete_funk_event, last_subevent);
     // scan forward adding subevent relations
@@ -403,20 +404,66 @@ f2ptr f2__cause__add_graph_event__complete_funk(f2ptr cause, f2ptr this, f2ptr f
 	iter = raw__graph__left_node__an_arbitrary_right_node(cause, event_graph, iter, new__symbol(cause, "and-then"));
       }
     }
+    f2__cause__event_graph_last_event__set(cause, this, complete_funk_event);
   }
   raw__mutex__unlock(cause, event_graph_mutex);
   return nil;
 }
 def_pcfunk6(cause__add_graph_event__complete_funk, this, funk, args, value, first_subevent, last_subevent, return f2__cause__add_graph_event__complete_funk(this_cause, this, funk, args, value, first_subevent, last_subevent));
 
+f2ptr f2__cause__add_graph_event__read_other_memory(f2ptr cause, f2ptr this, f2ptr array, f2ptr index) {
+  if (this == nil) {
+    return nil;
+  }
+  f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
+  raw__mutex__lock(cause, event_graph_mutex);
+  {
+    f2ptr event_graph             = f2__cause__get_event_graph__thread_unsafe(cause, this);
+    f2ptr event_graph_last_event  = f2__cause__event_graph_last_event(cause, this);
+    f2ptr read_other_memory_event = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "event_type"), new__symbol(cause, "read_other_memory"));
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "array"),      array);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "index"),      index);
+    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, read_other_memory_event);
+    f2__cause__event_graph_last_event__set(cause, this, read_other_memory_event);
+  }
+  raw__mutex__unlock(cause, event_graph_mutex);
+  return nil;
+}
+def_pcfunk3(cause__add_graph_event__read_other_memory, this, array, index, return f2__cause__add_graph_event__read_other_memory(this_cause, this, array, index));
+
+f2ptr f2__cause__add_graph_event__write_other_memory(f2ptr cause, f2ptr this, f2ptr array, f2ptr index, f2ptr old_value) {
+  if (this == nil) {
+    return nil;
+  }
+  f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
+  raw__mutex__lock(cause, event_graph_mutex);
+  {
+    f2ptr event_graph             = f2__cause__get_event_graph__thread_unsafe(cause, this);
+    f2ptr event_graph_last_event  = f2__cause__event_graph_last_event(cause, this);
+    f2ptr write_other_memory_event = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "event_type"), new__symbol(cause, "write_other_memory"));
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "array"),      array);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "index"),      index);
+    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "old_value"),  old_value);
+    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, write_other_memory_event);
+    f2__cause__event_graph_last_event__set(cause, this, write_other_memory_event);
+  }
+  raw__mutex__unlock(cause, event_graph_mutex);
+  return nil;
+}
+def_pcfunk4(cause__add_graph_event__write_other_memory, this, array, index, old_value, return f2__cause__add_graph_event__write_other_memory(this_cause, this, array, index, old_value));
+
 f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2cause__primobject_type__new(cause);
-  {char* slot_name = "define";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk);}
-  {char* slot_name = "define-funk";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__funk);}
-  {char* slot_name = "add_graph_event-funk";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__funk__funk);}
-  {char* slot_name = "add_graph_event-endfunk";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__endfunk__funk);}
-  {char* slot_name = "add_graph_event-branch";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__branch__funk);}
-  {char* slot_name = "add_graph_event-complete_funk"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__complete_funk__funk);}
+  {char* slot_name = "define";                             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk);}
+  {char* slot_name = "define-funk";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__funk);}
+  {char* slot_name = "add_graph_event-funk";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__funk__funk);}
+  {char* slot_name = "add_graph_event-endfunk";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__endfunk__funk);}
+  {char* slot_name = "add_graph_event-branch";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__branch__funk);}
+  {char* slot_name = "add_graph_event-complete_funk";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__complete_funk__funk);}
+  {char* slot_name = "add_graph_event-read_other_memory";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__read_other_memory__funk);}
+  {char* slot_name = "add_graph_event-write_other_memory"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__write_other_memory__funk);}
   return this;
 }
 
@@ -467,6 +514,10 @@ void f2__cause__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__6_arg(cause__add_graph_event__branch, this, fiber, bytecode, program_counter, branch_program_counter, value, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__branch__funk = never_gc(cfunk);}
   {char* symbol_str = "add_graph_event-complete_funk"; __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__complete_funk__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__6_arg(cause__add_graph_event__complete_funk, this, funk, args, value, first_subevent, last_subevent, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__complete_funk__funk = never_gc(cfunk);}
+  {char* symbol_str = "add_graph_event-read_other_memory"; __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__read_other_memory__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__add_graph_event__read_other_memory, this, array, index, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__read_other_memory__funk = never_gc(cfunk);}
+  {char* symbol_str = "add_graph_event-write_other_memory"; __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__write_other_memory__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__4_arg(cause__add_graph_event__write_other_memory, this, array, index, old_value, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__write_other_memory__funk = never_gc(cfunk);}
   
   f2__primcfunk__init__0(cause, "Sets the current cause to be a new cause.  Properties are inherited from the previous cause.");
   

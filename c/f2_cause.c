@@ -24,7 +24,7 @@
 
 // cause
 
-def_primobject_15_slot(cause,
+def_primobject_17_slot(cause,
 		       fibers_mutex,
 		       fibers,
 		       frame,
@@ -37,6 +37,8 @@ def_primobject_15_slot(cause,
 		       bytecode_tracer_funks,
 		       bytecode_endfunk_funks,
 		       complete_funk_funks,
+		       read_other_memory_funks,
+		       write_other_memory_funks,
 		       event_graph_mutex,
 		       event_graph,
 		       event_graph_last_event);
@@ -50,7 +52,9 @@ f2ptr f2__cause__new(f2ptr cause,
 		     f2ptr bytecode_funk_funks,
 		     f2ptr bytecode_tracer_funks,
 		     f2ptr bytecode_endfunk_funks,
-		     f2ptr complete_funk_funks) {
+		     f2ptr complete_funk_funks,
+		     f2ptr read_other_memory_funks,
+		     f2ptr write_other_memory_funks) {
   f2ptr fibers_mutex           = f2mutex__new(cause);
   f2ptr fibers                 = nil;
   f2ptr frame                  = f2__frame__new(cause, nil);
@@ -70,13 +74,15 @@ f2ptr f2__cause__new(f2ptr cause,
 					      bytecode_tracer_funks,
 					      bytecode_endfunk_funks,
 					      complete_funk_funks,
+					      read_other_memory_funks,
+					      write_other_memory_funks,
 					      event_graph_mutex,
 					      event_graph,
 					      event_graph_last_event);
   //printf("\nnew cause: " u64__fstr ".\n", this); fflush(stdout);
   return this;
 }
-def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil));
+def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil));
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   if (source && (! raw__cause__is_type(cause, source))) {
@@ -92,15 +98,17 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   f2ptr bytecode_endfunk_funks   = nil;
   f2ptr complete_funk_funks      = nil;
   if (source) {
-    allocate_traced_arrays = f2__cause__allocate_traced_arrays(cause, source);
-    bytecode_tracing_on    = f2__cause__bytecode_tracing_on(   cause, source);
-    memory_tracing_on      = f2__cause__memory_tracing_on(     cause, source);
-    imagination_stack      = f2__cause__imagination_stack(     cause, source);
-    bytecode_branch_funks  = f2__cause__bytecode_branch_funks( cause, source);
-    bytecode_funk_funks    = f2__cause__bytecode_funk_funks(   cause, source);
-    bytecode_tracer_funks  = f2__cause__bytecode_tracer_funks( cause, source);
-    bytecode_endfunk_funks = f2__cause__bytecode_endfunk_funks(cause, source);
-    complete_funk_funks    = f2__cause__complete_funk_funks(   cause, source);
+    allocate_traced_arrays   = f2__cause__allocate_traced_arrays(  cause, source);
+    bytecode_tracing_on      = f2__cause__bytecode_tracing_on(     cause, source);
+    memory_tracing_on        = f2__cause__memory_tracing_on(       cause, source);
+    imagination_stack        = f2__cause__imagination_stack(       cause, source);
+    bytecode_branch_funks    = f2__cause__bytecode_branch_funks(   cause, source);
+    bytecode_funk_funks      = f2__cause__bytecode_funk_funks(     cause, source);
+    bytecode_tracer_funks    = f2__cause__bytecode_tracer_funks(   cause, source);
+    bytecode_endfunk_funks   = f2__cause__bytecode_endfunk_funks(  cause, source);
+    complete_funk_funks      = f2__cause__complete_funk_funks(     cause, source);
+    read_other_memory_funks  = f2__cause__read_other_memory_funks( cause, source);;
+    write_other_memory_funks = f2__cause__write_other_memory_funks(cause, source);;
   }
   return f2__cause__new(cause,
 			allocate_traced_arrays,
@@ -111,7 +119,9 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
 			bytecode_funk_funks,
 			bytecode_tracer_funks,
 			bytecode_endfunk_funks,
-			complete_funk_funks);
+			complete_funk_funks,
+			read_other_memory_funks,
+			write_other_memory_funks);
 }
 
 f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
@@ -424,7 +434,7 @@ void f2__cause__initialize() {
   
   // cause
   
-  initialize_primobject_15_slot(cause,
+  initialize_primobject_17_slot(cause,
 				fibers_mutex,
 				fibers,
 				frame,
@@ -437,6 +447,8 @@ void f2__cause__initialize() {
 				bytecode_tracer_funks,
 				bytecode_endfunk_funks,
 				complete_funk_funks,
+				read_other_memory_funks,
+				write_other_memory_funks,
 				event_graph_mutex,
 				event_graph,
 				event_graph_last_event);

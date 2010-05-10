@@ -27,7 +27,7 @@
 // cause
 
 typedef struct funk2_object_type__cause__slot_s funk2_object_type__cause__slot_t;
-declare_object_type_15_slot(cause,
+declare_object_type_17_slot(cause,
 			    fibers_mutex,
 			    fibers,
 			    frame,
@@ -40,6 +40,8 @@ declare_object_type_15_slot(cause,
 			    bytecode_tracer_funks,
 			    bytecode_endfunk_funks,
 			    complete_funk_funks,
+			    read_other_memory_funks,
+			    write_other_memory_funks,
 			    event_graph_mutex,
 			    event_graph,
 			    event_graph_last_event,
@@ -70,7 +72,7 @@ declare_object_type_15_slot(cause,
 
 #define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
 
-declare_primobject_15_slot(cause,
+declare_primobject_17_slot(cause,
 			   fibers_mutex,
 			   fibers,
 			   frame,
@@ -83,6 +85,8 @@ declare_primobject_15_slot(cause,
 			   bytecode_tracer_funks,
 			   bytecode_endfunk_funks,
 			   complete_funk_funks,
+			   read_other_memory_funks,
+			   write_other_memory_funks,
 			   event_graph_mutex,
 			   event_graph,
 			   event_graph_last_event
@@ -93,9 +97,9 @@ f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name);
 f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
 f2ptr f2__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
 
-f2ptr  f2__cause(f2ptr cause);
-f2ptr  f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this);
-f2ptr  f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
+f2ptr f2__cause(f2ptr cause);
+f2ptr f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this);
+f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
 
 f2ptr f2cause__primobject_type__new_aux(f2ptr cause);
 

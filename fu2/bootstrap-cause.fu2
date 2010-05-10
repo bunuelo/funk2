@@ -158,7 +158,8 @@
   nil]
 
 [defunk test-fast_tracers []
-  [shelter [start-fast_tracers]]
+  [shelter [start-fast_tracers]
+	   ]
   nil]
 
 [defunk tracer_graph-abstract [this]

@@ -298,7 +298,7 @@
 
 
 'must be run on carol in order for her to actually go.'
-[deftypefunk female_child_agent start_mind []
+[deftypefunk female_child_agent execute start_mind []
   [have this add `fiber [fiber [funk [] [while t
 					  `[print 'female_child_agent construct: fiber here.']
 					   [let [[paused [have this lookup `paused]]]

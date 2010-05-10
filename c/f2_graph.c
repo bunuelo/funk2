@@ -1432,6 +1432,47 @@ f2ptr f2__graph__without_self_loops(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(graph__without_self_loops, this, return f2__graph__without_self_loops(this_cause, this));
 
+f2ptr f2__graph__without_duplicate_edges(f2ptr cause, f2ptr this) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  f2ptr new_graph            = f2__graph__new(cause);
+  f2ptr edge_right_left_hash = f2__ptypehash__new(cause);
+  graph__node__iteration(cause, this, node,
+			 f2ptr node__label = f2__graph_node__label(cause, node);
+			 f2__graph__add_node(cause, new_graph, node__label);
+			 );
+  graph__edge__iteration(cause, this, edge,
+			 f2ptr edge__label             = f2__graph_edge__label(cause, edge);
+			 f2ptr edge__left_node         = f2__graph_edge__left_node(cause, edge);
+			 f2ptr edge__left_node__label  = f2__graph_node__label(cause, edge__left_node);
+			 f2ptr edge__right_node        = f2__graph_edge__right_node(cause, edge);
+			 f2ptr edge__right_node__label = f2__graph_node__label(cause, edge__right_node);
+			 {
+			   f2ptr edge_right_hash = f2__ptypehash__lookup(cause, edge_right_left_hash, edge__left_node__label);
+			   if (edge_right_hash == nil) {
+			     edge_right_hash = f2__ptypehash__new(cause);
+			     f2__ptypehash__add(cause, edge_right_left_hash, edge__left_node__label, edge_right_hash);
+			   }
+			   {
+			     f2ptr edge_hash = f2__ptypehash__lookup(cause, edge_right_hash, edge__right_node__label);
+			     if (edge_hash == nil) {
+			       edge_hash = f2__ptypehash__new(cause);
+			       f2__ptypehash__add(cause, edge_right_hash, edge__right_node__label, edge_hash);
+			     }
+			     {
+			       f2ptr edge__old_label = f2__ptypehash__lookup(cause, edge_hash, edge__label);
+			       if (edge__old_label == nil) {
+				 f2__graph__add_edge(cause, new_graph, edge__label, edge__left_node__label, edge__right_node__label);
+			       }
+			     }
+			   }
+			 }
+			 );
+  return new_graph;
+}
+def_pcfunk1(graph__without_duplicate_edges, this, return f2__graph__without_duplicate_edges(this_cause, this));
+
 // trans
 
 def_primobject_2_slot(trans, remove, add);
@@ -1865,6 +1906,7 @@ void f2__graph__initialize() {
   f2__primcfunk__init__2(graph__abstract_frame_node_slot, this, slot_name, "For all nodes that are frames, lookup the slot_name and create a new graph based on these slot values.");
   f2__primcfunk__init__2(graph__node_map, this, map_funk, "Creates a new graph that filters all node labels through the user supplied map_funk.");
   f2__primcfunk__init__1(graph__without_self_loops, this, "Creates a new graph without any self-loops (edges that connect a node to itself).");
+  f2__primcfunk__init__1(graph__without_duplicate_edges, this, "Creates a new graph without any duplicate edges (same edge label connecting same nodes).");
   
   // trans
   initialize_primobject_2_slot(trans, remove, add);

@@ -1389,6 +1389,9 @@ f2ptr f2__graph__node_map(f2ptr cause, f2ptr this, f2ptr map_funk) {
   graph__node__iteration(cause, this, node,
 			 f2ptr node__label = f2__graph_node__label(cause, node);
 			 f2ptr node__new_label = f2__force_funk_apply(cause, fiber, map_funk, f2cons__new(cause, node__label, nil));
+			 if (raw__larva__is_type(cause, node__new_label)) {
+			   return node__new_label;
+			 }
 			 f2__ptypehash__add(cause, node_hash, node__label, node__new_label);
 			 f2__graph__add_node(cause, new_graph, node__new_label);
 			 );

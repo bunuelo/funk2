@@ -157,6 +157,12 @@
   [shelter [start-fast_tracers]]
   nil]
 
+[defunk tracer_graph-abstract [this]
+  [define a [get this node_map [funk [x] [shelter [get [have x lookup `funk] name]]]]]
+  [define b [get a without_self_loops]]
+  [define c [get b without_duplicate_edges]]
+  c]
+
 
 
 

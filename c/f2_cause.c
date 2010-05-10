@@ -247,33 +247,60 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
     f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, event_frame);
     f2ptr and_then__symbol = new__symbol(cause, "and-then");
     if (raw__funkable__is_type(cause, funk)) {
-      boolean_t found_my_funk = boolean__false;
+      f2ptr matching_funk_event = nil;
       {
 	f2ptr funk__name = f2__funkable__name(cause, funk);
 	f2ptr iter = event_graph_last_event;
-	while (iter && (! raw__larva__is_type(cause, iter)) && (! found_my_funk)) {
+	while (iter && (matching_funk_event == nil)) {
 	  if (raw__frame__is_type(cause, iter)) {
 	    f2ptr iter_event_frame = iter;
 	    f2ptr event_type       = f2__frame__lookup_var_value(cause, iter_event_frame, new__symbol(cause, "event_type"), nil);
 	    if (raw__eq(cause, event_type, new__symbol(cause, "funk"))) {
-	      f2ptr iter_event_frame__funk       = f2__frame__lookup_var_value(cause, iter_event_frame, new__symbol(cause, "funk"), nil);
+	      f2ptr iter_event_frame__funk = f2__frame__lookup_var_value(cause, iter_event_frame, new__symbol(cause, "funk"), nil);
 	      if (raw__funkable__is_type(cause, iter_event_frame__funk)) {
 		f2ptr iter_event_frame__funk__name = f2__funkable__name(cause, iter_event_frame__funk);
 		if (raw__eq(cause, funk__name, iter_event_frame__funk__name)) {
-		  found_my_funk = boolean__true;
+		  matching_funk_event = iter_event_frame;
 		  f2__graph__add_edge(cause, event_graph, new__symbol(cause, "subfunk-span"), iter_event_frame, event_frame);
 		  break;
 		}
 	      }
 	    }
 	  }
-	  // first try jumping by subfunk-spans if one exists.
-	  f2ptr try_before_subfunk_span = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, new__symbol(cause, "subfunk-span"));
-	  if (try_before_subfunk_span != nil) {
-	    iter = try_before_subfunk_span;
+	  {
+	    // first try jumping by subfunk-span if one exists.
+	    f2ptr try_before_subfunk_span = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, new__symbol(cause, "subfunk-span"));
+	    if (try_before_subfunk_span != nil) {
+	      iter = try_before_subfunk_span;
+	    }
+	    // then, just go to the previous event.
+	    iter = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, and_then__symbol);
 	  }
-	  // then, just go to the previous event.
-	  iter = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, and_then__symbol);
+	}
+      }
+      if (matching_funk_event != nil) {
+	// create complete_funk event
+	f2ptr matching_funk_event__args = f2__frame__lookup(cause, matching_funk_event, new__symbol(cause, "args"));
+	f2ptr complete_funk_event       = f2__frame__new(cause);
+	f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "event_type"), new__symbol(cause, "complete-funk"));
+	f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "funk"),       funk);
+	f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "args"),       matching_funk_event__args);
+	f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "value"),      value);
+	// scan forward adding subevent relations
+	f2ptr iter = matching_funk_event;
+	while (iter) {
+	  f2__graph__add_edge(cause, event_graph, new__symbol(cause, "subevent"), matching_funk_event, iter);
+	  if (iter == event_frame) {
+	    iter = nil;
+	  } else {
+	    // first try jumping by subfunk-span if one exists.
+	    f2ptr try_subfunk_span = raw__graph__left_node__an_arbitrary_right_node(cause, event_graph, iter, new__symbol(cause, "subfunk-span"));
+	    if (try_subfunk_span != nil) {
+	      iter = try_subfunk_span;
+	    }
+	    // then, just go to the next event.
+	    iter = raw__graph__left_node__an_arbitrary_right_node(cause, event_graph, iter, and_then__symbol);
+	  }
 	}
       }
     }

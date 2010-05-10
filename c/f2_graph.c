@@ -1409,7 +1409,28 @@ f2ptr f2__graph__node_map(f2ptr cause, f2ptr this, f2ptr map_funk) {
 }
 def_pcfunk2(graph__node_map, this, map_funk, return f2__graph__node_map(this_cause, this, map_funk));
 
-
+f2ptr f2__graph__without_self_loops(f2ptr cause, f2ptr this) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  f2ptr new_graph = f2__graph__new(cause);
+  graph__node__iteration(cause, this, node,
+			 f2ptr node__label = f2__graph_node__label(cause, node);
+			 f2__graph__add_node(cause, new_graph, node__label);
+			 );
+  graph__edge__iteration(cause, this, edge,
+			 f2ptr edge__label                 = f2__graph_edge__label(cause, edge);
+			 f2ptr edge__left_node             = f2__graph_edge__left_node(cause, edge);
+			 f2ptr edge__left_node__label      = f2__graph_node__label(cause, edge__left_node);
+			 f2ptr edge__right_node            = f2__graph_edge__right_node(cause, edge);
+			 f2ptr edge__right_node__label     = f2__graph_node__label(cause, edge__right_node);
+			 if (! raw__eq(cause, edge__left_node__label, edge__right_node__label)) {
+			   f2__graph__add_edge(cause, new_graph, edge__label, edge__left_node__new_label, edge__right_node__new_label);
+			 }
+			 );
+  return new_graph;
+}
+def_pcfunk1(graph__without_self_loops, this, return f2__graph__without_self_loops(this_cause, this));
 
 // trans
 
@@ -1843,6 +1864,7 @@ void f2__graph__initialize() {
   }
   f2__primcfunk__init__2(graph__abstract_frame_node_slot, this, slot_name, "For all nodes that are frames, lookup the slot_name and create a new graph based on these slot values.");
   f2__primcfunk__init__2(graph__node_map, this, map_funk, "Creates a new graph that filters all node labels through the user supplied map_funk.");
+  f2__primcfunk__init__1(graph__without_self_loops, this, "Creates a new graph without any self-loops (edges that connect a node to itself).");
   
   // trans
   initialize_primobject_2_slot(trans, remove, add);

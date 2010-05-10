@@ -24,7 +24,7 @@
 
 // cause
 
-def_primobject_14_slot(cause,
+def_primobject_15_slot(cause,
 		       fibers_mutex,
 		       fibers,
 		       frame,
@@ -36,6 +36,7 @@ def_primobject_14_slot(cause,
 		       bytecode_funk_funks,
 		       bytecode_tracer_funks,
 		       bytecode_endfunk_funks,
+		       complete_funk_funks,
 		       event_graph_mutex,
 		       event_graph,
 		       event_graph_last_event);
@@ -48,7 +49,9 @@ f2ptr f2__cause__new(f2ptr cause,
 		     f2ptr bytecode_branch_funks,
 		     f2ptr bytecode_funk_funks,
 		     f2ptr bytecode_tracer_funks,
-		     f2ptr bytecode_endfunk_funks) {
+		     f2ptr bytecode_endfunk_funks,
+		     f2ptr complete_funk_funks,
+		     ) {
   f2ptr fibers_mutex           = f2mutex__new(cause);
   f2ptr fibers                 = nil;
   f2ptr frame                  = f2__frame__new(cause, nil);
@@ -67,13 +70,14 @@ f2ptr f2__cause__new(f2ptr cause,
 					      bytecode_funk_funks,
 					      bytecode_tracer_funks,
 					      bytecode_endfunk_funks,
+					      complete_funk_funks,
 					      event_graph_mutex,
 					      event_graph,
 					      event_graph_last_event);
   //printf("\nnew cause: " u64__fstr ".\n", this); fflush(stdout);
   return this;
 }
-def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil));
+def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil));
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   if (source && (! raw__cause__is_type(cause, source))) {
@@ -87,6 +91,7 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   f2ptr bytecode_funk_funks      = nil;
   f2ptr bytecode_tracer_funks    = nil;
   f2ptr bytecode_endfunk_funks   = nil;
+  f2ptr complete_funk_funks      = nil;
   if (source) {
     allocate_traced_arrays = f2__cause__allocate_traced_arrays(cause, source);
     bytecode_tracing_on    = f2__cause__bytecode_tracing_on(   cause, source);
@@ -96,6 +101,7 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
     bytecode_funk_funks    = f2__cause__bytecode_funk_funks(   cause, source);
     bytecode_tracer_funks  = f2__cause__bytecode_tracer_funks( cause, source);
     bytecode_endfunk_funks = f2__cause__bytecode_endfunk_funks(cause, source);
+    complete_funk_funks    = f2__cause__complete_funk_funks(   cause, source);
   }
   return f2__cause__new(cause,
 			allocate_traced_arrays,
@@ -105,7 +111,8 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
 			bytecode_branch_funks,
 			bytecode_funk_funks,
 			bytecode_tracer_funks,
-			bytecode_endfunk_funks);
+			bytecode_endfunk_funks,
+			complete_funk_funks);
 }
 
 f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
@@ -233,85 +240,92 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
   if (this == nil) {
     return nil;
   }
-  f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
-  raw__mutex__lock(cause, event_graph_mutex);
+  boolean_t complete_funk__occurred = boolean__false;
+  f2ptr     complete_funk__funk;
+  f2ptr     complete_funk__args;
+  f2ptr     complete_funk__value;
+  f2ptr     complete_funk__first_subevent;
+  f2ptr     complete_funk__last_subevent;
   {
-    f2ptr event_graph            = f2__cause__get_event_graph__thread_unsafe(cause, this);
-    f2ptr event_graph_last_event = f2__cause__event_graph_last_event(cause, this);
-    f2ptr event_frame            = f2__frame__new(cause, nil);
-    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "event_type"), new__symbol(cause, "endfunk"));
-    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "fiber"),      fiber);
-    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "bytecode"),   bytecode);
-    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "value"),      value);
-    f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "funk"),       funk);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, event_frame);
-    f2ptr and_then__symbol = new__symbol(cause, "and-then");
-    if (raw__funkable__is_type(cause, funk)) {
-      f2ptr matching_funk_event = nil;
-      {
-	f2ptr funk__name = f2__funkable__name(cause, funk);
-	f2ptr iter = event_graph_last_event;
-	while (iter && (matching_funk_event == nil)) {
-	  if (raw__frame__is_type(cause, iter)) {
-	    f2ptr iter_event_frame = iter;
-	    f2ptr event_type       = f2__frame__lookup_var_value(cause, iter_event_frame, new__symbol(cause, "event_type"), nil);
-	    if (raw__eq(cause, event_type, new__symbol(cause, "funk"))) {
-	      f2ptr iter_event_frame__funk = f2__frame__lookup_var_value(cause, iter_event_frame, new__symbol(cause, "funk"), nil);
-	      if (raw__funkable__is_type(cause, iter_event_frame__funk)) {
-		f2ptr iter_event_frame__funk__name = f2__funkable__name(cause, iter_event_frame__funk);
-		if (raw__eq(cause, funk__name, iter_event_frame__funk__name)) {
-		  matching_funk_event = iter_event_frame;
-		  f2__graph__add_edge(cause, event_graph, new__symbol(cause, "subfunk-span"), iter_event_frame, event_frame);
-		  break;
+    f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
+    raw__mutex__lock(cause, event_graph_mutex);
+    {
+      f2ptr event_graph            = f2__cause__get_event_graph__thread_unsafe(cause, this);
+      f2ptr event_graph_last_event = f2__cause__event_graph_last_event(cause, this);
+      f2ptr event_frame            = f2__frame__new(cause, nil);
+      f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "event_type"), new__symbol(cause, "endfunk"));
+      f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "fiber"),      fiber);
+      f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "bytecode"),   bytecode);
+      f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "value"),      value);
+      f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "funk"),       funk);
+      f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, event_frame);
+      f2ptr and_then__symbol = new__symbol(cause, "and-then");
+      if (raw__funkable__is_type(cause, funk)) {
+	f2ptr matching_funk_event = nil;
+	{
+	  f2ptr funk__name = f2__funkable__name(cause, funk);
+	  f2ptr iter = event_graph_last_event;
+	  while (iter && (matching_funk_event == nil)) {
+	    if (raw__frame__is_type(cause, iter)) {
+	      f2ptr iter_event_frame = iter;
+	      f2ptr event_type       = f2__frame__lookup_var_value(cause, iter_event_frame, new__symbol(cause, "event_type"), nil);
+	      if (raw__eq(cause, event_type, new__symbol(cause, "funk"))) {
+		f2ptr iter_event_frame__funk = f2__frame__lookup_var_value(cause, iter_event_frame, new__symbol(cause, "funk"), nil);
+		if (raw__funkable__is_type(cause, iter_event_frame__funk)) {
+		  f2ptr iter_event_frame__funk__name = f2__funkable__name(cause, iter_event_frame__funk);
+		  if (raw__eq(cause, funk__name, iter_event_frame__funk__name)) {
+		    matching_funk_event = iter_event_frame;
+		    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "subfunk-span"), iter_event_frame, event_frame);
+		    break;
+		  }
 		}
 	      }
 	    }
-	  }
-	  {
-	    // first try jumping by subfunk-span if one exists.
-	    f2ptr try_before_subfunk_span = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, new__symbol(cause, "subfunk-span"));
-	    if (try_before_subfunk_span != nil) {
-	      iter = try_before_subfunk_span;
+	    {
+	      // first try jumping by subfunk-span if one exists.
+	      f2ptr try_before_subfunk_span = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, new__symbol(cause, "subfunk-span"));
+	      if (try_before_subfunk_span != nil) {
+		iter = try_before_subfunk_span;
+	      }
+	      // then, just go to the previous event.
+	      iter = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, and_then__symbol);
 	    }
-	    // then, just go to the previous event.
-	    iter = raw__graph__right_node__an_arbitrary_left_node(cause, event_graph, iter, and_then__symbol);
 	  }
+	}
+	if (matching_funk_event != nil) {
+	  f2ptr matching_funk_event__args = f2__frame__lookup_var_value(cause, matching_funk_event, new__symbol(cause, "args"), new__symbol(cause, "no-args-available"));
+	  complete_funk__occurred       = boolean__true;
+	  complete_funk__funk           = funk;
+	  complete_funk__args           = matching_funk_event__args;
+	  complete_funk__first_subevent = matching_funk_event;
+	  complete_funk__last_subevent  = event_frame;
+	  // call complete_funk callback
 	}
       }
-      if (matching_funk_event != nil) {
-	// create complete_funk event
-	f2ptr matching_funk_event__args = f2__frame__lookup_var_value(cause, matching_funk_event, new__symbol(cause, "args"), new__symbol(cause, "no-args-available"));
-	f2ptr complete_funk_event       = f2__frame__new(cause, nil);
-	f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "event_type"), new__symbol(cause, "complete-funk"));
-	f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "funk"),       funk);
-	f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "args"),       matching_funk_event__args);
-	f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "value"),      value);
-	f2__graph__add_edge(cause, event_graph, new__symbol(cause, "first-subevent"), complete_funk_event, matching_funk_event);
-	f2__graph__add_edge(cause, event_graph, new__symbol(cause, "last-subevent"),  complete_funk_event, event_frame);
-	// scan forward adding subevent relations
-	f2ptr iter = matching_funk_event;
-	while (iter) {
-	  f2__graph__add_edge(cause, event_graph, new__symbol(cause, "subevent"), complete_funk_event, iter);
-	  if (iter == event_frame) {
-	    iter = nil;
-	  } else {
-	    // don't try jumping if we're at the beginning of our own funktion because that will just take us to the end and we won't mark any subevents at all!
-	    if (iter != matching_funk_event) {
-	      // first try jumping by subfunk-span if one exists.
-	      f2ptr try_subfunk_span = raw__graph__left_node__an_arbitrary_right_node(cause, event_graph, iter, new__symbol(cause, "subfunk-span"));
-	      if (try_subfunk_span != nil) {
-		iter = try_subfunk_span;
-	      }
-	    }
-	    // then, just go to the next event.
-	    iter = raw__graph__left_node__an_arbitrary_right_node(cause, event_graph, iter, and_then__symbol);
-	  }
+      f2__cause__event_graph_last_event__set(cause, this, event_frame);
+    }
+    raw__mutex__unlock(cause, event_graph_mutex);
+  }
+  if (complete_funk__occurred) {
+    f2ptr complete_funk_funks = f2__cause__complete_funk_funks(cause, this);
+    f2ptr fiber = f2__this__fiber(cause);
+    {
+      f2ptr iter = complete_funk_funks;
+      while (iter) {
+	f2ptr complete_funk_funk = f2__cons__car(cause, iter);
+	f2ptr result = f2__force_funk_apply(cause, fiber, complete_funk_funk, f2list6__new(cause, this,
+											   complete_funk__funk,
+											   complete_funk__args,
+											   complete_funk__value,
+											   complete_funk__first_subevent,
+											   complete_funk__last_subevent));
+	if (raw__larva__is_type(cause, result)) {
+	  printf("\nwarning: complete_funk_funk resulted in larva.");
 	}
+	iter = f2__cons__cdr(cause, iter);
       }
     }
-    f2__cause__event_graph_last_event__set(cause, this, event_frame);
   }
-  raw__mutex__unlock(cause, event_graph_mutex);
   return nil;
 }
 def_pcfunk5(cause__add_graph_event__endfunk, this, fiber, bytecode, value, funk, return f2__cause__add_graph_event__endfunk(this_cause, this, fiber, bytecode, value, funk));
@@ -340,14 +354,55 @@ f2ptr f2__cause__add_graph_event__branch(f2ptr cause, f2ptr this, f2ptr fiber, f
 }
 def_pcfunk6(cause__add_graph_event__branch, this, fiber, bytecode, program_counter, branch_program_counter, value, return f2__cause__add_graph_event__branch(this_cause, this, fiber, bytecode, program_counter, branch_program_counter, value));
 
+f2ptr f2__cause__add_graph_event__complete_funk(f2ptr cause, f2ptr this, f2ptr funk, f2ptr args, f2ptr value, f2ptr first_subevent, f2ptr last_subevent) {
+  if (this == nil) {
+    return nil;
+  }
+  f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
+  raw__mutex__lock(cause, event_graph_mutex);
+  {
+    f2ptr event_graph = f2__cause__get_event_graph__thread_unsafe(cause, this);
+    // create complete_funk event
+    f2ptr complete_funk_event = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "event_type"), new__symbol(cause, "complete-funk"));
+    f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "funk"),       funk);
+    f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "args"),       matching_funk_event__args);
+    f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "value"),      value);
+    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "first-subevent"), complete_funk_event, matching_funk_event);
+    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "last-subevent"),  complete_funk_event, event_frame);
+    // scan forward adding subevent relations
+    f2ptr iter = matching_funk_event;
+    while (iter) {
+      f2__graph__add_edge(cause, event_graph, new__symbol(cause, "subevent"), complete_funk_event, iter);
+      if (iter == event_frame) {
+	iter = nil;
+      } else {
+	// don't try jumping if we're at the beginning of our own funktion because that will just take us to the end and we won't mark any subevents at all!
+	if (iter != matching_funk_event) {
+	  // first try jumping by subfunk-span if one exists.
+	  f2ptr try_subfunk_span = raw__graph__left_node__an_arbitrary_right_node(cause, event_graph, iter, new__symbol(cause, "subfunk-span"));
+	  if (try_subfunk_span != nil) {
+	    iter = try_subfunk_span;
+	  }
+	}
+	// then, just go to the next event.
+	iter = raw__graph__left_node__an_arbitrary_right_node(cause, event_graph, iter, and_then__symbol);
+      }
+    }
+  }
+  raw__mutex__unlock(cause, event_graph_mutex);
+  return nil;
+}
+def_pcfunk6(cause__add_graph_event__complete_funk, this, funk, args, value, first_subevent, last_subevent, return f2__cause__add_graph_event__complete_funk(this_cause, this, funk, args, value, first_subevent, last_subevent));
 
 f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2cause__primobject_type__new(cause);
-  {char* slot_name = "define";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk);}
-  {char* slot_name = "define-funk";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__funk);}
-  {char* slot_name = "add_graph_event-funk";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__funk__funk);}
-  {char* slot_name = "add_graph_event-endfunk"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__endfunk__funk);}
-  {char* slot_name = "add_graph_event-branch";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__branch__funk);}
+  {char* slot_name = "define";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk);}
+  {char* slot_name = "define-funk";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__funk);}
+  {char* slot_name = "add_graph_event-funk";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__funk__funk);}
+  {char* slot_name = "add_graph_event-endfunk";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__endfunk__funk);}
+  {char* slot_name = "add_graph_event-branch";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__branch__funk);}
+  {char* slot_name = "add_graph_event-complete_funk"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__complete_funk__funk);}
   return this;
 }
 
@@ -367,7 +422,7 @@ void f2__cause__initialize() {
   
   // cause
   
-  initialize_primobject_14_slot(cause,
+  initialize_primobject_15_slot(cause,
 				fibers_mutex,
 				fibers,
 				frame,
@@ -379,6 +434,7 @@ void f2__cause__initialize() {
 				bytecode_funk_funks,
 				bytecode_tracer_funks,
 				bytecode_endfunk_funks,
+				complete_funk_funks,
 				event_graph_mutex,
 				event_graph,
 				event_graph_last_event);
@@ -393,6 +449,8 @@ void f2__cause__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__5_arg(cause__add_graph_event__endfunk, this, fiber, bytecode, value, funk, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__endfunk__funk = never_gc(cfunk);}
   {char* symbol_str = "add_graph_event-branch"; __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__branch__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__6_arg(cause__add_graph_event__branch, this, fiber, bytecode, program_counter, branch_program_counter, value, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__branch__funk = never_gc(cfunk);}
+  {char* symbol_str = "add_graph_event-complete_funk"; __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__complete_funk__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__6_arg(cause__add_graph_event__complete_funk, this, funk, args, value, first_subevent, last_subevent, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__complete_funk__funk = never_gc(cfunk);}
   
   f2__primcfunk__init__0(cause, "Sets the current cause to be a new cause.  Properties are inherited from the previous cause.");
   

@@ -150,6 +150,10 @@
     [set [this-cause] bytecode_branch_funks [cons [object-execute-funk [this-cause] `add_graph_event-branch]
 						  funks]]
     nil]
+  [let [[funks [get [this-cause] complete_funk_funks]]]
+    [set [this-cause] complete_funk_funks [cons [object-execute-funk [this-cause] `add_graph_event-complete_funk]
+						funks]]
+    nil]
   [globalize fast_tracer_graph [get [this-cause] event_graph]]
   nil]
 

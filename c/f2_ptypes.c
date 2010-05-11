@@ -2885,9 +2885,10 @@ f2ptr f2simple_array__primobject_type__new(f2ptr cause) {
 // traced_array
 
 f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_ptr) {
-  boolean_t tracing_on = raw__cause__is_traced(cause, cause);
-  u64 data_byte_num = (sizeof(funk2_dptr_t) * length);
-  f2ptr traced_array_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
+  f2ptr                       reflective_cause   = nil;
+  boolean_t                   tracing_on         = raw__cause__is_traced(reflective_cause, cause);
+  u64                         data_byte_num      = (sizeof(funk2_dptr_t) * length);
+  f2ptr                       traced_array_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
   ptype_traced_array_block_t* traced_array_block = (ptype_traced_array_block_t*)from_ptr(raw__f2ptr_to_ptr(traced_array_f2ptr));
   debug__assert(traced_array_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
@@ -2907,9 +2908,10 @@ f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_
 }
 
 f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 length, f2ptr* f2ptr_ptr) {
-  boolean_t tracing_on = raw__cause__is_traced(cause, cause);
-  u64 data_byte_num = (sizeof(funk2_dptr_t) * length);
-  f2ptr traced_array_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
+  f2ptr                       reflective_cause   = nil;
+  boolean_t                   tracing_on         = raw__cause__is_traced(reflective_cause, cause);
+  u64                         data_byte_num      = (sizeof(funk2_dptr_t) * length);
+  f2ptr                       traced_array_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
   ptype_traced_array_block_t* traced_array_block = (ptype_traced_array_block_t*)from_ptr(raw__f2ptr_to_ptr(traced_array_f2ptr));
   debug__assert(traced_array_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}

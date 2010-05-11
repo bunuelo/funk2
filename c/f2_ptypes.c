@@ -2986,10 +2986,6 @@ u64 pfunk2__f2traced_array__length(f2ptr this, f2ptr cause) {
   return length;
 }
 
-void debug_break_here() {
-  printf("\ndebug_break_here.");
-}
-
 f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr cause, int trace_depth) {
   check_wait_politely();
   //release__assert((! cause) || raw__causep(cause, nil), nil, "f2traced_array_elt failed debug assertion: cause is non-null and not a cause.");
@@ -3045,7 +3041,6 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
 	f2ptr reflective_cause            = nil;
 	f2ptr read_other_memory_callbacks = f2__cause__read_other_memory_callbacks(reflective_cause, cause);
 	if (read_other_memory_callbacks) {
-	  debug_break_here();
 	  f2ptr fiber = f2__this__fiber(cause);
 	  f2ptr iter  = read_other_memory_callbacks;
 	  while (iter) {

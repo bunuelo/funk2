@@ -3034,6 +3034,29 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
     }
   }
   
+  // then execute causal interaction read funks
+  {
+    if (cause) {
+      f2ptr this__cause = __pure__f2ptype__cause(this);
+      if (cause != this__cause) {
+	f2ptr read_other_memory_callbacks = f2__cause__read_other_memory_callbacks(nil, cause);
+	{
+	  f2ptr fiber = f2__this__fiber(cause);
+	  f2ptr iter = read_other_memory_callbacks;
+	  while (iter) {
+	    f2ptr callback = f2__cons__car(cause, iter);
+	    f2ptr reflective_cause = nil;
+	    f2ptr result = f2__force_funk_apply(reflective_cause, fiber, callback, cause, this, f2integer__new(cause, index));
+	    if (raw__larva__is_type(cause, result)) {
+	      printf("\nwarning: other read callback resulted in larva.");
+	    }
+	    iter = f2__cons__cdr(cause, iter);
+	  }
+	}
+      }
+    }
+  }
+  
   return return_value;
 }
 

@@ -228,6 +228,9 @@ f2ptr f2__cause__add_graph_event__funk(f2ptr cause, f2ptr this, f2ptr fiber, f2p
   if (this == nil) {
     return nil;
   }
+  if (! raw__cause__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
   {
@@ -250,6 +253,9 @@ def_pcfunk5(cause__add_graph_event__funk, this, fiber, bytecode, funk, args, ret
 f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr value, f2ptr funk) {
   if (this == nil) {
     return nil;
+  }
+  if (! raw__cause__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
   }
   boolean_t complete_funk__occurred = boolean__false;
   f2ptr     complete_funk__funk;
@@ -343,6 +349,9 @@ f2ptr f2__cause__add_graph_event__branch(f2ptr cause, f2ptr this, f2ptr fiber, f
   if (this == nil) {
     return nil;
   }
+  if (! raw__cause__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
   {
@@ -366,6 +375,9 @@ def_pcfunk6(cause__add_graph_event__branch, this, fiber, bytecode, program_count
 f2ptr f2__cause__add_graph_event__complete_funk(f2ptr cause, f2ptr this, f2ptr funk, f2ptr args, f2ptr value, f2ptr first_subevent, f2ptr last_subevent) {
   if (this == nil) {
     return nil;
+  }
+  if (! raw__cause__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
   }
   printf("\ncomplete_funk");
   f2__print(cause, funk);
@@ -435,6 +447,9 @@ def_pcfunk3(cause__add_graph_event__read_other_memory, this, array, index, retur
 f2ptr f2__cause__add_graph_event__write_other_memory(f2ptr cause, f2ptr this, f2ptr object, f2ptr slot_name, f2ptr old_value) {
   if (this == nil) {
     return nil;
+  }
+  if (! raw__cause__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
   }
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);

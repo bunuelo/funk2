@@ -32,13 +32,13 @@ def_primobject_17_slot(cause,
 		       bytecode_tracing_on,
 		       memory_tracing_on,
 		       imagination_stack,
-		       bytecode_branch_funks,
-		       bytecode_funk_funks,
-		       bytecode_tracer_funks,
-		       bytecode_endfunk_funks,
-		       complete_funk_funks,
-		       read_other_memory_funks,
-		       write_other_memory_funks,
+		       bytecode_branch_callbacks,
+		       bytecode_funk_callbacks,
+		       bytecode_tracer_callbacks,
+		       bytecode_endfunk_callbacks,
+		       complete_funk_callbacks,
+		       read_other_memory_callbacks,
+		       write_other_memory_callbacks,
 		       event_graph_mutex,
 		       event_graph,
 		       event_graph_last_event);
@@ -48,13 +48,13 @@ f2ptr f2__cause__new(f2ptr cause,
 		     f2ptr bytecode_tracing_on,
 		     f2ptr memory_tracing_on,
 		     f2ptr imagination_name,
-		     f2ptr bytecode_branch_funks,
-		     f2ptr bytecode_funk_funks,
-		     f2ptr bytecode_tracer_funks,
-		     f2ptr bytecode_endfunk_funks,
-		     f2ptr complete_funk_funks,
-		     f2ptr read_other_memory_funks,
-		     f2ptr write_other_memory_funks) {
+		     f2ptr bytecode_branch_callbacks,
+		     f2ptr bytecode_funk_callbacks,
+		     f2ptr bytecode_tracer_callbacks,
+		     f2ptr bytecode_endfunk_callbacks,
+		     f2ptr complete_funk_callbacks,
+		     f2ptr read_other_memory_callbacks,
+		     f2ptr write_other_memory_callbacks) {
   f2ptr fibers_mutex           = f2mutex__new(cause);
   f2ptr fibers                 = nil;
   f2ptr frame                  = f2__frame__new(cause, nil);
@@ -69,13 +69,13 @@ f2ptr f2__cause__new(f2ptr cause,
 					      bytecode_tracing_on,
 					      memory_tracing_on,
 					      imagination_name,
-					      bytecode_branch_funks,
-					      bytecode_funk_funks,
-					      bytecode_tracer_funks,
-					      bytecode_endfunk_funks,
-					      complete_funk_funks,
-					      read_other_memory_funks,
-					      write_other_memory_funks,
+					      bytecode_branch_callbacks,
+					      bytecode_funk_callbacks,
+					      bytecode_tracer_callbacks,
+					      bytecode_endfunk_callbacks,
+					      complete_funk_callbacks,
+					      read_other_memory_callbacks,
+					      write_other_memory_callbacks,
 					      event_graph_mutex,
 					      event_graph,
 					      event_graph_last_event);
@@ -88,42 +88,42 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   if (source && (! raw__cause__is_type(cause, source))) {
     return f2larva__new(cause, 333, nil);
   }
-  f2ptr allocate_traced_arrays   = cause__allocate_traced_arrays__default_value; // default values
-  f2ptr bytecode_tracing_on      = nil;
-  f2ptr memory_tracing_on        = nil;
-  f2ptr imagination_stack        = nil;
-  f2ptr bytecode_branch_funks    = nil;
-  f2ptr bytecode_funk_funks      = nil;
-  f2ptr bytecode_tracer_funks    = nil;
-  f2ptr bytecode_endfunk_funks   = nil;
-  f2ptr complete_funk_funks      = nil;
-  f2ptr read_other_memory_funks  = nil;
-  f2ptr write_other_memory_funks = nil;
+  f2ptr allocate_traced_arrays       = cause__allocate_traced_arrays__default_value; // default values
+  f2ptr bytecode_tracing_on          = nil;
+  f2ptr memory_tracing_on            = nil;
+  f2ptr imagination_stack            = nil;
+  f2ptr bytecode_branch_callbacks    = nil;
+  f2ptr bytecode_funk_callbacks      = nil;
+  f2ptr bytecode_tracer_callbacks    = nil;
+  f2ptr bytecode_endfunk_callbacks   = nil;
+  f2ptr complete_funk_callbacks      = nil;
+  f2ptr read_other_memory_callbacks  = nil;
+  f2ptr write_other_memory_callbacks = nil;
   if (source) {
-    allocate_traced_arrays   = f2__cause__allocate_traced_arrays(  cause, source);
-    bytecode_tracing_on      = f2__cause__bytecode_tracing_on(     cause, source);
-    memory_tracing_on        = f2__cause__memory_tracing_on(       cause, source);
-    imagination_stack        = f2__cause__imagination_stack(       cause, source);
-    bytecode_branch_funks    = f2__cause__bytecode_branch_funks(   cause, source);
-    bytecode_funk_funks      = f2__cause__bytecode_funk_funks(     cause, source);
-    bytecode_tracer_funks    = f2__cause__bytecode_tracer_funks(   cause, source);
-    bytecode_endfunk_funks   = f2__cause__bytecode_endfunk_funks(  cause, source);
-    complete_funk_funks      = f2__cause__complete_funk_funks(     cause, source);
-    read_other_memory_funks  = f2__cause__read_other_memory_funks( cause, source);;
-    write_other_memory_funks = f2__cause__write_other_memory_funks(cause, source);;
+    allocate_traced_arrays       = f2__cause__allocate_traced_arrays(      cause, source);
+    bytecode_tracing_on          = f2__cause__bytecode_tracing_on(         cause, source);
+    memory_tracing_on            = f2__cause__memory_tracing_on(           cause, source);
+    imagination_stack            = f2__cause__imagination_stack(           cause, source);
+    bytecode_branch_callbacks    = f2__cause__bytecode_branch_callbacks(   cause, source);
+    bytecode_funk_callbacks      = f2__cause__bytecode_funk_callbacks(     cause, source);
+    bytecode_tracer_callbacks    = f2__cause__bytecode_tracer_callbacks(   cause, source);
+    bytecode_endfunk_callbacks   = f2__cause__bytecode_endfunk_callbacks(  cause, source);
+    complete_funk_callbacks      = f2__cause__complete_funk_callbacks(     cause, source);
+    read_other_memory_callbacks  = f2__cause__read_other_memory_callbacks( cause, source);;
+    write_other_memory_callbacks = f2__cause__write_other_memory_callbacks(cause, source);;
   }
   return f2__cause__new(cause,
 			allocate_traced_arrays,
 			bytecode_tracing_on,
 			memory_tracing_on,
 			imagination_stack,
-			bytecode_branch_funks,
-			bytecode_funk_funks,
-			bytecode_tracer_funks,
-			bytecode_endfunk_funks,
-			complete_funk_funks,
-			read_other_memory_funks,
-			write_other_memory_funks);
+			bytecode_branch_callbacks,
+			bytecode_funk_callbacks,
+			bytecode_tracer_callbacks,
+			bytecode_endfunk_callbacks,
+			complete_funk_callbacks,
+			read_other_memory_callbacks,
+			write_other_memory_callbacks);
 }
 
 f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
@@ -319,10 +319,10 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
     raw__mutex__unlock(cause, event_graph_mutex);
   }
   if (complete_funk__occurred) {
-    f2ptr complete_funk_funks = f2__cause__complete_funk_funks(cause, this);
+    f2ptr complete_funk_callbacks = f2__cause__complete_funk_callbacks(cause, this);
     f2ptr fiber = f2__this__fiber(cause);
     {
-      f2ptr iter = complete_funk_funks;
+      f2ptr iter = complete_funk_callbacks;
       while (iter) {
 	f2ptr complete_funk_funk = f2__cons__car(cause, iter);
 	f2ptr result = f2__force_funk_apply(cause, fiber, complete_funk_funk, f2list6__new(cause, this,
@@ -491,13 +491,13 @@ void f2__cause__initialize() {
 				bytecode_tracing_on,
 				memory_tracing_on,
 				imagination_stack,
-				bytecode_branch_funks,
-				bytecode_funk_funks,
-				bytecode_tracer_funks,
-				bytecode_endfunk_funks,
-				complete_funk_funks,
-				read_other_memory_funks,
-				write_other_memory_funks,
+				bytecode_branch_callbacks,
+				bytecode_funk_callbacks,
+				bytecode_tracer_callbacks,
+				bytecode_endfunk_callbacks,
+				complete_funk_callbacks,
+				read_other_memory_callbacks,
+				write_other_memory_callbacks,
 				event_graph_mutex,
 				event_graph,
 				event_graph_last_event);

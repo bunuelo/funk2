@@ -412,6 +412,7 @@ f2ptr f2__cause__add_graph_event__read_other_memory(f2ptr cause, f2ptr this, f2p
   if (this == nil) {
     return nil;
   }
+  pause_gc();
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
   {
@@ -425,6 +426,7 @@ f2ptr f2__cause__add_graph_event__read_other_memory(f2ptr cause, f2ptr this, f2p
     f2__cause__event_graph_last_event__set(cause, this, read_other_memory_event);
   }
   raw__mutex__unlock(cause, event_graph_mutex);
+  resume_gc();
   return nil;
 }
 def_pcfunk3(cause__add_graph_event__read_other_memory, this, array, index, return f2__cause__add_graph_event__read_other_memory(this_cause, this, array, index));

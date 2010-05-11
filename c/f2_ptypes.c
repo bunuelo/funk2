@@ -3046,7 +3046,7 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
 	  while (iter) {
 	    f2ptr callback = f2__cons__car(cause, iter);
 	    f2ptr reflective_cause = nil;
-	    f2ptr result = f2__force_funk_apply(reflective_cause, fiber, callback, cause, this, f2integer__new(cause, index));
+	    f2ptr result = f2__force_funk_apply(reflective_cause, fiber, callback, f2list3__new(cause, cause, this, f2integer__new(cause, index)));
 	    if (raw__larva__is_type(cause, result)) {
 	      printf("\nwarning: other read callback resulted in larva.");
 	    }

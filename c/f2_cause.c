@@ -412,6 +412,9 @@ f2ptr f2__cause__add_graph_event__read_other_memory(f2ptr cause, f2ptr this, f2p
   if (this == nil) {
     return nil;
   }
+  if (! raw__cause__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
   {

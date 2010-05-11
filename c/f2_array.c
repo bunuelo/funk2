@@ -24,7 +24,8 @@
 // array interface
 
 f2ptr raw__array__new(f2ptr cause, u64 length) {
-  if (raw__cause__allocate_traced_arrays(cause, cause)) {
+  f2ptr reflective_cause = nil;
+  if (raw__cause__allocate_traced_arrays(reflective_cause, cause)) {
     return f2traced_array__new(cause, length, to_ptr(NULL));
   } else {
     return f2simple_array__new(cause, length, to_ptr(NULL));
@@ -32,7 +33,8 @@ f2ptr raw__array__new(f2ptr cause, u64 length) {
 }
 
 f2ptr raw__array__new_copy(f2ptr cause, u64 length, f2ptr init) {
-  if (raw__cause__allocate_traced_arrays(cause, cause)) {
+  f2ptr reflective_cause = nil;
+  if (raw__cause__allocate_traced_arrays(reflective_cause, cause)) {
     return f2traced_array__new_copy(cause, length, init);
   } else {
     return f2simple_array__new_copy(cause, length, init);

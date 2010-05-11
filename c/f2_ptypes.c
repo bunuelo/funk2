@@ -3040,7 +3040,7 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
       f2ptr this__cause = __pure__f2ptype__cause(this);
       if (cause != this__cause) {
 	f2ptr read_other_memory_callbacks = f2__cause__read_other_memory_callbacks(nil, cause);
-	{
+	if (read_other_memory_callbacks) {
 	  f2ptr fiber = f2__this__fiber(cause);
 	  f2ptr iter = read_other_memory_callbacks;
 	  while (iter) {

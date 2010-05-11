@@ -492,11 +492,11 @@ f2ptr f2__parallel_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr ar
 
 void f2fiber__force_funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   f2ptr env;
-  if      (raw__funk__is_type(cause, cfunkable))       {env = f2funk__env(cfunkable, cause);}
-  else if (raw__metro__is_type(cause, cfunkable))      {env = f2metro__env(cfunkable, cause);}
-  else if (raw__cfunk__is_type(cause, cfunkable))      {env = f2fiber__env(fiber, cause);}
+  if      (raw__funk__is_type(      cause, cfunkable)) {env = f2funk__env(cfunkable, cause);}
+  else if (raw__metro__is_type(     cause, cfunkable)) {env = f2metro__env(cfunkable, cause);}
+  else if (raw__cfunk__is_type(     cause, cfunkable)) {env = f2fiber__env(fiber, cause);}
   else if (raw__metrocfunk__is_type(cause, cfunkable)) {env = f2fiber__env(fiber, cause);}
-  else                                         {error(nil, "f2fiber__force_funk error: cfunkable must be funk or metro.");}
+  else                                                 {error(nil, "f2fiber__force_funk error: cfunkable must be funk or metro.");}
   
   f2fiber__env__set(fiber, cause, env);
   f2fiber__args__set(fiber, cause, args);

@@ -3027,7 +3027,7 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
       f2ptr args          = nil;
       while (funkable_iter) {
 	f2ptr funkable = f2cons__car(funkable_iter, cause);
-	f2__parallel_funk_apply(cause, fiber, funkable, args);
+	f2__force_funk_apply(cause, fiber, funkable, args);
 	funkable_iter = f2cons__cdr(funkable_iter, cause);
       }
     }
@@ -3045,7 +3045,7 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
 	  f2ptr iter  = read_other_memory_callbacks;
 	  while (iter) {
 	    f2ptr callback = f2__cons__car(reflective_cause, iter);
-	    f2__parallel_funk_apply(reflective_cause, fiber, callback, f2list3__new(reflective_cause, cause, this, f2integer__new(cause, index)));
+	    f2__force_funk_apply(reflective_cause, fiber, callback, f2list3__new(reflective_cause, cause, this, f2integer__new(cause, index)));
 	    iter = f2__cons__cdr(reflective_cause, iter);
 	  }
 	}
@@ -3132,7 +3132,7 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
       f2ptr args          = nil;
       while (funkable_iter) {
 	f2ptr funkable = f2cons__car(funkable_iter, cause);
-	f2__parallel_funk_apply(cause, fiber, funkable, args);
+	f2__force_funk_apply(cause, fiber, funkable, args);
 	funkable_iter = f2cons__cdr(funkable_iter, cause);
       }
     }

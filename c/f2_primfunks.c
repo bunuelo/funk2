@@ -484,6 +484,12 @@ f2ptr f2__force_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args)
   }
 }
 
+f2ptr f2__parallel_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args) {
+  f2ptr new_fiber = f2__fiber_parallel(cause, cause, fiber, f2fiber__env(fiber, cause), funkable, args);
+  f2fiber__keep_undead__set(new_fiber, cause, nil);
+  return nil;
+}
+
 void f2fiber__force_funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   f2ptr env;
   if      (raw__funk__is_type(cause, cfunkable))       {env = f2funk__env(cfunkable, cause);}

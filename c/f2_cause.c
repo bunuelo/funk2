@@ -325,15 +325,12 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
       f2ptr iter = complete_funk_callbacks;
       while (iter) {
 	f2ptr complete_funk_funk = f2__cons__car(cause, iter);
-	f2ptr result = f2__force_funk_apply(cause, fiber, complete_funk_funk, f2list6__new(cause, this,
-											   complete_funk__funk,
-											   complete_funk__args,
-											   complete_funk__value,
-											   complete_funk__first_subevent,
-											   complete_funk__last_subevent));
-	if (raw__larva__is_type(cause, result)) {
-	  printf("\nwarning: complete_funk_funk resulted in larva.");
-	}
+	f2__parallel_funk_apply(cause, fiber, complete_funk_funk, f2list6__new(cause, this,
+									       complete_funk__funk,
+									       complete_funk__args,
+									       complete_funk__value,
+									       complete_funk__first_subevent,
+									       complete_funk__last_subevent));
 	iter = f2__cons__cdr(cause, iter);
       }
     }

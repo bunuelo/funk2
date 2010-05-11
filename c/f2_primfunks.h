@@ -890,6 +890,7 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y);
 // primobject fiber
 
 f2ptr f2__force_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args);
+f2ptr f2__parallel_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args);
 void f2fiber__force_funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args);
 void f2fiber__funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args);
 f2ptr f2__fiber__new_unscheduled(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args);

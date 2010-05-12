@@ -274,7 +274,7 @@
 
 [defunk compile_funk2_about [root_dir posts]
   [let [[about [funk2_about posts]]]
-    [have about save [string-concat 'about/index.html']]
+    [have about save [string-concat root_dir 'about/index.html']]
     nil]]
 
 

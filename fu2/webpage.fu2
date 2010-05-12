@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 [deframe funk2_post    [frame] [title date author entry]]
-[deframe funk2_example [frame] [name title]]
+[deframe funk2_example [frame] [name title content]]
 
 [defunk funk2_calendar []
   [string-prog '<div id="calendar_wrap">'
@@ -353,6 +353,22 @@
     nil]]
 
 
+[defunk funk2_example [posts examples example]
+  [funk2_page posts examples
+	      [get example content]]]
+
+[defunk compile_funk2_example [root_dir posts example]
+  [let [[example [funk2_example posts examples example]]]
+    [have example save [string-concat root_dir 'example/' [get example name] '/index.html']]
+    nil]]
+
+[defunk compile_funk2_examples [root_dir posts examples]
+  [mapc [funk [example]
+	      [compile_funk2_example root_dir posts example]]
+	examples]
+  nil]
+
+
 [defunk recompile_webpage []
   [load 'fu2/webpage.fu2']
   [let [[root_dir '/home/neptune/Desktop/www/funk2/']
@@ -454,32 +470,39 @@
      
      
 	[examples [list [let [[this [new funk2_example]]]
-			  [set this name  'xmlrpc_client']
-			  [set this title 'XML-RPC client']
+			  [set this name    'xmlrpc_client']
+			  [set this title   'XML-RPC client']
+			  [set this content 'example content']
 			  this]
 			[let [[this [new funk2_example]]]
-			  [set this name  'graph_matching']
-			  [set this title 'Graph Matching']
+			  [set this name    'graph_matching']
+			  [set this title   'Graph Matching']
+			  [set this content 'example content']
 			  this]
 			[let [[this [new funk2_example]]]
-			  [set this name  'graphviz']
-			  [set this title 'GraphViz Graph Visualization']
+			  [set this name    'graphviz']
+			  [set this title   'GraphViz Graph Visualization']
+			  [set this content 'example content']
 			  this]
 			[let [[this [new funk2_example]]]
-			  [set this name  'socket_client']
-			  [set this title 'Socket client']
+			  [set this name    'socket_client']
+			  [set this title   'Socket client']
+			  [set this content 'example content']
 			  this]
 			[let [[this [new funk2_example]]]
-			  [set this name  'socket_server']
-			  [set this title 'Socket server']
+			  [set this name    'socket_server']
+			  [set this title   'Socket server']
+			  [set this content 'example content']
 			  this]
 			[let [[this [new funk2_example]]]
-			  [set this name  'causal_event_tracing']
-			  [set this title 'Causal event tracing']
+			  [set this name    'causal_event_tracing']
+			  [set this title   'Causal event tracing']
+			  [set this content 'example content']
 			  this]
 			[let [[this [new funk2_example]]]
-			  [set this name  'isisworld_client']
-			  [set this title 'IsisWorld client']
+			  [set this name    'isisworld_client']
+			  [set this title   'IsisWorld client']
+			  [set this content 'example content']
 			  this]
 			]]]
     [print 'compiling funk2 homepage']      [compile_funk2_homepage      root_dir posts examples]
@@ -490,6 +513,7 @@
     [print 'compiling funk2 community']     [compile_funk2_community     root_dir posts examples]
     [print 'compiling funk2 foundation']    [compile_funk2_foundation    root_dir posts examples]
     [print 'compiling funk2 development']   [compile_funk2_development   root_dir posts examples]
+    [print 'compiling funk2 examples']      [compile_funk2_examples      root_dir posts examples]
     [print 'done compiling']
     nil]]
 

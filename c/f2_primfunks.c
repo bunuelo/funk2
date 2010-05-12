@@ -791,6 +791,43 @@ def_pcfunk2(exp__format__html, stream, x, return f2__format__html(this_cause, si
 
 def_pcfunk2(exp__fwrite_html, stream, exp, return f2__fwrite_html(this_cause, simple_fiber, stream, exp));
 
+
+f2ptr raw__mkdir(f2ptr cause, f2ptr directory_name) {
+  u64 directory_name__length = raw__string__length(cause, directory_name);
+  u8* directory_name__str = (u8*)alloca(directory_name__length + 1);
+  raw__string__str_copy(cause, directory_name, directory_name__str);
+  directory_name__str[directory_name__length] = 0;
+  int failure = mkdir((char*)directory_name__str);
+  if (failure) {
+    f2ptr bug_frame = f2__frame__new(cause);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_create_directory"));
+    f2ptr error_description;
+    switch(errno) {
+    case EACCES:       error_description = new__string(cause, "Search permission is denied on a component of the path prefix, or write permission is denied on the parent directory of the directory to be created."); break;
+    case EEXIST:       error_description = new__string(cause, "The named file exists."); break;
+    case ELOOP:        error_description = new__string(cause, "A loop exists in symbolic links encountered during resolution of the path argument."); break;
+    case EMLINK:       error_description = new__string(cause, "The link count of the parent directory would exceed {LINK_MAX}."); break;
+    case ENAMETOOLONG: error_description = new__string(cause, "The length of the path argument exceeds {PATH_MAX} or a pathname component is longer than {NAME_MAX}."); break;
+    case ENOENT:       error_description = new__string(cause, "A component of the path prefix specified by path does not name an existing directory or path is an empty string."); break;
+    case ENOSPC:       error_description = new__string(cause, "The file system does not contain enough space to hold the contents of the new directory or to extend the parent directory of the new directory."); break;
+    case ENOTDIR:      error_description = new__string(cause, "A component of the path prefix is not a directory."); break;
+    case EROFS:        error_description = new__string(cause, "The parent directory resides on a read-only file system."); break;
+    case ELOOP:        error_description = new__string(cause, "More than {SYMLOOP_MAX} symbolic links were encountered during resolution of the path argument."); break;
+    case ENAMETOOLONG: error_description = new__string(cause, "As a result of encountering a symbolic link in resolution of the path argument, the length of the substituted pathname string exceeded {PATH_MAX}."); break;
+    default:           error_description = new__string(cause, "unknown mkdir error."); break;
+    }
+  }
+  return f2larva__new(cause, 345, f2__bug__new(cause, f2integer__new(cause, 345), bug_frame));
+}
+
+f2ptr f2__mkdir(f2ptr cause, f2ptr directory_name) {
+  if (! raw__string__is_type(cause, directory_name)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mkdir(cause, directory_name);
+}
+def_pcfunk1(mkdir, directory_name, return f2__mkdir(this_cause, directory_name));
+
 f2ptr f2__conslist(f2ptr cause, f2ptr seq) {
   //debug_memory_test();
   if (! seq) {return nil;}
@@ -1641,6 +1678,8 @@ void f2__primcfunks__initialize() {
   
   // traced_array
   
+  
+  f2__primcfunk__init__1(mkdir, directory_name, "makes a directory.");
   
   // cons
   

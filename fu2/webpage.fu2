@@ -98,7 +98,7 @@
 	       '<title>Funk2 Programming Language -- Official Website</title>'
 	       '<meta name="keywords" content="" />'
 	       '<meta name="Funk2" content="" />'
-	       '<link href="default.css" rel="stylesheet" type="text/css" media="screen" />'
+	       '<link href="/default.css" rel="stylesheet" type="text/css" media="screen" />'
 	       '</head>'
 	       '<body>'
 	       '<div id="header">'

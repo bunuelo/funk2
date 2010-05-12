@@ -303,7 +303,7 @@
 									'       The Funk2 project is currently supported as a core research effort of the <a href=http://mmp.mit.edu>Mind Machine Project</a>.</p>']]
 					  this]
 					]]]]
-    [have funk2_homepage save '/home/neptune/Desktop/www/funk2/index.html']
+    [have homepage save '/home/neptune/Desktop/www/funk2/index.html']
     nil]]
 
 [defunk recompile_homepage []

@@ -25,18 +25,10 @@
 
 // bug
 
-def_primobject_1_slot(bug, bug_type);
+def_primobject_2_slot(bug, bug_type, frame);
 
-f2ptr f2__bug__new(f2ptr cause, f2ptr type) {return f2bug__new(cause, type);}
-def_pcfunk1(bug__new, type, return f2__bug__new(this_cause, type));
-
-f2ptr f2__bug__new_from_larva(f2ptr cause, f2ptr larva) {
-  if (! raw__larva__is_type(cause, larva)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  u64 larva_type = f2larva__larva_type(larva, cause);
-  return f2__bug__new(cause, f2integer__new(cause, larva_type));
-}
+f2ptr f2__bug__new(f2ptr cause, f2ptr type, f2ptr frame) {return f2bug__new(cause, type, frame);}
+def_pcfunk2(bug__new, type, frame, return f2__bug__new(this_cause, type, frame));
 
 
 // **
@@ -56,7 +48,7 @@ void f2__bug__initialize() {
   
   // bug
   
-  initialize_primobject_1_slot(bug, bug_type);
+  initialize_primobject_2_slot(bug, bug_type, frame);
   
 }
 

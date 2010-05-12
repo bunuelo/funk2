@@ -30,7 +30,7 @@
 	       '</head>'
 	       '<body>'
 	       '<div id="header">'
-	       '        <div id="logo">'
+	       '        <div id="logo" width="100%">'
 	       '	  <h1><a href="#">Funk2</a></h1>'
 	       '	  <p>reflective programming language</p>'
 	       '          <div id="img.right">'

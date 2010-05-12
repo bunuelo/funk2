@@ -816,8 +816,9 @@ f2ptr raw__mkdir(f2ptr cause, f2ptr directory_name) {
       //case ENAMETOOLONG: error_description = new__string(cause, "As a result of encountering a symbolic link in resolution of the path argument, the length of the substituted pathname string exceeded {PATH_MAX}."); break;
     default:           error_description = new__string(cause, "unknown mkdir error."); break;
     }
+    return f2larva__new(cause, 345, f2__bug__new(cause, f2integer__new(cause, 345), bug_frame));
   }
-  return f2larva__new(cause, 345, f2__bug__new(cause, f2integer__new(cause, 345), bug_frame));
+  return nil;
 }
 
 f2ptr f2__mkdir(f2ptr cause, f2ptr directory_name) {

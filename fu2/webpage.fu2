@@ -110,7 +110,7 @@
 	       '				<h1 class="title"><a href="#">Welcome to the official Funk2 Website!</a></h1>'
 	       '				<p class="byline"><small>Posted on May 12th, 2010 by <a href="#">Bo Morgan</a></small></p>'
 	       '				<div class="entry">'
-	       '					<p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  This project is currently a core research effort of the <a href=mmp.mit.edu>>Mind Machine Project</a>.</p>'
+	       '					<p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  This project is currently a core research effort of the <a href=http://mmp.mit.edu>Mind Machine Project</a>.</p>'
 	       '					<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
 	       '				</div>'
 	       '			</div>'

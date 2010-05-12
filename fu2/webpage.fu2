@@ -90,7 +90,7 @@
 	       '</table>'
 	       '</div>']]
 
-[defunk funk2_homepage [posts]
+[defunk funk2_page [posts content]
   [string-prog '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
 	       '<html xmlns="http://www.w3.org/1999/xhtml">'
 	       '<head>'
@@ -142,7 +142,7 @@
 	       [stringlist-prog [let [[index 0]]
 				  [mapcar [funk [post]
 						[= index [+ index 1]]
-						[stringlist-concat `['<li><a href="#post' ,[exp-as-string index] '">' ,[get post title] '</a></li>']]]
+						[stringlist-concat `['<li><a href="/#post' ,[exp-as-string index] '">' ,[get post title] '</a></li>']]]
 					  posts]]]
 	       '					</ul>'
 	       '				</li>'
@@ -181,8 +181,66 @@
 	       '				</li>'
 	       '			</ul>'
 	       '		</div>'
-	       '		<!-- start content -->'
-	       '		<div id="content">'
+	       content
+	       '		<!-- start sidebars -->'
+	       '		<div id="sidebar2" class="sidebar">'
+	       '			<ul>'
+	       '				<li>'
+	       '					<form id="searchform" method="get" action="#">'
+	       '						<div>'
+	       '							<h2>Site Search</h2>'
+	       '							<input type="text" name="s" id="s" size="15" value="" />'
+	       '							<br />'
+	       '							<input type="submit" value="Search" id="x" />'
+	       '						</div>'
+	       '					</form>'
+	       '				</li>'
+	       '				<li>'
+	       '					<h2>Tags</h2>'
+	       '					<p class="tag"><a href="#">reflection</a> <a href="#">mind</a> <a href="#">consciousness</a> <a href="#">debug</a> <a href="#">language</a> <a href="#">control</a> <a href="#">learn</a> <a href="#">cognitive model</a></p></li>'
+	       '				<li>'
+	       '					<h2>Calendar</h2>'
+	       [funk2_calendar]
+	       '				</li>'
+	       '				<li>'
+	       '					<h2>Categories</h2>'
+	       '					<ul>'
+	       '						<li><a href="#">Aliquam libero</a></li>'
+	       '						<li><a href="#">Consectetuer adipiscing elit</a></li>'
+	       '						<li><a href="#">Metus aliquam pellentesque</a></li>'
+	       '						<li><a href="#">Suspendisse iaculis mauris</a></li>'
+	       '						<li><a href="#">Urnanet non molestie semper</a></li>'
+	       '						<li><a href="#">Proin gravida orci porttitor</a></li>'
+	       '						<li><a href="#">Aliquam libero</a></li>'
+	       '						<li><a href="#">Consectetuer adipiscing elit</a></li>'
+	       '						<li><a href="#">Metus aliquam pellentesque</a></li>'
+	       '						<li><a href="#">Urnanet non molestie semper</a></li>'
+	       '						<li><a href="#">Proin gravida orci porttitor</a></li>'
+	       '						<li><a href="#">Aliquam libero</a></li>'
+	       '						<li><a href="#">Consectetuer adipiscing elit</a></li>'
+	       '						<li><a href="#">Metus aliquam pellentesque</a></li>'
+	       '						<li><a href="#">Suspendisse iaculis mauris</a></li>'
+	       '						<li><a href="#">Urnanet non molestie semper</a></li>'
+	       '						<li><a href="#">Proin gravida orci porttitor</a></li>'
+	       '					</ul>'
+	       '				</li>'
+	       '			</ul>'
+	       '		</div>'
+	       '		<!-- end sidebars -->'
+	       '		<div style="clear: both;">&nbsp;</div>'
+	       '	</div>'
+	       '	<!-- end page -->'
+	       '</div>'
+	       '<div id="footer">'
+	       '	<p>&copy;2009 All Rights Reserved. &nbsp;&bull;&nbsp; Design by <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.</p>'
+	       '</div>'
+	       '</body>'
+	       '</html>']]
+  
+
+[defunk funk2_homepage-content [posts]
+  [string-prog '<!-- start content -->'
+	       '<div id="content">'
 	       [stringlist-prog [let [[index 0]]
 				  [mapcar [funk [post]
 						[= index [+ index 1]]
@@ -195,8 +253,13 @@
 							     '  </div>'
 							     '</div>']]
 					  posts]]]
-	       '		</div>'
-	       '		<!-- end content -->'
+	       '</div>'
+	       '<!-- end content -->']]
+
+[defunk funk2_homepage [posts]
+  [funk_page posts
+	     [funk2_homepage-content]]]
+
 	       '		<!-- start sidebars -->'
 	       '		<div id="sidebar2" class="sidebar">'
 	       '			<ul>'
@@ -262,7 +325,7 @@
 									'       The Funk2 project is currently supported as a core research effort of the <a href=http://mmp.mit.edu>Mind Machine Project</a>.</p>']]
 					  this]
 					[let [[this [new funk2_post]]]
-					  [set this title  'Call to Collaboration to Build Artificial Intelligence']
+					  [set this title  'Call for Collaboration to Build Artificial Intelligence']
 					  [set this date   'May 12st, 2010']
 					  [set this author '<a href="#">Bo Morgan</a>']
 					  [set this entry  [string-prog '<h3>All programs fail, so let us embrace this failure, and write systems that react to failure through reflection:</h3>'

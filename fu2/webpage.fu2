@@ -17,8 +17,9 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[deframe funk2_post [frame] [title date author entry]]
 
-[defunk funk2_homepage []
+[defunk funk2_homepage [posts]
   [string-prog '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
 	       '<html xmlns="http://www.w3.org/1999/xhtml">'
 	       '<head>'
@@ -116,6 +117,16 @@
 	       '		</div>'
 	       '		<!-- start content -->'
 	       '		<div id="content">'
+	       [stringlist-prog [mapcar [funk [post]
+					      [string-prog '<div class="post">'
+							   [stringlist-concat `['<h1 class="title">' ,[get post title] '</h1>']]
+							   [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get post date] ' by ' ,[get post author] '</small></p>']]
+							   '  <div class="entry">'
+							   [get post entry]
+							   '	<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
+							   '  </div>'
+							   '</div>']]
+					posts]]
 	       '			<div class="post">'
 	       '				<h1 class="title"><a href="#">Welcome to the official Funk2 Website!</a></h1>'
 	       '				<p class="byline"><small>Posted on May 12th, 2010 by <a href="#">Bo Morgan</a></small></p>'
@@ -283,8 +294,17 @@
 	       '</html>']]
 
 [defunk compile_funk2_homepage []
-  [have [funk2_homepage] save '/home/neptune/Desktop/www/funk2/index.html']]
-
+  [let [[homepage [funk2_homepage [list [let [[this [new funk2_post]]]
+					  [set this title  '<a href="#">Welcome to the official Funk2 Website!</a>']
+					  [set this date   'May 12th, 2010']
+					  [set this author '<a href="#">Bo Morgan</a>']
+					  [set this entry  [string-prog '    <p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  '
+									'       This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
+									'       The Funk2 project is currently supported as a core research effort of the <a href=http://mmp.mit.edu>Mind Machine Project</a>.</p>']]
+					  this]
+					]]]]
+    [have funk2_homepage save '/home/neptune/Desktop/www/funk2/index.html']
+    nil]]
 
 [defunk recompile_homepage []
   [load 'fu2/webpage.fu2']

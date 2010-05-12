@@ -68,16 +68,11 @@
 	       '				<li>'
 	       '					<h2>Recent Updates</h2>'
 	       '					<ul>'
-	       '						<li><a href="#">Causal tracing of Funk completion events</a></li>'
-	       '						<li><a href="#">IsisWorld remote interface completed</a></li>'
-	       '						<li><a href="#">XML-RPC client library built on fast xmlrpc-c library</a></li>'
-	       '						<li><a href="#">Simple node and edge variable graph matching library completed</a></li>'
-	       '						<li><a href="#">Compiles on Windows XP under CygWin</a></li>'
-	       '						<li><a href="#">MacOS X Binaries available for 10.5 and 10.6</a></li>'
-	       '						<li><a href="#">GraphViz graph visualization completed</a></li>'
-	       '						<li><a href="#">Successfully stress tested 1000 parallel fibers for 1 day!</a></li>'
-	       '						<li><a href="#">Funk2 used to teach 35 students &#8220;Block\'s World&#8221; planning in Marvin Minsky\'s Society of Mind class</a></li>'
-	       '						<li><a href="#">Bo Morgan presents Funk2 at Seed Magazine</a></li>'
+	       [stringlist-prog [let [[index 0]]
+				  [mapcar [funk [post]
+						[= index [+ index 1]]
+						[stringlist-concat `['<li><a href="#post' [exp-as-string index] '">' [get post title] '</a></li>']]]
+					  posts]]]
 	       '					</ul>'
 	       '				</li>'
 	       '				<li>'
@@ -117,16 +112,18 @@
 	       '		</div>'
 	       '		<!-- start content -->'
 	       '		<div id="content">'
-	       [stringlist-prog [mapcar [funk [post]
-					      [string-prog '<div class="post">'
-							   [stringlist-concat `['<h1 class="title">' ,[get post title] '</h1>']]
-							   [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get post date] ' by ' ,[get post author] '</small></p>']]
-							   '  <div class="entry">'
-							   [get post entry]
-							   '	<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
-							   '  </div>'
-							   '</div>']]
-					posts]]
+	       [stringlist-prog [let [[index 0]]
+				  [mapcar [funk [post]
+						[= index [+ index 1]]
+						[string-prog '<div class="post">'
+							     [stringlist-concat `['<h1 class="title"><a name=post' ,[exp-as-string index] '>' ,[get post title] '</a></h1>']]
+							     [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get post date] ' by ' ,[get post author] '</small></p>']]
+							     '  <div class="entry">'
+							     [get post entry]
+							     '	<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
+							     '  </div>'
+							     '</div>']]
+					  posts]]]
 	       '		</div>'
 	       '		<!-- end content -->'
 	       '		<!-- start sidebars -->'
@@ -254,7 +251,7 @@
 
 [defunk compile_funk2_homepage []
   [let [[homepage [funk2_homepage [list [let [[this [new funk2_post]]]
-					  [set this title  '<a href="#">Welcome to the official Funk2 Website!</a>']
+					  [set this title  'Welcome to the official Funk2 Website!']
 					  [set this date   'May 12th, 2010']
 					  [set this author '<a href="#">Bo Morgan</a>']
 					  [set this entry  [string-prog '    <p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  '
@@ -262,7 +259,7 @@
 									'       The Funk2 project is currently supported as a core research effort of the <a href=http://mmp.mit.edu>Mind Machine Project</a>.</p>']]
 					  this]
 					[let [[this [new funk2_post]]]
-					  [set this title  '<a href="#">Call to Collaboration to Build Artificial Intelligence</a>']
+					  [set this title  'Call to Collaboration to Build Artificial Intelligence']
 					  [set this date   'May 12st, 2010']
 					  [set this author '<a href="#">Bo Morgan</a>']
 					  [set this entry  [string-prog '<h3>All programs fail, so let us embrace this failure, and write systems that react to failure through reflection:</h3>'
@@ -283,61 +280,61 @@
 									'</ol>']]
 					  this]
 					[let [[this [new funk2_post]]]
-					  [set this title  '<a href="#">Causal tracing of Funk completion events</a>']
+					  [set this title  'Causal tracing of Funk completion events']
 					  [set this date   'May 12th, 2010']
 					  [set this author '<a href="#">Bo Morgan</a>']
 					  [set this entry  [string-prog '']]
 					  this]
 					[let [[this [new funk2_post]]]
-					  [set this title  '<a href="#">IsisWorld remote interface completed</a>']
+					  [set this title  'IsisWorld remote interface completed']
 					  [set this date   'May 12th, 2010']
 					  [set this author '<a href="#">Bo Morgan</a>']
 					  [set this entry  [string-prog '']]
 					  this]
 					[let [[this [new funk2_post]]]
-					  [set this title  '<a href="#">XML-RPC client library built on fast xmlrpc-c library</a>']
+					  [set this title  'XML-RPC client library built on fast xmlrpc-c library']
 					  [set this date   'May 12th, 2010']
 					  [set this author '<a href="#">Bo Morgan</a>']
 					  [set this entry  [string-prog '']]
 					  this]
 					[let [[this [new funk2_post]]]
-					  [set this title  '<a href="#">Simple node and edge variable graph matching library completed</a>']
+					  [set this title  'Simple node and edge variable graph matching library completed']
 					  [set this date   'May 12th, 2010']
 					  [set this author '<a href="#">Bo Morgan</a>']
 					  [set this entry  [string-prog '']]
 					  this]
 					[let [[this [new funk2_post]]]
-					  [set this title  '<a href="#">Compiles on Windows XP under CygWin</a>']
+					  [set this title  'Compiles on Windows XP under CygWin']
 					  [set this date   'May 12th, 2010']
 					  [set this author '<a href="#">Bo Morgan</a>']
 					  [set this entry  [string-prog '']]
 					  this]
 					[let [[this [new funk2_post]]]
-					  [set this title  '<a href="#">MacOS X Binaries available for 10.5 and 10.6</a>']
+					  [set this title  'MacOS X Binaries available for 10.5 and 10.6']
 					  [set this date   'May 12th, 2010']
 					  [set this author '<a href="#">Bo Morgan</a>']
 					  [set this entry  [string-prog '']]
 					  this]
 					[let [[this [new funk2_post]]]
-					  [set this title  '<a href="#">GraphViz graph visualization completed</a>']
+					  [set this title  'GraphViz graph visualization completed']
 					  [set this date   'May 12th, 2010']
 					  [set this author '<a href="#">Bo Morgan</a>']
 					  [set this entry  [string-prog '']]
 					  this]
 					[let [[this [new funk2_post]]]
-					  [set this title  '<a href="#">Successfully stress tested 1000 parallel fibers for 1 day!</a>']
+					  [set this title  'Successfully stress tested 1000 parallel fibers for 1 day!']
 					  [set this date   'May 12th, 2010']
 					  [set this author '<a href="#">Bo Morgan</a>']
 					  [set this entry  [string-prog '']]
 					  this]
 					[let [[this [new funk2_post]]]
-					  [set this title  '<a href="#">Funk2 used to teach 35 students &#8220;Block\'s World&#8221; planning in Marvin Minsky\'s Society of Mind class</a>']
+					  [set this title  'Funk2 used to teach 35 students &#8220;Block\'s World&#8221; planning in Marvin Minsky\'s Society of Mind class']
 					  [set this date   'May 12th, 2010']
 					  [set this author '<a href="#">Bo Morgan</a>']
 					  [set this entry  [string-prog '']]
 					  this]
 					[let [[this [new funk2_post]]]
-					  [set this title  '<a href="#">Bo Morgan presents Funk2 at Seed Magazine in New York</a>']
+					  [set this title  'Bo Morgan presents Funk2 at Seed Magazine in New York']
 					  [set this date   'May 12th, 2010']
 					  [set this author '<a href="#">Bo Morgan</a>']
 					  [set this entry  [string-prog '']]

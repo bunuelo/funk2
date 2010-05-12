@@ -317,6 +317,45 @@
     nil]]
 
 
+[defunk funk2_community-content []
+  'community']
+
+[defunk funk2_community [posts]
+  [funk2_page posts
+	      [funk2_community-content]]]
+
+[defunk compile_funk2_community [root_dir posts]
+  [let [[community [funk2_community posts]]]
+    [have community save [string-concat root_dir 'community/index.html']]
+    nil]]
+
+
+[defunk funk2_foundation-content []
+  'foundation']
+
+[defunk funk2_foundation [posts]
+  [funk2_page posts
+	      [funk2_foundation-content]]]
+
+[defunk compile_funk2_foundation [root_dir posts]
+  [let [[foundation [funk2_foundation posts]]]
+    [have foundation save [string-concat root_dir 'foundation/index.html']]
+    nil]]
+
+
+[defunk funk2_development-content []
+  'development']
+
+[defunk funk2_development [posts]
+  [funk2_page posts
+	      [funk2_development-content]]]
+
+[defunk compile_funk2_development [root_dir posts]
+  [let [[development [funk2_foundation posts]]]
+    [have development save [string-concat root_dir 'development/index.html']]
+    nil]]
+
+
 [defunk recompile_webpage []
   [load 'fu2/webpage.fu2']
   [let [[root_dir '/home/neptune/Desktop/www/funk2/']
@@ -415,6 +454,9 @@
     [print 'compiling funk2 news']          [compile_funk2_news          root_dir posts]
     [print 'compiling funk2 documentation'] [compile_funk2_documentation root_dir posts]
     [print 'compiling funk2 download']      [compile_funk2_download      root_dir posts]
+    [print 'compiling funk2 community']     [compile_funk2_community     root_dir posts]
+    [print 'compiling funk2 foundation']    [compile_funk2_foundation    root_dir posts]
+    [print 'compiling funk2 development']   [compile_funk2_development   root_dir posts]
     [print 'done compiling']
     nil]]
 

@@ -30,7 +30,7 @@
 	       '</head>'
 	       '<body>'
 	       '<div id="header">'
-	       '  <table><tr><td>'
+	       '  <table border=0><tr><td>'
 	       '    <div id="header1">'
 	       '        <div id="logo">'
 	       '	  <h1><a href="#">Funk2</a></h1>'

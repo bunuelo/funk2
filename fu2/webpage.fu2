@@ -291,6 +291,32 @@
     nil]]
 
 
+[defunk funk2_documentation-content []
+  'documentation']
+
+[defunk funk2_documentation [posts]
+  [funk2_page posts
+	      [funk2_documentation-content]]]
+
+[defunk compile_funk2_documentation [root_dir posts]
+  [let [[documentation [funk2_documentation posts]]]
+    [have documentation save [string-concat root_dir 'documentation/index.html']]
+    nil]]
+
+
+[defunk funk2_download-content []
+  'download']
+
+[defunk funk2_download [posts]
+  [funk2_page posts
+	      [funk2_download-content]]]
+
+[defunk compile_funk2_download [root_dir posts]
+  [let [[download [funk2_download posts]]]
+    [have download save [string-concat root_dir 'download/index.html']]
+    nil]]
+
+
 [defunk recompile_webpage []
   [load 'fu2/webpage.fu2']
   [let [[root_dir '/home/neptune/Desktop/www/funk2/']
@@ -384,12 +410,11 @@
 			  [set this entry  [string-prog '']]
 			  this]
 			]]]
-    [print 'compiling funk2 homepage']
-    [compile_funk2_homepage root_dir posts]
-    [print 'compiling funk2 about']
-    [compile_funk2_about    root_dir posts]
-    [print 'compiling funk2 news']
-    [compile_funk2_news     root_dir posts]
+    [print 'compiling funk2 homepage']      [compile_funk2_homepage      root_dir posts]
+    [print 'compiling funk2 about']         [compile_funk2_about         root_dir posts]
+    [print 'compiling funk2 news']          [compile_funk2_news          root_dir posts]
+    [print 'compiling funk2 documentation'] [compile_funk2_documentation root_dir posts]
+    [print 'compiling funk2 download']      [compile_funk2_download      root_dir posts]
     [print 'done compiling']
     nil]]
 

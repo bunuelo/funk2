@@ -108,7 +108,7 @@ f2ptr f2__environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type
     env = f2environment__parent_env(env, cause);
   }
   __funk2.primobject__environment.environment__last_23_larva_symbol = var;
-  return __funk2.primobject__frame.type_variable_not_defined__larva;
+  return f2larva__new(cause, 23, var);
 }
 def_pcfunk3(environment__lookup_type_var_value, this, type, var, return f2__environment__lookup_type_var_value(this_cause, this, type, var));
 

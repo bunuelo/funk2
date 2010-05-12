@@ -237,7 +237,6 @@
 	       '</body>'
 	       '</html>']]
   
-
 [defunk funk2_homepage-content [posts]
   [string-prog '<!-- start content -->'
 	       '<div id="content">'

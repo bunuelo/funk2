@@ -17,7 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe funk2_post [frame] [title date author entry]]
+[deframe funk2_post    [frame] [title date author entry]]
+[deframe funk2_example [frame] [name title]]
 
 [defunk funk2_calendar []
   [string-prog '<div id="calendar_wrap">'
@@ -90,7 +91,7 @@
 	       '</table>'
 	       '</div>']]
 
-[defunk funk2_page [posts content]
+[defunk funk2_page [posts examples content]
   [string-prog '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
 	       '<html xmlns="http://www.w3.org/1999/xhtml">'
 	       '<head>'
@@ -142,20 +143,16 @@
 	       [stringlist-prog [let [[index 0]]
 				  [mapcar [funk [post]
 						[= index [+ index 1]]
-						[stringlist-concat `['<li><a href="/#post' ,[exp-as-string index] '">' ,[get post title] '</a></li>']]]
+						[string-concat '<li><a href="/#post' [exp-as-string index] '">' [get post title] '</a></li>']]
 					  posts]]]
 	       '					</ul>'
 	       '				</li>'
 	       '				<li>'
 	       '					<h2>Example Applications</h2>'
 	       '					<ul>'
-	       '						<li><a href="#">XML-RPC client</a></li>'
-	       '						<li><a href="#">Graph Matching</a></li>'
-	       '						<li><a href="#">GraphViz Graph Visualiation</a></li>'
-	       '						<li><a href="#">Socket client</a></li>'
-	       '						<li><a href="#">Socket server</a></li>'
-	       '						<li><a href="#">Causal event tracing</a></li>'
-	       '						<li><a href="#">IsisWorld client</a></li>'
+	       [stringlist-prog [mapcar [funk [example]
+					      [string-concat '<li><a href="/example/' [get example name] '">' [get example title] '</a></li>']]
+					examples]]
 	       '					</ul>'
 	       '				</li>'
 	       '				<li>'
@@ -255,12 +252,12 @@
 	       '</div>'
 	       '<!-- end content -->']]
 
-[defunk funk2_homepage [posts]
-  [funk2_page posts
+[defunk funk2_homepage [posts examples]
+  [funk2_page posts examples
 	      [funk2_homepage-content posts]]]
 
-[defunk compile_funk2_homepage [root_dir posts]
-  [let [[homepage [funk2_homepage posts]]]
+[defunk compile_funk2_homepage [root_dir posts examples]
+  [let [[homepage [funk2_homepage posts examples]]]
     [have homepage save [string-concat root_dir 'index.html']]
     nil]]
 
@@ -268,12 +265,12 @@
 [defunk funk2_about-content []
   'about']
 
-[defunk funk2_about [posts]
-  [funk2_page posts
+[defunk funk2_about [posts examples]
+  [funk2_page posts examples
 	      [funk2_about-content]]]
 
-[defunk compile_funk2_about [root_dir posts]
-  [let [[about [funk2_about posts]]]
+[defunk compile_funk2_about [root_dir posts examples]
+  [let [[about [funk2_about posts examples]]]
     [have about save [string-concat root_dir 'about/index.html']]
     nil]]
 
@@ -281,12 +278,12 @@
 [defunk funk2_news-content []
   'news']
 
-[defunk funk2_news [posts]
-  [funk2_page posts
+[defunk funk2_news [posts examples]
+  [funk2_page posts examples
 	      [funk2_news-content]]]
 
-[defunk compile_funk2_news [root_dir posts]
-  [let [[news [funk2_news posts]]]
+[defunk compile_funk2_news [root_dir posts examples]
+  [let [[news [funk2_news posts examples]]]
     [have news save [string-concat root_dir 'news/index.html']]
     nil]]
 
@@ -294,12 +291,12 @@
 [defunk funk2_documentation-content []
   'documentation']
 
-[defunk funk2_documentation [posts]
-  [funk2_page posts
+[defunk funk2_documentation [posts examples]
+  [funk2_page posts examples
 	      [funk2_documentation-content]]]
 
-[defunk compile_funk2_documentation [root_dir posts]
-  [let [[documentation [funk2_documentation posts]]]
+[defunk compile_funk2_documentation [root_dir posts examples]
+  [let [[documentation [funk2_documentation posts examples]]]
     [have documentation save [string-concat root_dir 'documentation/index.html']]
     nil]]
 
@@ -307,12 +304,12 @@
 [defunk funk2_download-content []
   'download']
 
-[defunk funk2_download [posts]
-  [funk2_page posts
+[defunk funk2_download [posts examples]
+  [funk2_page posts examples
 	      [funk2_download-content]]]
 
-[defunk compile_funk2_download [root_dir posts]
-  [let [[download [funk2_download posts]]]
+[defunk compile_funk2_download [root_dir posts examples]
+  [let [[download [funk2_download posts examples]]]
     [have download save [string-concat root_dir 'download/index.html']]
     nil]]
 
@@ -320,12 +317,12 @@
 [defunk funk2_community-content []
   'community']
 
-[defunk funk2_community [posts]
-  [funk2_page posts
+[defunk funk2_community [posts examples]
+  [funk2_page posts examples
 	      [funk2_community-content]]]
 
-[defunk compile_funk2_community [root_dir posts]
-  [let [[community [funk2_community posts]]]
+[defunk compile_funk2_community [root_dir posts examples]
+  [let [[community [funk2_community posts examples]]]
     [have community save [string-concat root_dir 'community/index.html']]
     nil]]
 
@@ -333,12 +330,12 @@
 [defunk funk2_foundation-content []
   'foundation']
 
-[defunk funk2_foundation [posts]
-  [funk2_page posts
+[defunk funk2_foundation [posts examples]
+  [funk2_page posts examples
 	      [funk2_foundation-content]]]
 
-[defunk compile_funk2_foundation [root_dir posts]
-  [let [[foundation [funk2_foundation posts]]]
+[defunk compile_funk2_foundation [root_dir posts examples]
+  [let [[foundation [funk2_foundation posts examples]]]
     [have foundation save [string-concat root_dir 'foundation/index.html']]
     nil]]
 
@@ -346,12 +343,12 @@
 [defunk funk2_development-content []
   'development']
 
-[defunk funk2_development [posts]
-  [funk2_page posts
+[defunk funk2_development [posts examples]
+  [funk2_page posts examples
 	      [funk2_development-content]]]
 
-[defunk compile_funk2_development [root_dir posts]
-  [let [[development [funk2_development posts]]]
+[defunk compile_funk2_development [root_dir posts examples]
+  [let [[development [funk2_development posts examples]]]
     [have development save [string-concat root_dir 'development/index.html']]
     nil]]
 
@@ -448,15 +445,51 @@
 			  [set this author '<a href="#">Bo Morgan</a>']
 			  [set this entry  [string-prog '']]
 			  this]
+			]]
+      
+     
+     
+     
+     
+     
+     
+	[examples [list [let [[this [new funk2_example]]]
+			  [set this name  'xmlrpc_client']
+			  [set this title 'XML-RPC client']
+			  this]
+			[let [[this [new funk2_example]]]
+			  [set this name  'graph_matching']
+			  [set this title 'Graph Matching']
+			  this]
+			[let [[this [new funk2_example]]]
+			  [set this name  'graphviz']
+			  [set this title 'GraphViz Graph Visualization']
+			  this]
+			[let [[this [new funk2_example]]]
+			  [set this name  'socket_client']
+			  [set this title 'Socket client']
+			  this]
+			[let [[this [new funk2_example]]]
+			  [set this name  'socket_server']
+			  [set this title 'Socket server']
+			  this]
+			[let [[this [new funk2_example]]]
+			  [set this name  'causal_event_tracing']
+			  [set this title 'Causal event tracing']
+			  this]
+			[let [[this [new funk2_example]]]
+			  [set this name  'isisworld_client']
+			  [set this title 'IsisWorld client']
+			  this]
 			]]]
-    [print 'compiling funk2 homepage']      [compile_funk2_homepage      root_dir posts]
-    [print 'compiling funk2 about']         [compile_funk2_about         root_dir posts]
-    [print 'compiling funk2 news']          [compile_funk2_news          root_dir posts]
-    [print 'compiling funk2 documentation'] [compile_funk2_documentation root_dir posts]
-    [print 'compiling funk2 download']      [compile_funk2_download      root_dir posts]
-    [print 'compiling funk2 community']     [compile_funk2_community     root_dir posts]
-    [print 'compiling funk2 foundation']    [compile_funk2_foundation    root_dir posts]
-    [print 'compiling funk2 development']   [compile_funk2_development   root_dir posts]
+    [print 'compiling funk2 homepage']      [compile_funk2_homepage      root_dir posts examples]
+    [print 'compiling funk2 about']         [compile_funk2_about         root_dir posts examples]
+    [print 'compiling funk2 news']          [compile_funk2_news          root_dir posts examples]
+    [print 'compiling funk2 documentation'] [compile_funk2_documentation root_dir posts examples]
+    [print 'compiling funk2 download']      [compile_funk2_download      root_dir posts examples]
+    [print 'compiling funk2 community']     [compile_funk2_community     root_dir posts examples]
+    [print 'compiling funk2 foundation']    [compile_funk2_foundation    root_dir posts examples]
+    [print 'compiling funk2 development']   [compile_funk2_development   root_dir posts examples]
     [print 'done compiling']
     nil]]
 

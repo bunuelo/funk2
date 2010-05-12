@@ -38,6 +38,8 @@ declare_object_type_2_slot(bug, bug_type, frame, );
 
 declare_primobject_2_slot(bug, bug_type, frame);
 
+f2ptr f2__bug__new(f2ptr cause, f2ptr type, f2ptr frame);
+
 // **
 
 void f2__bug__initialize();

@@ -372,8 +372,13 @@
 		       [set this entry  [string-prog '']]
 		       this]
 		     ]]]
+    [print 'compiling funk2 homepage']
     [compile_funk2_homepage posts]
-    [compile_funk2_about    posts]]]
+    [print 'compiling funk2 about']
+    [compile_funk2_about    posts]
+    [print 'done compiling']
+    nil]]
+
 
 
 

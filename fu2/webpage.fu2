@@ -266,7 +266,7 @@
 
 
 [defunk funk2_about-content []
-  '']
+  'about']
 
 [defunk funk2_about [posts]
   [funk2_page posts
@@ -275,6 +275,19 @@
 [defunk compile_funk2_about [root_dir posts]
   [let [[about [funk2_about posts]]]
     [have about save [string-concat root_dir 'about/index.html']]
+    nil]]
+
+
+[defunk funk2_news-content []
+  'news']
+
+[defunk funk2_news [posts]
+  [funk2_page posts
+	      [funk2_news-content]]]
+
+[defunk compile_funk2_news [root_dir posts]
+  [let [[news [funk2_news posts]]]
+    [have news save [string-concat root_dir 'news/index.html']]
     nil]]
 
 
@@ -375,6 +388,8 @@
     [compile_funk2_homepage root_dir posts]
     [print 'compiling funk2 about']
     [compile_funk2_about    root_dir posts]
+    [print 'compiling funk2 news']
+    [compile_funk2_news     root_dir posts]
     [print 'done compiling']
     nil]]
 

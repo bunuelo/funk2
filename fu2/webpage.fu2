@@ -270,5 +270,7 @@
   [have [funk2_homepage] save '/home/neptune/Desktop/www/funk2/index.html']]
 
 
-
+[defunk recompile_homepage []
+  [load 'fu2/webpage.fu2']
+  [compile_funk2_homepage]]
 

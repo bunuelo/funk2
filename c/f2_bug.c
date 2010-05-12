@@ -31,7 +31,7 @@ f2ptr f2__bug__new(f2ptr cause, f2ptr type, f2ptr frame) {return f2bug__new(caus
 def_pcfunk2(bug__new, type, frame, return f2__bug__new(this_cause, type, frame));
 
 f2ptr raw__bug__new_from_larva(f2ptr cause, f2ptr larva) {
-  u64 larva_type = f2larva__larva_type(cause, fiber_value);
+  u64 larva_type = f2larva__larva_type(cause, larva);
   return f2larva__new(cause, larva_type, f2__bug__new(cause, f2integer__new(cause, larva_type), nil));
 }
 

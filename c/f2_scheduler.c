@@ -168,12 +168,6 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
     f2ptr bug = f2larva__bug(larva, cause);
     if (! bug) {
       bug = f2__bug__new_from_larva(cause, larva);
-    } else {
-      if (raw__bug__is_type(cause, bug)) {
-	f2bug__bug_type__set(bug, cause, f2integer__new(cause, f2larva__larva_type(larva, cause)));
-      } else {
-	printf("\nfunk2 error: larva has bug that is of the wrong type.\n");
-      }
     }
     f2fiber__value__set(fiber, cause, bug);
     resume_gc();

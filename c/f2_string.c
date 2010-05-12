@@ -311,7 +311,12 @@ f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
   filename__str[filename__length] = 0;
   int fd = open((char*)filename__str, O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
   if (fd == -1) {
-    return f2larva__new(cause, 89, nil);
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_open_file"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "source_file"), new__symbol(cause, __FILE__));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "source_line"), f2integer__new(cause, __LINE__));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "filename"), filename);
+    return f2larva__new(cause, 89, bug_frame);
   }
   u64 this__length = f2string__length(this, cause);
   u8* this__str = alloca(this__length);
@@ -319,7 +324,12 @@ f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
   u64 write_bytes = write(fd, this__str, this__length);
   f2ptr result = nil;
   if (write_bytes != this__length) {
-    result = f2larva__new(cause, 89, nil);
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),    new__symbol(cause, "could_not_write_to_file"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "source_file"), new__symbol(cause, __FILE__));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "source_line"), f2integer__new(cause, __LINE__));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "filename"),    filename);
+    return f2larva__new(cause, 89, bug_frame);
   }
   close(fd);
   return result;

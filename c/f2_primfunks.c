@@ -799,7 +799,7 @@ f2ptr raw__mkdir(f2ptr cause, f2ptr directory_name) {
   directory_name__str[directory_name__length] = 0;
   int failure = mkdir((char*)directory_name__str, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
   if (failure) {
-    f2ptr bug_frame = f2__frame__new(cause);
+    f2ptr bug_frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_create_directory"));
     f2ptr error_description;
     switch(errno) {

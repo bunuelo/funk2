@@ -127,47 +127,6 @@
 							   '  </div>'
 							   '</div>']]
 					posts]]
-	       '			<div class="post">'
-	       '				<h1 class="title"><a href="#">Welcome to the official Funk2 Website!</a></h1>'
-	       '				<p class="byline"><small>Posted on May 12th, 2010 by <a href="#">Bo Morgan</a></small></p>'
-	       '				<div class="entry">'
-	       '					<p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  '
-	       '                                           This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
-	       '                                           The Funk2 project is currently supported as a core research effort of the <a href=http://mmp.mit.edu>Mind Machine Project</a>.</p>'
-	       '					<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
-	       '				</div>'
-	       '			</div>'
-	       '			<div class="post">'
-	       '				<h2 class="title"><a href="#">Call to Collaboration to Build Artificial Intelligence</a></h2>'
-	       '				<p class="byline"><small>Posted on May 12st, 2010 by <a href="#">Bo Morgan</a></small></p>'
-	       '				<div class="entry">'
-	       '					<h3>All programs fail, so let us embrace this failure, and write systems that react to failure through reflection:</h3>'
-	       '					<blockquote>'
-	       '						<p>&#8220;Reflection is the business of man; a sense of his state is his first duty: but who remembereth himself in joy? Is it not in mercy then that sorrow is allotted unto us?&#8221;&#8212;William&nbsp;Shakespeare</p>'
-	       '					</blockquote>'
-	       '					<h3>Bulleted List:</h3>'
-	       '					<ul>'
-	       '						<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>'
-	       '						<li>Phasellus nec erat sit amet nibh pellentesque congue.</li>'
-	       '						<li>Cras vitae metus aliquam risus pellentesque pharetra.</li>'
-	       '					</ul>'
-	       '					<h3>Numbered List:</h3>'
-	       '					<ol>'
-	       '						<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>'
-	       '						<li>Phasellus nec erat sit amet nibh pellentesque congue.</li>'
-	       '						<li>Cras vitae metus aliquam risus pellentesque pharetra.</li>'
-	       '					</ol>'
-	       '					<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
-	       '				</div>'
-	       '			</div>'
-	       '			<div class="post">'
-	       '				<h2 class="title"><a href="#">Lorem Ipsum Dolor </a></h2>'
-	       '				<p class="byline"><small>Posted on October 1st, 2009 by <a href="#">Free CSS Templates</a></small></p>'
-	       '				<div class="entry">'
-	       '					<p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.					</p>'
-	       '					<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
-	       '				</div>'
-	       '			</div>'
 	       '		</div>'
 	       '		<!-- end content -->'
 	       '		<!-- start sidebars -->'
@@ -301,6 +260,34 @@
 					  [set this entry  [string-prog '    <p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  '
 									'       This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
 									'       The Funk2 project is currently supported as a core research effort of the <a href=http://mmp.mit.edu>Mind Machine Project</a>.</p>']]
+					  this]
+					[let [[this [new funk2_post]]]
+					  [set this title '<a href="#">Call to Collaboration to Build Artificial Intelligence</a>']
+					  [set this date  'May 12st, 2010']
+					  [set this author '<a href="#">Bo Morgan</a>']
+					  [set this entry  [string-prog '<h3>All programs fail, so let us embrace this failure, and write systems that react to failure through reflection:</h3>'
+									'<blockquote>'
+									'  <p>&#8220;Reflection is the business of man; a sense of his state is his first duty: but who remembereth himself in joy? Is it not in mercy then that sorrow is allotted unto us?&#8221;&#8212;William&nbsp;Shakespeare</p>'
+									'</blockquote>'
+									'<h3>Bulleted List:</h3>'
+									'<ul>'
+									'  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>'
+									'  <li>Phasellus nec erat sit amet nibh pellentesque congue.</li>'
+									'  <li>Cras vitae metus aliquam risus pellentesque pharetra.</li>'
+									'</ul>'
+									'<h3>Numbered List:</h3>'
+									'<ol>'
+									'  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>'
+									'  <li>Phasellus nec erat sit amet nibh pellentesque congue.</li>'
+									'  <li>Cras vitae metus aliquam risus pellentesque pharetra.</li>'
+									'</ol>']]
+					  this]
+					[let [[this [new funk2_post]]]
+					  [set this title  '<a href="#">Lorem Ipsum Dolor </a>']
+					  [set this date   'October 1st, 2009']
+					  [set this author '<a href="#">Free CSS Templates</a>']
+					  [set this entry  [string-prog '<p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>'
+									'<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>']]
 					  this]
 					]]]]
     [have homepage save '/home/neptune/Desktop/www/funk2/index.html']

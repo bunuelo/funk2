@@ -29,6 +29,8 @@
 [globalize-funk ptype-cause                                 &primfunk:ptype__cause]
 [globalize-funk ptype-cause-set                             &primfunk:ptype__cause__set]
 
+[globalize-funk mkdir                                       &primfunk:mkdir]
+
 [globalize-funk conslist-as-array                           &primfunk:conslist__as__array]
 [globalize-funk conslist-first_n                            &primfunk:conslist__first_n]
 [globalize-funk conslistlist-append                         &primfunk:conslistlist__append]

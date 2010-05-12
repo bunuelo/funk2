@@ -1328,7 +1328,8 @@ int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type
     f2ptr bug_frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "undefined_variable_type"), type);
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "undefined_variable"),      var);
-    fiber_value = f2larva__new(cause, f2__bug__new(cause, f2integer__new(cause, f2larva__larva_type(cause, fiber_value)), bug_frame));
+    u64 larva_type = f2larva__larva_type(cause, fiber_value);
+    fiber_value = f2larva__new(cause, larva_type, f2__bug__new(cause, f2integer__new(cause, larva_type), bug_frame));
   }
   f2__fiber__increment_pc(fiber, cause);
   f2fiber__value__set(fiber, cause, fiber_value);

@@ -71,7 +71,7 @@
 	       [stringlist-prog [let [[index 0]]
 				  [mapcar [funk [post]
 						[= index [+ index 1]]
-						[stringlist-concat `['<li><a href="#post' [exp-as-string index] '">' [get post title] '</a></li>']]]
+						[stringlist-concat `['<li><a href="#post' ,[exp-as-string index] '">' ,[get post title] '</a></li>']]]
 					  posts]]]
 	       '					</ul>'
 	       '				</li>'

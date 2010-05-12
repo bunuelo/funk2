@@ -254,6 +254,12 @@
 
 [defunk compile_funk2_homepage []
   [let [[homepage [funk2_homepage [list [let [[this [new funk2_post]]]
+					  [set this title  'Here is a new posy!']
+					  [set this date   'May 12th, 2010']
+					  [set this author '<a href="#">Bo Morgan</a>']
+					  [set this entry  [string-prog '    <p>Yay!</p>']]
+					  this]
+					[let [[this [new funk2_post]]]
 					  [set this title  'Welcome to the official Funk2 Website!']
 					  [set this date   'May 12th, 2010']
 					  [set this author '<a href="#">Bo Morgan</a>']

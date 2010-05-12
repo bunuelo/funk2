@@ -812,8 +812,8 @@ f2ptr raw__mkdir(f2ptr cause, f2ptr directory_name) {
     case ENOSPC:       error_description = new__string(cause, "The file system does not contain enough space to hold the contents of the new directory or to extend the parent directory of the new directory."); break;
     case ENOTDIR:      error_description = new__string(cause, "A component of the path prefix is not a directory."); break;
     case EROFS:        error_description = new__string(cause, "The parent directory resides on a read-only file system."); break;
-    case ELOOP:        error_description = new__string(cause, "More than {SYMLOOP_MAX} symbolic links were encountered during resolution of the path argument."); break;
-    case ENAMETOOLONG: error_description = new__string(cause, "As a result of encountering a symbolic link in resolution of the path argument, the length of the substituted pathname string exceeded {PATH_MAX}."); break;
+      //case ELOOP:        error_description = new__string(cause, "More than {SYMLOOP_MAX} symbolic links were encountered during resolution of the path argument."); break;
+      //case ENAMETOOLONG: error_description = new__string(cause, "As a result of encountering a symbolic link in resolution of the path argument, the length of the substituted pathname string exceeded {PATH_MAX}."); break;
     default:           error_description = new__string(cause, "unknown mkdir error."); break;
     }
   }

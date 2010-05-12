@@ -256,8 +256,8 @@
 	       '<!-- end content -->']]
 
 [defunk funk2_homepage [posts]
-  [funk_page posts
-	     [funk2_homepage-content posts]]]
+  [funk2_page posts
+	      [funk2_homepage-content posts]]]
 
 [defunk compile_funk2_homepage []
   [let [[homepage [funk2_homepage [list [let [[this [new funk2_post]]]

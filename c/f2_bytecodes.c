@@ -364,8 +364,14 @@ int f2__fiber__bytecode__cdr(f2ptr fiber, f2ptr bytecode) {
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
-  
-  f2fiber__value__set(fiber, cause, f2cons__cdr(f2fiber__iter(fiber, cause), cause));
+  f2ptr fiber__iter  = f2fiber__iter(fiber, cause);
+  f2ptr fiber__value;
+  if (! raw__cons__is_type(cause, fiber__iter)) {
+    fiber__value = f2larva__new(cause, 1, nil);
+  } else {
+    fiber__value = f2cons__cdr(fiber__iter, cause);
+  }
+  f2fiber__value__set(fiber, cause, fiber__value);
   return 0;
 }
 

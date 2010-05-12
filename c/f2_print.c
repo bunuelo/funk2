@@ -69,6 +69,13 @@ void f2__write__line_break(f2ptr cause, f2ptr stream, boolean_t use_html) {
   }
 }
 
+void f2__write__tab(f2ptr cause, f2ptr stream, boolean_t use_html) {
+  if (stream) {
+    if (use_html) {raw__stream__writef(cause, stream, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");}
+    raw__stream__writef(cause, stream, "\t");
+  }
+}
+
 void f2__fwrite__raw_char(f2ptr cause, f2ptr stream, char ch, int return_size[2], boolean_t use_html) {
   int width    = 0;
   int height   = 0;
@@ -78,6 +85,9 @@ void f2__fwrite__raw_char(f2ptr cause, f2ptr stream, char ch, int return_size[2]
     break;
   case '\n':
     f2__write__line_break(cause, stream, use_html); width = 0; height ++;
+    break;
+  case '\t':
+    f2__write__tab(cause, stream, use_html); width = 0; height ++;
     break;
   default:
     if(stream) {raw__stream__writef(cause, stream, "%c", ch);} width ++;
@@ -345,6 +355,8 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    f2__fwrite__raw_char(cause, stream, f2char__ch(__funk2.reader.char__string_quote, cause), subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	  } else if(ch == '\n') {
 	    f2__fwrite__raw_char(cause, stream, '\n', subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
+	  } else if(ch == '\t') {
+	    f2__fwrite__raw_char(cause, stream, '\t', subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	  } else if(ch < 28) {
 	    f2__fwrite__raw_char(cause, stream, '?', subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	  } else {

@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 [deframe funk2_post    [frame] [title date author entry]]
-[deframe funk2_example [frame] [name title content]]
+[deframe funk2_example [frame] [name title date author content]]
 
 [defunk funk2_calendar []
   [string-prog '<div id="calendar_wrap">'
@@ -361,9 +361,15 @@
 
 
 [defunk funk2_example [posts examples example]
-  [print 'debug 5.1']
-  [funk2_page posts examples
-	      [get example content]]]
+  [let [[content [string-prog '<div class="post">'
+			      [stringlist-concat `['<h1 class="title">' ,[get example title] '</h1>']]
+			      [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get example date] ' by ' ,[get example author] '</small></p>']]
+			      '  <div class="entry">'
+			      [get example entry]
+			      '	<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
+			      '  </div>'
+			      '</div>']]]
+    [funk2_page posts examples content]]]
 
 [defunk compile_funk2_example [root_dir posts examples example]
   [let [[example_code [funk2_example posts examples example]]]
@@ -474,47 +480,61 @@
 			  [set this entry  [string-prog '']]
 			  this]
 			]]
-      
-     
-     
-     
-     
-     
-     
 	[examples [list [let [[this [new funk2_example]]]
-			  [set this name    'xmlrpc_client']
-			  [set this title   'XML-RPC client']
-			  [set this content 'example content']
+			  [set this name   'xmlrpc_client']
+			  [set this title  'XML-RPC client']
+			  [set this date   'May 13th, 2010']
+			  [set this author 'Bo Morgan']
+			  [set this entry  [string-prog 'example content'
+							 ]]
 			  this]
 			[let [[this [new funk2_example]]]
-			  [set this name    'graph_matching']
-			  [set this title   'Graph Matching']
-			  [set this content 'example content']
+			  [set this name   'graph_matching']
+			  [set this title  'Graph Matching']
+			  [set this date   'May 13th, 2010']
+			  [set this author 'Bo Morgan']
+			  [set this entry  [string-prog 'example content'
+							 ]]
 			  this]
 			[let [[this [new funk2_example]]]
-			  [set this name    'graphviz']
-			  [set this title   'GraphViz Graph Visualization']
-			  [set this content 'example content']
+			  [set this name   'graphviz']
+			  [set this title  'GraphViz Graph Visualization']
+			  [set this date   'May 13th, 2010']
+			  [set this author 'Bo Morgan']
+			  [set this entry  [string-prog 'example content'
+							 ]]
 			  this]
 			[let [[this [new funk2_example]]]
-			  [set this name    'socket_client']
-			  [set this title   'Socket client']
-			  [set this content 'example content']
+			  [set this name   'socket_client']
+			  [set this title  'Socket client']
+			  [set this date   'May 13th, 2010']
+			  [set this author 'Bo Morgan']
+			  [set this entry  [string-prog 'example content'
+							 ]]
 			  this]
 			[let [[this [new funk2_example]]]
-			  [set this name    'socket_server']
-			  [set this title   'Socket server']
-			  [set this content 'example content']
+			  [set this name   'socket_server']
+			  [set this title  'Socket server']
+			  [set this date   'May 13th, 2010']
+			  [set this author 'Bo Morgan']
+			  [set this entry  [string-prog 'example content'
+							 ]]
 			  this]
 			[let [[this [new funk2_example]]]
-			  [set this name    'causal_event_tracing']
-			  [set this title   'Causal event tracing']
-			  [set this content 'example content']
+			  [set this name   'causal_event_tracing']
+			  [set this title  'Causal event tracing']
+			  [set this date   'May 13th, 2010']
+			  [set this author 'Bo Morgan']
+			  [set this entry  [string-prog 'example content'
+							 ]]
 			  this]
 			[let [[this [new funk2_example]]]
-			  [set this name    'isisworld_client']
-			  [set this title   'IsisWorld client']
-			  [set this content 'example content']
+			  [set this name   'isisworld_client']
+			  [set this title  'IsisWorld client']
+			  [set this date   'May 13th, 2010']
+			  [set this author 'Bo Morgan']
+			  [set this entry  [string-prog 'example content'
+							 ]]
 			  this]
 			]]]
     [print 'compiling funk2 homepage']      [compile_funk2_homepage      root_dir posts examples]

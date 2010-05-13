@@ -361,13 +361,18 @@
 
 
 [defunk funk2_example [posts examples example]
+  [print 'debug 5.1']
   [funk2_page posts examples
 	      [get example content]]]
 
 [defunk compile_funk2_example [root_dir posts examples example]
+  [print 'debug 0']
   [let [[example [funk2_example posts examples example]]]
+    [print 'debug 1']
     [shelter [mkdir [string-concat root_dir 'example']]]
+    [print 'debug 2']
     [shelter [mkdir [string-concat root_dir 'example/' [get example name]]]]
+    [print 'debug 3']
     [have example save [string-concat root_dir 'example/' [get example name] '/index.html']]
     nil]]
 

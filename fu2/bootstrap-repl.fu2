@@ -46,8 +46,6 @@
 ']
 [primfunk:ansi__stream__reset stdout]
 
-[primfunk:wrong_argument_number_error__set `wrong_argument_number_error]
-
 [primfunk:load 'fu2/primfunks.fu2']
 [primfunk:load 'fu2/primfunks-array.fu2']
 [primfunk:load 'fu2/primfunks-apropos.fu2']
@@ -161,7 +159,7 @@
 	     [args [conslist @args]]]
 	 [if proc
 	     [funk-apply proc args]
-	   [error `run-time 'apply error: proc is nil.']]]
+	   [error-new `message 'apply error: proc is nil.']]]
     `[funk-apply ,proc ,args]]]
 
 [defmetro funk [args :rest body]
@@ -213,8 +211,6 @@
     `[if [null ,[first conds]]
 	 nil
        ,[funk-apply &and [next conds]]]]]
-
-[defmetro error [:rest slots_and_values] `[new larva 34 [new bug 34 [frame @slots_and_values]]]]
 
 'Now we have defunk, basic logic (and, or), and errors (almost! :-) [exceptions are defined below])!  We can define "safe" type-checked primitive accessors and mutators:'
 
@@ -315,6 +311,21 @@
 [defmetro car-set [x y] `[object-set ,x `car ,y]]
 [defmetro cdr-set [x y] `[object-set ,x `cdr ,y]]
 
+[defunk error-new [:rest slot_value_pairs]
+  [new larva 34 [new bug 34 [new-apply frame slot_value_pairs]]]]
+
+[defmetro error [:rest slot_value_pairs]
+  `[error-new @[let [[iter          slot_value_pairs]
+		     [reverse_codes nil]]
+		 [while iter
+		   [let [[key [car iter]]]
+		     [= iter [cdr iter]]
+		     [let [[value [car iter]]]
+		       [= reverse_codes [cons `[quote ,key] reverse_codes]]
+		       [= reverse_codes [cons  value        reverse_codes]]]]
+		   [= iter [cdr iter]]]
+		 [reverse reverse_codes]]]]
+
 [defunk wrong_argument_number [] [error bug_type `wrong_number_of_arguments]]
 [wrong_argument_number-bcs-set [get &wrong_argument_number body_bytecodes]]
 
@@ -371,9 +382,6 @@
 
 [defunk is-type [type_name exp]
   [apply [primobject_type-lookup_slot_type_funk [lookup_type type_name] `execute `is_type] [cons exp nil]]]
-
-[defunk wrong_argument_number_error [:rest args] [error `run-time `[wrong-argument-number ,[cons `<funkable> [mapcar &identity args]]]]]
-[wrong_argument_number_error-set [object-get &wrong_argument_number_error `body_bytecodes]]
 
 [defunk slots [exp]
   [primobject_type-type_funk-slot_names [lookup_type [type exp]] `get]]
@@ -502,14 +510,14 @@
 	 ,[apply &cond [cdr clauses]]]]]]
 
 [defunk elt-1d-seq [seq index]
-  [cond [[null seq]                   [error `run-time `conslist-index-too-big]]
+  [cond [[null seq]                   [error bug_type `conslist-index-too-big]]
 	[[integer-equal_sign index 0] [car seq]]
 	[t                            [elt-1d-seq [cdr seq] [integer-subtract index 1]]]]]
 
 [defunk elt-1d [collection index]
   [cond [[is-type `cons  collection] [elt-1d-seq collection index]]
 	[[is-type `array collection] [array-elt  collection index]]
-	[t                           [error `run-time `unknown-collection-type]]]]
+	[t                           [error bug_type `unknown-collection-type]]]]
 
 [defunk elt [collection :rest indices]
   [let [[rest_indices [cdr indices]]]
@@ -518,14 +526,14 @@
       [funkall &elt [elt-1d collection [car indices]] rest_indices]]]]
 
 [defunk elt-1d-seq-set [seq index value]
-  [cond [[null seq]                   [error `run-time `conslist-index-too-big]]
+  [cond [[null seq]                   [error bug_type `conslist-index-too-big]]
 	[[integer-equal_sign index 0] [car-set seq value]]
 	[t                            [elt-1d-seq-set [cdr seq] [integer-subtract index 1] value]]]]
 
 [defunk elt-1d-set [collection index value]
   [cond [[is-type `cons  collection] [elt-1d-seq-set collection index value]]
 	[[is-type `array collection] [array-elt-set  collection index value]]
-	[t                           [error `run-time `unknown-collection-type]]]]
+	[t                           [error bug_type `unknown-collection-type]]]]
 
 [defunk elt-set [collection indices value]
   [if [is-type `cons indices]
@@ -570,7 +578,7 @@
 	 [apply &join [parseq partimes-proc partimes-seq]]]]]]
 
 [defunk conslist-set_cdr [seq value]
-  [if [null seq] [error `run-time `[[funk conslist-set_cdr] [desc [null seq]] [funk-args ,seq ,value]]]]
+  [if [null seq] [error description `[[funk conslist-set_cdr] [desc [null seq]] [funk-args ,seq ,value]]]]
   [let [[cdr_seq [cdr seq]]]
     [if cdr_seq
 	[conslist-set_cdr cdr_seq value]

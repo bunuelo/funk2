@@ -714,6 +714,12 @@
 [defunk error-new [:rest slot_value_pairs]
   [new larva 34 [new bug 34 [new-apply frame slot_value_pairs]]]]
 
+[defmetro list [:rest elements] `[new list @elements]]
+
+[defmetro length [x] `[get ,x length]]
+
+[defmetro = [var value] `[mutate ,var ,value]]
+
 [defmetro error [:rest slot_value_pairs]
   `[error-new @[let [[iter          slot_value_pairs]
 		     [reverse_codes nil]]
@@ -725,12 +731,6 @@
 		       [= reverse_codes [cons  value        reverse_codes]]]]
 		   [= iter [cdr iter]]]
 		 [reverse reverse_codes]]]]
-
-[defmetro list [:rest elements] `[new list @elements]]
-
-[defmetro length [x] `[get ,x length]]
-
-[defmetro = [var value] `[mutate ,var ,value]]
 
 [defunk exit [value]
   [management_thread-add_exit_command value]

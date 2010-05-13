@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 [deframe funk2_post    [frame] [title date author entry]]
-[deframe funk2_example [frame] [name title date author content]]
+[deframe funk2_example [frame] [name title date author entry]]
 
 [defunk funk2_calendar []
   [string-prog '<div id="calendar_wrap">'

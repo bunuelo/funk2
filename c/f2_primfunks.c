@@ -1392,7 +1392,7 @@ f2ptr f2__larva(f2ptr cause, f2ptr type, f2ptr bug) {
   u32 raw_type = f2integer__i(type, cause);
   return f2larva__new(cause, raw_type, bug);
 }
-def_pcfunk1(larva, type, bug, return f2__larva(this_cause, type, bug));
+def_pcfunk2(larva, type, bug, return f2__larva(this_cause, type, bug));
 
 f2ptr f2__funkable__env(f2ptr cause, f2ptr this) {
   if (raw__cfunk__is_type(cause, this)) {
@@ -1900,7 +1900,7 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(system__peer_command_server__port_num, "");
   f2__primcfunk__init(system__gethostname, "");
   
-  f2__funktional_primcfunk__init(larva, "");
+  f2__funktional_primcfunk__init__2(larva, larva_type, bug, "");
   
   f2__funktional_primcfunk__init(first, "");
   f2__funktional_primcfunk__init(first__set, "");

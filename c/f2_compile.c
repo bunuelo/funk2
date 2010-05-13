@@ -1594,7 +1594,7 @@ void f2__compile__reinitialize_globalvars() {
   {char* str = "compile:f2__demetropolize_full";                __f2__demetropolize_full__symbol                = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:raw__compile";                          __raw__compile__symbol                          = f2symbol__new(cause, strlen(str), (u8*)str);}
   
-  __wrong_argument_number__bcs = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, "--wrong_argument_number-bcs--"));
+  __wrong_argument_number__bcs = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "--wrong_argument_number-bcs--"));
 }
 
 void f2__compile__initialize() {
@@ -1639,8 +1639,6 @@ void f2__compile__initialize() {
   environment__add_var_value(cause, global_environment(), __f2__demetropolize_once__symbol,                nil);
   environment__add_var_value(cause, global_environment(), __f2__demetropolize_full__symbol,                nil);
   environment__add_var_value(cause, global_environment(), __raw__compile__symbol,                          nil);
-  
-  environment__add_var_value(cause, global_environment(), new__symbol(cause, "--wrong_argument_number-bcs--"), nil);
   
   //f2__primcfunk__init__1(string__to_symbol, this, "convert any string to a new symbol.  for any two strings that are equal, the symbols returned by this function will be eq.");
   f2__primcfunk__init__1(wrong_argument_number__bcs__set, bytecodes, "sets the interrupt for responding to the wrong number of arguments to a funk.");

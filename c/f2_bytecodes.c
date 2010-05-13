@@ -351,8 +351,18 @@ int f2__fiber__bytecode__car(f2ptr fiber, f2ptr bytecode) {
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
+
+  f2ptr fiber__iter = f2fiber__iter(fiber, cause);
+  f2ptr fiber__value;
+  if (! raw__cons__is_type(cause, fiber__iter)) {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "fiber_iter_is_not_cons_in_bytecode_car"));
+    fiber__value = f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
+  } else {
+    fiber__value = f2cons__car(fiber__iter, cause);
+  }
   
-  f2fiber__value__set(fiber, cause, f2cons__car(f2fiber__iter(fiber, cause), cause));
+  f2fiber__value__set(fiber, cause, fiber__value);
   return 0;
 }
 
@@ -367,7 +377,9 @@ int f2__fiber__bytecode__cdr(f2ptr fiber, f2ptr bytecode) {
   f2ptr fiber__iter  = f2fiber__iter(fiber, cause);
   f2ptr fiber__value;
   if (! raw__cons__is_type(cause, fiber__iter)) {
-    fiber__value = f2larva__new(cause, 1, nil);
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "fiber_iter_is_not_cons_in_bytecode_cdr"));
+    fiber__value = f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
   } else {
     fiber__value = f2cons__cdr(fiber__iter, cause);
   }

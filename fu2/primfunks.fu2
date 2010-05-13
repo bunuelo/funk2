@@ -237,7 +237,7 @@
 [globalize-funk funk2_node_handler-know_of_node             &primfunk:funk2_node_handler__know_of_node]
 [globalize-funk send_request_register_peer                  &primfunk:send_request_register_peer]
 
-`[globalize-funk larva                                       &primfunk:larva]
+[globalize-funk larva                                       &primfunk:larva]
 
 `[globalize-funk fiber-subversion_cause                     &primfunk:fiber__subversion_cause]
 

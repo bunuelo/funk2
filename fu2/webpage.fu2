@@ -398,11 +398,10 @@
 '  <li>Cras vitae metus aliquam risus pellentesque pharetra.</li>'
 '</ol>'
 
-[defunk recompile_webpage []
-  [load 'fu2/webpage.fu2']
+[defunk compile_webpage []
   [let [[root_dir '/home/neptune/Desktop/www/funk2/']
 	[posts    [list [let [[this [new funk2_post]]]
-			  [set this title  'Welcome to the official Funk2 Website!']
+			  [set this title  'Welcome to the official Funk2 Website (under construction)!']
 			  [set this date   'May 12th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
 			  [set this entry  [string-prog '    <p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  '
@@ -549,6 +548,9 @@
     [print 'done compiling']
     nil]]
 
+[defunk recompile_webpage []
+  [load 'fu2/webpage.fu2']
+  [compile_webpage]]
 
 
 

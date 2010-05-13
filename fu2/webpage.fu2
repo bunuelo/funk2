@@ -365,17 +365,20 @@
 			      [stringlist-concat `['<h1 class="title">' ,[get example title] '</h1>']]
 			      [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get example date] ' by ' ,[get example author] '</small></p>']]
 			      '  <div class="entry">'
-			      [get example entry]
-			      '	<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
+			      '    <tt>'
+			      [have [get example entry] replace_all '\n' '<br>\n']
+			      '    </tt>'
+			      '	 <p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
 			      '  </div>'
 			      '</div>']]]
     [funk2_page posts examples content]]]
 
 [defunk compile_funk2_example [root_dir posts examples example]
-  [let [[example_code [funk2_example posts examples example]]]
+  [let [[example_html_code [funk2_example posts examples example]]]
     [shelter [mkdir [string-concat root_dir 'example']]]
     [shelter [mkdir [string-concat root_dir 'example/' [get example name]]]]
-    [have example_code save [string-concat root_dir 'example/' [get example name] '/index.html']]
+    [have [get example entry] save [string-concat root_dir 'example/' [get example name] '.fu2']]
+    [have example_html_code   save [string-concat root_dir 'example/' [get example name] '/index.html']]
     nil]]
 
 [defunk compile_funk2_examples [root_dir posts examples]

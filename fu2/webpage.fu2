@@ -364,7 +364,7 @@
   [funk2_page posts examples
 	      [get example content]]]
 
-[defunk compile_funk2_example [root_dir posts example]
+[defunk compile_funk2_example [root_dir posts examples example]
   [let [[example [funk2_example posts examples example]]]
     [shelter [mkdir [string-concat root_dir 'example']]]
     [shelter [mkdir [string-concat root_dir 'example/' [get example name]]]]
@@ -374,7 +374,7 @@
 [defunk compile_funk2_examples [root_dir posts examples]
   [mapc [funk [example]
 	      [print [string-concat 'compiling example ' [get example name]]]
-	      [compile_funk2_example root_dir posts example]]
+	      [compile_funk2_example root_dir posts examples example]]
 	examples]
   nil]
 

@@ -800,7 +800,8 @@ f2ptr raw__mkdir(f2ptr cause, f2ptr directory_name) {
   int failure = mkdir((char*)directory_name__str, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
   if (failure) {
     f2ptr bug_frame = f2__frame__new(cause, nil);
-    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_create_directory"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),       new__symbol(cause, "could_not_create_directory"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "directory_name"), directory_name);
     f2ptr error_description;
     switch(errno) {
     case EACCES:       error_description = new__string(cause, "Search permission is denied on a component of the path prefix, or write permission is denied on the parent directory of the directory to be created."); break;

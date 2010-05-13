@@ -378,6 +378,18 @@
 	examples]
   nil]
 
+'<h3>Bulleted List:</h3>'
+'<ul>'
+'  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>'
+'  <li>Phasellus nec erat sit amet nibh pellentesque congue.</li>'
+'  <li>Cras vitae metus aliquam risus pellentesque pharetra.</li>'
+'</ul>'
+'<h3>Numbered List:</h3>'
+'<ol>'
+'  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>'
+'  <li>Phasellus nec erat sit amet nibh pellentesque congue.</li>'
+'  <li>Cras vitae metus aliquam risus pellentesque pharetra.</li>'
+'</ol>'
 
 [defunk recompile_webpage []
   [load 'fu2/webpage.fu2']
@@ -398,18 +410,7 @@
 							'<blockquote>'
 							'  <p>&#8220;Reflection is the business of man; a sense of his state is his first duty: but who remembereth himself in joy? Is it not in mercy then that sorrow is allotted unto us?&#8221;&#8212;William&nbsp;Shakespeare</p>'
 							'</blockquote>'
-							'<h3>Bulleted List:</h3>'
-							'<ul>'
-							'  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>'
-							'  <li>Phasellus nec erat sit amet nibh pellentesque congue.</li>'
-							'  <li>Cras vitae metus aliquam risus pellentesque pharetra.</li>'
-							'</ul>'
-							'<h3>Numbered List:</h3>'
-							'<ol>'
-							'  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>'
-							'  <li>Phasellus nec erat sit amet nibh pellentesque congue.</li>'
-							'  <li>Cras vitae metus aliquam risus pellentesque pharetra.</li>'
-							'</ol>']]
+							]]
 			  this]
 			[let [[this [new funk2_post]]]
 			  [set this title  'Causal tracing of Funk completion events']

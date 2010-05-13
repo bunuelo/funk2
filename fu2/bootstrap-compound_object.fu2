@@ -39,7 +39,7 @@
 											 [slot_value [compound-slotdef-value slot_name_value_pair]]]
 										     [if [is-type `symbol slot_name]
 											 `[frame-add_var_value frame [quote ,slot_name] ,slot_value]
-										       [error `type-creation-new `[,type_name ,slot_name]]]]]
+										       [error type-creation-new `[,type_name ,slot_name]]]]]
 									     slot_name_value_pairs]]
 							      [set this frame frame]]
 							    [let [[part_frame [get this part_frame]]]
@@ -61,7 +61,7 @@
 			    [primobject_type-add_slot_type primobject_type `set slot_name
 							   [eval `[funk-unlabeled ,slot_name [this value]
 										   [frame-var_value-set this [quote ,slot_name] value `slot-does-not-exist]]]]]
-		    [error [error `type-creation-slot `[,type_name ,slot_name]]]]]]
+		    [error type-creation-slot `[,type_name ,slot_name]]]]]
 	  slot_name_value_pairs]
     [add_type type_name primobject_type]]
   nil]

@@ -377,7 +377,10 @@
   [let [[example_html_code [funk2_example posts examples example]]]
     [shelter [mkdir [string-concat root_dir 'example']]]
     [shelter [mkdir [string-concat root_dir 'example/' [get example name]]]]
-    [have [get example entry] save [string-concat root_dir 'example/' [get example name] '.fu2']]
+    [have [string-prog '\'This example Funk2 code was downloaded from http://funk2.org/example/' [get example name] '.fu2\''
+		       ''
+		       [get example entry]]
+	  save [string-concat root_dir 'example/' [get example name] '.fu2']]
     [have example_html_code   save [string-concat root_dir 'example/' [get example name] '/index.html']]
     nil]]
 

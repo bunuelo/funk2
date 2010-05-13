@@ -143,6 +143,7 @@ f2ptr f2__list_cdr__set(f2ptr cause, f2ptr seq, f2ptr cdr_value);
 f2ptr __wrong_argument_number__bcs = nil; // this is like an interrupt pointer... (nil causes fiber to fail silently [this is a bug])
 
 f2ptr f2__wrong_argument_number__bcs__set(f2ptr cause, f2ptr bytecodes) {
+  environment__add_var_value(cause, global_environment(), new__symbol(cause, "--wrong_argument_number-bcs--"), bytecodes);
   __wrong_argument_number__bcs = bytecodes;
   return nil;
 }
@@ -1592,6 +1593,8 @@ void f2__compile__reinitialize_globalvars() {
   {char* str = "compile:f2__demetropolize_once";                __f2__demetropolize_once__symbol                = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__demetropolize_full";                __f2__demetropolize_full__symbol                = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:raw__compile";                          __raw__compile__symbol                          = f2symbol__new(cause, strlen(str), (u8*)str);}
+  
+  __wrong_argument_number__bcs = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, "--wrong_argument_number-bcs--"));
 }
 
 void f2__compile__initialize() {

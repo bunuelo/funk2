@@ -181,7 +181,11 @@ f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2pt
       if (cause_iter) {
 	keep_looping = boolean__true;
       } else {
-	value = f2larva__new(cause, 23, nil);
+	f2ptr bug_frame = f2__frame__new(cause, nil);
+	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),      new__symbol(cause, "undefined_var_value"));
+	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_type"), type);
+	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable"),      var);
+	value = f2larva__new(cause, 23, f2__bug__new(cause, f2integer__new(cause, 23), bug_frame));
       }
     }
   } while (keep_looping);

@@ -412,10 +412,14 @@
 			  [set this title  'Call for Collaboration to Build Artificial Intelligence']
 			  [set this date   'May 12st, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
-			  [set this entry  [string-prog '<h3>All programs fail, so let us embrace this failure, and write systems that react to failure through reflection:</h3>'
+			  [set this entry  [string-prog '<h3>All programs fail, so let us embrace this failure and write systems that react to failure through reflection:</h3>'
 							'<blockquote>'
 							'  <p>&#8220;Reflection is the business of man; a sense of his state is his first duty: but who remembereth himself in joy? Is it not in mercy then that sorrow is allotted unto us?&#8221;&#8212;William&nbsp;Shakespeare</p>'
 							'</blockquote>'
+							'<p>Human intelligence is a complicated control system for accomplishing complicated goals.  '
+							'Building artificial intelligence is a massive software engineering project that requires new ways for large teams of engineers to work together.  '
+							'Funk2 is meant as a collaboration platform that provides reflective tracing of resposibility for bugs in large software systems.'
+							'</p>'
 							]]
 			  this]
 			[let [[this [new funk2_post]]]

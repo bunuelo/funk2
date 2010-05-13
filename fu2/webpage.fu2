@@ -271,7 +271,7 @@
 
 [defunk compile_funk2_about [root_dir posts examples]
   [let [[about [funk2_about posts examples]]]
-    [mkdir [string-concat root_dir 'about']]
+    [shelter [mkdir [string-concat root_dir 'about']]]
     [have about save [string-concat root_dir 'about/index.html']]
     nil]]
 
@@ -285,7 +285,7 @@
 
 [defunk compile_funk2_news [root_dir posts examples]
   [let [[news [funk2_news posts examples]]]
-    [mkdir [string-concat root_dir 'news']]
+    [shelter [mkdir [string-concat root_dir 'news']]]
     [have news save [string-concat root_dir 'news/index.html']]
     nil]]
 
@@ -299,7 +299,7 @@
 
 [defunk compile_funk2_documentation [root_dir posts examples]
   [let [[documentation [funk2_documentation posts examples]]]
-    [mkdir [string-concat root_dir 'documentation']]
+    [shelter [mkdir [string-concat root_dir 'documentation']]]
     [have documentation save [string-concat root_dir 'documentation/index.html']]
     nil]]
 
@@ -313,7 +313,7 @@
 
 [defunk compile_funk2_download [root_dir posts examples]
   [let [[download [funk2_download posts examples]]]
-    [mkdir [string-concat root_dir 'download']]
+    [shelter [mkdir [string-concat root_dir 'download']]]
     [have download save [string-concat root_dir 'download/index.html']]
     nil]]
 
@@ -327,7 +327,7 @@
 
 [defunk compile_funk2_community [root_dir posts examples]
   [let [[community [funk2_community posts examples]]]
-    [mkdir [string-concat root_dir 'community']]
+    [shelter [mkdir [string-concat root_dir 'community']]]
     [have community save [string-concat root_dir 'community/index.html']]
     nil]]
 
@@ -341,7 +341,7 @@
 
 [defunk compile_funk2_foundation [root_dir posts examples]
   [let [[foundation [funk2_foundation posts examples]]]
-    [mkdir [string-concat root_dir 'foundation']]
+    [shelter [mkdir [string-concat root_dir 'foundation']]]
     [have foundation save [string-concat root_dir 'foundation/index.html']]
     nil]]
 
@@ -355,7 +355,7 @@
 
 [defunk compile_funk2_development [root_dir posts examples]
   [let [[development [funk2_development posts examples]]]
-    [mkdir [string-concat root_dir 'development']]
+    [shelter [mkdir [string-concat root_dir 'development']]]
     [have development save [string-concat root_dir 'development/index.html']]
     nil]]
 
@@ -366,8 +366,8 @@
 
 [defunk compile_funk2_example [root_dir posts example]
   [let [[example [funk2_example posts examples example]]]
-    [mkdir [string-concat root_dir 'example']]
-    [mkdir [string-concat root_dir 'example/' [get example name]]]
+    [shelter [mkdir [string-concat root_dir 'example']]]
+    [shelter [mkdir [string-concat root_dir 'example/' [get example name]]]]
     [have example save [string-concat root_dir 'example/' [get example name] '/index.html']]
     nil]]
 

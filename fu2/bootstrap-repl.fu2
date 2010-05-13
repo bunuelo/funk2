@@ -214,8 +214,7 @@
 	 nil
        ,[funk-apply &and [next conds]]]]]
 
-[defunk error [type value]
-  [new larva 63]]
+[defmetro error [:rest slots_and_values] `[new larva 34 [new bug 34 [frame @slots_and_values]]]]
 
 'Now we have defunk, basic logic (and, or), and errors (almost! :-) [exceptions are defined below])!  We can define "safe" type-checked primitive accessors and mutators:'
 
@@ -315,6 +314,9 @@
 [defmetro cdr     [x]   `[object-get ,x `cdr]]
 [defmetro car-set [x y] `[object-set ,x `car ,y]]
 [defmetro cdr-set [x y] `[object-set ,x `cdr ,y]]
+
+[defunk wrong_argument_number [] [error bug_type `wrong_number_of_arguments]]
+[wrong_argument_number-bcs-set [get &test body_bytecodes]]
 
 [defunk conslist [:rest seq]
   [if [null seq]

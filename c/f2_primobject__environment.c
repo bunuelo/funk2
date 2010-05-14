@@ -159,6 +159,8 @@ f2ptr f2environment__primobject_type__new_aux(f2ptr cause) {
 
 void f2__primobject_environment__reinitialize_globalvars() {
   funk2_primobject__environment__reinit(&(__funk2.primobject__environment));
+  
+  __environment__symbol = f2symbol__new(initial_cause(), strlen("environment"), (u8*)"environment");
 }
 
 void f2__primobject_environment__initialize() {

@@ -1338,7 +1338,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	       (! f2primobject__is__cons(        exp, cause)) &&
 	       (! f2primobject__is__doublelink(  exp, cause)) &&
 	       (! f2primobject__is_list(         exp, cause)) &&
-	       (! f2primobject__is_frame(        exp, cause)))) {
+	       (! f2primobject__is__frame(       exp, cause)))) {
 	    if (ptype == ptype_simple_array) {
 	      f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
 	    } else {

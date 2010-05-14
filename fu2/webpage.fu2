@@ -463,8 +463,8 @@
 			  [set this entry  [string-prog 'Funk2 is written in pure C, which makes incorporating the fastest libraries easy.'
 							'<a href="http://xmlrpc-c.sourceforge.net/">Xmlrpc-c</a> is a lightweight implementation of this very abstract remote procedure call (RPC) protocol.'
 							'The <a href="www.xmlrpc.com">XML-RPC protocol</a> is an XML representation communicated through HTTP and is supported by <a href="http://www.xmlrpc.com/directory/1568/implementations">all popular languages</a>.'
-							'The XML-RPC protocol supports the efficient communication of large amounts of raw binary data between correctly implemented versions of the protocol.'
 							'Python dictionaries, Java hashtables, and other hierarchical named complex data types from other languages can be easily communicated to and from Funk2\'s frame-based and directed-graph object representations.'
+							'Also, for data-intensive algorithms, the XML-RPC protocol supports the efficient communication of large amounts of raw binary data between correctly implemented versions of the protocol.'
 							]]
 			  this]
 			[let [[this [new funk2_post]]]

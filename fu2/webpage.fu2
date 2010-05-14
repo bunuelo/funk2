@@ -475,7 +475,7 @@
 							'We are developing algorithms for simplifying the process of finding and recognizing critical patterns in these reflective traces.  '
 							'Often, large and subtle but exact patterns must be found in order to correctly assign credit for a failure in a learning situation.  '
 							'We have developed a fast labeled directed graph representation in Funk2.  '
-							'See our <a href="/example/graph_matching.fu2">graph matching example</a> for a demonstration of a simple variable graph matching algorithm.  '
+							'See our <a href="/example/graph_matching">graph matching example</a> for a demonstration of a simple variable graph matching algorithm.  '
 							]]
 			  this]
 			[let [[this [new funk2_post]]]
@@ -497,7 +497,9 @@
 			  [set this title  'GraphViz graph visualization completed']
 			  [set this date   'May 12th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
-			  [set this entry  [string-prog '']]
+			  [set this entry  [string-prog '<a href="http://www.graphviz.org/">GraphViz</a> is an open, free and fast graph visualization tool for labeled directed graphs.  '
+							'We have included a very fast GraphViz compiler in Funk2 for generating and viewing our causal reflective traces.  '
+							'See our <a href="/example/graphviz">GraphViz example</a> for how this new facility of Funk2 can be used.  ']]
 			  this]
 			[let [[this [new funk2_post]]]
 			  [set this title  'Successfully stress tested 1000 parallel fibers for 1 day!']

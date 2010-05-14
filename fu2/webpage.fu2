@@ -612,7 +612,7 @@
 							'Thirty-five students completed two computer laboratory assignments within the Funk2 language that related the continuity between the contemporary fields of planning and reinforcement learning in relational domains to Prof. Minsky\'s theory for how to build a cognitive architecture.']]
 			  this]
 			[let [[this [new funk2_post]]]
-			  [set this title  'Bo Morgan presents Funk2 at Seed Magazine in New York']
+			  [set this title  'Funk2 presented at Seed Magazine in New York']
 			  [set this date   'May 12th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
 			  [set this entry  [string-prog 'Funk2 is the programming language that supports building large cognitive architectures, and a preliminary demonstration of the <a href="http://neuromin.de/rct/moral_compass.html">Moral Compass</a> cognitive architecture was invited to be presented last week at Seed Magazine\'s head office in New York.'

@@ -441,8 +441,12 @@
 			  [set this title  'Causal tracing of Funk completion events']
 			  [set this date   'May 12th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
-			  [set this entry  [string-prog 'The funk object is to Funk2 as the lambda object is to Lisp or Python.'
-							'Therefor, causally tracing funk execution and completion events allows us a powerful reflective tool for building graphs and other representations for debugging software failures.']]
+			  [set this entry  [string-prog 'The funk object is as universal to Funk2 as the lambda object is to Lisp or Python.'
+							'Causally tracing funk execution and completion events allows us a powerful and intricate reflective tool.'
+							'These numerous and intricate events are compiled into graphs and other representations for both debugging as well as planning in order to avoid software failures.'
+							'Declarative and goal-oriented software systems that are not reflectively controlled are notoriously difficult to control and often attempt to solve problems by diving into an under constrained search.  '
+							'Building pattern recognition that deals not only with the problem space but with the mental space of the solver itself is necessary for learning to solve more difficult control problems.  '
+							]]
 			  this]
 			[let [[this [new funk2_post]]]
 			  [set this title  'IsisWorld remote interface completed']

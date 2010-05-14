@@ -24,7 +24,7 @@
 
 // circular_buffer
 
-*/
+/*
 typedef struct funk2_object_type__circular_buffer__slot_s funk2_object_type__circular_buffer__slot_t;
 
 struct funk2_object_type__circular_buffer__slot_s {

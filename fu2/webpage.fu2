@@ -483,7 +483,9 @@
 			  [set this title  'Compiles on Windows XP under CygWin']
 			  [set this date   'May 12th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
-			  [set this entry  [string-prog '']]
+			  [set this entry  [string-prog 'A port of Funk2 has been made to the CygWin platform, which now enables Microsoft Windows users to join the Funk2 distributed programming effort!'
+							'We have not completed a binary distribution package for the Windows operating system yet, but developers should have few problems compiling and installing Funk2 from source.'
+							'Please see the Funk2 <a href=/download/>download</a> page in order to download the latest source package.']]
 			  this]
 			[let [[this [new funk2_post]]]
 			  [set this title  'MacOS X Binaries available for 10.5 and 10.6']

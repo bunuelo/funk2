@@ -466,7 +466,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	       (! f2primobject__is__cons(        exp, cause)) &&
 	       (! f2primobject__is__doublelink(  exp, cause)) &&
 	       (! f2primobject__is_list(         exp, cause)) &&
-	       (! f2primobject__is_frame(        exp, cause)))) {
+	       (! f2primobject__is__frame(       exp, cause)))) {
 	    int subexp_size[2];
 	    if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__begin_char, cause));} width ++;
 	    f2__write_pretty(cause, fiber, stream, f2primobject__type(exp, cause), recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];

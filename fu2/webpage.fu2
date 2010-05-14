@@ -365,9 +365,9 @@
 			      [stringlist-concat `['<h1 class="title">' ,[get example title] '</h1>']]
 			      [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get example date] ' by ' ,[get example author] '</small></p>']]
 			      '  <div class="entry">'
-			      '    <tt><p>'
+			      '    <p>'
 			      [have [get example entry] replace_all '\n' '<br>\n']
-			      '    </p></tt>'
+			      '    </p>'
 			      '	 <p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
 			      '  </div>'
 			      '</div>']]]

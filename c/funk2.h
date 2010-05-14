@@ -152,7 +152,6 @@ typedef struct funk2_s {
   funk2_node_handler_t                node_handler;
   funk2_status_t                      status;
   funk2_locale_t                      locale;
-  funk2_primobject_circular_buffer_t  primobject__circular_buffer;
   funk2_processor_thread_handler_t    processor_thread_handler;
   funk2_primobject_type_handler_t     primobject_type_handler;
   funk2_primobject__frame_t           primobject__frame;

@@ -74,10 +74,6 @@ declare_object_type_4_slot(circular_buffer, access_mutex, start, end, bin_array,
 
 #include "f2_primobjects.h"
 
-typedef struct funk2_primobject_circular_buffer_s {
-  f2ptr symbol;
-} funk2_primobject_circular_buffer_t;
-
 // circular_buffer
 
 /*

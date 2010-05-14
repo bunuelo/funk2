@@ -267,7 +267,8 @@
 
 
 [defunk funk2_about-content []
-  [string-prog '<p>The goal of the programming language Funk2 is to enable reflective algorithmic tracing for large heterogenous control systems. A few point emphasized in the Funk2 programming language are:</p>'
+  [string-prog '<h1>About</h1>'
+	       '<p>The goal of the programming language Funk2 is to enable reflective algorithmic tracing for large heterogenous control systems. A few points emphasized in the Funk2 programming language are:</p>'
 	       ''
 	       '<ul>'
 	       '  <li>Layered Critical Causal Reflection</li>'

@@ -266,7 +266,27 @@
 
 
 [defunk funk2_about-content []
-  'About Funk2 (coming soon!)']
+  [string-prog 'The goal of the programming language Funk2 is to enable reflective algorithmic tracing for large heterogenous control systems. A few point emphasized in the Funk2 programming language are:'
+	       ''
+	       '<ul>'
+	       '  <li>Layered Critical Causal Reflection</li>'
+	       '  <li>Efficient and Robust Control</li>'
+	       '  <li>Learning by Credit Assignment</li>'
+	       '  <li>Divergent Solution Paths</li>'
+	       '  <li>Intricate Thread Control</li>'
+	       '  <li>Goal-oriented Learning</li>'
+	       '</ul>'
+	       ''
+	       'Funk2 is a novel programming language that introduced a programming technology that we call Causal Reflective Programming.'
+	       'The language is based on a peer-to-peer shared memory system, allowing individuals access to large numbers of processors and memory.'
+	       'Funk2 uses a virtual scheduler, processor, and thread model that is based on top of the shared memory system, while taking advantage of the specific number of processor cores on each machine.'
+	       'We use POSIX threads to implement virtual processors.'
+	       'Funk2 includes very simple and abstract data and syntax representation--inspired by lisp and scheme.'
+	       'Funk2 compiles to bytecodes that may be shared between architectures, inspired by these similar concepts in Python and Java virtual machines.'
+	       'What is novel to the Funk2 programming language is it\'s unique ability to keep track of everything that it does, which uses a lot of memory when used indiscreetly, but in general allows reflective tracing for causal reasons why bugs occur, when they inevitably do.'
+	       'Other reflective features of the language include an event-based inter-process communication system that works across the peer-to-peer network, inspired by the Erlang model.'
+	       'We see a language like this as necessary for the social, iterative, cooperative design environment for large distributed complex control systems.'
+	       'Our applications are inspired by Marvin Minsky\'s, Emotion Machine layered control algorithm for a Society of Mind.']]
 
 [defunk funk2_about [posts examples]
   [funk2_page posts examples

@@ -529,7 +529,7 @@
 			  [set this title  'Bo Morgan presents Funk2 at Seed Magazine in New York']
 			  [set this date   'May 12th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
-			  [set this entry  [string-prog 'Funk2 is the programming language that supports building large cognitive architectures, and a preliminary demonstration of the <a href="http://neuromin.de/rct/moral_compass.html">Moral Compass</a> cognitive architecture was presented last week at Seed Magazine\'s head office in New York.'
+			  [set this entry  [string-prog 'Funk2 is the programming language that supports building large cognitive architectures, and a preliminary demonstration of the <a href="http://neuromin.de/rct/moral_compass.html">Moral Compass</a> cognitive architecture was invited to be presented last week at Seed Magazine\'s head office in New York.'
 							'Read more about our visit on <a href="http://seedmediagroup.com/index.php/blog/some-reflective-common-sense-thoughts1/">Seed Media Group\'s blog</a>!']]
 			  this]
 			]]

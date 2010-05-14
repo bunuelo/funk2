@@ -77,7 +77,7 @@ f2ptr f2frame__new(f2ptr cause) {
 */
 
 f2ptr f2__frame__new(f2ptr cause, f2ptr slot_value_pairs) {
-  f2ptr this = f2frame__new(cause);
+  f2ptr this = f2frame__new(cause, f2mutex__new(cause), f2__ptypehash__new(cause));
   {
     f2ptr iter = slot_value_pairs;
     while (iter) {

@@ -519,7 +519,11 @@
 			  [set this title  'Funk2 used to teach 35 students &#8220;Block\'s World&#8221; planning in Marvin Minsky\'s Society of Mind class']
 			  [set this date   'May 12th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
-			  [set this entry  [string-prog '']]
+			  [set this entry  [string-prog 'Funk2 is largely inspired by Marvin Minsky\'s theory that the ability of humans to quickly adapt and switch between mental representations and processes is a metacognitive problem of reflective control.'
+							'His book, <u>Society of Mind</u>, organizes and describes in surprisingly both dense and understandable English the hundreds of different types of reasoning that a human performs.'
+							'In his most recent book, <u>The Emotion Machine</u>, Prof. Minsky tells a story about how what we normally call &#8220;emotions&#8221; are actually self-reflective forms of control processes for switching between ways of thinking.'
+							'We have built and demonstrated basic reactive and deliberative planning algorithms in Funk2 that demonstrate simple aspects of the lower layers of this theory.'
+							'Thirty-five students completed two computer laboratory assignments within the Funk2 language that related the continuity between the contemporary fields of planning and reinforcement learning in relational domains to Prof. Minsky\'s theory for how to build a cognitive architecture.']]
 			  this]
 			[let [[this [new funk2_post]]]
 			  [set this title  'Bo Morgan presents Funk2 at Seed Magazine in New York']

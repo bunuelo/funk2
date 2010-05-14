@@ -181,7 +181,11 @@
 	       '				</li>'
 	       '			</ul>'
 	       '		</div>'
+	       '<!-- start content -->'
+	       '<div id="content">'
 	       content
+	       '</div>'
+	       '<!-- end content -->'
 	       '		<!-- start sidebars -->'
 	       '		<div id="sidebar2" class="sidebar">'
 	       '			<ul>'
@@ -238,9 +242,7 @@
 	       '</html>']]
   
 [defunk funk2_homepage-content [posts]
-  [string-prog '<!-- start content -->'
-	       '<div id="content">'
-	       [stringlist-prog [let [[index 0]]
+  [string-prog [stringlist-prog [let [[index 0]]
 				  [mapcar [funk [post]
 						[= index [+ index 1]]
 						[string-prog '<div class="post">'
@@ -252,8 +254,7 @@
 							     '  </div>'
 							     '</div>']]
 					  posts]]]
-	       '</div>'
-	       '<!-- end content -->']]
+	       ]]
 
 [defunk funk2_homepage [posts examples]
   [funk2_page posts examples

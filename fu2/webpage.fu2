@@ -426,7 +426,9 @@
 
 
 [defunk funk2_support-content []
-  'Support Funk2 (coming soon!)']
+  [string-prog '<h1>Support Funk2</h1>'
+	       ''
+	       'Coming soon!']]
 
 [defunk funk2_support [posts examples]
   [funk2_page posts examples

@@ -72,27 +72,6 @@ f2ptr      f2__typedframe__type(f2ptr cause, f2ptr this);
 
 declare_primobject_2_slot(frame, new_type_mutex, type_ptypehash);
 
-/*
-boolean_t raw__frame__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__frame__is_type(f2ptr cause, f2ptr x);
-f2ptr f2frame__new(f2ptr cause);
-#define f2primobject__is_frame(this, cause) raw__eq(cause, f2primobject__type(this, cause), __funk2.primobject__frame.frame__symbol)
-
-defprimobject__static_slot__prototype(frame__new_type_mutex);
-#define f2frame__new_type_mutex(            this, cause)        primobject__static_slot__accessor(  this, frame__new_type_mutex, cause)
-#define f2frame__new_type_mutex__set(       this, cause, value) primobject__static_slot__set(       this, frame__new_type_mutex, cause, value)
-#define f2frame__new_type_mutex__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, frame__new_type_mutex, cause)
-#define f2frame__new_type_mutex__trace(     this, cause)        primobject__static_slot__trace(     this, frame__new_type_mutex, cause)
-#define f2frame__new_type_mutex__cause(     this, cause)        primobject__static_slot__cause(     this, frame__new_type_mutex, cause)
-
-defprimobject__static_slot__prototype(frame__type_ptypehash);
-#define f2frame__type_ptypehash(            this, cause)        primobject__static_slot__accessor(  this, frame__type_ptypehash, cause)
-#define f2frame__type_ptypehash__set(       this, cause, value) primobject__static_slot__set(       this, frame__type_ptypehash, cause, value)
-#define f2frame__type_ptypehash__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, frame__type_ptypehash, cause)
-#define f2frame__type_ptypehash__trace(     this, cause)        primobject__static_slot__trace(     this, frame__type_ptypehash, cause)
-#define f2frame__type_ptypehash__cause(     this, cause)        primobject__static_slot__cause(     this, frame__type_ptypehash, cause)
-*/
-
 f2ptr  f2__frame__new                            (f2ptr cause, f2ptr slot_value_pairs);
 f2ptr  f2__frame__add_type_var_value             (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 f2ptr  f2__frame__var_ptypehash                  (f2ptr cause, f2ptr this);

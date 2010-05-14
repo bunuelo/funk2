@@ -512,6 +512,7 @@
 							'Funk2 processors each have a scheduler that handles scheduling Funk2 fibers that represent parallel procedures, implemented as funks (traceable functions) of compiled bytecodes.'
 							'Because this entire operating system simulation is built out of traceable memory, this opens an avenue for easily building very intricate causally reflective traces.'
 							'The ability to run 1000 parallel fibers for a complete day is one step closer to the ability of the Funk2 programming to simulate large distributed concurrent systems.'
+							'See our <a href="/example/parallel_programming">parallel programming example</a> for more details about how to create and control parallel fibers in Funk2.'
 							]]
 			  this]
 			[let [[this [new funk2_post]]]
@@ -556,20 +557,12 @@
 							 ]]
 			  this]
 			[let [[this [new funk2_example]]]
-			  [set this name   'socket_client']
-			  [set this title  'Socket client']
-			  [set this date   'May 13th, 2010']
+			  [set this name   'parallel_programming']
+			  [set this title  'Parallel Programming']
+			  [set this date   'May 14th, 2010']
 			  [set this author 'Bo Morgan']
 			  [set this entry  [string-prog 'coming soon!'
-							 ]]
-			  this]
-			[let [[this [new funk2_example]]]
-			  [set this name   'socket_server']
-			  [set this title  'Socket server']
-			  [set this date   'May 13th, 2010']
-			  [set this author 'Bo Morgan']
-			  [set this entry  [string-prog 'coming soon!'
-							 ]]
+							]]
 			  this]
 			[let [[this [new funk2_example]]]
 			  [set this name   'causal_event_tracing']

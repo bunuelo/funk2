@@ -104,8 +104,7 @@
 	       '<meta name="keywords" content="" />'
 	       '<meta name="Funk2" content="" />'
 	       '<link href="/default.css" rel="stylesheet" type="text/css" media="screen" />'
-	       '</head>'
-	       '<body>'
+	       '</head>'	       '<body>'
 	       '<div id="header">'
 	       '  <table border=0 cellspacing=0 cellpadding=0><tr><td>'
 	       '    <div id="funk2_logo_header">'
@@ -124,7 +123,7 @@
 	       '			<li><a href="/documentation">Documentation</a></li>'
 	       '			<li><a href="/download">Download</a></li>'
 	       '			<li><a href="/community">Community</a></li>'
-	       '			<li><a href="/foundation">Foundation</a></li>'
+	       '			<li><a href="/support">Support</a></li>'
 	       '			<li><a href="/development">Development</a></li>'
 	       '		</ul>'
 	       '	</div>'
@@ -267,7 +266,7 @@
 
 
 [defunk funk2_about-content []
-  'about']
+  'About Funk2 (coming soon!)']
 
 [defunk funk2_about [posts examples]
   [funk2_page posts examples
@@ -281,7 +280,7 @@
 
 
 [defunk funk2_news-content []
-  'news']
+  'Funk2 News (coming soon!)']
 
 [defunk funk2_news [posts examples]
   [funk2_page posts examples
@@ -295,7 +294,7 @@
 
 
 [defunk funk2_documentation-content []
-  'documentation']
+  'Funk2 Documentation (coming soon!)']
 
 [defunk funk2_documentation [posts examples]
   [funk2_page posts examples
@@ -309,7 +308,7 @@
 
 
 [defunk funk2_download-content []
-  'download']
+  'Download Funk2 (coming soon!)']
 
 [defunk funk2_download [posts examples]
   [funk2_page posts examples
@@ -323,7 +322,7 @@
 
 
 [defunk funk2_community-content []
-  'community']
+  'Funk2 Community (coming soon!)']
 
 [defunk funk2_community [posts examples]
   [funk2_page posts examples
@@ -336,22 +335,22 @@
     nil]]
 
 
-[defunk funk2_foundation-content []
-  'foundation']
+[defunk funk2_support-content []
+  'Support Funk2 (coming soon!)']
 
-[defunk funk2_foundation [posts examples]
+[defunk funk2_support [posts examples]
   [funk2_page posts examples
-	      [funk2_foundation-content]]]
+	      [funk2_support-content]]]
 
-[defunk compile_funk2_foundation [root_dir posts examples]
-  [let [[foundation [funk2_foundation posts examples]]]
-    [shelter [mkdir [string-concat root_dir 'foundation']]]
-    [have foundation save [string-concat root_dir 'foundation/index.html']]
+[defunk compile_funk2_support [root_dir posts examples]
+  [let [[support [funk2_support posts examples]]]
+    [shelter [mkdir [string-concat root_dir 'support']]]
+    [have support save [string-concat root_dir 'support/index.html']]
     nil]]
 
 
 [defunk funk2_development-content []
-  'development']
+  'Funk2 Development (coming soon!)']
 
 [defunk funk2_development [posts examples]
   [funk2_page posts examples
@@ -585,7 +584,7 @@
     [print 'compiling funk2 documentation'] [compile_funk2_documentation root_dir posts examples]
     [print 'compiling funk2 download']      [compile_funk2_download      root_dir posts examples]
     [print 'compiling funk2 community']     [compile_funk2_community     root_dir posts examples]
-    [print 'compiling funk2 foundation']    [compile_funk2_foundation    root_dir posts examples]
+    [print 'compiling funk2 support']       [compile_funk2_support       root_dir posts examples]
     [print 'compiling funk2 development']   [compile_funk2_development   root_dir posts examples]
     [print 'compiling funk2 examples']      [compile_funk2_examples      root_dir posts examples]
     [print 'done compiling']

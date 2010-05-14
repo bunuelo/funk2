@@ -268,6 +268,11 @@
 
 [defunk funk2_about-content []
   [string-prog '<h1>About</h1>'
+	       ''
+	       '<p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  '
+	       'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
+	       'The Funk2 project is currently supported as a core research effort of the <a href=http://mmp.mit.edu>Mind Machine Project</a>.</p>'	       ''
+	       ''
 	       '<p>The goal of the programming language Funk2 is to enable reflective algorithmic tracing for large heterogenous control systems. A few points emphasized in the Funk2 programming language are:</p>'
 	       ''
 	       '<ul>'
@@ -318,7 +323,9 @@
 
 
 [defunk funk2_news-content []
-  'Funk2 News (coming soon!)']
+  [string-prog '<h1>News</h1>'
+	       ''
+	       '<p>Coming soon!</p>']]
 
 [defunk funk2_news [posts examples]
   [funk2_page posts examples
@@ -496,9 +503,9 @@
 			  [set this title  'Welcome to the official Funk2 Website (under construction)!']
 			  [set this date   'May 12th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
-			  [set this entry  [string-prog '    <p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  '
-							'       This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
-							'       The Funk2 project is currently supported as a core research effort of the <a href=http://mmp.mit.edu>Mind Machine Project</a>.</p>']]
+			  [set this entry  [string-prog '<p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  '
+							'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
+							'The Funk2 project is currently supported as a core research effort of the <a href=http://mmp.mit.edu>Mind Machine Project</a>.</p>']]
 			  this]
 			[let [[this [new funk2_post]]]
 			  [set this title  'Call for Collaboration to Build Artificial Intelligence']

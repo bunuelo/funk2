@@ -340,7 +340,9 @@
 
 
 [defunk funk2_documentation-content []
-  [string-prog 'Funk2 Documentation (coming soon!)']]
+  [string-prog '<h1>Documentation</h1>'
+	       ''
+	       'Coming soon!']]
 
 [defunk funk2_documentation [posts examples]
   [funk2_page posts examples
@@ -408,7 +410,9 @@
 
 
 [defunk funk2_community-content []
-  'Funk2 Community (coming soon!)']
+  [string-prog '<h1>Community</h1>'
+	       ''
+	       'Coming soon!']]
 
 [defunk funk2_community [posts examples]
   [funk2_page posts examples
@@ -436,7 +440,9 @@
 
 
 [defunk funk2_development-content []
-  'Funk2 Development (coming soon!)']
+  [string-prog '<h1>Development</h1>'
+	       ''
+	       'Coming soon!']]
 
 [defunk funk2_development [posts examples]
   [funk2_page posts examples

@@ -505,7 +505,14 @@
 			  [set this title  'Successfully stress tested 1000 parallel fibers for 1 day!']
 			  [set this date   'May 12th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
-			  [set this entry  [string-prog '']]
+			  [set this entry  [string-prog 'Fibers are to Funk2 as threads are to a C or Java application.  '
+							'Funk2 is an abstract simulation of an operating system built out of Funk2 traceable memory.  '
+							'Each Funk2 processor is an abstract object representing each processor core in it\'s host machine.  '
+							'Each Funk2 processor is implemented as a POSIX thread (pthread).'
+							'Funk2 processors each have a scheduler that handles scheduling Funk2 fibers that represent parallel procedures, implemented as funks (traceable functions) of compiled bytecodes.'
+							'Because this entire operating system simulation is built out of traceable memory, this opens an avenue for easily building very intricate causally reflective traces.'
+							'The ability to run 1000 parallel fibers for a complete day is one step closer to the ability of the Funk2 programming to simulate large distributed concurrent systems.'
+							]]
 			  this]
 			[let [[this [new funk2_post]]]
 			  [set this title  'Funk2 used to teach 35 students &#8220;Block\'s World&#8221; planning in Marvin Minsky\'s Society of Mind class']

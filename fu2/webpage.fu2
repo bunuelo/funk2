@@ -361,16 +361,20 @@
 
 
 [defunk funk2_example [posts examples example]
-  [let [[content [string-prog '<div class="post">'
+  [let [[content [string-prog '<!-- start content -->'
+			      '<div id="content">'
+			      '  <div class="post">'
 			      [stringlist-concat `['<h1 class="title">' ,[get example title] '</h1>']]
 			      [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get example date] ' by ' ,[get example author] '</small></p>']]
-			      '  <div class="entry">'
-			      '    <p>'
-			      [have [get example entry] replace_all '\n' '</p>\n<p>']
-			      '    </p>'
-			      '	 <p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
+			      '    <div class="entry">'
+			      '      <p>'
+			      [have [get example entry] replace_all '\n' '<br>\n']
+			      '      </p>'
+			      '	   <p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
+			      '    </div>'
 			      '  </div>'
-			      '</div>']]]
+			      '</div>'
+			      '<!-- end content -->']]]
     [funk2_page posts examples content]]]
 
 [defunk compile_funk2_example [root_dir posts examples example]

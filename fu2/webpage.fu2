@@ -441,7 +441,8 @@
 			  [set this title  'Causal tracing of Funk completion events']
 			  [set this date   'May 12th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
-			  [set this entry  [string-prog '']]
+			  [set this entry  [string-prog 'The funk object is to Funk2 as the lambda object is to Lisp or Python.'
+							'Therefor, causally tracing funk execution and completion events allows us a powerful reflective tool for building graphs and other representations for debugging software failures.']]
 			  this]
 			[let [[this [new funk2_post]]]
 			  [set this title  'IsisWorld remote interface completed']
@@ -515,7 +516,7 @@
 			  [set this title  'Graph Matching']
 			  [set this date   'May 13th, 2010']
 			  [set this author 'Bo Morgan']
-			  [set this entry  [string-prog 'example content'
+			  [set this entry  [string-prog 'coming soon!'
 							 ]]
 			  this]
 			[let [[this [new funk2_example]]]
@@ -523,7 +524,7 @@
 			  [set this title  'GraphViz Graph Visualization']
 			  [set this date   'May 13th, 2010']
 			  [set this author 'Bo Morgan']
-			  [set this entry  [string-prog 'example content'
+			  [set this entry  [string-prog 'coming soon!'
 							 ]]
 			  this]
 			[let [[this [new funk2_example]]]
@@ -531,7 +532,7 @@
 			  [set this title  'Socket client']
 			  [set this date   'May 13th, 2010']
 			  [set this author 'Bo Morgan']
-			  [set this entry  [string-prog 'example content'
+			  [set this entry  [string-prog 'coming soon!'
 							 ]]
 			  this]
 			[let [[this [new funk2_example]]]
@@ -539,7 +540,7 @@
 			  [set this title  'Socket server']
 			  [set this date   'May 13th, 2010']
 			  [set this author 'Bo Morgan']
-			  [set this entry  [string-prog 'example content'
+			  [set this entry  [string-prog 'coming soon!'
 							 ]]
 			  this]
 			[let [[this [new funk2_example]]]
@@ -547,7 +548,7 @@
 			  [set this title  'Causal event tracing']
 			  [set this date   'May 13th, 2010']
 			  [set this author 'Bo Morgan']
-			  [set this entry  [string-prog 'example content'
+			  [set this entry  [string-prog 'coming soon!'
 							 ]]
 			  this]
 			[let [[this [new funk2_example]]]
@@ -555,7 +556,7 @@
 			  [set this title  'IsisWorld client']
 			  [set this date   'May 13th, 2010']
 			  [set this author 'Bo Morgan']
-			  [set this entry  [string-prog 'example content'
+			  [set this entry  [string-prog 'coming soon!'
 							 ]]
 			  this]
 			]]]

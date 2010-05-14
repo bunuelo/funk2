@@ -22,9 +22,10 @@
 #ifndef F2__PRIMOBJECT__CIRCULAR_BUFFER__TYPES__H
 #define F2__PRIMOBJECT__CIRCULAR_BUFFER__TYPES__H
 
-typedef struct funk2_object_type__circular_buffer__slot_s funk2_object_type__circular_buffer__slot_t;
-
 // circular_buffer
+
+*/
+typedef struct funk2_object_type__circular_buffer__slot_s funk2_object_type__circular_buffer__slot_t;
 
 struct funk2_object_type__circular_buffer__slot_s {
   f2ptr is_type__symbol;
@@ -54,6 +55,17 @@ struct funk2_object_type__circular_buffer__slot_s {
   f2ptr is_empty__symbol;
   f2ptr is_empty__funk;
 };
+*/
+
+typedef struct funk2_object_type__circular_buffer__slot_s funk2_object_type__circular_buffer__slot_t;
+declare_object_type_4_slot(circular_buffer, access_mutex, start, end, bin_array,
+			   f2ptr pop__symbol;
+			   f2ptr pop__funk;
+			   f2ptr add__symbol;
+			   f2ptr add__funk;
+			   f2ptr is_empty__symbol;
+			   f2ptr is_empty__funk;
+			   );
 
 #endif // F2__PRIMOBJECT__CIRCULAR_BUFFER__TYPES__H
 
@@ -62,11 +74,13 @@ struct funk2_object_type__circular_buffer__slot_s {
 
 #include "f2_primobjects.h"
 
-// circular_buffer
-
 typedef struct funk2_primobject_circular_buffer_s {
   f2ptr symbol;
 } funk2_primobject_circular_buffer_t;
+
+// circular_buffer
+
+/*
 
 boolean_t raw__circular_buffer__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__circular_buffer__is_type(f2ptr cause, f2ptr this);
@@ -100,12 +114,15 @@ defprimobject__static_slot__prototype(circular_buffer__bin_array);
 #define f2circular_buffer__bin_array__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, circular_buffer__bin_array, cause)
 #define f2circular_buffer__bin_array__trace(            this, cause)        primobject__static_slot__trace(            this, circular_buffer__bin_array, cause)
 #define f2circular_buffer__bin_array__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, circular_buffer__bin_array, cause)
+*/
+
+declare_primobject_4_slot(circular_buffer, access_mutex, start, end, bin_array);
 
 f2ptr raw__circular_buffer__new_empty(f2ptr cause, u64 length);
 f2ptr f2__circular_buffer__new(f2ptr cause);
 f2ptr f2__circular_buffer__add(f2ptr cause, f2ptr this, f2ptr value);
 f2ptr f2__circular_buffer__pop(f2ptr cause, f2ptr this);
-boolean_t  raw__circular_buffer__is_empty(f2ptr cause, f2ptr this);
+boolean_t raw__circular_buffer__is_empty(f2ptr cause, f2ptr this);
 
 f2ptr f2circular_buffer__primobject_type__new(f2ptr cause);
 

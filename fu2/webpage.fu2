@@ -471,7 +471,13 @@
 			  [set this title  'Simple node and edge variable graph matching library completed']
 			  [set this date   'May 12th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
-			  [set this entry  [string-prog '']]
+			  [set this entry  [string-prog 'Procedural traces in Funk2 are labeled directed graphs.  '
+							'These graphs are very large and difficult to visualize because of their size and complexity.  '
+							'We are developing algorithms for simplifying the process of finding and recognizing critical patterns in these reflective traces.  '
+							'Often, large and subtle but exact patterns must be found in order to correctly assign credit for a failure in a learning situation.  '
+							'We have developed a fast labeled directed graph representation in Funk2.  '
+							'See our <a href="/example/graph_matching.fu2">graph matching example</a> for a demonstration of a simple variable graph matching algorithm.  '
+							]]
 			  this]
 			[let [[this [new funk2_post]]]
 			  [set this title  'Compiles on Windows XP under CygWin']

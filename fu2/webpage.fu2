@@ -490,7 +490,8 @@
 			  [set this title  'MacOS X Binaries available for 10.5 and 10.6']
 			  [set this date   'May 12th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
-			  [set this entry  [string-prog '']]
+			  [set this entry  [string-prog 'Binary packages for the Apple Macintosh operating system X (MacOS X) are now available!  '
+							'Please see the Funk2 <a href=/download/>download</a> page in order to download the latest MacOS X binary package for Funk2.']]
 			  this]
 			[let [[this [new funk2_post]]]
 			  [set this title  'GraphViz graph visualization completed']

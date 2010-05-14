@@ -21,8 +21,11 @@
 
 #include "funk2.h"
 
-// set primobject definition
+// set
 
+def_primobject_4_slot(set, write_mutex, key_count, bin_num_power, bin_array);
+
+/*
 defprimobject__static_slot(set__write_mutex,   0);
 defprimobject__static_slot(set__key_count,     1);
 defprimobject__static_slot(set__bin_num_power, 2);
@@ -46,6 +49,7 @@ f2ptr f2set__new(f2ptr cause, f2ptr write_mutex, f2ptr key_count, f2ptr bin_num_
 boolean_t raw__set__is_type(f2ptr cause, f2ptr this) {return raw__array__is_type(cause, this) && f2primobject__is_set(this, cause);}
 f2ptr f2__set__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__set__is_type(cause, this));}
 def_pcfunk1(set__is_type, this, return f2__set__is_type(this_cause, this));
+*/
 
 boolean_t raw__set__valid(f2ptr cause, f2ptr this) {
   if (! raw__set__is_type(cause, this)) {return 0;}
@@ -70,6 +74,7 @@ f2ptr raw__set__new(f2ptr cause, s64 bin_num_power) {
 f2ptr f2__set__new(f2ptr cause) {return raw__set__new(cause, set__default_start_bin_num_power);}
 def_pcfunk0(set__new, return f2__set__new(this_cause));
 
+/*
 f2ptr f2__set__write_mutex(f2ptr cause, f2ptr this) {return f2set__write_mutex(this, cause);}
 def_pcfunk1(set__write_mutex, this, return f2__set__write_mutex(this_cause, this));
 
@@ -93,6 +98,7 @@ def_pcfunk1(set__bin_array, this, return f2__set__bin_array(this_cause, this));
 
 f2ptr f2__set__bin_array__set(f2ptr cause, f2ptr this, f2ptr value) {return f2set__bin_array__set(this, cause, value);}
 def_pcfunk2(set__bin_array__set, this, value, return f2__set__bin_array__set(this_cause, this, value));
+*/
 
 void f2__set__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr bin_num_power    = f2set__bin_num_power(this, cause);
@@ -193,21 +199,11 @@ f2ptr f2__set__elements(f2ptr cause, f2ptr this) {
 def_pcfunk1(set__elements, this, return f2__set__elements(this_cause, this));
 
 
-f2ptr f2set__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, nil);
-  {char* slot_name = "is_type";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.is_type__funk);}
-  {char* slot_name = "new";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.new__funk);}
-  {char* slot_name = "write_mutex";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.write_mutex__funk);}
-  {char* slot_name = "write_mutex";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.write_mutex__set__funk);}
-  {char* slot_name = "key_count";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.key_count__funk);}
-  {char* slot_name = "key_count";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.key_count__set__funk);}
-  {char* slot_name = "bin_num_power"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.bin_num_power__funk);}
-  {char* slot_name = "bin_num_power"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.bin_num_power__set__funk);}
-  {char* slot_name = "bin_array";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.bin_array__funk);}
-  {char* slot_name = "bin_array";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.bin_array__set__funk);}
-  {char* slot_name = "add";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.add__funk);}
-  {char* slot_name = "lookup";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.lookup__funk);}
-  {char* slot_name = "elements";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.elements__funk);}
+f2ptr f2set__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2set__primobject_type__new(cause);
+  {char* slot_name = "add";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.add__funk);}
+  {char* slot_name = "lookup";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.lookup__funk);}
+  {char* slot_name = "elements"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.elements__funk);}
   return this;
 }
 
@@ -215,7 +211,7 @@ f2ptr f2set__primobject_type__new(f2ptr cause) {
 // **
 
 void f2__primobject_set__reinitialize_globalvars() {
-  __set__symbol = f2symbol__new(initial_cause(), strlen("set"), (u8*)"set");
+  __set__symbol = new__symbol(initial_cause(), "set");
 }
 
 void f2__primobject_set__initialize() {
@@ -227,6 +223,9 @@ void f2__primobject_set__initialize() {
   
   // set
   
+  initialize_primobject_4_slot(set, write_mutex, key_count, bin_num_power, bin_array);
+  
+  /*
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_set.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.is_type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_set.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -247,6 +246,7 @@ void f2__primobject_set__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__bin_array, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.bin_array__funk = never_gc(cfunk);}
   {char* symbol_str = "bin_array-set"; __funk2.globalenv.object_type.primobject.primobject_type_set.bin_array__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__bin_array__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.bin_array__set__funk = never_gc(cfunk);}
+  */
   {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_set.add__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__add, this, element, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.add__funk = never_gc(cfunk);}
   {char* symbol_str = "lookup"; __funk2.globalenv.object_type.primobject.primobject_type_set.lookup__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

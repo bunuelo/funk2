@@ -22,10 +22,11 @@
 #ifndef F2__PRIMOBJECT__SET__TYPES__H
 #define F2__PRIMOBJECT__SET__TYPES__H
 
-typedef struct funk2_object_type__set__slot_s funk2_object_type__set__slot_t;
 
 // set
 
+typedef struct funk2_object_type__set__slot_s funk2_object_type__set__slot_t;
+/*
 struct funk2_object_type__set__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
@@ -54,6 +55,15 @@ struct funk2_object_type__set__slot_s {
   f2ptr elements__symbol;
   f2ptr elements__funk;
 };
+*/
+declare_object_type_4_slot(set, write_mutex, key_count, bin_num_power, bin_array,
+			   f2ptr add__symbol;
+			   f2ptr add__funk;
+			   f2ptr lookup__symbol;
+			   f2ptr lookup__funk;
+			   f2ptr elements__symbol;
+			   f2ptr elements__funk;
+			   );
 
 #endif // F2__PRIMOBJECT__SET__TYPES__H
 
@@ -64,6 +74,9 @@ struct funk2_object_type__set__slot_s {
 
 // set
 
+declare_primobject_4_slot(set, write_mutex, key_count, bin_num_power, bin_array);
+
+/*
 extern f2ptr __set__symbol;
 boolean_t raw__set__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__set__is_type(f2ptr cause, f2ptr this);
@@ -98,6 +111,8 @@ defprimobject__static_slot__prototype(set__bin_array);
 #define f2set__bin_array__trace(            this, cause)        primobject__static_slot__trace(            this, set__bin_array, cause)
 #define f2set__bin_array__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, set__bin_array, cause)
 
+*/
+
 f2ptr raw__set__new   (f2ptr cause, s64 bin_num_power);
 f2ptr  f2__set__new   (f2ptr cause);
 f2ptr  f2__set__add   (f2ptr cause, f2ptr this, f2ptr key);
@@ -105,7 +120,7 @@ f2ptr  f2__set__lookup(f2ptr this, f2ptr cause, f2ptr key);
 
 f2ptr f2__set__slot_names(f2ptr cause, f2ptr this);
 
-f2ptr f2set__primobject_type__new(f2ptr cause);
+f2ptr f2set__primobject_type__new_aux(f2ptr cause);
 
 // **
 

@@ -90,20 +90,20 @@ f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause);
   } \
 }
 
-#define ptypehash__iteration(cause, this, key, value, code) {\
+#define ptypehash__iteration(cause, this, key, value, code) { \
   ptypehash__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
                                       f2ptr key   = f2cons__car(keyvalue_pair, iteration__cause); \
                                       f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
                                       code); \
 }
 
-#define ptypehash__key__iteration(cause, this, key, code) {\
+#define ptypehash__key__iteration(cause, this, key, code) { \
   ptypehash__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
                                       f2ptr key = f2cons__car(keyvalue_pair, iteration__cause); \
                                       code); \
 }
 
-#define ptypehash__value__iteration(cause, this, value, code) {\
+#define ptypehash__value__iteration(cause, this, value, code) { \
   ptypehash__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
                                       f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
                                       code); \

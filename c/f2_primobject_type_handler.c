@@ -52,9 +52,9 @@ f2ptr funk2_primobject_type_handler__types(funk2_primobject_type_handler_t* this
   f2ptr types = nil;
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
   funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
-  ptypehash__iteration(cause, this->type_hash, key, value,
-		       types = f2cons__new(cause, value, types);
-		       );
+  ptypehash__value__iteration(cause, this->type_hash, value,
+			      types = f2cons__new(cause, value, types);
+			      );
   funk2_processor_mutex__unlock(&(this->type_hash_mutex));
   return types;
 }

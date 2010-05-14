@@ -22,10 +22,11 @@
 #ifndef F2__PRIMOBJECT__ENVIRONMENT__TYPES__H
 #define F2__PRIMOBJECT__ENVIRONMENT__TYPES__H
 
-typedef struct funk2_object_type__environment__slot_s funk2_object_type__environment__slot_t;
-
 // environment
 
+typedef struct funk2_object_type__environment__slot_s funk2_object_type__environment__slot_t;
+
+/*
 struct funk2_object_type__environment__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
@@ -50,6 +51,17 @@ struct funk2_object_type__environment__slot_s {
   f2ptr type_var_value__set__symbol;
   f2ptr type_var_value__set__funk;
 };
+*/
+
+declare_object_type_3_slot(environment, frame, parent_env, desc,
+			   f2ptr add_type_var_value__symbol;
+			   f2ptr add_type_var_value__funk;
+			   f2ptr lookup_type_var_value__symbol;
+			   f2ptr lookup_type_var_value__funk;
+			   f2ptr type_var_value__set__symbol;
+			   f2ptr type_var_value__set__funk;
+			   );
+
 
 #endif // F2__PRIMOBJECT__ENVIRONMENT__TYPES__H
 
@@ -64,6 +76,9 @@ struct funk2_object_type__environment__slot_s {
 #include "f2_primobject__ptypehash.h"
 #include "f2_primobject__frame.h"
 
+declare_primobject_3_slot(environment, frame, parent_env, desc);
+
+/*
 boolean_t raw__environment__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__environment__is_type(f2ptr cause, f2ptr this);
 f2ptr f2environment__new(f2ptr cause, f2ptr frame, f2ptr parent_env, f2ptr desc);
@@ -89,6 +104,7 @@ defprimobject__static_slot__prototype(environment__desc);
 #define f2environment__desc__tracing_on(      this, cause)        primobject__static_slot__tracing_on(this, environment__desc, cause)
 #define f2environment__desc__trace(           this, cause)        primobject__static_slot__trace(     this, environment__desc, cause)
 #define f2environment__desc__imagination_frame(           this, cause)        primobject__static_slot__imagination_frame(     this, environment__desc, cause)
+*/
 
 f2ptr f2__environment__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 f2ptr f2__environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
@@ -121,7 +137,7 @@ void funk2_primobject__environment__init(funk2_primobject__environment_t* this);
 void funk2_primobject__environment__reinit(funk2_primobject__environment_t* this);
 void funk2_primobject__environment__destroy(funk2_primobject__environment_t* this);
 
-f2ptr f2environment__primobject_type__new(f2ptr cause);
+f2ptr f2environment__primobject_type__new_aux(f2ptr cause);
 
 // **
 

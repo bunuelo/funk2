@@ -449,7 +449,7 @@
 							]]
 			  this]
 			[let [[this [new funk2_post]]]
-			  [set this title  'IsisWorld remote interface completed']
+			  [set this title  'Funk2 remote interface to IsisWorld']
 			  [set this date   'May 12th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
 			  [set this entry  [string-prog '<a href="http://web.media.mit.edu/~dustin/simulator_setup/">IsisWorld</a> is another core research effort supported by the <a href=mmp.mit.edu>Mind Machine Project</a> that we are using to collaborate in developing reflective social commonsense reasoning cognitive models of humans.  '

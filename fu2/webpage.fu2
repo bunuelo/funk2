@@ -370,7 +370,7 @@
 			      '      <p><tt>'
 			      [have [get example entry] replace_all '\n' '<br>\n']
 			      '      </tt></p>'
-			      '	   <p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
+			      [string-concat '<p class="links"><a href="/example/' [get example name] '.fu2" class="more">Download</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>']
 			      '    </div>'
 			      '  </div>'
 			      '</div>'

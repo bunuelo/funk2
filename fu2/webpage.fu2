@@ -460,7 +460,10 @@
 			  [set this title  'XML-RPC client library built on fast xmlrpc-c library']
 			  [set this date   'May 12th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
-			  [set this entry  [string-prog '']]
+			  [set this entry  [string-prog 'Funk2 is written in pure C, which makes incorporating the fastest libraries easy.'
+							'<a href="http://xmlrpc-c.sourceforge.net/">Xmlrpc-c</a> is a lightweight implementation of a very abstract remote procedure call (RPC) protocol.'
+							'The <a href="www.xmlrpc.com">XML-RPC protocol</a> is an XML representation communicated through HTTP and is supported by <a href="http://www.xmlrpc.com/directory/1568/implementations">all popular languages</a>.'
+							'']]
 			  this]
 			[let [[this [new funk2_post]]]
 			  [set this title  'Simple node and edge variable graph matching library completed']

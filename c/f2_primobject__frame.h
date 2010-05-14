@@ -22,48 +22,35 @@
 #ifndef F2__PRIMOBJECT__FRAME__TYPES__H
 #define F2__PRIMOBJECT__FRAME__TYPES__H
 
-typedef struct funk2_object_type__frame__slot_s funk2_object_type__frame__slot_t;
-
 // frame
 
-struct funk2_object_type__frame__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr new_type_mutex__symbol;
-  f2ptr new_type_mutex__funk;
-  f2ptr new_type_mutex__set__symbol;
-  f2ptr new_type_mutex__set__funk;
-  f2ptr type_ptypehash__symbol;
-  f2ptr type_ptypehash__funk;
-  f2ptr type_ptypehash__set__symbol;
-  f2ptr type_ptypehash__set__funk;
-  f2ptr add_type_var_value__symbol;
-  f2ptr add_type_var_value__funk;
-  f2ptr lookup_type_var_assignment_cons__symbol;
-  f2ptr lookup_type_var_assignment_cons__funk;
-  f2ptr lookup_type_var_value__symbol;
-  f2ptr lookup_type_var_value__funk;
-  f2ptr type_var_value__set__symbol;
-  f2ptr type_var_value__set__funk;
-  f2ptr type_var__slot_names__symbol;
-  f2ptr type_var__slot_names__funk;
-  f2ptr copy__symbol;
-  f2ptr copy__funk;
-  f2ptr copy_slots__symbol;
-  f2ptr copy_slots__funk;
-  f2ptr check_has_type_slot__symbol;
-  f2ptr check_has_type_slot__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr part_not_contained_by__symbol;
-  f2ptr part_not_contained_by__funk;
-  f2ptr as__graph__symbol;
-  f2ptr as__graph__funk;
-};
+typedef struct funk2_object_type__frame__slot_s funk2_object_type__frame__slot_t;
+declare_object_type_2_slot(frame, new_type_mutex, type_ptypehash,
+			   f2ptr add_type_var_value__symbol;
+			   f2ptr add_type_var_value__funk;
+			   f2ptr lookup_type_var_assignment_cons__symbol;
+			   f2ptr lookup_type_var_assignment_cons__funk;
+			   f2ptr lookup_type_var_value__symbol;
+			   f2ptr lookup_type_var_value__funk;
+			   f2ptr type_var_value__set__symbol;
+			   f2ptr type_var_value__set__funk;
+			   f2ptr type_var__slot_names__symbol;
+			   f2ptr type_var__slot_names__funk;
+			   f2ptr copy__symbol;
+			   f2ptr copy__funk;
+			   f2ptr copy_slots__symbol;
+			   f2ptr copy_slots__funk;
+			   f2ptr check_has_type_slot__symbol;
+			   f2ptr check_has_type_slot__funk;
+			   f2ptr equals_hash_value__loop_free__symbol;
+			   f2ptr equals_hash_value__loop_free__funk;
+			   f2ptr equals_hash_value__symbol;
+			   f2ptr equals_hash_value__funk;
+			   f2ptr part_not_contained_by__symbol;
+			   f2ptr part_not_contained_by__funk;
+			   f2ptr as__graph__symbol;
+			   f2ptr as__graph__funk;
+			   );
 
 #endif // F2__PRIMOBJECT__PTYPEHASH__TYPES__H
 
@@ -77,12 +64,15 @@ struct funk2_object_type__frame__slot_s {
 // typedframe
 
 boolean_t raw__typedframe__is_type(f2ptr cause, f2ptr this);
-f2ptr f2__typedframe__is_type(f2ptr cause, f2ptr this);
-f2ptr f2__typedframe__type(f2ptr cause, f2ptr this);
+f2ptr      f2__typedframe__is_type(f2ptr cause, f2ptr this);
+f2ptr      f2__typedframe__type(f2ptr cause, f2ptr this);
 
 
 // frame
 
+declare_primobject_2_slot(frame, new_type_mutex, type_ptypehash);
+
+/*
 boolean_t raw__frame__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__frame__is_type(f2ptr cause, f2ptr x);
 f2ptr f2frame__new(f2ptr cause);
@@ -101,6 +91,7 @@ defprimobject__static_slot__prototype(frame__type_ptypehash);
 #define f2frame__type_ptypehash__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, frame__type_ptypehash, cause)
 #define f2frame__type_ptypehash__trace(     this, cause)        primobject__static_slot__trace(     this, frame__type_ptypehash, cause)
 #define f2frame__type_ptypehash__cause(     this, cause)        primobject__static_slot__cause(     this, frame__type_ptypehash, cause)
+*/
 
 f2ptr  f2__frame__new                            (f2ptr cause, f2ptr slot_value_pairs);
 f2ptr  f2__frame__add_type_var_value             (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
@@ -135,7 +126,7 @@ void funk2_primobject__frame__init(   funk2_primobject__frame_t* this);
 void funk2_primobject__frame__reinit( funk2_primobject__frame_t* this);
 void funk2_primobject__frame__destroy(funk2_primobject__frame_t* this);
 
-f2ptr f2frame__primobject_type__new(f2ptr cause);
+f2ptr f2frame__primobject_type__new_aux(f2ptr cause);
 
 #define frame__iteration(cause, this, type_slot_name, slot_name, slot_value, code) \
   ptypehash__iteration(cause, f2frame__type_ptypehash(this, cause), type_slot_name, type_slot_ptypehash, \

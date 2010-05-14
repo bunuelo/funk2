@@ -39,42 +39,6 @@ void funk2_primobject__environment__destroy(funk2_primobject__environment_t* thi
 
 def_primobject_3_slot(environment, frame, parent_env, desc);
 
-/*
-defprimobject__static_slot(environment__frame,      0);
-defprimobject__static_slot(environment__parent_env, 1);
-defprimobject__static_slot(environment__desc,       2);
-
-f2ptr f2environment__new(f2ptr cause, f2ptr frame, f2ptr parent_env, f2ptr desc) {
-  f2ptr this = f2__primobject__new(cause, __funk2.primobject__environment.environment__symbol, 3, nil);
-  f2environment__frame__set(     this, cause, frame);
-  f2environment__parent_env__set(this, cause, parent_env);
-  f2environment__desc__set(      this, cause, desc);
-  return this;
-}
-
-boolean_t raw__environment__is_type(f2ptr cause, f2ptr this) {return (raw__array__is_type(cause, this) && f2primobject__is_environment(this, cause));}
-f2ptr f2__environment__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__environment__is_type(cause, this));}
-def_pcfunk1(environment__is_type, exp, return f2__environment__is_type(this_cause, exp));
-
-f2ptr f2__environment__frame(f2ptr cause, f2ptr this) {return f2environment__frame(this, cause);}
-def_pcfunk1(environment__frame, this, return f2__environment__frame(this_cause, this));
-
-f2ptr f2__environment__frame__set(f2ptr cause, f2ptr this, f2ptr value) {return f2environment__frame__set(this, cause, value);}
-def_pcfunk2(environment__frame__set, this, value, return f2__environment__frame__set(this_cause, this, value));
-
-f2ptr f2__environment__parent_env(f2ptr cause, f2ptr this) {return f2environment__parent_env(this, cause);}
-def_pcfunk1(environment__parent_env, this, return f2__environment__parent_env(this_cause, this));
-
-f2ptr f2__environment__parent_env__set(f2ptr cause, f2ptr this, f2ptr value) {return f2environment__parent_env__set(this, cause, value);}
-def_pcfunk2(environment__parent_env__set, this, value, return f2__environment__parent_env__set(this_cause, this, value));
-
-f2ptr f2__environment__desc(f2ptr cause, f2ptr this) {return f2environment__desc(this, cause);}
-def_pcfunk1(environment__desc, this, return f2__environment__desc(this_cause, this));
-
-f2ptr f2__environment__desc__set(f2ptr cause, f2ptr this, f2ptr value) {return f2environment__desc__set(this, cause, value);}
-def_pcfunk2(environment__desc__set, this, value, return f2__environment__desc__set(this_cause, this, value));
-*/
-
 f2ptr f2__environment__new(f2ptr cause, f2ptr parent_env, f2ptr desc) {
   return f2environment__new(cause, f2__frame__new(cause, nil), parent_env, desc);
 }
@@ -178,26 +142,8 @@ void f2__primobject_environment__initialize() {
   
   initialize_primobject_3_slot(environment, frame, parent_env, desc);
   
-  /*
-  {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_environment.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(environment__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_environment.is_type__funk = never_gc(cfunk);}
-  */
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_environment.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(environment__new, parent_env, desc, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_environment.new__funk = never_gc(cfunk);}
-  /*
-  {char* symbol_str = "frame"; __funk2.globalenv.object_type.primobject.primobject_type_environment.frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(environment__frame, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_environment.frame__funk = never_gc(cfunk);}
-  {char* symbol_str = "frame-set"; __funk2.globalenv.object_type.primobject.primobject_type_environment.frame__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(environment__frame__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_environment.frame__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "parent_env"; __funk2.globalenv.object_type.primobject.primobject_type_environment.parent_env__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(environment__parent_env, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_environment.parent_env__funk = never_gc(cfunk);}
-  {char* symbol_str = "parent_env-set"; __funk2.globalenv.object_type.primobject.primobject_type_environment.parent_env__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(environment__parent_env__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_environment.parent_env__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "desc"; __funk2.globalenv.object_type.primobject.primobject_type_environment.desc__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(environment__desc, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_environment.desc__funk = never_gc(cfunk);}
-  {char* symbol_str = "desc-set"; __funk2.globalenv.object_type.primobject.primobject_type_environment.desc__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(environment__desc__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_environment.desc__set__funk = never_gc(cfunk);}
-  */
   {char* symbol_str = "add_type_var_value"; __funk2.globalenv.object_type.primobject.primobject_type_environment.add_type_var_value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__4_arg(environment__add_type_var_value, this, type, var, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_environment.add_type_var_value__funk = never_gc(cfunk);}
   {char* symbol_str = "lookup_type_var_value"; __funk2.globalenv.object_type.primobject.primobject_type_environment.lookup_type_var_value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

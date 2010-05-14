@@ -346,7 +346,7 @@
 
 
 [defunk funk2_download-content []
-  [string-prog '<h1>Documentation</h1>'
+  [string-prog '<h1>Download</h1>'
 	       ''
 	       '<h2>Binary and Source Packages</h2>'
 	       ''

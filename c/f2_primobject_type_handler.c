@@ -48,6 +48,22 @@ void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* th
 f2ptr f2__add_type(f2ptr cause, f2ptr type_name, f2ptr type) {funk2_primobject_type_handler__add_type(&(__funk2.primobject_type_handler), cause, type_name, type); return nil;}
 def_pcfunk2(add_type, type_name, type, return f2__add_type(this_cause, type_name, type));
 
+f2ptr funk2_primobject_type_handler__types(funk2_primobject_type_handler_t* this, f2ptr cause) {
+  f2ptr types = nil;
+  if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
+  funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
+  ptypehash__iteration(cause, this->type_hash, key, value,
+		       types = f2cons__new(cause, value, types);
+		       );
+  funk2_processor_mutex__unlock(&(this->type_hash_mutex));
+  return types;
+}
+
+f2ptr f2__system__types(f2ptr cause) {
+  return funk2_primobject_type_handler__types(&(__funk2.primobject_type_handler), cause);
+}
+def_pcfunk0(system__types, return f2__system__types(this_cause));
+
 f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name) {
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
   funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
@@ -58,7 +74,6 @@ f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t
 
 f2ptr f2__lookup_type(f2ptr cause, f2ptr type_name) {return funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, type_name);}
 def_pcfunk1(lookup_type, type_name, return f2__lookup_type(this_cause, type_name));
-
 
 void funk2_primobject_type_handler__add_builtin_ptype_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause) {
   {char* type_name = "ptype";        funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),        f2ptype__primobject_type__new(cause));}
@@ -149,7 +164,9 @@ void f2__primobject_type_handler__initialize() {
   
   f2__primobject_type_handler__reinitialize_globalvars();
   
-  f2__primcfunk__init__2(add_type, type_name, type, "adds the symbolic type_name associated with type to the primobject_type_handler.");
-  f2__primcfunk__init__1(lookup_type, type_name, "returns the type associated with the symbolic type_name, or nil if no such type has been added to the primobject_type_handler.");
+  f2__primcfunk__init__2(add_type,    type_name, type, "Adds the symbolic type_name associated with type to the primobject_type_handler.");
+  f2__primcfunk__init__1(lookup_type, type_name,       "Returns the type associated with the symbolic type_name, or nil if no such type has been added to the primobject_type_handler.");
+  f2__primcfunk__init__0(system__types,                "Returns a new list of all of the types currently defined in the system.");
+  
 }
 

@@ -288,7 +288,23 @@
 	       'What is novel to the Funk2 programming language is it\'s unique ability to keep track of everything that it does, which uses a lot of memory when used indiscreetly, but in general allows reflective tracing for causal reasons why bugs occur, when they inevitably do.'
 	       'Other reflective features of the language include an event-based inter-process communication system that works across the peer-to-peer network, inspired by the Erlang model.'
 	       'We see a language like this as necessary for the social, iterative, cooperative design environment for large distributed complex control systems.'
-	       'Our applications are inspired by Marvin Minsky\'s, Emotion Machine layered control algorithm for a Society of Mind.</p>']]
+	       'Our applications are inspired by Marvin Minsky\'s, Emotion Machine layered control algorithm for a Society of Mind.</p>'
+	       ''
+	       '<h2>Publications</h2>'
+	       ''
+	       '<ul>'
+	       '  <li>Morgan, B.; "Funk2: A Distributed Processing Language for Reflective Tracing of a Large Critic-Selector Cognitive Architecture"; Proceedings of the Metacognition Workshop at the Third IEEE International Conference on Self-Adaptive and Self-Organizing Systems; San Francisco, California, USA; 2009 September</li>'
+	       '  <li>Morgan, B.; "Funk2: A Frame-based Programming Language with Causally Reflective Capabilities"; Technical Note; Massachusetts Institute of Technology; 2009 May</li>'
+	       '</ul>'
+	       ''
+	       '<h2>Presentations</h2>'
+	       ''
+	       '<ul>'
+	       '  <li>Morgan, B.; "Funk2 Trust Presentation online Movie, PDF, and Transcript."; Research Presentation; Massachusetts Institute of Technology; 2008 April</li>'
+	       '  <li>Morgan, B.; "Funk2: Causal Reflective Programming"; Research Presentation; Massachusetts Institute of Technology; 2008 January</li>'
+	       '</ul>'
+	       ''
+	       ]]
 
 [defunk funk2_about [posts examples]
   [funk2_page posts examples

@@ -64,14 +64,14 @@ defarray_slot__prototype(primobject__primobject_label);
 #define f2primobject__primobject_label__trace(                         this, cause)                     array_slot__trace(                         this, primobject__primobject_label, cause)
 #define f2primobject__primobject_label__imagination_frame(             this, cause)                     array_slot__imagination_frame(             this, primobject__primobject_label, cause)
 
-defarray_slot__prototype(primobject__type);
-#define f2primobject__type__trace_depth(                   this, cause, trace_depth)        array_slot__accessor__trace_depth(         this, primobject__type, cause, trace_depth)
-#define f2primobject__type(                                this, cause)                     array_slot__accessor(                      this, primobject__type, cause)
-#define f2primobject__type__set__trace_depth(              this, cause, value, trace_depth) array_slot__set__trace_depth(              this, primobject__type, cause, value, trace_depth)
-#define f2primobject__type__set(                           this, cause, value)              array_slot__set(                           this, primobject__type, cause, value)
-#define f2primobject__type__tracing_on(                    this, cause)                     array_slot__tracing_on(                    this, primobject__type, cause)
-#define f2primobject__type__trace(                         this, cause)                     array_slot__trace(                         this, primobject__type, cause)
-#define f2primobject__type__imagination_frame(             this, cause)                     array_slot__imagination_frame(             this, primobject__type, cause)
+defarray_slot__prototype(primobject__object_type);
+#define f2primobject__object_type__trace_depth(                   this, cause, trace_depth)        array_slot__accessor__trace_depth(         this, primobject__object_type, cause, trace_depth)
+#define f2primobject__object_type(                                this, cause)                     array_slot__accessor(                      this, primobject__object_type, cause)
+#define f2primobject__object_type__set__trace_depth(              this, cause, value, trace_depth) array_slot__set__trace_depth(              this, primobject__object_type, cause, value, trace_depth)
+#define f2primobject__object_type__set(                           this, cause, value)              array_slot__set(                           this, primobject__object_type, cause, value)
+#define f2primobject__object_type__tracing_on(                    this, cause)                     array_slot__tracing_on(                    this, primobject__object_type, cause)
+#define f2primobject__object_type__trace(                         this, cause)                     array_slot__trace(                         this, primobject__object_type, cause)
+#define f2primobject__object_type__imagination_frame(             this, cause)                     array_slot__imagination_frame(             this, primobject__object_type, cause)
 
 defarray_slot__prototype(primobject__dynamic_slots);
 #define f2primobject__dynamic_slots__trace_depth(                   this, cause, trace_depth)        array_slot__accessor__trace_depth(         this, primobject__dynamic_slots, cause, trace_depth)
@@ -119,9 +119,9 @@ f2ptr raw__array__elt__imagination_frame(f2ptr cause, f2ptr this, u64 index);   
 
 extern f2ptr __primobject__symbol;
 
-f2ptr f2__primobject__new(             f2ptr cause, f2ptr type, int   static_slot_num, f2ptr dynamic_slots);
-f2ptr f2__primobject__new__trace_depth(f2ptr cause, f2ptr type, int   static_slot_num, f2ptr dynamic_slots, int trace_depth);
-f2ptr   f2primobject__new(             f2ptr cause, f2ptr type, f2ptr static_slot_num, f2ptr dynamic_slots);
+f2ptr f2__primobject__new(             f2ptr cause, f2ptr object_type, int   static_slot_num, f2ptr dynamic_slots);
+f2ptr f2__primobject__new__trace_depth(f2ptr cause, f2ptr object_type, int   static_slot_num, f2ptr dynamic_slots, int trace_depth);
+f2ptr   f2primobject__new(             f2ptr cause, f2ptr object_type, f2ptr static_slot_num, f2ptr dynamic_slots);
 
 f2ptr f2primobject__primobject_type__new(f2ptr cause);
 
@@ -129,7 +129,7 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   boolean_t raw__##name##__is_type(f2ptr cause, f2ptr x); \
   f2ptr f2__##name##__is_type(f2ptr cause, f2ptr x); \
   f2ptr f2##name##__primobject_type__new(f2ptr cause); \
-  static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);}
+  static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__object_type(this, cause), __##name##__symbol);}
 
 #define debug_type_check(cause, this, name) debug__assert(raw__##name##__is_type(cause, this), nil, "debug error: this is not a " #name ".")
 

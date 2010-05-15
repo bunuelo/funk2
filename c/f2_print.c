@@ -469,7 +469,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	       (! f2primobject__is__frame(       exp, cause)))) {
 	    int subexp_size[2];
 	    if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__begin_char, cause));} width ++;
-	    f2__write_pretty(cause, fiber, stream, f2primobject__type(exp, cause), recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
+	    f2__write_pretty(cause, fiber, stream, f2primobject__object_type(exp, cause), recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	    indent_space_num += 2; available_width -= 2;
 	  }
 	  if (f2primobject__is__largeinteger(exp, cause)) {
@@ -1005,7 +1005,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    
 	    boolean_t need_to_print_type_besides_basic_variable = boolean__false; // if this is false, we can omit printing "variable" before each frame variable key.
 	    
-	    f2ptr frame_type_name = f2primobject__type(exp, cause); // defaults to "frame", but is set to :type slot name if one exists.
+	    f2ptr frame_type_name = f2primobject__object_type(exp, cause); // defaults to "frame", but is set to :type slot name if one exists.
 	    
 	    ptypehash__iteration(cause, type_ptypehash, type_ptypehash__key, type_ptypehash__value,
 				 
@@ -1236,7 +1236,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    */
 	  } else {
-	    f2ptr type_name = f2primobject__type(exp, cause);
+	    f2ptr type_name = f2primobject__object_type(exp, cause);
 	    f2ptr primobject_type = f2__lookup_type(cause, type_name);
 	    if (primobject_type) {
 	      f2ptr keyvalue_pairs       = nil;

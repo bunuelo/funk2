@@ -54,7 +54,7 @@ f2ptr f2__object__type(f2ptr cause, f2ptr this) {
   case ptype_simple_array:
   case ptype_traced_array:
     if (raw__primobject__is_type(cause, this)) {
-      f2ptr primobject_type_name = f2primobject__type(this, cause);
+      f2ptr primobject_type_name = f2primobject__object_type(this, cause);
       //printf("\nprimobject_type_name: "); f2__print(cause, primobject_type_name); fflush(stdout);
       if (primobject_type_name == __funk2.primobject__frame.frame__symbol) {
 	f2ptr test_get_type = f2__frame__lookup_var_value(cause, this, __funk2.globalenv.type__symbol, nil);
@@ -201,7 +201,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
   case ptype_simple_array:
   case ptype_traced_array: {
     if (raw__primobject__is_type(cause, this)) {
-      f2ptr primobject_type_name = f2primobject__type(this, cause);
+      f2ptr primobject_type_name = f2primobject__object_type(this, cause);
       //printf("\nprimobject_type_name: "); f2__print(cause, primobject_type_name); fflush(stdout);
       if (primobject_type_name == __funk2.primobject__frame.frame__symbol) {
 	f2ptr test_get_type = f2__frame__lookup_var_value(cause, this, __funk2.globalenv.type__symbol, nil);

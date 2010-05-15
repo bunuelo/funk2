@@ -22,7 +22,7 @@
 #include "funk2.h"
 
 defarray_slot(primobject__primobject_label, 0);
-defarray_slot(primobject__type,             1);
+defarray_slot(primobject__object_type,      1);
 defarray_slot(primobject__dynamic_slots,    2);
 
 #define primobject_error(str) f2exception__new(cause, f2string__new(cause, strlen("primobject:error"), (u8*)"primobject:error"), f2string__new(cause, strlen(str), (u8*)str))
@@ -30,31 +30,31 @@ defarray_slot(primobject__dynamic_slots,    2);
 
 // primobject
 
-f2ptr f2primobject__new(f2ptr cause, f2ptr type, f2ptr static_slot_num, f2ptr dynamic_slots) {return f2__primobject__new(cause, type, f2integer__i(static_slot_num, cause), dynamic_slots);}
+f2ptr f2primobject__new(f2ptr cause, f2ptr object_type, f2ptr static_slot_num, f2ptr dynamic_slots) {return f2__primobject__new(cause, object_type, f2integer__i(static_slot_num, cause), dynamic_slots);}
 
 f2ptr __primobject__symbol = -1;
 
-f2ptr f2__primobject__new__trace_depth(f2ptr cause, f2ptr type, int static_slot_num, f2ptr dynamic_slots, int trace_depth) {
+f2ptr f2__primobject__new__trace_depth(f2ptr cause, f2ptr object_type, int static_slot_num, f2ptr dynamic_slots, int trace_depth) {
   release__assert(__primobject__symbol != -1, nil, "f2__primobject__new error: used before primobjects initialized.");
   f2ptr this = raw__array__new(cause, primobject__header_size + static_slot_num);
   f2primobject__primobject_label__set__trace_depth(this, cause, __primobject__symbol, trace_depth);
-  f2primobject__type__set__trace_depth(            this, cause, type,                 trace_depth);
+  f2primobject__object_type__set__trace_depth(     this, cause, object_type,          trace_depth);
   f2primobject__dynamic_slots__set__trace_depth(   this, cause, dynamic_slots,        trace_depth);
   return this;
 }
 
-f2ptr f2__primobject__new(f2ptr cause, f2ptr type, int static_slot_num, f2ptr dynamic_slots) {
-  return f2__primobject__new__trace_depth(cause, type, static_slot_num, dynamic_slots, 1);
+f2ptr f2__primobject__new(f2ptr cause, f2ptr object_type, int static_slot_num, f2ptr dynamic_slots) {
+  return f2__primobject__new__trace_depth(cause, object_type, static_slot_num, dynamic_slots, 1);
 }
 
 f2ptr f2__primobject__is_type(f2ptr cause, f2ptr thing) {return f2bool__new(raw__primobject__is_type(cause, thing));}
 def_pcfunk1(primobject__is_type, thing, return f2__primobject__is_type(this_cause, thing));
 
-f2ptr f2__primobject__type(f2ptr cause, f2ptr this) {return f2primobject__type(this, cause);}
-def_pcfunk1(primobject__type, this, return f2__primobject__type(this_cause, this));
+f2ptr f2__primobject__object_type(f2ptr cause, f2ptr this) {return f2primobject__object_type(this, cause);}
+def_pcfunk1(primobject__object_type, this, return f2__primobject__object_type(this_cause, this));
 
-f2ptr f2__primobject__type__set(f2ptr cause, f2ptr this, f2ptr value) {return f2primobject__type__set(this, cause, value);}
-def_pcfunk2(primobject__type__set, this, value, return f2__primobject__type__set(this_cause, this, value));
+f2ptr f2__primobject__object_type__set(f2ptr cause, f2ptr this, f2ptr value) {return f2primobject__object_type__set(this, cause, value);}
+def_pcfunk2(primobject__object_type__set, this, value, return f2__primobject__object_type__set(this_cause, this, value));
 
 f2ptr f2__primobject__dynamic_slots(f2ptr cause, f2ptr this) {return f2primobject__dynamic_slots(this, cause);}
 def_pcfunk1(primobject__dynamic_slots, this, return f2__primobject__dynamic_slots(this_cause, this));
@@ -99,8 +99,8 @@ def_pcfunk5(primobject__dynamic_slot_type_value__set, this, slot_type, slot_name
 f2ptr f2primobject__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("array"), (u8*)"array"), nil));
   {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.is_type__funk);}
-  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.type__funk);}
-  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.type__set__funk);}
+  {char* slot_name = "object_type";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.object_type__funk);}
+  {char* slot_name = "object_type";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.object_type__set__funk);}
   {char* slot_name = "dynamic_slots";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.dynamic_slots__funk);}
   {char* slot_name = "dynamic_slots";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.dynamic_slots__set__funk);}
   {char* slot_name = "add_dynamic_slot_type_value"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.add_dynamic_slot_type_value__funk);}
@@ -569,10 +569,10 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(primobject__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.is_type__funk = never_gc(cfunk);}
-  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(primobject__type, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.type__funk = never_gc(cfunk);}
-  {char* symbol_str = "type-set"; __funk2.globalenv.object_type.primobject.type__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(primobject__type__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.type__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "object_type"; __funk2.globalenv.object_type.primobject.object_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(primobject__object_type, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.object_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "object_type-set"; __funk2.globalenv.object_type.primobject.object_type__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(primobject__object_type__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.object_type__set__funk = never_gc(cfunk);}
   {char* symbol_str = "dynamic_slots"; __funk2.globalenv.object_type.primobject.dynamic_slots__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(primobject__dynamic_slots, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.dynamic_slots__funk = never_gc(cfunk);}
   {char* symbol_str = "dynamic_slots-set"; __funk2.globalenv.object_type.primobject.dynamic_slots__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

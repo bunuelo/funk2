@@ -30,7 +30,7 @@ extern f2ptr __semantic_relation__symbol;
 boolean_t raw__semantic_relation__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__semantic_relation__is_type(f2ptr cause, f2ptr this);
 f2ptr f2semantic_relation__new(f2ptr cause, f2ptr type, f2ptr left_concept, f2ptr right_concept);
-#define      f2primobject__is__semantic_relation(this, cause) raw__eq(cause, f2primobject__type(this, cause), __semantic_relation__symbol)
+#define      f2primobject__is__semantic_relation(this, cause) raw__eq(cause, f2primobject__object_type(this, cause), __semantic_relation__symbol)
 
 defprimobject__static_slot__prototype(semantic_relation__type);
 #define      f2semantic_relation__type(                   this, cause)        primobject__static_slot__accessor(         this, semantic_relation__type, cause)
@@ -58,7 +58,7 @@ defprimobject__static_slot__prototype(semantic_relation__right_concept);
 
 extern f2ptr __semantic_graph__symbol;
 f2ptr f2semantic_graph__new(f2ptr cause, f2ptr relations);
-#define      f2primobject__is__semantic_graph(this, cause) raw__eq(cause, f2primobject__type(this, cause), __semantic_graph__symbol)
+#define      f2primobject__is__semantic_graph(this, cause) raw__eq(cause, f2primobject__object_type(this, cause), __semantic_graph__symbol)
 
 defprimobject__static_slot__prototype(semantic_graph__relations);
 #define      f2semantic_graph__relations(                   this, cause)        primobject__static_slot__accessor(         this, semantic_graph__relations, cause)

@@ -30,7 +30,7 @@ extern f2ptr __blocks_world_rectangle__symbol;
 f2ptr f2blocks_world_rectangle__new(f2ptr cause, f2ptr x0, f2ptr y0, f2ptr x1, f2ptr y1);
 boolean_t  raw__blocks_world_rectangle__is_type(f2ptr cause, f2ptr this);
 
-#define f2primobject__is__blocks_world_rectangle(this, cause) raw__eq(cause, f2primobject__type(this, cause), __blocks_world_rectangle__symbol)
+#define f2primobject__is__blocks_world_rectangle(this, cause) raw__eq(cause, f2primobject__object_type(this, cause), __blocks_world_rectangle__symbol)
 
 defprimobject__static_slot__prototype(blocks_world_rectangle__x0);
 #define f2blocks_world_rectangle__x0(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_rectangle__x0, cause)
@@ -68,7 +68,7 @@ extern f2ptr __blocks_world_color__symbol;
 f2ptr f2blocks_world_color__new(f2ptr cause, f2ptr name);
 boolean_t raw__blocks_world_color__is_type(f2ptr cause, f2ptr this);
 
-#define f2primobject__is__blocks_world_color(this, cause) raw__eq(cause, f2primobject__type(this, cause), __blocks_world_color__symbol)
+#define f2primobject__is__blocks_world_color(this, cause) raw__eq(cause, f2primobject__object_type(this, cause), __blocks_world_color__symbol)
 
 defprimobject__static_slot__prototype(blocks_world_color__name);
 #define f2blocks_world_color__name(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_color__name, cause)
@@ -85,7 +85,7 @@ extern f2ptr __blocks_world_object__symbol;
 f2ptr f2blocks_world_object__new(f2ptr cause, f2ptr name, f2ptr type, f2ptr rectangle, f2ptr color, f2ptr ignore_gravity, f2ptr holding_object);
 boolean_t raw__blocks_world_object__is_type(f2ptr cause, f2ptr this);
 
-#define f2primobject__is__blocks_world_object(this, cause) raw__eq(cause, f2primobject__type(this, cause), __blocks_world_object__symbol)
+#define f2primobject__is__blocks_world_object(this, cause) raw__eq(cause, f2primobject__object_type(this, cause), __blocks_world_object__symbol)
 
 defprimobject__static_slot__prototype(blocks_world_object__name);
 #define f2blocks_world_object__name(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_object__name, cause)
@@ -137,7 +137,7 @@ extern f2ptr __blocks_world_physics__symbol;
 f2ptr f2blocks_world_physics__new(f2ptr cause, f2ptr objects);
 boolean_t raw__blocks_world_physics__is_type(f2ptr cause, f2ptr this);
 
-#define f2primobject__is__blocks_world_physics(this, cause) raw__eq(cause, f2primobject__type(this, cause), __blocks_world_physics__symbol)
+#define f2primobject__is__blocks_world_physics(this, cause) raw__eq(cause, f2primobject__object_type(this, cause), __blocks_world_physics__symbol)
 
 defprimobject__static_slot__prototype(blocks_world_physics__objects);
 #define f2blocks_world_physics__objects(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_physics__objects, cause)

@@ -30,7 +30,7 @@ extern f2ptr __object__symbol;
 boolean_t raw__object__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__object__is_type(f2ptr cause, f2ptr this);
 f2ptr f2object__new(f2ptr cause, f2ptr dimensions, f2ptr data);
-#define f2primobject__is_object(this, cause)            raw__eq(cause, f2primobject__type(this, cause), __object__symbol)
+#define f2primobject__is_object(this, cause)            raw__eq(cause, f2primobject__object_type(this, cause), __object__symbol)
 
 defprimobject__static_slot__prototype(object__types);
 #define f2object__types(            this, cause)        primobject__static_slot__accessor(  this, object__types, cause)

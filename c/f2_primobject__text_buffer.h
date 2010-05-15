@@ -28,7 +28,7 @@
 
 extern f2ptr __text_buffer_character__symbol;
 f2ptr f2text_buffer_character__new(f2ptr cause, f2ptr character, f2ptr foreground_color, f2ptr background_color);
-#define      f2primobject__is__text_buffer_character(this, cause) raw__eq(cause, f2primobject__type(this, cause), __text_buffer_character__symbol)
+#define      f2primobject__is__text_buffer_character(this, cause) raw__eq(cause, f2primobject__object_type(this, cause), __text_buffer_character__symbol)
 
 defprimobject__static_slot__prototype(text_buffer_character__character);
 #define      f2text_buffer_character__character(                   this, cause)        primobject__static_slot__accessor(         this, text_buffer_character__character, cause)
@@ -59,7 +59,7 @@ f2ptr f2__text_buffer_character__is_type(f2ptr cause, f2ptr this);
 
 extern f2ptr __text_buffer__symbol;
 f2ptr f2text_buffer__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr characters);
-#define      f2primobject__is__text_buffer(this, cause) raw__eq(cause, f2primobject__type(this, cause), __text_buffer__symbol)
+#define      f2primobject__is__text_buffer(this, cause) raw__eq(cause, f2primobject__object_type(this, cause), __text_buffer__symbol)
 
 defprimobject__static_slot__prototype(text_buffer__width);
 #define      f2text_buffer__width(                   this, cause)        primobject__static_slot__accessor(         this, text_buffer__width, cause)
@@ -90,7 +90,7 @@ f2ptr f2__text_buffer__is_type(f2ptr cause, f2ptr this);
 
 extern f2ptr __text_cursor__symbol;
 f2ptr f2text_cursor__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr foreground_color, f2ptr background_color);
-#define      f2primobject__is__text_cursor(this, cause) raw__eq(cause, f2primobject__type(this, cause), __text_cursor__symbol)
+#define      f2primobject__is__text_cursor(this, cause) raw__eq(cause, f2primobject__object_type(this, cause), __text_cursor__symbol)
 
 defprimobject__static_slot__prototype(text_cursor__x);
 #define      f2text_cursor__x(                   this, cause)        primobject__static_slot__accessor(         this, text_cursor__x, cause)
@@ -128,7 +128,7 @@ f2ptr      f2__text_cursor__is_type(f2ptr cause, f2ptr this);
 
 extern f2ptr __text_window__symbol;
 f2ptr f2text_window__new(f2ptr cause, f2ptr double_buffer, f2ptr cursor);
-#define      f2primobject__is__text_window(this, cause) raw__eq(cause, f2primobject__type(this, cause), __text_window__symbol)
+#define      f2primobject__is__text_window(this, cause) raw__eq(cause, f2primobject__object_type(this, cause), __text_window__symbol)
 
 defprimobject__static_slot__prototype(text_window__double_buffer);
 #define      f2text_window__double_buffer(                   this, cause)        primobject__static_slot__accessor(         this, text_window__double_buffer, cause)

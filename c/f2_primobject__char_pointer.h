@@ -31,7 +31,7 @@ extern f2ptr __char_pointer__symbol;
 boolean_t raw__char_pointer__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__char_pointer__is_type(f2ptr cause, f2ptr this);
 f2ptr f2char_pointer__new(f2ptr cause, f2ptr pointer_value);
-#define      f2primobject__is_char_pointer(this, cause)             raw__eq(cause, f2primobject__type(this, cause), __char_pointer__symbol)
+#define      f2primobject__is_char_pointer(this, cause)             raw__eq(cause, f2primobject__object_type(this, cause), __char_pointer__symbol)
 
 defprimobject__static_slot__prototype(char_pointer__pointer_value);
 #define      f2char_pointer__pointer_value(this, cause)             primobject__static_slot__accessor(  this, char_pointer__pointer_value, cause)

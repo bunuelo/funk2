@@ -26,36 +26,6 @@
 // set
 
 typedef struct funk2_object_type__set__slot_s funk2_object_type__set__slot_t;
-/*
-struct funk2_object_type__set__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr write_mutex__symbol;
-  f2ptr write_mutex__funk;
-  f2ptr write_mutex__set__symbol;
-  f2ptr write_mutex__set__funk;
-  f2ptr key_count__symbol;
-  f2ptr key_count__funk;
-  f2ptr key_count__set__symbol;
-  f2ptr key_count__set__funk;
-  f2ptr bin_num_power__symbol;
-  f2ptr bin_num_power__funk;
-  f2ptr bin_num_power__set__symbol;
-  f2ptr bin_num_power__set__funk;
-  f2ptr bin_array__symbol;
-  f2ptr bin_array__funk;
-  f2ptr bin_array__set__symbol;
-  f2ptr bin_array__set__funk;
-  f2ptr add__symbol;
-  f2ptr add__funk;
-  f2ptr lookup__symbol;
-  f2ptr lookup__funk;
-  f2ptr elements__symbol;
-  f2ptr elements__funk;
-};
-*/
 declare_object_type_4_slot(set, write_mutex, key_count, bin_num_power, bin_array,
 			   f2ptr add__symbol;
 			   f2ptr add__funk;
@@ -75,43 +45,6 @@ declare_object_type_4_slot(set, write_mutex, key_count, bin_num_power, bin_array
 // set
 
 declare_primobject_4_slot(set, write_mutex, key_count, bin_num_power, bin_array);
-
-/*
-extern f2ptr __set__symbol;
-boolean_t raw__set__is_type(f2ptr cause, f2ptr this);
-f2ptr f2__set__is_type(f2ptr cause, f2ptr this);
-f2ptr f2set__new(f2ptr cause, f2ptr write_mutex, f2ptr key_count, f2ptr bin_num_power, f2ptr bin_array);
-#define f2primobject__is_set(this, cause)                    raw__eq(cause, f2primobject__type(this, cause), __set__symbol)
-
-defprimobject__static_slot__prototype(set__write_mutex);
-#define f2set__write_mutex(                   this, cause)        primobject__static_slot__accessor(         this, set__write_mutex, cause)
-#define f2set__write_mutex__set(              this, cause, value) primobject__static_slot__set(              this, set__write_mutex, cause, value)
-#define f2set__write_mutex__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, set__write_mutex, cause)
-#define f2set__write_mutex__trace(            this, cause)        primobject__static_slot__trace(            this, set__write_mutex, cause)
-#define f2set__write_mutex__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, set__write_mutex, cause)
-
-defprimobject__static_slot__prototype(set__key_count);
-#define f2set__key_count(                   this, cause)        primobject__static_slot__accessor(         this, set__key_count, cause)
-#define f2set__key_count__set(              this, cause, value) primobject__static_slot__set(              this, set__key_count, cause, value)
-#define f2set__key_count__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, set__key_count, cause)
-#define f2set__key_count__trace(            this, cause)        primobject__static_slot__trace(            this, set__key_count, cause)
-#define f2set__key_count__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, set__key_count, cause)
-
-defprimobject__static_slot__prototype(set__bin_num_power);
-#define f2set__bin_num_power(                   this, cause)        primobject__static_slot__accessor(         this, set__bin_num_power, cause)
-#define f2set__bin_num_power__set(              this, cause, value) primobject__static_slot__set(              this, set__bin_num_power, cause, value)
-#define f2set__bin_num_power__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, set__bin_num_power, cause)
-#define f2set__bin_num_power__trace(            this, cause)        primobject__static_slot__trace(            this, set__bin_num_power, cause)
-#define f2set__bin_num_power__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, set__bin_num_power, cause)
-
-defprimobject__static_slot__prototype(set__bin_array);
-#define f2set__bin_array(                   this, cause)        primobject__static_slot__accessor(         this, set__bin_array, cause)
-#define f2set__bin_array__set(              this, cause, value) primobject__static_slot__set(              this, set__bin_array, cause, value)
-#define f2set__bin_array__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, set__bin_array, cause)
-#define f2set__bin_array__trace(            this, cause)        primobject__static_slot__trace(            this, set__bin_array, cause)
-#define f2set__bin_array__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, set__bin_array, cause)
-
-*/
 
 f2ptr raw__set__new   (f2ptr cause, s64 bin_num_power);
 f2ptr  f2__set__new   (f2ptr cause);

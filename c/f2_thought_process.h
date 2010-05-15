@@ -60,7 +60,7 @@ f2ptr f2thought_process__new__trace_depth(f2ptr cause, f2ptr read_write_execute_
 f2ptr f2thought_process__new(f2ptr cause, f2ptr read_write_execute_slot_hash);
 
 
-#define f2primobject__is_thought_process(this, cause) (f2primobject__type(this, cause) == __funk2.thought_process.thought_process__symbol)
+#define f2primobject__is_thought_process(this, cause) (f2primobject__object_type(this, cause) == __funk2.thought_process.thought_process__symbol)
 
 defprimobject__static_slot__prototype(thought_process__read_write_execute_slot_hash);
 #define f2thought_process__read_write_execute_slot_hash(                  this, cause)                     primobject__static_slot__accessor(        this, thought_process__read_write_execute_slot_hash, cause)

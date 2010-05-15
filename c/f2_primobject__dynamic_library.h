@@ -29,7 +29,7 @@
 extern f2ptr __dynamic_library__symbol;
 f2ptr f2dynamic_library__new__trace_depth(f2ptr cause, f2ptr type, f2ptr directory, f2ptr name, int trace_depth);
 f2ptr f2dynamic_library__new(f2ptr cause, f2ptr type, f2ptr directory, f2ptr name);
-#define f2primobject__is__dynamic_library(this, cause) raw__eq(cause, f2primobject__type(this, cause), __dynamic_library__symbol)
+#define f2primobject__is__dynamic_library(this, cause) raw__eq(cause, f2primobject__object_type(this, cause), __dynamic_library__symbol)
 
 defprimobject__static_slot__prototype(dynamic_library__type);
 #define f2dynamic_library__type(                   this, cause)                     primobject__static_slot__accessor(         this, dynamic_library__type, cause)

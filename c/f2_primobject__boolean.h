@@ -30,7 +30,7 @@ extern f2ptr __boolean__symbol;
 boolean_t raw__boolean__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__boolean__is_type(f2ptr cause, f2ptr this);
 f2ptr f2boolean__new(f2ptr cause, f2ptr integer_value);
-#define f2primobject__is_boolean(this, cause) raw__eq(cause, f2primobject__type(this, cause), __boolean__symbol)
+#define f2primobject__is_boolean(this, cause) raw__eq(cause, f2primobject__object_type(this, cause), __boolean__symbol)
 
 defprimobject__static_slot__prototype(boolean__integer_value);
 #define      f2boolean__integer_value(            this)               primobject__static_slot(            this, boolean__integer_value)

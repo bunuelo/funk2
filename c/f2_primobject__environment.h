@@ -26,33 +26,6 @@
 
 typedef struct funk2_object_type__environment__slot_s funk2_object_type__environment__slot_t;
 
-/*
-struct funk2_object_type__environment__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr frame__symbol;
-  f2ptr frame__funk;
-  f2ptr frame__set__symbol;
-  f2ptr frame__set__funk;
-  f2ptr parent_env__symbol;
-  f2ptr parent_env__funk;
-  f2ptr parent_env__set__symbol;
-  f2ptr parent_env__set__funk;
-  f2ptr desc__symbol;
-  f2ptr desc__funk;
-  f2ptr desc__set__symbol;
-  f2ptr desc__set__funk;
-  f2ptr add_type_var_value__symbol;
-  f2ptr add_type_var_value__funk;
-  f2ptr lookup_type_var_value__symbol;
-  f2ptr lookup_type_var_value__funk;
-  f2ptr type_var_value__set__symbol;
-  f2ptr type_var_value__set__funk;
-};
-*/
-
 declare_object_type_3_slot(environment, frame, parent_env, desc,
 			   f2ptr add_type_var_value__symbol;
 			   f2ptr add_type_var_value__funk;
@@ -77,34 +50,6 @@ declare_object_type_3_slot(environment, frame, parent_env, desc,
 #include "f2_primobject__frame.h"
 
 declare_primobject_3_slot(environment, frame, parent_env, desc);
-
-/*
-boolean_t raw__environment__is_type(f2ptr cause, f2ptr this);
-f2ptr f2__environment__is_type(f2ptr cause, f2ptr this);
-f2ptr f2environment__new(f2ptr cause, f2ptr frame, f2ptr parent_env, f2ptr desc);
-#define f2primobject__is_environment(this, cause) raw__eq(cause, f2primobject__type(this, cause), __funk2.primobject__environment.environment__symbol)
-
-defprimobject__static_slot__prototype(environment__frame);
-#define f2environment__frame(                 this, cause)        primobject__static_slot__accessor(  this, environment__frame, cause)
-#define f2environment__frame__set(            this, cause, value) primobject__static_slot__set(       this, environment__frame, cause, value)
-#define f2environment__frame__tracing_on(     this, cause)        primobject__static_slot__tracing_on(this, environment__frame, cause)
-#define f2environment__frame__trace(          this, cause)        primobject__static_slot__trace(     this, environment__frame, cause)
-#define f2environment__frame__imagination_frame(          this, cause)        primobject__static_slot__imagination_frame(     this, environment__frame, cause)
-
-defprimobject__static_slot__prototype(environment__parent_env);
-#define f2environment__parent_env(            this, cause)        primobject__static_slot__accessor(  this, environment__parent_env, cause)
-#define f2environment__parent_env__set(       this, cause, value) primobject__static_slot__set(       this, environment__parent_env, cause, value)
-#define f2environment__parent_env__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, environment__parent_env, cause)
-#define f2environment__parent_env__trace(     this, cause)        primobject__static_slot__trace(     this, environment__parent_env, cause)
-#define f2environment__parent_env__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, environment__parent_env, cause)
-
-defprimobject__static_slot__prototype(environment__desc);
-#define f2environment__desc(                  this, cause)        primobject__static_slot__accessor(  this, environment__desc, cause)
-#define f2environment__desc__set(             this, cause, value) primobject__static_slot__set(       this, environment__desc, cause, value)
-#define f2environment__desc__tracing_on(      this, cause)        primobject__static_slot__tracing_on(this, environment__desc, cause)
-#define f2environment__desc__trace(           this, cause)        primobject__static_slot__trace(     this, environment__desc, cause)
-#define f2environment__desc__imagination_frame(           this, cause)        primobject__static_slot__imagination_frame(     this, environment__desc, cause)
-*/
 
 f2ptr f2__environment__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 f2ptr f2__environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);

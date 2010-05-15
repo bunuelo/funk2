@@ -53,7 +53,7 @@ f2ptr f2thought_process__read_parent_types(f2ptr cause, f2ptr this) {
 f2ptr f2__determine_real_thought_process_types(f2ptr cause, f2ptr exp) {
   if (exp) {
     if (raw__primobject__is_type(cause, exp)) {
-      return f2cons__new(cause, f2primobject__type(exp, cause), nil);
+      return f2cons__new(cause, f2primobject__object_type(exp, cause), nil);
     }
     ptype_t ptype = f2ptype__raw(exp, cause);
     switch(ptype) {

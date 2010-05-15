@@ -54,6 +54,7 @@ f2ptr f2__doublelinklist__new(f2ptr cause, f2ptr elements) {
 }
 def_pcfunk0_and_rest(doublelinklist__new, elements, return f2__doublelinklist__new(this_cause, elements));
 
+/*
 f2ptr f2__doublelinklist__write_mutex(f2ptr cause, f2ptr this) {return f2doublelinklist__write_mutex(this, cause);}
 def_pcfunk1(doublelinklist__write_mutex, this, return f2__doublelinklist__write_mutex(this_cause, this));
 
@@ -71,6 +72,7 @@ def_pcfunk1(doublelinklist__cons_cells, this, return f2__doublelinklist__cons_ce
 
 f2ptr f2__doublelinklist__cons_cells__set(f2ptr cause, f2ptr this, f2ptr value) {return f2doublelinklist__cons_cells__set(this, cause, value);}
 def_pcfunk2(doublelinklist__cons_cells__set, this, value, return f2__doublelinklist__cons_cells__set(this_cause, this, value));
+*/
 
 f2ptr f2__doublelinklist__car(f2ptr cause, f2ptr this) {
   f2ptr cons_cells = f2doublelinklist__cons_cells(this, cause);

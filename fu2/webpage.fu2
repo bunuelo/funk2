@@ -348,9 +348,9 @@
 			     [string-prog '<h2>get interface</h2>'
 					  '<ul>'
 					  [stringlist-prog [mapcar [funk [get_slot_name]
-									 [let [[funk [get type type_var_value `get get_slot_name nil]]]
+									 [let [[funk [print [get type type_var_value `get get_slot_name nil]]]]
 									   [print funk]
-									   [string-concat '<li>' [get get_slot_name as-string] ' ' [get [cdr [get funk args]] as-string] '</li>']]]
+									   [print [string-concat '<li>' [get get_slot_name as-string] ' ' [get [cdr [get funk args]] as-string] '</li>']]]]
 								   [get type type_var-slot_names `get]]]
 					  '</ul>'
 					  ]]

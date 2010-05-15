@@ -373,7 +373,7 @@
 					  [stringlist-prog [mapcar [funk [slot_name]
 									 [print [string-concat '  slot: ' [get slot_name as-string]]]
 									 [let [[funk [get type type_var_value `execute slot_name nil]]]
-									   [string-prog [string-concat '<li><tt>' [get slot_name as-string] ' ' [exp-as-string [cdr [get funk args]]] '</tt><br>']
+									   [string-prog [string-concat '<li><tt>' [get slot_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
 											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [exp-as-string [get funk documentation]] '<br>']
 											'&nbsp;'
 											'</li>']]]

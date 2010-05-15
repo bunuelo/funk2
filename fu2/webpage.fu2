@@ -364,7 +364,7 @@
 
 [defunk funk2_documentation [root_dir posts examples]
   [funk2_page posts examples
-	      [funk2_documentation-content posts examples]]]
+	      [funk2_documentation-content root_dir posts examples]]]
 
 [defunk compile_funk2_documentation [root_dir posts examples]
   [let [[documentation [funk2_documentation root_dir posts examples]]]

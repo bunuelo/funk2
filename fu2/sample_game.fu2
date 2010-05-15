@@ -1,0 +1,47 @@
+'Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[deframe          simple_game [frame] [state actions]]
+[deftypeconstruct simple_game []
+  [set this state 0]
+  [set this actions [list 
+  this]
+
+[deftypefunk simple_game execute add_one []
+  [set this state [+ [get this state] 1]]
+  nil]
+
+[deftypefunk simple_game execute subtract_one []
+  [set this state [- [get this state] 1]]
+  nil]
+
+[deftypefunk simple_game execute reset []
+  [set this state 0]
+  nil]
+
+[deftypefunk simple_game execute do [name]
+  [shelter [cause-define agent_trace_graph nil]
+	   [object-execute this name this]
+	   nil]]
+
+[deftypefunk simple_game execute sense []
+  [shelter [have this sense]]]
+
+
+

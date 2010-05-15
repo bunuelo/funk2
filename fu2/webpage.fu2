@@ -344,12 +344,14 @@
   [funk2_page posts examples
 	      [string-prog [string-concat '<h1>' [get type_name as-string] '</h1>']
 			   [let [[type [lookup_type type_name]]]
+			     [print type]
 			     [string-prog '<h2>get interface</h2>'
 					  '<ul>'
 					  [stringlist-prog [mapcar [funk [get_slot_name]
-									 [let [[funk [get [lookup_type `frame] type_var_value `get get_slot_name nil]]]
+									 [let [[funk [get type type_var_value `get get_slot_name nil]]]
+									   [print funk]
 									   [string-concat '<li>' [get get_slot_name as-string] ' ' [cdr [get funk args]] '</li>']]]
-								   [get [lookup_type type_name] type_var-slot_names `get]]]
+								   [get type type_var-slot_names `get]]]
 					  '</ul>'
 					  ]]
 			   ''

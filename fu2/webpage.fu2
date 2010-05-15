@@ -345,10 +345,11 @@
 	       '<h2>Object Types</h2>'
 	       ''
 	       '<ul>'
-	       [stringlist-prog [mapcar [funk [type_name]
-					      [let [[type_name_string [get type_name as-string]]]
-						[string-prog [string-concat '<li><a href="/documentation/object/' type_name_string '"><strong>' type_name_string '</strong></a></li>']]]]
-					[system-type_names]]]
+	       [stringlist-prog [mapcar [funk [type_name_string]
+					      [string-prog [string-concat '<li><a href="/documentation/object/' type_name_string '"><strong>' type_name_string '</strong></a></li>']]]
+					[sort [mapcar [funk [type_name]
+							    [get type_name as-string]]
+						      [system-type_names]] &>]]]
 	       '</ul>'
 	       '']]
 

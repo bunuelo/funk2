@@ -146,7 +146,7 @@ boolean_t raw__ptype__is_type(f2ptr cause, f2ptr thing) {
 f2ptr f2__ptype__is_type(f2ptr cause, f2ptr thing) {return f2bool__new(raw__ptype__is_type(cause, thing));}
 def_pcfunk1(ptype__is_type, thing, return f2__ptype__is_type(this_cause, thing));
 
-f2ptr f2__ptype__type(f2ptr cause, f2ptr this) {return f2symbol__new(cause, strlen("ptype"), (u8*)"ptype");}
+f2ptr f2__ptype__type(f2ptr cause, f2ptr this) {return new__symbol(cause, "ptype");}
 def_pcfunk1(ptype__type, this, return f2__ptype__type(this_cause, this));
 
 ptype_t pfunk2__f2ptype__raw(f2ptr this, f2ptr cause) {
@@ -3828,9 +3828,9 @@ void f2__ptypes__initialize__object_slots() {
   // ptype
   
   {char* str = "is_type"; __funk2.globalenv.object_type.ptype.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.is_type__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.is_type__funk = never_gc(cfunk);}
   {char* str = "type"; __funk2.globalenv.object_type.ptype.type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.type__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.type__funk = never_gc(cfunk);}
   {char* str = "raw"; __funk2.globalenv.object_type.ptype.raw__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__raw, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.raw__funk = never_gc(cfunk);}
   {char* str = "cause"; __funk2.globalenv.object_type.ptype.cause__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}

@@ -20,7 +20,7 @@
 [deframe          simple_game [frame] [state actions]]
 [deftypeconstruct simple_game []
   [set this state 0]
-  [set this actions [list 
+  [set this actions `[add_one subtract_one reset]]
   this]
 
 [deftypefunk simple_game execute add_one []

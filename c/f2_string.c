@@ -453,12 +453,12 @@ boolean_t raw__string__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
     return f2larva__new(cause, 53, nil);
   }
   u64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)alloca(this__string + 1);
+  u8* this__str    = (u8*)alloca(this__length + 1);
   raw__string__str_copy(cause, this, this__str);
   this__str[this__length] = 0;
   
   u64 that__length = raw__string__length(cause, that);
-  u8* that__str    = (u8*)alloca(that__string + 1);
+  u8* that__str    = (u8*)alloca(that__length + 1);
   raw__string__str_copy(cause, that, that__str);
   that__str[that__length] = 0;
   
@@ -488,12 +488,12 @@ boolean_t raw__string__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
     return f2larva__new(cause, 53, nil);
   }
   u64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)alloca(this__string + 1);
+  u8* this__str    = (u8*)alloca(this__length + 1);
   raw__string__str_copy(cause, this, this__str);
   this__str[this__length] = 0;
   
   u64 that__length = raw__string__length(cause, that);
-  u8* that__str    = (u8*)alloca(that__string + 1);
+  u8* that__str    = (u8*)alloca(that__length + 1);
   raw__string__str_copy(cause, that, that__str);
   that__str[that__length] = 0;
   

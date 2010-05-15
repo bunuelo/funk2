@@ -22,10 +22,11 @@
 #ifndef F2__PRIMOBJECT__LIST__TYPES__H
 #define F2__PRIMOBJECT__LIST__TYPES__H
 
-typedef struct funk2_object_type__list__slot_s funk2_object_type__list__slot_t;
 
 // list
 
+typedef struct funk2_object_type__list__slot_s funk2_object_type__list__slot_t;
+/*
 struct funk2_object_type__list__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
@@ -58,6 +59,23 @@ struct funk2_object_type__list__slot_s {
   f2ptr equals_hash_value__symbol;
   f2ptr equals_hash_value__funk;
 };
+*/
+declare_object_type_3_slot(list, write_mutex, length, cons_cells,
+			   f2ptr add__symbol;
+			   f2ptr add__funk;
+			   f2ptr lookup__symbol;
+			   f2ptr lookup__funk;
+			   f2ptr car__symbol;
+			   f2ptr car__funk;
+			   f2ptr cdr__symbol;
+			   f2ptr cdr__funk;
+			   f2ptr equals__symbol;
+			   f2ptr equals__funk;
+			   f2ptr equals_hash_value__loop_free__symbol;
+			   f2ptr equals_hash_value__loop_free__funk;
+			   f2ptr equals_hash_value__symbol;
+			   f2ptr equals_hash_value__funk;
+			   );
 
 #endif // F2__PRIMOBJECT__LIST__TYPES__H
 
@@ -68,6 +86,8 @@ struct funk2_object_type__list__slot_s {
 
 // list
 
+declare_primobject_3_slot(list, write_mutex, length, cons_cells);
+/*
 extern f2ptr __list__symbol;
 boolean_t raw__list__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__list__is_type(f2ptr cause, f2ptr this);
@@ -94,7 +114,7 @@ defprimobject__static_slot__prototype(list__cons_cells);
 #define f2list__cons_cells__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, list__cons_cells, cause)
 #define f2list__cons_cells__trace(            this, cause)        primobject__static_slot__trace(            this, list__cons_cells, cause)
 #define f2list__cons_cells__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, list__cons_cells, cause)
-
+*/
 f2ptr f2__list__new   (f2ptr cause, f2ptr elements);
 f2ptr f2__list__cons_cells(f2ptr cause, f2ptr this);
 f2ptr f2__list__add   (f2ptr cause, f2ptr this, f2ptr element);
@@ -103,7 +123,7 @@ f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element);
 f2ptr f2__list__car(f2ptr cause, f2ptr this);
 f2ptr f2__list__cdr(f2ptr cause, f2ptr this);
 
-f2ptr f2list__primobject_type__new(f2ptr cause);
+f2ptr f2list__primobject_type__new_aux(f2ptr cause);
 
 // **
 

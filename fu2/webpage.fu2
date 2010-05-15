@@ -351,7 +351,7 @@
 									 [let [[funk [get type type_var_value `get get_slot_name nil]]]
 									   [print funk]
 									   [print [string-prog [string-concat '<li><tt>' [get get_slot_name as-string] ' ' [exp-as-string [cdr [get funk args]]] '</tt><br>']
-											       [exp-as-string [get funk documentation]]
+											       '&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [exp-as-string [get funk documentation]] '<br>']
 											       '</li>']]]]
 								   [get type type_var-slot_names `get]]]
 					  '</ul>'

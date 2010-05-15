@@ -344,6 +344,7 @@
 	      [string-concat '<h1>' [get type_name as-string] '</h1>']]]
 
 [defunk funk2_documentation-content [root_dir posts examples]
+  [shelter [mkdir [string-concat root_dir 'documentation/object']]]
   [string-prog '<h1>Documentation</h1>'
 	       ''
 	       '<h2>Object Types</h2>'

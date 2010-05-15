@@ -465,7 +465,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	      ((! f2primobject__is__largeinteger(exp, cause)) &&
 	       (! f2primobject__is__cons(        exp, cause)) &&
 	       (! f2primobject__is__doublelink(  exp, cause)) &&
-	       (! f2primobject__is_list(         exp, cause)) &&
+	       (! f2primobject__is__list(        exp, cause)) &&
 	       (! f2primobject__is__frame(       exp, cause)))) {
 	    int subexp_size[2];
 	    if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__begin_char, cause));} width ++;
@@ -990,7 +990,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("add",    6, cause, fiber, stream, f2trans__add(exp, cause), f2trans__add__tracing_on(exp, cause), f2trans__add__trace(exp, cause), f2trans__add__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is_list(exp, cause)) {
+	  } else if (f2primobject__is__list(exp, cause)) {
 	    f2ptr cons_cells = f2list__cons_cells(exp, cause);
 	    {
 	      int subexp_size[2];
@@ -1337,7 +1337,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	      ((! f2primobject__is__largeinteger(exp, cause)) &&
 	       (! f2primobject__is__cons(        exp, cause)) &&
 	       (! f2primobject__is__doublelink(  exp, cause)) &&
-	       (! f2primobject__is_list(         exp, cause)) &&
+	       (! f2primobject__is__list(        exp, cause)) &&
 	       (! f2primobject__is__frame(       exp, cause)))) {
 	    if (ptype == ptype_simple_array) {
 	      f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);

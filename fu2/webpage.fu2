@@ -342,7 +342,15 @@
 [defunk funk2_documentation-content []
   [string-prog '<h1>Documentation</h1>'
 	       ''
-	       'Coming soon!']]
+	       '<h2>Object Types</h2>'
+	       ''
+	       [stringlist-prog [mapcar [funk [type]
+					      [let [[type_name [get [funkall [primobject_type-lookup_slot_type_funk type `get `type] nil] as-string]]]
+						[string-prog [string-concat '<p><strong>' type_name '</strong></p>']
+							     ]
+						]]
+					[system-types]]]
+	       '']]
 
 [defunk funk2_documentation [posts examples]
   [funk2_page posts examples

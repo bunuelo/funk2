@@ -339,7 +339,11 @@
     nil]]
 
 
-[defunk funk2_documentation-content []
+[defunk funk2_object_documentation [posts examples type_name]
+  [funk2_page posts examples
+	      [string-concat '<h1>' [get type_name as-string] '</h1>']]]
+
+[defunk funk2_documentation-content [posts examples]
   [string-prog '<h1>Documentation</h1>'
 	       ''
 	       '<h2>Object Types</h2>'
@@ -348,7 +352,11 @@
 	       [stringlist-prog [mapcar [funk [type_name_string]
 					      [string-concat '<li><a href="/documentation/object/' type_name_string '"><strong>' type_name_string '</strong></a></li>']]
 					[have [mapcar [funk [type_name]
-							    [get type_name as-string]]
+							    [let [[type_name_string     [get type_name as-string]]
+								  [object_documentation [funk2_object_documentation posts examples type_name]]]
+							      [shelter [mkdir [string-concat root_dir 'documentation/object/' type_name_string]]]
+							      [have object_documentation save [string-concat root_dir 'documentation/object/' type_name_string '/index.html']]]
+							    type_name_string]]
 						      [system-type_names]]
 					      sort &>]]]
 	       '</ul>'
@@ -356,12 +364,13 @@
 
 [defunk funk2_documentation [posts examples]
   [funk2_page posts examples
-	      [funk2_documentation-content]]]
+	      [funk2_documentation-content posts examples]]]
 
 [defunk compile_funk2_documentation [root_dir posts examples]
   [let [[documentation [funk2_documentation posts examples]]]
     [shelter [mkdir [string-concat root_dir 'documentation']]]
     [have documentation save [string-concat root_dir 'documentation/index.html']]
+    
     nil]]
 
 

@@ -64,6 +64,24 @@ f2ptr f2__system__types(f2ptr cause) {
 }
 def_pcfunk0(system__types, return f2__system__types(this_cause));
 
+f2ptr f2__system__type_names(f2ptr cause) {
+  f2ptr fiber      = f2__this__fiber(cause);
+  f2ptr type_names = nil;
+  f2ptr types      = f2__system__types(cause);
+  {
+    f2ptr iter = types;
+    while (iter) {
+      f2ptr type = f2__cons__car(cause, iter);
+      f2ptr get_type_funk = f2__primobject_type__lookup_slot_type_funk(cause, type, new__symbol(cause, "get"), new__symbol(cause, "type"));
+      f2ptr type_name = f2__force_funk_apply(cause, fiber, get_type_funk, f2cons__new(cause, nil, nil));
+      type_names = f2cons__new(cause, type_name, type_names);
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  return type_names;
+}
+def_pcfunk0(system__type_names, return f2__system__type_names(this_cause));
+
 f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name) {
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
   funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
@@ -167,6 +185,7 @@ void f2__primobject_type_handler__initialize() {
   f2__primcfunk__init__2(add_type,    type_name, type, "Adds the symbolic type_name associated with type to the primobject_type_handler.");
   f2__primcfunk__init__1(lookup_type, type_name,       "Returns the type associated with the symbolic type_name, or nil if no such type has been added to the primobject_type_handler.");
   f2__primcfunk__init__0(system__types,                "Returns a new list of all of the types currently defined in the system.");
+  f2__primcfunk__init__0(system__type_names,           "Returns a new list of all of the type names currently defined in the system.");
   
 }
 

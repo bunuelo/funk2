@@ -19,7 +19,8 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk add_type     &primfunk:add_type]
-[globalize-funk lookup_type  &primfunk:lookup_type]
-[globalize-funk system-types &primfunk:system__types]
+[globalize-funk add_type          &primfunk:add_type]
+[globalize-funk lookup_type       &primfunk:lookup_type]
+[globalize-funk system-types      &primfunk:system__types]
+[globalize-funk system-type_names &primfunk:system__type_names]
 

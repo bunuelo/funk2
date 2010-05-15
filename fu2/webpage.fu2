@@ -346,7 +346,7 @@
 	       ''
 	       '<ul>'
 	       [stringlist-prog [mapcar [funk [type_name]
-					      [string-prog [string-concat '<li><strong>' type_name '</strong></li>']
+					      [string-prog [string-concat '<li><strong>' [get type_name as-string] '</strong></li>']
 							   ]
 					      ]
 					[system-type_names]]]

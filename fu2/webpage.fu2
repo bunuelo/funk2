@@ -347,6 +347,7 @@
 			     [string-prog '<h2><tt>get</tt> interface</h2>'
 					  '<ul>'
 					  [stringlist-prog [mapcar [funk [slot_name]
+									 [print [string-concat '  slot: ' [get slot_name as-string]]]
 									 [let [[funk [get type type_var_value `get slot_name nil]]]
 									   [string-prog [string-concat '<li><tt>' [get slot_name as-string] ' ' [exp-as-string [cdr [get funk args]]] '</tt><br>']
 											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [exp-as-string [get funk documentation]] '<br>']
@@ -358,6 +359,7 @@
 					  '<h2><tt>set</tt> interface</h2>'
 					  '<ul>'
 					  [stringlist-prog [mapcar [funk [slot_name]
+									 [print [string-concat '  slot: ' [get slot_name as-string]]]
 									 [let [[funk [get type type_var_value `set slot_name nil]]]
 									   [string-prog [string-concat '<li><tt>' [get slot_name as-string] ' ' [exp-as-string [cdr [get funk args]]] '</tt><br>']
 											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [exp-as-string [get funk documentation]] '<br>']
@@ -369,6 +371,7 @@
 					  '<h2><tt>execute</tt> interface</h2>'
 					  '<ul>'
 					  [stringlist-prog [mapcar [funk [slot_name]
+									 [print [string-concat '  slot: ' [get slot_name as-string]]]
 									 [let [[funk [get type type_var_value `execute slot_name nil]]]
 									   [string-prog [string-concat '<li><tt>' [get slot_name as-string] ' ' [exp-as-string [cdr [get funk args]]] '</tt><br>']
 											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [exp-as-string [get funk documentation]] '<br>']

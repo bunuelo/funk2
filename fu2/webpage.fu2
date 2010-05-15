@@ -350,7 +350,9 @@
 					  [stringlist-prog [mapcar [funk [get_slot_name]
 									 [let [[funk [get type type_var_value `get get_slot_name nil]]]
 									   [print funk]
-									   [print [string-concat '<li>' [get get_slot_name as-string] ' ' [exp-as-string [cdr [get funk args]]] '</li>']]]]
+									   [print [string-prog [string-concat '<li><tt>' [get get_slot_name as-string] ' ' [exp-as-string [cdr [get funk args]]] '</tt><br>']
+											       [exp-as-string [get funk documentation]]
+											       '</li>']]]]
 								   [get type type_var-slot_names `get]]]
 					  '</ul>'
 					  ]]

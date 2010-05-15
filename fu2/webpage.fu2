@@ -355,8 +355,8 @@
 							    [let [[type_name_string     [get type_name as-string]]
 								  [object_documentation [funk2_object_documentation posts examples type_name]]]
 							      [shelter [mkdir [string-concat root_dir 'documentation/object/' type_name_string]]]
-							      [have object_documentation save [string-concat root_dir 'documentation/object/' type_name_string '/index.html']]]
-							    type_name_string]]
+							      [have object_documentation save [string-concat root_dir 'documentation/object/' type_name_string '/index.html']]
+							      type_name_string]]
 						      [system-type_names]]
 					      sort &>]]]
 	       '</ul>'

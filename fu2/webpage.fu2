@@ -340,8 +340,20 @@
 
 
 [defunk funk2_object_documentation [posts examples type_name]
+  [print [string-concat 'compiling ' [get type_name as-string] ' documentation']]
   [funk2_page posts examples
-	      [string-concat '<h1>' [get type_name as-string] '</h1>']]]
+	      [string-prog [string-concat '<h1>' [get type_name as-string] '</h1>']
+			   [let [[type [lookup_type type_name]]]
+			     [string-prog '<h2>get interface</h2>'
+					  '<ul>'
+					  [stringlist-prog [mapcar [funk [get_slot_name]
+									 [let [[funk [get [lookup_type `frame] type_var_value `get get_slot_name nil]]]
+									   [string-concat '<li>' [get get_slot_name as-string] ' ' [cdr [get funk args]] '</li>']]]
+								   [get [lookup_type type_name] type_var-slot_names `get]]]
+					  '</ul>'
+					  ]]
+			   ''
+			   ]]]
 
 [defunk funk2_documentation-content [root_dir posts examples]
   [shelter [mkdir [string-concat root_dir 'documentation/object']]]

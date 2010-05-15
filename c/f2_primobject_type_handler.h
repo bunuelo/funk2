@@ -61,10 +61,10 @@ typedef struct funk2_primobject_object_types_s funk2_primobject_object_types_t;
 struct funk2_primobject_object_types_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr type__set__symbol;
-  f2ptr type__set__funk;
+  f2ptr object_type__symbol;
+  f2ptr object_type__funk;
+  f2ptr object_type__set__symbol;
+  f2ptr object_type__set__funk;
   f2ptr dynamic_slots__symbol;
   f2ptr dynamic_slots__funk;
   f2ptr dynamic_slots__set__symbol;

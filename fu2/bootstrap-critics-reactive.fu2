@@ -37,7 +37,7 @@
     [format stdout '\n' '  bug: ' value]
     [if [is-type `bug value]
 	[let* [[bug  value]
-	       [type [object-get bug `type]]]
+	       [type [object-get bug `bug_type]]]
 	  [if [eq `bug_handled [cond [[is-type `integer type] [critic-reactive-integer_type_bug fiber bug]]
 				     [t                       `bug_not_handled]]]
 	      [= bug_handled t]]]

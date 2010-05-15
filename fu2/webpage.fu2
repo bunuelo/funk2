@@ -342,19 +342,39 @@
 [defunk funk2_object_documentation [posts examples type_name]
   [print [string-concat 'compiling ' [get type_name as-string] ' documentation']]
   [funk2_page posts examples
-	      [string-prog [string-concat '<h1>' [get type_name as-string] '</h1>']
+	      [string-prog [string-concat '<h1><tt>' [get type_name as-string] '</tt> Object Documentation</h1>']
 			   [let [[type [lookup_type type_name]]]
-			     [print type]
-			     [string-prog '<h2>get interface</h2>'
+			     [string-prog '<h2><tt>get</tt> interface</h2>'
 					  '<ul>'
-					  [stringlist-prog [mapcar [funk [get_slot_name]
-									 [let [[funk [get type type_var_value `get get_slot_name nil]]]
-									   [print funk]
-									   [print [string-prog [string-concat '<li><tt>' [get get_slot_name as-string] ' ' [exp-as-string [cdr [get funk args]]] '</tt><br>']
-											       '&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [exp-as-string [get funk documentation]] '<br>']
-											       '&nbsp;'
-											       '</li>']]]]
+					  [stringlist-prog [mapcar [funk [slot_name]
+									 [let [[funk [get type type_var_value `get slot_name nil]]]
+									   [string-prog [string-concat '<li><tt>' [get slot_name as-string] ' ' [exp-as-string [cdr [get funk args]]] '</tt><br>']
+											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [exp-as-string [get funk documentation]] '<br>']
+											'&nbsp;'
+											'</li>']]]
 								   [get type type_var-slot_names `get]]]
+					  '</ul>'
+					  ''
+					  '<h2><tt>set</tt> interface</h2>'
+					  '<ul>'
+					  [stringlist-prog [mapcar [funk [slot_name]
+									 [let [[funk [get type type_var_value `set slot_name nil]]]
+									   [string-prog [string-concat '<li><tt>' [get slot_name as-string] ' ' [exp-as-string [cdr [get funk args]]] '</tt><br>']
+											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [exp-as-string [get funk documentation]] '<br>']
+											'&nbsp;'
+											'</li>']]]
+								   [get type type_var-slot_names `set]]]
+					  '</ul>'
+					  ''
+					  '<h2><tt>execute</tt> interface</h2>'
+					  '<ul>'
+					  [stringlist-prog [mapcar [funk [slot_name]
+									 [let [[funk [get type type_var_value `execute slot_name nil]]]
+									   [string-prog [string-concat '<li><tt>' [get slot_name as-string] ' ' [exp-as-string [cdr [get funk args]]] '</tt><br>']
+											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [exp-as-string [get funk documentation]] '<br>']
+											'&nbsp;'
+											'</li>']]]
+								   [get type type_var-slot_names `execute]]]
 					  '</ul>'
 					  ]]
 			   ''

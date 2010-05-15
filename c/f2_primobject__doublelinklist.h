@@ -36,39 +36,6 @@ declare_object_type_3_slot(doublelinklist, write_mutex, length, cons_cells,
 			   f2ptr cdr__funk;
 			   );
 
-/*
-// doublelinklist
-
-typedef struct funk2_object_type__doublelinklist__slot_s funk2_object_type__doublelinklist__slot_t;
-
-struct funk2_object_type__doublelinklist__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr write_mutex__symbol;
-  f2ptr write_mutex__funk;
-  f2ptr write_mutex__set__symbol;
-  f2ptr write_mutex__set__funk;
-  f2ptr length__symbol;
-  f2ptr length__funk;
-  f2ptr length__set__symbol;
-  f2ptr length__set__funk;
-  f2ptr cons_cells__symbol;
-  f2ptr cons_cells__funk;
-  f2ptr cons_cells__set__symbol;
-  f2ptr cons_cells__set__funk;
-  f2ptr add__symbol;
-  f2ptr add__funk;
-  f2ptr lookup__symbol;
-  f2ptr lookup__funk;
-  f2ptr car__symbol;
-  f2ptr car__funk;
-  f2ptr cdr__symbol;
-  f2ptr cdr__funk;
-};
-*/
-
 #endif // F2__PRIMOBJECT__DOUBLELINKLIST__TYPES__H
 
 #ifndef F2__PRIMOBJECT__DOUBLELINKLIST__H
@@ -78,6 +45,9 @@ struct funk2_object_type__doublelinklist__slot_s {
 
 // doublelinklist
 
+declare_primobject_3_slot(doublelinklist, write_mutex, length, cons_cells);
+
+/*
 extern f2ptr __doublelinklist__symbol;
 boolean_t raw__doublelinklist__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__doublelinklist__is_type(f2ptr cause, f2ptr this);
@@ -104,12 +74,13 @@ defprimobject__static_slot__prototype(doublelinklist__cons_cells);
 #define f2doublelinklist__cons_cells__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, doublelinklist__cons_cells, cause)
 #define f2doublelinklist__cons_cells__trace(            this, cause)        primobject__static_slot__trace(            this, doublelinklist__cons_cells, cause)
 #define f2doublelinklist__cons_cells__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, doublelinklist__cons_cells, cause)
+*/
 
 f2ptr f2__doublelinklist__new   (f2ptr cause, f2ptr elements);
 f2ptr f2__doublelinklist__add   (f2ptr cause, f2ptr this, f2ptr element);
 f2ptr f2__doublelinklist__lookup(f2ptr cause, f2ptr this, f2ptr element);
 
-f2ptr f2doublelinklist__primobject_type__new(f2ptr cause);
+f2ptr f2doublelinklist__primobject_type__new_aux(f2ptr cause);
 
 // **
 

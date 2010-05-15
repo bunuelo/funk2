@@ -25,32 +25,6 @@
 
 def_primobject_4_slot(set, write_mutex, key_count, bin_num_power, bin_array);
 
-/*
-defprimobject__static_slot(set__write_mutex,   0);
-defprimobject__static_slot(set__key_count,     1);
-defprimobject__static_slot(set__bin_num_power, 2);
-defprimobject__static_slot(set__bin_array,     3);
-
-f2ptr __set__symbol = -1;
-
-f2ptr f2set__new(f2ptr cause, f2ptr write_mutex, f2ptr key_count, f2ptr bin_num_power, f2ptr bin_array) {
-  release__assert(__set__symbol != -1, nil, "f2set__new error: used before primobjects initialized.");
-  release__assert((raw__integer__is_type(cause, bin_num_power) && raw__array__is_type(cause, bin_array)), nil, "f2set__new error: bin_num_power or bin_array are of wrong type.");
-  f2ptr this = f2__primobject__new(cause, __set__symbol, 4, nil);
-  f2set__write_mutex__set(  this, cause, write_mutex);
-  f2set__key_count__set(    this, cause, key_count);
-  f2set__bin_num_power__set(this, cause, bin_num_power);
-  f2set__bin_array__set(    this, cause, bin_array);
-  return this;
-}
-
-// hardcoded set functions
-
-boolean_t raw__set__is_type(f2ptr cause, f2ptr this) {return raw__array__is_type(cause, this) && f2primobject__is_set(this, cause);}
-f2ptr f2__set__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__set__is_type(cause, this));}
-def_pcfunk1(set__is_type, this, return f2__set__is_type(this_cause, this));
-*/
-
 boolean_t raw__set__valid(f2ptr cause, f2ptr this) {
   if (! raw__set__is_type(cause, this)) {return 0;}
   f2ptr bin_num_power = f2set__bin_num_power(this, cause);
@@ -73,32 +47,6 @@ f2ptr raw__set__new(f2ptr cause, s64 bin_num_power) {
 #define set__default_start_bin_num_power 3
 f2ptr f2__set__new(f2ptr cause) {return raw__set__new(cause, set__default_start_bin_num_power);}
 def_pcfunk0(set__new, return f2__set__new(this_cause));
-
-/*
-f2ptr f2__set__write_mutex(f2ptr cause, f2ptr this) {return f2set__write_mutex(this, cause);}
-def_pcfunk1(set__write_mutex, this, return f2__set__write_mutex(this_cause, this));
-
-f2ptr f2__set__write_mutex__set(f2ptr cause, f2ptr this, f2ptr value) {return f2set__write_mutex__set(this, cause, value);}
-def_pcfunk2(set__write_mutex__set, this, value, return f2__set__write_mutex__set(this_cause, this, value));
-
-f2ptr f2__set__key_count(f2ptr cause, f2ptr this) {return f2set__key_count(this, cause);}
-def_pcfunk1(set__key_count, this, return f2__set__key_count(this_cause, this));
-
-f2ptr f2__set__key_count__set(f2ptr cause, f2ptr this, f2ptr value) {return f2set__key_count__set(this, cause, value);}
-def_pcfunk2(set__key_count__set, this, value, return f2__set__key_count__set(this_cause, this, value));
-
-f2ptr f2__set__bin_num_power(f2ptr cause, f2ptr this) {return f2set__bin_num_power(this, cause);}
-def_pcfunk1(set__bin_num_power, this, return f2__set__bin_num_power(this_cause, this));
-
-f2ptr f2__set__bin_num_power__set(f2ptr cause, f2ptr this, f2ptr value) {return f2set__bin_num_power__set(this, cause, value);}
-def_pcfunk2(set__bin_num_power__set, this, value, return f2__set__bin_num_power__set(this_cause, this, value));
-
-f2ptr f2__set__bin_array(f2ptr cause, f2ptr this) {return f2set__bin_array(this, cause);}
-def_pcfunk1(set__bin_array, this, return f2__set__bin_array(this_cause, this));
-
-f2ptr f2__set__bin_array__set(f2ptr cause, f2ptr this, f2ptr value) {return f2set__bin_array__set(this, cause, value);}
-def_pcfunk2(set__bin_array__set, this, value, return f2__set__bin_array__set(this_cause, this, value));
-*/
 
 void f2__set__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr bin_num_power    = f2set__bin_num_power(this, cause);
@@ -225,28 +173,6 @@ void f2__primobject_set__initialize() {
   
   initialize_primobject_4_slot(set, write_mutex, key_count, bin_num_power, bin_array);
   
-  /*
-  {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_set.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.is_type__funk = never_gc(cfunk);}
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_set.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var(set__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.new__funk = never_gc(cfunk);}
-  {char* symbol_str = "write_mutex"; __funk2.globalenv.object_type.primobject.primobject_type_set.write_mutex__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__write_mutex, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.write_mutex__funk = never_gc(cfunk);}
-  {char* symbol_str = "write_mutex-set"; __funk2.globalenv.object_type.primobject.primobject_type_set.write_mutex__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__write_mutex__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.write_mutex__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "key_count"; __funk2.globalenv.object_type.primobject.primobject_type_set.key_count__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__key_count, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.key_count__funk = never_gc(cfunk);}
-  {char* symbol_str = "key_count-set"; __funk2.globalenv.object_type.primobject.primobject_type_set.key_count__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__key_count__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.key_count__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "bin_num_power"; __funk2.globalenv.object_type.primobject.primobject_type_set.bin_num_power__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__bin_num_power, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.bin_num_power__funk = never_gc(cfunk);}
-  {char* symbol_str = "bin_num_power-set"; __funk2.globalenv.object_type.primobject.primobject_type_set.bin_num_power__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__bin_num_power__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.bin_num_power__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "bin_array"; __funk2.globalenv.object_type.primobject.primobject_type_set.bin_array__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__bin_array, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.bin_array__funk = never_gc(cfunk);}
-  {char* symbol_str = "bin_array-set"; __funk2.globalenv.object_type.primobject.primobject_type_set.bin_array__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__bin_array__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.bin_array__set__funk = never_gc(cfunk);}
-  */
   {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_set.add__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__add, this, element, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.add__funk = never_gc(cfunk);}
   {char* symbol_str = "lookup"; __funk2.globalenv.object_type.primobject.primobject_type_set.lookup__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

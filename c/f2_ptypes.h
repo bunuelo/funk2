@@ -775,6 +775,10 @@ typedef struct funk2_object_type__string__slot_s {
   f2ptr split__funk;
   f2ptr contains__symbol;
   f2ptr contains__funk;
+  f2ptr is_less_than__symbol;
+  f2ptr is_less_than__funk;
+  f2ptr is_greater_than__symbol;
+  f2ptr is_greater_than__funk;
 } funk2_object_type__string__slot_t;
 
 // symbol

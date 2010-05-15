@@ -448,12 +448,84 @@ f2ptr f2__string__replace_all(f2ptr cause, f2ptr this, f2ptr token, f2ptr replac
 }
 def_pcfunk3(string__replace_all, this, token, replacement, return f2__string__replace_all(this_cause, this, token, replacement));
 
+boolean_t raw__string__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__string__is_type(cause, that)) {
+    return f2larva__new(cause, 53, nil);
+  }
+  u64 this__length = raw__string__length(cause, this);
+  u8* this__str    = (u8*)alloca(this__string + 1);
+  raw__string__str_copy(cause, this, this__str);
+  this__str[this__length] = 0;
+  
+  u64 that__length = raw__string__length(cause, that);
+  u8* that__str    = (u8*)alloca(that__string + 1);
+  raw__string__str_copy(cause, that, that__str);
+  that__str[that__length] = 0;
+  
+  int comparison = memcmp(this__str, that__str, (this__length < that__length) ? this__length : that__length);
+  if (comparison < 0) {
+    return boolean__true;
+  }
+  if (comparison > 0) {
+    return boolean__false;
+  }
+  if (this__length < that__length) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
+f2ptr f2__string__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__string__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__string__is_less_than(cause, this, that);
+}
+def_pcfunk2(string__is_less_than, this, that, return f2__string__is_less_than(this_cause, this, that));
+
+boolean_t raw__string__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__string__is_type(cause, that)) {
+    return f2larva__new(cause, 53, nil);
+  }
+  u64 this__length = raw__string__length(cause, this);
+  u8* this__str    = (u8*)alloca(this__string + 1);
+  raw__string__str_copy(cause, this, this__str);
+  this__str[this__length] = 0;
+  
+  u64 that__length = raw__string__length(cause, that);
+  u8* that__str    = (u8*)alloca(that__string + 1);
+  raw__string__str_copy(cause, that, that__str);
+  that__str[that__length] = 0;
+  
+  int comparison = memcmp(this__str, that__str, (this__length < that__length) ? this__length : that__length);
+  if (comparison < 0) {
+    return boolean__false;
+  }
+  if (comparison > 0) {
+    return boolean__true;
+  }
+  if (this__length > that__length) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
+f2ptr f2__string__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__string__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__string__is_greater_than(cause, this, that);
+}
+def_pcfunk2(string__is_greater_than, this, that, return f2__string__is_greater_than(this_cause, this, that));
+
 f2ptr f2string__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2string__primobject_type__new(cause);
-  {char* slot_name = "as-symbol"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__funk);}
-  {char* slot_name = "save";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.save__funk);}
-  {char* slot_name = "split";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.split__funk);}
-  {char* slot_name = "contains";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.contains__funk);}
+  {char* slot_name = "as-symbol";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__funk);}
+  {char* slot_name = "save";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.save__funk);}
+  {char* slot_name = "split";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.split__funk);}
+  {char* slot_name = "contains";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.contains__funk);}
+  {char* slot_name = "is_less_than";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.is_less_than__funk);}
+  {char* slot_name = "is_greater_than"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__funk);}
   return this;
 }
 
@@ -486,10 +558,10 @@ void f2__string__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__split, this, token, cfunk, 1, "split a string into a list of strings (a stringlist).  this function is the inverse of stringlist-intersperse."); __funk2.globalenv.object_type.ptype.ptype_string.split__funk = never_gc(cfunk);}
   {char* str = "contains"; __funk2.globalenv.object_type.ptype.ptype_string.contains__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__contains, this, substring, cfunk, 1, "returns true when the string contains the specified substring."); __funk2.globalenv.object_type.ptype.ptype_string.contains__funk = never_gc(cfunk);}
+  {char* str = "is_less_than"; __funk2.globalenv.object_type.ptype.ptype_string.is_less_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__is_less_than, this, substring, cfunk, 1, "returns true when this string is_less_than that string."); __funk2.globalenv.object_type.ptype.ptype_string.is_less_than__funk = never_gc(cfunk);}
+  {char* str = "is_greater_than"; __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__is_greater_than, this, substring, cfunk, 1, "returns true when this string is_greater_than that string."); __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__funk = never_gc(cfunk);}
   
-  //f2__primcfunk__init__1(string__to_symbol, this, "convert any string to a new symbol.  for any two strings that are equal, the symbols returned by this function will be eq.");
-  //f2__primcfunk__init__2(string__save, this, filename, "save a string to a filename");
-  //f2__primcfunk__init__2(string__split, this, token, "split a string into a list of strings (a stringlist).  this function is the inverse of stringlist-intersperse.");
-  //f2__primcfunk__init__2(string__contains, this, substring, "returns true when the string contains the specified substring.");
 }
 

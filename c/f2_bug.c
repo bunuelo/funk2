@@ -32,7 +32,7 @@ def_pcfunk2(bug__new, type, frame, return f2__bug__new(this_cause, type, frame))
 
 f2ptr raw__bug__new_from_larva(f2ptr cause, f2ptr larva) {
   u64 larva_type = f2larva__larva_type(larva, cause);
-  return f2larva__new(cause, larva_type, f2__bug__new(cause, f2integer__new(cause, larva_type), nil));
+  return f2__bug__new(cause, f2integer__new(cause, larva_type), f2__frame__new(cause, nil));
 }
 
 f2ptr f2__bug__new_from_larva(f2ptr cause, f2ptr larva) {

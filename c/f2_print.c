@@ -437,6 +437,9 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	  if (width < available_width) {
 	    f2__write__space(cause, stream, use_html); width ++;
 	  } else {
+	    if (wide_success) {
+	      wide_success[0] = 0;
+	    }
 	    f2__write__line_break(cause, stream, use_html); width = 0; height ++;
 	    int i;
 	    for (i = 0; i < indent_space_num + width; i++) {
@@ -514,6 +517,9 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 		    if (width < available_width && subexp__wide_success[0]) {
 		      f2__write__space(cause, stream, use_html); width ++;
 		    } else {
+		      if (wide_success) {
+			wide_success[0] = 0;
+		      }
 		      f2__write__line_break(cause, stream, use_html); width = 0; height ++;
 		      int i;
 		      for (i = 0; i < indent_space_num + width; i++) {
@@ -1049,8 +1055,10 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	      f2__write_pretty(cause, fiber, stream, frame_type_name, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	    }
 	    
-	    // indent frame slots
-	    indent_space_num += 2; available_width -= 2;
+	    if (! try_wide) {
+	      // indent frame slots
+	      indent_space_num += 2; available_width -= 2;
+	    }
 	    
 	    ptypehash__iteration(cause, type_ptypehash, type_keyvalue_pair__key, typevar_ptypehash,
 				 
@@ -1315,6 +1323,9 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	      if (width < available_width && subexp__wide_success[0]) {
 		f2__write__space(cause, stream, use_html); width ++;
 	      } else {
+		if (wide_success) {
+		  wide_success[0] = 0;
+		}
 		f2__write__line_break(cause, stream, use_html); width = 0; height ++;
 		int i;
 		for (i = 0; i < indent_space_num + width; i++) {

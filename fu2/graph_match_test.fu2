@@ -46,5 +46,11 @@
 
 [globalize c [get a as-graph]]
 
+[defunk test-match []
+  [get [get c contains_match_with_bindings b nil]
+       as-frame]]
+
+
+
 
 

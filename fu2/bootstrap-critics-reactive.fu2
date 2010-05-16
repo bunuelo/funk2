@@ -30,14 +30,10 @@
   `bug_not_handled]
 
 [defunk critic-reactive-unknown_bug [fiber]
-  [print 'debug 1222']
   [ansi-stream-foreground stdout 10]
-  [print 'debug 1223']
   [fiber-print_backtrace fiber]
-  [print 'debug 1224']
-  [let [[value       [print [object-get [print fiber] `value]]]
+  [let [[value       [get fiber value]]
 	[bug_handled nil]]
-    [print 'debug 1225']
     [format stdout '\n' '  bug: ' value]
     [if [is-type `bug value]
 	[let* [[bug  value]
@@ -64,7 +60,6 @@
 	    [repl]]]]]
 
 [defunk critic-reactive-primitive_response [fiber]
-  [print 'debug 0']
   [critic-reactive-unknown_bug fiber]]
 
 [globalize fiber:-environment_critics- [conslist &critic-reactive-unknown_bug]]

@@ -216,6 +216,9 @@ f2ptr      f2__graph__edges(f2ptr cause, f2ptr this);
 f2ptr     raw__graph__variables(f2ptr cause, f2ptr this);
 f2ptr      f2__graph__variables(f2ptr cause, f2ptr this);
 
+f2ptr     raw__graph__lookup_variable(f2ptr cause, f2ptr this, f2ptr variable_name);
+f2ptr     raw__graph__add_variable(f2ptr cause, f2ptr this, f2ptr variable_name);
+
 boolean_t raw__graph__is_rooted(f2ptr cause, f2ptr this);
 void      raw__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label);
 f2ptr      f2__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label);

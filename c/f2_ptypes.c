@@ -1662,7 +1662,7 @@ void raw__mutex__lock(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__mutex__lock(f2ptr cause, f2ptr this) {
-  if (raw__mutex__is_type(cause, this)) {
+  if (! raw__mutex__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
   raw__mutex__lock(cause, this);

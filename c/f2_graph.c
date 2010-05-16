@@ -103,6 +103,13 @@ f2ptr f2__graph__lookup_node(f2ptr cause, f2ptr this, f2ptr node_label) {
 def_pcfunk2(graph__lookup_node, this, node, return f2__graph__lookup_node(this_cause, this, node));
 
 f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label) {
+  if (raw__graph_variable__is_type(cause, node_label)) {
+    f2ptr variable_name = f2__graph_variable__name(cause, node_label);
+    f2ptr variable      = raw__graph__lookup_variable(cause, this, variable_name);
+    if (! variable) {
+      node_label = raw__graph__add_variable(cause, this, variable_name);
+    }
+  }
   f2ptr node_label_hash = f2__graph__node_label_hash(cause, this);
   f2ptr node            = f2__ptypehash__lookup(cause, node_label_hash, node_label);
   if (node == nil) {
@@ -208,6 +215,13 @@ def_pcfunk2(graph__remove_node, this, node_label, return f2__graph__remove_node(
 
 
 f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
+  if (raw__graph_variable__is_type(cause, edge_label)) {
+    f2ptr variable_name = f2__graph_variable__name(cause, edge_label);
+    f2ptr variable      = raw__graph__lookup_variable(cause, this, variable_name);
+    if (! variable) {
+      edge_label = raw__graph__add_variable(cause, this, variable_name);
+    }
+  }
   f2ptr left_node  = raw__graph__add_node(cause, this, left_node_label);
   f2ptr right_node = raw__graph__add_node(cause, this, right_node_label);
   {
@@ -1416,8 +1430,7 @@ f2ptr f2__graph__without_self_loops(f2ptr cause, f2ptr this) {
   f2ptr new_graph = f2__graph__new(cause);
   graph__node__iteration(cause, this, node,
 			 f2ptr node__label = f2__graph_node__label(cause, node);
-			 f2__graph__add_node(cause, new_graph, node__label);
-			 );
+			 f2__graph__add_node(cause, new_graph, node__label);			 );
   graph__edge__iteration(cause, this, edge,
 			 f2ptr edge__label             = f2__graph_edge__label(cause, edge);
 			 f2ptr edge__left_node         = f2__graph_edge__left_node(cause, edge);

@@ -168,6 +168,8 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
     f2ptr bug = f2larva__bug(larva, cause);
     if (! bug) {
       bug = f2__bug__new_from_larva(cause, larva);
+    } else if (raw__larva__is_type(cause, bug)) {
+      bug = f2__bug__new(cause, f2integer__new(cause, f2larva__larva_type(larva, cause)), f2__frame__new(cause, nil));
     }
     f2fiber__value__set(fiber, cause, bug);
     resume_gc();

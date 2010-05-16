@@ -26,9 +26,22 @@
 	       this]]
 
 [globalize b [let [[this [new graph]]]
-	       [have this add_edge `head                   [new graph_variable `x] [new graph_variable `y]]
-	       [have this add_edge [new graph_variable `s] [new graph_variable `x] [new graph_variable `z]]
-	       [have this add_edge `tail                   [new graph_variable `x] [new graph_variable `w]]
+	       [have this add_edge
+		     `type
+		     [new graph_variable `x]
+		     `dog]
+	       [have this add_edge
+		     `head
+		     [new graph_variable `x]
+		     [new graph_variable `y]]
+	       [have this add_edge
+		     [new graph_variable `s]
+		     [new graph_variable `x]
+		     [new graph_variable `z]]
+	       [have this add_edge
+		     `tail
+		     [new graph_variable `x]
+		     [new graph_variable `w]]
 	       this]]
 
 [globalize c [get a as-graph]]

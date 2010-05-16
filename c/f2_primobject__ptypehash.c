@@ -309,13 +309,30 @@ f2ptr f2__ptypehash__is_empty(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(ptypehash__is_empty, this, return f2__ptypehash__is_empty(this_cause, this));
 
+f2ptr raw__ptypehash__as__frame(f2ptr cause, f2ptr this) {
+  f2ptr new_frame = f2__frame__new(cause, nil);
+  ptypehash__iteration(cause, this, key, value,
+		       f2__frame__add_var_value(cause, new_frame, key, value);
+		       );
+  return new_frame;
+}
+
+f2ptr f2__ptypehash__as__frame(f2ptr cause, f2ptr this) {
+  if (! raw__ptypehash__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__ptypehash__as__frame(cause, this);
+}
+def_pcfunk1(ptypehash__as__frame, this, return f2__ptypehash__as__frame(this_cause, this));
+
 f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2ptypehash__primobject_type__new(cause);
-  {char* slot_name = "slot_names";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.slot_names__funk);}
-  {char* slot_name = "add";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.add__funk);}
-  {char* slot_name = "remove";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.remove__funk);}
-  {char* slot_name = "lookup";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.lookup__funk);}
-  {char* slot_name = "is_empty";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.is_empty__funk);}
+  {char* slot_name = "slot_names"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.slot_names__funk);}
+  {char* slot_name = "add";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.add__funk);}
+  {char* slot_name = "remove";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.remove__funk);}
+  {char* slot_name = "lookup";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.lookup__funk);}
+  {char* slot_name = "is_empty";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.is_empty__funk);}
+  {char* slot_name = "as-frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.as__frame__funk);}
   return this;
 }
 
@@ -346,6 +363,8 @@ void f2__primobject_ptypehash__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__lookup, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.lookup__funk = never_gc(cfunk);}
   {char* symbol_str = "is_empty"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.is_empty__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__is_empty, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.is_empty__funk = never_gc(cfunk);}
+  {char* symbol_str = "as-frame"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.as__frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__as__frame, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.as__frame__funk = never_gc(cfunk);}
   
 }
 

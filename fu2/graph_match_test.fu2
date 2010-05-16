@@ -19,24 +19,19 @@
 
 [deframe dog [frame] [head body tail]]
 
-[globalize a [new dog]]
-[set a head `white]
-[set a body `black]
-[set a tail `long]
+[globalize a [let [[this [new dog]]]
+	       [set this head `white]
+	       [set this body `black]
+	       [set this tail `long]
+	       this]]
 
-[globalize b [new dog]]
-[set b head `white]
-[set b body `black]
-[set b tail `long]
+[globalize b [let [[this [new graph]]]
+	       [have this add_edge `head                   [new graph_variable `x] [new graph_variable `y]]
+	       [have this add_edge [new graph_variable `s] [new graph_variable `x] [new graph_variable `z]]
+	       [have this add_edge `tail                   [new graph_variable `x] [new graph_variable `w]]
+	       this]]
 
 [globalize c [get a as-graph]]
-[globalize d [get b as-graph]]
-
-[prog [have d make_edge_variable `body  b `black `s]
-      [have d make_node_variable b      `x]
-      [have d make_node_variable `white `y]
-      [have d make_node_variable `black `z]
-      [have d make_node_variable `long  `w]]
 
 
 

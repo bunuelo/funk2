@@ -78,8 +78,10 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
   } else if (raw__string__is_type(cause, exp)) {
     string = exp;
   } else if (raw__symbol__is_type(cause, exp)) {
-    string =f2__exp__as__string(cause, exp);
+    string = f2__exp__as__string(cause, exp);
   } else if (raw__integer__is_type(cause, exp)) {
+    string = f2__exp__as__string(cause, exp);
+  } else if (raw__double__is_type(cause, exp)) {
     string = f2__exp__as__string(cause, exp);
   } else if (raw__cons__is_type(cause, exp)) {
     string = f2__exp__as__string(cause, exp);
@@ -92,6 +94,8 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
 						      new__string(cause, "<font color=\"#CF0000\">?"),
 						      f2__graphviz__exp__as__label(cause, f2__graph_variable__name(cause, exp)),
 						      new__string(cause, "</font>")));
+  } else if (raw__array__is_type(cause, exp) && (! raw__primobject__is_type(cause, exp))) {
+    string = f2__exp__as__string(cause, exp);
   } else {
     f2ptr type = f2__object__type(cause, exp);
     string = f2__stringlist__concat(cause, f2list3__new(cause,

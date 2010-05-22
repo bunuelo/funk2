@@ -58,6 +58,31 @@ f2ptr f2__graph__new(f2ptr cause) {
 }
 def_pcfunk0(graph__new, return f2__graph__new(this_cause));
 
+f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label) {
+  return nil;
+}
+
+f2ptr f2__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__add_node(cause, this, node_label);
+}
+def_pcfunk2(graph__add_node, this, node_label, return f2__graph__add_node(this_cause, this, node_label));
+
+f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node, f2ptr right_node) {
+  return nil;
+}
+
+f2ptr f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node, f2ptr right_node) {
+  if ((! raw__graph__is_type(cause, this)) ||
+      (! raw__graph_node__is_type(cause, left_node)) ||
+      (! raw__graph_node__is_type(cause, right_node))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__add_node(cause, this, edge_label, left_node, right_node);
+}
+def_pcfunk4(graph__add_edge, this, edge_label, left_node, right_node, return f2__graph__add_edge(this_cause, this, edge_label, left_node, right_node));
 
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2graph__primobject_type__new(cause);
@@ -287,16 +312,9 @@ void f2__graph__initialize() {
   // graph
   initialize_primobject_4_slot(graph, variable_name_hash, root_node, node_label_hash, edge_type_label_hash);
   
-  {char* symbol_str = "equals"; __funk2.globalenv.object_type.primobject.primobject_type_graph.equals__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph__equals, this, that, cfunk, 0, "checks for equality between two graphs."); __funk2.globalenv.object_type.primobject.primobject_type_graph.equals__funk = never_gc(cfunk);}
-  {char* symbol_str = "equals_hash_value"; __funk2.globalenv.object_type.primobject.primobject_type_graph.equals_hash_value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(graph__equals_hash_value, this, cfunk, 0, "calculates the equals_hash_value for a graph."); __funk2.globalenv.object_type.primobject.primobject_type_graph.equals_hash_value__funk = never_gc(cfunk);}
-  {char* symbol_str = "part_not_contained_by"; __funk2.globalenv.object_type.primobject.primobject_type_graph.part_not_contained_by__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph__part_not_contained_by, this, that, cfunk, 0, "calculates the subgraph of this graph that is not contained in that graph."); __funk2.globalenv.object_type.primobject.primobject_type_graph.part_not_contained_by__funk = never_gc(cfunk);}
-  {char* symbol_str = "as-frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph.as__frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(rooted_graph__as__frame, this, cfunk, 0, "returns a rooted graph as a frame."); __funk2.globalenv.object_type.primobject.primobject_type_graph.as__frame__funk = never_gc(cfunk);}
-  
-  f2__primcfunk__init__1(graph__as__dot_code,                  this,                                                                "returns dot code in a string suitable for graphing with graphviz.");
+  f2__primcfunk__init__2(graph__add_node,     this, node_label,                        "Add a node to this graph.");
+  f2__primcfunk__init__4(graph__add_edge,     this, edge_label, left_node, right_node, "Add an edge between two nodes in this graph.");
+  f2__primcfunk__init__1(graph__as__dot_code, this,                                    "Returns dot code in a string suitable for graphing with graphviz.");
   
   // graph_variable
   initialize_primobject_1_slot(graph_variable, name);

@@ -63,7 +63,11 @@ declare_primobject_3_slot(graph_edge, label, left_node, right_node);
 // graph
 declare_primobject_4_slot(graph, variable_name_hash, root_node, node_label_hash, edge_type_label_hash);
 
-f2ptr      f2__graph__new(f2ptr cause);
+f2ptr  f2__graph__new(f2ptr cause);
+f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label);
+f2ptr  f2__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label);
+f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node, f2ptr right_node);
+f2ptr  f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node, f2ptr right_node);
 
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause);
 

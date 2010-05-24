@@ -59,7 +59,7 @@ f2ptr f2__graph__new(f2ptr cause) {
 def_pcfunk0(graph__new, return f2__graph__new(this_cause));
 
 f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label) {
-  return nil;
+  return f2larva__new(cause, 22, nil);
 }
 
 f2ptr f2__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label) {
@@ -71,7 +71,7 @@ f2ptr f2__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label) {
 def_pcfunk2(graph__add_node, this, node_label, return f2__graph__add_node(this_cause, this, node_label));
 
 f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node, f2ptr right_node) {
-  return nil;
+  return f2larva__new(cause, 22, nil);
 }
 
 f2ptr f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node, f2ptr right_node) {
@@ -83,6 +83,20 @@ f2ptr f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_
   return raw__graph__add_node(cause, this, edge_label, left_node, right_node);
 }
 def_pcfunk4(graph__add_edge, this, edge_label, left_node, right_node, return f2__graph__add_edge(this_cause, this, edge_label, left_node, right_node));
+
+f2ptr raw__graph__right_node__an_arbitrary_left_edge(f2ptr cause, f2ptr this, f2ptr right_node, f2ptr edge_label) {
+  return f2larva__new(cause, 22, nil);
+}
+
+f2ptr f2__graph__right_node__an_arbitrary_left_edge(f2ptr cause, f2ptr this, f2ptr right_node, f2ptr edge_label) {
+  if ((! raw__graph__is_type(cause, this)) ||
+      (! raw__graph_node__is_type(cause, right_node))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__right_node__an_arbitrary_left_edge(cause, this, right_node, edge_label);
+}
+
+
 
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2graph__primobject_type__new(cause);

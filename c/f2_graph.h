@@ -24,15 +24,25 @@
 
 // graph_node
 typedef struct funk2_object_type__graph_node__slot_s funk2_object_type__graph_node__slot_t;
-declare_object_type_5_slot(graph_node, label, edges_left_node_hash_edge_hash, edges_right_node_hash_edge_hash, edges_edge_hash_left_node_hash, edges_edge_hash_right_node_hash, );
+declare_object_type_1_slot(graph_node, label,
+			   f2ptr eq__symbol;
+			   f2ptr eq__funk;
+			   f2ptr eq_hash_value__symbol;
+			   f2ptr eq_hash_value__funk;
+			   );
 
 // graph_edge
 typedef struct funk2_object_type__graph_edge__slot_s funk2_object_type__graph_edge__slot_t;
-declare_object_type_3_slot(graph_edge, label, left_node, right_node, );
+declare_object_type_3_slot(graph_edge, label, left_node, right_node,
+			   f2ptr eq__symbol;
+			   f2ptr eq__funk;
+			   f2ptr eq_hash_value__symbol;
+			   f2ptr eq_hash_value__funk;
+			   );
 
 // graph
 typedef struct funk2_object_type__graph__slot_s funk2_object_type__graph__slot_t;
-declare_object_type_4_slot(graph, variable_name_hash, root_node, node_label_hash, edge_type_label_hash,
+declare_object_type_4_slot(graph, variable_name_hash, node_set, edge_set,
 			   );
 
 // graph_variable
@@ -55,19 +65,19 @@ typedef struct funk2_graph_s {
 #include "f2_primobjects.h"
 
 // graph_node
-declare_primobject_5_slot(graph_node, label, edges_left_node_hash_edge_hash, edges_right_node_hash_edge_hash, edges_edge_hash_left_node_hash, edges_edge_hash_right_node_hash);
+declare_primobject_5_slot(graph_node, label);
 
 // graph_edge
 declare_primobject_3_slot(graph_edge, label, left_node, right_node);
 
 // graph
-declare_primobject_4_slot(graph, variable_name_hash, root_node, node_label_hash, edge_type_label_hash);
+declare_primobject_4_slot(graph, node_set, edge_set);
 
 f2ptr  f2__graph__new(f2ptr cause);
-f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label);
-f2ptr  f2__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label);
-f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node, f2ptr right_node);
-f2ptr  f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node, f2ptr right_node);
+f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node);
+f2ptr  f2__graph__add_node(f2ptr cause, f2ptr this, f2ptr node);
+f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge);
+f2ptr  f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge);
 
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause);
 

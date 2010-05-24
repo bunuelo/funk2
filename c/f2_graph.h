@@ -42,7 +42,7 @@ declare_object_type_3_slot(graph_edge, label, left_node, right_node,
 
 // graph
 typedef struct funk2_object_type__graph__slot_s funk2_object_type__graph__slot_t;
-declare_object_type_4_slot(graph, variable_name_hash, node_set, edge_set,
+declare_object_type_2_slot(graph, node_set, edge_set,
 			   );
 
 // graph_variable

@@ -65,7 +65,7 @@ typedef struct funk2_graph_s {
 #include "f2_primobjects.h"
 
 // graph_node
-declare_primobject_5_slot(graph_node, label);
+declare_primobject_1_slot(graph_node, label);
 
 // graph_edge
 declare_primobject_3_slot(graph_edge, label, left_node, right_node);

@@ -71,7 +71,7 @@ declare_primobject_5_slot(graph_node, label);
 declare_primobject_3_slot(graph_edge, label, left_node, right_node);
 
 // graph
-declare_primobject_4_slot(graph, node_set, edge_set);
+declare_primobject_2_slot(graph, node_set, edge_set);
 
 f2ptr  f2__graph__new(f2ptr cause);
 f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node);

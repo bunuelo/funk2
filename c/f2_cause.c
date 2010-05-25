@@ -284,7 +284,10 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
       f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "value"),      value);
       f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "funk"),       funk);
       f2ptr event_node = f2__graph__add_node(cause, event_graph, event_frame);
-      f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event_node, event_node);
+      {
+	f2ptr new_edge = f2__graph_edge__new(cause, new__symbol(cause, "and-then"), event_graph_last_event_node, event_node);
+	f2__graph__add_edge(cause, event_graph, new_edge);
+      }
       f2ptr and_then__symbol = new__symbol(cause, "and-then");
       if (raw__funkable__is_type(cause, funk)) {
 	f2ptr matching_funk_event = nil;

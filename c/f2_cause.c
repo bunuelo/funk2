@@ -339,7 +339,7 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
 	  // call complete_funk callback
 	}
       }
-      f2__cause__event_graph_last_event__set(cause, this, event_frame);
+      f2__cause__event_graph_last_event_node__set(cause, this, event_node);
     }
     raw__mutex__unlock(cause, event_graph_mutex);
   }

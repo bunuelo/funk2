@@ -41,7 +41,7 @@ def_primobject_17_slot(cause,
 		       write_other_memory_callbacks,
 		       event_graph_mutex,
 		       event_graph,
-		       event_graph_last_event);
+		       event_graph_last_event_node);
 
 f2ptr f2__cause__new(f2ptr cause,
 		     f2ptr allocate_traced_arrays,
@@ -530,7 +530,7 @@ void f2__cause__initialize() {
 				write_other_memory_callbacks,
 				event_graph_mutex,
 				event_graph,
-				event_graph_last_event);
+				event_graph_last_event_node);
   
   {char* symbol_str = "define"; __funk2.globalenv.object_type.primobject.primobject_type_cause.define__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__define, this, var, value, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk = never_gc(cfunk);}

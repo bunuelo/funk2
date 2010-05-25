@@ -44,7 +44,7 @@ declare_object_type_17_slot(cause,
 			    write_other_memory_callbacks,
 			    event_graph_mutex,
 			    event_graph,
-			    event_graph_last_event,
+			    event_graph_last_event_node,
 			    
 			    f2ptr define__symbol;
 			    f2ptr define__funk;
@@ -93,7 +93,7 @@ declare_primobject_17_slot(cause,
 			   write_other_memory_callbacks,
 			   event_graph_mutex,
 			   event_graph,
-			   event_graph_last_event
+			   event_graph_last_event_node
 			   );
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source);

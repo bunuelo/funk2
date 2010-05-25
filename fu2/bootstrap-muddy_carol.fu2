@@ -25,7 +25,7 @@
   [set this reduce_difference_funk reduce_difference_funk]
   this]
 
-w[defmetro difference_engine [name :rest reduce_difference_body]
+[defmetro difference_engine [name :rest reduce_difference_body]
   `[new difference_engine [quote ,name]
 	[funk [difference_engine]
 	  @reduce_difference_body]]]

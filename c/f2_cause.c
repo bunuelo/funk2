@@ -307,7 +307,10 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
 		    f2ptr iter_event_frame__funk__name = f2__funkable__name(cause, iter_event_frame__funk);
 		    if (raw__eq(cause, funk__name, iter_event_frame__funk__name)) {
 		      matching_funk_event = iter_event_frame;
-		      f2__graph__add_edge(cause, event_graph, new__symbol(cause, "subfunk-span"), iter_event_frame, event_node);
+		      {
+			f2ptr new_edge = f2__graph_edge__new(cause, new__symbol(cause, "subfunk-span"), iter_event_frame, event_node);
+			f2__graph__add_edge(cause, event_graph, new_edge);
+		      }
 		      break;
 		    }
 		  }

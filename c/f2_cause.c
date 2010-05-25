@@ -415,9 +415,18 @@ f2ptr f2__cause__add_graph_event__complete_funk(f2ptr cause, f2ptr this, f2ptr f
     f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "args"),       args);
     f2__frame__add_var_value(cause, complete_funk_event, new__symbol(cause, "value"),      value);
     f2ptr complete_funk_node = f2__graph__add_node(cause, event_graph, complete_funk_event);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event_node, complete_funk_node);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "first_subevent"), complete_funk_node, first_subevent);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "last_subevent"),  complete_funk_node, last_subevent);
+    {
+      f2ptr new_edge = f2__graph_edge__new(cause, new__symbol(cause, "and-then"), event_graph_last_event_node, complete_funk_node);
+      f2__graph__add_edge(cause, event_graph, new_edge);
+    }
+    {
+      f2ptr new_edge = f2__graph_edge__new(cause, new__symbol(cause, "first_subevent"), complete_funk_node, first_subevent);
+      f2__graph__add_edge(cause, event_graph, new_edge);
+    }
+    {
+      f2ptr new_edge = f2__graph_edge__new(cause, new__symbol(cause, "last_subevent"),  complete_funk_node, last_subevent);
+      f2__graph__add_edge(cause, event_graph, new_edge);
+    }
     // scan forward adding subevent relations
     f2ptr iter = first_subevent;
     while (iter) {

@@ -466,14 +466,18 @@ f2ptr f2__cause__add_graph_event__read_other_memory(f2ptr cause, f2ptr this, f2p
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
   {
-    f2ptr event_graph             = f2__cause__get_event_graph__thread_unsafe(cause, this);
-    f2ptr event_graph_last_event  = f2__cause__event_graph_last_event(cause, this);
-    f2ptr read_other_memory_event = f2__frame__new(cause, nil);
+    f2ptr event_graph                  = f2__cause__get_event_graph__thread_unsafe(cause, this);
+    f2ptr event_graph_last_event_node  = f2__cause__event_graph_last_event_node(cause, this);
+    f2ptr read_other_memory_event      = f2__frame__new(cause, nil);
+    f2ptr read_other_memory_event_node = f2__graph__add_node(cause, read_other_memory_event);
     f2__frame__add_var_value(cause, read_other_memory_event, new__symbol(cause, "event_type"), new__symbol(cause, "read_other_memory"));
     f2__frame__add_var_value(cause, read_other_memory_event, new__symbol(cause, "object"),     object);
     f2__frame__add_var_value(cause, read_other_memory_event, new__symbol(cause, "slot_name"),  slot_name);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event, read_other_memory_event);
-    f2__cause__event_graph_last_event__set(cause, this, read_other_memory_event);
+    {
+      f2ptr new_edge = f2__graph_edge__new(cause, new__symbol(cause, "and-then"), event_graph_last_event_node, read_other_memory_event_node);
+      f2__graph__add_edge(cause, event_graph, new_edge);
+    }
+    f2__cause__event_graph_last_event_node__set(cause, this, read_other_memory_event_node);
   }
   raw__mutex__unlock(cause, event_graph_mutex);
   return nil;

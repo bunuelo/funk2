@@ -247,7 +247,10 @@ f2ptr f2__cause__add_graph_event__funk(f2ptr cause, f2ptr this, f2ptr fiber, f2p
     f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "funk"),       funk);
     f2__frame__add_var_value(cause, event_frame, new__symbol(cause, "args"),       args);
     f2ptr event_node = f2__graph__add_node(cause, event_graph, event_frame);
-    f2__graph__add_edge(cause, event_graph, new__symbol(cause, "and-then"), event_graph_last_event_node, event_node);
+    {
+      f2ptr new_edge = f2__graph_edge__new(cause, new__symbol(cause, "and-then"), event_graph_last_event_node, event_node);
+      f2__graph__add_edge(cause, event_graph, new_edge);
+    }
     f2__cause__event_graph_last_event__set(cause, this, event_frame);
   }
   raw__mutex__unlock(cause, event_graph_mutex);

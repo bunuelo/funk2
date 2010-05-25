@@ -469,7 +469,7 @@ f2ptr f2__cause__add_graph_event__read_other_memory(f2ptr cause, f2ptr this, f2p
     f2ptr event_graph                  = f2__cause__get_event_graph__thread_unsafe(cause, this);
     f2ptr event_graph_last_event_node  = f2__cause__event_graph_last_event_node(cause, this);
     f2ptr read_other_memory_event      = f2__frame__new(cause, nil);
-    f2ptr read_other_memory_event_node = f2__graph__add_node(cause, read_other_memory_event);
+    f2ptr read_other_memory_event_node = f2__graph__add_node(cause, event_graph, read_other_memory_event);
     f2__frame__add_var_value(cause, read_other_memory_event, new__symbol(cause, "event_type"), new__symbol(cause, "read_other_memory"));
     f2__frame__add_var_value(cause, read_other_memory_event, new__symbol(cause, "object"),     object);
     f2__frame__add_var_value(cause, read_other_memory_event, new__symbol(cause, "slot_name"),  slot_name);

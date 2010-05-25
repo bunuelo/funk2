@@ -97,7 +97,6 @@ f2ptr f2__graph__right_node__an_arbitrary_left_edge(f2ptr cause, f2ptr this, f2p
 }
 
 
-
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2graph__primobject_type__new(cause);
   return this;

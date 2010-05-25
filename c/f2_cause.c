@@ -449,7 +449,7 @@ f2ptr f2__cause__add_graph_event__complete_funk(f2ptr cause, f2ptr this, f2ptr f
 	iter = raw__graph__left_node__an_arbitrary_right_node(cause, event_graph, iter, new__symbol(cause, "and-then"));
       }
     }
-    f2__cause__event_graph_last_event_node__set(cause, this, complete_funk_event_node);
+    f2__cause__event_graph_last_event_node__set(cause, this, complete_funk_node);
   }
   raw__mutex__unlock(cause, event_graph_mutex);
   return nil;

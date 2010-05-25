@@ -41,7 +41,7 @@
   nil]
 
 `[not finished
-
+      
       [deftypefunk difference_engine execute activate [frame]
 	[if [get this active]
 	    [error error_type `goal_already_active goal_name [get this name]]
@@ -85,7 +85,7 @@
        `[deftypefunk female_child_agent execute choose_random_move_goal []
 	  [let [[goal [have this lookup `choose_random_move_goal-goal]]]
 	    [have goal handle]
-
+	    
 	    ]]]
 
 [deftypefunk female_child_agent execute set_enable_random_move_goal [enable_random_move_goal]
@@ -355,7 +355,6 @@
     [set this now future]]
   [let [[perception glwindow_value]]
     `[print 'perceive_think_act: debug 0.']
-     [
      [have this handle_enable_random_move_goal]
      
      [have this handle_put_object_at_goal]
@@ -367,8 +366,8 @@
      [have this handle_drop_object_goal]
      ]
   nil]
-
-
+  
+  
 'must be run on carol in order for her to actually go.'
 [deftypefunk female_child_agent execute start_mind []
   [have this add `fiber [fiber [funk [] [while t

@@ -87,7 +87,7 @@
   nil]
 
 
-[deftypefunk female_child_agent execute choose_random_move_goal []
+`[deftypefunk female_child_agent execute choose_random_move_goal []
   [let [[goal [have this lookup `choose_random_move_goal-goal]]]
     [have goal handle]
 

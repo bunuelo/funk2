@@ -501,6 +501,7 @@ f2ptr f2__cause__add_graph_event__write_other_memory(f2ptr cause, f2ptr this, f2
     f2__frame__add_var_value(cause, write_other_memory_event, new__symbol(cause, "object"),     object);
     f2__frame__add_var_value(cause, write_other_memory_event, new__symbol(cause, "slot_name"),  slot_name);
     f2__frame__add_var_value(cause, write_other_memory_event, new__symbol(cause, "old_value"),  old_value);
+    f2ptr write_other_memory_event_node = f2__graph__new_node(cause, write_other_memory_event);
     {
       f2ptr new_edge = f2__graph_edge__new(cause, new__symbol(cause, "and-then"), event_graph_last_event_node, write_other_memory_event_node);
       f2__graph__add_edge(cause, event_graph, new_edge);

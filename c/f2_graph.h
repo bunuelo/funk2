@@ -86,6 +86,8 @@ f2ptr  f2__graph__right_node__an_arbitrary_left_edge(f2ptr cause, f2ptr this, f2
 
 f2ptr raw__graph__right_node__an_arbitrary_left_node(f2ptr cause, f2ptr this, f2ptr right_node, f2ptr edge_label);
 
+f2ptr raw__graph__left_node__an_arbitrary_right_node(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr edge_label);
+
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause);
 
 // graph_variable

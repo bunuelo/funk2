@@ -100,6 +100,10 @@ f2ptr raw__graph__right_node__an_arbitrary_left_node(f2ptr cause, f2ptr this, f2
   return f2larva__new(cause, 22, nil);
 }
 
+f2ptr raw__graph__left_node__an_arbitrary_right_node(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr edge_label) {
+  return f2larva__new(cause, 22, nil);
+}
+
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2graph__primobject_type__new(cause);
   return this;

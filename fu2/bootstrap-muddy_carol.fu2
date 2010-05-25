@@ -17,12 +17,77 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[deframe difference_engine [frame] [name fiber frame reduce_difference_funk active alive]]
+[deftypeconstruct difference_engine [name reduce_difference_funk]
+  [set this name                   name]
+  [set this reduce_difference_funk reduce_difference_funk]
+  this]
+
+w[defmetro difference_engine [name :rest reduce_difference_body]
+  `[new difference_engine [quote ,name]
+	[funk [difference_engine]
+	  @reduce_difference_body]]]
+
+[deftypefunk difference_engine execute live []
+  [if [not [get this alive]]
+      [set this fiber [fiber [funk []
+				   [while t
+				     [if [get this active]
+					 [have this reduce_difference]
+				       [sleep 1]]]]
+			     nil]]]
+  nil]
+
+[deftypefunk goal execute activate [frame]
+  [if [get this active]
+      [error error_type `goal_already_active goal_name [get this name]]
+    [set this frame frame]]]
+
+[deftypefunk goal execute handle []
+  [shelter [set [this-fiber] cause_reg [get this cause]]
+	   [funkall [get this handle_funk] this]]]
+
+[deftypefunk goal get slot [name]
+  [have [get goal frame] lookup name]]
+
 [deftypefunk female_child_agent execute set_enable_random_move_goal [enable_random_move_goal]
   [let [[old_enable_random_move_goal [have this lookup `enable_random_move_goal]]]
     [if [not [eq old_enable_random_move_goal enable_random_move_goal]]
 	[prog [have this add_reactive_trace `set_enable_random_move_goal [get this now] enable_random_move_goal]
 	      [have this add `enable_random_move_goal enable_random_move_goal]]]]
   nil]
+
+`[deftypefunk female_child_agent execute define-choose_random_move_goal []
+  [have this add `choose_random_move_goal-goal [goal choose_random_move_goal
+						     [let [[object [get goal slot `put_object_at_goal__object]]]
+						       [if [not object]
+							   [let [[random_object   [get carol_scene random_object]]
+								 [random_position [get carol_scene random_position]]]
+							     [if [and [is-type `physical_object random_object]
+								      [not [eq random_object carol]]
+								      [let [[transform [get random_object transform]]]
+									[let [[object_position [get transform position]]
+									      [position        [get this      position]]]
+									  [let [[distance [get position distance object_position]]]
+									    [> distance arms_length]]]]]
+								 [prog [format stdout
+									       '\n'
+									       '\nenable_random_move_goal:'
+									       '\n  random_object   = ' [get [get random_object texture] texture_name]
+									       '\n  random_position = ' random_position]
+								       [let [[event_id [gensym]]]
+									 [have this add_reactive_trace `causes [get this now] event_id]
+									 [have this add_reactive_trace `resource   event_id `random_move_goal]
+									 [have this add_reactive_trace `event_name event_id `put_object_at_goal]
+									 [have this add_reactive_trace `object     event_id random_object]
+									 [have this add_reactive_trace `position   event_id random_position]]
+								       [have this set_put_object_at_goal random_object random_position]]]]]]]]
+  nil]
+
+
+[deftypefunk female_child_agent execute choose_random_move_goal []
+  [let [[goal [have this lookup `choose_random_move_goal-goal]]]
+    [have goal handle]
 
 [deftypefunk female_child_agent execute choose_random_move_goal []
   [let [[put_object_at_goal__object [have this lookup `put_object_at_goal__object]]]
@@ -39,7 +104,7 @@
 	      [prog [format stdout
 			    '\n'
 			    '\nenable_random_move_goal:'
-			    '\n  random_object = '   random_object
+			    '\n  random_object   = ' [get [get random_object texture] texture_name]
 			    '\n  random_position = ' random_position]
 		    [let [[event_id [gensym]]]
 		      [have this add_reactive_trace `causes [get this now] event_id]
@@ -284,6 +349,7 @@
     [set this now future]]
   [let [[perception glwindow_value]]
     `[print 'perceive_think_act: debug 0.']
+     [
      [have this handle_enable_random_move_goal]
      
      [have this handle_put_object_at_goal]

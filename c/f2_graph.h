@@ -70,6 +70,8 @@ declare_primobject_1_slot(graph_node, label);
 // graph_edge
 declare_primobject_3_slot(graph_edge, label, left_node, right_node);
 
+f2ptr f2__graph_edge__new(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node);
+
 // graph
 declare_primobject_2_slot(graph, node_set, edge_set);
 

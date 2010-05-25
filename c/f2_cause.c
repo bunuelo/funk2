@@ -430,7 +430,10 @@ f2ptr f2__cause__add_graph_event__complete_funk(f2ptr cause, f2ptr this, f2ptr f
     // scan forward adding subevent relations
     f2ptr iter = first_subevent;
     while (iter) {
-      f2__graph__add_edge(cause, event_graph, new__symbol(cause, "subevent"), complete_funk_event, iter);
+      {
+	f2ptr new_edge = f2__graph_edge__new(cause, new__symbol(cause, "subevent"), complete_funk_event, iter);
+	f2__graph__add_edge(cause, event_graph, new_edge);
+      }
       if (iter == last_subevent) {
 	iter = nil;
       } else {

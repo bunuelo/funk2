@@ -369,6 +369,7 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
 	    xmlrpc_value* new_exp = funk2_xmlrpc__create_xmlrpc_value_from_exp(&env, cause, exp);
 	    if (new_exp == NULL) {
 	      call_successful_so_far = boolean__false;
+	      printf("\nf2_xmlrpc.c: error interpretting arguments.");
 	    } else {
 	      xmlrpc_array_append_item(&env, argument_array, new_exp);
 	      xmlrpc_DECREF(new_exp);
@@ -384,6 +385,7 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
 	if (env.fault_occurred) {
 	  xmlrpc_print_fault_status(&env);
 	  call_successful_so_far = boolean__false;
+	  printf("\nf2_xmlrpc.c: error making call.");
 	}
       }
       xmlrpc_DECREF(argument_array);

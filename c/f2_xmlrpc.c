@@ -209,7 +209,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
   switch(type) {
   case XMLRPC_TYPE_DEAD:    // not a value
     return f2larva__new(cause, 1, nil);
-  case XMLRPC_TYPE_NIL:    // empty value, eg NULL
+  case XMLRPC_TYPE_NIL:     // empty value, eg NULL
     return nil;
   case XMLRPC_TYPE_BASE64: { // base64 value, eg binary data
     size_t         value__length;
@@ -370,6 +370,14 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
 	    if (new_exp == NULL) {
 	      call_successful_so_far = boolean__false;
 	      printf("\nf2_xmlrpc.c: error interpretting arguments.");
+	      {
+		f2ptr bug_frame = f2__frame__new(cause, nil);
+		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "xmlrpc_error_interpretting_arguments"));
+		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "url"),       url);
+		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  funkname);
+		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "arguments"), arguments);
+		return_value = f2larva__new(cause, 5533, f2__bug__new(cause, f2integer__new(cause, 5533), bug_frame));
+	      }
 	    } else {
 	      xmlrpc_array_append_item(&env, argument_array, new_exp);
 	      xmlrpc_DECREF(new_exp);
@@ -386,6 +394,14 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
 	  xmlrpc_print_fault_status(&env);
 	  call_successful_so_far = boolean__false;
 	  printf("\nf2_xmlrpc.c: error making call.");
+	  {
+	    f2ptr bug_frame = f2__frame__new(cause, nil);
+	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "xmlrpc_error_making_call"));
+	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "url"),       url);
+	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  funkname);
+	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "arguments"), arguments);
+	    return_value = f2larva__new(cause, 5533, f2__bug__new(cause, f2integer__new(cause, 5533), bug_frame));
+	  }
 	}
       }
       xmlrpc_DECREF(argument_array);
@@ -408,9 +424,6 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
   
   xmlrpc_client_teardown_global_const();
   
-  if (! success) {
-    return f2larva__new(cause, 5533, nil);
-  }
   return return_value;
 }
 

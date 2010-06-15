@@ -19,8 +19,9 @@
 
 [deframe isis_world_client [frame] [xmlrpc_client]]
 
-[deftypeconstruct isis_world_client [xmlrpc_url]
-  [set this xmlrpc_client [new xmlrpc_client xmlrpc_url]]
+[deftypeconstruct isis_world_client [xmlrpc_hostname]
+  [let [[xmlrpc_url [string-concat 'http://' xmlrpc_hostname ':8001/RPC2']]]
+    [set this xmlrpc_client [new xmlrpc_client xmlrpc_url]]]
   this]
 [deftypefunk isis_world_client execute call [:rest args] [have-apply [get this xmlrpc_client] call args]]
 

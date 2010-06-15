@@ -372,10 +372,12 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
 	      printf("\nf2_xmlrpc.c: error interpretting arguments.");
 	      {
 		f2ptr bug_frame = f2__frame__new(cause, nil);
-		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "xmlrpc_error_interpretting_arguments"));
-		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "url"),       url);
-		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  funkname);
-		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "arguments"), arguments);
+		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),     new__symbol(cause, "xmlrpc_error_interpretting_arguments"));
+		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "url"),          url);
+		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),     funkname);
+		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "arguments"),    arguments);
+		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_string"), (env.fault_string != NULL) ? nil : new__string(cause, env.fault_string));
+		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_code"),   f2integer__new(cause, env.fault_code));
 		return_value = f2larva__new(cause, 5533, f2__bug__new(cause, f2integer__new(cause, 5533), bug_frame));
 	      }
 	    } else {
@@ -396,10 +398,12 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
 	  printf("\nf2_xmlrpc.c: error making call.");
 	  {
 	    f2ptr bug_frame = f2__frame__new(cause, nil);
-	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "xmlrpc_error_making_call"));
-	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "url"),       url);
-	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  funkname);
-	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "arguments"), arguments);
+	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),     new__symbol(cause, "xmlrpc_error_making_call"));
+	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "url"),          url);
+	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),     funkname);
+	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "arguments"),    arguments);
+	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_string"), (env.fault_string != NULL) ? nil : new__string(cause, env.fault_string));
+	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_code"),   f2integer__new(cause, env.fault_code));
 	    return_value = f2larva__new(cause, 5533, f2__bug__new(cause, f2integer__new(cause, 5533), bug_frame));
 	  }
 	}

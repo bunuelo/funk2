@@ -51,7 +51,7 @@
 					      [millisleep 100]]]
 					  [have active_mutex lock]
 					  [= done [get this done]]
-					  [have active_mutex unlock]]
+					  [have active_mutex unlock]
 					  ]]]
 				nil]]
   this]

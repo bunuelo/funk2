@@ -23,7 +23,9 @@
 			       [while [not [get this done]]
 				 [if [get this active]
 				     [prog [let [[active_funk [get this active_funk]]]
-					     [set this result [apply active_funk [get this active_args]]]]
+					     [if active_funk
+						 [set this result [apply active_funk [get this active_args]]]
+					       [format stdout '\nresource warning: active_funk is nil.']]]
 					   [set this done t]]]
 				 [sleep 1]]]
 			 nil]]

@@ -402,7 +402,7 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
 	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "url"),          url);
 	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),     funkname);
 	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "arguments"),    arguments);
-	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_string"), (env.fault_string != NULL) ? nil : new__string(cause, env.fault_string));
+	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_string"), ((env.fault_string != NULL) ? new__string(cause, env.fault_string) : nil));
 	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_code"),   f2integer__new(cause, env.fault_code));
 	    return_value = f2larva__new(cause, 5533, f2__bug__new(cause, f2integer__new(cause, 5533), bug_frame));
 	  }

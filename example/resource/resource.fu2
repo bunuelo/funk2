@@ -48,6 +48,7 @@
 								[have active_mutex unlock]]]
 							  [format stdout '\nresource warning: active_funk is nil (name = ' [get this name] ').\n']]]
 						      [have active_mutex lock]
+						      [set this active   nil]
 						      [set this finished t]
 						      [have active_mutex unlock]]
 					      [millisleep 100]]]

@@ -65,6 +65,10 @@
 	[sleep 1]]]
     result]]
 
+[deftypefunk resource call [:rest args]
+  [have-apply this activate args]
+  [have this finish]]
+
 
       
     

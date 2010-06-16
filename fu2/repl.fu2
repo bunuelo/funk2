@@ -103,7 +103,7 @@
 [defunk load1 [filename]
   [let [[file-stream [stream-new_open_file filename [stream-file_mode-rdonly]]]]
     [if [null file-stream]
-	[error load-error [list 'load error: could not open "' filename '" for reading.']]
+	[error load-error [string-concat 'load error: could not open "' filename '" for reading.']]
       [let [[result [repl-io file-stream nil nil nil]]]
 	[stream-close file-stream]
 	result]]]]

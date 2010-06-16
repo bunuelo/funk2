@@ -59,13 +59,14 @@
   `[new resource [quote ,name] [funk ,args @body]]]
 
 [deftypefunk resource execute activate [:rest args]
-  [let [[successful_activation nil]]
-    [prog [have [get this active_mutex] lock]
+  [let [[successful_activation nil]
+	[active_mutex          [get this active_mutex]]]
+    [prog [have active_mutex lock]
 	  [if [not [get this active]]
 	      [prog [set this active           t]
 		    [set this active_args      args]
 		    [=   successful_activation t]]]
-	  [have [get this active_mutex] unlock]]
+	  [have active_mutex unlock]]
     [if successful_activation
 	nil
       [error object_type `resource object_typefunk `activate error_type `resource-is-already-activated]]]]
@@ -92,11 +93,15 @@
     result]]
 
 [deftypefunk resource execute call [:rest args]
+  [print 'debug 0']
   [have-apply this activate args]
-  [have this finish]]
+  [print 'debug 1']
+  [let [[result [have this finish]]]
+    [print 'debug 2']
+    result]]
 
 
-      
-    
+
+
 
 

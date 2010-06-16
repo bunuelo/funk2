@@ -24,10 +24,35 @@
 				 [if [get this active]
 				     [prog [let [[active_funk [get this active_funk]]]
 					     [set this result [apply active_funk [get this active_args]]]]
-					   [set this done `t]]]
+					   [set this done t]]]
 				 [sleep 1]]]
 			 nil]]
   this]
 
-[deftypefunk 
+[deftypefunk resource execute activate [:rest args]
+  [let [[successful_activation nil]]
+    [prog [have [get this active_mutex] lock]
+	  [if [not [get this active]]
+	      [prog [set this active           t]
+		    [set this active_args      args]
+		    [=   successful_activation t]]]
+	  [have [get this active_mutex] unlock]]
+    [if successful_activation
+	nil
+      [error object_type `resource object_typefunk `activate error_type `resource-is-already-activated]]]]
+
+[deftypefunk resource execute finish []
+  [if [get this done]
+      [let [[result nil]]
+	[prog [have [get this active_mutex] lock]
+	      [=   result           [get this result]]
+	      [set this active      nil]
+	      [set this active_args nil]
+	      [set this result      nil]
+	      [set this done        nil]
+	      [have [get this active_mutex] unlock]]
+	result]
+    [error object_type `resource object_typefunk `finish error_type `resource-is-not-done]]]
+
+
 

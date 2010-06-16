@@ -17,8 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe isis_world_client [frame] [xmlrpc_client]]
-
+[deframe          isis_world_client [frame] [xmlrpc_client]]
 [deftypeconstruct isis_world_client [xmlrpc_hostname]
   [let [[xmlrpc_url [string-concat 'http://' xmlrpc_hostname ':8001/RPC2']]]
     [set this xmlrpc_client [new xmlrpc_client xmlrpc_url]]]

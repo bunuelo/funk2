@@ -18,8 +18,9 @@
  rights to redistribute these changes.'
 
 [deframe          resource [frame] [name fiber active_mutex active active_funk active_args result finished done]]
-[deftypeconstruct resource [name]
+[deftypeconstruct resource [name active_funk]
   [set this name         name]
+  [set this active_funk  active_funk]
   [set this active_mutex [new mutex]]
   [set this fiber        [fiber [funk []
 				      [while [not [get this done]]
@@ -32,6 +33,9 @@
 					[sleep 1]]]
 				nil]]
   this]
+
+[defmetro resource [name args :rest body]
+  `[new resource [quote ,name] [funk ,args @body]]]
 
 [deftypefunk resource execute activate [:rest args]
   [let [[successful_activation nil]]

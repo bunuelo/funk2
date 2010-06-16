@@ -17,8 +17,9 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe          resource [frame] [fiber active_mutex active active_funk active_args result finished done]]
-[deftypeconstruct resource []
+[deframe          resource [frame] [name fiber active_mutex active active_funk active_args result finished done]]
+[deftypeconstruct resource [name]
+  [set this name         name]
   [set this active_mutex [new mutex]]
   [set this fiber        [fiber [funk []
 				      [while [not [get this done]]
@@ -26,7 +27,7 @@
 					    [prog [let [[active_funk [get this active_funk]]]
 						    [if active_funk
 							[set this result [apply active_funk [get this active_args]]]
-						      [format stdout '\nresource warning: active_funk is nil.']]]
+						      [format stdout '\nresource warning: active_funk is nil (name = ' [get this name] ').\n']]]
 						  [set this done t]]]
 					[sleep 1]]]
 				nil]]

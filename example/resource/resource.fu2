@@ -30,7 +30,7 @@
 							[set this result [apply active_funk [get this active_args]]]
 						      [format stdout '\nresource warning: active_funk is nil (name = ' [get this name] ').\n']]]
 						  [set this done t]]]
-					[sleep 1]]]
+					[millisleep 100]]]
 				nil]]
   this]
 
@@ -62,7 +62,7 @@
 		[set this done        nil]
 		[have [get this active_mutex] unlock]
 		[= finished t]]
-	[sleep 1]]]
+	[millisleep 100]]]
     result]]
 
 [deftypefunk resource execute call [:rest args]

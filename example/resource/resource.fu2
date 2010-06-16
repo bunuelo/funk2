@@ -50,17 +50,23 @@
       [error object_type `resource object_typefunk `activate error_type `resource-is-already-activated]]]]
 
 [deftypefunk resource execute finish []
-  [if [get this done]
-      [let [[result nil]]
-	[prog [have [get this active_mutex] lock]
-	      [=   result           [get this result]]
-	      [set this active      nil]
-	      [set this active_args nil]
-	      [set this result      nil]
-	      [set this done        nil]
-	      [have [get this active_mutex] unlock]]
-	result]
-    [error object_type `resource object_typefunk `finish error_type `resource-is-not-done]]]
+  [let [[finished nil]
+	[result   nil]]
+    [while [not finished]
+      [if [get this done]
+	  [prog [have [get this active_mutex] lock]
+		[=   result           [get this result]]
+		[set this active      nil]
+		[set this active_args nil]
+		[set this result      nil]
+		[set this done        nil]
+		[have [get this active_mutex] unlock]
+		[= finished t]]
+	[sleep 1]]]
+    result]]
 
+
+      
+    
 
 

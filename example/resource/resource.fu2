@@ -54,6 +54,7 @@
 							      [print 'fiber 12']
 							      [have active_mutex unlock]
 							      [print 'fiber 13']
+							      [print `[apply ,active_funk ,active_args]]
 							      [let [[result [apply active_funk active_args]]]
 								[print 'fiber 14']
 								[have active_mutex lock]

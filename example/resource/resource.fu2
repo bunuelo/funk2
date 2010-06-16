@@ -40,8 +40,6 @@
 							      [have active_mutex lock]
 							      [= active_args [get this active_args]]
 							      [have active_mutex unlock]
-							      [print 'fiber 13']
-							      [print `[apply ,active_funk ,active_args]]
 							      [let [[result [apply active_funk active_args]]]
 								[have active_mutex lock]
 								[set this result result]
@@ -96,12 +94,8 @@
     result]]
 
 [deftypefunk resource execute call [:rest args]
-  [print 'debug 0']
   [have-apply this activate args]
-  [print 'debug 1']
-  [let [[result [have this finish]]]
-    [print 'debug 2']
-    result]]
+  [have this finish]]
 
 
 

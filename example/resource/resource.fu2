@@ -17,6 +17,9 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+
+'resource'
+
 [deframe          resource [frame] [name fiber active_mutex active active_funk active_args result finished done]]
 [deftypeconstruct resource [name active_funk]
   [set this name         name]
@@ -99,6 +102,13 @@
 
 
 
+
+'agency'
+
+[deframe          agency [frame] [resources trace_graph]]
+[deftypeconstruct agency []
+  [set this trace_graph [new graph]]
+  this]
 
 
 

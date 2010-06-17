@@ -105,10 +105,21 @@
 
 'agency'
 
-[deframe          agency [frame] [resources trace_graph]]
+[deframe          agency [frame] [resources_frame trace_graph]]
 [deftypeconstruct agency []
-  [set this trace_graph [new graph]]
+  [set this resources_frame [frame]]
+  [set this trace_graph     [new graph]]
   this]
 
+[defmetro agency_resource [agency name args :rest body]
+  `[let [[agency ,agency]]
+     [resource ,name ,args
+	[let [[trace_graph     [get agency trace_graph]]
+	      [resources_frame [get agency resources_frame]]]
+	  [define-funk the-resource [metro [name]
+					   `[have resources_frame lookup [quote ,name]]]]
+	  @body]]]]
 
+
+		
 

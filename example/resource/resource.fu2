@@ -112,9 +112,9 @@
   this]
 
 [defmetro defresource [agency name args :rest body]
-  [print `[defresource agency ,name ,args]]
+  [print `[defresource ,agency ,name ,args]]
   `[let [[agency ,agency]]
-     [let [[resources_frame [get agency resources]]
+     [let [[resources_frame [get agency resources_frame]]
 	   [trace_graph     [get agency trace_graph]]]
        [define-funk the-resource [metro [name]
 					`[have resources_frame lookup [quote ,name]]]]

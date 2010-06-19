@@ -103,8 +103,6 @@
   [have this finish]]
 
 
-
-
 'agency'
 
 [deframe          agency [frame] [resources_frame trace_graph]]
@@ -121,36 +119,54 @@
   [let [[resource [get this resource name]]]
     [have-apply resource call `[,cause-outside_resource @args]]]]
 
-[defmetro defresource [agency name args :rest body]
-  [print `[defresource ,agency ,name ,args]]
-  `[let [[agency ,agency]]
-     [let [[resources_frame [get agency resources_frame]]
-	   [trace_graph     [get agency trace_graph]]]
-       [define-funk the-resource [metro [name]
-					`[have resources_frame lookup [quote ,name]]]]
-       [define-funk call [metro [name :rest args]
-				`[let [[resource [get agency resource [quote ,name]]]]
-				   [have-apply resource call `[,this ,resource @args]]]]]
-       [let [[resource [resource ,name [caller @args]
-				  [print 'debug 0 caller:']
-				  [print caller]
-				  [print 'debug 1 this:']
-				  [print this]
-				  [print 'debug 2 trace_graph:']
-				  [print trace_graph]
-				  [have trace_graph add_edge `called [get caller name] [get this name]]
-				  [print 'debug 3']
-				  @body]]]
-	 [have resources_frame add [quote ,name] resource]
-	 nil]]]]
+[defmetro defresource [agent agency_name name args :rest body]
+  [print `[defresource ,agency_name ,name ,args]]
+  `[let [[agent ,agent]]
+     [let [[agency [get agent agency [quote ,agency_name]]]]
+       [let [[resources_frame [get agency resources_frame]]
+	     [trace_graph     [get agency trace_graph]]]
+	 [define-funk the-resource [metro [name]
+					  `[have resources_frame lookup [quote ,name]]]]
+	 [define-funk call [metro [name :rest args]
+				  `[let [[resource [get agency resource [quote ,name]]]]
+				     [have-apply resource call `[,this ,resource @args]]]]]
+	 [let [[resource [resource ,name [caller @args]
+				    [let [[caller-name [get caller name]]
+					  [this-name   [get this   name]]]
+				      [have trace_graph add_edge `called caller-name this-name]
+				      @body]]]]
+	   [have resources_frame add [quote ,name] resource]
+	   nil]]]]]
 
-		
 
-[defunk test-agency []
-  [let [[a [new agency]]]
-    [defresource a test [x] [print x]]
-    [print a]
-    [cause-define cause-outside_resource [resource hiya [] [print 'hiya']]]
-    [have a call `test 'test']
-    ]]
+'agent'
+
+[deframe          agent [frame] [agencies_frame]]
+[deftypeconstruct agent []
+  [set this agencies_frame [frame]]
+  this]
+
+[deftypefunk agent get agency [name]
+  [have [get this agencies_frame] lookup name]]
+
+[defmetro defagency [agent name]
+  `[have [get ,agent agencies_frame] add [quote ,name] [new agency]]]
+
+
+'blockman'
+
+[deframe          blockman [frame] [agent]]
+[deftypeconstruct blockman []
+  [let [[agent [new agent]]]
+    [set this agent agent]
+    [defagency   agent physical]
+    [defresource agent physical move_to [position]
+      [format stdout '\n  move_to ' position]]
+    ]
+  this]
+
+
+[defunk test-blockman []
+  [let [[b [new blockman]]]
+    b]]
 

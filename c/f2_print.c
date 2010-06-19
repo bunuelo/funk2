@@ -189,7 +189,7 @@ void f2__write_pretty__slot_key_and_value(char* slot_name, int max_slot_name_len
   
   f2__write__ansi_color(cause, stream, print__ansi__symbol__key__foreground, use_ansi_colors, use_html);
   
-  if (stream) {raw__stream__writef(cause, stream, "%s", slot_name);} width += slot_name__length;a
+  if (stream) {raw__stream__writef(cause, stream, "%s", slot_name);} width += slot_name__length;
   if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {int i; for(i = 0; i < max_slot_name_length - slot_name__length + 1; i++) {f2__write__space(cause, stream, use_html); width ++; /*indent_space_num ++;*/}}
   if (recursion_depth == 0) {
     f2__write__ansi_color(cause, stream, print__ansi__end_recursion__foreground, use_ansi_colors, use_html);

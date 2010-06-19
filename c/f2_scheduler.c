@@ -180,9 +180,6 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
     }
     resume_gc();
   }
-  if (! critics) {
-    f2fiber__program_counter__set(fiber, cause, nil);
-  }
 }
 
 typedef enum scheduler_fast_loop_exit_reason_e {

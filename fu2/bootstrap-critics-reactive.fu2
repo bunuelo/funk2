@@ -69,8 +69,8 @@
 							     ,code]]]
 	 @body]]
 
-[defunk fiber-enable_reactive_critics [this]
+[defunk cause-enable_reactive_critics [this]
   [object-set this `critics &critic-reactive-primitive_response]]
 
-[boot-add_user_command `[fiber-enable_reactive_critics [this-fiber]]]
+[boot-add_user_command `[fiber-enable_reactive_critics [this-cause]]]
 

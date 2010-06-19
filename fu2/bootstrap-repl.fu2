@@ -479,11 +479,7 @@
      [while [not [or [get fiber is_complete] [get fiber paused]]]
        [millisleep 10]]
      [if [eq result `sheltered]
-	 [let [[bug [get fiber value]]]
-	   [if [is-type `bug bug]
-	       [let [[bug_frame [get bug frame]]]
-		 [have bug_frame add `fiber fiber]]]
-	   bug]]]]
+	 [get fiber value]]]]
 
 [defmetro cause-defunk [name args :rest body]
   `[have [this-cause] define-funk [quote ,name] [funk ,args @body]]]

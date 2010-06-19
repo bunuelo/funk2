@@ -359,20 +359,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	}	
 	//printf("\n  processor="); f2__print(cause, processor); fflush(stdout);
       } else {
-	f2__fiber__print(cause, nil, fiber);
-	printf("\nlarva found in fiber and fiber has no critics, so doing nothing."); fflush(stdout);
-	f2ptr larva = f2fiber__value(fiber, cause);
-	if (! raw__larva__is_type(cause, larva)) {
-	  printf("\n  larva is not a larva."); fflush(stdout);
-	} else {
-	  u64 raw_type = f2larva__larva_type(larva, cause);
-	  printf("\n  larva type=" u64__fstr, raw_type); fflush(stdout);
-	  if (raw_type == 23) {
-	    printf("\n  larva is symbol-undefined type"); fflush(stdout);
-	    printf(", and last symbol was: "); fflush(stdout);
-	    f2__fiber__print(nil, nil, __funk2.primobject__environment.environment__last_23_larva_symbol); fflush(stdout);
-	  }
-	}
+	//f2__fiber__print(cause, nil, fiber);
+	status("larva found in fiber and fiber has no critics, so doing nothing.");
       }
     }
     

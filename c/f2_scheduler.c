@@ -163,7 +163,7 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
   f2ptr larva = f2fiber__value(fiber, cause);
   f2fiber__paused__set(fiber, cause, __funk2.globalenv.true__symbol);
   f2ptr cause_reg = f2fiber__cause_reg(fiber, cause);
-  f2ptr critics   = f2cause__critics(cause_reg, cause);
+  f2ptr critics   = cause_reg ? f2cause__critics(cause_reg, cause) : nil;
   if (critics) {
     pause_gc();
     f2ptr bug = f2larva__bug(larva, cause);
@@ -332,7 +332,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     }
     
     if(need_to_launch_larva_handling_critic_fiber) {
-      f2ptr critics = f2fiber__critics(fiber, cause);
+      f2ptr cause_reg = f2fiber__cause_reg(fiber, cause);
+      f2ptr critics   = cause_reg ? f2cause__critics(cause_reg, cause) : nil;
       if (critics) {
 	f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
 	printf("\nlarva found in fiber and fiber has a critic, so launching critic fiber in serial."); fflush(stdout);

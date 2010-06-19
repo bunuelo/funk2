@@ -485,6 +485,12 @@
 		 [have bug_frame add `fiber fiber]]]
 	   bug]]]]
 
+[defmetro cause-defunk [name args :rest body]
+  `[have [this-cause] define-funk [quote ,name] [funk ,args @body]]]
+
+[defmetro cause-define [name value]
+  `[have [this-cause] define [quote ,name] ,value]]
+
 [defunk parcar [proc seq]
   'run mapcar commands in parallel'
   [let [[parcar-fibers [mapcar [funk [exp]

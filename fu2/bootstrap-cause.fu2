@@ -127,12 +127,6 @@
 	    @codes]]
 
 
-[defmetro cause-defunk [name args :rest body]
-  `[have [this-cause] define-funk [quote ,name] [funk ,args @body]]]
-
-[defmetro cause-define [name value]
-  `[have [this-cause] define [quote ,name] ,value]]
-
 [defunk test-tracers []
   [fiber &start-tracers nil]
   []]

@@ -149,6 +149,9 @@
 [deftypefunk agent get agency [name]
   [have [get this agencies_frame] lookup name]]
 
+[deftypefunk agent execute call [agency_name resource_name :rest args]
+  [have-apply [have [get [have [get this agencies_frame] lookup agency_name] resources_frame] lookup resource_name] call args]]
+
 [defmetro defagency [agent name]
   `[have [get ,agent agencies_frame] add [quote ,name] [new agency]]]
 
@@ -174,7 +177,7 @@
       [format stdout '\n  move_to ' position]]
     [defresource agent physical sense [position]
       [format stdout '\n  sense']
-      [have this add sensory_state [isis-call isis_world_client sense agent isis_agent_name]]
+      [have this add `sensory_state [isis-call isis_world_client sense agent isis_agent_name]]
       ]
     ]
   this]

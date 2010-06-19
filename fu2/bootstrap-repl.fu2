@@ -476,7 +476,7 @@
 	  [fiber  [fiber [funk []
 			       [set [this-cause] critics nil]
 			       [= result [prog @codes]]] nil]]]
-     [while [not [get fiber is_complete]]
+     [while [not [or [get fiber is_complete] [get fiber paused]]]
        [millisleep 10]]
      [if [eq result `sheltered]
 	 [let [[bug [get fiber value]]]

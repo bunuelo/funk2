@@ -337,8 +337,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
       f2ptr critics   = cause_reg ? f2cause__critics(cause_reg, cause) : nil;
       if (critics) {
 	f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
-	printf("\nlarva found in fiber and fiber has a critic, so launching critic fiber in serial."); fflush(stdout);
-	printf("\n  critic="); f2__fiber__print(cause, nil, critics); fflush(stdout);
+	status("larva found in fiber and fiber has a critic, so launching critic fiber in serial.");
+	//status("\n  critic="); f2__fiber__print(cause, nil, critics); fflush(stdout);
 	pause_gc();
 	f2ptr new_fiber = f2__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, cause), critics, f2cons__new(cause, fiber, nil));
 	resume_gc();

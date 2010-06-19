@@ -53,7 +53,6 @@
 		      '\n']
 	      [ansi-stream-reset stdout]]
       [prog [ansi-stream-foreground stdout 10]
-	    [fiber-enable_reactive_critics [this-fiber]]
 	    [format stdout
 		    '\n' 'Beginning new user debug repl now.']
 	    [ansi-stream-reset stdout]

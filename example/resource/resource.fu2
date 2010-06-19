@@ -155,8 +155,10 @@
 
 'blockman'
 
-[deframe          blockman [frame] [agent]]
-[deftypeconstruct blockman []
+[deframe          blockman [frame] [isis_world_client isis_agent_name agent]]
+[deftypeconstruct blockman [isis_world_client isis_agent_name]
+  [set this isis_world_client isis_world_client]
+  [set this isis_agent_name   isis_agent_name]
   [let [[agent [new agent]]]
     [set this agent agent]
     [defagency   agent physical]
@@ -170,11 +172,16 @@
       [format stdout '\n  move_backward']]
     [defresource agent physical move_to [position]
       [format stdout '\n  move_to ' position]]
+    [defresource agent physical sense [position]
+      [format stdout '\n  sense']
+      [have this add sensory_state [isis-call isis_world_client sense agent isis_agent_name]]
+      ]
     ]
   this]
 
 
 [defunk test-blockman []
-  [let [[b [new blockman]]]
-    b]]
+  [let [[isis_world_client [new isis_world_client '18.85.58.18']]]
+    [let [[ralph [new blockman isis_world_client 'Ralph']]]
+      ralph]]]
 

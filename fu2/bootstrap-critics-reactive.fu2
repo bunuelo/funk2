@@ -51,10 +51,8 @@
 		      '\n' 'Bug reported as handled.  Exiting reactive critic fiber.'
 		      '\n']
 	      [ansi-stream-reset stdout]]
-      [prog `[ansi-stream-foreground stdout 10]
-	    `[format stdout
-		     '\n' 'Beginning new user debug repl now.']
-	    [ansi-stream-reset stdout]
+      [prog [ansi-stream-reset stdout]
+	    [cause-define bug value]
 	    [repl]]]]]
 
 [defunk critic-reactive-primitive_response [fiber]

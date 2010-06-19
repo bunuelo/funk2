@@ -24,7 +24,7 @@
 
 // cause
 
-def_primobject_17_slot(cause,
+def_primobject_18_slot(cause,
 		       fibers_mutex,
 		       fibers,
 		       frame,
@@ -41,7 +41,8 @@ def_primobject_17_slot(cause,
 		       write_other_memory_callbacks,
 		       event_graph_mutex,
 		       event_graph,
-		       event_graph_last_event);
+		       event_graph_last_event,
+		       critics);
 
 f2ptr f2__cause__new(f2ptr cause,
 		     f2ptr allocate_traced_arrays,
@@ -54,7 +55,8 @@ f2ptr f2__cause__new(f2ptr cause,
 		     f2ptr bytecode_endfunk_callbacks,
 		     f2ptr complete_funk_callbacks,
 		     f2ptr read_other_memory_callbacks,
-		     f2ptr write_other_memory_callbacks) {
+		     f2ptr write_other_memory_callbacks,
+		     f2ptr critics) {
   f2ptr fibers_mutex           = f2mutex__new(cause);
   f2ptr fibers                 = nil;
   f2ptr frame                  = f2__frame__new(cause, nil);
@@ -78,11 +80,12 @@ f2ptr f2__cause__new(f2ptr cause,
 					      write_other_memory_callbacks,
 					      event_graph_mutex,
 					      event_graph,
-					      event_graph_last_event);
+					      event_graph_last_event,
+					      critics);
   //printf("\nnew cause: " u64__fstr ".\n", this); fflush(stdout);
   return this;
 }
-def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil));
+def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil));
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   if (source && (! raw__cause__is_type(cause, source))) {
@@ -99,6 +102,7 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   f2ptr complete_funk_callbacks      = nil;
   f2ptr read_other_memory_callbacks  = nil;
   f2ptr write_other_memory_callbacks = nil;
+  f2ptr critics                      = nil;
   if (source) {
     allocate_traced_arrays       = f2__cause__allocate_traced_arrays(      cause, source);
     bytecode_tracing_on          = f2__cause__bytecode_tracing_on(         cause, source);
@@ -111,6 +115,7 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
     complete_funk_callbacks      = f2__cause__complete_funk_callbacks(     cause, source);
     read_other_memory_callbacks  = f2__cause__read_other_memory_callbacks( cause, source);;
     write_other_memory_callbacks = f2__cause__write_other_memory_callbacks(cause, source);;
+    critics                      = f2__cause__critics(                     cause, source);;
   }
   return f2__cause__new(cause,
 			allocate_traced_arrays,
@@ -123,7 +128,8 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
 			bytecode_endfunk_callbacks,
 			complete_funk_callbacks,
 			read_other_memory_callbacks,
-			write_other_memory_callbacks);
+			write_other_memory_callbacks,
+			critics);
 }
 
 f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {

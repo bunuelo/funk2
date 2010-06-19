@@ -62,7 +62,9 @@
   this]
 
 [defmetro resource [name args :rest body]
-  `[new resource [quote ,name] [funk ,args @body]]]
+  `[let [[this [new resource [quote ,name] nil]]]
+     [set this active_funk [funk ,args @body]]
+     this]]
 
 [deftypefunk resource execute activate [:rest args]
   [let [[successful_activation nil]
@@ -130,12 +132,25 @@
 				`[let [[resource [get agency resource [quote ,name]]]]
 				   [have-apply resource call `[,this ,resource @args]]]]]
        [let [[resource [resource ,name [caller @args]
-				  [print 'debug 0']
+				  [print 'debug 0 caller:']
+				  [print caller]
+				  [print 'debug 1 this:']
+				  [print this]
+				  [print 'debug 2 trace_graph:']
+				  [print trace_graph]
 				  [have trace_graph add_edge `called [get caller name] [get this name]]
-				  [print 'debug 1']
+				  [print 'debug 3']
 				  @body]]]
 	 [have resources_frame add [quote ,name] resource]
 	 nil]]]]
 
 		
+
+[defunk test-agency []
+  [let [[a [new agency]]]
+    [defresource a test [x] [print x]]
+    [print a]
+    [cause-define cause-outside_resource [resource hiya [] [print 'hiya']]]
+    [have a call `test 'test']
+    ]]
 

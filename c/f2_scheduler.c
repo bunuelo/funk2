@@ -164,7 +164,7 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
   f2fiber__paused__set(fiber, cause, __funk2.globalenv.true__symbol);
   f2ptr cause_reg = f2fiber__cause_reg(fiber, cause);
   f2ptr critics   = cause_reg ? f2cause__critics(cause_reg, cause) : nil;
-  if (critics) {
+  {
     pause_gc();
     f2ptr bug = f2larva__bug(larva, cause);
     if (! bug) {
@@ -173,13 +173,14 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
       bug = f2__bug__new(cause, f2integer__new(cause, f2larva__larva_type(larva, cause)), f2__frame__new(cause, nil));
     }
     if (raw__larva__is_type(cause, bug)) {
-      printf("\ntranslated larve into larva."); fflush(stdout);
+      printf("\nwhoops, translated larva into larva!"); fflush(stdout);
       f2fiber__value__set(fiber, cause, nil);
     } else {
       f2fiber__value__set(fiber, cause, bug);
     }
     resume_gc();
-  } else {
+  }
+  if (! critics) {
     f2fiber__program_counter__set(fiber, cause, nil);
   }
 }

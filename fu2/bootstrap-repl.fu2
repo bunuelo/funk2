@@ -473,10 +473,13 @@
 
 [defmetro shelter [:rest codes]
   `[let* [[result `sheltered]
-	  [fiber  [fiber [funk [] [= result [prog @codes]]] nil]]]
+	  [fiber  [fiber [funk []
+			       [set [this-cause] critics nil]
+			       [= result [prog @codes]]] nil]]]
      [while [not [get fiber is_complete]]
        [millisleep 10]]
-     result]]
+     [if [eq result `sheltered]
+	 [get fiber value]]]]
 
 [defunk parcar [proc seq]
   'run mapcar commands in parallel'

@@ -1145,7 +1145,7 @@ declare_primobject_4_slot(bytecode, command, arg0, arg1, arg2);
 
 // fiber
 
-declare_primobject_20_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, critics, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args, execution_nanoseconds);
+declare_primobject_19_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args, execution_nanoseconds);
 
 f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args);
 
@@ -1457,7 +1457,7 @@ declare_object_type_4_slot(bytecode, command, arg0, arg1, arg2, );
 
 // fiber
 
-declare_object_type_20_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, critics, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args, execution_nanoseconds,
+declare_object_type_19_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args, execution_nanoseconds,
 			    f2ptr do_sleep_until_time__symbol;   // execute
 			    f2ptr do_sleep_until_time__funk;
 			    f2ptr sleep_for_nanoseconds__symbol; // execute

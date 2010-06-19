@@ -31,7 +31,6 @@
 
 [defunk critic-reactive-unknown_bug [fiber]
   [ansi-stream-foreground stdout 10]
-  [fiber-print_backtrace fiber]
   [let [[value       [get fiber value]]
 	[bug_handled nil]]
     [format stdout '\n' '  bug: ' value]
@@ -52,9 +51,9 @@
 		      '\n' 'Bug reported as handled.  Exiting reactive critic fiber.'
 		      '\n']
 	      [ansi-stream-reset stdout]]
-      [prog [ansi-stream-foreground stdout 10]
-	    [format stdout
-		    '\n' 'Beginning new user debug repl now.']
+      [prog `[ansi-stream-foreground stdout 10]
+	    `[format stdout
+		     '\n' 'Beginning new user debug repl now.']
 	    [ansi-stream-reset stdout]
 	    [repl]]]]]
 

@@ -23,11 +23,12 @@
 
 f2ptr f2__argument_type_check_failure__larva__new(f2ptr cause, f2ptr value) {return f2larva__new(cause, 1, nil);}
 
-f2ptr f2__argument_number_check_failure__larva__new(f2ptr cause, f2ptr funk_symbol, int min_arg_num, f2ptr args) {
+f2ptr f2__argument_number_check_failure__larva__new(f2ptr cause, f2ptr funk_symbol, int correct_arg_num, f2ptr args) {
   f2ptr bug_frame = f2__frame__new(cause, nil);
-  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_symbol"), funk_symbol);
-  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "min_arg_num"), f2integer__new(cause, min_arg_num));
-  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "args"),        args);
+  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),        new__symbol(cause, "argument_number_check_failure"));
+  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_symbol"),     funk_symbol);
+  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "correct_arg_num"), f2integer__new(cause, correct_arg_num));
+  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "args"),            args);
   return f2larva__new(cause, 33, f2__bug__new(cause, f2integer__new(cause, 33), bug_frame));
 }
 

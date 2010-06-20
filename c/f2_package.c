@@ -21,6 +21,22 @@
 
 #include "funk2.h"
 
+// source
+
+def_primobject_1_slot(source,
+		      code);
+
+f2ptr f2__source__new(f2ptr cause, f2ptr code) {return f2source__new(cause, code);}
+def_pcfunk1(source__new, code, return f2__package__new(this_cause, code));
+
+
+
+f2ptr f2source__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2source__primobject_type__new(cause);
+  return this;
+}
+
+
 // package
 
 def_primobject_1_slot(package,
@@ -28,6 +44,8 @@ def_primobject_1_slot(package,
 
 f2ptr f2__package__new(f2ptr cause, f2ptr dependencies) {return f2package__new(cause, dependencies);}
 def_pcfunk1(package__new, dependencies, return f2__package__new(this_cause, dependencies));
+
+
 
 f2ptr f2package__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2package__primobject_type__new(cause);
@@ -38,6 +56,7 @@ f2ptr f2package__primobject_type__new_aux(f2ptr cause) {
 
 void f2__package__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
+  __source__symbol  = new__symbol(cause, "source");
   __package__symbol = new__symbol(cause, "package");
 }
 
@@ -47,6 +66,11 @@ void f2__package__initialize() {
   f2ptr cause = initial_cause();
   
   //--
+  
+  // source
+  
+  initialize_primobject_1_slot(source,
+			       code);
   
   // package
   

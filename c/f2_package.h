@@ -24,6 +24,13 @@
 
 #include "f2_primobjects.h"
 
+// source
+
+typedef struct funk2_object_type__source__slot_s funk2_object_type__source__slot_t;
+declare_object_type_1_slot(source,
+			   code,
+			   );
+
 // package
 
 typedef struct funk2_object_type__package__slot_s funk2_object_type__package__slot_t;
@@ -38,6 +45,15 @@ declare_object_type_1_slot(package,
 #define F2__PACKAGE__H
 
 #include "f2_primobjects.h"
+
+// source
+
+declare_primobject_1_slot(source,
+			  code
+			  );
+
+f2ptr f2source__primobject_type__new_aux(f2ptr cause);
+
 
 // package
 

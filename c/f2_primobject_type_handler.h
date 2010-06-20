@@ -126,6 +126,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__largeinteger__slot_t           primobject_type_largeinteger;
   funk2_object_type__redblacktree__slot_t           primobject_type_redblacktree;
   funk2_object_type__redblacktree_node__slot_t      primobject_type_redblacktree_node;
+  funk2_object_type__source__slot_t                 primobject_type_source;
   funk2_object_type__package__slot_t                primobject_type_package;
 };
 

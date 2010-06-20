@@ -163,7 +163,6 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
   f2ptr larva = f2fiber__value(fiber, cause);
   f2fiber__paused__set(fiber, cause, __funk2.globalenv.true__symbol);
   f2ptr cause_reg = f2fiber__cause_reg(fiber, cause);
-  f2ptr critics   = cause_reg ? f2cause__critics(cause_reg, cause) : nil;
   {
     pause_gc();
     f2ptr bug = f2larva__bug(larva, cause);

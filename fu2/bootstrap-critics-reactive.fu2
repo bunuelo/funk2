@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2010 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,8 +15,7 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
 [defunk critic-reactive-integer_type_bug [fiber bug]
   [ansi-stream-reset stdout]
@@ -33,7 +31,7 @@
   [ansi-stream-foreground stdout 10]
   [let [[value       [get fiber value]]
 	[bug_handled nil]]
-    [format stdout '\n' '  bug: ' value]
+    [print value]
     [if [is-type `bug value]
 	[let* [[bug  value]
 	       [type [object-get bug `bug_type]]]

@@ -39,6 +39,7 @@
 #include "f2_perception_lattice.h"
 #include "f2_primobject__largeinteger.h"
 #include "f2_primobject__redblacktree.h"
+#include "f2_package.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;
@@ -125,6 +126,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__largeinteger__slot_t           primobject_type_largeinteger;
   funk2_object_type__redblacktree__slot_t           primobject_type_redblacktree;
   funk2_object_type__redblacktree_node__slot_t      primobject_type_redblacktree_node;
+  funk2_object_type__package__slot_t                primobject_type_package;
 };
 
 // **

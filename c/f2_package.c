@@ -27,7 +27,7 @@ def_primobject_1_slot(source,
 		      code);
 
 f2ptr f2__source__new(f2ptr cause, f2ptr code) {return f2source__new(cause, code);}
-def_pcfunk1(source__new, code, return f2__package__new(this_cause, code));
+def_pcfunk1(source__new, code, return f2__source__new(this_cause, code));
 
 
 

@@ -29,7 +29,11 @@ def_primobject_1_slot(source,
 f2ptr f2__source__new(f2ptr cause, f2ptr code) {return f2source__new(cause, code);}
 def_pcfunk1(source__new, code, return f2__source__new(this_cause, code));
 
-
+f2ptr f2__source__load(f2ptr cause, f2ptr filename) {
+  f2ptr code = f2__string__load(cause, filename);
+  return f2__source__new(cause, code);
+}
+def_pcfunk1(source__load, filename, return f2__source__new_from_file(this_cause, filename));
 
 f2ptr f2source__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2source__primobject_type__new(cause);
@@ -71,6 +75,8 @@ void f2__package__initialize() {
   
   initialize_primobject_1_slot(source,
 			       code);
+  
+  f2__primcfunk__init__1(source__load, filename, "load source code from a file named by filename.");
   
   // package
   

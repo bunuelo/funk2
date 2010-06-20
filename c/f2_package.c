@@ -33,7 +33,7 @@ f2ptr f2__source__load(f2ptr cause, f2ptr filename) {
   f2ptr code = f2__string__load(cause, filename);
   return f2__source__new(cause, code);
 }
-def_pcfunk1(source__load, filename, return f2__source__new_from_file(this_cause, filename));
+def_pcfunk1(source__load, filename, return f2__source__load(this_cause, filename));
 
 f2ptr f2source__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2source__primobject_type__new(cause);

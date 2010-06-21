@@ -72,9 +72,8 @@ f2ptr f2package__primobject_type__new_aux(f2ptr cause) {
 }
 
 
-f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname, f2ptr extension) {
-  if ((! raw__string__is_type(cause, pathname)) ||
-      (! raw__string__is_type(cause, extension))) {
+f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
+  if (! raw__string__is_type(cause, pathname)) {
     return f2larva__new(cause, 1, nil);
   }
   u64 pathname__length = raw__string__length(cause, pathname);
@@ -82,12 +81,7 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
   raw__string__str_copy(cause, pathname, pathname__str);
   pathname__str[pathname__length] = 0;
   
-  u64 extension__length = raw__string__length(cause, extension);
-  u8* extension__str    = (u8*)alloca(extension__length + 1);
-  raw__string__str_copy(cause, extension, extension__str);
-  extension__str[extension__length] = 0;
-  
-  f2ptr matching_filenames = nil;
+  f2ptr filenames = nil;
   {
     DIR* dirp = opendir((char*)pathname__str);
     if (dirp == NULL) {
@@ -113,16 +107,45 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
     do {
       directory_entry = readdir(dirp);
       if (directory_entry) {
-	char* d_name     = directory_entry->d_name;
-	char* rindex_ptr = rindex(d_name, '.');
-	if ((rindex_ptr != NULL) && (strcmp((char*)extension__str, rindex_ptr + 1) == 0)) {
-	  f2ptr matching_filename = new__string(cause, d_name);
-	  matching_filenames = f2cons__new(cause, matching_filename, matching_filenames);
-	}
+	f2ptr filename = new__string(cause, directory_entry->d_name);
+	filenames = f2cons__new(cause, filename, filenames);
       }
     } while (directory_entry);
     closedir(dirp);
-    
+  }
+  return filenames;
+}
+def_pcfunk1(pathname__scan_for_filenames, pathname, return f2__pathname__scan_for_filenames(this_cause, pathname));
+
+f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname, f2ptr extension) {
+  if (! raw__string__is_type(cause, extension)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  f2ptr filenames = f2__pathname__scan_for_filenames(cause, pathname);
+  
+  u64 extension__length = raw__string__length(cause, extension);
+  u8* extension__str    = (u8*)alloca(extension__length + 1);
+  raw__string__str_copy(cause, extension, extension__str);
+  extension__str[extension__length] = 0;
+  
+  f2ptr matching_filenames = nil;
+  {
+    f2ptr iter = filenames;
+    while (iter) {
+      f2ptr filename = f2__cons__car(cause, iter);
+      
+      u64 filename__length = raw__string__length(cause, filename);
+      u8* filename__str    = (u8*)alloca(filename__length + 1);
+      raw__string__str_copy(cause, filename, filename__str);
+      filename__str[filename__length] = 0;
+      
+      char* rindex_ptr = rindex(filename__str, '.');
+      if ((rindex_ptr != NULL) && (strcmp((char*)extension__str, rindex_ptr + 1) == 0)) {
+	f2ptr matching_filename = filename;
+	matching_filenames = f2cons__new(cause, matching_filename, matching_filenames);
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
   }
   return matching_filenames;
 }
@@ -164,6 +187,7 @@ void f2__package__initialize() {
   
   // pathname
   
+  f2__primcfunk__init__1(pathname__scan_for_filenames,              pathname,            "Scans a directory name and returns all filenames.");
   f2__primcfunk__init__2(pathname__scan_for_filenames_by_extension, pathname, extension, "Scans a directory name and returns all filenames that match the given extension.");
   
 }

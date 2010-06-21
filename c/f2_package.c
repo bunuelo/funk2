@@ -23,11 +23,11 @@
 
 // source_expression
 
-def_primobject_5_slot(source_expression,
-		      body, first_line, last_line, first_column, last_column);
+def_primobject_6_slot(source_expression,
+		      body, first_line, last_line, first_column, last_column, subexpressions);
 
-f2ptr f2__source_expression__new(f2ptr cause, f2ptr body, f2ptr first_line, f2ptr last_line, f2ptr first_column, f2ptr last_column) {return f2source_expression__new(cause, body, first_line, last_line, first_column, last_column);}
-def_pcfunk5(source_expression__new, body, first_line, last_line, first_column, last_column, return f2__source_expression__new(this_cause, body, first_line, last_line, first_column, last_column));
+f2ptr f2__source_expression__new(f2ptr cause, f2ptr body, f2ptr first_line, f2ptr last_line, f2ptr first_column, f2ptr last_column, f2ptr subexpressions) {return f2source_expression__new(cause, body, first_line, last_line, first_column, last_column, subexpressions);}
+def_pcfunk6(source_expression__new, body, first_line, last_line, first_column, last_column, subexpressions, return f2__source_expression__new(this_cause, body, first_line, last_line, first_column, last_column, subexpressions));
 
 f2ptr f2source_expression__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2source_expression__primobject_type__new(cause);
@@ -88,8 +88,8 @@ void f2__package__initialize() {
   
   // source_expression
   
-  initialize_primobject_5_slot(source_expression,
-			       body, first_line, last_line, first_column, last_column);
+  initialize_primobject_6_slot(source_expression,
+			       body, first_line, last_line, first_column, last_column, subexpressions);
   
   // source
   

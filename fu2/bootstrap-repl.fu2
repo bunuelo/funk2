@@ -724,6 +724,9 @@
 [defunk error-new [:rest slot_value_pairs]
   [new larva 34 [new bug 34 [new-apply frame slot_value_pairs]]]]
 
+[defunk bug [bug]
+  [new larva [get bug bug_type] bug]]
+
 [defmetro list [:rest elements] `[new list @elements]]
 
 [defmetro length [x] `[get ,x length]]

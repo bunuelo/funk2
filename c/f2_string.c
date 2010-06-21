@@ -346,7 +346,11 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
   filename__str[filename__length] = 0;
   int fd = open((char*)filename__str, O_RDONLY);
   if (fd == -1) {
-    return f2larva__new(cause, 90, nil);
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_open_file_for_reading"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"), new__symbol(cause, "string-load"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "filename"), filename);
+    return f2larva__new(cause, 90, bug_frame);
   }
   u64 file__length = lseek(fd, 0, SEEK_END);
   lseek(fd, 0, SEEK_SET);
@@ -355,7 +359,15 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
   if (read_length != file__length) {
     printf("\nread_length=" u64__fstr ", file__length=" u64__fstr "\n", read_length, file__length);
     free(file__str);
-    return f2larva__new(cause, 91, nil);
+    {
+      f2ptr bug_frame = f2__frame__new(cause, nil);
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),    new__symbol(cause, "could_not_read_complete_file"));
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),    new__symbol(cause, "string-load"));
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "filename"),    filename);
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "read_length"), f2integer__new(cause, read_length));
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "file_length"), f2integer__new(cause, file__length));
+      return f2larva__new(cause, 91, bug_frame);
+    }
   }
   f2ptr new_string = f2string__new(cause, file__length, file__str);
   free(file__str);

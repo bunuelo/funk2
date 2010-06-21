@@ -55,27 +55,18 @@
 	      [source-eval [source-load filename]]]
 	filenames]]
 
-`[old-code-being converted to f2_package.[ch]
-		 [deftypefunk symbol get is-defined [] [not [is-type `bug [shelter [eval this]]]]]
-		 
-		 [globalize packages_frame [frame]]
-		 [globalize packages_search_path `['./example/resource/'
-						   './example/isis_world/']]
-		 
-		 [deframe          package [frame] [name dependencies]]
-		 [deftypeconstruct package [name dependencies]
-		   [set this name         name]
-		   [set this dependencies dependencies]
-		   this]
-		 
-		 [defmetro defpackage [name :rest dependencies]
-		   `[have packages_frame add [quote ,name] [new package [quote ,name] [quote ,`[nil @dependencies]]]]]
-		 
-		 [defmetro package [name]
-		   `[have packages_frame lookup [quote ,name]]]
-		 
-		 [defmetro package-defined [name]
-		   `[not [null [package ,name]]]]
-		 
-		 ]
+[deftypefunk symbol get is-defined [] [not [is-type `bug [shelter [eval this]]]]]
+
+[globalize packages_frame [frame]]
+[globalize packages_search_path `['./example/resource/'
+				  './example/isis_world/']]
+
+[defmetro defpackage [name :rest dependencies]
+  `[have packages_frame add [quote ,name] [new package [quote ,name] [quote [conslist @dependencies]]]]]
+
+[defmetro package [name]
+  `[have packages_frame lookup [quote ,name]]]
+
+[defmetro package-defined [name]
+  `[not [null [package ,name]]]]
 

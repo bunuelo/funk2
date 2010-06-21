@@ -77,19 +77,19 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
       (! raw__string__is_type(cause, extension))) {
     return f2larva__new(cause, 1, nil);
   }
-  u64   pathname__length = raw__string__length(cause, pathname);
-  char* pathname__str    = (char*)alloca(pathname__length + 1);
+  u64 pathname__length = raw__string__length(cause, pathname);
+  u8* pathname__str    = (u8*)alloca(pathname__length + 1);
   raw__string__str_copy(cause, pathname, pathname__str);
   pathname__str[pathname__length] = 0;
   
-  u64   extension__length = raw__string__length(cause, extension);
-  char* extension__str    = (char*)alloca(extension__length + 1);
+  u64 extension__length = raw__string__length(cause, extension);
+  u8* extension__str    = (u8*)alloca(extension__length + 1);
   raw__string__str_copy(cause, extension, extension__str);
   extension__str[extension__length] = 0;
   
   f2ptr matching_filenames = nil;
   {
-    DIR* dirp = opendir(pathname__str);
+    DIR* dirp = opendir((char*)pathname__str);
     if (dirp == NULL) {
       f2ptr bug_frame = f2__frame__new(cause, nil);
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "pathname-scan_for_filenames_by_extension"));
@@ -115,7 +115,7 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
       if (directory_entry) {
 	char* d_name     = directory_entry->d_name;
 	char* rindex_ptr = rindex(d_name, '.');
-	if ((rindex_ptr != NULL) && (strcmp(extension__str, rindex_ptr + 1) == 0)) {
+	if ((rindex_ptr != NULL) && (strcmp((char*)extension__str, rindex_ptr + 1) == 0)) {
 	  f2ptr matching_filename = new__string(cause, d_name);
 	  matching_filenames = f2cons__new(cause, matching_filename, matching_filenames);
 	}

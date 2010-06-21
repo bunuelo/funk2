@@ -89,7 +89,6 @@ f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "pathname-scan_for_filenames_by_extension"));
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "could_not_open_directory"));
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "pathname"),  pathname);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "extension"), extension);
       char* errno_str = "unrecognized error number.";
       switch(errno) {
       case EACCES:  errno_str = "Permission denied.";                                    break;

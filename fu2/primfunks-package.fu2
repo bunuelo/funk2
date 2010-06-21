@@ -19,3 +19,5 @@
 
 [globalize-funk source-load &primfunk:source__load]
 
+[globalize-funk pathname-scan_for_filenames_by_extension &primfunk:pathname__scan_for_filenames_by_extension]
+

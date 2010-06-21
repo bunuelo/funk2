@@ -37,8 +37,9 @@
   "Keymap for Funk major mode")
 
 (add-to-list 'auto-mode-alist '("\\.funk\\'" . funk-mode))
-(add-to-list 'auto-mode-alist '("\\.fu\\'" . funk-mode))
-(add-to-list 'auto-mode-alist '("\\.fu2\\'" . funk-mode))
+(add-to-list 'auto-mode-alist '("\\.fu\\'"   . funk-mode))
+(add-to-list 'auto-mode-alist '("\\.fu2\\'"  . funk-mode))
+(add-to-list 'auto-mode-alist '("\\.fpkg\\'" . funk-mode))
 
 (add-to-list 'interpreter-mode-alist '("funk" . funk-mode))
 

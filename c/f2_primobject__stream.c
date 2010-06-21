@@ -251,7 +251,7 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
     f2__stream__column_number__set(cause, this, f2integer__new(cause, 1));
   } else {
     f2ptr column_num    = f2__stream__column_number(cause, this);
-    u64   column_num__i = f2integer__i(line_num, cause);
+    u64   column_num__i = f2integer__i(column_num, cause);
     f2__stream__column_number__set(cause, this, f2integer__new(cause, column_num__i + 1));
   }
   return character;

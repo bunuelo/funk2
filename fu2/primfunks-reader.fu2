@@ -21,6 +21,6 @@
 [globalize-funk exp-contains_cdr_comma               &primfunk:exp__contains_cdr_comma]
 [globalize-funk exp-contains_cdr_comma_at_this_level &primfunk:exp__contains_cdr_comma_at_this_level]
 [globalize-funk exp-comma_filter_backquoted          &primfunk:exp__comma_filter_backquoted]
-[globalize-funk stream-read_whitespace               &primfunk:stream__read_whitespace]
+[globalize-funk stream-skip_whitespace               &primfunk:stream__skip_whitespace]
 [globalize-funk stream-try_read                      &primfunk:stream__try_read]
 

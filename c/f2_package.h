@@ -56,7 +56,7 @@ declare_object_type_1_slot(package,
 // source_expression
 
 declare_primobject_6_slot(source_expression,
-			  body, first_line, last_line, first_column, last_column, subexpressions,
+			  body, first_line, last_line, first_column, last_column, subexpressions
 			  );
 
 f2ptr f2source_expression__primobject_type__new_aux(f2ptr cause);

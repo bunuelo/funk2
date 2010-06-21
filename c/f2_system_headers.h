@@ -56,6 +56,7 @@
 
 #include <assert.h>
 #include <arpa/inet.h>
+#include <dirent.h>
 #ifdef F2__DLFCN__SUPPORTED
 #  include <dlfcn.h>
 #endif

@@ -138,7 +138,7 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
       raw__string__str_copy(cause, filename, filename__str);
       filename__str[filename__length] = 0;
       
-      char* rindex_ptr = rindex(filename__str, '.');
+      char* rindex_ptr = rindex((char*)filename__str, '.');
       if ((rindex_ptr != NULL) && (strcmp((char*)extension__str, rindex_ptr + 1) == 0)) {
 	f2ptr matching_filename = filename;
 	matching_filenames = f2cons__new(cause, matching_filename, matching_filenames);

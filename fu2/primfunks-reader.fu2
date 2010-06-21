@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2008 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,12 +15,12 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
 [globalize-funk exp-contains_comma                   &primfunk:exp__contains_comma]
 [globalize-funk exp-contains_cdr_comma               &primfunk:exp__contains_cdr_comma]
 [globalize-funk exp-contains_cdr_comma_at_this_level &primfunk:exp__contains_cdr_comma_at_this_level]
 [globalize-funk exp-comma_filter_backquoted          &primfunk:exp__comma_filter_backquoted]
+[globalize-funk stream-read_whitespace               &primfunk:stream__read_whitespace]
 [globalize-funk stream-try_read                      &primfunk:stream__try_read]
 

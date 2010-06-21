@@ -25,14 +25,14 @@
 // stream
 
 typedef struct funk2_object_type__stream__slot_s funk2_object_type__stream__slot_t;
-declare_object_type_9_slot(stream, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number,
-			   f2ptr try_read_character__symbol;
-			   f2ptr try_read_character__funk;
-			   f2ptr rewind__symbol;
-			   f2ptr rewind__funk;
-			   f2ptr rewind_to_length__symbol;
-			   f2ptr rewind_to_length__funk;
-			   );
+declare_object_type_10_slot(stream, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number,
+			    f2ptr try_read_character__symbol;
+			    f2ptr try_read_character__funk;
+			    f2ptr rewind__symbol;
+			    f2ptr rewind__funk;
+			    f2ptr rewind_to_length__symbol;
+			    f2ptr rewind_to_length__funk;
+			    );
 
 #endif // F2__PRIMOBJECT__STREAM__TYPES__H
 
@@ -43,7 +43,7 @@ declare_object_type_9_slot(stream, stream_type, ungetc_stack, rewind_stack, rewi
 
 // stream
 
-declare_primobject_9_slot(stream, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number);
+declare_primobject_10_slot(stream, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number);
 
 boolean_t raw__file_stream__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__file_stream__is_type(f2ptr cause, f2ptr this);

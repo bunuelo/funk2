@@ -23,14 +23,14 @@
 
 // stream
 
-def_primobject_9_slot(stream, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number);
+def_primobject_10_slot(stream, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number);
 
 f2ptr __file_stream__symbol        = -1;
 f2ptr __string_stream__symbol      = -1;
 f2ptr __text_window_stream__symbol = -1;
 
 f2ptr f2__stream__new(f2ptr cause, f2ptr stream_type, f2ptr ungetc_stack, f2ptr rewind_stack, f2ptr rewindable, f2ptr rewind_length, f2ptr file_descriptor, f2ptr string, f2ptr index) {
-  return f2stream__new(cause, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, f2integer__new(cause, 1));
+  return f2stream__new(cause, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, f2integer__new(cause, 1), f2integer__new(cause, 1));
 }
 def_pcfunk8(stream__new, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, return f2__stream__new(this_cause, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index));
 
@@ -248,6 +248,11 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
     f2ptr line_num    = f2__stream__line_number(cause, this);
     u64   line_num__i = f2integer__i(line_num, cause);
     f2__stream__line_number__set(cause, this, f2integer__new(cause, line_num__i + 1));
+    f2__stream__column_number__set(cause, this, f2integer__new(cause, 1));
+  } else {
+    f2ptr column_num    = f2__stream__column_number(cause, this);
+    u64   column_num__i = f2integer__i(line_num, cause);
+    f2__stream__column_number__set(cause, this, f2integer__new(cause, column_num__i + 1));
   }
   return character;
 }
@@ -295,6 +300,26 @@ f2ptr f2__stream__rewind(f2ptr cause, f2ptr this) {
     f2ptr line_num    = f2__stream__line_number(cause, this);
     u64   line_num__i = f2integer__i(line_num, cause);
     f2__stream__line_number__set(cause, this, f2integer__new(cause, line_num__i - 1));
+    {
+      f2ptr rewind_stack = f2stream__rewind_stack(this, cause);
+      int column_num = 1;
+      {
+	f2ptr iter = rewind_stack;
+	while (iter) {
+	  f2ptr rewind_character = f2__cons__car(cause, iter);
+	  if (raw__eq(cause, rewind_character, __funk2.reader.char__newline)) {
+	    break;
+	  }
+	  column_num ++;
+	  iter = f2__cons__cdr(cause, iter);
+	}
+      }
+      f2__stream__column_number__set(cause, this, f2integer__new(cause, column_num));
+    }
+  } else {
+    f2ptr column_num    = f2__stream__column_number(cause, this);
+    u64   column_num__i = f2integer__i(column_num, cause);
+    f2__stream__column_number__set(cause, this, f2integer__new(cause, column_num__i - 1));
   }
   return character;
 }
@@ -358,7 +383,7 @@ void f2__primobject__stream__initialize() {
   
   // stream
   
-  initialize_primobject_9_slot(stream, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number);
+  initialize_primobject_10_slot(stream, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number);
   
   {char* symbol_str = "try_read_character"; __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__try_read_character, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__funk = never_gc(cfunk);}

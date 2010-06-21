@@ -21,6 +21,20 @@
 
 #include "funk2.h"
 
+// source_expression
+
+def_primobject_5_slot(source_expression,
+		      body, first_line, last_line, first_column, last_column);
+
+f2ptr f2__source_expression__new(f2ptr cause, f2ptr body, f2ptr first_line, f2ptr last_line, f2ptr first_column, f2ptr last_column) {return f2source_expression__new(cause, body, first_line, last_line, first_column, last_column);}
+def_pcfunk5(source_expression__new, body, first_line, last_line, first_column, last_column, return f2__source_expression__new(this_cause, body, first_line, last_line, first_column, last_column));
+
+f2ptr f2source_expression__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2source_expression__primobject_type__new(cause);
+  return this;
+}
+
+
 // source
 
 def_primobject_1_slot(source,
@@ -60,8 +74,9 @@ f2ptr f2package__primobject_type__new_aux(f2ptr cause) {
 
 void f2__package__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  __source__symbol  = new__symbol(cause, "source");
-  __package__symbol = new__symbol(cause, "package");
+  __source_expression__symbol = new__symbol(cause, "source_expression");
+  __source__symbol            = new__symbol(cause, "source");
+  __package__symbol           = new__symbol(cause, "package");
 }
 
 void f2__package__initialize() {
@@ -70,6 +85,11 @@ void f2__package__initialize() {
   f2ptr cause = initial_cause();
   
   //--
+  
+  // source_expression
+  
+  initialize_primobject_5_slot(source_expression,
+			       body, first_line, last_line, first_column, last_column);
   
   // source
   

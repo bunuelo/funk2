@@ -24,6 +24,13 @@
 
 #include "f2_primobjects.h"
 
+// source_expression
+
+typedef struct funk2_object_type__source_expression__slot_s funk2_object_type__source_expression__slot_t;
+declare_object_type_5_slot(source_expression,
+			   body, first_line, last_line, first_column, last_column,
+			   );
+
 // source
 
 typedef struct funk2_object_type__source__slot_s funk2_object_type__source__slot_t;
@@ -45,6 +52,15 @@ declare_object_type_1_slot(package,
 #define F2__PACKAGE__H
 
 #include "f2_primobjects.h"
+
+// source_expression
+
+declare_primobject_5_slot(source_expression,
+			  body, first_line, last_line, first_column, last_column
+			  );
+
+f2ptr f2source_expression__primobject_type__new_aux(f2ptr cause);
+
 
 // source
 

@@ -52,19 +52,9 @@
 [load 'fu2/bootstrap-surrogate_parent.fu2']
 [load 'fu2/bootstrap-redblacktree.fu2']
 [load 'fu2/bootstrap-xmlrpc.fu2']
-`[load 'fu2/bootstrap-little_carol_world.fu2']
-`[load 'fu2/bootstrap-muddy_carol.fu2']
-`[load 'fu2/bootstrap-isis_world.fu2']
+[load 'fu2/bootstrap-package.fu2']
 
 [load 'fu2/time.fu2']
-
-`[load 'fu2/bootstrap-set_theory.fu2']
-`[load 'fu2/action.fu2']
-`[load 'fu2/bootstrap-dlfcn.fu2']
-`[load 'fu2/bootstrap-gmodule.fu2']
-`[load 'fu2/bootstrap-alien.fu2']
-`[load 'fu2/bootstrap-dynamic_library.fu2']
-
 
 [globalize load-utilities nil]
 [defunk load-utilities []
@@ -90,35 +80,3 @@
 
 [format stdout '\ndone.\n']
 [quit]
-
-
-
-`[prog
-  
-  `[parload 'fu2/miscfunks.fu2'
-	    'fu2/cause.fu2'
-	    ]
-   
-   `[seqload 'fu2/actor.fu2']
-    
-    'fu2/x86-compile.fu2'
-    
-  [parload 'fu2/socket-client.fu2'
-	   'fu2/socket-server.fu2']
-  
-  'fu2/opengl.fu2'
-  
-  [parload 'fu2/bootstrap-critic.fu2'
-	   'fu2/bootstrap-default_critics.fu2']
-  
-  'fu2/roboverse.fu2'
-  
-  `['fu2/brainviz.fu2']
-   
-   `[seqload 'fu2/neuralmom-demo.fu2']
-    
-    [seqload 'fu2/bootstrap-grid.fu2'
-	     'fu2/serialize.fu2']
-    
-    ]
-

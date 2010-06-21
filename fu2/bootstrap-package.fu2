@@ -62,7 +62,7 @@
 				  './example/isis_world/']]
 
 [defmetro defpackage [name :rest dependencies]
-  `[have packages_frame add [quote ,name] [new package [quote ,name] [quote [conslist @dependencies]]]]]
+  `[have packages_frame add [quote ,name] [new package [quote ,name] [conslist @dependencies]]]]
 
 [defmetro package [name]
   `[have packages_frame lookup [quote ,name]]]

@@ -1245,9 +1245,15 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_
   if (f2__is_compile_special_symbol(cause, car)) {return bcs_valid(f2__compile__special_symbol_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   if (raw__symbol__is_type(cause, car))          {return bcs_valid(f2__compile__funkvar_call(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   status("tried to compile: "); f2__write(cause, fiber, exp); fflush(stdout);
-  status("don't know how to compile type."); // should throw exception... (or return larva)
+  status("don't know how to compile."); // should throw exception... (or return larva)
   dont_know_how_to_compile();
-  return f2larva__new(cause, 125, nil);
+  {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "do_not_know_how_to_compile"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"), new__symbol(cause, "compile-cons_exp"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "exp"),      exp);
+    return f2larva__new(cause, 125, f2__bug__new(cause, f2integer__new(cause, 125), bug_frame));
+  }
 }
 
 f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {

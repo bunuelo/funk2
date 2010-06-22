@@ -1,0 +1,56 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'agency'
+
+[deframe          agency [frame] [resources_frame trace_graph]]
+[deftypeconstruct agency []
+  [set this resources_frame [frame]]
+  [set this trace_graph     [new graph]]
+  this]
+
+[deftypefunk agency get resource [name]
+  [let [[resources_frame [get this resources_frame]]]
+    [have resources_frame lookup name]]]
+
+[deftypefunk agency execute call [name :rest args]
+  [let [[resource [get this resource name]]]
+    [have-apply resource call `[,cause-outside_resource @args]]]]
+
+[defmetro defresource [agent agency_name name args :rest body]
+  [print `[defresource ,agency_name ,name ,args]]
+  `[let [[agent ,agent]]
+     [let [[agency [get agent agency [quote ,agency_name]]]]
+       [let [[resources_frame [get agency resources_frame]]
+	     [trace_graph     [get agency trace_graph]]]
+	 [define-funk the-resource [metro [name]
+					  `[have resources_frame lookup [quote ,name]]]]
+	 [define-funk call [metro [name :rest args]
+				  `[let [[resource [get agency resource [quote ,name]]]]
+				     [have-apply resource call `[,this ,resource @args]]]]]
+	 [let [[resource [resource ,name [caller @args]
+				    [let [[caller-name [get caller name]]
+					  [this-name   [get this   name]]]
+				      [have trace_graph add_edge `called caller-name this-name]
+				      @body]]]]
+	   [have resources_frame add [quote ,name] resource]
+	   nil]]]]]
+
+

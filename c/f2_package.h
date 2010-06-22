@@ -41,9 +41,10 @@ declare_object_type_1_slot(source,
 // package
 
 typedef struct funk2_object_type__package__slot_s funk2_object_type__package__slot_t;
-declare_object_type_2_slot(package,
+declare_object_type_3_slot(package,
 			   name,
-			   dependencies,
+			   package_dependencies,
+			   source_dependencies,
 			   );
 
 #endif // F2__PACKAGE__TYPES__H
@@ -74,9 +75,10 @@ f2ptr f2source__primobject_type__new_aux(f2ptr cause);
 
 // package
 
-declare_primobject_2_slot(package,
+declare_primobject_3_slot(package,
 			  name,
-			  dependencies
+			  package_dependencies,
+			  source_dependencies
 			  );
 
 f2ptr f2package__primobject_type__new_aux(f2ptr cause);

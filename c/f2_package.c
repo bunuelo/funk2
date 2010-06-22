@@ -57,12 +57,13 @@ f2ptr f2source__primobject_type__new_aux(f2ptr cause) {
 
 // package
 
-def_primobject_2_slot(package,
+def_primobject_3_slot(package,
 		      name,
-		      dependencies);
+		      package_dependencies,
+		      source_dependencies);
 
-f2ptr f2__package__new(f2ptr cause, f2ptr name, f2ptr dependencies) {return f2package__new(cause, name, dependencies);}
-def_pcfunk2(package__new, name, dependencies, return f2__package__new(this_cause, name, dependencies));
+f2ptr f2__package__new(f2ptr cause, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies) {return f2package__new(cause, name, package_dependencies, source_dependencies);}
+def_pcfunk3(package__new, name, package_dependencies, source_dependencies, return f2__package__new(this_cause, name, package_dependencies, source_dependencies));
 
 
 
@@ -180,9 +181,10 @@ void f2__package__initialize() {
   
   // package
   
-  initialize_primobject_2_slot(package,
+  initialize_primobject_3_slot(package,
 			       name,
-			       dependencies);
+			       package_dependencies,
+			       source_dependencies);
   
   // pathname
   

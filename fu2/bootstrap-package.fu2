@@ -62,7 +62,16 @@
 				  './example/isis_world/']]
 
 [defmetro defpackage [name :rest dependencies]
-  `[have packages_frame add [quote ,name] [new package [quote ,name] [conslist @dependencies]]]]
+  [let [[package_dependencies nil]
+	[source_dependencies  nil]]
+    [let [[iter dependencies]]
+      [while iter
+	[let [[key   [car  iter]]
+	      [value [cadr iter]]]
+	  [cond [[eq key `:packages] [= package_dependencies value]]
+		[[eq key `:sources]  [= source_dependencies  value]]
+		[t                   [error bug_type `unknown_package_dependency_key_type funkname `defpackage]]]]]]
+    `[have packages_frame add [quote ,name] [new package [quote ,name] [conslist @package_dependencies] [conslist @source_dependencies]]]]]
 
 [defmetro package [name]
   `[have packages_frame lookup [quote ,name]]]

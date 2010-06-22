@@ -105,7 +105,7 @@ f2ptr raw__pathname__concat(f2ptr cause, f2ptr this, f2ptr that) {
     return f2__stringlist__concat(cause, f2list2__new(cause, this, that));
   } else { // separator_count == 2
     this__str[this__length - 1] = 0;
-    return f2__stringlist__concat(cause, f2list2__new(cause, new__string(cause, this__str), that));
+    return f2__stringlist__concat(cause, f2list2__new(cause, new__string(cause, (char*)this__str), that));
   }
 }
 

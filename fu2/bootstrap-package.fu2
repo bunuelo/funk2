@@ -52,14 +52,15 @@
 
 [defunk load [:rest filenames]
   [mapc [funk [filename]
+	      [cause-define source-filename filename]
 	      [source-eval [source-load filename]]]
 	filenames]]
 
 [deftypefunk symbol get is-defined [] [not [is-type `bug [shelter [eval this]]]]]
 
 [globalize packages_frame [frame]]
-[globalize packages_search_path `['./example/resource/'
-				  './example/isis_world/']]
+[globalize packages_search_path `['example/resource/'
+				  'example/isis_world/']]
 
 [defmetro defpackage [name :rest dependencies]
   [let [[package_dependencies nil]
@@ -91,4 +92,8 @@
 		[= fpkg_filenames [append fpkg_filenames [pathname-scan_for_filenames_by_extension pathname 'fpkg']]]]
 	  this]
     fpkg_filenames]]
+
+[defunk reload_all_package_definitions []
+  [apply &load [pathnames-all_fpkg_filenames packages_search_path]]]
+
 

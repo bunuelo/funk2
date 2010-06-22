@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[print source-filename]
-
 [defpackage isis_world
   :sources ['isis_world.fu2']]
 

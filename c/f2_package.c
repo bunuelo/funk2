@@ -57,13 +57,14 @@ f2ptr f2source__primobject_type__new_aux(f2ptr cause) {
 
 // package
 
-def_primobject_3_slot(package,
+def_primobject_4_slot(package,
+		      fpkg_filename,
 		      name,
 		      package_dependencies,
 		      source_dependencies);
 
-f2ptr f2__package__new(f2ptr cause, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies) {return f2package__new(cause, name, package_dependencies, source_dependencies);}
-def_pcfunk3(package__new, name, package_dependencies, source_dependencies, return f2__package__new(this_cause, name, package_dependencies, source_dependencies));
+f2ptr f2__package__new(f2ptr cause, f2ptr fpkg_filename, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies) {return f2package__new(cause, fpkg_filename, name, package_dependencies, source_dependencies);}
+def_pcfunk4(package__new, fpkg_filename, name, package_dependencies, source_dependencies, return f2__package__new(this_cause, fpkg_filename, name, package_dependencies, source_dependencies));
 
 
 
@@ -71,6 +72,8 @@ f2ptr f2package__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2package__primobject_type__new(cause);
   return this;
 }
+
+
 
 f2ptr f2__current_working_directory(f2ptr cause) {
   char* current_working_directory__str = getcwd(NULL, 0);
@@ -281,7 +284,8 @@ void f2__package__initialize() {
   
   // package
   
-  initialize_primobject_3_slot(package,
+  initialize_primobject_4_slot(package,
+			       fpkg_filename,
 			       name,
 			       package_dependencies,
 			       source_dependencies);

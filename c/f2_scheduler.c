@@ -175,7 +175,14 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
       f2fiber__value__set(fiber, cause, nil);
     } else {
       f2ptr bug_frame = f2__bug__frame(cause, bug);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fiber"), fiber);
+      if (bug_frame == nil) {
+	bug_frame = f2__frame__new(cause, nil);
+	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "unknown_type_of_frameless_larva"));
+	f2__bug__frame__set(cause, bug, bug_frame);
+      }
+      if (raw__frame__is_type(cause, bug_frame)) {
+	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fiber"), fiber);
+      }
       f2fiber__value__set(fiber, cause, bug);
     }
     resume_gc();

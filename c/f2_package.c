@@ -72,6 +72,44 @@ f2ptr f2package__primobject_type__new_aux(f2ptr cause) {
   return this;
 }
 
+f2ptr f2__current_working_directory(f2ptr cause) {
+  char* current_working_directory__str = getcwd(NULL, 0);
+  f2ptr current_working_directory = new__string(cause, current_working_directory__str);
+  free(current_working_directory__str);
+  return current_working_directory;
+}
+def_pcfunk0(current_working_directory, return f2__current_working_directory(this_cause));
+
+f2ptr raw__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
+  u64 this__length = raw__string__length(cause, this);
+  u8* this__str    = (u8*)alloca(this__length);
+  raw__string__str_copy(cause, this, this__str);
+  this__str[this__length] = 0;
+  
+  if (this__str[0] == '/') {
+    return this;
+  }
+  
+  f2ptr current_working_directory = f2__current_working_directory(cause);
+  u64 current_working_directory__length = raw__string__length(cause, current_working_directory);
+  u8* current_working_directory__str    = (u8*)alloca(current_working_directory__length);
+  raw__string__str_copy(cause, current_working_directory, current_working_directory__str);
+  current_working_directory__str[current_working_directory__length] = 0;
+  
+  if (current_working_directory__length == 0 ||
+      current_working_directory__str[current_working_directory__length - 1] != '/') {
+    current_working_directory = f2__stringlist__concat(cause, f2list2__new(cause, current_working_directory, new__string(cause, "/")));
+  }
+  return f2__stringlist__concat(cause, f2list2__new(cause, current_working_directory, this));
+}
+
+f2ptr f2__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
+  if (! raw__string__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__pathname__as__absolute_pathname(cause, this);
+}
+def_pcfunk1(pathname__as__absolute_pathname, this, return f2__pathname__as__absolute_pathname(this_cause, this));
 
 f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
   if (! raw__string__is_type(cause, pathname)) {
@@ -150,45 +188,6 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
   return matching_filenames;
 }
 def_pcfunk2(pathname__scan_for_filenames_by_extension, pathname, extension, return f2__pathname__scan_for_filenames_by_extension(this_cause, pathname, extension));
-
-f2ptr f2__current_working_directory(f2ptr cause) {
-  char* current_working_directory__str = getcwd(NULL, 0);
-  f2ptr current_working_directory = new__string(cause, current_working_directory__str);
-  free(current_working_directory__str);
-  return current_working_directory;
-}
-def_pcfunk0(current_working_directory, return f2__current_working_directory(this_cause));
-
-f2ptr raw__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
-  u64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)alloca(this__length);
-  raw__string__str_copy(cause, this, this__str);
-  this__str[this__length] = 0;
-  
-  if (this__str[0] == '/') {
-    return this;
-  }
-  
-  f2ptr current_working_directory = f2__current_working_directory(cause);
-  u64 current_working_directory__length = raw__string__length(cause, current_working_directory);
-  u8* current_working_directory__str    = (u8*)alloca(current_working_directory__length);
-  raw__string__str_copy(cause, current_working_directory, current_working_directory__str);
-  current_working_directory__str[current_working_directory__length] = 0;
-  
-  if (current_working_directory__length == 0 ||
-      current_working_directory__str[current_working_directory__length - 1] != '/') {
-    current_working_directory = f2__stringlist__concat(cause, f2list2__new(cause, current_working_directory, new__string(cause, "/")));
-  }
-  return f2__stringlist__concat(cause, f2list2__new(cause, current_working_directory, this));
-}
-
-f2ptr f2__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
-  if (! raw__string__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__pathname__as__absolute_pathname(cause, this);
-}
-def_pcfunk1(pathname__as__absolute_pathname, this, return f2__pathname__as__absolute_pathname(this_cause, this));
 
 // **
 

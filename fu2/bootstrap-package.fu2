@@ -85,3 +85,10 @@
 [defmetro package-defined [name]
   `[not [null [package ,name]]]]
 
+[defunk pathnames-all_fpkg_filenames [this]
+  [let [[fpkg_filenames nil]]
+    [mapc [funk [pathname]
+		[= fpkg_filenames [append fpkg_filenames [pathname-scan_for_filenames_by_extension pathname 'fpkg']]]]
+	  this]
+    fpkg_filenames]]
+

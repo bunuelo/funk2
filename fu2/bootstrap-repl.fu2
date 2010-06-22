@@ -585,7 +585,9 @@
 
 [defunk append [first_seq :rest rest_seqs]
   [if [null first_seq]
-      [apply &append rest_seqs]
+      [if [null rest_seqs]
+	  nil
+	[apply &append rest_seqs]]
     [let [[first_seq_copy [conslist-copy first_seq]]]
       [if [null rest_seqs]
 	  first_seq_copy

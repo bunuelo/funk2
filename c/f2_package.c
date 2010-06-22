@@ -140,27 +140,28 @@ f2ptr f2__pathnamelist__concat(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(pathnamelist__concat, this, return f2__pathnamelist__concat(this_cause, this));
 
-f2ptr raw__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
+boolean_t raw__pathname__is_absolute(f2ptr cause, f2ptr this) {
   u64 this__length = raw__string__length(cause, this);
   u8* this__str    = (u8*)alloca(this__length);
   raw__string__str_copy(cause, this, this__str);
   this__str[this__length] = 0;
   
-  if (this__str[0] == '/') {
+  return (this__str[0] == '/');
+}
+
+f2ptr f2__pathname__is_absolute(f2ptr cause, f2ptr this) {
+  if (! raw__string__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2bool__new(raw__pathname__is_absolute(cause, this));
+}
+def_pcfunk1(pathname__is_absolute, this, return f2__pathname__is_absolute(this_cause, this));
+
+f2ptr raw__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
+  if (raw__pathname__is_absolute(cause, this)) {
     return this;
   }
-  
-  f2ptr current_working_directory = f2__current_working_directory(cause);
-  u64 current_working_directory__length = raw__string__length(cause, current_working_directory);
-  u8* current_working_directory__str    = (u8*)alloca(current_working_directory__length);
-  raw__string__str_copy(cause, current_working_directory, current_working_directory__str);
-  current_working_directory__str[current_working_directory__length] = 0;
-  
-  if (current_working_directory__length == 0 ||
-      current_working_directory__str[current_working_directory__length - 1] != '/') {
-    current_working_directory = f2__stringlist__concat(cause, f2list2__new(cause, current_working_directory, new__string(cause, "/")));
-  }
-  return f2__stringlist__concat(cause, f2list2__new(cause, current_working_directory, this));
+  return f2__pathname__concat(cause, f2__current_working_directory(cause), this);
 }
 
 f2ptr f2__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
@@ -180,7 +181,7 @@ f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
   raw__string__str_copy(cause, pathname, pathname__str);
   pathname__str[pathname__length] = 0;
   
-  f2ptr filenames = nil;
+  f2ptr absolute_filenames = nil;
   {
     DIR* dirp = opendir((char*)pathname__str);
     if (dirp == NULL) {
@@ -205,13 +206,14 @@ f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
     do {
       directory_entry = readdir(dirp);
       if (directory_entry) {
-	f2ptr filename = new__string(cause, directory_entry->d_name);
-	filenames = f2cons__new(cause, filename, filenames);
+	f2ptr relative_filename = new__string(cause, directory_entry->d_name);
+	f2ptr absolute_filename = f2__pathname__as__absolute_pathname(cause, relative_filename);
+	absolute_filenames = f2cons__new(cause, absolute_filename, absolute_filenames);
       }
     } while (directory_entry);
     closedir(dirp);
   }
-  return filenames;
+  return absolute_filenames;
 }
 def_pcfunk1(pathname__scan_for_filenames, pathname, return f2__pathname__scan_for_filenames(this_cause, pathname));
 
@@ -288,6 +290,7 @@ void f2__package__initialize() {
   
   f2__primcfunk__init__2(pathname__concat,                          this, that,          "Concatenates two paths and returns the result in a new path string.");
   f2__primcfunk__init__1(pathnamelist__concat,                      this,                "Concatenates a list of paths and returns the result in a new path string.");
+  f2__primcfunk__init__1(pathname__is_absolute,                     this,                "Returns true if pathname represents an absolute path.");
   f2__primcfunk__init__1(pathname__scan_for_filenames,              pathname,            "Scans a directory name and returns all filenames.");
   f2__primcfunk__init__2(pathname__scan_for_filenames_by_extension, pathname, extension, "Scans a directory name and returns all filenames that match the given extension.");
   f2__primcfunk__init__0(current_working_directory,                                      "Returns a string representing the current working directory name.");

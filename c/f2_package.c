@@ -206,7 +206,7 @@ f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
     do {
       directory_entry = readdir(dirp);
       if (directory_entry) {
-	f2ptr relative_filename = new__string(cause, directory_entry->d_name);
+	f2ptr relative_filename = f2__pathname__concat(cause, pathname, new__string(cause, directory_entry->d_name));
 	f2ptr absolute_filename = f2__pathname__as__absolute_pathname(cause, relative_filename);
 	absolute_filenames = f2cons__new(cause, absolute_filename, absolute_filenames);
       }

@@ -58,13 +58,13 @@ f2ptr f2source__primobject_type__new_aux(f2ptr cause) {
 // package
 
 def_primobject_4_slot(package,
-		      fpkg_filename,
+		      pathname,
 		      name,
 		      package_dependencies,
 		      source_dependencies);
 
-f2ptr f2__package__new(f2ptr cause, f2ptr fpkg_filename, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies) {return f2package__new(cause, fpkg_filename, name, package_dependencies, source_dependencies);}
-def_pcfunk4(package__new, fpkg_filename, name, package_dependencies, source_dependencies, return f2__package__new(this_cause, fpkg_filename, name, package_dependencies, source_dependencies));
+f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies) {return f2package__new(cause, pathname, name, package_dependencies, source_dependencies);}
+def_pcfunk4(package__new, pathname, name, package_dependencies, source_dependencies, return f2__package__new(this_cause, pathname, name, package_dependencies, source_dependencies));
 
 
 
@@ -174,6 +174,29 @@ f2ptr f2__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
   return raw__pathname__as__absolute_pathname(cause, this);
 }
 def_pcfunk1(pathname__as__absolute_pathname, this, return f2__pathname__as__absolute_pathname(this_cause, this));
+
+f2ptr raw__pathname__directory_pathname(f2ptr cause, f2ptr this) {
+  u64 this__length = raw__string__length(cause, this);
+  u8* this__str    = (u8*)alloca(this__length);
+  raw__string__str_copy(cause, this, this__str);
+  this__str[this__length] = 0;
+  
+  char* last_slash = rindex(this__str, '/');
+  if (last_slash) {
+    last_slash[1] = 0;
+  } else {
+    this__str[0] = 0;
+  }
+  return new__string(cause, (char*)this__str);
+}
+
+f2ptr f2__pathname__directory_pathname(f2ptr cause, f2ptr this) {
+  if (! raw__string__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__pathname__directory_pathname(cause, this);
+}
+def_pcfunk1(pathname__directory_pathname, this, return f2__pathname__directory_pathname(this_cause, this));
 
 f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
   if (! raw__string__is_type(cause, pathname)) {
@@ -285,7 +308,7 @@ void f2__package__initialize() {
   // package
   
   initialize_primobject_4_slot(package,
-			       fpkg_filename,
+			       pathname,
 			       name,
 			       package_dependencies,
 			       source_dependencies);
@@ -295,6 +318,7 @@ void f2__package__initialize() {
   f2__primcfunk__init__2(pathname__concat,                          this, that,          "Concatenates two paths and returns the result in a new path string.");
   f2__primcfunk__init__1(pathnamelist__concat,                      this,                "Concatenates a list of paths and returns the result in a new path string.");
   f2__primcfunk__init__1(pathname__is_absolute,                     this,                "Returns true if pathname represents an absolute path.");
+  f2__primcfunk__init__1(pathname__directory_pathname,              this,                "Returns the directory part of a path.");
   f2__primcfunk__init__1(pathname__scan_for_filenames,              pathname,            "Scans a directory name and returns all filenames.");
   f2__primcfunk__init__2(pathname__scan_for_filenames_by_extension, pathname, extension, "Scans a directory name and returns all filenames that match the given extension.");
   f2__primcfunk__init__0(current_working_directory,                                      "Returns a string representing the current working directory name.");

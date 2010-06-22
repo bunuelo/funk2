@@ -42,7 +42,7 @@ declare_object_type_1_slot(source,
 
 typedef struct funk2_object_type__package__slot_s funk2_object_type__package__slot_t;
 declare_object_type_4_slot(package,
-			   fpkg_filename,
+			   pathname,
 			   name,
 			   package_dependencies,
 			   source_dependencies,
@@ -77,7 +77,7 @@ f2ptr f2source__primobject_type__new_aux(f2ptr cause);
 // package
 
 declare_primobject_4_slot(package,
-			  fpkg_filename,
+			  pathname,
 			  name,
 			  package_dependencies,
 			  source_dependencies

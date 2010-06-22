@@ -19,10 +19,10 @@
 
 [globalize-funk source-load &primfunk:source__load]
 
+[globalize-funk pathname-concat                          &primfunk:pathname__concat]
+[globalize-funk pathnamelist-concat                      &primfunk:pathnamelist__concat]
 [globalize-funk pathname-scan_for_filenames              &primfunk:pathname__scan_for_filenames]
 [globalize-funk pathname-scan_for_filenames_by_extension &primfunk:pathname__scan_for_filenames_by_extension]
-
-[globalize-funk current_working_directory &primfunk:current_working_directory]
-
-[globalize-funk pathname-as-absolute_pathname &primfunk:pathname__as__absolute_pathname]
+[globalize-funk current_working_directory                &primfunk:current_working_directory]
+[globalize-funk pathname-as-absolute_pathname            &primfunk:pathname__as__absolute_pathname]
 

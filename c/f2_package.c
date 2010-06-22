@@ -112,7 +112,7 @@ f2ptr raw__pathname__concat(f2ptr cause, f2ptr this, f2ptr that) {
 f2ptr f2__pathname__concat(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__string__is_type(cause, this)) ||
       (! raw__string__is_type(cause, that))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__pathname__concat(cause, this, that);
 }
@@ -124,7 +124,7 @@ f2ptr f2__pathnamelist__concat(f2ptr cause, f2ptr this) {
   while (iter) {
     f2ptr pathname = f2__first(cause, iter); if (raw__larva__is_type(cause, pathname)) {return pathname;}
     if (! raw__string__is_type(cause, pathname)) {
-      return f2larva__new(cause, 1);
+      return f2larva__new(cause, 1, nil);
     }
     if (result == nil) {
       result = pathname;

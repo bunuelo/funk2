@@ -159,6 +159,37 @@ f2ptr f2__current_working_directory(f2ptr cause) {
 }
 def_pcfunk0(current_working_directory, return f2__current_working_directory(this_cause));
 
+f2ptr raw__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
+  u64 this__length = raw__string__length(cause, this);
+  u8* this__str    = (u8*)alloca(this__length);
+  raw__string__str_copy(cause, this, this__str);
+  this__str[this__length] = 0;
+  
+  if (this__str[0] == '/') {
+    return this;
+  }
+  
+  f2ptr current_working_directory = f2__current_working_directory(cause);
+  u64 current_working_directory__length = raw__string__length(cause, current_working_directory);
+  u8* current_working_directory__str    = (u8*)alloca(current_working_directory__length);
+  raw__string__str_copy(cause, current_working_directory, current_working_directory__str);
+  current_working_directory__str[current_working_directory__length] = 0;
+  
+  if (current_working_directory__length == 0 ||
+      current_working_directory__str[current_working_directory__length - 1] != '/') {
+    current_working_directory = f2__stringlist__concat(cause, f2list2__new(cause, current_working_directory, new__string(cause, "/")));
+  }
+  return f2__stringlist__concat(cause, f2list2__new(cause, current_working_directory, this));
+}
+
+f2ptr f2__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
+  if (! raw__string__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__pathname__as__absolute_pathname(cause, this);
+}
+def_pcfunk1(pathname__as__absolute_pathname, this, return f2__pathname__as__absolute_pathname(this_cause, this));
+
 // **
 
 void f2__package__reinitialize_globalvars() {
@@ -200,6 +231,9 @@ void f2__package__initialize() {
   f2__primcfunk__init__2(pathname__scan_for_filenames_by_extension, pathname, extension, "Scans a directory name and returns all filenames that match the given extension.");
   
   f2__primcfunk__init__0(current_working_directory, "Returns a string representing the current working directory name.");
+  
+  f2__primcfunk__init__1(pathname__as__absolute_pathname, this, "Returns an absolute pathname for this pathname.");
+  
   
 }
 

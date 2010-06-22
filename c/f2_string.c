@@ -350,7 +350,7 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_open_file_for_reading"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"), new__symbol(cause, "string-load"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "filename"), filename);
-    return f2larva__new(cause, 90, bug_frame);
+    return f2larva__new(cause, 90, f2__bug__new(cause, f2integer__new(cause, 90), bug_frame));
   }
   u64 file__length = lseek(fd, 0, SEEK_END);
   lseek(fd, 0, SEEK_SET);
@@ -366,7 +366,7 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "filename"),    filename);
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "read_length"), f2integer__new(cause, read_length));
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "file_length"), f2integer__new(cause, file__length));
-      return f2larva__new(cause, 91, bug_frame);
+      return f2larva__new(cause, 91, f2__bug__new(cause, f2integer__new(cause, 91), bug_frame));
     }
   }
   f2ptr new_string = f2string__new(cause, file__length, file__str);

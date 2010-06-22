@@ -38,7 +38,7 @@
 	  [if [eq `bug_handled [cond [[is-type `integer type] [critic-reactive-integer_type_bug fiber bug]]
 				     [t                       `bug_not_handled]]]
 	      [= bug_handled t]]]
-      [prog [ansi-stream-foreground stdout]
+      [prog [ansi-stream-foreground stdout 10]
 	    [format stdout
 		    '\n' 'This should be a bug.  Instead we got: ' value
 		    '\n']]]

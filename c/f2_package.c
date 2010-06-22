@@ -181,7 +181,7 @@ f2ptr raw__pathname__directory_pathname(f2ptr cause, f2ptr this) {
   raw__string__str_copy(cause, this, this__str);
   this__str[this__length] = 0;
   
-  char* last_slash = rindex(this__str, '/');
+  char* last_slash = rindex((char*)this__str, '/');
   if (last_slash) {
     last_slash[1] = 0;
   } else {

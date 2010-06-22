@@ -151,6 +151,14 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
 }
 def_pcfunk2(pathname__scan_for_filenames_by_extension, pathname, extension, return f2__pathname__scan_for_filenames_by_extension(this_cause, pathname, extension));
 
+f2ptr f2__current_working_directory(f2ptr cause) {
+  char* current_working_directory__str = getcwd(NULL, 0);
+  f2ptr current_working_directory = new__string(cause, current_working_directory__str);
+  free(current_working_directory__str);
+  return current_working_directory;
+}
+def_pcfunk0(current_working_directory, return f2__current_working_directory(this_cause));
+
 // **
 
 void f2__package__reinitialize_globalvars() {
@@ -190,6 +198,8 @@ void f2__package__initialize() {
   
   f2__primcfunk__init__1(pathname__scan_for_filenames,              pathname,            "Scans a directory name and returns all filenames.");
   f2__primcfunk__init__2(pathname__scan_for_filenames_by_extension, pathname, extension, "Scans a directory name and returns all filenames that match the given extension.");
+  
+  f2__primcfunk__init__0(current_working_directory, "Returns a string representing the current working directory name.");
   
 }
 

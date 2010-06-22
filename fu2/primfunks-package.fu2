@@ -22,3 +22,5 @@
 [globalize-funk pathname-scan_for_filenames              &primfunk:pathname__scan_for_filenames]
 [globalize-funk pathname-scan_for_filenames_by_extension &primfunk:pathname__scan_for_filenames_by_extension]
 
+[globalize-funk current_working_directory &primfunk:current_working_directory]
+

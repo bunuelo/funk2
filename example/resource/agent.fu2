@@ -29,7 +29,16 @@
   [have [get this agencies_frame] lookup name]]
 
 [deftypefunk agent execute call [agency_name resource_name :rest args]
-  [have-apply [have [get [have [get this agencies_frame] lookup agency_name] resources_frame] lookup resource_name] call args]]
+  [print 'dbg 0']
+  [let [[agencies_frame [get this agencies_frame]]]
+    [print 'dbg 1']
+    [let [[agency [have agencies_frame lookup agency_name]]]
+      [print 'dbg 2']
+      [let [[resources_frame [get agency resources_frame]]]
+	[print 'dbg 3']
+	[let [[resource [have resources_frame lookup resource_name]]]
+	  [print 'dbg 4']
+	  [have-apply resource call args]]]]]]
 
 [defmetro defagency [agent name]
   `[have [get ,agent agencies_frame] add [quote ,name] [new agency]]]

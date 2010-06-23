@@ -50,10 +50,31 @@
 			  [bug bug]]]]]
 	[source-read this]]]
 
+[globalize file_loaded_modification_time_hash [hash]]
+
+[defunk filename-load [this]
+  [cause-define source-filename filename]
+  [source-eval [source-load filename]]
+  [let [[stat [pathname-stat this]]]
+    [let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
+      [have file_loaded_modification_time_hash add this time_of_last_modification]]]]
+
+[defunk filename-load_if_modified [this]
+  [let [[last_loaded_modification_time [have file_loaded_modification_time_hash lookup this]]]
+    [if [or [null last_loaded_modification_time]
+	    [let [[stat [pathname-stat this]]]
+	      [let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
+		[not [get last_loaded_modification_time equals time_of_last_modification]]]]]
+	[filename-load this]]]]
+
 [defunk load [:rest filenames]
   [mapc [funk [filename]
-	      [cause-define source-filename filename]
-	      [source-eval [source-load filename]]]
+	      [filename-load filename]]
+	filenames]]
+
+[defunk load-if-modified [:rest filenames]
+  [mapc [funk [filename]
+	      [filename-load_if_modified filename]]
 	filenames]]
 
 [deftypefunk symbol get is-defined [] [not [is-type `bug [shelter [eval this]]]]]
@@ -106,6 +127,12 @@
 		[load [pathname-concat [get package pathname] source_dependency]]]
 	  [get package source_dependencies]]]]
 
+[defunk package-load_if_modified [name]
+  [let [[package [lookup-package name]]]
+    [mapc [funk [source_dependency]
+		[load-if-modified [pathname-concat [get package pathname] source_dependency]]]
+	  [get package source_dependencies]]]]
+
 [defmetro require [name]
-  `[package-load [quote ,name]]]
+  `[package-load_if_modified [quote ,name]]]
 

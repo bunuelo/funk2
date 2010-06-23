@@ -277,6 +277,60 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
 }
 def_pcfunk2(pathname__scan_for_filenames_by_extension, pathname, extension, return f2__pathname__scan_for_filenames_by_extension(this_cause, pathname, extension));
 
+f2ptr raw__pathname__stat(f2ptr cause, f2ptr this) {
+  u64 this__length = raw__string__length(cause, this);
+  u8* this__str    = (u8*)alloca(this__length);
+  raw__string__str_copy(cause, this, this__str);
+  this__str[this__length] = 0;
+  
+  struct stat buf;
+  if (stat(this__str, &buf) != 0) {
+    char* error_str = "unknown error occurred.";
+    switch(errno) {
+    case EACCES:       error_str = "Search permission is denied for one of the directories in the path prefix of path.  (See also path_resolution(7).)"; break;
+    case EBADF:        error_str = "fd is bad."; break;
+    case EFAULT:       error_str = "Bad address."; break;
+    case ELOOP:        error_str = "Too many symbolic links encountered while traversing the path."; break;
+    case ENAMETOOLONG: error_str = "File name too long."; break;
+    case ENOENT:       error_str = "A component of the path path does not exist, or the path is an empty string."; break;
+    case ENOMEM:       error_str = "Out of memory (i.e., kernel memory)."; break;
+    case ENOTDIR:      error_str = "A component of the path is not a directory."; break;
+    case EOVERFLOW:    error_str = "(stat()) path refers to a file whose size cannot be represented in the type off_t.  This can occur when an application compiled on a 32-bit platform without -D_FILE_OFFSET_BITS=64 calls stat() on a file whose size exceeds (2<<31)-1 bits."; break;
+    }
+    {
+      f2ptr bug_frame = f2__frame__new(cause, nil);
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),    new__symbol(cause, "failed_to_stat_pathname"));
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),    new__symbol(cause, "pathname-stat"));
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),        this);
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "description"), new__string(cause, error_str));
+      return f2larva__new(cause, 655, f2__bug__new(cause, f2integer__new(cause, 655), bug_frame));
+    }
+  }
+  f2ptr stat_frame = f2__frame__new(cause, nil);
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "id_of_device_containing_file"),        f2integer__new(cause, (s64)buf.st_dev));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "inode_number"),                        f2integer__new(cause, (s64)buf.st_ino));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "protection_mode"),                     f2integer__new(cause, (s64)buf.st_mode));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "number_of_hard_links"),                f2integer__new(cause, (s64)buf.st_nlink));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "user_id_of_owner"),                    f2integer__new(cause, (s64)buf.st_uid));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "group_id_of_owner"),                   f2integer__new(cause, (s64)buf.st_gid));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "device_id"),                           f2integer__new(cause, (s64)buf.st_rdev));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "total_size_in_bytes"),                 f2integer__new(cause, (s64)buf.st_size));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "blocksize_for_file_system_io"),        f2integer__new(cause, (s64)buf.st_blksize));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "number_of_512_byte_blocks_allocated"), f2integer__new(cause, (s64)buf.st_blocks));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "time_of_last_access"),                 raw__time__new_from_unix_time(cause, buf.st_atime));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "time_of_last_modification"),           raw__time__new_from_unix_time(cause, buf.st_mtime));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "time_of_last_status_change"),          raw__time__new_from_unix_time(cause, buf.st_ctime));
+  return stat_frame;
+}
+
+f2ptr f2__pathname__stat(f2ptr cause, f2ptr this) {
+  if (! raw__string__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__pathname__stat(cause, this);
+}
+def_pcfunk1(pathname__stat, this, return f2__pathname__stat(this_cause, this));
+
 // **
 
 void f2__package__reinitialize_globalvars() {
@@ -323,6 +377,7 @@ void f2__package__initialize() {
   f2__primcfunk__init__2(pathname__scan_for_filenames_by_extension, pathname, extension, "Scans a directory name and returns all filenames that match the given extension.");
   f2__primcfunk__init__0(current_working_directory,                                      "Returns a string representing the current working directory name.");
   f2__primcfunk__init__1(pathname__as__absolute_pathname,           this,                "Returns an absolute pathname for this pathname.");
+  f2__primcfunk__init__1(pathname__stat,                            this,                "Returns a frame with stat info about this pathname.");
   
 }
 

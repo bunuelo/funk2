@@ -175,14 +175,18 @@ f2ptr f2__funk2__execution_nanoseconds(f2ptr cause) {
 def_pcfunk0(funk2__execution_nanoseconds, return f2__funk2__execution_nanoseconds(this_cause));
 #endif // F2__CYGWIN
 
-time_t nanoseconds_since_1970__to_time(u64 nanoseconds_since_1970) {
-  return (nanoseconds_since_1970 / nanoseconds_per_second);
+time_t nanoseconds_since_1970__to_unix_time(u64 nanoseconds_since_1970) {
+  return (nanoseconds_since_1970 / nanoseconds_per_second) - (4 * 60 * 60);
+}
+
+u64 unix_time__to_nanoseconds_since_1970(time_t unix_time) {
+  return (((u64)unix_time) + (4 * 60 * 60)) * nanoseconds_per_second;
 }
 
 void nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, funk2_date_t* funk2_date) {
   u64    seconds_since_1970     = nanoseconds_since_1970 / nanoseconds_per_second;
   u64    nanoseconds            = nanoseconds_since_1970 - (seconds_since_1970 * nanoseconds_per_second);
-  time_t unix_time              = nanoseconds_since_1970__to_time(nanoseconds_since_1970) - (4 * 60 * 60);
+  time_t unix_time              = nanoseconds_since_1970__to_time(nanoseconds_since_1970);
   struct tm unix_tm;
   gmtime_r(&unix_time, &unix_tm);
   funk2_date->years       = unix_tm.tm_year + 1900;
@@ -192,6 +196,11 @@ void nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, funk2_dat
   funk2_date->minutes     = unix_tm.tm_min;
   funk2_date->seconds     = unix_tm.tm_sec;
   funk2_date->nanoseconds = nanoseconds;
+}
+
+f2ptr raw__time__new_from_unix_time(f2ptr cause, time_t unix_time) {
+  u64 nanoseconds_since_1970 = unix_time__to_nanoseconds_since_1970(unix_time);
+  return f2__time__new(cause, f2integer__new(cause, nanoseconds_since_1970));
 }
 
 // **

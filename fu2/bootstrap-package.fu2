@@ -81,8 +81,11 @@
 								    package_dependencies]]
 						 [conslist @source_dependencies]]]]]
 
+[defunk lookup-package [name]
+  [have packages_frame lookup name]]
+
 [defmetro package [name]
-  `[have packages_frame lookup [quote ,name]]]
+  `[lookup-package [quote ,name]]]
 
 [defmetro package-defined [name]
   `[not [null [package ,name]]]]
@@ -98,12 +101,11 @@
   [apply &load [pathnames-all_fpkg_filenames packages_search_path]]]
 
 [defunk package-load [name]
-  [let [[package [package name]]]
+  [let [[package [lookup-package name]]]
     [mapc [funk [source_dependency]
 		[load [pathname-concat [get package pathname] source_dependency]]]
 	  [get package source_dependencies]]]]
 
 [defmetro require [name]
   `[package-load [quote ,name]]]
-
 

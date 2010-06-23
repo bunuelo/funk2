@@ -57,7 +57,8 @@
   [source-eval [source-load this]]
   [let [[stat [pathname-stat this]]]
     [let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
-      [have file_loaded_modification_time_hash add this time_of_last_modification]]]]
+      [have file_loaded_modification_time_hash add this time_of_last_modification]]]
+  nil]
 
 [defunk filename-load_if_modified [this]
   [let [[last_loaded_modification_time [have file_loaded_modification_time_hash lookup this]]]

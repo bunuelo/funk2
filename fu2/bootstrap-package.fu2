@@ -97,4 +97,13 @@
 [defunk reload_all_package_definitions []
   [apply &load [pathnames-all_fpkg_filenames packages_search_path]]]
 
+[defunk package-load [name]
+  [let [[package [package name]]]
+    [mapc [funk [source_dependency]
+		[load [pathname-concat [get package pathname] source_dependency]]]
+	  [get package source_dependencies]]]]
+
+[defmetro require [name]
+  `[package-load [quote ,name]]]
+
 

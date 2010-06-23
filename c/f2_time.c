@@ -186,7 +186,7 @@ u64 unix_time__to_nanoseconds_since_1970(time_t unix_time) {
 void nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, funk2_date_t* funk2_date) {
   u64    seconds_since_1970     = nanoseconds_since_1970 / nanoseconds_per_second;
   u64    nanoseconds            = nanoseconds_since_1970 - (seconds_since_1970 * nanoseconds_per_second);
-  time_t unix_time              = nanoseconds_since_1970__to_time(nanoseconds_since_1970);
+  time_t unix_time              = nanoseconds_since_1970__to_unix_time(nanoseconds_since_1970);
   struct tm unix_tm;
   gmtime_r(&unix_time, &unix_tm);
   funk2_date->years       = unix_tm.tm_year + 1900;

@@ -337,7 +337,7 @@ f2ptr raw__getenv(f2ptr cause, f2ptr environment_variable) {
   raw__string__str_copy(cause, environment_variable, environment_variable__str);
   environment_variable__str[environment_variable__length] = 0;
   
-  char* environment_value = getenv(environment_variable__str);
+  char* environment_value = getenv((char*)environment_variable__str);
   if (environment_value == NULL) {
     return nil;
   }

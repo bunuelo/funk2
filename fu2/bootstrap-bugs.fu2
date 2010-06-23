@@ -31,7 +31,7 @@
 				       [[eq bug_type 23]     `failed_to_lookup_variable_in_environment-bug_type]
 				       [[eq bug_type 24]              `cfunkable_must_be_funk_or_metro-bug_type]
 				       [[eq bug_type 63]                                   `user_space-bug_type]
-				       [t                                   `unspecified_error_occured-bug_type]]
+				       [t                                  `unspecified_error_occurred-bug_type]]
 			       `unknown-bug_type]]]]
 	symbolic_type]]]]
 
@@ -49,17 +49,17 @@
 	  [[eq symbolic_type `cfunkable_must_be_funk_or_metro-bug_type]              `[Bug is from primitive virtual machine larva.
 											   The larva signifies that the fiber tried to execute an object that was not a funkable object, such as a funk or a metro.
 											   ]]
-	  [[eq symbolic_type `unspecified_error_occured-bug_type]                    `[Bug is from primitive virtual machine larva.
-											   The larva signifies that an unspecified error occured.
+	  [[eq symbolic_type `unspecified_error_occurred-bug_type]                    `[Bug is from primitive virtual machine larva.
+											   The larva signifies that an unspecified error occurred.
 											   ]]
 	  [[eq symbolic_type `unknown-bug_type]                                      `[Bug is from primitive virtual machine larva that was not recognized.
-											   Unknown category of bug type has occured.
+											   Unknown category of bug type has occurred.
 											   ]]
 	  [[eq symbolic_type `user_space-bug_type]                                   `[Bug is one of those regular old friendly user-space bugs.
 											   ]]
 	  [[eq symbolic_type `not-bug]                                               `[We are trying to print an english description of a bug that is not a bug.
-											  A meta bug has occured in trying to print a bug.
-											  Unknown category of bug type has occured.
+											  A meta bug has occurred in trying to print a bug.
+											  Unknown category of bug type has occurred.
 											  ]]
 	  [t                                                                         `[Meta error recognizing symbolic bug type [a meta bug in bug-print_human_readable].]]
 	  ]]]

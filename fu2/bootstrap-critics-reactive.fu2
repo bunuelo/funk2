@@ -21,7 +21,7 @@
   [ansi-stream-reset stdout]
   [format stdout
 	  '\n\n'
-	  [append `[A bug has occured.]
+	  [append `[A bug has occurred.]
 		   [bug-english_sentence_conslist bug]]
 	  '\n\n']
   [globalize last-error-fiber fiber]

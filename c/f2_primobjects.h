@@ -1482,6 +1482,8 @@ declare_object_type_2_slot(transframe, nanoseconds_since_1970, symbol_old_news, 
 // time
 
 declare_object_type_1_slot(time, nanoseconds_since_1970,
+			   f2ptr equals__symbol;
+			   f2ptr equals__funk;
 			   f2ptr years__symbol;
 			   f2ptr years__funk;
 			   f2ptr months__symbol;

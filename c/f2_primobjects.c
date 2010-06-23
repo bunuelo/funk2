@@ -488,8 +488,18 @@ u64 raw__time__nanoseconds(f2ptr cause, f2ptr this) {
 f2ptr f2__time__nanoseconds(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__nanoseconds(cause, this));}
 def_pcfunk1(time__nanoseconds, this, return f2__time__nanoseconds(this_cause, this));
 
+f2ptr f2__time__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__time__is_type(cause, this)) ||
+      (! raw__time__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__eq(cause, f2__time__nanoseconds_since_1970(cause, this), f2__time__nanoseconds_since_1970(cause, that));
+}
+def_pcfunk2(time__equals, this, that, return f2__time__equals(this_cause, this, that));
+
 f2ptr f2time__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2time__primobject_type__new(cause);
+  {char* slot_name = "equals";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.equals__funk);}
   {char* slot_name = "years";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.years__funk);}
   {char* slot_name = "months";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.months__funk);}
   {char* slot_name = "days";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.days__funk);}
@@ -658,6 +668,7 @@ void f2__primobjects__initialize() {
   // time
   
   initialize_primobject_1_slot(time, nanoseconds_since_1970);
+  initialize_primobject_funk(time, equals);
   initialize_primobject_funk(time, years);
   initialize_primobject_funk(time, months);
   initialize_primobject_funk(time, days);

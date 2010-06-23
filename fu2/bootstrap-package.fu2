@@ -124,12 +124,18 @@
 
 [defunk package-load [name]
   [let [[package [lookup-package name]]]
+    [mapc [funk [package_dependency]
+		[package-load_if_modified package_dependency]]
+	  [get package package_dependencies]]
     [mapc [funk [source_dependency]
 		[load [pathname-concat [get package pathname] source_dependency]]]
 	  [get package source_dependencies]]]]
 
 [defunk package-load_if_modified [name]
   [let [[package [lookup-package name]]]
+    [mapc [funk [package_dependency]
+		[package-load_if_modified package_dependency]]
+	  [get package package_dependencies]]
     [mapc [funk [source_dependency]
 		[load-if-modified [pathname-concat [get package pathname] source_dependency]]]
 	  [get package source_dependencies]]]]

@@ -418,6 +418,21 @@ def_primobject_1_slot(time, nanoseconds_since_1970);
 f2ptr f2__time__new(f2ptr cause, f2ptr nanoseconds_since_1970) {return f2time__new(cause, nanoseconds_since_1970);}
 def_pcfunk1(time__new, nanoseconds_since_1970, return f2__time__new(this_cause, nanoseconds_since_1970));
 
+boolean_t raw__time__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__time__is_type(cause, that)) {
+    return boolean__false;
+  }
+  return raw__eq(cause, f2__time__nanoseconds_since_1970(cause, this), f2__time__nanoseconds_since_1970(cause, that));
+}
+
+f2ptr f2__time__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__time__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2bool__new(raw__time__equals(cause, this, that));
+}
+def_pcfunk2(time__equals, this, that, return f2__time__equals(this_cause, this, that));
+
 u64 raw__time__years(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
   funk2_date_t funk2_date;
@@ -487,15 +502,6 @@ u64 raw__time__nanoseconds(f2ptr cause, f2ptr this) {
 
 f2ptr f2__time__nanoseconds(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__nanoseconds(cause, this));}
 def_pcfunk1(time__nanoseconds, this, return f2__time__nanoseconds(this_cause, this));
-
-f2ptr f2__time__equals(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__time__is_type(cause, this)) ||
-      (! raw__time__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__eq(cause, f2__time__nanoseconds_since_1970(cause, this), f2__time__nanoseconds_since_1970(cause, that));
-}
-def_pcfunk2(time__equals, this, that, return f2__time__equals(this_cause, this, that));
 
 f2ptr f2time__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2time__primobject_type__new(cause);

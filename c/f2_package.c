@@ -284,7 +284,7 @@ f2ptr raw__pathname__stat(f2ptr cause, f2ptr this) {
   this__str[this__length] = 0;
   
   struct stat buf;
-  if (stat(this__str, &buf) != 0) {
+  if (stat((char*)this__str, &buf) != 0) {
     char* error_str = "unknown error occurred.";
     switch(errno) {
     case EACCES:       error_str = "Search permission is denied for one of the directories in the path prefix of path.  (See also path_resolution(7).)"; break;

@@ -46,10 +46,8 @@
 				  `[let [[resource [get agency resource [quote ,name]]]]
 				     [have-apply resource call `[,this ,resource @args]]]]]
 	 [let [[resource [resource ,name [caller @args]
-				    [let [[caller-name [get caller name]]
-					  [this-name   [get this   name]]]
-				      [have trace_graph add_edge `called caller-name this-name]
-				      @body]]]]
+				    [have trace_graph add_edge `called [get caller name] [get this name]]
+				    @body]]]
 	   [have resources_frame add [quote ,name] resource]
 	   nil]]]]]
 

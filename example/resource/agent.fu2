@@ -29,11 +29,8 @@
   [have [get this agencies_frame] lookup name]]
 
 [deftypefunk agent execute call [agency_name resource_name :rest args]
-  [print 'dbg 0']
   [let [[agencies_frame [get this agencies_frame]]]
-    [print 'dbg 1']
     [let [[agency [have agencies_frame lookup agency_name]]]
-      [print 'dbg 2']
       [have-apply agency call [cons resource_name args]]]]]
 
 [defmetro defagency [agent name]

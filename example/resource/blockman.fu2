@@ -47,9 +47,7 @@
 
 [deftypefunk blockman execute step []
   [let [[agent [get this agent]]]
-    [print 'debug 0']
     [have agent call `physical `sense]
-    [print 'debug 1']
     ]]
 
 [defunk test-blockman []

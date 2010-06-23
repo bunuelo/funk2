@@ -331,6 +331,27 @@ f2ptr f2__pathname__stat(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(pathname__stat, this, return f2__pathname__stat(this_cause, this));
 
+f2ptr raw__getenv(f2ptr cause, f2ptr environment_variable) {
+  u64 environment_variable__length = raw__string__length(cause, environment_variable);
+  u8* environment_variable__str    = (u8*)alloca(environment_variable__length);
+  raw__string__str_copy(cause, environment_variable, environment_variable__str);
+  environment_variable__str[environment_variable__length] = 0;
+  
+  char* environment_value = getenv(environment_variable__str);
+  if (environment_value == NULL) {
+    return nil;
+  }
+  return new__string(cause, environment_value);
+}
+
+f2ptr f2__getenv(f2ptr cause, f2ptr environment_variable) {
+  if (! raw__string__is_type(cause, environment_variable)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__getenv(cause, environment_variable);
+}
+def_pcfunk1(getenv, environment_variable, return f2__getenv(this_cause, environment_variable));
+
 // **
 
 void f2__package__reinitialize_globalvars() {
@@ -369,15 +390,16 @@ void f2__package__initialize() {
   
   // pathname
   
-  f2__primcfunk__init__2(pathname__concat,                          this, that,          "Concatenates two paths and returns the result in a new path string.");
-  f2__primcfunk__init__1(pathnamelist__concat,                      this,                "Concatenates a list of paths and returns the result in a new path string.");
-  f2__primcfunk__init__1(pathname__is_absolute,                     this,                "Returns true if pathname represents an absolute path.");
-  f2__primcfunk__init__1(pathname__directory_pathname,              this,                "Returns the directory part of a path.");
-  f2__primcfunk__init__1(pathname__scan_for_filenames,              pathname,            "Scans a directory name and returns all filenames.");
-  f2__primcfunk__init__2(pathname__scan_for_filenames_by_extension, pathname, extension, "Scans a directory name and returns all filenames that match the given extension.");
-  f2__primcfunk__init__0(current_working_directory,                                      "Returns a string representing the current working directory name.");
-  f2__primcfunk__init__1(pathname__as__absolute_pathname,           this,                "Returns an absolute pathname for this pathname.");
-  f2__primcfunk__init__1(pathname__stat,                            this,                "Returns a frame with stat info about this pathname.");
+  f2__primcfunk__init__2(pathname__concat,                          this, that,           "Concatenates two paths and returns the result in a new path string.");
+  f2__primcfunk__init__1(pathnamelist__concat,                      this,                 "Concatenates a list of paths and returns the result in a new path string.");
+  f2__primcfunk__init__1(pathname__is_absolute,                     this,                 "Returns true if pathname represents an absolute path.");
+  f2__primcfunk__init__1(pathname__directory_pathname,              this,                 "Returns the directory part of a path.");
+  f2__primcfunk__init__1(pathname__scan_for_filenames,              pathname,             "Scans a directory name and returns all filenames.");
+  f2__primcfunk__init__2(pathname__scan_for_filenames_by_extension, pathname, extension,  "Scans a directory name and returns all filenames that match the given extension.");
+  f2__primcfunk__init__0(current_working_directory,                                       "Returns a string representing the current working directory name.");
+  f2__primcfunk__init__1(pathname__as__absolute_pathname,           this,                 "Returns an absolute pathname for this pathname.");
+  f2__primcfunk__init__1(pathname__stat,                            this,                 "Returns a frame with stat info about this pathname.");
+  f2__primcfunk__init__1(getenv,                                    environment_variable, "Returns the environment definition of the given string variable or returns nil if the variable is not defined.");
   
 }
 

@@ -27,4 +27,5 @@
 [globalize-funk current_working_directory                &primfunk:current_working_directory]
 [globalize-funk pathname-as-absolute_pathname            &primfunk:pathname__as__absolute_pathname]
 [globalize-funk pathname-stat                            &primfunk:pathname__stat]
+[globalize-funk getenv                                   &primfunk:getenv]
 

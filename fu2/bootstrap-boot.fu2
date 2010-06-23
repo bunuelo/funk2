@@ -21,7 +21,7 @@
 
 [globalize user-boot-commands nil]
 
-[defunk boot []
+[defunk post_userfile_init_boot []
   [if user-boot-commands
       [mapc [funk [user-boot-command]
 		  [format stdout '\nuser-boot-command: ' user-boot-command]
@@ -35,8 +35,11 @@
 	  '\n**                     **'
 	  '\n*************************'
 	  '\n']
-  [repl]
-  ]
+  [repl]]
+
+[defunk boot []
+  [shelter [load [pathname-concat [getenv 'HOME'] '.funk2rc']]]
+  [post_userfile_init_boot]]
 
 [defunk boot-add_user_command [user_command]
   [mutate user-boot-commands [append user-boot-commands

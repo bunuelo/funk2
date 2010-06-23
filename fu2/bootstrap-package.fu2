@@ -137,3 +137,6 @@
 [defmetro require [name]
   `[package-load_if_modified [quote ,name]]]
 
+[defmetro load-package [name]
+  `[package-load [quote ,name]]]
+

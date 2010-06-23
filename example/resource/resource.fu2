@@ -62,9 +62,9 @@
   this]
 
 [defmetro resource [name args :rest body]
-  `[let [[this [new resource [quote ,name] nil]]]
-     [set this active_funk [funk ,args @body]]
-     this]]
+  `[let [[this-resource [new resource [quote ,name] nil]]]
+     [set this-resource active_funk [funk ,args @body]]
+     this-resource]]
 
 [deftypefunk resource execute activate [:rest args]
   [let [[successful_activation nil]

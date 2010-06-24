@@ -28,7 +28,7 @@ f2ptr __compile__exception = -1;
 f2ptr __cause__compiled_from__symbol = -1;
 f2ptr f2cause__compiled_from__new(f2ptr cause, f2ptr name, f2ptr args) {
   release__assert(__cause__compiled_from__symbol != -1, nil, "cause-compiled_from error: used before symbol defined.");
-  return nil;
+  return cause;
   //return f2cause__new(cause, nil, nil, __cause__compiled_from__symbol, f2cons__new(cause, name, args));
 }
 

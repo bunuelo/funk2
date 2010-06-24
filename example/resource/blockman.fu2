@@ -40,7 +40,7 @@
       [format stdout '\n  move_to ' position]]
     [defresource agent physical sense []
       [format stdout '\n  sense']
-      `[test]
+      [test]
       [have this add `sensory_state [isis-call isis_world_client sense agent isis_agent_name]]
       ]
     ]

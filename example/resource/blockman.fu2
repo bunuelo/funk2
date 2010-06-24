@@ -49,7 +49,7 @@
 
 [deftypefunk blockman execute step []
   [let [[agent [get this agent]]]
-    [have agent call `physical `sense]
+    [have agent call `physical `move_to 'knife']
     ]]
 
 [defunk test-blockman []

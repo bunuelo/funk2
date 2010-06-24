@@ -480,7 +480,8 @@
      [while [not [or [get fiber is_complete] [get fiber paused]]]
        [millisleep 10]]
      [if [eq result `sheltered]
-	 [get fiber value]]]]
+	 [get fiber value]
+       result]]]
 
 [defmetro cause-defunk [name args :rest body]
   `[have [this-cause] define-funk [quote ,name] [funk ,args @body]]]

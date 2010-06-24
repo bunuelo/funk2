@@ -248,6 +248,9 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
     return f2larva__new(cause, 1, nil);
   }
   f2ptr filenames = f2__pathname__scan_for_filenames(cause, pathname);
+  if (raw__larva__is_type(cause, filenames)) {
+    return filenames;
+  }
   
   u64 extension__length = raw__string__length(cause, extension);
   u8* extension__str    = (u8*)alloca(extension__length + 1);

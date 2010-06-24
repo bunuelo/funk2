@@ -1325,7 +1325,6 @@ int f2__fiber__bytecode__copy(f2ptr fiber, f2ptr bytecode, f2ptr src_reg, f2ptr 
 
 int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var) {
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
-  f2ptr env   = f2fiber__env(fiber, cause);
 #ifdef DEBUG_BYTECODES
   {
     u64 var_len;

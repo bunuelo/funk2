@@ -1341,17 +1341,7 @@ int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type
     bytecode_status("bytecode lookup_type_var beginning.  var=%s env=%s", var_str, env ? "<non-nil>" : "nil");
   }
 #endif // DEBUG_BYTECODES  
-  f2ptr fiber_value = f2__environment__lookup_type_var_value(cause, env, type, var);
-  if (raw__larva__is_type(cause, fiber_value)) {
-    fiber_value = f2__cause__lookup_type_var_value(cause, cause, type, var);
-  }
-  if (raw__larva__is_type(cause, fiber_value)) {
-    f2ptr bug_frame = f2__frame__new(cause, nil);
-    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "undefined_variable_type"), type);
-    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "undefined_variable"),      var);
-    u64 larva_type = f2larva__larva_type(fiber_value, cause);
-    fiber_value = f2larva__new(cause, larva_type, f2__bug__new(cause, f2integer__new(cause, larva_type), bug_frame));
-  }
+  f2ptr fiber_value = f2__fiber__lookup_type_variable_value(cause, fiber, type, var);
   f2__fiber__increment_pc(fiber, cause);
   f2fiber__value__set(fiber, cause, fiber_value);
   bytecode_status("bytecode lookup_type_var ending.  fiber_value=%s", fiber_value ? "<non-nil>" : "nil");

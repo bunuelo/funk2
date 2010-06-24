@@ -1620,7 +1620,6 @@ f2ptr f2__string__read(f2ptr cause, f2ptr this) {
   return raw__string__read(cause, this);
 }
 
-
 // **
 
 void f2__primcfunks__reinitialize_globalvars() {

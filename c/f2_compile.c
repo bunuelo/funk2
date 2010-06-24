@@ -942,7 +942,8 @@ f2ptr   f2__compile__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr exps, b
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__funkvar_call__symbol, exps);
   
   f2ptr funkvar = f2cons__car(exps, cause);
-  f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2fiber__env(fiber, cause), funkvar);
+  //f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2fiber__env(fiber, cause), funkvar);
+  f2ptr funkvar_value = f2__fiber__lookup_type_variable_value(cause, fiber, __funk2.primobject__frame.funk_variable__symbol, car);
   if (raw__metrocfunk__is_type(cause, funkvar_value)) {
     f2ptr exp_bcs = raw__compile(cause, fiber, f2__metrocfunk__apply(cause, funkvar_value, fiber, f2cons__cdr(exps, cause)), boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
     if (raw__larva__is_type(cause, exp_bcs)) {
@@ -1240,7 +1241,9 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__cons_exp__symbol, f2cons__new(simple_cause, exp, nil));
   
   f2ptr car = f2cons__car(exp, cause);
-  f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2fiber__env(fiber, cause), car);
+  //f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2fiber__env(fiber, cause), car);
+  f2ptr funkvar_value = f2__fiber__lookup_type_variable_value(cause, fiber, __funk2.primobject__frame.funk_variable__symbol, car);
+  
   if (raw__metro__is_type(cause, funkvar_value)) {return raw__compile(cause, fiber, raw__apply_metro(cause, fiber, funkvar_value, f2cons__cdr(exp, cause)), boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);}
   if (f2__is_compile_special_symbol(cause, car)) {return bcs_valid(f2__compile__special_symbol_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   if (raw__symbol__is_type(cause, car))          {return bcs_valid(f2__compile__funkvar_call(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}

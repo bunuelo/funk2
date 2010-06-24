@@ -28,6 +28,22 @@ f2ptr __fiber__args_reg__symbol;
 f2ptr __fiber__return_reg__symbol;
 f2ptr __fiber__value_reg__symbol;
 
+f2ptr f2__fiber__lookup_type_variable_value(f2ptr cause, f2ptr fiber, f2ptr type, f2ptr variable) {
+  f2ptr env   = f2fiber__env(fiber, cause);
+  f2ptr value = f2__environment__lookup_type_var_value(cause, env, type, variable);
+  if (raw__larva__is_type(cause, value)) {
+    value = f2__cause__lookup_type_var_value(cause, cause, type, variable);
+  }
+  if (raw__larva__is_type(cause, value)) {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "undefined_variable_type"), type);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "undefined_variable"),      variable);
+    u64 larva_type = f2larva__larva_type(value, cause);
+    return f2larva__new(cause, larva_type, f2__bug__new(cause, f2integer__new(cause, larva_type), bug_frame));
+  }
+  return value;
+}
+
 boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
   debug__assert(raw__fiber__is_type(nil, fiber), nil, "fiber type assertion failed.");
   debug__assert(raw__bytecode__is_type(nil, bytecode), nil, "bytecode type assertion failed.");

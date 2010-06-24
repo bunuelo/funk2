@@ -943,7 +943,7 @@ f2ptr   f2__compile__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr exps, b
   
   f2ptr funkvar = f2cons__car(exps, cause);
   //f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2fiber__env(fiber, cause), funkvar);
-  f2ptr funkvar_value = f2__fiber__lookup_type_variable_value(cause, fiber, __funk2.primobject__frame.funk_variable__symbol, car);
+  f2ptr funkvar_value = f2__fiber__lookup_type_variable_value(cause, fiber, __funk2.primobject__frame.funk_variable__symbol, funkvar);
   if (raw__metrocfunk__is_type(cause, funkvar_value)) {
     f2ptr exp_bcs = raw__compile(cause, fiber, f2__metrocfunk__apply(cause, funkvar_value, fiber, f2cons__cdr(exps, cause)), boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
     if (raw__larva__is_type(cause, exp_bcs)) {

@@ -116,38 +116,38 @@
 					    nil
 					    nil]]
 
-[globalize-funk metro [make-metro `metro `[name args :rest body]
-				  `[[define demetroed    [exps-demetropolize_full body]]
-				    [define compiled_funk [make-funk name args
-								     demetroed
-								     body
-								     nil
-								     nil
-								     nil]]
-				    [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
-				    [define is_funktional [primfunk:array__elt compiled_funk 10]]
-				    `[make-metro [quote ,name] [quote ,args]
-						 [quote ,demetroed]
-						 [quote ,body]
-						 [quote ,compiled_bcs]
-						 ,is_funktional
-						 nil]]
-				   nil
-				   nil
-				   nil
-				   nil]]
+[globalize-funk metro-unlabeled [make-metro `metro-unlabeled `[name args :rest body]
+					     `[[define demetroed    [exps-demetropolize_full body]]
+					       [define compiled_funk [make-funk name args
+										demetroed
+										body
+										nil
+										nil
+										nil]]
+					       [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
+					       [define is_funktional [primfunk:array__elt compiled_funk 10]]
+					       `[make-metro [quote ,name] [quote ,args]
+							    [quote ,demetroed]
+							    [quote ,body]
+							    [quote ,compiled_bcs]
+							    ,is_funktional
+							     nil]]
+					      nil
+					      nil
+					      nil
+					      nil]]
 
 [globalize-funk defmetro
-		[metro `defmetro [name args :rest body]
-		       [exp-format stdout '\n'] [exp-format stdout `[defmetro ,name ,args]]
-		       `[globalize-funk ,name [metro ,name ,args
-						      @body]]]]
+		[metro-unlabeled `defmetro [name args :rest body]
+				  [exp-format stdout '\n'] [exp-format stdout `[defmetro ,name ,args]]
+				  `[globalize-funk ,name [metro-unlabeled ,name ,args
+									   @body]]]]
 
 [globalize-funk defmetro-local
-		[metro `defmetro-local [name args :rest body]
-			[exp-format stdout '\n'] [exp-format stdout `[defmetro-local ,name ,args]]
-			`[define-funk ,name [metro ,name ,args
-						    @body]]]]
+		[metro-unlabeled `defmetro-local [name args :rest body]
+				  [exp-format stdout '\n'] [exp-format stdout `[defmetro-local ,name ,args]]
+				  `[define-funk ,name [metro-unlabeled ,name ,args
+									@body]]]]
 
 [defmetro prog [:rest body]
   `[funk-apply [funk-unlabeled prog []
@@ -166,6 +166,10 @@
 [defmetro funk [args :rest body]
   `[funk-unlabeled funk ,args
 		   @body]]
+
+[defmetro metro [args :rest body]
+  `[metro-unlabeled metro ,args
+		    @body]]
 
 `[exp-format stdout '\ndefining defunk\n']
 
@@ -483,8 +487,11 @@
 	 [get fiber value]
        result]]]
 
+[defmetro cause-define-funk [name value]
+  `[have [this-cause] define-funk [quote ,name] ,value]]
+
 [defmetro cause-defunk [name args :rest body]
-  `[have [this-cause] define-funk [quote ,name] [funk ,args @body]]]
+  `[cause-define-funk ,name [funk ,args @body]]]
 
 [defmetro cause-define [name value]
   `[have [this-cause] define [quote ,name] ,value]]

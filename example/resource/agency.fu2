@@ -45,6 +45,7 @@
 	 [define-funk call [metro [name :rest args]
 				  `[let [[resource [get agency resource [quote ,name]]]]
 				     [have-apply resource call `[,[the-resource] ,resource @args]]]]]
+	 [define-funk test [metro [] `[print 'hi']]]
 	 [let [[resource [resource ,name [caller @args]
 				    [have trace_graph add_edge `called [get caller name] [get this-resource name]]
 				    @body]]]

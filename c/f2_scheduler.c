@@ -367,7 +367,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
       } else {
 	//f2__fiber__print(cause, nil, fiber);
 	char status_msg[1024];
-	sprintf(status_msg, 1023, "larva found in fiber and fiber has no critics, so doing nothing.");
+	snprintf(status_msg, 1023, "larva found in fiber and fiber has no critics, so doing nothing.");
 	status(status_msg);
       }
     }

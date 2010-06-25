@@ -47,6 +47,14 @@
     ]
   this]
 
+[deftypefunk blockman get agency [name]
+  [let [[agent [get this agent]]]
+    [get agent agency name]]]
+
+[deftypefunk blockman get resource [agency_name resource_name]
+  [let [[agency [get this agency agency_name]]]
+    [get agency resource resource_name]]]
+
 [deftypefunk blockman execute step []
   [let [[agent [get this agent]]]
     [have agent call `physical `move_to 'knife']

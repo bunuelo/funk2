@@ -1,0 +1,3 @@
+[defpackage isis_toast
+            :packages [isis_world resource]
+            :sources  ['isis_toast.fu2']]

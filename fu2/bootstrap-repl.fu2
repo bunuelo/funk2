@@ -95,47 +95,47 @@
 
 [define -current_env_name- `global-environment]
 
-[globalize-funk funk-unlabeled [make-metro `funk-unlabeled `[name args :rest body]
-					   `[[define demetroed    [exps-demetropolize_full body]]
-					     [define compiled_funk [make-funk name args
-									      demetroed
-									      body
-									      nil
-									      nil
-									      nil]]
-					     [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
-					     [define is_funktional [primfunk:array__elt compiled_funk 10]]
-					     `[make-funk [quote ,name] [quote ,args]
-							  [quote ,demetroed]
-							  [quote ,body]
-							  [quote ,compiled_bcs]
-							  ,is_funktional
-							  nil]]
-					    nil
-					    nil
-					    nil
-					    nil]]
+[globalize-funk funk-unlabeled [metro-new_in_current_environment `funk-unlabeled `[name args :rest body]
+								  `[[define demetroed    [exps-demetropolize_full body]]
+								    [define compiled_funk [funk-new_in_current_environment name args
+															   demetroed
+															   body
+															   nil
+															   nil
+															   nil]]
+								    [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
+								    [define is_funktional [primfunk:array__elt compiled_funk 10]]
+								    `[funk-new_in_current_environment [quote ,name] [quote ,args]
+												      [quote ,demetroed]
+												      [quote ,body]
+												      [quote ,compiled_bcs]
+												      ,is_funktional
+												       nil]]
+								   nil
+								   nil
+								   nil
+								   nil]]
 
-[globalize-funk metro-unlabeled [make-metro `metro-unlabeled `[name args :rest body]
-					     `[[define demetroed    [exps-demetropolize_full body]]
-					       [define compiled_funk [make-funk name args
-										demetroed
-										body
-										nil
-										nil
-										nil]]
-					       [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
-					       [define is_funktional [primfunk:array__elt compiled_funk 10]]
-					       `[make-metro [quote ,name] [quote ,args]
-							    [quote ,demetroed]
-							    [quote ,body]
-							    [quote ,compiled_bcs]
-							    ,is_funktional
-							     nil]]
-					      nil
-					      nil
-					      nil
-					      nil]]
+[globalize-funk metro-unlabeled [metro-new_in_current_environment `metro-unlabeled `[name args :rest body]
+								   `[[define demetroed    [exps-demetropolize_full body]]
+								     [define compiled_funk [funk-new_in_current_environment name args
+															    demetroed
+															    body
+															    nil
+															    nil
+															    nil]]
+								     [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
+								     [define is_funktional [primfunk:array__elt compiled_funk 10]]
+								     `[metro-new_in_current_environment [quote ,name] [quote ,args]
+													[quote ,demetroed]
+													[quote ,body]
+													[quote ,compiled_bcs]
+													,is_funktional
+													 nil]]
+								    nil
+								    nil
+								    nil
+								    nil]]
 
 [globalize-funk defmetro
 		[metro-unlabeled `defmetro [name args :rest body]
@@ -190,12 +190,12 @@
 
 
 [defunk eval [exp]
-  [funk-apply [make-funk `eval []
-			 [cons exp nil]
-			 [cons exp nil]
-			 nil
-			 nil
-			 nil]
+  [funk-apply [funk-new_in_current_environment `eval []
+						[cons exp nil]
+						[cons exp nil]
+						nil
+						nil
+						nil]
 	      nil]]
 
 `[exp-format stdout '\ndone defining eval\n']

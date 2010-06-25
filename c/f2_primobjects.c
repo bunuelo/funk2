@@ -268,6 +268,26 @@ def_primobject_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documenta
 f2ptr f2__cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {return f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);}
 def_pcfunk6(cfunk__new, name, args, cfunkptr, env, is_funktional, documentation, return f2__cfunk__new(this_cause, name, args, cfunkptr, env, is_funktional, documentation));
 
+f2ptr f2__cfunk__apply(f2ptr cause, f2ptr cfunk, f2ptr fiber, f2ptr args) {
+  release__assert(raw__cfunk__is_type(cause, cfunk),        nil, "cfunk failed type assertion.");
+  release__assert(raw__fiber__is_type(cause, fiber),        nil, "fiber failed type assertion.");
+  release__assert(!args || raw__cons__is_type(cause, args), nil, "args failed type assertion.");
+  if (!f2cfunk__cfunkptr(cfunk, cause)) {
+    printf("\ncfunk-apply error: cfunkptr object was null for cfunk.");
+    return f2larva__new(cause, 1, nil);
+    //return f2__argument_type_check_failure__exception__new(cause, cfunk);
+  }
+  ptr cfunk_ptr = f2pointer__p(f2cfunk__cfunkptr(cfunk, cause), cause);
+  if (!cfunk_ptr) {
+    printf("\ncfunk-apply error: cfunk_ptr was null for cfunk.");
+    return f2larva__new(cause, 1, nil);
+    //return f2__argument_type_check_failure__exception__new(cause, cfunk);
+  }
+  return ((cfunkptr_t)(relative_ptr__to__raw_executable(cfunk_ptr)))(cause, fiber, f2cfunk__env(cfunk, cause), args);
+}
+def_pcfunk3(cfunk__apply, x, y, z, return f2__cfunk__apply(this_cause, x, y, z));
+
+
 // metrocfunk
 
 def_primobject_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation);
@@ -275,6 +295,13 @@ def_primobject_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, docu
 f2ptr f2__metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {return f2metrocfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);}
 def_pcfunk6(metrocfunk__new, name, args, cfunkptr, env, is_funktional, documentation, return f2__metrocfunk__new(this_cause, name, args, cfunkptr, env, is_funktional, documentation));
 
+f2ptr f2__metrocfunk__apply(f2ptr cause, f2ptr metrocfunk, f2ptr fiber, f2ptr args) {
+  release__assert(raw__metrocfunk__is_type(cause, metrocfunk), nil, "metrocfunk failed type assertion.");
+  release__assert(raw__fiber__is_type(cause, fiber),           nil, "fiber failed type assertion.");
+  release__assert(raw__cons__is_type(cause, args),             nil, "args failed type assertion.");
+  return ((cfunkptr_t)relative_ptr__to__raw_executable(f2pointer__p(f2metrocfunk__cfunkptr(metrocfunk, cause), cause)))(cause, fiber, f2metrocfunk__env(metrocfunk, cause), args);
+}
+def_pcfunk3(metrocfunk__apply, x, y, z, return f2__metrocfunk__apply(this_cause, x, y, z));
 
 
 // funk
@@ -286,6 +313,17 @@ f2ptr f2__funk__new(f2ptr cause) {
 }
 def_pcfunk0(funk__new, return f2__funk__new(this_cause));
 
+f2ptr f2__funk__new_in_current_environment(f2ptr cause, f2ptr fiber, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
+  f2ptr funk   = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, f2fiber__env(fiber, cause), nil, is_funktional, documentation);
+  f2ptr result = f2__compile__funk(cause, fiber, funk);
+  if (raw__larva__is_type(cause, result)) {
+    return result;
+  }
+  //f2funk__machine_code__set(funk, this_cause, f2chunk__new_compiled_from_funk(this_cause, funk));
+  return funk;
+}
+def_pcfunk7(funk__new_in_current_environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__funk__new_in_current_environment(this_cause, simple_fiber, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
+
 
 // metro
 
@@ -295,6 +333,20 @@ f2ptr f2__metro__new(f2ptr cause) {
   return f2metro__new(cause, nil, nil, nil, nil, nil, nil, nil, nil, nil);
 }
 def_pcfunk0(metro__new, return f2__metro__new(this_cause));
+
+f2ptr f2__metro__new_in_current_environment(f2ptr cause, f2ptr fiber, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
+  f2ptr metro  = f2metro__new(cause, name, bytecodes, args, demetropolized_body, body, f2fiber__env(fiber, cause), nil, is_funktional, documentation);
+  f2ptr result = f2__compile__metro(cause, fiber, metro);
+  if (raw__larva__is_type(cause, result)) {
+    return result;
+  }
+  
+  // metro machine code compiling bug...  temporarily disabled.
+  //f2metro__machine_code__set(metro, this_cause, f2chunk__new_compiled_from_metro(this_cause, metro));
+  
+  return metro;
+}
+def_pcfunk7(metro__new_in_current_environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__metro__new_in_current_environment(this_cause, simple_fiber, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
 
 
 // exception
@@ -617,7 +669,7 @@ void f2__primobjects__initialize() {
   // doublelink
   
   initialize_primobject_3_slot(doublelink, prev, next, value);
-
+  
   // imagination_link
   
   initialize_primobject_5_slot(imagination_link, next, name, value, trace, imagination_frame);
@@ -626,17 +678,28 @@ void f2__primobjects__initialize() {
   
   initialize_primobject_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation);
   
+  f2__primcfunk__init__3(cfunk__apply, x, y, z, "");
+  
   // metrocfunk
   
   initialize_primobject_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation);
+  
+  f2__primcfunk__init__3(metrocfunk__apply, x, y, z, "");
+  
   
   // funk
   
   initialize_primobject_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
   
+  f2__primcfunk__init(funk__new_in_current_environment, "");
+  
+  
   // metro
   
   initialize_primobject_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
+  
+  f2__primcfunk__init(metro__new_in_current_environment, "");
+  
   
   // exception
   

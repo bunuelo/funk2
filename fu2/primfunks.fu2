@@ -38,8 +38,6 @@
 [globalize-funk time                                        &primfunk:time]
 [globalize-funk sleep_for_nanoseconds_without_yield         &primfunk:sleep_for_nanoseconds_without_yield]
 
-[globalize-funk make-funk                                   &primfunk:make_funk]
-[globalize-funk make-metro                                  &primfunk:make_metro]
 [globalize-funk fiber_parallel                              &primfunk:fiber_parallel]
 [globalize-funk fiber-imagine                               &primfunk:fiber__imagine]
 

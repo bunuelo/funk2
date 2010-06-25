@@ -1,3 +1,4 @@
 [defpackage divisi2
-	    :sources ['divisi2.fu2']]
+  :packages []
+  :sources ['divisi2.fu2']]
 

@@ -129,6 +129,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__source_expression__slot_t      primobject_type_source_expression;
   funk2_object_type__source__slot_t                 primobject_type_source;
   funk2_object_type__package__slot_t                primobject_type_package;
+  funk2_object_type__bruno_graph_node__slot_t       primobject_type_bruno_graph_node;
 };
 
 // **

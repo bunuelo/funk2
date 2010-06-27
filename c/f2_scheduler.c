@@ -183,8 +183,8 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
       if (raw__frame__is_type(cause, bug_frame)) {
 	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fiber"), fiber);
       }
-      //printf("\nbug: ");
-      //f2__print(cause, bug);
+      printf("\nbug: ");
+      f2__print(cause, bug);
       f2fiber__value__set(fiber, cause, bug);
     }
     resume_gc();

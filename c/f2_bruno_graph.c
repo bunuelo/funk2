@@ -139,6 +139,19 @@ f2ptr f2__bruno_decomposition_lattice_node__new(f2ptr cause, f2ptr parent_graph,
 def_pcfunk4(bruno_decomposition_lattice_node__new, parent_graph, left_child_graph, right_child_graph, edges, return f2__bruno_decomposition_lattice_node__new(this_cause, parent_graph, left_child_graph, right_child_graph, edges));
 
 
+// bruno_decomposition_lattice
+
+def_primobject_3_slot(bruno_decomposition_lattice, node_parent_hash, node_left_child_hash, node_right_child_hash);
+
+f2ptr f2__bruno_decomposition_lattice__new(f2ptr cause) {
+  f2ptr node_parent_hash      = f2__ptypehash__new(cause);
+  f2ptr node_left_child_hash  = f2__ptypehash__new(cause);
+  f2ptr node_right_child_hash = f2__ptypehash__new(cause);
+  return f2bruno_decomposition_lattice__new(cause, node_parent_hash, node_left_child_hash, node_right_child_hash);
+}
+def_pcfunk0(bruno_decomposition_lattice__new, return f2__bruno_decomposition_lattice__new(this_cause));
+
+
 // **
 
 void f2__bruno_graph__reinitialize_globalvars() {
@@ -150,6 +163,7 @@ void f2__bruno_graph__reinitialize_globalvars() {
   __bruno_graph_edge__symbol                 = new__symbol(cause, "bruno_graph_edge");
   __bruno_graph__symbol                      = new__symbol(cause, "bruno_graph");
   __bruno_decomposition_lattice_node__symbol = new__symbol(cause, "bruno_decomposition_lattice_node");
+  __bruno_decomposition_lattice__symbol      = new__symbol(cause, "bruno_decomposition_lattice");
 }
 
 void f2__bruno_graph__initialize() {
@@ -172,6 +186,9 @@ void f2__bruno_graph__initialize() {
   
   // bruno_decomposition_lattice_node
   initialize_primobject_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, edges);
+  
+  // bruno_decomposition_lattice
+  initialize_primobject_3_slot(bruno_decomposition_lattice, node_parent_hash, node_left_child_hash, node_right_child_hash);
   
 }
 

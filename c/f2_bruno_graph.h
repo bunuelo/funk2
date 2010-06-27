@@ -48,7 +48,7 @@ declare_primobject_1_slot(bruno_graph_node, label);
 declare_primobject_3_slot(bruno_graph_edge, label, left_node, right_node);
 
 // bruno_graph
-declare_primobject_2_slot(bruno_graph, edge_left_node_hash, edge_right_node_hash);
+declare_primobject_4_slot(bruno_graph, node_set, edge_set, edge_left_node_hash, edge_right_node_hash);
 
 // **
 

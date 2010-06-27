@@ -43,7 +43,7 @@ def_pcfunk3(bruno_graph_edge__new, label, left_node, right_node, return f2__brun
 
 def_primobject_2_slot(bruno_graph, edge_left_node_hash, edge_right_node_hash);
 
-f2ptr f2__bruno_graph__new(f2ptr cause, f2ptr edge_left_node_hash, f2ptr edge_right_node_hash) {
+f2ptr f2__bruno_graph__new(f2ptr cause) {
   f2ptr edge_left_node_hash  = f2__ptypehash__new(cause);
   f2ptr edge_right_node_hash = f2__ptypehash__new(cause);
   return f2bruno_graph__new(cause, edge_left_node_hash, edge_right_node_hash);

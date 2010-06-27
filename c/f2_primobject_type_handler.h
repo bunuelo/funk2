@@ -40,6 +40,7 @@
 #include "f2_primobject__largeinteger.h"
 #include "f2_primobject__redblacktree.h"
 #include "f2_package.h"
+#include "f2_bruno_graph.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;

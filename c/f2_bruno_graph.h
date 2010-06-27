@@ -32,7 +32,7 @@ declare_object_type_3_slot(bruno_graph_edge, label, left_node, right_node, );
 
 // bruno_graph
 typedef struct funk2_object_type__bruno_graph__slot_s funk2_object_type__bruno_graph__slot_t;
-declare_object_type_2_slot(bruno_graph, edge_left_node_hash, edge_right_node_hash, );
+declare_object_type_4_slot(bruno_graph, node_set, edge_set, edge_left_node_hash, edge_right_node_hash, );
 
 #endif // F2__BRUNO_GRAPH__TYPE__H
 

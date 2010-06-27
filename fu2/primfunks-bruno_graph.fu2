@@ -19,4 +19,6 @@
 
 [globalize-funk bruno_graph-add_node     &primfunk:bruno_graph__add_node]
 [globalize-funk bruno_graph-add_new_node &primfunk:bruno_graph__add_new_node]
+[globalize-funk bruno_graph-add_edge     &primfunk:bruno_graph__add_edge]
+[globalize-funk bruno_graph-add_new_edge &primfunk:bruno_graph__add_new_edge]
 

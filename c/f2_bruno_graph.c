@@ -129,6 +129,19 @@ f2ptr f2__bruno_graph__add_new_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr 
 }
 def_pcfunk4(bruno_graph__add_new_edge, this, label, left_node, right_node, return f2__bruno_graph__add_new_edge(this_cause, this, label, left_node, right_node));
 
+
+// bruno_graph_isomorphism
+
+def_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);
+
+f2ptr f2__bruno_graph_isomorphism__new(f2ptr cause) {
+  f2ptr right_node_left_node_hash = f2__ptypehash__new(cause);
+  f2ptr left_node_right_node_hash = f2__ptypehash__new(cause);
+  return f2bruno_graph_isomorphism__new(cause, right_node_left_node_hash, left_node_right_node_hash);
+}
+def_pcfunk0(bruno_graph_isomorphism__new, return f2__bruno_graph_isomorphism__new(this_cause));
+
+
 // bruno_decomposition_lattice_node
 
 def_primobject_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, edges);
@@ -151,7 +164,6 @@ f2ptr f2__bruno_decomposition_lattice__new(f2ptr cause) {
 }
 def_pcfunk0(bruno_decomposition_lattice__new, return f2__bruno_decomposition_lattice__new(this_cause));
 
-
 // **
 
 void f2__bruno_graph__reinitialize_globalvars() {
@@ -162,6 +174,7 @@ void f2__bruno_graph__reinitialize_globalvars() {
   __bruno_graph_node__symbol                 = new__symbol(cause, "bruno_graph_node");
   __bruno_graph_edge__symbol                 = new__symbol(cause, "bruno_graph_edge");
   __bruno_graph__symbol                      = new__symbol(cause, "bruno_graph");
+  __bruno_graph_isomorphism__symbol          = new__symbol(cause, "bruno_graph_isomorphism");
   __bruno_decomposition_lattice_node__symbol = new__symbol(cause, "bruno_decomposition_lattice_node");
   __bruno_decomposition_lattice__symbol      = new__symbol(cause, "bruno_decomposition_lattice");
 }
@@ -183,6 +196,9 @@ void f2__bruno_graph__initialize() {
   f2__primcfunk__init__2(bruno_graph__add_new_node, this, label,                        "Add a new node to this bruno_graph.");
   f2__primcfunk__init__2(bruno_graph__add_edge,     this, edge,                         "Add a bruno_edge to this bruno_graph.");
   f2__primcfunk__init__4(bruno_graph__add_new_edge, this, label, left_node, right_node, "Add a new edge between two bruno_nodes to this bruno_graph.");
+  
+  // bruno_graph_isomorphism
+  initialize_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);
   
   // bruno_decomposition_lattice_node
   initialize_primobject_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, edges);

@@ -30,6 +30,15 @@ f2ptr f2__bruno_graph_node__new(f2ptr cause, f2ptr label) {
 }
 def_pcfunk1(bruno_graph_node__new, label, return f2__bruno_graph_node__new(this_cause, label));
 
+// bruno_graph_edge
+
+def_primobject_3_slot(bruno_graph_node, label, left_node, right_node);
+
+f2ptr f2__bruno_graph_node__new(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node) {
+  return f2bruno_graph_node__new(cause, label, left_node, right_node);
+}
+def_pcfunk3(bruno_graph_node__new, label, left_node, right_node, return f2__bruno_graph_node__new(this_cause, label, left_node, right_node));
+
 // **
 
 void f2__bruno_graph__reinitialize_globalvars() {
@@ -38,6 +47,7 @@ void f2__bruno_graph__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   __bruno_graph_node__symbol = new__symbol(cause, "bruno_graph_node");
+  __bruno_graph_edge__symbol = new__symbol(cause, "bruno_graph_edge");
 }
 
 void f2__bruno_graph__initialize() {
@@ -46,6 +56,9 @@ void f2__bruno_graph__initialize() {
   
   // bruno_graph_node
   initialize_primobject_1_slot(bruno_graph_node, label);
+  
+  // bruno_graph_edge
+  initialize_primobject_3_slot(bruno_graph_node, label, left_node, right_node);
   
 }
 

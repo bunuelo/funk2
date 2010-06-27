@@ -36,6 +36,9 @@ declare_object_type_1_slot(bruno_graph_node, label, );
 // bruno_graph_node
 declare_primobject_1_slot(bruno_graph_node, label);
 
+// bruno_graph_edge
+declare_primobject_3_slot(bruno_graph_edge, label, left_node, right_node);
+
 // **
 
 void f2__bruno_graph__initialize();

@@ -19,7 +19,9 @@
  rights to redistribute these changes.
 '
 
+[globalize-funk funk-new                         &primfunk:funk__new]
 [globalize-funk funk-new_in_current_environment  &primfunk:funk__new_in_current_environment]
+[globalize-funk metro-new                        &primfunk:metro__new]
 [globalize-funk metro-new_in_current_environment &primfunk:metro__new_in_current_environment]
 
 

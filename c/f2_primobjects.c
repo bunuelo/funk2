@@ -308,19 +308,19 @@ def_pcfunk3(metrocfunk__apply, x, y, z, return f2__metrocfunk__apply(this_cause,
 
 def_primobject_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
 
-f2ptr f2__funk__new(f2ptr cause) {
-  return f2funk__new(cause, nil, nil, nil, nil, nil, nil, nil, nil, nil);
-}
-def_pcfunk0(funk__new, return f2__funk__new(this_cause));
-
-f2ptr f2__funk__new_in_current_environment(f2ptr cause, f2ptr fiber, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
-  f2ptr funk   = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, f2fiber__env(fiber, cause), nil, is_funktional, documentation);
+f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
+  f2ptr funk   = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, environment, nil, is_funktional, documentation);
   f2ptr result = f2__compile__funk(cause, fiber, funk);
   if (raw__larva__is_type(cause, result)) {
     return result;
   }
   //f2funk__machine_code__set(funk, this_cause, f2chunk__new_compiled_from_funk(this_cause, funk));
   return funk;
+}
+def_pcfunk8(funk__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__funk__new(this_cause, simple_fiber, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
+
+f2ptr f2__funk__new_in_current_environment(f2ptr cause, f2ptr fiber, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
+  return f2__funk__new(cause, fiber, f2fiber__env(fiber, cause), name, args, demetropolized_body, body, bytecodes, is_funktional, documentation);
 }
 def_pcfunk7(funk__new_in_current_environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__funk__new_in_current_environment(this_cause, simple_fiber, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
 
@@ -329,13 +329,8 @@ def_pcfunk7(funk__new_in_current_environment, name, args, demetropolized_body, b
 
 def_primobject_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
 
-f2ptr f2__metro__new(f2ptr cause) {
-  return f2metro__new(cause, nil, nil, nil, nil, nil, nil, nil, nil, nil);
-}
-def_pcfunk0(metro__new, return f2__metro__new(this_cause));
-
-f2ptr f2__metro__new_in_current_environment(f2ptr cause, f2ptr fiber, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
-  f2ptr metro  = f2metro__new(cause, name, bytecodes, args, demetropolized_body, body, f2fiber__env(fiber, cause), nil, is_funktional, documentation);
+f2ptr f2__metro__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
+  f2ptr metro  = f2metro__new(cause, name, bytecodes, args, demetropolized_body, body, environment, nil, is_funktional, documentation);
   f2ptr result = f2__compile__metro(cause, fiber, metro);
   if (raw__larva__is_type(cause, result)) {
     return result;
@@ -345,6 +340,11 @@ f2ptr f2__metro__new_in_current_environment(f2ptr cause, f2ptr fiber, f2ptr name
   //f2metro__machine_code__set(metro, this_cause, f2chunk__new_compiled_from_metro(this_cause, metro));
   
   return metro;
+}
+def_pcfunk8(metro__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__metro__new(this_cause, simple_fiber, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
+
+f2ptr f2__metro__new_in_current_environment(f2ptr cause, f2ptr fiber, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
+  return f2__metro__new(cause, fiber, f2fiber__env(fiber, cause), name, args, demetropolized_body, body, bytecodes, is_funktional, documentation);
 }
 def_pcfunk7(metro__new_in_current_environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__metro__new_in_current_environment(this_cause, simple_fiber, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
 
@@ -691,14 +691,16 @@ void f2__primobjects__initialize() {
   
   initialize_primobject_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
   
-  f2__primcfunk__init(funk__new_in_current_environment, "");
+  f2__primcfunk__init__8(funk__new,                        environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, "");
+  f2__primcfunk__init__7(funk__new_in_current_environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation,              "");
   
   
   // metro
   
   initialize_primobject_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
   
-  f2__primcfunk__init(metro__new_in_current_environment, "");
+  f2__primcfunk__init__8(metro__new,                        environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, "");
+  f2__primcfunk__init__7(metro__new_in_current_environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation,              "");
   
   
   // exception

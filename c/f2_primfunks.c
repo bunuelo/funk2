@@ -1094,8 +1094,8 @@ f2ptr f2__demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp) {re
 def_pcfunk1(demetropolize_full, exp, return f2__demetropolize_full(this_cause, simple_fiber, simple_env, exp));
 
 def_pcfunk0(this__cause,  return this_cause);
-def_pcfunk0(this__fiber, return simple_fiber);
-def_pcfunk0(this__env,    return simple_env);
+def_pcfunk0(this__fiber,  return simple_fiber);
+def_pcfunk0(this__env,    return f2fiber__env(simple_fiber, this_cause));
 def_pcfunk0(this__args,   return simple_args);
 
 f2ptr f2__exps_demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp) {

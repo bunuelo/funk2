@@ -52,7 +52,31 @@ f2ptr f2__bruno_graph__new(f2ptr cause) {
 }
 def_pcfunk0(bruno_graph__new, return f2__bruno_graph__new(this_cause));
 
+f2ptr raw__bruno_graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
+  f2ptr node_set = f2__bruno_graph__node_set(cause, this);
+  return f2__set__add(cause, node_set, node);
+}
 
+f2ptr f2__bruno_graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
+  if (! raw__bruno_graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bruno_graph__add_node(cause, this, node);
+}
+def_pcfunk2(bruno_graph__add_node, this, node, return f2__bruno_graph__add_node(this_cause, this, node));
+
+f2ptr raw__bruno_graph__add_new_node(f2ptr cause, f2ptr this, f2ptr label) {
+  f2ptr node = f2__bruno_graph_node__new(cause, label);
+  return raw__bruno_graph__add_node(cause, this, node);
+}
+
+f2ptr f2__bruno_graph__add_new_node(f2ptr cause, f2ptr this, f2ptr label) {
+  if (! raw__bruno_graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bruno_graph__add_new_node(cause, this, label);
+}
+def_pcfunk2(bruno_graph__add_new_node, this, label, return f2__bruno_graph__add_new_node(this_cause, this, label));
 
 // **
 
@@ -78,6 +102,9 @@ void f2__bruno_graph__initialize() {
   
   // bruno_graph
   initialize_primobject_4_slot(bruno_graph, node_set, edge_set, edges_left_node_hash, edges_right_node_hash);
+  
+  f2__primcfunk__init__2(bruno_graph__add_node, this, node, "");
+  f2__primcfunk__init__2(bruno_graph__add_new_node, this, label, "");
   
 }
 

@@ -129,6 +129,16 @@ f2ptr f2__bruno_graph__add_new_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr 
 }
 def_pcfunk4(bruno_graph__add_new_edge, this, label, left_node, right_node, return f2__bruno_graph__add_new_edge(this_cause, this, label, left_node, right_node));
 
+// bruno_decomposition_lattice_node
+
+def_primobject_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, edges);
+
+f2ptr f2__bruno_decomposition_lattice_node__new(f2ptr cause, f2ptr parent_graph, f2ptr left_child_graph, f2ptr right_child_graph, f2ptr edges) {
+  return f2bruno_graph__new(cause, parent_graph, left_child_graph, right_child_graph, edges);
+}
+def_pcfunk4(bruno_decomposition_lattice_node__new, parent_graph, left_child_graph, right_child_graph, edges, return f2__bruno_decomposition_lattice_node__new(this_cause, parent_graph, left_child_graph, right_child_graph, edges));
+
+
 // **
 
 void f2__bruno_graph__reinitialize_globalvars() {
@@ -154,10 +164,13 @@ void f2__bruno_graph__initialize() {
   // bruno_graph
   initialize_primobject_4_slot(bruno_graph, node_set, edge_set, edges_left_node_hash, edges_right_node_hash);
   
-  f2__primcfunk__init__2(bruno_graph__add_node,     this, node, "");
-  f2__primcfunk__init__2(bruno_graph__add_new_node, this, label, "");
-  f2__primcfunk__init__2(bruno_graph__add_edge,     this, edge, "");
-  f2__primcfunk__init__4(bruno_graph__add_new_edge, this, label, left_node, right_node, "");
+  f2__primcfunk__init__2(bruno_graph__add_node,     this, node,                         "Add a bruno_node to this bruno_graph.");
+  f2__primcfunk__init__2(bruno_graph__add_new_node, this, label,                        "Add a new node to this bruno_graph.");
+  f2__primcfunk__init__2(bruno_graph__add_edge,     this, edge,                         "Add a bruno_edge to this bruno_graph.");
+  f2__primcfunk__init__4(bruno_graph__add_new_edge, this, label, left_node, right_node, "Add a new edge between two bruno_nodes to this bruno_graph.");
+  
+  // bruno_decomposition_lattice_node
+  initialize_primobject_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, edges);
   
 }
 

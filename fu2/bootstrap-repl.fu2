@@ -95,63 +95,63 @@
 
 [define -current_env_name- `global-environment]
 
-[globalize-funk funk-unlabeled [metro-new [this-env] `funk-unlabeled `[name args :rest body]
-					  `[[define demetroed     [exps-demetropolize_full body]]
-					    [define compiled_funk [funk-new [this-env] name args
-									    demetroed
-									    body
-									    nil
-									    nil
-									    nil]]
-					    [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
-					    [define is_funktional [primfunk:array__elt compiled_funk 10]]
-					    `[funk-new [this-env] [quote ,name] [quote ,args]
-						       [quote ,demetroed]
-						       [quote ,body]
-						       [quote ,compiled_bcs]
-						       ,is_funktional
-							nil]]
-					   nil
-					   nil
-					   nil
-					   nil]]
+[globalize-funk funk-new_with_name [metro-new [this-env] `funk-new_with_name `[name args :rest body]
+					      `[[define demetroed     [exps-demetropolize_full body]]
+						[define compiled_funk [funk-new [this-env] name args
+										demetroed
+										body
+										nil
+										nil
+										nil]]
+						[define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
+						[define is_funktional [primfunk:array__elt compiled_funk 10]]
+						`[funk-new [this-env] [quote ,name] [quote ,args]
+							   [quote ,demetroed]
+							   [quote ,body]
+							   [quote ,compiled_bcs]
+							   ,is_funktional
+							    nil]]
+					       nil
+					       nil
+					       nil
+					       nil]]
 
-[globalize-funk metro-unlabeled [metro-new [this-env] `metro-unlabeled `[name args :rest body]
-					   `[[define demetroed     [exps-demetropolize_full body]]
-					     [define compiled_funk [funk-new [this-env] name args
-									     demetroed
-									     body
-									     nil
-									     nil
-									     nil]]
-					     [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
-					     [define is_funktional [primfunk:array__elt compiled_funk 10]]
-					     `[metro-new [this-env] [quote ,name] [quote ,args]
-							 [quote ,demetroed]
-							 [quote ,body]
-							 [quote ,compiled_bcs]
-							 ,is_funktional
-							  nil]]
-					    nil
-					    nil
-					    nil
-					    nil]]
+[globalize-funk metro-new_with_name [metro-new [this-env] `metro-new_with_name `[name args :rest body]
+					       `[[define demetroed     [exps-demetropolize_full body]]
+						 [define compiled_funk [funk-new [this-env] name args
+										 demetroed
+										 body
+										 nil
+										 nil
+										 nil]]
+						 [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
+						 [define is_funktional [primfunk:array__elt compiled_funk 10]]
+						 `[metro-new [this-env] [quote ,name] [quote ,args]
+							     [quote ,demetroed]
+							     [quote ,body]
+							     [quote ,compiled_bcs]
+							     ,is_funktional
+							      nil]]
+						nil
+						nil
+						nil
+						nil]]
 
 [globalize-funk defmetro
-		[metro-unlabeled `defmetro [name args :rest body]
-				  [exp-format stdout '\n'] [exp-format stdout `[defmetro ,name ,args]]
-				  `[globalize-funk ,name [metro-unlabeled ,name ,args
-									   @body]]]]
+		[metro-new_with_name `defmetro [name args :rest body]
+				      [exp-format stdout '\n'] [exp-format stdout `[defmetro ,name ,args]]
+				      `[globalize-funk ,name [metro-new_with_name ,name ,args
+										   @body]]]]
 
 [globalize-funk defmetro-local
-		[metro-unlabeled `defmetro-local [name args :rest body]
-				  [exp-format stdout '\n'] [exp-format stdout `[defmetro-local ,name ,args]]
-				  `[define-funk ,name [metro-unlabeled ,name ,args
-									@body]]]]
+		[metro-new_with_name `defmetro-local [name args :rest body]
+				      [exp-format stdout '\n'] [exp-format stdout `[defmetro-local ,name ,args]]
+				      `[define-funk ,name [metro-new_with_name ,name ,args
+										@body]]]]
 
 [defmetro prog [:rest body]
-  `[funk-apply [funk-unlabeled prog []
-			       @body] []]]
+  `[funk-apply [funk-new_with_name prog []
+				   @body] []]]
 
 [defmetro apply [proc args]
   [define debug-apply nil]
@@ -164,26 +164,26 @@
     `[funk-apply ,proc ,args]]]
 
 [defmetro funk [args :rest body]
-  `[funk-unlabeled funk ,args
-		   @body]]
+  `[funk-new_with_name funk ,args
+		       @body]]
 
 [defmetro metro [args :rest body]
-  `[metro-unlabeled metro ,args
-		    @body]]
+  `[metro-new_with_name metro ,args
+			@body]]
 
 `[exp-format stdout '\ndefining defunk\n']
 
 [defmetro defunk [name args :rest body]
   [exp-format stdout '\n'] [exp-format stdout `[defunk ,name ,args]]
   `[globalize-funk ,name
-		    [funk-unlabeled ,name ,args
-				     @body]]]
+		    [funk-new_with_name ,name ,args
+					 @body]]]
 
 [defmetro defunk-local [name args :rest body]
   [exp-format stdout '\n'] [exp-format stdout `[defunk-local ,name ,args]]
   `[define-funk ,name
-     [funk-unlabeled ,name ,args
-		      @body]]]
+     [funk-new_with_name ,name ,args
+			  @body]]]
 
 `[exp-format stdout '\ndone defining defunk\n']
 `[exp-format stdout '\ndefining eval\n']
@@ -328,8 +328,8 @@
 
 [defmetro label [name args :rest body]
   `[define-funk ,name
-     [funk-unlabeled label ,args
-		     @body]]]
+     [funk-new_with_name label ,args
+			 @body]]]
 
 [defunk mapc [proc seq]
   [while seq
@@ -402,8 +402,8 @@
 
 [defmetro let [varpairs :rest body]
   [define let-vars [mapcar [funk [varpair] [car varpair]] varpairs]]
-  `[apply [funk-unlabeled let ,let-vars
-			  @body]
+  `[apply [funk-new_with_name let ,let-vars
+			      @body]
 	  [conslist @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]
 
 [defmetro parlet [varpairs :rest body]
@@ -622,10 +622,10 @@
 
 `[defmetro while [cond :rest body]
    `[prog [define-funk while-loop
-	    [funk-unlabeled while []
-			    [if ,cond
-				[prog [prog @body]
-				      [while-loop]]]]]
+	    [funk-new_with_name while []
+				[if ,cond
+				    [prog [prog @body]
+					  [while-loop]]]]]
 	  [while-loop]]]
 
 [defmetro funkall [funk :rest args]

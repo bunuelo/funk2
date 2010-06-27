@@ -31,7 +31,7 @@
   `[global_actions-lookup [quote ,name]]]
 
 [defmetro defaction [name args :rest body]
-  `[let [[this-action-funk [funk-unlabeled ,name ,args @body]]]
+  `[let [[this-action-funk [funk-new_with_name ,name ,args @body]]]
      [let [[this-action [action-new this-action-funk]]]
        [global_actions-add [quote ,name] this-action]
        [defunk ,name ,args

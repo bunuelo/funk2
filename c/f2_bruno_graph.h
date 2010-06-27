@@ -26,6 +26,10 @@
 typedef struct funk2_object_type__bruno_graph_node__slot_s funk2_object_type__bruno_graph_node__slot_t;
 declare_object_type_1_slot(bruno_graph_node, label, );
 
+// bruno_graph_edge
+typedef struct funk2_object_type__bruno_graph_edge__slot_s funk2_object_type__bruno_graph_edge__slot_t;
+declare_object_type_3_slot(bruno_graph_edge, label, left_node, right_node, );
+
 #endif // F2__BRUNO_GRAPH__TYPE__H
 
 #ifndef F2__BRUNO_GRAPH__H

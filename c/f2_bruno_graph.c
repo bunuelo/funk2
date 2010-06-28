@@ -154,7 +154,8 @@ f2ptr f2__bruno_graph_isomorphism__add_mapping(f2ptr cause, f2ptr this, f2ptr le
       (! raw__bruno_graph_node__is_type(cause, right_node))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__bruno_graph_isomorphism__add_mapping(cause, this, left_node, right_node);
+  raw__bruno_graph_isomorphism__add_mapping(cause, this, left_node, right_node);
+  return nil;
 }
 def_pcfunk3(bruno_graph_isomorphism__add_mapping, this, left_node, right_node, return f2__bruno_graph_isomorphism__add_mapping(this_cause, this, left_node, right_node));
 

@@ -294,6 +294,32 @@ f2ptr f2__bruno_graph__minus(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(bruno_graph__minus, this, that, return f2__bruno_graph__minus(this_cause, this, that));
 
+f2ptr raw__bruno_graph__node_isomorphisms(f2ptr cause, f2ptr this, f2ptr node) {
+  f2ptr isomorphisms = nil;
+  {
+    f2ptr node__label    = f2__bruno_graph_node__label(cause, node);
+    f2ptr this__node_set = f2__bruno_graph__node_set(cause, this);
+    set__iteration(cause, this__node_set, this__node,
+		   f2ptr this__node__label = f2__bruno_graph_node__label(cause, this__node);
+		   if (raw__eq(cause, node__label, this__node__label)) {
+		     f2ptr isomorphism = f2__bruno_graph_isomorphism__new(cause);
+		     f2__isomorphism__add_mapping(cause, isomorphism, node, this__node);
+		     isomorphisms = f2__cons__new(cause, isomorphism, isomorphisms);
+		   }
+		   );
+  }
+  return isomorphisms;
+}
+
+f2ptr f2__bruno_graph__node_isomorphisms(f2ptr cause, f2ptr this, f2ptr node) {
+  if ((! raw__bruno_graph__is_type(cause, this)) ||
+      (! raw__bruno_graph_node__is_type(cause, node))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bruno_graph__node_isomorphisms(cause, this, node);
+}
+def_pcfunk2(bruno_graph__node_isomorphisms, this, node, return f2__bruno_graph__node_isomorphisms(this_cause, this, node));
+
 
 // bruno_graph_isomorphism
 
@@ -485,6 +511,7 @@ void f2__bruno_graph__initialize() {
   f2__primcfunk__init__2(bruno_graph__contains,                        this, graph,                        "Returns true if this bruno_graph contains a bruno_graph as a subgraph.");
   f2__primcfunk__init__1(bruno_graph__random_nonempty_strict_subgraph, this,                               "When this bruno_graph contains N nodes, returns a random subgraph with N/2 nodes.  This bruno_graph must have at least 2 nodes.");
   f2__primcfunk__init__2(bruno_graph__minus,                           this, that,                         "Returns a subgraph of this bruno_graph without the nodes in that bruno_graph.");
+  f2__primcfunk__init__2(bruno_graph__node_isomorphisms,               this, node,                         "Returns all single node isomorphisms between this bruno_graph and a bruno_graph_node.");
   
   // bruno_graph_isomorphism
   initialize_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);

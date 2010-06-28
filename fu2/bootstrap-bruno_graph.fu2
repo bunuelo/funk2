@@ -27,6 +27,7 @@
 [deftypefunk bruno_graph get     contains                        [graph]                      [bruno_graph-contains                        this graph]]
 [deftypefunk bruno_graph get     random_nonempty_strict_subgraph []                           [bruno_graph-random_nonempty_strict_subgraph this]]
 [deftypefunk bruno_graph get     minus                           [that]                       [bruno_graph-minus                           this that]]
+[deftypefunk bruno_graph get     node_isomorphisms               [node]                       [bruno_graph-node_isomorphisms               this node]]
 
 [deftypefunk bruno_graph_isomorphism execute add_mapping [left_node right_node] [bruno_graph_isomorphism-add_mapping this left_node right_node]]
 

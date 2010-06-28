@@ -53,6 +53,8 @@ f2ptr      f2__set__lookup    (f2ptr cause, f2ptr this, f2ptr key);
 boolean_t raw__set__contains  (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__set__contains  (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__set__slot_names(f2ptr cause, f2ptr this);
+f2ptr     raw__set__elements  (f2ptr cause, f2ptr this);
+f2ptr      f2__set__elements  (f2ptr cause, f2ptr this);
 
 f2ptr f2set__primobject_type__new_aux(f2ptr cause);
 

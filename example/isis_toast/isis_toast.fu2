@@ -21,7 +21,7 @@
 
 'blockman'
 
-[deframe          blockman [frame] [isis_world_client isis_agent_name agent time_in_seconds]]
+[deframe          blockman [frame] [isis_world_client isis_agent_name agent time_in_seconds timer_fiber]]
 
 [deftypeconstruct blockman [isis_world_client isis_agent_name]
   [set this isis_world_client isis_world_client]
@@ -47,14 +47,14 @@
       [format stdout '\n  move_to ' object]
       [call move_forward]
       ]  
-    [defresource agent physical timer []
+    '[defresource agent physical timer []
        [let [[time [have this lookup `time_in_seconds]]]
-        [if [eq nil [have [have [have [have this lookup `agent] lookup `physical] lookup `timer] lookup `paused]]
+        [if [eq nil [have [get [get [get this agent] agency `physical] resource `timer] lookup `paused]]
             [prog [millisleep 100]
                   [= time [+ time 0.1]]
                   [set this time_in_seconds time]]
           nil]]            
-      ]
+      ]'
     [defresource agent physical sense []
       [format stdout '\n  sense']
       [have this add `sensory_state [isis-call isis_world_client sense agent isis_agent_name]]
@@ -64,10 +64,35 @@
 
 [deftypefunk blockman execute step_simulator [seconds blockman_name]
   [isis-call [have this lookup `isis_world_client] meta_step [seconds]]
-  [set [have [[[have blockman_name lookup `agent] lookup `physical] lookup `timer] lookup `paused] nill]]
-     this]
+  [have this timer seconds]
+  ]
 
-[deftypefunk blockman execute timer []      
+'[deftypefunk blockman execute step_simulator [seconds blockman_name]
+  [isis-call [have this lookup `isis_world_client] meta_step [seconds]]
+  [have this timer]
+  ]'
+
+
+'[deftypefunk blockman execute timer []      
+      [let [[time [have this lookup `time_in_seconds]]]
+      [sleep 0.1]
+      [= time [+ time 0.1]]
+      [set this time_in_seconds time]]
+      [have this timer]            
+      ]'
+
+[deftypefunk blockman execute timer []
+    [set this timer-fiber [fiber [funk [seconds]
+				   [let [[start_time [have this lookup `time_in_seconds]]
+					 [time [have this lookup `time_in_seconds]]]
+                                     [while [> seconds [- time start_time]]
+				     [millisleep 100]
+				     [= time [+ time 0.1]]
+                                     [set [have this lookup `time_in_seconds] time]
+				       ]]]
+			     nil]]]
+
+'[deftypefunk blockman execute timer []      
       [let [[time [have this lookup `time_in_seconds]]]
         [if [eq nil [have [have [have [have this lookup `agent] lookup `physical] lookup `timer] lookup `paused]]
             [prog [sleep 0.1]
@@ -75,7 +100,7 @@
                   [set this time_in_seconds time]]
           nil]]
             
-      ]
+      ]'
 
 [deftypefunk blockman get agency [name]
   [let [[agent [get this agent]]]

@@ -261,8 +261,8 @@ f2ptr f2__bruno_graph__random_nonempty_strict_subgraph(f2ptr cause, f2ptr this) 
 }
 def_pcfunk1(bruno_graph__random_nonempty_strict_subgraph, this, return f2__bruno_graph__random_nonempty_strict_subgraph(this_cause, this));
 
-f2ptr raw__bruno_graph__subtract(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr graph          = f2__bruno_graph__new(cause);
+f2ptr raw__bruno_graph__minus(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr graph = f2__bruno_graph__new(cause);
   {
     f2ptr this__node_set = f2__bruno_graph__node_set(cause, this);
     set__iteration(cause, this__node_set, node,
@@ -285,14 +285,14 @@ f2ptr raw__bruno_graph__subtract(f2ptr cause, f2ptr this, f2ptr that) {
   return graph;
 }
 
-f2ptr f2__bruno_graph__subtract(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__bruno_graph__minus(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__bruno_graph__is_type(cause, this)) ||
       (! raw__bruno_graph__is_type(cause, that))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__bruno_graph__subtract(cause, this, that);
+  return raw__bruno_graph__minus(cause, this, that);
 }
-def_pcfunk2(bruno_graph__subtract, this, that, return f2__bruno_graph__subtract(this_cause, this, that));
+def_pcfunk2(bruno_graph__minus, this, that, return f2__bruno_graph__minus(this_cause, this, that));
 
 
 // bruno_graph_isomorphism
@@ -401,7 +401,7 @@ def_pcfunk2(bruno_decomposition_lattice__add_node, this, node, return f2__bruno_
 //    maximum_isomorphic_graph = f2__bruno_graph__random_nonempty_strict_subgraph(cause, graph);
 //    raw__bruno_decomposition_lattice__decompose_graph(cause, this, maximum_isomorphic_graph);
 //  }
-//  f2ptr remainder_graph = f2__bruno_graph__subtract(cause, graph, maximum_isomorphic_graph);
+//  f2ptr remainder_graph = f2__bruno_graph__minus(cause, graph, maximum_isomorphic_graph);
 //  raw__bruno_decomposition_lattice__decompose_graph(cause, this, remainder_graph);
 //  // 7.
 //}
@@ -443,7 +443,7 @@ void f2__bruno_graph__initialize() {
   f2__primcfunk__init__2(bruno_graph__contains_edge,                   this, edge,                         "Returns true if this bruno_graph contains a bruno_graph_edge.");
   f2__primcfunk__init__2(bruno_graph__contains,                        this, graph,                        "Returns true if this bruno_graph contains a bruno_graph as a subgraph.");
   f2__primcfunk__init__1(bruno_graph__random_nonempty_strict_subgraph, this,                               "When this bruno_graph contains N nodes, returns a random subgraph with N/2 nodes.  This bruno_graph must have at least 2 nodes.");
-  f2__primcfunk__init__2(bruno_graph__subtract,                        this, that,                         "Returns a subgraph of this bruno_graph without the nodes in that bruno_graph.");
+  f2__primcfunk__init__2(bruno_graph__minus,                           this, that,                         "Returns a subgraph of this bruno_graph without the nodes in that bruno_graph.");
   
   // bruno_graph_isomorphism
   initialize_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);

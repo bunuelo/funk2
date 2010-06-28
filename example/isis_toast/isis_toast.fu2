@@ -1,1 +1,98 @@
-[print 'loading isis_toast.fu2']
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+
+'blockman'
+
+[deframe          blockman [frame] [isis_world_client isis_agent_name agent time_in_seconds]]
+
+[deftypeconstruct blockman [isis_world_client isis_agent_name]
+  [set this isis_world_client isis_world_client]
+  [set this isis_agent_name   isis_agent_name]
+  [set time_in_seconds        0]
+  [let [[agent [new agent]]]
+    [set this agent agent]
+    [defagency   agent physical]
+    [defresource agent physical turn_right [seconds]
+      [format stdout '\n  turn_right']
+      [have isis_world_client turn_right-start agent_name]
+      [let [[start_seconds [have this lookup time_in_seconds]]]
+	[while [< [- [have this lookup time_in_seconds] start_seconds] seconds]
+	  [millisleep 100]]
+	[have isis_world_client turn_right-stop agent_name]]]
+    [defresource agent physical turn_left []
+      [format stdout '\n  turn_left']]
+    [defresource agent physical move_forward []
+      [format stdout '\n  move_forward']]
+    [defresource agent physical move_backward []
+      [format stdout '\n  move_backward']]
+    [defresource agent physical move_to [object]
+      [format stdout '\n  move_to ' object]
+      [call move_forward]
+      ]  
+    [defresource agent physical timer []
+       [let [[time [have this lookup `time_in_seconds]]]
+        [if [eq nil [have [have [have [have this lookup `agent] lookup `physical] lookup `timer] lookup `paused]]
+            [prog [millisleep 100]
+                  [= time [+ time 0.1]]
+                  [set this time_in_seconds time]]
+          nil]]            
+      ]
+    [defresource agent physical sense []
+      [format stdout '\n  sense']
+      [have this add `sensory_state [isis-call isis_world_client sense agent isis_agent_name]]
+      ]
+     
+    ]
+
+[deftypefunk blockman execute step_simulator [seconds blockman_name]
+  [isis-call [have this lookup `isis_world_client] meta_step [seconds]]
+  [set [have [[[have blockman_name lookup `agent] lookup `physical] lookup `timer] lookup `paused] nill]]
+     this]
+
+[deftypefunk blockman execute timer []      
+      [let [[time [have this lookup `time_in_seconds]]]
+        [if [eq nil [have [have [have [have this lookup `agent] lookup `physical] lookup `timer] lookup `paused]]
+            [prog [sleep 0.1]
+                  [= time [+ time 0.1]]
+                  [set this time_in_seconds time]]
+          nil]]
+            
+      ]
+
+[deftypefunk blockman get agency [name]
+  [let [[agent [get this agent]]]
+    [get agent agency name]]]
+
+[deftypefunk blockman get resource [agency_name resource_name]
+  [let [[agency [get this agency agency_name]]]
+    [get agency resource resource_name]]]
+
+[deftypefunk blockman execute step []
+  [let [[agent [get this agent]]]
+    [have agent call `physical `move_to 'knife']
+    ]]
+
+
+[defunk test-blockman []
+  [let [[isis_world_client [new isis_world_client '18.85.58.18']]]
+    [let [[ralph [new blockman isis_world_client 'Ralph']]]
+      ralph]]]
+

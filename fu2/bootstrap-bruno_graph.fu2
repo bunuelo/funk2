@@ -30,5 +30,6 @@
 
 [deftypefunk bruno_graph_isomorphism execute add_mapping [left_node right_node] [bruno_graph_isomorphism-add_mapping this left_node right_node]]
 
-[deftypefunk bruno_decomposition_lattice execute add_node [node] [bruno_decomposition_lattice-add_node this node]]
+[deftypefunk bruno_decomposition_lattice execute add_node        [node]  [bruno_decomposition_lattice-add_node        this node]]
+[deftypefunk bruno_decomposition_lattice execute decompose_graph [graph] [bruno_decomposition_lattice-decompose_graph this graph]]
 

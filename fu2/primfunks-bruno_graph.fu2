@@ -30,4 +30,6 @@
 
 [globalize-funk bruno_graph_isomorphism-add_mapping &primfunk:bruno_graph_isomorphism__add_mapping]
 
-[globalize-funk bruno_decomposition_lattice-add_node &primfunk:bruno_decomposition_lattice__add_node]
+[globalize-funk bruno_decomposition_lattice-add_node        &primfunk:bruno_decomposition_lattice__add_node]
+[globalize-funk bruno_decomposition_lattice-decompose_graph &primfunk:bruno_decomposition_lattice__decompose_graph]
+

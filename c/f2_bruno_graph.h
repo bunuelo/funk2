@@ -40,7 +40,7 @@ declare_object_type_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, l
 
 // bruno_decomposition_lattice_node
 typedef struct funk2_object_type__bruno_decomposition_lattice_node__slot_s funk2_object_type__bruno_decomposition_lattice_node__slot_t;
-declare_object_type_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, edges, );
+declare_object_type_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, between_edge_set, );
 
 // bruno_decomposition_lattice
 typedef struct funk2_object_type__bruno_decomposition_lattice__slot_s funk2_object_type__bruno_decomposition_lattice__slot_t;
@@ -66,7 +66,7 @@ declare_primobject_4_slot(bruno_graph, node_set, edge_set, edges_left_node_hash,
 declare_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);
 
 // bruno_decomposition_lattice_node
-declare_primobject_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, edges);
+declare_primobject_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, between_edge_set);
 
 // bruno_decomposition_lattice
 declare_primobject_4_slot(bruno_decomposition_lattice, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash);

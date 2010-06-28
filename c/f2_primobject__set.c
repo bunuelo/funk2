@@ -102,7 +102,7 @@ f2ptr f2__set__add(f2ptr cause, f2ptr this, f2ptr key) {
 }
 def_pcfunk2(set__add, this, element, return f2__set__add(this_cause, this, element));
 
-f2ptr f2__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
+f2ptr raw__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__lookup assert failed: f2__set__valid(this)");
   f2mutex__lock(f2set__write_mutex(this, cause), cause);
   f2ptr bin_num_power      = f2set__bin_num_power(this, cause);
@@ -124,25 +124,43 @@ f2ptr f2__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
   f2mutex__unlock(f2set__write_mutex(this, cause), cause);
   return nil;
 }
+
+f2ptr f2__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
+  if (! raw__set__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__set__lookup(cause, this, key);
+}
 def_pcfunk2(set__lookup, this, element, return f2__set__lookup(this_cause, this, element));
 
-f2ptr f2__set__elements(f2ptr cause, f2ptr this) {
-  debug__assert(raw__set__valid(cause, this), nil, "f2__set__elements assert failed: f2__set__valid(this)");
-  f2mutex__lock(f2set__write_mutex(this, cause), cause);
-  f2ptr bin_array          = f2set__bin_array(this, cause);
-  s64   bin_array__length  = raw__array__length(cause, bin_array);
-  s64   index;
-  f2ptr new_list = nil;
-  for (index = 0; index < bin_array__length; index ++) {
-    f2ptr key_iter = raw__array__elt(cause, bin_array, index);
-    while (key_iter) {
-      f2ptr iter__key = f2cons__car(key_iter, cause);
-      new_list = f2cons__new(cause, iter__key, new_list);
-      key_iter = f2cons__cdr(key_iter, cause);
-    }
+boolean_t raw__set__contains(f2ptr cause, f2ptr this, f2ptr key) {
+  f2ptr set__key = f2__set__lookup(cause, this, key);
+  if (set__key) {
+    return boolean__true;
   }
-  f2mutex__unlock(f2set__write_mutex(this, cause), cause);
+  return boolean__false;
+}
+
+f2ptr f2__set__contains(f2ptr cause, f2ptr this, f2ptr key) {
+  if (! raw__set__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2bool__new(raw__set__contains(cause, this, key));
+}
+
+f2ptr raw__set__elements(f2ptr cause, f2ptr this) {
+  debug__assert(raw__set__valid(cause, this), nil, "f2__set__elements assert failed: f2__set__valid(this)");
+  f2ptr new_list = nil;
+  set__iteration(cause, this, element,
+		 new_list = f2cons__new(set__iteration__cause, element, new_list));
   return new_list;
+}
+
+f2ptr f2__set__elements(f2ptr cause, f2ptr this) {
+  if (! raw__set__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__set__elements(cause, this);
 }
 def_pcfunk1(set__elements, this, return f2__set__elements(this_cause, this));
 

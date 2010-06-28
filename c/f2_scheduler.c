@@ -452,7 +452,7 @@ void f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
   do {
     if(f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) {
       if(f2fiber__is_complete(fiber, cause) ||
-	 (f2fiber__paused(fiber, cause) && raw__larva__is_type(cause, f2fiber__value(fiber, cause))))
+	 (f2fiber__paused(fiber, cause) && raw__bug__is_type(cause, f2fiber__value(fiber, cause))))
 	complete = 1;
       f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
     }

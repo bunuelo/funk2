@@ -55,6 +55,26 @@ f2ptr f2__set__slot_names(f2ptr cause, f2ptr this);
 
 f2ptr f2set__primobject_type__new_aux(f2ptr cause);
 
+#define set__iteration(cause, this, element, code) {			\
+    f2ptr set__iteration__cause = (cause);				\
+    f2ptr set__iteration__this  = (this);				\
+    f2mutex__lock(f2set__write_mutex(set__iteration__this, set__iteration__cause), set__iteration__cause); \
+    f2ptr bin_array         = f2set__bin_array(set__iteration__this, set__iteration__cause); \
+    s64   bin_array__length = raw__array__length(set__iteration__cause, bin_array); \
+    s64   index;							\
+    for (index = 0; index < bin_array__length; index ++) {		\
+      f2ptr key_iter = raw__array__elt(set__iteration__cause, bin_array, index); \
+      while (key_iter) {						\
+	f2ptr element = f2cons__car(key_iter, set__iteration__cause);	\
+	{								\
+	  code;								\
+	}								\
+	key_iter = f2cons__cdr(key_iter, set__iteration__cause);	\
+      }									\
+    }									\
+    f2mutex__unlock(f2set__write_mutex(set__iteration__this, set__iteration__cause), set__iteration__cause); \
+  }
+
 // **
 
 void f2__primobject_set__reinitialize_globalvars();

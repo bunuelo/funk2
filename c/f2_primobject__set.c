@@ -128,20 +128,9 @@ def_pcfunk2(set__lookup, this, element, return f2__set__lookup(this_cause, this,
 
 f2ptr f2__set__elements(f2ptr cause, f2ptr this) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__elements assert failed: f2__set__valid(this)");
-  f2mutex__lock(f2set__write_mutex(this, cause), cause);
-  f2ptr bin_array          = f2set__bin_array(this, cause);
-  s64   bin_array__length  = raw__array__length(cause, bin_array);
-  s64   index;
   f2ptr new_list = nil;
-  for (index = 0; index < bin_array__length; index ++) {
-    f2ptr key_iter = raw__array__elt(cause, bin_array, index);
-    while (key_iter) {
-      f2ptr iter__key = f2cons__car(key_iter, cause);
-      new_list = f2cons__new(cause, iter__key, new_list);
-      key_iter = f2cons__cdr(key_iter, cause);
-    }
-  }
-  f2mutex__unlock(f2set__write_mutex(this, cause), cause);
+  set__iteration(cause, this, element,
+		 new_list = f2cons__new(set__iteration__cause, element, new_list));
   return new_list;
 }
 def_pcfunk1(set__elements, this, return f2__set__elements(this_cause, this));

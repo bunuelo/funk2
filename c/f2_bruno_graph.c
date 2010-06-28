@@ -236,6 +236,7 @@ def_pcfunk2(bruno_decomposition_lattice__add_node, this, node, return f2__bruno_
 //  if (graph__node_count == 1) {
 //    return nil; // we're done.
 //  }
+//  f2ptr node_set = f2__bruno_decomposition_lattice__node_set(cause, this);
 //  
 //}
 

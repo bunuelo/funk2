@@ -304,7 +304,7 @@ f2ptr raw__bruno_graph__node_isomorphisms(f2ptr cause, f2ptr this, f2ptr node) {
 		   if (raw__eq(cause, node__label, this__node__label)) {
 		     f2ptr isomorphism = f2__bruno_graph_isomorphism__new(cause);
 		     f2__bruno_graph_isomorphism__add_mapping(cause, isomorphism, node, this__node);
-		     isomorphisms = f2__cons__new(cause, isomorphism, isomorphisms);
+		     isomorphisms = f2cons__new(cause, isomorphism, isomorphisms);
 		   }
 		   );
   }

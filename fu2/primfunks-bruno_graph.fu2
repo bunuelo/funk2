@@ -26,6 +26,7 @@
 [globalize-funk bruno_graph-contains_edge                   &primfunk:bruno_graph__contains_edge]
 [globalize-funk bruno_graph-contains                        &primfunk:bruno_graph__contains]
 [globalize-funk bruno_graph-random_nonempty_strict_subgraph &primfunk:bruno_graph__random_nonempty_strict_subgraph]
+[globalize-funk bruno_graph-subtract                        &primfunk:bruno_graph__subtract]
 
 [globalize-funk bruno_graph_isomorphism-add_mapping &primfunk:bruno_graph_isomorphism__add_mapping]
 

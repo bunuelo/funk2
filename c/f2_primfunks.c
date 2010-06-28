@@ -1041,7 +1041,7 @@ def_pcfunk1(identity, exp, return f2__identity(this_cause, exp));
 #define PRIME_NUMBER__16_BIT 65521
 
 u64 raw__random(u64 max_value) {
-  int random_value = (uint)(rand() * PRIME_NUMBER__16_BIT) % raw_max_value;
+  int random_value = (uint)(rand() * PRIME_NUMBER__16_BIT) % max_value;
   random_value = (random_value < 0) ? (-random_value) : random_value;
   return random_value;
 }

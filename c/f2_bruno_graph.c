@@ -210,7 +210,7 @@ f2ptr raw__bruno_graph__random_nonempty_strict_subgraph(f2ptr cause, f2ptr this)
     f2ptr node_set = f2__bruno_graph__node_set(cause, this);
     {
       u64 index = 0;
-      set__iteration(node_set, node,
+      set__iteration(cause, node_set, node,
 		     node_array[index] = node;
 		     index ++;
 		     );
@@ -234,7 +234,7 @@ f2ptr raw__bruno_graph__random_nonempty_strict_subgraph(f2ptr cause, f2ptr this)
   }
   {
     f2ptr edge_set = f2__bruno_graph__edge_set(cause, this);
-    set__iteration(edge_set, edge,
+    set__iteration(cause, edge_set, edge,
 		   f2ptr left_node  = f2__bruno_graph_edge__left_node(cause, edge);
 		   f2ptr right_node = f2__bruno_graph_edge__right_node(cause, edge);
 		   if (raw__bruno_graph__contains_node(cause, graph, left_node) &&

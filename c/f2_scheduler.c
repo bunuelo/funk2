@@ -451,15 +451,17 @@ void f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
   boolean_t complete = 0;
   do {
     if(f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) {
-      if(f2fiber__is_complete(fiber, cause)) {
+      if(f2fiber__is_complete(fiber, cause) ||
+	 (f2fiber__paused(fiber, cause) && raw__larva__is_type(cause, f2fiber__value(fiber, cause))))
 	complete = 1;
-      }
+    }
+      if (
       f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
     }
     if (! complete) {
       f2__scheduler__yield(cause);
     }
-  } while (!complete);
+  } while (! complete);
 }
 
 void f2processor__start_new_processor_thread(f2ptr cause, long processor_index) {

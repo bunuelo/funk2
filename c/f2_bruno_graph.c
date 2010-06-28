@@ -197,7 +197,7 @@ f2ptr f2__bruno_graph__contains(f2ptr cause, f2ptr this, f2ptr graph) {
       (! raw__bruno_graph__is_type(cause, graph))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__bruno_graph__contains(cause, this, graph);
+  return f2bool__new(raw__bruno_graph__contains(cause, this, graph));
 }
 def_pcfunk2(bruno_graph__contains, this, graph, return f2__bruno_graph__contains(this_cause, this, graph));
 

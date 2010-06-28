@@ -54,6 +54,7 @@
 [load 'fu2/bootstrap-xmlrpc.fu2']
 [load 'fu2/bootstrap-package.fu2']
 [load 'fu2/bootstrap-list.fu2']
+[load 'fu2/bootstrap-bruno_graph.fu2']
 
 [load 'fu2/time.fu2']
 

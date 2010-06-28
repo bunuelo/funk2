@@ -31,6 +31,7 @@
 #include "f2_array.h"
 #include "f2_atomic.h"
 #include "f2_blocks_world.h"
+#include "f2_bruno_graph.h"
 #include "f2_buffered_file.h"
 #include "f2_buffered_socket.h"
 #include "f2_bug.h"

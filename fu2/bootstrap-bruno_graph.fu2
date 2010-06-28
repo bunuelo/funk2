@@ -1,0 +1,32 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[deftypefunk bruno_graph execute add_node      [node]                       [bruno_graph-add_node      this node]]
+[deftypefunk bruno_graph execute add_new_node  [label]                      [bruno_graph-add_new_node  this label]]
+[deftypefunk bruno_graph execute add_edge      [edge]                       [bruno_graph-add_edge      this edge]]
+[deftypefunk bruno_graph execute add_new_edge  [label left_node right_node] [bruno_graph-add_new_edge  this label left_node right_node]]
+[deftypefunk bruno_graph get     node_count    []                           [bruno_graph-node_count    this]]
+[deftypefunk bruno_graph get     contains_node [node]                       [bruno_graph-contains_node this node]]
+[deftypefunk bruno_graph get     contains_edge [edge]                       [bruno_graph-contains_edge this edge]]
+[deftypefunk bruno_graph get     contains      [graph]                      [bruno_graph-contains      this graph]]
+
+[deftypefunk bruno_graph_isomorphism execute add_mapping [left_node right_node] [bruno_graph_isomorphism-add_mapping this left_node right_node]]
+
+[deftypefunk bruno_decomposition_lattice execute add_node [node] [bruno_decomposition_lattice-add_node this node]]
+

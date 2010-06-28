@@ -1,0 +1,127 @@
+
+
+'Create an xmlrpc client.'
+
+[deframe crossbridge_client [frame] [xmlrpc_client]]
+[deftypeconstruct crossbridge_client [xmlrpc_hostname]
+  [let [[xmlrpc_url [string-concat 'http://' xmlrpc_hostname ':8002/RPC2']]]
+    [set this xmlrpc_client [new xmlrpc_client xmlrpc_url]]]
+  this]
+[deftypefunk crossbridge_client execute call [:rest args] [have-apply [get this xmlrpc_client] call args]]
+[deftypefunk crossbridge_client execute adder [x y] [have this call `add x y]]
+
+[deftypefunk crossbridge_client execute register_graph [graph-edge-triples graph_name] 
+    [have this call `register_graph graph-edge-triples graph_name]]
+[deftypefunk crossbridge_client execute find_analogies [graph_name nodes amount]
+    [have this call `find_analogies graph_name [get nodes as-array] amount]]
+
+[deftypefunk graph get node-map [sign]
+  [let 
+    [[my-hash [new ptypehash]] [idx sign]]
+    [mapc
+      [funk [x]
+        [have my-hash add x idx]
+        [have my-hash add idx x]
+        [= idx [+ idx sign]]
+      ]
+      [get this nodes]
+    ]
+    my-hash
+  ]
+]
+
+[deftypefunk graph get edge-triples [node-map]
+  [mapcar
+    [funk [x]
+      [let
+        [[my-array [new array 3]]]
+        [set my-array elt 0 [have node-map lookup [get x left_node]]]
+        [set my-array elt 1 [get x label]]
+        [set my-array elt 2 [have node-map lookup [get x right_node]]]
+        my-array
+      ]
+    ]
+    [get this edges]
+  ]
+]
+
+[deframe similar-match [frame] [score matching]]
+[deftypefunk crossbridge_client execute find-similar-subgraph [template query]
+  [let* 
+    [
+      [template-hash [get template node-map 1]]
+      [query-hash [get query node-map -1]]
+      [template-edge-triples [get template edge-triples template-hash]]
+      [query-edge-triples [get query edge-triples query-hash]]
+      [graph-triples [get [merge template-edge-triples query-edge-triples] as-array]]
+      [n-neg-ints [funk [n] [let [[seq nil]] [dotimes [i n] [= seq [cons [- i n] seq]]] seq]]]
+    ]
+    [have this register_graph graph-triples 'temp_name']
+    [let
+      [
+        [result_array [have this find_analogies 'temp_name' [funkall n-neg-ints [get [get query nodes] length]] 10]]
+        [result [new similar-match]] [i 0] [done nil]
+      ]
+      [while [and [not done] [< i 10]]
+	[let*
+	  [
+	    [substitution_array [get [get result_array elt i] elt 0]]
+	    [j [- [get substitution_array length] 1]]
+	    [valid_match t]
+	  ]
+	  [while [and [>= j 0] valid_match]
+	    [if [< [get [get substitution_array elt j] elt 0] 0] [= valid_match nil] [= j [- j 1]]]
+	  ]
+	  [if valid_match
+	    [prog
+	      [set result score [/ [get [get result_array elt i] elt 1] [- [get [get query nodes] length] 2.0]]]
+	      [set result matching [new ptypehash]]
+	      [dotimes [j [get substitution_array length]]
+                [have [get result matching] add
+                  [get [have query-hash lookup [get [get substitution_array elt j] elt 1]] label]
+                  [get [have template-hash lookup [get [get substitution_array elt j] elt 0]] label]
+                ]                                
+              ]
+	      [= done t]
+	    ]
+	    [= i [+ i 1]]
+	  ]
+	]
+      ]
+      [if done result nil]
+    ]
+  ]
+]
+
+[deftypefunk graph get match-with-node-variables [that crossbridgeclient]
+  [let
+    [
+      [augmented_this [get this copy]]
+      [augmented_that [get that copy]]
+    ]
+    [mapc
+      [funk [x]
+        [if
+          [eq [type [get x label]] `graph_variable]
+          nil
+          [prog
+            [have augmented_that add_edge [get x label] [get x label] `dummy]
+            [have augmented_that make_node_variable [get x label] [get x label]]
+            [if
+              [get augmented_this contains_node [get x label]]
+              [have augmented_this add_edge [get x label] [get x label] `dummy]
+            ]
+          ]
+        ]
+      ]
+      [get that nodes]
+    ]
+    [let
+      [
+        [result [have crossbridgeclient find-similar-subgraph augmented_this augmented_that]]
+      ]
+      [if [eq result nil] nil [have [get result matching] remove `dummy]]
+      result
+    ]
+  ]
+]

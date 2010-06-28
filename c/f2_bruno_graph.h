@@ -65,6 +65,10 @@ declare_primobject_4_slot(bruno_graph, node_set, edge_set, edges_left_node_hash,
 // bruno_graph_isomorphism
 declare_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);
 
+f2ptr  f2__bruno_graph_isomorphism__new        (f2ptr cause);
+void  raw__bruno_graph_isomorphism__add_mapping(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
+f2ptr  f2__bruno_graph_isomorphism__add_mapping(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
+
 // bruno_decomposition_lattice_node
 declare_primobject_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, between_edge_set);
 

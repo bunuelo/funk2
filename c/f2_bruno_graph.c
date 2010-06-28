@@ -434,7 +434,8 @@ f2ptr f2__bruno_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, 
       (! raw__bruno_graph__is_type(cause, graph))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__bruno_decomposition_lattice__decompose_graph(cause, this, graph);
+  raw__bruno_decomposition_lattice__decompose_graph(cause, this, graph);
+  return nil;
 }
 def_pcfunk2(bruno_decomposition_lattice__decompose_graph, this, graph, return f2__bruno_decomposition_lattice__decompose_graph(this_cause, this, graph));
 

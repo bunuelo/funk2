@@ -21,6 +21,9 @@
 [deftypefunk bruno_graph execute add_new_node [label]                      [bruno_graph-add_new_node this label]]
 [deftypefunk bruno_graph execute add_edge     [edge]                       [bruno_graph-add_edge     this edge]]
 [deftypefunk bruno_graph execute add_new_edge [label left_node right_node] [bruno_graph-add_new_edge this label left_node right_node]]
+[deftypefunk bruno_graph get     node_count   []                           [bruno_graph-node_count   this]]
 
 [deftypefunk bruno_graph_isomorphism execute add_mapping [left_node right_node] [bruno_graph_isomorphism-add_mapping this left_node right_node]]
+
+[deftypefunk bruno_decomposition_lattice execute add_node [node] [bruno_decomposition_lattice-add_node this node]]
 

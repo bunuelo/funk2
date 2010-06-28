@@ -129,6 +129,21 @@ f2ptr f2__bruno_graph__add_new_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr 
 }
 def_pcfunk4(bruno_graph__add_new_edge, this, label, left_node, right_node, return f2__bruno_graph__add_new_edge(this_cause, this, label, left_node, right_node));
 
+u64 raw__bruno_graph__node_count(f2ptr cause, f2ptr this) {
+  f2ptr node_set            = f2__bruno_graph__node_set(cause, this);
+  f2ptr node_set__key_count = f2__set__key_count(cause, node_set);
+  return f2integer__i(node_set__key_count, cause);
+}
+
+f2ptr f2__bruno_graph__node_count(f2ptr cause, f2ptr this) {
+  if (! raw__bruno_graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  f2ptr node_set = f2__bruno_graph__node_set(cause, this);
+  return f2__set__key_count(cause, node_set);
+}
+def_pcfunk1(bruno_graph__node_count, this, return f2__bruno_graph__node_count(this_cause, this));
+
 
 // bruno_graph_isomorphism
 
@@ -159,6 +174,7 @@ f2ptr f2__bruno_graph_isomorphism__add_mapping(f2ptr cause, f2ptr this, f2ptr le
 }
 def_pcfunk3(bruno_graph_isomorphism__add_mapping, this, left_node, right_node, return f2__bruno_graph_isomorphism__add_mapping(this_cause, this, left_node, right_node));
 
+
 // bruno_decomposition_lattice_node
 
 def_primobject_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, edges);
@@ -171,15 +187,57 @@ def_pcfunk4(bruno_decomposition_lattice_node__new, parent_graph, left_child_grap
 
 // bruno_decomposition_lattice
 
-def_primobject_3_slot(bruno_decomposition_lattice, node_parent_hash, node_left_child_hash, node_right_child_hash);
+def_primobject_4_slot(bruno_decomposition_lattice, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash);
 
 f2ptr f2__bruno_decomposition_lattice__new(f2ptr cause) {
+  f2ptr node_set              = f2__set__new(cause);
   f2ptr node_parent_hash      = f2__ptypehash__new(cause);
   f2ptr node_left_child_hash  = f2__ptypehash__new(cause);
   f2ptr node_right_child_hash = f2__ptypehash__new(cause);
-  return f2bruno_decomposition_lattice__new(cause, node_parent_hash, node_left_child_hash, node_right_child_hash);
+  return f2bruno_decomposition_lattice__new(cause, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash);
 }
 def_pcfunk0(bruno_decomposition_lattice__new, return f2__bruno_decomposition_lattice__new(this_cause));
+
+f2ptr raw__bruno_decomposition_lattice__add_node(f2ptr cause, f2ptr this, f2ptr node) {
+  f2ptr node_set              = f2__bruno_decomposition_lattice__node_set(cause, this);
+  f2ptr already_contains_node = f2__set__add(cause, node_set, node);
+  if (already_contains_node == nil) {
+    {
+      f2ptr parent_graph     = f2__bruno_decomposition_lattice_node__parent_graph(cause, node);
+      f2ptr node_parent_hash = f2__bruno_decomposition_lattice__node_parent_hash(cause, this);
+      f2__ptypehash__add(cause, node_parent_hash, parent_graph, node);
+    }
+    {
+      f2ptr left_child_graph     = f2__bruno_decomposition_lattice_node__left_child_graph(cause, node);
+      f2ptr node_left_child_hash = f2__bruno_decomposition_lattice__node_left_child_hash(cause, this);
+      f2__ptypehash__add(cause, node_left_child_hash, left_child_graph, node);
+    }
+    {
+      f2ptr right_child_graph     = f2__bruno_decomposition_lattice_node__right_child_graph(cause, node);
+      f2ptr node_right_child_hash = f2__bruno_decomposition_lattice__node_right_child_hash(cause, this);
+      f2__ptypehash__add(cause, node_right_child_hash, right_child_graph, node);
+    }
+  }
+  return already_contains_node;
+}
+
+f2ptr f2__bruno_decomposition_lattice__add_node(f2ptr cause, f2ptr this, f2ptr node) {
+  if ((! raw__bruno_decomposition_lattice__is_type(cause, this)) ||
+      (! raw__bruno_decomposition_lattice_node__is_type(cause, node))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bruno_decomposition_lattice__add_node(cause, this, node);
+}
+def_pcfunk2(bruno_decomposition_lattice__add_node, this, node, return f2__bruno_decomposition_lattice__add_node(this_cause, this, node));
+
+//f2ptr raw__bruno_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, f2ptr graph) {
+//  f2ptr maximum_isomorphic_graph = nil;
+//  u64   graph__node_count        = raw__bruno_graph__node_count(cause, graph);
+//  if (graph__node_count == 1) {
+//    return nil; // we're done.
+//  }
+//  
+//}
 
 // **
 
@@ -213,6 +271,7 @@ void f2__bruno_graph__initialize() {
   f2__primcfunk__init__2(bruno_graph__add_new_node, this, label,                        "Add a new bruno_graph_node to this bruno_graph.");
   f2__primcfunk__init__2(bruno_graph__add_edge,     this, edge,                         "Add a bruno_graph_edge to this bruno_graph.");
   f2__primcfunk__init__4(bruno_graph__add_new_edge, this, label, left_node, right_node, "Add a new bruno_graph_edge between two bruno_graph_nodes to this bruno_graph.");
+  f2__primcfunk__init__1(bruno_graph__node_count,   this,                               "Returns the number of nodes in this bruno_graph.");
   
   // bruno_graph_isomorphism
   initialize_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);
@@ -223,7 +282,9 @@ void f2__bruno_graph__initialize() {
   initialize_primobject_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, edges);
   
   // bruno_decomposition_lattice
-  initialize_primobject_3_slot(bruno_decomposition_lattice, node_parent_hash, node_left_child_hash, node_right_child_hash);
+  initialize_primobject_4_slot(bruno_decomposition_lattice, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash);
+  
+  f2__primcfunk__init__2(bruno_decomposition_lattice__add_node, this, node, "Add a bruno_decomposition_lattice_node to this bruno_decomposition_lattice.");
   
 }
 

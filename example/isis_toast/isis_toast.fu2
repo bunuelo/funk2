@@ -81,6 +81,12 @@
 		      [have this turn_left_and_right]]
 	      nil]]]]
       [have this turn_left_and_right]]
+    [defresource agent physical seek_object [my_object]
+      [deftypefunk blockman execute look_for_object [patience]
+        [if [> 0 patience]
+	  [have ]
+      
+
     '[defresource agent physical timer []
        [let [[time [have this lookup `time_in_seconds]]]
         [if [eq nil [have [get [get [get this agent] agency `physical] resource `timer] lookup `paused]]
@@ -89,6 +95,15 @@
                   [set this time_in_seconds time]]
           nil]]            
       ]'
+
+  ' [deftypefunk isis_world_client execute find_angular_speed [agent_name my_object]
+     [globalize angular_speed 0]
+     [let [[x [have [have [have [have this sense agent_name] lookup `object] lookup my_object] lookup `x_pos]]] 
+       [call turn_left 0.1]  
+       [let [[new_x [have [have [have [have this sense agent_name] lookup `object] lookup my_object] lookup `x_pos]]]
+         [= angular_speed [/ [- new_x x] 0.5]]]]
+      angular_speed]'
+  
     [defresource agent physical sense []
       [format stdout '\n  sense']
       [have this add `sensory_state [isis-call isis_world_client sense agent isis_agent_name]]

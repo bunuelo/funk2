@@ -60,17 +60,17 @@ f2ptr f2set__primobject_type__new_aux(f2ptr cause);
     f2ptr set__iteration__cause = (cause);				\
     f2ptr set__iteration__this  = (this);				\
     f2mutex__lock(f2set__write_mutex(set__iteration__this, set__iteration__cause), set__iteration__cause); \
-    f2ptr bin_array         = f2set__bin_array(set__iteration__this, set__iteration__cause); \
-    s64   bin_array__length = raw__array__length(set__iteration__cause, bin_array); \
-    s64   index;							\
-    for (index = 0; index < bin_array__length; index ++) {		\
-      f2ptr key_iter = raw__array__elt(set__iteration__cause, bin_array, index); \
-      while (key_iter) {						\
-	f2ptr element = f2cons__car(key_iter, set__iteration__cause);	\
+    f2ptr set__iteration__bin_array         = f2set__bin_array(set__iteration__this, set__iteration__cause); \
+    s64   set__iteration__bin_array__length = raw__array__length(set__iteration__cause, set__iteration__bin_array); \
+    s64   set__iteration__index;							\
+    for (set__iteration__index = 0; set__iteration__index < set__iteration__bin_array__length; set__iteration__index ++) {		\
+      f2ptr set__iteration__key_iter = raw__array__elt(set__iteration__cause, set__iteration__bin_array, set__iteration__index); \
+      while (set__iteration__key_iter) {						\
+	f2ptr element = f2cons__car(set__iteration__key_iter, set__iteration__cause);	\
 	{								\
 	  code;								\
 	}								\
-	key_iter = f2cons__cdr(key_iter, set__iteration__cause);	\
+	set__iteration__key_iter = f2cons__cdr(set__iteration__key_iter, set__iteration__cause);	\
       }									\
     }									\
     f2mutex__unlock(f2set__write_mutex(set__iteration__this, set__iteration__cause), set__iteration__cause); \

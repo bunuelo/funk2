@@ -228,7 +228,7 @@ f2ptr raw__bruno_graph__random_nonempty_strict_subgraph(f2ptr cause, f2ptr this)
 	node_array[random_index] = node_array[index - 1];
 	node_array[index - 1]    = nil;
       }
-      f2__graph__add_node(cause, graph, random_node);
+      f2__bruno_graph__add_node(cause, graph, random_node);
       index --;
     }
   }

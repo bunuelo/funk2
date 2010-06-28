@@ -144,6 +144,62 @@ f2ptr f2__bruno_graph__node_count(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(bruno_graph__node_count, this, return f2__bruno_graph__node_count(this_cause, this));
 
+boolean_t raw__bruno_graph__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
+  f2ptr node_set = f2__bruno_graph__node_set(cause, this);
+  return raw__set__contains(cause, node_set, node);
+}
+
+f2ptr f2__bruno_graph__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
+  if ((! raw__bruno_graph__is_type(cause, this)) ||
+      (! raw__bruno_graph_node__is_type(cause, node))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2bool__new(raw__bruno_graph__contains_node(cause, this, node));
+}
+def_pcfunk2(bruno_graph__contains_node, this, node, return f2__bruno_graph__contains_node(this_cause, this, node));
+
+boolean_t raw__bruno_graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge) {
+  f2ptr edge_set = f2__bruno_graph__edge_set(cause, this);
+  return raw__set__contains(cause, edge_set, edge);
+}
+
+f2ptr f2__bruno_graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge) {
+  if ((! raw__bruno_graph__is_type(cause, this)) ||
+      (! raw__bruno_graph_edge__is_type(cause, edge))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2bool__new(raw__bruno_graph__contains_edge(cause, this, edge));
+}
+def_pcfunk2(bruno_graph__contains_edge, this, edge, return f2__bruno_graph__contains_edge(this_cause, this, edge));
+
+boolean_t raw__bruno_graph__contains(f2ptr cause, f2ptr this, f2ptr graph) {
+  {
+    f2ptr graph__node_set = f2__bruno_graph__node_set(cause, graph);
+    set__iteration(cause, graph__node_set, node,
+		   if (! raw__bruno_graph__contains_node(cause, this, node)) {
+		     return boolean__false;
+		   }
+		   );
+  }
+  {
+    f2ptr graph__edge_set = f2__bruno_graph__edge_set(cause, graph);
+    set__iteration(cause, graph__edge_set, edge,
+		   if (! raw__bruno_graph__contains_edge(cause, this, edge)) {
+		     return boolean__false;
+		   }
+		   );
+  }
+  return boolean__true;
+}
+
+f2ptr f2__bruno_graph__contains(f2ptr cause, f2ptr this, f2ptr graph) {
+  if ((! raw__bruno_graph__is_type(cause, this)) ||
+      (! raw__bruno_graph__is_type(cause, graph))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bruno_graph__contains(cause, this, graph);
+}
+def_pcfunk2(bruno_graph__contains, this, graph, return f2__bruno_graph__contains(this_cause, this, graph));
 
 // bruno_graph_isomorphism
 
@@ -237,7 +293,10 @@ def_pcfunk2(bruno_decomposition_lattice__add_node, this, node, return f2__bruno_
 //    return nil; // we're done.
 //  }
 //  f2ptr node_set = f2__bruno_decomposition_lattice__node_set(cause, this);
-//  
+//  set__iteration(cause, node_set, node,
+//		 f2ptr parent_graph = f2__bruno_decomposition_lattice_node__parent_graph(cause, node);
+//		 
+//		 );
 //}
 
 // **
@@ -268,11 +327,14 @@ void f2__bruno_graph__initialize() {
   // bruno_graph
   initialize_primobject_4_slot(bruno_graph, node_set, edge_set, edges_left_node_hash, edges_right_node_hash);
   
-  f2__primcfunk__init__2(bruno_graph__add_node,     this, node,                         "Add a bruno_graph_node to this bruno_graph.");
-  f2__primcfunk__init__2(bruno_graph__add_new_node, this, label,                        "Add a new bruno_graph_node to this bruno_graph.");
-  f2__primcfunk__init__2(bruno_graph__add_edge,     this, edge,                         "Add a bruno_graph_edge to this bruno_graph.");
-  f2__primcfunk__init__4(bruno_graph__add_new_edge, this, label, left_node, right_node, "Add a new bruno_graph_edge between two bruno_graph_nodes to this bruno_graph.");
-  f2__primcfunk__init__1(bruno_graph__node_count,   this,                               "Returns the number of nodes in this bruno_graph.");
+  f2__primcfunk__init__2(bruno_graph__add_node,      this, node,                         "Add a bruno_graph_node to this bruno_graph.");
+  f2__primcfunk__init__2(bruno_graph__add_new_node,  this, label,                        "Add a new bruno_graph_node to this bruno_graph.");
+  f2__primcfunk__init__2(bruno_graph__add_edge,      this, edge,                         "Add a bruno_graph_edge to this bruno_graph.");
+  f2__primcfunk__init__4(bruno_graph__add_new_edge,  this, label, left_node, right_node, "Add a new bruno_graph_edge between two bruno_graph_nodes to this bruno_graph.");
+  f2__primcfunk__init__1(bruno_graph__node_count,    this,                               "Returns the number of nodes in this bruno_graph.");
+  f2__primcfunk__init__2(bruno_graph__contains_node, this, node,                         "Returns true if this bruno_graph contains a bruno_graph_node.");
+  f2__primcfunk__init__2(bruno_graph__contains_edge, this, edge,                         "Returns true if this bruno_graph contains a bruno_graph_edge.");
+  f2__primcfunk__init__2(bruno_graph__contains,      this, graph,                        "Returns true if this bruno_graph contains a bruno_graph as a subgraph.");
   
   // bruno_graph_isomorphism
   initialize_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);

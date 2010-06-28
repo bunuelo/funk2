@@ -223,13 +223,14 @@ f2ptr raw__bruno_graph__random_nonempty_strict_subgraph(f2ptr cause, f2ptr this)
     while (index > 0) {
       f2ptr random_node;
       {
-	u64 random_index         = raw__random(index);
-	random_node              = node_array[random_index];
-	node_array[random_index] = node_array[index - 1];
-	node_array[index - 1]    = nil;
+	u64 random_index                      = raw__random(nodes_count_remaining);
+	random_node                           = node_array[random_index];
+	node_array[random_index]              = node_array[nodes_count_remaining - 1];
+	node_array[nodes_count_remaining - 1] = nil;
       }
       f2__bruno_graph__add_node(cause, graph, random_node);
-      index --;
+      index                 --;
+      nodes_count_remaining --;
     }
   }
   {

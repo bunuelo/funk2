@@ -143,9 +143,9 @@ boolean_t raw__set__contains(f2ptr cause, f2ptr this, f2ptr key) {
 
 f2ptr f2__set__contains(f2ptr cause, f2ptr this, f2ptr key) {
   if (! raw__set__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
-  return f2bool__new(cause, raw__set__contains(cause, this, key));
+  return f2bool__new(raw__set__contains(cause, this, key));
 }
 
 f2ptr raw__set__elements(f2ptr cause, f2ptr this) {

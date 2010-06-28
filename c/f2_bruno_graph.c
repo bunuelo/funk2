@@ -255,7 +255,6 @@ f2ptr f2__bruno_graph__random_nonempty_strict_subgraph(f2ptr cause, f2ptr this) 
     f2ptr bug_frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "bruno_graph_must_have_at_least_two_nodes"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"), new__symbol(cause, "bruno_graph-random_nonempty_strict_subgraph"));
-    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),     this);
     return f2larva__new(cause, 342, f2__bug__new(cause, f2integer__new(cause, 342), bug_frame));
   }
   return raw__bruno_graph__random_nonempty_strict_subgraph(cause, this);

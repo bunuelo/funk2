@@ -434,6 +434,14 @@ f2ptr f2__bruno_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, 
       (! raw__bruno_graph__is_type(cause, graph))) {
     return f2larva__new(cause, 1, nil);
   }
+  if (raw__bruno_graph__node_count(cause, graph) < 1) {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "cannot_decompose_empty_graph"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"), new__symbol(cause, "bruno_decomposition_lattice-decompose_graph"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),     this);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "graph"),    graph);
+    return f2larva__new(cause, 454, f2__bug__new(cause, f2integer__new(cause, 454), bug_frame));
+  }
   raw__bruno_decomposition_lattice__decompose_graph(cause, this, graph);
   return nil;
 }

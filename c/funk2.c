@@ -122,6 +122,7 @@ void f2__initialize() {
   f2__xmlrpc__initialize();
   f2__package__initialize();
   f2__bruno_graph__initialize();
+  f2__graph_cluster__initialize();
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)

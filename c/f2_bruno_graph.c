@@ -477,6 +477,8 @@ def_pcfunk3(bruno_decomposition_lattice_node__new, parent_graph, left_child_grap
 //	      set__iteration(cause, between_edge_set, edge,
 //			     f2ptr left_node  = f2__bruno_graph_edge__left_node(cause, edge);
 //			     f2ptr right_node = f2__bruno_graph_edge__right_node(cause, edge);
+//			     f2ptr graph__left_node  = f2__bruno_graph_isomorphism__map_left_to_right(cause, left_child_isomorphism,  left_node);
+//			     f2ptr graph__right_node = f2__bruno_graph_isomorphism__map_left_to_right(cause, right_child_isomorphism, right_node);
 //			     
 //			     );
 //	    }

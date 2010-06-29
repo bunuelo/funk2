@@ -20,6 +20,7 @@
 // 
 
 #include "funk2.h"
+#include <stdio.h>
 
 // bruno_graph_node
 
@@ -58,7 +59,7 @@ f2ptr raw__bruno_graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
 }
 
 f2ptr f2__bruno_graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
-  if (! raw__bruno_graph__is_type(cause, this)) {
+  if (! raw__bruno_graph__is_type(cause, this) || ! raw__bruno_graph_node__is_type(cause, node)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__bruno_graph__add_node(cause, this, node);

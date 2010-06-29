@@ -20,6 +20,7 @@
 // 
 
 #include "funk2.h"
+#include <stdio.h>
 
 // set
 
@@ -84,6 +85,7 @@ f2ptr f2__set__add(f2ptr cause, f2ptr this, f2ptr key) {
   while(key_iter) {
     f2ptr iter__key = f2cons__car(key_iter,  cause);
     if (raw__eq(cause, key, iter__key)) {
+      f2mutex__unlock(f2set__write_mutex(this, cause), cause);
       return f2bool__new(boolean__true);
     }
     key_iter = f2cons__cdr(key_iter, cause);

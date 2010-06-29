@@ -27,6 +27,7 @@ f2ptr f2__bruno_graph__cluster(f2ptr cause, f2ptr this) {
   }
   return new__string(cause, "this is a test.");
 }
+def_pcfunk1(bruno_graph__cluster, this, return f2__bruno_graph__cluster(this_cause, this));
 
 // **
 

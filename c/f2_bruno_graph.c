@@ -320,6 +320,33 @@ f2ptr f2__bruno_graph__node_isomorphisms(f2ptr cause, f2ptr this, f2ptr node) {
 }
 def_pcfunk2(bruno_graph__node_isomorphisms, this, node, return f2__bruno_graph__node_isomorphisms(this_cause, this, node));
 
+f2ptr raw__bruno_graph__left_node_edges(f2ptr cause, f2ptr this, f2ptr left_node) {
+  f2ptr edges_left_node_hash = f2__bruno_graph__edges_left_node_hash(cause, this);
+  return f2__ptypehash__lookup(cause, edges_left_node_hash, left_node);
+}
+
+f2ptr f2__bruno_graph__left_node_edges(f2ptr cause, f2ptr this, f2ptr left_node) {
+  if ((! raw__bruno_graph__is_type(cause, this)) ||
+      (! raw__bruno_graph_node__is_type(cause, left_node))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bruno_graph__left_node_edges(cause, this, left_node);
+}
+def_pcfunk2(bruno_graph__left_node_edges, this, left_node, return f2__bruno_graph__left_node_edges(this_cause, this, left_node));
+
+f2ptr raw__bruno_graph__right_node_edges(f2ptr cause, f2ptr this, f2ptr right_node) {
+  f2ptr edges_right_node_hash = f2__bruno_graph__edges_right_node_hash(cause, this);
+  return f2__ptypehash__lookup(cause, edges_right_node_hash, right_node);
+}
+
+f2ptr f2__bruno_graph__right_node_edges(f2ptr cause, f2ptr this, f2ptr right_node) {
+  if ((! raw__bruno_graph__is_type(cause, this)) ||
+      (! raw__bruno_graph_node__is_type(cause, right_node))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bruno_graph__right_node_edges(cause, this, right_node);
+}
+def_pcfunk2(bruno_graph__right_node_edges, this, right_node, return f2__bruno_graph__right_node_edges(this_cause, this, right_node));
 
 // bruno_graph_isomorphism
 
@@ -461,36 +488,36 @@ f2ptr f2__bruno_decomposition_lattice_node__new(f2ptr cause, f2ptr parent_graph,
 }
 def_pcfunk3(bruno_decomposition_lattice_node__new, parent_graph, left_child_graph, right_child_graph, return f2__bruno_decomposition_lattice_node__new(this_cause, parent_graph, left_child_graph, right_child_graph));
 
-//f2ptr raw__bruno_decomposition_lattice_node__combine_children_isomorphisms(f2ptr cause, f2ptr this, f2ptr left_child_isomorphisms, f2ptr right_child_isomorphisms, f2ptr graph) {
-//  f2ptr isomorphisms = nil;
-//  {
-//    f2ptr left_iter = left_child_isomorphisms;
-//    while (left_iter) {
-//      f2ptr left_isomorphism = f2__cons__car(cause, left_iter);
-//      {
-//	f2ptr right_iter = right_child_isomorphisms;
-//	while (right_iter) {
-//	  f2ptr right_isomorphism = f2__cons__car(cause, right_iter);
-//	  {
-//	    if (raw__bruno_graph_isomorphism__is_disjoint_with(cause, left_isomorphism, right_isomorphism)) {
-//	      f2ptr between_edge_set = f2__bruno_decomposition_lattice_node__between_edge_set(cause, this);
-//	      set__iteration(cause, between_edge_set, edge,
-//			     f2ptr left_node  = f2__bruno_graph_edge__left_node(cause, edge);
-//			     f2ptr right_node = f2__bruno_graph_edge__right_node(cause, edge);
-//			     f2ptr graph__left_node  = f2__bruno_graph_isomorphism__map_left_to_right(cause, left_child_isomorphism,  left_node);
-//			     f2ptr graph__right_node = f2__bruno_graph_isomorphism__map_left_to_right(cause, right_child_isomorphism, right_node);
-//			     
-//			     );
-//	    }
-//	  }
-//	  right_iter = f2__cons__cdr(cause, right_iter);
-//	}
-//      }
-//      left_iter = f2__cons__cdr(cause, left_iter);
-//    }
-//  }
-//  return isomorphisms;
-//}
+f2ptr raw__bruno_decomposition_lattice_node__combine_children_isomorphisms(f2ptr cause, f2ptr this, f2ptr left_child_isomorphisms, f2ptr right_child_isomorphisms, f2ptr graph) {
+  f2ptr isomorphisms = nil;
+  {
+    f2ptr left_iter = left_child_isomorphisms;
+    while (left_iter) {
+      f2ptr left_isomorphism = f2__cons__car(cause, left_iter);
+      {
+	f2ptr right_iter = right_child_isomorphisms;
+	while (right_iter) {
+	  f2ptr right_isomorphism = f2__cons__car(cause, right_iter);
+	  {
+	    if (raw__bruno_graph_isomorphism__is_disjoint_with(cause, left_isomorphism, right_isomorphism)) {
+	      f2ptr between_edge_set = f2__bruno_decomposition_lattice_node__between_edge_set(cause, this);
+	      set__iteration(cause, between_edge_set, edge,
+			     f2ptr label             = f2__bruno_graph_edge__label(     cause, edge);
+			     f2ptr left_node         = f2__bruno_graph_edge__left_node( cause, edge);
+			     f2ptr right_node        = f2__bruno_graph_edge__right_node(cause, edge);
+			     f2ptr graph__left_node  = f2__bruno_graph_isomorphism__map_left_to_right(cause, left_child_isomorphism,  left_node);
+			     f2ptr graph__right_node = f2__bruno_graph_isomorphism__map_left_to_right(cause, right_child_isomorphism, right_node);
+			     );
+	    }
+	  }
+	  right_iter = f2__cons__cdr(cause, right_iter);
+	}
+      }
+      left_iter = f2__cons__cdr(cause, left_iter);
+    }
+  }
+  return isomorphisms;
+}
 
 // bruno_decomposition_lattice
 
@@ -621,6 +648,8 @@ void f2__bruno_graph__initialize() {
   f2__primcfunk__init__1(bruno_graph__random_nonempty_strict_subgraph, this,                               "When this bruno_graph contains N nodes, returns a random subgraph with N/2 nodes.  This bruno_graph must have at least 2 nodes.");
   f2__primcfunk__init__2(bruno_graph__minus,                           this, that,                         "Returns a subgraph of this bruno_graph without the nodes in that bruno_graph.");
   f2__primcfunk__init__2(bruno_graph__node_isomorphisms,               this, node,                         "Returns all single node isomorphisms between this bruno_graph and a bruno_graph_node.");
+  f2__primcfunk__init__2(bruno_graph__left_node_edges,                 this, left_node,                    "Returns all edges in this bruno_graph that have a left_node.");
+  f2__primcfunk__init__2(bruno_graph__right_node_edges,                this, right_node,                   "Returns all edges in this bruno_graph that have a right_node.");
   
   // bruno_graph_isomorphism
   initialize_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);

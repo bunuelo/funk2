@@ -102,6 +102,55 @@ f2ptr f2__set__add(f2ptr cause, f2ptr this, f2ptr key) {
 }
 def_pcfunk2(set__add, this, element, return f2__set__add(this_cause, this, element));
 
+boolean_t raw__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
+  debug__assert(raw__set__valid(cause, this), nil, "f2__set__remove assert failed: f2__set__valid(this)");
+  boolean_t key_was_removed = boolean__false;
+  f2mutex__lock(f2set__write_mutex(this, cause), cause);
+  {
+    f2ptr bin_num_power    = f2set__bin_num_power(this, cause);
+    u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
+    f2ptr bin_array        = f2set__bin_array(this, cause);
+    u64   key__hash_value  = raw__eq_hash_value(cause, key);
+    u64   hash_value       = (key__hash_value * PRIME_NUMBER__16_BIT);
+    u64   hash_value_mask  = (0xffffffffffffffffll >> (64 - bin_num_power__i));
+    u64   index            = hash_value & hash_value_mask;
+    {
+      f2ptr prev = nil;
+      f2ptr iter = raw__array__elt(cause, bin_array, index);
+      while(iter) {
+	f2ptr next      = f2cons__cdr(iter, cause);
+	f2ptr iter__key = f2cons__car(iter, cause);
+	if (raw__eq(cause, key, iter__key)) {
+	  if (prev) {
+	    f2cons__cdr__set(prev, cause, next);
+	  } else {
+	    raw__array__elt__set(cause, bin_array, index, next);
+	  }
+	  s64 key_count__i = f2integer__i(f2set__key_count(this, cause), cause);
+	  {
+	    key_count__i --;
+	    f2set__key_count__set(this, cause, f2integer__new(cause, key_count__i));
+	  }
+	  key_was_removed = boolean__true;
+	  break;
+	}
+	prev = iter;
+	iter = next;
+      }
+    }
+  }
+  f2mutex__unlock(f2set__write_mutex(this, cause), cause);
+  return key_was_removed;
+}
+
+f2ptr f2__set__remove(f2ptr cause, f2ptr this, f2ptr key) {
+  if (! raw__set__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__set__remove(cause, this, key);
+}
+def_pcfunk2(set__remove, this, key, return f2__set__remove(this_cause, this, key));
+
 f2ptr raw__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__lookup assert failed: f2__set__valid(this)");
   f2mutex__lock(f2set__write_mutex(this, cause), cause);
@@ -168,6 +217,7 @@ def_pcfunk1(set__elements, this, return f2__set__elements(this_cause, this));
 f2ptr f2set__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2set__primobject_type__new(cause);
   {char* slot_name = "add";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.add__funk);}
+  {char* slot_name = "remove";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.remove__funk);}
   {char* slot_name = "lookup";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.lookup__funk);}
   {char* slot_name = "elements"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.elements__funk);}
   return this;

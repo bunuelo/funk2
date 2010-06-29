@@ -1040,15 +1040,19 @@ def_pcfunk1(identity, exp, return f2__identity(this_cause, exp));
 
 #define PRIME_NUMBER__16_BIT 65521
 
+u64 raw__random(u64 max_value) {
+  int random_value = (uint)(rand() * PRIME_NUMBER__16_BIT) % max_value;
+  random_value = (random_value < 0) ? (-random_value) : random_value;
+  return random_value;
+}
+
 f2ptr f2__random(f2ptr cause, f2ptr max_value) {
   if ((! max_value) || (! raw__integer__is_type(cause, max_value))) {
     printf("\n[random max_value] error: max_value must be integer.");
     return f2larva__new(cause, 1, nil);
   }
   int raw_max_value = f2integer__i(max_value, cause);
-  int random_value = (uint)(rand() * PRIME_NUMBER__16_BIT) % raw_max_value;
-  random_value = (random_value < 0) ? (-random_value) : random_value;
-  return f2integer__new(cause, random_value % max_value);
+  return f2integer__new(cause, raw__random(raw_max_value));
 }
 def_pcfunk1(random, max_value, return f2__random(this_cause, max_value));
 

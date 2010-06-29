@@ -68,6 +68,8 @@ f2ptr      f2__ptypehash__an_arbitrary_value        (f2ptr cause, f2ptr this);
 f2ptr      f2__ptypehash__copy                      (f2ptr cause, f2ptr this);
 boolean_t raw__ptypehash__is_empty                  (f2ptr cause, f2ptr this);
 f2ptr      f2__ptypehash__is_empty                  (f2ptr cause, f2ptr this);
+f2ptr     raw__ptypehash__as__frame                 (f2ptr cause, f2ptr this);
+f2ptr      f2__ptypehash__as__frame                 (f2ptr cause, f2ptr this);
 
 f2ptr raw__ptypehash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
 

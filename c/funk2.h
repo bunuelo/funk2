@@ -54,6 +54,7 @@
 #include "f2_globalenv.h"
 #include "f2_glwindow.h"
 #include "f2_graph.h"
+#include "f2_graph_cluster.h"
 #include "f2_graphviz.h"
 #include "f2_html.h"
 #include "f2_load.h"

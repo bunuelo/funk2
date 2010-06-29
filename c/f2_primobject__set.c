@@ -102,7 +102,7 @@ f2ptr f2__set__add(f2ptr cause, f2ptr this, f2ptr key) {
 }
 def_pcfunk2(set__add, this, element, return f2__set__add(this_cause, this, element));
 
-boolean_t raw__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
+boolean_t raw__set__remove(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__remove assert failed: f2__set__valid(this)");
   boolean_t key_was_removed = boolean__false;
   f2mutex__lock(f2set__write_mutex(this, cause), cause);

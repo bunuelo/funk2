@@ -56,12 +56,17 @@ declare_object_type_4_slot(bruno_decomposition_lattice, node_set, node_parent_ha
 // bruno_graph_node
 declare_primobject_1_slot(bruno_graph_node, label);
 
+f2ptr f2__bruno_graph_node__new(f2ptr cause, f2ptr label);
+
 // bruno_graph_edge
 declare_primobject_3_slot(bruno_graph_edge, label, left_node, right_node);
+
+f2ptr f2__bruno_graph_edge__new(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node);
 
 // bruno_graph
 declare_primobject_4_slot(bruno_graph, node_set, edge_set, edges_right_node_hash_left_node_hash, edges_left_node_hash_right_node_hash);
 
+f2ptr      f2__bruno_graph__new                            (f2ptr cause);
 f2ptr     raw__bruno_graph__add_node                       (f2ptr cause, f2ptr this, f2ptr node);
 f2ptr      f2__bruno_graph__add_node                       (f2ptr cause, f2ptr this, f2ptr node);
 f2ptr     raw__bruno_graph__add_new_node                   (f2ptr cause, f2ptr this, f2ptr label);
@@ -93,6 +98,7 @@ f2ptr      f2__bruno_graph__node_isomorphisms              (f2ptr cause, f2ptr t
 declare_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);
 
 f2ptr      f2__bruno_graph_isomorphism__new              (f2ptr cause);
+f2ptr      f2__bruno_graph_isomorphism__new              (f2ptr cause);
 void      raw__bruno_graph_isomorphism__add_mapping      (f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
 f2ptr      f2__bruno_graph_isomorphism__add_mapping      (f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
 u64       raw__bruno_graph_isomorphism__mapping_count    (f2ptr cause, f2ptr this);
@@ -107,9 +113,13 @@ f2ptr      f2__bruno_graph_isomorphism__map_right_to_left(f2ptr cause, f2ptr thi
 // bruno_decomposition_lattice_node
 declare_primobject_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, between_edge_set);
 
+f2ptr raw__bruno_decomposition_lattice_node__new(f2ptr cause, f2ptr parent_graph, f2ptr left_child_graph, f2ptr right_child_graph);
+f2ptr  f2__bruno_decomposition_lattice_node__new(f2ptr cause, f2ptr parent_graph, f2ptr left_child_graph, f2ptr right_child_graph);
+
 // bruno_decomposition_lattice
 declare_primobject_4_slot(bruno_decomposition_lattice, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash);
 
+f2ptr  f2__bruno_decomposition_lattice__new            (f2ptr cause);
 f2ptr raw__bruno_decomposition_lattice__add_node       (f2ptr cause, f2ptr this, f2ptr node);
 f2ptr  f2__bruno_decomposition_lattice__add_node       (f2ptr cause, f2ptr this, f2ptr node);
 void  raw__bruno_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, f2ptr graph);

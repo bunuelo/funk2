@@ -540,8 +540,8 @@ f2ptr raw__bruno_decomposition_lattice_node__combine_children_isomorphisms(f2ptr
 			       goto raw__bruno_decomposition_lattice_node__combine_children_isomorphisms__found_unmatched_edge;
 			     }
 			     );
-	    raw__bruno_decomposition_lattice_node__combine_children_isomorphisms__found_unmatched_edge:
 	    }
+	  raw__bruno_decomposition_lattice_node__combine_children_isomorphisms__found_unmatched_edge:
 	    if (combined_isomorphism_is_valid) {
 	      f2ptr isomorphism = f2__bruno_graph_isomorphism__union(cause, left_isomorphism, right_isomorphism);
 	      isomorphisms = f2cons__new(cause, isomorphism, isomorphisms);

@@ -243,6 +243,8 @@ void f2__primobject_set__initialize() {
   
   {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_set.add__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__add, this, element, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.add__funk = never_gc(cfunk);}
+  {char* symbol_str = "remove"; __funk2.globalenv.object_type.primobject.primobject_type_set.remove__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__remove, this, element, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.remove__funk = never_gc(cfunk);}
   {char* symbol_str = "lookup"; __funk2.globalenv.object_type.primobject.primobject_type_set.lookup__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__lookup, this, element, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.lookup__funk = never_gc(cfunk);}
   {char* symbol_str = "elements"; __funk2.globalenv.object_type.primobject.primobject_type_set.elements__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

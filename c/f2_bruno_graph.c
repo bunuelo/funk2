@@ -568,14 +568,15 @@ def_pcfunk4(bruno_decomposition_lattice_node__combine_children_isomorphisms, thi
 
 // bruno_decomposition_lattice
 
-def_primobject_4_slot(bruno_decomposition_lattice, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash);
+def_primobject_5_slot(bruno_decomposition_lattice, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_set);
 
 f2ptr f2__bruno_decomposition_lattice__new(f2ptr cause) {
   f2ptr node_set              = f2__set__new(cause);
   f2ptr node_parent_hash      = f2__ptypehash__new(cause);
   f2ptr node_left_child_hash  = f2__ptypehash__new(cause);
   f2ptr node_right_child_hash = f2__ptypehash__new(cause);
-  return f2bruno_decomposition_lattice__new(cause, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash);
+  f2ptr leaf_set              = f2__set__new(cause);
+  return f2bruno_decomposition_lattice__new(cause, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_set);
 }
 def_pcfunk0(bruno_decomposition_lattice__new, return f2__bruno_decomposition_lattice__new(this_cause));
 
@@ -583,6 +584,7 @@ f2ptr raw__bruno_decomposition_lattice__add_node(f2ptr cause, f2ptr this, f2ptr 
   f2ptr node_set              = f2__bruno_decomposition_lattice__node_set(cause, this);
   f2ptr already_contains_node = f2__set__add(cause, node_set, node);
   if (already_contains_node == nil) {
+    f2ptr leaf_set = f2__bruno_decomposition_lattice__leaf_set(cause, this);
     {
       f2ptr parent_graph     = f2__bruno_decomposition_lattice_node__parent_graph(cause, node);
       f2ptr node_parent_hash = f2__bruno_decomposition_lattice__node_parent_hash(cause, this);
@@ -592,11 +594,17 @@ f2ptr raw__bruno_decomposition_lattice__add_node(f2ptr cause, f2ptr this, f2ptr 
       f2ptr left_child_graph     = f2__bruno_decomposition_lattice_node__left_child_graph(cause, node);
       f2ptr node_left_child_hash = f2__bruno_decomposition_lattice__node_left_child_hash(cause, this);
       f2__ptypehash__add(cause, node_left_child_hash, left_child_graph, node);
+      if (raw__bruno_graph__node_count(cause, left_child_graph) == 1) {
+	f2__set__add(cause, leaf_set, left_child_graph);
+      }
     }
     {
       f2ptr right_child_graph     = f2__bruno_decomposition_lattice_node__right_child_graph(cause, node);
       f2ptr node_right_child_hash = f2__bruno_decomposition_lattice__node_right_child_hash(cause, this);
       f2__ptypehash__add(cause, node_right_child_hash, right_child_graph, node);
+      if (raw__bruno_graph__node_count(cause, right_child_graph) == 1) {
+	f2__set__add(cause, leaf_set, right_child_graph);
+      }
     }
   }
   return already_contains_node;
@@ -713,7 +721,7 @@ void f2__bruno_graph__initialize() {
   f2__primcfunk__init__4(bruno_decomposition_lattice_node__combine_children_isomorphisms, this, left_child_isomorphisms, right_child_isomorphisms, graph, "Combine children isomorphisms when they are non-overlapping.");
   
   // bruno_decomposition_lattice
-  initialize_primobject_4_slot(bruno_decomposition_lattice, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash);
+  initialize_primobject_5_slot(bruno_decomposition_lattice, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_set);
   
   f2__primcfunk__init__2(bruno_decomposition_lattice__add_node,        this, node,  "Add a bruno_decomposition_lattice_node to this bruno_decomposition_lattice.");
   f2__primcfunk__init__2(bruno_decomposition_lattice__decompose_graph, this, graph, "Decompose a bruno_graph into this bruno_decomposition_lattice.");

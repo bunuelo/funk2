@@ -350,6 +350,85 @@ f2ptr f2__bruno_graph_isomorphism__add_mapping(f2ptr cause, f2ptr this, f2ptr le
 }
 def_pcfunk3(bruno_graph_isomorphism__add_mapping, this, left_node, right_node, return f2__bruno_graph_isomorphism__add_mapping(this_cause, this, left_node, right_node));
 
+u64 raw__bruno_graph_isomorphism__mapping_count(f2ptr cause, f2ptr this) {
+  f2ptr right_node_left_node_hash = f2__bruno_graph_isomorphism__right_node_left_node_hash(cause, this);
+  f2ptr key_count                 = f2__ptypehash__key_count(cause, right_node_left_node_hash);
+  return f2integer__i(key_count, cause);
+}
+
+f2ptr f2__bruno_graph_isomorphism__mapping_count(f2ptr cause, f2ptr this) {
+  if (! raw__bruno_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  f2ptr right_node_left_node_hash = f2__bruno_graph_isomorphism__right_node_left_node_hash(cause, this);
+  f2ptr key_count                 = f2__ptypehash__key_count(cause, right_node_left_node_hash);
+  return key_count;
+}
+def_pcfunk1(bruno_graph_isomorphism__mapping_count, this, return f2__bruno_graph_isomorphism__mapping_count(this_cause, this));
+
+boolean_t raw__bruno_graph_isomorphism__is_disjoint_with(f2ptr cause, f2ptr this, f2ptr that) {
+  u64 this__mapping_count = raw__bruno_graph_isomorphism__mapping_count(cause, this);
+  u64 that__mapping_count = raw__bruno_graph_isomorphism__mapping_count(cause, that);
+  if (this__mapping_count > that__mapping_count) {
+    {
+      f2ptr swap = this;
+      this = that;
+      that = swap;
+    }
+    {
+      u64 swap = this__mapping_count;
+      this__mapping_count = that__mapping_count;
+      that__mapping_count = swap;
+    }
+  }
+  f2ptr this__right_node_left_node_hash = f2__bruno_graph_isomorphism__right_node_left_node_hash(cause, this);
+  f2ptr that__right_node_left_node_hash = f2__bruno_graph_isomorphism__right_node_left_node_hash(cause, that);
+  f2ptr that__left_node_right_node_hash = f2__bruno_graph_isomorphism__left_node_right_node_hash(cause, that);
+  ptypehash__iteration(cause, this__right_node_left_node_hash, this__left_node, this__right_node,
+		       if (raw__ptypehash__contains(cause, that__right_node_left_node_hash, this__left_node) ||
+			   raw__ptypehash__contains(cause, that__left_node_right_node_hash, this__right_node)) {
+			 return boolean__false;
+		       }
+		       );
+  return boolean__true;
+}
+
+f2ptr f2__bruno_graph_isomorphism__is_disjoint_with(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__bruno_graph_isomorphism__is_type(cause, this)) ||
+      (! raw__bruno_graph_isomorphism__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bruno_graph_isomorphism__is_disjoint_with(cause, this, that);
+}
+def_pcfunk2(bruno_graph_isomorphism__is_disjoint_with, this, that, return f2__bruno_graph_isomorphism__is_disjoint_with(this_cause, this, that));
+
+f2ptr raw__bruno_graph_isomorphism__map_left_to_right(f2ptr cause, f2ptr this, f2ptr left_node) {
+  f2ptr right_node_left_node_hash = f2__bruno_graph_isomorphism__right_node_left_node_hash(cause, this);
+  return raw__ptypehash__lookup(cause, right_node_left_node_hash, left_node);
+}
+
+f2ptr f2__bruno_graph_isomorphism__map_left_to_right(f2ptr cause, f2ptr this, f2ptr left_node) {
+  if ((! raw__bruno_graph_isomorphism__is_type(cause, this)) ||
+      (! raw__bruno_graph_node__is_type(cause, left_node))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bruno_graph_isomorphism__map_left_to_right(cause, this, left_node);
+}
+def_pcfunk2(bruno_graph_isomorphism__map_left_to_right, this, left_node, return f2__bruno_graph_isomorphism__map_left_to_right(this_cause, this, left_node));
+
+f2ptr raw__bruno_graph_isomorphism__map_right_to_left(f2ptr cause, f2ptr this, f2ptr right_node) {
+  f2ptr left_node_right_node_hash = f2__bruno_graph_isomorphism__left_node_right_node_hash(cause, this);
+  return raw__ptypehash__lookup(cause, left_node_right_node_hash, right_node);
+}
+
+f2ptr f2__bruno_graph_isomorphism__map_right_to_left(f2ptr cause, f2ptr this, f2ptr right_node) {
+  if ((! raw__bruno_graph_isomorphism__is_type(cause, this)) ||
+      (! raw__bruno_graph_node__is_type(cause, right_node))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bruno_graph_isomorphism__map_right_to_left(cause, this, right_node);
+}
+def_pcfunk2(bruno_graph_isomorphism__map_right_to_left, this, right_node, return f2__bruno_graph_isomorphism__map_right_to_left(this_cause, this, right_node));
 
 // bruno_decomposition_lattice_node
 
@@ -382,6 +461,34 @@ f2ptr f2__bruno_decomposition_lattice_node__new(f2ptr cause, f2ptr parent_graph,
 }
 def_pcfunk3(bruno_decomposition_lattice_node__new, parent_graph, left_child_graph, right_child_graph, return f2__bruno_decomposition_lattice_node__new(this_cause, parent_graph, left_child_graph, right_child_graph));
 
+//f2ptr raw__bruno_decomposition_lattice_node__combine_children_isomorphisms(f2ptr cause, f2ptr this, f2ptr left_child_isomorphisms, f2ptr right_child_isomorphisms, f2ptr graph) {
+//  f2ptr isomorphisms = nil;
+//  {
+//    f2ptr left_iter = left_child_isomorphisms;
+//    while (left_iter) {
+//      f2ptr left_isomorphism = f2__cons__car(cause, left_iter);
+//      {
+//	f2ptr right_iter = right_child_isomorphisms;
+//	while (right_iter) {
+//	  f2ptr right_isomorphism = f2__cons__car(cause, right_iter);
+//	  {
+//	    if (raw__bruno_graph_isomorphism__is_disjoint_with(cause, left_isomorphism, right_isomorphism)) {
+//	      f2ptr between_edge_set = f2__bruno_decomposition_lattice_node__between_edge_set(cause, this);
+//	      set__iteration(cause, between_edge_set, edge,
+//			     f2ptr left_node  = f2__bruno_graph_edge__left_node(cause, edge);
+//			     f2ptr right_node = f2__bruno_graph_edge__right_node(cause, edge);
+//			     
+//			     );
+//	    }
+//	  }
+//	  right_iter = f2__cons__cdr(cause, right_iter);
+//	}
+//      }
+//      left_iter = f2__cons__cdr(cause, left_iter);
+//    }
+//  }
+//  return isomorphisms;
+//}
 
 // bruno_decomposition_lattice
 
@@ -516,7 +623,11 @@ void f2__bruno_graph__initialize() {
   // bruno_graph_isomorphism
   initialize_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);
   
-  f2__primcfunk__init__3(bruno_graph_isomorphism__add_mapping, this, left_node, right_node, "Add a bruno_graph_node mapping to a bruno_graph_isomorphism.");
+  f2__primcfunk__init__3(bruno_graph_isomorphism__add_mapping,       this, left_node, right_node, "Add a bruno_graph_node mapping to a bruno_graph_isomorphism.");
+  f2__primcfunk__init__1(bruno_graph_isomorphism__mapping_count,     this,                        "Returns the number of node mappings in this bruno_graph_isomorphism.");
+  f2__primcfunk__init__2(bruno_graph_isomorphism__is_disjoint_with,  this, that,                  "Returns true if this bruno_graph_isomorphism is disjoint with that bruno_graph_isomorphism.");
+  f2__primcfunk__init__2(bruno_graph_isomorphism__map_left_to_right, this, left_node,             "Maps a node on the left of this bruno_graph_isomorphism to the right.");
+  f2__primcfunk__init__2(bruno_graph_isomorphism__map_right_to_left, this, right_node,            "Maps a node on the right of this bruno_graph_isomorphism to the left.");
   
   // bruno_decomposition_lattice_node
   initialize_primobject_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, between_edge_set);

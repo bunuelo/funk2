@@ -29,7 +29,9 @@
 [globalize-funk bruno_graph-minus                           &primfunk:bruno_graph__minus]
 [globalize-funk bruno_graph-node_isomorphisms               &primfunk:bruno_graph__node_isomorphisms]
 
-[globalize-funk bruno_graph_isomorphism-add_mapping &primfunk:bruno_graph_isomorphism__add_mapping]
+[globalize-funk bruno_graph_isomorphism-add_mapping       &primfunk:bruno_graph_isomorphism__add_mapping]
+[globalize-funk bruno_graph_isomorphism-map_left_to_right &primfunk:bruno_graph_isomorphism__map_left_to_right]
+[globalize-funk bruno_graph_isomorphism-map_right_to_left &primfunk:bruno_graph_isomorphism__map_right_to_left]
 
 [globalize-funk bruno_decomposition_lattice-add_node        &primfunk:bruno_decomposition_lattice__add_node]
 [globalize-funk bruno_decomposition_lattice-decompose_graph &primfunk:bruno_decomposition_lattice__decompose_graph]

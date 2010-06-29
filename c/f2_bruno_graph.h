@@ -84,10 +84,10 @@ f2ptr     raw__bruno_graph__minus                          (f2ptr cause, f2ptr t
 f2ptr      f2__bruno_graph__minus                          (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr     raw__bruno_graph__node_isomorphisms              (f2ptr cause, f2ptr this, f2ptr node);
 f2ptr      f2__bruno_graph__node_isomorphisms              (f2ptr cause, f2ptr this, f2ptr node);
-f2ptr     raw__bruno_graph__left_node_edges                (f2ptr cause, f2ptr this, f2ptr left_node);
-f2ptr      f2__bruno_graph__left_node_edges                (f2ptr cause, f2ptr this, f2ptr left_node);
-f2ptr     raw__bruno_graph__right_node_edges               (f2ptr cause, f2ptr this, f2ptr right_node);
-f2ptr      f2__bruno_graph__right_node_edges               (f2ptr cause, f2ptr this, f2ptr right_node);
+//f2ptr     raw__bruno_graph__left_node_edges                (f2ptr cause, f2ptr this, f2ptr left_node);
+//f2ptr      f2__bruno_graph__left_node_edges                (f2ptr cause, f2ptr this, f2ptr left_node);
+//f2ptr     raw__bruno_graph__right_node_edges               (f2ptr cause, f2ptr this, f2ptr right_node);
+//f2ptr      f2__bruno_graph__right_node_edges               (f2ptr cause, f2ptr this, f2ptr right_node);
 
 // bruno_graph_isomorphism
 declare_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);

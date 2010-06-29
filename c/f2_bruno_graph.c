@@ -648,8 +648,8 @@ void f2__bruno_graph__initialize() {
   f2__primcfunk__init__1(bruno_graph__random_nonempty_strict_subgraph, this,                               "When this bruno_graph contains N nodes, returns a random subgraph with N/2 nodes.  This bruno_graph must have at least 2 nodes.");
   f2__primcfunk__init__2(bruno_graph__minus,                           this, that,                         "Returns a subgraph of this bruno_graph without the nodes in that bruno_graph.");
   f2__primcfunk__init__2(bruno_graph__node_isomorphisms,               this, node,                         "Returns all single node isomorphisms between this bruno_graph and a bruno_graph_node.");
-  f2__primcfunk__init__2(bruno_graph__left_node_edges,                 this, left_node,                    "Returns all edges in this bruno_graph that have a left_node.");
-  f2__primcfunk__init__2(bruno_graph__right_node_edges,                this, right_node,                   "Returns all edges in this bruno_graph that have a right_node.");
+  //f2__primcfunk__init__2(bruno_graph__left_node_edges,                 this, left_node,                    "Returns all edges in this bruno_graph that have a left_node.");
+  //f2__primcfunk__init__2(bruno_graph__right_node_edges,                this, right_node,                   "Returns all edges in this bruno_graph that have a right_node.");
   
   // bruno_graph_isomorphism
   initialize_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);

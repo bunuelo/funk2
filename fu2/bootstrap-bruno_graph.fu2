@@ -28,8 +28,8 @@
 [deftypefunk bruno_graph get     random_nonempty_strict_subgraph []                           [bruno_graph-random_nonempty_strict_subgraph this]]
 [deftypefunk bruno_graph get     minus                           [that]                       [bruno_graph-minus                           this that]]
 [deftypefunk bruno_graph get     node_isomorphisms               [node]                       [bruno_graph-node_isomorphisms               this node]]
-[deftypefunk bruno_graph get     left_node_edges                 [left_node]                  [bruno_graph-left_node_edges                 this left_node]]
-[deftypefunk bruno_graph get     right_node_edges                [right_node]                 [bruno_graph-right_node_edges                this right_node]]
+`[deftypefunk bruno_graph get     left_node_edges                 [left_node]                  [bruno_graph-left_node_edges                 this left_node]]
+`[deftypefunk bruno_graph get     right_node_edges                [right_node]                 [bruno_graph-right_node_edges                this right_node]]
 
 [deftypefunk bruno_graph_isomorphism execute add_mapping       [left_node right_node] [bruno_graph_isomorphism-add_mapping       this left_node right_node]]
 [deftypefunk bruno_graph_isomorphism execute map_left_to_right [left_node]            [bruno_graph_isomorphism-map_left_to_right this left_node]]

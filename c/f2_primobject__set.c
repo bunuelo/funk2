@@ -147,7 +147,7 @@ f2ptr f2__set__remove(f2ptr cause, f2ptr this, f2ptr key) {
   if (! raw__set__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__set__remove(cause, this, key);
+  return f2bool__new(raw__set__remove(cause, this, key));
 }
 def_pcfunk2(set__remove, this, key, return f2__set__remove(this_cause, this, key));
 

@@ -633,7 +633,7 @@ void f2__bruno_graph__initialize() {
   initialize_primobject_3_slot(bruno_graph_edge, label, left_node, right_node);
   
   // bruno_graph
-  initialize_primobject_4_slot(bruno_graph, node_set, edge_set, edges_right_node_hash_left_node_hash, edges_left_node_hash_right_node_hash);
+  initialize_primobject_3_slot(bruno_graph, node_set, edge_set, edges_label_hash_right_node_hash_left_node_hash);
   
   f2__primcfunk__init__2(bruno_graph__add_node,                        this, node,                         "Add a bruno_graph_node to this bruno_graph.");
   f2__primcfunk__init__2(bruno_graph__add_new_node,                    this, label,                        "Add a new bruno_graph_node to this bruno_graph.");

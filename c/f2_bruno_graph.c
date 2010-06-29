@@ -41,14 +41,13 @@ def_pcfunk3(bruno_graph_edge__new, label, left_node, right_node, return f2__brun
 
 // bruno_graph
 
-def_primobject_4_slot(bruno_graph, node_set, edge_set, edges_right_node_hash_left_node_hash, edges_left_node_hash_right_node_hash);
+def_primobject_3_slot(bruno_graph, node_set, edge_set, edges_label_hash_right_node_hash_left_node_hash);
 
 f2ptr f2__bruno_graph__new(f2ptr cause) {
-  f2ptr node_set                             = f2__set__new(cause);
-  f2ptr edge_set                             = f2__set__new(cause);
-  f2ptr edges_right_node_hash_left_node_hash = f2__ptypehash__new(cause);
-  f2ptr edges_left_node_hash_right_node_hash = f2__ptypehash__new(cause);
-  return f2bruno_graph__new(cause, node_set, edge_set, edges_right_node_hash_left_node_hash, edges_left_node_hash_right_node_hash);
+  f2ptr node_set                                        = f2__set__new(cause);
+  f2ptr edge_set                                        = f2__set__new(cause);
+  f2ptr edges_label_hash_right_node_hash_left_node_hash = f2__ptypehash__new(cause);
+  return f2bruno_graph__new(cause, node_set, edge_set, edges_label_hash_right_node_hash_left_node_hash);
 }
 def_pcfunk0(bruno_graph__new, return f2__bruno_graph__new(this_cause));
 
@@ -83,29 +82,25 @@ f2ptr raw__bruno_graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge) {
   f2ptr edge_set              = f2__bruno_graph__edge_set(cause, this);
   f2ptr already_contains_edge = f2__set__add(cause, edge_set, edge);
   if (already_contains_edge == nil) {
-    f2ptr left_node  = f2__bruno_graph_edge__left_node(cause, edge);
+    f2ptr left_node  = f2__bruno_graph_edge__left_node( cause, edge);
     f2ptr right_node = f2__bruno_graph_edge__right_node(cause, edge);
+    f2ptr label      = f2__bruno_graph_edge__label(     cause, edge);
     f2__bruno_graph__add_node(cause, this, left_node);
     f2__bruno_graph__add_node(cause, this, right_node);
     {
-      f2ptr edges_right_node_hash_left_node_hash = f2__bruno_graph__edges_right_node_hash_left_node_hash(cause, this);
-      f2ptr edges_right_node_hash                = f2__ptypehash__lookup(cause, edges_right_node_hash_left_node_hash, left_node);
-      if (edges_right_node_hash == nil) {
-	edges_right_node_hash = f2__ptypehash__new(cause);
-	f2__ptypehash__add(cause, edges_right_node_hash_left_node_hash, left_node, edges_right_node_hash);
+      f2ptr edges_label_hash_right_node_hash_left_node_hash = f2__bruno_graph__edges_label_hash_right_node_hash_left_node_hash(cause, this);
+      f2ptr edges_label_hash_right_node_hash                = f2__ptypehash__lookup(cause, edges_label_hash_right_node_hash_left_node_hash, left_node);
+      if (edges_label_hash_right_node_hash == nil) {
+	edges_label_hash_right_node_hash = f2__ptypehash__new(cause);
+	f2__ptypehash__add(cause, edges_label_hash_right_node_hash_left_node_hash, left_node, edges_label_hash_right_node_hash);
       }
-      f2ptr edges = f2__ptypehash__lookup(cause, edges_right_node_hash, right_node);
-      f2__ptypehash__add(cause, edges_right_node_hash, right_node, f2cons__new(cause, edge, edges));
-    }
-    {
-      f2ptr edges_left_node_hash_right_node_hash = f2__bruno_graph__edges_left_node_hash_right_node_hash(cause, this);
-      f2ptr edges_left_node_hash                 = f2__ptypehash__lookup(cause, edges_left_node_hash_right_node_hash, right_node);
-      if (edges_left_node_hash == nil) {
-	edges_left_node_hash = f2__ptypehash__new(cause);
-	f2__ptypehash__add(cause, edges_left_node_hash_right_node_hash, right_node, edges_left_node_hash);
+      f2ptr edges_label_hash = f2__ptypehash__lookup(cause, edges_label_hash_right_node_hash, right_node);
+      if (edges_label_hash == nil) {
+	edges_label_hash = f2__ptypehash__new(cause);
+	f2__ptypehash__add(cause, edges_label_hash_right_node_hash, right_node, edges_label_hash);
       }
-      f2ptr edges = f2__ptypehash__lookup(cause, edges_left_node_hash, left_node);
-      f2__ptypehash__add(cause, edges_left_node_hash, left_node, f2cons__new(cause, edge, edges));
+      f2ptr edges = f2__ptypehash__lookup(cause, edges_label_hash, label);
+      f2__ptypehash__add(cause, edges_label_hash, label, f2cons__new(cause, edge, edges));
     }
   }
   return already_contains_edge;
@@ -326,25 +321,29 @@ f2ptr f2__bruno_graph__node_isomorphisms(f2ptr cause, f2ptr this, f2ptr node) {
 }
 def_pcfunk2(bruno_graph__node_isomorphisms, this, node, return f2__bruno_graph__node_isomorphisms(this_cause, this, node));
 
-f2ptr raw__bruno_graph__edges_between_nodes(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node) {
-  f2ptr edges_right_node_hash_left_node_hash = f2__bruno_graph__edges_right_node_hash_left_node_hash(cause, this);
-  f2ptr edges_right_node_hash                = f2__ptypehash__lookup(cause, edges_right_node_hash_left_node_hash, left_node);
-  if (! edges_right_node_hash) {
+f2ptr raw__bruno_graph__edges_with_label_between_nodes(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
+  f2ptr edges_label_hash_right_node_hash_left_node_hash = f2__bruno_graph__edges_label_hash_right_node_hash_left_node_hash(cause, this);
+  f2ptr edges_label_hash_right_node_hash                = f2__ptypehash__lookup(cause, edges_label_hash_right_node_hash_left_node_hash, left_node);
+  if (! edges_label_hash_right_node_hash) {
     return nil;
   }
-  f2ptr edges = f2__ptypehash__lookup(cause, edges_right_node_hash, right_node);
+  f2ptr edges_label_hash = f2__ptypehash__lookup(cause, edges_label_hash_right_node_hash, right_node);
+  if (! edges_label_hash) {
+    return nil;
+  }
+  f2ptr edges = f2__ptypehash__lookup(cause, edges_label_hash, label);
   return edges;
 }
 
-f2ptr f2__bruno_graph__edges_between_nodes(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node) {
+f2ptr f2__bruno_graph__edges_with_label_between_nodes(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
   if ((! raw__bruno_graph__is_type(cause, this)) ||
       (! raw__bruno_graph_node__is_type(cause, left_node)) ||
       (! raw__bruno_graph_node__is_type(cause, right_node))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__bruno_graph__edges_between_nodes(cause, this, left_node, right_node);
+  return raw__bruno_graph__edges_with_label_between_nodes(cause, this, label, left_node, right_node);
 }
-def_pcfunk3(bruno_graph__edges_between_nodes, this, left_node, right_node, return f2__bruno_graph__edges_between_nodes(this_cause, this, left_node, right_node));
+def_pcfunk4(bruno_graph__edges_with_label_between_nodes, this, label, left_node, right_node, return f2__bruno_graph__edges_with_label_between_nodes(this_cause, this, label, left_node, right_node));
 
 // bruno_graph_isomorphism
 
@@ -505,7 +504,7 @@ def_pcfunk3(bruno_decomposition_lattice_node__new, parent_graph, left_child_grap
 //			     f2ptr right_node        = f2__bruno_graph_edge__right_node(cause, edge);
 //			     f2ptr graph__left_node  = f2__bruno_graph_isomorphism__map_left_to_right(cause, left_child_isomorphism,  left_node);
 //			     f2ptr graph__right_node = f2__bruno_graph_isomorphism__map_left_to_right(cause, right_child_isomorphism, right_node);
-//			     f2ptr graph__edges      = f2__bruno_graph__edges_between_nodes(cause, graph, graph__left_node, graph__right_node);
+//			     
 //			     );
 //	    }
 //	  }
@@ -647,7 +646,7 @@ void f2__bruno_graph__initialize() {
   f2__primcfunk__init__1(bruno_graph__random_nonempty_strict_subgraph, this,                               "When this bruno_graph contains N nodes, returns a random subgraph with N/2 nodes.  This bruno_graph must have at least 2 nodes.");
   f2__primcfunk__init__2(bruno_graph__minus,                           this, that,                         "Returns a subgraph of this bruno_graph without the nodes in that bruno_graph.");
   f2__primcfunk__init__2(bruno_graph__node_isomorphisms,               this, node,                         "Returns all single node isomorphisms between this bruno_graph and a bruno_graph_node.");
-  f2__primcfunk__init__3(bruno_graph__edges_between_nodes,             this, left_node, right_node,        "Returns edges directed from a left_node to a right_node in this bruno_graph.");
+  f2__primcfunk__init__4(bruno_graph__edges_with_label_between_nodes,  this, label, left_node, right_node, "Returns edges directed from the left_node to the right_node that have the label in this bruno_graph.");
   
   // bruno_graph_isomorphism
   initialize_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);

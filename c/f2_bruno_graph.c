@@ -459,13 +459,13 @@ f2ptr raw__bruno_graph_isomorphism__union(f2ptr cause, f2ptr this, f2ptr that) {
   {
     f2ptr this__right_node_left_node_hash = f2__bruno_graph_isomorphism__right_node_left_node_hash(cause, this);
     ptypehash__iteration(cause, this__right_node_left_node_hash, left_node, right_node,
-			 f2__isomorphism__add_mapping(cause, isomorphism, left_node, right_node);
+			 f2__bruno_graph_isomorphism__add_mapping(cause, isomorphism, left_node, right_node);
 			 );
   }
   {
     f2ptr that__right_node_left_node_hash = f2__bruno_graph_isomorphism__right_node_left_node_hash(cause, that);
     ptypehash__iteration(cause, that__right_node_left_node_hash, left_node, right_node,
-			 f2__isomorphism__add_mapping(cause, isomorphism, left_node, right_node);
+			 f2__bruno_graph_isomorphism__add_mapping(cause, isomorphism, left_node, right_node);
 			 );
   }
   return isomorphism;

@@ -20,14 +20,17 @@
 // 
 
 #include "funk2.h"
+#include <stdio.h>
 
 f2ptr raw__bruno_graph__cluster(f2ptr cause, f2ptr this) {
   f2ptr  graph        = f2__bruno_graph__new(cause);
-  f2ptr  unused_nodes = f2__bruno_graph__node_set(cause, this);
+  f2ptr  node_set     = f2__bruno_graph__node_set(cause, this);
+  f2ptr  unused_nodes = f2__set__new(cause);
   u64    node_count   = raw__bruno_graph__node_count(cause, this);
   f2ptr* node_queue   = (f2ptr*)alloca(sizeof(f2ptr) * node_count);
   u64    queue_front  = 0, queue_back = 0;
   { //chose 2 nodes at random
+    set__iteration(cause, node_set, node, f2__set__add(cause, unused_nodes, node); );
     set__iteration(cause, unused_nodes, node,
 		   node_queue[queue_back] = node;
 		   queue_back++;
@@ -57,7 +60,7 @@ f2ptr raw__bruno_graph__cluster(f2ptr cause, f2ptr this) {
 		f2ptr edges = f2__cons__cdr(cause, pair_edge_label_edges);
 		while (edges) {
 		  f2ptr edge = f2__cons__car(cause, edges);
-		  if (f2__ptypehash__lookup(cause, unused_nodes, right_node)) {
+		  if (f2__set__lookup(cause, unused_nodes, right_node) != nil) {
 		    f2__set__remove(cause, unused_nodes, right_node);
 		    node_queue[queue_back] = right_node;
 		    queue_back++;
@@ -86,6 +89,7 @@ f2ptr f2__bruno_graph__cluster(f2ptr cause, f2ptr this) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__bruno_graph__cluster(cause, this);
+  //return this;
 }
 def_pcfunk1(bruno_graph__cluster, this, return f2__bruno_graph__cluster(this_cause, this));
 

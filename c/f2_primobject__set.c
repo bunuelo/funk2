@@ -195,7 +195,7 @@ f2ptr raw__set__an_arbitrary_element(f2ptr cause, f2ptr this) {
   return nil;
 }
 
-f2ptr f2__set__an_arbitrary_element(f2ptr cause, f2ptr thit) {
+f2ptr f2__set__an_arbitrary_element(f2ptr cause, f2ptr this) {
   if (! raw__set__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }

@@ -44,7 +44,7 @@ declare_object_type_4_slot(bruno_decomposition_lattice_node, parent_graph, left_
 
 // bruno_decomposition_lattice
 typedef struct funk2_object_type__bruno_decomposition_lattice__slot_s funk2_object_type__bruno_decomposition_lattice__slot_t;
-declare_object_type_6_slot(bruno_decomposition_lattice, graph_set, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_graph_set, );
+declare_object_type_7_slot(bruno_decomposition_lattice, graph_set, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_graph_set, root_graph_set, );
 
 #endif // F2__BRUNO_GRAPH__TYPE__H
 
@@ -113,7 +113,7 @@ f2ptr raw__bruno_decomposition_lattice_node__new(f2ptr cause, f2ptr parent_graph
 f2ptr  f2__bruno_decomposition_lattice_node__new(f2ptr cause, f2ptr parent_graph, f2ptr left_child_graph, f2ptr right_child_graph);
 
 // bruno_decomposition_lattice
-declare_primobject_6_slot(bruno_decomposition_lattice, graph_set, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_graph_set);
+declare_primobject_7_slot(bruno_decomposition_lattice, graph_set, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_graph_set, root_graph_set);
 
 f2ptr  f2__bruno_decomposition_lattice__new            (f2ptr cause);
 f2ptr raw__bruno_decomposition_lattice__add_node       (f2ptr cause, f2ptr this, f2ptr node);

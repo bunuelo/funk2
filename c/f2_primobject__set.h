@@ -37,6 +37,8 @@ declare_object_type_4_slot(set, write_mutex, key_count, bin_num_power, bin_array
 			   f2ptr elements__funk;
 			   f2ptr is_empty__symbol;
 			   f2ptr is_empty__funk;
+			   f2ptr an_arbitrary_element__symbol;
+			   f2ptr an_arbitrary_element__funk;
 			   );
 
 #endif // F2__PRIMOBJECT__SET__TYPES__H

@@ -695,7 +695,12 @@ def_pcfunk2(bruno_decomposition_lattice__decompose_graph, this, graph, return f2
 //		   f2__set__add(cause, dead_graph_set, leaf_graph);
 //		 }
 //		 );
-//  
+//  f2ptr node_parent_hash = f2__bruno_decomposition_lattice__node_parent_hash(cause, this);
+//  while (! raw__set__is_empty(cause, unsolved_graph_set)) {
+//    f2ptr unsolved_graph = f2__set__an_arbitrary_element(cause, unsolved_graph_set);
+//    
+//    f2ptr lattice_node = f2__ptypehash__lookup(cause, node_parent_hash, 
+//  }
 //}
 
 // **

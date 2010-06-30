@@ -176,6 +176,33 @@ f2ptr raw__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
   return nil;
 }
 
+f2ptr raw__set__an_arbitrary_element(f2ptr cause, f2ptr this) {
+  f2mutex__lock(f2set__write_mutex(this, cause), cause);
+  {
+    f2ptr bin_array         = f2__set__bin_array(cause, this);
+    u64   bin_array__length = raw__array__length(cause, bin_array);
+    u64   index;
+    for (index = 0; index < bin_array__length; index ++) {
+      f2ptr key_iter = raw__array__elt(cause, bin_array, index);
+      if (key_iter) {
+	f2ptr key = f2cons__car(key_iter, cause);
+	f2mutex__unlock(f2set__write_mutex(this, cause), cause);
+	return key;
+      }
+    }
+  }
+  f2mutex__unlock(f2set__write_mutex(this, cause), cause);
+  return nil;
+}
+
+f2ptr f2__set__an_arbitrary_element(f2ptr cause, f2ptr thit) {
+  if (! raw__set__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__set__an_arbitrary_element(cause, this);
+}
+def_pcfunk1(set__an_arbitrary_element, this, return f2__set__an_arbitrary_element(this_cause, this));
+
 f2ptr f2__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
   if (! raw__set__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
@@ -235,11 +262,12 @@ def_pcfunk1(set__is_empty, this, return f2__set__is_empty(this_cause, this));
 
 f2ptr f2set__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2set__primobject_type__new(cause);
-  {char* slot_name = "add";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.add__funk);}
-  {char* slot_name = "remove";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.remove__funk);}
-  {char* slot_name = "lookup";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.lookup__funk);}
-  {char* slot_name = "elements"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.elements__funk);}
-  {char* slot_name = "is_empty"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.is_empty__funk);}
+  {char* slot_name = "add";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.add__funk);}
+  {char* slot_name = "remove";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.remove__funk);}
+  {char* slot_name = "lookup";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.lookup__funk);}
+  {char* slot_name = "elements";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.elements__funk);}
+  {char* slot_name = "is_empty";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.is_empty__funk);}
+  {char* slot_name = "an_arbitrary_element"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.an_arbitrary_element__funk);}
   return this;
 }
 
@@ -271,6 +299,8 @@ void f2__primobject_set__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__elements, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.elements__funk = never_gc(cfunk);}
   {char* symbol_str = "is_empty"; __funk2.globalenv.object_type.primobject.primobject_type_set.is_empty__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__is_empty, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.is_empty__funk = never_gc(cfunk);}
+  {char* symbol_str = "an_arbitrary_element"; __funk2.globalenv.object_type.primobject.primobject_type_set.an_arbitrary_element__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__an_arbitrary_element, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.an_arbitrary_element__funk = never_gc(cfunk);}
   
 }
 

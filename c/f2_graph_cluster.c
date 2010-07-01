@@ -130,7 +130,7 @@ f2ptr raw__bruno_graph__cluster(f2ptr cause, f2ptr this) {
   f2ptr pair_distances_from_a_node_b = raw__graph__distances_from_node(cause, temp_graph, node_a);
   f2ptr distances_from_a             = f2__cons__car(cause, pair_distances_from_a_node_b);
   f2ptr node_b                       = f2__cons__cdr(cause, pair_distances_from_a_node_b);
-  if (f2__ptypehash__key_count(cause, distances_from_a) < node_count) {
+  if (f2integer__i(f2__ptypehash__key_count(cause, distances_from_a), cause) < node_count) {
     ptypehash__keyvalue_pair__iteration
       (cause, distances_from_a, pair_node_distance,
        f2__bruno_graph__add_node(cause, graph, f2__cons__car(cause, pair_node_distance));
@@ -159,6 +159,12 @@ f2ptr raw__bruno_graph__cluster(f2ptr cause, f2ptr this) {
 f2ptr f2__bruno_graph__cluster(f2ptr cause, f2ptr this) {
   if (! raw__bruno_graph__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
+  }
+  if (raw__bruno_graph__node_count(cause, this) < 2) {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "bruno_graph_must_have_at_least_two_nodes"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"), new__symbol(cause, "bruno_graph-cluster"));
+    return f2larva__new(cause, 342, f2__bug__new(cause, f2integer__new(cause, 342), bug_frame));
   }
   return raw__bruno_graph__cluster(cause, this);
 }

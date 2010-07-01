@@ -721,6 +721,7 @@ f2ptr raw__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr
 		   f2__set__add(cause, alive_graph_set, leaf_graph);
 		   f2__ptypehash__add(cause, isomorphisms_graph_hash, leaf_graph, leaf_graph__isomorphisms);
 		 } else {
+		   printf("\ndebug 0");
 		   f2__set__add(cause, dead_graph_set, leaf_graph);
 		 }
 		 );
@@ -739,10 +740,13 @@ f2ptr raw__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr
 		     solve_lattice_node = lattice_node;
 		     parent_graph       = unsolved_graph;
 		     goto raw__bruno_decomposition_lattice__subgraph_isomorphisms__found_solve_lattice_node;
+		   } else {
+		     printf("\ndebug 1");
 		   }
 		   );
   raw__bruno_decomposition_lattice__subgraph_isomorphisms__found_solve_lattice_node:
     if (solve_lattice_node == nil) {
+      printf("\ndebug 2");
       break;
     }
     f2ptr left_child_graph__isomorphisms  = f2__ptypehash__lookup(cause, isomorphisms_graph_hash, left_child_graph);
@@ -750,6 +754,7 @@ f2ptr raw__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr
     f2ptr parent_graph__isomorphisms      = f2__bruno_decomposition_lattice_node__combine_children_isomorphisms(cause, solve_lattice_node, left_child_graph__isomorphisms, right_child_graph__isomorphisms, graph);
     f2__set__remove(cause, unsolved_graph_set, parent_graph);
     if (parent_graph__isomorphisms == nil) {
+      printf("\ndebug 3");
       f2__set__add(cause, dead_graph_set, parent_graph);
     } else {
       f2__set__add(cause, alive_graph_set, parent_graph);

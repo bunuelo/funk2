@@ -32,7 +32,7 @@ declare_object_type_3_slot(bruno_graph_edge, label, left_node, right_node, );
 
 // bruno_graph
 typedef struct funk2_object_type__bruno_graph__slot_s funk2_object_type__bruno_graph__slot_t;
-declare_object_type_3_slot(bruno_graph, node_set, edge_set, edges_label_hash_right_node_hash_left_node_hash, );
+declare_object_type_4_slot(bruno_graph, node_set, edge_set, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash, );
 
 // bruno_graph_isomorphism
 typedef struct funk2_object_type__bruno_graph_isomorphism__slot_s funk2_object_type__bruno_graph_isomorphism__slot_t;
@@ -64,7 +64,7 @@ declare_primobject_3_slot(bruno_graph_edge, label, left_node, right_node);
 f2ptr f2__bruno_graph_edge__new(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node);
 
 // bruno_graph
-declare_primobject_3_slot(bruno_graph, node_set, edge_set, edges_label_hash_right_node_hash_left_node_hash);
+declare_primobject_4_slot(bruno_graph, node_set, edge_set, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);
 
 f2ptr      f2__bruno_graph__new                            (f2ptr cause);
 f2ptr     raw__bruno_graph__add_node                       (f2ptr cause, f2ptr this, f2ptr node);

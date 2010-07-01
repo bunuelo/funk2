@@ -32,7 +32,6 @@
 	 [g1 [get 'ABC' as-graph]]]
     [format stdout '\n  g1: ' g1]
     [have d decompose_graph g1]
-    [have d decompose_graph g2]
     [print d]
     [let [[isomorphismss [get d subgraph_isomorphisms [get 'ABC' as-graph]]]]
       [mapc [funk [isomorphisms]

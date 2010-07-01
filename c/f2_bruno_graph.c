@@ -716,10 +716,10 @@ f2ptr raw__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr
 		 );
   f2ptr node_parent_hash = f2__bruno_decomposition_lattice__node_parent_hash(cause, this);
   while (! raw__set__is_empty(cause, unsolved_graph_set)) {
-    f2ptr lattice_node      = nil;
-    f2ptr parent_graph      = nil;
-    f2ptr left_child_graph  = nil;
-    f2ptr right_child_graph = nil;
+    f2ptr solve_lattice_node = nil;
+    f2ptr parent_graph       = nil;
+    f2ptr left_child_graph   = nil;
+    f2ptr right_child_graph  = nil;
     set__iteration(cause, unsolved_graph_set, unsolved_graph,
 		   lattice_node      = f2__ptypehash__lookup(cause, node_parent_hash, unsolved_graph);
 		   left_child_graph  = f2__bruno_decomposition_lattice_node__left_child_graph( cause, lattice_node);
@@ -732,12 +732,12 @@ f2ptr raw__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr
 		   }
 		   );
   raw__bruno_decomposition_lattice__subgraph_isomorphisms__found_solve_lattice_node:
-    if (lattice_node == nil) {
+    if (solve_lattice_node == nil) {
       break;
     }
     f2ptr left_child_graph__isomorphisms  = f2__ptypehash__lookup(cause, isomorphisms_graph_hash, left_child_graph);
     f2ptr right_child_graph__isomorphisms = f2__ptypehash__lookup(cause, isomorphisms_graph_hash, right_child_graph);
-    f2ptr parent_graph__isomorphisms      = f2__bruno_decomposition_lattice_node__combine_children_isomorphisms(cause, lattice_node, left_child_graph__isomorphisms, right_child_graph__isomorphisms, graph);
+    f2ptr parent_graph__isomorphisms      = f2__bruno_decomposition_lattice_node__combine_children_isomorphisms(cause, solve_lattice_node, left_child_graph__isomorphisms, right_child_graph__isomorphisms, graph);
     if (parent_graph__isomorphisms == nil) {
       f2__set__remove(cause, unsolved_graph_set, parent_graph);
       f2__set__add(   cause,     dead_graph_set, parent_graph);

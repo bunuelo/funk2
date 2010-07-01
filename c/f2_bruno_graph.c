@@ -695,14 +695,10 @@ f2ptr raw__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr
   set__iteration(cause, graph_set, graph,
 		 f2__set__add(cause, unsolved_graph_set, graph);
 		 );
-  f2ptr lattice_node_set = f2__bruno_decomposition_lattice__node_set(cause, this);
-  set__iteration(cause, lattice_node_set, lattice_node,
-		 f2__set__add(cause, two_children_unsolved_lattice_node_set, lattice_node);
-		 );
-  f2ptr isomorphisms_graph_hash         = f2__ptypehash__new(cause);
-  f2ptr leaf_graph_set                  = f2__bruno_decomposition_lattice__leaf_graph_set(cause, this);
-  f2ptr lattice_node_left_child_hash    = f2__bruno_decomposition_lattice__node_left_child_hash(cause, this);
-  f2ptr lattice_node_right_child_hash   = f2__bruno_decomposition_lattice__node_right_child_hash(cause, this);
+  f2ptr isomorphisms_graph_hash       = f2__ptypehash__new(cause);
+  f2ptr leaf_graph_set                = f2__bruno_decomposition_lattice__leaf_graph_set(cause, this);
+  f2ptr lattice_node_left_child_hash  = f2__bruno_decomposition_lattice__node_left_child_hash(cause, this);
+  f2ptr lattice_node_right_child_hash = f2__bruno_decomposition_lattice__node_right_child_hash(cause, this);
   set__iteration(cause, leaf_graph_set, leaf_graph,
 		 f2ptr leaf_graph__node_set = f2__bruno_graph__node_set(cause, leaf_graph);
 		 f2ptr leaf_graph__node     = nil;

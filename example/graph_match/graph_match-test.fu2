@@ -17,6 +17,16 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[deftypefunk string get as-graph []
+  [let [[this-length [length this]]]
+    [let [[a [new array this-length]]]
+      [dotimes [i this-length]
+	[set a elt i [new bruno_graph_node [get this elt i]]]]
+      [let [[g [new bruno_graph]]]
+	[dotimes [i [- this-length 1]]
+	  [have g add_new_edge `next-char [get a elt i] [get a elt [+ i 1]]]]
+	g]]]]
+
 [defunk graph_match-test []
   [let* [[d [new bruno_decomposition_lattice]]
 	 [g [new bruno_graph]]]

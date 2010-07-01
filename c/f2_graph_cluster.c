@@ -85,9 +85,9 @@ f2ptr raw__bruno_graph__cluster(f2ptr cause, f2ptr this) {
 }
 */
 
-f2ptr raw__graph__distances_from_node(f2ptr cause, f2ptr graph, f2ptr start_node) {
+f2ptr raw__bruno_graph__distances_from_node(f2ptr cause, f2ptr this, f2ptr start_node) {
   f2ptr  distances_hash = f2__ptypehash__new(cause);
-  u64    node_count     = graph__node_count(cause, graph);
+  u64    node_count     = raw__bruno_graph__node_count(cause, this);
   f2ptr* node_queue     = (f2ptr*)alloca(sizeof(f2ptr) * node_count);
   u64    queue_front    = 0,  queue_back = 0;
   f2__ptypehash__add(cause, distances_hash, start_node, 1);
@@ -96,40 +96,44 @@ f2ptr raw__graph__distances_from_node(f2ptr cause, f2ptr graph, f2ptr start_node
   while (queue_front < queue_back) {
     current_node = node_queue[queue_front++];
     u64 current_distance = f2__ptypehash__lookup(cause, distances_hash, current_node);
-    f2ptr current_graph_node = f2__graph__lookup_node (cause, graph, current_node);
-    graph_node__out_edge__iteration
-      (cause, current_graph_node, edge,
-       f2ptr right_graph_node = f2__graph_edge__right_node(cause, edge);
-       f2ptr right_node       = f2__graph_edge__label(cause, right_graph_node);
-       if (f2__ptypehash__lookup(cause, distances_hash, right_node) == nil) {
-	 f2__ptypehash__add(cause, distances_hash, right_node, current_distance + 1);
-	 node_queue[queue_back++] = right_node;
-       }
-       );
+    f2ptr hash_from_current_node           = f2__bruno_graph__edges_label_hash_right_node_hash_left_node_hash(cause, this);
+    f2ptr edges_label_hash_right_node_hash = f2__ptypehash__lookup(cause, hash_from_current_node, current_node);
+    if (edges_label_hash_right_node_hash != nil) {
+      ptypehash__keyvalue_pair__iteration
+	(cause, edges_label_hash_right_node_hash, pair__right_node__edges_label_hash,
+	 f2ptr right_node = f2__cons__car(cause, pair__right_node__edges_label_hash);
+	 if(f2__ptypehash__lookup(cause, distances_hash, right_node) == nil) {
+	   f2__ptypehash__add(cause, distances_hash, right_node, current_distance + 1);
+	   node_queue[queue_back++] = right_node;
+	 }
+	 );
+    }
+    f2ptr hash_to_current_node            = f2__bruno_graph__edges_label_hash_left_node_hash_right_node_hash(cause, this);
+    f2ptr edges_label_hash_left_node_hash = f2__ptypehash__lookup(cause, hash_to_current_node, current_node);
+    if(edges_label_hash_left_node_hash != nil) {
+      ptypehash__keyvalue_pair__iteration
+	(cause, edges_label_hash_left_node_hash, pair__left_node__edges_label_hash,
+	 f2ptr left_node = f2__cons__car(cause, pair__left_node__edges_label_hash);
+	 if(f2__ptypehash__lookup(cause, distances_hash, left_node) == nil) {
+	   f2__ptypehash__add(cause, distances_hash, left_node, current_distance + 1);
+	   node_queue[queue_back++] = left_node;
+	 }
+	 );
+    }
   }
   return f2__cons__new(cause, distances_hash, current_node);
 }
 
 f2ptr raw__bruno_graph__cluster(f2ptr cause, f2ptr this) {
   f2ptr graph      = f2__bruno_graph__new(cause);
-  f2ptr temp_graph = f2__graph__new(cause);
   u64   node_count = raw__bruno_graph__node_count(cause, this);
   f2ptr node_set   = f2__bruno_graph__node_set(cause, this);
   f2ptr edge_set   = f2__bruno_graph__edge_set(cause, this);
-  set__iteration(cause, node_set, node, f2__graph__add_node(cause, temp_graph, node));
-  set__iteration(cause, edge_set, edge,
-		 f2ptr left_node  = f2__bruno_graph_edge__left_node(cause, edge);
-		 f2ptr right_node = f2__bruno_graph_edge__right_node(cause, edge);
-		 if (f2__graph__contains_edge(cause, temp_graph, 0, left_node, right_node) == nil) {
-		   f2__graph__add_edge(cause, temp_graph, 0, left_node, right_node);
-		   f2__graph__add_edge(cause, temp_graph, 0, right_node, left_node);
-		 }
-		 );
-  f2ptr node_a;
+  f2ptr node_a     = nil;
   set__iteration(cause, node_set, node, node_a = node; break; );
-  f2ptr pair_distances_from_a_node_b = raw__graph__distances_from_node(cause, temp_graph, node_a);
-  f2ptr distances_from_a             = f2__cons__car(cause, pair_distances_from_a_node_b);
-  f2ptr node_b                       = f2__cons__cdr(cause, pair_distances_from_a_node_b);
+  f2ptr pair__distances_from_a__node_b = raw__bruno_graph__distances_from_node(cause, this, node_a);
+  f2ptr distances_from_a               = f2__cons__car(cause, pair__distances_from_a__node_b);
+  f2ptr node_b                         = f2__cons__cdr(cause, pair__distances_from_a__node_b);
   if (f2integer__i(f2__ptypehash__key_count(cause, distances_from_a), cause) < node_count) {
     ptypehash__keyvalue_pair__iteration
       (cause, distances_from_a, pair_node_distance,
@@ -137,7 +141,7 @@ f2ptr raw__bruno_graph__cluster(f2ptr cause, f2ptr this) {
        );
   }
   else {
-    f2ptr distances_from_b = f2__cons__car(cause, raw__graph__distances_from_node(cause, temp_graph, node_b));
+    f2ptr distances_from_b = f2__cons__car(cause, raw__bruno_graph__distances_from_node(cause, this, node_b));
     set__iteration(cause, node_set, node,
 		   if(f2__ptypehash__lookup(cause, distances_from_a, node) < f2__ptypehash__lookup(cause, distances_from_b, node)) {
 			f2__bruno_graph__add_node(cause, graph, node);
@@ -152,8 +156,7 @@ f2ptr raw__bruno_graph__cluster(f2ptr cause, f2ptr this) {
 		   raw__bruno_graph__add_edge(cause, graph, edge);
 		 }
 		 );
-  return graph;
-  
+  return graph;  
 }
 
 f2ptr f2__bruno_graph__cluster(f2ptr cause, f2ptr this) {

@@ -705,7 +705,7 @@ f2ptr raw__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr
 		 set__iteration(cause, leaf_graph__node_set, leaf_graph__node_set__node,
 				leaf_graph__node = leaf_graph__node_set__node;
 				);
-		 leaf_graph__isomorphisms = f2__bruno_graph__node_isomorphisms(cause, graph, leaf_graph__node);
+		 f2ptr leaf_graph__isomorphisms = f2__bruno_graph__node_isomorphisms(cause, graph, leaf_graph__node);
 		 f2__set__remove(cause, unsolved_graph_set, leaf_graph);
 		 if (leaf_graph__isomorphisms != nil) {
 		   f2__set__add(cause, alive_graph_set, leaf_graph);

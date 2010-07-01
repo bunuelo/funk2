@@ -29,11 +29,11 @@
 
 [defunk graph_match-test []
   [let* [[d  [new bruno_decomposition_lattice]]
-	 [g1 [get 'ABC' as-graph]]]
+	 [g1 [get 'ABCD' as-graph]]]
     [format stdout '\n  g1: ' g1]
     [have d decompose_graph g1]
     [print d]
-    [let [[isomorphismss [get d subgraph_isomorphisms [get 'ABC' as-graph]]]]
+    [let [[isomorphismss [get d subgraph_isomorphisms [get 'ABCD' as-graph]]]]
       [mapc [funk [isomorphisms]
 		  [mapc [funk [isomorphism]
 			      [format stdout '\n  isomorphism: ' isomorphism]]

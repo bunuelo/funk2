@@ -745,7 +745,7 @@ f2ptr raw__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr
       f2__set__add(cause, alive_graph_set, parent_graph);
       f2__ptypehash__add(cause, isomorphisms_graph_hash, parent_graph, parent_graph__isomorphisms);
       f2__set__remove(cause, alive_graph_set, left_child_graph);
-      f2__set__add(cause, dead_graph_set, leaf_child_graph);
+      f2__set__add(cause, dead_graph_set, left_child_graph);
       f2__set__remove(cause, alive_graph_set, right_child_graph);
       f2__set__add(cause, dead_graph_set, right_child_graph);
     }

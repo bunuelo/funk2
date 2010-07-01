@@ -721,9 +721,9 @@ f2ptr raw__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr
     f2ptr left_child_graph   = nil;
     f2ptr right_child_graph  = nil;
     set__iteration(cause, unsolved_graph_set, unsolved_graph,
-		   lattice_node      = f2__ptypehash__lookup(cause, node_parent_hash, unsolved_graph);
-		   left_child_graph  = f2__bruno_decomposition_lattice_node__left_child_graph( cause, lattice_node);
-		   right_child_graph = f2__bruno_decomposition_lattice_node__right_child_graph(cause, lattice_node);
+		   f2ptr lattice_node = f2__ptypehash__lookup(cause, node_parent_hash, unsolved_graph);
+		   left_child_graph   = f2__bruno_decomposition_lattice_node__left_child_graph( cause, lattice_node);
+		   right_child_graph  = f2__bruno_decomposition_lattice_node__right_child_graph(cause, lattice_node);
 		   if (raw__set__contains(cause, alive_graph_set, left_child_graph) &&
 		       raw__set__contains(cause, alive_graph_set, right_child_graph)) {
 		     solve_lattice_node = lattice_node;

@@ -20,10 +20,15 @@
 [defunk graph_match-test []
   [let* [[d [new bruno_decomposition_lattice]]
 	 [g [new bruno_graph]]]
-    [have g add_new_edge `contains [new bruno_graph_node `test] [new bruno_graph_node `words]]
+    [have g add_new_edge `contains      [new bruno_graph_node `test]     [new bruno_graph_node `words]]
     [have g add_new_edge `happens-after [new bruno_graph_node `spelling] [new bruno_graph_node `writing]]
     [print g]
     [have d decompose_graph g]
     [print d]
-    [get d subgraph_isomorphisms g]]]
+    [let [[isomorphisms [get d subgraph_isomorphisms g]]]
+      [mapc [funk [isomorphism]
+		  [format stdout '\n  isomorphism: ' isomorphism]]
+	    isomorphisms]]]
+  nil]
+
 

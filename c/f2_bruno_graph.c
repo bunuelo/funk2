@@ -626,7 +626,7 @@ f2ptr f2__bruno_decomposition_lattice__add_node(f2ptr cause, f2ptr this, f2ptr n
 }
 def_pcfunk2(bruno_decomposition_lattice__add_node, this, node, return f2__bruno_decomposition_lattice__add_node(this_cause, this, node));
 
-void raw__bruno_decomposition_lattice__decompose_subgraph(f2ptr cause, f2ptr this, f2ptr graph) {
+void raw__bruno_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, f2ptr graph) {
   f2ptr maximum_isomorphic_graph = nil;
   u64   graph__node_count        = raw__bruno_graph__node_count(cause, graph);
   if (graph__node_count == 1) {
@@ -645,15 +645,15 @@ void raw__bruno_decomposition_lattice__decompose_subgraph(f2ptr cause, f2ptr thi
   }
   if (maximum_isomorphic_graph == nil) {
     maximum_isomorphic_graph = f2__bruno_graph__random_nonempty_strict_subgraph(cause, graph);
-    raw__bruno_decomposition_lattice__decompose_subgraph(cause, this, maximum_isomorphic_graph);
+    raw__bruno_decomposition_lattice__decompose_graph(cause, this, maximum_isomorphic_graph);
   }
   f2ptr remainder_graph = f2__bruno_graph__minus(cause, graph, maximum_isomorphic_graph);
-  raw__bruno_decomposition_lattice__decompose_subgraph(cause, this, remainder_graph);
+  raw__bruno_decomposition_lattice__decompose_graph(cause, this, remainder_graph);
   f2ptr decomposition_lattice_node = f2__bruno_decomposition_lattice_node__new(cause, graph, maximum_isomorphic_graph, remainder_graph);
   raw__bruno_decomposition_lattice__add_node(cause, this, decomposition_lattice_node);
 }
 
-f2ptr f2__bruno_decomposition_lattice__decompose_subgraph(f2ptr cause, f2ptr this, f2ptr graph) {
+f2ptr f2__bruno_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, f2ptr graph) {
   if ((! raw__bruno_decomposition_lattice__is_type(cause, this)) ||
       (! raw__bruno_graph__is_type(cause, graph))) {
     return f2larva__new(cause, 1, nil);
@@ -661,32 +661,15 @@ f2ptr f2__bruno_decomposition_lattice__decompose_subgraph(f2ptr cause, f2ptr thi
   if (raw__bruno_graph__node_count(cause, graph) < 1) {
     f2ptr bug_frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "cannot_decompose_empty_graph"));
-    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"), new__symbol(cause, "bruno_decomposition_lattice-decompose_subgraph"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"), new__symbol(cause, "bruno_decomposition_lattice-decompose_graph"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),     this);
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "graph"),    graph);
     return f2larva__new(cause, 454, f2__bug__new(cause, f2integer__new(cause, 454), bug_frame));
-  }
-  raw__bruno_decomposition_lattice__decompose_subgraph(cause, this, graph);
-  return nil;
-}
-def_pcfunk2(bruno_decomposition_lattice__decompose_subgraph, this, graph, return f2__bruno_decomposition_lattice__decompose_subgraph(this_cause, this, graph));
-
-void raw__bruno_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, f2ptr graph) {
-  f2ptr root_graph_set = f2__bruno_decomposition_lattice__root_graph_set(cause, this);
-  f2__set__add(cause, root_graph_set, graph);
-  raw__bruno_decomposition_lattice__decompose_subgraph(cause, this, graph);
-}
-
-f2ptr f2__bruno_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, f2ptr graph) {
-  if ((! raw__bruno_decomposition_lattice__is_type(cause, this)) &&
-      (! raw__bruno_graph__is_type(cause, graph))) {
-    return f2larva__new(cause, 1, nil);
   }
   raw__bruno_decomposition_lattice__decompose_graph(cause, this, graph);
   return nil;
 }
 def_pcfunk2(bruno_decomposition_lattice__decompose_graph, this, graph, return f2__bruno_decomposition_lattice__decompose_graph(this_cause, this, graph));
-
 
 //f2ptr raw__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph) {
 //  f2ptr unsolved_graph_set = f2__set__new(cause);
@@ -813,9 +796,8 @@ void f2__bruno_graph__initialize() {
   // bruno_decomposition_lattice
   initialize_primobject_7_slot(bruno_decomposition_lattice, graph_set, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_graph_set, root_graph_set);
   
-  f2__primcfunk__init__2(bruno_decomposition_lattice__add_node,           this, node,  "Add a bruno_decomposition_lattice_node to this bruno_decomposition_lattice.");
-  f2__primcfunk__init__2(bruno_decomposition_lattice__decompose_subgraph, this, graph, "Decompose a bruno_graph into this bruno_decomposition_lattice.");
-  f2__primcfunk__init__2(bruno_decomposition_lattice__decompose_graph,    this, graph, "Decompose a bruno_graph into this bruno_decomposition_lattice, and store graph as a root_graph.");
+  f2__primcfunk__init__2(bruno_decomposition_lattice__add_node,        this, node,  "Add a bruno_decomposition_lattice_node to this bruno_decomposition_lattice.");
+  f2__primcfunk__init__2(bruno_decomposition_lattice__decompose_graph, this, graph, "Decompose a bruno_graph into this bruno_decomposition_lattice.");
   
 }
 

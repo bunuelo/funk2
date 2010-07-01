@@ -497,6 +497,18 @@ f2ptr f2__bruno_graph_isomorphism__union(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(bruno_graph_isomorphism__union, this, that, return f2__bruno_graph_isomorphism__union(this_cause, this, that));
 
+f2ptr raw__bruno_graph_isomorphism__as__frame(f2ptr cause, f2ptr this) {
+  return f2__ptypehash__as__frame(cause, f2__bruno_graph_isomorphism__right_node_left_node_hash(cause, this));
+}
+
+f2ptr f2__bruno_graph_isomorphism__as__frame(f2ptr cause, f2ptr this) {
+  if (! raw__bruno_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bruno_graph_isomorphism__as__frame(cause, this);
+}
+def_pcfunk1(bruno_graph_isomorphism__as__frame, this, return f2__bruno_graph_isomorphism__as__frame(this_cause, this));
+
 
 // bruno_decomposition_lattice_node
 
@@ -816,6 +828,7 @@ void f2__bruno_graph__initialize() {
   f2__primcfunk__init__2(bruno_graph_isomorphism__map_left_to_right, this, left_node,             "Maps a node on the left of this bruno_graph_isomorphism to the right.");
   f2__primcfunk__init__2(bruno_graph_isomorphism__map_right_to_left, this, right_node,            "Maps a node on the right of this bruno_graph_isomorphism to the left.");
   f2__primcfunk__init__2(bruno_graph_isomorphism__union,             this, that,                  "Returns a new bruno_graph_isomorphism representing the union between this bruno_graph_isomorphism and that bruno_graph_isomorphism.");
+  f2__primcfunk__init__1(bruno_graph_isomorphism__as__frame,         this,                        "Returns a frame representing the left to right mapping ptypehash.");
   
   // bruno_decomposition_lattice_node
   initialize_primobject_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, between_graph);

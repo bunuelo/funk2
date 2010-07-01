@@ -39,5 +39,5 @@
 
 [deftypefunk bruno_decomposition_lattice execute add_node              [node]  [bruno_decomposition_lattice-add_node              this node]]
 [deftypefunk bruno_decomposition_lattice execute decompose_graph       [graph] [bruno_decomposition_lattice-decompose_graph       this graph]]
-[deftypefunk bruno_decomposition_lattice execute subgraph_isomorphisms [graph] [bruno_decomposition_lattice-subgraph_isomorphisms this graph]]
+[deftypefunk bruno_decomposition_lattice get     subgraph_isomorphisms [graph] [bruno_decomposition_lattice-subgraph_isomorphisms this graph]]
 

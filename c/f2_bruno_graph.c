@@ -566,6 +566,7 @@ f2ptr raw__bruno_decomposition_lattice_node__combine_children_isomorphisms(f2ptr
 			     f2ptr graph__edges      = f2__bruno_graph__edges_with_label_between_nodes(cause, graph, label, graph__left_node, graph__right_node);
 			     if (raw__simple_length(cause, edges) != raw__simple_length(cause, graph__edges)) {
 			       combined_isomorphism_is_valid = boolean__false;
+			       printf("\ndebug -6");
 			       goto raw__bruno_decomposition_lattice_node__combine_children_isomorphisms__found_unmatched_edge;
 			     }
 			     );
@@ -574,6 +575,8 @@ f2ptr raw__bruno_decomposition_lattice_node__combine_children_isomorphisms(f2ptr
 		f2ptr isomorphism = f2__bruno_graph_isomorphism__union(cause, left_isomorphism, right_isomorphism);
 		isomorphisms = f2cons__new(cause, isomorphism, isomorphisms);
 	      }
+	    } else {
+	      printf("\ndebug -5");
 	    }
 	  }
 	  right_iter = f2__cons__cdr(cause, right_iter);

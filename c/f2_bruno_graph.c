@@ -802,7 +802,7 @@ f2ptr raw__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr
       f2__set__add(   cause,  dead_graph_set, right_child_graph);
     }
   }
-  f2ptr isomorphisms_root_graph_hash = f2__ptypehash__new(cause);
+  f2ptr root_graph_isomorphisms_pairs = nil;
   set__iteration(cause, alive_graph_set, alive_graph,
 		 f2ptr isomorphisms = f2__ptypehash__lookup(cause, isomorphisms_graph_hash, alive_graph);
 		 if (isomorphisms != nil) {
@@ -810,12 +810,12 @@ f2ptr raw__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr
 		   if (lattice_node) {
 		     f2ptr root_graph_set = f2__bruno_decomposition_lattice_node__root_graph_set(cause, lattice_node);
 		     set__iteration(cause, root_graph_set, root_graph,
-				    f2__ptypehash__add(cause, isomorphisms_root_graph_hash, root_graph, isomorphisms);
+				    root_graph_isomorphisms_pairs = f2cons__new(cause, f2list2__new(cause, root_graph, isomorphisms), root_graph_isomorphisms_pairs);
 				    );
 		   }
 		 }
 		 );
-  return isomorphisms_root_graph_hash;
+  return root_graph_isomorphisms_pairs;
 }
 
 f2ptr f2__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph) {

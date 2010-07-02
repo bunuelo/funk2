@@ -37,7 +37,10 @@
     [have d decompose_graph g2]
     `[print d]
      [let [[isomorphisms [get d subgraph_max_isomorphisms [get 'This is a test.' as-graph]]]]
-       [print isomorphisms]]]
+       [print [have isomorphisms sort [funk [x y] [let [[x-isomorphism [second x]]
+							[y-isomorphism [second y]]]
+						    [< [get x-isomorphism mapping_count] [get y-isomorphism mapping_count]]]]]]
+       ]]
   nil]
 
 

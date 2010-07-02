@@ -37,7 +37,8 @@
 
 [deftypefunk bruno_decomposition_lattice_node execute combine_children_isomorphisms [left_child_isomorphisms right_child_isomorphisms graph]  [bruno_decomposition_lattice_node-combine_children_isomorphisms this left_child_isomorphisms right_child_isomorphisms graph]]
 
-[deftypefunk bruno_decomposition_lattice execute add_node              [node]  [bruno_decomposition_lattice-add_node              this node]]
-[deftypefunk bruno_decomposition_lattice execute decompose_graph       [graph] [bruno_decomposition_lattice-decompose_graph       this graph]]
-[deftypefunk bruno_decomposition_lattice get     subgraph_isomorphisms [graph] [bruno_decomposition_lattice-subgraph_isomorphisms this graph]]
+[deftypefunk bruno_decomposition_lattice execute add_node                        [node]             [bruno_decomposition_lattice-add_node              this node]]
+[deftypefunk bruno_decomposition_lattice execute decompose_graph                 [graph]            [bruno_decomposition_lattice-decompose_graph       this graph]]
+[deftypefunk bruno_decomposition_lattice execute decompose_graph_with_root_graph [graph root_graph] [bruno_decomposition_lattice-decompose_graph       this graph root_graph]]
+[deftypefunk bruno_decomposition_lattice get     subgraph_isomorphisms           [graph]            [bruno_decomposition_lattice-subgraph_isomorphisms this graph]]
 

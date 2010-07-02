@@ -786,12 +786,17 @@ f2ptr raw__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr
       f2__set__add(   cause,  dead_graph_set, right_child_graph);
     }
   }
-  f2ptr isomorphisms_alive_graph_hash = f2__ptypehash__new(cause);
+  f2ptr root_graph_set = f2__bruno_decomposition_lattice__root_graph_set(cause, this);
+  f2ptr isomorphisms_root_graph_hash = f2__ptypehash__new(cause);
   set__iteration(cause, alive_graph_set, alive_graph,
 		 f2ptr isomorphisms = f2__ptypehash__lookup(cause, isomorphisms_graph_hash, alive_graph);
-		 f2__ptypehash__add(cause, isomorphisms_alive_graph_hash, alive_graph, isomorphisms);
+		 if (isomorphisms) {
+		   if (raw__set__contains(cause, root_graph_set, alive_graph)) {
+		     f2__ptypehash__add(cause, isomorphisms_root_graph_hash, alive_graph, isomorphisms);
+		   }
+		 }
 		 );
-  return isomorphisms_alive_graph_hash;
+  return isomorphisms_root_graph_hash;
 }
 
 f2ptr f2__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph) {

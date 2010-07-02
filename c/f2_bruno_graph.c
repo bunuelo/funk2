@@ -564,16 +564,16 @@ f2ptr raw__bruno_decomposition_lattice_node__combine_children_isomorphisms(f2ptr
 			     f2ptr graph__left_node  = f2__bruno_graph_isomorphism__map_left_to_right(cause, left_isomorphism,  left_node);
 			     f2ptr graph__right_node = f2__bruno_graph_isomorphism__map_left_to_right(cause, right_isomorphism, right_node);
 			     f2ptr graph__edges      = f2__bruno_graph__edges_with_label_between_nodes(cause, graph, label, graph__left_node, graph__right_node);
+			     printf("\nnote -6: between_graph = "); f2__print(cause, between_graph);
+			     printf("\nnote -6: left_node = "); f2__print(cause, left_node);
+			     printf("\nnote -6: right_node = "); f2__print(cause, right_node);
+			     printf("\nnote -6: left_isomorphism = "); f2__print(cause, left_isomorphism);
+			     printf("\nnote -6: right_isomorphism = "); f2__print(cause, right_isomorphism);
+			     printf("\nnote -6: graph = "); f2__print(cause, graph);
+			     printf("\nnote -6: graph__left_node = "); f2__print(cause, graph__left_node);
+			     printf("\nnote -6: graph__right_node = "); f2__print(cause, graph__right_node);
 			     if (raw__simple_length(cause, edges) != raw__simple_length(cause, graph__edges)) {
 			       combined_isomorphism_is_valid = boolean__false;
-			       printf("\ndebug -6: between_graph = "); f2__print(cause, between_graph);
-			       printf("\ndebug -6: left_node = "); f2__print(cause, left_node);
-			       printf("\ndebug -6: right_node = "); f2__print(cause, right_node);
-			       printf("\ndebug -6: left_isomorphism = "); f2__print(cause, left_isomorphism);
-			       printf("\ndebug -6: right_isomorphism = "); f2__print(cause, right_isomorphism);
-			       printf("\ndebug -6: graph = "); f2__print(cause, graph);
-			       printf("\ndebug -6: graph__left_node = "); f2__print(cause, graph__left_node);
-			       printf("\ndebug -6: graph__right_node = "); f2__print(cause, graph__right_node);
 			       goto raw__bruno_decomposition_lattice_node__combine_children_isomorphisms__found_unmatched_edge;
 			     }
 			     );

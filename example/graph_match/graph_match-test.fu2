@@ -36,12 +36,8 @@
     [have d decompose_graph g1]
     [have d decompose_graph g2]
     `[print d]
-    [let [[isomorphismss [get d subgraph_isomorphisms [get 'This is a test.' as-graph]]]]
-      [mapc [funk [isomorphisms]
-		  [mapc [funk [isomorphism]
-			      [format stdout '\n  isomorphism: ' isomorphism]]
-			isomorphisms]]
-	    isomorphismss]]]
+     [let [[isomorphisms [get d subgraph_isomorphisms [get 'This is a test.' as-graph]]]]
+       [print [get isomorphisms as-frame]]]]
   nil]
 
 

@@ -827,6 +827,48 @@ f2ptr f2__bruno_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr 
 }
 def_pcfunk2(bruno_decomposition_lattice__subgraph_isomorphisms, this, graph, return f2__bruno_decomposition_lattice__subgraph_isomorphisms(this_cause, this, graph));
 
+f2ptr raw__bruno_decomposition_lattice__subgraph_max_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph) {
+  f2ptr root_graph_isomorphisms_pairs    = raw__bruno_decomposition_lattice__subgraph_isomorphisms(cause, this, graph);
+  f2ptr max_root_graph_isomorphism_pairs = nil;
+  {
+    f2ptr pair_iter = root_graph_isomorphisms_pairs;
+    while (pair_iter) {
+      f2ptr root_graph_isomorphisms_pair = f2__cons__car(cause, pair_iter);
+      {
+	f2ptr root_graph                     = f2__cons__car(cause, root_graph_isomorphisms_pair);
+	f2ptr isomorphisms                   = f2__cons__car(cause, f2__cons__cdr(cause, root_graph_isomorphisms_pair));
+	f2ptr max_isomorphism                = nil;
+	u64   max_isomorphism__mapping_count = 0;
+	{
+	  f2ptr iter = isomorphisms;
+	  while (iter) {
+	    f2ptr isomorphism = f2__cons__car(cause, iter);
+	    {
+	      u64 mapping_count = raw__bruno_graph_isomorphism__mapping_count(cause, isomorphism);
+	      if (mapping_count > max_isomorphism__mapping_count) {
+		max_isomorphism                = isomorphism;
+		max_isomorphism__mapping_count = mapping_count;
+	      }
+	    }
+	    iter = f2__cons__cdr(cause, iter);
+	  }
+	}
+	max_root_graph_isomorphism_pairs = f2cons__new(cause, f2list2__new(cause, root_graph, max_isomorphism), max_root_graph_isomorphism_pairs);
+      }
+      pair_iter = f2__cons__cdr(cause, pair_iter);
+    }
+  }
+  return max_root_graph_isomorphism_pairs;
+}
+
+f2ptr f2__bruno_decomposition_lattice__subgraph_max_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph) {
+  if ((! raw__bruno_decomposition_lattice__is_type(cause, this)) ||
+      (! raw__bruno_graph__is_type(cause, graph))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bruno_decomposition_lattice__subgraph_max_isomorphisms(cause, this, graph);
+}
+def_pcfunk2(bruno_decomposition_lattice__subgraph_max_isomorphisms, this, graph, return f2__bruno_decomposition_lattice__subgraph_max_isomorphisms(this_cause, this, graph));
 
 // **
 
@@ -892,6 +934,7 @@ void f2__bruno_graph__initialize() {
   f2__primcfunk__init__3(bruno_decomposition_lattice__decompose_graph_with_root_graph, this, graph, root_graph, "Decompose a bruno_graph into this bruno_decomposition_lattice with given root_graph.");
   f2__primcfunk__init__2(bruno_decomposition_lattice__decompose_graph,                 this, graph,             "Decompose a bruno_graph into this bruno_decomposition_lattice, assuming graph is also a root graph.");
   f2__primcfunk__init__2(bruno_decomposition_lattice__subgraph_isomorphisms,           this, graph,             "Returns all subgraph isomorphisms to model graphs decomposed into this bruno_decomposition_lattice.");
+  f2__primcfunk__init__2(bruno_decomposition_lattice__subgraph_max_isomorphisms,       this, graph,             "Returns maximum subgraph isomorphisms to model graphs decomposed into this bruno_decomposition_lattice.");
   
 }
 

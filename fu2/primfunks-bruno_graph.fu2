@@ -41,4 +41,5 @@
 [globalize-funk bruno_decomposition_lattice-decompose_graph_with_root_graph &primfunk:bruno_decomposition_lattice__decompose_graph_with_root_graph]
 [globalize-funk bruno_decomposition_lattice-decompose_graph                 &primfunk:bruno_decomposition_lattice__decompose_graph]
 [globalize-funk bruno_decomposition_lattice-subgraph_isomorphisms           &primfunk:bruno_decomposition_lattice__subgraph_isomorphisms]
+[globalize-funk bruno_decomposition_lattice-subgraph_max_isomorphisms       &primfunk:bruno_decomposition_lattice__subgraph_max_isomorphisms]
 

@@ -543,6 +543,7 @@ def_pcfunk3(bruno_decomposition_lattice_node__new, parent_graph, left_child_grap
 
 f2ptr raw__bruno_decomposition_lattice_node__combine_children_isomorphisms(f2ptr cause, f2ptr this, f2ptr left_child_isomorphisms, f2ptr right_child_isomorphisms, f2ptr graph) {
   f2ptr isomorphisms = nil;
+  printf("\nnote -9.");
   {
     f2ptr left_iter = left_child_isomorphisms;
     while (left_iter) {
@@ -593,6 +594,7 @@ f2ptr raw__bruno_decomposition_lattice_node__combine_children_isomorphisms(f2ptr
       left_iter = f2__cons__cdr(cause, left_iter);
     }
   }
+  printf("\nnote -4: isomorphisms = "); f2__print(cause, isomorphisms);
   return isomorphisms;
 }
 

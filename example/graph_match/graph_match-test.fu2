@@ -36,8 +36,8 @@
     [have d decompose_graph g1]
     [have d decompose_graph g2]
     `[print d]
-     [let [[isomorphisms [get d subgraph_isomorphisms [get 'This is a test.' as-graph]]]]
-       [print [get isomorphisms as-frame]]]]
+     [let [[isomorphisms [get d subgraph_max_isomorphisms [get 'This is a test.' as-graph]]]]
+       [print isomorphisms]]]
   nil]
 
 

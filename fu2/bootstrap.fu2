@@ -56,6 +56,7 @@
 [load 'fu2/bootstrap-list.fu2']
 [load 'fu2/bootstrap-bruno_graph.fu2']
 [load 'fu2/bootstrap-graph_cluster.fu2']
+[load 'fu2/bootstrap-graph_match_error_correcting.fu2']
 
 [load 'fu2/time.fu2']
 

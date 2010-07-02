@@ -1,0 +1,44 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[deftypefunk string get as-graph []
+  [let [[this-length [length this]]]
+    [let [[a [new array this-length]]]
+      [dotimes [i this-length]
+	[set a elt i [new bruno_graph_node [get this elt i]]]]
+      [let [[g [new bruno_graph]]]
+	[dotimes [i [- this-length 1]]
+	  [have g add_new_edge `next-char [get a elt i] [get a elt [+ i 1]]]]
+	g]]]]
+
+[defunk graph_match-test []
+  [let* [[d  [new bruno_decomposition_lattice]]
+	 [g1 [get 'ABCD' as-graph]]]
+    [format stdout '\n  g1: ' g1]
+    [have d decompose_graph g1]
+    [print d]
+    [let [[isomorphismss [get d subgraph_isomorphisms [get 'ABCD' as-graph]]]]
+      [mapc [funk [isomorphisms]
+		  [mapc [funk [isomorphism]
+			      [format stdout '\n  isomorphism: ' isomorphism]]
+			isomorphisms]]
+	    isomorphismss]]]
+  nil]
+
+

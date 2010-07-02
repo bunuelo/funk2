@@ -84,7 +84,8 @@
 [globalize packages_search_path `['example/resource/'
 				  'example/isis_world/'
 				  'example/isis_toast/'
-				  'example/divisi2/']]
+				  'example/divisi2/'
+				  'example/graph_match/']]
 
 [defmetro defpackage [name :rest dependencies]
   [let [[package_dependencies nil]

@@ -29,10 +29,16 @@ typedef struct funk2_object_type__set__slot_s funk2_object_type__set__slot_t;
 declare_object_type_4_slot(set, write_mutex, key_count, bin_num_power, bin_array,
 			   f2ptr add__symbol;
 			   f2ptr add__funk;
+			   f2ptr remove__symbol;
+			   f2ptr remove__funk;
 			   f2ptr lookup__symbol;
 			   f2ptr lookup__funk;
 			   f2ptr elements__symbol;
 			   f2ptr elements__funk;
+			   f2ptr is_empty__symbol;
+			   f2ptr is_empty__funk;
+			   f2ptr an_arbitrary_element__symbol;
+			   f2ptr an_arbitrary_element__funk;
 			   );
 
 #endif // F2__PRIMOBJECT__SET__TYPES__H
@@ -49,12 +55,16 @@ declare_primobject_4_slot(set, write_mutex, key_count, bin_num_power, bin_array)
 f2ptr     raw__set__new       (f2ptr cause, s64 bin_num_power);
 f2ptr      f2__set__new       (f2ptr cause);
 f2ptr      f2__set__add       (f2ptr cause, f2ptr this, f2ptr key);
+boolean_t raw__set__remove    (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr      f2__set__remove    (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__set__lookup    (f2ptr cause, f2ptr this, f2ptr key);
 boolean_t raw__set__contains  (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__set__contains  (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__set__slot_names(f2ptr cause, f2ptr this);
 f2ptr     raw__set__elements  (f2ptr cause, f2ptr this);
 f2ptr      f2__set__elements  (f2ptr cause, f2ptr this);
+boolean_t raw__set__is_empty  (f2ptr cause, f2ptr this);
+f2ptr      f2__set__is_empty  (f2ptr cause, f2ptr this);
 
 f2ptr f2set__primobject_type__new_aux(f2ptr cause);
 

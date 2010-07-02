@@ -32,7 +32,7 @@ void f2__graph_match_error_correcting__reinitialize_globalvars() {
 }
 
 void f2__graph_match_error_correcting__initialize() {
-  f2ptr cause = initial_cause();
+  //f2ptr cause = initial_cause();
   
   funk2_module_registration__add_module(&(__funk2.module_registration), "graph_match_error_correcting", "", &f2__graph_match_error_correcting__reinitialize_globalvars);
   

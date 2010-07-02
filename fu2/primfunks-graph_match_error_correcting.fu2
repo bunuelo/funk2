@@ -17,5 +17,5 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk error_correcting-test &primfunk:error_correcting-test]
+[globalize-funk error_correcting-test &primfunk:error_correcting__test]
 

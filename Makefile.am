@@ -232,14 +232,14 @@ lib_libfunk2_la_SOURCES = \
   c/f2_globalenv.c \
   c/f2_glwindow.c \
   c/f2_gmodule.c \
+  c/f2_graph.c \
   c/f2_graph_cluster.c \
   c/f2_graph_match_error_correcting.c \
+  c/f2_graphviz.c \
   c/f2_fileio.c \
   c/f2_frame_objects.c \
   c/f2_funk2_node.c \
   c/f2_funktional.c \
-  c/f2_graph.c \
-  c/f2_graphviz.c \
   c/f2_html.c \
   c/f2_load.c \
   c/f2_malloc.c \

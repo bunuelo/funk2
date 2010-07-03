@@ -63,5 +63,5 @@
 [defunk test-blockman []
   [let [[isis_world_client [new isis_world_client '18.85.58.18']]]
     [let [[ralph [new blockman isis_world_client 'Ralph']]]
-      ralph]]]
-
+      [have ralph step]
+      nil]]]

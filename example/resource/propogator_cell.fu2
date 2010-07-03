@@ -37,6 +37,13 @@
 	nil
       [get cell_value time]]]]
 
+[deftypefunk propogator_cell get value []
+  [let [[cell_value [get this cell_value]]]
+    [if [null cell_value]
+	nil
+      [get cell_value value]]]]
+
+
 'propogator_constraint'
 
 [deframe          propogator_constraint [frame] [output-cell input-cells funk]]
@@ -49,12 +56,27 @@
 [deftypefunk propogator_constraint execute apply []
   [let [[output-cell [get this output-cell]]
 	[input-cells [get this input-cells]]]
-    [let [[output_needs_update nil]]
+    [let [[output_needs_update nil]
+	  [input_not_ready     nil]]
       [let [[output-cell-time [get output-cell time]]]
 	[if [null output-cell-time]
 	    [= output_needs_update t]
-      [mapc [funk [
-  nil]
+	  [mapc [funk [input-cell]
+		      [let [[input-cell-time [get input-cell time]]]
+			[if [null input-cell-time]
+			    [= input_not_ready t]
+			  [if [> input-cell-time output-cell-time]
+			      [= output_needs_update t]]]]]
+		input-cells]]]
+      [if [and output_needs_update [not input_not_ready]]
+	  [let [[output_value [new propogator_cell_value
+				   [apply [get this funk] [mapcar [funk [input-cell]
+									[get input-cell value]]
+								  input-cells]]
+				   [time]]]]
+	    [set output-cell cell_value output_value]
+	    t]
+	nil]]]]
 
 
 'propogator_graph'

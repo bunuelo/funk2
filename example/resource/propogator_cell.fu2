@@ -46,9 +46,10 @@
 	nil
       [get cell_value value]]]]
 
-[deftypefunk propogator_cell execute replace_value_if_new [value]
+[deftypefunk propogator_cell set value [value]
   [let [[this-value [get this value]]]
-    [if [== this-value value]
+    [if [and this-value
+	     [== this-value value]]
 	nil
       [let [[cell_value [new propogator_cell_value value [time]]]]
 	[set this cell_value cell_value]
@@ -82,20 +83,29 @@
 	  [let [[output_value [apply [get this funk] [mapcar [funk [input-cell]
 								   [get input-cell value]]
 							     input-cells]]]]
-	    [have output-cell replace_value_if_new output_value]]
+	    [set output-cell value output_value]]
 	nil]]]]
 
 
 'propogator_graph'
 
-[deframe          propogator_graph [frame] [cell_set constraint_set]]
+[deframe          propogator_graph [frame] [cell_set constraint_set cell_name_hash]]
 [deftypeconstruct propogator_graph []
   [set this cell_set       [new set]]
   [set this constraint_set [new set]]
+  [set this cell_name_hash [new ptypehash]]
   this]
 
 [deftypefunk propogator_graph execute add_cell [cell]
-  [have [get this cell_set] add cell]]
+  [let [[cell_set [get this cell_set]]]
+    [if [get cell_set contains cell]
+	nil
+      [prog [have cell_set add cell]
+	    [have [get this cell_name_hash] add [get cell name] cell]
+	    t]]]]
+
+[deftypefunk propogator_graph get cell [name]
+  [have [get this cell_name_hash] lookup name]]
 
 [deftypefunk propogator_graph execute add_constraint [constraint]
   [if [get [get this constraint_set] contains constraint]
@@ -128,6 +138,12 @@
 
 [deftypefunk propogator_resource execute call []
   [have [get this resource] call]]
+
+[deftypefunk propogator_resource get cell [name]
+  [get [get this graph] cell name]]
+
+[deftypefunk propogator_resource set cell [name value]
+  [set [get this cell name] value value]]
 
 [defunk propogator-test []
   [let [[F-cell [new propogator_cell `F nil]]

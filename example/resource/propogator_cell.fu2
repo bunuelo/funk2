@@ -47,15 +47,16 @@
       [get cell_value value]]]]
 
 [deftypefunk propogator_cell set value [value]
-  [let [[this-value [get this value]]]
-    [if [and this-value
-	     [== this-value value]]
-	nil
-      [if [!= this-value value]
-	  [error bug_type `propogator_cell_encountered_contradiction old_value this-value new_value value]
-	[let [[cell_value [new propogator_cell_value value [time]]]]
-	  [set this cell_value cell_value]
-	  t]]]]]
+  [let [[cell_value [new propogator_cell_value value [time]]]]
+    [let [[this-value [get this value]]]
+      [if [and this-value
+	       [== this-value value]]
+	  nil
+	[if [and this-value
+		 [!= this-value value]]
+	    [set this value [error bug_type `propogator_cell_encountered_contradiction old_value this-value new_value value]]
+	  [prog [set this cell_value cell_value]
+		t]]]]]]
 
 'propogator_constraint'
 

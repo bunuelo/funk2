@@ -126,8 +126,8 @@
 
 [defunk propogator-test []
   [let [[F-cell [new propogator_cell `F]]
-	[m-cell [new propogator_cell `m [new propogator_cell_value 10]]]
-	[a-cell [new propogator_cell `a [new propogator_cell_value  5]]]]
+	[m-cell [new propogator_cell `m [new propogator_cell_value 10 [time]]]]
+	[a-cell [new propogator_cell `a [new propogator_cell_value  5 [time]]]]]
     [let [[F=ma  [new propogator_constraint F-cell [list m-cell a-cell] [funk [m a] [* m a]]]]
 	  [m=F/a [new propogator_constraint m-cell [list F-cell a-cell] [funk [F a] [/ F a]]]]
 	  [a=F/m [new propogator_constraint a-cell [list F-cell m-cell] [funk [F m] [/ F m]]]]]

@@ -26,7 +26,6 @@
   [set this time  time]
   this]
 
-
 'propogator_cell'
 
 [deframe          propogator_cell [frame] [name cell_value]]
@@ -47,6 +46,13 @@
 	nil
       [get cell_value value]]]]
 
+[deftypefunk propogator_cell execute replace_value_if_new [value]
+  [let [[this-value [get this value]]]
+    [if [== this-value value]
+	nil
+      [let [[cell_value [new propogator_cell_value value [time]]]]
+	[set this cell_value cell_value]
+	t]]]]
 
 'propogator_constraint'
 
@@ -73,13 +79,10 @@
 			      [= output_needs_update t]]]]]
 		input-cells]]]
       [if [and output_needs_update [not input_not_ready]]
-	  [let [[output_value [new propogator_cell_value
-				   [apply [get this funk] [mapcar [funk [input-cell]
-									[get input-cell value]]
-								  input-cells]]
-				   [time]]]]
-	    [set output-cell cell_value output_value]
-	    t]
+	  [let [[output_value [apply [get this funk] [mapcar [funk [input-cell]
+								   [get input-cell value]]
+							     input-cells]]]]
+	    [have output-cell replace_value_if_new output_value]]
 	nil]]]]
 
 

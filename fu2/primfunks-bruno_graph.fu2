@@ -29,6 +29,7 @@
 [globalize-funk bruno_graph-minus                           &primfunk:bruno_graph__minus]
 [globalize-funk bruno_graph-node_isomorphisms               &primfunk:bruno_graph__node_isomorphisms]
 [globalize-funk bruno_graph-edges_with_label_between_nodes  &primfunk:bruno_graph__edges_with_label_between_nodes]
+[globalize-funk bruno_graph-as-dot_code                     &primfunk:bruno_graph__as__dot_code]
 
 [globalize-funk bruno_graph_isomorphism-add_mapping       &primfunk:bruno_graph_isomorphism__add_mapping]
 [globalize-funk bruno_graph_isomorphism-mapping_count     &primfunk:bruno_graph_isomorphism__mapping_count]

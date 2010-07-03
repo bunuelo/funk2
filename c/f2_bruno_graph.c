@@ -362,6 +362,42 @@ f2ptr f2__bruno_graph__edges_with_label_between_nodes(f2ptr cause, f2ptr this, f
 }
 def_pcfunk4(bruno_graph__edges_with_label_between_nodes, this, label, left_node, right_node, return f2__bruno_graph__edges_with_label_between_nodes(this_cause, this, label, left_node, right_node));
 
+f2ptr f2__bruno_graph__as__dot_code(f2ptr cause, f2ptr this) {
+  if (! raw__bruno_graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  f2ptr node_codes = nil;
+  {
+    f2ptr node_set = f2__bruno_graph__node_set(cause, this);
+    set__iteration(cause, node_set, node,
+		   f2ptr node__label = f2__bruno_graph_node__label(cause, node);
+		   f2ptr color       = new__string(cause, "#000000");
+		   f2ptr node_code   = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, node__label), f2__graphviz__exp__as__label(cause, node__label), color);
+		   node_codes = f2cons__new(cause, node_code, node_codes);
+		   );
+  }    
+  f2ptr edge_codes = nil;
+  {
+    f2ptr edge_set = f2__bruno_graph__edge_set(cause, this);
+    set__iteration(cause, edge_set, edge,
+		   f2ptr edge__label             = f2__bruno_graph_edge__label(cause, edge);
+		   f2ptr edge__left_node         = f2__bruno_graph_edge__left_node(cause, edge);
+		   f2ptr edge__right_node        = f2__bruno_graph_edge__right_node(cause, edge);
+		   f2ptr edge__left_node__label  = f2__bruno_graph_node__label(cause, edge__left_node);
+		   f2ptr edge__right_node__label = f2__bruno_graph_node__label(cause, edge__right_node);
+		   f2ptr edge_code               = f2__graphviz__raw_labelled_edge(cause, edge__label, f2__graphviz__exp__as__name(cause, edge__left_node__label), f2__graphviz__exp__as__name(cause, edge__right_node__label));
+		   edge_codes = f2cons__new(cause, edge_code, edge_codes);
+		   );
+  }
+  return f2__graphviz__digraph(cause, f2list4__new(cause,
+						   f2__graphviz__node_color(cause, new__string(cause, "#000000")),
+						   f2__graphviz__edge_color(cause, new__string(cause, "#000000")),
+						   f2__stringlist__rawcode(cause, node_codes),
+						   f2__stringlist__rawcode(cause, edge_codes)));
+}
+def_pcfunk1(bruno_graph__as__dot_code, this, return f2__bruno_graph__as__dot_code(this_cause, this));
+
+
 // bruno_graph_isomorphism
 
 def_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);
@@ -870,6 +906,7 @@ f2ptr f2__bruno_decomposition_lattice__subgraph_max_isomorphisms(f2ptr cause, f2
 }
 def_pcfunk2(bruno_decomposition_lattice__subgraph_max_isomorphisms, this, graph, return f2__bruno_decomposition_lattice__subgraph_max_isomorphisms(this_cause, this, graph));
 
+
 // **
 
 void f2__bruno_graph__reinitialize_globalvars() {
@@ -910,6 +947,7 @@ void f2__bruno_graph__initialize() {
   f2__primcfunk__init__2(bruno_graph__minus,                           this, that,                         "Returns a subgraph of this bruno_graph without the nodes in that bruno_graph.");
   f2__primcfunk__init__2(bruno_graph__node_isomorphisms,               this, node,                         "Returns all single node isomorphisms between this bruno_graph and a bruno_graph_node.");
   f2__primcfunk__init__4(bruno_graph__edges_with_label_between_nodes,  this, label, left_node, right_node, "Returns edges directed from the left_node to the right_node that have the label in this bruno_graph.");
+  f2__primcfunk__init__1(bruno_graph__as__dot_code,                    this,                               "Returns graph as dot_code for rendering with the graphviz dot application.");
   
   // bruno_graph_isomorphism
   initialize_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);

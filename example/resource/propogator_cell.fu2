@@ -51,9 +51,11 @@
     [if [and this-value
 	     [== this-value value]]
 	nil
-      [let [[cell_value [new propogator_cell_value value [time]]]]
-	[set this cell_value cell_value]
-	t]]]]
+      [if [!= this-value value]
+	  [error bug_type `propogator_cell_encountered_contradiction old_value this-value new_value value]
+	[let [[cell_value [new propogator_cell_value value [time]]]]
+	  [set this cell_value cell_value]
+	  t]]]]]
 
 'propogator_constraint'
 
@@ -143,7 +145,8 @@
   [get [get this graph] cell name]]
 
 [deftypefunk propogator_resource set cell [name value]
-  [set [get this cell name] value value]]
+  [set [get this cell name] value value]
+  [have this call]]
 
 [defunk propogator-test []
   [let [[F-cell [new propogator_cell `F nil]]

@@ -32,7 +32,7 @@
 [deframe          propogator_cell [frame] [name cell_value]]
 [deftypeconstruct propogator_cell [name call_value]
   [set this name       name]
-  [set this cell_value nil]
+  [set this cell_value cell_value]
   this]
 
 [deftypefunk propogator_cell get time []

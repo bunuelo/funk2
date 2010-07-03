@@ -63,5 +63,6 @@
 [defunk test-blockman []
   [let [[isis_world_client [new isis_world_client '18.85.58.18']]]
     [let [[ralph [new blockman isis_world_client 'Ralph']]]
+      [cause-define cause-outside_resource [resource test-blockman [] [print 'test-blockman resource here.']]]
       [have ralph step]
       nil]]]

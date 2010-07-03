@@ -68,7 +68,7 @@
       [have [get this constraint_set] add constraint]]]]
 
 
-[deftypefunk      propogator_resource [frame] [resource]]
+[deframe          propogator_resource [frame] [resource]]
 [deftypeconstruct propogator_resource [name graph]
   [set this graph    graph]
   [set this resource [new resource name [funk []

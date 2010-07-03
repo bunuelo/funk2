@@ -1,0 +1,78 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'propogator_cell_value'
+
+[deframe propogator_cell_value [frame] [value time]]
+
+
+'propogator_cell'
+
+[deframe          propogator_cell [frame] [resource cell_value]]
+[deftypeconstruct propogator_cell [resource-name resource-active_funk]
+  [set this resource [new resource resource-name resource-active_funk]]
+  [set this cell_value nil]
+  this]
+
+
+'propogator_constraint'
+
+[deframe propogator_constraint [frame] [output-cell input-cells funk]]
+
+
+'propogator_graph'
+
+[deframe          propogator_graph [frame] [cell_set constraint_set]]
+[deftypeconstruct propogator_graph []
+  [set this cell_set       [new set]]
+  [set this constraint_set [new set]]
+  this]
+
+[deftypefunk propogator_graph execute add_cell [cell]
+  [have [get this cell_set] add cell]]
+
+[deftypefunk propogator_graph execute add_constraint [constraint]
+  [if [get [get this constraint_set] contains constraint]
+      nil
+    [let [[output-cell [get constraint output-cell]]
+	  [input-cells [get constraint input-cells]]]
+      [have this add cell output-cell]
+      [mapc [funk [input-cell]
+		  [have this add cell input-cell]]
+	    input-cells]
+      [have [get this constraint_set] add constraint]]]]
+
+
+
+[defunk propogator-test []
+  [let [[F-cell [new propogator_cell `F]]
+	[m-cell [new propogator_cell `m]]
+	[a-cell [new propogator_cell `a]]]
+    [let [[F=ma  [new propogator_constraint F-cell [list m-cell a-cell] [funk [m a] [* m a]]]]
+	  [m=F/a [new propogator_constraint m-cell [list F-cell a-cell] [funk [F a] [/ F a]]]]
+	  [a=F/m [new propogator_constraint a-cell [list F-cell m-cell] [funk [F m] [/ F m]]]]]
+      [let [[g [new propogator_graph]]]
+	[have g add_constraint F=ma]
+	[have g add_constraint m=F/a]
+	[have g add_constraint a=F/m]
+	g]]]]
+
+
+								      

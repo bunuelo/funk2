@@ -20,6 +20,7 @@
 [defpackage resource
   :packages [isis_world]
    :sources ['resource.fu2'
+	     'propogator_cell.fu2'
 	     'agency.fu2'
 	     'agent.fu2'
 	     'blockman.fu2']]

@@ -25,9 +25,9 @@
 
 'propogator_cell'
 
-[deframe          propogator_cell [frame] [resource cell_value]]
-[deftypeconstruct propogator_cell [resource-name]
-  [set this resource [new resource resource-name [funk [] [print 'propogator active!']]]]
+[deframe          propogator_cell [frame] [name cell_value]]
+[deftypeconstruct propogator_cell [name]
+  [set this name       name]
   [set this cell_value nil]
   this]
 
@@ -40,6 +40,9 @@
   [set this input-cells input-cells]
   [set this funk        funk]
   this]
+
+[deftypefunk propogator_constraint execute apply []
+  nil]
 
 
 'propogator_graph'
@@ -65,6 +68,20 @@
       [have [get this constraint_set] add constraint]]]]
 
 
+[deftypefunk      propogator_resource [frame] [resource]]
+[deftypeconstruct propogator_resource [name graph]
+  [set this graph    graph]
+  [set this resource [new resource name [funk []
+					      [let [[constraint-set [get graph constraint-set]]
+						    [done           nil]]
+						[while [not done]
+						  [= done t]
+						  [mapc [funk [constraint]
+							      [if [have constraint apply]
+								  [= done nil]]]
+							[get constraint-set elements]]]
+						nil]]]]
+  this]
 
 [defunk propogator-test []
   [let [[F-cell [new propogator_cell `F]]
@@ -77,7 +94,8 @@
 	[have g add_constraint F=ma]
 	[have g add_constraint m=F/a]
 	[have g add_constraint a=F/m]
-	g]]]]
+	[let [[p [new propogator_resource `Newtonian-Physics g]]]
+	  p]]]]]
 
 
 								      

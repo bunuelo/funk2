@@ -26,8 +26,8 @@
 'propogator_cell'
 
 [deframe          propogator_cell [frame] [resource cell_value]]
-[deftypeconstruct propogator_cell [resource-name resource-active_funk]
-  [set this resource [new resource resource-name resource-active_funk]]
+[deftypeconstruct propogator_cell [resource-name]
+  [set this resource [new resource resource-name [funk [] [print 'propogator active!']]]]
   [set this cell_value nil]
   this]
 

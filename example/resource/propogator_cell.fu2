@@ -20,7 +20,11 @@
 
 'propogator_cell_value'
 
-[deframe propogator_cell_value [frame] [value time]]
+[deframe          propogator_cell_value [frame] [value time cause]]
+[deftypeconstruct propogator_cell_value [value time]
+  [set this value value]
+  [set this time  time]
+  this]
 
 
 'propogator_cell'
@@ -122,8 +126,8 @@
 
 [defunk propogator-test []
   [let [[F-cell [new propogator_cell `F]]
-	[m-cell [new propogator_cell `m]]
-	[a-cell [new propogator_cell `a]]]
+	[m-cell [new propogator_cell `m [new propogator_cell_value 10]]]
+	[a-cell [new propogator_cell `a [new propogator_cell_value  5]]]]
     [let [[F=ma  [new propogator_constraint F-cell [list m-cell a-cell] [funk [m a] [* m a]]]]
 	  [m=F/a [new propogator_constraint m-cell [list F-cell a-cell] [funk [F a] [/ F a]]]]
 	  [a=F/m [new propogator_constraint a-cell [list F-cell m-cell] [funk [F m] [/ F m]]]]]

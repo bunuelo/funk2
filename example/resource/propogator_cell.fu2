@@ -55,7 +55,7 @@
 	  [input-cells [get constraint input-cells]]]
       [have this add cell output-cell]
       [mapc [funk [input-cell]
-		  [have this add cell input-cell]]
+		  [have this add_cell input-cell]]
 	    input-cells]
       [have [get this constraint_set] add constraint]]]]
 

@@ -792,17 +792,17 @@ void f2__primobjects__initialize() {
   // time
   
   initialize_primobject_1_slot(time, nanoseconds_since_1970);
-  initialize_primobject_funk__0_arg(time, equals,                        "");
-  initialize_primobject_funk__0_arg(time, years,                         "");
-  initialize_primobject_funk__0_arg(time, months,                        "");
-  initialize_primobject_funk__0_arg(time, days,                          "");
-  initialize_primobject_funk__0_arg(time, hours,                         "");
-  initialize_primobject_funk__0_arg(time, minutes,                       "");
-  initialize_primobject_funk__0_arg(time, seconds,                       "");
-  initialize_primobject_funk__0_arg(time, nanoseconds,                   "");
-  initialize_primobject_funk__1_arg(time, is_less_than,            that, "");
-  initialize_primobject_funk__1_arg(time, is_greater_than,         that, "");
-  initialize_primobject_funk__1_arg(time, is_numerically_equal_to, that, "");
+  initialize_primobject_funk__0_arg(time, equals,                        "The time represented by this and that time object are the same even if the objects themselves are different objects.");
+  initialize_primobject_funk__0_arg(time, years,                         "The number of years since the monk Dionysius Exiguus thought Jesus Christ was born.");
+  initialize_primobject_funk__0_arg(time, months,                        "The number of months since the beginning of the year.");
+  initialize_primobject_funk__0_arg(time, days,                          "The number of days since the beginning of the month.");
+  initialize_primobject_funk__0_arg(time, hours,                         "The number of hours since the beginning of the day.");
+  initialize_primobject_funk__0_arg(time, minutes,                       "The number of minutes since the beginning of the hour.");
+  initialize_primobject_funk__0_arg(time, seconds,                       "The number of seconds since the beginning of the minute.");
+  initialize_primobject_funk__0_arg(time, nanoseconds,                   "The number of nanoseconds since the beginning of the second.");
+  initialize_primobject_funk__1_arg(time, is_less_than,            that, "Returns t if this time is further in the past than that time.");
+  initialize_primobject_funk__1_arg(time, is_greater_than,         that, "Returns t if this time is further in the future than that time.");
+  initialize_primobject_funk__1_arg(time, is_numerically_equal_to, that, "Returns t if the nanoseconds_since_1970 of this time is numerically equal to those of that time.");
   
   // size_2d
   

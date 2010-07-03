@@ -34,7 +34,12 @@
 
 'propogator_constraint'
 
-[deframe propogator_constraint [frame] [output-cell input-cells funk]]
+[deframe          propogator_constraint [frame] [output-cell input-cells funk]]
+[deftypeconstruct propogator_constraint [output-cell input-cells funk]
+  [set this output-cell output-cell]
+  [set this input-cells input-cells]
+  [set this funk        funk]
+  this]
 
 
 'propogator_graph'
@@ -53,7 +58,7 @@
       nil
     [let [[output-cell [get constraint output-cell]]
 	  [input-cells [get constraint input-cells]]]
-      [have this add cell output-cell]
+      [have this add_cell output-cell]
       [mapc [funk [input-cell]
 		  [have this add_cell input-cell]]
 	    input-cells]

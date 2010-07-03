@@ -561,7 +561,7 @@ f2ptr f2__time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
       (! raw__time__is_type(cause, that))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__time__is_less_than(cause, this, that);
+  return f2bool__new(raw__time__is_less_than(cause, this, that));
 }
 def_pcfunk2(time__is_less_than, this, that, return f2__time__is_less_than(this_cause, this, that));
 
@@ -581,7 +581,7 @@ f2ptr f2__time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
       (! raw__time__is_type(cause, that))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__time__is_greater_than(cause, this, that);
+  return f2bool__new(raw__time__is_greater_than(cause, this, that));
 }
 def_pcfunk2(time__is_greater_than, this, that, return f2__time__is_greater_than(this_cause, this, that));
 
@@ -601,7 +601,7 @@ f2ptr f2__time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
       (! raw__time__is_type(cause, that))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__time__is_numerically_equal_to(cause, this, that);
+  return f2bool__new(raw__time__is_numerically_equal_to(cause, this, that));
 }
 def_pcfunk2(time__is_numerically_equal_to, this, that, return f2__time__is_numerically_equal_to(this_cause, this, that));
 

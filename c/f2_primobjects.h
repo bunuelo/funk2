@@ -945,9 +945,17 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
 #define stringify(x) #x
 #define tostring(x) stringify(x)
 
-#define initialize_primobject_funk(name, funk_name) \
+#define initialize_primobject_funk__0_arg(name, funk_name, documentation) \
   {char* symbol_str = #funk_name; __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);} \
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(name##__##funk_name, this, cfunk, 0, "automatically generated cfunk (" __FILE__ ":" tostring(__LINE__) ")"); __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(name##__##funk_name, this, cfunk, 0, documentation "  (cfunk " __FILE__ ":" tostring(__LINE__) ")"); __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = never_gc(cfunk);}
+
+#define initialize_primobject_funk__1_arg(name, funk_name, arg_1, documentation) \
+  {char* symbol_str = #funk_name; __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);} \
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(name##__##funk_name, this, arg_1, cfunk, 0, documentation "  (cfunk " __FILE__ ":" tostring(__LINE__) ")"); __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = never_gc(cfunk);}
+
+
+#define initialize_primobject_funk(name, funk_name) \
+  initialize_primobject_funk__0_arg(name, funk_name, "");
 
 #define initialize_primobject_common(name)   \
   initialize_primobject_funk(name, is_type); \
@@ -1500,6 +1508,12 @@ declare_object_type_1_slot(time, nanoseconds_since_1970,
 			   f2ptr seconds__funk;
 			   f2ptr nanoseconds__symbol;
 			   f2ptr nanoseconds__funk;
+			   f2ptr is_less_than__symbol;
+			   f2ptr is_less_than__funk;
+			   f2ptr is_greater_than__symbol;
+			   f2ptr is_greater_than__funk;
+			   f2ptr is_numerically_equal_to__symbol;
+			   f2ptr is_numerically_equal_to__funk;
 			   );
 
 boolean_t raw__time__equals(f2ptr cause, f2ptr this, f2ptr that);

@@ -31,6 +31,11 @@
   [set this cell_value nil]
   this]
 
+[deftypefunk propogator_cell get time []
+  [let [[cell_value [get this cell_value]]]
+    [if [null cell_value]
+	nil
+      [get cell_value time]]]]
 
 'propogator_constraint'
 
@@ -42,6 +47,13 @@
   this]
 
 [deftypefunk propogator_constraint execute apply []
+  [let [[output-cell [get this output-cell]]
+	[input-cells [get this input-cells]]]
+    [let [[output_needs_update nil]]
+      [let [[output-cell-time [get output-cell time]]]
+	[if [null output-cell-time]
+	    [= output_needs_update t]
+      [mapc [funk [
   nil]
 
 
@@ -72,16 +84,19 @@
 [deftypeconstruct propogator_resource [name graph]
   [set this graph    graph]
   [set this resource [new resource name [funk []
-					      [let [[constraint-set [get graph constraint-set]]
+					      [let [[constraint_set [get graph constraint_set]]
 						    [done           nil]]
 						[while [not done]
 						  [= done t]
 						  [mapc [funk [constraint]
 							      [if [have constraint apply]
 								  [= done nil]]]
-							[get constraint-set elements]]]
+							[get constraint_set elements]]]
 						nil]]]]
   this]
+
+[deftypefunk propogator_resource execute call []
+  [have [get this resource] call]]
 
 [defunk propogator-test []
   [let [[F-cell [new propogator_cell `F]]

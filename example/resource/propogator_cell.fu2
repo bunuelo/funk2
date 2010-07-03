@@ -136,7 +136,7 @@
 	[have g add_constraint m=F/a]
 	[have g add_constraint a=F/m]
 	[let [[p [new propogator_resource `Newtonian-Physics g]]]
+	  [have p call]
 	  p]]]]]
 
 
-								      

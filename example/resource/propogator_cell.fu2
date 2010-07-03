@@ -30,7 +30,7 @@
 'propogator_cell'
 
 [deframe          propogator_cell [frame] [name cell_value]]
-[deftypeconstruct propogator_cell [name]
+[deftypeconstruct propogator_cell [name call_value]
   [set this name       name]
   [set this cell_value nil]
   this]
@@ -125,7 +125,7 @@
   [have [get this resource] call]]
 
 [defunk propogator-test []
-  [let [[F-cell [new propogator_cell `F]]
+  [let [[F-cell [new propogator_cell `F nil]]
 	[m-cell [new propogator_cell `m [new propogator_cell_value 10 [time]]]]
 	[a-cell [new propogator_cell `a [new propogator_cell_value  5 [time]]]]]
     [let [[F=ma  [new propogator_constraint F-cell [list m-cell a-cell] [funk [m a] [* m a]]]]

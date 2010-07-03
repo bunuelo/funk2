@@ -38,7 +38,7 @@
       [format stdout '\n  move_backward']]
     [defresource agent physical move_to [object]
       [format stdout '\n  move_to ' object]
-      [call move_forward]
+      [have agent call `physical `move_forward]
       ]
     [defresource agent physical sense []
       [format stdout '\n  sense']

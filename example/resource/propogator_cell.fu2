@@ -30,7 +30,7 @@
 'propogator_cell'
 
 [deframe          propogator_cell [frame] [name cell_value]]
-[deftypeconstruct propogator_cell [name call_value]
+[deftypeconstruct propogator_cell [name cell_value]
   [set this name       name]
   [set this cell_value cell_value]
   this]

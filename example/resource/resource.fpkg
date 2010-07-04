@@ -33,7 +33,11 @@
   :packages [mental_layer]
    :sources ['agent.fu2']]
 
-[defpackage blockman
-  :packages [isis_world agent]
-   :sources ['blockman.fu2']]
+[defpackage isis_world_body
+  :packages [isis_world]
+   :sources ['isis_world_body.fu2']]
+
+[defpackage isis_world-test
+  :packages [agent isis_world_body]
+   :sources ['isis_world-test.fu2']]
 

@@ -1,0 +1,75 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+[deframe          isis_world_body [frame] [name world]]
+[deftypeconstruct isis_world_body [name]
+  [set this name  name]
+  [set this world nil]
+  this]
+
+
+[deframe          isis_agent [frame] [name mind body]]
+[deftypeconstruct isis_agent [name]
+  [set this name name]
+  [set this mind [new agent]]
+  [set this body [new isis_world_body name]]
+  this]
+
+[deftypefunk isis_agent get world []
+  [get [get this body] world]]
+
+[deftypefunk isis_agent set world [world]
+  [set [get this body] world world]]
+
+
+[deframe          isis_world [frame] [client agent_frame]]
+[deftypeconstruct isis_world [client]
+  [set this client      client]
+  [set this agent_frame [frame]]
+  this]
+
+[deftypefunk isis_world execute add_agent [agent]
+  [if [get agent world]
+      [error bug_type isis_agent_is_already_in_a_world agent agent]
+    [prog [set agent world this]
+	  [have [get this agent_frame] add [get agent name] agent]]]]
+
+
+
+[defunk ralph_agent-new []
+  [new isis_agent `Ralph]]
+
+[defunk lauren_agent-new []
+  [new isis_agent `Lauren]]
+
+[defunk david_agent-new []
+  [new isis_agent `David]]
+
+
+[defunk isis_world-test []
+  [let [[client [new isis_world_client '18.85.58.18']]]
+    [let [[isis_world [new isis_world client]]]
+      [have isis_world add_agent [ralph_agent-new]]
+      [have isis_world add_agent [lauren_agent-new]]
+      [have isis_world add_agent [david_agent-new]]
+      
+      isis_world
+      ]]]
+

@@ -20,20 +20,17 @@
 
 'agent'
 
-[deframe          agent [frame] [agencies_frame]]
+[deframe          agent [frame] [layer_frame]]
 [deftypeconstruct agent []
-  [set this agencies_frame [frame]]
+  [set this layer_frame [frame]]
   this]
 
-[deftypefunk agent get agency [name]
-  [have [get this agencies_frame] lookup name]]
+[deftypefunk agent get layer [name]
+  [have [get this layer_frame] lookup name]]
 
-[deftypefunk agent execute call [agency_name resource_name :rest args]
-  [let [[agencies_frame [get this agencies_frame]]]
-    [let [[agency [have agencies_frame lookup agency_name]]]
-      [have-apply agency call [cons resource_name args]]]]]
-
-[defmetro defagency [agent name]
-  `[have [get ,agent agencies_frame] add [quote ,name] [new agency]]]
+[deftypefunk agent execute call [layer_name agency_name resource_name :rest args]
+  [let [[layer_frame [get this layer_frame]]]
+    [let [[layer [have layer_frame lookup layer_name]]]
+      [have-apply layer call `[,agency_name ,resource_name @args]]]]]
 
 

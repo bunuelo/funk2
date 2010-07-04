@@ -17,3 +17,20 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+
+'mental_layer'
+
+[deframe          mental_layer [frame] [agency_frame]]
+[deftypeconstruct mental_layer []
+  [set this agency_frame [frame]]
+  this]
+
+[deftypefunk mental_layer get agency [name]
+  [have [get this agency_frame] lookup name]]
+
+[deftypefunk mental_layer execute call [agency_name resource_name :rest args]
+  [let [[agency_frame [get this agency_frame]]]
+    [let [[agency [have agency_frame lookup agency_name]]]
+      [have-apply agency call [cons resource_name args]]]]]
+
+

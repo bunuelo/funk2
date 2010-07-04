@@ -35,12 +35,17 @@
     
     'All isis_agents inherit these basic features.'
     
-    [let [[reactive_layer     [new mental_layer `reactive]]
-	  [deliberative_layer [new mental_layer `deliberative]]
-	  [reflective_layer   [new mental_layer `reflective]]]
+    [let [[reactive_layer        [new mental_layer `reactive]]
+	  [deliberative_layer    [new mental_layer `deliberative]]
+	  [reflective_layer      [new mental_layer `reflective]]
+	  [self_reflective_layer [new mental_layer `self_reflective]]
+	  [self_conscious_layer  [new mental_layer `self_conscious]]]
+      
       [have mind add_layer reactive_layer]
       [have mind add_layer deliberative_layer]
       [have mind add_layer reflective_layer]
+      [have mind add_layer self_reflective_layer]
+      [have mind add_layer self_conscious_layer]
       
       [have reactive_layer        add_agency [new agency `physical]]
       [have deliberative_layer    add_agency [new agency `physical]]

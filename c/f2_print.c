@@ -1015,7 +1015,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 				 int type_key__length;
 				 {
 				   int subexp_size[2];
-				   f2__write_pretty(cause, fiber, nil, type_ptypehash__key, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode);
+				   f2__write_pretty(cause, fiber, nil, type_ptypehash__key, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode);
 				   int exp_width  = subexp_size[0];
 				   type_key__length = exp_width;
 				 }
@@ -1035,7 +1035,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 						      int slot_name__length;
 						      {
 							int subexp_size[2];
-							f2__write_pretty(cause, fiber, nil, slot_name, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode);
+							f2__write_pretty(cause, fiber, nil, slot_name, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode);
 							int exp_width  = subexp_size[0];
 							slot_name__length = exp_width;
 						      }
@@ -1049,7 +1049,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    {
 	      int subexp_size[2];
 	      if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(frame__begin_char, cause));} width ++;
-	      f2__write_pretty(cause, fiber, stream, frame_type_name, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
+	      f2__write_pretty(cause, fiber, stream, frame_type_name, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	    }
 	    
 	    if (! try_wide) {
@@ -1062,7 +1062,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 				 int type_key__length;
 				 {
 				   int subexp_size[2];
-				   f2__write_pretty(cause, fiber, nil, type_keyvalue_pair__key, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode);
+				   f2__write_pretty(cause, fiber, nil, type_keyvalue_pair__key, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode);
 				   int exp_width  = subexp_size[0];
 				   type_key__length = exp_width;
 				 }
@@ -1073,7 +1073,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 						      int key__length;
 						      {
 							int subexp_size[2];
-							f2__write_pretty(cause, fiber, nil, keyvalue_pair__key, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode);
+							f2__write_pretty(cause, fiber, nil, keyvalue_pair__key, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode);
 							int exp_width  = subexp_size[0];
 							key__length = exp_width;
 						      }
@@ -1092,7 +1092,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 							    if (stream) {raw__stream__writef(cause, stream, "%s", symbol__str);} width += symbol__length;
 							    f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
 							  } else {
-							    f2__write_pretty(cause, fiber, stream, type_keyvalue_pair__key, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
+							    f2__write_pretty(cause, fiber, stream, type_keyvalue_pair__key, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 							  }
 							  if (! try_wide) {
 							    int i;
@@ -1112,7 +1112,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 							  if (stream) {raw__stream__writef(cause, stream, "%s", symbol__str);} width += symbol__length;
 							  f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
 							} else {
-							  f2__write_pretty(cause, fiber, stream, keyvalue_pair__key, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
+							  f2__write_pretty(cause, fiber, stream, keyvalue_pair__key, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 							}
 							if (! try_wide) {
 							  int i;
@@ -1121,7 +1121,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 							  }
 							}
 							f2__write__space(cause, stream, use_html); width ++;
-							f2__write_pretty(cause, fiber, stream, slot_value, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
+							f2__write_pretty(cause, fiber, stream, slot_value, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 						      }
 						      );
 				 

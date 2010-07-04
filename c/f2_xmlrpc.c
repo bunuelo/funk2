@@ -166,8 +166,8 @@ xmlrpc_value* funk2_xmlrpc__create_xmlrpc_value_from_exp(xmlrpc_env* env, f2ptr 
   } else if (raw__frame__is_type(cause, exp)) {
     xmlrpc_value* new_struct = xmlrpc_struct_new(env);
     frame__var__iteration(cause, exp, key, value,
-			  printf("\nkey: "); f2__print(cause, key);
-			  printf("\nvalue: "); f2__print(cause, value);
+			  //printf("\nkey: "); f2__print(cause, key);
+			  //printf("\nvalue: "); f2__print(cause, value);
 			  xmlrpc_value* new_key = funk2_xmlrpc__create_xmlrpc_value_from_exp(env, cause, key);
 			  if (new_key == NULL) {
 			    xmlrpc_DECREF(new_struct);

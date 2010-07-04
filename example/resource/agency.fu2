@@ -20,8 +20,9 @@
 
 'agency'
 
-[deframe          agency [frame] [resources_frame trace_graph]]
-[deftypeconstruct agency []
+[deframe          agency [frame] [name resources_frame trace_graph]]
+[deftypeconstruct agency [name]
+  [set this name            name]
   [set this resources_frame [frame]]
   [set this trace_graph     [new graph]]
   this]

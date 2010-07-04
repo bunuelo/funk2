@@ -20,10 +20,14 @@
 
 'mental_layer'
 
-[deframe          mental_layer [frame] [agency_frame]]
-[deftypeconstruct mental_layer []
+[deframe          mental_layer [frame] [name agency_frame]]
+[deftypeconstruct mental_layer [name]
+  [set this name         name]
   [set this agency_frame [frame]]
   this]
+
+[deftypefunk mental_layer add_agency [agency]
+  [have [get this agency_frame] add [get agency name] agency]]
 
 [deftypefunk mental_layer get agency [name]
   [have [get this agency_frame] lookup name]]

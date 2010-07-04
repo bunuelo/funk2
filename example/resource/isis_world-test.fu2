@@ -27,9 +27,30 @@
 
 [deframe          isis_agent [frame] [name mind body]]
 [deftypeconstruct isis_agent [name]
-  [set this name name]
-  [set this mind [new agent]]
-  [set this body [new isis_world_body name]]
+  [let [[mind [new agent]]
+	[body [new isis_world_body name]]]
+    [set this name name]
+    [set this mind mind]
+    [set this body body]
+    
+    'All isis_agents inherit these basic features.'
+    
+    [let [[reactive_layer     [new mental_layer `reactive]]
+	  [deliberative_layer [new mental_layer `deliberative]]
+	  [reflective_layer   [new mental_layer `reflective]]]
+      [have mind add_layer reactive_layer]
+      [have mind add_layer deliberative_layer]
+      [have mind add_layer reflective_layer]
+      
+      [have reactive_layer        add_agency [new agency `physical]]
+      [have deliberative_layer    add_agency [new agency `physical]]
+      [have reflective_layer      add_agency [new agency `physical]]
+      [have self_reflective_layer add_agency [new agency `physical]]
+      [have self_conscious_layer  add_agency [new agency `physical]]
+      
+      
+      
+      ]]
   this]
 
 [deftypefunk isis_agent get world []
@@ -54,7 +75,9 @@
 
 
 [defunk ralph_agent-new []
-  [new isis_agent `Ralph]]
+  [let [[this [new isis_agent `Ralph]]]
+    
+    this]]
 
 [defunk lauren_agent-new []
   [new isis_agent `Lauren]]

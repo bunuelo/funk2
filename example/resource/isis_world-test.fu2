@@ -90,6 +90,10 @@
 [deftypefunk isis_world get agent_names []
   [get [get this agent_frame] slots]]
 
+[deftypefunk isis_world get agent_mind [agent_name]
+  [get [have [get this agent_frame] lookup agent_name] mind]]
+
+
 [defunk ralph_agent-new []
   [let [[this [new isis_agent `Ralph]]]
     

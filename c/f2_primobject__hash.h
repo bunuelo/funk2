@@ -36,6 +36,8 @@ declare_object_type_6_slot(hash, write_mutex, key_count, bin_num_power, bin_arra
 			   f2ptr equals__funk;
 			   f2ptr equals_hash_value__symbol;
 			   f2ptr equals_hash_value__funk;
+			   f2ptr as__frame__symbol;
+			   f2ptr as__frame__funk;
 			   );
 
 #endif // F2__PRIMOBJECT__HASH__TYPES__H
@@ -61,6 +63,9 @@ f2ptr      f2__hash__lookup              (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr raw__hash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
 
 f2ptr f2__hash__slot_names(f2ptr cause, f2ptr this);
+
+f2ptr raw__hash__as__frame(f2ptr cause, f2ptr this);
+f2ptr  f2__hash__as__frame(f2ptr cause, f2ptr this);
 
 f2ptr f2hash__primobject_type__new(f2ptr cause);
 f2ptr f2hash__primobject_type__new_aux(f2ptr cause);

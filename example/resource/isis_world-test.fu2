@@ -70,7 +70,7 @@
 			  [have this think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
 			]]
 	
-	[have self_conscious-physical_agency add_resource
+	[have self_conscious-imprimer_learning_agency add_resource
 	      [resource react_to_imprimer_scold [imprimer scold]
 			[have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', has scolded something about ' [get scold focus] '!  How should I react?']
 			]]

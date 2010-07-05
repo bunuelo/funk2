@@ -42,4 +42,7 @@
     [let [[agency [have agency_frame lookup agency_name]]]
       [have-apply agency activate [cons resource_name args]]]]]
 
+[deftypefunk mental_layer get agencies []
+  [get [get this agency_frame] values]]
+
 

@@ -41,3 +41,6 @@
   [let [[resource [get this resource name]]]
     [have-apply resource activate `[,cause-outside_resource @args]]]]
 
+[deftypefunk agency get resources []
+  [get [get this resource_frame] values]]
+

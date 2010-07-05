@@ -271,7 +271,7 @@ f2ptr raw__hash__as__frame(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__hash__as__frame(f2ptr cause, f2ptr this) {
-  if (! raw__frame__is_type(cause, this)) {
+  if (! raw__hash__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__hash__as__frame(cause, this);

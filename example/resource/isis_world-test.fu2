@@ -34,7 +34,33 @@
     
     'All isis_agents inherit these basic features.'
     
-    [let [[reactive_layer        [new mental_layer `reactive]]
+    [mind-create_layer mind reactive]
+    [mind-create_layer mind deliberative]
+    [mind-create_layer mind reflective]
+    [mind-create_layer mind self_reflective]
+    [mind-create_layer mind self_conscious]
+    
+    [mind-create_agency mind reactive        sensory]
+    [mind-create_agency mind reactive        physical]
+    [mind-create_agency mind deliberative    physical]
+    [mind-create_agency mind reflective      physical]
+    [mind-create_agency mind self_reflective physical]
+    [mind-create_agency mind self_conscious  imprimer_learning]
+    
+    [mind-create_resource mind reactive sensory sense_imprimer_scold [imprimer]
+			  [if [get [get imprimer speech] is-scold]
+			      [prog [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', said something that sounds like a scold!']
+				    [let [[imprimer_focus [mind-call reactive sensory discover_person_focus imprimer]]]
+				      [mind-activate mind self_conscious imprimer_learning react_to_imprimer_scold
+						     imprimer imprimer_focus]]]
+			    [have this think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
+			  ]
+    
+    [mind-create_resource mind self_conscious imprimer_learning react_to_imprimer_scold [imprimer scold]
+			  [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', has scolded something about ' [get scold focus] '!  How should I react?']
+			  ]
+    
+    `[let [[reactive_layer        [new mental_layer `reactive]]
 	  [deliberative_layer    [new mental_layer `deliberative]]
 	  [reflective_layer      [new mental_layer `reflective]]
 	  [self_reflective_layer [new mental_layer `self_reflective]]

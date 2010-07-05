@@ -67,7 +67,7 @@
 				  [let [[imprimer_focus [mind-call reactive sensory discover_person_focus imprimer]]]
 				    [mind-activate mind self_conscious imprimer_learning react_to_imprimer_scold
 						   imprimer imprimer_focus]]]
-			  [have this think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']
+			  [have this think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
 			]]
 	
 	[have self_conscious-physical_agency add_resource

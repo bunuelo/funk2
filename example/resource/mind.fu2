@@ -1,0 +1,80 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'mind'
+
+[deframe          mind [frame] [layer_frame]]
+[deftypeconstruct mind []
+  [set this layer_frame [frame]]
+  this]
+
+
+[deftypefunk mind execute add_layer [layer]
+  [have [get this layer_frame] add [get layer name] layer]]
+
+[defmetro mind-create_layer [mind layer_name]
+  `[have ,mind add_layer [new mental_layer [quote ,layer_name]]]]
+
+
+[deftypefunk mind get layer [name]
+  [have [get this layer_frame] lookup name]]
+
+[defmetro mind-layer [mind layer_name]
+  `[get ,mind layer [quote ,layer_name]]]
+
+
+[deftypefunk mind execute add_agency [layer_name agency]
+  [have [get this layer layer_name] add_agency agency]]
+
+[defmetro mind-create_agency [mind layer_name agency_name]
+  `[have ,mind add_agency [quote ,layer_name] [new agency [quote ,agency_name]]]]
+
+
+[deftypefunk mind get agency [layer_name agency_name]
+  [get [get this layer layer_name] agency agency_name]]
+
+[defmetro mind-agency [mind layer_name agency_name]
+  `[get ,mind agency [quote ,layer_name] [quote ,agency_name]]]
+
+
+[deftypefunk mind execute add_resource [layer_name agency_name resource]
+  [have [get this agency layer_name agency_name] add_resource resource]]
+
+[defmetro mind-create_resource [mind layer_name agency_name resource_name resource_args :rest resource_body]
+  `[have ,mind add_resource [quote ,layer_name] [quote ,agency_name] [resource ,resource_name ,resource_args @resource_body]]]
+
+
+[deftypefunk mind execute call [layer_name agency_name resource_name :rest args]
+  [let [[layer_frame [get this layer_frame]]]
+    [let [[layer [have layer_frame lookup layer_name]]]
+      [have-apply layer call `[,agency_name ,resource_name @args]]]]]
+
+[defmetro mind-call [mind layer_name agency_name resource_name :rest args]
+  `[have ,mind call [quote ,layer_name] [quote ,agency_name] [quote ,resource_name] @args]]
+
+
+[deftypefunk mind execute activate [layer_name agency_name resource_name :rest args]
+  [let [[layer_frame [get this layer_frame]]]
+    [let [[layer [have layer_frame lookup layer_name]]]
+      [have-apply layer activate `[,agency_name ,resource_name @args]]]]]
+
+[defmetro mind-activate [mind layer_name agency_name resource_name :rest args]
+  `[have ,mind activate [quote ,layer_name] [quote ,agency_name] [quote ,resource_name] @args]]
+

@@ -371,7 +371,7 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
 	    xmlrpc_value* new_exp = funk2_xmlrpc__create_xmlrpc_value_from_exp(&env, cause, exp);
 	    if (new_exp == NULL) {
 	      call_successful_so_far = boolean__false;
-	      printf("\nf2_xmlrpc.c: error interpretting arguments.\n");
+	      status("f2_xmlrpc.c: error interpretting arguments.");
 	      {
 		f2ptr bug_frame = f2__frame__new(cause, nil);
 		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),     new__symbol(cause, "xmlrpc_error_interpretting_arguments"));
@@ -397,7 +397,7 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
 	if (env.fault_occurred) {
 	  xmlrpc_print_fault_status(&env);
 	  call_successful_so_far = boolean__false;
-	  printf("\nf2_xmlrpc.c: error making call.\n");
+	  status("f2_xmlrpc.c: error making call.");
 	  {
 	    f2ptr bug_frame = f2__frame__new(cause, nil);
 	    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),     new__symbol(cause, "xmlrpc_error_making_call"));

@@ -20,35 +20,24 @@
 
 'agency'
 
-[deframe          agency [frame] [name resources_frame trace_graph]]
+[deframe          agency [frame] [name resource_frame trace_graph]]
 [deftypeconstruct agency [name]
-  [set this name            name]
-  [set this resources_frame [frame]]
-  [set this trace_graph     [new graph]]
+  [set this name           name]
+  [set this resource_frame [frame]]
+  [set this trace_graph    [new graph]]
   this]
 
+[deftypefunk agency execute add_resource [resource]
+  [have [get this resource_frame] add [get resource name] resource]]
+
 [deftypefunk agency get resource [name]
-  [let [[resources_frame [get this resources_frame]]]
-    [have resources_frame lookup name]]]
+  [have [get this resource_frame] lookup name]]
 
 [deftypefunk agency execute call [name :rest args]
   [let [[resource [get this resource name]]]
     [have-apply resource call `[,cause-outside_resource @args]]]]
 
-[defmetro defresource [agent agency_name name args :rest body]
-  [print `[defresource ,agency_name ,name ,args]]
-  `[let [[agent ,agent]]
-     [let [[agency [get agent agency [quote ,agency_name]]]]
-       [let [[resources_frame [get agency resources_frame]]
-	     [trace_graph     [get agency trace_graph]]]
-	 [define-funk call [metro [name :rest args]
-				  `[let [[resource [get agency resource [quote ,name]]]]
-				     [have-apply resource call `[,this-resource ,resource ,@args]]]]]
-	 [let [[resource [resource ,name [caller @args]
-				    [have trace_graph add_edge `called [get caller name] [get this-resource name]]
-				    @body]]]
-	   [cause-define-funk call nil]
-	   [have resources_frame add [quote ,name] resource]
-	   nil]]]]]
-
+[deftypefunk agency execute activate [name :rest args]
+  [let [[resource [get this resource name]]]
+    [have-apply resource activate `[,cause-outside_resource @args]]]]
 

@@ -26,14 +26,14 @@
    :sources ['propogator_cell.fu2']]
 
 [defpackage mental_layer
-  :packages [resource propogator]
+  :packages [resource]
    :sources ['mental_layer.fu2']]
 
-[defpackage agent
+[defpackage mind
   :packages [mental_layer]
-   :sources ['agent.fu2']]
+   :sources ['mind.fu2']]
 
 [defpackage isis_world-test
-  :packages [agent isis_world]
+  :packages [mind isis_world]
    :sources ['isis_world-test.fu2']]
 

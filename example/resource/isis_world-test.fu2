@@ -24,10 +24,9 @@
   [set this world nil]
   this]
 
-
 [deframe          isis_agent [frame] [name mind body]]
 [deftypeconstruct isis_agent [name]
-  [let [[mind [new agent]]
+  [let [[mind [new mind]]
 	[body [new isis_world_body name]]]
     [set this name name]
     [set this mind mind]
@@ -47,15 +46,37 @@
       [have mind add_layer self_reflective_layer]
       [have mind add_layer self_conscious_layer]
       
-      [have reactive_layer        add_agency [new agency `physical]]
-      [have deliberative_layer    add_agency [new agency `physical]]
-      [have reflective_layer      add_agency [new agency `physical]]
-      [have self_reflective_layer add_agency [new agency `physical]]
-      [have self_conscious_layer  add_agency [new agency `physical]]
-      
-      
-      
-      ]]
+      [let [[reactive-sensory_agency                 [new agency `sensory]]
+	    [reactive-physical_agency                [new agency `physical]]
+	    [deliberative-physical_agency            [new agency `physical]]
+	    [reflective-physical_agency              [new agency `physical]]
+	    [self_reflective-physical_agency         [new agency `physical]]
+	    [self_conscious-imprimer_learning_agency [new agency `imprimer_learning]]]
+	
+	[have reactive_layer        add_agency reactive-sensory_agency]
+	[have reactive_layer        add_agency reactive-physical_agency]
+	[have deliberative_layer    add_agency deliberative-physical_agency]
+	[have reflective_layer      add_agency reflective-physical_agency]
+	[have self_reflective_layer add_agency self_reflective-physical_agency]
+	[have self_conscious_layer  add_agency self_conscious-imprimer_learning_agency]
+	
+	[have reactive-sensory_agency add_resource
+	      [resource sense_imprimer_scold [imprimer]
+			[if [get [get imprimer speech] is-scold]
+			    [prog [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', said something that sounds like a scold!']
+				  [let [[imprimer_focus [mind-call reactive sensory discover_person_focus imprimer]]]
+				    [mind-activate mind self_conscious imprimer_learning react_to_imprimer_scold
+						   imprimer imprimer_focus]]]
+			  [have this think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']
+			]]
+	
+	[have self_conscious-physical_agency add_resource
+	      [resource react_to_imprimer_scold [imprimer scold]
+			[have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', has scolded something about ' [get scold focus] '!  How should I react?']
+			]]
+	
+	
+	]]]
   this]
 
 [deftypefunk isis_agent get world []
@@ -64,6 +85,9 @@
 [deftypefunk isis_agent set world [world]
   [set [get this body] world world]]
 
+[deftypefunk isis_agent execute think_to_self [:rest expressions]
+  [format stdout '\nAgent ' [get this name] ' Thinks: ']
+  [apply &format `[,stdout @expressions]]]
 
 [deframe          isis_world [frame] [client agent_frame]]
 [deftypeconstruct isis_world [client]
@@ -77,7 +101,8 @@
     [prog [set agent world this]
 	  [have [get this agent_frame] add [get agent name] agent]]]]
 
-
+[deftypefunk isis_world get agent_names []
+  [get [get this agent_frame] slots]]
 
 [defunk ralph_agent-new []
   [let [[this [new isis_agent `Ralph]]]
@@ -90,14 +115,16 @@
 [defunk david_agent-new []
   [new isis_agent `David]]
 
-
-[defunk isis_world-test []
+[defunk isis_world-initialize []
   [let [[client [new isis_world_client '18.85.58.18']]]
     [let [[isis_world [new isis_world client]]]
       [have isis_world add_agent [ralph_agent-new]]
       [have isis_world add_agent [lauren_agent-new]]
       [have isis_world add_agent [david_agent-new]]
       
-      isis_world
-      ]]]
+      [globalize isis_world isis_world]
+      
+      [format stdout '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
+      
+      'success']]]
 

@@ -265,7 +265,7 @@ def_pcfunk1(hash__equals_hash_value, this, return f2__hash__equals_hash_value(th
 f2ptr raw__hash__as__frame(f2ptr cause, f2ptr this) {
   f2ptr frame = f2__frame__new(cause, nil);
   hash__iteration(cause, this, key, value,
-		  f2__frame__add(cause, this, key, value);
+		  f2__frame__add_var_value(cause, this, key, value);
 		  );
   return frame;
 }

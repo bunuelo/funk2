@@ -29,6 +29,9 @@
   :packages [resource]
    :sources ['mental_layer.fu2']]
 
+[defpackage self_model
+  :sources ['self_model.fu2']]
+
 [defpackage mind
   :packages [mental_layer self_model]
    :sources ['mind.fu2']]

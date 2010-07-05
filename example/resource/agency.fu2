@@ -20,11 +20,13 @@
 
 'agency'
 
-[deframe          agency [frame] [name resource_frame trace_graph]]
+[deframe          agency [frame] [name resource_frame knowledge trace_graph]]
 [deftypeconstruct agency [name]
   [set this name           name]
   [set this resource_frame [frame]]
+  [set this knowledge      [new propogator_resource `knowledge]]
   [set this trace_graph    [new graph]]
+  [have this add_resource [get [get this knowledge] resource]]
   this]
 
 [deftypefunk agency execute add_resource [resource]

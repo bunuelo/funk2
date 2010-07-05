@@ -44,7 +44,8 @@
     
     [mind-create_agency mind reactive        sensory]
     [mind-create_agency mind reactive        physical]
-    [mind-create_agency mind deliberative    physical]
+    [mind-create_agency mind deliberative    reality]
+    [mind-create_agency mind deliberative    imagination]
     [mind-create_agency mind reflective      physical]
     [mind-create_agency mind self_reflective physical]
     [mind-create_agency mind self_conscious  imprimer_learning]
@@ -56,6 +57,14 @@
 				      [mind-activate mind self_conscious imprimer_learning react_to_imprimer_scold
 						     imprimer imprimer_focus]]]
 			    [have this think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
+			  ]
+    
+    [mind-create_resource mind deliberative reality interpret_senses_into_current_story []
+			  'call reactive sensory knowledge propogator.'
+			  ]
+    
+    [mind-create_resource mind deliberative reality current_story []
+			  
 			  ]
     
     [mind-create_resource mind self_conscious imprimer_learning react_to_imprimer_scold [imprimer scold]

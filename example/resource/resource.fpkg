@@ -30,7 +30,7 @@
    :sources ['mental_layer.fu2']]
 
 [defpackage mind
-  :packages [mental_layer]
+  :packages [mental_layer self_model]
    :sources ['mind.fu2']]
 
 [defpackage isis_world-test

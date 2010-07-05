@@ -160,6 +160,17 @@ f2ptr f2__frame__type_var__slot_names(f2ptr cause, f2ptr this, f2ptr type) {
 }
 def_pcfunk2(frame__type_var__slot_names, this, type, return f2__frame__type_var__slot_names(this_cause, this, type));
 
+f2ptr f2__frame__type_var__slot_values(f2ptr cause, f2ptr this, f2ptr type) {
+  f2ptr retval = nil;
+  f2ptr type__keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, f2frame__type_ptypehash(this, cause), type);
+  if (type__keyvalue_pair) {
+    f2ptr type__ptypehash = f2cons__cdr(type__keyvalue_pair, cause);
+    retval = f2__ptypehash__slot_values(cause, type__ptypehash);
+  }
+  return retval;
+}
+def_pcfunk2(frame__type_var__slot_values, this, type, return f2__frame__type_var__slot_values(this_cause, this, type));
+
 f2ptr f2__frame__var_ptypehash(f2ptr cause, f2ptr this) {return f2__ptypehash__lookup(cause, f2frame__type_ptypehash(this, cause), __funk2.primobject__frame.variable__symbol);}
 
 f2ptr f2__frame__add_var_value(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {return f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, var, value);}
@@ -371,6 +382,7 @@ f2ptr f2frame__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "type_var_value";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.lookup_type_var_value__funk);}
   {char* slot_name = "type_var_value";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var_value__set__funk);}
   {char* slot_name = "type_var-slot_names";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var__slot_names__funk);}
+  {char* slot_name = "type_var-slot_values";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var__slot_values__funk);}
   {char* slot_name = "copy";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.copy__funk);}
   {char* slot_name = "copy_slots";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.copy_slots__funk);}
   {char* slot_name = "check_has_type_slot";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.check_has_type_slot__funk);}
@@ -423,6 +435,8 @@ void f2__primobject_frame__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__5_arg(frame__type_var_value__set, this, type, var, value, not_defined_value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var_value__set__funk = never_gc(cfunk);}
   {char* symbol_str = "type_var-slot_names"; __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var__slot_names__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__type_var__slot_names, this, type, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var__slot_names__funk = never_gc(cfunk);}
+  {char* symbol_str = "type_var-slot_values"; __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var__slot_values__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__type_var__slot_values, this, type, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var__slot_values__funk = never_gc(cfunk);}
   {char* symbol_str = "copy"; __funk2.globalenv.object_type.primobject.primobject_type_frame.copy__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__copy, this, source, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.copy__funk = never_gc(cfunk);}
   {char* symbol_str = "copy_slots"; __funk2.globalenv.object_type.primobject.primobject_type_frame.copy_slots__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

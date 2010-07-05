@@ -24,6 +24,8 @@
   [set this world nil]
   this]
 
+
+
 [deframe          isis_agent [frame] [name mind body]]
 [deftypeconstruct isis_agent [name]
   [let [[mind [new mind]]
@@ -60,49 +62,7 @@
 			  [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', has scolded something about ' [get scold focus] '!  How should I react?']
 			  ]
     
-    `[let [[reactive_layer        [new mental_layer `reactive]]
-	  [deliberative_layer    [new mental_layer `deliberative]]
-	  [reflective_layer      [new mental_layer `reflective]]
-	  [self_reflective_layer [new mental_layer `self_reflective]]
-	  [self_conscious_layer  [new mental_layer `self_conscious]]]
-      
-      [have mind add_layer reactive_layer]
-      [have mind add_layer deliberative_layer]
-      [have mind add_layer reflective_layer]
-      [have mind add_layer self_reflective_layer]
-      [have mind add_layer self_conscious_layer]
-      
-      [let [[reactive-sensory_agency                 [new agency `sensory]]
-	    [reactive-physical_agency                [new agency `physical]]
-	    [deliberative-physical_agency            [new agency `physical]]
-	    [reflective-physical_agency              [new agency `physical]]
-	    [self_reflective-physical_agency         [new agency `physical]]
-	    [self_conscious-imprimer_learning_agency [new agency `imprimer_learning]]]
-	
-	[have reactive_layer        add_agency reactive-sensory_agency]
-	[have reactive_layer        add_agency reactive-physical_agency]
-	[have deliberative_layer    add_agency deliberative-physical_agency]
-	[have reflective_layer      add_agency reflective-physical_agency]
-	[have self_reflective_layer add_agency self_reflective-physical_agency]
-	[have self_conscious_layer  add_agency self_conscious-imprimer_learning_agency]
-	
-	[have reactive-sensory_agency add_resource
-	      [resource sense_imprimer_scold [imprimer]
-			[if [get [get imprimer speech] is-scold]
-			    [prog [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', said something that sounds like a scold!']
-				  [let [[imprimer_focus [mind-call reactive sensory discover_person_focus imprimer]]]
-				    [mind-activate mind self_conscious imprimer_learning react_to_imprimer_scold
-						   imprimer imprimer_focus]]]
-			  [have this think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
-			]]
-	
-	[have self_conscious-imprimer_learning_agency add_resource
-	      [resource react_to_imprimer_scold [imprimer scold]
-			[have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', has scolded something about ' [get scold focus] '!  How should I react?']
-			]]
-	
-	
-	]]]
+    ]
   this]
 
 [deftypefunk isis_agent get world []

@@ -108,6 +108,7 @@
 			  [if [get [get imprimer speech] is-scold]
 			      [prog [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', said something that sounds like a scold!']
 				    [cause-define cause-time_step [get body time_step]]
+				    [cause-define cause-name      `[reactive sensory sense_imprimer_scold]]
 				    [let [[imprimer_focus [mind-call reactive sensory discover_person_focus imprimer]]]
 				      [mind-activate mind self_conscious imprimer_learning react_to_imprimer_scold
 						     imprimer imprimer_focus]]]
@@ -116,6 +117,7 @@
     
     [mind-create_resource mind deliberative reality interpret_senses_into_current_story [activating]
 			  [cause-define cause-time_step [get body time_step]]
+			  [cause-define cause-name      `[deliberative reality interpret_senses_into_current_story]]
 			  [mind-call reactive sensory sense_current_story]
 			  'call reactive sensory knowledge propogator.'
 			  ]
@@ -229,6 +231,7 @@
       
       [cause-define cause-outside_resource [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
       [cause-define cause-time_step        [get isis_world time_step]]
+      [cause-define cause-name             `isis_world-initialize]
       
       [mind-activate [get isis_world agent_mind `Ralph]  reactive sensory continuous_sensing]
       [mind-activate [get isis_world agent_mind `Lauren] reactive sensory continuous_sensing]

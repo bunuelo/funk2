@@ -157,6 +157,12 @@
 [deftypefunk propogator_resource get cell [name]
   [get [get this cell name] value]]
 
+[deftypefunk propogator_resource execute add_cell [cell]
+  [have [get this graph] add_cell cell]]
+
+[deftypefunk propogator_resource execute add_new_cell [name value]
+  [have [get this graph] add_new_cell name value]]
+
 [defunk propogator-test []
   [let [[p [new propogator_resource `Newtonian-Physics]]]
     [let [[F-cell [new propogator_cell `F nil]]

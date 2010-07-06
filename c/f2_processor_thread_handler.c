@@ -57,7 +57,7 @@ funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
   while (iter) {
     if (iter->processor_thread.pthread == tid) {
-      //funk2_processor_mutex__unlock(&(this->access_mutex));
+      funk2_processor_mutex__unlock(&(this->access_mutex));
       return &(iter->processor_thread);
     }
     iter = iter->next;

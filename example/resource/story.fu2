@@ -70,6 +70,9 @@
 [deftypefunk story get events []
   [get [get this event_redblacktree] leaves]]
 
+[deftypefunk story get characters []
+  [get [get this character_frame] values]]
+
 [deftypefunk story get as-list []
   [append [apply &append [mapcar [funk [character]
 				       [get character as-list]]

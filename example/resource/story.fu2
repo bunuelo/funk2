@@ -74,9 +74,12 @@
   [get [get this character_frame] values]]
 
 [deftypefunk story get as-list []
-  [append [apply &append [mapcar [funk [character]
-				       [get character as-list]]
-				 [get this characters]]]
+  [append [let [[seq [mapcar [funk [character]
+				   [get character as-list]]
+			     [get this characters]]]]
+	    [if seq
+		[apply &append seq]
+	      nil]]
 	  [mapcar [funk [event]
 			[get event as-list]]
 		  [get this events]]]]

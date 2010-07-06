@@ -47,6 +47,8 @@
   [have [get this event_redblacktree] insert event]]
 
 [deftypefunk story execute add_new_event [time character_name action_name prepositional_frame]
+  [if [null [get this character character_name]]
+      [have this add_new_character character_name]]
   [have this add_event [new story_event time character_name action_name prepositional_frame]]]
 
 [defmetro story-create_event [story time character_name action_name :rest prepositional_frame_slots_and_values]

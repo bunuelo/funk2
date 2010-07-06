@@ -92,7 +92,7 @@
 											      says           nil]
 										Lauren [frame distance       15.0
 											      recent_actions nil
-											      says           'Bad Ralph!']
+											      says           [list 'Bad Ralph!']]
 										David  [frame distance       15.0
 											      recent_actions nil
 											      says           nil]]]

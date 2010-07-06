@@ -105,7 +105,9 @@
     [if [get cell_set contains cell]
 	nil
       [prog [have cell_set add cell]
+	    [print 'debug 1']
 	    [have [get this cell_name_hash] add [get cell name] cell]
+	    [print 'debug 2']
 	    t]]]]
 
 [deftypefunk propogator_graph get cell [name]

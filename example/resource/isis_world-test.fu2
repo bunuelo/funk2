@@ -55,7 +55,7 @@
     [mind-create_agency mind self_reflective physical]
     [mind-create_agency mind self_conscious  imprimer_learning]
     
-    [have [mind-knowledge mind reactive sensory] add_cell `sense nil]
+    [have [mind-knowledge mind reactive sensory] add_new_cell `sense nil]
     
     [mind-create_resource mind reactive sensory continuous_sensing []
 			  [let [[last_time_step nil]]

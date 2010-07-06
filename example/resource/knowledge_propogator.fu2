@@ -33,7 +33,7 @@
 [deftypefunk knowledge_propogator execute call_propogate []
   [have [get this propogator] call]]
 
-[deftypefunk knowledge_propogator execute add_cell [cell_identity cell_value]
+[deftypefunk knowledge_propogator execute add_new_cell [cell_identity cell_value]
   [let [[cell_identity_hash [get this cell_identity_hash]]]
     [have cell_identity_hash add cell_identity]
     [let [[cell_name [have cell_identity_hash lookup cell_identity]]]

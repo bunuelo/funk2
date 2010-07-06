@@ -25,5 +25,5 @@
   this]
 
 [deftypefunk character get as-list []
-  `[The character ,[get this name] is part of this story.]]
+  `[,[get this name] is part of this story.]]
 

@@ -174,7 +174,7 @@
 	      [have agent destroy]]
 	[get this agents]]]
 
-[deftypefunk isis_agent execute format [:rest expressions]
+[deftypefunk isis_world execute format [:rest expressions]
   [let [[format_mutex [get this format_mutex]]]
     [have format_mutex lock]
     [apply &format [cons stdout expressions]]

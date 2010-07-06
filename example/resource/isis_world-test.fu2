@@ -164,8 +164,11 @@
   [isis-call [get this client] sense]]
 
 [deftypefunk isis_world execute step_simulation []
-  [isis-call client meta_step seconds 0.05]
+  [isis-call [get this client] meta_step seconds 0.05]
   [set this time_step [+ 1 [get this time_step]]]]
+
+[deftypefunk isis_world execute pause_simulation []
+  [isis-call [get this client] meta_pause]]
 
 [deftypefunk isis_world execute destroy []
   [mapc [funk [agent]
@@ -193,6 +196,8 @@
       [have isis_world add_agent [david_agent-new]]
       
       [globalize isis_world isis_world]
+      
+      [have isis_world pause_simulation]
       
       [format stdout '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
       

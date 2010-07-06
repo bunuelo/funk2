@@ -50,7 +50,7 @@
   [let [[cell_value [new propogator_cell_value value [time]]]]
     [let [[this-value [get this value]]]
       [if [and this-value
-	       [== this-value value]]
+	       [eq this-value value]]
 	  nil
 	[if [and this-value
 		 [!= this-value value]]

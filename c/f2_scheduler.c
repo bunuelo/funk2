@@ -296,7 +296,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		  if (last_executed_time) {
 		    f2ptr nanoseconds_since_1970 = f2time__nanoseconds_since_1970(last_executed_time, cause);
 		    u64 nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
-		    if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > 1 * nanoseconds_per_second) {
+		    if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > 10 * nanoseconds_per_second) {
 		      // anytime a fiber is removed from processor active fibers, it should be removed from it's cause so that it can be garbage collected.
 		      f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
 		      if (fiber_cause) {

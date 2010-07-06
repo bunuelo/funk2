@@ -160,8 +160,9 @@ ptr funk2_memory__f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
 }
 
 void debug__found_unused_memory_block(funk2_memblock_t* block) {
-  status("debug: found unused memory block.");
-  printf("debug: found unused memory block.");
+  status(  "debug: found unused memory block.");
+  printf("\ndebug: found unused memory block.");
+  block->used = 1;
 }
 
 ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {

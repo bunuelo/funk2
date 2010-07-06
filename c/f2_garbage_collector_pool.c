@@ -391,6 +391,9 @@ void funk2_garbage_collector_pool__know_of_used_exp_self_no_more_references(funk
     if (block->gc.tricolor == funk2_tricolor__black) {
       funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_tricolor__grey);
     }
+  } else {
+    status(  "warning: tried to free block with references.");
+    printf("\nwarning: tried to free block with references.");
   }
 }
 

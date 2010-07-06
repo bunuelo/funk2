@@ -1210,7 +1210,9 @@ f2ptr f2__demetropolize__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr env
   
   f2ptr did_something = nil;
   f2ptr args = f2cons__cdr(exp, cause);
-  if (!args) {return f2cons__new(cause, nil, exp);}
+  if (!args) {
+    return f2cons__new(cause, nil, exp);
+  }
   f2ptr demetro_exp  = f2cons__new(cause, f2cons__car(exp, cause), nil);
   f2ptr iter         = args;
   f2ptr demetro_iter = demetro_exp;

@@ -38,7 +38,7 @@
   [repl]]
 
 [defunk boot []
-  [shelter [load [pathname-concat [getenv 'HOME'] '.funk2rc']]]
+  [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2rc']]]
   [post_userfile_init_boot]]
 
 [defunk boot-add_user_command [user_command]

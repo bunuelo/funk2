@@ -38,11 +38,21 @@ void raw__exp__increment_reference_count(f2ptr this) {
   }
 }
 
+void debug__contradictory_atomic_dec_and_test() {
+  printf("\ncontradictory atomic dec and test.");
+  status(  "contradictory atomic dec and test.");
+}
+
 boolean_t raw__exp__decrement_reference_count(f2ptr this) {
   boolean_t no_more_references = boolean__false;
   if (this) {
     funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(this));
     no_more_references      = atomic_dec_and_test(&(block->reference_count));
+    if (no_more_references) {
+      if (atomic_read(&(block->reference_count)) != 0) { // double check...
+	debug__contradictory_atomic_dec_and_test();
+      }
+    }
   }
   return no_more_references;
 }

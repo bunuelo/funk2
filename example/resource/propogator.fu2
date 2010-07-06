@@ -53,7 +53,7 @@
 	       [eq this-value value]]
 	  nil
 	[if [and this-value
-		 [!= this-value value]]
+		 [not [eq this-value value]]]
 	    [set this value [error bug_type `propogator_cell_encountered_contradiction old_value this-value new_value value]]
 	  [prog [set this cell_value cell_value]
 		t]]]]]]

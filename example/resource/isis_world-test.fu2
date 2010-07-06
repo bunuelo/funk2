@@ -18,10 +18,11 @@
  rights to redistribute these changes.'
 
 
-[deframe          isis_world_body [frame] [name world]]
+[deframe          isis_world_body [frame] [name world says]]
 [deftypeconstruct isis_world_body [name]
   [set this name  name]
   [set this world nil]
+  [set this says  nil]
   this]
 
 [deftypefunk isis_world_body get sense []
@@ -29,6 +30,7 @@
 
 [deftypefunk isis_world_body get time_step []
   [get [get this world] time_step]]
+
 
 
 [deframe          isis_agent [frame] [name mind body]]
@@ -85,18 +87,7 @@
 			      [let [[time_step [get body time_step]]]
 				[if [eq last_time_step time_step]
 				    [millisleep 100]
-				  [let [[sense [let [[sense [get body sense]]]
-						 'This is a hack to make up for the fact that the simulation does not return agent information yet.'
-						 [have sense add `agents [frame Ralph  [frame distance       15.0
-											      recent_actions nil
-											      says           nil]
-										Lauren [frame distance       15.0
-											      recent_actions nil
-											      says           [list 'Bad Ralph!']]
-										David  [frame distance       15.0
-											      recent_actions nil
-											      says           nil]]]
-						 sense]]]
+				  [let [[sense [get body sense]]]
 				    [have this think_to_self 'My body senses the world.']
 				    [set [mind-knowledge mind reactive sensory] value `sense `[time_step ,time_step] sense]
 				    [= last_time_step time_step]]]]
@@ -160,11 +151,29 @@
 [deftypefunk isis_world get agent_names []
   [get [get this agent_frame] slots]]
 
+[deftypefunk isis_world get agent [agent_name]
+  [have [get this agent_frame] lookup agent_name]]
+
 [deftypefunk isis_world get agent_mind [agent_name]
-  [get [have [get this agent_frame] lookup agent_name] mind]]
+  [get [get this agent agent_name] mind]]
+
+[deftypefunk isis_world get agent_body [agent_name]
+  [get [get this agent agent_name] body]]
+
+[deftypefunk isis_world get agent_says [agent_name]
+  [get [get this agent_body agent_name] says]]
 
 [deftypefunk isis_world get agent_sense [agent_name]
-  [isis-call [get this client] sense]]
+  [let [[sense [isis-call [get this client] sense]]]
+    [let [[agent_frame [frame]]]
+      [mapc [funk [sense_agent_name]
+		  [if [not [eq agent_name sense_agent_name]]
+		      [have agent_frame add sense_agent_name [frame distance       15.0
+								    recent_actions nil
+								    says           [get this agent_says sense_agent_name]]]]]
+	    [get this agent_names]]
+      [have sense add `agents agent_frame]]
+    sense]]
 
 [deftypefunk isis_world execute step_simulation []
   [isis-call [get this client] meta_step seconds 0.05]
@@ -191,7 +200,9 @@
     this]]
 
 [defunk lauren_agent-new []
-  [new isis_agent `Lauren]]
+  [let [[this [new isis_agent `Lauren]]]
+    [set [get this body] says [list 'Bad Ralph!']]
+    this]]
 
 [defunk david_agent-new []
   [new isis_agent `David]]

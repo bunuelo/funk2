@@ -51,6 +51,7 @@
     
     [mind-create_agency mind reactive        sensory]
     [mind-create_agency mind reactive        physical]
+    [mind-create_agency mind reactive        speech]
     [mind-create_agency mind deliberative    reality]
     [mind-create_agency mind deliberative    imagination]
     [mind-create_agency mind reflective      physical]
@@ -74,8 +75,10 @@
 					 [have story add_new_character agent_name]
 					 [let [[says [have agent lookup `says]]]
 					   [if says
-					       [prog [have this think_to_self 'While propogating sense->story, I can hear ' agent_name ' saying, "' says '"']
-						     [story-create_event story [get body time_step] agent_name `says says]]]]]]
+					       [mapc [funk [say]
+							   [have this think_to_self 'While propogating sense->story, I can hear ' agent_name ' saying, "' say '"']
+							   [story-create_event story [get body time_step] agent_name `says say]]
+						     says]]]]]
 				 agent_names]]
 			 story]]]]
       ]
@@ -92,6 +95,13 @@
 				    [set [mind-knowledge mind reactive sensory] value `sense `[time_step ,time_step] sense]
 				    [= last_time_step time_step]]]]
 			      ]]]
+    
+    [mind-create_resource mind reactive speech say [string]
+			  [set body says [list string]]
+			  [let [[start_time_step [get body time_step]]]
+			    [while [eq start_time_step [get body time_step]]
+			      [millisleep 100]]]
+			  [set body says nil]]
     
     [mind-create_resource mind reactive sensory sense_imprimer_scold [imprimer]
 			  [if [get [get imprimer speech] is-scold]
@@ -201,12 +211,10 @@
 
 [defunk lauren_agent-new []
   [let [[this [new isis_agent `Lauren]]]
-    [set [get this body] says [list 'Bad Ralph!']]
     this]]
 
 [defunk david_agent-new []
   [let [[this [new isis_agent `David]]]
-    [set [get this body] says [list 'Hello Ralph.']]
     this]]
 
 [defunk isis_world-initialize []
@@ -226,6 +234,9 @@
       [mind-activate [get isis_world agent_mind `Ralph]  reactive sensory continuous_sensing]
       [mind-activate [get isis_world agent_mind `Lauren] reactive sensory continuous_sensing]
       [mind-activate [get isis_world agent_mind `David]  reactive sensory continuous_sensing]
+      
+      [mind-activate [get isis_world agent_mind `Lauren] reactive speech say 'Bad Ralph!']
+      [mind-activate [get isis_world agent_mind `David]  reactive speech say 'Good Ralph!']
       
       [format stdout '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
       

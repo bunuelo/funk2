@@ -131,8 +131,7 @@
   [set [get this body] world world]]
 
 [deftypefunk isis_agent execute think_to_self [:rest expressions]
-  [format stdout '\nAgent ' [get this name] ' Thinks: ']
-  [apply &format `[,stdout @expressions]]]
+  [have-apply [get this world] format `['\nAgent ' ,[get this name] ' Thinks: ' @expressions]]]
 
 [deftypefunk isis_agent execute destroy []
   [have [get this mind] destroy]]
@@ -174,6 +173,12 @@
   [mapc [funk [agent]
 	      [have agent destroy]]
 	[get this agents]]]
+
+[deftypefunk isis_agent execute format [:rest expressions]
+  [let [[format_mutex [get this format_mutex]]]
+    [have format_mutex lock]
+    [apply &format [cons stdout expressions]]
+    [have format_mutex unlock]]]
 
 
 [defunk ralph_agent-new []

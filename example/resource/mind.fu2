@@ -86,7 +86,7 @@
   [get [get this agency layer_name agency_name] knowledge]]
 
 [defmetro mind-knowledge [mind layer_name agency_name]
-  `[get ,mind knowledge [quote ,layername] [quote ,agency_name]]]
+  `[get ,mind knowledge [quote ,layer_name] [quote ,agency_name]]]
 
 
 [deftypefunk mind get self_model []

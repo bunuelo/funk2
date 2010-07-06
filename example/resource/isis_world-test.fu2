@@ -60,7 +60,7 @@
     [mind-create_resource mind reactive sensory continuous_sensing []
 			  [let [[last_time_step nil]]
 			    [while t
-			      [let [[time_step [get world time_step]]]
+			      [let [[time_step [get body time_step]]]
 				[if [== last_time_step time_step]
 				    [millisleep 100]
 				  [prog [set [mind-knowledge mind reactive sensory] cell_value `sense [get body sense]]

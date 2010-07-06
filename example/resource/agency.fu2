@@ -37,6 +37,7 @@
 
 [deftypefunk agency execute call [name :rest args]
   [have [get this story] add_new_event cause-time_step cause-name `calls name]
+  [format stdout '\n\ncreating this story in agency: ' [get this story] '\n\n']
   [let [[resource [get this resource name]]]
     [have-apply resource call `[,cause-outside_resource @args]]]]
 

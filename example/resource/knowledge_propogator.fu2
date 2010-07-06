@@ -46,5 +46,8 @@
 [deftypefunk knowledge_propogator get cell_value [cell_identity]
   [get [get this cell cell_identity] value]]
 
+[deftypefunk knowledge_propogator set cell_value [cell_identity cell_value]
+  [set [get this cell cell_identity] value cell_value]]
+
 
   

@@ -27,6 +27,9 @@
 [deftypefunk isis_world_body get sense []
   [get world agent_sense [get this name]]]
 
+[deftypefunk isis_world_body get time_step []
+  [get world time_step]]
+
 
 [deframe          isis_agent [frame] [name mind body]]
 [deftypeconstruct isis_agent [name]
@@ -52,6 +55,19 @@
     [mind-create_agency mind self_reflective physical]
     [mind-create_agency mind self_conscious  imprimer_learning]
     
+    [have [mind-knowledge reactive sensory] add_cell `sense nil]
+    
+    [mind-create_resource mind reactive sensory continuous_sensing []
+			  [let [[last_time_step nil]]
+			    [while t
+			      [let [[time_step [get world time_step]]]
+				[if [== last_time_step time_step]
+				    [millisleep 100]
+				  [prog [set [mind-knowledge reactive sensory] cell_value `sense [get body sense]]
+					[have this think_to_self 'My body senses the world.']
+					[= last_time_step time_step]]]]
+			      ]]]
+    
     [mind-create_resource mind reactive sensory sense_imprimer_scold [imprimer]
 			  [if [get [get imprimer speech] is-scold]
 			      [prog [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', said something that sounds like a scold!']
@@ -63,7 +79,7 @@
     
     [mind-create_resource mind reactive sensory sense_current_story []
 			  [let [[knowledge [mind-knowledge reactive sensory]]
-				[time      [time]]
+				[time      [get body time_step]]
 				[sense     [have body sense]]]
 			    'Agents in view cannot be sensed yet, so we make up some data for now.'
 			    [have sense add `agents [frame Ralph  [frame distance       15.0
@@ -118,10 +134,11 @@
   [format stdout '\nAgent ' [get this name] ' Thinks: ']
   [apply &format `[,stdout @expressions]]]
 
-[deframe          isis_world [frame] [client agent_frame]]
+[deframe          isis_world [frame] [client agent_frame time_step]]
 [deftypeconstruct isis_world [client]
   [set this client      client]
   [set this agent_frame [frame]]
+  [set this time_step   0]
   this]
 
 [deftypefunk isis_world execute add_agent [agent]
@@ -138,6 +155,10 @@
 
 [deftypefunk isis_world get agent_sense [agent_name]
   [isis-call [get this client] sense]]
+
+[deftypefunk isis_world execute step_simulation []
+  [isis-call client meta_step seconds 0.05]
+  [set this time_step [+ 1 [get this time_step]]]]
 
 
 [defunk ralph_agent-new []

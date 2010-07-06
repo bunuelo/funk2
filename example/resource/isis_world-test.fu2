@@ -199,6 +199,12 @@
       
       [have isis_world pause_simulation]
       
+      [cause-define cause-outside_resource [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
+      
+      [mind-activate [get isis_world agent_mind `Ralph]  reactive sensory continuous_sensing]
+      [mind-activate [get isis_world agent_mind `Lauren] reactive sensory continuous_sensing]
+      [mind-activate [get isis_world agent_mind `David]  reactive sensory continuous_sensing]
+      
       [format stdout '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
       
       'success']]]

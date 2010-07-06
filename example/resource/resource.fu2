@@ -59,6 +59,8 @@
 					  ]
 					[format stdout '\nresource status: done.  (name = ' [get this name] ').\n']]]
 				nil]]
+  'There is a bug in Funk that drops dead fibers for some reason.  This might help:'
+  [set [get this fiber] keep_undead t]
   this]
 
 [defmetro resource [name args :rest body]

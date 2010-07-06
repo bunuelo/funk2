@@ -55,7 +55,7 @@
     [mind-create_agency mind self_reflective physical]
     [mind-create_agency mind self_conscious  imprimer_learning]
     
-    [have [mind-knowledge reactive sensory] add_cell `sense nil]
+    [have [mind-knowledge mind reactive sensory] add_cell `sense nil]
     
     [mind-create_resource mind reactive sensory continuous_sensing []
 			  [let [[last_time_step nil]]
@@ -63,7 +63,7 @@
 			      [let [[time_step [get world time_step]]]
 				[if [== last_time_step time_step]
 				    [millisleep 100]
-				  [prog [set [mind-knowledge reactive sensory] cell_value `sense [get body sense]]
+				  [prog [set [mind-knowledge mind reactive sensory] cell_value `sense [get body sense]]
 					[have this think_to_self 'My body senses the world.']
 					[= last_time_step time_step]]]]
 			      ]]]
@@ -78,7 +78,7 @@
 			  ]
     
     [mind-create_resource mind reactive sensory sense_current_story []
-			  [let [[knowledge [mind-knowledge reactive sensory]]
+			  [let [[knowledge [mind-knowledge mind reactive sensory]]
 				[time      [get body time_step]]
 				[sense     [have body sense]]]
 			    'Agents in view cannot be sensed yet, so we make up some data for now.'

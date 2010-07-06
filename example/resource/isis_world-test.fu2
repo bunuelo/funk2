@@ -205,7 +205,9 @@
     this]]
 
 [defunk david_agent-new []
-  [new isis_agent `David]]
+  [let [[this [new isis_agent `David]]]
+    [set [get this body] says [list 'Hello Ralph.']]
+    this]]
 
 [defunk isis_world-initialize []
   [shelter [have isis_world destroy]]

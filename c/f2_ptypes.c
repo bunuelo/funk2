@@ -34,11 +34,7 @@ void print_mutex_error(int retval) {
 void raw__exp__increment_reference_count(f2ptr this) {
   if (this) {
     funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(this));
-    //atomic_inc(&(block->reference_count));
-    boolean_t was_zero_before_increment = atomic_test_and_inc(&(block->reference_count));
-    if (was_zero_before_increment) {
-      error(nil, "was zero before increment.");
-    }
+    atomic_inc(&(block->reference_count));
   }
 }
 

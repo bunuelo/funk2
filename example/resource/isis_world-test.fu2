@@ -137,11 +137,12 @@
   [have [get this mind] destroy]]
 
 
-[deframe          isis_world [frame] [client agent_frame time_step]]
+[deframe          isis_world [frame] [client agent_frame time_step format_mutex]]
 [deftypeconstruct isis_world [client]
-  [set this client      client]
-  [set this agent_frame [frame]]
-  [set this time_step   0]
+  [set this client       client]
+  [set this agent_frame  [frame]]
+  [set this time_step    0]
+  [set this format_mutex [new mutex]]
   this]
 
 [deftypefunk isis_world execute add_agent [agent]

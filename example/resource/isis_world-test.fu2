@@ -67,7 +67,7 @@
 				[have this think_to_self 'Continuous sensing debug 2.']
 				[if [eq last_time_step time_step]
 				    [prog [have this think_to_self 'Time has not passed (time_step is still ' time_step '), so waiting to sense.']
-					  [millisleep 100]]
+					  [millisleep 1000]]
 				  [prog [set [mind-knowledge mind reactive sensory] value `sense `[time_step ,time_step] [get body sense]]
 					[have this think_to_self 'My body senses the world.']
 					[= last_time_step time_step]]]]

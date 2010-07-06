@@ -58,6 +58,7 @@
     [have [mind-knowledge mind reactive sensory] add_new_cell `sense]
     
     [mind-create_resource mind reactive sensory continuous_sensing []
+			  [have this think_to_self 'Continuous sensing is starting.']
 			  [let [[last_time_step nil]]
 			    [while t
 			      [let [[time_step [get body time_step]]]

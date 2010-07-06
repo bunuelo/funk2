@@ -62,7 +62,7 @@
 								    `[frame]]]]
 
 [deftypefunk story get events []
-  [get [get this event_redblacktree] elements]]
+  [get [get this event_redblacktree] leaves]]
 
 [deftypefunk story get as-list []
   [mapcar [funk [event]

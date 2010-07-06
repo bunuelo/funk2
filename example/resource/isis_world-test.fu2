@@ -94,7 +94,8 @@
 											      says           nil]
 										David  [frame distance       15.0
 											      recent_actions nil
-											      says           nil]]]]]]
+											      says           nil]]]
+						 sense]]]
 				    [have this think_to_self 'My body senses the world.']
 				    [set [mind-knowledge mind reactive sensory] value `sense `[time_step ,time_step] sense]
 				    [= last_time_step time_step]]]]

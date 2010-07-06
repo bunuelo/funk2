@@ -42,7 +42,7 @@
     [have-apply resource call `[,cause-outside_resource @args]]]]
 
 [deftypefunk agency execute activate [name :rest args]
-  [have [get this trace_story] add_new_event cause-time_step cause-name `activates name]
+  [story-create_event [get this trace_story] cause-time_step cause-name `activates name]
   [format stdout '\n\ncreating this story in agency activate: ' [get [get this trace_story] as-list] '\n\n']
   [let [[resource [get this resource name]]]
     [have-apply resource activate `[,cause-outside_resource @args]]]]

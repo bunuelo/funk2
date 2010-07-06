@@ -100,3 +100,12 @@
 	  [get this layers]]
     self_model]]
 
+[deftypefunk mind execute destroy []
+  [mapc [funk [layer]
+	      [mapc [funk [agency]
+			  [mapc [funk [resource]
+				      [have resource destroy]]
+				[get agency resources]]]
+		    [get layer agencies]]]
+	[get this layers]]]
+

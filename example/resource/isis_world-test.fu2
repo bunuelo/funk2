@@ -25,10 +25,10 @@
   this]
 
 [deftypefunk isis_world_body get sense []
-  [get world agent_sense [get this name]]]
+  [get [get this world] agent_sense [get this name]]]
 
 [deftypefunk isis_world_body get time_step []
-  [get world time_step]]
+  [get [get this world] time_step]]
 
 
 [deframe          isis_agent [frame] [name mind body]]
@@ -134,6 +134,10 @@
   [format stdout '\nAgent ' [get this name] ' Thinks: ']
   [apply &format `[,stdout @expressions]]]
 
+[deftypefunk isis_agent execute destroy []
+  [have [get this mind] destroy]]
+
+
 [deframe          isis_world [frame] [client agent_frame time_step]]
 [deftypeconstruct isis_world [client]
   [set this client      client]
@@ -146,6 +150,9 @@
       [error bug_type isis_agent_is_already_in_a_world agent agent]
     [prog [set agent world this]
 	  [have [get this agent_frame] add [get agent name] agent]]]]
+
+[deftypefunk isis_world get agents []
+  [get [get this agent_frame] values]]
 
 [deftypefunk isis_world get agent_names []
   [get [get this agent_frame] slots]]
@@ -160,6 +167,11 @@
   [isis-call client meta_step seconds 0.05]
   [set this time_step [+ 1 [get this time_step]]]]
 
+[deftypefunk isis_world execute destroy []
+  [mapc [funk [agent]
+	      [have agent destroy]]
+	[get this agents]]]
+
 
 [defunk ralph_agent-new []
   [let [[this [new isis_agent `Ralph]]]
@@ -173,6 +185,7 @@
   [new isis_agent `David]]
 
 [defunk isis_world-initialize []
+  [shelter [have isis_world destroy]]
   [let [[client [new isis_world_client '18.85.58.18']]]
     [let [[isis_world [new isis_world client]]]
       [have isis_world add_agent [ralph_agent-new]]

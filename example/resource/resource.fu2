@@ -98,6 +98,9 @@
 	[millisleep 100]]]
     result]]
 
+[deftypefunk resource execute destroy []
+  [set this done t]]
+
 [deftypefunk resource execute call [:rest args]
   [have-apply this activate args]
   [have this finish]]

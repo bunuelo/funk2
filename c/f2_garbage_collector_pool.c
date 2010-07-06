@@ -387,7 +387,7 @@ void funk2_garbage_collector_pool__know_of_used_exp_other_mutation(funk2_garbage
 
 void funk2_garbage_collector_pool__know_of_used_exp_self_no_more_references(funk2_garbage_collector_pool_t* this, f2ptr exp) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
-  if (atomic_read(block->reference_count) == 0) { // double check...
+  if (atomic_read(&(block->reference_count)) == 0) { // double check...
     if (block->gc.tricolor == funk2_tricolor__black) {
       funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_tricolor__grey);
     }

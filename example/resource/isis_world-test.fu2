@@ -71,8 +71,9 @@
 				       [let [[agent [have sense_agent_frame lookup agent_name]]]
 					 [have story add_new_character agent_name]
 					 [let [[says [have agent lookup `says]]]
-					   [have this think_to_self 'While propogating sense->story, I can hear ' agent_name ' saying, "' says '"']
-					   [story-create_event story [get body time_step] agent_name `says says]]]]
+					   [if says
+					       [prog [have this think_to_self 'While propogating sense->story, I can hear ' agent_name ' saying, "' says '"']
+						     [story-create_event story [get body time_step] agent_name `says says]]]]]]
 				 agent_names]]
 			 story]]]]
       ]
@@ -91,7 +92,7 @@
 											      says           nil]
 										Lauren [frame distance       15.0
 											      recent_actions nil
-											      says           nil]
+											      says           'Bad Ralph!']
 										David  [frame distance       15.0
 											      recent_actions nil
 											      says           nil]]]

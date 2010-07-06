@@ -393,7 +393,7 @@ void funk2_garbage_collector_pool__know_of_used_exp_self_no_more_references(funk
     }
   } else {
     status(  "warning: tried to free block with references.");
-    printf("\nwarning: tried to free block with references.");
+    //printf("\nwarning: tried to free block with references.");
   }
 }
 

@@ -71,7 +71,10 @@
   [get [get this event_redblacktree] leaves]]
 
 [deftypefunk story get as-list []
-  [mapcar [funk [event]
-		[get event as-list]]
-	  [get this events]]]
+  [append [apply &append [mapcar [funk [character]
+				       [get character as-list]]
+				 [get this characters]]]
+	  [mapcar [funk [event]
+			[get event as-list]]
+		  [get this events]]]]
 

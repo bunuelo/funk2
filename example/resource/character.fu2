@@ -24,3 +24,6 @@
   [set this self_model [new self_model]]
   this]
 
+[deftypefunk character get as-list []
+  `[The character ,[get this name] is part of this story.]]
+

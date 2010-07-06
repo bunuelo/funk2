@@ -73,6 +73,7 @@
 			   [mapc [funk [agent_name]
 				       [let [[agent [have sense_agent_frame lookup agent_name]]]
 					 [have story add_new_character agent_name]
+					 [story-create_event story [get body time_step] `I `see agent_name]
 					 [let [[says [have agent lookup `says]]]
 					   [if says
 					       [mapc [funk [say]

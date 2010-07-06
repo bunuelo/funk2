@@ -29,7 +29,7 @@
 [deftypefunk story_event get as-list []
   [let [[prepositional_frame [get this prepositional_frame]]]
     `[The character ,[get this character_name] ,[get this action_name] at time ,[get this time] @[apply &append [mapcar [funk [preposition]
-															      `[,preposition ,[get prepositional_frame preposition]]]
+															      `[,preposition ,[have prepositional_frame lookup preposition]]]
 															[get prepositional_frame slots]]]]]]
 
 [deframe          story [frame] [character_frame event_redblacktree]]

@@ -55,7 +55,7 @@
     [mind-create_agency mind self_reflective physical]
     [mind-create_agency mind self_conscious  imprimer_learning]
     
-    [have [mind-knowledge mind reactive sensory] add_new_cell `sense nil]
+    [have [mind-knowledge mind reactive sensory] add_new_cell `sense]
     
     [mind-create_resource mind reactive sensory continuous_sensing []
 			  [let [[last_time_step nil]]
@@ -63,7 +63,7 @@
 			      [let [[time_step [get body time_step]]]
 				[if [eq last_time_step time_step]
 				    [millisleep 100]
-				  [prog [set [mind-knowledge mind reactive sensory] cell_value `sense [get body sense]]
+				  [prog [set [mind-knowledge mind reactive sensory] value `sense `[time_step ,time_step] [get body sense]]
 					[have this think_to_self 'My body senses the world.']
 					[= last_time_step time_step]]]]
 			      ]]]
@@ -104,8 +104,7 @@
 					      [have this think_to_self 'I can hear ' agent_name ' saying, "' says '"']
 					      [story-create_event story time agent_name `says says]]]]
 				    agent_names]
-			      [have knowledge add_cell `[sense-story ,time] story]
-			      [have knowledge call_propogate]
+			      
 			      ]]]
     
     [mind-create_resource mind deliberative reality interpret_senses_into_current_story []

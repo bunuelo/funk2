@@ -30,24 +30,24 @@
 [deftypefunk knowledge_propogator get resource []
   [get [get this propogator] resource]]
 
-[deftypefunk knowledge_propogator execute call_propogate []
-  [have [get this propogator] call]]
+[deftypefunk knowledge_propogator execute call_propogate [provenance]
+  [have [get this propogator] call provenance]]
 
-[deftypefunk knowledge_propogator execute add_new_cell [cell_identity cell_value]
+[deftypefunk knowledge_propogator execute add_new_cell [cell_identity]
   [let [[cell_identity_hash [get this cell_identity_hash]]]
     [have cell_identity_hash add cell_identity]
     [let [[cell_name [have cell_identity_hash lookup cell_identity]]]
-      [have [get this propogator] add_new_cell cell_name call_value]]]]
+      [have [get this propogator] add_new_cell cell_name]]]]
 
 [deftypefunk knowledge_propogator get cell [cell_identity]
   [let [[cell_name [have cell_identity_hash lookup cell_identity]]]
     [get [get this propogator] cell cell_name]]]
 
-[deftypefunk knowledge_propogator get cell_value [cell_identity]
-  [get [get this cell cell_identity] value]]
+[deftypefunk knowledge_propogator get value [cell_identity provenance]
+  [get [get this cell cell_identity] value provenance]]
 
-[deftypefunk knowledge_propogator set cell_value [cell_identity cell_value]
-  [set [get this cell cell_identity] value cell_value]]
+[deftypefunk knowledge_propogator set value [cell_identity provenance cell_value]
+  [set [get this cell cell_identity] value provenance cell_value]]
 
 
   

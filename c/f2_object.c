@@ -449,7 +449,7 @@ f2ptr f2__object__eq(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, __funk2.globalenv.eq__symbol);
   if (! raw__funkable__is_type(cause, funk)) {
-    return (this == that);
+    return f2bool__new(this == that);
   }
   return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, that, nil)));
 }
@@ -459,7 +459,7 @@ f2ptr f2__object__eq_hash_value(f2ptr cause, f2ptr this) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, __funk2.globalenv.eq_hash_value__symbol);
   if (! raw__funkable__is_type(cause, funk)) {
-    return ((this == 0) ? 1 : this);
+    return ((this == nil) ? f2integer__new(cause, 1) : f2integer__new(cause, (u64)this));
   }
   return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, nil));
 }

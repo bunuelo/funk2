@@ -448,12 +448,13 @@ f2ptr f2__scheduler__active_fibers(f2ptr cause) {
 def_pcfunk0(scheduler__active_fibers, return f2__scheduler__active_fibers(this_cause));
 
 void f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
-  boolean_t complete = 0;
+  boolean_t complete = boolean__false;
   do {
     if(f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) {
       if(f2fiber__is_complete(fiber, cause) ||
-	 (f2fiber__paused(fiber, cause) && raw__bug__is_type(cause, f2fiber__value(fiber, cause))))
-	complete = 1;
+	 (f2fiber__paused(fiber, cause) && raw__bug__is_type(cause, f2fiber__value(fiber, cause)))) {
+	complete = boolean__true;
+      }
       f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
     }
     if (! complete) {

@@ -125,6 +125,9 @@
 	    input-cells]
       [have [get this constraint_set] add constraint]]]]
 
+[deftypefunk propogator_graph set cell_value [cell_name value]
+  [set [get this cell cell_name] value value]]
+
 
 [deframe          propogator_resource [frame] [resource graph]]
 [deftypeconstruct propogator_resource [name]
@@ -156,6 +159,9 @@
 
 [deftypefunk propogator_resource get cell [name]
   [get [get this cell name] value]]
+
+[deftypefunk propogator_resource set cell_value [cell_name value]
+  [set [get this graph] cell_value cell_name value]]
 
 [deftypefunk propogator_resource execute add_cell [cell]
   [have [get this graph] add_cell cell]]

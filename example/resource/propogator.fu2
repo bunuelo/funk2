@@ -111,6 +111,9 @@
 [deftypefunk propogator_graph get cell [name]
   [have [get this cell_name_hash] lookup name]]
 
+[deftypefunk propogator_graph execute add_new_cell [name value]
+  [have this add_cell [new propogator_cell name value]]]
+
 [deftypefunk propogator_graph execute add_constraint [constraint]
   [if [get [get this constraint_set] contains constraint]
       nil

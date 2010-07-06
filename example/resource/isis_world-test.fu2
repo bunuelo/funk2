@@ -24,6 +24,8 @@
   [set this world nil]
   this]
 
+[deftypefunk isis_world_body get sense []
+  [get world agent_sense [get this name]]]
 
 
 [deframe          isis_agent [frame] [name mind body]]
@@ -59,7 +61,39 @@
 			    [have this think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
 			  ]
     
+    [mind-create_resource mind reactive sensory sense_current_story []
+			  [let [[knowledge [mind-knowledge reactive sensory]]
+				[time      [time]]
+				[sense     [have body sense]]]
+			    'Agents in view cannot be sensed yet, so we make up some data for now.'
+			    [have sense add `agents [frame Ralph  [frame distance       15.0
+									 recent_actions nil
+									 says           nil]
+							   Lauren [frame distance       15.0
+									 recent_actions nil
+									 says           nil]
+							   David  [frame distance       15.0
+									 recent_actions nil
+									 says           nil]]]
+			    [let [[sense_agent_frame [have sense lookup `agents]]
+				  [story             [new story]]
+				  [agent_names       [get sense_agent_frame slots]]]
+			      [if agent_names
+				  [have this think_to_self 'I can see agents, ' agent_names '.']
+				[have this think_to_self 'I cannot see any other agents.']]
+			      [mapc [funk [agent_name]
+					  [let [[agent [have sense_agent_frame lookup agent_name]]]
+					    [have story add_new_character agent_name]
+					    [let [[says [have agent lookup `says]]]
+					      [have this think_to_self 'I can hear ' agent_name ' saying, "' says '"']
+					      [story-create_event story time agent_name `says says]]]]
+				    agent_names]
+			      [have knowledge add_cell `[sense-story ,time] story]
+			      [have knowledge call_propogate]
+			      ]]]
+    
     [mind-create_resource mind deliberative reality interpret_senses_into_current_story []
+			  [mind-call reactive sensory sense_current_story]
 			  'call reactive sensory knowledge propogator.'
 			  ]
     
@@ -101,6 +135,9 @@
 
 [deftypefunk isis_world get agent_mind [agent_name]
   [get [have [get this agent_frame] lookup agent_name] mind]]
+
+[deftypefunk isis_world get agent_sense [agent_name]
+  [isis-call [get this client] sense]]
 
 
 [defunk ralph_agent-new []

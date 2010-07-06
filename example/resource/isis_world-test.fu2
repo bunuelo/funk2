@@ -116,16 +116,20 @@
 			    [have this think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
 			  ]
     
-    [mind-create_resource mind deliberative reality interpret_senses_into_current_story [activating]
+    [mind-create_resource mind deliberative reality include_reactive_stories_into_deliberative_story [activating]
 			  [cause-define cause-time_step [get body time_step]]
 			  [cause-define cause-name      `[deliberative reality interpret_senses_into_current_story]]
-			  [mind-call reactive sensory sense_current_story]
-			  'call reactive sensory knowledge propogator.'
-			  ]
-    
-    [mind-create_resource mind deliberative reality current_story []
-			  
-			  ]
+			  [let [[last_time_step -1]]
+			    [while t
+			      [let [[time_step [get body time_step]]]
+				[if [== last_time_step time_step]
+				    [millisleep 100]
+				  [let [[knowledge [mind-knowledge mind reactive sensory]]]
+				    [let [[reactive_sensory_story [get knowledge value `story `[time_step ,time_step]]]]
+				      [if [null reactive_sensory_story]
+					  [millisleep 1000]
+					[prog [have this think_to_self 'Including reactive sensory story into deliberative story: ' reactive_sensory_story]
+					      [= last_time_step time_step]]]]]]]]]]
     
     [mind-create_resource mind self_conscious imprimer_learning react_to_imprimer_scold [imprimer scold]
 			  [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', has scolded something about ' [get scold focus] '!  How should I react?']
@@ -234,8 +238,10 @@
       [cause-define cause-time_step        [get isis_world time_step]]
       [cause-define cause-name             `isis_world-initialize]
       
-      [mind-activate [get isis_world agent_mind `Ralph]  reactive sensory continuous_sensing]
-      [mind-activate [get isis_world agent_mind `Lauren] reactive sensory continuous_sensing]
+      [mind-activate [get isis_world agent_mind `Ralph]  reactive     sensory continuous_sensing]
+      [mind-activate [get isis_world agent_mind `Ralph]  deliberative reality include_reactive_stories_into_deliberative_story]
+      [mind-activate [get isis_world agent_mind `Lauren] reactive     sensory continuous_sensing]
+      [mind-activate [get isis_world agent_mind `Lauren] deliberative reality include_reactive_stories_into_deliberative_story]
       
       [mind-activate [get isis_world agent_mind `Lauren] reactive speech say 'Bad Ralph!']
       

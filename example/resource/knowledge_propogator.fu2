@@ -49,5 +49,6 @@
 [deftypefunk knowledge_propogator set value [cell_identity provenance cell_value]
   [set [get this cell cell_identity] value provenance cell_value]]
 
+[deftypefunk knowledge_propogator execute add_constraint [constraint]
+  [have [get this propogator] add_constraint constraint]]
 
-  

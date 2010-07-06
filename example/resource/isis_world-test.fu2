@@ -55,7 +55,15 @@
     [mind-create_agency mind self_reflective physical]
     [mind-create_agency mind self_conscious  imprimer_learning]
     
-    [have [mind-knowledge mind reactive sensory] add_new_cell `sense]
+    [let [[sense-cell [new propogator_cell `sense]]
+	  [story-cell [new propogator_cell `story]]]
+      [have [mind-knowledge mind reactive sensory] add_constraint
+	    [new propogator_constraint `sense->story story-cell [list sense-cell]
+		 [funk [sense]
+		       [let [[story [new story]]]
+			 [have this think_to_self 'Propogating sense->story.']
+			 story]]]]
+      ]
     
     [mind-create_resource mind reactive sensory continuous_sensing []
 			  [have this think_to_self 'Continuous sensing is starting.']

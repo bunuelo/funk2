@@ -62,7 +62,8 @@
 			    [while t
 			      [let [[time_step [get body time_step]]]
 				[if [eq last_time_step time_step]
-				    [millisleep 100]
+				    [prog [have this think_to_self 'Time has not passed (time_step is still ' time_step '), so waiting to sense.']
+					  [millisleep 100]]
 				  [prog [set [mind-knowledge mind reactive sensory] value `sense `[time_step ,time_step] [get body sense]]
 					[have this think_to_self 'My body senses the world.']
 					[= last_time_step time_step]]]]

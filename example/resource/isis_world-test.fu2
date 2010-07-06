@@ -83,7 +83,7 @@
 			 story]]]]
       ]
     
-    [mind-create_resource mind reactive sensory continuous_sensing []
+    [mind-create_resource mind reactive sensory continuous_sensing [activating_resource]
 			  [have this think_to_self 'Continuous sensing is starting.']
 			  [let [[last_time_step nil]]
 			    [while t
@@ -96,14 +96,14 @@
 				    [= last_time_step time_step]]]]
 			      ]]]
     
-    [mind-create_resource mind reactive speech say [string]
+    [mind-create_resource mind reactive speech say [activating_resource string]
 			  [set body says [list string]]
 			  [let [[start_time_step [get body time_step]]]
 			    [while [eq start_time_step [get body time_step]]
 			      [millisleep 100]]]
 			  [set body says nil]]
     
-    [mind-create_resource mind reactive sensory sense_imprimer_scold [imprimer]
+    [mind-create_resource mind reactive sensory sense_imprimer_scold [activating imprimer]
 			  [if [get [get imprimer speech] is-scold]
 			      [prog [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', said something that sounds like a scold!']
 				    [let [[imprimer_focus [mind-call reactive sensory discover_person_focus imprimer]]]
@@ -112,7 +112,7 @@
 			    [have this think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
 			  ]
     
-    [mind-create_resource mind deliberative reality interpret_senses_into_current_story []
+    [mind-create_resource mind deliberative reality interpret_senses_into_current_story [activating]
 			  [mind-call reactive sensory sense_current_story]
 			  'call reactive sensory knowledge propogator.'
 			  ]

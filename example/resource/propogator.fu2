@@ -176,6 +176,9 @@
 [deftypefunk propogator_resource execute add_new_cell [name]
   [have [get this graph] add_new_cell name]]
 
+[deftypefunk propogator_resource execute add_constraint [constraint]
+  [have [get this graph] add_constraint constraint]]
+
 [defunk propogator-test []
   [let [[p [new propogator_resource `Newtonian-Physics]]]
     [let [[F-cell [new propogator_cell `F]]

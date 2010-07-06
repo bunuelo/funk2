@@ -60,8 +60,20 @@
       [have [mind-knowledge mind reactive sensory] add_constraint
 	    [new propogator_constraint `sense->story story-cell [list sense-cell]
 		 [funk [sense]
-		       [let [[story [new story]]]
-			 [have this think_to_self 'Propogating sense->story.']
+		       [have this think_to_self 'Propogating sense->story.']
+		       [let [[sense_agent_frame [have sense lookup `agents]]
+			     [story             [new story]]
+			     [agent_names       [get sense_agent_frame slots]]]
+			 [if agent_names
+			     [have this think_to_self 'While propogating sense->story, I can see agents, ' agent_names '.']
+			   [have this think_to_self 'While propogating sense->story, I cannot see any other agents.']]
+			 [mapc [funk [agent_name]
+				     [let [[agent [have sense_agent_frame lookup agent_name]]]
+				       [have story add_new_character agent_name]
+				       [let [[says [have agent lookup `says]]]
+					 [have this think_to_self 'While propogating sense->story, I can hear ' agent_name ' saying, "' says '"']
+					 [story-create_event story time agent_name `says says]]]]
+			       agent_names]
 			 story]]]]
       ]
     
@@ -72,9 +84,20 @@
 			      [let [[time_step [get body time_step]]]
 				[if [eq last_time_step time_step]
 				    [millisleep 100]
-				  [prog [set [mind-knowledge mind reactive sensory] value `sense `[time_step ,time_step] [get body sense]]
-					[have this think_to_self 'My body senses the world.']
-					[= last_time_step time_step]]]]
+				  [let [[sense [let [[sense [get body sense]]]
+						 'This is a hack to make up for the fact that the simulation does not return agent information yet.'
+						 [have sense add `agents [frame Ralph  [frame distance       15.0
+											      recent_actions nil
+											      says           nil]
+										Lauren [frame distance       15.0
+											      recent_actions nil
+											      says           nil]
+										David  [frame distance       15.0
+											      recent_actions nil
+											      says           nil]]]]]]
+				    [have this think_to_self 'My body senses the world.']
+				    [set [mind-knowledge mind reactive sensory] value `sense `[time_step ,time_step] sense]
+				    [= last_time_step time_step]]]]
 			      ]]]
     
     [mind-create_resource mind reactive sensory sense_imprimer_scold [imprimer]
@@ -85,36 +108,6 @@
 						     imprimer imprimer_focus]]]
 			    [have this think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
 			  ]
-    
-    [mind-create_resource mind reactive sensory sense_current_story []
-			  [let [[knowledge [mind-knowledge mind reactive sensory]]
-				[time      [get body time_step]]
-				[sense     [have body sense]]]
-			    'Agents in view cannot be sensed yet, so we make up some data for now.'
-			    [have sense add `agents [frame Ralph  [frame distance       15.0
-									 recent_actions nil
-									 says           nil]
-							   Lauren [frame distance       15.0
-									 recent_actions nil
-									 says           nil]
-							   David  [frame distance       15.0
-									 recent_actions nil
-									 says           nil]]]
-			    [let [[sense_agent_frame [have sense lookup `agents]]
-				  [story             [new story]]
-				  [agent_names       [get sense_agent_frame slots]]]
-			      [if agent_names
-				  [have this think_to_self 'I can see agents, ' agent_names '.']
-				[have this think_to_self 'I cannot see any other agents.']]
-			      [mapc [funk [agent_name]
-					  [let [[agent [have sense_agent_frame lookup agent_name]]]
-					    [have story add_new_character agent_name]
-					    [let [[says [have agent lookup `says]]]
-					      [have this think_to_self 'I can hear ' agent_name ' saying, "' says '"']
-					      [story-create_event story time agent_name `says says]]]]
-				    agent_names]
-			      
-			      ]]]
     
     [mind-create_resource mind deliberative reality interpret_senses_into_current_story []
 			  [mind-call reactive sensory sense_current_story]

@@ -63,7 +63,8 @@ void funk2_garbage_collector__know_of_changed_references(funk2_garbage_collector
     boolean_t no_more_references = raw__exp__decrement_reference_count(old_value);
     if (no_more_references) {
       // notify garbage collector to whiten old value if it is not already because it has no references (because of no references it doesn't upset the "no black references white" invariant).
-      funk2_garbage_collector__know_of_no_more_references(this, exp);
+      //funk2_garbage_collector__know_of_no_more_references(this, exp);
+      funk2_garbage_collector__know_of_no_more_references(this, old_value);
     }
   }
   if (value) {

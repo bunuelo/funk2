@@ -20,12 +20,12 @@
 
 'agency'
 
-[deframe          agency [frame] [name resource_frame knowledge trace_graph]]
+[deframe          agency [frame] [name resource_frame knowledge trace_story]]
 [deftypeconstruct agency [name]
   [set this name           name]
   [set this resource_frame [frame]]
   [set this knowledge      [new propogator_resource `knowledge]]
-  [set this trace_graph    [new graph]]
+  [set this trace_story    [new story]]
   [have this add_resource [get [get this knowledge] resource]]
   this]
 
@@ -36,6 +36,7 @@
   [have [get this resource_frame] lookup name]]
 
 [deftypefunk agency execute call [name :rest args]
+  [have [get this story] add_new_event cause-time_step cause-name `calls name]
   [let [[resource [get this resource name]]]
     [have-apply resource call `[,cause-outside_resource @args]]]]
 

@@ -106,6 +106,7 @@
     [mind-create_resource mind reactive sensory sense_imprimer_scold [activating imprimer]
 			  [if [get [get imprimer speech] is-scold]
 			      [prog [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', said something that sounds like a scold!']
+				    [cause-define cause-time_step [get body time_step]]
 				    [let [[imprimer_focus [mind-call reactive sensory discover_person_focus imprimer]]]
 				      [mind-activate mind self_conscious imprimer_learning react_to_imprimer_scold
 						     imprimer imprimer_focus]]]
@@ -113,6 +114,7 @@
 			  ]
     
     [mind-create_resource mind deliberative reality interpret_senses_into_current_story [activating]
+			  [cause-define cause-time_step [get body time_step]]
 			  [mind-call reactive sensory sense_current_story]
 			  'call reactive sensory knowledge propogator.'
 			  ]
@@ -213,30 +215,24 @@
   [let [[this [new isis_agent `Lauren]]]
     this]]
 
-[defunk david_agent-new []
-  [let [[this [new isis_agent `David]]]
-    this]]
-
 [defunk isis_world-initialize []
   [shelter [have isis_world destroy]]
   [let [[client [new isis_world_client '18.85.58.18']]]
     [let [[isis_world [new isis_world client]]]
       [have isis_world add_agent [ralph_agent-new]]
       [have isis_world add_agent [lauren_agent-new]]
-      `[have isis_world add_agent [david_agent-new]]
       
       [globalize isis_world isis_world]
       
       [have isis_world pause_simulation]
       
       [cause-define cause-outside_resource [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
+      [cause-define cause-time_step        [get isis_world time_step]]
       
       [mind-activate [get isis_world agent_mind `Ralph]  reactive sensory continuous_sensing]
       [mind-activate [get isis_world agent_mind `Lauren] reactive sensory continuous_sensing]
-      `[mind-activate [get isis_world agent_mind `David]  reactive sensory continuous_sensing]
-       
-       [mind-activate [get isis_world agent_mind `Lauren] reactive speech say 'Bad Ralph!']
-       `[mind-activate [get isis_world agent_mind `David]  reactive speech say 'Good Ralph!']
+      
+      [mind-activate [get isis_world agent_mind `Lauren] reactive speech say 'Bad Ralph!']
       
       [format stdout '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
       

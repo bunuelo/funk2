@@ -72,7 +72,7 @@
 					 [have story add_new_character agent_name]
 					 [let [[says [have agent lookup `says]]]
 					   [have this think_to_self 'While propogating sense->story, I can hear ' agent_name ' saying, "' says '"']
-					   [story-create_event story time agent_name `says says]]]]
+					   [story-create_event story [get body time_step] agent_name `says says]]]]
 				 agent_names]]
 			 story]]]]
       ]

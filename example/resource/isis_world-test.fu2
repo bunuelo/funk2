@@ -80,7 +80,7 @@
 							   [story-create_event story [get body time_step] agent_name `says say]]
 						     says]]]]]
 				 agent_names]]
-			 [have this think_to_self 'While propogating sense->story, I created this story: ' story '.']
+			 [have this think_to_self 'While propogating sense->story, I created this story: ' [get story as-list] '.']
 			 story]]]]
       ]
     

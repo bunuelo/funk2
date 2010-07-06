@@ -50,8 +50,8 @@
 		      '\n']
 	      [ansi-stream-reset stdout]]
       [prog [ansi-stream-reset stdout]
-	    [cause-define bug value]
-	    [repl]]]]]
+	    `[cause-define bug value]
+	     [repl]]]]]
 
 [defunk critic-reactive-primitive_response [fiber]
   [critic-reactive-unknown_bug fiber]]

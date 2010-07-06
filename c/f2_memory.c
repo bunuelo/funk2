@@ -120,7 +120,9 @@ boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p)
     if (p >= to_ptr(iter) && p < to_ptr(end_of_blocks)) {
       int byte_num;
       while(iter < end_of_blocks) {
-	if ((to_ptr(iter)) == p) {return boolean__true;}
+	if ((to_ptr(iter)) == p) {
+	  return boolean__true;
+	}
 	byte_num = funk2_memblock__byte_num(iter);
 	if (byte_num <= 0) {
 	  char str[1024];

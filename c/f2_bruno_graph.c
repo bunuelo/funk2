@@ -766,7 +766,12 @@ f2ptr f2__bruno_decomposition_lattice__decompose_graph_with_root_graph(f2ptr cau
 def_pcfunk3(bruno_decomposition_lattice__decompose_graph_with_root_graph, this, graph, root_graph, return f2__bruno_decomposition_lattice__decompose_graph_with_root_graph(this_cause, this, graph, root_graph));
 
 f2ptr f2__bruno_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, f2ptr graph) {
-  return f2__bruno_decomposition_lattice__decompose_graph_with_root_graph(cause, this, graph, graph);
+  f2__bruno_decomposition_lattice__decompose_graph_with_root_graph(cause, this, graph, graph);
+  f2ptr root_graph_set = f2__bruno_decomposition_lattice__root_graph_set(cause, this);
+  f2__print(cause, root_graph_set);
+  f2__print(cause, graph);
+  f2__set__add(cause, root_graph_set, graph);
+  return nil;
 }
 def_pcfunk2(bruno_decomposition_lattice__decompose_graph, this, graph, return f2__bruno_decomposition_lattice__decompose_graph(this_cause, this, graph));
 

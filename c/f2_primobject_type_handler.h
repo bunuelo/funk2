@@ -41,6 +41,7 @@
 #include "f2_primobject__redblacktree.h"
 #include "f2_package.h"
 #include "f2_bruno_graph.h"
+#include "f2_graph_match_error_correcting.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;
@@ -136,6 +137,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__bruno_graph_isomorphism__slot_t          primobject_type_bruno_graph_isomorphism;
   funk2_object_type__bruno_decomposition_lattice_node__slot_t primobject_type_bruno_decomposition_lattice_node;
   funk2_object_type__bruno_decomposition_lattice__slot_t      primobject_type_bruno_decomposition_lattice;
+  funk2_object_type__ecs_edit_sequence__slot_t                primobject_type_ecs_edit_sequence;
 };
 
 // **

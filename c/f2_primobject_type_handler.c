@@ -174,6 +174,8 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "bruno_graph_isomorphism";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2bruno_graph_isomorphism__primobject_type__new(cause));}
   {char* type_name = "bruno_decomposition_lattice_node"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2bruno_decomposition_lattice_node__primobject_type__new(cause));}
   {char* type_name = "bruno_decomposition_lattice";      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),      f2bruno_decomposition_lattice__primobject_type__new(cause));}
+  {char* type_name = "ecs_edit_sequence";                funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),      f2ecs_edit_sequence__primobject_type__new(cause));}
+  
 }
 
 void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_type_handler_t* this, f2ptr cause) {

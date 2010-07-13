@@ -296,7 +296,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		  if (last_executed_time) {
 		    f2ptr nanoseconds_since_1970 = f2time__nanoseconds_since_1970(last_executed_time, cause);
 		    u64 nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
-		    if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > 1 * nanoseconds_per_second) {
+		    if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > 10 * nanoseconds_per_second) {
 		      // anytime a fiber is removed from processor active fibers, it should be removed from it's cause so that it can be garbage collected.
 		      f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
 		      if (fiber_cause) {
@@ -448,12 +448,13 @@ f2ptr f2__scheduler__active_fibers(f2ptr cause) {
 def_pcfunk0(scheduler__active_fibers, return f2__scheduler__active_fibers(this_cause));
 
 void f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
-  boolean_t complete = 0;
+  boolean_t complete = boolean__false;
   do {
     if(f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) {
       if(f2fiber__is_complete(fiber, cause) ||
-	 (f2fiber__paused(fiber, cause) && raw__bug__is_type(cause, f2fiber__value(fiber, cause))))
-	complete = 1;
+	 (f2fiber__paused(fiber, cause) && raw__bug__is_type(cause, f2fiber__value(fiber, cause)))) {
+	complete = boolean__true;
+      }
       f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
     }
     if (! complete) {

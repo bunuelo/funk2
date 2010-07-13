@@ -102,7 +102,7 @@ static inline int atomic_sub_and_test( int i, atomic_t *v ) {
   return !(v->counter);
 #endif
 }
- 
+
 /**
  * Increment atomic variable
  * @param v pointer of type atomic_t
@@ -114,6 +114,21 @@ static inline void atomic_inc( atomic_t *v ) {
   (void)__sync_fetch_and_add(&v->counter, 1);
 #else
   v->counter ++;
+#endif
+}
+ 
+/**
+ * Increment atomic variable
+ * @param v pointer of type atomic_t
+ *
+ * Atomically increments @v by 1 and
+ * returns true if was zero before increment.
+ */
+static inline int atomic_test_and_inc( atomic_t *v ) {
+#if GCC_ATOMIC_BUILTINS
+  return !(__sync_fetch_and_add(&v->counter, 1));
+#else
+  return !(v->counter ++);
 #endif
 }
  
@@ -165,7 +180,7 @@ static inline int atomic_inc_and_test( atomic_t *v ) {
   return !(v->counter);
 #endif
 }
- 
+
 /**
  * @brief add and test if negative
  * @param v pointer of type atomic_t

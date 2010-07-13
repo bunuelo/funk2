@@ -40,7 +40,7 @@ declare_object_type_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, l
 
 // bruno_decomposition_lattice_node
 typedef struct funk2_object_type__bruno_decomposition_lattice_node__slot_s funk2_object_type__bruno_decomposition_lattice_node__slot_t;
-declare_object_type_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, between_graph, );
+declare_object_type_5_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, between_graph, root_graph_set, );
 
 // bruno_decomposition_lattice
 typedef struct funk2_object_type__bruno_decomposition_lattice__slot_s funk2_object_type__bruno_decomposition_lattice__slot_t;
@@ -109,7 +109,7 @@ f2ptr     raw__bruno_graph_isomorphism__as__frame        (f2ptr cause, f2ptr thi
 f2ptr      f2__bruno_graph_isomorphism__as__frame        (f2ptr cause, f2ptr this);
 
 // bruno_decomposition_lattice_node
-declare_primobject_4_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, between_graph);
+declare_primobject_5_slot(bruno_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, between_graph, root_graph_set);
 
 f2ptr raw__bruno_decomposition_lattice_node__new(f2ptr cause, f2ptr parent_graph, f2ptr left_child_graph, f2ptr right_child_graph);
 f2ptr  f2__bruno_decomposition_lattice_node__new(f2ptr cause, f2ptr parent_graph, f2ptr left_child_graph, f2ptr right_child_graph);

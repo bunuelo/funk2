@@ -66,10 +66,11 @@
 	    [let [[stat [pathname-stat this]]]
 	      [let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
 		[not [get last_loaded_modification_time equals time_of_last_modification]]]]]
-	[filename-load this]]]]
+	[load this]]]]
 
 [defunk load [:rest filenames]
   [mapc [funk [filename]
+	      [print `[load ,filename]]
 	      [filename-load filename]]
 	filenames]]
 
@@ -126,7 +127,9 @@
     fpkg_filenames]]
 
 [defunk reload_all_package_definitions []
-  [apply &load [pathnames-all_fpkg_filenames packages_search_path]]]
+  [mapc [funk [filename]
+	      [filename-load filename]]
+	[pathnames-all_fpkg_filenames packages_search_path]]]
 
 [defunk package-load [name]
   [let [[package [lookup-package name]]]

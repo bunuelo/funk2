@@ -1,0 +1,195 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'propogator_cell_value'
+
+[deframe          propogator_cell_value [frame] [value time provenance]]
+[deftypeconstruct propogator_cell_value [value time provenance]
+  [set this value      value]
+  [set this time       time]
+  [set this provenance provenance]
+  this]
+
+'propogator_cell'
+
+[deframe          propogator_cell [frame] [name cell_value_provenance_hash]]
+[deftypeconstruct propogator_cell [name]
+  [set this name                       name]
+  [set this cell_value_provenance_hash [hash]]
+  this]
+
+[deftypefunk propogator_cell get cell_value [provenance]
+  [have [get this cell_value_provenance_hash] lookup provenance]]
+
+[deftypefunk propogator_cell set cell_value [provenance cell_value]
+  [have [get this cell_value_provenance_hash] add provenance cell_value]]
+
+[deftypefunk propogator_cell get time [provenance]
+  [let [[cell_value [get this cell_value provenance]]]
+    [if [null cell_value]
+	nil
+      [get cell_value time]]]]
+
+[deftypefunk propogator_cell get value [provenance]
+  [let [[cell_value [get this cell_value provenance]]]
+    [if [null cell_value]
+	nil
+      [get cell_value value]]]]
+
+[deftypefunk propogator_cell set value [provenance value]
+  [let [[cell_value [new propogator_cell_value value [time] provenance]]]
+    [let [[this-value [get this value provenance]]]
+      [if [and this-value
+	       [eq this-value value]]
+	  nil
+	[if [and this-value
+		 [not [eq this-value value]]]
+	    [set this value [error bug_type `propogator_cell_encountered_contradiction provenance provenance old_value this-value new_value value]]
+	  [prog [set this cell_value provenance cell_value]
+		t]]]]]]
+
+'propogator_constraint'
+
+[deframe          propogator_constraint [frame] [name output-cell input-cells funk]]
+[deftypeconstruct propogator_constraint [name output-cell input-cells funk]
+  [set this name        name]
+  [set this output-cell output-cell]
+  [set this input-cells input-cells]
+  [set this funk        funk]
+  this]
+
+[deftypefunk propogator_constraint execute apply [provenance]
+  [let [[output-cell [get this output-cell]]
+	[input-cells [get this input-cells]]]
+    [let [[output_needs_update nil]
+	  [input_not_ready     nil]]
+      [let [[output-cell-time [get output-cell time provenance]]]
+	[if [null output-cell-time]
+	    [= output_needs_update t]]
+	[mapc [funk [input-cell]
+		    [let [[input-cell-time [get input-cell time provenance]]]
+		      [if [null input-cell-time]
+			  [= input_not_ready t]
+			[if [and output-cell-time [> input-cell-time output-cell-time]]
+			    [= output_needs_update t]]]]]
+	      input-cells]]
+      [if [and output_needs_update [not input_not_ready]]
+	  [let [[output_value [apply [get this funk] [mapcar [funk [input-cell]
+								   [get input-cell value provenance]]
+							     input-cells]]]]
+	    [set output-cell value provenance output_value]]
+	nil]]]]
+
+
+'propogator_graph'
+
+[deframe          propogator_graph [frame] [cell_set constraint_set cell_name_hash]]
+[deftypeconstruct propogator_graph []
+  [set this cell_set       [new set]]
+  [set this constraint_set [new set]]
+  [set this cell_name_hash [new ptypehash]]
+  this]
+
+[deftypefunk propogator_graph execute add_cell [cell]
+  [let [[cell_set [get this cell_set]]]
+    [if [get cell_set contains cell]
+	nil
+      [prog [have cell_set add cell]
+	    [have [get this cell_name_hash] add [get cell name] cell]
+	    t]]]]
+
+[deftypefunk propogator_graph get cell [name]
+  [have [get this cell_name_hash] lookup name]]
+
+[deftypefunk propogator_graph execute add_new_cell [name]
+  [have this add_cell [new propogator_cell name]]]
+
+[deftypefunk propogator_graph execute add_constraint [constraint]
+  [if [get [get this constraint_set] contains constraint]
+      nil
+    [let [[output-cell [get constraint output-cell]]
+	  [input-cells [get constraint input-cells]]]
+      [have this add_cell output-cell]
+      [mapc [funk [input-cell]
+		  [have this add_cell input-cell]]
+	    input-cells]
+      [have [get this constraint_set] add constraint]]]]
+
+[deftypefunk propogator_graph set cell_value [cell_name provenance value]
+  [set [get this cell cell_name] value provenance value]]
+
+
+[deframe          propogator_resource [frame] [resource graph]]
+[deftypeconstruct propogator_resource [name]
+  [set this graph    [new propogator_graph]]
+  [set this resource [new resource name [funk [provenance]
+					      `[print 'propogator_resource here!']
+					      [let [[constraint_set [get [get this graph] constraint_set]]
+						    [done           nil]]
+						[while [not done]
+						  `[print 'propogator_resource looping...']
+						  [= done t]
+						  [mapc [funk [constraint]
+							      `[format stdout '\napplying constraint ' [get constraint name] ' for provenance=' provenance '.']
+							      [if [have constraint apply provenance]
+								  [= done nil]]]
+							[get constraint_set elements]]]
+						nil]]]]
+  this]
+
+[deftypefunk propogator_resource execute call [provenance]
+  [have [get this resource] call provenance]]
+
+[deftypefunk propogator_resource get cell [name]
+  [get [get this graph] cell name]]
+
+[deftypefunk propogator_resource set value [cell_name provenance value]
+  [set [get this cell cell_name] value provenance value]
+  [have this call provenance]]
+
+[deftypefunk propogator_resource get value [cell_name provenance]
+  [get [get this cell cell_name] value provenance]]
+
+[deftypefunk propogator_resource set cell_value [cell_name provenance value]
+  [set [get this graph] cell_value cell_name provenance value]]
+
+[deftypefunk propogator_resource execute add_cell [cell]
+  [have [get this graph] add_cell cell]]
+
+[deftypefunk propogator_resource execute add_new_cell [name]
+  [have [get this graph] add_new_cell name]]
+
+[deftypefunk propogator_resource execute add_constraint [constraint]
+  [have [get this graph] add_constraint constraint]]
+
+[defunk propogator-test []
+  [let [[p [new propogator_resource `Newtonian-Physics]]]
+    [let [[F-cell [new propogator_cell `F]]
+	  [m-cell [new propogator_cell `m]]
+	  [a-cell [new propogator_cell `a]]]
+      [let [[F=ma  [new propogator_constraint `F=ma  F-cell [list m-cell a-cell] [funk [m a] [* m a]]]]
+	    [m=F/a [new propogator_constraint `m=F/a m-cell [list F-cell a-cell] [funk [F a] [/ F a]]]]
+	    [a=F/m [new propogator_constraint `a=F/m a-cell [list F-cell m-cell] [funk [F m] [/ F m]]]]]
+	[have [get p graph] add_constraint F=ma]
+	[have [get p graph] add_constraint m=F/a]
+	[have [get p graph] add_constraint a=F/m]
+	p]]]]
+
+

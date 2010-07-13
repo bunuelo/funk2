@@ -18,22 +18,16 @@
  rights to redistribute these changes.'
 
 
-'agent'
+'self_model'
 
-[deframe          agent [frame] [agencies_frame]]
-[deftypeconstruct agent []
-  [set this agencies_frame [frame]]
+[deframe          self_model [frame] [activity_resource_hash]]
+[deftypeconstruct self_model []
+  [set this activity_resource_hash [hash]]
   this]
 
-[deftypefunk agent get agency [name]
-  [have [get this agencies_frame] lookup name]]
+[deftypefunk self_model execute add_activity [layer_name agency_name resource_name activity]
+  [have [get this activity_resource_hash] add `[,layer_name ,agency_name ,resource_name] activity]]
 
-[deftypefunk agent execute call [agency_name resource_name :rest args]
-  [let [[agencies_frame [get this agencies_frame]]]
-    [let [[agency [have agencies_frame lookup agency_name]]]
-      [have-apply agency call [cons resource_name args]]]]]
-
-[defmetro defagency [agent name]
-  `[have [get ,agent agencies_frame] add [quote ,name] [new agency]]]
-
+[deftypefunk self_model get activity [layer_name agency_name resource_name]
+  [have [get this activity_resource_hash] lookup `[,layer_name ,agency_name ,resource_name]]]
 

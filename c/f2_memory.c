@@ -120,7 +120,9 @@ boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p)
     if (p >= to_ptr(iter) && p < to_ptr(end_of_blocks)) {
       int byte_num;
       while(iter < end_of_blocks) {
-	if ((to_ptr(iter)) == p) {return boolean__true;}
+	if ((to_ptr(iter)) == p) {
+	  return boolean__true;
+	}
 	byte_num = funk2_memblock__byte_num(iter);
 	if (byte_num <= 0) {
 	  char str[1024];
@@ -157,6 +159,11 @@ ptr funk2_memory__f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
   return p;
 }
 
+void debug__found_unused_memory_block(funk2_memblock_t* block) {
+  status(  "debug: found unused memory block.");
+  printf("\ndebug: found unused memory block.");
+}
+
 ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
   computer_id_t  computer_id  = __f2ptr__computer_id(f2p);
   pool_index_t   pool_index   = __f2ptr__pool_index(f2p);
@@ -179,7 +186,8 @@ ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
   if (p) {
     funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(p);
     if(! block->used) {
-      error(nil, "used_f2ptr_to_ptr__debug error: referenced unused memory block.");
+      debug__found_unused_memory_block(block);
+      //error(nil, "used_f2ptr_to_ptr__debug error: referenced unused memory block.");
     }
   }
   return p;

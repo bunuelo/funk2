@@ -1337,6 +1337,7 @@ int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type
     } else {
       var_str = (u8*)"<non-symbol>";
     }
+    f2ptr env = f2fiber__env(fiber, cause);
     bytecode_status("bytecode lookup_type_var beginning.  var=%s env=%s", var_str, env ? "<non-nil>" : "nil");
   }
 #endif // DEBUG_BYTECODES  

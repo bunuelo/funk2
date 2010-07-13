@@ -38,11 +38,21 @@ void raw__exp__increment_reference_count(f2ptr this) {
   }
 }
 
+void debug__contradictory_atomic_dec_and_test() {
+  printf("\ncontradictory atomic dec and test.");
+  status(  "contradictory atomic dec and test.");
+}
+
 boolean_t raw__exp__decrement_reference_count(f2ptr this) {
   boolean_t no_more_references = boolean__false;
   if (this) {
     funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(this));
     no_more_references      = atomic_dec_and_test(&(block->reference_count));
+    //if (no_more_references) {
+    //if (atomic_read(&(block->reference_count)) != 0) { // double check...
+    //debug__contradictory_atomic_dec_and_test();
+    //}
+    //}
   }
   return no_more_references;
 }
@@ -53,7 +63,7 @@ void funk2_garbage_collector__know_of_changed_references(funk2_garbage_collector
     boolean_t no_more_references = raw__exp__decrement_reference_count(old_value);
     if (no_more_references) {
       // notify garbage collector to whiten old value if it is not already because it has no references (because of no references it doesn't upset the "no black references white" invariant).
-      funk2_garbage_collector__know_of_no_more_references(this, exp);
+      funk2_garbage_collector__know_of_no_more_references(this, old_value);
     }
   }
   if (value) {

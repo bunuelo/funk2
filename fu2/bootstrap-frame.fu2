@@ -31,6 +31,9 @@
 [deftypefunk frame get slots []
   [get this type_var-slot_names `variable]]
 
+[deftypefunk frame get values []
+  [get this type_var-slot_values `variable]]
+
 [defmetro frame [:rest slot_value_pairs]
   `[new frame @[let [[iter          slot_value_pairs]
 		     [reverse_codes nil]]

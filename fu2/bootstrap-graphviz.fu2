@@ -39,7 +39,7 @@
   [dot_code-gview [get this as-dot_code]]]
 
 [deftypefunk frame execute gview       [] [have [get this as-graph] gview]]
-[deftypefunk frame get     as-dot_code [] [get [get this as-graph] as-dot_code]]
+[deftypefunk frame get     as-dot_code [] [get  [get this as-graph] as-dot_code]]
 
 [defunk graph-test_gview []
   [let [[this [new graph]]]

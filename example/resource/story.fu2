@@ -1,0 +1,86 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+[deframe          story_event [frame] [time character_name action_name prepositional_frame]]
+[deftypeconstruct story_event [time character_name action_name prepositional_frame]
+  [set this time                time]
+  [set this character_name      character_name]
+  [set this action_name         action_name]
+  [set this prepositional_frame prepositional_frame]
+  this]
+
+[deftypefunk story_event get as-list []
+  [let [[prepositional_frame [get this prepositional_frame]]]
+    `[,[get this character_name] ,[get this action_name] at time ,[get this time] @[apply &append [cons [let [[direct_object [have prepositional_frame lookup `direct_object]]]
+													  [if direct_object
+													      `[,direct_object]
+													    nil]]
+													[mapcar [funk [preposition]
+														      [if [eq preposition `direct_object]
+															  nil
+															`[,preposition ,[have prepositional_frame lookup preposition]]]]
+														[get prepositional_frame slots]]]]]]]
+
+[deframe          story [frame] [character_frame event_redblacktree]]
+[deftypeconstruct story []
+  [set this character_frame    [frame]]
+  [set this event_redblacktree [new redblacktree [funk [event-x event-y]
+						       [< [get event-x time] [get event-y time]]]]]
+  this]
+
+[deftypefunk story get character [character_name]
+  [have [get this character_frame] lookup character_name]]
+
+[deftypefunk story execute add_character [character]
+  [have [get this character_frame] add [get character name] character]]
+
+[deftypefunk story execute add_new_character [character_name]
+  [have this add_character [new character character_name]]]
+
+[deftypefunk story execute add_event [event]
+  [have [get this event_redblacktree] insert event]]
+
+[deftypefunk story execute add_new_event [time character_name action_name prepositional_frame]
+  [if [null [get this character character_name]]
+      [have this add_new_character character_name]]
+  [have this add_event [new story_event time character_name action_name prepositional_frame]]]
+
+[defmetro story-create_event [story time character_name action_name :rest prepositional_frame_slots_and_values]
+  `[have ,story add_new_event ,time ,character_name ,action_name ,[if prepositional_frame_slots_and_values
+								      `[frame direct_object @prepositional_frame_slots_and_values]
+								    `[frame]]]]
+
+[deftypefunk story get events []
+  [get [get this event_redblacktree] leaves]]
+
+[deftypefunk story get characters []
+  [get [get this character_frame] values]]
+
+[deftypefunk story get as-list []
+  [append [let [[seq [mapcar [funk [character]
+				   [get character as-list]]
+			     [get this characters]]]]
+	    [if seq
+		[apply &append seq]
+	      nil]]
+	  [mapcar [funk [event]
+			[get event as-list]]
+		  [get this events]]]]
+

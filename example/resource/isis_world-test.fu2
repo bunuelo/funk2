@@ -1,0 +1,258 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+[deframe          isis_world_body [frame] [name world says]]
+[deftypeconstruct isis_world_body [name]
+  [set this name  name]
+  [set this world nil]
+  [set this says  nil]
+  this]
+
+[deftypefunk isis_world_body get sense []
+  [get [get this world] agent_sense [get this name]]]
+
+[deftypefunk isis_world_body get time_step []
+  [get [get this world] time_step]]
+
+
+
+[deframe          isis_agent [frame] [name mind body]]
+[deftypeconstruct isis_agent [name]
+  [let [[mind [new mind]]
+	[body [new isis_world_body name]]]
+    [set this name name]
+    [set this mind mind]
+    [set this body body]
+    
+    'All isis_agents inherit these basic features.'
+    
+    [mind-create_layer mind reactive]
+    [mind-create_layer mind deliberative]
+    [mind-create_layer mind reflective]
+    [mind-create_layer mind self_reflective]
+    [mind-create_layer mind self_conscious]
+    
+    [mind-create_agency mind reactive        sensory]
+    [mind-create_agency mind reactive        physical]
+    [mind-create_agency mind reactive        speech]
+    [mind-create_agency mind deliberative    reality]
+    [mind-create_agency mind deliberative    imagination]
+    [mind-create_agency mind reflective      physical]
+    [mind-create_agency mind self_reflective physical]
+    [mind-create_agency mind self_conscious  imprimer_learning]
+    
+    [let [[sense-cell [new propogator_cell `sense]]
+	  [story-cell [new propogator_cell `story]]]
+      [have [mind-knowledge mind reactive sensory] add_constraint
+	    [new propogator_constraint `sense->story story-cell [list sense-cell]
+		 [funk [sense]
+		       [have this think_to_self 'Propogating sense->story.']
+		       [let [[sense_agent_frame [have sense lookup `agents]]
+			     [story             [new story]]]
+			 [let [[agent_names [get sense_agent_frame slots]]]
+			   [if agent_names
+			       [have this think_to_self 'While propogating sense->story, I can see agents, ' agent_names '.']
+			     [have this think_to_self 'While propogating sense->story, I cannot see any other agents.']]
+			   [mapc [funk [agent_name]
+				       [let [[agent [have sense_agent_frame lookup agent_name]]]
+					 [have story add_new_character agent_name]
+					 [story-create_event story [get body time_step] `I `sees agent_name]
+					 [let [[says [have agent lookup `says]]]
+					   [if says
+					       [mapc [funk [say]
+							   [have this think_to_self 'While propogating sense->story, I can hear ' agent_name ' saying, "' say '"']
+							   [story-create_event story [get body time_step] agent_name `says say]]
+						     says]]]]]
+				 agent_names]]
+			 [have this think_to_self 'While propogating sense->story, I created this story: ' [get story as-list] '.']
+			 story]]]]
+      ]
+    
+    [mind-create_resource mind reactive sensory continuous_sensing [activating_resource]
+			  [have this think_to_self 'Continuous sensing is starting.']
+			  [let [[last_time_step nil]]
+			    [while t
+			      [let [[time_step [get body time_step]]]
+				[if [eq last_time_step time_step]
+				    [millisleep 100]
+				  [let [[sense [get body sense]]]
+				    [have this think_to_self 'My body senses the world.']
+				    [set [mind-knowledge mind reactive sensory] value `sense `[time_step ,time_step] sense]
+				    [= last_time_step time_step]]]]
+			      ]]]
+    
+    [mind-create_resource mind reactive speech say [activating_resource string]
+			  [set body says [list string]]
+			  [let [[start_time_step [get body time_step]]]
+			    [while [< [- [get body time_step] 2] start_time_step]
+			      [millisleep 100]]]
+			  [set body says nil]]
+    
+    [mind-create_resource mind reactive sensory sense_imprimer_scold [activating imprimer]
+			  [if [get [get imprimer speech] is-scold]
+			      [prog [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', said something that sounds like a scold!']
+				    [cause-define cause-time_step [get body time_step]]
+				    [cause-define cause-name      `[reactive sensory sense_imprimer_scold]]
+				    [let [[imprimer_focus [mind-call reactive sensory discover_person_focus imprimer]]]
+				      [mind-activate mind self_conscious imprimer_learning react_to_imprimer_scold
+						     imprimer imprimer_focus]]]
+			    [have this think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
+			  ]
+    
+    [let [[reality_story-cell [new propogator_cell `reality_story]]]
+      
+      [have [mind-knowledge mind deliberative reality] add_cell reality_story-cell]
+      
+      [mind-create_resource mind deliberative reality include_reactive_stories_into_deliberative_story [activating]
+			    [cause-define cause-time_step [get body time_step]]
+			    [cause-define cause-name      `[deliberative reality interpret_senses_into_current_story]]
+			    [let [[last_time_step -1]]
+			      [while t
+				[let [[time_step [get body time_step]]]
+				  [if [== last_time_step time_step]
+				      [millisleep 100]
+				    [let [[knowledge [mind-knowledge mind reactive sensory]]]
+				      [let [[reactive_sensory_story [get knowledge value `story `[time_step ,time_step]]]]
+					[if [null reactive_sensory_story]
+					    [millisleep 1000]
+					  [prog [have this think_to_self 'Including reactive sensory story into deliberative story: ' [get reactive_sensory_story as-list]]
+						[set [mind-knowledge mind deliberative reality] value `reality_story `[time_step ,time_step] reactive_sensory_story]
+						[= last_time_step time_step]]]]]]]]]]
+      
+      ]
+    
+    [mind-create_resource mind self_conscious imprimer_learning react_to_imprimer_scold [imprimer scold]
+			  [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', has scolded something about ' [get scold focus] '!  How should I react?']
+			  ]
+    
+    ]
+  this]
+
+[deftypefunk isis_agent get world []
+  [get [get this body] world]]
+
+[deftypefunk isis_agent set world [world]
+  [set [get this body] world world]]
+
+[deftypefunk isis_agent execute think_to_self [:rest expressions]
+  [have-apply [get this world] format `['\nAgent ' ,[get this name] ' Thinks: ' @expressions]]]
+
+[deftypefunk isis_agent execute destroy []
+  [have [get this mind] destroy]]
+
+
+[deframe          isis_world [frame] [client agent_frame time_step format_mutex]]
+[deftypeconstruct isis_world [client]
+  [set this client       client]
+  [set this agent_frame  [frame]]
+  [set this time_step    0]
+  [set this format_mutex [new mutex]]
+  this]
+
+[deftypefunk isis_world execute add_agent [agent]
+  [if [get agent world]
+      [error bug_type isis_agent_is_already_in_a_world agent agent]
+    [prog [set agent world this]
+	  [have [get this agent_frame] add [get agent name] agent]]]]
+
+[deftypefunk isis_world get agents []
+  [get [get this agent_frame] values]]
+
+[deftypefunk isis_world get agent_names []
+  [get [get this agent_frame] slots]]
+
+[deftypefunk isis_world get agent [agent_name]
+  [have [get this agent_frame] lookup agent_name]]
+
+[deftypefunk isis_world get agent_mind [agent_name]
+  [get [get this agent agent_name] mind]]
+
+[deftypefunk isis_world get agent_body [agent_name]
+  [get [get this agent agent_name] body]]
+
+[deftypefunk isis_world get agent_says [agent_name]
+  [get [get this agent_body agent_name] says]]
+
+[deftypefunk isis_world get agent_sense [agent_name]
+  [let [[sense [isis-call [get this client] sense]]]
+    [let [[agent_frame [frame]]]
+      [mapc [funk [sense_agent_name]
+		  [if [not [eq agent_name sense_agent_name]]
+		      [have agent_frame add sense_agent_name [frame distance       15.0
+								    recent_actions nil
+								    says           [get this agent_says sense_agent_name]]]]]
+	    [get this agent_names]]
+      [have sense add `agents agent_frame]]
+    sense]]
+
+[deftypefunk isis_world execute step_simulation []
+  [isis-call [get this client] meta_step seconds 0.05]
+  [set this time_step [+ 1 [get this time_step]]]]
+
+[deftypefunk isis_world execute pause_simulation []
+  [isis-call [get this client] meta_pause]]
+
+[deftypefunk isis_world execute destroy []
+  [mapc [funk [agent]
+	      [have agent destroy]]
+	[get this agents]]]
+
+[deftypefunk isis_world execute format [:rest expressions]
+  [let [[format_mutex [get this format_mutex]]]
+    [have format_mutex lock]
+    [apply &format [cons stdout expressions]]
+    [have format_mutex unlock]]]
+
+
+[defunk ralph_agent-new []
+  [let [[this [new isis_agent `Ralph]]]
+    
+    this]]
+
+[defunk lauren_agent-new []
+  [let [[this [new isis_agent `Lauren]]]
+    this]]
+
+[defunk isis_world-initialize []
+  [shelter [have isis_world destroy]]
+  [let [[client [new isis_world_client '18.85.58.18']]]
+    [let [[isis_world [new isis_world client]]]
+      [have isis_world add_agent [ralph_agent-new]]
+      [have isis_world add_agent [lauren_agent-new]]
+      
+      [globalize isis_world isis_world]
+      
+      [have isis_world pause_simulation]
+      
+      [cause-define cause-outside_resource [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
+      [cause-define cause-time_step        [get isis_world time_step]]
+      [cause-define cause-name             `isis_world-initialize]
+      
+      [mind-activate [get isis_world agent_mind `Ralph]  reactive     sensory continuous_sensing]
+      [mind-activate [get isis_world agent_mind `Ralph]  deliberative reality include_reactive_stories_into_deliberative_story]
+      [mind-activate [get isis_world agent_mind `Lauren] reactive     sensory continuous_sensing]
+      [mind-activate [get isis_world agent_mind `Lauren] deliberative reality include_reactive_stories_into_deliberative_story]
+      
+      [mind-activate [get isis_world agent_mind `Lauren] reactive speech say 'Bad Ralph!']
+      
+      [format stdout '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
+      
+      'success']]]
+

@@ -1,0 +1,48 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'mental_layer'
+
+[deframe          mental_layer [frame] [name agency_frame]]
+[deftypeconstruct mental_layer [name]
+  [set this name         name]
+  [set this agency_frame [frame]]
+  this]
+
+[deftypefunk mental_layer get agencies []
+  [get [get this agency_frame] values]]
+
+[deftypefunk mental_layer execute add_agency [agency]
+  [have [get this agency_frame] add [get agency name] agency]]
+
+[deftypefunk mental_layer get agency [name]
+  [have [get this agency_frame] lookup name]]
+
+[deftypefunk mental_layer execute call [agency_name resource_name :rest args]
+  [let [[agency_frame [get this agency_frame]]]
+    [let [[agency [have agency_frame lookup agency_name]]]
+      [have-apply agency call [cons resource_name args]]]]]
+
+[deftypefunk mental_layer execute activate [agency_name resource_name :rest args]
+  [let [[agency_frame [get this agency_frame]]]
+    [let [[agency [have agency_frame lookup agency_name]]]
+      [have-apply agency activate [cons resource_name args]]]]]
+
+

@@ -25,11 +25,11 @@ void circular_buffer__init(circular_buffer_t* this, u32 byte_num) {
   this->byte_num = byte_num;
   this->start    = 0;
   this->end      = 0;
-  this->bytes    = (u8*)malloc(byte_num);
+  this->bytes    = (u8*)from_ptr(f2__malloc(byte_num));
 }
 
 void circular_buffer__destroy(circular_buffer_t* this) {
-  free(this->bytes);
+  f2__free(to_ptr(this->bytes));
 }
 
 u32 circular_buffer__get_used_byte_num(circular_buffer_t* this) {

@@ -59,6 +59,8 @@
 					  ]
 					[format stdout '\nresource status: done.  (name = ' [get this name] ').\n']]]
 				nil]]
+  'There is a bug in Funk that drops dead fibers for some reason.  This might help:'
+  [set [get this fiber] keep_undead t]
   this]
 
 [defmetro resource [name args :rest body]
@@ -97,6 +99,9 @@
 		[have active_mutex unlock]]
 	[millisleep 100]]]
     result]]
+
+[deftypefunk resource execute destroy []
+  [set this done t]]
 
 [deftypefunk resource execute call [:rest args]
   [have-apply this activate args]

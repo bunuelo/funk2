@@ -521,9 +521,9 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_
     protect_subexp_environment     = (f2cons__cdr(exps, cause) != nil) || protect_environment;
     optimize_subexp_tail_recursion = (f2cons__cdr(exps, cause) == nil) && optimize_tail_recursion;
     
-    f2ptr exp_bcs = nil;
-    boolean_t  exp__is_funktional = boolean__true;
-    f2ptr next = nil;
+    f2ptr     exp_bcs = nil;
+    boolean_t exp__is_funktional = boolean__true;
+    f2ptr     next = nil;
     do {
       f2ptr exp = f2cons__car(exps, cause);
       next      = f2cons__cdr(exps, cause);
@@ -1210,7 +1210,9 @@ f2ptr f2__demetropolize__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr env
   
   f2ptr did_something = nil;
   f2ptr args = f2cons__cdr(exp, cause);
-  if (!args) {return f2cons__new(cause, nil, exp);}
+  if (!args) {
+    return f2cons__new(cause, nil, exp);
+  }
   f2ptr demetro_exp  = f2cons__new(cause, f2cons__car(exp, cause), nil);
   f2ptr iter         = args;
   f2ptr demetro_iter = demetro_exp;

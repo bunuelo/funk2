@@ -18,11 +18,39 @@
  rights to redistribute these changes.'
 
 [defpackage resource
-  :packages [isis_world]
-   :sources ['resource.fu2'
-	     'agency.fu2'
-	     'agent.fu2'
-	     'blockman.fu2']]
+  :sources ['resource.fu2']]
 
+[defpackage self_model
+  :sources ['self_model.fu2']]
 
+[defpackage character
+  :sources ['character.fu2']]
+
+[defpackage story
+  :packages [character]
+   :sources ['story.fu2']]
+
+[defpackage propogator
+  :packages [resource]
+   :sources ['propogator.fu2']]
+
+[defpackage knowledge_propogator
+  :packages [propogator]
+   :sources ['knowledge_propogator.fu2']]
+
+[defpackage agency
+  :packages [knowledge_propogator]
+   :sources ['agency.fu2']]
+
+[defpackage mental_layer
+  :packages [agency]
+   :sources ['mental_layer.fu2']]
+
+[defpackage mind
+  :packages [mental_layer self_model]
+   :sources ['mind.fu2']]
+
+[defpackage isis_world-test
+  :packages [mind story isis_world]
+   :sources ['isis_world-test.fu2']]
 

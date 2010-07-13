@@ -29,15 +29,19 @@
 [deftypefunk bruno_graph get     minus                           [that]                       [bruno_graph-minus                           this that]]
 [deftypefunk bruno_graph get     node_isomorphisms               [node]                       [bruno_graph-node_isomorphisms               this node]]
 [deftypefunk bruno_graph get     edges_with_label_between_nodes  [label left_node right_node] [bruno_graph-edges_with_label_between_nodes  this label left_node right_node]]
+[deftypefunk bruno_graph get     as-dot_code                     []                           [bruno_graph-as-dot_code                     this]]
 
 [deftypefunk bruno_graph_isomorphism execute add_mapping       [left_node right_node] [bruno_graph_isomorphism-add_mapping       this left_node right_node]]
+[deftypefunk bruno_graph_isomorphism get     mapping_count     []                     [bruno_graph_isomorphism-mapping_count     this]]
 [deftypefunk bruno_graph_isomorphism execute map_left_to_right [left_node]            [bruno_graph_isomorphism-map_left_to_right this left_node]]
 [deftypefunk bruno_graph_isomorphism execute map_right_to_left [right_node]           [bruno_graph_isomorphism-map_right_to_left this right_node]]
 [deftypefunk bruno_graph_isomorphism get     union             [that]                 [bruno_graph_isomorphism-union             this that]]
 
 [deftypefunk bruno_decomposition_lattice_node execute combine_children_isomorphisms [left_child_isomorphisms right_child_isomorphisms graph]  [bruno_decomposition_lattice_node-combine_children_isomorphisms this left_child_isomorphisms right_child_isomorphisms graph]]
 
-[deftypefunk bruno_decomposition_lattice execute add_node              [node]  [bruno_decomposition_lattice-add_node              this node]]
-[deftypefunk bruno_decomposition_lattice execute decompose_graph       [graph] [bruno_decomposition_lattice-decompose_graph       this graph]]
-[deftypefunk bruno_decomposition_lattice get     subgraph_isomorphisms [graph] [bruno_decomposition_lattice-subgraph_isomorphisms this graph]]
+[deftypefunk bruno_decomposition_lattice execute add_node                        [node]             [bruno_decomposition_lattice-add_node                  this node]]
+[deftypefunk bruno_decomposition_lattice execute decompose_graph                 [graph]            [bruno_decomposition_lattice-decompose_graph           this graph]]
+[deftypefunk bruno_decomposition_lattice execute decompose_graph_with_root_graph [graph root_graph] [bruno_decomposition_lattice-decompose_graph           this graph root_graph]]
+[deftypefunk bruno_decomposition_lattice get     subgraph_isomorphisms           [graph]            [bruno_decomposition_lattice-subgraph_isomorphisms     this graph]]
+[deftypefunk bruno_decomposition_lattice get     subgraph_max_isomorphisms       [graph]            [bruno_decomposition_lattice-subgraph_max_isomorphisms this graph]]
 

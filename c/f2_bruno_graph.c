@@ -683,7 +683,12 @@ f2ptr raw__bruno_decomposition_lattice__add_node(f2ptr cause, f2ptr this, f2ptr 
       f2ptr left_child_graph     = f2__bruno_decomposition_lattice_node__left_child_graph(cause, node);
       f2__set__add(cause, graph_set, left_child_graph);
       f2ptr node_left_child_hash = f2__bruno_decomposition_lattice__node_left_child_hash(cause, this);
-      f2__ptypehash__add(cause, node_left_child_hash, left_child_graph, node);
+      f2ptr node_s = f2__ptypehash__lookup(cause, node_left_child_hash, left_child_graph);
+      if (node_s == nil) {
+	node_s = f2__set__new(cause);
+	f2__ptypehash__add(cause, node_left_child_hash, left_child_graph, node_s);
+      }
+      f2__set__add(cause, node_s, node);
       if (raw__bruno_graph__node_count(cause, left_child_graph) == 1) {
 	f2__set__add(cause, leaf_graph_set, left_child_graph);
       }
@@ -692,7 +697,12 @@ f2ptr raw__bruno_decomposition_lattice__add_node(f2ptr cause, f2ptr this, f2ptr 
       f2ptr right_child_graph     = f2__bruno_decomposition_lattice_node__right_child_graph(cause, node);
       f2__set__add(cause, graph_set, right_child_graph);
       f2ptr node_right_child_hash = f2__bruno_decomposition_lattice__node_right_child_hash(cause, this);
-      f2__ptypehash__add(cause, node_right_child_hash, right_child_graph, node);
+      f2ptr node_s = f2__ptypehash__lookup(cause, node_right_child_hash, right_child_graph);
+      if (node_s == nil) {
+	node_s = f2__set__new(cause);
+	f2__ptypehash__add(cause, node_right_child_hash, right_child_graph, node_s);
+      }
+      f2__set__add(cause, node_s, node);
       if (raw__bruno_graph__node_count(cause, right_child_graph) == 1) {
 	f2__set__add(cause, leaf_graph_set, right_child_graph);
       }
@@ -768,8 +778,6 @@ def_pcfunk3(bruno_decomposition_lattice__decompose_graph_with_root_graph, this, 
 f2ptr f2__bruno_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, f2ptr graph) {
   f2__bruno_decomposition_lattice__decompose_graph_with_root_graph(cause, this, graph, graph);
   f2ptr root_graph_set = f2__bruno_decomposition_lattice__root_graph_set(cause, this);
-  f2__print(cause, root_graph_set);
-  f2__print(cause, graph);
   f2__set__add(cause, root_graph_set, graph);
   return nil;
 }

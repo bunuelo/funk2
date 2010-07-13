@@ -108,13 +108,14 @@ am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_agent.lo \
 	c/lib_libfunk2_la-f2_garbage_collector_pool.lo \
 	c/lib_libfunk2_la-f2_globalenv.lo \
 	c/lib_libfunk2_la-f2_glwindow.lo \
-	c/lib_libfunk2_la-f2_gmodule.lo \
+	c/lib_libfunk2_la-f2_gmodule.lo c/lib_libfunk2_la-f2_graph.lo \
 	c/lib_libfunk2_la-f2_graph_cluster.lo \
+	c/lib_libfunk2_la-f2_graph_match_error_correcting.lo \
+	c/lib_libfunk2_la-f2_graphviz.lo \
 	c/lib_libfunk2_la-f2_fileio.lo \
 	c/lib_libfunk2_la-f2_frame_objects.lo \
 	c/lib_libfunk2_la-f2_funk2_node.lo \
 	c/lib_libfunk2_la-f2_funktional.lo \
-	c/lib_libfunk2_la-f2_graph.lo c/lib_libfunk2_la-f2_graphviz.lo \
 	c/lib_libfunk2_la-f2_html.lo c/lib_libfunk2_la-f2_load.lo \
 	c/lib_libfunk2_la-f2_malloc.lo \
 	c/lib_libfunk2_la-f2_management_thread.lo \
@@ -443,7 +444,7 @@ compiled_image__flags = -DF2__INSTALL__BOOTSTRAP_IMG__FILENAME=\"$(plain__instal
 @XMLRPC_SUPPORTED_TRUE@xmlrpc_ldflags = $(shell xmlrpc-c-config abyss-server client --ldflags)
 
 #system_cflags = -Dbuild_os=\"$(build_os)\" -Dbuild_vendor=\"$(build_vendor)\"
-debug_flags = -pg -DDEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY=1 -DDEBUG_MEMORY_POINTERS -DDEBUG_BYTECODES -DDEBUG_LOAD #-DDEBUG_REDBLACKTREE -DDEBUG_COMPILE -DDEBUG_MEMORY_VALID_PTRS 
+debug_flags = -pg -DDEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY=1 -DDEBUG_MEMORY_POINTERS -DDEBUG_LOAD #-DDEBUG_COMPILE -DDEBUG_REDBLACKTREE -DDEBUG_BYTECODES -DDEBUG_MEMORY_VALID_PTRS 
 optimize_flags = 
 debug__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(debug_flags)
 release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(optimize_flags)
@@ -480,13 +481,14 @@ lib_libfunk2_la_SOURCES = \
   c/f2_globalenv.c \
   c/f2_glwindow.c \
   c/f2_gmodule.c \
+  c/f2_graph.c \
   c/f2_graph_cluster.c \
+  c/f2_graph_match_error_correcting.c \
+  c/f2_graphviz.c \
   c/f2_fileio.c \
   c/f2_frame_objects.c \
   c/f2_funk2_node.c \
   c/f2_funktional.c \
-  c/f2_graph.c \
-  c/f2_graphviz.c \
   c/f2_html.c \
   c/f2_load.c \
   c/f2_malloc.c \
@@ -728,7 +730,13 @@ c/lib_libfunk2_la-f2_glwindow.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_gmodule.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/lib_libfunk2_la-f2_graph.lo: c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_graph_cluster.lo: c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
+c/lib_libfunk2_la-f2_graph_match_error_correcting.lo:  \
+	c/$(am__dirstamp) c/$(DEPDIR)/$(am__dirstamp)
+c/lib_libfunk2_la-f2_graphviz.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_fileio.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
@@ -737,10 +745,6 @@ c/lib_libfunk2_la-f2_frame_objects.lo: c/$(am__dirstamp) \
 c/lib_libfunk2_la-f2_funk2_node.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_funktional.lo: c/$(am__dirstamp) \
-	c/$(DEPDIR)/$(am__dirstamp)
-c/lib_libfunk2_la-f2_graph.lo: c/$(am__dirstamp) \
-	c/$(DEPDIR)/$(am__dirstamp)
-c/lib_libfunk2_la-f2_graphviz.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_html.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
@@ -972,6 +976,8 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_graph.lo
 	-rm -f c/lib_libfunk2_la-f2_graph_cluster.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_graph_cluster.lo
+	-rm -f c/lib_libfunk2_la-f2_graph_match_error_correcting.$(OBJEXT)
+	-rm -f c/lib_libfunk2_la-f2_graph_match_error_correcting.lo
 	-rm -f c/lib_libfunk2_la-f2_graphviz.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_graphviz.lo
 	-rm -f c/lib_libfunk2_la-f2_html.$(OBJEXT)
@@ -1165,6 +1171,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_gmodule.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_graph.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_graph_cluster.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_graph_match_error_correcting.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_graphviz.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_html.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_load.Plo@am__quote@
@@ -1430,12 +1437,33 @@ c/lib_libfunk2_la-f2_gmodule.lo: c/f2_gmodule.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_gmodule.lo `test -f 'c/f2_gmodule.c' || echo '$(srcdir)/'`c/f2_gmodule.c
 
+c/lib_libfunk2_la-f2_graph.lo: c/f2_graph.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_graph.lo -MD -MP -MF "c/$(DEPDIR)/lib_libfunk2_la-f2_graph.Tpo" -c -o c/lib_libfunk2_la-f2_graph.lo `test -f 'c/f2_graph.c' || echo '$(srcdir)/'`c/f2_graph.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/lib_libfunk2_la-f2_graph.Tpo" "c/$(DEPDIR)/lib_libfunk2_la-f2_graph.Plo"; else rm -f "c/$(DEPDIR)/lib_libfunk2_la-f2_graph.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_graph.c' object='c/lib_libfunk2_la-f2_graph.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_graph.lo `test -f 'c/f2_graph.c' || echo '$(srcdir)/'`c/f2_graph.c
+
 c/lib_libfunk2_la-f2_graph_cluster.lo: c/f2_graph_cluster.c
 @am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_graph_cluster.lo -MD -MP -MF "c/$(DEPDIR)/lib_libfunk2_la-f2_graph_cluster.Tpo" -c -o c/lib_libfunk2_la-f2_graph_cluster.lo `test -f 'c/f2_graph_cluster.c' || echo '$(srcdir)/'`c/f2_graph_cluster.c; \
 @am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/lib_libfunk2_la-f2_graph_cluster.Tpo" "c/$(DEPDIR)/lib_libfunk2_la-f2_graph_cluster.Plo"; else rm -f "c/$(DEPDIR)/lib_libfunk2_la-f2_graph_cluster.Tpo"; exit 1; fi
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_graph_cluster.c' object='c/lib_libfunk2_la-f2_graph_cluster.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_graph_cluster.lo `test -f 'c/f2_graph_cluster.c' || echo '$(srcdir)/'`c/f2_graph_cluster.c
+
+c/lib_libfunk2_la-f2_graph_match_error_correcting.lo: c/f2_graph_match_error_correcting.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_graph_match_error_correcting.lo -MD -MP -MF "c/$(DEPDIR)/lib_libfunk2_la-f2_graph_match_error_correcting.Tpo" -c -o c/lib_libfunk2_la-f2_graph_match_error_correcting.lo `test -f 'c/f2_graph_match_error_correcting.c' || echo '$(srcdir)/'`c/f2_graph_match_error_correcting.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/lib_libfunk2_la-f2_graph_match_error_correcting.Tpo" "c/$(DEPDIR)/lib_libfunk2_la-f2_graph_match_error_correcting.Plo"; else rm -f "c/$(DEPDIR)/lib_libfunk2_la-f2_graph_match_error_correcting.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_graph_match_error_correcting.c' object='c/lib_libfunk2_la-f2_graph_match_error_correcting.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_graph_match_error_correcting.lo `test -f 'c/f2_graph_match_error_correcting.c' || echo '$(srcdir)/'`c/f2_graph_match_error_correcting.c
+
+c/lib_libfunk2_la-f2_graphviz.lo: c/f2_graphviz.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_graphviz.lo -MD -MP -MF "c/$(DEPDIR)/lib_libfunk2_la-f2_graphviz.Tpo" -c -o c/lib_libfunk2_la-f2_graphviz.lo `test -f 'c/f2_graphviz.c' || echo '$(srcdir)/'`c/f2_graphviz.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/lib_libfunk2_la-f2_graphviz.Tpo" "c/$(DEPDIR)/lib_libfunk2_la-f2_graphviz.Plo"; else rm -f "c/$(DEPDIR)/lib_libfunk2_la-f2_graphviz.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_graphviz.c' object='c/lib_libfunk2_la-f2_graphviz.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_graphviz.lo `test -f 'c/f2_graphviz.c' || echo '$(srcdir)/'`c/f2_graphviz.c
 
 c/lib_libfunk2_la-f2_fileio.lo: c/f2_fileio.c
 @am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_fileio.lo -MD -MP -MF "c/$(DEPDIR)/lib_libfunk2_la-f2_fileio.Tpo" -c -o c/lib_libfunk2_la-f2_fileio.lo `test -f 'c/f2_fileio.c' || echo '$(srcdir)/'`c/f2_fileio.c; \
@@ -1464,20 +1492,6 @@ c/lib_libfunk2_la-f2_funktional.lo: c/f2_funktional.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_funktional.c' object='c/lib_libfunk2_la-f2_funktional.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_funktional.lo `test -f 'c/f2_funktional.c' || echo '$(srcdir)/'`c/f2_funktional.c
-
-c/lib_libfunk2_la-f2_graph.lo: c/f2_graph.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_graph.lo -MD -MP -MF "c/$(DEPDIR)/lib_libfunk2_la-f2_graph.Tpo" -c -o c/lib_libfunk2_la-f2_graph.lo `test -f 'c/f2_graph.c' || echo '$(srcdir)/'`c/f2_graph.c; \
-@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/lib_libfunk2_la-f2_graph.Tpo" "c/$(DEPDIR)/lib_libfunk2_la-f2_graph.Plo"; else rm -f "c/$(DEPDIR)/lib_libfunk2_la-f2_graph.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_graph.c' object='c/lib_libfunk2_la-f2_graph.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_graph.lo `test -f 'c/f2_graph.c' || echo '$(srcdir)/'`c/f2_graph.c
-
-c/lib_libfunk2_la-f2_graphviz.lo: c/f2_graphviz.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_graphviz.lo -MD -MP -MF "c/$(DEPDIR)/lib_libfunk2_la-f2_graphviz.Tpo" -c -o c/lib_libfunk2_la-f2_graphviz.lo `test -f 'c/f2_graphviz.c' || echo '$(srcdir)/'`c/f2_graphviz.c; \
-@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/lib_libfunk2_la-f2_graphviz.Tpo" "c/$(DEPDIR)/lib_libfunk2_la-f2_graphviz.Plo"; else rm -f "c/$(DEPDIR)/lib_libfunk2_la-f2_graphviz.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_graphviz.c' object='c/lib_libfunk2_la-f2_graphviz.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_graphviz.lo `test -f 'c/f2_graphviz.c' || echo '$(srcdir)/'`c/f2_graphviz.c
 
 c/lib_libfunk2_la-f2_html.lo: c/f2_html.c
 @am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_html.lo -MD -MP -MF "c/$(DEPDIR)/lib_libfunk2_la-f2_html.Tpo" -c -o c/lib_libfunk2_la-f2_html.lo `test -f 'c/f2_html.c' || echo '$(srcdir)/'`c/f2_html.c; \

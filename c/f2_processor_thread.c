@@ -21,7 +21,7 @@
 
 #include "funk2.h"
 
-#define REQUIRED_STACK_SIZE (2*1024*1024)
+#define REQUIRED_STACK_SIZE (8*1024*1024)
 
 int create_thread_with_large_stack(pthread_t *out_thread, void *thread_func, void *arg) {
   int            err = 0;

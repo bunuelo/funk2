@@ -54,6 +54,10 @@
 	    [cause-define bug value]
 	    [repl]]]]]
 
+[defunk critic-reactive-unknown_bug [fiber]
+  [print `critic-reactive-unknown_bug]
+  [repl]]
+
 [defunk critic-reactive-primitive_response [fiber]
   [critic-reactive-unknown_bug fiber]]
 

@@ -27,7 +27,7 @@
   [globalize last-error-fiber fiber]
   `bug_not_handled]
 
-[defunk critic-reactive-unknown_bug [fiber]
+`[defunk critic-reactive-unknown_bug [fiber]
   [ansi-stream-foreground stdout 10]
   [let [[value       [get fiber value]]
 	[bug_handled nil]]

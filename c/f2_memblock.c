@@ -52,7 +52,9 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
       }
       return found_invalid;
     }
-    case ptype_larva:        return boolean__false;
+    case ptype_larva:
+      // should check bug is reasonably valid.
+      return boolean__false;
     default:
       {
 	char str[1024];

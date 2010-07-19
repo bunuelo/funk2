@@ -40,13 +40,11 @@ void funk2_memorypool__init(funk2_memorypool_t* this) {
   rbt_tree__init(&(this->free_memory_tree), NULL);
   rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
   rbt_tree__init(&(this->used_memory_tree), NULL);
-  //funk2_gc_touch_circle_buffer__init(&(this->gc_touch_circle_buffer));
   
   funk2_memorypool__debug_memory_test(this, 1);
 }
 
 void funk2_memorypool__destroy(funk2_memorypool_t* this) {
-  //funk2_gc_touch_circle_buffer__destroy(&(this->gc_touch_circle_buffer));
   f2dynamicmemory__destroy_and_free(&(this->dynamic_memory));
 }
 
@@ -163,8 +161,7 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
     if (last->used) {
       release__assert(byte_num > old_total_global_memory, nil, "(byte_num > old_total_global_memory) because defragment was just called and there is still used memory at end.");
       funk2_memblock__byte_num(iter) = (byte_num - old_total_global_memory);
-      iter->used     = 0;
-      //iter->gc_touch = 0;
+      iter->used = 0;
       status("funk2_memorypool__change_total_memory_available: created new block with size funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(iter));
       rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)iter);
       release__assert(funk2_memblock__byte_num(iter) > 0, nil, "(funk2_memblock__byte_num(iter) >= 0) should be enough free space to reduce memory block.");
@@ -179,8 +176,7 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
     if (byte_num > old_total_global_memory) {
       funk2_memblock_t* block = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
       funk2_memblock__byte_num(block) = (byte_num - old_total_global_memory);
-      block->used     = 0;
-      //block->gc_touch = 0;
+      block->used = 0;
       rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
       release__assert(funk2_memblock__byte_num(block) > 0, nil, "(funk2_memblock__byte_num(block) > 0) should be enough free space to reduce memory block.");
     } else {
@@ -244,8 +240,8 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   {
     ptype_block_t* ptype_block = (ptype_block_t*)block;
     {
-      f2ptr             cause       = ((ptype_larva_block_t*)ptype_block)->ptype.cause;
-      ptr               cause_ptr   = f2ptr_to_ptr(cause);
+      f2ptr             cause       = ptype_block->cause;
+      f2ptr               cause_ptr   = __f2ptr_to_ptr(cause);
       funk2_memblock_t* cause_block = (funk2_memblock_t*)from_ptr(cause_ptr);
       funk2_memblock__decrement_reference_count(cause_block, cause, &(__funk2.garbage_collector));
     }
@@ -280,7 +276,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
     } break;
     case ptype_larva: {
       f2ptr             bug       = ((ptype_larva_block_t*)ptype_block)->bug;
-      ptr               bug_ptr   = f2ptr_to_ptr(bug);
+      ptr               bug_ptr   = __f2ptr_to_ptr(bug);
       funk2_memblock_t* bug_block = (funk2_memblock_t*)from_ptr(bug_ptr);
       funk2_memblock__decrement_reference_count(bug_block, bug, &(__funk2.garbage_collector));
     } break;

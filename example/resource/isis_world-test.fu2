@@ -230,9 +230,9 @@
   [let [[this [new isis_agent `Lauren]]]
     this]]
 
-[defunk isis_world-initialize []
+[defunk isis_world-initialize [hostname]
   [shelter [have isis_world destroy]]
-  [let [[client [new isis_world_client '18.85.58.18']]]
+  [let [[client [new isis_world_client hostname]]]
     [let [[isis_world [new isis_world client]]]
       [have isis_world add_agent [ralph_agent-new]]
       [have isis_world add_agent [lauren_agent-new]]

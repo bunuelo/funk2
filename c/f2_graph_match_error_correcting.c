@@ -32,9 +32,8 @@
 
 /*
   TODO:
-  - reimplement stuff using the redblacktree
-   = find the way to use redblacktree (esp. funk object) 
   - debug on more graphs
+  - What should the ecs_isomorphisms return?
   - analogies!
  */
 
@@ -53,7 +52,12 @@ f2ptr raw__bruno_graph__edges_between_nodes(f2ptr cause, f2ptr this, f2ptr left_
   }
   ptypehash__keyvalue_pair__iteration
     (cause, edges_label_hash, pair__edge_label__edges,
-     result = f2__cons__new(cause, pair__edge_label__edges, result);
+     f2ptr edge_label = f2__cons__car(cause, pair__edge_label__edges);
+     f2ptr edges      = f2__cons__cdr(cause, pair__edge_label__edges);
+     while (edges) {
+       result = f2__cons__new(cause, f2__cons__new(cause, edge_label, f2__cons__car(cause, edges)), result);
+       edges  = f2__cons__cdr(cause, edges);
+     }
      );
   return result;
 }
@@ -78,8 +82,8 @@ def_pcfunk0(ecs_edit_sequence__new, return f2__ecs_edit_sequence__new(this_cause
 f2ptr raw__ecs_edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f2ptr to, f2ptr cost_function) {
   f2ptr edit_sequence     = f2__ecs_edit_sequence__edit_sequence(cause, this);
   f2ptr new_edit_sequence = f2__cons__new(cause, f2__cons__new(cause, type, f2__cons__new(cause, from, to)), edit_sequence);
-  f2__print(cause, type); f2__print(cause, from); f2__print(cause, to);
-  f2__print(cause, f2__cons__new(cause, type, f2__cons__new(cause, from, to)));
+  //f2__print(cause, type); f2__print(cause, from); f2__print(cause, to);
+  //f2__print(cause, f2__cons__new(cause, type, f2__cons__new(cause, from, to)));
   f2__ecs_edit_sequence__edit_sequence__set(cause, this, new_edit_sequence);
   // Fix later
   u64 cost__i = f2integer__i(f2__ecs_edit_sequence__cost(cause, this), cause);
@@ -309,7 +313,7 @@ f2ptr raw__bruno_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this
 		 );
 
   // Topologically sort the decomposed graphs -- will be used for heuristics
-  printf("Prepare to TopSort...\n");
+  //printf("Prepare to TopSort...\n");
   f2ptr used_hash         = f2__ptypehash__new(cause);
   f2ptr root_to_leaf_list = nil;
   set__iteration(cause, root_graph_set, root_graph, 
@@ -322,7 +326,7 @@ f2ptr raw__bruno_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this
     leaf_to_root_list = f2__cons__new(cause, f2__cons__car(cause, leaf_to_root_revs), leaf_to_root_list);
     leaf_to_root_revs = f2__cons__cdr(cause, leaf_to_root_revs);
   }
-  printf("TopSort Done!\n"); //f2__print(cause, leaf_to_root_list); f2__print(cause, root_to_leaf_list);
+  //printf("TopSort Done!\n"); //f2__print(cause, leaf_to_root_list); f2__print(cause, root_to_leaf_list);
 
   u64 threshold = INF;
   while (1) {
@@ -425,7 +429,7 @@ f2ptr raw__bruno_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this
                    }
 		   );
     if (minimal_cost_graph == nil) break;
-    printf("%d %d\n", minimal_cost_graph, minimal_estimated_cost);
+    //printf("%d %d\n", minimal_cost_graph, minimal_estimated_cost);
     //f2__print(cause, minimal_cost_graph); 
     //Move the smallest edit sequence to closed(S)
     f2ptr minimal_cost_graph__open_edit_sequence_rbt   = f2__ptypehash__lookup(cause, open_edit_sequence_rbt_hash, minimal_cost_graph);

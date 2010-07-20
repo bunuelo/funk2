@@ -208,7 +208,7 @@ f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
   f2ptr iter = f2__fiber__stack(cause, this);
   while (iter) {
     f2ptr element = f2__cons__car(cause, iter);
-    f2__print(cause, f2__exp__as__string(cause, element));
+    //f2__print(cause, f2__exp__as__string(cause, element));
     if (raw__eq(cause, element, __funk2.compile.debug_funk_call__symbol)) {
       f2ptr iter_cdr = f2__cons__cdr(cause, iter);
       if (iter_cdr) {
@@ -225,7 +225,7 @@ f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
 	    f2ptr args = f2__cons__car(cause, iter_cdr_cdr);
 	    printf("\nargs: ");
 	    if ((args == nil) || raw__cons__is_type(cause, args)) {
-	      f2__print(cause, f2__exp__as__string(cause, args));
+	      f2__print(cause, args);
 	    } else {
 	      printf("<not cons>");
 	    }

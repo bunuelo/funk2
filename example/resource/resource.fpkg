@@ -30,6 +30,10 @@
   :packages [character]
    :sources ['story.fu2']]
 
+[defpackage story-graph
+  :packages [story]
+   :sources ['story-graph.fu2']]
+
 [defpackage propogator
   :packages [resource]
    :sources ['propogator.fu2']]

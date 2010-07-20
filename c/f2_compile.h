@@ -19,6 +19,52 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__COMPILE__TYPE__H
+#define F2__COMPILE__TYPE__H
+
+typedef struct funk2_compile_s funk2_compile_t;
+struct funk2_compile_s {
+  f2ptr cause__compiled_from__symbol;
+  f2ptr compile__exception;
+  
+  f2ptr f2__compile__funk__symbol;
+  f2ptr f2__compile__metro__symbol;
+  f2ptr f2__compile__if__symbol;
+  f2ptr f2__compile__if_exp__symbol;
+  f2ptr f2__compile__while__symbol;
+  f2ptr f2__compile__while_exp__symbol;
+  f2ptr f2__compile__return__symbol;
+  f2ptr f2__compile__return_exp__symbol;
+  f2ptr f2__compile__rawcode__symbol;
+  f2ptr f2__compile__lookup_funkvar_exp__symbol;
+  f2ptr f2__compile__eval_args__symbol;
+  f2ptr f2__compile__eval_args__current_arg__symbol;
+  f2ptr f2__compile__define_funk_exp__symbol;
+  f2ptr f2__compile__define_exp__symbol;
+  f2ptr f2__compile__mutate_exp__symbol;
+  f2ptr f2__compile__mutatefunk_exp__symbol;
+  f2ptr f2__compile__globalize_var_exp__symbol;
+  f2ptr f2__compile__globalize_funkvar_exp__symbol;
+  f2ptr f2__compile__apply_exp__symbol;
+  f2ptr f2__compile__funkvar_call__symbol;
+  f2ptr raw__apply_metro__symbol;
+  f2ptr raw__apply_funk__symbol;
+  f2ptr f2__compile__backquote_exp__symbol;
+  f2ptr f2__compile__backquote_append_exp__symbol;
+  f2ptr f2__compile__special_symbol_exp__symbol;
+  f2ptr f2__compile__cons_exp__symbol;
+  f2ptr f2__demetropolize__special_symbol_exp__symbol;
+  f2ptr f2__demetropolize__funkvar_call__symbol;
+  f2ptr f2__demetropolize_once__symbol;
+  f2ptr f2__demetropolize_full__symbol;
+  f2ptr raw__compile__symbol;
+  
+  f2ptr wrong_argument_number__bcs;
+};
+
+
+#endif // F2__COMPILE__TYPE__H
+
 #ifndef F2__COMPILE__H
 #define F2__COMPILE__H
 

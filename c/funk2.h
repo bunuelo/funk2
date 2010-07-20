@@ -148,6 +148,7 @@ typedef struct funk2_s {
   funk2_command_line_t                command_line;
   funk2_memory_t                      memory;
   funk2_globalenv_t                   globalenv;
+  funk2_compile_t                     compile;
   funk2_operating_system_t            operating_system;
   funk2_thought_process_t             thought_process;
   funk2_bytecode_t                    bytecode;

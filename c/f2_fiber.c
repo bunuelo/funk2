@@ -276,14 +276,14 @@ f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
       }
       f2ptr funkall_frame = element;
       {
-	f2ptr funk = f2__frame__lookup_var_value(cause, funkall_frame, new__symbol(cause, "funk"));
+	f2ptr funk = f2__frame__lookup_var_value(cause, funkall_frame, new__symbol(cause, "funk"), nil);
 	{
 	  if (! raw__funkable__is_type(cause, funk)) {
 	    return f2larva__new(cause, 39, nil);
 	  }
 	  f2ptr name = f2__funkable__name(cause, funk);
 	  {
-	    f2ptr arg_frame = f2__frame__lookup_var_value(cause, funkall_frame, new__symbol(cause, "arg_frame"));
+	    f2ptr arg_frame = f2__frame__lookup_var_value(cause, funkall_frame, new__symbol(cause, "arg_frame"), nil);
 	    f2__print(cause, f2list2__new(cause, name, arg_frame));
 	  }
 	}

@@ -1379,6 +1379,18 @@ f2ptr f2__funkable__name(f2ptr cause, f2ptr this) {
   }
 }
 
+f2ptr f2__funkable__args(f2ptr cause, f2ptr this) {
+  if (raw__cfunk__is_type(cause, this)) {
+    return f2cfunk__args(this, cause);
+  } else if (raw__funk__is_type(cause, this)) {
+    return f2funk__args(this, cause);
+  } else if (raw__metro__is_type(cause, this)) {
+    return f2metro__args(this, cause);
+  } else {
+    return f2larva__new(cause, 1, nil);
+  }
+}
+
 // abstract sequence getters and setters (first, next, prev)
 
 f2ptr f2__first(f2ptr cause, f2ptr exp) {

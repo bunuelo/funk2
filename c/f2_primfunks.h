@@ -920,7 +920,7 @@ f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause);
 boolean_t raw__funkable__is_type(f2ptr cause, f2ptr exp);
 f2ptr      f2__funkable__env(f2ptr cause, f2ptr this);
 f2ptr      f2__funkable__name(f2ptr cause, f2ptr this);
-  
+f2ptr      f2__funkable__args(f2ptr cause, f2ptr this);
   
 f2ptr f2__first(f2ptr cause, f2ptr exp);
 f2ptr f2__first__set(f2ptr cause, f2ptr exp, f2ptr value);

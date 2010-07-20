@@ -214,7 +214,7 @@ f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
       if (rest) {
 	f2ptr funkable = f2__cons__car(cause, rest);
 	printf("\nfunkable: "); f2__print(cause, funkable);
-	f2ptr rest = f2__cons__cdr(cause, iter);
+	f2ptr rest = f2__cons__cdr(cause, rest);
 	if (rest) {
 	  f2ptr args = f2__cons__car(cause, rest);
 	  printf("\nargs: "); f2__print(cause, args);

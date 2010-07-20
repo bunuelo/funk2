@@ -554,7 +554,7 @@ f2ptr f2__compile__if_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t
   release__assert(__funk2.compile.f2__compile__if_exp__symbol != -1, nil, "__funk2.compile.f2__compile__if_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __funk2.compile.f2__compile__if_exp__symbol, exps);
   
-  if (! raw__cons__is_type(cause, exps)) {return __compile__exception;}
+  if (! raw__cons__is_type(cause, exps)) {return __funk2.compile.compile__exception;}
   exps = f2cons__cdr(exps, cause); // skip |if|
   f2ptr cond_exp   = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause); if (!raw__cons__is_type(cause, exps)) {return __compile__exception;}
   f2ptr true_exp   = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause);
@@ -641,7 +641,7 @@ f2ptr f2__compile__while_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolea
   release__assert(__funk2.compile.f2__compile__while_exp__symbol != -1, nil, "__funk2.compile.f2__compile__while_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __funk2.compile.f2__compile__while_exp__symbol, exps);
   
-  if (! raw__cons__is_type(cause, exps)) {printf("\nf2__compile__while_exp error: exps="); f2__print(nil, exps); fflush(stdout); return __compile__exception;}
+  if (! raw__cons__is_type(cause, exps)) {printf("\nf2__compile__while_exp error: exps="); f2__print(nil, exps); fflush(stdout); return __funk2.compile.compile__exception;}
   exps = f2cons__cdr(exps, cause); // skip |while|
   f2ptr cond_exp   = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause); if (exps && (! raw__cons__is_type(cause, exps))) {printf("\ncompile error: exps="); f2__print(nil, exps); fflush(stdout); return __compile__exception;}
   
@@ -689,7 +689,7 @@ f2ptr f2__compile__return_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boole
   release__assert(__funk2.compile.f2__compile__return_exp__symbol != -1, nil, "__funk2.compile.f2__compile__return_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __funk2.compile.f2__compile__return_exp__symbol, exps);
   
-  if (! raw__cons__is_type(cause, exps)) {return __compile__exception;}
+  if (! raw__cons__is_type(cause, exps)) {return __funk2.compile.compile__exception;}
   exps = f2cons__cdr(exps, cause); // skip |return|
   f2ptr value_exp = nil;
   if (exps) {
@@ -863,7 +863,7 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolea
   release__assert(__funk2.compile.f2__compile__apply_exp__symbol != -1, nil, "__funk2.compile.f2__compile__apply_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __funk2.compile.f2__compile__apply_exp__symbol, exps);
   
-  exps = f2cons__cdr(exps, cause); if (! raw__cons__is_type(cause, exps)) {return __compile__exception;} f2ptr funk_exp = f2cons__car(exps, cause);
+  exps = f2cons__cdr(exps, cause); if (! raw__cons__is_type(cause, exps)) {return __funk2.compile.compile__exception;} f2ptr funk_exp = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! raw__cons__is_type(cause, exps)) {return __compile__exception;} f2ptr args_exp = f2cons__car(exps, cause);
   
   f2ptr full_bcs = raw__compile(cause, fiber, funk_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
@@ -1583,7 +1583,7 @@ void f2__compile__initialize() {
   f2ptr cause = f2_compile_c__cause__new(initial_cause());
   
   environment__add_var_value(cause, global_environment(), __funk2.compile.cause__compiled_from__symbol, nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.compile__exception, f2exception__new(cause, __compile__exception, nil));
+  environment__add_var_value(cause, global_environment(), __funk2.compile.compile__exception, f2exception__new(cause, __funk2.compile.compile__exception__symbol, nil));
   
   environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__funk__symbol,                     nil);
   environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__metro__symbol,                    nil);

@@ -205,7 +205,7 @@ boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber) {
 
 
 f2ptr raw__fiber__stack_trace(f2ptr cause, f2ptr this) {
-  f2ptr stack_trace = nil;
+  f2ptr reverse_stack_trace = nil;
   {
     f2ptr iter = f2__fiber__stack(cause, this);
     while (iter) {
@@ -248,7 +248,7 @@ f2ptr raw__fiber__stack_trace(f2ptr cause, f2ptr this) {
 		    f2__frame__add_var_value(cause, funkall_frame, new__symbol(cause, "arg_frame"), arg_frame);
 		  }
 		}
-		stack_trace = f2cons__new(cause, funkall_frame, stack_trace);
+		reverse_stack_trace = f2cons__new(cause, funkall_frame, reverse_stack_trace);
 	      } else {
 		//printf("<not cons>");
 	      }
@@ -259,7 +259,7 @@ f2ptr raw__fiber__stack_trace(f2ptr cause, f2ptr this) {
       iter = f2__cons__cdr(cause, iter);
     }
   }
-  return stack_trace;
+  return f2__reverse(cause, reverse_stack_trace);
 }
 
 f2ptr f2__fiber__stack_trace(f2ptr cause, f2ptr this) {

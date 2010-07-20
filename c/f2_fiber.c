@@ -210,6 +210,11 @@ f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
     f2__print(cause, f2__exp__as__string(cause, element));
     if (raw__funkable__is_type(cause, element)) {
       printf("\nfunkable: "); f2__print(cause, element);
+      f2ptr rest = f2__cons__cdr(cause, iter);
+      if (rest) {
+	f2ptr args = f2__cons__car(cause, rest);
+	printf("\nargs: "); f2__print(cause, args);
+      }
     }
     iter = f2__cons__cdr(cause, iter);
   }

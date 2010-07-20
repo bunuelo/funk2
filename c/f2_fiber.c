@@ -205,53 +205,57 @@ boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber) {
 
 
 f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
-  f2ptr iter = f2__fiber__stack(cause, this);
-  while (iter) {
-    f2ptr element = f2__cons__car(cause, iter);
-    //f2__print(cause, f2__exp__as__string(cause, element));
-    if (raw__eq(cause, element, __funk2.compile.debug_funk_call__symbol)) {
-      f2ptr iter_cdr = f2__cons__cdr(cause, iter);
-      if (iter_cdr) {
-	f2ptr funkable = f2__cons__car(cause, iter_cdr);
-	printf("\nfunkable: ");
-	if (raw__funkable__is_type(cause, funkable)) {
-	  f2__print(cause, funkable);
-	} else {
-	  printf("<not funkable>");
-	}
-	{
-	  f2ptr iter_cdr_cdr = f2__cons__cdr(cause, iter_cdr);
-	  if (iter_cdr_cdr) {
-	    f2ptr args = f2__cons__car(cause, iter_cdr_cdr);
-	    printf("\nargs: ");
-	    if ((args == nil) || raw__cons__is_type(cause, args)) {
-	      f2__print(cause, args);
-	      f2ptr funkall_frame = f2__frame__new(cause, nil);
-	      f2__frame__add_var_value(cause, funkall_frame, new__symbol(cause, "funk"), funkable);
-	      f2ptr arg_frame = f2__frame__new(cause, nil);
-	      {
-		f2ptr arg_names = f2__funkable__args(cause, funkable);
-		f2ptr arg_name_iter = arg_names;
-		f2ptr arg_iter = args;
-		while(arg_name_iter && arg_iter) {
-		  f2ptr arg_name = f2__cons__car(cause, arg_name_iter);
-		  f2ptr arg      = f2__cons__car(cause, arg_iter);
-		  f2__frame__add_var_value(cause, arg_frame, arg_name, arg);
-		  arg_name_iter = f2__cons__cdr(cause, arg_name_iter);
-		  arg_iter      = f2__cons__cdr(cause, arg_iter);
+  f2ptr stack_trace = nil;
+  {
+    f2ptr iter = f2__fiber__stack(cause, this);
+    while (iter) {
+      f2ptr element = f2__cons__car(cause, iter);
+      //f2__print(cause, f2__exp__as__string(cause, element));
+      if (raw__eq(cause, element, __funk2.compile.debug_funk_call__symbol)) {
+	f2ptr iter_cdr = f2__cons__cdr(cause, iter);
+	if (iter_cdr) {
+	  f2ptr funkable = f2__cons__car(cause, iter_cdr);
+	  printf("\nfunkable: ");
+	  if (raw__funkable__is_type(cause, funkable)) {
+	    f2__print(cause, funkable);
+	  } else {
+	    printf("<not funkable>");
+	  }
+	  {
+	    f2ptr iter_cdr_cdr = f2__cons__cdr(cause, iter_cdr);
+	    if (iter_cdr_cdr) {
+	      f2ptr args = f2__cons__car(cause, iter_cdr_cdr);
+	      printf("\nargs: ");
+	      if ((args == nil) || raw__cons__is_type(cause, args)) {
+		f2__print(cause, args);
+		f2ptr funkall_frame = f2__frame__new(cause, nil);
+		f2__frame__add_var_value(cause, funkall_frame, new__symbol(cause, "funk"), funkable);
+		f2ptr arg_frame = f2__frame__new(cause, nil);
+		{
+		  f2ptr arg_names = f2__funkable__args(cause, funkable);
+		  f2ptr arg_name_iter = arg_names;
+		  f2ptr arg_iter = args;
+		  while(arg_name_iter && arg_iter) {
+		    f2ptr arg_name = f2__cons__car(cause, arg_name_iter);
+		    f2ptr arg      = f2__cons__car(cause, arg_iter);
+		    f2__frame__add_var_value(cause, arg_frame, arg_name, arg);
+		    arg_name_iter = f2__cons__cdr(cause, arg_name_iter);
+		    arg_iter      = f2__cons__cdr(cause, arg_iter);
+		  }
 		}
+		f2__frame__add_var_value(cause, funkall_frame, new__symbol(cause, "arg_frame"), arg_frame);
+		stack_trace = f2cons__new(cause, funkall_frame, stack_trace);
+	      } else {
+		printf("<not cons>");
 	      }
-	      f2__frame__add_var_value(cause, funkall_frame, new__symbol(cause, "arg_frame"), arg_frame);
-	    } else {
-	      printf("<not cons>");
 	    }
 	  }
 	}
       }
+      iter = f2__cons__cdr(cause, iter);
     }
-    iter = f2__cons__cdr(cause, iter);
   }
-  return nil;
+  return stack_trace;
 }
 
 f2ptr f2__fiber__print_stack_trace(f2ptr cause, f2ptr this) {

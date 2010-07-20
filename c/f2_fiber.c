@@ -215,19 +215,19 @@ f2ptr raw__fiber__stack_trace(f2ptr cause, f2ptr this) {
 	f2ptr iter_cdr = f2__cons__cdr(cause, iter);
 	if (iter_cdr) {
 	  f2ptr funkable = f2__cons__car(cause, iter_cdr);
-	  printf("\nfunkable: ");
-	  if (raw__funkable__is_type(cause, funkable)) {
-	    f2__print(cause, funkable);
-	  } else {
-	    printf("<not funkable>");
-	  }
+	  //printf("\nfunkable: ");
+	  //if (raw__funkable__is_type(cause, funkable)) {
+	  //  f2__print(cause, funkable);
+	  //} else {
+	  //  printf("<not funkable>");
+	  //}
 	  {
 	    f2ptr iter_cdr_cdr = f2__cons__cdr(cause, iter_cdr);
 	    if (iter_cdr_cdr) {
 	      f2ptr args = f2__cons__car(cause, iter_cdr_cdr);
-	      printf("\nargs: ");
+	      //printf("\nargs: ");
 	      if ((args == nil) || raw__cons__is_type(cause, args)) {
-		f2__print(cause, args);
+		//f2__print(cause, args);
 		f2ptr funkall_frame = f2__frame__new(cause, nil);
 		{
 		  f2__frame__add_var_value(cause, funkall_frame, new__symbol(cause, "funk"), funkable);
@@ -250,7 +250,7 @@ f2ptr raw__fiber__stack_trace(f2ptr cause, f2ptr this) {
 		}
 		stack_trace = f2cons__new(cause, funkall_frame, stack_trace);
 	      } else {
-		printf("<not cons>");
+		//printf("<not cons>");
 	      }
 	    }
 	  }
@@ -261,6 +261,15 @@ f2ptr raw__fiber__stack_trace(f2ptr cause, f2ptr this) {
   }
   return stack_trace;
 }
+
+f2ptr f2__fiber__stack_trace(f2ptr cause, f2ptr this) {
+  if (! raw__fiber__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__fiber__stack_trace(cause, this);
+}
+def_pcfunk1(fiber__stack_trace, this, return f2__fiber__stack_trace(this_cause, this));
+
 
 f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
   f2ptr stack_trace = raw__fiber__stack_trace(cause, this);
@@ -345,7 +354,8 @@ void f2__fiber__initialize() {
   {char* symbol_str = "is_complete"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_complete__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__is_complete, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_complete__funk = never_gc(cfunk);}
   
-  f2__primcfunk__init__1(fiber__print_stack_trace, this, "Prints a stack trace to help a human understand a fiber's current execution."); 
+  f2__primcfunk__init__1(fiber__stack_trace,       this, "Returns a stack trace of this fiber's current execution."); 
+  f2__primcfunk__init__1(fiber__print_stack_trace, this, "Pretty prints a stack trace to help a human understand this fiber's current execution."); 
 
 }
 

@@ -19,38 +19,12 @@
  rights to redistribute these changes.
 '
 
-'  f2ptr full_bcs =                                    f2__compile__push_iter(cause, tracewrap); f2ptr iter = full_bcs;'  
-'  iter           = f2__conslist_cdr__set(cause, iter, f2__compile__push_value(cause, tracewrap));'
-'  iter           = f2__conslist_cdr__set(cause, iter, f2__compile__push_return(cause, tracewrap));'
-'  iter           = f2__conslist_cdr__set(cause, iter, f2__compile__push_env(cause, tracewrap));'
-
-
+[deftypefunk fiber get     stack_trace       [] [fiber-stack_trace       this]]
 [deftypefunk fiber execute print_stack_trace [] [fiber-print_stack_trace this]]
 
 
-[defmetro fiber_stack-rest       [this]      `[cdr [cdr [cdr [cdr ,this]]]]]
-[defmetro fiber_stack-env_reg    [this] `[car                     ,this]]
-[defmetro fiber_stack-return_reg [this] `[car                [cdr ,this]]]
-[defmetro fiber_stack-value_reg  [this] `[car           [cdr [cdr ,this]]]]
-[defmetro fiber_stack-args_reg   [this] `[car      [cdr [cdr [cdr ,this]]]]]
-
-[defunk fiber_stack-is_complete [this]
-  [if [is-type `cons this]
-      [let [[cdr1 [cdr this]]]
-	[if [is-type `cons cdr1]
-	    [let [[cdr2 [cdr cdr1]]]
-	      [if [is-type `cons cdr2]
-		  [let [[cdr3 [cdr cdr2]]]
-		    [if [is-type `cons cdr3]
-			t]]]]]]]]
-
-[defunk fiber_stack-get_rest [this]
-  [let [[rest [fiber_stack-rest this]]]
-    [if [fiber_stack-is_complete rest]
-	rest]]]
-
 [defunk fiber-print_backtrace [this]
-  `[format stdout '\nfiber-print_backtrace not implemented yet.']
+  [format stdout '\nfiber-print_backtrace not implemented yet.']
   nil]
 
 

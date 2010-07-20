@@ -909,7 +909,8 @@ f2ptr f2__conslistlist__append(f2ptr cause, f2ptr these);
 // sequence (array, list, doublelist, etc.)
 
 f2ptr raw__elt(f2ptr cause, f2ptr this, int raw_index);
-f2ptr f2__elt(f2ptr cause, f2ptr this, f2ptr index);
+f2ptr  f2__elt(f2ptr cause, f2ptr this, f2ptr index);
+f2ptr  f2__reverse(f2ptr cause, f2ptr this);
 
 // deprecated (use raw__elt or f2__elt instead)
 f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause);

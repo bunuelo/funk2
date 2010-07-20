@@ -556,7 +556,7 @@ f2ptr f2__compile__if_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t
   
   if (! raw__cons__is_type(cause, exps)) {return __funk2.compile.compile__exception;}
   exps = f2cons__cdr(exps, cause); // skip |if|
-  f2ptr cond_exp   = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause); if (!raw__cons__is_type(cause, exps)) {return __compile__exception;}
+  f2ptr cond_exp   = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause); if (!raw__cons__is_type(cause, exps)) {return __funk2.compile.compile__exception;}
   f2ptr true_exp   = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause);
   
   f2ptr false_exps = exps;
@@ -643,7 +643,7 @@ f2ptr f2__compile__while_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolea
   
   if (! raw__cons__is_type(cause, exps)) {printf("\nf2__compile__while_exp error: exps="); f2__print(nil, exps); fflush(stdout); return __funk2.compile.compile__exception;}
   exps = f2cons__cdr(exps, cause); // skip |while|
-  f2ptr cond_exp   = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause); if (exps && (! raw__cons__is_type(cause, exps))) {printf("\ncompile error: exps="); f2__print(nil, exps); fflush(stdout); return __compile__exception;}
+  f2ptr cond_exp   = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause); if (exps && (! raw__cons__is_type(cause, exps))) {printf("\ncompile error: exps="); f2__print(nil, exps); fflush(stdout); return __funk2.compile.compile__exception;}
   
   f2ptr loop_exps = exps;
   if (loop_exps && (! raw__cons__is_type(cause, loop_exps))) {printf("\nf2__compile__while_exp error: loop_exps="); f2__print(nil, loop_exps); fflush(stdout); return loop_exps;}
@@ -694,7 +694,7 @@ f2ptr f2__compile__return_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boole
   f2ptr value_exp = nil;
   if (exps) {
     value_exp = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause);
-    if (exps) {return __compile__exception;}
+    if (exps) {return __funk2.compile.compile__exception;}
   }
   
   boolean_t value_popped_env_and_return = boolean__false;
@@ -864,7 +864,7 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolea
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __funk2.compile.f2__compile__apply_exp__symbol, exps);
   
   exps = f2cons__cdr(exps, cause); if (! raw__cons__is_type(cause, exps)) {return __funk2.compile.compile__exception;} f2ptr funk_exp = f2cons__car(exps, cause);
-  exps = f2cons__cdr(exps, cause); if (! raw__cons__is_type(cause, exps)) {return __compile__exception;} f2ptr args_exp = f2cons__car(exps, cause);
+  exps = f2cons__cdr(exps, cause); if (! raw__cons__is_type(cause, exps)) {return __funk2.compile.compile__exception;} f2ptr args_exp = f2cons__car(exps, cause);
   
   f2ptr full_bcs = raw__compile(cause, fiber, funk_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
   if (raw__larva__is_type(cause, full_bcs)) {
@@ -1583,7 +1583,7 @@ void f2__compile__initialize() {
   f2ptr cause = f2_compile_c__cause__new(initial_cause());
   
   environment__add_var_value(cause, global_environment(), __funk2.compile.cause__compiled_from__symbol, nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.compile__exception, f2exception__new(cause, __funk2.compile.compile__exception__symbol, nil));
+  environment__add_var_value(cause, global_environment(), __funk2.compile.compile__exception, f2exception__new(cause, __funk2.compile.compile__exception, nil));
   
   environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__funk__symbol,                     nil);
   environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__metro__symbol,                    nil);

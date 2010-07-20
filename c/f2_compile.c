@@ -154,11 +154,13 @@ def_pcfunk1(wrong_argument_number__bcs__set, bytecodes, return f2__wrong_argumen
 f2ptr f2__compile__push_debug_funk_call(f2ptr cause) {
   f2ptr full_bcs =                      f2__compile__push_args( cause); f2ptr iter = full_bcs;
   iter = f2__list_cdr__set(cause, iter, f2__compile__push_value(cause));
+  iter = f2__list_cdr__set(cause, iter, f2__compile__push_constant(cause, new__symbol(cause, "debug_funk_call")));
   return full_bcs;
 }
 
 f2ptr f2__compile__pop_debug_funk_call(f2ptr cause) {
   f2ptr full_bcs =                      f2__compile__pop_nil(cause); f2ptr iter = full_bcs;
+  iter = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause));
   iter = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause));
   return full_bcs;
 }

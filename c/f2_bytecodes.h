@@ -123,7 +123,7 @@ int                    f2__fiber__bytecode__array_elt__set(                  f2p
 int                    f2__fiber__bytecode__set(                             f2ptr fiber, f2ptr bytecode, f2ptr reg, f2ptr exp);
 int                    f2__fiber__bytecode__nop(                             f2ptr fiber, f2ptr bytecode);
 int                    f2__fiber__bytecode__swap(                            f2ptr fiber, f2ptr bytecode, f2ptr reg0, f2ptr reg1);
-int                    f2__fiber__bytecode__push_constant(                   f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__push_constant(                   f2ptr fiber, f2ptr bytecode, f2ptr constant);
 int                    f2__fiber__bytecode__push(                            f2ptr fiber, f2ptr bytecode, f2ptr reg);
 int                    f2__fiber__bytecode__pop(                             f2ptr fiber, f2ptr bytecode, f2ptr reg);
 int                    f2__fiber__bytecode__copy(                            f2ptr fiber, f2ptr bytecode, f2ptr src_reg, f2ptr dest_reg);

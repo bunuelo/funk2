@@ -32,6 +32,7 @@
   [let [[value       [get fiber value]]
 	[bug_handled nil]]
     [print value]
+    [have fiber print_stack_trace]
     [if [is-type `bug value]
 	[let [[bug  value]]
 	  [let [[type [object-get bug `bug_type]]]

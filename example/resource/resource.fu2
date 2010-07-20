@@ -59,8 +59,6 @@
 					  ]
 					[format stdout '\nresource status: done.  (name = ' [get this name] ').\n']]]
 				nil]]
-  'There is a bug in Funk that drops dead fibers for some reason.  This might help:'
-  [set [get this fiber] keep_undead t]
   this]
 
 [defmetro resource [name args :rest body]
@@ -79,7 +77,9 @@
 	  [have active_mutex unlock]]
     [if successful_activation
 	nil
-      [error object_type `resource object_typefunk `activate error_type `resource-is-already-activated]]]]
+      [error object_type     `resource
+	     object_typefunk `activate
+	     error_type      `resource-is-already-activated]]]]
 
 [deftypefunk resource execute finish []
   [let [[finished     nil]

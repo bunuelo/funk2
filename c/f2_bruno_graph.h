@@ -101,6 +101,8 @@ u64       raw__bruno_graph_isomorphism__mapping_count    (f2ptr cause, f2ptr thi
 f2ptr      f2__bruno_graph_isomorphism__mapping_count    (f2ptr cause, f2ptr this);
 boolean_t raw__bruno_graph_isomorphism__is_disjoint_with (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__bruno_graph_isomorphism__is_disjoint_with (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__bruno_graph_isomorphism__union            (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__bruno_graph_isomorphism__union            (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr     raw__bruno_graph_isomorphism__map_left_to_right(f2ptr cause, f2ptr this, f2ptr left_node);
 f2ptr      f2__bruno_graph_isomorphism__map_left_to_right(f2ptr cause, f2ptr this, f2ptr left_node);
 f2ptr     raw__bruno_graph_isomorphism__map_right_to_left(f2ptr cause, f2ptr this, f2ptr right_node);

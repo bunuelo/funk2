@@ -41,6 +41,7 @@ typedef struct funk2_bytecode_s {
   f2ptr bytecode__set__symbol;
   f2ptr bytecode__swap__symbol;
   f2ptr bytecode__push__symbol;
+  f2ptr bytecode__push_constant__symbol;
   f2ptr bytecode__pop__symbol;
   f2ptr bytecode__copy__symbol;
   f2ptr bytecode__lookup_type_var__symbol;
@@ -78,8 +79,8 @@ typedef struct funk2_bytecode_s {
 void funk2_bytecode__init(funk2_bytecode_t* this);
 void funk2_bytecode__destroy(funk2_bytecode_t* this);
 
-// there is no significance to the fact that the cause and fiber variables appear in different orders for the fiber push and pop functions.
-// a global decision should be made as to the correct order, which is typically now: function_name(f2ptr object, [f2ptr index,] f2ptr cause, f2ptr arg0, f2ptr arg1, ...)
+// There is no significance to the fact that the cause and fiber variables appear in different orders for the fiber push and pop functions.
+// A global decision has been made as to the correct order: (funk2_type_t subfunk_this, f2ptr cause, f2ptr fiber, f2ptr this, f2ptr arg0, f2ptr arg1, ...)
 
 void f2__fiber__stack__push_value(f2ptr cause, f2ptr fiber);
 void f2__fiber__stack__push_iter(f2ptr cause, f2ptr fiber);
@@ -122,6 +123,7 @@ int                    f2__fiber__bytecode__array_elt__set(                  f2p
 int                    f2__fiber__bytecode__set(                             f2ptr fiber, f2ptr bytecode, f2ptr reg, f2ptr exp);
 int                    f2__fiber__bytecode__nop(                             f2ptr fiber, f2ptr bytecode);
 int                    f2__fiber__bytecode__swap(                            f2ptr fiber, f2ptr bytecode, f2ptr reg0, f2ptr reg1);
+int                    f2__fiber__bytecode__push_constant(                   f2ptr fiber, f2ptr bytecode, f2ptr constant);
 int                    f2__fiber__bytecode__push(                            f2ptr fiber, f2ptr bytecode, f2ptr reg);
 int                    f2__fiber__bytecode__pop(                             f2ptr fiber, f2ptr bytecode, f2ptr reg);
 int                    f2__fiber__bytecode__copy(                            f2ptr fiber, f2ptr bytecode, f2ptr src_reg, f2ptr dest_reg);

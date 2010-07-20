@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2010 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,10 +15,9 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
-[deftypefunk fiber get     stack_trace       [] [fiber-stack_trace       this]]
-[deftypefunk fiber execute print_stack_trace [] [fiber-print_stack_trace this]]
+[globalize-funk fiber-stack_trace       &primfunk:fiber__stack_trace]
+[globalize-funk fiber-print_stack_trace &primfunk:fiber__print_stack_trace]
 
 

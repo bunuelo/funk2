@@ -311,12 +311,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
   return f2larva__new(cause, 1, nil);
 }
 
-f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments) {
-  if ((! raw__string__is_type(cause, url)) ||
-      ((! raw__string__is_type(cause, funkname)) && (! raw__symbol__is_type(cause, funkname)))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  
+f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments) {
   u64 url__length = raw__string__length(cause, url);
   u8* url__str    = (u8*)alloca(url__length + 1);
   raw__string__str_copy(cause, url, url__str);
@@ -440,6 +435,8 @@ void funk2_xmlrpc__init(funk2_xmlrpc_t* this) {
 }
 
 void funk2_xmlrpc__destroy(funk2_xmlrpc_t* this) {
+  // no servers could have been created without xmlrpc support.
+#if defined(F2__XMLRPC_SUPPORTED)
   funk2_xmlrpc_server_list_t* next;
   funk2_xmlrpc_server_list_t* iter = this->servers;
   while (iter) {
@@ -449,9 +446,12 @@ void funk2_xmlrpc__destroy(funk2_xmlrpc_t* this) {
     f2__free(to_ptr(iter));
     iter = next;
   }
+#endif
 }
 
 void funk2_xmlrpc__handle_destroying_dead_servers(funk2_xmlrpc_t* this) {
+  // no servers could have been created without xmlrpc support.
+#if defined(F2__XMLRPC_SUPPORTED)
   funk2_xmlrpc_server_list_t* prev = NULL;
   funk2_xmlrpc_server_list_t* next;
   funk2_xmlrpc_server_list_t* iter = this->servers;
@@ -471,6 +471,7 @@ void funk2_xmlrpc__handle_destroying_dead_servers(funk2_xmlrpc_t* this) {
     prev = iter;
     iter = next;
   }
+#endif
 }
 
 void funk2_xmlrpc__handle(funk2_xmlrpc_t* this) {
@@ -509,7 +510,26 @@ f2ptr f2__xmlrpc__create_new_server(f2ptr cause, f2ptr port_num) {
 def_pcfunk1(xmlrpc__create_new_server, port_num, return f2__xmlrpc__create_new_server(this_cause, port_num));
 
 
+f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments) {
+  if ((! raw__string__is_type(cause, url)) ||
+      ((! raw__string__is_type(cause, funkname)) && (! raw__symbol__is_type(cause, funkname)))) {
+    return f2larva__new(cause, 1, nil);
+  }
+#if defined(F2__XMLRPC_SUPPORTED)
+  return raw__xmlrpc__apply(cause, url, funkname, arguments);
+#else
+  f2ptr bug_frame = f2__frame__new(cause, nil);
+  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),        new__symbol(cause, "xmlrpc_not_supported"));
+  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),        new__symbol(cause, "xmlrpc-apply"));
+  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "url"),             url);
+  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "remote_funkname"), funkname);
+  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "arguments"),       arguments);
+  return f2larva__new(cause, 435, f2__bug__new(cause, f2integer__new(cause, 435), bug_frame));
+#endif // F2__XMLRPC_SUPPORTED
+}
 def_pcfunk3(xmlrpc__apply, url, funkname, arguments, return f2__xmlrpc__apply(this_cause, url, funkname, arguments));
+
+
 
 
 // **

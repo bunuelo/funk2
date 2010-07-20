@@ -204,7 +204,12 @@ boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber) {
 
 
 f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
-  
+  f2ptr iter = f2__fiber__stack(cause, this);
+  while (iter) {
+    f2ptr element = f2__cons__car(cause, iter);
+    f2__print(cause, f2__exp__as__string(cause, element));
+    iter = f2__cons__cdr(cause, iter);
+  }
   return nil;
 }
 

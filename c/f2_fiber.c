@@ -224,7 +224,7 @@ f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
 	  f2ptr args = f2__cons__car(cause, rest);
 	  printf("\nargs: ");
 	  if (raw__cons__is_type(cause, args)) {
-	    f2__print(cause, f2__exp__as_string(cause, args));
+	    f2__print(cause, f2__exp__as__string(cause, args));
 	  } else {
 	    printf("<not cons>");
 	  }

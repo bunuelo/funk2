@@ -151,7 +151,7 @@ def_pcfunk1(wrong_argument_number__bcs__set, bytecodes, return f2__wrong_argumen
 f2ptr f2__compile__push_debug_funk_call(f2ptr cause) {
   f2ptr full_bcs =                      f2__compile__push_args( cause); f2ptr iter = full_bcs;
   iter = f2__list_cdr__set(cause, iter, f2__compile__push_value(cause));
-  iter = f2__list_cdr__set(cause, iter, f2__compile__push_constant(cause, new__symbol(cause, "debug_funk_call")));
+  iter = f2__list_cdr__set(cause, iter, f2__compile__push_constant(cause, __funk2.compile.debug_funk_call__symbol));
   return full_bcs;
 }
 
@@ -1571,6 +1571,8 @@ void f2__compile__reinitialize_globalvars() {
   {char* str = "compile:f2__demetropolize_once";                __funk2.compile.f2__demetropolize_once__symbol                = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__demetropolize_full";                __funk2.compile.f2__demetropolize_full__symbol                = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:raw__compile";                          __funk2.compile.raw__compile__symbol                          = f2symbol__new(cause, strlen(str), (u8*)str);}
+  
+  {char* str = "debug_funk_call";                               __funk2.compile.debug_funk_call__symbol                       = f2symbol__new(cause, strlen(str), (u8*)str);}
   
   __funk2.compile.wrong_argument_number__bcs = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "--wrong_argument_number-bcs--"));
 }

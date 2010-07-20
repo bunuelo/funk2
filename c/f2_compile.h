@@ -59,6 +59,8 @@ struct funk2_compile_s {
   f2ptr f2__demetropolize_full__symbol;
   f2ptr raw__compile__symbol;
   
+  f2ptr debug_funk_call__symbol;
+  
   f2ptr wrong_argument_number__bcs;
 };
 

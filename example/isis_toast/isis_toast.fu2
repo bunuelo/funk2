@@ -82,6 +82,7 @@
 	[have [get this agency `physical] call `sense]
 	[print '0']
         [let [[x_pos [have [have [have [have this lookup `sensory_state] lookup `object] lookup my_object] lookup `x_pos]]]
+	  [print [exp-as-string [have [have [have [isis-call isis sense agent 'Ralph'] lookup `object] lookup my_object] lookup `x_pos]]
           [if [>  x_pos 0.02]
               [prog '[call turn_left 0.1]'
 		    [print 'x too positive']
@@ -96,16 +97,17 @@
 		      [millisleep 100]
 		      [print 'i turned right']
 		      [have this turn_left_and_right]]
-	      
-	      [print 'im centered']]]]]
-      [print 'finished turning left and right']
+	      [print 'im centered']]]]]]
       [have this turn_left_and_right]
+      [print 'finished turning left and right']
       [print 'finished centering']]
-    [defresource agent physical move_around_object [obstacle_object]]
-      
+ ]
+  this]
 
- 
-        [print [exp-as-string [have [have [have [isis-call isis sense agent 'Ralph'] lookup `object] lookup my_object] lookup `x_pos]]
+   `[defresource agent physical move_around_object [obstacle_object]]
+      
+    
+      
          
 
 [deftypefunk blockman execute step_simulator [second]

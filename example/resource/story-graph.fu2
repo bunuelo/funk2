@@ -1,0 +1,82 @@
+
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+'[deframe          story_graph [frame] [event_list event_node_hash character_list bruno_graph]]
+[deftypeconstruct story_graph []
+  [let bruno_graph [new bruno_graph]]
+  [set this event_list nil]
+  [set this character_list nil]
+  [set this bruno_graph bruno_graph]
+  [
+  this]
+
+
+
+
+
+[deftypefunk story_graph execute add_event [event]
+  [set this event_list [cons event [get this event_list]]]
+  [conslist-sort [get this `event_list] [funk [event-x event-y]
+					      [< [get event-x time][get event-y time]]]]
+  [defunk find_neighbors [event_list event]
+    [let [[left_node_label nil] [right_node_label nil]]
+      [cond [eq event [car [event_list]]]
+	    [prog[= right_node_label [have [cadr[event_list]] lookup `action_name]] 
+		 [= left_node_label  []]]]]]]'
+
+[deftypefunk story_event get as-graph []
+  `[print 'debug 0']
+  [let [[graph [new bruno_graph]]]
+    `[print 'debug 0.1']
+    [let* [[story_event [new bruno_graph_node `story_event]]
+	  [time        [new bruno_graph_node [string-as-symbol [exp-as-string [have this lookup `time]]]]]
+	  [action      [new bruno_graph_node [have this lookup `action_name]]]
+	  [character   [new bruno_graph_node [have this lookup `character_name]]]
+	  [prep_frame  [new bruno_graph_node `prepositional_frame]]
+	  [time_edge       [new bruno_graph_edge `time                story_event time]]
+	  [action_edge     [new bruno_graph_edge `action              story_event action]]
+	  [character_edge  [new bruno_graph_edge `character           story_event character]]
+	  [prep_frame_edge [new bruno_graph_edge `prepositional_frame story_event prep_frame]]]
+      `[print 'debug1']
+      [have graph add_edge time_edge]
+      [have graph add_edge action_edge]
+      [have graph add_edge character_edge]
+      [have graph add_edge prep_frame_edge]
+      `[print 'debug 2']
+      [let [[prepositional_frame [have this lookup `prepositional_frame]]]
+	[let [[direct_object [have prepositional_frame lookup `direct_object]]]
+	  `[print 'debug 3']
+	  [mapcar [funk [preposition]
+			[if [eq preposition `direct_object]
+			    [prog [let* [[direct_object_node [new bruno_graph_node direct_object]]
+					[direct_object_edge [new bruno_graph_edge `direct_object prep_frame direct_object_node]]]
+				    [have graph add_edge direct_object_edge]]]
+			  [prog [let* [[preposition_node [new bruno_graph_node [have prepositional_frame lookup preposition]]]
+				      [preposition_edge   [new bruno_graph_edge preposition  prep_frame preposition_node]]]
+				      [have graph add_edge preposition_edge]]]]]
+			[get prepositional_frame slots]]]]]
+    `[print 'debug 4']
+      graph]]
+
+[globalize my_prep_frame  [new frame]]
+[have my_prep_frame add `direct_object `tomato]
+[have my_prep_frame add `towards `mom]
+[globalize my_story_event [new story_event 140 `sit_down `Ralph my_prep_frame]]
+  

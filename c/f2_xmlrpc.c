@@ -435,6 +435,8 @@ void funk2_xmlrpc__init(funk2_xmlrpc_t* this) {
 }
 
 void funk2_xmlrpc__destroy(funk2_xmlrpc_t* this) {
+  // no servers could have been created without xmlrpc support.
+#if defined(F2__XMLRPC_SUPPORTED)
   funk2_xmlrpc_server_list_t* next;
   funk2_xmlrpc_server_list_t* iter = this->servers;
   while (iter) {
@@ -444,6 +446,7 @@ void funk2_xmlrpc__destroy(funk2_xmlrpc_t* this) {
     f2__free(to_ptr(iter));
     iter = next;
   }
+#endif
 }
 
 void funk2_xmlrpc__handle_destroying_dead_servers(funk2_xmlrpc_t* this) {

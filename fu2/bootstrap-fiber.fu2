@@ -23,8 +23,3 @@
 [deftypefunk fiber execute print_stack_trace [] [fiber-print_stack_trace this]]
 
 
-[defunk fiber-print_backtrace [this]
-  [format stdout '\nfiber-print_backtrace not implemented yet.']
-  nil]
-
-

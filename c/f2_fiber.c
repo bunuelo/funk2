@@ -226,6 +226,22 @@ f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
 	    printf("\nargs: ");
 	    if ((args == nil) || raw__cons__is_type(cause, args)) {
 	      f2__print(cause, args);
+	      f2ptr funkall_frame = f2__frame__new(cause, nil);
+	      f2__frame__add_var_value(cause, funkall_frame, new__symbol(cause, "funk"), funkable);
+	      f2ptr arg_frame = f2__frame__new(cause, nil);
+	      {
+		f2ptr arg_names = f2__funkable__args(cause, funkable);
+		f2ptr arg_name_iter = arg_names;
+		f2ptr arg_iter = args;
+		while(arg_name_iter && arg_iter) {
+		  f2ptr arg_name = f2__cons__car(cause, arg_name_iter);
+		  f2ptr arg      = f2__cons__car(cause, arg_iter);
+		  f2__frame__add_var_value(cause, arg_frame, arg_name, arg);
+		  arg_name_iter = f2__cons__cdr(cause, arg_name_iter);
+		  arg_iter      = f2__cons__cdr(cause, arg_iter);
+		}
+	      }
+	      f2__frame__add_var_value(cause, funkall_frame, new__symbol(cause, "arg_frame"), arg_frame);
 	    } else {
 	      printf("<not cons>");
 	    }

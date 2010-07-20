@@ -210,23 +210,25 @@ f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
     f2ptr element = f2__cons__car(cause, iter);
     f2__print(cause, f2__exp__as__string(cause, element));
     if (raw__eq(cause, element, __funk2.compile.debug_funk_call__symbol)) {
-      f2ptr rest = f2__cons__cdr(cause, iter);
-      if (rest) {
-	f2ptr funkable = f2__cons__car(cause, rest);
+      f2ptr iter_cdr = f2__cons__cdr(cause, iter);
+      if (iter_cdr) {
+	f2ptr funkable = f2__cons__car(cause, iter_cdr);
 	printf("\nfunkable: ");
 	if (raw__funkable__is_type(cause, funkable)) {
 	  f2__print(cause, funkable);
 	} else {
 	  printf("<not funkable>");
 	}
-	f2ptr rest = f2__cons__cdr(cause, rest);
-	if (rest) {
-	  f2ptr args = f2__cons__car(cause, rest);
-	  printf("\nargs: ");
-	  if (raw__cons__is_type(cause, args)) {
-	    f2__print(cause, f2__exp__as__string(cause, args));
-	  } else {
-	    printf("<not cons>");
+	{
+	  f2ptr iter_cdr_cdr = f2__cons__cdr(cause, iter_cdr);
+	  if (iter_cdr_cdr) {
+	    f2ptr args = f2__cons__car(cause, iter_cdr_cdr);
+	    printf("\nargs: ");
+	    if (raw__cons__is_type(cause, args)) {
+	      f2__print(cause, f2__exp__as__string(cause, args));
+	    } else {
+	      printf("<not cons>");
+	    }
 	  }
 	}
       }

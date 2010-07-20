@@ -204,7 +204,7 @@ boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber) {
 }
 
 
-f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
+f2ptr raw__fiber__stack_trace(f2ptr cause, f2ptr this) {
   f2ptr stack_trace = nil;
   {
     f2ptr iter = f2__fiber__stack(cause, this);
@@ -230,10 +230,7 @@ f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
 		f2__print(cause, args);
 		f2ptr funkall_frame = f2__frame__new(cause, nil);
 		{
-		  {
-		    f2ptr name = f2__funkable__name(cause, funkable);
-		    f2__frame__add_var_value(cause, funkall_frame, new__symbol(cause, "name"), name);
-		  }
+		  f2__frame__add_var_value(cause, funkall_frame, new__symbol(cause, "funk"), funkable);
 		  {
 		    f2ptr arg_frame = f2__frame__new(cause, nil);
 		    {
@@ -263,6 +260,38 @@ f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
     }
   }
   return stack_trace;
+}
+
+f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
+  f2ptr stack_trace = raw__fiber__stack_trace(cause, this);
+  if (raw__larva__is_type(cause, stack_trace)) {
+    return stack_trace;
+  }
+  f2ptr iter = stack_trace;
+  while (iter) {
+    f2ptr element = f2__cons__car(cause, iter);
+    {
+      if (!raw__frame__is_type(cause, element)) {
+	return f2larva__new(cause, 39, nil);
+      }
+      f2ptr funkall_frame = element;
+      {
+	f2ptr funk = f2__frame__lookup_var_value(cause, funkall_frame, new__symbol(cause, "funk"));
+	{
+	  if (! raw__funkable__is_type(cause, funk)) {
+	    return f2larva__new(cause, 39, nil);
+	  }
+	  f2ptr name = f2__funkable__name(cause, funk);
+	  {
+	    f2ptr arg_frame = f2__frame__lookup_var_value(cause, funkall_frame, new__symbol(cause, "arg_frame"));
+	    f2__print(cause, f2list2__new(cause, name, arg_frame));
+	  }
+	}
+      }
+    }
+    iter = f2__cons__cdr(cause, iter);
+  }
+  return nil;
 }
 
 f2ptr f2__fiber__print_stack_trace(f2ptr cause, f2ptr this) {

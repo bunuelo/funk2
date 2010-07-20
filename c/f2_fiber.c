@@ -208,6 +208,9 @@ f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
   while (iter) {
     f2ptr element = f2__cons__car(cause, iter);
     f2__print(cause, f2__exp__as__string(cause, element));
+    if (raw__funkable__is_type(cause, element)) {
+      printf("\nfunkable: "); f2__print(cause, element);
+    }
     iter = f2__cons__cdr(cause, iter);
   }
   return nil;

@@ -88,6 +88,16 @@
 [defmetro mind-knowledge [mind layer_name agency_name]
   `[get ,mind knowledge [quote ,layer_name] [quote ,agency_name]]]
 
+[deftypefunk mind get resources []
+  [let [[resources nil]]
+    [mapc [funk [layer]
+		[mapc [funk [agency]
+			    [mapc [funk [resource]
+					[= resources [cons resource resources]]]
+				  [get agency resources]]]
+		      [get layer agencies]]]
+	  [get this layers]]
+    resources]]
 
 [deftypefunk mind get self_model []
   [let [[self_model [new self_model]]]
@@ -108,4 +118,11 @@
 				[get agency resources]]]
 		    [get layer agencies]]]
 	[get this layers]]]
+
+[deftypefunk mind execute print_stack_traces []
+  [let [[resources [get this resources]]]
+    [mapc [funk [resource]
+		[format stdout '\n***' [get resource name] '***']
+		[have resource print_stack_trace]]
+	  resources]]]
 

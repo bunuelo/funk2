@@ -107,4 +107,10 @@
   [have-apply this activate args]
   [have this finish]]
 
+[deftypefunk resource get stack_trace []
+  [get [get this fiber] stack_trace]]
+
+[deftypefunk resource execute print_stack_trace []
+  [have [get this fiber] print_stack_trace]]
+
 

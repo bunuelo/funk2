@@ -33,6 +33,7 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->bytecode__cdr__set__symbol           = -1;
   this->bytecode__array_elt__symbol          = -1;
   this->bytecode__swap__symbol               = -1;
+  this->bytecode__push_constant__symbol      = -1;
   this->bytecode__push__symbol               = -1;
   this->bytecode__pop__symbol                = -1;
   this->bytecode__copy__symbol               = -1;
@@ -68,6 +69,10 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
 }
 
 void funk2_bytecode__destroy(funk2_bytecode_t* this) {
+}
+
+void f2__fiber__stack__push_constant(f2ptr cause, f2ptr fiber, f2ptr constant) {
+  f2fiber__stack__set(fiber, cause, f2cons__new(cause, constant, f2fiber__stack(fiber, cause)));
 }
 
 void f2__fiber__stack__push_value(f2ptr cause, f2ptr fiber) {
@@ -771,6 +776,19 @@ int f2__fiber__bytecode__swap(f2ptr fiber, f2ptr bytecode, f2ptr reg0, f2ptr reg
   return (f2__compile__bytecode__swap(cause, reg0, reg1))(fiber, bytecode);
 }
 
+
+// bytecode push_constant [constant]
+
+int f2__fiber__bytecode__push_constant(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode push_constant beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  f2ptr constant = f2bytecode__arg0(bytecode, cause);
+  f2__fiber__stack__push_constant(cause, fiber, constant);
+  return 0;
+}
 
 // bytecode push [reg]
 
@@ -1955,6 +1973,7 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.bytecode__set__symbol                 = new__symbol(cause, "set");
   __funk2.bytecode.bytecode__swap__symbol                = new__symbol(cause, "swap");
   __funk2.bytecode.bytecode__push__symbol                = new__symbol(cause, "push");
+  __funk2.bytecode.bytecode__push_constant__symbol       = new__symbol(cause, "push_constant");
   __funk2.bytecode.bytecode__pop__symbol                 = new__symbol(cause, "pop");
   __funk2.bytecode.bytecode__copy__symbol                = new__symbol(cause, "copy");
   __funk2.bytecode.bytecode__lookup_type_var__symbol     = new__symbol(cause, "lookup");

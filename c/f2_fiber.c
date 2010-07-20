@@ -239,7 +239,17 @@ f2ptr raw__fiber__stack_trace(f2ptr cause, f2ptr this) {
 		      f2ptr arg_iter = args;
 		      while(arg_name_iter && arg_iter) {
 			f2ptr arg_name = f2__cons__car(cause, arg_name_iter);
-			f2ptr arg      = f2__cons__car(cause, arg_iter);
+			f2ptr arg      = nil;
+			if (raw__eq(cause, arg_name, __funk2.globalenv.and_rest__symbol)) {
+			  f2ptr arg_name_iter_cdr = f2__cons__cdr(cause, arg_name_iter);
+			  if (arg_name_iter_cdr) {
+			    arg_name_iter = arg_name_iter_cdr; // skip ahead one in arg names.
+			    arg_name      = f2__cons__car(cause, arg_name_iter_cdr);
+			    arg           = arg_iter;
+			  }
+			} else {
+			  arg = f2__cons__car(cause, arg_iter);
+			}
 			f2__frame__add_var_value(cause, arg_frame, arg_name, arg);
 			arg_name_iter = f2__cons__cdr(cause, arg_name_iter);
 			arg_iter      = f2__cons__cdr(cause, arg_iter);

@@ -50,7 +50,7 @@ f2ptr f2__bruno_graph__new(f2ptr cause) {
   f2ptr nodes_label_hash                                = f2__ptypehash__new(cause);
   f2ptr edges_label_hash_right_node_hash_left_node_hash = f2__ptypehash__new(cause);
   f2ptr edges_label_hash_left_node_hash_right_node_hash = f2__ptypehash__new(cause);
-  return f2bruno_graph__new(cause, node_set, edge_set, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);
+  return f2bruno_graph__new(cause, node_set, edge_set, nodes_label_hash, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);
 }
 def_pcfunk0(bruno_graph__new, return f2__bruno_graph__new(this_cause));
 

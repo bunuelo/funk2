@@ -31,6 +31,8 @@ declare_object_type_19_slot(fiber, program_counter, stack, iter, env, args, retu
 			    f2ptr sleep_for_nanoseconds__funk;
 			    f2ptr is_complete__symbol; // get
 			    f2ptr is_complete__funk;
+			    f2ptr quit__symbol; // execute
+			    f2ptr quit__funk;
 			    );
 
 

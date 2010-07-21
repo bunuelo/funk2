@@ -114,13 +114,16 @@
     self_model]]
 
 [deftypefunk mind execute destroy []
-  [mapc [funk [layer]
-	      [mapc [funk [agency]
-			  [mapc [funk [resource]
-				      [have resource destroy]]
-				[get agency resources]]]
-		    [get layer agencies]]]
-	[get this layers]]]
+  [mapc [funk [resource]
+	      [have resource destroy]]
+	[get this resources]]]
+
+[deftypefunk mind execute quit []
+  [have this destroy]
+  [sleep 1]
+  [mapc [funk [resource]
+	      [have resource quit]]
+	[get this resources]]]
 
 [deftypefunk mind execute print_stack_traces []
   [let [[resources [get this resources]]]

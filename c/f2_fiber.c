@@ -90,11 +90,29 @@ f2ptr f2__fiber__is_complete(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(fiber__is_complete, this, return f2__fiber__is_complete(this_cause, this));
 
+void raw__fiber__quit(f2ptr cause, f2ptr this) {
+  f2ptr execute_mutex = f2__fiber__execute_mutex(cause, this);
+  f2__mutex__lock(cause, execute_mutex);
+  f2__fiber__program_counter__set(cause, this, nil);
+  f2__mutex__unlock(cause, execute_mutex);
+}
+
+f2ptr f2__fiber__quit(f2ptr cause, f2ptr this) {
+  if (! raw__fiber__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__fiber__quit(cause, this);
+  return nil;
+}
+def_pcfunk1(fiber__quit, this, return f2__fiber__quit(this_cause, this));
+
+
 f2ptr f2fiber__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2fiber__primobject_type__new(cause);
-  {char* slot_name = "do_sleep_until_time";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk);}
-  {char* slot_name = "sleep_for_nanoseconds"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__funk);}
-  {char* slot_name = "is_complete";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_complete__funk);}
+  {char* slot_name = "do_sleep_until_time";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk);}
+  {char* slot_name = "sleep_for_nanoseconds"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__funk);}
+  {char* slot_name = "is_complete";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_complete__funk);}
+  {char* slot_name = "quit";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.quit__funk);}
   return this;
 }
 
@@ -360,6 +378,9 @@ void f2__fiber__initialize() {
   
   {char* symbol_str = "is_complete"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_complete__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__is_complete, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_complete__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "quit"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.quit__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__quit, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.quit__funk = never_gc(cfunk);}
   
   f2__primcfunk__init__1(fiber__stack_trace,       this, "Returns a stack trace of this fiber's current execution."); 
   f2__primcfunk__init__1(fiber__print_stack_trace, this, "Pretty prints a stack trace to help a human understand this fiber's current execution."); 

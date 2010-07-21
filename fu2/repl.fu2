@@ -104,7 +104,8 @@
   [let [[file-stream [stream-new_open_file filename [stream-file_mode-rdonly]]]]
     [if [null file-stream]
 	[error load-error [string-concat 'load error: could not open "' filename '" for reading.']]
-      [let [[result [repl-io file-stream nil nil nil]]]
+      [let [[result [with-new-cause [cause-define source-filename filename]
+				    [repl-io file-stream nil nil nil]]]]
 	[stream-close file-stream]
 	result]]]]
 

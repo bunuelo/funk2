@@ -35,6 +35,9 @@
 [deftypefunk mental_layer get agency [name]
   [have [get this agency_frame] lookup name]]
 
+[deftypefunk mental_layer get resource [agency_name resource_name]
+  [get [get this agency agency_name] resource resource_name]]
+
 [deftypefunk mental_layer execute call [agency_name resource_name :rest args]
   [let [[agency_frame [get this agency_frame]]]
     [let [[agency [have agency_frame lookup agency_name]]]

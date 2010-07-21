@@ -57,7 +57,7 @@ def_pcfunk0(bruno_graph__new, return f2__bruno_graph__new(this_cause));
 f2ptr raw__bruno_graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr node_set = f2__bruno_graph__node_set(cause, this);
   f2ptr already_contains_node = f2__set__add(cause, node_set, node);
-  if (already_contains_node != nil) {
+  if (already_contains_node == nil) {
     f2ptr nodes_label_hash = f2__bruno_graph__nodes_label_hash(cause, this);
     f2ptr node_label = f2__bruno_graph_node__label(cause, node);
     f2__ptypehash__add(cause, nodes_label_hash, node_label, f2cons__new(cause, node, f2__ptypehash__lookup(cause, nodes_label_hash, node_label)));

@@ -22,7 +22,7 @@
 'blockman'
 
 
-[globalize arm_length 0.2]
+'[globalize arm_length 0.2]
 
 [deframe          blockman [frame] [isis_world_client isis_agent_name agent time_in_seconds timer_fiber]]
 
@@ -155,5 +155,41 @@
 [globalize isis [new isis_world_client '18.111.61.216']]
 
 
-[cause-define cause-outside_resource [funk [] [print 'p']]]
+[cause-define cause-outside_resource [funk [] [print 'p']]]'
+
+[deframe          isis_world_body [frame] [name world says]]
+[deftypeconstruct isis_world_body [name]
+  [set this name  name]
+  [set this world nil]
+  [set this says  nil]
+  this]
+
+[deftypefunk isis_world_body get sense []
+  [get [get this world] agent_sense [get this name]]]
+
+[deftypefunk isis_world_body get time_step []
+  [get [get this world] time_step]]
+
+
+
+[deframe          isis_agent [frame] [name mind body]]
+[deftypeconstruct isis_agent [name]
+  [let [[mind [new mind]]
+	[body [new isis_world_body name]]]
+    [set this name name]
+    [set this mind mind]
+    [set this body body]
+    
+    'All isis_agents inherit these basic features.'
+    
+    [mind-create_layer mind reactive]
+    [mind-create_layer mind deliberative]
+    [mind-create_layer mind reflective]
+    [mind-create_layer mind self_reflective]
+    [mind-create_layer mind self_conscious]
+    
+    [mind-create_agency mind reactive        sensory]
+    [mind-create_agency mind reactive        physical]
+    [mind-create_agency mind reactive        speech]
+    [mind-create_agency mind 
 

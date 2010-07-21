@@ -474,6 +474,17 @@
 					  codes]]]]
      [apply &join parog-fibers]]]
 
+[defmetro with-new-cause [:rest codes]
+  `[let* [[result `bug]
+	  [fiber  [fiber [funk []
+			       [set [this-cause] critics nil]
+			       [= result [prog @codes]]] nil]]]
+     [while [not [or [get fiber is_complete] [get fiber paused]]]
+       [millisleep 10]]
+     [if [eq result `bug]
+	 [get fiber value]
+       result]]]
+
 [defunk parc [proc seq]
   'run mapc commands in parallel'
   [let [[parc-fibers [mapcar [funk [exp]

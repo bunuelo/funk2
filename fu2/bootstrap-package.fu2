@@ -53,11 +53,11 @@
 [globalize file_loaded_modification_time_hash [hash]]
 
 [defunk filename-load [this]
-  [cause-define source-filename this]
-  [source-eval [source-load this]]
-  [let [[stat [pathname-stat this]]]
-    [let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
-      [have file_loaded_modification_time_hash add this time_of_last_modification]]]
+  [with-new-cause [cause-define source-filename this]
+		  [source-eval [source-load this]]
+		  [let [[stat [pathname-stat this]]]
+		    [let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
+		      [have file_loaded_modification_time_hash add this time_of_last_modification]]]]
   nil]
 
 [defunk filename-load_if_modified [this]

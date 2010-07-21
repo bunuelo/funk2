@@ -1614,9 +1614,13 @@ void pfunk2__f2mutex__lock(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   funk2_processor_mutex_trylock_result_t trylock_result = funk2_processor_mutex_trylock_result__failure;
-  while (trylock_result == funk2_processor_mutex_trylock_result__failure) {
-    f2__scheduler__yield(cause);
+  while (1) {
     trylock_result = funk2_processor_mutex__trylock(ptype_mutex__m(this, cause));
+    if (trylock_result == funk2_processor_mutex_trylock_result__failure) {
+      f2__scheduler__yield(cause);
+    } else {
+      break;
+    }
   }
 }
 

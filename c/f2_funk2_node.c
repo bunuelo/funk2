@@ -180,16 +180,19 @@ void funk2_node__handle_node(funk2_node_t* this, funk2_node_handler_t* node_hand
       if (result != socket_client_connect_result__success) {
 	status("funk2_node__handle_node error: failed to reconnect to funk2 node (node_id=" node_id__fstr ") %d.%d.%d.%d:%d.",
 	       this->node_id, this->socket_client.client_id.ip_addr[0], this->socket_client.client_id.ip_addr[1], this->socket_client.client_id.ip_addr[2], this->socket_client.client_id.ip_addr[3], this->socket_client.client_id.port_num);
+	funk2_processor_mutex__unlock(&(this->socket_client_mutex));
       } else {
 	status("funk2_node__handle_node note: trying to reconnect to funk2 node (node_id=" node_id__fstr ") %d.%d.%d.%d:%d.",
 	       this->node_id, this->socket_client.client_id.ip_addr[0], this->socket_client.client_id.ip_addr[1], this->socket_client.client_id.ip_addr[2], this->socket_client.client_id.ip_addr[3], this->socket_client.client_id.port_num);
 	// after disconnect and reconnect, send last sent packet again.
+	funk2_processor_mutex__unlock(&(this->socket_client_mutex));
 	if (this->last_sent_packet__is_valid) {
 	  socket_rpc_layer__funk2_node__send_packet(this, &(this->last_sent.packet));
 	}
       }
+    } else {
+      funk2_processor_mutex__unlock(&(this->socket_client_mutex));
     }
-    funk2_processor_mutex__unlock(&(this->socket_client_mutex));
   } else {
     buffered_socket__error_type_t result = buffered_socket__flush(&(this->socket_client.socket));
     if (result != buffered_socket__error_type__success) {

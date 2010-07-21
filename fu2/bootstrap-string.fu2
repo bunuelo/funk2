@@ -49,8 +49,9 @@
 `[defunk string-replace_all [this token replacement]
    [stringlist-intersperse [string-split this token] replacement]]
 
-[deftypefunk string execute replace_all [token replacement] [string-replace_all this token replacement]]
-[deftypefunk string execute read        []                  [string-read        this]]
+[deftypefunk string execute replace_all [token replacement] [       string-replace_all this token replacement]]
+[deftypefunk string execute read        []                  [       string-read        this]]
+[deftypefunk string get     plus        [:rest strings]     [apply &string-concat      [cons this strings]]]
 
 'tests'
 

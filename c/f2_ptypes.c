@@ -1613,7 +1613,15 @@ void pfunk2__f2mutex__lock(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_mutex__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  funk2_processor_mutex__user_lock(ptype_mutex__m(this, cause));
+  funk2_processor_mutex_trylock_result_t trylock_result = funk2_processor_mutex_trylock_result__failure;
+  while (1) {
+    trylock_result = funk2_processor_mutex__trylock(ptype_mutex__m(this, cause));
+    if (trylock_result == funk2_processor_mutex_trylock_result__failure) {
+      f2__scheduler__yield(cause);
+    } else {
+      break;
+    }
+  }
 }
 
 void pfunk2__f2mutex__unlock(f2ptr this, f2ptr cause) {

@@ -213,8 +213,23 @@
     
     `[mind-create_resource mind reactive physical walk_around [activating_resource desired_object obstacle]
 			  [mind-activate [get this mind] reactive physical center_body_on desired_object]
-			  [check left or right]
-			  [deftypefunk walk []
+			  [deftypefunk walk [if_left]
+			    [let [[patience 30]]
+			      [if [if_left]
+				  [prog [[center_body_on obstacle]
+					 [turn 90 degrees  right]
+					 [while [and [object still blocked] [patience >0]]
+					   [walk straight]
+					   [check distance]
+					   [cond [[too far]
+						  [turn left]]
+						 [[too close]
+						  [turn right]]
+						 [t
+						  walk staight]]
+					   [= patience [patience -1]]
+						     
+			      
 			    [walk]
 			    [check distance]
 			    [if too far, turn left]
@@ -228,6 +243,8 @@
 			  [move_forward]
 			  [check obstacle]
 			  []
+			    [have this walk [check left or right]]
+
 			  [mind-activate [get this mind] reactive physical center_head_on obstacle]
 			  []]]]]
     

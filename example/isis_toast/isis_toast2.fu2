@@ -18,6 +18,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[globalize arm_length 0.2]
 
 [deframe          isis_world_body [frame] [name world says]]
 [deftypeconstruct isis_world_body [name]
@@ -28,6 +29,9 @@
 
 [deftypefunk isis_world_body get sense []
   [get [get this world] agent_sense [get this name]]]
+
+[deftypefunk isis_world_body get objects []
+  [have [get [get this world] agent_sense [get this name]] lookup `objects]]
 
 [deftypefunk isis_world_body get time_step []
   [get [get this world] time_step]]
@@ -85,28 +89,41 @@
 			 [have this think_to_self 'While propogating sense->story, I created this story: ' [get story as-list] '.']
 			 story]]]]
       ]
-
+    
     [mind_create_resource mind reactive physical turn_right [activating_resource steps]
 			  [format stdout '\n  turn_right']
 			  [let [[starting_time [get body time_step]]]			
 			    [isis-call [get [get this world] client] turn_right-start agent [get this name]]
 			    [while [< [- [get body time_step] starting_time] steps]
-			      [milisleep 100]]
-			    [isis-call [get [get this world] client] turn_right-stop agent [get this name]]
+			      [milisleep 50]]
+			    [isis-call [get [get this world] client] turn_right-stop agent [get this name]]]]
     [mind_create_resource mind reactive physical turn_left [activating_resource steps]
 			  [format stdout '\n  turn_left']
 			  [isis-call [get [get this world] client] turn_left-start agent [get this name]]
 			  [let [[start_steps [get body time_step]]]
 			    [while [< [- [get body time_step] start_steps] steps]
-			      [millisleep 100]]
+			      [millisleep 50]]
 			    [isis-call [get [get this world] client] turn_left-stop agent [get this name]]]]
-    
+    [mind_create_resource mind reactive physical look_right [activating_resource steps]
+			  [format stdout '\n  look_right']
+			  [let [[starting_time [get body time_step]]]			
+			    [isis-call [get [get this world] client] look_right-start agent [get this name]]
+			    [while [< [- [get body time_step] starting_time] steps]
+			      [milisleep 50]]
+			    [isis-call [get [get this world] client] look_right-stop agent [get this name]]]]
+    [mind_create_resource mind reactive physical look_left [activating_resource steps]
+			  [format stdout '\n  turn_left']
+			  [isis-call [get [get this world] client] look_left-start agent [get this name]]
+			  [let [[start_steps [get body time_step]]]
+			    [while [< [- [get body time_step] start_steps] steps]
+			      [millisleep 50]]
+			    [isis-call [get [get this world] client] look_left-stop agent [get this name]]]]
     [mind_create_resource mind reactive physical move_forward [activating_resource steps]
 			  [format stdout '\n  move_forward']
 			  [have [get this world]_client move_forward-start agent [get this name]]
 			  [let [[start_steps [get body time_step]]]
 			    [while [< [- [get body time_step] start_steps] steps]
-			      [millisleep 100]]
+			      [millisleep 50]]
 			    [isis-call [get [get this world] client] move_forward-stop agent [get this name]]]]
     
     [mind_create_resource mind reactive physical move_backward [activating_resource steps]
@@ -114,47 +131,105 @@
 			  [isis-call [get [get this world] client] move_backward-start agent [get this name]]
 			  [let [[start_steps [get body time_step]]]
 			    [while [< [- [get body time_step] start_steps] steps]
-			      [millisleep 100]]
+			      [millisleep 50]]
 			    [isis-call [get [get this world] client] move_backward-stop agent [get this name]]]]
-
-    [mind_create_resource mind reactive physical center_on [activating_resource object]
-			   [print 'center_on_object']
-			   [deftypefunk isis_agent execute turn_left_and_right []
-			     [print '0']
-			     [let [[x_pos [have [have [have [get body sense] lookup `object] lookup my_object] lookup `x_pos]]]
-			       [cond [>  x_pos 0.05]
+    
+    [mind_create_resource mind reactive physical center_body_on [activating_resource object]
+			  [print 'center_body_on_object']
+			  [deftypefunk isis_agent execute turn_left_and_right []
+			    [print '0']
+			    [let [[x_pos [have [have [get body objects] lookup my_object] lookup `x_pos]]]
+			      [cond [[>  x_pos 0.05]
 				     [prog [print 'x too positive']
 					   [mind-activate [get this mind] reactive physical turn_left 1]
 					   [print 'i turned left']
-					   [have this turn_left_and_right]]
-				     [> [- 0 0.05] x_pos]
+					   [have this turn_left_and_right]]]
+				    [[> [- 0 0.05] x_pos]
 				     [prog [print 'x too negative']
 					   [mind-activate [get this mind] reactive physical turn_right 1]
-					   [print 'i turned right']
-					   [have this turn_left_and_right]]
-				     t
-				     [print 'im centered']]]]]]
+					    [print 'i turned right']
+					    [have this turn_left_and_right]]]
+				    [t
+				     [print 'im centered']]]]]
 			  [have this turn_left_and_right]
 			  [print 'finished turning left and right']
 			  [print 'finished centering']]
     
+    [mind_create_resource mind reactive physical center_head_on [activating_resource object]
+			  [print 'center_head_on_object']
+			  [deftypefunk isis_agent execute look_left_and_right []
+			    [print '0']
+			    [let [[x_pos [have [have [get body objects] lookup my_object] lookup `x_pos]]]
+			      [cond [[>  x_pos 0.05]
+				     [prog [print 'x too positive']
+					   [mind-activate [get this mind] reactive physical look_left 1]
+					   [print 'i looked left']
+					   [have this look_left_and_right]]]
+				    [[> [- 0 0.05] x_pos]
+				     [prog [print 'x too negative']
+					   [mind-activate [get this mind] reactive physical look_right 1]
+					   [print 'i looked right']
+					   [have this look_left_and_right]]]
+				    [t
+				     [print 'my head is centered']]]]]
+			  [have this look_left_and_right]
+			  [print 'finished looking left and right']
+			  [print 'finished centering head']]
+    
+    
     [mind_create_resource mind reactive physical walk_towards [activating_resource desired_object]
-			  [mind-activate [get this mind] reactive physical center_on desired_object]
-			  [deftypefunk isis_agent execute check_obstacle []
-			    [cond [[and [no object other than desired object within distance] 
-					[< arm_length [have [have [have [get body sense] lookup `object] lookup my_object] lookup `distance]]]
+			  [mind-activate [get this mind] reactive physical center_body_on desired_object]
+			  [deftypefunk isis_agent execute check_obstacle [desired_object]
+			    [let* [[ordered-list [conslist-sort [get [get body objects] slots]
+								[funk [object-x object-y] 
+								      [> 
+								       [have [have [get body objects] lookup object-x] lookup `distance]
+								       [have [have [get body objects] lookup object-y] lookup `distance]]]]]
+				   
+				   [nearest_object [car [ordered-list]]]]
+			      [if [and [null [eq nearest_object desired_object]] [< [have [have [get body objects] lookup nearest_object] lookup `distance] 0.5]]
+				  nearest_object
+				nil]]]
+			  [deftypefunk isis_agent execute cautiously_walk []
+			    [cond [[and [null [have this check_obstacle]] 
+					[< arm_length [have [have [get body objects] lookup my_object] lookup `distance]]]
 				   [prog [mind-activate [get this mind] reactive physical move_forward 1]
-					 [have this check_obstacle]]]
-				  [[> arm_length [have [have [have [get body sense] lookup `object] lookup my_object] lookup `distance]]
+					 [have this cautiously_walk]]]
+				  [[> arm_length [have [have [get body objects] lookup my_object] lookup `distance]]
 				   nil]
-				  [[and [yes object other than desired object within distance] 
-					[< arm_length [have [have [have [get body sense] lookup `object] lookup my_object] lookup `distance]]]
-				   [mind-activate [get this mind] reactive physical walk_around desired_object obstacle_object]]
+				  [[and [have this check_obstacle] 
+					[< arm_length [have [have [get body objects] lookup my_object] lookup `distance]]]
+				   [mind-activate [get this mind] reactive physical walk_around desired_object [have this check_obstacle]]]
 				  [t
-				   [print 'weird! non of the conditions applied']]]]]
-		
-    [mind-create_resource mind reactive physical walk_around [activating_resource desired_object obstacle]
-			  [
+				   [print 'weird, no conditions applied']]]]
+			  [have this cautiously_walk]]
+
+    [mind-create_resource mind reactive physical search_for [activating_resource desired_object]
+			  [let [[patience 10]]
+			    [while [and [null [have [get body objects] lookup desired_object]] [> patience 0]
+					[mind-activate [get this mind] reactive physical look_left 3]]
+			      [= patience [- patience 1]]]]]
+					
+    
+    `[mind-create_resource mind reactive physical walk_around [activating_resource desired_object obstacle]
+			  [mind-activate [get this mind] reactive physical center_body_on desired_object]
+			  [check left or right]
+			  [deftypefunk walk []
+			    [walk]
+			    [check distance]
+			    [if too far, turn left]
+			    [if too close, turn right]
+			    
+			  [if [left]
+			      [prog [turn right]
+				    [walk]
+				    [check obstacle]
+			  [turn right]
+			  [move_forward]
+			  [check obstacle]
+			  []
+			  [mind-activate [get this mind] reactive physical center_head_on obstacle]
+			  []]]]]
     
     [mind-create_resource mind reactive sensory continuous_sensing [activating_resource]
 			  [have this think_to_self 'Continuous sensing is starting.']
@@ -215,6 +290,19 @@
     
     ]
   this]
+
+
+[deftypefunk isis_agent execute check_obstacle [desired_object]
+  [let* [[ordered-list [conslist-sort [get [get body objects] slots]
+				      [funk [object-x object-y] 
+					    [> 
+					     [have [have [get body objects] lookup object-x] lookup `distance]
+					     [have [have [get body objects] lookup object-y] lookup `distance]]]]]
+	 
+	 [nearest_object [car [ordered-list]]]]
+    [if [and [null [eq nearest_object desired_object]] [< [have [have [get body objects] lookup nearest_object] lookup `distance] 0.5]]
+	nearest_object
+      nil]]]
 
 [deftypefunk isis_agent get world []
   [get [get this body] world]]
@@ -322,6 +410,8 @@
       [mind-activate [get isis_world agent_mind `Lauren] deliberative reality include_reactive_stories_into_deliberative_story]
       
       [mind-activate [get isis_world agent_mind `Lauren] reactive speech say 'Bad Ralph!']
+      [mind-activate [get isis_world agent_mind `Ralph]  reactive     physical walk_forward 5]
+
       
       [format stdout '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
       

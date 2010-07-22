@@ -1,3 +1,4 @@
+
 'Copyright (c) 2007-2010 Bo Morgan.
  All rights reserved.
  
@@ -18,144 +19,6 @@
  rights to redistribute these changes.'
 
 
-
-'blockman'
-
-
-'[globalize arm_length 0.2]
-
-[deframe          blockman [frame] [isis_world_client isis_agent_name agent time_in_seconds timer_fiber]]
-
-[deftypeconstruct blockman [isis_world_client isis_agent_name]
-  [set this isis_world_client isis_world_client]
-  [set this isis_agent_name   isis_agent_name]
-  [set this time_in_seconds   0]
-  [let [[agent [new agent]]]
-    [set this agent agent]
-    [defagency   agent physical]
-    [defresource agent physical turn_right [seconds]
-      [format stdout '\n  turn_right']
-      [have [have this lookup `isis_world_client] turn_right-start [have this lookup `isis_agent_name]]
-      [print 'debug turn_right 00']
-      [let [[start_seconds [have this lookup `time_in_seconds]]]
-	[while [< [- [have this lookup `time_in_seconds] start_seconds] seconds]
-	  `[print 'debug turn_right-start 0.5']
-	  [millisleep 80]]
-	[print 'debug turn_right-start 1']
-	[isis-call [have this lookup `isis_world_client] turn_right-stop agent [have this lookup `isis_agent_name]]]]
-    [defresource agent physical turn_left []
-      [format stdout '\n  turn_left']
-      [have isis_world_client turn_left-start isis_agent_name]
-      [let [[start_seconds [have this lookup `time_in_seconds]]]
-	[while [< [- [have this lookup `time_in_seconds] start_seconds] seconds]
-	  [millisleep 80]]
-	[have isis_world_client turn_left-stop isis_agent_name]]]
-    [defresource agent physical move_forward []
-      [format stdout '\n  move_forward']
-      [have isis_world_client move_forward-start isis_agent_name]
-      [let [[start_seconds [have this lookup `time_in_seconds]]]
-	[while [< [- [have this lookup `time_in_seconds] start_seconds] seconds]
-	  [millisleep 80]]
-	[have isis_world_client move_forward-stop isis_agent_name]]]
-    [defresource agent physical move_backward []
-      [format stdout '\n  move_backward']
-      [have isis_world_client move_backward-start isis_agent_name]
-      [let [[start_seconds [have this lookup `time_in_seconds]]]
-	[while [< [- [have this lookup `time_in_seconds] start_seconds] seconds]
-	  [millisleep 80]]
-	[have isis_world_client move_backward-stop isis_agent_name]]]
-    [defresource agent physical move_to [my_object]
-      [format stdout '\n  move_to ' object]
-      '[call `center_on_object my_object]'
-      [have [get this agency `physical] call `center_on_object my_object]
-      [let [[distance [have [have [have [have this lookup `sensory_state] lookup `object] lookup my_object] lookup `distance]]]
-	[while [> distance arm_length]
-	  '[call `move_forward 0.1]
-          [call `sense]'
-          [have [get this agency `physical] call `move_forward 0.2]
-	  [have [get this agency `physical] call `sense]
-	  [= distance [have [have [have [have this lookup `sensory_state] lookup `object] lookup my_object] lookup `distance]]]]]  
-    [defresource agent physical center_on_object [my_object]
-      [print 'center_on_object']
-      [deftypefunk blockman execute turn_left_and_right []
-        '[call `sense]'
-	[have [get this agency `physical] call `sense]
-	[print '0']
-        [let [[x_pos [have [have [have [have this lookup `sensory_state] lookup `object] lookup my_object] lookup `x_pos]]]
-	  [print [exp-as-string [have [have [have [isis-call isis sense agent 'Ralph'] lookup `object] lookup my_object] lookup `x_pos]]
-          [if [>  x_pos 0.02]
-              [prog '[call turn_left 0.1]'
-		    [print 'x too positive']
-		    [have [get this agency `physical] call `turn_left 0.3]
-		    [millisleep 100]
-		    [print 'i turned left']
-		    [have this turn_left_and_right]]
-            [if [> [- 0 0.02] x_pos]
-		[prog '[call turn_right 0.1]'
-		      [print 'x too negative']
-		      [have [get this agency `physical] call `turn_right 0.3]
-		      [millisleep 100]
-		      [print 'i turned right']
-		      [have this turn_left_and_right]]
-	      [print 'im centered']]]]]]
-      [have this turn_left_and_right]
-      [print 'finished turning left and right']
-      [print 'finished centering']]
- ]
-  this]
-
-   `[defresource agent physical move_around_object [obstacle_object]]
-      
-    
-      
-         
-
-[deftypefunk blockman execute step_simulator [second]
-  [set this timer_fiber [fiber [funk []
-				     [let [[step_size 0.1]
-					   [count     0]]
-				       [while [< count second]
-					 [isis-call [have this lookup `isis_world_client] meta_step seconds step_size]
-					 [print 'debug 00']
-					 [have this timer step_size]
-					 [print 'debug 22']
-					 [= count [+ count step_size]]
-					 ]]
-				     ]
-			       nil]]
-  nil]
-
-[deftypefunk blockman execute timer [seconds]
-  [have this add `time_in_seconds [+ [have this lookup `time_in_seconds] seconds]]]
-
-
-[deftypefunk blockman get agency [name]
-  [let [[agent [get this agent]]]
-    [get agent agency name]]]
-
-[deftypefunk blockman get resource [agency_name resource_name]
-  [let [[agency [get this agency agency_name]]]
-    [get agency resource resource_name]]]
-
-[deftypefunk blockman execute step []
-  [let [[agent [get this agent]]]
-    [have agent call `physical `move_to 'knife']
-    ]]
-
-
-[defunk test-blockman []
-  [let [[isis_world_client [new isis_world_client '18.111.5.100']]]
-    [let [[ralph [new blockman isis_world_client 'Ralph']]]
-      ralph]]]
-
-[globalize ralph [test-blockman]]
-
-'[have [get ralph resource `physical `move_forward] lookup `finished]'
-
-[globalize isis [new isis_world_client '18.111.61.216']]
-
-
-[cause-define cause-outside_resource [funk [] [print 'p']]]'
 [deframe          isis_world_body [frame] [name world says]]
 [deftypeconstruct isis_world_body [name]
   [set this name  name]
@@ -463,5 +326,4 @@
       [format stdout '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
       
       'success']]]
-
 

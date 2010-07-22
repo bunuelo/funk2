@@ -42,20 +42,26 @@ def_pcfunk3(bruno_graph_edge__new, label, left_node, right_node, return f2__brun
 
 // bruno_graph
 
-def_primobject_4_slot(bruno_graph, node_set, edge_set, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);
+def_primobject_5_slot(bruno_graph, node_set, edge_set, nodes_label_hash, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);
 
 f2ptr f2__bruno_graph__new(f2ptr cause) {
   f2ptr node_set                                        = f2__set__new(cause);
   f2ptr edge_set                                        = f2__set__new(cause);
+  f2ptr nodes_label_hash                                = f2__ptypehash__new(cause);
   f2ptr edges_label_hash_right_node_hash_left_node_hash = f2__ptypehash__new(cause);
   f2ptr edges_label_hash_left_node_hash_right_node_hash = f2__ptypehash__new(cause);
-  return f2bruno_graph__new(cause, node_set, edge_set, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);
+  return f2bruno_graph__new(cause, node_set, edge_set, nodes_label_hash, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);
 }
 def_pcfunk0(bruno_graph__new, return f2__bruno_graph__new(this_cause));
 
 f2ptr raw__bruno_graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr node_set = f2__bruno_graph__node_set(cause, this);
   f2ptr already_contains_node = f2__set__add(cause, node_set, node);
+  if (already_contains_node == nil) {
+    f2ptr nodes_label_hash = f2__bruno_graph__nodes_label_hash(cause, this);
+    f2ptr node_label = f2__bruno_graph_node__label(cause, node);
+    f2__ptypehash__add(cause, nodes_label_hash, node_label, f2cons__new(cause, node, f2__ptypehash__lookup(cause, nodes_label_hash, node_label)));
+  }
   return already_contains_node;
 }
 
@@ -79,6 +85,21 @@ f2ptr f2__bruno_graph__add_new_node(f2ptr cause, f2ptr this, f2ptr label) {
   return raw__bruno_graph__add_new_node(cause, this, label);
 }
 def_pcfunk2(bruno_graph__add_new_node, this, label, return f2__bruno_graph__add_new_node(this_cause, this, label));
+
+
+f2ptr raw__bruno_graph__nodes_with_label(f2ptr cause, f2ptr this, f2ptr label) {
+  f2ptr nodes_label_hash = f2__bruno_graph__nodes_label_hash(cause, this);
+  return f2__ptypehash__lookup(cause, nodes_label_hash, label);
+}
+
+f2ptr f2__bruno_graph__nodes_with_label(f2ptr cause, f2ptr this, f2ptr label) {
+  if (! raw__bruno_graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bruno_graph__nodes_with_label(cause, this, label);
+}
+def_pcfunk2(bruno_graph__nodes_with_label, this, label, return f2__bruno_graph__nodes_with_label(this_cause, this, label));
+
 
 f2ptr raw__bruno_graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge) {
   f2ptr edge_set              = f2__bruno_graph__edge_set(cause, this);
@@ -946,10 +967,11 @@ void f2__bruno_graph__initialize() {
   initialize_primobject_3_slot(bruno_graph_edge, label, left_node, right_node);
   
   // bruno_graph
-  initialize_primobject_4_slot(bruno_graph, node_set, edge_set, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);
+  initialize_primobject_5_slot(bruno_graph, node_set, edge_set, nodes_label_hash, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);
   
   f2__primcfunk__init__2(bruno_graph__add_node,                        this, node,                         "Add a bruno_graph_node to this bruno_graph.");
   f2__primcfunk__init__2(bruno_graph__add_new_node,                    this, label,                        "Add a new bruno_graph_node to this bruno_graph.");
+  f2__primcfunk__init__2(bruno_graph__nodes_with_label,                this, label,                        "Returns a list of nodes with label in this bruno_graph.");
   f2__primcfunk__init__2(bruno_graph__add_edge,                        this, edge,                         "Add a bruno_graph_edge to this bruno_graph.");
   f2__primcfunk__init__4(bruno_graph__add_new_edge,                    this, label, left_node, right_node, "Add a new bruno_graph_edge between two bruno_graph_nodes to this bruno_graph.");
   f2__primcfunk__init__1(bruno_graph__node_count,                      this,                               "Returns the number of nodes in this bruno_graph.");

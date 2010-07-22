@@ -24,7 +24,7 @@
 
 #include "f2_global.h"
 
-#define F2__PROCESSOR_MUTEX__DEBUG
+//#define F2__PROCESSOR_MUTEX__DEBUG
 
 typedef struct funk2_processor_mutex_s {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)

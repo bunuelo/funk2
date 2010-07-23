@@ -41,7 +41,7 @@ void f2__gtk__reinitialize_globalvars() {
 }
 
 void f2__gtk__initialize() {
-  f2ptr cause = initial_cause();
+  //f2ptr cause = initial_cause();
   
   funk2_module_registration__add_module(&(__funk2.module_registration), "gtk", "", &f2__string__reinitialize_globalvars);
   

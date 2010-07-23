@@ -29,7 +29,7 @@ boolean_t raw__gtk__is_supported(f2ptr cause) {
 #endif //F2__GTK_SUPPORTED
 }
 
-f2ptr g2__gtk__is_supported(f2ptr cause) {
+f2ptr f2__gtk__is_supported(f2ptr cause) {
   return f2bool__new(raw__gtk__is_supported(cause));
 }
 def_pcfunk0(gtk__is_supported, return f2__gtk__is_supported(this_cause));

@@ -29,10 +29,12 @@ void f2__receive_signal(int sig) {
   case SIGINT:
     printf ("\nsignal note: received ctrl-c\n"); fflush(stdout);
     __received_signal__sigint = 1;
+    exit(-1);
     break;
   case SIGSEGV:
     printf ("\nsignal note: received segmentation fault\n"); fflush(stdout);
     __received_segmentation_fault = 1;
+    exit(-1);
     break;
   default:
     printf ("\nsignal warning: received unknown signal (%d)\n", sig);
@@ -55,7 +57,7 @@ void f2__signal__initialize() {
   
   f2__signal__reinitialize_globalvars();
   
-  //signal(SIGINT,  f2__receive_signal);
-  //signal(SIGSEGV, f2__receive_signal);
+  signal(SIGINT,  f2__receive_signal);
+  signal(SIGSEGV, f2__receive_signal);
 }
 

@@ -141,14 +141,17 @@ xmlrpc_cflags  = $(shell xmlrpc-c-config abyss-server client --cflags)
 xmlrpc_ldflags = $(shell xmlrpc-c-config abyss-server client --ldflags)
 endif
 
+gtk_cflags = $(shell pkg-config --cflags gtk+-2.0)
+gtk_libs   = $(shell pkg-config --libs   gtk+-2.0)
+
 #system_cflags = -Dbuild_os=\"$(build_os)\" -Dbuild_vendor=\"$(build_vendor)\"
 
 debug_flags    = -g -pg -fstack-check -DDEBUG -DF2__PROCESSOR_MUTEX__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY=1 -DDEBUG_MEMORY_POINTERS -DDEBUG_LOAD #-DDEBUG_COMPILE -DDEBUG_REDBLACKTREE -DDEBUG_BYTECODES -DDEBUG_MEMORY_VALID_PTRS 
 
 optimize_flags = 
 
-debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(debug_flags)
-release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(optimize_flags)
+debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(gtk_cflags) $(debug_flags)
+release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(gtk_cflags) $(optimize_flags)
 athena__cc_flags  = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
 #cc_flags = $(debug__cc_flags)
@@ -236,6 +239,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_graph_cluster.c \
   c/f2_graph_match_error_correcting.c \
   c/f2_graphviz.c \
+  c/f2_gtk.c \
   c/f2_fileio.c \
   c/f2_frame_objects.c \
   c/f2_funk2_node.c \
@@ -341,7 +345,7 @@ FUNK2_LIBRARY_VERSION=0:0:0
 #              |           set to zero if current is incremented
 #              +- increment if interfaces have been added, removed or changed
 
-lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags)
+lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(gtk_libs)
 lib_libfunk2_la_CFLAGS  = $(cc_flags)
 
 #bin_funk2_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Llib/.libs -lfunk2

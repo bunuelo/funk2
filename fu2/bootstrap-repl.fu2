@@ -60,6 +60,7 @@
 [primfunk:load 'fu2/primfunks-graph_cluster.fu2']
 [primfunk:load 'fu2/primfunks-graph_match_error_correcting.fu2']
 [primfunk:load 'fu2/primfunks-graphviz.fu2']
+[primfunk:load 'fu2/primfunks-gtk.fu2']
 [primfunk:load 'fu2/primfunks-hash.fu2']
 [primfunk:load 'fu2/primfunks-ioctl.fu2']
 [primfunk:load 'fu2/primfunks-largeinteger.fu2']
@@ -758,6 +759,15 @@
 [defmetro length [x] `[get ,x length]]
 
 [defmetro = [var value] `[mutate ,var ,value]]
+
+[defmetro labels [label_definitions :rest body]
+  [append [cons `prog [mapcar [funk [label_definition]
+				    [let [[name [car  label_definition]]
+					  [args [cadr label_definition]]
+					  [body [cddr label_definition]]]
+				      `[define-funk ,name [funk-new_with_name ,name ,args @body]]]]
+			      label_definitions]]
+	  body]]
 
 [defmetro error [:rest slot_value_pairs]
   `[error-new @[let [[iter          slot_value_pairs]

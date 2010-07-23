@@ -8,6 +8,9 @@
 /* Define to 1 if using `alloca.c'. */
 #undef C_ALLOCA
 
+/* Define if we've support for GTK+ */
+#undef F2__GTK_SUPPORTED
+
 /* Build XML-RPC support into Funk2 */
 #undef F2__XMLRPC_SUPPORTED
 

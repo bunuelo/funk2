@@ -419,6 +419,50 @@ f2ptr f2__bruno_graph__as__dot_code(f2ptr cause, f2ptr this) {
 def_pcfunk1(bruno_graph__as__dot_code, this, return f2__bruno_graph__as__dot_code(this_cause, this));
 
 
+// bruno_graph_list
+
+f2ptr raw__bruno_graph_list__union(f2ptr cause, f2ptr this) {
+  f2ptr new_graph = f2__bruno_graph__new(cause);
+  {
+    f2ptr iter = this;
+    while (iter) {
+      if (! raw__cons__is_type(cause, iter)) {
+	return f2larva__new(cause, 563, nil);
+      }
+      f2ptr graph = f2__cons__car(cause, iter);
+      if (! raw__bruno_graph__is_type(cause, graph)) {
+	return f2larva__new(cause, 1, nil);
+      }
+      {
+	{
+	  f2ptr node_set = f2__bruno_graph__node_set(cause, graph);
+	  set__iteration(cause, node_set, node,
+			 f2__bruno_graph__add_node(cause, new_graph, node);
+			 );
+	}
+	{
+	  f2ptr edge_set = f2__bruno_graph__node_set(cause, graph);
+	  set__iteration(cause, edge_set, node,
+			 f2__bruno_graph__add_edge(cause, new_graph, edge);
+			 );
+	}
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  return new_graph;
+}
+
+f2ptr f2__bruno_graph_list__union(f2ptr cause, f2ptr this) {
+  if (! raw__cons__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bruno_graph_list__union(cause, this);
+}
+def_pcfunk1(bruno_graph_list__union, this, return f2__bruno_graph_list__union(this_cause, this));
+
+
+
 // bruno_graph_isomorphism
 
 def_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);
@@ -983,6 +1027,9 @@ void f2__bruno_graph__initialize() {
   f2__primcfunk__init__2(bruno_graph__node_isomorphisms,               this, node,                         "Returns all single node isomorphisms between this bruno_graph and a bruno_graph_node.");
   f2__primcfunk__init__4(bruno_graph__edges_with_label_between_nodes,  this, label, left_node, right_node, "Returns edges directed from the left_node to the right_node that have the label in this bruno_graph.");
   f2__primcfunk__init__1(bruno_graph__as__dot_code,                    this,                               "Returns graph as dot_code for rendering with the graphviz dot application.");
+  
+  // bruno_graph_list
+  f2__primcfunk__init__1(bruno_graph_list__union, this, "Returns a new graph that is the union of all graphs in this list.");
   
   // bruno_graph_isomorphism
   initialize_primobject_2_slot(bruno_graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);

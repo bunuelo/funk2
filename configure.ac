@@ -53,8 +53,8 @@ else
 fi
 
 PKG_CHECK_MODULES(GTK, gtk+-2.0, AC_DEFINE(F2__GTK_SUPPORTED, 1, [Define if we've support for GTK+]), AC_MSG_ERROR([
-*** GTK+ 2.0 is not required to build Funk2, but the GLib development headers
-*** are not installed, so GTK support will not be compiled into Funk2.  The
+*** GTK+ 2.0 is not required to build Funk2\, but the GLib development headers
+*** are not installed\, so GTK support will not be compiled into Funk2.  The
 *** latest version of GLib is always available at http://www.gtk.org]))
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)

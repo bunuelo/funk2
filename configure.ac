@@ -52,18 +52,12 @@ else
   AC_MSG_NOTICE([Feature xmlrpc-c is not fully supported.])
 fi
 
-# Checking for xmlrpc-c and its requirements.
-have_xmlrpc_requirements=1
-AC_MSG_NOTICE([Checking for GTK+-2.0 and its requirements.])
-AC_CHECK_HEADERS([gtk/gtk.h],[],[have_gtk_requirements=0])
-AM_CONDITIONAL(GTK_SUPPORTED, test $have_gtk_requirements == 1)
-if test $have_gtk_requirements == 1
-then
-  AC_MSG_NOTICE([Feature GTK+-2.0 is fully supported.])
-  AC_DEFINE(F2__GTK_SUPPORTED, 1, Build GTK+-2.0 support into Funk2)
-else
-  AC_MSG_NOTICE([Feature GTK+-2.0 is not fully supported.])
-fi
+PKG_CHECK_MODULES(GTK, gtk+-2.0, AC_DEFINE(F2__GTK_SUPPORTED, 1, [Define if we've support for GTK+]), AC_MSG_ERROR([
+*** GTK+ 2.0 is not required to build Funk2, but the GLib development headers
+*** are not installed, so GTK support will not be compiled into Funk2.  The
+*** latest version of GLib is always available at http://www.gtk.org]))
+AC_SUBST(GTK_CFLAGS)
+AC_SUBST(GTK_LIBS)
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

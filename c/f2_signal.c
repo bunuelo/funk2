@@ -55,7 +55,7 @@ void f2__signal__initialize() {
   
   f2__signal__reinitialize_globalvars();
   
-  signal(SIGINT,  f2__receive_signal);
-  signal(SIGSEGV, f2__receive_signal);
+  //signal(SIGINT,  f2__receive_signal);
+  //signal(SIGSEGV, f2__receive_signal);
 }
 

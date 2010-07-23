@@ -123,7 +123,7 @@
 					[if [get this edges_with_label_between_nodes [get edge label] left_node [car a_node_list]]
 					    [prog [= right_node [get [car a_node_list] label]]
 						  [print 'debug 0.91']
-						  [= edge_node_pair [cons edge right_node]]]
+						  [= edge_node_pair [cons [get edge label] right_node]]]
 					  [iterate_nodes [cdr a_node_list]]]]
 				nil]
 			      edge_node_pair]	    
@@ -137,7 +137,12 @@
     [set story_event                            prepositional_frame prep_frame]
     [print 'debug 0']
     [mapc [funk [edge_node_pair] 
-		[set [get story_event prepositional_frame] [car edge_node_pair] [cdr edge_node_pair]]]
+		[if edge_node_pair
+		    [prog [print [car edge_node_pair]]
+			  [print [cdr edge_node_pair]]
+			  [have [get story_event prepositional_frame] add [car edge_node_pair] [cdr edge_node_pair]]]
+		  nil]]
+		
 	  [find_edge_node [car [get this nodes_with_label `prepositional_frame]] nodes_list edges_list]] 
 		
     story_event]]

@@ -119,7 +119,10 @@ f2ptr array__quicksort_helper(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr compa
 	keep_looping = boolean__false;
 	if (i <= last_element) {
 	  f2ptr comparison_result = f2__force_funk_apply(cause, fiber, comparison_funk, f2list2__new(cause, raw__array__elt(cause, array, i), key));
-	  if (! comparison_result) {
+          if (raw__larva__is_type(cause, comparison_result) || raw__bug__is_type(cause, comparison_result)) {
+            return comparison_result;
+          }
+          if (! comparison_result) {
 	    i ++;
 	    keep_looping = boolean__true;
 	  }
@@ -130,7 +133,10 @@ f2ptr array__quicksort_helper(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr compa
 	keep_looping = boolean__false;
 	if (j >= first_element) {
 	  f2ptr comparison_result = f2__force_funk_apply(cause, fiber, comparison_funk, f2list2__new(cause, raw__array__elt(cause, array, j), key));
-	  if (comparison_result) {
+          if (raw__larva__is_type(cause, comparison_result) || raw__bug__is_type(cause, comparison_result)) {
+            return comparison_result;
+          }
+          if (comparison_result) {
 	    j --;
 	    keep_looping = boolean__true;
 	  }
@@ -179,7 +185,8 @@ def_pcfunk2(array__sort, this, comparison_funk, return f2__array__sort(this_caus
 f2ptr raw__conslist__sort(f2ptr cause, f2ptr this, f2ptr comparison_funk) {
   f2ptr array  = raw__conslist__as__array(cause, this);
   f2ptr result = f2__array__sort(cause, array, comparison_funk);
-  if (raw__larva__is_type(cause, result)) {
+  f2__print(cause, result);
+  if (raw__larva__is_type(cause, result) || raw__bug__is_type(cause, result)) {
     return result;
   }
   f2ptr new_conslist = f2__array__as__conslist(cause, array);

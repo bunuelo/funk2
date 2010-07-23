@@ -441,8 +441,8 @@ f2ptr raw__bruno_graph_list__union(f2ptr cause, f2ptr this) {
 			 );
 	}
 	{
-	  f2ptr edge_set = f2__bruno_graph__node_set(cause, graph);
-	  set__iteration(cause, edge_set, node,
+	  f2ptr edge_set = f2__bruno_graph__edge_set(cause, graph);
+	  set__iteration(cause, edge_set, edge,
 			 f2__bruno_graph__add_edge(cause, new_graph, edge);
 			 );
 	}

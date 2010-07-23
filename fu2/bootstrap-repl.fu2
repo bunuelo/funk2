@@ -760,6 +760,15 @@
 
 [defmetro = [var value] `[mutate ,var ,value]]
 
+[defmetro labels [label_definitions :rest body]
+  [append [cons `prog [mapcar [funk [label_definition]
+				    [let [[name [car  label_definition]]
+					  [args [cadr label_definition]]
+					  [body [cddr label_definition]]]
+				      `[define-funk ,name [funk-new_with_name ,name ,args @body]]]]
+			      label_definitions]]
+	  body]]
+
 [defmetro error [:rest slot_value_pairs]
   `[error-new @[let [[iter          slot_value_pairs]
 		     [reverse_codes nil]]

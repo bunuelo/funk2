@@ -141,8 +141,8 @@ xmlrpc_cflags  = $(shell xmlrpc-c-config abyss-server client --cflags)
 xmlrpc_ldflags = $(shell xmlrpc-c-config abyss-server client --ldflags)
 endif
 
-gtk_cflags = $(shell pkg-config --cflags GTK+-2.0)
-gtk_libs   = $(shell pkg-config --libs   GTK+-2.0)
+gtk_cflags = $(shell pkg-config --cflags gtk+-2.0)
+gtk_libs   = $(shell pkg-config --libs   gtk+-2.0)
 
 #system_cflags = -Dbuild_os=\"$(build_os)\" -Dbuild_vendor=\"$(build_vendor)\"
 

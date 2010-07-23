@@ -426,10 +426,11 @@ f2ptr raw__bruno_graph_list__union(f2ptr cause, f2ptr this) {
   {
     f2ptr iter = this;
     while (iter) {
-      if (! raw__cons__is_type(cause, iter)) {
+      if ((! raw__cons__is_type(cause, iter)) &&
+	  (! raw__list__is_type(cause, iter))) {
 	return f2larva__new(cause, 563, nil);
       }
-      f2ptr graph = f2__cons__car(cause, iter);
+      f2ptr graph = f2__first(cause, iter);
       if (! raw__bruno_graph__is_type(cause, graph)) {
 	return f2larva__new(cause, 1, nil);
       }
@@ -447,14 +448,15 @@ f2ptr raw__bruno_graph_list__union(f2ptr cause, f2ptr this) {
 			 );
 	}
       }
-      iter = f2__cons__cdr(cause, iter);
+      iter = f2__next(cause, iter);
     }
   }
   return new_graph;
 }
 
 f2ptr f2__bruno_graph_list__union(f2ptr cause, f2ptr this) {
-  if (! raw__cons__is_type(cause, this)) {
+  if ((! raw__cons__is_type(cause, this)) &&
+      (! raw__list__is_type(cause, this))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__bruno_graph_list__union(cause, this);

@@ -35,6 +35,7 @@ f2ptr f2__gtk__is_supported(f2ptr cause) {
 def_pcfunk0(gtk__is_supported, return f2__gtk__is_supported(this_cause));
 
 
+
 // **
 
 void f2__gtk__reinitialize_globalvars() {

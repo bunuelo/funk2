@@ -236,6 +236,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_graph_cluster.c \
   c/f2_graph_match_error_correcting.c \
   c/f2_graphviz.c \
+  c/f2_gtk.c \
   c/f2_fileio.c \
   c/f2_frame_objects.c \
   c/f2_funk2_node.c \

@@ -60,6 +60,7 @@
 [primfunk:load 'fu2/primfunks-graph_cluster.fu2']
 [primfunk:load 'fu2/primfunks-graph_match_error_correcting.fu2']
 [primfunk:load 'fu2/primfunks-graphviz.fu2']
+[primfunk:load 'fu2/primfunks-gtk.fu2']
 [primfunk:load 'fu2/primfunks-hash.fu2']
 [primfunk:load 'fu2/primfunks-ioctl.fu2']
 [primfunk:load 'fu2/primfunks-largeinteger.fu2']

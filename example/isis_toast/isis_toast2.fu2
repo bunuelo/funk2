@@ -213,39 +213,45 @@
     
     `[mind-create_resource mind reactive physical walk_around [activating_resource desired_object obstacle]
 			  [mind-activate [get this mind] reactive physical center_body_on desired_object]
-			  [deftypefunk walk [if_left]
+			  [have this walk_around [> 0 [have [have [get body objects] lookup my_object] lookup `x_pos]]]
+			  [deftypefunk walk_around [if_left]
+			    [center_body_on obstacle]
 			    [let [[patience 30]]
-			      [if [if_left]
-				  [prog [[center_body_on obstacle]
-					 [turn 90 degrees  right]
-					 [while [and [object still blocked] [patience >0]]
-					   [walk straight]
-					   [check distance]
+			      [if if_left
+				  [prog [[mind-activate [get this mind] reactive physical turn_right 15]]
+					 [while [and [object still blocked+out of reach] [patience >0]]
+					   [mind-activate [get this mind] reactive physical walk_forward 3]
+					   [mind-activate [get this mind] reactive physical center_head_on obstacle]
+					   [let [[distance [have [have [get body objects] lookup my_object] lookup `distance]]]
 					   [cond [[too far]
 						  [turn left]]
 						 [[too close]
 						  [turn right]]
 						 [t
 						  walk staight]]
-					   [= patience [patience -1]]
-						     
-			      
-			    [walk]
-			    [check distance]
-			    [if too far, turn left]
-			    [if too close, turn right]
-			    
-			  [if [left]
-			      [prog [turn right]
-				    [walk]
-				    [check obstacle]
-			  [turn right]
-			  [move_forward]
-			  [check obstacle]
-			  []
-			    [have this walk [check left or right]]
+					   [search_for object]
+					   [= patience [patience -1]]]]]
+				 [prog [[turn 90 degrees right]
+					[while [and [object still blocked+out of reach] [patience >0]]
+					  [walk straight 3]
+					  [mind-activate [get this mind] reactive physical center_head_on obstacle]
+					  [check distance to obstacle]
+					  [cond [[too far]
+						 [turn left]]
+						[[too close]
+						 [turn right]]
+						[t
+						  walk staight]]
+					  [search_for object]
+					  [= patience [patience -1]]]]]
 
-			  [mind-activate [get this mind] reactive physical center_head_on obstacle]
+			  
+			  [have this walk_around [> 0 [have [have [get body objects] lookup my_object] lookup `x_pos]]]
+					   
+			  [mind-activate [get this mind] reactive physical walk_towards desired_object]
+					   
+			 [mind-activate [get this mind] reactive physical center_body_on desired_object]
+			  
 			  []]]]]
     
     [mind-create_resource mind reactive sensory continuous_sensing [activating_resource]

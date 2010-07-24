@@ -25,14 +25,14 @@
 
 #if defined(F2__GTK_SUPPORTED)
 void funk2_gtk__thread__start_function(funk2_gtk_t* this) {
-  funk2_process_mutex__lock(&(this->main_thread__mutex));
+  funk2_processor_mutex__lock(&(this->main_thread__mutex));
   if (this->main_thread__active) {
-    funk2_process_mutex__unlock(&(this->main_thread__mutex));
+    funk2_processor_mutex__unlock(&(this->main_thread__mutex));
     status("funk2_gtk__thread__start_function warning: NOT beginning processor_thread because already active.");
     return;
   }
   this->main_thread__active = boolean__true;
-  funk2_process_mutex__unlock(&(this->main_thread__mutex));
+  funk2_processor_mutex__unlock(&(this->main_thread__mutex));
   
   status("funk2_gtk__thread__start_function status: beginning processor_thread.");
   status("funk2_gtk__thread__start_function status: calling gtk_main().");
@@ -42,9 +42,9 @@ void funk2_gtk__thread__start_function(funk2_gtk_t* this) {
   status("funk2_gtk__thread__start_function status: returned from gtk_main().");
   status("funk2_gtk__thread__start_function status: ending processor_thread.");
   
-  funk2_process_mutex__lock(&(this->main_thread__mutex));
+  funk2_processor_mutex__lock(&(this->main_thread__mutex));
   this->main_thread__active = boolean__false;
-  funk2_process_mutex__unlock(&(this->main_thread__mutex));
+  funk2_processor_mutex__unlock(&(this->main_thread__mutex));
 }
 
 void* funk2_gtk__thread__start_function__helper(void* ptr) {

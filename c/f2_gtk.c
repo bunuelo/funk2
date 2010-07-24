@@ -53,7 +53,9 @@ void funk2_gtk__thread__start_function(funk2_gtk_t* this) {
   status("funk2_gtk__thread__start_function status: beginning processor_thread.");
   status("funk2_gtk__thread__start_function status: calling gtk_main().");
   {
+    gdk_threads_enter();
     gtk_main();
+    gdk_threads_leave();
   }
   status("funk2_gtk__thread__start_function status: returned from gtk_main().");
   status("funk2_gtk__thread__start_function status: ending processor_thread.");
@@ -70,6 +72,8 @@ void* funk2_gtk__thread__start_function__helper(void* ptr) {
 }
 
 void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc) {
+  g_threads_init();
+  gdk_threads_init();
   gtk_init(argv, argc);
   
   this->widgets = NULL;
@@ -136,7 +140,13 @@ f2ptr raw__gtk__window__new(f2ptr cause, f2ptr name) {
   u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
   raw__symbol__str_copy(cause, name, name__str);
   name__str[name__length] = 0;
-  funk2_gtk__window__new(&(__funk2.gtk), name__str);
+  
+  {
+    gdk_threads_enter();
+    funk2_gtk__window__new(&(__funk2.gtk), name__str);
+    gdk_threads_leave();
+  }
+  
   return name;
 #else
   return nil;

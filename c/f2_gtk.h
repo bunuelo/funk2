@@ -62,7 +62,7 @@ void funk2_gtk__destroy(funk2_gtk_t* this);
 // funk2_gtk_widget
 
 #ifdef F2__GTK__SUPPORTED
-void funk2_gtk_widget__init(funk2_gtk_widget_t* this, char* name, GtkWidget* widget);
+void funk2_gtk_widget__init(funk2_gtk_widget_t* this, u8* name, GtkWidget* gtk_widget);
 void funk2_gtk_widget__destroy(funk2_gtk_widget_t* this);
 #endif // F2__GTK__SUPPORTED
 

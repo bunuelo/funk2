@@ -53,7 +53,7 @@ void* funk2_gtk__thread__start_function__helper(void* ptr) {
   return NULL;
 }
 
-void funk2_gtk__init(funk2_gtk_t* this, int* argv, char** argc) {
+void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc) {
   gtk_init(argv, argc);
   
   funk2_processor_mutex__init(&(this->main_thread__mutex));

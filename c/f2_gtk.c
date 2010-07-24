@@ -173,6 +173,23 @@ funk2_gtk_widget_t* funk2_gtk__widget__show_all(funk2_gtk_t* this, u8* name) {
   return widget;
 }
 
+funk2_gtk_widget_t* funk2_gtk__box__pack_start(funk2_gtk_t* this, u8* name, u8* child_name, boolean_t expand, boolean_t fill, u64 padding) {
+  funk2_gtk_widget_t* widget = funk2_gtk__lookup_widget(this, name);
+  if (! widget) {
+    return NULL;
+  }
+  funk2_gtk_widget_t* child_widget = funk2_gtk__lookup_widget(this, child_name);
+  if (! child_widget) {
+    return NULL;
+  }
+  {
+    gdk_threads_enter();
+    gtk_box_pack_start(GTK_BOX(widget->gtk_widget), child_widget->gtk_widget, expand, fill, padding);
+    gdk_threads_leave();
+  }
+  return widget;
+}
+
 #endif // F2__GTK__SUPPORTED
 
 
@@ -270,31 +287,6 @@ f2ptr f2__gtk__hbox__new(f2ptr cause, f2ptr name, f2ptr column_count) {
 def_pcfunk2(gtk__hbox__new, name, column_count, return f2__gtk__hbox__new(this_cause, name, column_count));
 
 
-f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr name) {
-#if defined(F2__GTK__SUPPORTED)
-  u64 name__length = raw__symbol__length(cause, name);
-  u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
-  raw__symbol__str_copy(cause, name, name__str);
-  name__str[name__length] = 0;
-  
-  if (! funk2_gtk__widget__show_all(&(__funk2.gtk), name__str)) {
-    return nil;
-  }
-  return name;
-#else
-  return nil;
-#endif
-}
-
-f2ptr f2__gtk__widget__show_all(f2ptr cause, f2ptr name) {
-  if (! raw__symbol__is_type(cause, name)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__gtk__widget__show_all(cause, name);
-}
-def_pcfunk1(gtk__widget__show_all, name, return f2__gtk__widget__show_all(this_cause, name));
-
-
 f2ptr raw__gtk__container__add(f2ptr cause, f2ptr name, f2ptr add_name) {
 #if defined(F2__GTK__SUPPORTED)
   u64 name__length = raw__symbol__length(cause, name);
@@ -326,6 +318,65 @@ f2ptr f2__gtk__container__add(f2ptr cause, f2ptr name, f2ptr add_name) {
 def_pcfunk2(gtk__container__add, name, add_name, return f2__gtk__container__add(this_cause, name, add_name));
 
 
+f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr name) {
+#if defined(F2__GTK__SUPPORTED)
+  u64 name__length = raw__symbol__length(cause, name);
+  u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
+  raw__symbol__str_copy(cause, name, name__str);
+  name__str[name__length] = 0;
+  
+  if (! funk2_gtk__widget__show_all(&(__funk2.gtk), name__str)) {
+    return nil;
+  }
+  return name;
+#else
+  return nil;
+#endif
+}
+
+f2ptr f2__gtk__widget__show_all(f2ptr cause, f2ptr name) {
+  if (! raw__symbol__is_type(cause, name)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__widget__show_all(cause, name);
+}
+def_pcfunk1(gtk__widget__show_all, name, return f2__gtk__widget__show_all(this_cause, name));
+
+
+f2ptr raw__gtk__box__pack_start(f2ptr cause, f2ptr name, f2ptr child_name, f2ptr expand, f2ptr fill, f2ptr padding) {
+#if defined(F2__GTK__SUPPORTED)
+  u64 name__length = raw__symbol__length(cause, name);
+  u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
+  raw__symbol__str_copy(cause, name, name__str);
+  name__str[name__length] = 0;
+  
+  u64 child_name__length = raw__symbol__length(cause, child_name);
+  u8* child_name__str    = (u8*)from_ptr(f2__malloc(child_name__length + 1));
+  raw__symbol__str_copy(cause, child_name, child_name__str);
+  child_name__str[child_name__length] = 0;
+  
+  u64 padding__i = f2integer__i(padding, cause);
+  
+  if (! funk2_gtk__widget__show_all(&(__funk2.gtk), name__str, child_name__str, expand != nil, fill != nil, padding__i)) {
+    return nil;
+  }
+  return name;
+#else
+  return nil;
+#endif
+}
+
+f2ptr f2__gtk__box__pack_start(f2ptr cause, f2ptr name, f2ptr child_name, f2ptr expand, f2ptr fill, f2ptr padding) {
+  if ((! raw__symbol__is_type(cause, name)) ||
+      (! raw__symbol__is_type(cause, child_name)) ||
+      (! raw__integer__is_type(cause, padding))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__box__pack_start(cause, name, child_name, expand, fill, padding);
+}
+def_pcfunk5(gtk__box__pack_start, name, child_name, expand, fill, padding, return f2__gtk__box__pack_start(this_cause, name, child_name, expand, fill, padding));
+
+
 // **
 
 void f2__gtk__reinitialize_globalvars() {
@@ -338,12 +389,13 @@ void f2__gtk__initialize() {
   
   f2__string__reinitialize_globalvars();
   
-  f2__primcfunk__init__0(gtk__is_supported,                         "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
-  f2__primcfunk__init__1(gtk__window__new,      name,               "Returns the name of a new window widget.");
-  f2__primcfunk__init__2(gtk__vbox__new,        name, row_count,    "Returns the name of a new vbox widget with row_count rows.");
-  f2__primcfunk__init__2(gtk__hbox__new,        name, column_count, "Returns the name of a new vbox widget with column_count columns.");
-  f2__primcfunk__init__1(gtk__widget__show_all, name,               "Shows the widget referenced by name.");
-  f2__primcfunk__init__2(gtk__container__add,   name, add_name,     "Adds a widget to a container.");
+  f2__primcfunk__init__0(gtk__is_supported,                                              "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
+  f2__primcfunk__init__1(gtk__window__new,      name,                                    "Returns the name of a new window widget.");
+  f2__primcfunk__init__2(gtk__vbox__new,        name, row_count,                         "Returns the name of a new vbox widget with row_count rows.");
+  f2__primcfunk__init__2(gtk__hbox__new,        name, column_count,                      "Returns the name of a new vbox widget with column_count columns.");
+  f2__primcfunk__init__1(gtk__widget__show_all, name,                                    "Shows the widget referenced by name.");
+  f2__primcfunk__init__2(gtk__container__add,   name, add_name,                          "Adds a widget to a container.");
+  f2__primcfunk__init__5(gtk__box__pack_start,  name, child_name, expand, fill, padding, "Packs a child widget in a box.");
   
 }
 

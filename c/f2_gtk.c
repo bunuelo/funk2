@@ -53,9 +53,9 @@ void funk2_gtk__thread__start_function(funk2_gtk_t* this) {
   status("funk2_gtk__thread__start_function status: beginning processor_thread.");
   status("funk2_gtk__thread__start_function status: calling gtk_main().");
   {
-    gdk_threads_enter();
+    //gdk_threads_enter();
     gtk_main();
-    gdk_threads_leave();
+    //gdk_threads_leave();
   }
   status("funk2_gtk__thread__start_function status: returned from gtk_main().");
   status("funk2_gtk__thread__start_function status: ending processor_thread.");

@@ -238,7 +238,7 @@ f2ptr f2__gtk__vbox__new(f2ptr cause, f2ptr name, f2ptr row_count) {
       (! raw__integer__is_type(cause, row_count))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__bbox__new(cause, name, row_count);
+  return raw__gtk__vbox__new(cause, name, row_count);
 }
 def_pcfunk2(gtk__vbox__new, name, row_count, return f2__gtk__vbox__new(this_cause, name, row_count));
 

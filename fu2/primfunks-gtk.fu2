@@ -18,4 +18,6 @@
  rights to redistribute these changes.'
 
 [globalize-funk gtk-is_supported &primfunk:gtk__is_supported]
+[globalize-funk gtk-window-new   &primfunk:gtk__window__new]
+
 

@@ -24,11 +24,26 @@
 
 #include "f2_processor_thread.h"
 
+typedef struct funk2_gtk_widget_s funk2_gtk_widget_t;
+struct funk2_gtk_widget_s {
+  u8*        name;
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_widget;
+#endif // F2__GTK__SUPPORTED
+};
+
+typedef struct funk2_gtk_widget_cons_s funk2_gtk_widget_cons_t;
+struct funk2_gtk_widget_cons_s {
+  funk2_gtk_widget_t*             widget;
+  struct funk2_gtk_widget_cons_s* next;
+};
+
 typedef struct funk2_gtk_s funk2_gtk_t;
 struct funk2_gtk_s {
   funk2_processor_mutex_t   main_thread__mutex;
   boolean_t                 main_thread__active;
   funk2_processor_thread_t* main_thread;
+  funk2_gtk_widget_cons_t*  widgets;
 };
 
 #endif // F2__GTK__TYPES__H
@@ -43,6 +58,13 @@ struct funk2_gtk_s {
 
 void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc);
 void funk2_gtk__destroy(funk2_gtk_t* this);
+
+// funk2_gtk_widget
+
+#ifdef F2__GTK__SUPPORTED
+void funk2_gtk_widget__init(funk2_gtk_widget_t* this, char* name, GtkWidget* widget);
+void funk2_gtk_widget__destroy(funk2_gtk_widget_t* this);
+#endif // F2__GTK__SUPPORTED
 
 // **
 

@@ -143,7 +143,7 @@ funk2_gtk_widget_t* funk2_gtk__container__add(funk2_gtk_t* this, u8* name, u8* a
   }
   {
     gdk_threads_enter();
-    gtk_container_add(widget->gtk_widget, add_widget->gtk_widget);
+    gtk_container_add(GTK_CONTAINER(widget->gtk_widget), add_widget->gtk_widget);
     gdk_threads_leave();
   }
   return widget;

@@ -134,5 +134,15 @@
 #  include <X11/keysym.h>
 #endif
 
+#ifdef F2__GTK_SUPPORTED
+#  ifndef F2__GTK__SUPPORTED
+#    define F2__GTK__SUPPORTED
+#  endif
+#endif
+
+#ifdef F2__GTK__SUPPORTED
+#  include <gtk/gtk.h>
+#endif
+
 #endif // F2__SYSTEM_HEADERS__H
 

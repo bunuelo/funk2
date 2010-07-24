@@ -19,6 +19,23 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__GTK__TYPES__H
+#define F2__GTK__TYPES__H
+
+#include "f2_processor_thread.h"
+
+#if defined(F2__GTK_SUPPORTED)
+typedef struct funk2_gtk_s funk2_gtk_t;
+struct funk2_gtk_s {
+  funk2_processor_mutex_t   main_thread__mutex;
+  boolean_t                 main_thread__active;
+  funk2_processor_thread_t* main_thread;
+};
+#endif // F2__GTK_SUPPORTED
+
+#endif // F2__GTK__TYPES__H
+
+
 #ifndef F2__GTK__H
 #define F2__GTK__H
 

@@ -181,6 +181,9 @@ typedef struct funk2_s {
   funk2_graph_t                       graph;
   funk2_xmlrpc_t                      xmlrpc;
   funk2_trace_t                       trace;
+#if defined(F2__GTK_SUPPORTED)
+  funk2_gtk_t                         gtk;
+#endif
 } funk2_t;
 
 void      funk2__init(   funk2_t* this, int argc, char** argv);

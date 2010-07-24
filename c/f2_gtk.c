@@ -103,7 +103,7 @@ funk2_gtk_widget_t* funk2_gtk__lookup_widget(funk2_gtk_t* this, u8* name) {
 }
 
 funk2_gtk_widget_t* funk2_gtk__window__new(funk2_gtk_t* this, u8* name) {
-  GtkWidget           window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  GtkWidget*          window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   funk2_gtk_widget_t* widget = (funk2_gtk_widget_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_widget_t)));
   funk2_gtk_widget__init(widget, name, window);
   funk2_gtk__add_widget(this, widget);

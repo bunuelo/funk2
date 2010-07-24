@@ -59,12 +59,12 @@ PKG_CHECK_MODULES(GTK, gtk+-2.0, AC_DEFINE(F2__GTK_SUPPORTED, 1, [Define if we'v
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 
-PKG_CHECK_MODULES(GLIB, glib-2.0, AC_DEFINE(F2__GLIB_SUPPORTED, 1, [Define if we've support for GLIB]), [AC_MSG_ERROR([
-*** GLIB 2.0 is not required to build Funk2, but the GLib development headers
-*** are not installed, so GLIB support will not be compiled into Funk2.  The
-*** latest version of GLib is always available at http://www.gtk.org])])
-AC_SUBST(GLIB_CFLAGS)
-AC_SUBST(GLIB_LIBS)
+PKG_CHECK_MODULES(GTHREAD, gthread-2.0, AC_DEFINE(F2__GTHREAD_SUPPORTED, 1, [Define if we've support for GTHREAD]), [AC_MSG_ERROR([
+*** GTHREAD 2.0 is not required to build Funk2, but the Gthread development headers
+*** are not installed, so GTHREAD support will not be compiled into Funk2.  The
+*** latest version of Gthread is always available at http://www.gtk.org])])
+AC_SUBST(GTHREAD_CFLAGS)
+AC_SUBST(GTHREAD_LIBS)
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

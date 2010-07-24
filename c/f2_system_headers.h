@@ -134,14 +134,14 @@
 #  include <X11/keysym.h>
 #endif
 
-#ifdef F2__GLIB_SUPPORTED
-#  ifndef F2__GLIB__SUPPORTED
-#    define F2__GLIB__SUPPORTED
+#ifdef F2__GTHREAD_SUPPORTED
+#  ifndef F2__GTHREAD__SUPPORTED
+#    define F2__GTHREAD__SUPPORTED
 #  endif
 #endif
 
-// only define F2__GTK__SUPPORTED if F2__GLIB__SUPPORTED because GLIB is needed for threading.
-#ifdef F2__GLIB__SUPPORTED
+// only define F2__GTK__SUPPORTED if F2__GTHREAD__SUPPORTED because GTHREAD is needed for threading.
+#ifdef F2__GTHREAD__SUPPORTED
 #  ifdef F2__GTK_SUPPORTED
 #    ifndef F2__GTK__SUPPORTED
 #      define F2__GTK__SUPPORTED

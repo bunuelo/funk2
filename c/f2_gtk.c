@@ -94,7 +94,7 @@ funk2_gtk_widget_t* funk2_gtk__lookup_widget(funk2_gtk_t* this, u8* name) {
   funk2_gtk_widget_cons_t* iter = this->widgets;
   while (iter) {
     funk2_gtk_widget_t* widget = iter->widget;
-    if (strcmp(widget->name, name) == 0) {
+    if (strcmp((char*)(widget->name), (char*)name) == 0) {
       return widget;
     }
     iter = iter->next;

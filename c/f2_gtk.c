@@ -233,14 +233,14 @@ f2ptr raw__gtk__vbox__new(f2ptr cause, f2ptr name, f2ptr row_count) {
 #endif
 }
 
-f2ptr f2__gtk__hbox__new(f2ptr cause, f2ptr name, f2ptr row_count) {
+f2ptr f2__gtk__vbox__new(f2ptr cause, f2ptr name, f2ptr row_count) {
   if ((! raw__symbol__is_type(cause, name)) ||
       (! raw__integer__is_type(cause, row_count))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__hbox__new(cause, name, row_count);
+  return raw__gtk__bbox__new(cause, name, row_count);
 }
-def_pcfunk2(gtk__hbox__new, name, row_count, return f2__gtk__hbox__new(this_cause, name, row_count));
+def_pcfunk2(gtk__vbox__new, name, row_count, return f2__gtk__vbox__new(this_cause, name, row_count));
 
 
 f2ptr raw__gtk__hbox__new(f2ptr cause, f2ptr name, f2ptr column_count) {

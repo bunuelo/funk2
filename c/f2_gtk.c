@@ -357,7 +357,7 @@ f2ptr raw__gtk__box__pack_start(f2ptr cause, f2ptr name, f2ptr child_name, f2ptr
   
   u64 padding__i = f2integer__i(padding, cause);
   
-  if (! funk2_gtk__widget__show_all(&(__funk2.gtk), name__str, child_name__str, expand != nil, fill != nil, padding__i)) {
+  if (! funk2_gtk__box__pack_start(&(__funk2.gtk), name__str, child_name__str, expand != nil, fill != nil, padding__i)) {
     return nil;
   }
   return name;

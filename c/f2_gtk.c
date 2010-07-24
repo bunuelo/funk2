@@ -229,7 +229,7 @@ f2ptr f2__gtk__vbox__new(f2ptr cause, f2ptr name, f2ptr row_count) {
   }
   return raw__gtk__vbox__new(cause, name, row_count);
 }
-def_pcfunk1(gtk__vbox__new, name, return f2__gtk__vbox__new(this_cause, name));
+def_pcfunk2(gtk__vbox__new, name, row_count, return f2__gtk__vbox__new(this_cause, name, row_count));
 
 
 f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr name) {

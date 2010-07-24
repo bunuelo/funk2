@@ -42,5 +42,8 @@ struct funk2_gtk_s {
 #include "f2_primfunks.h"
 
 
+// **
+
+void f2__gtk__initialize();
 
 #endif // F2__GTK__H

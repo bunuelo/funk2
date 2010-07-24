@@ -218,6 +218,10 @@ void socket_rpc_layer__funk2_packet__send_to_socket(funk2_packet_t* packet, buff
       raw__spin_sleep_yield();
     }
     result = buffered_socket__send(socket, packet, sizeof(funk2_packet_header_t) + packet->header.payload_length);
+    if (result == circular_buffer__write_result__not_enough_room) {
+      status("socket_rpc_layer__funk2_packet__send_to_socket warning: failed to send entire packet to socket.");
+      return;
+    }
   } while(result == circular_buffer__write_result__not_enough_room);
   u8 end_packet_bytes[2] = {funk2_end_of_packet_byte0, funk2_end_of_packet_byte1};
   do {
@@ -225,6 +229,10 @@ void socket_rpc_layer__funk2_packet__send_to_socket(funk2_packet_t* packet, buff
       raw__spin_sleep_yield();
     }
     result = buffered_socket__send(socket, end_packet_bytes, 2);
+    if (result == circular_buffer__write_result__not_enough_room) {
+      status("socket_rpc_layer__funk2_packet__send_to_socket warning: failed to send entire packet to socket.");
+      return;
+    }
   } while(result == circular_buffer__write_result__not_enough_room);
   //{
   //  int i;

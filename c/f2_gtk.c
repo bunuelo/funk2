@@ -197,7 +197,7 @@ f2ptr f2__gtk__widget__show_all(f2ptr cause, f2ptr name) {
   }
   return raw__gtk__widget__show_all(cause, name);
 }
-def_pcfunk1(gtk__widget__show_all, name, return f2__gtk__window__show_all(this_cause, name));
+def_pcfunk1(gtk__widget__show_all, name, return f2__gtk__widget__show_all(this_cause, name));
 
 
 // **

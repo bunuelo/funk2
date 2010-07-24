@@ -23,7 +23,7 @@
 
 // funk2_gtk
 
-#if defined(F2__GTK_SUPPORTED)
+#if defined(F2__GTK__SUPPORTED)
 void funk2_gtk__thread__start_function(funk2_gtk_t* this) {
   funk2_processor_mutex__lock(&(this->main_thread__mutex));
   if (this->main_thread__active) {
@@ -53,7 +53,9 @@ void* funk2_gtk__thread__start_function__helper(void* ptr) {
   return NULL;
 }
 
-void funk2_gtk__init(funk2_gtk_t* this) {
+void funk2_gtk__init(funk2_gtk_t* this, int* argv, char** argc) {
+  gtk_init(argv, argc);
+  
   funk2_processor_mutex__init(&(this->main_thread__mutex));
   this->main_thread__active = boolean__false;
   this->main_thread         = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), &funk2_gtk__thread__start_function__helper, (void*)this);
@@ -62,17 +64,17 @@ void funk2_gtk__init(funk2_gtk_t* this) {
 void funk2_gtk__destroy(funk2_gtk_t* this) {
   funk2_processor_mutex__destroy(&(this->main_thread__mutex));
 }
-#endif
+#endif // F2__GTK__SUPPORTED
 
 
 // user-space interface to gtk
 
 boolean_t raw__gtk__is_supported(f2ptr cause) {
-#if defined(F2__GTK_SUPPORTED)
+#if defined(F2__GTK__SUPPORTED)
   return boolean__true;
 #else
   return boolean__false;
-#endif //F2__GTK_SUPPORTED
+#endif //F2__GTK__SUPPORTED
 }
 
 f2ptr f2__gtk__is_supported(f2ptr cause) {
@@ -95,8 +97,5 @@ void f2__gtk__initialize() {
   
   f2__primcfunk__init__0(gtk__is_supported, "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
   
-#if defined(F2__GTK_SUPPORTED)
-  funk2_gtk__init(&(__funk2.gtk));
-#endif // F2__GTK_SUPPORTED
 }
 

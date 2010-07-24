@@ -24,14 +24,12 @@
 
 #include "f2_processor_thread.h"
 
-#if defined(F2__GTK_SUPPORTED)
 typedef struct funk2_gtk_s funk2_gtk_t;
 struct funk2_gtk_s {
   funk2_processor_mutex_t   main_thread__mutex;
   boolean_t                 main_thread__active;
   funk2_processor_thread_t* main_thread;
 };
-#endif // F2__GTK_SUPPORTED
 
 #endif // F2__GTK__TYPES__H
 
@@ -41,6 +39,10 @@ struct funk2_gtk_s {
 
 #include "f2_primfunks.h"
 
+// funk2_gtk
+
+void funk2_gtk__init(funk2_gtk_t* this, int* argv, char** argc);
+void funk2_gtk__destroy(funk2_gtk_t* this);
 
 // **
 

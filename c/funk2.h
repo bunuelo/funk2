@@ -182,7 +182,7 @@ typedef struct funk2_s {
   funk2_graph_t                       graph;
   funk2_xmlrpc_t                      xmlrpc;
   funk2_trace_t                       trace;
-#if defined(F2__GTK_SUPPORTED)
+#if defined(F2__GTK__SUPPORTED)
   funk2_gtk_t                         gtk;
 #endif
 } funk2_t;

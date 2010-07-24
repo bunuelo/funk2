@@ -145,6 +145,10 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   status("*******************************************************************");
   status("");
   
+#if defined(F2__GTK__SUPPORTED)
+  funk2_gtk__init(&(this->gtk), &argc, &argv);
+#endif
+  
   funk2_command_line__init(&(this->command_line), argc, argv);
   
   {

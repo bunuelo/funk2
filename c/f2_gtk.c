@@ -126,7 +126,7 @@ funk2_gtk_widget_t* funk2_gtk__widget__show_all(funk2_gtk_t* this, u8* name) {
   }
   {
     gdk_threads_enter();
-    window = gtk_widget_show_all(widget->gtk_widget);
+    gtk_widget_show_all(widget->gtk_widget);
     gdk_threads_leave();
   }
   return widget;

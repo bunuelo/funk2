@@ -304,7 +304,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__1(gtk__window__new,      name,            "Returns the name of a new window widget.");
   f2__primcfunk__init__2(gtk__vbox__new,        name, row_count, "Returns the name of a new vbox widget with row_count rows.");
   f2__primcfunk__init__1(gtk__widget__show_all, name,            "Shows the widget referenced by name.");
-  f2__primcfunk__init__2(gtk__container__add,   name, add_name   "Adds a widget to a container.");
+  f2__primcfunk__init__2(gtk__container__add,   name, add_name,  "Adds a widget to a container.");
   
 }
 

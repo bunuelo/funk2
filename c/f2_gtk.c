@@ -56,7 +56,7 @@ void* funk2_gtk__thread__start_function__helper(void* ptr) {
 void funk2_gtk__init(funk2_gtk_t* this) {
   funk2_processor_mutex__init(&(this->main_thread__mutex));
   this->main_thread__active = boolean__false;
-  this->thread              = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), &funk2_gtk__thread__start_function, (void*)this);
+  this->thread              = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), funk2_gtk__thread__start_function, (void*)this);
 }
 
 void funk2_gtk__destroy(funk2_gtk_t* this) {

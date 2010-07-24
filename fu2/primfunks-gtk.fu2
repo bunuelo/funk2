@@ -20,6 +20,7 @@
 [globalize-funk gtk-is_supported    &primfunk:gtk__is_supported]
 [globalize-funk gtk-window-new      &primfunk:gtk__window__new]
 [globalize-funk gtk-vbox-new        &primfunk:gtk__vbox__new]
+[globalize-funk gtk-hbox-new        &primfunk:gtk__hbox__new]
 [globalize-funk gtk-widget-show_all &primfunk:gtk__widget__show_all]
 [globalize-funk gtk-container-add   &primfunk:gtk__container__add]
 

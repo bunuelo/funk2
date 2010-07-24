@@ -53,9 +53,7 @@ void funk2_gtk__thread__start_function(funk2_gtk_t* this) {
   status("funk2_gtk__thread__start_function status: beginning processor_thread.");
   status("funk2_gtk__thread__start_function status: calling gtk_main().");
   {
-    //gdk_threads_enter();
     gtk_main();
-    //gdk_threads_leave();
   }
   status("funk2_gtk__thread__start_function status: returned from gtk_main().");
   status("funk2_gtk__thread__start_function status: ending processor_thread.");
@@ -128,6 +126,19 @@ funk2_gtk_widget_t* funk2_gtk__vbox__new(funk2_gtk_t* this, u8* name, int row_co
   }
   funk2_gtk_widget_t* widget = (funk2_gtk_widget_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_widget_t)));
   funk2_gtk_widget__init(widget, name, vbox);
+  funk2_gtk__add_widget(this, widget);
+  return widget;
+}
+
+funk2_gtk_widget_t* funk2_gtk__hbox__new(funk2_gtk_t* this, u8* name, int column_count) {
+  GtkWidget* hbox = NULL;
+  {
+    gdk_threads_enter();
+    hbox = gtk_hbox_new(FALSE, column_count);
+    gdk_threads_leave();
+  }
+  funk2_gtk_widget_t* widget = (funk2_gtk_widget_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_widget_t)));
+  funk2_gtk_widget__init(widget, name, hbox);
   funk2_gtk__add_widget(this, widget);
   return widget;
 }
@@ -222,14 +233,41 @@ f2ptr raw__gtk__vbox__new(f2ptr cause, f2ptr name, f2ptr row_count) {
 #endif
 }
 
-f2ptr f2__gtk__vbox__new(f2ptr cause, f2ptr name, f2ptr row_count) {
+f2ptr f2__gtk__hbox__new(f2ptr cause, f2ptr name, f2ptr row_count) {
   if ((! raw__symbol__is_type(cause, name)) ||
       (! raw__integer__is_type(cause, row_count))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__vbox__new(cause, name, row_count);
+  return raw__gtk__hbox__new(cause, name, row_count);
 }
-def_pcfunk2(gtk__vbox__new, name, row_count, return f2__gtk__vbox__new(this_cause, name, row_count));
+def_pcfunk2(gtk__hbox__new, name, row_count, return f2__gtk__hbox__new(this_cause, name, row_count));
+
+
+f2ptr raw__gtk__hbox__new(f2ptr cause, f2ptr name, f2ptr column_count) {
+#if defined(F2__GTK__SUPPORTED)
+  u64 name__length = raw__symbol__length(cause, name);
+  u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
+  raw__symbol__str_copy(cause, name, name__str);
+  name__str[name__length] = 0;
+  
+  u64 column_count__i = f2integer__i(column_count, cause);
+  
+  funk2_gtk__hbox__new(&(__funk2.gtk), name__str, column_count__i);
+  
+  return name;
+#else
+  return nil;
+#endif
+}
+
+f2ptr f2__gtk__hbox__new(f2ptr cause, f2ptr name, f2ptr column_count) {
+  if ((! raw__symbol__is_type(cause, name)) ||
+      (! raw__integer__is_type(cause, column_count))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__hbox__new(cause, name, column_count);
+}
+def_pcfunk2(gtk__hbox__new, name, column_count, return f2__gtk__hbox__new(this_cause, name, column_count));
 
 
 f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr name) {
@@ -300,11 +338,12 @@ void f2__gtk__initialize() {
   
   f2__string__reinitialize_globalvars();
   
-  f2__primcfunk__init__0(gtk__is_supported,                      "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
-  f2__primcfunk__init__1(gtk__window__new,      name,            "Returns the name of a new window widget.");
-  f2__primcfunk__init__2(gtk__vbox__new,        name, row_count, "Returns the name of a new vbox widget with row_count rows.");
-  f2__primcfunk__init__1(gtk__widget__show_all, name,            "Shows the widget referenced by name.");
-  f2__primcfunk__init__2(gtk__container__add,   name, add_name,  "Adds a widget to a container.");
+  f2__primcfunk__init__0(gtk__is_supported,                         "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
+  f2__primcfunk__init__1(gtk__window__new,      name,               "Returns the name of a new window widget.");
+  f2__primcfunk__init__2(gtk__vbox__new,        name, row_count,    "Returns the name of a new vbox widget with row_count rows.");
+  f2__primcfunk__init__2(gtk__hbox__new,        name, column_count, "Returns the name of a new vbox widget with column_count columns.");
+  f2__primcfunk__init__1(gtk__widget__show_all, name,               "Shows the widget referenced by name.");
+  f2__primcfunk__init__2(gtk__container__add,   name, add_name,     "Adds a widget to a container.");
   
 }
 

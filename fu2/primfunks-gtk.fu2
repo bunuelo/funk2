@@ -17,7 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk gtk-is_supported &primfunk:gtk__is_supported]
-[globalize-funk gtk-window-new   &primfunk:gtk__window__new]
+[globalize-funk gtk-is_supported    &primfunk:gtk__is_supported]
+[globalize-funk gtk-window-new      &primfunk:gtk__window__new]
+[globalize-funk gtk-widget-show_all &primfunk:gtk__widget__show_all]
 
 

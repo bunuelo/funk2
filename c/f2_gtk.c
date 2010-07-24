@@ -107,13 +107,30 @@ funk2_gtk_widget_t* funk2_gtk__lookup_widget(funk2_gtk_t* this, u8* name) {
 }
 
 funk2_gtk_widget_t* funk2_gtk__window__new(funk2_gtk_t* this, u8* name) {
-  GtkWidget*          window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  GtkWidget* window = NULL;
+  {
+    gdk_threads_enter();
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gdk_threads_leave();
+  }
   funk2_gtk_widget_t* widget = (funk2_gtk_widget_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_widget_t)));
   funk2_gtk_widget__init(widget, name, window);
   funk2_gtk__add_widget(this, widget);
   return widget;
 }
 
+funk2_gtk_widget_t* funk2_gtk__widget__show_all(funk2_gtk_t* this, u8* name) {
+  GtkWidget* widget = funk2_gtk__lookup_widget(this, name);
+  if (! widget) {
+    return NULL;
+  }
+  {
+    gdk_threads_enter();
+    window = gtk_widget_show_all(widget);
+    gdk_threads_leave();
+  }
+  return widget;
+}
 
 #endif // F2__GTK__SUPPORTED
 
@@ -141,11 +158,7 @@ f2ptr raw__gtk__window__new(f2ptr cause, f2ptr name) {
   raw__symbol__str_copy(cause, name, name__str);
   name__str[name__length] = 0;
   
-  {
-    gdk_threads_enter();
-    funk2_gtk__window__new(&(__funk2.gtk), name__str);
-    gdk_threads_leave();
-  }
+  funk2_gtk__window__new(&(__funk2.gtk), name__str);
   
   return name;
 #else
@@ -162,6 +175,31 @@ f2ptr f2__gtk__window__new(f2ptr cause, f2ptr name) {
 def_pcfunk1(gtk__window__new, name, return f2__gtk__window__new(this_cause, name));
 
 
+f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr name) {
+#if defined(F2__GTK__SUPPORTED)
+  u64 name__length = raw__symbol__length(cause, name);
+  u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
+  raw__symbol__str_copy(cause, name, name__str);
+  name__str[name__length] = 0;
+  
+  if (! funk2_gtk__widget__show_all(&(__funk2.gtk), name__str)) {
+    return nil;
+  }
+  return name;
+#else
+  return nil;
+#endif
+}
+
+f2ptr f2__gtk__widget__show_all(f2ptr cause, f2ptr name) {
+  if (! raw__symbol__is_type(cause, name)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__widget__show_all(cause, name);
+}
+def_pcfunk1(gtk__widget__show_all, name, return f2__gtk__window__show_all(this_cause, name));
+
+
 // **
 
 void f2__gtk__reinitialize_globalvars() {
@@ -174,8 +212,9 @@ void f2__gtk__initialize() {
   
   f2__string__reinitialize_globalvars();
   
-  f2__primcfunk__init__0(gtk__is_supported,       "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
-  f2__primcfunk__init__1(gtk__window__new,  name, "If GIMP TookKit (GTK) is supported, returns the name of a new window widget.");
+  f2__primcfunk__init__0(gtk__is_supported,           "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
+  f2__primcfunk__init__1(gtk__window__new,      name, "If GIMP TookKit (GTK) is supported, returns the name of a new window widget.");
+  f2__primcfunk__init__1(gtk__widget__show_all, name, "Shows the widget referenced by name.");
   
 }
 

@@ -28,13 +28,13 @@
 
 void funk2_gtk_widget__init(funk2_gtk_widget_t* this, u8* name, GtkWidget* gtk_widget) {
   u64 name__length = strlen((char*)name);
-  this->name = (u8*)f2__malloc(name__length);
+  this->name = (u8*)from_ptr(f2__malloc(name__length));
   memcpy(this->name, name, name__length + 1);
   this->gtk_widget = gtk_widget;
 }
 
 void funk2_gtk_widget__destroy(funk2_gtk_widget_t* this) {
-  f2__free(this->name);
+  f2__free(to_ptr(this->name));
 }
 
 
@@ -84,7 +84,7 @@ void funk2_gtk__destroy(funk2_gtk_t* this) {
 }
 
 void funk2_gtk__add_widget(funk2_gtk_t* this, funk2_gtk_widget_t* widget) {
-  funk2_gtk_widget_cons_t* cons = (funk2_gtk_widget_cons_t*)f2__malloc(sizeof(funk2_gtk_widget_cons_t));
+  funk2_gtk_widget_cons_t* cons = (funk2_gtk_widget_cons_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_widget_cons_t)));
   cons->widget = widget;
   cons->next   = this->widgets;
   this->widgets = cons;
@@ -104,7 +104,7 @@ funk2_gtk_widget_t* funk2_gtk__lookup_widget(funk2_gtk_t* this, u8* name) {
 
 funk2_gtk_widget_t* funk2_gtk__window__new(funk2_gtk_t* this, u8* name) {
   GtkWidget           window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  funk2_gtk_widget_t* widget = (funk2_gtk_widget_t*)f2__malloc(sizeof(funk2_gtk_widget_t));
+  funk2_gtk_widget_t* widget = (funk2_gtk_widget_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_widget_t)));
   funk2_gtk_widget__init(widget, name, window);
   funk2_gtk__add_widget(this, widget);
   return widget;
@@ -133,7 +133,7 @@ def_pcfunk0(gtk__is_supported, return f2__gtk__is_supported(this_cause));
 f2ptr raw__gtk__window__new(f2ptr cause, f2ptr name) {
 #if defined(F2__GTK__SUPPORTED)
   u64 name__length = raw__symbol__length(cause, name);
-  u8* name__str    = (u8*)f2__malloc(name__length + 1);
+  u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
   raw__symbol__str_copy(cause, name, name__str);
   name__str[name__length] = 0;
   funk2_gtk__window__new(&(__funk2.gtk), name__str);

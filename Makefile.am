@@ -390,7 +390,7 @@ make-install-sh:
 	chmod a+x install-sh
 
 bin/funk2$(EXEEXT): $(lib_LTLIBRARIES)
-	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GLIB_CFLAGS) -Llib/.libs -lfunk2
+	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GLIB_CFLAGS) $(gtk_libs) $(glib_libs) -Llib/.libs -lfunk2
 
 install: install-am make-install-sh
 	./install-sh

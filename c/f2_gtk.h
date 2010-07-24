@@ -41,7 +41,7 @@ struct funk2_gtk_s {
 
 // funk2_gtk
 
-void funk2_gtk__init(funk2_gtk_t* this, int* argv, char** argc);
+void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc);
 void funk2_gtk__destroy(funk2_gtk_t* this);
 
 // **

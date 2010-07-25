@@ -173,7 +173,7 @@ f2ptr raw__gtk__vbox__new(f2ptr cause, f2ptr row_count) {
 #endif
 }
 
-f2ptr f2__gtk__vbox__new(f2ptr cause, f2ptr name, f2ptr row_count) {
+f2ptr f2__gtk__vbox__new(f2ptr cause, f2ptr row_count) {
   if (! raw__integer__is_type(cause, row_count)) {
     return f2larva__new(cause, 1, nil);
   }

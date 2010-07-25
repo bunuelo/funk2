@@ -17,12 +17,13 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk gtk-is_supported    &primfunk:gtk__is_supported]
-[globalize-funk gtk-window-new      &primfunk:gtk__window__new]
-[globalize-funk gtk-vbox-new        &primfunk:gtk__vbox__new]
-[globalize-funk gtk-hbox-new        &primfunk:gtk__hbox__new]
-[globalize-funk gtk-widget-show_all &primfunk:gtk__widget__show_all]
-[globalize-funk gtk-container-add   &primfunk:gtk__container__add]
-[globalize-funk gtk-box-pack_start  &primfunk:gtk__box__pack_start]
+[globalize-funk gtk-is_supported          &primfunk:gtk__is_supported]
+[globalize-funk gtk-window-new            &primfunk:gtk__window__new]
+[globalize-funk gtk-vbox-new              &primfunk:gtk__vbox__new]
+[globalize-funk gtk-hbox-new              &primfunk:gtk__hbox__new]
+[globalize-funk gtk-button-new_with_label &primfunk:gtk__button__new_with_label]
+[globalize-funk gtk-widget-show_all       &primfunk:gtk__widget__show_all]
+[globalize-funk gtk-container-add         &primfunk:gtk__container__add]
+[globalize-funk gtk-box-pack_start        &primfunk:gtk__box__pack_start]
 
 

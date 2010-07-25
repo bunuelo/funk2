@@ -124,6 +124,39 @@ GtkWidget* funk2_gtk__button__new_with_label(funk2_gtk_t* this, u8* label) {
   return button;
 }
 
+GtkWidget* funk2_gtk__entry__new(funk2_gtk_t* this) {
+  GtkWidget* entry = NULL;
+  {
+    gdk_threads_enter();
+    entry = gtk_entry_new();
+    gdk_threads_leave();
+  }
+  return entry;
+}
+
+GtkWidget* funk2_gtk__scrolled_window__new(funk2_gtk_t* this) {
+  GtkWidget* scrolled_window = NULL;
+  {
+    gdk_threads_enter();
+    scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window),
+				   GTK_POLICY_AUTOMATIC,
+				   GTK_POLICY_AUTOMATIC);
+    gdk_threads_leave();
+  }
+  return scrolled_window;
+}
+
+GtkWidget* funk2_gtk__text_view__new(funk2_gtk_t* this) {
+  GtkWidget* text_view = NULL;
+  {
+    gdk_threads_enter();
+    text_view = gtk_text_view_new();
+    gdk_threads_leave();
+  }
+  return text_view;
+}
+
 void funk2_gtk__container__add(funk2_gtk_t* this, GtkWidget* widget, GtkWidget* add_widget) {
   {
     gdk_threads_enter();
@@ -243,6 +276,51 @@ f2ptr f2__gtk__button__new_with_label(f2ptr cause, f2ptr label) {
 def_pcfunk1(gtk__button__new_with_label, label, return f2__gtk__button__new_with_label(this_cause, label));
 
 
+f2ptr raw__gtk__entry__new(f2ptr cause) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* entry = funk2_gtk__entry__new(&(__funk2.gtk));
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(entry)));
+#else
+  return nil;
+#endif
+}
+
+f2ptr f2__gtk__entry__new(f2ptr cause) {
+  return raw__gtk__entry__new(cause);
+}
+def_pcfunk0(gtk__entry__new, return f2__gtk__entry__new(this_cause));
+
+
+f2ptr raw__gtk__scrolled_window__new(f2ptr cause) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* scrolled_window = funk2_gtk__scrolled_window__new(&(__funk2.gtk));
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(scrolled_window)));
+#else
+  return nil;
+#endif
+}
+
+f2ptr f2__gtk__scrolled_window__new(f2ptr cause) {
+  return raw__gtk__scrolled_window__new(cause);
+}
+def_pcfunk0(gtk__scrolled_window__new, return f2__gtk__scrolled_window__new(this_cause));
+
+
+f2ptr raw__gtk__text_view__new(f2ptr cause) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* text_view = funk2_gtk__text_view__new(&(__funk2.gtk));
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(text_view)));
+#else
+  return nil;
+#endif
+}
+
+f2ptr f2__gtk__text_view__new(f2ptr cause) {
+  return raw__gtk__text_view__new(cause);
+}
+def_pcfunk0(gtk__text_view__new, return f2__gtk__text_view__new(this_cause));
+
+
 f2ptr raw__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
 #if defined(F2__GTK__SUPPORTED)
   GtkWidget* gtk_widget     = raw__gtk_widget__as__GtkWidget(cause, widget);
@@ -325,9 +403,12 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__0(gtk__is_supported,                                                        "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
   f2__primcfunk__init__0(gtk__window__new,                                                         "Returns the name of a new window widget.");
   f2__primcfunk__init__1(gtk__vbox__new,              row_count,                                   "Returns the name of a new vbox widget with row_count rows.");
-  f2__primcfunk__init__1(gtk__hbox__new,              column_count,                                "Returns the name of a new vbox widget with column_count columns.");
-  f2__primcfunk__init__1(gtk__button__new_with_label, label,                                       "Returns the name of a new vbox widget with column_count columns.");
-  f2__primcfunk__init__1(gtk__widget__show_all,       widget,                                      "Shows the widget referenced by name.");
+  f2__primcfunk__init__1(gtk__hbox__new,              column_count,                                "Returns the name of a new hbox widget with column_count columns.");
+  f2__primcfunk__init__1(gtk__button__new_with_label, label,                                       "Returns the name of a new button widget with label.");
+  f2__primcfunk__init__0(gtk__entry__new,                                                          "Returns the name of a new entry widget.");
+  f2__primcfunk__init__0(gtk__scrolled_window__new,                                                "Returns the name of a new scrolled_window widget.");
+  f2__primcfunk__init__0(gtk__text_view__new,                                                      "Returns the name of a new text_view widget.");
+  f2__primcfunk__init__1(gtk__widget__show_all,       widget,                                      "Shows the widget and all children.");
   f2__primcfunk__init__2(gtk__container__add,         widget, add_widget,                          "Adds a widget to a container.");
   f2__primcfunk__init__5(gtk__box__pack_start,        widget, child_widget, expand, fill, padding, "Packs a child widget in a box.");
   

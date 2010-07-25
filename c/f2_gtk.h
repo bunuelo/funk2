@@ -24,26 +24,11 @@
 
 #include "f2_processor_thread.h"
 
-typedef struct funk2_gtk_widget_s funk2_gtk_widget_t;
-struct funk2_gtk_widget_s {
-  u8*        name;
-#if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget;
-#endif // F2__GTK__SUPPORTED
-};
-
-typedef struct funk2_gtk_widget_cons_s funk2_gtk_widget_cons_t;
-struct funk2_gtk_widget_cons_s {
-  funk2_gtk_widget_t*             widget;
-  struct funk2_gtk_widget_cons_s* next;
-};
-
 typedef struct funk2_gtk_s funk2_gtk_t;
 struct funk2_gtk_s {
   funk2_processor_mutex_t   main_thread__mutex;
   boolean_t                 main_thread__active;
   funk2_processor_thread_t* main_thread;
-  funk2_gtk_widget_cons_t*  widgets;
 };
 
 #endif // F2__GTK__TYPES__H

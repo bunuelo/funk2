@@ -78,8 +78,6 @@ void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc) {
   gdk_threads_init();
   gtk_init(argv, argc);
   
-  this->widgets = NULL;
-  
   funk2_processor_mutex__init(&(this->main_thread__mutex));
   this->main_thread__active = boolean__false;
   this->main_thread         = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), &funk2_gtk__thread__start_function__helper, (void*)this);
@@ -90,106 +88,57 @@ void funk2_gtk__destroy(funk2_gtk_t* this) {
   funk2_processor_mutex__destroy(&(this->main_thread__mutex));
 }
 
-void funk2_gtk__add_widget(funk2_gtk_t* this, funk2_gtk_widget_t* widget) {
-  funk2_gtk_widget_cons_t* cons = (funk2_gtk_widget_cons_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_widget_cons_t)));
-  cons->widget = widget;
-  cons->next   = this->widgets;
-  this->widgets = cons;
-}
 
-funk2_gtk_widget_t* funk2_gtk__lookup_widget(funk2_gtk_t* this, u8* name) {
-  funk2_gtk_widget_cons_t* iter = this->widgets;
-  while (iter) {
-    funk2_gtk_widget_t* widget = iter->widget;
-    if (strcmp((char*)(widget->name), (char*)name) == 0) {
-      return widget;
-    }
-    iter = iter->next;
-  }
-  return NULL;
-}
-
-funk2_gtk_widget_t* funk2_gtk__window__new(funk2_gtk_t* this, u8* name) {
+GtkWidget* funk2_gtk__window__new(funk2_gtk_t* this) {
   GtkWidget* window = NULL;
   {
     gdk_threads_enter();
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gdk_threads_leave();
   }
-  funk2_gtk_widget_t* widget = (funk2_gtk_widget_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_widget_t)));
-  funk2_gtk_widget__init(widget, name, window);
-  funk2_gtk__add_widget(this, widget);
-  return widget;
+  return window;
 }
 
-funk2_gtk_widget_t* funk2_gtk__vbox__new(funk2_gtk_t* this, u8* name, int row_count) {
+GtkWidget* funk2_gtk__vbox__new(funk2_gtk_t* this, int row_count) {
   GtkWidget* vbox = NULL;
   {
     gdk_threads_enter();
     vbox = gtk_vbox_new(FALSE, row_count);
     gdk_threads_leave();
   }
-  funk2_gtk_widget_t* widget = (funk2_gtk_widget_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_widget_t)));
-  funk2_gtk_widget__init(widget, name, vbox);
-  funk2_gtk__add_widget(this, widget);
-  return widget;
+  return vbox;
 }
 
-funk2_gtk_widget_t* funk2_gtk__hbox__new(funk2_gtk_t* this, u8* name, int column_count) {
+GtkWidget* funk2_gtk__hbox__new(funk2_gtk_t* this, int column_count) {
   GtkWidget* hbox = NULL;
   {
     gdk_threads_enter();
     hbox = gtk_hbox_new(FALSE, column_count);
     gdk_threads_leave();
   }
-  funk2_gtk_widget_t* widget = (funk2_gtk_widget_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_widget_t)));
-  funk2_gtk_widget__init(widget, name, hbox);
-  funk2_gtk__add_widget(this, widget);
-  return widget;
+  return hbox;
 }
 
-funk2_gtk_widget_t* funk2_gtk__container__add(funk2_gtk_t* this, u8* name, u8* add_name) {
-  funk2_gtk_widget_t* widget = funk2_gtk__lookup_widget(this, name);
-  if (! widget) {
-    return NULL;
-  }
-  funk2_gtk_widget_t* add_widget = funk2_gtk__lookup_widget(this, add_name);
-  if (! add_widget) {
-    return NULL;
-  }
+void funk2_gtk__container__add(funk2_gtk_t* this, GtkWidget* widget, GtkWidget* add_widget) {
   {
     gdk_threads_enter();
-    gtk_container_add(GTK_CONTAINER(widget->gtk_widget), add_widget->gtk_widget);
+    gtk_container_add(GTK_CONTAINER(widget), add_widget);
     gdk_threads_leave();
   }
-  return widget;
 }
 
-funk2_gtk_widget_t* funk2_gtk__widget__show_all(funk2_gtk_t* this, u8* name) {
-  funk2_gtk_widget_t* widget = funk2_gtk__lookup_widget(this, name);
-  if (! widget) {
-    return NULL;
-  }
+void funk2_gtk__widget__show_all(funk2_gtk_t* this, GtkWidget* widget) {
   {
     gdk_threads_enter();
-    gtk_widget_show_all(widget->gtk_widget);
+    gtk_widget_show_all(widget);
     gdk_threads_leave();
   }
-  return widget;
 }
 
-funk2_gtk_widget_t* funk2_gtk__box__pack_start(funk2_gtk_t* this, u8* name, u8* child_name, boolean_t expand, boolean_t fill, u64 padding) {
-  funk2_gtk_widget_t* widget = funk2_gtk__lookup_widget(this, name);
-  if (! widget) {
-    return NULL;
-  }
-  funk2_gtk_widget_t* child_widget = funk2_gtk__lookup_widget(this, child_name);
-  if (! child_widget) {
-    return NULL;
-  }
+void funk2_gtk__box__pack_start(funk2_gtk_t* this, GtkWidget* widget, GtkWidget* child_widget, boolean_t expand, boolean_t fill, u64 padding) {
   {
     gdk_threads_enter();
-    gtk_box_pack_start(GTK_BOX(widget->gtk_widget), child_widget->gtk_widget, expand, fill, padding);
+    gtk_box_pack_start(GTK_BOX(widget), child_widget, expand, fill, padding);
     gdk_threads_leave();
   }
   return widget;
@@ -214,172 +163,112 @@ f2ptr f2__gtk__is_supported(f2ptr cause) {
 def_pcfunk0(gtk__is_supported, return f2__gtk__is_supported(this_cause));
 
 
-f2ptr raw__gtk__window__new(f2ptr cause, f2ptr name) {
+f2ptr raw__gtk__window__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  u64 name__length = raw__symbol__length(cause, name);
-  u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
-  raw__symbol__str_copy(cause, name, name__str);
-  name__str[name__length] = 0;
-  
-  funk2_gtk__window__new(&(__funk2.gtk), name__str);
-  
-  return name;
+  GtkWidget* window = funk2_gtk__window__new(&(__funk2.gtk));
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(window)));
 #else
   return nil;
 #endif
 }
 
-f2ptr f2__gtk__window__new(f2ptr cause, f2ptr name) {
-  if (! raw__symbol__is_type(cause, name)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__gtk__window__new(cause, name);
+f2ptr f2__gtk__window__new(f2ptr cause) {
+  return raw__gtk__window__new(cause);
 }
-def_pcfunk1(gtk__window__new, name, return f2__gtk__window__new(this_cause, name));
+def_pcfunk0(gtk__window__new, return f2__gtk__window__new(this_cause));
 
 
-f2ptr raw__gtk__vbox__new(f2ptr cause, f2ptr name, f2ptr row_count) {
+f2ptr raw__gtk__vbox__new(f2ptr cause, f2ptr row_count) {
 #if defined(F2__GTK__SUPPORTED)
-  u64 name__length = raw__symbol__length(cause, name);
-  u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
-  raw__symbol__str_copy(cause, name, name__str);
-  name__str[name__length] = 0;
-  
-  u64 row_count__i = f2integer__i(row_count, cause);
-  
-  funk2_gtk__vbox__new(&(__funk2.gtk), name__str, row_count__i);
-  
-  return name;
+  u64        row_count__i = f2integer__i(row_count, cause);
+  GtkWidget* vbox         = funk2_gtk__vbox__new(&(__funk2.gtk), row_count__i);
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(vbox)));
 #else
   return nil;
 #endif
 }
 
 f2ptr f2__gtk__vbox__new(f2ptr cause, f2ptr name, f2ptr row_count) {
-  if ((! raw__symbol__is_type(cause, name)) ||
-      (! raw__integer__is_type(cause, row_count))) {
+  if (! raw__integer__is_type(cause, row_count)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__vbox__new(cause, name, row_count);
+  return raw__gtk__vbox__new(cause, row_count);
 }
-def_pcfunk2(gtk__vbox__new, name, row_count, return f2__gtk__vbox__new(this_cause, name, row_count));
+def_pcfunk1(gtk__vbox__new, row_count, return f2__gtk__vbox__new(this_cause, row_count));
 
 
-f2ptr raw__gtk__hbox__new(f2ptr cause, f2ptr name, f2ptr column_count) {
+f2ptr raw__gtk__hbox__new(f2ptr cause, f2ptr column_count) {
 #if defined(F2__GTK__SUPPORTED)
-  u64 name__length = raw__symbol__length(cause, name);
-  u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
-  raw__symbol__str_copy(cause, name, name__str);
-  name__str[name__length] = 0;
-  
-  u64 column_count__i = f2integer__i(column_count, cause);
-  
-  funk2_gtk__hbox__new(&(__funk2.gtk), name__str, column_count__i);
-  
-  return name;
+  u64        column_count__i = f2integer__i(column_count, cause);
+  GtkWidget* hbox            = funk2_gtk__hbox__new(&(__funk2.gtk), column_count__i);
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(hbox)));
 #else
   return nil;
 #endif
 }
 
-f2ptr f2__gtk__hbox__new(f2ptr cause, f2ptr name, f2ptr column_count) {
-  if ((! raw__symbol__is_type(cause, name)) ||
-      (! raw__integer__is_type(cause, column_count))) {
+f2ptr f2__gtk__hbox__new(f2ptr cause, f2ptr column_count) {
+  if (! raw__integer__is_type(cause, column_count)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__hbox__new(cause, name, column_count);
+  return raw__gtk__hbox__new(cause, column_count);
 }
-def_pcfunk2(gtk__hbox__new, name, column_count, return f2__gtk__hbox__new(this_cause, name, column_count));
+def_pcfunk1(gtk__hbox__new, column_count, return f2__gtk__hbox__new(this_cause, column_count));
 
 
-f2ptr raw__gtk__container__add(f2ptr cause, f2ptr name, f2ptr add_name) {
+void raw__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
 #if defined(F2__GTK__SUPPORTED)
-  u64 name__length = raw__symbol__length(cause, name);
-  u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
-  raw__symbol__str_copy(cause, name, name__str);
-  name__str[name__length] = 0;
-  
-  u64 add_name__length = raw__symbol__length(cause, add_name);
-  u8* add_name__str    = (u8*)from_ptr(f2__malloc(add_name__length + 1));
-  raw__symbol__str_copy(cause, add_name, add_name__str);
-  add_name__str[add_name__length] = 0;
-  
-  if (! funk2_gtk__container__add(&(__funk2.gtk), name__str, add_name__str)) {
-    return nil;
-  }
-  return name;
-#else
-  return nil;
+  GtkWidget* gtk_widget     = (GtkWidget*)from_ptr(f2pointer__p(f2__gtk_widget__pointer(cause, widget),     cause));
+  GtkWidget* add_gtk_widget = (GtkWidget*)from_ptr(f2pointer__p(f2__gtk_widget__pointer(cause, add_widget), cause));
+  funk2_gtk__container__add(&(__funk2.gtk), gtk_widget, add_gtk_widget)) {
 #endif
 }
 
-f2ptr f2__gtk__container__add(f2ptr cause, f2ptr name, f2ptr add_name) {
-  if ((! raw__symbol__is_type(cause, name)) ||
-      (! raw__symbol__is_type(cause, add_name))) {
+f2ptr f2__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
+  if ((! raw__gtk_widget__is_type(cause, widget)) ||
+      (! raw__gtk_widget__is_type(cause, add_widget))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__container__add(cause, name, add_name);
-}
-def_pcfunk2(gtk__container__add, name, add_name, return f2__gtk__container__add(this_cause, name, add_name));
-
-
-f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr name) {
-#if defined(F2__GTK__SUPPORTED)
-  u64 name__length = raw__symbol__length(cause, name);
-  u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
-  raw__symbol__str_copy(cause, name, name__str);
-  name__str[name__length] = 0;
-  
-  if (! funk2_gtk__widget__show_all(&(__funk2.gtk), name__str)) {
-    return nil;
-  }
-  return name;
-#else
+  raw__gtk__container__add(cause, widget, add_widget);
   return nil;
+}
+def_pcfunk2(gtk__container__add, widget, add_widget, return f2__gtk__container__add(this_cause, widget, add_widget));
+
+
+void raw__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_widget = (GtkWidget*)from_ptr(f2pointer__p(f2__gtk_widget__pointer(cause, widget), cause));
+  funk2_gtk__widget__show_all(&(__funk2.gtk), gtk_widget);
 #endif
 }
 
-f2ptr f2__gtk__widget__show_all(f2ptr cause, f2ptr name) {
-  if (! raw__symbol__is_type(cause, name)) {
+f2ptr f2__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
+  if (! raw__gtk_widget__is_type(cause, widget)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__widget__show_all(cause, name);
+  return raw__gtk__widget__show_all(cause, widget);
 }
-def_pcfunk1(gtk__widget__show_all, name, return f2__gtk__widget__show_all(this_cause, name));
+def_pcfunk1(gtk__widget__show_all, widget, return f2__gtk__widget__show_all(this_cause, widget));
 
 
-f2ptr raw__gtk__box__pack_start(f2ptr cause, f2ptr name, f2ptr child_name, f2ptr expand, f2ptr fill, f2ptr padding) {
+void raw__gtk__box__pack_start(f2ptr cause, f2ptr widget, f2ptr child_widget, f2ptr expand, f2ptr fill, f2ptr padding) {
 #if defined(F2__GTK__SUPPORTED)
-  u64 name__length = raw__symbol__length(cause, name);
-  u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
-  raw__symbol__str_copy(cause, name, name__str);
-  name__str[name__length] = 0;
-  
-  u64 child_name__length = raw__symbol__length(cause, child_name);
-  u8* child_name__str    = (u8*)from_ptr(f2__malloc(child_name__length + 1));
-  raw__symbol__str_copy(cause, child_name, child_name__str);
-  child_name__str[child_name__length] = 0;
-  
-  u64 padding__i = f2integer__i(padding, cause);
-  
-  if (! funk2_gtk__box__pack_start(&(__funk2.gtk), name__str, child_name__str, expand != nil, fill != nil, padding__i)) {
-    return nil;
-  }
-  return name;
-#else
-  return nil;
+  GtkWidget* gtk_widget       = (GtkWidget*)from_ptr(f2pointer__p(f2__gtk_widget__pointer(cause, widget),       cause));
+  GtkWidget* child_gtk_widget = (GtkWidget*)from_ptr(f2pointer__p(f2__gtk_widget__pointer(cause, child_widget), cause));
+  u64        padding__i       = f2integer__i(padding, cause);
+  funk2_gtk__box__pack_start(&(__funk2.gtk), gtk_widget, child_gtk_widget, expand != nil, fill != nil, padding__i);
 #endif
 }
 
-f2ptr f2__gtk__box__pack_start(f2ptr cause, f2ptr name, f2ptr child_name, f2ptr expand, f2ptr fill, f2ptr padding) {
-  if ((! raw__symbol__is_type(cause, name)) ||
-      (! raw__symbol__is_type(cause, child_name)) ||
+f2ptr f2__gtk__box__pack_start(f2ptr cause, f2ptr widget, f2ptr child_widget, f2ptr expand, f2ptr fill, f2ptr padding) {
+  if ((! raw__gtk_widget__is_type(cause, widget)) ||
+      (! raw__gtk_widget__is_type(cause, child_widget)) ||
       (! raw__integer__is_type(cause, padding))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__box__pack_start(cause, name, child_name, expand, fill, padding);
+  return raw__gtk__box__pack_start(cause, widget, child_widget, expand, fill, padding);
 }
-def_pcfunk5(gtk__box__pack_start, name, child_name, expand, fill, padding, return f2__gtk__box__pack_start(this_cause, name, child_name, expand, fill, padding));
+def_pcfunk5(gtk__box__pack_start, widget, child_widget, expand, fill, padding, return f2__gtk__box__pack_start(this_cause, widget, child_widget, expand, fill, padding));
 
 
 // **
@@ -398,14 +287,13 @@ void f2__gtk__initialize() {
   
   init_frame_object__1_slot(gtk_widget, pointer);
   
-  
-  f2__primcfunk__init__0(gtk__is_supported,                                              "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
-  f2__primcfunk__init__1(gtk__window__new,      name,                                    "Returns the name of a new window widget.");
-  f2__primcfunk__init__2(gtk__vbox__new,        name, row_count,                         "Returns the name of a new vbox widget with row_count rows.");
-  f2__primcfunk__init__2(gtk__hbox__new,        name, column_count,                      "Returns the name of a new vbox widget with column_count columns.");
-  f2__primcfunk__init__1(gtk__widget__show_all, name,                                    "Shows the widget referenced by name.");
-  f2__primcfunk__init__2(gtk__container__add,   name, add_name,                          "Adds a widget to a container.");
-  f2__primcfunk__init__5(gtk__box__pack_start,  name, child_name, expand, fill, padding, "Packs a child widget in a box.");
+  f2__primcfunk__init__0(gtk__is_supported,                                                  "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
+  f2__primcfunk__init__0(gtk__window__new,                                                   "Returns the name of a new window widget.");
+  f2__primcfunk__init__1(gtk__vbox__new,        row_count,                                   "Returns the name of a new vbox widget with row_count rows.");
+  f2__primcfunk__init__1(gtk__hbox__new,        column_count,                                "Returns the name of a new vbox widget with column_count columns.");
+  f2__primcfunk__init__1(gtk__widget__show_all, widget,                                      "Shows the widget referenced by name.");
+  f2__primcfunk__init__2(gtk__container__add,   widget, add_widget,                          "Adds a widget to a container.");
+  f2__primcfunk__init__5(gtk__box__pack_start,  widget, child_widget, expand, fill, padding, "Packs a child widget in a box.");
   
 }
 

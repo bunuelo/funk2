@@ -205,7 +205,7 @@ void raw__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
 #if defined(F2__GTK__SUPPORTED)
   GtkWidget* gtk_widget     = (GtkWidget*)from_ptr(f2pointer__p(f2__gtk_widget__pointer(cause, widget),     cause));
   GtkWidget* add_gtk_widget = (GtkWidget*)from_ptr(f2pointer__p(f2__gtk_widget__pointer(cause, add_widget), cause));
-  funk2_gtk__container__add(&(__funk2.gtk), gtk_widget, add_gtk_widget)) {
+  funk2_gtk__container__add(&(__funk2.gtk), gtk_widget, add_gtk_widget);
 #endif
 }
 

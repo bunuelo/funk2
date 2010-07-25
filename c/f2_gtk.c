@@ -25,6 +25,15 @@
 
 def_frame_object__global__1_slot(gtk_widget, pointer);
 
+#if defined(F2__GTK__SUPPORTED)
+
+GtkWidget* raw__gtk_widget__as__GtkWidget(f2ptr cause, f2ptr this) {
+  return (GtkWidget*)from_ptr(f2pointer__p(f2__gtk_widget__pointer(cause, this), cause));
+}
+
+#endif // F2__GTK__SUPPORTED
+
+
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -203,8 +212,8 @@ def_pcfunk1(gtk__hbox__new, column_count, return f2__gtk__hbox__new(this_cause, 
 
 void raw__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget     = (GtkWidget*)from_ptr(f2pointer__p(f2__gtk_widget__pointer(cause, widget),     cause));
-  GtkWidget* add_gtk_widget = (GtkWidget*)from_ptr(f2pointer__p(f2__gtk_widget__pointer(cause, add_widget), cause));
+  GtkWidget* gtk_widget     = raw__gtk_widget__as__GtkWidget(cause, widget);
+  GtkWidget* add_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, add_widget);
   funk2_gtk__container__add(&(__funk2.gtk), gtk_widget, add_gtk_widget);
 #endif
 }
@@ -222,7 +231,7 @@ def_pcfunk2(gtk__container__add, widget, add_widget, return f2__gtk__container__
 
 void raw__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = (GtkWidget*)from_ptr(f2pointer__p(f2__gtk_widget__pointer(cause, widget), cause));
+  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
   funk2_gtk__widget__show_all(&(__funk2.gtk), gtk_widget);
 #endif
 }
@@ -239,8 +248,8 @@ def_pcfunk1(gtk__widget__show_all, widget, return f2__gtk__widget__show_all(this
 
 void raw__gtk__box__pack_start(f2ptr cause, f2ptr widget, f2ptr child_widget, f2ptr expand, f2ptr fill, f2ptr padding) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget       = (GtkWidget*)from_ptr(f2pointer__p(f2__gtk_widget__pointer(cause, widget),       cause));
-  GtkWidget* child_gtk_widget = (GtkWidget*)from_ptr(f2pointer__p(f2__gtk_widget__pointer(cause, child_widget), cause));
+  GtkWidget* gtk_widget       = raw__gtk_widget__as__GtkWidget(cause, widget);
+  GtkWidget* child_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, child_widget);
   u64        padding__i       = f2integer__i(padding, cause);
   funk2_gtk__box__pack_start(&(__funk2.gtk), gtk_widget, child_gtk_widget, expand != nil, fill != nil, padding__i);
 #endif

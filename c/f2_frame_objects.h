@@ -385,7 +385,10 @@
   init_frame_object__slot(name, slot_5);
 
 
+// physical_sim_object
+
 f2ptr f2physical_sim_object__primobject_type__new(f2ptr cause);
+
 
 // **
 

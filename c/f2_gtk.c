@@ -21,8 +21,12 @@
 
 #include "funk2.h"
 
-#if defined(F2__GTK__SUPPORTED)
+// gtk_widget
 
+def_frame_object__global__1_slot(gtk_widget, pointer);
+
+
+#if defined(F2__GTK__SUPPORTED)
 
 // funk2_gtk_widget
 
@@ -80,6 +84,7 @@ void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc) {
   this->main_thread__active = boolean__false;
   this->main_thread         = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), &funk2_gtk__thread__start_function__helper, (void*)this);
 }
+
 
 void funk2_gtk__destroy(funk2_gtk_t* this) {
   funk2_processor_mutex__destroy(&(this->main_thread__mutex));
@@ -383,11 +388,16 @@ void f2__gtk__reinitialize_globalvars() {
 }
 
 void f2__gtk__initialize() {
-  //f2ptr cause = initial_cause();
+  f2ptr cause = initial_cause();
   
   funk2_module_registration__add_module(&(__funk2.module_registration), "gtk", "", &f2__string__reinitialize_globalvars);
   
   f2__string__reinitialize_globalvars();
+  
+  // gtk_widget
+  
+  init_frame_object__1_slot(gtk_widget, pointer);
+  
   
   f2__primcfunk__init__0(gtk__is_supported,                                              "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
   f2__primcfunk__init__1(gtk__window__new,      name,                                    "Returns the name of a new window widget.");

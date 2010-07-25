@@ -28,20 +28,6 @@ def_frame_object__global__1_slot(gtk_widget, pointer);
 
 #if defined(F2__GTK__SUPPORTED)
 
-// funk2_gtk_widget
-
-void funk2_gtk_widget__init(funk2_gtk_widget_t* this, u8* name, GtkWidget* gtk_widget) {
-  u64 name__length = strlen((char*)name);
-  this->name = (u8*)from_ptr(f2__malloc(name__length));
-  memcpy(this->name, name, name__length + 1);
-  this->gtk_widget = gtk_widget;
-}
-
-void funk2_gtk_widget__destroy(funk2_gtk_widget_t* this) {
-  f2__free(to_ptr(this->name));
-}
-
-
 // funk2_gtk
 
 void funk2_gtk__thread__start_function(funk2_gtk_t* this) {

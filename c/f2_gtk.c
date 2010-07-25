@@ -231,7 +231,8 @@ f2ptr f2__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
   if (! raw__gtk_widget__is_type(cause, widget)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__widget__show_all(cause, widget);
+  raw__gtk__widget__show_all(cause, widget);
+  return nil;
 }
 def_pcfunk1(gtk__widget__show_all, widget, return f2__gtk__widget__show_all(this_cause, widget));
 
@@ -251,7 +252,8 @@ f2ptr f2__gtk__box__pack_start(f2ptr cause, f2ptr widget, f2ptr child_widget, f2
       (! raw__integer__is_type(cause, padding))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__box__pack_start(cause, widget, child_widget, expand, fill, padding);
+  raw__gtk__box__pack_start(cause, widget, child_widget, expand, fill, padding);
+  return nil;
 }
 def_pcfunk5(gtk__box__pack_start, widget, child_widget, expand, fill, padding, return f2__gtk__box__pack_start(this_cause, widget, child_widget, expand, fill, padding));
 

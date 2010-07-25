@@ -127,7 +127,6 @@ void funk2_gtk__box__pack_start(funk2_gtk_t* this, GtkWidget* widget, GtkWidget*
     gtk_box_pack_start(GTK_BOX(widget), child_widget, expand, fill, padding);
     gdk_threads_leave();
   }
-  return widget;
 }
 
 #endif // F2__GTK__SUPPORTED

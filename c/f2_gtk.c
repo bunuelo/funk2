@@ -34,6 +34,12 @@ GtkWidget* raw__gtk_widget__as__GtkWidget(f2ptr cause, f2ptr this) {
 #endif // F2__GTK__SUPPORTED
 
 
+// gtk_callback
+
+def_frame_object__global__2_slot(gtk_callback, funk, args);
+
+
+
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -479,6 +485,17 @@ f2ptr f2__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2pt
 }
 def_pcfunk4(gtk__signal_connect, widget, signal_name, funk, args, return f2__gtk__signal_connect(this_cause, widget, signal_name, funk, args));
 
+f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
+  funk2_gtk_callback_t* callback = funk2_gtk__pop_callback_event(&(__funk2.gtk));
+  if (! callback) {
+    return nil;
+  }
+  f2ptr funk = callback->funk;
+  f2ptr args = callback->args;
+  return f2__gtk_callback__new(cause, funk, args);
+}
+def_pcfunk0(gtk__pop_callback_event, return f2__gtk__pop_callback_event(this_cause));
+
 
 // **
 
@@ -496,6 +513,10 @@ void f2__gtk__initialize() {
   
   init_frame_object__1_slot(gtk_widget, pointer);
   
+  // gtk_callback
+  
+  init_frame_object__2_slot(gtk_callback, funk, args);
+  
   f2__primcfunk__init__0(gtk__is_supported,                                                        "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
   f2__primcfunk__init__0(gtk__window__new,                                                         "Returns the name of a new window widget.");
   f2__primcfunk__init__1(gtk__vbox__new,              row_count,                                   "Returns the name of a new vbox widget with row_count rows.");
@@ -508,6 +529,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__2(gtk__container__add,         widget, add_widget,                          "Adds a widget to a container.");
   f2__primcfunk__init__5(gtk__box__pack_start,        widget, child_widget, expand, fill, padding, "Packs a child widget in a box.");
   f2__primcfunk__init__4(gtk__signal_connect,         widget, signal_name, funk, args,             "Creates a callback for a widget (see gtk-pop_callback_event).");
+  f2__primcfunk__init__0(gtk__pop_callback_event,                                                  "Returns the next waiting callback event, if one exists, nil otherwise.");
   
 }
 

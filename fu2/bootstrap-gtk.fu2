@@ -24,7 +24,9 @@
 [deftypefunk gtk_widget get     text           []                          [gtk-entry-get_text       this]]
 [deftypefunk gtk_widget get     buffer         []                          [gtk-text_view-get_buffer this]]
 
-[deftypefunk gtk_text_buffer get start_iter [] [gtk-text_buffer-get_start_iter this]]
+[deftypefunk gtk_text_buffer get     start_iter   []      [gtk-text_buffer-get_start_iter this]]
+[deftypefunk gtk_text_buffer execute select_range [range] [gtk-text_buffer-select_range   this range]]
+[deftypefunk gtk_text_buffer set     select_range [range] [gtk-text_buffer-select_range   this range]]
 
 [globalize gtk-event_handling_fiber nil]
 

@@ -23,6 +23,8 @@
 [globalize-funk gtk-hbox-new              &primfunk:gtk__hbox__new]
 [globalize-funk gtk-button-new_with_label &primfunk:gtk__button__new_with_label]
 [globalize-funk gtk-entry-new             &primfunk:gtk__entry__new]
+[globalize-funk gtk-scrolled_window-new   &primfunk:gtk__scrolled_window__new]
+[globalize-funk gtk-text_view-new         &primfunk:gtk__text_view__new]
 [globalize-funk gtk-widget-show_all       &primfunk:gtk__widget__show_all]
 [globalize-funk gtk-container-add         &primfunk:gtk__container__add]
 [globalize-funk gtk-box-pack_start        &primfunk:gtk__box__pack_start]

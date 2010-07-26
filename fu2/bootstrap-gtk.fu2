@@ -24,12 +24,15 @@
 [deftypefunk gtk_widget get     text           []                          [gtk-entry-get_text       this]]
 [deftypefunk gtk_widget get     buffer         []                          [gtk-text_view-get_buffer this]]
 
+[deftypefunk gtk_text_buffer get start_iter [] [gtk-text_buffer-get_start_iter this]]
+
 [globalize gtk-event_handling_fiber nil]
 
 [defunk gtk-event_handling_fiber-start []
   [if gtk-event_handling_fiber
       [have gtk-event_handling_fiber quit]]
   [let [[event_handling_fiber [fiber [funk []
+					   [cause-enable_reactive_critics [this-cause]]
 					   [while t
 					     [let [[callback_event [gtk-pop_callback_event]]]
 					       [if [null callback_event]
@@ -70,6 +73,7 @@
 		[print 'Search button clicked!']
 		[format stdout '\n  text: "' [get search_entry text] '"']
 		[print [get text_view buffer]]
+		[print [get [get text_view buffer] start_iter]]
 		]
 	  nil]
     [have next_button signal_connect 'clicked' [funk [button] [print 'Next button clicked!']] [cons next_button   nil]]

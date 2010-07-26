@@ -672,12 +672,12 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__0(gtk__scrolled_window__new,                                                     "Returns the name of a new scrolled_window widget.");
   f2__primcfunk__init__0(gtk__text_view__new,                                                           "Returns the name of a new text_view widget.");
   f2__primcfunk__init__1(gtk__text_view__get_buffer,       text_view,                                   "Returns the buffer widget of a text_view widget.");
-  f2__primcfunk__init__1(gtk__text_buffer__get_start_iter, text_buffer,                                 "Returns the starting text_iter of a text_buffer.");
   f2__primcfunk__init__1(gtk__widget__show_all,            widget,                                      "Shows the widget and all children.");
   f2__primcfunk__init__2(gtk__container__add,              widget, add_widget,                          "Adds a widget to a container.");
   f2__primcfunk__init__5(gtk__box__pack_start,             widget, child_widget, expand, fill, padding, "Packs a child widget in a box.");
   f2__primcfunk__init__4(gtk__signal_connect,              widget, signal_name, funk, args,             "Creates a callback for a widget (see gtk-pop_callback_event).");
   f2__primcfunk__init__0(gtk__pop_callback_event,                                                       "Returns the next waiting callback event, if one exists, nil otherwise.");
+  f2__primcfunk__init__1(gtk__text_buffer__get_start_iter, text_buffer,                                 "Returns the starting text_iter of a text_buffer.");
   
 }
 

@@ -335,7 +335,7 @@ void funk2_gtk__text_buffer__get_start_iter(funk2_gtk_t* this, GtkTextBuffer* te
   }
 }
 
-boolean_t funk2_gtk__text_iter__forward_search(GtkTextiter* iter, char* text, GtkTextIter* mstart, GtkTextIter* mend) {
+boolean_t funk2_gtk__text_iter__forward_search(GtkTextIter* iter, char* text, GtkTextIter* mstart, GtkTextIter* mend) {
   boolean_t found;
   {
     gdk_threads_enter();

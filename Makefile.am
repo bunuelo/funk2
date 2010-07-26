@@ -141,11 +141,11 @@ xmlrpc_cflags  = $(shell xmlrpc-c-config abyss-server client --cflags)
 xmlrpc_ldflags = $(shell xmlrpc-c-config abyss-server client --ldflags)
 endif
 
-gtk_cflags = $(shell pkg-config --cflags gtk+-2.0)
-gtk_libs   = $(shell pkg-config --libs   gtk+-2.0)
+#gtk_cflags = $(shell pkg-config --cflags gtk+-2.0)
+#gtk_libs   = $(shell pkg-config --libs   gtk+-2.0)
 
-gthread_cflags = $(shell pkg-config --cflags gthread-2.0)
-gthread_libs   = $(shell pkg-config --libs   gthread-2.0)
+#gthread_cflags = $(shell pkg-config --cflags gthread-2.0)
+#gthread_libs   = $(shell pkg-config --libs   gthread-2.0)
 
 #system_cflags = -Dbuild_os=\"$(build_os)\" -Dbuild_vendor=\"$(build_vendor)\"
 
@@ -153,8 +153,8 @@ debug_flags    = -g -pg -fstack-check -DDEBUG -DF2__PROCESSOR_MUTEX__DEBUG -DF2_
 
 optimize_flags = 
 
-debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(gtk_cflags) $(gthread_cflags) $(debug_flags)
-release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(gtk_cflags) $(gthread_cflags) $(optimize_flags)
+debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(debug_flags)
+release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(optimize_flags)
 athena__cc_flags  = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
 #cc_flags = $(debug__cc_flags)

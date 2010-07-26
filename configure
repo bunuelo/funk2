@@ -12427,7 +12427,7 @@ else
 $as_echo "$as_me:
 *** XMLRPC-C is not required to build Funk2, but the xmlrpc-c development headers
 *** are not installed, so XMLRPC-C support will not be compiled into Funk2.  The
-*** latest version of xmlrpc-c is always available at http://xmlrpc-c.sourceforge.net" >&6;}])
+*** latest version of xmlrpc-c is always available at http://xmlrpc-c.sourceforge.net" >&6;}
 fi
 
 

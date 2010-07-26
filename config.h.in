@@ -8,6 +8,9 @@
 /* Define to 1 if using `alloca.c'. */
 #undef C_ALLOCA
 
+/* Define if we've support for GTHREAD */
+#undef F2__GTHREAD_SUPPORTED
+
 /* Define if we've support for GTK+ */
 #undef F2__GTK_SUPPORTED
 

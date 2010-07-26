@@ -183,6 +183,12 @@ void funk2_gtk__box__pack_start(funk2_gtk_t* this, GtkWidget* widget, GtkWidget*
 
 #endif // F2__GTK__SUPPORTED
 
+f2ptr f2__gtk_not_supported_larva__new(f2ptr cause) {
+  f2ptr bug_frame = f2__frame__new(cause, nil);
+  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "gtk_support_not_compiled_into_this_version_of_funk2"));
+  return f2larva__new(cause, 534, f2__bug__new(cause, f2integer__new(cause, 534), bug_frame));
+}
+
 
 // user-space interface to gtk
 
@@ -205,7 +211,7 @@ f2ptr raw__gtk__window__new(f2ptr cause) {
   GtkWidget* window = funk2_gtk__window__new(&(__funk2.gtk));
   return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(window)));
 #else
-  return nil;
+  return f2__gtk_not_supported_larva__new(cause);
 #endif
 }
 
@@ -221,7 +227,7 @@ f2ptr raw__gtk__vbox__new(f2ptr cause, f2ptr row_count) {
   GtkWidget* vbox         = funk2_gtk__vbox__new(&(__funk2.gtk), row_count__i);
   return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(vbox)));
 #else
-  return nil;
+  return f2__gtk_not_supported_larva__new(cause);
 #endif
 }
 
@@ -240,7 +246,7 @@ f2ptr raw__gtk__hbox__new(f2ptr cause, f2ptr column_count) {
   GtkWidget* hbox            = funk2_gtk__hbox__new(&(__funk2.gtk), column_count__i);
   return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(hbox)));
 #else
-  return nil;
+  return f2__gtk_not_supported_larva__new(cause);
 #endif
 }
 
@@ -263,7 +269,7 @@ f2ptr raw__gtk__button__new_with_label(f2ptr cause, f2ptr label) {
   GtkWidget* button = funk2_gtk__button__new_with_label(&(__funk2.gtk), label__str);
   return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(button)));
 #else
-  return nil;
+  return f2__gtk_not_supported_larva__new(cause);
 #endif
 }
 
@@ -281,7 +287,7 @@ f2ptr raw__gtk__entry__new(f2ptr cause) {
   GtkWidget* entry = funk2_gtk__entry__new(&(__funk2.gtk));
   return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(entry)));
 #else
-  return nil;
+  return f2__gtk_not_supported_larva__new(cause);
 #endif
 }
 
@@ -296,7 +302,7 @@ f2ptr raw__gtk__scrolled_window__new(f2ptr cause) {
   GtkWidget* scrolled_window = funk2_gtk__scrolled_window__new(&(__funk2.gtk));
   return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(scrolled_window)));
 #else
-  return nil;
+  return f2__gtk_not_supported_larva__new(cause);
 #endif
 }
 
@@ -311,7 +317,7 @@ f2ptr raw__gtk__text_view__new(f2ptr cause) {
   GtkWidget* text_view = funk2_gtk__text_view__new(&(__funk2.gtk));
   return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(text_view)));
 #else
-  return nil;
+  return f2__gtk_not_supported_larva__new(cause);
 #endif
 }
 
@@ -328,7 +334,7 @@ f2ptr raw__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
   funk2_gtk__container__add(&(__funk2.gtk), gtk_widget, add_gtk_widget);
   return nil;
 #else
-  return f2larva__new(cause, 534, nil);
+  return f2__gtk_not_supported_larva__new(cause);
 #endif
 }
 
@@ -348,7 +354,7 @@ f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
   funk2_gtk__widget__show_all(&(__funk2.gtk), gtk_widget);
   return nil;
 #else
-  return f2larva__new(cause, 534, nil);
+  return f2__gtk_not_supported_larva__new(cause);
 #endif
 }
 
@@ -369,7 +375,7 @@ f2ptr raw__gtk__box__pack_start(f2ptr cause, f2ptr widget, f2ptr child_widget, f
   funk2_gtk__box__pack_start(&(__funk2.gtk), gtk_widget, child_gtk_widget, expand != nil, fill != nil, padding__i);
   return nil;
 #else
-  return f2larva__new(cause, 534, nil);
+  return f2__gtk_not_supported_larva__new(cause);
 #endif
 }
 

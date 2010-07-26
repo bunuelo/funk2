@@ -141,12 +141,6 @@ xmlrpc_cflags  = $(shell xmlrpc-c-config abyss-server client --cflags)
 xmlrpc_ldflags = $(shell xmlrpc-c-config abyss-server client --ldflags)
 endif
 
-#gtk_cflags = $(shell pkg-config --cflags gtk+-2.0)
-#gtk_libs   = $(shell pkg-config --libs   gtk+-2.0)
-
-#gthread_cflags = $(shell pkg-config --cflags gthread-2.0)
-#gthread_libs   = $(shell pkg-config --libs   gthread-2.0)
-
 #system_cflags = -Dbuild_os=\"$(build_os)\" -Dbuild_vendor=\"$(build_vendor)\"
 
 debug_flags    = -g -pg -fstack-check -DDEBUG -DF2__PROCESSOR_MUTEX__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY=1 -DDEBUG_MEMORY_POINTERS -DDEBUG_LOAD #-DDEBUG_COMPILE -DDEBUG_REDBLACKTREE -DDEBUG_BYTECODES -DDEBUG_MEMORY_VALID_PTRS 

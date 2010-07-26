@@ -132,6 +132,9 @@ funk2_gtk_callback_t* funk2_gtk__pop_callback_event(funk2_gtk_t* this) {
     this->callback_events = this->callback_events->next;
     callback = cons->callback;
     f2__free(to_ptr(cons));
+    if (this->callback_events == NULL) {
+      this->callback_events__last_cons = NULL;
+    }
   }
   funk2_processor_mutex__unlock(&(this->callback_events__mutex));
   return callback;

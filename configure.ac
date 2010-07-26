@@ -36,7 +36,7 @@ AC_CHECK_LIB(rt,clock_gettime)
 AC_CHECK_LIB(gmon,_mcount)
 
 AC_CHECK_HEADERS([X11/Xlib.h X11/keysym.h])
-AC_CHECK_HEADERS([zlib.h], [], [AC_MSG_ERROR([Funk2 requires the zlib library in order to compress and decompress disk images.])])
+AC_CHECK_HEADERS([zlib.h], [], [AC_MSG_ERROR([*** Funk2 requires the zlib library in order to compress and decompress disk images.])])
 
 # Checking for xmlrpc-c and its requirements.
 have_xmlrpc_requirements=1
@@ -49,7 +49,10 @@ then
   AC_MSG_NOTICE([Feature xmlrpc-c is fully supported.])
   AC_DEFINE(F2__XMLRPC_SUPPORTED, 1, Build XML-RPC support into Funk2)
 else
-  AC_MSG_NOTICE([Feature xmlrpc-c is not fully supported.])
+  AC_MSG_NOTICE([
+*** XMLRPC-C is not required to build Funk2, but the xmlrpc-c development headers
+*** are not installed, so XMLRPC-C support will not be compiled into Funk2.  The
+*** latest version of xmlrpc-c is always available at http://xmlrpc-c.sourceforge.net])])
 fi
 
 PKG_CHECK_MODULES(GTK, gtk+-2.0, AC_DEFINE(F2__GTK_SUPPORTED, 1, [Define if we've support for GTK+]), [AC_MSG_NOTICE([

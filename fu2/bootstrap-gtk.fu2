@@ -66,12 +66,13 @@
     [have swindow add        text_view]
     
     [have search_button signal_connect 'clicked'
-	  [funk [button]
+	  [funk []
 		[print 'Search button clicked!']
 		[format stdout '\n  text: "' [get search_entry text] '"']
+		[print [get text_view buffer]]
 		]
-	  [cons search_button nil]]
-    [have next_button   signal_connect 'clicked' [funk [button] [print 'Next button clicked!']]   [cons next_button   nil]]
+	  nil]
+    [have next_button signal_connect 'clicked' [funk [button] [print 'Next button clicked!']] [cons next_button   nil]]
     
     [have win show_all]]]
 

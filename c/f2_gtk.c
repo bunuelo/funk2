@@ -278,8 +278,15 @@ void funk2_gtk__box__pack_start(funk2_gtk_t* this, GtkWidget* widget, GtkWidget*
 void funk2_gtk__signal_connect(funk2_gtk_t* this, GtkWidget* widget, u8* signal_name, f2ptr funk, f2ptr args) {
   funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)f2__malloc(sizeof(funk2_gtk_callback_t));
   callback->gtk  = this;
-  callback->funk = never_gc(funk); // note never_gc
-  callback->args = never_gc(args);
+  callback->funk = funk;
+  callback->args = args;
+  // never gc these (they are not referenced in the global environment)
+  if (funk) {
+    never_gc(funk);
+  }
+  if (args) {
+    never_gc(args);
+  }
   funk2_gtk__add_callback(this, callback);
   g_signal_connect(G_OBJECT(widget), (char*)signal_name, G_CALLBACK(funk2_gtk__callback_handler), callback);
 }

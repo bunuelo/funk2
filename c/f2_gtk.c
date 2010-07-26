@@ -668,7 +668,7 @@ f2ptr raw__gtk__text_iter__forward_search(f2ptr cause, f2ptr text_iter, f2ptr te
   
   GtkTextIter mstart;
   GtkTextIter mend;
-  boolean_t   found = funk2_gtk__text_iter__forward_search(&(__funk2.gtk), gtk_text_iter, text__str, &mstart, &mend);
+  boolean_t   found = funk2_gtk__text_iter__forward_search(&(__funk2.gtk), &gtk_text_iter, text__str, &mstart, &mend);
   if (! found) {
     return nil;
   }

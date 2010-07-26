@@ -12154,8 +12154,8 @@ as_val=`eval 'as_val=${'$as_ac_Header'}
 _ACEOF
 
 else
-  { { $as_echo "$as_me:$LINENO: error: Funk2 requires the zlib library in order to compress and decompress disk images." >&5
-$as_echo "$as_me: error: Funk2 requires the zlib library in order to compress and decompress disk images." >&2;}
+  { { $as_echo "$as_me:$LINENO: error: *** Funk2 requires the zlib library in order to compress and decompress disk images." >&5
+$as_echo "$as_me: error: *** Funk2 requires the zlib library in order to compress and decompress disk images." >&2;}
    { (exit 1); exit 1; }; }
 fi
 
@@ -12420,8 +12420,14 @@ cat >>confdefs.h <<\_ACEOF
 _ACEOF
 
 else
-  { $as_echo "$as_me:$LINENO: Feature xmlrpc-c is not fully supported." >&5
-$as_echo "$as_me: Feature xmlrpc-c is not fully supported." >&6;}
+  { $as_echo "$as_me:$LINENO:
+*** XMLRPC-C is not required to build Funk2, but the xmlrpc-c development headers
+*** are not installed, so XMLRPC-C support will not be compiled into Funk2.  The
+*** latest version of xmlrpc-c is always available at http://xmlrpc-c.sourceforge.net" >&5
+$as_echo "$as_me:
+*** XMLRPC-C is not required to build Funk2, but the xmlrpc-c development headers
+*** are not installed, so XMLRPC-C support will not be compiled into Funk2.  The
+*** latest version of xmlrpc-c is always available at http://xmlrpc-c.sourceforge.net" >&6;}])
 fi
 
 
@@ -20526,11 +20532,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:20529: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:20535: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:20533: \$? = $ac_status" >&5
+   echo "$as_me:20539: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -20625,11 +20631,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:20628: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:20634: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:20632: \$? = $ac_status" >&5
+   echo "$as_me:20638: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -20677,11 +20683,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:20680: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:20686: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:20684: \$? = $ac_status" >&5
+   echo "$as_me:20690: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized

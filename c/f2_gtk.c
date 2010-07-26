@@ -74,8 +74,16 @@ void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc) {
   gtk_init(argv, argc);
   
   funk2_processor_mutex__init(&(this->main_thread__mutex));
-  this->main_thread__active = boolean__false;
-  this->main_thread         = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), &funk2_gtk__thread__start_function__helper, (void*)this);
+  this->main_thread__active        = boolean__false;
+  
+  funk2_processor_mutex__init(&(this->callbacks__mutex));
+  this->callbacks                  = NULL;
+  
+  funk2_processor_mutex__init(&(this->callback_events__mutex));
+  this->callback_events            = NULL;
+  this->callback_events__last_cons = NULL;
+  
+  this->main_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), &funk2_gtk__thread__start_function__helper, (void*)this);
 }
 
 
@@ -83,6 +91,49 @@ void funk2_gtk__destroy(funk2_gtk_t* this) {
   funk2_processor_mutex__destroy(&(this->main_thread__mutex));
 }
 
+
+void funk2_gtk__add_callback(funk2_gtk_t* this, funk2_gtk_callback_t* callback) {
+  funk2_gtk_callback_cons_t* cons = (funk2_gtk_callback_cons_t*)f2__malloc(sizeof(funk2_gtk_callback_cons_t));
+  cons->callback = callback;
+  
+  funk2_processor_mutex__user_lock(&(this->callbacks__mutex));
+  cons->next      = this->callbacks;
+  this->callbacks = cons->next;
+  funk2_processor_mutex__unlock(&(this->callbacks__mutex));
+}
+
+void funk2_gtk__add_callback_event(funk2_gtk_t* this, funk2_gtk_callback_t* callback) {
+  funk2_gtk_callback_cons_t* cons = (funk2_gtk_callback_cons_t*)f2__malloc(sizeof(funk2_gtk_callback_cons_t));
+  cons->callback = callback;
+  cons->next     = NULL;
+  
+  funk2_processor_mutex__user_lock(&(this->callback_events__mutex));
+  if (this->callback_events__last_cons) {
+    this->callback_events__last_cons->next = cons;
+    this->callback_events__last_cons       = cons;
+  } else {
+    this->callback_events            = cons;
+    this->callback_events__last_cons = cons;
+  }
+  funk2_processor_mutex__unlock(&(this->callback_events__mutex));
+}
+
+funk2_gtk_callback_t* funk2_gtk__pop_callback_event(funk2_gtk_t* this) {
+  funk2_gtk_callback_t* callback = NULL;
+  funk2_processor_mutex__user_lock(&(this->callback_events__mutex));
+  if (this->callback_events) {
+    funk2_gtk_callback_cons_t* cons = this->callback_events;
+    this->callback_events = this->callback_events->next;
+    callback = cons->callback;
+    f2__free(to_ptr(cons));
+  }
+  funk2_processor_mutex__unlock(&(this->callback_events__mutex));
+  return callback;
+}
+
+void funk2_gtk__callback_handler(GtkWidget *widget, funk2_gtk_callback_t* callback) {
+  funk2_gtk__add_callback_event(callback->gtk, callback);
+}
 
 GtkWidget* funk2_gtk__window__new(funk2_gtk_t* this) {
   GtkWidget* window = NULL;
@@ -180,6 +231,17 @@ void funk2_gtk__box__pack_start(funk2_gtk_t* this, GtkWidget* widget, GtkWidget*
     gdk_threads_leave();
   }
 }
+
+void funk2_gtk__signal_connect(funk2_gtk_t* this, GtkWidget* widget, char* signal_name, f2ptr funk, f2ptr args) {
+  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)f2__malloc(sizeof(funk2_gtk_callback_t));
+  callback->gtk  = this;
+  callback->funk = funk;
+  callback->args = args;
+  funk2_gtk__add_callback(this, callback);
+  g_signal_connect(G_OBJECT(widget), signal_name, G_CALLBACK(funk2_gtk__callback_handler), callback);
+}
+
+
 
 #endif // F2__GTK__SUPPORTED
 
@@ -390,6 +452,34 @@ f2ptr f2__gtk__box__pack_start(f2ptr cause, f2ptr widget, f2ptr child_widget, f2
 def_pcfunk5(gtk__box__pack_start, widget, child_widget, expand, fill, padding, return f2__gtk__box__pack_start(this_cause, widget, child_widget, expand, fill, padding));
 
 
+f2ptr raw__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk, f2ptr args) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+  
+  u64 signal_name__length = raw__string__length(cause, signal_name);
+  u8* signal_name__str    = (u8*)alloca(signal_name__length + 1);
+  raw__string__str_copy(cause, signal_name, signal_name__str);
+  signal_name__str[signal_name__length] = 0;
+  
+  funk2_gtk__signal_connect(&(__funk2.gtk), gtk_widget, signal_name__str, funk, args);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk, f2ptr args) {
+  if ((! raw__gtk_widget__is_type(cause, widget)) ||
+      (! raw__string__is_type(cause, signal_name)) ||
+      (! raw__funkable__is_type(cause, funk)) ||
+      (args && (! raw__cons__is_type(cause, args)))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__signal_connect(cause, widget, signal_name, funk, args);
+}
+def_pcfunk4(gtk__signal_connect, widget, signal_name, funk, args, return f2__gtk__signal_connect(this_cause, widget, signal_name, funk, args));
+
+
 // **
 
 void f2__gtk__reinitialize_globalvars() {
@@ -417,6 +507,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__1(gtk__widget__show_all,       widget,                                      "Shows the widget and all children.");
   f2__primcfunk__init__2(gtk__container__add,         widget, add_widget,                          "Adds a widget to a container.");
   f2__primcfunk__init__5(gtk__box__pack_start,        widget, child_widget, expand, fill, padding, "Packs a child widget in a box.");
+  f2__primcfunk__init__4(gtk__signal_connect,         widget, signal_name, funk, args,             "Creates a callback for a widget (see gtk-pop_callback_event).");
   
 }
 

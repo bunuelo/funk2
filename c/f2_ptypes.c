@@ -2384,7 +2384,7 @@ void pfunk2__f2chunk__str_copy(f2ptr this, f2ptr cause, u8* str) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  memcpy(str, __pure__f2chunk__str(this), __pure__f2chunk__length(this));
+  memcpy(str, __pure__f2chunk__bytes(this), __pure__f2chunk__length(this));
 }
 
 void raw__chunk__str_copy(f2ptr cause, f2ptr this, u8* str) {

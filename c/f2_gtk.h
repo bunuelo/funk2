@@ -81,6 +81,16 @@ f2ptr f2gtk_text_iter__primobject_type__new(f2ptr cause);
 f2ptr f2gtk_callback__primobject_type__new(f2ptr cause);
 
 
+// gtk_text_mark
+
+f2ptr f2gtk_text_mark__primobject_type__new(f2ptr cause);
+
+
+// gtk_text_range
+
+f2ptr f2gtk_text_range__primobject_type__new(f2ptr cause);
+
+
 // funk2_gtk
 
 void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc);

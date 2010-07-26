@@ -76,7 +76,7 @@
 		[print [get [get text_view buffer] start_iter]]
 		]
 	  nil]
-    [have next_button signal_connect 'clicked' [funk [button] [print 'Next button clicked!']] [cons next_button   nil]]
+    [have next_button signal_connect 'clicked' [funk [button] [print 'Next button clicked!']] [cons next_button nil]]
     
     [have win show_all]]]
 

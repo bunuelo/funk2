@@ -184,6 +184,8 @@ void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_t
   {char* type_name = "gtk_text_buffer";     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),     f2gtk_text_buffer__primobject_type__new(cause));}
   {char* type_name = "gtk_text_iter";       funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),       f2gtk_text_iter__primobject_type__new(cause));}
   {char* type_name = "gtk_callback";        funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),        f2gtk_callback__primobject_type__new(cause));}
+  {char* type_name = "gtk_text_mark";       funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),       f2gtk_text_mark__primobject_type__new(cause));}
+  {char* type_name = "gtk_text_range";      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),      f2gtk_text_range__primobject_type__new(cause));}
 }
 
 // **

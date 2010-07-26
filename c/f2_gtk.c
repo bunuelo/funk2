@@ -61,9 +61,27 @@ void raw__gtk_text_iter__as__GtkTextIter(f2ptr cause, f2ptr this, GtkTextIter* t
 #endif // F2__GTK__SUPPORTED
 
 
+// gtk_text_mark
+
+def_frame_object__global__1_slot(gtk_text_mark, pointer);
+
+#if defined(F2__GTK__SUPPORTED)
+
+GtkTextMark* raw__gtk_text_mark__as__GtkTextMark(f2ptr cause, f2ptr this) {
+  return (GtkTextMark*)from_ptr(f2pointer__p(f2__gtk_text_mark__pointer(cause, this), cause));
+}
+
+#endif // F2__GTK__SUPPORTED
+
+
 // gtk_callback
 
 def_frame_object__global__2_slot(gtk_callback, funk, args);
+
+
+// gtk_text_range
+
+def_frame_object__global__2_slot(gtk_text_range, start, end);
 
 
 
@@ -315,6 +333,16 @@ void funk2_gtk__text_buffer__get_start_iter(funk2_gtk_t* this, GtkTextBuffer* te
     gtk_text_buffer_get_start_iter(text_buffer, text_iter);
     gdk_threads_leave();
   }
+}
+
+boolean_t funk2_gtk__text_iter__forward_search(GtkTextiter* iter, char* text, GtkTextIter* mstart, GtkTextIter* mend) {
+  boolean_t found;
+  {
+    gdk_threads_enter();
+    found = (gtk_text_iter_forward_search(iter, (gchar*)text, 0, mstart, mend, NULL) ? boolean__true : boolean__false);
+    gdk_threads_leave();
+  }
+  return found;
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -629,6 +657,23 @@ f2ptr f2__gtk__text_buffer__get_start_iter(f2ptr cause, f2ptr text_buffer) {
 def_pcfunk1(gtk__text_buffer__get_start_iter, text_buffer, return f2__gtk__text_buffer__get_start_iter(this_cause, text_buffer));
 
 
+f2ptr raw__gtk__text_iter__forward_search(f2ptr cause, f2ptr text_iter, f2ptr text) {
+  GtkTextIter gtk_text_iter;
+  raw__gtk_text_iter__as__GtkTextIter(cause, text_iter, &gtk_text_iter);
+  
+  u64 text__length = raw__string__length(cause, text);
+  u8* text__str    = (u8*)alloca(text__length + 1);
+  raw__string__str_copy(cause, text, text__str);
+  text__str[text__length] = 0;
+  
+  GtkTextIter mstart;
+  GtkTextIter mend;
+  boolean_t   found = funk2_gtk__text_iter__forward_search(gtk_text_iter, text__str, &mstart, &mend);
+  if (! found) {
+    return nil;
+  }
+  return f2__gtk_text_range__new(cause, f2__gtk_text_iter__new(cause, f2chunk__new(cause, sizeof(GtkTextIter), &mstart)), f2__gtk_text_iter__new(cause, f2chunk__new(cause, sizeof(GtkTextIter), &mend)));
+}
 
 // **
 
@@ -657,9 +702,19 @@ void f2__gtk__initialize() {
   init_frame_object__1_slot(gtk_text_iter, chunk);
   
   
+  // gtk_text_mark
+  
+  init_frame_object__1_slot(gtk_text_mark, pointer);
+  
+  
   // gtk_callback
   
   init_frame_object__2_slot(gtk_callback, funk, args);
+  
+  
+  // gtk_text_range
+  
+  init_frame_object__2_slot(gtk_text_range, start, end);
   
   
   f2__primcfunk__init__0(gtk__is_supported,                                                             "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");

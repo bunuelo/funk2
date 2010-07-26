@@ -198,7 +198,7 @@ char* funk2_gtk__entry__get_text(funk2_gtk_t* this, GtkWidget* widget) {
   char* text = NULL;
   {
     gdk_threads_enter();
-    text = gtk_entry_get_text(GTK_ENTRY(widget));
+    text = (char*)gtk_entry_get_text(GTK_ENTRY(widget));
     gdk_threads_leave();
   }
   return text;

@@ -194,6 +194,16 @@ GtkWidget* funk2_gtk__entry__new(funk2_gtk_t* this) {
   return entry;
 }
 
+char* funk2_gtk__entry__get_text(funk2_gtk_t* this, GtkWidget* widget) {
+  char* text = NULL;
+  {
+    gdk_threads_enter();
+    text = gtk_entry_get_text(GTK_ENTRY(widget));
+    gdk_threads_leave();
+  }
+  return text;
+}
+
 GtkWidget* funk2_gtk__scrolled_window__new(funk2_gtk_t* this) {
   GtkWidget* scrolled_window = NULL;
   {
@@ -368,6 +378,28 @@ f2ptr f2__gtk__entry__new(f2ptr cause) {
 def_pcfunk0(gtk__entry__new, return f2__gtk__entry__new(this_cause));
 
 
+f2ptr raw__gtk__entry__get_text(f2ptr cause, f2ptr widget) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+  char* text = funk2_gtk__entry__get_text(&(__funk2.gtk), gtk_widget);
+  if (! text) {
+    return nil;
+  }
+  return new__string(cause, text);
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__entry__get_text(f2ptr cause, f2ptr widget) {
+  if (! raw__gtk_widget__is_type(cause, widget)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__entry__get_text(cause, widget);
+}
+def_pcfunk1(gtk__entry__get_text, widget, return f2__gtk__entry__get_text(this_cause, widget));
+
+
 f2ptr raw__gtk__scrolled_window__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
   GtkWidget* scrolled_window = funk2_gtk__scrolled_window__new(&(__funk2.gtk));
@@ -526,6 +558,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__1(gtk__hbox__new,              column_count,                                "Returns the name of a new hbox widget with column_count columns.");
   f2__primcfunk__init__1(gtk__button__new_with_label, label,                                       "Returns the name of a new button widget with label.");
   f2__primcfunk__init__0(gtk__entry__new,                                                          "Returns the name of a new entry widget.");
+  f2__primcfunk__init__1(gtk__entry__get_text,        widget,                                      "Returns the text of an entry widget as a string.");
   f2__primcfunk__init__0(gtk__scrolled_window__new,                                                "Returns the name of a new scrolled_window widget.");
   f2__primcfunk__init__0(gtk__text_view__new,                                                      "Returns the name of a new text_view widget.");
   f2__primcfunk__init__1(gtk__widget__show_all,       widget,                                      "Shows the widget and all children.");

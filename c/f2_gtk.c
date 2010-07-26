@@ -54,7 +54,7 @@ def_frame_object__global__1_slot(gtk_text_iter, chunk);
 #if defined(F2__GTK__SUPPORTED)
 
 void raw__gtk_text_iter__as__GtkTextIter(f2ptr cause, f2ptr this, GtkTextIter* text_iter) {
-  f2ptr chunk = f2__gtk_text_buffer__chunk(cause, this);
+  f2ptr chunk = f2__gtk_text_iter__chunk(cause, this);
   raw__chunk__str_copy(cause, chunk, text_iter);
 }
 

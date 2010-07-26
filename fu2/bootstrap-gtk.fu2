@@ -28,6 +28,8 @@
 [deftypefunk gtk_text_buffer execute select_range [range] [gtk-text_buffer-select_range   this range]]
 [deftypefunk gtk_text_buffer set     select_range [range] [gtk-text_buffer-select_range   this range]]
 
+[deftypefunk gtk_text_iter execute forward_search [text] [gtk-text_iter-forward_search this text]]
+
 [globalize gtk-event_handling_fiber nil]
 
 [defunk gtk-event_handling_fiber-start []

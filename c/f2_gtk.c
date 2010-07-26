@@ -711,6 +711,16 @@ f2ptr raw__gtk__text_iter__forward_search(f2ptr cause, f2ptr text_iter, f2ptr te
   return f2__gtk_text_range__new(cause, f2__gtk_text_iter__new(cause, f2chunk__new(cause, sizeof(GtkTextIter), (u8*)&mstart)), f2__gtk_text_iter__new(cause, f2chunk__new(cause, sizeof(GtkTextIter), (u8*)&mend)));
 }
 
+f2ptr f2__gtk__text_iter__forward_search(f2ptr cause, f2ptr text_iter, f2ptr text) {
+  if ((! raw__gtk_text_iter__is_type(cause, text_iter)) ||
+      (! raw__string__is_type(cause, text))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__text_iter__forward_search(cause, text_iter, text);
+}
+def_pcfunk2(gtk__text_iter__forward_search, text_iter, text, return f2__gtk__text_iter__forward_search(this_cause, text_iter, text));
+
+
 // **
 
 void f2__gtk__reinitialize_globalvars() {
@@ -770,6 +780,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__0(gtk__pop_callback_event,                                                       "Returns the next waiting callback event, if one exists, nil otherwise.");
   f2__primcfunk__init__1(gtk__text_buffer__get_start_iter, text_buffer,                                 "Returns the starting text_iter of a text_buffer.");
   f2__primcfunk__init__2(gtk__text_buffer__select_range,   text_buffer, range,                          "Sets select range in this text_buffer.");
+  f2__primcfunk__init__2(gtk__text_iter__forward_search,   text_iter, text,                             "");
   
 }
 

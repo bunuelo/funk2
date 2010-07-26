@@ -26,6 +26,7 @@
 [globalize-funk gtk-entry-get_text        &primfunk:gtk__entry__get_text]
 [globalize-funk gtk-scrolled_window-new   &primfunk:gtk__scrolled_window__new]
 [globalize-funk gtk-text_view-new         &primfunk:gtk__text_view__new]
+[globalize-funk gtk-text_view-get_buffer  &primfunk:gtk__text_view__get_buffer]
 [globalize-funk gtk-widget-show_all       &primfunk:gtk__widget__show_all]
 [globalize-funk gtk-container-add         &primfunk:gtk__container__add]
 [globalize-funk gtk-box-pack_start        &primfunk:gtk__box__pack_start]

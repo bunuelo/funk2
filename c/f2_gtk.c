@@ -34,6 +34,19 @@ GtkWidget* raw__gtk_widget__as__GtkWidget(f2ptr cause, f2ptr this) {
 #endif // F2__GTK__SUPPORTED
 
 
+// gtk_text_buffer
+
+def_frame_object__global__1_slot(gtk_text_buffer, pointer);
+
+#if defined(F2__GTK__SUPPORTED)
+
+GtkTextBuffer* raw__gtk_text_buffer__as__GtkTextBuffer(f2ptr cause, f2ptr this) {
+  return (GtkTextBuffer*)from_ptr(f2pointer__p(f2__gtk_text_buffer__pointer(cause, this), cause));
+}
+
+#endif // F2__GTK__SUPPORTED
+
+
 // gtk_callback
 
 def_frame_object__global__2_slot(gtk_callback, funk, args);
@@ -42,6 +55,7 @@ def_frame_object__global__2_slot(gtk_callback, funk, args);
 
 
 #if defined(F2__GTK__SUPPORTED)
+
 
 // funk2_gtk
 
@@ -225,6 +239,16 @@ GtkWidget* funk2_gtk__text_view__new(funk2_gtk_t* this) {
     gdk_threads_leave();
   }
   return text_view;
+}
+
+GtkTextBuffer* funk2_gtk__text_view__get_buffer(funk2_gtk_t* this, GtkWidget* text_view) {
+  GtkTextBuffer* buffer = NULL;
+  {
+    gdk_threads_enter();
+    buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
+    gdk_threads_leave();
+  }
+  return buffer;
 }
 
 void funk2_gtk__container__add(funk2_gtk_t* this, GtkWidget* widget, GtkWidget* add_widget) {
@@ -430,6 +454,28 @@ f2ptr f2__gtk__text_view__new(f2ptr cause) {
 def_pcfunk0(gtk__text_view__new, return f2__gtk__text_view__new(this_cause));
 
 
+f2ptr raw__gtk__text_view__get_buffer(f2ptr cause, f2ptr widget) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+  GtkTextBuffer* buffer = funk2_gtk__text_view__get_buffer(&(__funk2.gtk), gtk_widget);
+  if (! buffer) {
+    return nil;
+  }
+  return f2__gtk_text_buffer__new(cause, f2pointer__new(cause, to_ptr(buffer)));
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__text_view__get_buffer(f2ptr cause, f2ptr widget) {
+  if (! raw__gtk_widget__is_type(cause, widget)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__text_view__get_buffer(cause, widget);
+}
+def_pcfunk1(gtk__text_view__get_buffer, widget, return f2__gtk__text_view__get_buffer(this_cause, widget));
+
+
 f2ptr raw__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
 #if defined(F2__GTK__SUPPORTED)
   GtkWidget* gtk_widget     = raw__gtk_widget__as__GtkWidget(cause, widget);
@@ -548,9 +594,16 @@ void f2__gtk__initialize() {
   
   init_frame_object__1_slot(gtk_widget, pointer);
   
+  
+  // gtk_text_buffer
+  
+  init_frame_object__1_slot(gtk_text_buffer, pointer);
+  
+  
   // gtk_callback
   
   init_frame_object__2_slot(gtk_callback, funk, args);
+  
   
   f2__primcfunk__init__0(gtk__is_supported,                                                        "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
   f2__primcfunk__init__0(gtk__window__new,                                                         "Returns the name of a new window widget.");
@@ -561,6 +614,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__1(gtk__entry__get_text,        widget,                                      "Returns the text of an entry widget as a string.");
   f2__primcfunk__init__0(gtk__scrolled_window__new,                                                "Returns the name of a new scrolled_window widget.");
   f2__primcfunk__init__0(gtk__text_view__new,                                                      "Returns the name of a new text_view widget.");
+  f2__primcfunk__init__1(gtk__text_view__get_buffer,  text_view,                                   "Returns the buffer widget of a text_view widget.");
   f2__primcfunk__init__1(gtk__widget__show_all,       widget,                                      "Shows the widget and all children.");
   f2__primcfunk__init__2(gtk__container__add,         widget, add_widget,                          "Adds a widget to a container.");
   f2__primcfunk__init__5(gtk__box__pack_start,        widget, child_widget, expand, fill, padding, "Packs a child widget in a box.");

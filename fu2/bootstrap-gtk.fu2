@@ -17,10 +17,35 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deftypefunk gtk_widget execute show_all       []                          [gtk-widget-show_all this]]
-[deftypefunk gtk_widget execute add            [that]                      [gtk-container-add   this that]]
-[deftypefunk gtk_widget execute pack_start     [child expand fill padding] [gtk-box-pack_start this child expand fill padding]]
-[deftypefunk gtk_widget execute signal_connect [signal_name funk args]     [gtk-signal_connect this signal_name funk args]]
+[deftypefunk gtk_widget execute show_all       []                          [gtk-widget-show_all      this]]
+[deftypefunk gtk_widget execute add            [that]                      [gtk-container-add        this that]]
+[deftypefunk gtk_widget execute pack_start     [child expand fill padding] [gtk-box-pack_start       this child expand fill padding]]
+[deftypefunk gtk_widget execute signal_connect [signal_name funk args]     [gtk-signal_connect       this signal_name funk args]]
+[deftypefunk gtk_widget get     text           []                          [gtk-entry-get_text       this]]
+[deftypefunk gtk_widget get     buffer         []                          [gtk-text_view-get_buffer this]]
+
+[globalize gtk-event_handling_fiber nil]
+
+[defunk gtk-event_handling_fiber-start []
+  [if gtk-event_handling_fiber
+      [have gtk-event_handling_fiber quit]]
+  [let [[event_handling_fiber [fiber [funk []
+					   [while t
+					     [let [[callback_event [gtk-pop_callback_event]]]
+					       [if [null callback_event]
+						   [millisleep 100]
+						 [let [[funk [get callback_event funk]]
+						       [args [get callback_event args]]]
+						   [apply funk args]]]]]]
+				     nil]]]
+    [= gtk-event_handling_fiber event_handling_fiber]]
+  nil]
+
+[gtk-event_handling_fiber-start]
+
+
+
+
 
 [defunk test-gtk []
   [let [[win           [gtk-window-new]]
@@ -40,27 +65,13 @@
     [have vbox    pack_start swindow t t 0]
     [have swindow add        text_view]
     
-    [have search_button signal_connect 'clicked' [funk [button] [print 'Search button clicked!']] [cons search_button nil]]
+    [have search_button signal_connect 'clicked'
+	  [funk [button]
+		[print 'Search button clicked!']
+		[format stdout '\n  text: "' [get search_entry text] '"']
+		]
+	  [cons search_button nil]]
     [have next_button   signal_connect 'clicked' [funk [button] [print 'Next button clicked!']]   [cons next_button   nil]]
     
     [have win show_all]]]
-
-[globalize gtk-event_handling_fiber nil]
-
-[defunk gtk-event_handling_fiber-start []
-  [if gtk-event_handling_fiber
-      [have gtk-event_handling_fiber quit]]
-  [= gtk-event_handling_fiber [fiber [funk []
-					   [while t
-					     [let [[callback_event [gtk-pop_callback_event]]]
-					       [if [null callback_event]
-						   [millisleep 100]
-						 [let [[funk [get callback_event funk]]
-						       [args [get callback_event args]]]
-						   [apply funk args]]]]]]
-				     nil]]
-  nil]
-
-[gtk-event_handling_fiber-start]
-
 

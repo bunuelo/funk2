@@ -609,24 +609,24 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 def_pcfunk0(gtk__pop_callback_event, return f2__gtk__pop_callback_event(this_cause));
 
 
-f2ptr raw__gtk__text_buffer__get_start_iter(f2ptr cause, f2ptr widget) {
+f2ptr raw__gtk__text_buffer__get_start_iter(f2ptr cause, f2ptr text_buffer) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget*  gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  GtkTextIter text_iter;
-  funk2_gtk__text_buffer__get_start_iter(&(__funk2.gtk), gtk_widget, &text_iter);
+  GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, GtkTextBuffer(cause, widget);
+  GtkTextIter    text_iter;
+  funk2_gtk__text_buffer__get_start_iter(&(__funk2.gtk), gtk_text_buffer, &text_iter);
   return f2__gtk_text_iter__new(cause, f2chunk__new(cause, sizeof(GtkTextIter), &text_iter));
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
 }
 
-f2ptr f2__gtk__text_buffer__get_start_iter(f2ptr cause, f2ptr widget) {
-  if (! raw__gtk_widget__is_type(cause, widget)) {
+f2ptr f2__gtk__text_buffer__get_start_iter(f2ptr cause, f2ptr text_buffer) {
+  if (! raw__gtk_text_buffer__is_type(cause, text_buffer)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__text_buffer__get_start_iter(cause, widget);
+  return raw__gtk__text_buffer__get_start_iter(cause, text_buffer);
 }
-def_pcfunk1(gtk__text_buffer__get_start_iter, widget, return f2__gtk__text_buffer__get_start_iter(this_cause, widget));
+def_pcfunk1(gtk__text_buffer__get_start_iter, text_buffer, return f2__gtk__text_buffer__get_start_iter(this_cause, text_buffer));
 
 
 

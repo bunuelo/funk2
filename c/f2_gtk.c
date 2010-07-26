@@ -614,7 +614,7 @@ f2ptr raw__gtk__text_buffer__get_start_iter(f2ptr cause, f2ptr text_buffer) {
   GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, text_buffer);
   GtkTextIter    text_iter;
   funk2_gtk__text_buffer__get_start_iter(&(__funk2.gtk), gtk_text_buffer, &text_iter);
-  return f2__gtk_text_iter__new(cause, f2chunk__new(cause, sizeof(GtkTextIter), &text_iter));
+  return f2__gtk_text_iter__new(cause, f2chunk__new(cause, sizeof(GtkTextIter), (u8*)&text_iter));
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif

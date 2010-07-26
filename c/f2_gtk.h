@@ -71,6 +71,11 @@ f2ptr f2gtk_widget__primobject_type__new(f2ptr cause);
 f2ptr f2gtk_text_buffer__primobject_type__new(f2ptr cause);
 
 
+// gtk_text_iter
+
+f2ptr f2gtk_text_iter__primobject_type__new(f2ptr cause);
+
+
 // gtk_callback
 
 f2ptr f2gtk_callback__primobject_type__new(f2ptr cause);

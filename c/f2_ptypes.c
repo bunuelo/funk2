@@ -2376,6 +2376,21 @@ u64 pfunk2__f2chunk__length(f2ptr this, f2ptr cause) {
   return length;
 }
 
+void pfunk2__f2chunk__str_copy(f2ptr this, f2ptr cause, u8* str) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_chunk) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  memcpy(str, __pure__f2chunk__str(this), __pure__f2chunk__length(this));
+}
+
+void raw__chunk__str_copy(f2ptr cause, f2ptr this, u8* str) {
+  f2chunk__str_copy(this, cause, str);
+}
+
 u64 pfunk2__f2chunk__eq_hash_value(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);

@@ -611,7 +611,7 @@ def_pcfunk0(gtk__pop_callback_event, return f2__gtk__pop_callback_event(this_cau
 
 f2ptr raw__gtk__text_buffer__get_start_iter(f2ptr cause, f2ptr text_buffer) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, GtkTextBuffer(cause, widget);
+  GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, text_buffer);
   GtkTextIter    text_iter;
   funk2_gtk__text_buffer__get_start_iter(&(__funk2.gtk), gtk_text_buffer, &text_iter);
   return f2__gtk_text_iter__new(cause, f2chunk__new(cause, sizeof(GtkTextIter), &text_iter));

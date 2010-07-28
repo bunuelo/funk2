@@ -326,6 +326,7 @@ boolean_t funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memo
 }
 
 void funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd) {
+  status("funk2_memorypool__save_to_stream: compressing memorypool.");
   int compressed_length = 0;
   u8* compressed_data;
   {
@@ -346,8 +347,8 @@ void funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd) {
   size_i = compressed_length;          safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
   size_i = this->total_global_memory;  safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
   size_i = this->next_unique_block_id; safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
-
-  status("funk2_memorypool__save_to_stream: dynamic_memory.ptr=0x" X64__fstr " " u64__fstr " total_global_memory=" u64__fstr " compressed_length=" u64__fstr,
+  
+  status("funk2_memorypool__save_to_stream: dynamic_memory.ptr=0x" X64__fstr " " u64__fstr " total_global_memory=" u64__fstr " compressed_length=" u64__fstr "  (writing compressed image to disk now)",
 	 this->dynamic_memory.ptr, this->dynamic_memory.ptr,
 	 this->total_global_memory,
 	 (u64)compressed_length);
@@ -355,6 +356,8 @@ void funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd) {
   safe_write(fd, to_ptr(compressed_data), compressed_length);
   
   //safe_write(fd, this->dynamic_memory.ptr, this->total_global_memory);
+  
+  status("funk2_memorypool__save_to_stream: done writing memorypool image to disk.");
   
   f2__free(to_ptr(compressed_data));
 }
@@ -376,8 +379,11 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
   
   u8* compressed_data = (u8*)from_ptr(f2__malloc(compressed_length));
   
+  status("funk2_memorypool__load_from_stream: loading compressed memorypool image from disk.");
   safe_read(fd, to_ptr(compressed_data), compressed_length);
+  status("funk2_memorypool__load_from_stream: done loading compressed memorypool image from disk.");
   
+  status("funk2_memorypool__load_from_stream: decompressing memorypool image.");
   {
     int dest_length = 0;
     boolean_t failure = zlib__inflate(from_ptr(this->dynamic_memory.ptr), &dest_length, compressed_data, compressed_length);
@@ -385,6 +391,7 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
       error(nil, "funk2_memorypool__load_from_stream error: failed to inflate image using zlib.");
     }
   }
+  status("funk2_memorypool__load_from_stream: done decompressing memorypool image.");
   
   //safe_read(fd, this->dynamic_memory.ptr, this->total_global_memory);
   

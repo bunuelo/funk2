@@ -103,6 +103,7 @@
 				    ]]
     ]]
 
+
 [deftypefunk bruno_graph execute gview []
   [let [[graph         [new graph]]
         [node_list     [get [get this node_set] elements]]

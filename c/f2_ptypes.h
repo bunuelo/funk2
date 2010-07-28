@@ -342,6 +342,7 @@ f2ptr      f2__symbol__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr pfunk2__f2chunk__new(f2ptr cause, u64 length, byte* bytes);
 f2ptr pfunk2__f2chunk__new_copy(f2ptr cause, f2ptr init_chunk);
 u64   pfunk2__f2chunk__length(f2ptr this, f2ptr cause);
+void  pfunk2__f2chunk__str_copy(f2ptr this, f2ptr cause, u8* str);
 u64   pfunk2__f2chunk__eq_hash_value(f2ptr this, f2ptr cause);
 u64   pfunk2__f2chunk__equals_hash_value(f2ptr this, f2ptr cause);
 
@@ -362,6 +363,8 @@ f2ptr f2chunk__primobject_type__new(f2ptr cause);
 
 boolean_t raw__chunk__is_type(f2ptr cause, f2ptr exp);
 f2ptr f2__chunk__is_type(f2ptr cause, f2ptr exp);
+
+void raw__chunk__str_copy(f2ptr cause, f2ptr this, u8* str);
 
 boolean_t raw__chunk__eq(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__chunk__eq(f2ptr cause, f2ptr this, f2ptr that);

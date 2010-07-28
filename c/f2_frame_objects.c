@@ -21,7 +21,10 @@
 
 #include "funk2.h"
 
+// physical_sim_object
+
 def_frame_object__global__4_slot(physical_sim_object, position, velocity, mass, shape);
+
 
 // **
 
@@ -33,7 +36,7 @@ void f2__frame_objects__initialize() {
   
   f2__frame_objects__reinitialize_globalvars();
   
-  // physical_object
+  // physical_sim_object
   
   f2ptr cause = initial_cause();
   

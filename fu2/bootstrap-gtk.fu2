@@ -1,0 +1,86 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[deftypefunk gtk_widget execute show_all       []                          [gtk-widget-show_all      this]]
+[deftypefunk gtk_widget execute add            [that]                      [gtk-container-add        this that]]
+[deftypefunk gtk_widget execute pack_start     [child expand fill padding] [gtk-box-pack_start       this child expand fill padding]]
+[deftypefunk gtk_widget execute signal_connect [signal_name funk args]     [gtk-signal_connect       this signal_name funk args]]
+[deftypefunk gtk_widget get     text           []                          [gtk-entry-get_text       this]]
+[deftypefunk gtk_widget get     buffer         []                          [gtk-text_view-get_buffer this]]
+
+[deftypefunk gtk_text_buffer get     start_iter   []      [gtk-text_buffer-get_start_iter this]]
+[deftypefunk gtk_text_buffer execute select_range [range] [gtk-text_buffer-select_range   this range]]
+[deftypefunk gtk_text_buffer set     select_range [range] [gtk-text_buffer-select_range   this range]]
+
+[deftypefunk gtk_text_iter execute forward_search [text] [gtk-text_iter-forward_search this text]]
+
+[globalize gtk-event_handling_fiber nil]
+
+[defunk gtk-event_handling_fiber-start []
+  [if gtk-event_handling_fiber
+      [have gtk-event_handling_fiber quit]]
+  [let [[event_handling_fiber [fiber [funk []
+					   [cause-enable_reactive_critics [this-cause]]
+					   [while t
+					     [let [[callback_event [gtk-pop_callback_event]]]
+					       [if [null callback_event]
+						   [millisleep 100]
+						 [let [[funk [get callback_event funk]]
+						       [args [get callback_event args]]]
+						   [apply funk args]]]]]]
+				     nil]]]
+    [= gtk-event_handling_fiber event_handling_fiber]]
+  nil]
+
+[gtk-event_handling_fiber-start]
+
+
+
+
+
+[defunk test-gtk []
+  [let [[win           [gtk-window-new]]
+	[vbox          [gtk-vbox-new 2]]
+	[hbox          [gtk-hbox-new 2]]
+	[search_entry  [gtk-entry-new]]
+	[search_button [gtk-button-new_with_label 'Search']]
+	[next_button   [gtk-button-new_with_label 'Next']]
+	[swindow       [gtk-scrolled_window-new]]
+	[text_view     [gtk-text_view-new]]]
+    
+    [have win     add        vbox]
+    [have vbox    pack_start hbox nil nil 0]
+    [have hbox    pack_start search_entry t t 0]
+    [have hbox    pack_start search_button nil nil 0]
+    [have hbox    pack_start next_button nil nil 0]
+    [have vbox    pack_start swindow t t 0]
+    [have swindow add        text_view]
+    
+    [have search_button signal_connect 'clicked'
+	  [funk []
+		[let [[found_range [have [get [get text_view buffer] start_iter] forward_search [get search_entry text]]]]
+		  [if found_range
+		      [prog [format stdout '\n  found "' [get search_entry text] '"!']
+			    [have [get text_view buffer] select_range found_range]]
+		    [prog [format stdout '\n  could not find "' [get search_entry text] '".']]]]]
+	  nil]
+    [have next_button signal_connect 'clicked' [funk [button] [print 'Next button clicked!']] [cons next_button nil]]
+    
+    [have win show_all]]]
+

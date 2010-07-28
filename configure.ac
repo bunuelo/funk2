@@ -36,7 +36,7 @@ AC_CHECK_LIB(rt,clock_gettime)
 AC_CHECK_LIB(gmon,_mcount)
 
 AC_CHECK_HEADERS([X11/Xlib.h X11/keysym.h])
-AC_CHECK_HEADERS([zlib.h], [], [AC_MSG_ERROR([Funk2 requires the zlib library in order to compress and decompress disk images.])])
+AC_CHECK_HEADERS([zlib.h], [], [AC_MSG_ERROR([*** Funk2 requires the zlib library in order to compress and decompress disk images.])])
 
 # Checking for xmlrpc-c and its requirements.
 have_xmlrpc_requirements=1
@@ -49,15 +49,25 @@ then
   AC_MSG_NOTICE([Feature xmlrpc-c is fully supported.])
   AC_DEFINE(F2__XMLRPC_SUPPORTED, 1, Build XML-RPC support into Funk2)
 else
-  AC_MSG_NOTICE([Feature xmlrpc-c is not fully supported.])
+  AC_MSG_NOTICE([
+*** XMLRPC-C is not required to build Funk2, but the xmlrpc-c development headers
+*** are not installed, so XMLRPC-C support will not be compiled into Funk2.  The
+*** latest version of xmlrpc-c is always available at http://xmlrpc-c.sourceforge.net])
 fi
 
-PKG_CHECK_MODULES(GTK, gtk+-2.0, AC_DEFINE(F2__GTK_SUPPORTED, 1, [Define if we've support for GTK+]), [AC_MSG_ERROR([
+PKG_CHECK_MODULES(GTK, gtk+-2.0, AC_DEFINE(F2__GTK_SUPPORTED, 1, [Define if we've support for GTK+]), [AC_MSG_NOTICE([
 *** GTK+ 2.0 is not required to build Funk2, but the GLib development headers
 *** are not installed, so GTK support will not be compiled into Funk2.  The
 *** latest version of GLib is always available at http://www.gtk.org])])
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
+
+PKG_CHECK_MODULES(GTHREAD, gthread-2.0, AC_DEFINE(F2__GTHREAD_SUPPORTED, 1, [Define if we've support for GTHREAD]), [AC_MSG_NOTICE([
+*** GTHREAD 2.0 is not required to build Funk2, but the Gthread development headers
+*** are not installed, so GTHREAD support will not be compiled into Funk2.  The
+*** latest version of Gthread is always available at http://www.gtk.org])])
+AC_SUBST(GTHREAD_CFLAGS)
+AC_SUBST(GTHREAD_LIBS)
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

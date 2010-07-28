@@ -57,6 +57,7 @@
 #include "f2_graph_cluster.h"
 #include "f2_graph_match_error_correcting.h"
 #include "f2_graphviz.h"
+#include "f2_gtk.h"
 #include "f2_html.h"
 #include "f2_load.h"
 #include "f2_malloc.h"
@@ -181,6 +182,9 @@ typedef struct funk2_s {
   funk2_graph_t                       graph;
   funk2_xmlrpc_t                      xmlrpc;
   funk2_trace_t                       trace;
+#if defined(F2__GTK__SUPPORTED)
+  funk2_gtk_t                         gtk;
+#endif
 } funk2_t;
 
 void      funk2__init(   funk2_t* this, int argc, char** argv);

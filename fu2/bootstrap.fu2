@@ -57,8 +57,7 @@
 [load 'fu2/bootstrap-bruno_graph.fu2']
 [load 'fu2/bootstrap-graph_cluster.fu2']
 [load 'fu2/bootstrap-graph_match_error_correcting.fu2']
-
-[load 'fu2/time.fu2']
+[load 'fu2/bootstrap-gtk.fu2']
 
 [globalize load-utilities nil]
 [defunk load-utilities []
@@ -75,6 +74,11 @@
    [load 'som-2009/blocks_world.fu2']
    ]
 [if load-basic-ai [load-basic-ai]]
+
+[defunk load-funk2-devrc []
+  [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]
+
+[load-funk2-devrc]
 
 [format stdout '\nforcing garbage collection.']
 [garbage_collect]

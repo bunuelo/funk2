@@ -218,6 +218,10 @@ void socket_rpc_layer__funk2_packet__send_to_socket(funk2_packet_t* packet, buff
       raw__spin_sleep_yield();
     }
     result = buffered_socket__send(socket, packet, sizeof(funk2_packet_header_t) + packet->header.payload_length);
+    if (result == circular_buffer__write_result__not_enough_room) {
+      status("socket_rpc_layer__funk2_packet__send_to_socket warning: failed to send entire packet to socket.");
+      return;
+    }
   } while(result == circular_buffer__write_result__not_enough_room);
   u8 end_packet_bytes[2] = {funk2_end_of_packet_byte0, funk2_end_of_packet_byte1};
   do {
@@ -225,6 +229,10 @@ void socket_rpc_layer__funk2_packet__send_to_socket(funk2_packet_t* packet, buff
       raw__spin_sleep_yield();
     }
     result = buffered_socket__send(socket, end_packet_bytes, 2);
+    if (result == circular_buffer__write_result__not_enough_room) {
+      status("socket_rpc_layer__funk2_packet__send_to_socket warning: failed to send entire packet to socket.");
+      return;
+    }
   } while(result == circular_buffer__write_result__not_enough_room);
   //{
   //  int i;
@@ -333,14 +341,14 @@ void funk2_packet__receive(funk2_node_t* funk2_node, pcs_action_packet_t* packet
   case funk2_packet_type__pcs_respond__f2string__elt:                               recv_packet__respond__f2string__elt(funk2_node, (pcs_respond__f2string__elt_t*)packet);                                                             break;
   case funk2_packet_type__pcs_request__f2string__str_copy:                          recv_packet__request__f2string__str_copy(funk2_node, (pcs_request__f2string__str_copy_t*)packet);                                                   break;
   case funk2_packet_type__pcs_respond__f2string__str_copy:                          recv_packet__respond__f2string__str_copy(funk2_node, (pcs_respond__f2string__str_copy_t*)packet);                                                   break;
-  case funk2_packet_type__pcs_request__f2string__eq_hash_value:                        recv_packet__request__f2string__eq_hash_value(funk2_node, (pcs_request__f2string__eq_hash_value_t*)packet);                                               break;
-  case funk2_packet_type__pcs_respond__f2string__eq_hash_value:                        recv_packet__respond__f2string__eq_hash_value(funk2_node, (pcs_respond__f2string__eq_hash_value_t*)packet);                                               break;
+  case funk2_packet_type__pcs_request__f2string__eq_hash_value:                     recv_packet__request__f2string__eq_hash_value(funk2_node, (pcs_request__f2string__eq_hash_value_t*)packet);                                         break;
+  case funk2_packet_type__pcs_respond__f2string__eq_hash_value:                     recv_packet__respond__f2string__eq_hash_value(funk2_node, (pcs_respond__f2string__eq_hash_value_t*)packet);                                         break;
   case funk2_packet_type__pcs_request__f2symbol__new:                               recv_packet__request__f2symbol__new(funk2_node, (pcs_request__f2symbol__new_t*)packet);                                                             break;
   case funk2_packet_type__pcs_respond__f2symbol__new:                               recv_packet__respond__f2symbol__new(funk2_node, (pcs_respond__f2symbol__new_t*)packet);                                                             break;
   case funk2_packet_type__pcs_request__f2symbol__length:                            recv_packet__request__f2symbol__length(funk2_node, (pcs_request__f2symbol__length_t*)packet);                                                       break;
   case funk2_packet_type__pcs_respond__f2symbol__length:                            recv_packet__respond__f2symbol__length(funk2_node, (pcs_respond__f2symbol__length_t*)packet);                                                       break;
-  case funk2_packet_type__pcs_request__f2symbol__eq_hash_value:                        recv_packet__request__f2symbol__eq_hash_value(funk2_node, (pcs_request__f2symbol__eq_hash_value_t*)packet);                                               break;
-  case funk2_packet_type__pcs_respond__f2symbol__eq_hash_value:                        recv_packet__respond__f2symbol__eq_hash_value(funk2_node, (pcs_respond__f2symbol__eq_hash_value_t*)packet);                                               break;
+  case funk2_packet_type__pcs_request__f2symbol__eq_hash_value:                     recv_packet__request__f2symbol__eq_hash_value(funk2_node, (pcs_request__f2symbol__eq_hash_value_t*)packet);                                         break;
+  case funk2_packet_type__pcs_respond__f2symbol__eq_hash_value:                     recv_packet__respond__f2symbol__eq_hash_value(funk2_node, (pcs_respond__f2symbol__eq_hash_value_t*)packet);                                         break;
   case funk2_packet_type__pcs_request__f2symbol__elt:                               recv_packet__request__f2symbol__elt(funk2_node, (pcs_request__f2symbol__elt_t*)packet);                                                             break;
   case funk2_packet_type__pcs_respond__f2symbol__elt:                               recv_packet__respond__f2symbol__elt(funk2_node, (pcs_respond__f2symbol__elt_t*)packet);                                                             break;
   case funk2_packet_type__pcs_request__f2symbol__str_copy:                          recv_packet__request__f2symbol__str_copy(funk2_node, (pcs_request__f2symbol__str_copy_t*)packet);                                                   break;
@@ -351,6 +359,8 @@ void funk2_packet__receive(funk2_node_t* funk2_node, pcs_action_packet_t* packet
   case funk2_packet_type__pcs_respond__f2chunk__new_copy:                           recv_packet__respond__f2chunk__new_copy(funk2_node, (pcs_respond__f2chunk__new_copy_t*)packet);                                                     break;
   case funk2_packet_type__pcs_request__f2chunk__length:                             recv_packet__request__f2chunk__length(funk2_node, (pcs_request__f2chunk__length_t*)packet);                                                         break;
   case funk2_packet_type__pcs_respond__f2chunk__length:                             recv_packet__respond__f2chunk__length(funk2_node, (pcs_respond__f2chunk__length_t*)packet);                                                         break;
+  case funk2_packet_type__pcs_request__f2chunk__str_copy:                           recv_packet__request__f2chunk__str_copy(funk2_node, (pcs_request__f2chunk__str_copy_t*)packet);                                                     break;
+  case funk2_packet_type__pcs_respond__f2chunk__str_copy:                           recv_packet__respond__f2chunk__str_copy(funk2_node, (pcs_respond__f2chunk__str_copy_t*)packet);                                                     break;
   case funk2_packet_type__pcs_request__f2chunk__bit8__elt:                          recv_packet__request__f2chunk__bit8__elt(funk2_node, (pcs_request__f2chunk__bit8__elt_t*)packet);                                                   break;
   case funk2_packet_type__pcs_respond__f2chunk__bit8__elt:                          recv_packet__respond__f2chunk__bit8__elt(funk2_node, (pcs_respond__f2chunk__bit8__elt_t*)packet);                                                   break;
   case funk2_packet_type__pcs_request__f2chunk__bit8__elt__set:                     recv_packet__request__f2chunk__bit8__elt__set(funk2_node, (pcs_request__f2chunk__bit8__elt__set_t*)packet);                                         break;
@@ -2824,6 +2834,70 @@ u64 f2chunk__length(f2ptr this, f2ptr cause) {
     f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2chunk__length(funk2_node, fiber, cause, this);
+  }
+}
+
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2chunk__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  packet_status("send_packet__request__f2chunk__str_copy: executing.");
+  pcs_request__f2chunk__str_copy_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2chunk__str_copy;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.this                                      = this;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2chunk__str_copy(funk2_node_t* funk2_node, pcs_request__f2chunk__str_copy_t* packet) {
+  packet_status("recv_packet__request__f2chunk__str_copy: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  int str__size = pfunk2__f2chunk__length(this, cause) + 1;
+  u8* str = (u8*)alloca(str__size);
+  f2chunk__str_copy(this, cause, str);
+  send_packet__respond__f2chunk__str_copy(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause, str);
+}
+
+void send_packet__respond__f2chunk__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u8* str) {
+  packet_status("send_packet__respond__f2chunk__str_copy: executing.");
+  int str__size = strlen((char*)str) + 1;
+  pcs_respond__f2chunk__str_copy_t* packet = (pcs_respond__f2chunk__str_copy_t*)alloca(sizeof(pcs_respond__f2chunk__str_copy_t) + str__size);
+  funk2_packet_header__init(&(packet->header), sizeof(packet->payload) + str__size);
+  packet->payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2chunk__str_copy;
+  packet->payload.action_payload_header.cause               = cause;
+  packet->payload.action_payload_header.fiber              = this_fiber;
+  memcpy(packet->payload.str, str, str__size);
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)packet);
+}
+
+void recv_packet__respond__f2chunk__str_copy(funk2_node_t* funk2_node, pcs_respond__f2chunk__str_copy_t* packet) {
+  packet_status("recv_packet__respond__f2chunk__str_copy: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+void funk2_node__f2chunk__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u8* str) {
+  send_packet__request__f2chunk__str_copy(funk2_node, this_fiber, cause, this);
+  pcs_respond__f2chunk__str_copy_t* packet = (pcs_respond__f2chunk__str_copy_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  strcpy((char*)str, (char*)packet->payload.str);
+  f2__free(to_ptr(packet));
+}
+
+void f2chunk__str_copy(f2ptr this, f2ptr cause, u8* str) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2chunk__str_copy(this, cause, str);
+  } else {
+    f2ptr         fiber      = f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2chunk__str_copy(funk2_node, fiber, cause, this, str);
   }
 }
 

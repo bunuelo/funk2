@@ -199,11 +199,13 @@ typedef enum scheduler_fast_loop_exit_reason_e {
   exit_reason__found_larva
 } scheduler_fast_loop_exit_reason_t;
 
+#define execute_next_bytecodes__helper__fast_loop__max_bytecode_count 1000
+
 scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2ptr cause, f2ptr fiber) {
   //status("bytecode fast loop beginning.");
   scheduler_fast_loop_exit_reason_t exit_reason = exit_reason__none;
   
-  int i = 1000;
+  int i = execute_next_bytecodes__helper__fast_loop__max_bytecode_count;
   while (! exit_reason) {
     if(i == 0) {
       exit_reason = exit_reason__too_many_loops;
@@ -221,6 +223,15 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
     } 
     i --;
   }
+
+  {
+    f2ptr bytecode_count     = f2fiber__bytecode_count(fiber, cause);
+    u64   bytecode_count__i  = f2integer__i(bytecode_count, cause);
+    bytecode_count__i       += (execute_next_bytecodes__helper__fast_loop__max_bytecode_count - i);
+    bytecode_count           = f2integer__new(cause, bytecode_count__i);
+    f2fiber__bytecode_count__set(fiber, cause, bytecode_count);
+  }
+  
   //status("bytecode fast loop done with %d loop fast cycles.", 1000-i);
   return exit_reason;
 }

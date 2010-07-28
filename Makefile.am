@@ -353,11 +353,13 @@ CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h
 
 AM_MAKEFLAGS = img/bootstrap.img
 
-clean: clean-am
-	rm -f config_compile_time_id.h
-	rm -f bin/funk2$(EXEEXT)
+clean-img:
 	rm -f img/bootstrap-repl.img
 	rm -f img/bootstrap.img
+
+clean: clean-am clean-img
+	rm -f config_compile_time_id.h
+	rm -f bin/funk2$(EXEEXT)
 	mkdir -p lib/.libs
 
 make-install-sh:

@@ -348,8 +348,12 @@ void funk2_gtk__text_buffer__select_range(funk2_gtk_t* this, GtkTextBuffer* text
 char* funk2_gtk__text_buffer__get_text(funk2_gtk_t* this, GtkTextBuffer* text_buffer) {
   char* text = NULL;
   {
+    GtkTextIter start;
+    GtkTextIter end;
     gdk_threads_enter();
-    text = (char*)gtk_text_buffer_get_text(text_buffer);
+    gtk_text_buffer_get_start_iter(text_buffer, &start);
+    gtk_text_buffer_get_end_iter(text_buffer, &end);
+    text = (char*)gtk_text_buffer_get_text(text_buffer, &start, &end);
     gdk_threads_leave();
   }
   return text;

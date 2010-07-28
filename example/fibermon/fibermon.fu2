@@ -17,6 +17,19 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defunk fibermon_processor_widget-new [index]
+  [let [[this [gtk-scrolled_window-new]]]
+    [let [[processor [get [get scheduler:global_scheduler processors] elt index]]
+	  [text_view [gtk-text_view-new]]]
+      [have this add text_view]
+      [fiber [funk []
+		   [while t
+		     
+		     [sleep 1]]]
+	     nil]
+      ]
+    this]]
+
 [defunk fibermon [:rest args]
   [let [[print_usage_message_and_exit nil]]
     [if args
@@ -26,38 +39,41 @@
 	[prog [format stdout '\nfibermon usage: [fibermon]']
 	      [format stdout '\n']
 	      [format stdout '\n  fibermon is a gtk-based application that allows the user to monitor the fibers in the Funk2 system.']
-	      [format stdout '\n']
-	      [return]]]]
-  
-  [let [[win            [gtk-window-new]]
-	[vbox           [gtk-vbox-new 3]]
-	[hbox           [gtk-hbox-new 2]]
-	[search_entry   [gtk-entry-new]]
-	[search_button  [gtk-button-new_with_label 'Search']]
-	[next_button    [gtk-button-new_with_label 'Next']]
-	[swindow        [gtk-scrolled_window-new]]
-	[processor_hbox [gtk-hbox-new 8]]
-	[text_view      [gtk-text_view-new]]]
-    
-    [have win     add        vbox]
-    [have vbox    pack_start hbox nil nil 0]
-    [have hbox    pack_start search_entry t t 0]
-    [have hbox    pack_start search_button nil nil 0]
-    [have hbox    pack_start next_button nil nil 0]
-    [have vbox    pack_start swindow t t 0]
-    [have vbox    pack_start processor_hbox nil nil 0]
-    [have swindow add        text_view]
-    
-    [have search_button signal_connect 'clicked'
-	  [funk []
-		[let [[found_range [have [get [get text_view buffer] start_iter] forward_search [get search_entry text]]]]
-		  [if found_range
-		      [prog [format stdout '\n  found "' [get search_entry text] '"!']
-			    [have [get text_view buffer] select_range found_range]]
-		    [prog [format stdout '\n  could not find "' [get search_entry text] '".']]]]]
-	  nil]
-    [have next_button signal_connect 'clicked' [funk [button] [print 'Next button clicked!']] [cons next_button nil]]
-    
-    [have win show_all]]]
+	      [format stdout '\n']]
+      [let [[win             [gtk-window-new]]
+	    [vbox            [gtk-vbox-new 3]]
+	    [hbox            [gtk-hbox-new 2]]
+	    [search_entry    [gtk-entry-new]]
+	    [search_button   [gtk-button-new_with_label 'Search']]
+	    [next_button     [gtk-button-new_with_label 'Next']]
+	    [swindow         [gtk-scrolled_window-new]]
+	    [processor_hbox  [gtk-hbox-new 8]]
+	    [processor_array [new array 8]]
+	    [text_view       [gtk-text_view-new]]]
+	
+	[have win            add        vbox]
+	[have vbox           pack_start hbox nil nil 0]
+	[have hbox           pack_start search_entry t t 0]
+	[have hbox           pack_start search_button nil nil 0]
+	[have hbox           pack_start next_button nil nil 0]
+	[have vbox           pack_start swindow t t 0]
+	[have swindow        add        text_view]
+	[have vbox           pack_start processor_hbox t t 0]
+	[dotimes [i 8]
+	  [let [[processor [fibermon_processor_widget-new]]]
+	    [have processor_hbox pack_start processor t t 0]
+	    [set processor_array elt i processor]]]
+	
+	[have search_button signal_connect 'clicked'
+	      [funk []
+		    [let [[found_range [have [get [get text_view buffer] start_iter] forward_search [get search_entry text]]]]
+		      [if found_range
+			  [prog [format stdout '\n  found "' [get search_entry text] '"!']
+				[have [get text_view buffer] select_range found_range]]
+			[prog [format stdout '\n  could not find "' [get search_entry text] '".']]]]]
+	      nil]
+	[have next_button signal_connect 'clicked' [funk [button] [print 'Next button clicked!']] [cons next_button nil]]
+	
+	[have win show_all]]]]]
 
 

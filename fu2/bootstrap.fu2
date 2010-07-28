@@ -59,8 +59,6 @@
 [load 'fu2/bootstrap-graph_match_error_correcting.fu2']
 [load 'fu2/bootstrap-gtk.fu2']
 
-[load 'fu2/time.fu2']
-
 [globalize load-utilities nil]
 [defunk load-utilities []
   [load 'fu2/errno.fu2']

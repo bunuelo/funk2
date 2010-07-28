@@ -24,7 +24,8 @@
       [have this add text_view]
       [fiber [funk []
 		   [while t
-		     
+		     [set [get text_view buffer] text [format nil [get [get text_view buffer] text]
+							      '\n' [format nil 'Processor monitor ' index ' here.']]]
 		     [sleep 1]]]
 	     nil]
       ]

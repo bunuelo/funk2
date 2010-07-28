@@ -327,6 +327,7 @@ void funk2_gtk__signal_connect(funk2_gtk_t* this, GtkWidget* widget, u8* signal_
   }
 }
 
+
 // text_buffer
 
 void funk2_gtk__text_buffer__get_start_iter(funk2_gtk_t* this, GtkTextBuffer* text_buffer, GtkTextIter* text_iter) {
@@ -358,6 +359,15 @@ char* funk2_gtk__text_buffer__get_text(funk2_gtk_t* this, GtkTextBuffer* text_bu
   }
   return text;
 }
+
+void funk2_gtk__text_buffer__set_text(funk2_gtk_t* this, GtkTextBuffer* text_buffer, char* text) {
+  {
+    gdk_threads_enter();
+    gtk_text_buffer_set_text(text_buffer, text, strlen(text));
+    gdk_threads_leave();
+  }
+}
+
 
 // text_iter
 
@@ -728,6 +738,32 @@ f2ptr f2__gtk__text_buffer__get_text(f2ptr cause, f2ptr text_buffer) {
 def_pcfunk1(gtk__text_buffer__get_text, text_buffer, return f2__gtk__text_buffer__get_text(this_cause, text_buffer));
 
 
+f2ptr raw__gtk__text_buffer__set_text(f2ptr cause, f2ptr text_buffer, f2ptr text) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, text_buffer);
+  
+  u64 text__length = raw__string__length(cause, text);
+  u8* text__str    = (u8*)alloca(text__length + 1);
+  raw__string__str_copy(cause, text, text__str);
+  text__str[text__length] = 0;
+  
+  funk2_gtk__text_buffer__set_text(&(__funk2.gtk), gtk_text_buffer, text__str);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__text_buffer__set_text(f2ptr cause, f2ptr text_buffer, f2ptr text) {
+  if ((! raw__gtk_text_buffer__is_type(cause, text_buffer)) ||
+      (! raw__string__is_type(cause, text))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__text_buffer__set_text(cause, text_buffer, text);
+}
+def_pcfunk2(gtk__text_buffer__set_text, text_buffer, text, return f2__gtk__text_buffer__set_text(this_cause, text_buffer, text));
+
+
 f2ptr raw__gtk__text_iter__forward_search(f2ptr cause, f2ptr text_iter, f2ptr text) {
   GtkTextIter gtk_text_iter;
   raw__gtk_text_iter__as__GtkTextIter(cause, text_iter, &gtk_text_iter);
@@ -816,6 +852,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__1(gtk__text_buffer__get_start_iter, text_buffer,                                 "Returns the starting text_iter of a text_buffer.");
   f2__primcfunk__init__2(gtk__text_buffer__select_range,   text_buffer, range,                          "Sets select range in this text_buffer.");
   f2__primcfunk__init__1(gtk__text_buffer__get_text,       text_buffer,                                 "Gets the text as a string from a gtk text_buffer widget.");
+  f2__primcfunk__init__2(gtk__text_buffer__set_text,       text_buffer, text,                           "Sets the text for a gtk text_buffer widget.");
   f2__primcfunk__init__2(gtk__text_iter__forward_search,   text_iter, text,                             "");
   
 }

@@ -360,10 +360,10 @@ char* funk2_gtk__text_buffer__get_text(funk2_gtk_t* this, GtkTextBuffer* text_bu
   return text;
 }
 
-void funk2_gtk__text_buffer__set_text(funk2_gtk_t* this, GtkTextBuffer* text_buffer, char* text) {
+void funk2_gtk__text_buffer__set_text(funk2_gtk_t* this, GtkTextBuffer* text_buffer, u8* text) {
   {
     gdk_threads_enter();
-    gtk_text_buffer_set_text(text_buffer, text, strlen(text));
+    gtk_text_buffer_set_text(text_buffer, (char*)text, strlen((char*)text));
     gdk_threads_leave();
   }
 }

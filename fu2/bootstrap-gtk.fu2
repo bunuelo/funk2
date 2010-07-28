@@ -74,11 +74,11 @@
     
     [have search_button signal_connect 'clicked'
 	  [funk []
-		[print 'Search button clicked!']
-		[format stdout '\n  text: "' [get search_entry text] '"']
-		[print [get text_view buffer]]
-		[print [get [get text_view buffer] start_iter]]
-		]
+		[let [[found_range [have [get [get text_view buffer] start_iter] forward_search [get search_entry text]]]]
+		  [if found_range
+		      [prog [format stdout '\n  found "' [get search_entry text] '"!']
+			    [have [get text_view buffer] select_range found_range]]
+		    [prog [format stdout '\n  could not find "' [get search_entry text] '".']]]]]
 	  nil]
     [have next_button signal_connect 'clicked' [funk [button] [print 'Next button clicked!']] [cons next_button nil]]
     

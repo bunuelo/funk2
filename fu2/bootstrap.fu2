@@ -77,6 +77,11 @@
    ]
 [if load-basic-ai [load-basic-ai]]
 
+[defunk load-funk2-devrc []
+  [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]
+
+[load-funk2-devrc]
+
 [format stdout '\nforcing garbage collection.']
 [garbage_collect]
 

@@ -353,7 +353,7 @@ char* funk2_gtk__text_buffer__get_text(funk2_gtk_t* this, GtkTextBuffer* text_bu
     gdk_threads_enter();
     gtk_text_buffer_get_start_iter(text_buffer, &start);
     gtk_text_buffer_get_end_iter(text_buffer, &end);
-    text = (char*)gtk_text_buffer_get_text(text_buffer, &start, &end);
+    text = (char*)gtk_text_buffer_get_text(text_buffer, &start, &end, FALSE);
     gdk_threads_leave();
   }
   return text;

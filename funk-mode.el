@@ -53,12 +53,14 @@
    '("\\<elt\\>" . font-lock-keyword-face)
    '("\\<f\\(?:irst\\|ourth\\)\\|make-\\(?:funk\\|metro\\)\\|s\\(?:econd\\|et-car\\|et-cdr\\)\\|t\\(?:hird\\|hread-\\(?:complete\\?\\|value\\)\\)\\>" . font-lock-function-name-face)
    '("\\<format\\|or\\>" . font-lock-function-name-face)
+   ;;'("\\[\\<format\\|or\\> " . font-lock-function-name-face)
+   ;;'("\\<format\\|or\\> " . font-lock-function-name-face)
    '("\\<range\\>" . font-lock-function-name-face)
    '("\\<join\\>" . font-lock-function-name-face)
    '("\\<parlet\\>" . font-lock-keyword-face)
    '("\\<partimes\\>" . font-lock-keyword-face)
    '("\\<act\\(?:ion\\|or\\|\\)\\|ca\\(?:dddr\\|ddr\\|dr\\)\\|cd\\(?:ddr\\|ddr\\|dr\\)\\|cond\\|def\\(?:unk\\|ine-funk\\|ine\\|metro\\)\\|dotimes\\|funk\\|g\\(?:lobalize-funk\\|lobalize\\)\\|if\\|let\\|metro\\|p\\(?:arlet\\|rog\\|ut\\)\\|quote\\|while\\>" . font-lock-keyword-face)
-   '("\\<and\\|apply\\|c\\(?:ar\\|dr\\|ons\\)\\|list\\|ma\\(?:pc\\(?:ar\\|\\)\\)\\|null\\|print\\|set\\>" . font-lock-function-name-face)
+   '("\\<and\\|apply\\|c\\(?:ar\\|dr\\|ons\\)\\|list\\|ma\\(?:pc\\(?:ar\\|\\)\\)\\|null\\|print\\|set\\|get\\|have\\>" . font-lock-function-name-face)
    '("\\<nil\\>" . font-lock-keyword-face)
    '("\\(:\\)\\([a-zA-Z0-9]+\\)" . font-lock-type-face)
    '("\\([a-zA-Z0-9]+\\)\\([?]\\)" . font-lock-type-face)
@@ -68,7 +70,38 @@
    ) 
   "Maximum highlighting for Funk major mode")
 
-(defvar funk-font-lock-keywords funk-font-lock-keywords-3
+(defconst funk-font-lock-keywords-i
+  (eval-when-compile
+    (list
+     ;;'("\\([a-zA-Z0-9_-~!@#$%^&*()_+-={}]+\\)" . font-lock-variable-name-face)
+     (cons (regexp-opt
+            '("and" "apply" "car" "cdr" "cons" "list" "mapc" "mapcar" "null" "print"
+              "range" "join" "format" "or" "not" "cadr" "caddr" "cadddr" "cddr" "cdddr"
+              "first" "fourth" "make-funk" "make-metro" "second" "set-car" "set-cdr"
+              "third" "thread-complete" "thread-value" "eq")
+            'words)
+           'font-lock-function-name-face)
+     (cons (regexp-opt
+            '("+" "-" "*" "/" "=" "<" ">" "!=" "<=" ">=") 'words)
+           'font-lock-function-name-face)
+     (cons (regexp-opt
+            '("action" "actor" "act" "elt" "execute" "parlet" "partimes" "cond"
+              "defunk" "define-funk" "define" "defmetro" "deftypefunk" "deframe" "dotimes" "funk" "set" "get" "have"
+              "globalize" "globalize-funk" "if" "let" "let*" "metro" "parlet" "prog" "put" "quote" "while" "nil")
+            'words)
+           'font-lock-keyword-face)
+     ;;'("\\('[a-zA-Z0-9\n\t\\ _-~!@#$%^&*/()_+-={}]+'\\)" . font-lock-string-face)
+     '("\\(&\\)\\([a-zA-Z0-9]+\\)" . font-lock-function-name-face)
+     '("\\(:\\)\\([a-zA-Z0-9]+\\)" . font-lock-type-face)
+     '("\\([a-zA-Z0-9]+\\)\\([?]\\)" . font-lock-type-face)
+     '("\\(\\\x\\)\\([a-fA-F0-9]+\\)" . font-lock-string-face)
+     ;;'("\\([+-*/=<>]\\|[<>!]=\\)" . font-lock-function-name-face)
+     ;;'("\\([+-*/=]\\)" . font-lock-function-name-face)
+     '("\\([a-zA-Z0-9_-~!@#$%^&*()_+-={}]+\\)" . font-lock-variable-name-face)
+     ))
+  "My hightlighting scheme for Funk mode")
+     
+(defvar funk-font-lock-keywords funk-font-lock-keywords-i
   "Maximum highlighting for Funk major mode")
 
 ;; is adding punctuation to word syntax appropriate?? 
@@ -90,11 +123,37 @@
    funk-mode-syntax-table)
   "Syntax for Funk major mode")
 
+(defvar funk-mode-syntax-table-i
+  (let ((funk-mode-syntax-table (make-syntax-table)))
+   ;;(modify-syntax-entry ?. "_" funk-mode-syntax-table)
+   ;;(modify-syntax-entry ?: "_" funk-mode-syntax-table)
+   ;;(modify-syntax-entry ?{ "(" funk-mode-syntax-table)
+   ;;(modify-syntax-entry ?} ")" funk-mode-syntax-table)
+   ;;(modify-syntax-entry ?[ "(" funk-mode-syntax-table)
+   ;;(modify-syntax-entry ?] ")" funk-mode-syntax-table)
+   ;;(modify-syntax-entry ?( "(" funk-mode-syntax-table)
+   ;;(modify-syntax-entry ?) ")" funk-mode-syntax-table)
+   ;;(modify-syntax-entry ?` "\\" funk-mode-syntax-table)
+   ;;(modify-syntax-entry ?_ "w" funk-mode-syntax-table)
+   ;;(modify-syntax-entry ?# "<" funk-mode-syntax-table)
+   ;;(modify-syntax-entry ?\n ">" funk-mode-syntax-table)
+   (modify-syntax-entry ?' "\"" funk-mode-syntax-table)
+   (modify-syntax-entry ?_ "w" funk-mode-syntax-table)
+   (modify-syntax-entry ?+ "w" funk-mode-syntax-table)
+   (modify-syntax-entry ?- "w" funk-mode-syntax-table)
+   (modify-syntax-entry ?* "w" funk-mode-syntax-table)
+   (modify-syntax-entry ?/ "w" funk-mode-syntax-table)
+   (modify-syntax-entry ?= "w" funk-mode-syntax-table)
+   (modify-syntax-entry ?< "w" funk-mode-syntax-table)
+   (modify-syntax-entry ?> "w" funk-mode-syntax-table)
+   funk-mode-syntax-table)
+  "Syntax for Funk major mode")
+
 (defun funk-mode ()
   "Major mode for editing Funk files"
   (interactive)
   (kill-all-local-variables)
-  (set-syntax-table funk-mode-syntax-table)
+  (set-syntax-table funk-mode-syntax-table-i)
   (use-local-map funk-mode-map)
   (set (make-local-variable 'font-lock-defaults) '(funk-font-lock-keywords))
   

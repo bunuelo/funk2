@@ -175,21 +175,11 @@
 			  [have this look_left_and_right]
 			  [print 'finished looking left and right']
 			  [print 'finished centering head']]
-    
+
     
     [mind_create_resource mind reactive physical walk_towards [activating_resource desired_object]
+			  [mind-activate [get this mind] reactive physical search_for desired_object]
 			  [mind-activate [get this mind] reactive physical center_body_on desired_object]
-			  [deftypefunk isis_agent execute check_obstacle [desired_object]
-			    [let* [[ordered-list [conslist-sort [get [get body objects] slots]
-								[funk [object-x object-y] 
-								      [> 
-								       [have [have [get body objects] lookup object-x] lookup `distance]
-								       [have [have [get body objects] lookup object-y] lookup `distance]]]]]
-				   
-				   [nearest_object [car [ordered-list]]]]
-			      [if [and [null [eq nearest_object desired_object]] [< [have [have [get body objects] lookup nearest_object] lookup `distance] 0.5]]
-				  nearest_object
-				nil]]]
 			  [deftypefunk isis_agent execute cautiously_walk []
 			    [cond [[and [null [have this check_obstacle]] 
 					[< arm_length [have [have [get body objects] lookup my_object] lookup `distance]]]
@@ -211,48 +201,41 @@
 			      [= patience [- patience 1]]]]]
 					
     
-    `[mind-create_resource mind reactive physical walk_around [activating_resource desired_object obstacle]
+    [mind-create_resource mind reactive physical walk_around [activating_resource desired_object obstacle]
 			  [mind-activate [get this mind] reactive physical center_body_on desired_object]
 			  [have this walk_around [> 0 [have [have [get body objects] lookup my_object] lookup `x_pos]]]
-			  [deftypefunk walk_around [if_left]
-			    [center_body_on obstacle]
+			  [deftypefunk isis_agent execute walk_around [if_left]
+			     [mind-activate [get this mind] reactive physical center_body_on obstacle]
 			    [let [[patience 30]]
 			      [if if_left
 				  [prog [[mind-activate [get this mind] reactive physical turn_right 15]]
-					 [while [and [object still blocked+out of reach] [patience >0]]
-					   [mind-activate [get this mind] reactive physical walk_forward 3]
-					   [mind-activate [get this mind] reactive physical center_head_on obstacle]
-					   [let [[distance [have [have [get body objects] lookup my_object] lookup `distance]]]
-					   [cond [[too far]
-						  [turn left]]
-						 [[too close]
-						  [turn right]]
-						 [t
-						  walk staight]]
-					   [search_for object]
-					   [= patience [patience -1]]]]]
-				 [prog [[turn 90 degrees right]
-					[while [and [object still blocked+out of reach] [patience >0]]
-					  [walk straight 3]
+					[while [and [have this check_obstacle desired_object] [> patience 0]]
+					  [mind-activate [get this mind] reactive physical walk_forward 3]
 					  [mind-activate [get this mind] reactive physical center_head_on obstacle]
-					  [check distance to obstacle]
-					  [cond [[too far]
-						 [turn left]]
-						[[too close]
-						 [turn right]]
+					  [let [[distance [have [have [get body objects] lookup my_object] lookup `distance]]]
+					    [cond [[> distance 8]
+						   [mind-activate [get this mind] reactive physical turn_left 2]]
+						  [[> distance 2]
+						   [mind-activate [get this mind] reactive physical turn_right 2]]
+						  [t
+						   [mind-activate [get this mind] reactive physical walk_forward 2]]]
+					    [mind-activate [get this mind] reactive physical search_for desired_object]
+					    [= patience [patience -1]]]]]
+				[prog [[mind-activate [get this mind] reactive physical turn_right 15]]
+				      [while [and [have this check_obstacle desired_object] [patience >0]]
+					[mind-activate [get this mind] reactive physical walk_forward 3]
+					[mind-activate [get this mind] reactive physical center_head_on obstacle]
+					[let [[distance [have [have [get body objects] lookup my_object] lookup `distance]]]
+					  [cond [[> distance 8]
+						 [mind-activate [get this mind] reactive physical turn_right 2]]
+						[[> distance 2]
+						 [mind-activate [get this mind] reactive physical turn_left 2]]
 						[t
-						  walk staight]]
-					  [search_for object]
-					  [= patience [patience -1]]]]]
-
-			  
-			  [have this walk_around [> 0 [have [have [get body objects] lookup my_object] lookup `x_pos]]]
-					   
-			  [mind-activate [get this mind] reactive physical walk_towards desired_object]
-					   
-			 [mind-activate [get this mind] reactive physical center_body_on desired_object]
-			  
-			  []]]]]
+						 [mind-activate [get this mind] reactive physical walk_forward 2]]]
+					  [mind-activate [get this mind] reactive physical search_for desired_object]
+					  [= patience [patience -1]]]]]]]]
+			  [have this walk_around [> 0 [have [have [get body objects] lookup obstacle] lookup `x_pos]]]		   
+			  [mind-activate [get this mind] reactive physical walk_towards desired_object]]
     
     [mind-create_resource mind reactive sensory continuous_sensing [activating_resource]
 			  [have this think_to_self 'Continuous sensing is starting.']
@@ -316,14 +299,14 @@
 
 
 [deftypefunk isis_agent execute check_obstacle [desired_object]
-  [let* [[ordered-list [conslist-sort [get [get body objects] slots]
+  [let* [[ordered-list [conslist-sort [get [get [get this body] objects] slots]
 				      [funk [object-x object-y] 
 					    [> 
-					     [have [have [get body objects] lookup object-x] lookup `distance]
-					     [have [have [get body objects] lookup object-y] lookup `distance]]]]]
+					     [have [have [get [get this body] objects] lookup object-x] lookup `distance]
+					     [have [have [get [get this body] objects] lookup object-y] lookup `distance]]]]]
 	 
 	 [nearest_object [car [ordered-list]]]]
-    [if [and [null [eq nearest_object desired_object]] [< [have [have [get body objects] lookup nearest_object] lookup `distance] 0.5]]
+    [if [and [null [eq nearest_object desired_object]] [< [have [have [get [get this body] objects] lookup nearest_object] lookup `distance] 5]]
 	nearest_object
       nil]]]
 
@@ -433,8 +416,6 @@
       [mind-activate [get isis_world agent_mind `Lauren] deliberative reality include_reactive_stories_into_deliberative_story]
       
       [mind-activate [get isis_world agent_mind `Lauren] reactive speech say 'Bad Ralph!']
-      [mind-activate [get isis_world agent_mind `Ralph]  reactive     physical walk_forward 5]
-
       
       [format stdout '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
       

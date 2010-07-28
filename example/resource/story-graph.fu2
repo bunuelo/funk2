@@ -17,34 +17,22 @@
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
+'
+todo: find out why [get [get story as-graph] as-story] is missing the prep frame
+      
 
-'[deframe          story_graph [frame] [event_list event_node_hash character_list bruno_graph]]
-[deftypeconstruct story_graph []
-  [let bruno_graph [new bruno_graph]]
-  [set this event_list nil]
-  [set this character_list nil]
-  [set this bruno_graph bruno_graph]
-  [
-  this]
+'
 
 
 
 
 
-[deftypefunk story_graph execute add_event [event]
-  [set this event_list [cons event [get this event_list]]]
-  [conslist-sort [get this `event_list] [funk [event-x event-y]
-					      [< [get event-x time][get event-y time]]]]
-  [defunk find_neighbors [event_list event]
-    [let [[left_node_label nil] [right_node_label nil]]
-      [cond [eq event [car [event_list]]]
-	    [prog[= right_node_label [have [cadr[event_list]] lookup `action_name]] 
-		 [= left_node_label  []]]]]]]'
+
 
 [deftypefunk story_event get as-graph []
   [let [[graph [new bruno_graph]]]
     [let* [[story_event [new bruno_graph_node `story_event]]
-	   [time        [new bruno_graph_node [string-as-symbol [exp-as-string [have this lookup `time]]]]]
+	   [time        [new bruno_graph_node [have this lookup `time]]]
 	   [action      [new bruno_graph_node [have this lookup `action_name]]]
 	   [character   [new bruno_graph_node [have this lookup `character_name]]]
 	   [prep_frame  [new bruno_graph_node `prepositional_frame]]
@@ -74,6 +62,7 @@
   [let  [[event_list [conslist-sort [get this events] [funk [event-x event-y]
 							    [< [get event-x time] [get event-y time]]]]]
 	 [graph [new bruno_graph]]]
+    [print 'let1']
 		      
     [mapc [funk [event]
 		[mapc [funk [edge]
@@ -81,49 +70,53 @@
 		      [get [get [get event as-graph] edge_set] elements]]]
 	  
 	  event_list]
+    [print 'mapc adds all edges']
+    [print [get graph node_set]]
 		      
-    [let [[nodes_list      [get [get graph node_set] elements]]
-	  [event_node_list [conslist-sort [get graph nodes_with_label `story_event] [funk [node-x node-y]
-							   [< [find_node_time node_x] [find_node_time node_y]]]]]]
-
-      [defunk find_node_time [node]
+    [defunk find_node_time [left_node]
       [let [[right_node nil]]
 	[defunk iterate [node_list]
 	  [if node_list
-	      [if [get this edges_with_label_between_nodes `time node [car node_list]]
+	      [if [get graph edges_with_label_between_nodes `time left_node [car node_list]]
 		  [= right_node [get [car node_list] label]]
 		[iterate [cdr node_list]]]
 	    nil]]
-	[iterate [get [get graph nodes_set] elements]]
+	[iterate [get [get graph node_set] elements]]
+	[print [get right_node type]]
 	right_node]]
-
-
-    [defunk find_previous_node [event_node  node_list]
-      [let [[previous_node nil]]
-	[cond [[and [cdr node_list]       [eq event_node [car node_list]]]
-	       [prog [= previous_node  [cadr node_list]]
-		     previous_node]]
-	      [[and [null [cdr node_list]] [eq event_node [car node_list]]]
-	       nil]
-	      [[and [cdr node_list] [null [eq event_node [car node_list]]]]
-	       [find_previous_node event_node [cdr node_list]]]
-	      [t
-	       nil]]]]
-
-
-    [mapc [funk [event_node]
-		[if [find_previous_node event_node]
-		    [let [[happens_after 
-			   [new bruno_graph_edge `happens_after 
-				                  event_node 
-						  [find_previous_node event_node nodes_list]]]]
-		      [have graph add_edge happens_after]
-		      [print '2']
-		      [print graph]]
-		  nil]]
-	  
-	  event_node_list]
-    graph]]
+   
+    
+    [let [[nodes_list      [get [get graph node_set] elements]]
+	  [event_node_list [conslist-sort [get graph nodes_with_label `story_event] [funk [node-x node-y]
+											  [< [find_node_time node-x] [find_node_time node-y]]]]]]
+      [print 'let2']
+      
+      [defunk find_previous_node [event_node  node_list]
+	[let [[previous_node nil]]
+	  [cond [[and [cdr node_list]       [eq event_node [car node_list]]]
+		 [prog [= previous_node  [cadr node_list]]
+		       previous_node]]
+		[[and [null [cdr node_list]] [eq event_node [car node_list]]]
+		 nil]
+		[[and [cdr node_list] [null [eq event_node [car node_list]]]]
+		 [find_previous_node event_node [cdr node_list]]]
+		[t
+		 nil]]]]
+      
+      [print 'defunked find_previous_node']
+      [mapc [funk [event_node]
+		  [if [find_previous_node event_node nodes_list]
+		      [let [[happens_after 
+			     [new bruno_graph_edge `happens_after 
+				  event_node 
+				  [find_previous_node event_node nodes_list]]]]
+			[have graph add_edge happens_after]
+			[print '2']
+			[print graph]]
+		    nil]]
+	    
+	    event_node_list]
+      graph]]
   ]
 
 [print 'beginning defining get as story_event']
@@ -276,7 +269,10 @@
     [mapc [funk [event_node]
 		[print 'event_node']
 		[print event_node]
-		[have story add_event [get origin_this indiv_story_event event_node]]]
+		[let [[story_event [get origin_this indiv_story_event event_node]]]
+		  [have story add_event [get origin_this indiv_story_event event_node]]
+		  [print story_event]]]
+		
 	  [get this nodes_with_label `story_event]]
     
     story]]

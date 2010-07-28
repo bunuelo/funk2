@@ -61,7 +61,7 @@
 	[have swindow        add        text_view]
 	[have vbox           pack_start processor_hbox t t 0]
 	[dotimes [i 8]
-	  [let [[processor [fibermon_processor_widget-new]]]
+	  [let [[processor [fibermon_processor_widget-new i]]]
 	    [have processor_hbox pack_start processor t t 0]
 	    [set processor_array elt i processor]]]
 	

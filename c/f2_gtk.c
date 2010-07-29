@@ -398,10 +398,10 @@ GtkWidget* funk2_gtk__hpaned__new(funk2_gtk_t* this) {
 // vpaned
 
 GtkWidget* funk2_gtk__vpaned__new(funk2_gtk_t* this) {
-  GtkWidget* hpaned;
+  GtkWidget* vpaned;
   {
     gdk_threads_enter();
-    vpaned = gtk_hpaned_new();
+    vpaned = gtk_vpaned_new();
     gdk_threads_leave();
   }
   return vpaned;

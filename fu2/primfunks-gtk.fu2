@@ -37,5 +37,7 @@
 [globalize-funk gtk-text_buffer-get_text       &primfunk:gtk__text_buffer__get_text]
 [globalize-funk gtk-text_buffer-set_text       &primfunk:gtk__text_buffer__set_text]
 [globalize-funk gtk-text_iter-forward_search   &primfunk:gtk__text_iter__forward_search]
+[globalize-funk gtk-vpaned-new                 &primfunk:gtk__vpaned__new]
+[globalize-funk gtk-hpaned-new                 &primfunk:gtk__hpaned__new]
 
 

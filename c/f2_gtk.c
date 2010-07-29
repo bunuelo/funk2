@@ -347,7 +347,7 @@ void funk2_gtk__text_buffer__select_range(funk2_gtk_t* this, GtkTextBuffer* text
 }
 
 char* funk2_gtk__text_buffer__get_text(funk2_gtk_t* this, GtkTextBuffer* text_buffer) {
-  char* text = NULL;
+  char* text;
   {
     GtkTextIter start;
     GtkTextIter end;
@@ -380,6 +380,33 @@ boolean_t funk2_gtk__text_iter__forward_search(funk2_gtk_t* this, GtkTextIter* i
   }
   return found;
 }
+
+
+// hpaned
+
+GtkWidget* funk2_gtk__hpaned__new(funk2_gtk_t* this) {
+  GtkWidget* hpaned;
+  {
+    gdk_threads_enter();
+    hpaned = gtk_hpaned_new();
+    gdk_threads_leave();
+  }
+  return hpaned;
+}
+
+
+// vpaned
+
+GtkWidget* funk2_gtk__vpaned__new(funk2_gtk_t* this) {
+  GtkWidget* hpaned;
+  {
+    gdk_threads_enter();
+    vpaned = gtk_hpaned_new();
+    gdk_threads_leave();
+  }
+  return vpaned;
+}
+
 
 #endif // F2__GTK__SUPPORTED
 
@@ -792,6 +819,25 @@ f2ptr f2__gtk__text_iter__forward_search(f2ptr cause, f2ptr text_iter, f2ptr tex
 def_pcfunk2(gtk__text_iter__forward_search, text_iter, text, return f2__gtk__text_iter__forward_search(this_cause, text_iter, text));
 
 
+// vpaned
+
+f2ptr f2__gtk__vpaned__new(f2ptr cause) {
+  GtkWidget* gtk_widget = funk2_gtk__vpaned__new(&(__funk2.gtk));
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(gtk_widget)));
+}
+def_pcfunk0(gtk__vpaned__new, return f2__gtk__vpaned__new(this_cause));
+
+
+// hpaned
+
+f2ptr f2__gtk__hpaned__new(f2ptr cause) {
+  GtkWidget* gtk_widget = funk2_gtk__hpaned__new(&(__funk2.gtk));
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(gtk_widget)));
+}
+def_pcfunk0(gtk__hpaned__new, return f2__gtk__hpaned__new(this_cause));
+
+
+
 // **
 
 void f2__gtk__reinitialize_globalvars() {
@@ -833,16 +879,16 @@ void f2__gtk__initialize() {
   
   init_frame_object__2_slot(gtk_text_range, start, end);
   
-  
+
   f2__primcfunk__init__0(gtk__is_supported,                                                             "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
-  f2__primcfunk__init__0(gtk__window__new,                                                              "Returns the name of a new window widget.");
-  f2__primcfunk__init__1(gtk__vbox__new,                   row_count,                                   "Returns the name of a new vbox widget with row_count rows.");
-  f2__primcfunk__init__1(gtk__hbox__new,                   column_count,                                "Returns the name of a new hbox widget with column_count columns.");
-  f2__primcfunk__init__1(gtk__button__new_with_label,      label,                                       "Returns the name of a new button widget with label.");
-  f2__primcfunk__init__0(gtk__entry__new,                                                               "Returns the name of a new entry widget.");
+  f2__primcfunk__init__0(gtk__window__new,                                                              "Returns a new window widget.");
+  f2__primcfunk__init__1(gtk__vbox__new,                   row_count,                                   "Returns a new vbox widget with row_count rows.");
+  f2__primcfunk__init__1(gtk__hbox__new,                   column_count,                                "Returns a new hbox widget with column_count columns.");
+  f2__primcfunk__init__1(gtk__button__new_with_label,      label,                                       "Returns a new button widget with label.");
+  f2__primcfunk__init__0(gtk__entry__new,                                                               "Returns a new entry widget.");
   f2__primcfunk__init__1(gtk__entry__get_text,             widget,                                      "Returns the text of an entry widget as a string.");
-  f2__primcfunk__init__0(gtk__scrolled_window__new,                                                     "Returns the name of a new scrolled_window widget.");
-  f2__primcfunk__init__0(gtk__text_view__new,                                                           "Returns the name of a new text_view widget.");
+  f2__primcfunk__init__0(gtk__scrolled_window__new,                                                     "Returns a new scrolled_window widget.");
+  f2__primcfunk__init__0(gtk__text_view__new,                                                           "Returns a new text_view widget.");
   f2__primcfunk__init__1(gtk__text_view__get_buffer,       text_view,                                   "Returns the buffer widget of a text_view widget.");
   f2__primcfunk__init__1(gtk__widget__show_all,            widget,                                      "Shows the widget and all children.");
   f2__primcfunk__init__2(gtk__container__add,              widget, add_widget,                          "Adds a widget to a container.");
@@ -853,7 +899,10 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__2(gtk__text_buffer__select_range,   text_buffer, range,                          "Sets select range in this text_buffer.");
   f2__primcfunk__init__1(gtk__text_buffer__get_text,       text_buffer,                                 "Gets the text as a string from a gtk text_buffer widget.");
   f2__primcfunk__init__2(gtk__text_buffer__set_text,       text_buffer, text,                           "Sets the text for a gtk text_buffer widget.");
-  f2__primcfunk__init__2(gtk__text_iter__forward_search,   text_iter, text,                             "");
+  f2__primcfunk__init__2(gtk__text_iter__forward_search,   text_iter, text,                             "Returns a range composed of two text_iters that represent the successful search forward from the text_iter for a string.  Returns nil on failure to find the text.");
+  f2__primcfunk__init__0(gtk__vpaned__new,                                                              "Returns a new GtkVPaned widget.");
+  f2__primcfunk__init__0(gtk__hpaned__new,                                                              "Returns a new GtkHPaned widget.");
+  
   
 }
 

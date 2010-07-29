@@ -58,7 +58,7 @@
 
 [defunk test-gtk []
   [let [[win           [gtk-window-new]]
-	[vbox          [gtk-vbox-new 2]]
+	[vpaned        [gtk-vpaned-new]]
 	[hbox          [gtk-hbox-new 2]]
 	[search_entry  [gtk-entry-new]]
 	[search_button [gtk-button-new_with_label 'Search']]
@@ -66,12 +66,12 @@
 	[swindow       [gtk-scrolled_window-new]]
 	[text_view     [gtk-text_view-new]]]
     
-    [have win     add        vbox]
-    [have vbox    pack_start hbox nil nil 0]
+    [have win     add        vpaned]
+    [have vpaned  pack_start hbox nil nil 0]
     [have hbox    pack_start search_entry t t 0]
     [have hbox    pack_start search_button nil nil 0]
     [have hbox    pack_start next_button nil nil 0]
-    [have vbox    pack_start swindow t t 0]
+    [have vpaned  pack_start swindow t t 0]
     [have swindow add        text_view]
     
     [have search_button signal_connect 'clicked'

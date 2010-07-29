@@ -34,6 +34,19 @@ GtkWidget* raw__gtk_widget__as__GtkWidget(f2ptr cause, f2ptr this) {
 #endif // F2__GTK__SUPPORTED
 
 
+// gtk_box
+
+def_frame_object__global__1_slot(gtk_box, pointer);
+
+#if defined(F2__GTK__SUPPORTED)
+
+GtkBox* raw__gtk_box__as__GtkBox(f2ptr cause, f2ptr this) {
+  return (GtkBox*)from_ptr(f2pointer__p(f2__gtk_box__pointer(cause, this), cause));
+}
+
+#endif // F2__GTK__SUPPORTED
+
+
 // gtk_text_buffer
 
 def_frame_object__global__1_slot(gtk_text_buffer, pointer);
@@ -452,7 +465,7 @@ f2ptr raw__gtk__vbox__new(f2ptr cause, f2ptr row_count) {
 #if defined(F2__GTK__SUPPORTED)
   u64        row_count__i = f2integer__i(row_count, cause);
   GtkWidget* vbox         = funk2_gtk__vbox__new(&(__funk2.gtk), row_count__i);
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(vbox)));
+  return f2__gtk_box__new(cause, f2pointer__new(cause, to_ptr(vbox)));
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -471,7 +484,7 @@ f2ptr raw__gtk__hbox__new(f2ptr cause, f2ptr column_count) {
 #if defined(F2__GTK__SUPPORTED)
   u64        column_count__i = f2integer__i(column_count, cause);
   GtkWidget* hbox            = funk2_gtk__hbox__new(&(__funk2.gtk), column_count__i);
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(hbox)));
+  return f2__gtk_box__new(cause, f2pointer__new(cause, to_ptr(hbox)));
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -650,15 +663,15 @@ f2ptr raw__gtk__box__pack_start(f2ptr cause, f2ptr widget, f2ptr child_widget, f
 #endif
 }
 
-f2ptr f2__gtk__box__pack_start(f2ptr cause, f2ptr widget, f2ptr child_widget, f2ptr expand, f2ptr fill, f2ptr padding) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
+f2ptr f2__gtk__box__pack_start(f2ptr cause, f2ptr box, f2ptr child_widget, f2ptr expand, f2ptr fill, f2ptr padding) {
+  if ((! raw__gtk_widget__is_type(cause, box)) ||
       (! raw__gtk_widget__is_type(cause, child_widget)) ||
       (! raw__integer__is_type(cause, padding))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__box__pack_start(cause, widget, child_widget, expand, fill, padding);
+  return raw__gtk__box__pack_start(cause, box, child_widget, expand, fill, padding);
 }
-def_pcfunk5(gtk__box__pack_start, widget, child_widget, expand, fill, padding, return f2__gtk__box__pack_start(this_cause, widget, child_widget, expand, fill, padding));
+def_pcfunk5(gtk__box__pack_start, box, child_widget, expand, fill, padding, return f2__gtk__box__pack_start(this_cause, box, child_widget, expand, fill, padding));
 
 
 f2ptr raw__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk, f2ptr args) {
@@ -853,6 +866,11 @@ void f2__gtk__initialize() {
   // gtk_widget
   
   init_frame_object__1_slot(gtk_widget, pointer);
+  
+  
+  // gtk_box
+  
+  init_frame_object__1_slot(gtk_box, pointer);
   
   
   // gtk_text_buffer

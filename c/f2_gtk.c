@@ -395,16 +395,22 @@ boolean_t funk2_gtk__text_iter__forward_search(funk2_gtk_t* this, GtkTextIter* i
 }
 
 
-// hpaned
+// paned
 
-GtkWidget* funk2_gtk__hpaned__new(funk2_gtk_t* this) {
-  GtkWidget* hpaned;
+void funk2_gtk__paned__pack1(funk2_gtk_t* this, GtkWidget* paned, GtkWidget* child, boolean_t resize, boolean_t shrink) {
   {
     gdk_threads_enter();
-    hpaned = gtk_hpaned_new();
+    gtk_paned_pack1(GTK_PANED(paned), child, resize ? TRUE : FALSE, shrink ? TRUE : FALSE);
     gdk_threads_leave();
   }
-  return hpaned;
+}
+
+void funk2_gtk__paned__pack2(funk2_gtk_t* this, GtkPaned* paned, GtkWidget* child, boolean_t resize, boolean_t shrink) {
+  {
+    gdk_threads_enter();
+    gtk_paned_pack2(paned, child, resize ? TRUE : FALSE, shrink ? TRUE : FALSE);
+    gdk_threads_leave();
+  }
 }
 
 
@@ -418,6 +424,19 @@ GtkWidget* funk2_gtk__vpaned__new(funk2_gtk_t* this) {
     gdk_threads_leave();
   }
   return vpaned;
+}
+
+
+// hpaned
+
+GtkWidget* funk2_gtk__hpaned__new(funk2_gtk_t* this) {
+  GtkWidget* hpaned;
+  {
+    gdk_threads_enter();
+    hpaned = gtk_hpaned_new();
+    gdk_threads_leave();
+  }
+  return hpaned;
 }
 
 
@@ -832,6 +851,39 @@ f2ptr f2__gtk__text_iter__forward_search(f2ptr cause, f2ptr text_iter, f2ptr tex
 def_pcfunk2(gtk__text_iter__forward_search, text_iter, text, return f2__gtk__text_iter__forward_search(this_cause, text_iter, text));
 
 
+// paned
+
+void raw__gtk__paned__pack1(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize, f2ptr shrink) {
+  GtkWidget* gtk_paned = raw__gtk_widget__as__GtkWidget(cause, paned);
+  GtkWidget* gtk_child = raw__gtk_widget__as__GtkWidget(cause, paned);
+  funk2_gtk__paned__pack1(&(__funk2.gtk), gtk_paned, gtk_child, (resize != nil) ? TRUE : FALSE, (shrink != nil) ? TRUE : FALSE);
+}
+
+f2ptr f2__gtk__paned__pack1(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize, f2ptr shrink) {
+  if ((! raw__gtk_widget__is_type(cause, paned)) ||
+      (! raw__gtk_widget__is_type(cause, child))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__paned__pack1(cause, paned, child, resize, shrink);
+}
+def_pcfunk4(gtk__paned__pack1, paned, child, resize, shrink, return f2__gtk__paned__pack1(this_cause, paned, child, resize, shrink));
+
+
+void raw__gtk__paned__pack2(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize, f2ptr shrink) {
+  GtkWidget* gtk_paned = raw__gtk_widget__as__GtkWidget(cause, paned);
+  GtkWidget* gtk_child = raw__gtk_widget__as__GtkWidget(cause, paned);
+  funk2_gtk__paned__pack2(&(__funk2.gtk), gtk_paned, gtk_child, (resize != nil) ? TRUE : FALSE, (shrink != nil) ? TRUE : FALSE);
+}
+
+f2ptr f2__gtk__paned__pack2(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize, f2ptr shrink) {
+  if ((! raw__gtk_widget__is_type(cause, paned)) ||
+      (! raw__gtk_widget__is_type(cause, child))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__paned__pack2(cause, paned, child, resize, shrink);
+}
+def_pcfunk4(gtk__paned__pack2, paned, child, resize, shrink, return f2__gtk__paned__pack2(this_cause, paned, child, resize, shrink));
+
 // vpaned
 
 f2ptr f2__gtk__vpaned__new(f2ptr cause) {
@@ -848,6 +900,7 @@ f2ptr f2__gtk__hpaned__new(f2ptr cause) {
   return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(gtk_widget)));
 }
 def_pcfunk0(gtk__hpaned__new, return f2__gtk__hpaned__new(this_cause));
+
 
 
 
@@ -918,7 +971,18 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__1(gtk__text_buffer__get_text,       text_buffer,                                 "Gets the text as a string from a gtk text_buffer widget.");
   f2__primcfunk__init__2(gtk__text_buffer__set_text,       text_buffer, text,                           "Sets the text for a gtk text_buffer widget.");
   f2__primcfunk__init__2(gtk__text_iter__forward_search,   text_iter, text,                             "Returns a range composed of two text_iters that represent the successful search forward from the text_iter for a string.  Returns nil on failure to find the text.");
+  
+  // paned
+  
+  f2__primcfunk__init__4(gtk__paned__pack1, paned, child, resize, shrink, "Packs the first child of the Paned.");
+  f2__primcfunk__init__4(gtk__paned__pack2, paned, child, resize, shrink, "Packs the second child of the Paned.");
+  
+  // vpaned
+  
   f2__primcfunk__init__0(gtk__vpaned__new,                                                              "Returns a new GtkVPaned widget.");
+
+  // hpaned
+
   f2__primcfunk__init__0(gtk__hpaned__new,                                                              "Returns a new GtkHPaned widget.");
   
   

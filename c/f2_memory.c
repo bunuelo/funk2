@@ -388,7 +388,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   }
   f2ptr f2_i;
   u64   i;
-  i = 0xfaded;             safe_write(fd, to_ptr(&i), sizeof(u64);
+  i = 0xfaded;             safe_write(fd, to_ptr(&i), sizeof(u64));
   i = F2__COMPILE_TIME_ID; safe_write(fd, to_ptr(&i), sizeof(u64));
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     status("funk2_memory__save_image_to_file: saving pool %d.", pool_index);

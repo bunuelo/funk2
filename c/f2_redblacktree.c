@@ -379,10 +379,10 @@ void rbt_node__reinit(rbt_node_t* node, s64 difference) {
 // reinitialize tree and all nodes within tree.
 void rbt_tree__reinit(rbt_tree_t* tree, ptr new_memorypool_beginning) {
   ptr old_memorypool_beginning = tree->memorypool_beginning;
+  s64 difference               = new_memorypool_beginning - old_memorypool_beginning;
   status("rbt_tree__reinit: new_memorypool_beginning=" u64__fstr ".", new_memorypool_beginning);
   status("rbt_tree__reinit: old_memorypool_beginning=" u64__fstr ".", old_memorypool_beginning);
   status("rbt_tree__reinit: difference=" s64__fstr ".", difference);
-  s64 difference = new_memorypool_beginning - old_memorypool_beginning;
   {
     ptr head    = to_ptr(tree->head);
     head       += difference;

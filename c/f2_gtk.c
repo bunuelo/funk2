@@ -855,7 +855,7 @@ def_pcfunk2(gtk__text_iter__forward_search, text_iter, text, return f2__gtk__tex
 
 void raw__gtk__paned__pack1(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize, f2ptr shrink) {
   GtkWidget* gtk_paned = raw__gtk_widget__as__GtkWidget(cause, paned);
-  GtkWidget* gtk_child = raw__gtk_widget__as__GtkWidget(cause, paned);
+  GtkWidget* gtk_child = raw__gtk_widget__as__GtkWidget(cause, child);
   funk2_gtk__paned__pack1(&(__funk2.gtk), gtk_paned, gtk_child, (resize != nil) ? TRUE : FALSE, (shrink != nil) ? TRUE : FALSE);
 }
 
@@ -872,7 +872,7 @@ def_pcfunk4(gtk__paned__pack1, paned, child, resize, shrink, return f2__gtk__pan
 
 void raw__gtk__paned__pack2(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize, f2ptr shrink) {
   GtkWidget* gtk_paned = raw__gtk_widget__as__GtkWidget(cause, paned);
-  GtkWidget* gtk_child = raw__gtk_widget__as__GtkWidget(cause, paned);
+  GtkWidget* gtk_child = raw__gtk_widget__as__GtkWidget(cause, child);
   funk2_gtk__paned__pack2(&(__funk2.gtk), gtk_paned, gtk_child, (resize != nil) ? TRUE : FALSE, (shrink != nil) ? TRUE : FALSE);
 }
 

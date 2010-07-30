@@ -405,10 +405,10 @@ void funk2_gtk__paned__pack1(funk2_gtk_t* this, GtkWidget* paned, GtkWidget* chi
   }
 }
 
-void funk2_gtk__paned__pack2(funk2_gtk_t* this, GtkPaned* paned, GtkWidget* child, boolean_t resize, boolean_t shrink) {
+void funk2_gtk__paned__pack2(funk2_gtk_t* this, GtkWidget* paned, GtkWidget* child, boolean_t resize, boolean_t shrink) {
   {
     gdk_threads_enter();
-    gtk_paned_pack2(paned, child, resize ? TRUE : FALSE, shrink ? TRUE : FALSE);
+    gtk_paned_pack2(GTK_PANED(paned), child, resize ? TRUE : FALSE, shrink ? TRUE : FALSE);
     gdk_threads_leave();
   }
 }

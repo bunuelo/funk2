@@ -853,7 +853,7 @@ void redblacktree__test__remove_maximums() {
   
   printf("\ntesting maximum removal");
   
-  rbt_tree__init(&tree, NULL);
+  rbt_tree__init(&tree, NULL, 0(ptr));
   
   redblacktree__test__insert_randoms(&tree, 10);
   
@@ -894,7 +894,7 @@ void redblacktree__test__remove_minimums() {
   
   printf("\ntesting minimum removal");
   
-  rbt_tree__init(&tree, NULL);
+  rbt_tree__init(&tree, NULL, 0(ptr));
   
   redblacktree__test__insert_randoms(&tree, 10);
   
@@ -936,7 +936,7 @@ void redblacktree__test__iterators() {
   
   printf("\ntesting minimum removal");
   
-  rbt_tree__init(&tree, NULL);
+  rbt_tree__init(&tree, NULL, 0(ptr));
   
   redblacktree__test__insert_randoms(&tree, 10);
   
@@ -994,7 +994,7 @@ void redblacktree__test__remove_all_with_iterators() {
   
   printf("\ntesting iterator removal");
   
-  rbt_tree__init(&tree, NULL);
+  rbt_tree__init(&tree, NULL, 0(ptr));
   
   redblacktree__test__insert_randoms(&tree, 10);
   
@@ -1028,7 +1028,7 @@ void redblacktree__test__remove_with_iterators() {
   
   printf("\ntesting iterator removal");
   
-  rbt_tree__init(&tree, NULL);
+  rbt_tree__init(&tree, NULL, 0(ptr));
   
   redblacktree__test__insert_randoms(&tree, 10);
   

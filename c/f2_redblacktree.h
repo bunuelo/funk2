@@ -45,7 +45,7 @@ typedef struct rbt_tree_s {
 } rbt_tree_t;
 
 void        rbt_node__print(rbt_node_t* node);
-void        rbt_tree__init(rbt_tree_t* tree, rbt_node_t* head);
+void        rbt_tree__init(rbt_tree_t* tree, rbt_node_t* head, ptr memorypool_beginning);
 void        rbt_tree__reinit(rbt_tree_t* tree, ptr new_memorypool_beginning);
 void        rbt_tree__print(rbt_tree_t* tree);
 void        rbt_tree__insert(rbt_tree_t* tree, rbt_node_t* node);

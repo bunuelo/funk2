@@ -37,9 +37,9 @@ void funk2_memorypool__init(funk2_memorypool_t* this) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(this->dynamic_memory.ptr);
   funk2_memblock__init(block, this->total_global_memory, 0);
   
-  rbt_tree__init(&(this->free_memory_tree), NULL);
+  rbt_tree__init(&(this->free_memory_tree), NULL, this->global_f2ptr_offset);
   rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
-  rbt_tree__init(&(this->used_memory_tree), NULL);
+  rbt_tree__init(&(this->used_memory_tree), NULL, this->global_f2ptr_offset);
   
   funk2_memorypool__debug_memory_test(this, 1);
 }
@@ -202,7 +202,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
   funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(this->dynamic_memory.ptr);
   funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
   funk2_memblock_t* segment_first_free_block = NULL;
-  rbt_tree__init(&(this->free_memory_tree), NULL);
+  rbt_tree__init(&(this->free_memory_tree), NULL, this->global_f2ptr_offset);
   while(iter < end_of_blocks) {
     if (segment_first_free_block) {
       // we are currently in a segment of free blocks

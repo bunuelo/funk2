@@ -349,8 +349,9 @@ void rbt_node__print(rbt_node_t* node) {
   }
 }
 
-void rbt_tree__init(rbt_tree_t* tree, rbt_node_t* head) {
-  tree->head = head;
+void rbt_tree__init(rbt_tree_t* tree, rbt_node_t* head, ptr memorypool_beginning) {
+  tree->memorypool_beginning = memorypool_beginning;
+  tree->head                 = head;
 }
 
 void rbt_node__reinit(rbt_node_t* node, s64 difference) {

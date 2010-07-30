@@ -249,7 +249,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
     int               new_block__byte_num = funk2_memblock__byte_num(block) - byte_num;
     funk2_memblock__init(new_block, new_block__byte_num, 0);
     
-    funk2_memorypool__link_funk2_memblock_to_freelist(&(this->pool[pool_index]), new_block);
+    funk2_memorypool__free_memory_tree__insert(&(this->pool[pool_index]), new_block);
     
     funk2_memblock__byte_num(block) = byte_num;
   }
@@ -380,16 +380,16 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
-  // should collect garbage probably
+  // note: we do not collect garbage here.
   int fd = open(filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
   if (fd == -1) {
     printf("\nsave_image_to_disk error: couldn't open file \"%s\".", filename);
     return boolean__true;
   }
   f2ptr f2_i;
-  int   i;
-  i = 0xfaded;             safe_write(fd, to_ptr(&i), sizeof(int));
-  i = F2__COMPILE_TIME_ID; safe_write(fd, to_ptr(&i), sizeof(int));
+  u64   i;
+  i = 0xfaded;             safe_write(fd, to_ptr(&i), sizeof(u64);
+  i = F2__COMPILE_TIME_ID; safe_write(fd, to_ptr(&i), sizeof(u64));
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     status("funk2_memory__save_image_to_file: saving pool %d.", pool_index);
     funk2_memorypool__save_to_stream(&(this->pool[pool_index]), fd);
@@ -425,9 +425,10 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     status("rebuilding memory pool[%d] info from image.", pool_index);
-    rbt_tree__init(&(this->pool[pool_index].free_memory_tree), NULL);
-    this->pool[pool_index].total_free_memory  = 0;
-    rbt_tree__init(&(this->pool[pool_index].used_memory_tree), NULL);
+    //rbt_tree__init(&(this->pool[pool_index].free_memory_tree), NULL);
+    //rbt_tree__init(&(this->pool[pool_index].used_memory_tree), NULL);
+    rbt_tree__reinit(&(this->pool[pool_index].free_memory_tree), this->pool[pool_index].global_f2ptr_offset);
+    rbt_tree__reinit(&(this->pool[pool_index].used_memory_tree), this->pool[pool_index].global_f2ptr_offset);
     
     {
       funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(this->pool[pool_index].dynamic_memory.ptr);
@@ -435,9 +436,9 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
       while(iter < end_of_blocks) {
 	debug__assert(funk2_memblock__byte_num(iter) > 0, nil, "memory_test__byte_num_zero failed.");
 	if (iter->used) {
-	  rbt_tree__insert(&(this->pool[pool_index].used_memory_tree), (rbt_node_t*)iter);
+	  //funk2_memorypool__used_memory_tree__insert(&(this->pool[pool_index]), (rbt_node_t*)iter);
 	} else {
-	  funk2_memorypool__link_funk2_memblock_to_freelist(&(this->pool[pool_index]), iter);
+	  //funk2_memorypool__free_memory_tree__insert(&(this->pool[pool_index]), iter);
 	  this->pool[pool_index].total_free_memory += funk2_memblock__byte_num(iter);
 	}
 	iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
@@ -507,16 +508,16 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
     retval = boolean__true;
   } else {
     while(1) {
-      int   i;
+      u64   i;
       f2ptr f2_i;
-      safe_read(fd, to_ptr(&i), sizeof(int));
+      safe_read(fd, to_ptr(&i), sizeof(u64));
       if (i != 0xfaded) {
 	status("load_image_from_disk failure: file is not a funk memory image.");
 	retval = boolean__true;
 	break;
       }
       
-      safe_read(fd, to_ptr(&i), sizeof(int));
+      safe_read(fd, to_ptr(&i), sizeof(u64));
       if (i != F2__COMPILE_TIME_ID) {
 	status("load_image_from_disk failure: file is saved from a different version of funk2.");
 	retval = boolean__true;

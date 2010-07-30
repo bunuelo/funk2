@@ -40,11 +40,13 @@ struct rbt_node_s {
 typedef struct rbt_node_s rbt_node_t;
 
 typedef struct rbt_tree_s {
+  ptr         memorypool_beginning;
   rbt_node_t* head;
 } rbt_tree_t;
 
 void        rbt_node__print(rbt_node_t* node);
 void        rbt_tree__init(rbt_tree_t* tree, rbt_node_t* head);
+void        rbt_tree__reinit(rbt_tree_t* tree, ptr new_memorypool_beginning);
 void        rbt_tree__print(rbt_tree_t* tree);
 void        rbt_tree__insert(rbt_tree_t* tree, rbt_node_t* node);
 void        rbt_tree__remove(rbt_tree_t* tree, rbt_node_t* node);
@@ -54,6 +56,8 @@ rbt_node_t* rbt_node__next(rbt_node_t* node);
 rbt_node_t* rbt_node__prev(rbt_node_t* node);
 int         rbt_node__is_valid(rbt_node_t* node);
 int         rbt_tree__is_valid(rbt_tree_t* tree);
+void        rbt_tree__load_from_stream(rbt_tree_t* tree, int fd);
+void        rbt_tree__save_to_stream(rbt_tree_t* tree, int fd);
 
 extern void f2__redblacktree__initialize();
 

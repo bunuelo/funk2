@@ -1,0 +1,513 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+[deframe          isis_world_body [frame] [name world says]]
+[deftypeconstruct isis_world_body [name]
+  [set this name  name]
+  [set this world nil]
+  [set this says  nil]
+  this]
+
+[deftypefunk isis_world_body get sense []
+  [get [get this world] agent_sense [get this name]]]
+
+[deftypefunk isis_world_body get time_step []
+  [get [get this world] time_step]]
+
+
+
+[deframe          isis_agent [frame] [name mind body]]
+[deftypeconstruct isis_agent [name]
+  [let [[mind [new mind]]
+	[body [new isis_world_body name]]]
+    [set this name name]
+    [set this mind mind]
+    [set this body body]
+    
+    [print 'set name mind body']
+    'All isis_agents inherit these basic features.'
+    
+    [mind-create_layer mind reactive]
+    [mind-create_layer mind deliberative]
+    [mind-create_layer mind reflective]
+    [mind-create_layer mind self_reflective]
+    [mind-create_layer mind self_conscious]
+    [print 'mind-create layers']
+    [mind-create_agency mind reactive        sensory]
+    [mind-create_agency mind reactive        physical]
+    [mind-create_agency mind reactive        speech]
+    [mind-create_agency mind deliberative    reality]
+    [mind-create_agency mind deliberative    imagination]
+    [mind-create_agency mind reflective      physical]
+    [mind-create_agency mind self_reflective physical]
+    [mind-create_agency mind self_conscious  imprimer_learning]
+    [print 'mind-create agencies']
+
+
+    [let [[sense-cell [new propogator_cell `sense]]
+	  [story-cell [new propogator_cell `story]]]
+      [have [mind-knowledge mind reactive sensory] add_constraint
+	    [new propogator_constraint `sense->story story-cell [list sense-cell]
+		 [funk [sense]
+		       [have this think_to_self 'Propogating sense->story.']
+		       [let [[sense_agent_frame [have sense lookup `agents]]
+			     [story             [new story]]]
+			 [let [[agent_names [get sense_agent_frame slots]]]
+			   [if agent_names
+			       [have this think_to_self 'While propogating sense->story, I can see agents, ' agent_names '.']
+			     [have this think_to_self 'While propogating sense->story, I cannot see any other agents.']]
+			   [mapc [funk [agent_name]
+				       [let [[agent [have sense_agent_frame lookup agent_name]]]
+					 [have story add_new_character agent_name]
+					 [story-create_event story [get body time_step] `I `sees agent_name]
+					 [let [[says [have agent lookup `says]]]
+					   [if says
+					       [mapc [funk [say]
+							   [have this think_to_self 'While propogating sense->story, I can hear ' agent_name ' saying, "' say '"']
+							   [story-create_event story [get body time_step] agent_name `says say]]
+						     says]]]]]
+				 agent_names]]
+			 [have this think_to_self 'While propogating sense->story, I created this story: ' [get story as-list] '.']
+			 story]]]]
+      ]
+    
+    
+
+
+
+   
+
+    [print 'mind_create story stuff']
+
+    [mind-create_resource mind reactive physical turn_right [activating_resource steps]
+			  [format stdout '\n  turn_right']
+			  [let [[starting_time [get body time_step]]]			
+			    [isis-call [get [get this world] client] turn_right-start agent [get this name]]
+			    [while [< [- [get body time_step] starting_time] steps]
+			      [millisleep 50]]
+			    [isis-call [get [get this world] client] turn_right-stop agent [get this name]]]]
+    [print 'turn right']
+    [mind-create_resource mind reactive physical turn_left [activating_resource steps]
+			  [format stdout '\n  turn_left']
+			  [isis-call [get [get this world] client] turn_left-start agent [get this name]]
+			  [let [[start_steps [get body time_step]]]
+			    [while [< [- [get body time_step] start_steps] steps]
+			      [millisleep 50]]
+			    [isis-call [get [get this world] client] turn_left-stop agent [get this name]]]]
+    [mind-create_resource mind reactive physical look_right [activating_resource steps]
+			  [format stdout '\n  look_right']
+			  [let [[starting_time [get body time_step]]]			
+			    [isis-call [get [get this world] client] look_right-start agent [get this name]]
+			    [while [< [- [get body time_step] starting_time] steps]
+			      [millisleep 50]]
+			    [isis-call [get [get this world] client] look_right-stop agent [get this name]]]]
+    [mind-create_resource mind reactive physical look_left [activating_resource steps]
+			  [format stdout '\n  turn_left']
+			  [isis-call [get [get this world] client] look_left-start agent [get this name]]
+			  [let [[start_steps [get body time_step]]]
+			    [while [< [- [get body time_step] start_steps] steps]
+			      [millisleep 50]]
+			    [isis-call [get [get this world] client] look_left-stop agent [get this name]]]]
+    [mind-create_resource mind reactive physical move_forward [activating_resource steps]
+			  [format stdout '\n  move_forward']
+			  [let [[start_steps [get body time_step]]]
+			    [isis-call [get [get this world] client] move_forward-start agent [get this name]]
+			    [while [< [- [get body time_step] start_steps] steps]
+			      [millisleep 50]]
+			    [isis-call [get [get this world] client] move_forward-stop agent [get this name]]]]
+    
+    [mind-create_resource mind reactive physical move_backward [activating_resource steps]
+			  [format stdout '\n  move_backward']
+			  [isis-call [get [get this world] client] move_backward-start agent [get this name]]
+			  [let [[start_steps [get body time_step]]]
+			    [while [< [- [get body time_step] start_steps] steps]
+			      [millisleep 50]]
+			    [isis-call [get [get this world] client] move_backward-stop agent [get this name]]]]
+    [print 'turn left, move forward, etc']
+    
+    [mind-create_resource mind reactive physical center_body_on [activating_resource my_object]
+			  [print 'center_body_on_object']
+			  [deftypefunk isis_agent execute turn_left_and_right []
+			    [print '0']
+			    [if [get this objects]
+				[if [have [get this objects] lookup my_object] 
+				    [let [[x_pos [have [have [get this objects] lookup my_object] lookup `x_pos]]]
+				      [print 'let']
+				      [cond [[>  x_pos 0.05]
+					     [prog [print 'x too positive']
+						   [while [get [get [get this mind] resource `reactive `physical `turn_right] active]
+						     [millisleep 100]
+						     [print 'sleeping cus resource already activated']]
+						   [mind-activate [get this mind] reactive physical turn_right 1]
+						   [print 'i turned right']
+						   [have this turn_left_and_right]]]
+					    [[< [- 0 0.05] x_pos]
+					     [prog [print 'x too negative']
+						   [while [get [get [get this mind] resource `reactive `physical `turn_left] active]
+						     [millisleep 100]
+						     [print 'sleeping cus resource already activated']]
+						   [mind-activate [get this mind] reactive physical turn_left 1]
+						   [print 'i turned left']
+						   [have this turn_left_and_right]]]
+					    [t
+					     [print 'im centered']]]]]]]
+			  [have this turn_left_and_right]
+			  [print 'finished turning left and right']
+			  [print 'finished centering']
+			  nil]
+    
+    [mind-create_resource mind reactive physical center_head_on [activating_resource my_object]
+			  [print 'center_head_on_object']
+			  [deftypefunk isis_agent execute look_left_and_right []
+			    [print '0']
+			    [let [[x_pos [have [have [get this objects] lookup my_object] lookup `x_pos]]]
+			      [cond [[<  x_pos 0.05]
+				     [prog [print 'x too positive']
+					   [mind-activate [get this mind] reactive physical look_left 1]
+					   [print 'i looked left']
+					   [have this look_left_and_right]]]
+				    [[< [- 0 0.05] x_pos]
+				     [prog [print 'x too negative']
+					   [mind-activate [get this mind] reactive physical look_right 1]
+					   [print 'i looked right']
+					   [have this look_left_and_right]]]
+				    [t
+				     [print 'my head is centered']]]]]
+			  [have this look_left_and_right]
+			  [print 'finished looking left and right']
+			  [print 'finished centering head']]
+    [print 'center_head_on']
+    
+    [mind-create_resource mind reactive physical walk_towards [activating_resource desired_object]
+			  [mind-activate [get this mind] reactive physical search_for desired_object]
+			  [mind-activate [get this mind] reactive physical center_body_on desired_object]
+			  [deftypefunk isis_agent execute cautiously_walk []
+			    [cond [[and [null [have this check_obstacle]] 
+					[< arm_length [have [have [get this objects] lookup my_object] lookup `distance]]]
+				   [prog [mind-activate [get this mind] reactive physical move_forward 1]
+					 [have this cautiously_walk]]]
+				  [[> arm_length [have [have [get this objects] lookup my_object] lookup `distance]]
+				   nil]
+				  [[and [have this check_obstacle] 
+					[< arm_length [have [have [get this objects] lookup my_object] lookup `distance]]]
+				   [mind-activate [get this mind] reactive physical avoid_obstacle desired_object [have this check_obstacle]]]
+				  [t
+				   [print 'weird, no conditions applied']]]]
+			  [have this cautiously_walk]]
+    [print 'walk_towards']
+    
+    [mind-create_resource mind reactive physical search_for [activating_resource desired_object]
+			  [let [[patience 10]]
+			    [print 'hello']
+			    [while 
+				[and t [not [have [get this objects] lookup desired_object]] 
+				     [> patience 0]]
+			      [print 'while']
+			      [print [get this objects]]
+			      [print [have [get this objects] lookup desired_object]]
+			      [while [get [get [get this mind] resource `reactive `physical `turn_left] active]
+				[millisleep 100]
+				[print 'sleeping cus resource already activated']]
+			      `[mind-activate [get this mind] reactive physical turn_left 1]
+			      [print 'activated turn-left']
+			      [= patience [- patience 1]]
+			      [print 'at the end of while']
+			      [print [get this objects]]
+			      [print [have [get this objects] lookup desired_object]]]
+			    'bug right here???'
+			    [print 'found it!']]]
+    
+    'here, since activate does not wait for completion, we need to check that resource is off before activating it again'
+    
+    [print 'search_for']
+    'ask ice if the things inside while are not checked each time'
+    'somehow the resource is active, but agent does not turn'
+    
+     
+     [mind-create_resource mind reactive physical avoid_obstacle [activating_resource desired_object obstacle]
+			   [mind-activate [get this mind] reactive physical center_body_on desired_object]
+			   [deftypefunk isis_agent execute walk_around [if_left]
+			     [mind-activate [get this mind] reactive physical center_body_on obstacle]
+			     [let [[patience 30]]
+			       [if if_left
+				   [prog [mind-activate [get this mind] reactive physical turn_right 15]
+					[while [and [have this check_obstacle desired_object] [> patience 0]]
+					  [mind-activate [get this mind] reactive physical walk_forward 3]
+					  [mind-activate [get this mind] reactive physical center_head_on obstacle]
+					  [let [[distance [have [have [get this objects] lokup my_object] lookup `distance]]]
+					    [cond [[> distance 8]
+						   [mind-activate [get this mind] reactive physical turn_left 2]]
+						  [[> distance 2]
+						   [mind-activate [get this mind] reactive physical turn_right 2]]
+						  [t
+						   [mind-activate [get this mind] reactive physical walk_forward 2]]]
+					    [mind-activate [get this mind] reactive physical search_for desired_object]
+					    [= patience [patience -1]]]]]
+				[prog [mind-activate [get this mind] reactive physical turn_left 15]
+				      [while [and [have this check_obstacle desired_object] [patience >0]]
+					[mind-activate [get this mind] reactive physical walk_forward 3]
+					[mind-activate [get this mind] reactive physical center_head_on obstacle]
+					[let [[distance [have [have [get this objects] lookup my_object] lookup `distance]]]
+					  [cond [[> distance 8]
+						 [mind-activate [get this mind] reactive physical turn_right 2]]
+						[[> distance 2]
+						 [mind-activate [get this mind] reactive physical turn_left 2]]
+						[t
+						 [mind-activate [get this mind] reactive physical walk_forward 2]]]
+					  [mind-activate [get this mind] reactive physical search_for desired_object]
+					  [= patience [patience -1]]]]]]]]
+			  [have this walk_around [> 0 [have [have [get this objects] lookup obstacle] lookup `x_pos]]]		   
+			  [mind-activate [get this mind] reactive physical walk_towards desired_object]]
+    [print 'avoid obstacle']
+    
+    [mind-create_resource mind reactive sensory continuous_sensing [activating_resource]
+			  [have this think_to_self 'Continuous sensing is starting.']
+			  [let [[last_time_step nil]]
+			    [while t
+			      [let [[time_step [get body time_step]]]
+				[if [eq last_time_step time_step]
+				    [millisleep 100]
+				  [let [[sense [get body sense]]]
+				    [have this think_to_self 'My body senses the world.']
+				    [set [mind-knowledge mind reactive sensory] value `sense `[time_step ,time_step] sense]
+				    [= last_time_step time_step]]]]
+			           ]]]
+
+
+    
+    [mind-create_resource mind reactive speech say [activating_resource string]
+			  [set body says [list string]]
+			  [let [[start_time_step [get body time_step]]]
+			    [while [< [- [get body time_step] 2] start_time_step]
+			      [millisleep 100]]]
+			  [set body says nil]]
+    
+    [mind-create_resource mind reactive sensory sense_imprimer_scold [activating imprimer]
+			  [if [get [get imprimer speech] is-scold]
+			      [prog [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', said something that sounds like a scold!']
+				    [cause-define cause-time_step [get body time_step]]
+				    [cause-define cause-name      `[reactive sensory sense_imprimer_scold]]
+				    [let [[imprimer_focus [mind-call reactive sensory discover_person_focus imprimer]]]
+				      [mind-activate mind self_conscious imprimer_learning react_to_imprimer_scold
+						     imprimer imprimer_focus]]]
+			    [have this think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
+			  ]
+    
+    [let [[reality_story-cell [new propogator_cell `reality_story]]]
+      
+      [have [mind-knowledge mind deliberative reality] add_cell reality_story-cell]
+      
+      [mind-create_resource mind deliberative reality include_reactive_stories_into_deliberative_story [activating]
+			    [cause-define cause-time_step [get body time_step]]
+			    [cause-define cause-name      `[deliberative reality interpret_senses_into_current_story]]
+			    [let [[last_time_step -1]]
+			      [while t
+				[let [[time_step [get body time_step]]]
+				  [if [== last_time_step time_step]
+				      [millisleep 100]
+				    [let [[knowledge [mind-knowledge mind reactive sensory]]]
+				      [let [[reactive_sensory_story [get knowledge value `story `[time_step ,time_step]]]]
+					[if [null reactive_sensory_story]
+					    [millisleep 1000]
+					  [prog [have this think_to_self 'Including reactive sensory story into deliberative story: ' [get reactive_sensory_story as-list]]
+						[set [mind-knowledge mind deliberative reality] value `reality_story `[time_step ,time_step] reactive_sensory_story]
+						[= last_time_step time_step]]]]]]]]]]
+      
+      ]
+    
+    [mind-create_resource mind self_conscious imprimer_learning react_to_imprimer_scold [imprimer scold]
+			  [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', has scolded something about ' [get scold focus] '!  How should I react?']
+			  ]
+    
+    ]
+  this]
+
+[deftypefunk isis_agent execute check_obstacle [desired_object]
+  [let* [[ordered-list [conslist-sort [get [get this objects] slots]
+				      [funk [object-x object-y] 
+					    [> 
+					     [have [have [get [get this body] objects] lookup object-x] lookup `distance]
+					     [have [have [get [get this body] objects] lookup object-y] lookup `distance]]]]]
+	 
+	 [nearest_object [car [ordered-list]]]]
+    [if [and [null [eq nearest_object desired_object]] [< [have [have [get this objects] lookup nearest_object] lookup `distance] 5]]
+	nearest_object
+      nil]]]
+
+
+[deftypefunk isis_agent get world []
+  [get [get this body] world]]
+
+[deftypefunk isis_agent set world [world]
+  [set [get this body] world world]]
+
+[deftypefunk isis_agent execute think_to_self [:rest expressions]
+  [have-apply [get this world] format `['\nAgent ' ,[get this name] ' Thinks: ' @expressions]]]
+
+[deftypefunk isis_agent execute destroy []
+  [have [get this mind] destroy]]
+
+[deftypefunk isis_agent get objects []
+  [have [get [mind-knowledge [get this mind] reactive sensory] value `sense `[time_step ,[get [get this body] time_step]]] lookup `objects]]
+
+[deftypefunk isis_agent get sense []
+  [get [mind-knowledge [get this mind] reactive sensory] value `sense `[time_step ,[get [get this body] time_step]]]]
+
+[deframe          isis_world [frame] [client agent_frame time_step format_mutex]]
+[deftypeconstruct isis_world [client]
+  [set this client       client]
+  [set this agent_frame  [frame]]
+  [set this time_step    0]
+  [set this format_mutex [new mutex]]
+  this]
+
+[deftypefunk isis_world execute add_agent [agent]
+  [if [get agent world]
+      [error bug_type isis_agent_is_already_in_a_world agent agent]
+    [prog [set agent world this]
+	  [have [get this agent_frame] add [get agent name] agent]]]]
+
+[deftypefunk isis_world get agents []
+  [get [get this agent_frame] values]]
+
+[deftypefunk isis_world get agent_names []
+  [get [get this agent_frame] slots]]
+
+[deftypefunk isis_world get agent [agent_name]
+  [have [get this agent_frame] lookup agent_name]]
+
+[deftypefunk isis_world get agent_mind [agent_name]
+  [get [get this agent agent_name] mind]]
+
+[deftypefunk isis_world get agent_body [agent_name]
+  [get [get this agent agent_name] body]]
+
+[deftypefunk isis_world get agent_says [agent_name]
+  [get [get this agent_body agent_name] says]]
+
+[deftypefunk isis_world get agent_sense [agent_name]
+  [let [[sense [isis-call [get this client] sense]]]
+    [let [[agent_frame [frame]]]
+      [mapc [funk [sense_agent_name]
+		  [if [not [eq agent_name sense_agent_name]]
+		      [have agent_frame add sense_agent_name [frame distance       15.0
+								    recent_actions nil
+								    says           [get this agent_says sense_agent_name]]]]]
+	    [get this agent_names]]
+      [have sense add `agents agent_frame]]
+    sense]]
+
+'only Ralph senses, Lauren senses the same thing'
+
+[deftypefunk isis_world get agent_sense_info [agent_name]
+  [get [mind-knowledge [get this agent_mind agent_name] reactive sensory] value `sense `[time_step ,[get [get this agent_body agent_name] time_step]]]]
+
+
+
+
+[deftypefunk isis_world execute step_simulation []
+    [isis-call [get this client] meta_step seconds 0.05]
+    [set this time_step [+ 1 [get this time_step]]]]
+
+[deftypefunk isis_world execute pause_simulation []
+  [isis-call [get this client] meta_pause]]
+
+[deftypefunk isis_world execute destroy []
+  [mapc [funk [agent]
+	      [have agent destroy]]
+	[get this agents]]]
+
+[deftypefunk isis_world execute format [:rest expressions]
+  [let [[format_mutex [get this format_mutex]]]
+    [have format_mutex lock]
+    [apply &format [cons stdout expressions]]
+    [have format_mutex unlock]]]
+
+
+[defunk ralph_agent-new []
+  [let [[this [new isis_agent `Ralph]]]
+    
+    this]]
+
+[defunk lauren_agent-new []
+  [let [[this [new isis_agent `Lauren]]]
+    this]]
+
+[defunk isis_world-initialize [hostname]
+  [print '1']
+  [shelter [have isis_world destroy]]
+  [print '2']
+  [let [[client [new isis_world_client hostname]]]
+    [print 3]
+    [let [[isis_world [new isis_world client]]]
+      [print 4]
+      [have isis_world add_agent [ralph_agent-new]]
+      `[have isis_world add_agent [lauren_agent-new]]
+       [print 5]
+       [globalize isis_world isis_world]
+       [print 6]
+       [have isis_world pause_simulation]
+      [print 7]
+      [cause-define cause-outside_resource [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
+      [cause-define cause-time_step        [get isis_world time_step]]
+      [cause-define cause-name             `isis_world-initialize]
+      [print 8]
+      [mind-activate [get isis_world agent_mind `Ralph]  reactive     sensory continuous_sensing]
+      [mind-activate [get isis_world agent_mind `Ralph]  deliberative reality include_reactive_stories_into_deliberative_story]
+      `[mind-activate [get isis_world agent_mind `Lauren] reactive     sensory continuous_sensing]
+      `[mind-activate [get isis_world agent_mind `Lauren] deliberative reality include_reactive_stories_into_deliberative_story]
+      [print 9]
+      `[mind-activate [get isis_world agent_mind `Lauren] reactive speech say 'Bad Ralph!']
+      [print 10]
+      [format stdout '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
+      'success']]]
+
+
+
+
+
+
+
+
+
+'
+`[get [get isis_world agent_body `Ralph] sense]
+`[mind-activate [get isis_world agent_mind `Ralph]  reactive  physical search_for `IsisObject/fridge+171459924]
+`[mind-activate [get isis_world agent_mind `Ralph]  reactive  physical center_body_on `IsisObject/fridge+171459924]
+`[have isis_world step_simulation]
+
+`[get [get [get isis_world agent_mind `Ralph] resource `reactive `physical `search_for] active]
+[have [get [get isis_world agent_mind `Ralph] resource `reactive `physical `center_body_on] quit]
+
+    `[have [get [get isis_world agent `Ralph] objects] lookup desired_object]
+
+`[mind-activate [get isis_world agent_mind `Ralph] reactive physical search_for `IsisObject/table+174433900]
+[get [mind-knowledge [get isis_world agent_mind `Ralph] reactive sensory] value `sense `[time_step ,4]]
+`[while t [have isis_world step_simulation] [millisleep 100]]'
+
+'IsisObject/fridge+163284348
+IsisObject/knife+163284308 
+IsisObject/toaster+163284148 
+IsisObject/table+163283948 
+IsisObject/loaf+163284268 
+
+[have [get [get isis_world agent `Ralph] objects] lookup `IsisObject/fridge+171459924]'
+
+`[have isis_world step_simulation]

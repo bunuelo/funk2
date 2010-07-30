@@ -354,12 +354,12 @@ void rbt_tree__init(rbt_tree_t* tree, rbt_node_t* head, ptr memorypool_beginning
   tree->head                 = head;
 }
 
+// reinitialize this node and all children of this node.
 void rbt_node__reinit(rbt_node_t* node, s64 difference) {
   if (node->parent != NULL) {
     ptr parent    = to_ptr(node->parent);
     parent       += difference;
     node->parent  = (rbt_node_t*)from_ptr(parent);
-    rbt_node__reinit(node->parent, difference);
   }
   if (node->left != NULL) {
     ptr left    = to_ptr(node->left);
@@ -375,6 +375,7 @@ void rbt_node__reinit(rbt_node_t* node, s64 difference) {
   }
 }
 
+// reinitialize tree and all nodes within tree.
 void rbt_tree__reinit(rbt_tree_t* tree, ptr new_memorypool_beginning) {
   ptr old_memorypool_beginning = tree->memorypool_beginning;
   s64 difference               = new_memorypool_beginning - old_memorypool_beginning;

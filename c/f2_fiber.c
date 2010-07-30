@@ -30,7 +30,7 @@ f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-def_primobject_19_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args, execution_nanoseconds);
+def_primobject_19_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, execution_nanoseconds, bytecode_count);
 
 f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args) {
   f2ptr program_counter       = nil;
@@ -48,9 +48,9 @@ f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cf
   f2ptr paused                = nil;
   f2ptr last_executed_time    = nil;
   f2ptr sleep_until_time      = nil;
-  f2ptr larva_args            = nil;
   f2ptr execution_nanoseconds = f2integer__new(cause, 0);
-  f2ptr new_fiber = f2fiber__new(cause, program_counter, stack, iter, env, args, return_reg, value, trace, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args, execution_nanoseconds);
+  f2ptr bytecode_count        = f2integer__new(cause, 0);
+  f2ptr new_fiber = f2fiber__new(cause, program_counter, stack, iter, env, args, return_reg, value, trace, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, execution_nanoseconds, bytecode_count);
   f2fiber__keep_undead__set(new_fiber, cause, __funk2.globalenv.true__symbol);
   f2fiber__funk(new_fiber, cause, cfunkable, cfunkable_args);
   
@@ -368,7 +368,7 @@ void f2__fiber__initialize() {
 
   // fiber
   
-  initialize_primobject_19_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args, execution_nanoseconds);
+  initialize_primobject_19_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, execution_nanoseconds, bytecode_count);
   
   {char* symbol_str = "do_sleep_until_time"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__do_sleep_until_time, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk = never_gc(cfunk);}

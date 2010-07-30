@@ -174,13 +174,14 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "bruno_graph_isomorphism";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2bruno_graph_isomorphism__primobject_type__new(cause));}
   {char* type_name = "bruno_decomposition_lattice_node"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2bruno_decomposition_lattice_node__primobject_type__new(cause));}
   {char* type_name = "bruno_decomposition_lattice";      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),      f2bruno_decomposition_lattice__primobject_type__new(cause));}
-  {char* type_name = "ecs_edit_sequence";                funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),      f2ecs_edit_sequence__primobject_type__new(cause));}
+  {char* type_name = "edit_sequence";                    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),      f2edit_sequence__primobject_type__new(cause));}
   
 }
 
 void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_type_handler_t* this, f2ptr cause) {
   {char* type_name = "physical_sim_object"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2physical_sim_object__primobject_type__new(cause));}
   {char* type_name = "gtk_widget";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2gtk_widget__primobject_type__new(cause));}
+  {char* type_name = "gtk_box";             funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),             f2gtk_box__primobject_type__new(cause));}
   {char* type_name = "gtk_text_buffer";     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),     f2gtk_text_buffer__primobject_type__new(cause));}
   {char* type_name = "gtk_text_iter";       funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),       f2gtk_text_iter__primobject_type__new(cause));}
   {char* type_name = "gtk_callback";        funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),        f2gtk_callback__primobject_type__new(cause));}

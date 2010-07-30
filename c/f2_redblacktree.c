@@ -349,8 +349,49 @@ void rbt_node__print(rbt_node_t* node) {
   }
 }
 
-void rbt_tree__init(rbt_tree_t* tree, rbt_node_t* head) {
-  tree->head = head;
+void rbt_tree__init(rbt_tree_t* tree, rbt_node_t* head, ptr memorypool_beginning) {
+  tree->memorypool_beginning = memorypool_beginning;
+  tree->head                 = head;
+  status("rbt_tree__init: memorypool_beginning=" u64__fstr ".", memorypool_beginning);
+}
+
+// reinitialize this node and all children of this node.
+void rbt_node__reinit(rbt_node_t* node, s64 difference) {
+  if (node->parent != NULL) {
+    ptr parent    = to_ptr(node->parent);
+    parent       += difference;
+    node->parent  = (rbt_node_t*)from_ptr(parent);
+  }
+  if (node->left != NULL) {
+    ptr left    = to_ptr(node->left);
+    left       += difference;
+    node->left  = (rbt_node_t*)from_ptr(left);
+    rbt_node__reinit(node->left, difference);
+  }
+  if (node->right != NULL) {
+    ptr right    = to_ptr(node->right);
+    right       += difference;
+    node->right  = (rbt_node_t*)from_ptr(right);
+    rbt_node__reinit(node->right, difference);
+  }
+}
+
+// reinitialize tree and all nodes within tree.
+void rbt_tree__reinit(rbt_tree_t* tree, ptr new_memorypool_beginning) {
+  ptr old_memorypool_beginning = tree->memorypool_beginning;
+  s64 difference               = new_memorypool_beginning - old_memorypool_beginning;
+  status("rbt_tree__reinit: new_memorypool_beginning=" u64__fstr ".", new_memorypool_beginning);
+  status("rbt_tree__reinit: old_memorypool_beginning=" u64__fstr ".", old_memorypool_beginning);
+  status("rbt_tree__reinit: difference=" s64__fstr ".", difference);
+  if (tree->head != NULL) {
+    ptr head    = to_ptr(tree->head);
+    status("rbt_tree__reinit: old head=" s64__fstr ".", head);
+    head       += difference;
+    tree->head  = (rbt_node_t*)from_ptr(head);
+    status("rbt_tree__reinit: new head=" s64__fstr ".", head);
+    rbt_node__reinit(tree->head, difference);
+  }
+  tree->memorypool_beginning = new_memorypool_beginning;
 }
 
 void rbt_tree__print(rbt_tree_t* tree) {
@@ -760,6 +801,41 @@ int rbt_node__is_valid(rbt_node_t* node) {
   return 1;
 }
 
+void rbt_tree__load_from_stream(rbt_tree_t* tree, int fd) {
+  {
+    ptr memorypool_beginning;
+    safe_read(fd, to_ptr(&memorypool_beginning), sizeof(ptr));
+    tree->memorypool_beginning = memorypool_beginning;
+    status("rbt_tree__load_from_stream: memorypool_beginning=" u64__fstr ".", memorypool_beginning);
+  }
+  {
+    ptr head;
+    safe_read(fd, to_ptr(&head), sizeof(ptr));
+    tree->head = (rbt_node_t*)from_ptr(head);
+    status("rbt_tree__load_from_stream: head=" u64__fstr ".", head);
+  }
+}
+
+void rbt_tree__save_to_stream(rbt_tree_t* tree, int fd) {
+  {
+    ptr memorypool_beginning = tree->memorypool_beginning;
+    safe_write(fd, to_ptr(&memorypool_beginning), sizeof(ptr));
+    status("rbt_tree__save_to_stream: memorypool_beginning=" u64__fstr ".", memorypool_beginning);
+  }
+  {
+    ptr head = to_ptr(tree->head);
+    safe_write(fd, to_ptr(&head), sizeof(ptr));
+    status("rbt_tree__save_to_stream: head=" u64__fstr ".", head);
+  }
+}
+
+
+
+// debugging and test code
+
+
+
+
 int rbt_tree__is_valid(rbt_tree_t* tree) {
   if (tree->head == NULL) {
     return 1;
@@ -800,7 +876,7 @@ void redblacktree__test__remove_maximums() {
   
   printf("\ntesting maximum removal");
   
-  rbt_tree__init(&tree, NULL);
+  rbt_tree__init(&tree, NULL, (ptr)0);
   
   redblacktree__test__insert_randoms(&tree, 10);
   
@@ -841,7 +917,7 @@ void redblacktree__test__remove_minimums() {
   
   printf("\ntesting minimum removal");
   
-  rbt_tree__init(&tree, NULL);
+  rbt_tree__init(&tree, NULL, (ptr)0);
   
   redblacktree__test__insert_randoms(&tree, 10);
   
@@ -883,7 +959,7 @@ void redblacktree__test__iterators() {
   
   printf("\ntesting minimum removal");
   
-  rbt_tree__init(&tree, NULL);
+  rbt_tree__init(&tree, NULL, (ptr)0);
   
   redblacktree__test__insert_randoms(&tree, 10);
   
@@ -941,7 +1017,7 @@ void redblacktree__test__remove_all_with_iterators() {
   
   printf("\ntesting iterator removal");
   
-  rbt_tree__init(&tree, NULL);
+  rbt_tree__init(&tree, NULL, (ptr)0);
   
   redblacktree__test__insert_randoms(&tree, 10);
   
@@ -975,7 +1051,7 @@ void redblacktree__test__remove_with_iterators() {
   
   printf("\ntesting iterator removal");
   
-  rbt_tree__init(&tree, NULL);
+  rbt_tree__init(&tree, NULL, (ptr)0);
   
   redblacktree__test__insert_randoms(&tree, 10);
   

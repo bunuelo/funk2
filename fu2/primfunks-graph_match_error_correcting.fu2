@@ -19,7 +19,7 @@
 
 [globalize-funk error_correcting-test                        &primfunk:error_correcting__test]
 [globalize-funk bruno_graph-edges_between_nodes              &primfunk:bruno_graph__edges_between_nodes]
-[globalize-funk ecs_edit_sequence-add                        &primfunk:ecs_edit_sequence__add]
-[globalize-funk ecs_edit_sequence-add_mapping                &primfunk:ecs_edit_sequence__add_mapping]
-[globalize-funk ecs_edit_sequence-combine                    &primfunk:ecs_edit_sequence__combine]
+[globalize-funk edit_sequence-add                            &primfunk:edit_sequence__add]
+[globalize-funk edit_sequence-add_mapping                    &primfunk:edit_sequence__add_mapping]
+[globalize-funk edit_sequence-combine                        &primfunk:edit_sequence__combine]
 [globalize-funk bruno_decomposition_lattice-ecs_isomorphisms &primfunk:bruno_decomposition_lattice__ecs_isomorphisms]

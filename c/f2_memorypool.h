@@ -77,7 +77,8 @@ void              funk2_memorypool__memory_test__byte_num_zero(funk2_memorypool_
 void              funk2_memorypool__memory_test__all_known_types(funk2_memorypool_t* this);
 void              funk2_memorypool__memory_test(funk2_memorypool_t* this);
 void              funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f2size_t byte_num);
-void              funk2_memorypool__link_funk2_memblock_to_freelist(funk2_memorypool_t* this, funk2_memblock_t* block);
+void              funk2_memorypool__used_memory_tree__insert(funk2_memorypool_t* this, funk2_memblock_t* block);
+void              funk2_memorypool__free_memory_tree__insert(funk2_memorypool_t* this, funk2_memblock_t* block);
 u8                funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* this);
 void              funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_t* block);
 funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_memorypool_t* this, f2size_t byte_num);

@@ -78,15 +78,24 @@
             '("and" "apply" "car" "cdr" "cons" "list" "mapc" "mapcar" "null" "print"
               "range" "join" "format" "or" "not" "cadr" "caddr" "cadddr" "cddr" "cdddr"
               "first" "fourth" "make-funk" "make-metro" "second" "set-car" "set-cdr"
+<<<<<<< HEAD:funk-mode.el
               "third" "thread-complete" "thread-value" "eq")
+=======
+              "third" "thread-complete" "thread-value" "eq" "set" "get" "have" "execute")
+>>>>>>> 0fc01d851948294fdf39d2ffaeb959fd8dcd4eba:funk-mode.el
             'words)
            'font-lock-function-name-face)
      (cons (regexp-opt
             '("+" "-" "*" "/" "=" "<" ">" "!=" "<=" ">=") 'words)
            'font-lock-function-name-face)
      (cons (regexp-opt
+<<<<<<< HEAD:funk-mode.el
             '("action" "actor" "act" "elt" "execute" "parlet" "partimes" "cond"
               "defunk" "define-funk" "define" "defmetro" "deftypefunk" "deframe" "dotimes" "funk" "set" "get" "have"
+=======
+            '("action" "actor" "act" "elt" "parlet" "partimes" "cond"
+              "defunk" "define-funk" "define" "defmetro" "deftypefunk" "deframe" "dotimes" "funk"
+>>>>>>> 0fc01d851948294fdf39d2ffaeb959fd8dcd4eba:funk-mode.el
               "globalize" "globalize-funk" "if" "let" "let*" "metro" "parlet" "prog" "put" "quote" "while" "nil")
             'words)
            'font-lock-keyword-face)
@@ -94,10 +103,17 @@
      '("\\(&\\)\\([a-zA-Z0-9]+\\)" . font-lock-function-name-face)
      '("\\(:\\)\\([a-zA-Z0-9]+\\)" . font-lock-type-face)
      '("\\([a-zA-Z0-9]+\\)\\([?]\\)" . font-lock-type-face)
+<<<<<<< HEAD:funk-mode.el
      '("\\(\\\x\\)\\([a-fA-F0-9]+\\)" . font-lock-string-face)
      ;;'("\\([+-*/=<>]\\|[<>!]=\\)" . font-lock-function-name-face)
      ;;'("\\([+-*/=]\\)" . font-lock-function-name-face)
      '("\\([a-zA-Z0-9_-~!@#$%^&*()_+-={}]+\\)" . font-lock-variable-name-face)
+=======
+     ;;'("\\(\\\x\\)\\([a-fA-F0-9]+\\)" . font-lock-string-face)
+     ;;'("\\([+-*/=<>]\\|[<>!]=\\)" . font-lock-function-name-face)
+     ;;'("\\([+-*/=]\\)" . font-lock-function-name-face)
+     '("\\([a-zA-Z0-9_-~!@#$%^&*_+-=]+\\)" . font-lock-variable-name-face)
+>>>>>>> 0fc01d851948294fdf39d2ffaeb959fd8dcd4eba:funk-mode.el
      ))
   "My hightlighting scheme for Funk mode")
      
@@ -146,6 +162,11 @@
    (modify-syntax-entry ?= "w" funk-mode-syntax-table)
    (modify-syntax-entry ?< "w" funk-mode-syntax-table)
    (modify-syntax-entry ?> "w" funk-mode-syntax-table)
+<<<<<<< HEAD:funk-mode.el
+=======
+   ;;(modify-syntax-entry ?( "(" funk-mode-syntax-table)
+   ;;(modify-syntax-entry ?) ")" funk-mode-syntax-table)
+>>>>>>> 0fc01d851948294fdf39d2ffaeb959fd8dcd4eba:funk-mode.el
    funk-mode-syntax-table)
   "Syntax for Funk major mode")
 

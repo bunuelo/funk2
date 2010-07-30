@@ -80,7 +80,13 @@ def_pcfunk1(object__type, this, return f2__object__type(this_cause, this));
 
 f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (! this) {
-    return nil;
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "nil_type_does_not_have_funktion"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
+    return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
   }
   ptype_t ptype = f2ptype__raw(this, cause);
   switch (ptype) {

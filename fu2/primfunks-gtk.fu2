@@ -34,6 +34,12 @@
 [globalize-funk gtk-pop_callback_event         &primfunk:gtk__pop_callback_event]
 [globalize-funk gtk-text_buffer-get_start_iter &primfunk:gtk__text_buffer__get_start_iter]
 [globalize-funk gtk-text_buffer-select_range   &primfunk:gtk__text_buffer__select_range]
+[globalize-funk gtk-text_buffer-get_text       &primfunk:gtk__text_buffer__get_text]
+[globalize-funk gtk-text_buffer-set_text       &primfunk:gtk__text_buffer__set_text]
 [globalize-funk gtk-text_iter-forward_search   &primfunk:gtk__text_iter__forward_search]
+[globalize-funk gtk-paned-pack1                &primfunk:gtk__paned__pack1]
+[globalize-funk gtk-paned-pack2                &primfunk:gtk__paned__pack2]
+[globalize-funk gtk-vpaned-new                 &primfunk:gtk__vpaned__new]
+[globalize-funk gtk-hpaned-new                 &primfunk:gtk__hpaned__new]
 
 

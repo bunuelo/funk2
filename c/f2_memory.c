@@ -539,6 +539,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
       
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
 	this->pool[pool_index].global_f2ptr_offset = to_ptr(this->pool[pool_index].dynamic_memory.ptr) - 1;
+	status("funk2_memory__load_from_stream: this->pool[%d].global_f2ptr_offset=" u64__fstr ".", pool_index, this->pool[pool_index].global_f2ptr_offset);
       }
       
       this->global_environment_f2ptr = global_environment_f2ptr;

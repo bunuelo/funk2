@@ -425,10 +425,10 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     status("rebuilding memory pool[%d] info from image.", pool_index);
-    //rbt_tree__init(&(this->pool[pool_index].free_memory_tree), NULL);
-    //rbt_tree__init(&(this->pool[pool_index].used_memory_tree), NULL);
-    rbt_tree__reinit(&(this->pool[pool_index].free_memory_tree), this->pool[pool_index].global_f2ptr_offset);
-    rbt_tree__reinit(&(this->pool[pool_index].used_memory_tree), this->pool[pool_index].global_f2ptr_offset);
+    rbt_tree__init(&(this->pool[pool_index].free_memory_tree), NULL, this->pool[pool_index].global_f2ptr_offset);
+    rbt_tree__init(&(this->pool[pool_index].used_memory_tree), NULL, this->pool[pool_index].global_f2ptr_offset);
+    //rbt_tree__reinit(&(this->pool[pool_index].free_memory_tree), this->pool[pool_index].global_f2ptr_offset);
+    //rbt_tree__reinit(&(this->pool[pool_index].used_memory_tree), this->pool[pool_index].global_f2ptr_offset);
     
     {
       funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(this->pool[pool_index].dynamic_memory.ptr);
@@ -436,9 +436,9 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
       while(iter < end_of_blocks) {
 	debug__assert(funk2_memblock__byte_num(iter) > 0, nil, "memory_test__byte_num_zero failed.");
 	if (iter->used) {
-	  //funk2_memorypool__used_memory_tree__insert(&(this->pool[pool_index]), (rbt_node_t*)iter);
+	  funk2_memorypool__used_memory_tree__insert(&(this->pool[pool_index]), (rbt_node_t*)iter);
 	} else {
-	  //funk2_memorypool__free_memory_tree__insert(&(this->pool[pool_index]), iter);
+	  funk2_memorypool__free_memory_tree__insert(&(this->pool[pool_index]), iter);
 	  this->pool[pool_index].total_free_memory += funk2_memblock__byte_num(iter);
 	}
 	iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));

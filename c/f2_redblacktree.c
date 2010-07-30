@@ -385,8 +385,10 @@ void rbt_tree__reinit(rbt_tree_t* tree, ptr new_memorypool_beginning) {
   status("rbt_tree__reinit: difference=" s64__fstr ".", difference);
   {
     ptr head    = to_ptr(tree->head);
+    status("rbt_tree__reinit: old head=" s64__fstr ".", head);
     head       += difference;
     tree->head  = (rbt_node_t*)from_ptr(head);
+    status("rbt_tree__reinit: new head=" s64__fstr ".", head);
     rbt_node__reinit(tree->head, difference);
   }
   tree->memorypool_beginning = new_memorypool_beginning;
@@ -800,17 +802,31 @@ int rbt_node__is_valid(rbt_node_t* node) {
 }
 
 void rbt_tree__load_from_stream(rbt_tree_t* tree, int fd) {
-  ptr memorypool_beginning;
-  safe_read(fd, to_ptr(&memorypool_beginning), sizeof(ptr));
-  tree->memorypool_beginning = memorypool_beginning;
-  status("rbt_tree__load_from_stream: memorypool_beginning=" u64__fstr ".", memorypool_beginning);
+  {
+    ptr memorypool_beginning;
+    safe_read(fd, to_ptr(&memorypool_beginning), sizeof(ptr));
+    tree->memorypool_beginning = memorypool_beginning;
+    status("rbt_tree__load_from_stream: memorypool_beginning=" u64__fstr ".", memorypool_beginning);
+  }
+  {
+    ptr head;
+    safe_read(fd, to_ptr(&head), sizeof(ptr));
+    tree->head = (rbt_node_t*)from_ptr(head);
+    status("rbt_tree__load_from_stream: head=" u64__fstr ".", head);
+  }
 }
 
 void rbt_tree__save_to_stream(rbt_tree_t* tree, int fd) {
-  ptr memorypool_beginning;
-  memorypool_beginning = tree->memorypool_beginning;
-  safe_write(fd, to_ptr(&memorypool_beginning), sizeof(ptr));
-  status("rbt_tree__save_to_stream: memorypool_beginning=" u64__fstr ".", memorypool_beginning);
+  {
+    ptr memorypool_beginning = tree->memorypool_beginning;
+    safe_write(fd, to_ptr(&memorypool_beginning), sizeof(ptr));
+    status("rbt_tree__save_to_stream: memorypool_beginning=" u64__fstr ".", memorypool_beginning);
+  }
+  {
+    ptr head = to_ptr(tree->head);
+    safe_write(fd, to_ptr(&head), sizeof(ptr));
+    status("rbt_tree__save_to_stream: head=" u64__fstr ".", head);
+  }
 }
 
 

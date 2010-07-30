@@ -353,35 +353,35 @@ void rbt_tree__init(rbt_tree_t* tree, rbt_node_t* head) {
   tree->head = head;
 }
 
-void rbt_node__reinit(rbt_node_t* node, u64 difference) {
+void rbt_node__reinit(rbt_node_t* node, s64 difference) {
   if (node->parent != NULL) {
     ptr parent    = to_ptr(node->parent);
     parent       += difference;
     node->parent  = (rbt_node_t*)from_ptr(parent);
-    rbt_node__reinit(node->parent);
+    rbt_node__reinit(node->parent, difference);
   }
   if (node->left != NULL) {
     ptr left    = to_ptr(node->left);
     left       += difference;
     node->left  = (rbt_node_t*)from_ptr(left);
-    rbt_node__reinit(node->left);
+    rbt_node__reinit(node->left, difference);
   }
   if (node->right != NULL) {
     ptr right    = to_ptr(node->right);
     right       += difference;
     node->right  = (rbt_node_t*)from_ptr(right);
-    rbt_node__reinit(node->right);
+    rbt_node__reinit(node->right, difference);
   }
 }
 
 void rbt_tree__reinit(rbt_tree_t* tree, ptr new_memorypool_beginning) {
   ptr old_memorypool_beginning = tree->memorypool_beginning;
-  s64 difference = new_memorypool_beginning - old_memorypool_beginning;
+  s64 difference               = new_memorypool_beginning - old_memorypool_beginning;
   {
     ptr head    = to_ptr(tree->head);
     head       += difference;
     tree->head  = (rbt_node_t*)from_ptr(head);
-    rbt_node__reinit(tree->head);
+    rbt_node__reinit(tree->head, new_memorypool_beginning);
   }
   tree->memorypool_beginning = new_memorypool_beginning;
 }

@@ -352,6 +352,7 @@ void rbt_node__print(rbt_node_t* node) {
 void rbt_tree__init(rbt_tree_t* tree, rbt_node_t* head, ptr memorypool_beginning) {
   tree->memorypool_beginning = memorypool_beginning;
   tree->head                 = head;
+  status("rbt_tree__init: memorypool_beginning=" u64__str ".", memorypool_beginning);
 }
 
 // reinitialize this node and all children of this node.
@@ -378,6 +379,8 @@ void rbt_node__reinit(rbt_node_t* node, s64 difference) {
 // reinitialize tree and all nodes within tree.
 void rbt_tree__reinit(rbt_tree_t* tree, ptr new_memorypool_beginning) {
   ptr old_memorypool_beginning = tree->memorypool_beginning;
+  status("rbt_tree__reinit: new_memorypool_beginning=" u64__str ".", new_memorypool_beginning);
+  status("rbt_tree__reinit: old_memorypool_beginning=" u64__str ".", old_memorypool_beginning);
   s64 difference               = new_memorypool_beginning - old_memorypool_beginning;
   {
     ptr head    = to_ptr(tree->head);
@@ -799,12 +802,14 @@ void rbt_tree__load_from_stream(rbt_tree_t* tree, int fd) {
   ptr memorypool_beginning;
   safe_read(fd, to_ptr(&memorypool_beginning), sizeof(ptr));
   tree->memorypool_beginning = memorypool_beginning;
+  status("rbt_tree__load_from_stream: memorypool_beginning=" u64__str ".", memorypool_beginning);
 }
 
 void rbt_tree__save_to_stream(rbt_tree_t* tree, int fd) {
   ptr memorypool_beginning;
   memorypool_beginning = tree->memorypool_beginning;
   safe_write(fd, to_ptr(&memorypool_beginning), sizeof(ptr));
+  status("rbt_tree__save_to_stream: memorypool_beginning=" u64__str ".", memorypool_beginning);
 }
 
 

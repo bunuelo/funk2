@@ -383,7 +383,7 @@ void rbt_tree__reinit(rbt_tree_t* tree, ptr new_memorypool_beginning) {
     ptr head    = to_ptr(tree->head);
     head       += difference;
     tree->head  = (rbt_node_t*)from_ptr(head);
-    rbt_node__reinit(tree->head, new_memorypool_beginning);
+    rbt_node__reinit(tree->head, difference);
   }
   tree->memorypool_beginning = new_memorypool_beginning;
 }

@@ -383,7 +383,7 @@ void rbt_tree__reinit(rbt_tree_t* tree, ptr new_memorypool_beginning) {
   status("rbt_tree__reinit: new_memorypool_beginning=" u64__fstr ".", new_memorypool_beginning);
   status("rbt_tree__reinit: old_memorypool_beginning=" u64__fstr ".", old_memorypool_beginning);
   status("rbt_tree__reinit: difference=" s64__fstr ".", difference);
-  {
+  if (tree->head != NULL) {
     ptr head    = to_ptr(tree->head);
     status("rbt_tree__reinit: old head=" s64__fstr ".", head);
     head       += difference;

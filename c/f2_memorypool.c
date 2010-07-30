@@ -367,8 +367,14 @@ void funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd) {
     
     f2__free(to_ptr(compressed_data));
   }
-  rbt_tree__save_to_stream(&(this->used_memory_tree), fd);
-  rbt_tree__save_to_stream(&(this->free_memory_tree), fd);
+  {
+    this->used_memory_tree.memorypool_beginning = this->global_f2ptr_offset;
+    rbt_tree__save_to_stream(&(this->used_memory_tree), fd);
+  }
+  {
+    this->free_memory_tree.memorypool_beginning = this->global_f2ptr_offset;
+    rbt_tree__save_to_stream(&(this->free_memory_tree), fd);
+  }
 }
 
 void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {

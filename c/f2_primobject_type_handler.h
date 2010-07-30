@@ -139,7 +139,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__bruno_graph_isomorphism__slot_t          primobject_type_bruno_graph_isomorphism;
   funk2_object_type__bruno_decomposition_lattice_node__slot_t primobject_type_bruno_decomposition_lattice_node;
   funk2_object_type__bruno_decomposition_lattice__slot_t      primobject_type_bruno_decomposition_lattice;
-  funk2_object_type__ecs_edit_sequence__slot_t                primobject_type_ecs_edit_sequence;
+  funk2_object_type__edit_sequence__slot_t                    primobject_type_edit_sequence;
 };
 
 // **

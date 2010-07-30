@@ -22,9 +22,9 @@
 #ifndef F2__GRAPH_MATCH_ERROR_CORRECTING__TYPE__H
 #define F2__GRAPH_MATCH_ERROR_CORRECTING__TYPE__H
 
-// ecs_edit_sequence
-typedef struct funk2_object_type__ecs_edit_sequence__slot_s funk2_object_type__ecs_edit_sequence__slot_t;
-declare_object_type_3_slot(ecs_edit_sequence, edit_sequence, cost, isomorphism, );
+// edit_sequence
+typedef struct funk2_object_type__edit_sequence__slot_s funk2_object_type__edit_sequence__slot_t;
+declare_object_type_3_slot(edit_sequence, operations, cost, isomorphism, );
 
 #endif
 
@@ -38,14 +38,14 @@ declare_object_type_3_slot(ecs_edit_sequence, edit_sequence, cost, isomorphism, 
 f2ptr raw__bruno_graph__edges_between_nodes (f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
 f2ptr  f2__bruno_graph__edges_between_nodes (f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
 
-// ecs_edit_sequence
-declare_primobject_3_slot(ecs_edit_sequence, edit_sequence, cost, isomorphism);
-f2ptr f2__ecs_edit_sequence__new(f2ptr cause);
-f2ptr raw__ecs_edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f2ptr to, f2ptr cost_function);
-f2ptr f2__ecs_edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f2ptr to, f2ptr cost_function);
-f2ptr f2__ecs_edit_sequence__add_mapping(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
-f2ptr raw__ecs_edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function);
-f2ptr f2__ecs_edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function);
+// edit_sequence
+declare_primobject_3_slot(edit_sequence, operations, cost, isomorphism);
+f2ptr f2__edit_sequence__new(f2ptr cause);
+f2ptr raw__edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f2ptr to, f2ptr cost_function);
+f2ptr f2__edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f2ptr to, f2ptr cost_function);
+f2ptr f2__edit_sequence__add_mapping(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
+f2ptr raw__edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function);
+f2ptr f2__edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function);
 
 // bruno_decomposition_lattice
 f2ptr raw__bruno_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph, f2ptr cost_function);

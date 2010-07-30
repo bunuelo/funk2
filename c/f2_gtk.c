@@ -864,7 +864,8 @@ f2ptr f2__gtk__paned__pack1(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize,
       (! raw__gtk_widget__is_type(cause, child))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__paned__pack1(cause, paned, child, resize, shrink);
+  raw__gtk__paned__pack1(cause, paned, child, resize, shrink);
+  return nil;
 }
 def_pcfunk4(gtk__paned__pack1, paned, child, resize, shrink, return f2__gtk__paned__pack1(this_cause, paned, child, resize, shrink));
 
@@ -880,7 +881,8 @@ f2ptr f2__gtk__paned__pack2(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize,
       (! raw__gtk_widget__is_type(cause, child))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__paned__pack2(cause, paned, child, resize, shrink);
+  raw__gtk__paned__pack2(cause, paned, child, resize, shrink);
+  return nil;
 }
 def_pcfunk4(gtk__paned__pack2, paned, child, resize, shrink, return f2__gtk__paned__pack2(this_cause, paned, child, resize, shrink));
 

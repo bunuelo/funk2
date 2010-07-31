@@ -448,6 +448,19 @@ GtkWidget* funk2_gtk__hpaned__new(funk2_gtk_t* this) {
 }
 
 
+// progress_bar
+
+GtkWidget* funk2_gtk__progress_bar__new(funk2_gtk_t* this) {
+  GtkWidget* progress_bar;
+  {
+    gdk_threads_enter();
+    progress_bar = gtk_progress_bar_new();
+    gdk_threads_leave();
+  }
+  return progress_bar;
+}
+
+
 #endif // F2__GTK__SUPPORTED
 
 f2ptr f2__gtk_not_supported_larva__new(f2ptr cause) {
@@ -944,6 +957,23 @@ f2ptr f2__gtk__hpaned__new(f2ptr cause) {
 def_pcfunk0(gtk__hpaned__new, return f2__gtk__hpaned__new(this_cause));
 
 
+// progress_bar
+
+f2ptr raw__gtk__progress_bar__new(f2ptr cause) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_widget = funk2_gtk__progress_bar__new(&(__funk2.gtk));
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(gtk_widget)));
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__progress_bar__new(f2ptr cause) {
+  return raw__gtk__progress_bar__new(cause);
+}
+def_pcfunk0(gtk__progress_bar__new, return f2__gtk__progress_bar__new(this_cause));
+
+
 
 
 // **
@@ -1026,6 +1056,10 @@ void f2__gtk__initialize() {
   // hpaned
 
   f2__primcfunk__init__0(gtk__hpaned__new, "Returns a new GtkHPaned widget.");
+  
+  // progress_bar
+  
+  f2__primcfunk__init__0(gtk__progress_bar__new, "Returns a new GtkProgressBar widget.");
   
   
 }

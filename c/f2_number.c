@@ -22,7 +22,7 @@
 #include "funk2.h"
 
 f2ptr f2__number__as__double(f2ptr cause, f2ptr this) {
-  return f2__object__get_0(cause, this, __funk2.number_globalvars.as__double__symbol);
+  return raw__number__as__double(cause, this);
 }
 
 double raw__number__as__raw_double(f2ptr cause, f2ptr this) {

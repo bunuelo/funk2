@@ -997,8 +997,7 @@ f2ptr raw__gtk__progress_bar__set_fraction(f2ptr cause, f2ptr this, f2ptr fracti
 }
 
 f2ptr f2__gtk__progress_bar__set_fraction(f2ptr cause, f2ptr this, f2ptr fraction) {
-  if ((! raw__gtk_widget__is_type(cause, this)) ||
-      (! raw__number__is_type(cause, fraction))) {
+  if (! raw__gtk_widget__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__gtk__progress_bar__set_fraction(cause, this, fraction);

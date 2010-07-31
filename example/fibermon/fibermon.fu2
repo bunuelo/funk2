@@ -83,8 +83,9 @@
 	      [format stdout '\n  fibermon is a gtk-based application that allows the user to monitor the fibers in the Funk2 system.']
 	      [format stdout '\n']]
       [let [[win             [gtk-window-new]]
-	    [vbox            [gtk-vbox-new 2]]
+	    [vbox            [gtk-vbox-new 3]]
 	    [hbox            [gtk-hbox-new 2]]
+	    [progress_bar    [gtk-progress_bar-new]]
 	    [search_entry    [gtk-entry-new]]
 	    [search_button   [gtk-button-new_with_label 'Search']]
 	    [next_button     [gtk-button-new_with_label 'Next']]
@@ -96,6 +97,7 @@
 	
 	[have win            add        vbox]
 	[have vbox           pack_start hbox nil nil 0]
+	[have vbox           pack_start progress_bar nil nil 0]
 	[have hbox           pack_start search_entry t t 0]
 	[have hbox           pack_start search_button nil nil 0]
 	[have hbox           pack_start next_button nil nil 0]

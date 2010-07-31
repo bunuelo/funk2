@@ -123,7 +123,8 @@
       [mind-create_resource mind deliberative reality include_reactive_stories_into_deliberative_story [activating]
 			    [cause-define cause-time_step [get body time_step]]
 			    [cause-define cause-name      `[deliberative reality interpret_senses_into_current_story]]
-			    [let [[last_time_step -1]]
+			    [let [[last_time_step     -1]
+				  [last_reality_story [new story]]]
 			      [while t
 				[let [[time_step [get body time_step]]]
 				  [if [== last_time_step time_step]
@@ -133,11 +134,10 @@
 					[if [null reactive_sensory_story]
 					    [millisleep 1000]
 					  [prog [have this think_to_self 'Including reactive sensory story into deliberative story: ' [get reactive_sensory_story as-list]]
-						[let [[last_reality_story [get [mind-knowledge mind deliberative reality] value `reality_story `[time_step ,last_time_step]]]]
+						[let [[reality_story [get last_reality_story union reactive_sensory_story]]]
 						  [set [mind-knowledge mind deliberative reality] value `reality_story `[time_step ,time_step]
-						       [if last_reality_story
-							   [get last_reality_story union reactive_sensory_story]
-							 reactive_sensory_story]]]
+						       reality_story]
+						  [= last_reality_story reality_story]]
 						[= last_time_step time_step]]]]]]]]]]
       
       ]

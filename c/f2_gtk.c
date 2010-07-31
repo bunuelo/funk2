@@ -931,7 +931,7 @@ f2ptr raw__gtk__hpaned__new(f2ptr cause) {
 }
 
 f2ptr f2__gtk__hpaned__new(f2ptr cause) {
-  return f2__gtk__hpaned__new(cause);
+  return raw__gtk__hpaned__new(cause);
 }
 def_pcfunk0(gtk__hpaned__new, return f2__gtk__hpaned__new(this_cause));
 
@@ -1013,11 +1013,11 @@ void f2__gtk__initialize() {
   
   // vpaned
   
-  f2__primcfunk__init__0(gtk__vpaned__new,                                                              "Returns a new GtkVPaned widget.");
+  f2__primcfunk__init__0(gtk__vpaned__new, "Returns a new GtkVPaned widget.");
 
   // hpaned
 
-  f2__primcfunk__init__0(gtk__hpaned__new,                                                              "Returns a new GtkHPaned widget.");
+  f2__primcfunk__init__0(gtk__hpaned__new, "Returns a new GtkHPaned widget.");
   
   
 }

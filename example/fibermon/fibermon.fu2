@@ -61,7 +61,10 @@
 											  '\t' elapsed_seconds                ' s real' '\n'
 											  '\t' elapsed_bytecode_count         ' bc' '\n'
 											  '\t' bytecodes_per_execution_second ' bc/s execution' '\n'
-											  '\t' bytecodes_per_second           ' bc/s real' ']' '\n']]]]]]]]
+											  '\t' bytecodes_per_second           ' bc/s real' '\n'
+											  '\t' 'is' [if [get fiber paused]      ' ' ' not '] 'paused' '\n'
+											  '\t' 'is' [if [get fiber is_complete] ' ' ' not '] 'complete' '\n'
+											  '\t' 'is' [if [get fiber is_zombie]   ' ' ' not '] 'zombie' ']' '\n']]]]]]]]
 								[get processor active_fibers]]]]
     
     [let [[real_time [time]]]

@@ -930,7 +930,7 @@ f2ptr raw__gtk__hpaned__new(f2ptr cause) {
 #endif
 }
 
-f2ptr raw__gtk__hpaned__new(f2ptr cause) {
+f2ptr f2__gtk__hpaned__new(f2ptr cause) {
   return f2__gtk__hpaned__new(cause);
 }
 def_pcfunk0(gtk__hpaned__new, return f2__gtk__hpaned__new(this_cause));

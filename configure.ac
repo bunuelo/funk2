@@ -19,6 +19,7 @@ AC_PROG_LIBTOOL
 
 # initialize automake
 AM_INIT_AUTOMAKE([subdir-objects])
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 # Checks for libraries.
 

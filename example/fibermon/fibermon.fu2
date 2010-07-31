@@ -77,7 +77,7 @@
 	    [search_entry    [gtk-entry-new]]
 	    [search_button   [gtk-button-new_with_label 'Search']]
 	    [next_button     [gtk-button-new_with_label 'Next']]
-	    [vpaned          [gtl-vpaned-new]]
+	    [vpaned          [gtk-vpaned-new]]
 	    [swindow         [gtk-scrolled_window-new]]
 	    [processor_hbox  [gtk-hbox-new 8]]
 	    [processor_array [new array 8]]

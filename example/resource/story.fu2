@@ -84,3 +84,18 @@
 			[get event as-list]]
 		  [get this events]]]]
 
+[defunk story_list-union [these]
+  [let [[new_story [new story]]]
+    [mapc [funk [story]
+		[let [[characters [get story characters]]]
+		  [mapc [funk [character]
+			      [have new_story add_character character]]
+			characters]]
+		[let [[events [get story events]]]
+		  [mapc [funk [event]
+			      [have new_story add_event event]]
+			events]]]
+	  these]
+    new_story]]
+
+[deftypefunk story get union [:rest these] [story_list-union [cons this these]]]

@@ -481,12 +481,14 @@
 			       [set [this-cause] critics nil]
 			       [= result [prog @codes]]] nil]]]
      [while [not [get fiber is_complete]]
-       [if [get fiber paused]
-	   [error bug_type    `with-new-cause-fiber_paused
-		  stack_trace [get fiber stack_trace]]]
-       [millisleep 10]]
+       [while [not [get fiber is_complete]]
+	 [if [get fiber paused]
+	     [error bug_type    `with-new-cause-fiber_paused
+		    stack_trace [get fiber stack_trace]]]
+	 [millisleep 10]]
+       [millisleep 500]]
      [if [eq result `bug]
-	 [get fiber value]
+	 [print [get fiber value]]
        result]]]
 
 [defunk parc [proc seq]

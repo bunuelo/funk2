@@ -17,34 +17,22 @@
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
+'
+todo: find out why [get [get story as-graph] as-story] is missing the prep frame
+      
 
-'[deframe          story_graph [frame] [event_list event_node_hash character_list bruno_graph]]
-[deftypeconstruct story_graph []
-  [let bruno_graph [new bruno_graph]]
-  [set this event_list nil]
-  [set this character_list nil]
-  [set this bruno_graph bruno_graph]
-  [
-  this]
+'
 
 
 
 
 
-[deftypefunk story_graph execute add_event [event]
-  [set this event_list [cons event [get this event_list]]]
-  [conslist-sort [get this `event_list] [funk [event-x event-y]
-					      [< [get event-x time][get event-y time]]]]
-  [defunk find_neighbors [event_list event]
-    [let [[left_node_label nil] [right_node_label nil]]
-      [cond [eq event [car [event_list]]]
-	    [prog[= right_node_label [have [cadr[event_list]] lookup `action_name]] 
-		 [= left_node_label  []]]]]]]'
+
 
 [deftypefunk story_event get as-graph []
   [let [[graph [new bruno_graph]]]
     [let* [[story_event [new bruno_graph_node `story_event]]
-	   [time        [new bruno_graph_node [string-as-symbol [exp-as-string [have this lookup `time]]]]]
+	   [time        [new bruno_graph_node [have this lookup `time]]]
 	   [action      [new bruno_graph_node [have this lookup `action_name]]]
 	   [character   [new bruno_graph_node [have this lookup `character_name]]]
 	   [prep_frame  [new bruno_graph_node `prepositional_frame]]
@@ -71,36 +59,64 @@
 
 
 [deftypefunk story get as-graph []
-  [let [[event_list [conslist-sort [get this events] [funk [event-x event-y]
-							   [< [get event-x time] [get event-y time]]]]]
-	[graph [new bruno_graph]]]
+  [let  [[event_list [conslist-sort [get this events] [funk [event-x event-y]
+							    [< [get event-x time] [get event-y time]]]]]
+	 [graph [new bruno_graph]]]
+    [print 'let1']
 		      
-		      
-    [defunk find_previous_node [event]
-      [let [[previous_node nil]]
-	[cond [[and [cdr event_list]       [eq event [car event_list]]]
-	       [prog [= previous_node [car [get [get [cadr event_list] as-graph] nodes_with_label `story_event]]]
-		     previous_node]]
-	      [[and [null [cdr event_list]] [eq event [car event_list]]]
-	       nil]
-	      [[and [null [cdr event_list]]   [eq event [car event_list]]]
-	       [find_previous_node [cdr event_list]]]
-	      [t
-	       nil]]]]
-	
     [mapc [funk [event]
 		[mapc [funk [edge]
 			    [have graph add_edge edge]]
 		      [get [get [get event as-graph] edge_set] elements]]]
-	  event_list]
-    
-    [mapc [funk [event]
-		[if [find_previous_node event]
-		    [have graph add_new_edge `happens_after [car [get [get event as-graph] nodes_with_label `story_event]] [find_previous_node event]]
-		  nil]]
 	  
 	  event_list]
-    graph]
+    [print 'mapc adds all edges']
+    [print [get graph node_set]]
+		      
+    [defunk find_node_time [left_node]
+      [let [[right_node nil]]
+	[defunk iterate [node_list]
+	  [if node_list
+	      [if [get graph edges_with_label_between_nodes `time left_node [car node_list]]
+		  [= right_node [get [car node_list] label]]
+		[iterate [cdr node_list]]]
+	    nil]]
+	[iterate [get [get graph node_set] elements]]
+	[print [get right_node type]]
+	right_node]]
+   
+    
+    [let [[nodes_list      [get [get graph node_set] elements]]
+	  [event_node_list [conslist-sort [get graph nodes_with_label `story_event] [funk [node-x node-y]
+											  [< [find_node_time node-x] [find_node_time node-y]]]]]]
+      [print 'let2']
+      
+      [defunk find_previous_node [event_node  node_list]
+	[let [[previous_node nil]]
+	  [cond [[and [cdr node_list]       [eq event_node [car node_list]]]
+		 [prog [= previous_node  [cadr node_list]]
+		       previous_node]]
+		[[and [null [cdr node_list]] [eq event_node [car node_list]]]
+		 nil]
+		[[and [cdr node_list] [null [eq event_node [car node_list]]]]
+		 [find_previous_node event_node [cdr node_list]]]
+		[t
+		 nil]]]]
+      
+      [print 'defunked find_previous_node']
+      [mapc [funk [event_node]
+		  [if [find_previous_node event_node nodes_list]
+		      [let [[happens_after 
+			     [new bruno_graph_edge `happens_after 
+				  event_node 
+				  [find_previous_node event_node nodes_list]]]]
+			[have graph add_edge happens_after]
+			[print '2']
+			[print graph]]
+		    nil]]
+	    
+	    event_node_list]
+      graph]]
   ]
 
 [print 'beginning defining get as story_event']
@@ -182,32 +198,37 @@
 	    [print 'debug 96']
 	    [print 'right_node']
 	    [print right_node]
-	    [defunk iterate [node_list]
+	    [defunk iteratex [node_list]
 	      [print 'car node_list']
-	      [print [car node_list]]
+	      [if node_list [print [car node_list]] []]
 	      [if node_list
 		  [prog [print 'node list non empty']
-			[if [get this edges_with_label_between_nodes edge_label left_node [car node_list]]
+			[print edge_label]
+			[print left_node]
+			[print [car node_list]]
+			[print origin_this]
+			[print [get origin_this edges_with_label_between_nodes edge_label left_node [car node_list]]]
+			[if [get origin_this edges_with_label_between_nodes edge_label left_node [car node_list]]
 			    [prog [= right_node [car node_list]]
 				  [print 'match found']
 				  [print right_node]]
 			  [prog [print 'no match']
-				[iterate [cdr node_list]]]]]
+				[iteratex [cdr node_list]]]]]
 		[print 'empty']]]
-	    [iterate node_list]
+	    [iteratex node_list]
 	    [print 'debug 100']
 	    [print left_node]
 	    [print edge_label]
 	    [print right_node]
 	    right_node]]
 	
-	[defunk find_edge_node [left_node node_list edge_list]
+	[defunk find_edge_nodex [left_node node_list edge_list]
 	  [print 'debug 0.5']
 	  [mapcar  [funk [edge]
 			 [print 'debug 0.8'] 
 			 [let [[right_node    nil]
 			       [edge_node_pair nil]]
-			   [defunk iterate_nodes [a_node_list]
+			   [defunk iteratex_nodes [a_node_list]
 			     [if [and a_node_list left_node]
 				 [prog [print 'debug 0.9']
 				       [print left_node]
@@ -220,10 +241,10 @@
 				     [prog [= right_node [get [car a_node_list] label]]
 					   [print 'debug 0.91']
 					   [= edge_node_pair [cons [get edge label] right_node]]]
-				   [iterate_nodes [cdr a_node_list]]]]
+				   [iteratex_nodes [cdr a_node_list]]]]
 			       nil]
 			     edge_node_pair]	    
-			   [iterate_nodes nodes_list]]]
+			   [iteratex_nodes nodes_list]]]
 		   edges_list]]
 	[print  'debug 1']
 	
@@ -240,7 +261,7 @@
 			      [have [get story_event prepositional_frame] add [car edge_node_pair] [cdr edge_node_pair]]]
 		      nil]]
 	      
-	      [find_edge_node [find_right_node nodes_list event_node `prepositional_frame] nodes_list edges_list]] 
+	      [find_edge_nodex [find_right_node nodes_list event_node `prepositional_frame] nodes_list edges_list]] 
 	
 	story_event]
       ]
@@ -248,8 +269,10 @@
     [mapc [funk [event_node]
 		[print 'event_node']
 		[print event_node]
-		[let [event [get origin_this indiv_story_event event_node]]
-		  [have story add_event event]]]
+		[let [[story_event [get origin_this indiv_story_event event_node]]]
+		  [have story add_event [get origin_this indiv_story_event event_node]]
+		  [print story_event]]]
+		
 	  [get this nodes_with_label `story_event]]
     
     story]]

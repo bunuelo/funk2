@@ -47,6 +47,14 @@ GtkBox* raw__gtk_box__as__GtkBox(f2ptr cause, f2ptr this) {
 #endif // F2__GTK__SUPPORTED
 
 
+f2ptr f2gtk_box__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2gtk_box__primobject_type__new(cause);
+  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  return this;
+}
+
+
+
 // gtk_text_buffer
 
 def_frame_object__global__1_slot(gtk_text_buffer, pointer);

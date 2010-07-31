@@ -84,5 +84,5 @@
     [have new_graph add_edge `-> `graph-root object]
     new_graph]]
 
-[defmetro inherits-from [this type_name] `[object-inherits_from ,this [quote ,type_name]]]
+[defmetro inherits-from [type_name this] `[object-inherits_from ,this [quote ,type_name]]]
 

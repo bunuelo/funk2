@@ -263,7 +263,7 @@
       return boolean__true; \
     } \
     f2ptr thing_type = f2__lookup_type(cause, thing_type_name); \
-    if (raw__primobject_type__is_type_or_has_parent_type(cause, thing_type, this_type_name_symbol)) { \
+    if (raw__primobject_type__has_parent_type(cause, thing_type, this_type_name_symbol)) { \
       return boolean__true; \
     } \
     return boolean__false; \

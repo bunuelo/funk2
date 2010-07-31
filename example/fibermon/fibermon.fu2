@@ -40,6 +40,9 @@
 										[elapsed_bytecode_count        [- bytecode_count         [have fiber_info lookup `last_bytecode_count]]]]
 									    [let [[elapsed_execution_seconds [/ elapsed_execution_nanoseconds 1000000000.0]]
 										  [elapsed_seconds           [/ elapsed_nanoseconds           1000000000.0]]]
+									      
+									      [= total_execution_seconds [+ total_execution_seconds elapsed_execution_seconds]]
+									      
 									      [let [[processor_usage [if [== elapsed_seconds 0.0]
 													 0.0
 													 [/ elapsed_execution_seconds elapsed_seconds]]]]

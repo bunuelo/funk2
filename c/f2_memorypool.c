@@ -361,8 +361,6 @@ void funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd) {
     
     safe_write(fd, to_ptr(compressed_data), compressed_length);
     
-    //safe_write(fd, this->dynamic_memory.ptr, this->total_global_memory);
-  
     status("funk2_memorypool__save_to_stream: done writing memorypool image to disk.");
     
     f2__free(to_ptr(compressed_data));
@@ -409,8 +407,6 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
       }
     }
     status("funk2_memorypool__load_from_stream: done decompressing memorypool image.");
-    
-    //safe_read(fd, this->dynamic_memory.ptr, this->total_global_memory);
     
     f2__free(to_ptr(compressed_data));
   }

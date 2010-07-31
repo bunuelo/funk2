@@ -70,6 +70,9 @@
 	  [let [[processor_usage [if [== elapsed_seconds 0.0]
 				     0.0
 				   [/ total_execution_seconds elapsed_seconds]]]]
+	    [= processor_usage [cond [[< processor_usage 0.0] 0.0]
+				     [[> processor_usage 1.0] 1.0]
+				     [t                       processor_usage]]]
 	    [set progress_bar fraction processor_usage]]]]
       [have info_fiber_hash add `last_real_time real_time]]]
   nil]

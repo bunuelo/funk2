@@ -38,6 +38,7 @@
 [globalize gtk-event_handling_fiber nil]
 
 [defunk gtk-event_handling_fiber-start []
+  [format stdout '\n' `gtk-event_handling_fiber ' starting!']
   [if gtk-event_handling_fiber
       [have gtk-event_handling_fiber quit]]
   [let [[event_handling_fiber [fiber [funk []
@@ -53,7 +54,8 @@
     [= gtk-event_handling_fiber event_handling_fiber]]
   nil]
 
-[gtk-event_handling_fiber-start]
+[if [gtk-is_supported]
+    [gtk-event_handling_fiber-start]]
 
 
 

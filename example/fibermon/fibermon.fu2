@@ -25,6 +25,7 @@
 												[have this add `last_execution_nanoseconds  [get fiber execution_nanoseconds]]
 												[have this add `last_bytecode_count         [get fiber bytecode_count]]
 												[have this add `last_nanoseconds_since_1970 [get [time] nanoseconds_since_1970]]
+												[have this add `last_processor_usage        0.0]
 												this]]
 										[have info_fiber_hash add fiber fiber_info]]]
 								      [let [[execution_nanoseconds  [get fiber execution_nanoseconds]]
@@ -35,21 +36,25 @@
 									      [elapsed_bytecode_count        [- bytecode_count         [have fiber_info lookup `last_bytecode_count]]]]
 									  [let [[elapsed_execution_seconds [/ elapsed_execution_nanoseconds 1000000000.0]]
 										[elapsed_seconds           [/ elapsed_nanoseconds           1000000000.0]]]
-									    [let [[bytecodes_per_execution_second [if [!= elapsed_execution_nanoseconds 0]
-														      [/ elapsed_bytecode_count elapsed_execution_seconds]
-														  nil]]
-										[bytecodes_per_second           [if [!= elapsed_nanoseconds 0]
-														    [/ elapsed_bytecode_count elapsed_seconds]
-														  nil]]]
-									    [have fiber_info add `last_execution_nanoseconds  execution_nanoseconds]
-									    [have fiber_info add `last_bytecode_count         bytecode_count]
-									    [have fiber_info add `last_nanoseconds_since_1970 nanoseconds_since_1970]
-									    [format nil '[' fiber '\n'
-										    '  ' elapsed_execution_seconds      ' s execution' '\n'
-										    '  ' elapsed_seconds                ' s real' '\n'
-										    '  ' elapsed_bytecode_count         ' bc' '\n'
-										    '  ' bytecodes_per_execution_second ' bc/s execution' '\n'
-										    '  ' bytecodes_per_second           ' bc/s real' ']' '\n']]]]]]]
+									    [let [[processor_usage [if [== elapsed_seconds 0.0]
+												       0.0
+												     [/ elapsed_execution_seconds elapsed_seconds]]]]
+									      [let [[bytecodes_per_execution_second [if [!= elapsed_execution_nanoseconds 0]
+															[/ elapsed_bytecode_count elapsed_execution_seconds]
+														      nil]]
+										    [bytecodes_per_second           [if [!= elapsed_nanoseconds 0]
+															[/ elapsed_bytecode_count elapsed_seconds]
+														      nil]]]
+										[have fiber_info add `last_execution_nanoseconds  execution_nanoseconds]
+										[have fiber_info add `last_bytecode_count         bytecode_count]
+										[have fiber_info add `last_nanoseconds_since_1970 nanoseconds_since_1970]
+										[format nil '[' fiber '\n'
+											'  ' processor_usage                '% processor' '\n'
+											'  ' elapsed_execution_seconds      ' s execution' '\n'
+											'  ' elapsed_seconds                ' s real' '\n'
+											'  ' elapsed_bytecode_count         ' bc' '\n'
+											'  ' bytecodes_per_execution_second ' bc/s execution' '\n'
+											'  ' bytecodes_per_second           ' bc/s real' ']' '\n']]]]]]]]
 							      [get processor active_fibers]]]]
   nil]
 

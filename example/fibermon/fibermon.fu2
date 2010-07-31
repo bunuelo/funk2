@@ -62,7 +62,7 @@
 								[get processor active_fibers]]]]
     
     [let [[real_time [time]]]
-      [let [[elapsed_nanoseconds [- [get real_time nanosecond_since_1970] [get last_real_time nanosecond_since_1970]]]]
+      [let [[elapsed_nanoseconds [- [get real_time nanoseconds_since_1970] [get last_real_time nanoseconds_since_1970]]]]
 	[let [[elapsed_seconds [/ elapsed_nanoseconds 1000000000]]]
 	  [let [[processor_usage [if [== elapsed_seconds 0.0]
 				     0.0

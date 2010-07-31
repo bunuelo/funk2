@@ -401,6 +401,27 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 }
 def_pcfunk3(object__slot__type_funk, this, slot_type, slot_name, return f2__object__slot__type_funk(this_cause, this, slot_type, slot_name));
 
+
+#define inherits_from(cause, this, type_name) raw__object__inherits_from(cause, this, new__symbol(cause, #type_name))
+
+boolean_t raw__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name) {
+  f2ptr this__type_name       = f2__object__type(cause, this);
+  f2ptr this__primobject_type = f2__lookup_type(cause, this__type_name);
+  if (! raw__primobject_type__is_type(cause, this__primobject_type)) {
+    return boolean__false;
+  }
+  return raw__primobject_type__is_type_or_has_parent_type(cause, this__primobject_type, type_name);
+}
+
+f2ptr f2__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name) {
+  if (! raw__symbol__is_type(cause, type_name)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__object__inherits_from(cause, this, type_name);
+}
+def_pcfunk2(object__inherits_from, this, type_name, return f2__object__inherits_from(this_cause, this, type_name));
+
+
 #define object__get__no_such_slot 789
 
 f2ptr f2__object__get_0(f2ptr cause, f2ptr this, f2ptr slot) {
@@ -592,9 +613,10 @@ void f2__object__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(object__equals_hash_value,            this,            cfunk, 0, "returns the equals_hash_value of the object.");                                          __funk2.object.object__equals_hash_value__funk            = never_gc(cfunk);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__equals_hash_value__loop_free, this, node_hash, cfunk, 0, "returns the equals_hash_value of the object when a node_hash is supplied.");             __funk2.object.object__equals_hash_value__loop_free__funk = never_gc(cfunk);}
   
-  f2__primcfunk__init__1(object__type,              this,                       "returns the symbolic type name of the object.");
-  f2__primcfunk__init__3(object__slot__type_funk,   this, slot_type, slot_name, "returns the slot type funk for the object (e.g. types: get, set, execute).");
-  f2__primcfunk__init__2(object__property_scan,     this, property_funk,        "property scan funk of type, [funk [name value] ...].");
+  f2__primcfunk__init__1(object__type,            this,                       "Returns the symbolic type name of the object.");
+  f2__primcfunk__init__3(object__slot__type_funk, this, slot_type, slot_name, "Returns the slot type funk for the object (e.g. types: get, set, execute).");
+  f2__primcfunk__init__2(object__inherits_from,   this, type_name,            "Returns whether this object inherits from a type interface.");
+  f2__primcfunk__init__2(object__property_scan,   this, property_funk,        "Property scan funk of type, [funk [name value] ...].");
 }
 
 

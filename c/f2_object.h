@@ -51,14 +51,18 @@ typedef struct funk2_object_types_s {
   funk2_object_type__array__slot_t array;
 } funk2_object_types_t;
 
-f2ptr f2__object__type(f2ptr cause, f2ptr this);
-f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__object__eq(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr f2__object__eq_hash_value(f2ptr cause, f2ptr this);
-f2ptr f2__object__equals(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr f2__object__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash);
-f2ptr f2__object__equals_hash_value(f2ptr cause, f2ptr this);
-f2ptr f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr property_funk);
+#define inherits_from(cause, this, type_name) raw__object__inherits_from(cause, this, new__symbol(cause, #type_name))
+
+f2ptr      f2__object__type(f2ptr cause, f2ptr this);
+f2ptr      f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+boolean_t raw__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name) {
+f2ptr      f2__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name) {
+f2ptr      f2__object__eq(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__object__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr      f2__object__equals(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__object__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash);
+f2ptr      f2__object__equals_hash_value(f2ptr cause, f2ptr this);
+f2ptr      f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr property_funk);
 
 f2ptr f2__object__get_0(f2ptr cause, f2ptr this, f2ptr slot);
 f2ptr     object__get_0(f2ptr cause, f2ptr this, char* slot_cstr);

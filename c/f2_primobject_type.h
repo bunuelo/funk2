@@ -29,8 +29,8 @@ f2ptr      f2__primobject_type__add_slot_type(f2ptr cause, f2ptr this, f2ptr slo
 f2ptr      f2__primobject_type__lookup_slot_type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr     raw__primobject_type__type_funk__mapc_slot_names(f2ptr cause, f2ptr this, f2ptr type_name, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
 f2ptr      f2__primobject_type__type_funk__slot_names(f2ptr cause, f2ptr this, f2ptr type_name);
-boolean_t raw__primobject_type__is_type_or_has_parent_type(f2ptr cause, f2ptr this, f2ptr type_name);
-f2ptr      f2__primobject_type__is_type_or_has_parent_type(f2ptr cause, f2ptr this, f2ptr type_name);
+boolean_t raw__primobject_type__has_parent_type(f2ptr cause, f2ptr this, f2ptr type_name);
+f2ptr      f2__primobject_type__has_parent_type(f2ptr cause, f2ptr this, f2ptr type_name);
 
 // **
 

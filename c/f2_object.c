@@ -405,12 +405,15 @@ def_pcfunk3(object__slot__type_funk, this, slot_type, slot_name, return f2__obje
 #define inherits_from(cause, this, type_name) raw__object__inherits_from(cause, this, new__symbol(cause, #type_name))
 
 boolean_t raw__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name) {
-  f2ptr this__type_name       = f2__object__type(cause, this);
+  f2ptr this__type_name = f2__object__type(cause, this);
+  if (raw__eq(cause, this__type_name, type_name)) {
+    return boolean__true;
+  }
   f2ptr this__primobject_type = f2__lookup_type(cause, this__type_name);
   if (! raw__primobject_type__is_type(cause, this__primobject_type)) {
     return boolean__false;
   }
-  return raw__primobject_type__is_type_or_has_parent_type(cause, this__primobject_type, type_name);
+  return raw__primobject_type__has_parent_type(cause, this__primobject_type, type_name);
 }
 
 f2ptr f2__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name) {

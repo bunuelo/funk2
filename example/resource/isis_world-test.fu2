@@ -134,8 +134,8 @@
 					    [millisleep 1000]
 					  [prog [have this think_to_self 'Including reactive sensory story into deliberative story: ' [get reactive_sensory_story as-list]]
 						[set [mind-knowledge mind deliberative reality] value `reality_story `[time_step ,time_step]
-						     [have [get [mind-knowledge mind deliberative reality] value `reality_story `[time_step ,last_time_step]] union
-							   reactive_sensory_story]]
+						     [get [get [mind-knowledge mind deliberative reality] value `reality_story `[time_step ,last_time_step]] union
+							  reactive_sensory_story]]
 						[= last_time_step time_step]]]]]]]]]]
       
       ]

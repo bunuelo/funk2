@@ -42,5 +42,6 @@
 [globalize-funk gtk-vpaned-new                 &primfunk:gtk__vpaned__new]
 [globalize-funk gtk-hpaned-new                 &primfunk:gtk__hpaned__new]
 [globalize-funk gtk-progress_bar-new           &primfunk:gtk__progress_bar__new]
+[globalize-funk gtk-progress_bar-set_fraction  &primfunk:gtk__progress_bar__set_fraction]
 
 

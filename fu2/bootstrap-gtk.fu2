@@ -17,13 +17,14 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deftypefunk gtk_widget execute show_all       []                          [gtk-widget-show_all      this]]
-[deftypefunk gtk_widget execute add            [that]                      [gtk-container-add        this that]]
-[deftypefunk gtk_widget execute signal_connect [signal_name funk args]     [gtk-signal_connect       this signal_name funk args]]
-[deftypefunk gtk_widget execute pack1          [child resize shrink]       [gtk-paned-pack1          this child resize shrink]]
-[deftypefunk gtk_widget execute pack2          [child resize shrink]       [gtk-paned-pack2          this child resize shrink]]
-[deftypefunk gtk_widget get     text           []                          [gtk-entry-get_text       this]]
-[deftypefunk gtk_widget get     buffer         []                          [gtk-text_view-get_buffer this]]
+[deftypefunk gtk_widget execute show_all       []                          [gtk-widget-show_all           this]]
+[deftypefunk gtk_widget execute add            [that]                      [gtk-container-add             this that]]
+[deftypefunk gtk_widget execute signal_connect [signal_name funk args]     [gtk-signal_connect            this signal_name funk args]]
+[deftypefunk gtk_widget execute pack1          [child resize shrink]       [gtk-paned-pack1               this child resize shrink]]
+[deftypefunk gtk_widget execute pack2          [child resize shrink]       [gtk-paned-pack2               this child resize shrink]]
+[deftypefunk gtk_widget get     text           []                          [gtk-entry-get_text            this]]
+[deftypefunk gtk_widget get     buffer         []                          [gtk-text_view-get_buffer      this]]
+[deftypefunk gtk_widget set     fraction       [fraction]                  [gtk-progress_bar-set_fraction this fraction]]
 
 [deftypefunk gtk_box execute pack_start [child expand fill padding] [gtk-box-pack_start this child expand fill padding]]
 

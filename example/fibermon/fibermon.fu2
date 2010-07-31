@@ -65,6 +65,7 @@
 	[vbox            [gtk-vbox-new 2]]
 	[progress_bar    [gtk-progress_bar-new]]
 	[text_view       [gtk-text_view-new]]]
+    [set progress_bar fraction 0.5]
     [have vbox pack_start progress_bar nil nil 0]
     [have scrolled_window add text_view]
     [have vbox pack_start scrolled_window t t 0]
@@ -73,8 +74,7 @@
 		   [fibermon_processor_widget-redraw scrolled_window processor info_fiber_hash text_view]
 		   [sleep 1]]]
 	   nil]
-    ]
-  vbox]
+    vbox]]
 
 [defunk fibermon [:rest args]
   [let [[print_usage_message_and_exit nil]]

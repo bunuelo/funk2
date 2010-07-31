@@ -460,6 +460,13 @@ GtkWidget* funk2_gtk__progress_bar__new(funk2_gtk_t* this) {
   return progress_bar;
 }
 
+void funk2_gtk__progress_bar__set_fraction(GtkWidget* progress_bar, double fraction) {
+  {
+    gdk_threads_enter();
+    gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(progress_bar), fraction);
+    gdk_threads_leave();
+  }
+}
 
 #endif // F2__GTK__SUPPORTED
 
@@ -974,6 +981,29 @@ f2ptr f2__gtk__progress_bar__new(f2ptr cause) {
 def_pcfunk0(gtk__progress_bar__new, return f2__gtk__progress_bar__new(this_cause));
 
 
+f2ptr raw__gtk__progress_bar__set_fraction(f2ptr cause, f2ptr this, f2ptr fraction) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_this        = raw__gtk_widget__as__GtkWidget(cause, this);
+  f2ptr      fraction_double = f2__number__as__double(cause, fraction);
+  if (! raw__double__is_type(cause, fraction_double)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  double fraction_double__d = f2double__d(fraction_double, cause);
+  funk2_gtk__progress_bar__set_fraction(gtk_this, fraction_double__d);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__progress_bar__set_fraction(f2ptr cause, f2ptr this, f2ptr fraction) {
+  if ((! raw__gtk_widget__is_type(cause, this)) ||
+      (! raw__number__is_type(cause, fraction))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__progress_bar__set_fraction(cause, this, fraction);
+}
+def_pcfunk2(gtk__progress_bar__set_fraction, this, fraction, return f2__gtk__progress_bar__set_fraction(this_cause, this, fraction));
 
 
 // **
@@ -1059,7 +1089,8 @@ void f2__gtk__initialize() {
   
   // progress_bar
   
-  f2__primcfunk__init__0(gtk__progress_bar__new, "Returns a new GtkProgressBar widget.");
+  f2__primcfunk__init__0(gtk__progress_bar__new,                          "Returns a new GtkProgressBar widget.");
+  f2__primcfunk__init__2(gtk__progress_bar__set_fraction, this, fraction, "Sets the fraction done of the progress bar.");
   
   
 }

@@ -17,45 +17,58 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defunk fibermon_processor_widget-redraw [scrolled_window processor info_fiber_hash text_view]
-  [set [get text_view buffer] text [stringlist-concat [mapcar [funk [fiber]
-								    [let [[fiber_info [have info_fiber_hash lookup fiber]]]
-								      [if [null fiber_info]
-									  [prog [= fiber_info [let [[this [frame]]]
-												[have this add `last_execution_nanoseconds  [get fiber execution_nanoseconds]]
-												[have this add `last_bytecode_count         [get fiber bytecode_count]]
-												[have this add `last_nanoseconds_since_1970 [get [time] nanoseconds_since_1970]]
-												[have this add `last_processor_usage        0.0]
-												this]]
-										[have info_fiber_hash add fiber fiber_info]]]
-								      [let [[execution_nanoseconds  [get fiber execution_nanoseconds]]
-									    [bytecode_count         [get fiber bytecode_count]]
-									    [nanoseconds_since_1970 [get [time] nanoseconds_since_1970]]]
-									[let [[elapsed_execution_nanoseconds [- execution_nanoseconds  [have fiber_info lookup `last_execution_nanoseconds]]]
-									      [elapsed_nanoseconds           [- nanoseconds_since_1970 [have fiber_info lookup `last_nanoseconds_since_1970]]]
-									      [elapsed_bytecode_count        [- bytecode_count         [have fiber_info lookup `last_bytecode_count]]]]
-									  [let [[elapsed_execution_seconds [/ elapsed_execution_nanoseconds 1000000000.0]]
-										[elapsed_seconds           [/ elapsed_nanoseconds           1000000000.0]]]
-									    [let [[processor_usage [if [== elapsed_seconds 0.0]
-												       0.0
-												     [/ elapsed_execution_seconds elapsed_seconds]]]]
-									      [let [[bytecodes_per_execution_second [if [!= elapsed_execution_nanoseconds 0]
-															[/ elapsed_bytecode_count elapsed_execution_seconds]
-														      nil]]
-										    [bytecodes_per_second           [if [!= elapsed_nanoseconds 0]
-															[/ elapsed_bytecode_count elapsed_seconds]
-														      nil]]]
-										[have fiber_info add `last_execution_nanoseconds  execution_nanoseconds]
-										[have fiber_info add `last_bytecode_count         bytecode_count]
-										[have fiber_info add `last_nanoseconds_since_1970 nanoseconds_since_1970]
-										[format nil '[' fiber '\n'
-											'\t' [* 100 processor_usage]        '% processor' '\n'
-											'\t' elapsed_execution_seconds      ' s execution' '\n'
-											'\t' elapsed_seconds                ' s real' '\n'
-											'\t' elapsed_bytecode_count         ' bc' '\n'
-											'\t' bytecodes_per_execution_second ' bc/s execution' '\n'
-											'\t' bytecodes_per_second           ' bc/s real' ']' '\n']]]]]]]]
-							      [get processor active_fibers]]]]
+[defunk fibermon_processor_widget-redraw [progress_bar processor info_fiber_hash text_view]
+  [let [[total_execution_seconds 0.0]
+	[last_real_time          [have info_fiber_hash lookup `last_real_time]]]
+    [if [null last_real_time]
+	[= last_real_time [time]]]
+    [set [get text_view buffer] text [stringlist-concat [mapcar [funk [fiber]
+								      [let [[fiber_info [have info_fiber_hash lookup fiber]]]
+									[if [null fiber_info]
+									    [prog [= fiber_info [let [[this [frame]]]
+												  [have this add `last_execution_nanoseconds  [get fiber execution_nanoseconds]]
+												  [have this add `last_bytecode_count         [get fiber bytecode_count]]
+												  [have this add `last_nanoseconds_since_1970 [get [time] nanoseconds_since_1970]]
+												  [have this add `last_processor_usage        0.0]
+												  this]]
+										  [have info_fiber_hash add fiber fiber_info]]]
+									[let [[execution_nanoseconds  [get fiber execution_nanoseconds]]
+									      [bytecode_count         [get fiber bytecode_count]]
+									      [nanoseconds_since_1970 [get [time] nanoseconds_since_1970]]]
+									  [let [[elapsed_execution_nanoseconds [- execution_nanoseconds  [have fiber_info lookup `last_execution_nanoseconds]]]
+										[elapsed_nanoseconds           [- nanoseconds_since_1970 [have fiber_info lookup `last_nanoseconds_since_1970]]]
+										[elapsed_bytecode_count        [- bytecode_count         [have fiber_info lookup `last_bytecode_count]]]]
+									    [let [[elapsed_execution_seconds [/ elapsed_execution_nanoseconds 1000000000.0]]
+										  [elapsed_seconds           [/ elapsed_nanoseconds           1000000000.0]]]
+									      [let [[processor_usage [if [== elapsed_seconds 0.0]
+													 0.0
+													 [/ elapsed_execution_seconds elapsed_seconds]]]]
+										[let [[bytecodes_per_execution_second [if [!= elapsed_execution_nanoseconds 0]
+															  [/ elapsed_bytecode_count elapsed_execution_seconds]
+															nil]]
+										      [bytecodes_per_second           [if [!= elapsed_nanoseconds 0]
+															  [/ elapsed_bytecode_count elapsed_seconds]
+															nil]]]
+										  [have fiber_info add `last_execution_nanoseconds  execution_nanoseconds]
+										  [have fiber_info add `last_bytecode_count         bytecode_count]
+										  [have fiber_info add `last_nanoseconds_since_1970 nanoseconds_since_1970]
+										  [format nil '[' fiber '\n'
+											  '\t' [* 100 processor_usage]        '% processor' '\n'
+											  '\t' elapsed_execution_seconds      ' s execution' '\n'
+											  '\t' elapsed_seconds                ' s real' '\n'
+											  '\t' elapsed_bytecode_count         ' bc' '\n'
+											  '\t' bytecodes_per_execution_second ' bc/s execution' '\n'
+											  '\t' bytecodes_per_second           ' bc/s real' ']' '\n']]]]]]]]
+								[get processor active_fibers]]]]
+    
+    [let [[real_time [time]]]
+      [let [[elapsed_nanoseconds [- [get real_time nanosecond_since_1970] [get last_real_time nanosecond_since_1970]]]]
+	[let [[elapsed_seconds [/ elapsed_nanoseconds 1000000000]]]
+	  [let [[processor_usage [if [== elapsed_seconds 0.0]
+				     0.0
+				   [/ total_execution_seconds elapsed_seconds]]]]
+	    [set progress_bar fraction processor_usage]]]]
+      [have info_fiber_hash add `last_real_time real_time]]]
   nil]
 
 [defunk fibermon_processor_widget-new [index]
@@ -65,13 +78,13 @@
 	[vbox            [gtk-vbox-new 2]]
 	[progress_bar    [gtk-progress_bar-new]]
 	[text_view       [gtk-text_view-new]]]
-    [set progress_bar fraction 0.5]
+    [set progress_bar fraction 0]
     [have vbox pack_start progress_bar nil nil 0]
     [have scrolled_window add text_view]
     [have vbox pack_start scrolled_window t t 0]
     [fiber [funk []
 		 [while t
-		   [fibermon_processor_widget-redraw scrolled_window processor info_fiber_hash text_view]
+		   [fibermon_processor_widget-redraw progress_bar processor info_fiber_hash text_view]
 		   [sleep 1]]]
 	   nil]
     vbox]]

@@ -68,7 +68,7 @@ f2ptr f2gtk_widget__primobject_type__new(f2ptr cause);
 
 // gtk_box
 
-f2ptr f2gtk_box__primobject_type__new(f2ptr cause);
+f2ptr f2gtk_box__primobject_type__new_aux(f2ptr cause);
 
 
 // gtk_text_buffer

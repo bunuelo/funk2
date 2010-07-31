@@ -55,8 +55,8 @@ typedef struct funk2_object_types_s {
 
 f2ptr      f2__object__type(f2ptr cause, f2ptr this);
 f2ptr      f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-boolean_t raw__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name) {
-f2ptr      f2__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name) {
+boolean_t raw__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name);
+f2ptr      f2__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name);
 f2ptr      f2__object__eq(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__object__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr      f2__object__equals(f2ptr cause, f2ptr this, f2ptr that);

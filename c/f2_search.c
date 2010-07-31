@@ -45,7 +45,9 @@ f2ptr f2__search(f2ptr fiber, f2ptr cause, f2ptr start_states, f2ptr expand_funk
     f2ptr iter = start_states;
     while (iter) {
       f2ptr start_state     = f2cons__car(iter, cause);
-      f2ptr heuristic_value = f2__force_funk_apply(cause, fiber, heuristic_funk, f2list1__new(cause, start_state));
+      // not done.
+      //f2ptr heuristic_value = ;
+      f2__force_funk_apply(cause, fiber, heuristic_funk, f2list1__new(cause, start_state));
       f2ptr search_node     = f2__search_node__new(cause, start_state, nil);
       search_nodes = f2cons__new(cause, search_node, search_nodes);
       search_nodes__count ++;

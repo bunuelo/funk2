@@ -78,6 +78,7 @@
 				     [t                       processor_usage]]]
 	    [set progress_bar fraction processor_usage]]]]
       [have info_fiber_hash add `last_real_time real_time]]]
+  [sleep 10]
   nil]
 
 [defunk fibermon_processor_widget-new [index]
@@ -93,8 +94,7 @@
     [have vbox pack_start scrolled_window t t 0]
     [fiber [funk []
 		 [while t
-		   [fibermon_processor_widget-redraw progress_bar processor info_fiber_hash text_view]
-		   [sleep 1]]]
+		   [fibermon_processor_widget-redraw progress_bar processor info_fiber_hash text_view]]]
 	   nil]
     vbox]]
 

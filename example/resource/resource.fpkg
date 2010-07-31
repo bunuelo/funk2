@@ -56,5 +56,5 @@
 
 [defpackage isis_world-test
   :packages [mind story isis_world]
-   :sources ['isis_world-test2.fu2']]
+   :sources ['isis_world-test.fu2']]
 

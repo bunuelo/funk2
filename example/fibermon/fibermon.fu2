@@ -121,10 +121,7 @@
     [have scrolled_window add text_view]
     [have vbox pack_start scrolled_window t t 0]
     [let [[redraw_funk [funk []
-			     [cause-define cause-name `fibermon_processor_handler]
-			     [cause-define cause-args [frame index index]]
-			     [while t
-			       [fibermon_processor_widget-redraw processor_text_view progress_bar processor info_fiber_hash text_view]]]]]
+			     [fibermon_processor_widget-redraw processor_text_view progress_bar processor info_fiber_hash text_view]]]]
       [frame widget vbox update_funk redraw_funk redraw_funk]]]]
 
 [defunk fibermon [:rest args]

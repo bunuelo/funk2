@@ -76,7 +76,7 @@
 																			[format nil ' - ' slot ': ' [have cause-frame lookup slot] '\n']
 																		      '']]
 																	      [get cause-frame slots]]]]]]
-											     '\t' bytecodes_per_second           ' bc/s' '\n'
+											     '\t' [/ bytecodes_per_second 1024.0]       ' kbc/s' '\n'
 											     '\t' 'is' [if [get fiber paused]           ' ' ' not '] 'paused' '\n'
 											     '\t' 'is' [if [get fiber is_complete]      ' ' ' not '] 'complete' '\n'
 											     '\t' 'is' [if [get fiber sleep_until_time] ' ' ' not '] 'asleep' '\n'
@@ -97,9 +97,9 @@
 	    [set progress_bar fraction processor_usage]
 	    
 	    [set [get processor_text_view buffer] text [format nil  'processor usage\t\t: ' [* 100.0 processor_usage] '%'
-							       '\n' 'total bytecode count\t: ' total_bytecode_count ' bc'
+							       '\n' 'total bytecode rate\t: ' [/ [if [== elapsed_seconds 0.0] 0.0 [/ total_bytecode_count elapsed_seconds]] 1024.0] ' kbc/s'
+							       '\n' 'total bytecode count\t: ' [/ total_bytecode_count 1024.0] ' kbc'
 							       '\n' 'elapsed\t\t\t\t: ' elapsed_seconds ' s'
-							       '\n' 'total bytecode rate\t: ' [if [== elapsed_seconds 0.0] 0.0 [/ total_bytecode_count elapsed_seconds]] ' bc/s'
 							       '\n' 'total execution\t\t: ' total_execution_seconds ' s'
 							       ]]
 	    
@@ -122,7 +122,8 @@
     [have scrolled_window add text_view]
     [have vbox pack_start scrolled_window t t 0]
     [fiber [funk []
-		 [cause-define cause-name `[fibermon_processor_widget-new ,index]]
+		 [cause-define cause-name `fibermon_processor_handler]
+		 [cause-define cause-args [frame index index]]
 		 [while t
 		   [fibermon_processor_widget-redraw processor_text_view progress_bar processor info_fiber_hash text_view]]]
 	   nil]

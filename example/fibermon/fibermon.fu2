@@ -196,8 +196,8 @@
 	  [have vbox             pack_start hbox nil nil 0]
 	  
 	  [have swindow          add        text_view]
-	  [have model6_vpaned    pack1      model6_widget t t]
-	  [have model6_vpaned    pack2      swindow t t]
+	  [have model6_vpaned    pack1      swindow t t]
+	  [have model6_vpaned    pack2      model6_widget t t]
 	  
 	  [have processor_vpaned pack1      model6_vpaned t t]
 	  [have processor_vpaned pack2      processor_hbox t t]

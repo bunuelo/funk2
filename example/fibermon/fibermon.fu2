@@ -156,8 +156,9 @@
 [defunk fibermon_model6-new []
   [let [[mind_num 3]]
     [let [[mind_array [new array mind_num]]]
-      [let [[vpaned                 [gtk-vpaned-new]]
+      [let [[text_view              [gtk-text_view-new]]
 	    [hbox                   [gtk-hbox-new mind_num]]
+	    [vpaned                 [gtk-vpaned-new]]
 	    [mind_redraw_funk_array [new array mind_num]]]
 	[dotimes [i mind_num]
 	  [let [[mind [fibermon_mind-new]]]
@@ -166,6 +167,8 @@
 		  [mind_redraw_funk [have mind lookup `redraw_funk]]]
 	      [have hbox pack_start mind_widget t t 0]
 	      [set mind_redraw_funk_array elt i mind_redraw_funk]]]]
+	[have vpaned pack1 text_view t t]
+	[have vpaned pack2 hbox t t]
 	[frame widget      vpaned
 	       redraw_funk [funk [] [fibermon_model6-redraw vpaned text_view_array mind_array]]]]]]]
 

@@ -953,8 +953,8 @@ f2ptr raw__gtk__paned__set_position(f2ptr cause, f2ptr paned, f2ptr position) {
 }
 
 f2ptr f2__gtk__paned__set_position(f2ptr cause, f2ptr paned, f2ptr position) {
-  if ((! inherits_from(cause, paned, gtk_widget)) ||
-      (! inherits_from(cause, child, integer))) {
+  if ((! inherits_from(cause, paned,    gtk_widget)) ||
+      (! inherits_from(cause, position, integer))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__gtk__paned__set_position(cause, paned, position);

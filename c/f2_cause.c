@@ -209,12 +209,20 @@ f2ptr f2__cause__define__funk(f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr valu
 def_pcfunk3(cause__define__funk, this, funkvar, value, return f2__cause__define__funk(this_cause, this, funkvar, value));
 
 f2ptr f2__cause__lookup(f2ptr cause, f2ptr this, f2ptr var) {
-  return f2__cause__lookup_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, var);
+  f2ptr result = f2__cause__lookup_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, var);
+  if (raw__larva__is_type(cause, result)) {
+    return nil;
+  }
+  return result;
 }
 def_pcfunk2(cause__lookup, this, var, return f2__cause__lookup(this_cause, this, var));
 
 f2ptr f2__cause__lookup__funk(f2ptr cause, f2ptr this, f2ptr funkvar) {
-  return f2__cause__lookup_type_var_value(cause, this, __funk2.primobject__frame.funk_variable__symbol, funkvar);
+  f2ptr result = f2__cause__lookup_type_var_value(cause, this, __funk2.primobject__frame.funk_variable__symbol, funkvar);
+  if (raw__larva__is_type(cause, result)) {
+    return nil;
+  }
+  return result;
 }
 def_pcfunk2(cause__lookup__funk, this, funkvar, return f2__cause__lookup__funk(this_cause, this, funkvar));
 

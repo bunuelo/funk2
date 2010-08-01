@@ -156,9 +156,9 @@
 	  [while iter
 	    [let [[arg [first iter]]]
 	      [cond [[or [eq arg `-h]
-			 [eq arg `help] [prog [= print_usage_message_and_exit t]]]
-		     [t                 [prog [format stdout '\nfibermon fatal: unrecognized command line argument, ' arg '.\n']
-					      [= print_usage_message_and_exit t]]]]]]
+			 [eq arg `help]] [prog [= print_usage_message_and_exit t]]]
+		    [t                   [prog [format stdout '\nfibermon fatal: unrecognized command line argument, ' arg '.\n']
+					       [= print_usage_message_and_exit t]]]]]
 	    [= iter [next iter]]]]]
     [if print_usage_message_and_exit
 	[format stdout 'FIBERMON(1)'
@@ -171,12 +171,9 @@
 		'\n'   'DESCRIPTION'
 		'\n'   '       The fibermon program provides a dynamic real-time view of a running system.  It can '
 		'\n'   '       display system summary information as well as a list of tasks currently being managed '
-		'\n'   '       by the Funk kernel.  The types of system summary information shown and the types, order '
-		'\n'   '       and size of information displayed for tasks are all user configurable and that '
-		'\n'   '       configuration can be made persistent across restarts.'
+		'\n'   '       by the Funk kernel.'
 		'\n'   ''
-		'\n'   '       This description is inspired by the TOP Linux man page.'
-		'\n'   '']
+		'\n'   '       This description is inspired by the TOP Linux man page.']
       [let [[win              [gtk-window-new]]
 	    [vbox             [gtk-vbox-new 2]]
 	    [hbox             [gtk-hbox-new 3]]
@@ -199,13 +196,13 @@
 	  [have vbox             pack_start hbox nil nil 0]
 	  
 	  [have swindow          add        text_view]
-	  [have processor_vpaned pack1      swindow t t]
+	  [have model6_vpaned    pack1      model6_widget t t]
+	  [have model6_vpaned    pack2      swindow t t]
+	  
+	  [have processor_vpaned pack1      model6_vpaned t t]
 	  [have processor_vpaned pack2      processor_hbox t t]
 	  
-	  [have model6_vpaned    pack1      model6_widget t t]
-	  [have model6_vpaned    pack2      processor_vpaned t t]
-	  
-	  [have vbox             pack_start model6_vpaned t t 0]
+	  [have vbox             pack_start processor_vpaned t t 0]
 	  
 	  [have win              add        vbox]
 	  

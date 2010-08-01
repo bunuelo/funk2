@@ -107,6 +107,8 @@
       [have info_fiber_hash add `last_real_time real_time]]]
   nil]
 
+
+
 [defunk fibermon_processor_widget-new [index]
   [let [[processor           [get [get scheduler:global_scheduler processors] elt index]]
 	[info_fiber_hash     [new ptypehash]]
@@ -122,7 +124,7 @@
     [have vbox pack_start scrolled_window t t 0]
     [let [[redraw_funk [funk []
 			     [fibermon_processor_widget-redraw processor_text_view progress_bar processor info_fiber_hash text_view]]]]
-      [frame widget vbox update_funk redraw_funk redraw_funk]]]]
+      [frame widget vbox redraw_funk redraw_funk]]]]
 
 [defunk fibermon [:rest args]
   [let [[print_usage_message_and_exit nil]]

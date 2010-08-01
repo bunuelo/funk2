@@ -19,6 +19,7 @@
 
 [defunk fibermon_processor_widget-redraw [processor_text_view progress_bar processor info_fiber_hash text_view]
   [let [[total_execution_seconds 0.0]
+	[total_bytecode_count    0]
 	[last_real_time          [have info_fiber_hash lookup `last_real_time]]]
     [if [null last_real_time]
 	[= last_real_time [time]]]
@@ -42,6 +43,7 @@
 										  [elapsed_seconds           [/ elapsed_nanoseconds           1000000000.0]]]
 									      
 									      [= total_execution_seconds [+ total_execution_seconds elapsed_execution_seconds]]
+									      [= total_bytecode_count    [+ total_bytecode_count    elapsed_bytecode_count]]
 									      
 									      [let [[processor_usage [if [== elapsed_seconds 0.0]
 													 0.0
@@ -65,10 +67,10 @@
 											   '\t' 'is' [if [get fiber paused]      ' ' ' not '] 'paused' '\n'
 											   '\t' 'is' [if [get fiber is_complete] ' ' ' not '] 'complete' '\n'
 											   '\t' 'is' [if [get fiber is_zombie]   ' ' ' not '] 'zombie' ']' '\n']
-										   [format nil '[' fiber '\n'
-											  '\t' [* 100 processor_usage]        '% processor' '\n'
-											  '\t' elapsed_seconds                ' s' '\n'
-											  '\t' elapsed_bytecode_count         ' bc' '\n'
+										   [format nil '[' [let [[cause_reg [get fiber cause_reg]]]
+												     [if cause_reg
+													 [have [get cause_reg frame] lookup `cause-name]
+												       `no-cause]] '\n'
 											  '\t' bytecodes_per_second           ' bc/s' '\n'
 											  '\t' 'is' [if [get fiber paused]           ' ' ' not '] 'paused' '\n'
 											  '\t' 'is' [if [get fiber is_complete]      ' ' ' not '] 'complete' '\n'
@@ -79,18 +81,21 @@
     
     [let [[real_time [time]]]
       [let [[elapsed_nanoseconds [- [get real_time nanoseconds_since_1970] [get last_real_time nanoseconds_since_1970]]]]
-	[let [[elapsed_seconds [/ elapsed_nanoseconds 1000000000]]]
+	[let [[elapsed_seconds [/ elapsed_nanoseconds 1000000000.0]]]
 	  [let [[processor_usage [if [== elapsed_seconds 0.0]
 				     0.0
 				   [/ total_execution_seconds elapsed_seconds]]]]
 	    [= processor_usage [cond [[< processor_usage 0.0] 0.0]
 				     [[> processor_usage 1.0] 1.0]
 				     [t                       processor_usage]]]
+	    
 	    [set progress_bar fraction processor_usage]
 	    
-	    [set [get processor_text_view buffer] text [format nil  'processor usage\t: ' [* 100.0 processor_usage] '%'
-							       '\n' 'elapsed\t: ' elapsed_seconds ' s'
-							       '\n' 'total execution\t: ' total_execution_seconds ' s'
+	    [set [get processor_text_view buffer] text [format nil  'processor usage\t\t: ' [* 100.0 processor_usage] '%'
+							       '\n' 'total bytecode count\t: ' total_bytecode_count ' bc'
+							       '\n' 'elapsed\t\t\t\t: ' elapsed_seconds ' s'
+							       '\n' 'total bytecode rate\t: ' [if [== elapsed_seconds 0.0] 0.0 [/ total_bytecode_count elapsed_seconds]] ' bc/s'
+							       '\n' 'total execution\t\t: ' total_execution_seconds ' s'
 							       ]]
 	    
 	    ]]]
@@ -112,6 +117,7 @@
     [have scrolled_window add text_view]
     [have vbox pack_start scrolled_window t t 0]
     [fiber [funk []
+		 [cause-define cause-name `[fibermon_processor_widget-new ,index]]
 		 [while t
 		   [fibermon_processor_widget-redraw processor_text_view progress_bar processor info_fiber_hash text_view]]]
 	   nil]

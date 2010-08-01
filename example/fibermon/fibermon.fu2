@@ -105,7 +105,6 @@
 	    
 	    ]]]
       [have info_fiber_hash add `last_real_time real_time]]]
-  [sleep 10]
   nil]
 
 [defunk fibermon_processor_widget-new [index]

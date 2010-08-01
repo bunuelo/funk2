@@ -39,6 +39,7 @@
 [globalize-funk gtk-text_iter-forward_search   &primfunk:gtk__text_iter__forward_search]
 [globalize-funk gtk-paned-pack1                &primfunk:gtk__paned__pack1]
 [globalize-funk gtk-paned-pack2                &primfunk:gtk__paned__pack2]
+[globalize-funk gtk-paned-set_position         &primfunk:gtk__paned__set_position]
 [globalize-funk gtk-vpaned-new                 &primfunk:gtk__vpaned__new]
 [globalize-funk gtk-hpaned-new                 &primfunk:gtk__hpaned__new]
 [globalize-funk gtk-progress_bar-new           &primfunk:gtk__progress_bar__new]

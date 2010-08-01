@@ -421,6 +421,14 @@ void funk2_gtk__paned__pack2(funk2_gtk_t* this, GtkWidget* paned, GtkWidget* chi
   }
 }
 
+void funk2_gtk__paned__set_position(funk2_gtk_t* this, GtkWidget* paned, s64 position) {
+  {
+    gdk_threads_enter();
+    gtk_paned_set_position(GTK_PANED(paned), position);
+    gdk_threads_leave();
+  }
+}
+
 
 // vpaned
 
@@ -930,6 +938,30 @@ f2ptr f2__gtk__paned__pack2(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize,
 }
 def_pcfunk4(gtk__paned__pack2, paned, child, resize, shrink, return f2__gtk__paned__pack2(this_cause, paned, child, resize, shrink));
 
+
+//void funk2_gtk__paned__set_position(funk2_gtk_t* this, GtkWidget* paned, s64 position) {
+
+f2ptr raw__gtk__paned__set_position(f2ptr cause, f2ptr paned, f2ptr position) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_paned   = raw__gtk_widget__as__GtkWidget(cause, paned);
+  s64        position__i = f2integer__i(position, cause);
+  funk2_gtk__paned__set_position(&(__funk2.gtk), gtk_paned, position__i);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__paned__set_position(f2ptr cause, f2ptr paned, f2ptr position) {
+  if ((! inherits_from(cause, paned, gtk_widget)) ||
+      (! inherits_from(cause, child, integer))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__paned__set_position(cause, paned, position);
+}
+def_pcfunk2(gtk__paned__set_position, paned, position, return f2__gtk__paned__set_position(this_cause, paned, position));
+
+
 // vpaned
 
 f2ptr raw__gtk__vpaned__new(f2ptr cause) {
@@ -1075,8 +1107,9 @@ void f2__gtk__initialize() {
   
   // paned
   
-  f2__primcfunk__init__4(gtk__paned__pack1, paned, child, resize, shrink, "Packs the first child of the Paned.");
-  f2__primcfunk__init__4(gtk__paned__pack2, paned, child, resize, shrink, "Packs the second child of the Paned.");
+  f2__primcfunk__init__4(gtk__paned__pack1,        paned, child, resize, shrink, "Packs the first child of the Paned.");
+  f2__primcfunk__init__4(gtk__paned__pack2,        paned, child, resize, shrink, "Packs the second child of the Paned.");
+  f2__primcfunk__init__2(gtk__paned__set_position, paned, position,              "Sets the pixel position of the Paned.");
   
   // vpaned
   

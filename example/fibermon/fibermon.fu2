@@ -108,13 +108,13 @@
 	    [let [[total_used_memory [system-memorypool-total_global_memory [get processor pool_index]]]
 		  [total_free_memory [system-memorypool-total_free_memory   [get processor pool_index]]]]
 	      
-	      [set [get processor_text_view buffer] text [format nil  'processor pool index\t: ' [get processor pool_index]
-								 '\n' 'total memory\t\t: '   [number-to_memory_string [+ total_free_memory total_used_memory]] 'B'
-								 '\n' 'free memory\t\t\t: '  [number-to_memory_string total_free_memory]                       'B'
-								 '\n' 'active fiber count\t: ' [simple_length [get processor active_fibers]]
-								 '\n' 'processor usage\t\t: ' [* 100.0 processor_usage] '%'
-								 '\n' 'total bytecode rate\t: ' [/ [if [== elapsed_seconds 0.0] 0.0 [/ total_bytecode_count elapsed_seconds]] 1024.0] ' kBc/s'
-								 '\n' 'elapsed\t\t\t\t: ' elapsed_seconds ' s'
+	      [set [get processor_text_view buffer] text [format nil  'processor pool index\t: ' [get processor pool_index]                                                            ''
+								 '\n' 'total memory\t\t: '       [number-to_memory_string [+ total_free_memory total_used_memory]]                     'B'
+								 '\n' 'free memory\t\t\t: '      [number-to_memory_string total_free_memory]                                           'B'
+								 '\n' 'active fiber count\t: '   [simple_length [get processor active_fibers]]                                         ''
+								 '\n' 'processor usage\t\t: '    [* 100.0 processor_usage]                                                             '%'
+								 '\n' 'total bytecode rate\t: '  [/ [if [== elapsed_seconds 0.0] 0.0 [/ total_bytecode_count elapsed_seconds]] 1024.0] ' kBc/s'
+								 '\n' 'elapsed\t\t\t\t: '        elapsed_seconds                                                                       ' s'
 								 ]]
 	      
 	      ]]]]
@@ -139,14 +139,35 @@
     [frame widget      vbox
 	   redraw_funk [funk [] [fibermon_processor_widget-redraw processor_text_view progress_bar processor info_fiber_hash text_view]]]]]
 
-[defunk fibermon_model6-redraw [text_view]
-  [set [get text_view buffer] text [format nil 'Model-6']]
+[defunk fibermon_model6-redraw [vpaned text_view_array mind_array]
+  [dotimes [i [length mind_redraw_funk_array]]
+    [let [[mind [get mind_array elt i]]]
+      [let [[mind_redraw_funk [have mind lookup `redraw_funk]]]
+	[apply mind_redraw_funk nil]]]]
   nil]
 
-[defunk fibermon_model6-new []
+[defunk fibermon_mind-new []
   [let [[text_view [gtk-text_view-new]]]
     [frame widget      text_view
-	   redraw_funk [funk [] [fibermon_model6-redraw text_view]]]]]
+	   redraw_funk [funk []
+			     [set [get text_view buffer] text [format nil 'Model-6']]
+			     ]]]]
+
+[defunk fibermon_model6-new []
+  [let [[mind_num 3]]
+    [let [[mind_array [new array mind_num]]]
+      [let [[vpaned                 [gtk-vpaned-new]]
+	    [hbox                   [gtk-hbox-new mind_num]]
+	    [mind_redraw_funk_array [new array mind_num]]]
+	[dotimes [i mind_num]
+	  [let [[mind [fibermon_mind-new]]]
+	    [set mind_array elt i mind]
+	    [let [[mind_widget      [have mind lookup `widget]]
+		  [mind_redraw_funk [have mind lookup `redraw_funk]]]
+	      [have hbox pack_start mind_widget t t 0]
+	      [set mind_redraw_funk_array elt i mind_redraw_funk]]]]
+	[frame widget      vpaned
+	       redraw_funk [funk [] [fibermon_model6-redraw vpaned text_view_array mind_array]]]]]]]
 
   
 [defunk fibermon-new [:rest args]

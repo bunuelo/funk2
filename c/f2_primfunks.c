@@ -108,6 +108,32 @@ f2ptr f2__system__environment(f2ptr cause, f2ptr node_id) {
 }
 def_pcfunk1(system__environment, node_id, return f2__system__environment(this_cause, node_id));
 
+f2ptr f2__system__memorypool__total_global_memory(f2ptr cause, f2ptr index) {
+  if (! raw__integer__is_type(cause, index)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  s64 index__i = f2integer__i(index, cause);
+  if (index__i < 0 || index__i > 7) {
+    return f2larva__new(cause, 2, nil);
+  }
+  return f2integer__new(cause, __funk2.memory.pool[index__i].total_global_memory);
+}
+def_pcfunk1(system__memorypool__total_global_memory, index, return f2__system__memorypool__total_global_memory(this_cause, index));
+
+
+f2ptr f2__system__memorypool__total_free_memory(f2ptr cause, f2ptr index) {
+  if (! raw__integer__is_type(cause, index)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  s64 index__i = f2integer__i(index, cause);
+  if (index__i < 0 || index__i > 7) {
+    return f2larva__new(cause, 2, nil);
+  }
+  return f2integer__new(cause, __funk2.memory.pool[index__i].total_free_memory);
+}
+def_pcfunk1(system__memorypool__total_free_memory, index, return f2__system__memorypool__total_free_memory(this_cause, index));
+
+
 // funk2 pointer (f2ptr)
 
 f2ptr f2__pointer(f2ptr cause, f2ptr x) {return f2pointer__new(cause, (ptr)(long)x);}
@@ -1845,6 +1871,9 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(funkall__raw_c_funk__p__pp, "");
   f2__primcfunk__init(funkall__raw_c_funk__p__ppp, "");
   f2__primcfunk__init(funkall__raw_c_funk__p__pppp, "");
+  
+  f2__primcfunk__init__1(system__memorypool__total_global_memory, index, "Returns the total_global_memory of the memorypool index (0-7).");
+  f2__primcfunk__init__1(system__memorypool__total_free_memory,   index, "Returns the total_free_memory of the memorypool index (0-7).");
   
   f2__funktional_primcfunk__init(integer__to_float, "");
   f2__funktional_primcfunk__init(integer__to_double, "");

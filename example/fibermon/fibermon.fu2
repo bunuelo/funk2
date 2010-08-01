@@ -98,6 +98,8 @@
 	    [set progress_bar fraction processor_usage]
 	    
 	    [set [get processor_text_view buffer] text [format nil  'processor pool index\t: ' [get processor pool_index]
+							       '\n' 'total global memory\t: ' [system-memorypool-total_global_memory [get processor pool_index]]
+							       '\n' 'total free memory\t: ' [system-memorypool-total_free_memory [get processor pool_index]]
 							       '\n' 'active fiber count\t: ' [simple_length [get processor active_fibers]]
 							       '\n' 'processor usage\t\t: ' [* 100.0 processor_usage] '%'
 							       '\n' 'total bytecode rate\t: ' [/ [if [== elapsed_seconds 0.0] 0.0 [/ total_bytecode_count elapsed_seconds]] 1024.0] ' kbc/s'

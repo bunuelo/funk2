@@ -207,6 +207,9 @@
 [globalize-funk funkall-raw_c_funk-p-ppp                    &primfunk:funkall__raw_c_funk__p__ppp]
 [globalize-funk funkall-raw_c_funk-p-pppp                   &primfunk:funkall__raw_c_funk__p__pppp]
 
+[globalize-funk system-memorypool-total_global_memory       &primfunk:system__memorypool__total_global_memory]
+[globalize-funk system-memorypool-total_free_memory         &primfunk:system__memorypool__total_free_memory]
+
 [globalize-funk integer-to_float                            &primfunk:integer__to_float]
 [globalize-funk integer-to_double                           &primfunk:integer__to_double]
 [globalize-funk double-to_integer                           &primfunk:double__to_integer]

@@ -85,7 +85,7 @@
 																		      '']]
 																	      [append `[cause-args]
 																		       [get cause-frame slots]]]]]]]
-											     '\t' [/ bytecodes_per_second 1024.0]       ' kbc/s' '\n'
+											     '\t' [/ bytecodes_per_second 1024.0]       ' kBc/s' '\n'
 											     '\t' 'is' [if [get fiber paused]           ' ' ' not '] 'paused' '\n'
 											     '\t' 'is' [if [get fiber is_complete]      ' ' ' not '] 'complete' '\n'
 											     '\t' 'is' [if [get fiber sleep_until_time] ' ' ' not '] 'asleep' '\n'
@@ -105,15 +105,15 @@
 	    
 	    [set progress_bar fraction processor_usage]
 	    
-	    [let [[total_global_memory [system-memorypool-total_global_memory [get processor pool_index]]]
-		  [total_free_memory   [system-memorypool-total_free_memory [get processor pool_index]]]]
+	    [let [[total_used_memory [system-memorypool-total_global_memory [get processor pool_index]]]
+		  [total_free_memory [system-memorypool-total_free_memory   [get processor pool_index]]]]
 	      
 	      [set [get processor_text_view buffer] text [format nil  'processor pool index\t: ' [get processor pool_index]
-								 '\n' 'total global memory\t: ' [number-to_memory_string total_global_memory] 'b'
-								 '\n' 'total free memory\t: ' [number-to_memory_string total_free_memory]     'b'
+								 '\n' 'total memory\t\t: '   [number-to_memory_string [+ total_free_memory total_used_memory]] 'B'
+								 '\n' 'free memory\t\t\t: '  [number-to_memory_string total_free_memory]                       'B'
 								 '\n' 'active fiber count\t: ' [simple_length [get processor active_fibers]]
 								 '\n' 'processor usage\t\t: ' [* 100.0 processor_usage] '%'
-								 '\n' 'total bytecode rate\t: ' [/ [if [== elapsed_seconds 0.0] 0.0 [/ total_bytecode_count elapsed_seconds]] 1024.0] ' kbc/s'
+								 '\n' 'total bytecode rate\t: ' [/ [if [== elapsed_seconds 0.0] 0.0 [/ total_bytecode_count elapsed_seconds]] 1024.0] ' kBc/s'
 								 '\n' 'elapsed\t\t\t\t: ' elapsed_seconds ' s'
 								 ]]
 	      

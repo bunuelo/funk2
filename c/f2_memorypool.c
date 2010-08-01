@@ -299,19 +299,19 @@ funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_
   funk2_memorypool__debug_memory_test(this, 4);
   //funk2_memblock_t* max_size_block = (funk2_memblock_t*)rbt_tree__maximum(&(this->free_memory_tree));
   funk2_memblock_t* perfect_size_block = (funk2_memblock_t*)rbt_tree__minimum_not_less_than(&(this->free_memory_tree), byte_num);
-  if (max_size_block && funk2_memblock__byte_num(max_size_block) >= byte_num) {
-    rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)max_size_block);
-    max_size_block->used = 1;
+  if (perfect_size_block && funk2_memblock__byte_num(perfect_size_block) >= byte_num) {
+    rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)perfect_size_block);
+    perfect_size_block->used = 1;
   } else {
-    if (!max_size_block) {
+    if (!perfect_size_block) {
       status("there are no free memory blocks left.");
     } else {
-      status("largest memory block is too small (need " f2size_t__fstr " bytes, have " f2size_t__fstr " bytes).", byte_num, funk2_memblock__byte_num(max_size_block));
+      status("largest memory block is too small (need " f2size_t__fstr " bytes, have " f2size_t__fstr " bytes).", byte_num, funk2_memblock__byte_num(perfect_size_block));
     }
-    max_size_block = NULL; // largest free memory block is not large enough.  fail.
+    perfect_size_block = NULL; // largest free memory block is not large enough.  fail.
   }
   funk2_memorypool__debug_memory_test(this, 4); // memory assumption violation here (block is taken out of free list and not added to used list, yet).
-  return max_size_block;
+  return perfect_size_block;
 }
 
 boolean_t funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memorypool_t* this, funk2_memory_t* memory) {

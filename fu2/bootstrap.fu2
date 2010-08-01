@@ -46,6 +46,7 @@
 [load 'fu2/bootstrap-cause.fu2']
 [load 'fu2/bootstrap-zlib.fu2']
 [load 'fu2/bootstrap-largeinteger.fu2']
+[load 'fu2/bootstrap-number.fu2']
 [load 'fu2/bootstrap-graph.fu2']
 [load 'fu2/bootstrap-perception_lattice.fu2']
 [load 'fu2/bootstrap-graphviz.fu2']

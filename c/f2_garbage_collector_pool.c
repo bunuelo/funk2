@@ -97,7 +97,7 @@ void funk2_garbage_collector_mutation_buffer__load_from_stream(funk2_garbage_col
 void funk2_garbage_collector_no_more_references_buffer__init(funk2_garbage_collector_no_more_references_buffer_t* this) {
   funk2_processor_mutex__init(&(this->mutex));
   this->count        = 0;
-  this->alloc_length = 1;
+  this->alloc_length = 1024 * 1024;
   this->data         = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
 }
 
@@ -158,7 +158,7 @@ void funk2_garbage_collector_no_more_references_buffer__load_from_stream(funk2_g
 void funk2_garbage_collector_protected_f2ptr_buffer__init(funk2_garbage_collector_protected_f2ptr_buffer_t* this) {
   funk2_processor_mutex__init(&(this->mutex));
   this->count        = 0;
-  this->alloc_length = 1;
+  this->alloc_length = 1024 * 1024;
   this->data         = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
 }
 
@@ -218,7 +218,7 @@ void funk2_garbage_collector_protected_f2ptr_buffer__load_from_stream(funk2_garb
 
 void funk2_garbage_collector_other_grey_buffer__init(funk2_garbage_collector_other_grey_buffer_t* this) {
   this->count        = 0;
-  this->alloc_length = 1;
+  this->alloc_length = 1024 * 1024;
   this->data         = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
 }
 

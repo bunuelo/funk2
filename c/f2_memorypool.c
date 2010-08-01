@@ -297,7 +297,8 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
 // look for memory block that is not used and is big enough for us to split up
 funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_memorypool_t* this, f2size_t byte_num) {
   funk2_memorypool__debug_memory_test(this, 4);
-  funk2_memblock_t* max_size_block = (funk2_memblock_t*)rbt_tree__maximum(&(this->free_memory_tree));
+  //funk2_memblock_t* max_size_block = (funk2_memblock_t*)rbt_tree__maximum(&(this->free_memory_tree));
+  funk2_memblock_t* perfect_size_block = (funk2_memblock_t*)rbt_tree__minimum_not_less_than(&(this->free_memory_tree), byte_num);
   if (max_size_block && funk2_memblock__byte_num(max_size_block) >= byte_num) {
     rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)max_size_block);
     max_size_block->used = 1;

@@ -291,6 +291,33 @@ rbt_node_t* rbt_node__maximum(rbt_node_t* node) {
   return iter;
 }
 
+rbt_node_t* rbt_node__minimum_not_less_than(rbt_node_t* node, f2size_t size) {
+  if (node == NULL) {
+    return NULL;
+  }
+  if (node->key >= size) {
+    rbt_node_t* left__minimum_not_less_than = NULL;
+    if (node->left) {
+      left__minimum_not_less_than = rbt_node__minimum_not_less_than(node->left, size);
+    }
+    if (left__minimum_not_less_than) {
+      return left__minimum_not_less_than;
+    } else {
+      return node;
+    }
+  } else {
+    rbt_node_t* right__minimum_not_less_than = NULL;
+    if (node->right) {
+      right__minimum_not_less_than = rbt_node__minimum_not_less_than(node->right, size);
+    }
+    if (right__minimum_not_less_than) {
+      return right__minimum_not_less_than;
+    } else {
+      return NULL;
+    }
+  }
+}
+
 int rbt_node__contains(rbt_node_t* root_node, rbt_node_t* node) {
   if (root_node == NULL) {
     return 0;
@@ -707,6 +734,10 @@ rbt_node_t* rbt_tree__minimum(rbt_tree_t* tree) {
 
 rbt_node_t* rbt_tree__maximum(rbt_tree_t* tree) {
   return rbt_node__maximum(tree->head);
+}
+
+rbt_node_t* rbt_tree__minimum_not_less_than(rbt_tree_t* tree, f2size_t size) {
+  return rbt_node__minimum_not_less_than(tree->head, size);
 }
 
 int rbt_tree__size(rbt_tree_t* tree) {

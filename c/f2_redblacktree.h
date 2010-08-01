@@ -52,6 +52,7 @@ void        rbt_tree__insert(rbt_tree_t* tree, rbt_node_t* node);
 void        rbt_tree__remove(rbt_tree_t* tree, rbt_node_t* node);
 rbt_node_t* rbt_tree__minimum(rbt_tree_t* tree);
 rbt_node_t* rbt_tree__maximum(rbt_tree_t* tree);
+rbt_node_t* rbt_tree__minimum_not_less_than(rbt_tree_t* tree, f2size_t size);
 rbt_node_t* rbt_node__next(rbt_node_t* node);
 rbt_node_t* rbt_node__prev(rbt_node_t* node);
 int         rbt_node__is_valid(rbt_node_t* node);

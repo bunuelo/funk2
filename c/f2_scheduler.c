@@ -110,12 +110,12 @@ f2ptr f2__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr scheduler) 
   u64   min_length    = 0xffffffffffffffffull;
   f2ptr min_processor = nil;
   u64 i;
-  status("processor fiber list:");
+  //status("processor fiber list:");
   for (i = 0; i < processors__length; i ++) {
     f2ptr processor = raw__array__elt(cause, processors, i);
     f2ptr active_fibers = f2processor__active_fibers(processor, cause);
     u64 fibers__length = raw__simple_length(cause, active_fibers);
-    status("  processor pool_index=" s64__fstr " active_fiber_num=" u64__fstr ".", f2integer__i(f2processor__pool_index(processor, cause), cause), fibers__length);
+    //status("  processor pool_index=" s64__fstr " active_fiber_num=" u64__fstr ".", f2integer__i(f2processor__pool_index(processor, cause), cause), fibers__length);
     if (fibers__length < min_length) {
       min_length = fibers__length;
       min_processor = processor;
@@ -131,7 +131,7 @@ void f2__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
 
 void f2__scheduler__add_fiber_to_least_used_processor(f2ptr cause, f2ptr this, f2ptr fiber) {
   f2ptr processor = f2__scheduler__processor_with_fewest_fibers(cause, this);
-  status("[adding fiber to least used processor " s64__fstr "]", f2integer__i(f2processor__pool_index(processor, cause), cause));
+  //status("[adding fiber to least used processor " s64__fstr "]", f2integer__i(f2processor__pool_index(processor, cause), cause));
   f2__processor__add_active_fiber(cause, processor, fiber);
 }
 

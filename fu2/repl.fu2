@@ -75,7 +75,7 @@
     [if [equals read-exp `[exit]]
 	`repl-exit
       [let [[eval-exp [with-new-cause [cause-define cause-name `repl-eval]
-				      [cause-define cause-args [frame read-exp read-exp]]
+				      [cause-define cause-exp read-exp]
 				      [eval read-exp]]]]
 	[if [is-type `exception eval-exp]
 	    [let [[tag [object-get eval-exp `tag]]]

@@ -121,13 +121,12 @@
     [have vbox pack_start progress_bar nil nil 0]
     [have scrolled_window add text_view]
     [have vbox pack_start scrolled_window t t 0]
-    [fiber [funk []
-		 [cause-define cause-name `fibermon_processor_handler]
-		 [cause-define cause-args [frame index index]]
-		 [while t
-		   [fibermon_processor_widget-redraw processor_text_view progress_bar processor info_fiber_hash text_view]]]
-	   nil]
-    vbox]]
+    [let [[redraw_funk [funk []
+			     [cause-define cause-name `fibermon_processor_handler]
+			     [cause-define cause-args [frame index index]]
+			     [while t
+			       [fibermon_processor_widget-redraw processor_text_view progress_bar processor info_fiber_hash text_view]]]]]
+      [frame widget vbox update_funk redraw_funk redraw_funk]]]]
 
 [defunk fibermon [:rest args]
   [let [[print_usage_message_and_exit nil]]
@@ -160,21 +159,36 @@
 	[have vpaned         pack1      swindow t t]
 	[have swindow        add        text_view]
 	[have vpaned         pack2      processor_hbox t t]
-	[dotimes [i 8]
-	  [let [[processor [fibermon_processor_widget-new i]]]
-	    [have processor_hbox pack_start processor t t 0]
-	    [set processor_array elt i processor]]]
-	
-	[have search_button signal_connect 'clicked'
-	      [funk []
-		    [let [[found_range [have [get [get text_view buffer] start_iter] forward_search [get search_entry text]]]]
-		      [if found_range
-			  [prog [format stdout '\n  found "' [get search_entry text] '"!']
-				[have [get text_view buffer] select_range found_range]]
-			[prog [format stdout '\n  could not find "' [get search_entry text] '".']]]]]
-	      nil]
-	[have next_button signal_connect 'clicked' [funk [button] [print 'Next button clicked!']] [cons next_button nil]]
-	
-	[have win show_all]]]]]
+	[let [[redraw_funks nil]]
+	  [dotimes [i 8]
+	    [let [[processor_frame [fibermon_processor_widget-new i]]]
+	      [let [[processor   [have processor_frame lookup `widget]]
+		    [redraw_funk [have processor_frame lookup `redraw_funk]]]
+		[= redraw_funks [cons redraw_funk redraw_funks]]
+		[have processor_hbox pack_start processor t t 0]
+		[set processor_array elt i processor]]]]
+	  
+	  [have search_button signal_connect 'clicked'
+		[funk []
+		      [let [[found_range [have [get [get text_view buffer] start_iter] forward_search [get search_entry text]]]]
+			[if found_range
+			    [prog [format stdout '\n  found "' [get search_entry text] '"!']
+				  [have [get text_view buffer] select_range found_range]]
+			  [prog [format stdout '\n  could not find "' [get search_entry text] '".']]]]]
+		nil]
+	  [have next_button signal_connect 'clicked' [funk [button] [print 'Next button clicked!']] [cons next_button nil]]
+	  
+	  [have win show_all]
+	  
+	  [fiber [funk []
+		       [cause-define cause-name `fibermon-redraw]
+		       [while t
+			 [mapc [funk [redraw_funk]
+				     [apply redraw_funk nil]]
+			       redraw_funks]
+			 [sleep 10]]]
+		 nil]
+	  
+	  nil]]]]]
 
 

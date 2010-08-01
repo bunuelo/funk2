@@ -67,15 +67,20 @@
 											   '\t' 'is' [if [get fiber paused]      ' ' ' not '] 'paused' '\n'
 											   '\t' 'is' [if [get fiber is_complete] ' ' ' not '] 'complete' '\n'
 											   '\t' 'is' [if [get fiber is_zombie]   ' ' ' not '] 'zombie' ']' '\n']
-										   [format nil '[' [let [[cause_reg [get fiber cause_reg]]]
-												     [if cause_reg
-													 [have [get cause_reg frame] lookup `cause-name]
-												       `no-cause]] '\n'
-											  '\t' bytecodes_per_second           ' bc/s' '\n'
-											  '\t' 'is' [if [get fiber paused]           ' ' ' not '] 'paused' '\n'
-											  '\t' 'is' [if [get fiber is_complete]      ' ' ' not '] 'complete' '\n'
-											  '\t' 'is' [if [get fiber sleep_until_time] ' ' ' not '] 'asleep' '\n'
-											  '\t' 'is' [if [get fiber is_zombie]        ' ' ' not '] 'zombie' ']' '\n']
+										   [let [[cause_reg [get fiber cause_reg]]]
+										     [format nil '[' [if cause_reg
+													 [let [[cause-frame [get cause_reg frame]]]
+													   [format nil [have cause-frame lookup `cause-name] '\n'
+														   [stringlist-concat [mapcar [funk [slot]
+																		    [if [not [eq slot `cause-name]]
+																			[format nil ' - ' slot ': ' [have cause-frame lookup slot] '\n']
+																		      '']]
+																	      [get cause-frame slots]]]]]]
+											     '\t' bytecodes_per_second           ' bc/s' '\n'
+											     '\t' 'is' [if [get fiber paused]           ' ' ' not '] 'paused' '\n'
+											     '\t' 'is' [if [get fiber is_complete]      ' ' ' not '] 'complete' '\n'
+											     '\t' 'is' [if [get fiber sleep_until_time] ' ' ' not '] 'asleep' '\n'
+											     '\t' 'is' [if [get fiber is_zombie]        ' ' ' not '] 'zombie' ']' '\n']]
 										   ]]]]]]]
 								[get processor active_fibers]]]]
     

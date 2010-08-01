@@ -85,12 +85,13 @@
 		[repl-io input-stream output-stream html tutorial]]]]]]]
 
 [defunk repl []
-  [let [[result [repl-io stdin stdout nil nil]]]
-    [if [is-type `exception result]
-	[prog [format stdout
-		      '\nerror repl: unexpected exception ' result '\n'
-		      '\n            restarting repl.\n']
-	      [repl]]]]]
+  [with-new-cause [cause-define cause-name `repl]
+		  [let [[result [repl-io stdin stdout nil nil]]]
+		    [if [is-type `exception result]
+			[prog [format stdout
+				      '\nerror repl: unexpected exception ' result '\n'
+				      '\n            restarting repl.\n']
+			      [repl]]]]]]
 
 [defunk repl-html []
   [let [[result [repl-io stdin stdout t t]]]
@@ -101,13 +102,15 @@
 	      [repl-html]]]]]
 
 [defunk load1 [filename]
-  [let [[file-stream [stream-new_open_file filename [stream-file_mode-rdonly]]]]
-    [if [null file-stream]
-	[error load-error [format nil 'load error: could not open "' filename '" for reading.']]
-      [let [[result [with-new-cause [cause-define source-filename filename]
-				    [repl-io file-stream nil nil nil]]]]
-	[stream-close file-stream]
-	result]]]]
+  [with-new-cause [cause-define cause-name `load1]
+		  [cause-define cause-args [frame filename filename]]
+		  [let [[file-stream [stream-new_open_file filename [stream-file_mode-rdonly]]]]
+		    [if [null file-stream]
+			[error load-error [format nil 'load error: could not open "' filename '" for reading.']]
+		      [let [[result [with-new-cause [cause-define source-filename filename]
+						    [repl-io file-stream nil nil nil]]]]
+			[stream-close file-stream]
+			result]]]]]
 
 [defunk load [:rest filenames]
   [print [cons `load filenames]]

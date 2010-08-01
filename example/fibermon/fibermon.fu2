@@ -70,12 +70,13 @@
 										   [let [[cause_reg [get fiber cause_reg]]]
 										     [format nil '[' [if cause_reg
 													 [let [[cause-frame [get cause_reg frame]]]
-													   [format nil [have cause-frame lookup `cause-name] '\n'
+													   [format nil [have cause_reg lookup `cause-name] '\n'
 														   [stringlist-concat [mapcar [funk [slot]
 																		    [if [not [eq slot `cause-name]]
-																			[format nil ' - ' slot ': ' [have cause-frame lookup slot] '\n']
+																			[format nil ' - ' slot ': ' [have cause_reg lookup slot] '\n']
 																		      '']]
-																	      [get cause-frame slots]]]]]]
+																	      [append `[cause-args]
+																		       [get cause-frame slots]]]]]]]
 											     '\t' [/ bytecodes_per_second 1024.0]       ' kbc/s' '\n'
 											     '\t' 'is' [if [get fiber paused]           ' ' ' not '] 'paused' '\n'
 											     '\t' 'is' [if [get fiber is_complete]      ' ' ' not '] 'complete' '\n'

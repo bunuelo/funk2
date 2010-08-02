@@ -27,7 +27,7 @@
 [deftypefunk gtk_widget get     buffer         []                                                          [gtk-text_view-get_buffer      this]]
 [deftypefunk gtk_widget set     fraction       [fraction]                                                  [gtk-progress_bar-set_fraction this fraction]]
 [deftypefunk gtk_widget set     title          [title]                                                     [gtk-window-set_title          this title]]
-[deftypefunk gtk_widget set     size           [minimum_width minimum_height natural_width natural_height] [gtk-size_request-set_size     this minimum_width minimum_height natural_width natural_height]]
+[deftypefunk gtk_widget set     size           [minimum_width minimum_height natural_width natural_height] [gtk-size_request-get_size     this minimum_width minimum_height natural_width natural_height]]
 
 [deftypefunk gtk_box execute pack_start [child expand fill padding] [gtk-box-pack_start this child expand fill padding]]
 

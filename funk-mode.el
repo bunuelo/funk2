@@ -78,7 +78,6 @@
             '("and" "apply" "car" "cdr" "cons" "list" "mapc" "mapcar" "null" "print"
               "range" "join" "format" "or" "not" "cadr" "caddr" "cadddr" "cddr" "cdddr"
               "first" "fourth" "make-funk" "make-metro" "second" "set-car" "set-cdr"
-              "third" "thread-complete" "thread-value" "eq")
               "third" "thread-complete" "thread-value" "eq" "set" "get" "have" "execute")
             'words)
            'font-lock-function-name-face)
@@ -86,8 +85,6 @@
             '("+" "-" "*" "/" "=" "<" ">" "!=" "<=" ">=") 'words)
            'font-lock-function-name-face)
      (cons (regexp-opt
-            '("action" "actor" "act" "elt" "execute" "parlet" "partimes" "cond"
-              "defunk" "define-funk" "define" "defmetro" "deftypefunk" "deframe" "dotimes" "funk" "set" "get" "have"
             '("action" "actor" "act" "elt" "parlet" "partimes" "cond"
               "defunk" "define-funk" "define" "defmetro" "deftypefunk" "deframe" "dotimes" "funk"
               "globalize" "globalize-funk" "if" "let" "let*" "metro" "parlet" "prog" "put" "quote" "while" "nil")
@@ -100,7 +97,7 @@
      '("\\(\\\x\\)\\([a-fA-F0-9]+\\)" . font-lock-string-face)
      ;;'("\\([+-*/=<>]\\|[<>!]=\\)" . font-lock-function-name-face)
      ;;'("\\([+-*/=]\\)" . font-lock-function-name-face)
-     '("\\([a-zA-Z0-9_-~!@#$%^&*()_+-={}]+\\)" . font-lock-variable-name-face)
+     ;;'("\\([a-zA-Z0-9_-~!@#$%^&*()_+-={}]+\\)" . font-lock-variable-name-face)
      ;;'("\\(\\\x\\)\\([a-fA-F0-9]+\\)" . font-lock-string-face)
      ;;'("\\([+-*/=<>]\\|[<>!]=\\)" . font-lock-function-name-face)
      ;;'("\\([+-*/=]\\)" . font-lock-function-name-face)

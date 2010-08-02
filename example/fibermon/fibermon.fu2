@@ -146,11 +146,17 @@
 	[apply mind_redraw_funk nil]]]]
   nil]
 
+[defunk fibermon_mind-redraw [text_view]
+  [set [get text_view buffer] text [format nil 'Model-6']]
+  ]
+
 [defunk fibermon_mind-new []
   [let [[text_view [gtk-text_view-new]]]
     [frame widget      text_view
 	   redraw_funk [funk []
-			     [set [get text_view buffer] text [format nil 'Model-6']]
+			     [print 'beginning fibermon_min-redraw.']
+			     [fibermon_mind-redraw text_view]
+			     [print 'finished fibermon_min-redraw.']
 			     ]]]]
 
 [defunk fibermon_model6-new []

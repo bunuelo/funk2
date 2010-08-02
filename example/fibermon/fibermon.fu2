@@ -173,7 +173,7 @@
 	    [text_view       [gtk-text_view-new]]]
 	
 	[have swindow add          text_view]
-	[have vbox    pack_start   swindow nil nil 0]
+	[have vbox    pack_start   swindow t t 0]
 	
 	[have win     add          vbox]
 	[set  win     default_size 1900 1024]
@@ -190,7 +190,7 @@
 		[have processor_hbox pack_start processor t t 0]
 		[set processor_array elt i processor]]]]
 	  
-	  [have vbox pack_start processor_hbox nil nil 0]
+	  [have vbox pack_start processor_hbox t t 0]
 	  
 	  [have win signal_connect 'destroy'
 		[funk []

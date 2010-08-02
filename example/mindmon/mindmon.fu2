@@ -50,8 +50,8 @@
 				       [set this text_view  [gtk-text_view-new]]
 				       [set this layer_vbox [gtk-vbox-new [get this layer_count]]]
 				       
-				       [have vbox pack_start text_view nil nil 0]
-				       [have vbox pack_start layer_vbox t t 0]
+				       [have [get this vbox] pack_start text_view nil nil 0]
+				       [have [get this vbox] pack_start layer_vbox t t 0]
 				       
 				       [have win add          [get this vbox]]
 				       [set  win default_size 640 800]

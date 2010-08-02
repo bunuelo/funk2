@@ -17,7 +17,20 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe          mindmon [frame] [initialized mind fiber text_view]]
+[deframe          mindmon_layer [frame] [mindmon text_view]]
+[deftypeconstruct mindmon_layer [mindmon]
+  [set this mindmon   mindmon]
+  [set this text_view [gtk-text_view-new]]
+  this]
+
+[deftypefunk mindmon_layer get widget []
+  [get this text_view]]
+
+[deftypefunk mindmon_layer execute redraw []
+  [set [get [get this text_view] buffer] text [format nil 'Mind Layer.']]
+  ]
+
+[deframe          mindmon [frame] [initialized mind fiber vbox layer_array]]
 [deftypeconstruct mindmon [mind]
   [if [not [is-type `mind mind]]
       [error bug_type `mindmon_mind_is_not_mind
@@ -33,11 +46,18 @@
 				     
 				     [let [[win [gtk-window-new]]]
 				       
-				       [set this text_view [gtk-text_view-new]]
+				       [set this vbox [gtk-vbox-new [get this layer_count]]]
 				       
-				       [have win add          [get this text_view]]
+				       [have win add          [get this vbox]]
 				       [set  win default_size 640 800]
 				       [set  win title        'mindmon']
+				       
+				       [set this layer_array [new array [get this layer_count]]]
+				       
+				       [dotimes [i [get this layer_count]]
+					 [let [[mindmon_layer [new mindmon_layer this]]]
+					   [set layer_array elt i mindmon_layer]
+					   [have vbox pack_start [get mindmon_layer widget] t t 0]]]
 				       
 				       [let [[mindmon-redraw-quit_now nil]
 					     [mindmon-redraw-is_done  nil]]
@@ -61,10 +81,14 @@
   [set this initialized t]
   this]
 
+
+[deftypefunk mindmon get layer_count []
+  [simple_length [get [get this mind] layers]]]
+
+
 [deftypefunk mindmon execute redraw []
-  [let [[layer_count [simple_length [get [get this mind] layers]]]]
-    [set [get [get this text_view] buffer] text [format nil 'Mind with ' layer_count ' layers.']]
-    ]]
+  [dotimes [i [get this layer_count]]
+    [have [get [get this layer_array] elt i] redraw]]]
 
 
 [defmetro mindmon [:rest args]

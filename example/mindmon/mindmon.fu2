@@ -78,7 +78,7 @@
 			 [cause-define cause-name `mindmon]
 			 [cause-enable_reactive_critics [this-cause]]
 			 [while [not mindmon-redraw-quit_now]
-			   [apply model6_redraw_funk nil]
+			   [apply mind_redraw_funk nil]
 			   [yield]]
 			 [= mindmon-redraw-is_done t]
 			 nil]

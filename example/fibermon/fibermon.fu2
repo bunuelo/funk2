@@ -275,6 +275,7 @@
 	    
 	    [fiber [funk []
 			 [cause-define cause-name `fibermon-redraw]
+			 [cause-enable_reactive_critics [this-cause]]
 			 [while [not fibermon-redraw-quit_now]
 			   [mapc [funk [redraw_funk]
 				       [apply redraw_funk nil]]

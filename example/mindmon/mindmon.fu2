@@ -201,8 +201,8 @@
 		'\n'   ''
 		'\n'   'DESCRIPTION'
 		'\n'   '       The mindmon program provides a dynamic real-time view of a running system.  It can '
-		'\n'   '       display system summary information as well as a list of tasks currently being managed '
-		'\n'   '       by the Funk kernel.'
+		'\n'   '       display system summary information as well as a list of resources currently being managed '
+		'\n'   '       by the mind.'
 		'\n'   ''
 		'\n'   '       This description is inspired by the TOP Linux man page.']
       [let [[win              [gtk-window-new]]

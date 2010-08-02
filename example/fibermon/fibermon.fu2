@@ -166,18 +166,11 @@
 		'\n'   ''
 		'\n'   '       This description is inspired by the TOP Linux man page.']
       [let [[win             [gtk-window-new]]
-	    [vbox            [gtk-vbox-new 2]]
-	    [swindow         [gtk-scrolled_window-new]]
 	    [processor_hbox  [gtk-hbox-new 8]]
-	    [processor_array [new array 8]]
-	    [text_view       [gtk-text_view-new]]]
+	    [processor_array [new array 8]]]
 	
-	[have swindow add          text_view]
-	[have vbox    pack_start   swindow t t 0]
-	
-	[have win     add          vbox]
-	[set  win     default_size 1900 1024]
-	[set  win     title        'fibermon']
+	[set win default_size 1900 1024]
+	[set win title        'fibermon']
 	
 	[let [[redraw_funks             nil]
 	      [fibermon-redraw-quit_now nil]
@@ -190,7 +183,7 @@
 		[have processor_hbox pack_start processor t t 0]
 		[set processor_array elt i processor]]]]
 	  
-	  [have vbox pack_start processor_hbox t t 0]
+	  [have win add processor_hbox]
 	  
 	  [have win signal_connect 'destroy'
 		[funk []

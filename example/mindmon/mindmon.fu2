@@ -27,7 +27,7 @@
   [get this text_view]]
 
 [deftypefunk mindmon_mind execute redraw []
-  [let [[layer_count [length [get [get this mind] layers]]]]
+  [let [[layer_count [simple_length [get [get this mind] layers]]]]
     [set [get [get this text_view] buffer] text [format nil 'Mind with ' layer_count ' layers.']]
     ]]
 
@@ -59,35 +59,34 @@
 		'\n'   '       This description is inspired by the TOP Linux man page.']
       [let [[win          [gtk-window-new]]
 	    [mindmon_mind [new mindmon_mind mind]]]
-	[let [[mindmon_mind_widget [get mindmon_mind widget]]]
+	
+	[have win add          [get mindmon_mind widget]]
+	[set  win default_size 640 800]
+	[set  win title        'mindmon']
+	
+	[let [[mindmon-redraw-quit_now nil]
+	      [mindmon-redraw-is_done  nil]]
 	  
-	  [have win add          mindmon_mind_widget]
-	  [set  win default_size 640 800]
-	  [set  win title        'mindmon']
+	  [have win signal_connect 'destroy'
+		[funk []
+		      [= mindmon-redraw-quit_now t]
+		      [while [not mindmon-redraw-is_done]
+			[millisleep 100]]]
+		nil]
 	  
-	  [let [[mindmon-redraw-quit_now nil]
-		[mindmon-redraw-is_done  nil]]
-	    
-	    [have win signal_connect 'destroy'
-		  [funk []
-			[= mindmon-redraw-quit_now t]
-			[while [not mindmon-redraw-is_done]
-			  [millisleep 100]]]
-		  nil]
-	    
-	    [have win show_all]
-	    
-	    [fiber [funk []
-			 [cause-define cause-name `mindmon]
-			 [cause-enable_reactive_critics [this-cause]]
-			 [while [not mindmon-redraw-quit_now]
-			   [have mindmon_mind redraw]
-			   [yield]]
-			 [= mindmon-redraw-is_done t]
-			 nil]
-		   nil]
-	    
-	    nil]]]]]]
+	  [have win show_all]
+	  
+	  [fiber [funk []
+		       [cause-define cause-name `mindmon]
+		       [cause-enable_reactive_critics [this-cause]]
+		       [while [not mindmon-redraw-quit_now]
+			 [have mindmon_mind redraw]
+			 [yield]]
+		       [= mindmon-redraw-is_done t]
+		       nil]
+		 nil]
+	  
+	  nil]]]]]
 
 [defmetro mindmon [mind :rest args]
   `[mindmon-new ,mind @[mapcar [funk [arg] `[quote ,arg]] args]]]

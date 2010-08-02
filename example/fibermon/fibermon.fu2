@@ -154,9 +154,7 @@
   [let [[text_view [gtk-text_view-new]]]
     [frame widget      text_view
 	   redraw_funk [funk []
-			     [print 'beginning fibermon_min-redraw.']
 			     [fibermon_mind-redraw text_view]
-			     [print 'finished fibermon_min-redraw.']
 			     ]]]]
 
 [defunk fibermon_model6-new []
@@ -178,9 +176,7 @@
 	[set  vpaned position 16]
 	[frame widget      vpaned
 	       redraw_funk [funk []
-				 [print 'fibermon_model6-redraw beginning.']
 				 [fibermon_model6-redraw vpaned mind_array]
-				 [print 'fibermon_model6-redraw finished.']
 				 ]]]]]]
 
   

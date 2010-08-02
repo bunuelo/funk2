@@ -227,7 +227,7 @@
 	  
 	  [have processor_vpaned pack1      model6_vpaned t t]
 	  [have processor_vpaned pack2      processor_hbox t t]
-	  [set  processor_vpaned position   400]
+	  [set  processor_vpaned position   800]
 	  
 	  [have vbox             pack_start processor_vpaned t t 0]
 	  

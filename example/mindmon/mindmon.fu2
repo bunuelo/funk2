@@ -23,7 +23,7 @@
   [set this text_view [gtk-text_view-new]]
   this]
 
-[deftypefunk mindmin_mind get widget []
+[deftypefunk mindmon_mind get widget []
   [get this text_view]]
 
 [deftypefunk mindmon_mind execute redraw []
@@ -59,9 +59,9 @@
 		'\n'   '       This description is inspired by the TOP Linux man page.']
       [let [[win          [gtk-window-new]]
 	    [mindmon_mind [mindmon_mind-new mind]]]
-	[let [[mindmin_mind_widget [get mindmon_mind widget]]]
+	[let [[mindmon_mind_widget [get mindmon_mind widget]]]
 	  
-	  [have win add          mindmin_mind_widget]
+	  [have win add          mindmon_mind_widget]
 	  [set  win default_size 640 800]
 	  [set  win title        'mindmon']
 	  

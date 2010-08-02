@@ -19,6 +19,9 @@
 
 [deframe          mindmon [frame] [initialized mind fiber text_view]]
 [deftypeconstruct mindmon [mind]
+  [if [not [is-type `mind mind]]
+      [error bug_type `mindmon_mind_is_not_mind
+	     was_type [type mind]]]
   [set this initialized nil]
   [set this mind        mind]
   [set this fiber       [fiber [funk []

@@ -229,7 +229,7 @@ void funk2_gtk__window__set_title(funk2_gtk_t* this, GtkWidget* window, u8* titl
   }
 }
 
-void funk2_gtk__size_request__set_size(funk2_gtk_t* this, GtkWidget* widget, s64 minimum_width, s64 minimum_height, s64 natural_width, s64 natural height) {
+void funk2_gtk__size_request__set_size(funk2_gtk_t* this, GtkWidget* widget, s64 minimum_width, s64 minimum_height, s64 natural_width, s64 natural_height) {
   GtkRequisition minimum_size;
   minimum_size.width  = minimum_width;
   minimum_size.height = minimum_height;

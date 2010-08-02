@@ -249,12 +249,12 @@
       [cause-define cause-time_step        [get isis_world time_step]]
       [cause-define cause-name             `isis_world-initialize]
       
-      [mind-activate [get isis_world agent_mind `Ralph]  reactive     sensory continuous_sensing]
-      [mind-activate [get isis_world agent_mind `Ralph]  deliberative reality include_reactive_stories_into_deliberative_story]
-      [mind-activate [get isis_world agent_mind `Lauren] reactive     sensory continuous_sensing]
+      [mind-activate [get isis_world agent_mind `Lauren] reactive     speech  say                                              'Bad Ralph!']
       [mind-activate [get isis_world agent_mind `Lauren] deliberative reality include_reactive_stories_into_deliberative_story]
+      [mind-activate [get isis_world agent_mind `Lauren] reactive     sensory continuous_sensing]
       
-      [mind-activate [get isis_world agent_mind `Lauren] reactive speech say 'Bad Ralph!']
+      [mind-activate [get isis_world agent_mind `Ralph]  deliberative reality include_reactive_stories_into_deliberative_story]
+      [mind-activate [get isis_world agent_mind `Ralph]  reactive     sensory continuous_sensing]
       
       [format stdout '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
       

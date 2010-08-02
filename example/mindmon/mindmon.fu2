@@ -17,16 +17,20 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defunk mindmon_mind-redraw [text_view]
-  [set [get text_view buffer] text [format nil 'Mind']]
-  ]
+[deframe          mindmon_mind [frame] [mind text_view]]
+[deftypeconstruct mindmon_mind [mind]
+  [set this mind      mind]
+  [set this text_view [gtk-text_view-new]]
+  this]
 
-[defunk mindmon_mind-new []
-  [let [[text_view [gtk-text_view-new]]]
-    [frame widget      text_view
-	   redraw_funk [funk []
-			     [mindmon_mind-redraw text_view]
-			     ]]]]
+[deftypefunk mindmin_mind get widget []
+  [get this text_view]]
+
+[deftypefunk mindmon_mind execute redraw []
+  [let [[layer_count [length [get [get this mind] layers]]]]
+    [set [get [get this text_view] buffer] text [format nil 'Mind with ' layer_count ' layers.']]
+    ]]
+
 
 [defunk mindmon-new [:rest args]
   [let [[print_usage_message_and_exit nil]]
@@ -53,12 +57,11 @@
 		'\n'   '       by the mind.'
 		'\n'   ''
 		'\n'   '       This description is inspired by the TOP Linux man page.']
-      [let [[win  [gtk-window-new]]
-	    [mind [mindmon_mind-new]]]
-	[let [[mind_widget      [have mind lookup `widget]]
-	      [mind_redraw_funk [have mind lookup `redraw_funk]]]
+      [let [[win          [gtk-window-new]]
+	    [mindmon_mind [mindmon_mind-new]]]
+	[let [[mindmin_mind_widget [get mindmon_mind widget]]
 	  
-	  [have win              add          mind_widget]
+	  [have win              add          mindmin_mind_widget]
 	  [set  win              default_size 640 800]
 	  [set  win              title        'mindmon']
 	  
@@ -78,7 +81,7 @@
 			 [cause-define cause-name `mindmon]
 			 [cause-enable_reactive_critics [this-cause]]
 			 [while [not mindmon-redraw-quit_now]
-			   [apply mind_redraw_funk nil]
+			   [have mindmon_mind redraw]
 			   [yield]]
 			 [= mindmon-redraw-is_done t]
 			 nil]

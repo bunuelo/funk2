@@ -229,16 +229,10 @@ void funk2_gtk__window__set_title(funk2_gtk_t* this, GtkWidget* window, u8* titl
   }
 }
 
-void funk2_gtk__size_request__get_size(funk2_gtk_t* this, GtkWidget* widget, s64 minimum_width, s64 minimum_height, s64 natural_width, s64 natural_height) {
-  GtkRequisition minimum_size;
-  minimum_size.width  = minimum_width;
-  minimum_size.height = minimum_height;
-  GtkRequisition natural_size;
-  natural_size.width  = natural_width;
-  natural_size.height = natural_height;
+void funk2_gtk__window__set_default_size(funk2_gtk_t* this, GtkWidget* widget, s64 width, s64 height) {
   {
     gdk_threads_enter();
-    gtk_size_request_get_size(widget, &minimum_size, natural_size);
+    gtk_window_set_default_size(widget, width, height);
     gdk_threads_leave();
   }
 }
@@ -564,31 +558,27 @@ f2ptr f2__gtk__window__set_title(f2ptr cause, f2ptr window, f2ptr title) {
 def_pcfunk2(gtk__window__set_title, window, title, return f2__gtk__window__set_title(this_cause, window, title));
 
 
-f2ptr raw__gtk__size_request__get_size(f2ptr cause, f2ptr size_request, f2ptr minimum_width, f2ptr minimum_height, f2ptr natural_width, f2ptr natural_height) {
+f2ptr raw__gtk__window__set_default_size(f2ptr cause, f2ptr window, f2ptr width, f2ptr height) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_size_request  = raw__gtk_widget__as__GtkWidget(cause, size_request);
-  s64        minimum_width__i  = f2integer__i(minimum_width,  cause);
-  s64        minimum_height__i = f2integer__i(minimum_height, cause);
-  s64        natural_width__i  = f2integer__i(natural_width,  cause);
-  s64        natural_height__i = f2integer__i(natural_height, cause);
-  funk2_gtk__size_request__get_size(&(__funk2.gtk), gtk_size_request, minimum_width__i, minimum_height__i, natural_width__i, natural_height__i);
+  GtkWidget* gtk_window = raw__gtk_widget__as__GtkWidget(cause, window);
+  s64        width__i   = f2integer__i(width,  cause);
+  s64        height__i  = f2integer__i(height, cause);
+  funk2_gtk__window__set_default_size(&(__funk2.gtk), gtk_window, width__i, height__i);
   return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
 }
 
-f2ptr f2__gtk__size_request__get_size(f2ptr cause, f2ptr size_request, f2ptr minimum_width, f2ptr minimum_height, f2ptr natural_width, f2ptr natural_height) {
-  if ((! raw__gtk_widget__is_type(cause, size_request)) ||
-      (! raw__integer__is_type(cause, minimum_width)) ||
-      (! raw__integer__is_type(cause, minimum_height)) ||
-      (! raw__integer__is_type(cause, natural_width)) ||
-      (! raw__integer__is_type(cause, natural_height))) {
+f2ptr f2__gtk__window__set_default_size(f2ptr cause, f2ptr window, f2ptr width, f2ptr height) {
+  if ((! raw__gtk_widget__is_type(cause, window)) ||
+      (! raw__integer__is_type(cause, width)) ||
+      (! raw__integer__is_type(cause, height))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__size_request__get_size(cause, size_request, minimum_width, minimum_height, natural_width, natural_height);
+  return raw__gtk__window__set_default_size(cause, window, width, height);
 }
-def_pcfunk5(gtk__size_request__get_size, size_request, minimum_width, minimum_height, natural_width, natural_height, return f2__gtk__size_request__get_size(this_cause, size_request, minimum_width, minimum_height, natural_width, natural_height));
+def_pcfunk3(gtk__window__set_default_size, window, width, height, return f2__gtk__window__set_default_size(this_cause, window, width, height));
 
 
 f2ptr raw__gtk__vbox__new(f2ptr cause, f2ptr row_count) {
@@ -1161,8 +1151,8 @@ void f2__gtk__initialize() {
 
   f2__primcfunk__init__0(gtk__is_supported,                                                                                            "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
   f2__primcfunk__init__0(gtk__window__new,                                                                                             "Returns a new window widget.");
-  f2__primcfunk__init__2(gtk__window__set_title,           window, title,                                                              "");
-  f2__primcfunk__init__5(gtk__size_request__get_size,      size_request, minimum_width, minimum_height, natural_width, natural_height, "");
+  f2__primcfunk__init__2(gtk__window__set_title,           window, title,                                                              "Sets the title of this gtk_window.");
+  f2__primcfunk__init__3(gtk__window__set_default_size,    window, width, height,                                                      "Sets the default width and height of this gtk_window.");
   f2__primcfunk__init__1(gtk__vbox__new,                   row_count,                                                                  "Returns a new vbox widget with row_count rows.");
   f2__primcfunk__init__1(gtk__hbox__new,                   column_count,                                                               "Returns a new hbox widget with column_count columns.");
   f2__primcfunk__init__1(gtk__button__new_with_label,      label,                                                                      "Returns a new button widget with label.");

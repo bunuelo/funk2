@@ -239,6 +239,7 @@
 	  
 	  [have win              add          vbox]
 	  [set  win              default_size 1900 1024]
+	  [set  win              title        'fibermon']
 	  
 	  [let [[redraw_funks             nil]
 		[fibermon-redraw-quit_now nil]
@@ -270,7 +271,7 @@
 	    [have win show_all]
 	    
 	    [fiber [funk []
-			 [cause-define cause-name `fibermon-redraw]
+			 [cause-define cause-name `fibermon]
 			 [cause-enable_reactive_critics [this-cause]]
 			 [while [not fibermon-redraw-quit_now]
 			   [mapc [funk [redraw_funk]

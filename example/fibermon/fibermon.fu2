@@ -231,7 +231,8 @@
 	  
 	  [have vbox             pack_start processor_vpaned t t 0]
 	  
-	  [have win              add        vbox]
+	  [have win              add          vbox]
+	  [set  win              default_size 1900 1024]
 	  
 	  [let [[redraw_funks             nil]
 		[fibermon-redraw-quit_now nil]

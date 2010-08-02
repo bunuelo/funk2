@@ -124,15 +124,23 @@ int clock_gettime(clockid_t clk_id, struct timespec *tp) {
 
 
 
-
-void f2__sleep(int microseconds) {
-  usleep(microseconds);
+void f2__nanosleep(u64 nanoseconds) {
+  struct timespec sleepTime;
+  struct timespec remainingSleepTime;
+  sleepTime.tv_sec  = nanoseconds / nanoseconds_per_second;
+  sleepTime.tv_nsec = nanoseconds - ((nanoseconds / nanoseconds_per_second) * nanoseconds_per_second);
+  nanosleep(&sleepTime, &remainingSleepTime);
 }
+
+
+//void f2__sleep(int microseconds) {
+//  usleep(microseconds);
+//}
 
 void raw__spin_sleep_yield() {
   sched_yield();
   //f2__sleep(10000);
-  f2__sleep(1);
+  f2__nanosleep(1);
 }
 
 void raw__fast_spin_sleep_yield() {

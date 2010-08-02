@@ -26,6 +26,8 @@
   [set this active_funk  active_funk]
   [set this active_mutex [new mutex]]
   [set this fiber        [fiber [funk []
+				      [cause-define cause-name    `resource]
+				      [cause-define resource-name name]
 				      [let [[active_mutex [get this active_mutex]]
 					    [done         nil]]
 					[while [not done]

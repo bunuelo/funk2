@@ -139,7 +139,7 @@
     [frame widget      vbox
 	   redraw_funk [funk [] [fibermon_processor_widget-redraw processor_text_view progress_bar processor info_fiber_hash text_view]]]]]
 
-[defunk fibermon_model6-redraw [vpaned text_view_array mind_array]
+[defunk fibermon_model6-redraw [vpaned mind_array]
   [dotimes [i [length mind_array]]
     [let [[mind [get mind_array elt i]]]
       [let [[mind_redraw_funk [have mind lookup `redraw_funk]]]
@@ -179,7 +179,7 @@
 	[frame widget      vpaned
 	       redraw_funk [funk []
 				 [print 'fibermon_model6-redraw beginning.']
-				 [fibermon_model6-redraw vpaned text_view_array mind_array]
+				 [fibermon_model6-redraw vpaned mind_array]
 				 [print 'fibermon_model6-redraw finished.']
 				 ]]]]]]
 

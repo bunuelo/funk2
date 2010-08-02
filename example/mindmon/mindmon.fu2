@@ -32,7 +32,7 @@
     ]]
 
 
-[defunk mindmon-new [:rest args]
+[defunk mindmon-new [mind :rest args]
   [let [[print_usage_message_and_exit nil]]
     [if args
 	[let [[iter args]]
@@ -49,21 +49,21 @@
 		'\n'   '       mindmon - display mind resources'
 		'\n'   ''
 		'\n'   'SYNOPSIS'
-		'\n'   '       mindmon -h'
+		'\n'   '       mindmon mind ... -h'
 		'\n'   ''
 		'\n'   'DESCRIPTION'
-		'\n'   '       The mindmon program provides a dynamic real-time view of a running system.  It can '
+		'\n'   '       The mindmon program provides a dynamic real-time view of a running mind.  It can '
 		'\n'   '       display system summary information as well as a list of resources currently being managed '
 		'\n'   '       by the mind.'
 		'\n'   ''
 		'\n'   '       This description is inspired by the TOP Linux man page.']
       [let [[win          [gtk-window-new]]
-	    [mindmon_mind [mindmon_mind-new]]]
+	    [mindmon_mind [mindmon_mind-new mind]]]
 	[let [[mindmin_mind_widget [get mindmon_mind widget]]]
 	  
-	  [have win              add          mindmin_mind_widget]
-	  [set  win              default_size 640 800]
-	  [set  win              title        'mindmon']
+	  [have win add          mindmin_mind_widget]
+	  [set  win default_size 640 800]
+	  [set  win title        'mindmon']
 	  
 	  [let [[mindmon-redraw-quit_now nil]
 		[mindmon-redraw-is_done  nil]]
@@ -89,7 +89,7 @@
 	    
 	    nil]]]]]]
 
-[defmetro mindmon [:rest args]
-  `[mindmon-new @[mapcar [funk [arg] `[quote ,arg]] args]]]
+[defmetro mindmon [mind :rest args]
+  `[mindmon-new ,mind @[mapcar [funk [arg] `[quote ,arg]] args]]]
 
 

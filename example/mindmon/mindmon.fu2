@@ -32,17 +32,21 @@
     ]]
 
 
-[defunk mindmon-new [mind :rest args]
-  [let [[print_usage_message_and_exit nil]]
+[defunk mindmon-new [:rest args]
+  [let [[minds                        nil]
+	[print_usage_message_and_exit nil]]
     [if args
 	[let [[iter args]]
 	  [while iter
 	    [let [[arg [first iter]]]
 	      [cond [[or [eq arg `-h]
 			 [eq arg `help]] [prog [= print_usage_message_and_exit t]]]
-		    [t                   [prog [format stdout '\nmindmon fatal: unrecognized command line argument, ' arg '.\n']
-					       [= print_usage_message_and_exit t]]]]]
+		    [t                   [prog [format stdout '\nmindmon: compiling mind command line argument, ' arg '.\n']
+					       [= minds [cons arg minds]]]]]]
 	    [= iter [next iter]]]]]
+    [if [!= [simple_length minds] 1]
+	[prog [format stdout '\nmindmon fatal; mindmon can only monitor one mind at a time, user supplied: ' minds '.']
+	      [= print_usage_message_and_exit t]]]
     [if print_usage_message_and_exit
 	[format stdout 'MINDMON(1)'
 		'\n'   'NAME'
@@ -57,36 +61,37 @@
 		'\n'   '       by the mind.'
 		'\n'   ''
 		'\n'   '       This description is inspired by the TOP Linux man page.']
-      [let [[win          [gtk-window-new]]
-	    [mindmon_mind [new mindmon_mind mind]]]
-	
-	[have win add          [get mindmon_mind widget]]
-	[set  win default_size 640 800]
-	[set  win title        'mindmon']
-	
-	[let [[mindmon-redraw-quit_now nil]
-	      [mindmon-redraw-is_done  nil]]
+      [let [[mind [first minds]]]
+	[let [[win          [gtk-window-new]]
+	      [mindmon_mind [new mindmon_mind mind]]]
 	  
-	  [have win signal_connect 'destroy'
-		[funk []
-		      [= mindmon-redraw-quit_now t]
-		      [while [not mindmon-redraw-is_done]
-			[millisleep 100]]]
-		nil]
+	  [have win add          [get mindmon_mind widget]]
+	  [set  win default_size 640 800]
+	  [set  win title        'mindmon']
 	  
-	  [have win show_all]
-	  
-	  [fiber [funk []
-		       [cause-define cause-name `mindmon]
-		       [cause-enable_reactive_critics [this-cause]]
-		       [while [not mindmon-redraw-quit_now]
-			 [have mindmon_mind redraw]
-			 [yield]]
-		       [= mindmon-redraw-is_done t]
-		       nil]
-		 nil]
-	  
-	  nil]]]]]
+	  [let [[mindmon-redraw-quit_now nil]
+		[mindmon-redraw-is_done  nil]]
+	    
+	    [have win signal_connect 'destroy'
+		  [funk []
+			[= mindmon-redraw-quit_now t]
+			[while [not mindmon-redraw-is_done]
+			  [millisleep 100]]]
+		  nil]
+	    
+	    [have win show_all]
+	    
+	    [fiber [funk []
+			 [cause-define cause-name `mindmon]
+			 [cause-enable_reactive_critics [this-cause]]
+			 [while [not mindmon-redraw-quit_now]
+			   [have mindmon_mind redraw]
+			   [yield]]
+			 [= mindmon-redraw-is_done t]
+			 nil]
+		   nil]
+	    
+	    nil]]]]]]
 
 [defmetro mindmon [mind :rest args]
   `[mindmon-new ,mind @[mapcar [funk [arg] `[quote ,arg]] args]]]

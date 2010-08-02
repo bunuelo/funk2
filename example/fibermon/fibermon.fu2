@@ -169,7 +169,7 @@
 	    [processor_hbox  [gtk-hbox-new 8]]
 	    [processor_array [new array 8]]]
 	
-	[set win default_size 1900 1024]
+	[set win default_size 1900 640]
 	[set win title        'fibermon']
 	
 	[let [[redraw_funks             nil]

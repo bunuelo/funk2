@@ -1,0 +1,291 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[defunk number-to_memory_string [this]
+  [let [[i [get this as-integer]]]
+    [cond [      [< i                        1024]   [format nil    i]]
+	  [      [< i [*                1024 1024]]  [format nil [/ i              1024]  'k']]
+	  [      [< i [*           1024 1024 1024]]  [format nil [/ i [*      1024 1024]] 'M']]
+	  [      [< i [*      1024 1024 1024 1024]]  [format nil [/ i [* 1024 1024 1024]] 'G']]
+	  [[or t [< i [* 1024 1024 1024 1024 1024]]] [format nil [/ i [* 1024 1024 1024]] 'T']]]]]
+
+[defunk mindmon_processor_widget-redraw [processor_text_view progress_bar processor info_fiber_hash text_view]
+  [let [[total_execution_seconds 0.0]
+	[total_bytecode_count    0]
+	[last_real_time          [have info_fiber_hash lookup `last_real_time]]]
+    [if [null last_real_time]
+	[= last_real_time [time]]]
+    [set [get text_view buffer] text [stringlist-concat [mapcar [funk [fiber]
+								      [let [[fiber_info [have info_fiber_hash lookup fiber]]]
+									[if [null fiber_info]
+									    [prog [= fiber_info [let [[this [frame]]]
+												  [have this add `last_execution_nanoseconds  [get fiber execution_nanoseconds]]
+												  [have this add `last_bytecode_count         [get fiber bytecode_count]]
+												  [have this add `last_nanoseconds_since_1970 [get [time] nanoseconds_since_1970]]
+												  [have this add `last_processor_usage        0.0]
+												  this]]
+										  [have info_fiber_hash add fiber fiber_info]]]
+									[let [[execution_nanoseconds  [get fiber execution_nanoseconds]]
+									      [bytecode_count         [get fiber bytecode_count]]
+									      [nanoseconds_since_1970 [get [time] nanoseconds_since_1970]]]
+									  [let [[elapsed_execution_nanoseconds [- execution_nanoseconds  [have fiber_info lookup `last_execution_nanoseconds]]]
+										[elapsed_nanoseconds           [- nanoseconds_since_1970 [have fiber_info lookup `last_nanoseconds_since_1970]]]
+										[elapsed_bytecode_count        [- bytecode_count         [have fiber_info lookup `last_bytecode_count]]]]
+									    [let [[elapsed_execution_seconds [/ elapsed_execution_nanoseconds 1000000000.0]]
+										  [elapsed_seconds           [/ elapsed_nanoseconds           1000000000.0]]]
+									      
+									      [= total_execution_seconds [+ total_execution_seconds elapsed_execution_seconds]]
+									      [= total_bytecode_count    [+ total_bytecode_count    elapsed_bytecode_count]]
+									      
+									      [let [[processor_usage [if [== elapsed_seconds 0.0]
+													 0.0
+													 [/ elapsed_execution_seconds elapsed_seconds]]]]
+										[let [[bytecodes_per_execution_second [if [!= elapsed_execution_nanoseconds 0]
+															  [/ elapsed_bytecode_count elapsed_execution_seconds]
+															nil]]
+										      [bytecodes_per_second           [if [!= elapsed_nanoseconds 0]
+															  [/ elapsed_bytecode_count elapsed_seconds]
+															nil]]]
+										  [have fiber_info add `last_execution_nanoseconds  execution_nanoseconds]
+										  [have fiber_info add `last_bytecode_count         bytecode_count]
+										  [have fiber_info add `last_nanoseconds_since_1970 nanoseconds_since_1970]
+										  `[format nil '[' fiber '\n'
+											   '\t' [* 100 processor_usage]        '% processor' '\n'
+											   '\t' elapsed_execution_seconds      ' s execution' '\n'
+											   '\t' elapsed_seconds                ' s real' '\n'
+											   '\t' elapsed_bytecode_count         ' bc' '\n'
+											   '\t' bytecodes_per_execution_second ' bc/s execution' '\n'
+											   '\t' bytecodes_per_second           ' bc/s real' '\n'
+											   '\t' 'is' [if [get fiber paused]      ' ' ' not '] 'paused' '\n'
+											   '\t' 'is' [if [get fiber is_complete] ' ' ' not '] 'complete' '\n'
+											   '\t' 'is' [if [get fiber is_zombie]   ' ' ' not '] 'zombie' ']' '\n']
+										   [let [[cause_reg [get fiber cause_reg]]]
+										     [format nil '[' [if cause_reg
+													 [let [[cause-frame [get cause_reg frame]]]
+													   [format nil [have cause_reg lookup `cause-name] '\n'
+														   [stringlist-concat [mapcar [funk [slot]
+																		    [if [not [eq slot `cause-name]]
+																			[format nil ' - ' slot ': ' [have cause_reg lookup slot] '\n']
+																		      '']]
+																	      [append `[cause-args]
+																		       [get cause-frame slots]]]]]]]
+											     '\t' [/ bytecodes_per_second 1024.0]       ' kBc/s' '\n'
+											     '\t' 'is' [if [get fiber paused]           ' ' ' not '] 'paused' '\n'
+											     '\t' 'is' [if [get fiber is_complete]      ' ' ' not '] 'complete' '\n'
+											     '\t' 'is' [if [get fiber sleep_until_time] ' ' ' not '] 'asleep' '\n'
+											     '\t' 'is' [if [get fiber is_zombie]        ' ' ' not '] 'zombie' ']' '\n']]
+										   ]]]]]]]
+								[get processor active_fibers]]]]
+    
+    [let [[real_time [time]]]
+      [let [[elapsed_nanoseconds [- [get real_time nanoseconds_since_1970] [get last_real_time nanoseconds_since_1970]]]]
+	[let [[elapsed_seconds [/ elapsed_nanoseconds 1000000000.0]]]
+	  [let [[processor_usage [if [== elapsed_seconds 0.0]
+				     0.0
+				   [/ total_execution_seconds elapsed_seconds]]]]
+	    [= processor_usage [cond [[< processor_usage 0.0] 0.0]
+				     [[> processor_usage 1.0] 1.0]
+				     [t                       processor_usage]]]
+	    
+	    [set progress_bar fraction processor_usage]
+	    
+	    [let [[total_used_memory [system-memorypool-total_global_memory [get processor pool_index]]]
+		  [total_free_memory [system-memorypool-total_free_memory   [get processor pool_index]]]]
+	      
+	      [set [get processor_text_view buffer] text [format nil  'processor pool index\t: ' [get processor pool_index]                                                            ''
+								 '\n' 'total memory\t\t: '       [number-to_memory_string [+ total_free_memory total_used_memory]]                     'B'
+								 '\n' 'free memory\t\t\t: '      [number-to_memory_string total_free_memory]                                           'B'
+								 '\n' 'active fiber count\t: '   [simple_length [get processor active_fibers]]                                         ''
+								 '\n' 'processor usage\t\t: '    [* 100.0 processor_usage]                                                             '%'
+								 '\n' 'total bytecode rate\t: '  [/ [if [== elapsed_seconds 0.0] 0.0 [/ total_bytecode_count elapsed_seconds]] 1024.0] ' kBc/s'
+								 '\n' 'elapsed\t\t\t\t: '        elapsed_seconds                                                                       ' s'
+								 ]]
+	      
+	      ]]]]
+      [have info_fiber_hash add `last_real_time real_time]]]
+  nil]
+
+
+
+[defunk mindmon_processor_widget-new [index]
+  [let [[processor           [get [get scheduler:global_scheduler processors] elt index]]
+	[info_fiber_hash     [new ptypehash]]
+	[scrolled_window     [gtk-scrolled_window-new]]
+	[vbox                [gtk-vbox-new 3]]
+	[processor_text_view [gtk-text_view-new]]
+	[progress_bar        [gtk-progress_bar-new]]
+	[text_view           [gtk-text_view-new]]]
+    [set progress_bar fraction 0]
+    [have vbox pack_start processor_text_view nil nil 0]
+    [have vbox pack_start progress_bar nil nil 0]
+    [have scrolled_window add text_view]
+    [have vbox pack_start scrolled_window t t 0]
+    [frame widget      vbox
+	   redraw_funk [funk [] [mindmon_processor_widget-redraw processor_text_view progress_bar processor info_fiber_hash text_view]]]]]
+
+[defunk mindmon_model6-redraw [vpaned mind_array]
+  [dotimes [i [length mind_array]]
+    [let [[mind [get mind_array elt i]]]
+      [let [[mind_redraw_funk [have mind lookup `redraw_funk]]]
+	[apply mind_redraw_funk nil]]]]
+  nil]
+
+[defunk mindmon_mind-redraw [text_view]
+  [set [get text_view buffer] text [format nil 'Model-6']]
+  ]
+
+[defunk mindmon_mind-new []
+  [let [[text_view [gtk-text_view-new]]]
+    [frame widget      text_view
+	   redraw_funk [funk []
+			     [mindmon_mind-redraw text_view]
+			     ]]]]
+
+[defunk mindmon_model6-new []
+  [let [[mind_num 3]]
+    [let [[mind_array [new array mind_num]]]
+      [let [[text_view              [gtk-text_view-new]]
+	    [hbox                   [gtk-hbox-new mind_num]]
+	    [vpaned                 [gtk-vpaned-new]]
+	    [mind_redraw_funk_array [new array mind_num]]]
+	[dotimes [i mind_num]
+	  [let [[mind [mindmon_mind-new]]]
+	    [set mind_array elt i mind]
+	    [let [[mind_widget      [have mind lookup `widget]]
+		  [mind_redraw_funk [have mind lookup `redraw_funk]]]
+	      [have hbox pack_start mind_widget t t 0]
+	      [set mind_redraw_funk_array elt i mind_redraw_funk]]]]
+	[have vpaned pack1    text_view t t]
+	[have vpaned pack2    hbox t t]
+	[set  vpaned position 16]
+	[frame widget      vpaned
+	       redraw_funk [funk []
+				 [mindmon_model6-redraw vpaned mind_array]
+				 ]]]]]]
+
+  
+[defunk mindmon-new [:rest args]
+  [let [[print_usage_message_and_exit nil]]
+    [if args
+	[let [[iter args]]
+	  [while iter
+	    [let [[arg [first iter]]]
+	      [cond [[or [eq arg `-h]
+			 [eq arg `help]] [prog [= print_usage_message_and_exit t]]]
+		    [t                   [prog [format stdout '\nmindmon fatal: unrecognized command line argument, ' arg '.\n']
+					       [= print_usage_message_and_exit t]]]]]
+	    [= iter [next iter]]]]]
+    [if print_usage_message_and_exit
+	[format stdout 'MINDMON(1)'
+		'\n'   'NAME'
+		'\n'   '       mindmon - display Funk tasks'
+		'\n'   ''
+		'\n'   'SYNOPSIS'
+		'\n'   '       mindmon -h'
+		'\n'   ''
+		'\n'   'DESCRIPTION'
+		'\n'   '       The mindmon program provides a dynamic real-time view of a running system.  It can '
+		'\n'   '       display system summary information as well as a list of tasks currently being managed '
+		'\n'   '       by the Funk kernel.'
+		'\n'   ''
+		'\n'   '       This description is inspired by the TOP Linux man page.']
+      [let [[win              [gtk-window-new]]
+	    [vbox             [gtk-vbox-new 2]]
+	    [hbox             [gtk-hbox-new 3]]
+	    [search_entry     [gtk-entry-new]]
+	    [search_button    [gtk-button-new_with_label 'Search']]
+	    [next_button      [gtk-button-new_with_label 'Next']]
+	    [processor_vpaned [gtk-vpaned-new]]
+	    [model6_vpaned    [gtk-vpaned-new]]
+	    [swindow          [gtk-scrolled_window-new]]
+	    [processor_hbox   [gtk-hbox-new 8]]
+	    [processor_array  [new array 8]]
+	    [text_view        [gtk-text_view-new]]
+	    [model6           [mindmon_model6-new]]]
+	[let [[model6_widget      [have model6 lookup `widget]]
+	      [model6_redraw_funk [have model6 lookup `redraw_funk]]]
+	  
+	  [have hbox             pack_start search_entry t t 0]
+	  [have hbox             pack_start search_button nil nil 0]
+	  [have hbox             pack_start next_button nil nil 0]
+	  [have vbox             pack_start hbox nil nil 0]
+	  
+	  [have swindow          add        text_view]
+	  [have model6_vpaned    pack1      swindow t t]
+	  [have model6_vpaned    pack2      model6_widget t t]
+	  [set  model6_vpaned    position   16]
+	  
+	  [have processor_vpaned pack1      model6_vpaned t t]
+	  [have processor_vpaned pack2      processor_hbox t t]
+	  [set  processor_vpaned position   800]
+	  
+	  [have vbox             pack_start processor_vpaned t t 0]
+	  
+	  [have win              add          vbox]
+	  [set  win              default_size 1900 1024]
+	  [set  win              title        'mindmon']
+	  
+	  [let [[redraw_funks             nil]
+		[mindmon-redraw-quit_now nil]
+		[mindmon-redraw-is_done  nil]]
+	    [dotimes [i 8]
+	      [let [[processor_frame [mindmon_processor_widget-new i]]]
+		[let [[processor   [have processor_frame lookup `widget]]
+		      [redraw_funk [have processor_frame lookup `redraw_funk]]]
+		  [= redraw_funks [cons redraw_funk redraw_funks]]
+		  [have processor_hbox pack_start processor t t 0]
+		  [set processor_array elt i processor]]]]
+	    
+	    [have search_button signal_connect 'clicked'
+		  [funk []
+			[let [[found_range [have [get [get text_view buffer] start_iter] forward_search [get search_entry text]]]]
+			  [if found_range
+			      [prog [format stdout '\n  found "' [get search_entry text] '"!']
+				    [have [get text_view buffer] select_range found_range]]
+			    [prog [format stdout '\n  could not find "' [get search_entry text] '".']]]]]
+		  nil]
+	    [have next_button signal_connect 'clicked' [funk [button] [print 'Next button clicked!']] [cons next_button nil]]
+	    [have win signal_connect 'destroy'
+		  [funk []
+			[= mindmon-redraw-quit_now t]
+			[while [not mindmon-redraw-is_done]
+			  [millisleep 100]]]
+		  nil]
+	    
+	    [have win show_all]
+	    
+	    [fiber [funk []
+			 [cause-define cause-name `mindmon]
+			 [cause-enable_reactive_critics [this-cause]]
+			 [while [not mindmon-redraw-quit_now]
+			   [mapc [funk [redraw_funk]
+				       [apply redraw_funk nil]]
+				 redraw_funks]
+			   [apply model6_redraw_funk nil]
+			   [yield]]
+			 [= mindmon-redraw-is_done t]
+			 nil]
+		   nil]
+	    
+	    nil]]]]]]
+
+[defmetro mindmon [:rest args]
+  `[mindmon-new @[mapcar [funk [arg] `[quote ,arg]] args]]]
+
+

@@ -88,7 +88,8 @@
 				  'example/isis_toast/'
 				  'example/divisi2/'
 				  'example/graph_match/'
-				  'example/fibermon/']]
+				  'example/fibermon/'
+				  'example/mindmon/']]
 
 [defmetro defpackage [name :rest dependencies]
   [let [[package_dependencies nil]

@@ -140,7 +140,7 @@
 	   redraw_funk [funk [] [fibermon_processor_widget-redraw processor_text_view progress_bar processor info_fiber_hash text_view]]]]]
 
 [defunk fibermon_model6-redraw [vpaned text_view_array mind_array]
-  [dotimes [i [length mind_redraw_funk_array]]
+  [dotimes [i [length mind_array]]
     [let [[mind [get mind_array elt i]]]
       [let [[mind_redraw_funk [have mind lookup `redraw_funk]]]
 	[apply mind_redraw_funk nil]]]]

@@ -30,7 +30,7 @@
   [set [get [get this text_view] buffer] text [format nil 'Mind Layer.']]
   ]
 
-[deframe          mindmon [frame] [initialized mind fiber vbox layer_array]]
+[deframe          mindmon [frame] [initialized mind fiber vbox text_view layer_vbox layer_array]]
 [deftypeconstruct mindmon [mind]
   [if [not [is-type `mind mind]]
       [error bug_type `mindmon_mind_is_not_mind
@@ -46,7 +46,12 @@
 				     
 				     [let [[win [gtk-window-new]]]
 				       
-				       [set this vbox [gtk-vbox-new [get this layer_count]]]
+				       [set this vbox       [get-vbox-new 2]]
+				       [set this text_view  [get-text_view-new]]
+				       [set this layer_vbox [gtk-vbox-new [get this layer_count]]]
+				       
+				       [have vbox pack_start text_view nil nil 0]
+				       [have vbox pack_start layer_vbox t t 0]
 				       
 				       [have win add          [get this vbox]]
 				       [set  win default_size 640 800]
@@ -88,6 +93,7 @@
 
 
 [deftypefunk mindmon execute redraw []
+  [set [get [get this text_view] buffer] text [format nil 'Mind.']]
   [dotimes [i [get this layer_count]]
     [have [get [get this layer_array] elt i] redraw]]]
 

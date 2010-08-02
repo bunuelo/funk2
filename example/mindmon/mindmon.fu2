@@ -101,6 +101,7 @@
 		'\n'   ''
 		'\n'   '       This description is inspired by the TOP Linux man page.']
       [let [[mind [first minds]]]
-	`[new mindmon ,mind]]]]]
+	`[prog [new mindmon ,mind]
+	       nil]]]]]
 
 

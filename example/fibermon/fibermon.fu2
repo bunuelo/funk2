@@ -172,8 +172,6 @@
 	    [processor_array [new array 8]]
 	    [text_view       [gtk-text_view-new]]]
 	
-	[have vbox    pack_start   hbox nil nil 0]
-	
 	[have swindow add          text_view]
 	[have vbox    pack_start   swindow nil nil 0]
 	
@@ -191,6 +189,8 @@
 		[= redraw_funks [cons redraw_funk redraw_funks]]
 		[have processor_hbox pack_start processor t t 0]
 		[set processor_array elt i processor]]]]
+	  
+	  [have vbox pack_start processor_hbox nil nil 0]
 	  
 	  [have win signal_connect 'destroy'
 		[funk []

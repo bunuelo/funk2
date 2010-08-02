@@ -59,7 +59,7 @@
 		'\n'   '       This description is inspired by the TOP Linux man page.']
       [let [[win          [gtk-window-new]]
 	    [mindmon_mind [mindmon_mind-new]]]
-	[let [[mindmin_mind_widget [get mindmon_mind widget]]
+	[let [[mindmin_mind_widget [get mindmon_mind widget]]]
 	  
 	  [have win              add          mindmin_mind_widget]
 	  [set  win              default_size 640 800]

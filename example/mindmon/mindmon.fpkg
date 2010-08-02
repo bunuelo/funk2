@@ -18,5 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage mindmon
-  :sources ['mindmon.fu2']]
+  :packages [mind]
+   :sources ['mindmon.fu2']]
 

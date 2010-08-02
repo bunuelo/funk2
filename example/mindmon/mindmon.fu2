@@ -57,7 +57,7 @@
 				       [dotimes [i [get this layer_count]]
 					 [let [[mindmon_layer [new mindmon_layer this]]]
 					   [set [get this layer_array] elt i mindmon_layer]
-					   [have vbox pack_start [get mindmon_layer widget] t t 0]]]
+					   [have [get this vbox] pack_start [get mindmon_layer widget] t t 0]]]
 				       
 				       [let [[mindmon-redraw-quit_now nil]
 					     [mindmon-redraw-is_done  nil]]

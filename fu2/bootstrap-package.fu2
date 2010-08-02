@@ -83,7 +83,7 @@
 [deftypefunk symbol get is-defined [] [not [is-type `bug [shelter [eval this]]]]]
 
 [globalize packages_frame [frame]]
-[globalize packages_search_path `['example/resource/'
+[globalize packages_search_path `['example/mind/'
 				  'example/isis_world/'
 				  'example/isis_toast/'
 				  'example/divisi2/'

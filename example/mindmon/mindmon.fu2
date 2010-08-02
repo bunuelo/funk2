@@ -77,7 +77,8 @@
 					 [= mindmon-redraw-is_done t]
 					 nil]]]
 			       nil]]
-  [set this text_view   [gtk-text_view-new]]
+  [set this vbox        nil]
+  [set this layer_array nil]
   [set this initialized t]
   this]
 

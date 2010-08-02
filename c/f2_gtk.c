@@ -229,10 +229,10 @@ void funk2_gtk__window__set_title(funk2_gtk_t* this, GtkWidget* window, u8* titl
   }
 }
 
-void funk2_gtk__window__set_default_size(funk2_gtk_t* this, GtkWidget* widget, s64 width, s64 height) {
+void funk2_gtk__window__set_default_size(funk2_gtk_t* this, GtkWidget* window, s64 width, s64 height) {
   {
     gdk_threads_enter();
-    gtk_window_set_default_size(widget, width, height);
+    gtk_window_set_default_size(GTK_WINDOW(window), width, height);
     gdk_threads_leave();
   }
 }

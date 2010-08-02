@@ -17,52 +17,52 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe          mindmon_mind [frame] [mind text_view]]
-[deftypeconstruct mindmon_mind [mind]
-  [set this mind      mind]
-  [set this text_view [gtk-text_view-new]]
+[deframe          mindmon [frame] [initialized mind fiber text_view]]
+[deftypeconstruct mindmon [mind]
+  [set this initialized nil]
+  [set this mind        mind]
+  [set this fiber       [fiber [funk []
+				     [cause-define cause-name `mindmon]
+				     [cause-enable_reactive_critics [this-cause]]
+				     
+				     [while [not [get this initialized]]
+				       [yield]]
+				     
+				     [let [[win [gtk-window-new]]]
+				       
+				       [set this text_view [gtk-text_view-new]]
+				       
+				       [have win add          [get this text_view]]
+				       [set  win default_size 640 800]
+				       [set  win title        'mindmon']
+				       
+				       [let [[mindmon-redraw-quit_now nil]
+					     [mindmon-redraw-is_done  nil]]
+					 
+					 [have win signal_connect 'destroy'
+					       [funk []
+						     [= mindmon-redraw-quit_now t]
+						     [while [not mindmon-redraw-is_done]
+						       [millisleep 100]]]
+					       nil]
+					 
+					 [have win show_all]
+					 
+					 [while [not mindmon-redraw-quit_now]
+					   [have this redraw]
+					   [yield]]
+					 [= mindmon-redraw-is_done t]
+					 nil]]]
+			       nil]]
+  [set this text_view   [gtk-text_view-new]]
+  [set this initialized t]
   this]
 
-[deftypefunk mindmon_mind get widget []
-  [get this text_view]]
-
-[deftypefunk mindmon_mind execute redraw []
+[deftypefunk mindmon execute redraw []
   [let [[layer_count [simple_length [get [get this mind] layers]]]]
     [set [get [get this text_view] buffer] text [format nil 'Mind with ' layer_count ' layers.']]
     ]]
 
-
-[defunk mindmon-new [mind]
-  [let [[win          [gtk-window-new]]
-	[mindmon_mind [new mindmon_mind mind]]]
-    
-    [have win add          [get mindmon_mind widget]]
-    [set  win default_size 640 800]
-    [set  win title        'mindmon']
-    
-    [let [[mindmon-redraw-quit_now nil]
-	  [mindmon-redraw-is_done  nil]]
-      
-      [have win signal_connect 'destroy'
-	    [funk []
-		  [= mindmon-redraw-quit_now t]
-		  [while [not mindmon-redraw-is_done]
-		    [millisleep 100]]]
-	    nil]
-      
-      [have win show_all]
-      
-      [fiber [funk []
-		   [cause-define cause-name `mindmon]
-		   [cause-enable_reactive_critics [this-cause]]
-		   [while [not mindmon-redraw-quit_now]
-		     [have mindmon_mind redraw]
-		     [yield]]
-		   [= mindmon-redraw-is_done t]
-		   nil]
-	     nil]
-      
-      nil]]]
 
 [defmetro mindmon [:rest args]
   [let [[minds                        nil]

@@ -76,9 +76,13 @@
 		    [t                   [prog [format stdout '\nmindmon: compiling mind command line argument, ' arg '.\n']
 					       [= minds [cons arg minds]]]]]]
 	    [= iter [next iter]]]]]
-    [if [!= [simple_length minds] 1]
-	[prog [format stdout '\nmindmon fatal; mindmon can only monitor one mind at a time, user supplied: ' minds '.']
-	      [= print_usage_message_and_exit t]]]
+    [if [not print_usage_message_and_exit]
+	[cond [[> [simple_length minds] 1]
+	       [prog [format stdout '\nmindmon fatal; mindmon can only monitor exactly one mind at a time, user supplied ' [simple_length minds] ': ' minds '.']
+		     [= print_usage_message_and_exit t]]]
+	      [[== [simple_length minds] 0]
+	       [prog [format stdout '\nmindmon fatal; mindmon can only monitor exactly one mind at a time, user supplied ' [simple_length minds] ': ' minds '.']
+		     [= print_usage_message_and_exit t]]]]]
     [if print_usage_message_and_exit
 	[format stdout 'MINDMON(1)'
 		'\n'   'NAME'

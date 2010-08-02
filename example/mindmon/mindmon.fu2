@@ -194,7 +194,7 @@
     [if print_usage_message_and_exit
 	[format stdout 'MINDMON(1)'
 		'\n'   'NAME'
-		'\n'   '       mindmon - display Funk tasks'
+		'\n'   '       mindmon - display mind resources'
 		'\n'   ''
 		'\n'   'SYNOPSIS'
 		'\n'   '       mindmon -h'

@@ -171,7 +171,11 @@
 	[have vpaned pack2    hbox t t]
 	[set  vpaned position 16]
 	[frame widget      vpaned
-	       redraw_funk [funk [] [fibermon_model6-redraw vpaned text_view_array mind_array]]]]]]]
+	       redraw_funk [funk []
+				 [print 'fibermon_model6-redraw beginning.']
+				 [fibermon_model6-redraw vpaned text_view_array mind_array]
+				 [print 'fibermon_model6-redraw finished.']
+				 ]]]]]]
 
   
 [defunk fibermon-new [:rest args]

@@ -30,7 +30,7 @@
 	[t                      [error `deframe `[compound-slotdef-value ,this]]]]]
 
 [defunk type-has_parent [type_name parent_name]
-  [primobject_type-is_type_or_has_parent_type [lookup_type type_name] parent_name]]
+  [primobject_type-has_parent_type [lookup_type type_name] parent_name]]
 
 [defmetro deframe [type_name parents slot_name_value_pairs]
   [print `[deframe ,type_name ,parents ,[mapcar &frametype-slotdef-name slot_name_value_pairs]]]

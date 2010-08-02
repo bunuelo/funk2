@@ -167,8 +167,9 @@
 		  [mind_redraw_funk [have mind lookup `redraw_funk]]]
 	      [have hbox pack_start mind_widget t t 0]
 	      [set mind_redraw_funk_array elt i mind_redraw_funk]]]]
-	[have vpaned pack1 text_view t t]
-	[have vpaned pack2 hbox t t]
+	[have vpaned pack1    text_view t t]
+	[have vpaned pack2    hbox t t]
+	[set  vpaned position 16]
 	[frame widget      vpaned
 	       redraw_funk [funk [] [fibermon_model6-redraw vpaned text_view_array mind_array]]]]]]]
 
@@ -222,9 +223,11 @@
 	  [have swindow          add        text_view]
 	  [have model6_vpaned    pack1      swindow t t]
 	  [have model6_vpaned    pack2      model6_widget t t]
+	  [set  model6_vpaned    position   16]
 	  
 	  [have processor_vpaned pack1      model6_vpaned t t]
 	  [have processor_vpaned pack2      processor_hbox t t]
+	  [set  processor_vpaned position   768]
 	  
 	  [have vbox             pack_start processor_vpaned t t 0]
 	  

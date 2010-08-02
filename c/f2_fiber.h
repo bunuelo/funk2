@@ -75,7 +75,9 @@ f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cf
 
 #define __pure__f2fiber__is_complete(this, cause)  (!f2fiber__program_counter(this, cause))
 #define f2fiber__is_complete(this, cause)          __pure__f2fiber__is_complete(this, cause)
-//extern int f2fiber__is_complete(f2ptr this);
+
+boolean_t raw__fiber__is_complete(f2ptr cause, f2ptr this);
+f2ptr      f2__fiber__is_complete(f2ptr cause, f2ptr this);
 
 f2ptr f2__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time);
 f2ptr f2__fiber__sleep_for_nanoseconds(f2ptr cause, f2ptr this, f2ptr nanoseconds);

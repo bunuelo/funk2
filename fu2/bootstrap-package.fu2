@@ -152,8 +152,10 @@
 		[load-if-modified [pathname-concat [get package pathname] source_dependency]]]
 	  [get package source_dependencies]]]]
 
-[defmetro require [name]
-  `[package-load_if_modified [quote ,name]]]
+[defmetro require [:rest names]
+  `[prog @[mapcar [funk [name]
+			`[package-load_if_modified [quote ,name]]]
+		  names]]]
 
 [defmetro load-package [name]
   `[package-load [quote ,name]]]

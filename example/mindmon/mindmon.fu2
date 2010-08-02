@@ -58,7 +58,7 @@
 		'\n'   ''
 		'\n'   '       This description is inspired by the TOP Linux man page.']
       [let [[win          [gtk-window-new]]
-	    [mindmon_mind [mindmon_mind-new mind]]]
+	    [mindmon_mind [new mindmon_mind mind]]]
 	[let [[mindmon_mind_widget [get mindmon_mind widget]]]
 	  
 	  [have win add          mindmon_mind_widget]

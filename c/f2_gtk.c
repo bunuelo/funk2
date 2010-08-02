@@ -238,7 +238,7 @@ void funk2_gtk__size_request__get_size(funk2_gtk_t* this, GtkWidget* widget, s64
   natural_size.height = natural_height;
   {
     gdk_threads_enter();
-    gtk_size_request_get_size(GTK_SIZE_REQUEST(widget), &minimum_size, natural_size);
+    gtk_size_request_get_size(widget, &minimum_size, natural_size);
     gdk_threads_leave();
   }
 }

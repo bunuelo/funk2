@@ -57,7 +57,7 @@
   this]
 
 [deftypefunk mindmon_layer get layer []
-  [get [get [get this mindmon] mind] layer layer_name]]
+  [get [get [get this mindmon] mind] layer [get this layer_name]]]
 
 [deftypefunk mindmon_layer get agency_count []
   [simple_length [get [get this layer] agencies]]]

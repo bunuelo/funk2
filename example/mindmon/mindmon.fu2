@@ -50,7 +50,7 @@
 				       [set this text_view  [gtk-text_view-new]]
 				       [set this layer_vbox [gtk-vbox-new [get this layer_count]]]
 				       
-				       [have [get this vbox] pack_start [get this text_view] t t 0]
+				       [have [get this vbox] pack_start [get this text_view] nil nil 0]
 				       [have [get this vbox] pack_start [get this layer_vbox] t t 0]
 				       
 				       [have win add          [get this vbox]]

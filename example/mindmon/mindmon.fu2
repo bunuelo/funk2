@@ -20,10 +20,11 @@
 
 'mindmon_agency'
 
-[deframe          mindmon_agency [frame] [mindmon mindmon_layer text_view]]
-[deftypeconstruct mindmon_agency [mindmon mindmon_layer]
+[deframe          mindmon_agency [frame] [mindmon mindmon_layer agency_name text_view]]
+[deftypeconstruct mindmon_agency [mindmon mindmon_layer agency_name]
   [set this mindmon       mindmon]
   [set this mindmon_layer mindmon_layer]
+  [set this agency_name   agency_name]
   [set this text_view     [gtk-text_view-new]]
   this]
 
@@ -31,9 +32,13 @@
   [get this text_view]]
 
 [deftypefunk mindmon_agency execute redraw []
-  [set [get [get this text_view] buffer] text [format nil '\t\t' 'Agency']]
+  [set [get [get this text_view] buffer] text [format nil  '\t\t' 'Agency'
+						      '\n' '\t\t' 'name\t\t\t'       [get this agency_name]
+						      '\n' '\t\t' 'resource count\t' [get this resource_count]]]
   ]
 
+[deftypefunk mindmon_agency get resource_count []
+  1]
 
 'mindmon_layer'
 
@@ -48,7 +53,7 @@
   [set this agency_array [new array    [get this agency_count]]]
   
   [dotimes [i [get this agency_count]]
-    [let [[mindmon_agency [new mindmon_agency mindmon this]]]
+    [let [[mindmon_agency [new mindmon_agency mindmon this i]]]
       [set  [get this agency_array] elt i      mindmon_agency]
       [have [get this agency_vbox]  pack_start [get mindmon_agency widget] t t 0]]]
   

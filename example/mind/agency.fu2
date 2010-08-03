@@ -24,7 +24,7 @@
 [deftypeconstruct agency [name]
   [set this name           name]
   [set this resource_frame [frame]]
-  [set this knowledge      [new propogator_resource `knowledge]]
+  [set this knowledge      [new propogator_resource [get [format nil name '_agency_knowledge'] as-symbol]]]
   [set this trace_story    [new story]]
   [have this add_resource [get [get this knowledge] resource]]
   this]

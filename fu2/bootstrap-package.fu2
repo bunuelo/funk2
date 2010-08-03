@@ -72,7 +72,7 @@
 		[= file_was_loaded t]]]]
     file_was_loaded]]
 
-[defunk load [:rest filenames]
+[defunk package_filenames-load [:rest filenames]
   [mapc [funk [filename]
 	      [print `[load ,filename]]
 	      [filename-load filename]]

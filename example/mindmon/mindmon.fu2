@@ -60,7 +60,7 @@
   [get [get [get this mindmon] mind] layer layer_name]]
 
 [deftypefunk mindmon_layer get agency_count []
-  [simple_length [get [get this layer] agencies]]]
+  [+ 1 [simple_length [get [get this layer] agencies]]]]
 
 [deftypefunk mindmon_layer get widget []
   [get this vbox]]

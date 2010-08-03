@@ -68,13 +68,13 @@
 	      [let [[stat [pathname-stat this]]]
 		[let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
 		  [not [get last_loaded_modification_time equals time_of_last_modification]]]]]
-	  [prog [load this]
+	  [prog [package_filename-load this]
 		[= file_was_loaded t]]]]
     file_was_loaded]]
 
-[defunk pacckage_filename-load [:rest filenames]
+[defunk package_filename-load [:rest filenames]
   [mapc [funk [filename]
-	      [print `[load ,filename]]
+	      [print `[package_filename-load ,filename]]
 	      [filename-load filename]]
 	filenames]]
 
@@ -147,7 +147,7 @@
 		[package-load_if_modified package_dependency]]
 	  [get package package_dependencies]]
     [mapc [funk [source_dependency]
-		[load [pathname-concat [get package pathname] source_dependency]]]
+		[package_filename-load [pathname-concat [get package pathname] source_dependency]]]
 	  [get package source_dependencies]]]]
 
 [defunk package-load_if_modified [name]

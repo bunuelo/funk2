@@ -52,8 +52,8 @@
       [set [get this agency_array] elt i mindmon_agency]
       [have [get this agency_hbox] pack_start [get mindmon_agency widget] t t 0]]]
   
-  [have [get this vbox] pack_start text_view   t t 0]
-  [have [get this vbox] pack_start agency_hbox t t 0]
+  [have [get this vbox] pack_start [get this text_view]   t t 0]
+  [have [get this vbox] pack_start [get this agency_hbox] t t 0]
   this]
 
 [deftypefunk mindmon_layer get layer []

@@ -18,23 +18,51 @@
  rights to redistribute these changes.'
 
 
+'mindmon_resource'
+
+[deframe          mindmon_resource [frame] [mindmon layer_name agency_name resource_name text_view]]
+[deftypeconstruct mindmon_resource [mindmon layer_name agency_name resource_name]
+  [set this mindmon       mindmon]
+  [set this layer_name    layer_name]
+  [set this agency_name   agency_name]
+  [set this resource_name resource_name]
+  [set this text_view     [gtk-text_view-new]]
+  this]
+
+[deftypefunk mindmon_resource get widget []
+  [get this text_view]]
+
+[deftypefunk mindmon_resource execute redraw []
+  [set [get [get this text_view] buffer] text [format nil  '\t\t' [get this resource_name] ' resource']]
+  ]
+
+
 'mindmon_agency'
 
-[deframe          mindmon_agency [frame] [mindmon mindmon_layer layer_name agency_name text_view]]
+[deframe          mindmon_agency [frame] [mindmon layer_name agency_name vbox text_view resource_vbox resource_array]]
 [deftypeconstruct mindmon_agency [mindmon layer_name agency_name]
   [set this mindmon       mindmon]
   [set this layer_name    layer_name]
   [set this agency_name   agency_name]
+  [set this vbox          2]
   [set this text_view     [gtk-text_view-new]]
+  [set this resource_vbox [gtk-vbox-new [get this resource_count]]]
+  [set this resource_array [new array [get this resource_count]]]
+  [dotimes [i [get this resource_count]]
+    [set  [get this resource_array] elt i      [new mindmon_resource mindmon layer_name agency_name resource_name]]
+    [have [get this resource_vbox]  pack_start [get [get this resource_array] elt i] t t 0]]
+  [have [get this vbox] pack_start [get this text_view]     nil nil 0]
+  [have [get this vbox] pack_start [get this resource_vbox] t t 0]
   this]
 
 [deftypefunk mindmon_agency get widget []
-  [get this text_view]]
+  [get this vbox]]
 
 [deftypefunk mindmon_agency execute redraw []
   [set [get [get this text_view] buffer] text [format nil  '\t\t' [get this agency_name] ' agency'
 						      '\n' '\t\t' 'resource count\t' [get this resource_count]]]
-  ]
+  [dotimes [i [get this resource_count]]
+    [have [get [get this resource_array] elt i] redraw]]]
 
 [deftypefunk mindmon_agency get resource_count []
   [get [get [get this mindmon] mind] layer_agency_resource_count [get this layer_name] [get this agency_name]]]

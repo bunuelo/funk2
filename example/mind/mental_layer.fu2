@@ -54,3 +54,5 @@
 [deftypefunk mental_layer get agency_resource_count [agency_name]
   [get [get this agency agency_name] resource_count]]
 
+[deftypefunk mental_layer get agency_resource_names [agency_name]
+  [get [get this agency agency_name] resource_names]]

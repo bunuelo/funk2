@@ -48,6 +48,9 @@
 [deftypefunk agency get resources []
   [get [get this resource_frame] values]]
 
+[deftypefunk agency get resource_names []
+  [get [get this resource_frame] slots]]
+
 [deftypefunk agency get resource_count []
   [simple_length [get this resources]]]
 

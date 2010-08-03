@@ -152,6 +152,7 @@
 								  [= done nil]]]
 							[get constraint_set elements]]]
 						nil]]]]
+  [set [get this resource] pole_nanoseconds 1000000000]
   this]
 
 [deftypefunk propogator_resource execute call [provenance]

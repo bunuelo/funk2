@@ -70,6 +70,9 @@
   `[have ,mind add_resource [quote ,layer_name] [quote ,agency_name] [resource ,resource_name ,resource_args @resource_body]]]
 
 
+[deftypefunk mind get layer_agency_resource_names [layer_name agency_name]
+  [get [get this layer layer_name] agency_resource_names agency_name]]
+
 [deftypefunk mind get layer_agency_resource_count [layer_name agency_name]
   [get [get this layer layer_name] agency_resource_count agency_name]]
 

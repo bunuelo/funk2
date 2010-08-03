@@ -32,9 +32,18 @@
 [deftypefunk mindmon_resource get widget []
   [get this text_view]]
 
+[deftypefunk mindmon_resource get resource []
+  [get [get [get this mindmon] mind] resource [get this layer_name] [get this agency_name] [get this resource_name]]]
+
 [deftypefunk mindmon_resource execute redraw []
-  [set [get [get this text_view] buffer] text [format nil  '\t\t\t' [get this resource_name] ' resource']]
-  ]
+  [let [[resource [get this resource]]]
+    [set [get [get this text_view] buffer] text [format nil  '\t\t\t' [get this resource_name] ' resource'
+							'\n' '\t\t\t' 'resource is' [if [get resource active] ' ' ' not '] 'active.'
+							'\n' '\t\t\t' 'resource is' [if [get resource done]   ' ' ' not '] 'done.'
+							'\n' '\t\t\t' 'pole time\t' [/ [get resource pole_nanoseconds] 1000000000.0] ' s'
+							]]
+    ]]
+
 
 
 'mindmon_agency'

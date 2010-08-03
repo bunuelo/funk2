@@ -268,7 +268,7 @@ f2ptr raw__bruno_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this
                                      f2pointer__new(cause, raw_executable__to__relative_ptr(cost_compare)), global_environment(), nil, nil);
 
   f2ptr graph_set             = f2__bruno_decomposition_lattice__graph_set            (cause, this);
-  f2ptr node_set              = f2__bruno_decomposition_lattice__node_set             (cause, this);
+  //f2ptr node_set              = f2__bruno_decomposition_lattice__node_set             (cause, this);
   f2ptr root_graph_set        = f2__bruno_decomposition_lattice__root_graph_set       (cause, this);
   f2ptr node_parent_hash      = f2__bruno_decomposition_lattice__node_parent_hash     (cause, this);
   f2ptr node_left_child_hash  = f2__bruno_decomposition_lattice__node_left_child_hash (cause, this);

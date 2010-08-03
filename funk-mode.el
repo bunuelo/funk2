@@ -78,7 +78,7 @@
             '("and" "apply" "car" "cdr" "cons" "list" "mapc" "mapcar" "null" "print"
               "range" "join" "format" "or" "not" "cadr" "caddr" "cadddr" "cddr" "cdddr"
               "first" "fourth" "make-funk" "make-metro" "second" "set-car" "set-cdr"
-              "third" "thread-complete" "thread-value" "eq" "set" "get" "have" "execute")
+              "third" "thread-complete" "thread-value" "eq" "equals" "set" "get" "have" "execute")
             'words)
            'font-lock-function-name-face)
      (cons (regexp-opt

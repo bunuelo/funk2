@@ -48,9 +48,14 @@
   [set this text_view     [gtk-text_view-new]]
   [set this resource_vbox [gtk-vbox-new [get this resource_count]]]
   [set this resource_array [new array [get this resource_count]]]
-  [dotimes [i [get this resource_count]]
-    [set  [get this resource_array] elt i      [new mindmon_resource mindmon layer_name agency_name resource_name]]
-    [have [get this resource_vbox]  pack_start [get [get this resource_array] elt i] t t 0]]
+  [let [[resource_name_index 0]
+	[resource_name_iter  [get this resource_names]]]
+    [while resource_name_iter
+      [let [[resource_name [first resource_name_iter]]]
+	[set  [get this resource_array] elt resource_name_index [new mindmon_resource mindmon layer_name agency_name resource_name]]
+	[have [get this resource_vbox]  pack_start              [get [get this resource_array] elt resource_name_index]             t t 0]]
+      [= resource_name_index [+    resource_name_index 1]]
+      [= resource_name_iter  [next resource_name_iter]]]]
   [have [get this vbox] pack_start [get this text_view]     nil nil 0]
   [have [get this vbox] pack_start [get this resource_vbox] t t 0]
   this]
@@ -66,6 +71,9 @@
 
 [deftypefunk mindmon_agency get resource_count []
   [get [get [get this mindmon] mind] layer_agency_resource_count [get this layer_name] [get this agency_name]]]
+
+[deftypefunk mindmon_agency get resource_names []
+  [get [get [get this mindmon] mind] layer_agency_resource_names [get this layer_name] [get this agency_name]]]
 
 
 'mindmon_layer'

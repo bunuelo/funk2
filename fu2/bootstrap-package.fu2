@@ -161,7 +161,7 @@
 	  [get package package_dependencies]]
     [mapc [funk [source_dependency]
 		[let [[filename [pathname-concat [get package pathname] source_dependency]]]
-		  [if dependency_was_loaded
+		  [if loaded_a_dependency
 		      [prog [load filename]
 			    [= package_was_loaded t]]
 		    [let [[a_file_was_loaded [load-if-modified filename]]]

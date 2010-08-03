@@ -53,7 +53,7 @@
     [while resource_name_iter
       [let [[resource_name [first resource_name_iter]]]
 	[set  [get this resource_array] elt resource_name_index [new mindmon_resource mindmon layer_name agency_name resource_name]]
-	[have [get this resource_vbox]  pack_start              [get [get this resource_array] elt resource_name_index]             t t 0]]
+	[have [get this resource_vbox]  pack_start              [get [get [get this resource_array] elt resource_name_index] widget] t t 0]]
       [= resource_name_index [+    resource_name_index 1]]
       [= resource_name_iter  [next resource_name_iter]]]]
   [have [get this vbox] pack_start [get this text_view]     nil nil 0]

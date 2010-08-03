@@ -32,8 +32,7 @@
   [get this text_view]]
 
 [deftypefunk mindmon_agency execute redraw []
-  [set [get [get this text_view] buffer] text [format nil  '\t\t' 'Agency'
-						      '\n' '\t\t' 'name\t\t\t'       [get this agency_name]
+  [set [get [get this text_view] buffer] text [format nil  '\t\t' [get this agency_name] ' agency'
 						      '\n' '\t\t' 'resource count\t' [get this resource_count]]]
   ]
 
@@ -77,8 +76,7 @@
   [get this vbox]]
 
 [deftypefunk mindmon_layer execute redraw []
-  [set [get [get this text_view] buffer] text [format nil  '\t' 'Layer'
-						      '\n' '\t' 'name\t\t\t'     [get this layer_name]
+  [set [get [get this text_view] buffer] text [format nil  '\t' [get this layer_name] ' layer'
 						      '\n' '\t' 'agency count\t' [get this agency_count]]]
   [dotimes [i [get this agency_count]]
     [have [get [get this agency_array] elt i] redraw]]]
@@ -155,7 +153,7 @@
 
 
 [deftypefunk mindmon execute redraw []
-  [set [get [get this text_view] buffer] text [format nil  'Mind'
+  [set [get [get this text_view] buffer] text [format nil  'mind'
 						      '\n' 'layer count\t' [get this layer_count]]]
   [dotimes [i [get this layer_count]]
     [have [get [get this layer_array] elt i] redraw]]]

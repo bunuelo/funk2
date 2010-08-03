@@ -49,8 +49,8 @@
   
   [dotimes [i [get this agency_count]]
     [let [[mindmon_agency [new mindmon_agency mindmon this]]]
-      [set [get this agency_array] elt i mindmon_agency]
-      [have [get this agency_hbox] pack_start [get mindmon_agency widget] t t 0]]]
+      [set  [get this agency_array] elt i      mindmon_agency]
+      [have [get this agency_hbox]  pack_start [get mindmon_agency widget] t t 0]]]
   
   [have [get this vbox] pack_start [get this text_view]   t t 0]
   [have [get this vbox] pack_start [get this agency_hbox] t t 0]
@@ -107,8 +107,8 @@
 					 [while layer_name_iter
 					   [let [[layer_name [first layer_name_iter]]]
 					     [let [[mindmon_layer [new mindmon_layer this layer_name]]]
-					       [set  [get this layer_array] elt i      mindmon_layer]
-					       [have [get this layer_vbox]  pack_start [get mindmon_layer widget] t t 0]]]
+					       [set  [get this layer_array] elt layer_name_index mindmon_layer]
+					       [have [get this layer_vbox]  pack_start           [get mindmon_layer widget] t t 0]]]
 					   [= layer_name_index [+ layer_name_index 1]]
 					   [= layer_name_iter  [next layer_name_iter]]]]
 				       

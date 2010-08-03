@@ -37,7 +37,7 @@
   ]
 
 [deftypefunk mindmon_agency get resource_count []
-  2]
+  [get [get [get this mindmon] mind] layer_agency_resource_count [get this layer_name] [get this agency_name]]]
 
 'mindmon_layer'
 

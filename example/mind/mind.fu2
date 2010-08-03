@@ -39,6 +39,9 @@
 [deftypefunk mind get layer [name]
   [have [get this layer_frame] lookup name]]
 
+[deftypefunk mind get layer_agency_names [name]
+  [get [get this layer name] agency_names]]
+
 [defmetro mind-layer [mind layer_name]
   `[get ,mind layer [quote ,layer_name]]]
 

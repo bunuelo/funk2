@@ -144,9 +144,8 @@
        [deftypefunk ,type_name set ,var_name [,new_var_name] [= ,var_name ,new_var_name]]
        nil]]]
 
-[deftypepvar propogator_resource pole_nanoseconds [* 10 1000 1000 1000]]
-
 [deframe          propogator_resource [frame] [resource graph]]
+[deftypepvar      propogator_resource pole_nanoseconds [* 10 1000 1000 1000]]
 [deftypeconstruct propogator_resource [name]
   [set this graph    [new propogator_graph]]
   [set this resource [new resource name [funk [provenance]

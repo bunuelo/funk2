@@ -137,7 +137,7 @@
 
 
 [defmetro deftypepvar [type_name var_name :rest optional_initial_value]
-  [print `[deftypevar ,type_name ,var_name]]
+  [print `[deftypepvar ,type_name ,var_name]]
   [let [[new_var_name [get [format nil 'new_' var_name] as-symbol]]]
     `[let [[,var_name ,[if optional_initial_value [first optional_initial_value] nil]]]
        [deftypefunk ,type_name get ,var_name []              ,var_name]

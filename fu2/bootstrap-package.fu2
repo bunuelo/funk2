@@ -55,7 +55,8 @@
 [defunk filename-load [this]
   [with-new-cause [cause-define source-filename this]
 		  [cause-define cause-name      `filename-load]
-		  [source-eval [source-load this]]
+		  [load this]
+		  `[source-eval [source-load this]]
 		  [let [[stat [pathname-stat this]]]
 		    [let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
 		      [have file_loaded_modification_time_hash add this time_of_last_modification]]]]
@@ -162,7 +163,7 @@
     [mapc [funk [source_dependency]
 		[let [[filename [pathname-concat [get package pathname] source_dependency]]]
 		  [if loaded_a_dependency
-		      [prog [load filename]
+		      [prog [filename-load filename]
 			    [= package_was_loaded t]]
 		    [let [[a_file_was_loaded [load-if-modified filename]]]
 		      [if a_file_was_loaded

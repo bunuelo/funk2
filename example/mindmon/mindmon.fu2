@@ -37,23 +37,23 @@
 
 'mindmon_layer'
 
-[deframe          mindmon_layer [frame] [mindmon layer_name vbox text_view agency_hbox agency_array]]
+[deframe          mindmon_layer [frame] [mindmon layer_name vbox text_view agency_vbox agency_array]]
 [deftypeconstruct mindmon_layer [mindmon layer_name]
   [set this mindmon      mindmon]
   [set this layer_name   layer_name]
   
   [set this vbox         [gtk-vbox-new 2]]
   [set this text_view    [gtk-text_view-new]]
-  [set this agency_hbox  [gtk-hbox-new [get this agency_count]]]
+  [set this agency_vbox  [gtk-vbox-new [get this agency_count]]]
   [set this agency_array [new array    [get this agency_count]]]
   
   [dotimes [i [get this agency_count]]
     [let [[mindmon_agency [new mindmon_agency mindmon this]]]
       [set  [get this agency_array] elt i      mindmon_agency]
-      [have [get this agency_hbox]  pack_start [get mindmon_agency widget] t t 0]]]
+      [have [get this agency_vbox]  pack_start [get mindmon_agency widget] t t 0]]]
   
   [have [get this vbox] pack_start [get this text_view]   nil nil 0]
-  [have [get this vbox] pack_start [get this agency_hbox] t t 0]
+  [have [get this vbox] pack_start [get this agency_vbox] t t 0]
   this]
 
 [deftypefunk mindmon_layer get layer []

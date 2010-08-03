@@ -62,12 +62,15 @@
   nil]
 
 [defunk filename-load_if_modified [this]
-  [let [[last_loaded_modification_time [have file_loaded_modification_time_hash lookup this]]]
-    [if [or [null last_loaded_modification_time]
-	    [let [[stat [pathname-stat this]]]
-	      [let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
-		[not [get last_loaded_modification_time equals time_of_last_modification]]]]]
-	[load this]]]]
+  [let [[file_was_loaded nil]]
+    [let [[last_loaded_modification_time [have file_loaded_modification_time_hash lookup this]]]
+      [if [or [null last_loaded_modification_time]
+	      [let [[stat [pathname-stat this]]]
+		[let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
+		  [not [get last_loaded_modification_time equals time_of_last_modification]]]]]
+	  [prog [load this]
+		[= file_was_loaded t]]]]
+    file_was_loaded]]
 
 [defunk load [:rest filenames]
   [mapc [funk [filename]
@@ -76,9 +79,13 @@
 	filenames]]
 
 [defunk load-if-modified [:rest filenames]
-  [mapc [funk [filename]
-	      [filename-load_if_modified filename]]
-	filenames]]
+  [let [[a_file_was_loaded nil]]
+    [mapc [funk [filename]
+		[let [[file_was_loaded [filename-load_if_modified filename]]]
+		  [if file_was_loaded
+		      [= a_file_was_loaded t]]]]
+	  filenames]
+    a_file_was_loaded]]
 
 [deftypefunk symbol get is-defined [] [not [is-type `bug [shelter [eval this]]]]]
 
@@ -144,13 +151,25 @@
 	  [get package source_dependencies]]]]
 
 [defunk package-load_if_modified [name]
-  [let [[package [lookup-package name]]]
+  [let [[package             [lookup-package name]]
+	[loaded_a_dependency nil]
+	[package_was_loaded  nil]]
     [mapc [funk [package_dependency]
-		[package-load_if_modified package_dependency]]
+		[let [[dependency_was_loaded [package-load_if_modified package_dependency]]]
+		  [if dependency_was_loaded
+		      [= loaded_a_dependency t]]]]
 	  [get package package_dependencies]]
     [mapc [funk [source_dependency]
-		[load-if-modified [pathname-concat [get package pathname] source_dependency]]]
-	  [get package source_dependencies]]]]
+		[let [[filename [pathname-concat [get package pathname] source_dependency]]]
+		  [if dependency_was_loaded
+		      [prog [load filename]
+			    [= package_was_loaded t]]
+		    [let [[a_file_was_loaded [load-if-modified filename]]]
+		      [if a_file_was_loaded
+			  [= package_was_loaded t]]]]]]
+	  [get package source_dependencies]]
+    [or loaded_a_dependency
+	package_was_loaded]]]
 
 [defmetro require [:rest names]
   `[prog @[mapcar [funk [name]

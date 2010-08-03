@@ -21,9 +21,9 @@
 'mindmon_agency'
 
 [deframe          mindmon_agency [frame] [mindmon mindmon_layer agency_name text_view]]
-[deftypeconstruct mindmon_agency [mindmon mindmon_layer agency_name]
+[deftypeconstruct mindmon_agency [mindmon layer_name agency_name]
   [set this mindmon       mindmon]
-  [set this mindmon_layer mindmon_layer]
+  [set this layer_name    layer_name]
   [set this agency_name   agency_name]
   [set this text_view     [gtk-text_view-new]]
   this]
@@ -38,7 +38,7 @@
   ]
 
 [deftypefunk mindmon_agency get resource_count []
-  1]
+  2]
 
 'mindmon_layer'
 
@@ -57,7 +57,7 @@
 	  [agency_name_iter  agency_names]]
       [while agency_name_iter
 	[let [[agency_name [first agency_name_iter]]]
-	  [let [[mindmon_agency [new mindmon_agency mindmon this agency_name]]]
+	  [let [[mindmon_agency [new mindmon_agency mindmon layer_name agency_name]]]
 	    [set  [get this agency_array] elt agency_name_index mindmon_agency]
 	    [have [get this agency_vbox]  pack_start [get mindmon_agency widget] t t 0]]]
 	[= agency_name_index [+    agency_name_index 1]]

@@ -33,7 +33,7 @@
   [get this text_view]]
 
 [deftypefunk mindmon_resource execute redraw []
-  [set [get [get this text_view] buffer] text [format nil  '\t\t' [get this resource_name] ' resource']]
+  [set [get [get this text_view] buffer] text [format nil  '\t\t\t' [get this resource_name] ' resource']]
   ]
 
 

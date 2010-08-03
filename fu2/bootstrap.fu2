@@ -77,8 +77,6 @@
 
 'specify core development package requirements here.'
 
-[require ansi]
-
 'done with loading core development bootstrap.img.'
 
 [load-funk2-devrc]

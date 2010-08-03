@@ -17,18 +17,61 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe          mindmon_layer [frame] [mindmon text_view]]
-[deftypeconstruct mindmon_layer [mindmon]
-  [set this mindmon   mindmon]
-  [set this text_view [gtk-text_view-new]]
+
+'mindmon_agency'
+
+[deframe          mindmon_agency [frame] [mindmon mindmon_layer text_view]]
+[deftypeconstruct mindmon_agency [mindmon mindmon_layer]
+  [set this mindmon       mindmon]
+  [set this mindmon_layer mindmon_layer]
+  [set this text_view     [gtk-text_view-new]]
   this]
 
-[deftypefunk mindmon_layer get widget []
+[deftypefunk mindmon_agency get widget []
   [get this text_view]]
 
-[deftypefunk mindmon_layer execute redraw []
-  [set [get [get this text_view] buffer] text [format nil 'Mind Layer.']]
+[deftypefunk mindmon_agency execute redraw []
+  [set [get [get this text_view] buffer] text [format nil 'Agency.']]
   ]
+
+
+'mindmon_layer'
+
+[deframe          mindmon_layer [frame] [mindmon layer_name vbox text_view agency_hbox agency_array]]
+[deftypeconstruct mindmon_layer [mindmon layer_name]
+  [set this mindmon      mindmon]
+  [set this layer_name   layer_name]
+  
+  [set this vbox         [gtk-vbox-new 2]]
+  [set this text_view    [gtk-text_view-new]]
+  [set this agency_hbox  [gtk-hbox-new [get this agency_count]]]
+  [set this agency_array [new array [get this agency_count]]]
+  
+  [dotimes [i [get this agency_count]]
+    [let [[mindmon_agency [new mindmon_agency mindmon this]]]
+      [set agency_array elt i mindmon_agency]
+      [have [get this agency_hbox] pack_start [get mindmon_agency widget] t t 0]]]
+  
+  [have vbox pack_start text_view   t t 0]
+  [have vbox pack_start agency_hbox t t 0]
+  this]
+
+[deftypefunk mindmon_layer get layer []
+  [get [get [get this mindmon] mind] layer layer_name]]
+
+[deftypefunk mindmon_layer get agency_count []
+  [simple_length [get [get this layer] agencies]]]
+
+[deftypefunk mindmon_layer get widget []
+  [get this vbox]]
+
+[deftypefunk mindmon_layer execute redraw []
+  [set [get [get this text_view] buffer] text [format nil 'Layer.']]
+  [dotimes [i [get this agency_count]]
+    [have [get [get this agency_array] elt i] redraw]]]
+
+
+'mindmon'
 
 [deframe          mindmon [frame] [initialized mind fiber vbox text_view layer_vbox layer_array]]
 [deftypeconstruct mindmon [mind]

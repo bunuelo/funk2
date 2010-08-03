@@ -45,11 +45,11 @@
   [set this vbox         [gtk-vbox-new 2]]
   [set this text_view    [gtk-text_view-new]]
   [set this agency_hbox  [gtk-hbox-new [get this agency_count]]]
-  [set this agency_array [new array [get this agency_count]]]
+  [set this agency_array [new array    [get this agency_count]]]
   
   [dotimes [i [get this agency_count]]
     [let [[mindmon_agency [new mindmon_agency mindmon this]]]
-      [set agency_array elt i mindmon_agency]
+      [set [get this agency_array] elt i mindmon_agency]
       [have [get this agency_hbox] pack_start [get mindmon_agency widget] t t 0]]]
   
   [have vbox pack_start text_view   t t 0]

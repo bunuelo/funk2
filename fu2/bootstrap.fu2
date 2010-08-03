@@ -30,7 +30,6 @@
 [load 'fu2/bootstrap-bugs.fu2']
 [load 'fu2/bootstrap-boot.fu2']
 [load 'fu2/bootstrap-math.fu2']
-[load 'fu2/bootstrap-blocks_world.fu2']
 [load 'fu2/bootstrap-semantic_graph.fu2']
 [load 'fu2/bootstrap-critics-reactive.fu2']
 [load 'fu2/bootstrap-string.fu2']

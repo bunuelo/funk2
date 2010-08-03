@@ -143,7 +143,11 @@
        [deftypefunk ,type_name set ,var_name [,new_var_name] [= ,var_name ,new_var_name]]
        nil]]]
 
+[print 'debug 0']
+
 [deftypepvar propogator_resource pole_nanoseconds [* 10 1000 1000 1000]]
+
+[print 'debug 1']
 
 [deframe          propogator_resource [frame] [resource graph]]
 [deftypeconstruct propogator_resource [name]

@@ -30,7 +30,6 @@
 [load 'fu2/bootstrap-bugs.fu2']
 [load 'fu2/bootstrap-boot.fu2']
 [load 'fu2/bootstrap-math.fu2']
-[load 'fu2/bootstrap-ansi.fu2']
 [load 'fu2/bootstrap-termios.fu2']
 [load 'fu2/bootstrap-blocks_world.fu2']
 [load 'fu2/bootstrap-semantic_graph.fu2']
@@ -78,6 +77,12 @@
 
 [defunk load-funk2-devrc []
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]
+
+'specify core development package requirements here.'
+
+[require ansi]
+
+'done with loading core development bootstrap.img.'
 
 [load-funk2-devrc]
 

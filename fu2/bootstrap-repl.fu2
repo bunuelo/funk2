@@ -77,6 +77,7 @@
 [primfunk:load 'fu2/primfunks-primobject_type_handler.fu2']
 [primfunk:load 'fu2/primfunks-primobjects.fu2']
 [primfunk:load 'fu2/primfunks-search.fu2']
+[primfunk:load 'fu2/primfunks-semantic_graph.fu2']
 [primfunk:load 'fu2/primfunks-serialize.fu2']
 [primfunk:load 'fu2/primfunks-set.fu2']
 [primfunk:load 'fu2/primfunks-socket.fu2']

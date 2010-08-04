@@ -43,7 +43,20 @@
 
 'mindmon_resource'
 
-[deframe          mindmon_resource [frame] [mindmon layer_name agency_name resource_name hbox text_view story_hbox story_array]]
+[deframe          mindmon_resource [frame] [mindmon
+					    layer_name
+					    agency_name
+					    resource_name
+					    
+					    hbox
+					    text_view
+					    story_hbox
+					    story_array
+					    
+					    last_fiber_bytecode_count
+					    last_fiber_bytecode_count_time
+					    bytecodes_per_second
+					    ]]
 [deftypeconstruct mindmon_resource [mindmon layer_name agency_name resource_name]
   [set this mindmon       mindmon]
   [set this layer_name    layer_name]
@@ -73,11 +86,21 @@
 
 [deftypefunk mindmon_resource execute redraw []
   [let [[resource [get this resource]]]
+    [let [[fiber [get resource fiber]]]
+      [let [[last_fiber_bytecode_count      [get this last_fiber_bytecode_count]]
+	    [last_fiber_bytecode_count_time [get this last_fiber_bytecode_count_time]]]
+	[let [[fiber_bytecode_count      [get fiber bytecode_count]]
+	      [fiber_bytecode_count_time [time]]]
+	  [let [[elapsed_bytecode_count             [- fiber_bytecode_count                                   last_fiber_bytecode_count]]
+		[elapsed_bytecode_count_nanoseconds [- [get fiber_bytecode_count_time nanoseconds_since_1970] [get last_fiber_bytecode_count_time nanoseconds_since_1970]]]]
+	    [let [[bytecodes_per_second [/ [* elapsed_bytecode_count 1000000000] elapsed_bytecode_count_nanoseconds]]]
+	      [set this bytecodes_per_second bytecodes_per_second]]]]]]
+    
     [set [get [get this text_view] buffer] text [format nil  '\t\t\t' [get this resource_name]
 							'\n' '\t\t\t\t' 'active\t\t'  [get resource active]
 							'\n' '\t\t\t\t' 'done\t\t'    [get resource done]
 							'\n' '\t\t\t\t' 'pole time\t' [/ [get resource pole_nanoseconds] 1000000000.0] ' s'
-							'\n' '\t\t\t\t' 'speed\t\t'   [/ 0 1024.0] ' kBc/s'
+							'\n' '\t\t\t\t' 'speed\t\t'   [/ [get this bytecodes_per_second] 1024.0] ' kBc/s'
 							]]
     [dotimes [i [get this story_count]]
       [have [get [get this story_array] elt i] redraw]]]]

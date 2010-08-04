@@ -137,6 +137,7 @@
   [set this mind        mind]
   [set this fiber       [fiber [funk []
 				     [cause-define cause-name `mindmon]
+				     [cause-define cause-args [frame mind_expression mind_expression]]
 				     [cause-enable_reactive_critics [this-cause]]
 				     
 				     [while [not [get this initialized]]

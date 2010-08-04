@@ -50,9 +50,9 @@
   [set this resource_name resource_name]
   [set this hbox          [gtk-hbox-new 2]]
   [set this text_view     [gtk-text_view-new]]
-  [set this story_hbox    [gtk-hbox-new 1]]
-  [set this story_array   [new array 1]]
-  [dotimes [i 1]
+  [set this story_hbox    [gtk-hbox-new [get this story_count]]]
+  [set this story_array   [new array    [get this story_count]]]
+  [dotimes [i [get this story_count]]
     [let [[story_name i]]
       [let [[mindmon_story [new mindmon_story mindmon layer_name agency_name resource_name story_name]]]
 	[set [get this story_array] elt i mindmon_story]
@@ -67,6 +67,9 @@
 [deftypefunk mindmon_resource get resource []
   [get [get [get this mindmon] mind] resource [get this layer_name] [get this agency_name] [get this resource_name]]]
 
+[deftypefunk mindmon_resource get story_count []
+  1]
+
 [deftypefunk mindmon_resource execute redraw []
   [let [[resource [get this resource]]]
     [set [get [get this text_view] buffer] text [format nil  '\t\t\t' [get this resource_name]
@@ -75,7 +78,8 @@
 							'\n' '\t\t\t\t' 'pole time\t' [/ [get resource pole_nanoseconds] 1000000000.0] ' s'
 							'\n' '\t\t\t\t' 'speed\t\t'   [/ 0 1024.0] ' kBc/s'
 							]]
-    ]]
+    [dotimes [i [get this story_count]]
+      [have [get [get this story_array] elt i] redraw]]]]
 
 
 

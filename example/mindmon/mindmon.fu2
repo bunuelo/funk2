@@ -129,7 +129,7 @@
 'mindmon'
 
 [deframe          mindmon [frame] [initialized mind fiber vbox text_view layer_vbox layer_array]]
-[deftypeconstruct mindmon [mind]
+[deftypeconstruct mindmon [mind mind_expression]
   [if [not [is-type `mind mind]]
       [error bug_type `mindmon_mind_is_not_mind
 	     was_type [type mind]]]
@@ -153,7 +153,7 @@
 				       
 				       [have win add          [get this vbox]]
 				       [set  win default_size 640 800]
-				       [set  win title        'mindmon']
+				       [set  win title        [format nil 'mindmon ' mind_expression]]
 				       
 				       [set this layer_array [new array [get this layer_count]]]
 				       
@@ -236,7 +236,7 @@
 		'\n'   ''
 		'\n'   '       This description is inspired by the TOP Linux man page.']
       [let [[mind [first minds]]]
-	`[prog [new mindmon ,mind]
+	`[prog [new mindmon ,mind ,[quote mind]]
 	       nil]]]]]
 
 

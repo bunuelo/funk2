@@ -20,7 +20,7 @@
 
 'mindmon_story'
 
-[deframe          mindmon_story [frame] [mindmon layer_name agency_name resource_name text_view]]
+[deframe          mindmon_story [frame] [mindmon layer_name agency_name resource_name story_name text_view]]
 [deftypeconstruct mindmon_story [mindmon layer_name agency_name resource_name story_name]
   [set this mindmon       mindmon]
   [set this layer_name    layer_name]

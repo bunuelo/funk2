@@ -74,7 +74,7 @@
     [if tutorial [if output-stream [prog [aformat-maybe_html output-stream '\nread> '] [afwrite-maybe_html read-exp output-stream]]]]
     [if [equals read-exp `[exit]]
 	`repl-exit
-      [let [[eval-exp [if [not [null stdout]]
+      [let [[eval-exp [if [eq stdin input-stream]
 			  [with-new-cause [cause-define cause-name `repl-eval]
 					  [cause-define cause-exp read-exp]
 					  [eval read-exp]]

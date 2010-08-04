@@ -225,7 +225,7 @@
 
 'mindmon'
 
-[deframe          mindmon [frame] [initialized mind fiber vbox text_view layer_vbox layer_array]]
+[deframe          mindmon [frame] [initialized mind fiber scrolled_window vbox text_view layer_vbox layer_array]]
 [deftypeconstruct mindmon [mind mind_expression]
   [if [not [is-type `mind mind]]
       [error bug_type `mindmon_mind_is_not_mind
@@ -242,14 +242,17 @@
 				     
 				     [let [[win [gtk-window-new]]]
 				       
-				       [set this vbox       [gtk-vbox-new 2]]
-				       [set this text_view  [gtk-text_view-new]]
-				       [set this layer_vbox [gtk-vbox-new [get this layer_count]]]
+				       [set this scrolled_window [gtk-scrolled_window-new]]
+				       [set this vbox            [gtk-vbox-new 2]]
+				       [set this text_view       [gtk-text_view-new]]
+				       [set this layer_vbox      [gtk-vbox-new [get this layer_count]]]
 				       
 				       [have [get this vbox] pack_start [get this text_view] nil nil 0]
 				       [have [get this vbox] pack_start [get this layer_vbox] t t 0]
 				       
-				       [have win add          [get this vbox]]
+				       [have [get this scrolled_window] add [get this vbox]]
+				       
+				       [have win add          [get this scrolled_window]]
 				       [set  win default_size 640 800]
 				       [set  win title        [format nil 'mindmon ' mind_expression]]
 				       

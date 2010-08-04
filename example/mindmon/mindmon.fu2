@@ -250,7 +250,7 @@
 				       [have [get this vbox] pack_start [get this text_view] nil nil 0]
 				       [have [get this vbox] pack_start [get this layer_vbox] t t 0]
 				       
-				       [have [get this scrolled_window] add [get this vbox]]
+				       [have [get this scrolled_window] add_with_viewport [get this vbox]]
 				       
 				       [have win add          [get this scrolled_window]]
 				       [set  win default_size 640 800]

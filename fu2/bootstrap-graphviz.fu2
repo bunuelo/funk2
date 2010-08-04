@@ -38,6 +38,9 @@
 [deftypefunk graph execute gview []
   [dot_code-gview [get this as-dot_code]]]
 
+[deftypefunk bruno_graph execute gview []
+  [dot_code-gview [get this as-dot_code]]]
+
 [deftypefunk frame execute gview       [] [have [get this as-graph] gview]]
 [deftypefunk frame get     as-dot_code [] [get  [get this as-graph] as-dot_code]]
 
@@ -104,7 +107,7 @@
     ]]
 
 
-[deftypefunk bruno_graph execute gview []
+`[deftypefunk bruno_graph execute gview []
   [let [[graph         [new graph]]
         [node_list     [get [get this node_set] elements]]
         [edge_list     [get [get this edge_set] elements]]

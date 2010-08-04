@@ -264,8 +264,10 @@
 					 [while layer_name_iter
 					   [let [[layer_name [first layer_name_iter]]]
 					     [let [[mindmon_layer [new mindmon_layer this layer_name]]]
-					       [set  [get this layer_array] elt layer_name_index mindmon_layer]
-					       [have [get this layer_vbox]  pack_start           [get mindmon_layer widget] t t 0]]]
+					       [let [[layer [get [get this mind] layer layer_name]]]
+						 [let [[layer_index [get layer index]]]
+						   [set  [get this layer_array] elt layer_index mindmon_layer]
+						   [have [get this layer_vbox]  pack_start      [get mindmon_layer widget] t t 0]]]
 					   [= layer_name_index [+ layer_name_index 1]]
 					   [= layer_name_iter  [next layer_name_iter]]]]
 				       

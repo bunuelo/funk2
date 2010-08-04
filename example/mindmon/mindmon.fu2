@@ -236,7 +236,7 @@
 		'\n'   ''
 		'\n'   '       This description is inspired by the TOP Linux man page.']
       [let [[mind [first minds]]]
-	`[prog [new mindmon ,mind ,[quote mind]]
+	`[prog [new mindmon ,mind [quote ,mind]]
 	       nil]]]]]
 
 

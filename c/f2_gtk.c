@@ -303,7 +303,7 @@ GtkWidget* funk2_gtk__scrolled_window__new(funk2_gtk_t* this) {
 void funk2_gtk__scrolled_window__add_with_viewport(funk2_gtk_t* this, GtkWidget* scrolled_window, GtkWidget* child) {
   {
     gdk_threads_enter();
-    gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(scrolled_window), GTK_WIDGET(chilld));
+    gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(scrolled_window), GTK_WIDGET(child));
     gdk_threads_leave();
   }
 }

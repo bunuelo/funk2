@@ -18,19 +18,51 @@
  rights to redistribute these changes.'
 
 
+'mindmon_story'
+
+[deframe          mindmon_story [frame] [mindmon layer_name agency_name resource_name text_view]]
+[deftypeconstruct mindmon_story [mindmon layer_name agency_name resource_name story_name]
+  [set this mindmon       mindmon]
+  [set this layer_name    layer_name]
+  [set this agency_name   agency_name]
+  [set this resource_name resource_name]
+  [set this story_name    story_name]
+  [set this text_view     [gtk-text_view-new]]
+  this]
+
+[deftypefunk mindmon_story get widget []
+  [get this text_view]]
+
+[deftypefunk mindmon_story execute redraw []
+  [set [get [get this text_view] buffer] text [format nil  '\t\t\t' [get this story_name] ' story'
+						      ]]
+  ]
+
+
+
 'mindmon_resource'
 
-[deframe          mindmon_resource [frame] [mindmon layer_name agency_name resource_name text_view]]
+[deframe          mindmon_resource [frame] [mindmon layer_name agency_name resource_name hbox text_view story_hbox story_array]]
 [deftypeconstruct mindmon_resource [mindmon layer_name agency_name resource_name]
   [set this mindmon       mindmon]
   [set this layer_name    layer_name]
   [set this agency_name   agency_name]
   [set this resource_name resource_name]
+  [set this hbox          [gtk-hbox-new 2]]
   [set this text_view     [gtk-text_view-new]]
+  [set this story_hbox    [gtk-hbox-new 1]]
+  [set this story_array   [new array 1]]
+  [dotimes [i 1]
+    [let [[story_name i]]
+      [let [[mindmon_story [new mindmon_story mindmon layer_name agency_name resource_name story_name]]]
+	[set [get this story_array] i mindmon_story]
+	[have [get this story_hbox] pack_start [get mindmon_story widget] t t 0]]]]
+  [have [get this hbox] pack_start [get this text_view]  nil nil 0]
+  [have [get this hbox] pack_start [get this story_hbox] t t 0]
   this]
 
 [deftypefunk mindmon_resource get widget []
-  [get this text_view]]
+  [get this hbox]]
 
 [deftypefunk mindmon_resource get resource []
   [get [get [get this mindmon] mind] resource [get this layer_name] [get this agency_name] [get this resource_name]]]
@@ -119,6 +151,9 @@
 
 [deftypefunk mindmon_layer get widget []
   [get this vbox]]
+
+[deftypefunk mindmon_layer get index []
+  [get [get [get [get this mindmon] mind] layer [get this layer_name]] index]]
 
 [deftypefunk mindmon_layer execute redraw []
   [set [get [get this text_view] buffer] text [format nil  '\t' [get this layer_name] ' layer']]

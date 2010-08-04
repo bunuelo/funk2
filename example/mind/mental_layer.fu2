@@ -20,8 +20,9 @@
 
 'mental_layer'
 
-[deframe          mental_layer [frame] [name agency_frame]]
-[deftypeconstruct mental_layer [name]
+[deframe          mental_layer [frame] [index name agency_frame]]
+[deftypeconstruct mental_layer [index name]
+  [set this index        index]
   [set this name         name]
   [set this agency_frame [frame]]
   this]

@@ -32,8 +32,8 @@
 [deftypefunk mind execute add_layer [layer]
   [have [get this layer_frame] add [get layer name] layer]]
 
-[defmetro mind-create_layer [mind layer_name]
-  `[have ,mind add_layer [new mental_layer [quote ,layer_name]]]]
+[defmetro mind-create_layer [mind layer_index layer_name]
+  `[have ,mind add_layer [new mental_layer layer_index [quote ,layer_name]]]]
 
 
 [deftypefunk mind get layer [name]

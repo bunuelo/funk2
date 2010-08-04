@@ -69,10 +69,11 @@
 
 [deftypefunk mindmon_resource execute redraw []
   [let [[resource [get this resource]]]
-    [set [get [get this text_view] buffer] text [format nil  '\t\t\t' [get this resource_name] ' resource'
+    [set [get [get this text_view] buffer] text [format nil  '\t\t\t' [get this resource_name]
 							'\n' '\t\t\t\t' 'active\t\t'  [get resource active]
 							'\n' '\t\t\t\t' 'done\t\t'    [get resource done]
 							'\n' '\t\t\t\t' 'pole time\t' [/ [get resource pole_nanoseconds] 1000000000.0] ' s'
+							'\n' '\t\t\t\t' 'speed\t\t'   [/ 0 1024.0] ' kBc/s'
 							]]
     ]]
 

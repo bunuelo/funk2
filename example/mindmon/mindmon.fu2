@@ -34,7 +34,8 @@
   [get this text_view]]
 
 [deftypefunk mindmon_story execute redraw []
-  [set [get [get this text_view] buffer] text [format nil  '\t\t\t' [get this story_name] ' story'
+  [set [get [get this text_view] buffer] text [format nil  [get this story_name]
+						      '\n' 
 						      ]]
   ]
 

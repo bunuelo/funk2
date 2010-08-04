@@ -167,7 +167,7 @@
     [let [[agency_bytecodes_per_second [/ [* agency_elapsed_bytecode_count 1000000000] agency_elapsed_bytecode_count_nanoseconds]]]
       [set this elapsed_bytecode_count             agency_elapsed_bytecode_count]
       [set this elapsed_bytecode_count_nanoseconds agency_elapsed_bytecode_count_nanoseconds]
-      [set this bytecodes_per_second               bytecodes_per_second]]]
+      [set this bytecodes_per_second               agency_bytecodes_per_second]]]
   [set [get [get this text_view] buffer] text [format nil  '\t\t' [get this agency_name] ' agency'
 						      '\n' '\t\t' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
 

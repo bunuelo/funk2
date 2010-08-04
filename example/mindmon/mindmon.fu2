@@ -104,10 +104,10 @@
 	      ]]]]]
     
     [set [get [get this text_view] buffer] text [format nil  '\t\t\t' [get this resource_name]
-							'\n' '\t\t\t\t' 'active\t\t'  [get resource active]
-							'\n' '\t\t\t\t' 'done\t\t'    [get resource done]
-							'\n' '\t\t\t\t' 'pole time\t' [/ [get resource pole_nanoseconds] 1000000000.0] ' s'
-							'\n' '\t\t\t\t' 'speed\t\t'   [/ [get this bytecodes_per_second] 1024.0] ' kBc/s'
+							'\n' '\t\t\t\t' 'active\t\t'   [get resource active]
+							'\n' '\t\t\t\t' 'done\t\t'     [get resource done]
+							'\n' '\t\t\t\t' 'sleep time\t' [/ [get resource pole_nanoseconds] 1000000000.0] ' s'
+							'\n' '\t\t\t\t' 'speed\t\t'    [/ [get this bytecodes_per_second] 1024.0] ' kBc/s'
 							]]
     [dotimes [i [get this story_count]]
       [have [get [get this story_array] elt i] redraw]]]]

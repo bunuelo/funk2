@@ -38,8 +38,8 @@
 [deftypefunk mindmon_resource execute redraw []
   [let [[resource [get this resource]]]
     [set [get [get this text_view] buffer] text [format nil  '\t\t\t' [get this resource_name] ' resource'
-							'\n' '\t\t\t\t' 'is' [if [get resource active] ' ' ' not '] 'active.'
-							'\n' '\t\t\t\t' 'is' [if [get resource done]   ' ' ' not '] 'done.'
+							'\n' '\t\t\t\t' 'active\t'    [get resource active]
+							'\n' '\t\t\t\t' 'done\t'      [get resource done]
 							'\n' '\t\t\t\t' 'pole time\t' [/ [get resource pole_nanoseconds] 1000000000.0] ' s'
 							]]
     ]]

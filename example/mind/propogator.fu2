@@ -153,7 +153,6 @@
 					      [let [[constraint_set [get [get this graph] constraint_set]]
 						    [done           nil]]
 						[while [not done]
-						  [set [get this resource] pole_nanoseconds [get this pole_nanoseconds]]
 						  `[print 'propogator_resource looping...']
 						  [= done t]
 						  [mapc [funk [constraint]
@@ -162,6 +161,7 @@
 								  [= done nil]]]
 							[get constraint_set elements]]]
 						nil]]]]
+  [set [get this resource] pole_nanoseconds [get this pole_nanoseconds]]
   this]
 
 [deftypefunk propogator_resource execute call [provenance]

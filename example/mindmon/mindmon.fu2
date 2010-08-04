@@ -55,7 +55,7 @@
   [dotimes [i 1]
     [let [[story_name i]]
       [let [[mindmon_story [new mindmon_story mindmon layer_name agency_name resource_name story_name]]]
-	[set [get this story_array] i mindmon_story]
+	[set [get this story_array] elt i mindmon_story]
 	[have [get this story_hbox] pack_start [get mindmon_story widget] t t 0]]]]
   [have [get this hbox] pack_start [get this text_view]  nil nil 0]
   [have [get this hbox] pack_start [get this story_hbox] t t 0]

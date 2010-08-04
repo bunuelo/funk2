@@ -113,7 +113,7 @@
 							'\n' '\t\t\t\t' 'done\t\t'     [get resource done]
 							'\n' '\t\t\t\t' 'sleep time\t' [/ [get resource pole_nanoseconds] 1000000000.0] ' s'
 							'\n' '\t\t\t\t' 'speed\t\t'    [/ [get this bytecodes_per_second] 1024.0] ' kBc/s'
-							'\n' '\t\t\t\t' '\t\t\t\t\t\t\t\t'
+							'\n' '\t\t\t\t' '\t\t\t\t\t\t\t\t\t\t'
 							]]
     [dotimes [i [get this story_count]]
       [have [get [get this story_array] elt i] redraw]]]]

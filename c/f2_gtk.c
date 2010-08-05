@@ -1296,7 +1296,7 @@ f2ptr f2__gtk__notebook__insert_page(f2ptr cause, f2ptr notebook, f2ptr child, f
 def_pcfunk4(gtk__notebook__insert_page, notebook, child, tab_label, position, return f2__gtk__notebook__insert_page(this_cause, notebook, child, tab_label, position));
 
 
-void raw__gtk__notebook__remove_page(f2ptr cause, f2ptr notebook, f2ptr position) {
+f2ptr raw__gtk__notebook__remove_page(f2ptr cause, f2ptr notebook, f2ptr position) {
 #if defined(F2__GTK__SUPPORTED)
   GtkWidget* gtk_notebook = raw__gtk_widget__as__GtkWidget(cause, notebook);
   s64        position__i  = f2integer__i(position, cause);

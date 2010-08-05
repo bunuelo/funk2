@@ -17,20 +17,50 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deftypefunk gtk_widget execute show_all          []                      [gtk-widget-show_all                   this]]
-[deftypefunk gtk_widget execute add               [that]                  [gtk-container-add                     this that]]
-[deftypefunk gtk_widget execute add_with_viewport [that]                  [gtk-scrolled_window-add_with_viewport this that]]
-[deftypefunk gtk_widget execute signal_connect    [signal_name funk args] [gtk-signal_connect                    this signal_name funk args]]
-[deftypefunk gtk_widget execute pack1             [child resize shrink]   [gtk-paned-pack1                       this child resize shrink]]
-[deftypefunk gtk_widget execute pack2             [child resize shrink]   [gtk-paned-pack2                       this child resize shrink]]
-[deftypefunk gtk_widget set     position          [position]              [gtk-paned-set_position                this position]]
-[deftypefunk gtk_widget get     text              []                      [gtk-entry-get_text                    this]]
-[deftypefunk gtk_widget get     buffer            []                      [gtk-text_view-get_buffer              this]]
-[deftypefunk gtk_widget set     fraction          [fraction]              [gtk-progress_bar-set_fraction         this fraction]]
-[deftypefunk gtk_widget set     title             [title]                 [gtk-window-set_title                  this title]]
-[deftypefunk gtk_widget set     default_size      [width height]          [gtk-window-set_default_size           this width height]]
+
+'Lazy Porting: A technique for implementing object type functionality only when member functions for get/set/execute funks have the same names.'
+
+'GtkWidget'
+[deftypefunk gtk_widget execute show_all       []                      [gtk-widget-show_all                   this]]
+[deftypefunk gtk_widget execute signal_connect [signal_name funk args] [gtk-signal_connect                    this signal_name funk args]]
+
+'GtkContainer'
+[deftypefunk gtk_widget execute add [that] [gtk-container-add this that]]
+
+'GtkScrolledWindow'
+[deftypefunk gtk_widget execute add_with_viewport [that] [gtk-scrolled_window-add_with_viewport this that]]
+
+'GtkPaned'
+[deftypefunk gtk_widget execute pack1    [child resize shrink] [gtk-paned-pack1        this child resize shrink]]
+[deftypefunk gtk_widget execute pack2    [child resize shrink] [gtk-paned-pack2        this child resize shrink]]
+[deftypefunk gtk_widget set     position [position]            [gtk-paned-set_position this position]]
+
+'GtkEntry'
+[deftypefunk gtk_widget get text [] [gtk-entry-get_text this]]
+
+'GtkTextView'
+[deftypefunk gtk_widget get buffer [] [gtk-text_view-get_buffer this]]
+
+'GtkProgressBar'
+[deftypefunk gtk_widget set fraction [fraction] [gtk-progress_bar-set_fraction this fraction]]
+
+'GtkWindow'
+[deftypefunk gtk_widget set title        [title]        [gtk-window-set_title        this title]]
+[deftypefunk gtk_widget set default_size [width height] [gtk-window-set_default_size this width height]]
+
+'GtkNotebook'
+[deftypefunk gtk_widget execute append_page  [child tab_label]          [gtk-notebook-append_page      this child tab_label]]
+[deftypefunk gtk_widget execute prepend_page [child tab_label]          [gtk-notebook-prepend_page     this child tab_label]]
+[deftypefunk gtk_widget execute insert_page  [child tab_label position] [gtk-notebook-insert_page      this child tab_label position]]
+[deftypefunk gtk_widget execute remove_page  [child tab_label position] [gtk-notebook-remove_page      this child tab_label position]]
+[deftypefunk gtk_widget get     current_page []                         [gtk-notebook-get_current_page this]]
+[deftypefunk gtk_widget set     scrollable   [scrollable]               [gtk-notebook-set_scrollable   this scrollable]]
+
+'GtkBox'
 
 [deftypefunk gtk_box execute pack_start [child expand fill padding] [gtk-box-pack_start this child expand fill padding]]
+
+'GtkTextBuffer'
 
 [deftypefunk gtk_text_buffer get     start_iter   []      [gtk-text_buffer-get_start_iter this]]
 [deftypefunk gtk_text_buffer execute select_range [range] [gtk-text_buffer-select_range   this range]]

@@ -513,6 +513,64 @@ GtkWidget* funk2_gtk__notebook__new(funk2_gtk_t* this) {
   return notebook;
 }
 
+s64 funk2_gtk__notebook__append_page(funk2_gtk_t* this, GtkWidget* notebook, GtkWidget* child, GtkWidget* tab_label) {
+  s64 index;
+  {
+    gdk_threads_enter();
+    // returns -1 on failure (according to gtk docs).
+    index = gtk_notebook_append_page(GTK_NOTEBOOK(notebook), GTK_WIDGET(child), GTK_WIDGET(tab_label));
+    gdk_threads_leave();
+  }
+  return index;
+}
+
+s64 funk2_gtk__notebook__prepend_page(funk2_gtk_t* this, GtkWidget* notebook, GtkWidget* child, GtkWidget* tab_label) {
+  s64 index;
+  {
+    gdk_threads_enter();
+    // returns -1 on failure (according to gtk docs).
+    index = gtk_notebook_prepend_page(GTK_NOTEBOOK(notebook), GTK_WIDGET(child), GTK_WIDGET(tab_label));
+    gdk_threads_leave();
+  }
+  return index;
+}
+
+s64 funk2_gtk__notebook__insert_page(funk2_gtk_t* this, GtkWidget* notebook, GtkWidget* child, GtkWidget* tab_label, s64 position) {
+  s64 index;
+  {
+    gdk_threads_enter();
+    // returns -1 on failure (according to gtk docs).
+    index = gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), GTK_WIDGET(child), GTK_WIDGET(tab_label), position);
+    gdk_threads_leave();
+  }
+  return index;
+}
+
+void funk2_gtk__notebook__remove_page(funk2_gtk_t* this, GtkWidget* notebook, s64 index) {
+  {
+    gdk_threads_enter();
+    gtk_notebook_remove_page(GTK_NOTEBOOK(notebook), index);
+    gdk_threads_leave();
+  }
+}
+
+s64 funk2_gtk__notebook__get_current_page(funk2_gtk_t* this, GtkWidget* notebook) {
+  s64 index;
+  {
+    gdk_threads_enter();
+    index = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
+    gdk_threads_leave();
+  }
+  return index;
+}
+
+void funk2_gtk__notebook__set_scrollable(funk2_gtk_t* this, GtkWidget* notebook, boolean_t scrollable) {
+  {
+    gdk_threads_enter();
+    gtk_notebook_set_scrollable(GTK_NOTEBOOK(notebook), scrollable ? TRUE : FALSE);
+    gdk_threads_leave();
+  }
+}
 
 #endif // F2__GTK__SUPPORTED
 
@@ -1158,6 +1216,154 @@ f2ptr f2__gtk__notebook__new(f2ptr cause) {
 def_pcfunk0(gtk__notebook__new, return f2__gtk__notebook__new(this_cause));
 
 
+f2ptr raw__gtk__notebook__append_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_notebook  = raw__gtk_widget__as__GtkWidget(cause, notebook);
+  GtkWidget* gtk_child     = raw__gtk_widget__as__GtkWidget(cause, child);
+  GtkWidget* gtk_tab_label = raw__gtk_widget__as__GtkWidget(cause, tab_label);
+  s64 index = funk2_gtk__notebook__append_page(&(__funk2.gtk), gtk_notebook, gtk_child, gtk_tab_label);
+  if (index == -1) {
+    return nil;
+  }
+  return f2integer__new(cause, index);
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__notebook__append_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label) {
+  if ((! raw__gtk_widget__is_type(cause, notebook)) ||
+      (! raw__gtk_widget__is_type(cause, child)) ||
+      (! raw__gtk_widget__is_type(cause, tab_label))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__notebook__append_page(cause, notebook, child, tab_label);
+}
+def_pcfunk3(gtk__notebook__append_page, notebook, child, tab_label, return f2__gtk__notebook__append_page(this_cause, notebook, child, tab_label));
+
+
+f2ptr raw__gtk__notebook__prepend_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_notebook  = raw__gtk_widget__as__GtkWidget(cause, notebook);
+  GtkWidget* gtk_child     = raw__gtk_widget__as__GtkWidget(cause, child);
+  GtkWidget* gtk_tab_label = raw__gtk_widget__as__GtkWidget(cause, tab_label);
+  s64 index = funk2_gtk__notebook__prepend_page(&(__funk2.gtk), gtk_notebook, gtk_child, gtk_tab_label);
+  if (index == -1) {
+    return nil;
+  }
+  return f2integer__new(cause, index);
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__notebook__prepend_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label) {
+  if ((! raw__gtk_widget__is_type(cause, notebook)) ||
+      (! raw__gtk_widget__is_type(cause, child)) ||
+      (! raw__gtk_widget__is_type(cause, tab_label))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__notebook__prepend_page(cause, notebook, child, tab_label);
+}
+def_pcfunk3(gtk__notebook__prepend_page, notebook, child, tab_label, return f2__gtk__notebook__prepend_page(this_cause, notebook, child, tab_label));
+
+
+f2ptr raw__gtk__notebook__insert_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label, f2ptr position) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_notebook  = raw__gtk_widget__as__GtkWidget(cause, notebook);
+  GtkWidget* gtk_child     = raw__gtk_widget__as__GtkWidget(cause, child);
+  GtkWidget* gtk_tab_label = raw__gtk_widget__as__GtkWidget(cause, tab_label);
+  s64        position__i   = f2integer__i(position, cause);
+  s64 index = funk2_gtk__notebook__insert_page(&(__funk2.gtk), gtk_notebook, gtk_child, gtk_tab_label, position__i);
+  if (index == -1) {
+    return nil;
+  }
+  return f2integer__new(cause, index);
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__notebook__insert_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label, f2ptr position) {
+  if ((! raw__gtk_widget__is_type(cause, notebook)) ||
+      (! raw__gtk_widget__is_type(cause, child)) ||
+      (! raw__gtk_widget__is_type(cause, tab_label)) ||
+      (! raw__integer__is_type(cause, position))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__notebook__insert_page(cause, notebook, child, tab_label, position);
+}
+def_pcfunk4(gtk__notebook__insert_page, notebook, child, tab_label, position, return f2__gtk__notebook__insert_page(this_cause, notebook, child, tab_label, position));
+
+
+void raw__gtk__notebook__remove_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label, f2ptr position) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_notebook  = raw__gtk_widget__as__GtkWidget(cause, notebook);
+  GtkWidget* gtk_child     = raw__gtk_widget__as__GtkWidget(cause, child);
+  GtkWidget* gtk_tab_label = raw__gtk_widget__as__GtkWidget(cause, tab_label);
+  s64        position__i   = f2integer__i(position, cause);
+  funk2_gtk__notebook__remove_page(&(__funk2.gtk), gtk_notebook, gtk_child, gtk_tab_label, position__i);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__notebook__remove_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label, f2ptr position) {
+  if ((! raw__gtk_widget__is_type(cause, notebook)) ||
+      (! raw__gtk_widget__is_type(cause, child)) ||
+      (! raw__gtk_widget__is_type(cause, tab_label)) ||
+      (! raw__integer__is_type(cause, position))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__notebook__remove_page(cause, notebook, child, tab_label, position);
+}
+def_pcfunk4(gtk__notebook__remove_page, notebook, child, tab_label, position, return f2__gtk__notebook__remove_page(this_cause, notebook, child, tab_label, position));
+
+
+f2ptr raw__gtk__notebook__get_current_page(f2ptr cause, f2ptr notebook) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_notebook = raw__gtk_widget__as__GtkWidget(cause, notebook);
+  s64 index = funk2_gtk__notebook__get_current_page(&(__funk2.gtk), gtk_notebook);
+  if (index == -1) {
+    return nil;
+  }
+  return f2integer__new(cause, index);
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__notebook__get_current_page(f2ptr cause, f2ptr notebook) {
+  if (! raw__gtk_widget__is_type(cause, notebook)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__notebook__get_current_page(cause, notebook);
+}
+def_pcfunk1(gtk__notebook__get_current_page, notebook, return f2__gtk__notebook__get_current_page(this_cause, notebook));
+
+
+f2ptr raw__gtk__notebook__set_scrollable(f2ptr cause, f2ptr notebook, f2ptr scrollable) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_notebook = raw__gtk_widget__as__GtkWidget(cause, notebook);
+  funk2_gtk__notebook__set_scrollable(&(__funk2.gtk), gtk_notebook, (scrollable != nil) ? TRUE : FALSE);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__notebook__set_scrollable(f2ptr cause, f2ptr notebook, f2ptr scrollable) {
+  if (! raw__gtk_widget__is_type(cause, notebook)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__notebook__set_scrollable(cause, notebook, scrollable);
+}
+def_pcfunk2(gtk__notebook__set_scrollable, notebook, scrollable, return f2__gtk__notebook__set_scrollable(this_cause, notebook, scrollable));
+
+
+
+
 
 // **
 
@@ -1251,7 +1457,14 @@ void f2__gtk__initialize() {
   
   // notebook
   
-  f2__primcfunk__init__0(gtk__notebook__new, "Returns a new GtkNotebook widget.");
+  f2__primcfunk__init__0(gtk__notebook__new,                                                    "Returns a new GtkNotebook widget.");
+  f2__primcfunk__init__3(gtk__notebook__append_page,      notebook, child, tab_label,           "Adds a new GtkNotebookPage to the end of GtkNotebook.");
+  f2__primcfunk__init__3(gtk__notebook__prepend_page,     notebook, child, tab_label,           "Adds a new GtkNotebookPage to the beginning of a GtkNotebook.");
+  f2__primcfunk__init__4(gtk__notebook__insert_page,      notebook, child, tab_label, position, "Inserts a new GtkNotebookPage to a specific position within a GtkNotebook.");
+  f2__primcfunk__init__4(gtk__notebook__remove_page,      notebook, child, tab_label, position, "Removes the GtkNotebookPage at a specific position within a GtkNotebook");
+  f2__primcfunk__init__1(gtk__notebook__get_current_page, notebook,                             "Returns the index of the current page in a GtkNotebook.");
+  f2__primcfunk__init__2(gtk__notebook__set_scrollable,   notebook, scrollable,                 "Sets a GtkNotebook to be either scollable (True) [t] or not scrollable (False) [nil].");
+  
   
 }
 

@@ -28,8 +28,7 @@
 
 [globalize-funk gtk-widget-show_all                   &primfunk:gtk__widget__show_all]
 [globalize-funk gtk-widget-set_size_request           &primfunk:gtk__widget__set_size_request]
-
-
+[globalize-funk gtk-widget-draw_arc                   &primfunk:gtk__widget__draw_arc]
 
 [globalize-funk gtk-window-new                        &primfunk:gtk__window__new]
 [globalize-funk gtk-window-set_title                  &primfunk:gtk__window__set_title]

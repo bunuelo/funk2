@@ -232,6 +232,8 @@ void funk2_gtk__signal_connect(funk2_gtk_t* this, GtkWidget* widget, u8* signal_
 }
 
 
+// expose_event
+
 gboolean funk2_gtk__expose_event__signal_connect__callback_handler(GtkWidget *widget, GdkEventExpose *event, gpointer data) {
   funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)data;
   funk2_gtk__add_callback_event(&(__funk2.gtk), callback);
@@ -931,6 +933,29 @@ f2ptr f2__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
 def_pcfunk2(gtk__container__add, widget, add_widget, return f2__gtk__container__add(this_cause, widget, add_widget));
 
 
+// expose_event
+
+f2ptr raw__gtk__expose_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+  funk2_gtk__expose_event__signal_connect(&(__funk2.gtk), gtk_widget, funk, args);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__expose_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args) {
+  if ((! raw__gtk_widget__is_type(cause, widget)) ||
+      (! raw__funkable__is_type(cause, funk)) ||
+      (args && (! raw__cons__is_type(cause, args)))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__expose_event__signal_connect(cause, widget, funk, args);
+}
+def_pcfunk3(gtk__expose_event__signal_connect, widget, funk, args, return f2__gtk__expose_event__signal_connect(this_cause, widget, funk, args));
+
+
 // widget
 
 f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
@@ -1560,6 +1585,16 @@ void f2__gtk__initialize() {
   
 
   f2__primcfunk__init__0(gtk__is_supported,                                                                    "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
+  
+  // expose_event
+  
+  f2__primcfunk__init__3(gtk__expose_event__signal_connect,       widget, funk, args,                          "Connects an expose_event signal handler to a GtkWidget.");
+  
+  // widget
+  
+  f2__primcfunk__init__1(gtk__widget__show_all,                   widget,                                      "Shows the widget and all children.");
+  f2__primcfunk__init__3(gtk__widget__set_size_request,           widget, width, height,                       "Requests that the widget be a specific size.");
+  
   f2__primcfunk__init__0(gtk__window__new,                                                                     "Returns a new window widget.");
   f2__primcfunk__init__2(gtk__window__set_title,                  window, title,                               "Sets the title of this gtk_window.");
   f2__primcfunk__init__3(gtk__window__set_default_size,           window, width, height,                       "Sets the default width and height of this gtk_window.");
@@ -1572,8 +1607,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__2(gtk__scrolled_window__add_with_viewport, scrolled_window, child,                      "Adds a non-scrollable widget to a scroll window.");
   f2__primcfunk__init__0(gtk__text_view__new,                                                                  "Returns a new text_view widget.");
   f2__primcfunk__init__1(gtk__text_view__get_buffer,              text_view,                                   "Returns the buffer widget of a text_view widget.");
-  f2__primcfunk__init__1(gtk__widget__show_all,                   widget,                                      "Shows the widget and all children.");
-  f2__primcfunk__init__3(gtk__widget__set_size_request,           widget, width, height,                       "Requests that the widget be a specific size.");
+  
   f2__primcfunk__init__2(gtk__container__add,                     widget, add_widget,                          "Adds a widget to a container.");
   f2__primcfunk__init__5(gtk__box__pack_start,                    widget, child_widget, expand, fill, padding, "Packs a child widget in a box.");
   f2__primcfunk__init__4(gtk__signal_connect,                     widget, signal_name, funk, args,             "Creates a callback for a widget (see gtk-pop_callback_event).");

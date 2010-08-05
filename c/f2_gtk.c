@@ -587,17 +587,6 @@ GtkWidget* funk2_gtk__label__new(funk2_gtk_t* this, u8* text) {
 
 // drawing_area
 
-gboolean
-expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer data)
-{
-  gdk_draw_arc (widget->window,
-                widget->style->fg_gc[gtk_widget_get_state (widget)],
-                TRUE,
-                0, 0, widget->allocation.width, widget->allocation.height,
-                0, 64 * 360);
-  return TRUE;
-}
-
 GtkWidget* funk2_gtk__drawing_area__new(funk2_gtk_t* this) {
   GtkWidget* drawing_area;
   {

@@ -105,17 +105,21 @@
 	[search_button [gtk-button-new_with_label 'Search']]
 	[next_button   [gtk-button-new_with_label 'Next']]
 	[swindow       [gtk-scrolled_window-new]]
+	[notebook      [gtk-notebook-new]]
 	[text_view     [gtk-text_view-new]]]
     
-    [have win     add          vpaned]
-    [set  win     title        'test-gtk']
-    [set  win     default_size 1024 768]
-    [have vpaned  pack1        hbox nil nil]
-    [have hbox    pack_start   search_entry t t 0]
-    [have hbox    pack_start   search_button nil nil 0]
-    [have hbox    pack_start   next_button nil nil 0]
-    [have vpaned  pack2        swindow t t]
-    [have swindow add          text_view]
+    [have hbox     pack_start   search_entry t t 0]
+    [have hbox     pack_start   search_button nil nil 0]
+    [have hbox     pack_start   next_button nil nil 0]
+    [have vpaned   pack1        hbox nil nil]
+    
+    [have swindow  add          text_view]
+    [have notebook append_page  swindow [gtk-label-new 'Document']]
+    [have vpaned   pack2        notebook t t]
+    
+    [have win      add          vpaned]
+    [set  win      title        'test-gtk']
+    [set  win      default_size 1024 768]
     
     [have search_button signal_connect 'clicked'
 	  [funk []

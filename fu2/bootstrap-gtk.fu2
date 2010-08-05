@@ -115,6 +115,7 @@
     
     [have swindow  add          text_view]
     [have notebook append_page  swindow [gtk-label-new 'Document']]
+    [have notebook append_page  [gtk-text_view-new] [gtk-label-new 'Misc. Details']]
     [have vpaned   pack2        notebook t t]
     
     [have win      add          vpaned]

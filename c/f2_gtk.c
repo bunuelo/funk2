@@ -585,6 +585,29 @@ GtkWidget* funk2_gtk__label__new(funk2_gtk_t* this, u8* text) {
   return label;
 }
 
+// drawing_area
+
+gboolean
+expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer data)
+{
+  gdk_draw_arc (widget->window,
+                widget->style->fg_gc[gtk_widget_get_state (widget)],
+                TRUE,
+                0, 0, widget->allocation.width, widget->allocation.height,
+                0, 64 * 360);
+  return TRUE;
+}
+
+GtkWidget* funk2_gtk__drawing_area__new(funk2_gtk_t* this) {
+  GtkWidget* drawing_area;
+  {
+    gdk_threads_enter();
+    drawing_area = gtk_drawing_area_new();
+    gdk_threads_leave();
+  }
+  return drawing_area;
+}
+
 #endif // F2__GTK__SUPPORTED
 
 f2ptr f2__gtk_not_supported_larva__new(f2ptr cause) {
@@ -1396,6 +1419,23 @@ f2ptr f2__gtk__label__new(f2ptr cause, f2ptr text) {
 def_pcfunk1(gtk__label__new, text, return f2__gtk__label__new(this_cause, text));
 
 
+// drawing_area
+
+f2ptr raw__gtk__drawing_area__new(f2ptr cause) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* drawing_area = funk2_gtk__drawing_area__new(&(__funk2.gtk));
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(drawing_area)));
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__drawing_area__new(f2ptr cause) {
+  return raw__gtk__drawing_area__new(cause);
+}
+def_pcfunk0(gtk__drawing_area__new, return f2__gtk__drawing_area__new(this_cause));
+
+
 
 
 
@@ -1502,6 +1542,11 @@ void f2__gtk__initialize() {
   // label
   
   f2__primcfunk__init__1(gtk__label__new, text, "Returns a new GtkLabel.");
+  
+  // drawing_area
+  
+  f2__primcfunk__init__0(gtk__drawing_area__new, "Returns a new GtkDrawingArea.");
+  
   
 }
 

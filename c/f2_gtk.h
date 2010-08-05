@@ -48,9 +48,8 @@ struct funk2_gtk_s {
 };
 
 struct funk2_gtk_callback_s {
-  funk2_gtk_t* gtk;
-  f2ptr        funk;
-  f2ptr        args;
+  f2ptr funk;
+  f2ptr args;
 };
 
 #endif // F2__GTK__TYPES__H

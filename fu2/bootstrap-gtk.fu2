@@ -119,10 +119,6 @@
     [have swindow      add          text_view]
     [have notebook     append_page  swindow [gtk-label-new 'Document']]
     [have drawing_area request_size 640 480]
-    [have drawing_area signal_connect 'expose_event'
-	  [funk []
-		[print 'expose!']]
-	  nil]
     
     [have notebook     append_page  drawing_area [gtk-label-new 'Drawing Area']]
     [have vpaned       pack2        notebook t t]
@@ -139,7 +135,16 @@
 			    [have [get text_view buffer] select_range found_range]]
 		    [prog [format stdout '\n  could not find "' [get search_entry text] '".']]]]]
 	  nil]
-    [have next_button signal_connect 'clicked' [funk [button] [print 'Next button clicked!']] [cons next_button nil]]
+    
+    [have next_button signal_connect 'clicked'
+	  [funk [button]
+		[print 'Next button clicked!']]
+	  [cons next_button nil]]
+    
+    [have drawing_area signal_connect 'expose_event'
+	  [funk []
+		[print 'expose!']]
+	  nil]
     
     [have win show_all]]]
 

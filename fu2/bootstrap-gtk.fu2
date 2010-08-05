@@ -142,9 +142,9 @@
 	  [cons next_button nil]]
     
     [have drawing_area signal_connect 'expose_event'
-	  [funk []
+	  [funk [drawing_area]
 		[print 'expose!']]
-	  nil]
+	  [cons drawing_area nil]]
     
     [have win show_all]]]
 

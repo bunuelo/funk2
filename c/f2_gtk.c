@@ -173,6 +173,14 @@ void funk2_gtk__add_callback(funk2_gtk_t* this, funk2_gtk_callback_t* callback) 
   cons->next      = this->callbacks;
   this->callbacks = cons->next;
   funk2_processor_mutex__unlock(&(this->callbacks__mutex));
+  
+  // never gc these (they are not referenced in the global environment)
+  if (callback->funk) {
+    never_gc(callback->funk);
+  }
+  if (callback->args) {
+    never_gc(callback->args);
+  }
 }
 
 void funk2_gtk__add_callback_event(funk2_gtk_t* this, funk2_gtk_callback_t* callback) {
@@ -215,17 +223,29 @@ void funk2_gtk__signal_connect(funk2_gtk_t* this, GtkWidget* widget, u8* signal_
   funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)f2__malloc(sizeof(funk2_gtk_callback_t));
   callback->funk = funk;
   callback->args = args;
-  // never gc these (they are not referenced in the global environment)
-  if (funk) {
-    never_gc(funk);
-  }
-  if (args) {
-    never_gc(args);
-  }
   funk2_gtk__add_callback(this, callback);
   {
     gdk_threads_enter();
     g_signal_connect(G_OBJECT(widget), (char*)signal_name, G_CALLBACK(funk2_gtk__callback_handler), callback);
+    gdk_threads_leave();
+  }
+}
+
+
+gboolean funk2_gtk__expose_event__signal_connect__callback_handler(GtkWidget *widget, GdkEventExpose *event, gpointer data) {
+  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)data;
+  funk2_gtk__add_callback_event(&(__funk2.gtk), callback);
+  return TRUE;
+}
+
+void funk2_gtk__expose_event__signal_connect(funk2_gtk_t* this, GtkWidget* widget, f2ptr funk, f2ptr args) {
+  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)f2__malloc(sizeof(funk2_gtk_callback_t));
+  callback->funk = funk;
+  callback->args = args;
+  funk2_gtk__add_callback(this, callback);
+  {
+    gdk_threads_enter();
+    g_signal_connect(G_OBJECT(widget), "expose_event", G_CALLBACK(funk2_gtk__expose_event__signal_connect__callback_handler), callback);
     gdk_threads_leave();
   }
 }

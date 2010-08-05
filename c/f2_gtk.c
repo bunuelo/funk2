@@ -274,7 +274,7 @@ void funk2_gtk__widget__set_size_request(funk2_gtk_t* this, GtkWidget* widget, s
 void funk2_gtk__widget__draw_arc(funk2_gtk_t* this, GtkWidget* widget, boolean_t filled, s64 x, s64 y, s64 width, s64 height, s64 angle1, s64 angle2) {
   {
     gdk_threads_enter();
-    gdk_draw_arc(widget->window, widget->style->fg_gc[gtk_widget_get_state(widget)], filled ? TRUE : FALSE, x, y, width, height, angle1, angle2);
+    gdk_draw_arc(widget->window, widget->style->fg_gc[GTK_WIDGET_STATE(widget)], filled ? TRUE : FALSE, x, y, width, height, angle1, angle2);
     gdk_threads_leave();
   }
 }
@@ -1045,8 +1045,6 @@ f2ptr f2__gtk__widget__set_size_request(f2ptr cause, f2ptr widget, f2ptr width, 
 }
 def_pcfunk3(gtk__widget__set_size_request, widget, width, height, return f2__gtk__widget__set_size_request(this_cause, widget, width, height));
 
-
-//void funk2_gtk__widget__draw_arc(funk2_gtk_t* this, GtkWidget* widget, boolean_t filled, s64 x, s64 y, s64 width, s64 height, s64 angle1, s64 angle2)
 
 f2ptr raw__gtk__widget__draw_arc(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr x, f2ptr y, f2ptr width, f2ptr height, f2ptr angle1, f2ptr angle2) {
 #if defined(F2__GTK__SUPPORTED)

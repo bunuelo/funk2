@@ -118,13 +118,18 @@
     
     [have swindow      add          text_view]
     [have notebook     append_page  swindow [gtk-label-new 'Document']]
-    [have drawing_area request_size 100 100]
+    [have drawing_area request_size 640 480]
+    [have drawing_area signal_connect 'expose_event'
+	  [funk []
+		[print 'expose!']]
+	  nil]
+    
     [have notebook     append_page  drawing_area [gtk-label-new 'Drawing Area']]
     [have vpaned       pack2        notebook t t]
     
     [have win          add          vpaned]
     [set  win          title        'test-gtk']
-    [set  win          default_size 1024 768]
+    [set  win          default_size 128 64]
     
     [have search_button signal_connect 'clicked'
 	  [funk []

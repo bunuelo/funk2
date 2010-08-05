@@ -938,7 +938,7 @@ f2ptr raw__gtk__widget__set_size_request(f2ptr cause, f2ptr widget, f2ptr width,
   GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
   s64        width__i   = f2integer__i(width,  cause);
   s64        height__i  = f2integer__i(height, cause);
-  funk2_gtk__widget__set_size_request(&(__funk2.gtk), width__i, height__i);
+  funk2_gtk__widget__set_size_request(&(__funk2.gtk), gtk_widget, width__i, height__i);
   return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);

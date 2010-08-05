@@ -359,8 +359,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  f2ptr larva      = f2fiber__value(fiber, cause);
 	  u64   larva_type = raw__larva__larva_type(cause, larva);
 	  status("larva type (" u64__fstr ") found in fiber and fiber has a critic, so launching critic fiber in serial.", larva_type);
-	} else {
-	  status("larva found in fiber, but it is no longer a fiber?  This shouldn't happen...");
 	}
 	//status("\n  critic="); f2__fiber__print(cause, nil, critics); fflush(stdout);
 	pause_gc();

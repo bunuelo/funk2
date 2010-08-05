@@ -48,6 +48,8 @@
 [deftypefunk mind get layer_names []
   [get [get this layer_frame] slots]]
 
+[deftypefunk mind get layer_count []
+  [simple_length [get this layer_names]]]
 
 [deftypefunk mind execute add_agency [layer_name agency]
   [have [get this layer layer_name] add_agency agency]]

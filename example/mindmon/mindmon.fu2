@@ -140,7 +140,7 @@
   [set this vbox           [gtk-vbox-new 2]]
   [set this text_view      [gtk-text_view-new]]
   [set this resource_vbox  [gtk-vbox-new [get this resource_count]]]
-  [set this resource_array [new array [get this resource_count]]]
+  [set this resource_array [new array    [get this resource_count]]]
   [let [[resource_name_index 0]
 	[resource_name_iter  [get this resource_names]]]
     [while resource_name_iter
@@ -174,7 +174,15 @@
 
 'mindmon_layer'
 
-[deframe          mindmon_layer [frame] [mindmon layer_name vbox text_view agency_vbox agency_array]]
+[deframe          mindmon_layer [frame] [mindmon
+					 layer_name
+					 
+					 vbox
+					 text_view
+					 agency_vbox
+					 agency_array
+					 
+					 bytecodes_per_second]]
 [deftypeconstruct mindmon_layer [mindmon layer_name]
   [set this mindmon      mindmon]
   [set this layer_name   layer_name]
@@ -212,9 +220,15 @@
   [get [get [get [get this mindmon] mind] layer [get this layer_name]] index]]
 
 [deftypefunk mindmon_layer execute redraw []
-  [set [get [get this text_view] buffer] text [format nil  '\t' [get this layer_name] ' layer']]
-  [dotimes [i [get this agency_count]]
-    [have [get [get this agency_array] elt i] redraw]]]
+  [let [[layer_bytecodes_per_second 0]]
+    [dotimes [i [get this agency_count]]
+      [let [[mindmon_agency [get [get this agency_array] elt i]]]
+	[have mindmon_agency redraw]
+	[let [[bytecodes_per_second [get mindmon_agency bytecodes_per_second]]]
+	  [= layer_bytecodes_per_second [+ layer_bytecodes_per_second bytecodes_per_second]]]]]
+    [set this bytecodes_per_second layer_bytecodes_per_second]]
+  [set [get [get this text_view] buffer] text [format nil  '\t' [get this layer_name] ' layer'
+						      '\n' '\t' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
 
 
 'mindmon'
@@ -259,11 +273,13 @@
 					     [let [[mindmon_layer [new mindmon_layer this layer_name]]]
 					       [let [[layer [get [get this mind] layer layer_name]]]
 						 [let [[layer_index [get layer index]]]
-						   [set  [get this layer_array] elt layer_index mindmon_layer]
-						   [have [get this layer_vbox]  pack_start      [get mindmon_layer widget] t t 0]]]]]
+						   [set  [get this layer_array] elt layer_index mindmon_layer]]]]]
 					   [= layer_name_index [+ layer_name_index 1]]
 					   [= layer_name_iter  [next layer_name_iter]]]]
 				       
+				       [dotimes [i [get mind layer_count]]
+					 [let [[mindmon_layer [get [get this layer_array] elt i]]]
+					   [have [get this layer_vbox] pack_start [get mindmon_layer widget] t t 0]]]
 				       
 				       [let [[mindmon-redraw-quit_now nil]
 					     [mindmon-redraw-is_done  nil]]

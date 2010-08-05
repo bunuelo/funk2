@@ -52,7 +52,7 @@
 [deftypefunk gtk_widget execute append_page  [child tab_label]          [gtk-notebook-append_page      this child tab_label]]
 [deftypefunk gtk_widget execute prepend_page [child tab_label]          [gtk-notebook-prepend_page     this child tab_label]]
 [deftypefunk gtk_widget execute insert_page  [child tab_label position] [gtk-notebook-insert_page      this child tab_label position]]
-[deftypefunk gtk_widget execute remove_page  [child tab_label position] [gtk-notebook-remove_page      this child tab_label position]]
+[deftypefunk gtk_widget execute remove_page  [position]                 [gtk-notebook-remove_page      this position]]
 [deftypefunk gtk_widget get     current_page []                         [gtk-notebook-get_current_page this]]
 [deftypefunk gtk_widget set     scrollable   [scrollable]               [gtk-notebook-set_scrollable   this scrollable]]
 

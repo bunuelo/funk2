@@ -1296,29 +1296,25 @@ f2ptr f2__gtk__notebook__insert_page(f2ptr cause, f2ptr notebook, f2ptr child, f
 def_pcfunk4(gtk__notebook__insert_page, notebook, child, tab_label, position, return f2__gtk__notebook__insert_page(this_cause, notebook, child, tab_label, position));
 
 
-void raw__gtk__notebook__remove_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label, f2ptr position) {
+void raw__gtk__notebook__remove_page(f2ptr cause, f2ptr notebook, f2ptr position) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_notebook  = raw__gtk_widget__as__GtkWidget(cause, notebook);
-  GtkWidget* gtk_child     = raw__gtk_widget__as__GtkWidget(cause, child);
-  GtkWidget* gtk_tab_label = raw__gtk_widget__as__GtkWidget(cause, tab_label);
-  s64        position__i   = f2integer__i(position, cause);
-  funk2_gtk__notebook__remove_page(&(__funk2.gtk), gtk_notebook, gtk_child, gtk_tab_label, position__i);
+  GtkWidget* gtk_notebook = raw__gtk_widget__as__GtkWidget(cause, notebook);
+  s64        position__i  = f2integer__i(position, cause);
+  funk2_gtk__notebook__remove_page(&(__funk2.gtk), gtk_notebook, position__i);
   return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
 }
 
-f2ptr f2__gtk__notebook__remove_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label, f2ptr position) {
+f2ptr f2__gtk__notebook__remove_page(f2ptr cause, f2ptr notebook, f2ptr position) {
   if ((! raw__gtk_widget__is_type(cause, notebook)) ||
-      (! raw__gtk_widget__is_type(cause, child)) ||
-      (! raw__gtk_widget__is_type(cause, tab_label)) ||
       (! raw__integer__is_type(cause, position))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__notebook__remove_page(cause, notebook, child, tab_label, position);
+  return raw__gtk__notebook__remove_page(cause, notebook, position);
 }
-def_pcfunk4(gtk__notebook__remove_page, notebook, child, tab_label, position, return f2__gtk__notebook__remove_page(this_cause, notebook, child, tab_label, position));
+def_pcfunk2(gtk__notebook__remove_page, notebook, position, return f2__gtk__notebook__remove_page(this_cause, notebook, position));
 
 
 f2ptr raw__gtk__notebook__get_current_page(f2ptr cause, f2ptr notebook) {

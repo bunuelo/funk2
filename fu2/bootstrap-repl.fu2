@@ -808,19 +808,11 @@
        [millisleep 1000]]
      [if [get fiber paused]
 	 [let [[bug [get fiber value]]]
-	   [if [is-type `bug bug]
-	       [let [[bug_frame [get bug frame]]]
-		 [if [is-type `frame bug_frame]
-		     [if [null [have bug_frame lookup `stack_trace]]
-			 [have bug_frame add `stack_trace [get fiber stack_trace]]]]
-		 [bug bug]]
-	     [error bug_type    `shelter-fiber_paused_without_bug
-		    fiber_value bug
-		    stack_trace [get fiber stack_trace]]]]]
-     [if [eq result `bug]
-	 [prog [get fiber value]
-	       `bug]
-       result]]]
+	   [if [not [is-type `bug bug]]
+	       [error bug_type    `shelter-fiber_paused_without_bug
+		      fiber_value bug
+		      stack_trace [get fiber stack_trace]]]]]
+     result]]
 
 [defmetro error [:rest slot_value_pairs]
   `[error-new @[let [[iter          slot_value_pairs]

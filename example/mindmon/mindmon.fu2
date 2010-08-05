@@ -233,7 +233,17 @@
 
 'mindmon'
 
-[deframe          mindmon [frame] [initialized mind fiber scrolled_window vbox text_view layer_vbox layer_array]]
+[deframe          mindmon [frame] [initialized
+				   mind
+				   fiber
+				   
+				   scrolled_window
+				   vbox
+				   text_view
+				   layer_vbox
+				   layer_array
+				   
+				   bytecodes_per_second]]
 [deftypeconstruct mindmon [mind mind_expression]
   [if [not [is-type `mind mind]]
       [error bug_type `mindmon_mind_is_not_mind
@@ -310,9 +320,14 @@
 
 
 [deftypefunk mindmon execute redraw []
-  [set [get [get this text_view] buffer] text [format nil  'mind']]
-  [dotimes [i [get this layer_count]]
-    [have [get [get this layer_array] elt i] redraw]]]
+  [let [[mind_bytecodes_per_second 0]]
+    [dotimes [i [get this layer_count]]
+      [let [[mindmon_layer [get [get this layer_array] elt i]]]
+	[have mindmon_layer redraw]
+	[= mind_bytecodes_per_second [+ mind_bytecodes_per_second [get mindmon_layer bytecodes_per_second]]]]]
+    [set this bytecodes_per_second mind_bytecodes_per_second]]
+  [set [get [get this text_view] buffer] text [format nil  'mind'
+						      '\n' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
 
 
 [defmetro mindmon [:rest args]

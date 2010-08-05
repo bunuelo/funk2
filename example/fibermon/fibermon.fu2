@@ -166,6 +166,7 @@
 		'\n'   ''
 		'\n'   '       This description is inspired by the TOP Linux man page.']
       [let [[win             [gtk-window-new]]
+	    [scrolled_window [gtk-scrolled_window]]
 	    [processor_hbox  [gtk-hbox-new 8]]
 	    [processor_array [new array 8]]]
 	
@@ -183,7 +184,9 @@
 		[have processor_hbox pack_start processor t t 0]
 		[set processor_array elt i processor]]]]
 	  
-	  [have win add processor_hbox]
+	  [have scrolled_window add_with_viewport processor_hbox]
+	  
+	  [have win add scrolled_window]
 	  
 	  [have win signal_connect 'destroy'
 		[funk []

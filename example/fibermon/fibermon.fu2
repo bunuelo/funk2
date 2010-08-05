@@ -166,7 +166,7 @@
 		'\n'   ''
 		'\n'   '       This description is inspired by the TOP Linux man page.']
       [let [[win             [gtk-window-new]]
-	    [scrolled_window [gtk-scrolled_window]]
+	    [scrolled_window [gtk-scrolled_window-new]]
 	    [processor_hbox  [gtk-hbox-new 8]]
 	    [processor_array [new array 8]]]
 	

@@ -131,8 +131,6 @@
 					  resource_vbox
 					  resource_array
 					  
-					  elapsed_bytecode_count
-					  elapsed_bytecode_count_nanoseconds
 					  bytecodes_per_second
 					  ]]
 [deftypeconstruct mindmon_agency [mindmon layer_name agency_name]
@@ -159,16 +157,11 @@
   [get this vbox]]
 
 [deftypefunk mindmon_agency execute redraw []
-  [let [[agency_elapsed_bytecode_count             0]
-	[agency_elapsed_bytecode_count_nanoseconds 0]]
+  [let [[agency_bytecodes_per_second 0]]
     [dotimes [i [get this resource_count]]
       [have [get [get this resource_array] elt i] redraw]
-      [= agency_elapsed_bytecode_count             [+ agency_elapsed_bytecode_count             [get [get [get this resource_array] elt i] elapsed_bytecode_count]]]
-      [= agency_elapsed_bytecode_count_nanoseconds [+ agency_elapsed_bytecode_count_nanoseconds [get [get [get this resource_array] elt i] elapsed_bytecode_count_nanoseconds]]]]
-    [let [[agency_bytecodes_per_second [/ [* agency_elapsed_bytecode_count 1000000000] agency_elapsed_bytecode_count_nanoseconds]]]
-      [set this elapsed_bytecode_count             agency_elapsed_bytecode_count]
-      [set this elapsed_bytecode_count_nanoseconds agency_elapsed_bytecode_count_nanoseconds]
-      [set this bytecodes_per_second               agency_bytecodes_per_second]]]
+      [= agency_bytecodes_per_second [+ agency_bytecodes_per_second [get [get [get this resource_array] elt i] bytecodes_per_second]]]]
+    [set this bytecodes_per_second agency_bytecodes_per_second]]
   [set [get [get this text_view] buffer] text [format nil  '\t\t' [get this agency_name] ' agency'
 						      '\n' '\t\t' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
 

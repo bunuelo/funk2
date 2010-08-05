@@ -572,6 +572,19 @@ void funk2_gtk__notebook__set_scrollable(funk2_gtk_t* this, GtkWidget* notebook,
   }
 }
 
+
+// label
+
+GtkWidget* funk2_gtk__label__new(funk2_gtk_t* this, u8* text) {
+  GtkWidget* label;
+  {
+    gdk_threads_enter();
+    label = gtk_label_new((char*)text);
+    gdk_threads_leave();
+  }
+  return label;
+}
+
 #endif // F2__GTK__SUPPORTED
 
 f2ptr f2__gtk_not_supported_larva__new(f2ptr cause) {
@@ -1358,6 +1371,31 @@ f2ptr f2__gtk__notebook__set_scrollable(f2ptr cause, f2ptr notebook, f2ptr scrol
 def_pcfunk2(gtk__notebook__set_scrollable, notebook, scrollable, return f2__gtk__notebook__set_scrollable(this_cause, notebook, scrollable));
 
 
+// label
+
+f2ptr raw__gtk__label__new(f2ptr cause, f2ptr text) {
+#if defined(F2__GTK__SUPPORTED)
+  u64 text__length = raw__string__length(cause, text);
+  u8* text__str    = (u8*)alloca(text__length + 1);
+  raw__string__str_copy(cause, text, text__str);
+  text__str[text__length] = 0;
+  
+  GtkWidget* label = funk2_gtk__label__new(&(__funk2.gtk), text__str);
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(label)));
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__label__new(f2ptr cause, f2ptr text) {
+  if (! raw__string__is_type(cause, text)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__label__new(cause, text);
+}
+def_pcfunk1(gtk__label__new, text, return f2__gtk__label__new(this_cause, text));
+
+
 
 
 
@@ -1461,6 +1499,9 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__1(gtk__notebook__get_current_page, notebook,                             "Returns the index of the current page in a GtkNotebook.");
   f2__primcfunk__init__2(gtk__notebook__set_scrollable,   notebook, scrollable,                 "Sets a GtkNotebook to be either scollable (True) [t] or not scrollable (False) [nil].");
   
+  // label
+  
+  f2__primcfunk__init__1(gtk__label__new, text, "Returns a new GtkLabel.");
   
 }
 

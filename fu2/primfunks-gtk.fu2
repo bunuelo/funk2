@@ -54,6 +54,7 @@
 [globalize-funk gtk-notebook-remove_page              &primfunk:gtk__notebook__remove_page]
 [globalize-funk gtk-notebook-get_current_page         &primfunk:gtk__notebook__get_current_page]
 [globalize-funk gtk-notebook-set_scrollable           &primfunk:gtk__notebook__set_scrollable]
+[globalize-funk gtk-label-new                         &primfunk:gtk__label__new]
 
 
 

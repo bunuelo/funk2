@@ -33,15 +33,13 @@ FILE* f2__fopen_for_read(f2ptr cause, f2ptr filename) {
 
 f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
   if (!raw__string__is_type(cause, filename)) {
-    printf("\nload error: filename must be a string.\n");
-    status(  "load error: filename must be a string.");
+    status("load error: filename must be a string.");
     return nil;
   }
   f2ptr stream = f2__stream__new_open_file__rdonly(cause, filename);
   if (! stream) {
-    f2__fiber__print(cause, fiber, filename);
-    printf("\nload error: couldn't open file for reading.\n");
-    status(  "load error: couldn't open file for reading.");
+    //f2__fiber__print(cause, fiber, filename);
+    status("load error: couldn't open file for reading.");
     return nil;
   }
 #ifdef DEBUG_LOAD

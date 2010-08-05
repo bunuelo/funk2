@@ -956,6 +956,37 @@ f2ptr f2__gtk__expose_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr fun
 def_pcfunk3(gtk__expose_event__signal_connect, widget, funk, args, return f2__gtk__expose_event__signal_connect(this_cause, widget, funk, args));
 
 
+// works for 'clicked' event but not 'expose_event'
+
+f2ptr raw__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk, f2ptr args) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+  
+  u64 signal_name__length = raw__string__length(cause, signal_name);
+  u8* signal_name__str    = (u8*)alloca(signal_name__length + 1);
+  raw__string__str_copy(cause, signal_name, signal_name__str);
+  signal_name__str[signal_name__length] = 0;
+  
+  funk2_gtk__signal_connect(&(__funk2.gtk), gtk_widget, signal_name__str, funk, args);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk, f2ptr args) {
+  if ((! raw__gtk_widget__is_type(cause, widget)) ||
+      (! raw__string__is_type(cause, signal_name)) ||
+      (! raw__funkable__is_type(cause, funk)) ||
+      (args && (! raw__cons__is_type(cause, args)))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__signal_connect(cause, widget, signal_name, funk, args);
+}
+def_pcfunk4(gtk__signal_connect, widget, signal_name, funk, args, return f2__gtk__signal_connect(this_cause, widget, signal_name, funk, args));
+
+
+
 // widget
 
 f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
@@ -1024,33 +1055,6 @@ f2ptr f2__gtk__box__pack_start(f2ptr cause, f2ptr box, f2ptr child_widget, f2ptr
 }
 def_pcfunk5(gtk__box__pack_start, box, child_widget, expand, fill, padding, return f2__gtk__box__pack_start(this_cause, box, child_widget, expand, fill, padding));
 
-
-f2ptr raw__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk, f2ptr args) {
-#if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  
-  u64 signal_name__length = raw__string__length(cause, signal_name);
-  u8* signal_name__str    = (u8*)alloca(signal_name__length + 1);
-  raw__string__str_copy(cause, signal_name, signal_name__str);
-  signal_name__str[signal_name__length] = 0;
-  
-  funk2_gtk__signal_connect(&(__funk2.gtk), gtk_widget, signal_name__str, funk, args);
-  return nil;
-#else
-  return f2__gtk_not_supported_larva__new(cause);
-#endif
-}
-
-f2ptr f2__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk, f2ptr args) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
-      (! raw__string__is_type(cause, signal_name)) ||
-      (! raw__funkable__is_type(cause, funk)) ||
-      (args && (! raw__cons__is_type(cause, args)))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__gtk__signal_connect(cause, widget, signal_name, funk, args);
-}
-def_pcfunk4(gtk__signal_connect, widget, signal_name, funk, args, return f2__gtk__signal_connect(this_cause, widget, signal_name, funk, args));
 
 f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)

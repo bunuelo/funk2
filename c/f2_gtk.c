@@ -500,6 +500,20 @@ void funk2_gtk__progress_bar__set_fraction(GtkWidget* progress_bar, double fract
   }
 }
 
+
+// notebook
+
+GtkWidget* funk2_gtk__notebook__new(funk2_gtk_t* this) {
+  GtkWidget* notebook;
+  {
+    gdk_threads_enter();
+    notebook = gtk_notebook_new();
+    gdk_threads_leave();
+  }
+  return notebook;
+}
+
+
 #endif // F2__GTK__SUPPORTED
 
 f2ptr f2__gtk_not_supported_larva__new(f2ptr cause) {
@@ -1127,6 +1141,24 @@ f2ptr f2__gtk__progress_bar__set_fraction(f2ptr cause, f2ptr this, f2ptr fractio
 def_pcfunk2(gtk__progress_bar__set_fraction, this, fraction, return f2__gtk__progress_bar__set_fraction(this_cause, this, fraction));
 
 
+// notebook
+
+f2ptr raw__gtk__notebook__new(f2ptr cause) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_widget = funk2_gtk__notebook__new(&(__funk2.gtk));
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(gtk_widget)));
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__notebook__new(f2ptr cause) {
+  return raw__gtk__notebook__new(cause);
+}
+def_pcfunk0(gtk__notebook__new, return f2__gtk__notebook__new(this_cause));
+
+
+
 // **
 
 void f2__gtk__reinitialize_globalvars() {
@@ -1217,6 +1249,9 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__0(gtk__progress_bar__new,                          "Returns a new GtkProgressBar widget.");
   f2__primcfunk__init__2(gtk__progress_bar__set_fraction, this, fraction, "Sets the fraction done of the progress bar.");
   
+  // notebook
+  
+  f2__primcfunk__init__0(gtk__notebook__new, "Returns a new GtkNotebook widget.");
   
 }
 

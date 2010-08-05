@@ -1055,7 +1055,7 @@ f2ptr raw__gtk__widget__draw_arc(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr 
   s64        height__i  = f2integer__i(height, cause);
   s64        angle1__i  = f2integer__i(angle1, cause);
   s64        angle2__i  = f2integer__i(angle2, cause);
-  funk2_gtk__widget__draw_arc(&(__funk2.gtk), gtk_widget, x__i, y__i, width__i, height__i, angle1__i, angle2__i);
+  funk2_gtk__widget__draw_arc(&(__funk2.gtk), gtk_widget, (filled != nil) ? TRUE : FALSE, x__i, y__i, width__i, height__i, angle1__i, angle2__i);
   return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);

@@ -788,14 +788,17 @@
 		    fiber_value bug
 		    stack_trace [get fiber stack_trace]]]]]
      [if [eq result `bug]
-	 [print [get fiber value]]
+	 [if [is-type `bug [get fiber value]]
+	     [get fiber value]
+	   result]
        result]]]
 
 [defmetro shelter [:rest codes]
   `[let* [[result `bug]
 	  [fiber  [fiber [funk []
 			       [set [this-cause] critics nil]
-			       [= result [prog @codes]]] nil]]]
+			       [= result [prog @codes]]]
+			 nil]]]
      'This is a bad hack to deal with noisy values in [get fiber is_complete] or [get fiber paused].'
      [while [and [not [get fiber is_complete]]
 		 [not [get fiber paused]]]
@@ -811,7 +814,8 @@
 	   [if [not [is-type `bug bug]]
 	       [error bug_type    `shelter-fiber_paused_without_bug
 		      fiber_value bug
-		      stack_trace [get fiber stack_trace]]]]]
+		      stack_trace [get fiber stack_trace]]
+	     `bug]]]
      result]]
 
 [defmetro error [:rest slot_value_pairs]

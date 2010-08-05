@@ -131,6 +131,18 @@
   [fiber &start-tracers nil]
   []]
 
+[defunk funk_bytecode-callback [object_cause fiber bytecode funk funk_args]
+  ]
+
+[defunk branch_bytecode-callback [object_cause fiber bytecode program_counter branch_program_counter value]
+  ]
+
+[defunk tracer_bytecode-callback [object_cause fiber bytecode value]
+  ]
+
+[defunk endfunk_bytecode-callback [object_cause fiber bytecode value funk]
+  ]
+
 [defunk start-fast_tracers []
   [let [[callbacks [get [this-cause] bytecode_funk_callbacks]]]
     [set [this-cause] bytecode_funk_callbacks [cons [object-execute-funk [this-cause] `add_graph_event-funk]
@@ -144,15 +156,15 @@
     [set [this-cause] bytecode_branch_callbacks [cons [object-execute-funk [this-cause] `add_graph_event-branch]
 						      callbacks]]
     nil]
-  [let [[callbacks [get [this-cause] complete_funk_callbacks]]]
+  `[let [[callbacks [get [this-cause] complete_funk_callbacks]]]
     [set [this-cause] complete_funk_callbacks [cons [object-execute-funk [this-cause] `add_graph_event-complete_funk]
 						    callbacks]]
     nil]
-  [let [[callbacks [get [this-cause] read_other_memory_callbacks]]]
+  `[let [[callbacks [get [this-cause] read_other_memory_callbacks]]]
     [set [this-cause] read_other_memory_callbacks [cons [object-execute-funk [this-cause] `add_graph_event-read_other_memory]
 							callbacks]]
     nil]
-  [let [[callbacks [get [this-cause] write_other_memory_callbacks]]]
+  `[let [[callbacks [get [this-cause] write_other_memory_callbacks]]]
     [set [this-cause] write_other_memory_callbacks [cons [object-execute-funk [this-cause] `add_graph_event-write_other_memory]
 							 callbacks]]
     nil]

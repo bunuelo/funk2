@@ -165,7 +165,7 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
 	f2ptr bytecode_funk_callbacks_iter = bytecode_funk_callbacks;
 	while (bytecode_funk_callbacks_iter) {
 	  f2ptr bytecode_funk_callbacks_next = f2cons__cdr(bytecode_funk_callbacks_iter, cause);
-	  f2ptr bytecode_funk_funk       = f2cons__car(bytecode_funk_callbacks_iter, cause);
+	  f2ptr bytecode_funk_funk           = f2cons__car(bytecode_funk_callbacks_iter, cause);
 	  {
 	    f2ptr reflective_cause = nil;
 	    f2ptr reflective_value = f2__bytecode_funk_funk__call_with_event(reflective_cause, bytecode_funk_funk, cause, fiber, bytecode, funktion, funk_args);
@@ -1567,7 +1567,7 @@ int f2__fiber__bytecode__tracer(f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr a
 	//f2ptr bytecode_tracer_callbacks_prev = nil;
 	while (bytecode_tracer_callbacks_iter) {
 	  f2ptr bytecode_tracer_callbacks_next = f2cons__cdr(bytecode_tracer_callbacks_iter, cause);
-	  f2ptr bytecode_tracer_funk       = f2cons__car(bytecode_tracer_callbacks_iter, cause);
+	  f2ptr bytecode_tracer_funk           = f2cons__car(bytecode_tracer_callbacks_iter, cause);
 	  {
 	    f2ptr reflective_cause = nil;
 	    f2ptr reflective_value = f2__bytecode_tracer_funk__call_with_event(reflective_cause, bytecode_tracer_funk, cause, fiber, bytecode, value);

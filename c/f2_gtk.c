@@ -211,6 +211,48 @@ void funk2_gtk__callback_handler(GtkWidget *widget, funk2_gtk_callback_t* callba
   funk2_gtk__add_callback_event(callback->gtk, callback);
 }
 
+void funk2_gtk__signal_connect(funk2_gtk_t* this, GtkWidget* widget, u8* signal_name, f2ptr funk, f2ptr args) {
+  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)f2__malloc(sizeof(funk2_gtk_callback_t));
+  callback->gtk  = this;
+  callback->funk = funk;
+  callback->args = args;
+  // never gc these (they are not referenced in the global environment)
+  if (funk) {
+    never_gc(funk);
+  }
+  if (args) {
+    never_gc(args);
+  }
+  funk2_gtk__add_callback(this, callback);
+  {
+    gdk_threads_enter();
+    g_signal_connect(G_OBJECT(widget), (char*)signal_name, G_CALLBACK(funk2_gtk__callback_handler), callback);
+    gdk_threads_leave();
+  }
+}
+
+
+// widget
+
+void funk2_gtk__widget__show_all(funk2_gtk_t* this, GtkWidget* widget) {
+  {
+    gdk_threads_enter();
+    gtk_widget_show_all(widget);
+    gdk_threads_leave();
+  }
+}
+
+void funk2_gtk__widget__set_size_request(funk2_gtk_t* this, GtkWidget* widget, s64 width, s64 height) {
+  {
+    gdk_threads_enter();
+    gtk_widget_set_size_request(widget, width, height);
+    gdk_threads_leave();
+  }
+}
+
+
+// window
+
 GtkWidget* funk2_gtk__window__new(funk2_gtk_t* this) {
   GtkWidget* window = NULL;
   {
@@ -237,6 +279,9 @@ void funk2_gtk__window__set_default_size(funk2_gtk_t* this, GtkWidget* window, s
   }
 }
 
+
+// vbox
+
 GtkWidget* funk2_gtk__vbox__new(funk2_gtk_t* this, int row_count) {
   GtkWidget* vbox = NULL;
   {
@@ -246,6 +291,9 @@ GtkWidget* funk2_gtk__vbox__new(funk2_gtk_t* this, int row_count) {
   }
   return vbox;
 }
+
+
+// hbox
 
 GtkWidget* funk2_gtk__hbox__new(funk2_gtk_t* this, int column_count) {
   GtkWidget* hbox = NULL;
@@ -257,6 +305,9 @@ GtkWidget* funk2_gtk__hbox__new(funk2_gtk_t* this, int column_count) {
   return hbox;
 }
 
+
+// button
+
 GtkWidget* funk2_gtk__button__new_with_label(funk2_gtk_t* this, u8* label) {
   GtkWidget* button = NULL;
   {
@@ -266,6 +317,9 @@ GtkWidget* funk2_gtk__button__new_with_label(funk2_gtk_t* this, u8* label) {
   }
   return button;
 }
+
+
+// entry
 
 GtkWidget* funk2_gtk__entry__new(funk2_gtk_t* this) {
   GtkWidget* entry = NULL;
@@ -286,6 +340,9 @@ char* funk2_gtk__entry__get_text(funk2_gtk_t* this, GtkWidget* widget) {
   }
   return text;
 }
+
+
+// scrolled_window
 
 GtkWidget* funk2_gtk__scrolled_window__new(funk2_gtk_t* this) {
   GtkWidget* scrolled_window = NULL;
@@ -308,6 +365,9 @@ void funk2_gtk__scrolled_window__add_with_viewport(funk2_gtk_t* this, GtkWidget*
   }
 }
 
+
+// text_view
+
 GtkWidget* funk2_gtk__text_view__new(funk2_gtk_t* this) {
   GtkWidget* text_view = NULL;
   {
@@ -328,6 +388,9 @@ GtkTextBuffer* funk2_gtk__text_view__get_buffer(funk2_gtk_t* this, GtkWidget* te
   return buffer;
 }
 
+
+// container
+
 void funk2_gtk__container__add(funk2_gtk_t* this, GtkWidget* widget, GtkWidget* add_widget) {
   {
     gdk_threads_enter();
@@ -336,38 +399,13 @@ void funk2_gtk__container__add(funk2_gtk_t* this, GtkWidget* widget, GtkWidget* 
   }
 }
 
-void funk2_gtk__widget__show_all(funk2_gtk_t* this, GtkWidget* widget) {
-  {
-    gdk_threads_enter();
-    gtk_widget_show_all(widget);
-    gdk_threads_leave();
-  }
-}
+
+// box
 
 void funk2_gtk__box__pack_start(funk2_gtk_t* this, GtkWidget* widget, GtkWidget* child_widget, boolean_t expand, boolean_t fill, u64 padding) {
   {
     gdk_threads_enter();
     gtk_box_pack_start(GTK_BOX(widget), child_widget, expand, fill, padding);
-    gdk_threads_leave();
-  }
-}
-
-void funk2_gtk__signal_connect(funk2_gtk_t* this, GtkWidget* widget, u8* signal_name, f2ptr funk, f2ptr args) {
-  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)f2__malloc(sizeof(funk2_gtk_callback_t));
-  callback->gtk  = this;
-  callback->funk = funk;
-  callback->args = args;
-  // never gc these (they are not referenced in the global environment)
-  if (funk) {
-    never_gc(funk);
-  }
-  if (args) {
-    never_gc(args);
-  }
-  funk2_gtk__add_callback(this, callback);
-  {
-    gdk_threads_enter();
-    g_signal_connect(G_OBJECT(widget), (char*)signal_name, G_CALLBACK(funk2_gtk__callback_handler), callback);
     gdk_threads_leave();
   }
 }
@@ -874,6 +912,8 @@ f2ptr f2__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
 def_pcfunk2(gtk__container__add, widget, add_widget, return f2__gtk__container__add(this_cause, widget, add_widget));
 
 
+// widget
+
 f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
   GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
@@ -892,6 +932,31 @@ f2ptr f2__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
 }
 def_pcfunk1(gtk__widget__show_all, widget, return f2__gtk__widget__show_all(this_cause, widget));
 
+
+f2ptr raw__gtk__widget__set_size_request(f2ptr cause, f2ptr widget, f2ptr width, f2ptr height) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+  s64        width__i   = f2integer__i(width,  cause);
+  s64        height__i  = f2integer__i(height, cause);
+  funk2_gtk__widget__set_size_request(&(__funk2.gtk), width__i, height__i);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__widget__set_size_request(f2ptr cause, f2ptr widget, f2ptr width, f2ptr height) {
+  if ((! raw__gtk_widget__is_type(cause, widget)) ||
+      (! raw__integer__is_type(cause, width)) ||
+      (! raw__integer__is_type(cause, height))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__widget__set_size_request(cause, widget, width, height);
+}
+def_pcfunk3(gtk__widget__set_size_request, widget, width, height, return f2__gtk__widget__set_size_request(this_cause, widget, width, height));
+
+
+// box
 
 f2ptr raw__gtk__box__pack_start(f2ptr cause, f2ptr widget, f2ptr child_widget, f2ptr expand, f2ptr fill, f2ptr padding) {
 #if defined(F2__GTK__SUPPORTED)
@@ -1489,6 +1554,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__0(gtk__text_view__new,                                                                  "Returns a new text_view widget.");
   f2__primcfunk__init__1(gtk__text_view__get_buffer,              text_view,                                   "Returns the buffer widget of a text_view widget.");
   f2__primcfunk__init__1(gtk__widget__show_all,                   widget,                                      "Shows the widget and all children.");
+  f2__primcfunk__init__3(gtk__widget__set_size_request,           widget, width, height,                       "Requests that the widget be a specific size.");
   f2__primcfunk__init__2(gtk__container__add,                     widget, add_widget,                          "Adds a widget to a container.");
   f2__primcfunk__init__5(gtk__box__pack_start,                    widget, child_widget, expand, fill, padding, "Packs a child widget in a box.");
   f2__primcfunk__init__4(gtk__signal_connect,                     widget, signal_name, funk, args,             "Creates a callback for a widget (see gtk-pop_callback_event).");

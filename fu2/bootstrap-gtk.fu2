@@ -20,9 +20,11 @@
 
 'Lazy Porting: A technique for implementing object type functionality only when member functions for get/set/execute funks have the same names.'
 
+[deftypefunk gtk_widget execute signal_connect [signal_name funk args] [gtk-signal_connect this signal_name funk args]]
+
 'GtkWidget'
-[deftypefunk gtk_widget execute show_all       []                      [gtk-widget-show_all                   this]]
-[deftypefunk gtk_widget execute signal_connect [signal_name funk args] [gtk-signal_connect                    this signal_name funk args]]
+[deftypefunk gtk_widget execute show_all     []             [gtk-widget-show_all         this]]
+[deftypefunk gtk_widget execute request_size [width height] [gtk-widget-set_size_request this width height]]
 
 'GtkContainer'
 [deftypefunk gtk_widget execute add [that] [gtk-container-add this that]]
@@ -106,21 +108,23 @@
 	[next_button   [gtk-button-new_with_label 'Next']]
 	[swindow       [gtk-scrolled_window-new]]
 	[notebook      [gtk-notebook-new]]
+	[drawing_area  [gtk-drawing_area-new]]
 	[text_view     [gtk-text_view-new]]]
     
-    [have hbox     pack_start   search_entry t t 0]
-    [have hbox     pack_start   search_button nil nil 0]
-    [have hbox     pack_start   next_button nil nil 0]
-    [have vpaned   pack1        hbox nil nil]
+    [have hbox         pack_start   search_entry t t 0]
+    [have hbox         pack_start   search_button nil nil 0]
+    [have hbox         pack_start   next_button nil nil 0]
+    [have vpaned       pack1        hbox nil nil]
     
-    [have swindow  add          text_view]
-    [have notebook append_page  swindow [gtk-label-new 'Document']]
-    [have notebook append_page  [gtk-text_view-new] [gtk-label-new 'Misc. Details']]
-    [have vpaned   pack2        notebook t t]
+    [have swindow      add          text_view]
+    [have notebook     append_page  swindow [gtk-label-new 'Document']]
+    [have drawing_area request_size 100 100]
+    [have notebook     append_page  drawing_area [gtk-label-new 'Drawing Area']]
+    [have vpaned       pack2        notebook t t]
     
-    [have win      add          vpaned]
-    [set  win      title        'test-gtk']
-    [set  win      default_size 1024 768]
+    [have win          add          vpaned]
+    [set  win          title        'test-gtk']
+    [set  win          default_size 1024 768]
     
     [have search_button signal_connect 'clicked'
 	  [funk []

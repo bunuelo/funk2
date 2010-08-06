@@ -95,6 +95,7 @@
 				  'built-in/ansi/'
 				  'built-in/utilities/'
 				  'built-in/graph/'
+				  'built-in/graphviz/'
 				  'built-in/gtk/'
 				  'example/conceptnet/'
 				  'example/mind/'

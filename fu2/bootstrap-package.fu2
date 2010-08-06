@@ -100,7 +100,9 @@
 				  'example/mindmon/'
 				  'example/gtk-test/'
 				  'example/little_carol_world/'
-				  'example/muddy_carol/']]
+				  'example/muddy_carol/'
+				  'example/roboverse/'
+				  ]]
 
 [defmetro defpackage [name :rest dependencies]
   [let [[package_dependencies nil]

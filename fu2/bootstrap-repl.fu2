@@ -57,7 +57,6 @@
 [primfunk:load 'fu2/primfunks-fcntl.fu2']
 [primfunk:load 'fu2/primfunks-fiber.fu2']
 [primfunk:load 'fu2/primfunks-frame.fu2']
-[primfunk:load 'fu2/primfunks-graph.fu2']
 [primfunk:load 'fu2/primfunks-graph_cluster.fu2']
 [primfunk:load 'fu2/primfunks-graph_match_error_correcting.fu2']
 [primfunk:load 'fu2/primfunks-graphviz.fu2']

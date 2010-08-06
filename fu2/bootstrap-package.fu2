@@ -94,6 +94,7 @@
 [globalize packages_search_path `['built-in/alien/'
 				  'built-in/ansi/'
 				  'built-in/utilities/'
+				  'built-in/graph/'
 				  'built-in/gtk/'
 				  'example/conceptnet/'
 				  'example/mind/'

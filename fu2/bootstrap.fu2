@@ -55,6 +55,7 @@
 [load 'fu2/bootstrap-graph_cluster.fu2']
 [load 'fu2/bootstrap-graph_match_error_correcting.fu2']
 
+[require alien]
 [require gtk]
 
 [globalize load-utilities nil]

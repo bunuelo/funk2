@@ -2828,7 +2828,7 @@
 [defmetro context-current_scene_number-set [this value] `[frame-var_value-set    ,this `current_scene_number ,value nil]]
 
 [defunk context-character_names [this]
-  [frame-slots [context-characters this]]]
+  [get [context-characters this] slots]]
 
 [defunk character-new [name description]
   [format stdout '\ncharacter-new: name=' name ' description=' description]

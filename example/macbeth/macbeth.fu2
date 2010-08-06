@@ -2811,6 +2811,8 @@
 				      'Flourish.'
 				      [exit_all]]]]]]
 
+[defunk cons? [exp] [is-type `cons exp]]
+
 [defunk context-new []
   [let [[this [frame-new]]]
     [frame-add_var_value this `characters           [frame-new]]

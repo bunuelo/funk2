@@ -98,7 +98,9 @@
 				  'example/graph_match/'
 				  'example/fibermon/'
 				  'example/mindmon/'
-				  'example/gtk-test/']]
+				  'example/gtk-test/'
+				  'example/little_carol_world/'
+				  'example/muddy_carol/']]
 
 [defmetro defpackage [name :rest dependencies]
   [let [[package_dependencies nil]

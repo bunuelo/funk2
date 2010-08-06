@@ -167,7 +167,8 @@
 			       [if [null [have [get this sense] lookup `left_hand]]
 				   [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] object object]
 				 [mind-activate [get this mind] reactive physical drop_from_left_hand]]
-			     [prog [mind-activate [get this mind] reactive physical walk_towards object]
+			     [prog 
+				   [mind-activate [get this mind] reactive physical walk_directly_towards object]
 				   [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] object object]]]]
      
      
@@ -176,68 +177,64 @@
 			   [print 'center_body_on_object']
 			   [deftypefunk isis_agent execute turn_left_and_right []
 			     [print '0']
+			     [while [null [get this sense]] 
+			       [millisleep 100]]
 			     [if [get this objects]
 				 [if [have [get this objects] lookup desired_object] 
 				     [let [[x_pos [have [have [get this objects] lookup desired_object] lookup `x_pos]]]
 				       [print 'let']
-				       [cond [[>  x_pos 0.1]
+				       [cond [[>  x_pos 0.25]
 					      [prog [print 'x too positive']
-						    [while [get [get [get this mind] resource `reactive `physical `turn_right] active]
-						      [millisleep 100]
-						      [print 'sleeping cus resource already activated']]
 						    [mind-activate [get this mind] reactive physical turn_right 1]
 						    [while [get [get [get this mind] resource `reactive `physical `turn_right] active]
 						      [millisleep 100]
 						      [print 'sleeping cus resource still activated']]
 						    [print 'i turned right']
 						    [have this turn_left_and_right]]]
-					     [[< x_pos [- 0 0.1]]
+					     [[< x_pos [- 0 0.25]]
 					      [prog [print 'x too negative']
-						    [while [get [get [get this mind] resource `reactive `physical `turn_left active]
-						      [millisleep 100]
-						      [print 'sleeping cus resource already activated']]
 						    [mind-activate [get this mind] reactive physical turn_left 1]
 						    [while [get [get [get this mind] resource `reactive `physical `turn_left] active]
 						      [millisleep 100]
 						      [print 'sleeping cus resource still activated']]
 						    [print 'i turned left']
-						    [have this turn_left_and_right]]]]]
-				   [prog [print 'my object not in view']
-					 `[mind-activate [get this mind] reactive physical search_for desired_object]]]
-			       [prog [print 'no objects in view']
-				     `[mind-activate [get this mind] reactive physical search_for desired_object]]]]]
+						    [have this turn_left_and_right]]]
+					     [t
+					      [print 'centered']]]]
+				   [prog [print 'no objects  not in view']
+					 [mind-activate [get this mind] reactive physical search_for desired_object]]]
+			       [prog [print 'my_object not in view']
+				     [mind-activate [get this mind] reactive physical search_for desired_object]]]]
 			   [have this turn_left_and_right]]
      
      [mind-create_resource mind reactive physical center_head_on [activating_resource desired_object]
 			   [print 'center_head_on_object']
 			   [deftypefunk isis_agent execute look_left_and_right []
 			     [print '0']
+			     [while [null [get this sense]] 
+			       [millisleep 100]]
 			     [if [get this objects]
 				 [if [have [get this objects] lookup desired_object] 
 				     [let [[x_pos [have [have [get this objects] lookup desired_object] lookup `x_pos]]]
 				       [print 'let']
-				       [cond [[>  x_pos 0.5]
+				       [cond [[>  x_pos 0.2]
 					      [prog [print 'x too positive']
-						    [while [get [get [get this mind] resource `reactive `physical `look_left] active]
-						      [millisleep 100]
-						      [print 'sleeping cus resource already activated']]
 						    [mind-activate [get this mind] reactive physical look_left 1]
 						    [while [get [get [get this mind] resource `reactive `physical `look_left] active]
 						      [millisleep 100]
 						      [print 'sleeping cus resource still activated']]
 						    [print 'i turned left']
 						    [have this look_left_and_right]]]
-					     [[<  x_pos [- 0 0.5]]
+					     [[<  x_pos [- 0 0.2]]
 					      [prog [print 'x too negative']
-						    [while [get [get [get this mind] resource `reactive `physical `look_right] active]
-						      [millisleep 100]
-						      [print 'sleeping cus resource already activated']]
 						    [mind-activate [get this mind] reactive physical look_right 1]
 						    [while [get [get [get this mind] resource `reactive `physical `look_right] active]
 						      [millisleep 100]
 						      [print 'sleeping cus resource still activated']]
 						    [print 'i turned right']
-						    [have this look_left_and_right]]]]]
+						    [have this look_left_and_right]]]
+					     [t
+					      [print 'centered']]]]
 				   [mind-activate [get this mind] reactive physical search_for desired_object]]
 			       [mind-activate [get this mind] reactive physical search_for desired_object]]]
 			   [have this look_left_and_right]]
@@ -260,11 +257,20 @@
      [print 'walk_towards']
 
      [mind-create_resource mind reactive physical walk_directly_towards [activating_resource desired_object]
-			   [if [get this object]
-			       [if [have [get this object] lookup desired_object]
-				   [while [< arm_length [have [have [get this object] lookup desired_object] lookup `distance]]
-				     [mind-activate [get this mind] reactive physical move_forward 1]]]]]
-    
+			   [let [[achieved nil]]
+			     [while  [null achieved]
+			       [while [null [get this sense]]
+				 [millisleep 100]]
+			       [if [get this object]
+				   [if [have [get this object] lookup desired_object]
+				       [if [< arm_length [have [have [get this object] lookup desired_object] lookup `distance]]
+					   [prog [mind-activate [get this mind] reactive physical center_body_on desired_object]
+						 [mind-activate [get this mind] reactive physical move_forward 1]]
+					 [prog [print 'got it']
+					       [= achieved t]]]
+				     [mind-activate [get this mind] reactive physical search_for desired_object]]
+				 [mind-activate [get this mind] reactive physical search_for desired_object]]]]]
+     
   
      [mind-create_resource mind reactive physical search_for [activating_resource desired_object]
 			   [let [[patience 10]]
@@ -272,14 +278,15 @@
 			     [while 
 				 [> patience 0]
 			       [print 'patience>0']
+	                       [while [null [get this sense]] 
+				 [millisleep 100]]
 			       [if [null [get this objects]]
 				   [prog 
 				    [print 'no objects in view']
 				    [mind-activate [get this mind] reactive physical turn_left 1]
 				    [while [get [get [get this mind] resource `reactive `physical `turn_left] active]
 				      [millisleep 100]
-				      [print 'sleeping cus resource still activated']]
-				    [millisleep 150]]
+				      [print 'sleeping cus resource still activated']]]
 				 [if [null [have [get this objects] lookup desired_object]]
 				     [prog [print [get this objects]]
 					   [print [have [get this objects] lookup desired_object]]
@@ -288,13 +295,12 @@
 					   [while [get [get [get this mind] resource `reactive `physical `turn_left] active]
 					     [millisleep 100]
 					     [print 'sleeping cus resource still activated']]
-					   [millisleep 150]
 					   [= patience [- patience 1]]
 					   [print 'at the end of while: ']]
 				   [prog [= patience 0]
 					 [mind-activate [get this mind] reactive physical turn_right 1]]]]]
 			     [print 'found it!/out of patience']]]
-
+     
 
      'problem now is lagg in perception, can fix by checking activeness of sensing resource?
       weird! step_simulation suddenly stopped controlling the simulator'
@@ -425,10 +431,10 @@
   [have [get this mind] destroy]]
 
 [deftypefunk isis_agent get objects []
-  [have [get [mind-knowledge [get this mind] reactive sensory] value `sense `[time_step ,[- [get [get this body] time_step] 1]]] lookup `objects]]
+  [have [get [mind-knowledge [get this mind] reactive sensory] value `sense `[time_step ,[get [get this body] time_step]]] lookup `objects]]
 
 [deftypefunk isis_agent get sense []
-  [get [mind-knowledge [get this mind] reactive sensory] value `sense `[time_step ,[- [get [get this body] time_step] 1]]]]
+  [get [mind-knowledge [get this mind] reactive sensory] value `sense `[time_step ,[get [get this body] time_step]]]]
 
 [deframe          isis_world [frame] [client agent_frame time_step format_mutex]]
 [deftypeconstruct isis_world [client]
@@ -477,13 +483,17 @@
 'only Ralph senses, Lauren senses the same thing'
 
 [deftypefunk isis_world get agent_sense_info [agent_name]
-  [get [mind-knowledge [get this agent_mind agent_name] reactive sensory] value `sense `[time_step ,[- [get [get this agent_body agent_name] time_step] 1]]]]
+  [get [mind-knowledge [get this agent_mind agent_name] reactive sensory] value `sense `[time_step ,[get [get this agent_body agent_name] time_step]]]]
 
 
 
 
 [deftypefunk isis_world execute step_simulation []
     [isis-call [get this client] meta_step seconds 0.15]
+    [set this time_step [+ 1 [get this time_step]]]]
+
+[deftypefunk isis_world execute mini_step []
+    [isis-call [get this client] meta_step seconds 0.02]
     [set this time_step [+ 1 [get this time_step]]]]
 
 [deftypefunk isis_world execute pause_simulation []
@@ -512,7 +522,7 @@
 
 [defunk isis_world-initialize [hostname]
   [print 1]
-  [globalize arm_length 1]
+   [globalize arm_length 1]
   `[shelter [have isis_world destroy]]
   [print 2]
   [let [[client [new isis_world_client hostname]]]
@@ -547,15 +557,15 @@
              
 `[get [get isis_world agent_body `Ralph] sense]
 [mind-activate [get isis_world agent_mind `Ralph]  reactive  physical move_forward 3]
-`[mind-activate [get isis_world agent_mind `Ralph]  reactive  physical search_for `IsisObject/fridge+159507676]
-`[mind-activate [get isis_world agent_mind `Ralph]  reactive  physical center_head_on `IsisObject/fridge+159507676]
+`[mind-activate [get isis_world agent_mind `Ralph]  reactive  physical search_for `IsisObject/knife+168604852]
+`[mind-activate [get isis_world agent_mind `Ralph]  reactive  physical center_body_on `IsisObject/knife+168604852]
 
 `[have isis_world step_simulation]
 
 `[get [get [get isis_world agent_mind `Ralph] resource `reactive `physical `search_for] active]
 [have [get [get isis_world agent_mind `Ralph] resource `reactive `physical `search_for] start]
 
-    `[have [get [get isis_world agent `Ralph] objects] lookup desired_object]
+    `[have [get [get isis_world agent `Ralph] objects] lookup `IsisObject/fridge+168604852]
 
 `[mind-activate [get isis_world agent_mind `Ralph] reactive physical search_for `IsisObject/table+174433900]
 [get [mind-knowledge [get isis_world agent_mind `Ralph] reactive sensory] value `sense `[time_step ,4]]
@@ -567,7 +577,24 @@ IsisObject/toaster+163284148
 IsisObject/table+163283948 
 IsisObject/loaf+163284268 
 
-[have [get [get isis_world agent `Ralph] objects] lookup `IsisObject/fridge+171459924]'
+[have [get [get isis_world agent `Ralph] objects] lookup `IsisObject/fridge+171459924]
+
+sense-use the hack function
+[deftypefunk symbol get object [] [get [car [have [get this as-string] split  ]] as-symbol]]
+
+have resources wait for sense to finish
+[have isis_world mini_step]
+
+ 
+
+'
+
+
+
+
+
+
+'
 
 
 

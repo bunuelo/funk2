@@ -272,10 +272,27 @@ void funk2_gtk__widget__set_size_request(funk2_gtk_t* this, GtkWidget* widget, s
   }
 }
 
+void funk2_gtk__widget__queue_draw_area(funk2_gtk_t* this, GtkWidget* widget, s64 x, s64 y, s64 width, s64 height) {
+  {
+    gdk_threads_enter();
+    gdk_widget_queue_draw_area(widget, x, y, width, height);
+    gdk_threads_leave();
+  }
+}
+
+
+
+// GtkWidget.GdkWindow ? widget draw functions...
+
 //void gdk_draw_point    (GdkDrawable* drawable,                GdkGC* gc, gint x, gint y);
 //void gdk_draw_points   (GdkDrawable* drawable,                GdkGC* gc, GdkPoint* points, gint npoints); 
-
 //void gdk_draw_line     (GdkDrawable* drawable,                GdkGC* gc, gint x1, gint y1, gint x2, gint y2);
+//void gdk_draw_lines    (GdkDrawable* drawable,                GdkGC* gc, GdkPoint* points, gint npoints);
+//void gdk_draw_segments (GdkDrawable* drawable,                GdkGC* gc, GdkSegment* segments, gint nsegments); 
+//void gdk_draw_polygon  (GdkDrawable* drawable,                GdkGC* gc, gint filled, GdkPoint* points, gint npoints);
+//void gdk_draw_string   (GdkDrawable* drawable, GdkFont* font, GdkGC* gc, gint x, gint y, const gchar* text);
+//void gdk_draw_pixmap   (GdkDrawable* drawable,                GdkGC* gc, GdkDrawable* src, gint xsrc, gint ysrc, gint xdest, gint ydest, gint width, gint height);
+//void gdk_draw_rgb_image(GdkDrawable* drawable,                GdkGC* gc, gint x, gint y, gint width, gint height, GdkRGBDither dither, guchar* rgb_buf, gint rowstride);
 
 void funk2_gtk__widget__draw_line(funk2_gtk_t* this, GtkWidget* widget, boolean_t filled, s64 x, s64 y, s64 width, s64 height) {
   {
@@ -284,10 +301,6 @@ void funk2_gtk__widget__draw_line(funk2_gtk_t* this, GtkWidget* widget, boolean_
     gdk_threads_leave();
   }
 }
-
-
-//void gdk_draw_lines    (GdkDrawable* drawable,                GdkGC* gc, GdkPoint* points, gint npoints);
-//void gdk_draw_segments (GdkDrawable* drawable,                GdkGC* gc, GdkSegment* segments, gint nsegments); 
 
 void funk2_gtk__widget__draw_arc(funk2_gtk_t* this, GtkWidget* widget, boolean_t filled, s64 x, s64 y, s64 width, s64 height, s64 angle1, s64 angle2) {
   {
@@ -305,10 +318,7 @@ void funk2_gtk__widget__draw_rectangle(funk2_gtk_t* this, GtkWidget* widget, boo
   }
 }
 
-//void gdk_draw_polygon  (GdkDrawable* drawable,                GdkGC* gc, gint filled, GdkPoint* points, gint npoints);
-//void gdk_draw_string   (GdkDrawable* drawable, GdkFont* font, GdkGC* gc, gint x, gint y, const gchar* text);
-//void gdk_draw_pixmap   (GdkDrawable* drawable,                GdkGC* gc, GdkDrawable* src, gint xsrc, gint ysrc, gint xdest, gint ydest, gint width, gint height);
-//void gdk_draw_rgb_image(GdkDrawable* drawable,                GdkGC* gc, gint x, gint y, gint width, gint height, GdkRGBDither dither, guchar* rgb_buf, gint rowstride);
+
 
 
 
@@ -1071,6 +1081,33 @@ f2ptr f2__gtk__widget__set_size_request(f2ptr cause, f2ptr widget, f2ptr width, 
 def_pcfunk3(gtk__widget__set_size_request, widget, width, height, return f2__gtk__widget__set_size_request(this_cause, widget, width, height));
 
 
+f2ptr raw__gtk__widget__queue_draw_area(f2ptr cause, f2ptr widget, f2ptr x, f2ptr y, f2ptr width, f2ptr height) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+  s64        x__i       = f2integer__i(x,  cause);
+  s64        y__i       = f2integer__i(y, cause);
+  s64        width__i   = f2integer__i(width,  cause);
+  s64        height__i  = f2integer__i(height, cause);
+  funk2_gtk__widget__queue_draw_area(&(__funk2.gtk), gtk_widget, x__i, y__i, width__i, height__i);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__widget__queue_draw_area(f2ptr cause, f2ptr widget, f2ptr x, f2ptr y, f2ptr width, f2ptr height) {
+  if ((! raw__gtk_widget__is_type(cause, widget)) ||
+      (! raw__integer__is_type(cause, x)) ||
+      (! raw__integer__is_type(cause, y)) ||
+      (! raw__integer__is_type(cause, width)) ||
+      (! raw__integer__is_type(cause, height))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__widget__queue_draw_area(cause, widget, x, y, width, height);
+}
+def_pcfunk5(gtk__widget__queue_draw_area, widget, x, y, width, height, return f2__gtk__widget__queue_draw_area(this_cause, widget, x, y, width, height));
+
+
 f2ptr raw__gtk__widget__draw_arc(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr x, f2ptr y, f2ptr width, f2ptr height, f2ptr angle1, f2ptr angle2) {
 #if defined(F2__GTK__SUPPORTED)
   GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
@@ -1757,6 +1794,7 @@ void f2__gtk__initialize() {
   
   f2__primcfunk__init__1(gtk__widget__show_all,                   widget,                                              "Shows the widget and all children.");
   f2__primcfunk__init__3(gtk__widget__set_size_request,           widget, width, height,                               "Requests that the widget be a specific size.");
+  f2__primcfunk__init__5(gtk__widget__queue_draw_area,            widget, x, y, width, height,                         "Requests that a specific rectangle of the widget be redrawn.");
   f2__primcfunk__init__8(gtk__widget__draw_arc,                   widget, filled, x, y, width, height, angle1, angle2, "Draws an arc in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
   f2__primcfunk__init__6(gtk__widget__draw_rectangle,             widget, filled, x, y, width, height,                 "Draws a rectangle in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
   f2__primcfunk__init__0(gtk__window__new,                                                                             "Returns a new window widget.");

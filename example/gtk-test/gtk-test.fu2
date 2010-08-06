@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defunk gtk-search-test []
+[defunk gtk-test []
   [let [[win           [gtk-window-new]]
 	[vpaned        [gtk-vpaned-new]]
 	[hbox          [gtk-hbox-new 2]]

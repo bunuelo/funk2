@@ -18,5 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage gtk-test
-  :sources ['gtk-test.fu2']]
+  :packages [gtk]
+   :sources ['gtk-test.fu2']]
 

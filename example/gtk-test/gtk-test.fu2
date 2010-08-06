@@ -1,0 +1,71 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[defunk gtk-search-test []
+  [let [[win           [gtk-window-new]]
+	[vpaned        [gtk-vpaned-new]]
+	[hbox          [gtk-hbox-new 2]]
+	[search_entry  [gtk-entry-new]]
+	[search_button [gtk-button-new_with_label 'Search']]
+	[next_button   [gtk-button-new_with_label 'Next']]
+	[swindow       [gtk-scrolled_window-new]]
+	[notebook      [gtk-notebook-new]]
+	[drawing_area  [gtk-drawing_area-new]]
+	[text_view     [gtk-text_view-new]]]
+    
+    [have hbox         pack_start   search_entry t t 0]
+    [have hbox         pack_start   search_button nil nil 0]
+    [have hbox         pack_start   next_button nil nil 0]
+    [have vpaned       pack1        hbox nil nil]
+    
+    [have swindow      add          text_view]
+    [have notebook     append_page  swindow [gtk-label-new 'Document']]
+    [have drawing_area request_size 100 100]
+    
+    [have notebook     append_page  drawing_area [gtk-label-new 'Drawing Area']]
+    [have vpaned       pack2        notebook t t]
+    
+    [have win          add          vpaned]
+    [set  win          title        'test-gtk']
+    [set  win          default_size 128 64]
+    
+    [have search_button signal_connect 'clicked'
+	  [funk []
+		[let [[found_range [have [get [get text_view buffer] start_iter] forward_search [get search_entry text]]]]
+		  [if found_range
+		      [prog [format stdout '\n  found "' [get search_entry text] '"!']
+			    [have [get text_view buffer] select_range found_range]]
+		    [prog [format stdout '\n  could not find "' [get search_entry text] '".']]]]]
+	  nil]
+    
+    [have next_button signal_connect 'clicked'
+	  [funk [button]
+		[print 'Next button clicked!']]
+	  [cons next_button nil]]
+    
+    [have drawing_area expose_event-signal_connect
+	  [funk []
+		[have drawing_area draw_arc       nil  0  0 100 100 [* 64   0] [* 64  90]]
+		[have drawing_area draw_arc       nil  0  0 100 100 [* 64 270] [* 64 -90]]
+		[have drawing_area draw_rectangle nil  0  0 100 100]
+		[have drawing_area draw_rectangle nil 45 45  10  10]]
+	  nil]
+    
+    [have win show_all]]]
+

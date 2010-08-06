@@ -97,7 +97,8 @@
 				  'example/divisi2/'
 				  'example/graph_match/'
 				  'example/fibermon/'
-				  'example/mindmon/']]
+				  'example/mindmon/'
+				  'example/gtk-test/']]
 
 [defmetro defpackage [name :rest dependencies]
   [let [[package_dependencies nil]

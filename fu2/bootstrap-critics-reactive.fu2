@@ -66,5 +66,7 @@
   [if this
       [object-set this `critics &critic-reactive-primitive_repl_response]]]
 
+[cause-enable_reactive_repl_critics [this-cause]]
+
 [boot-add_user_command `[cause-enable_reactive_repl_critics [this-cause]]]
 

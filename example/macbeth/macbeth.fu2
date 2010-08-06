@@ -2811,7 +2811,8 @@
 				      'Flourish.'
 				      [exit_all]]]]]]
 
-[defunk cons? [exp] [is-type `cons exp]]
+[defunk cons?   [exp] [is-type `cons   exp]]
+[defunk string? [exp] [is-type `string exp]]
 
 [defunk context-new []
   [let [[this [frame-new]]]
@@ -2827,7 +2828,7 @@
 [defmetro context-current_scene_number-set [this value] `[frame-var_value-set    ,this `current_scene_number ,value nil]]
 
 [defunk context-character_names [this]
-  [frame-create_var_list [context-characters this]]]
+  [frame-slots [context-characters this]]]
 
 [defunk character-new [name description]
   [format stdout '\ncharacter-new: name=' name ' description=' description]

@@ -149,8 +149,7 @@
 		[have drawing_area draw_arc       nil  0  0 100 100 [* 64   0] [* 64  90]]
 		[have drawing_area draw_arc       nil  0  0 100 100 [* 64 270] [* 64 -90]]
 		[have drawing_area draw_rectangle nil  0  0 100 100]
-		[have drawing_area draw_rectangle nil 45 45  10  10]
-		[print 'expose!']]
+		[have drawing_area draw_rectangle nil 45 45  10  10]]
 	  nil]
     
     [have win show_all]]]

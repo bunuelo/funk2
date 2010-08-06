@@ -275,7 +275,7 @@ void funk2_gtk__widget__set_size_request(funk2_gtk_t* this, GtkWidget* widget, s
 void funk2_gtk__widget__queue_draw_area(funk2_gtk_t* this, GtkWidget* widget, s64 x, s64 y, s64 width, s64 height) {
   {
     gdk_threads_enter();
-    gdk_widget_queue_draw_area(widget, x, y, width, height);
+    gtk_widget_queue_draw_area(widget, x, y, width, height);
     gdk_threads_leave();
   }
 }

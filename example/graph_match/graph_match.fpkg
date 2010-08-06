@@ -22,3 +22,4 @@
 
 [defpackage basic_analogy
   :sources ['basic_analogy.fu2']]
+

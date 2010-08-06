@@ -18,5 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage roboverse
-  :sources ['roboverse.fu2']]
+  :packages [alien]
+   :sources ['roboverse.fu2']]
 

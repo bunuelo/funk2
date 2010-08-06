@@ -286,7 +286,7 @@ void funk2_gtk__widget__draw_arc(funk2_gtk_t* this, GtkWidget* widget, boolean_t
   }
 }
 
-void funk2_gtk__widget__draw_rectangle(GtkWidget* widget, boolean_t filled, s64 x, s64 y, s64 width, s64 height) {
+void funk2_gtk__widget__draw_rectangle(funk2_gtk_t* this, GtkWidget* widget, boolean_t filled, s64 x, s64 y, s64 width, s64 height) {
   {
     gdk_threads_enter();
     gdk_draw_rectangle(widget->window, widget->style->fg_gc[GTK_WIDGET_STATE(widget)], filled ? TRUE : FALSE, x, y, width, height);

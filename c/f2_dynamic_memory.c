@@ -40,6 +40,8 @@ void f2dynamicmemory__destroy_and_free(f2dynamicmemory_t* this) {
 void f2dynamicmemory__realloc(f2dynamicmemory_t* new_memory, f2dynamicmemory_t* old_memory, f2size_t byte_num) {
   new_memory->ptr = to_ptr(realloc(from_ptr(old_memory->ptr), byte_num));
   if (from_ptr(new_memory->ptr) == NULL) {
+    status("f2dynamicmemory__realloc fatal: realloc error \"%s\".", strerror(errno));
+    status("                                byte_num=" u64__fstr ".", (u64)byte_num);
     perror("realloc");
     exit(-1);
   }

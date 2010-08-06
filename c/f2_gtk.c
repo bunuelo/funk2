@@ -167,7 +167,7 @@ void funk2_gtk__destroy(funk2_gtk_t* this) {
 
 
 void funk2_gtk__add_callback(funk2_gtk_t* this, funk2_gtk_callback_t* callback) {
-  funk2_gtk_callback_cons_t* cons = (funk2_gtk_callback_cons_t*)f2__malloc(sizeof(funk2_gtk_callback_cons_t));
+  funk2_gtk_callback_cons_t* cons = (funk2_gtk_callback_cons_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_cons_t)));
   cons->callback = callback;
   
   funk2_processor_mutex__user_lock(&(this->callbacks__mutex));
@@ -185,7 +185,7 @@ void funk2_gtk__add_callback(funk2_gtk_t* this, funk2_gtk_callback_t* callback) 
 }
 
 void funk2_gtk__add_callback_event(funk2_gtk_t* this, funk2_gtk_callback_t* callback) {
-  funk2_gtk_callback_cons_t* cons = (funk2_gtk_callback_cons_t*)f2__malloc(sizeof(funk2_gtk_callback_cons_t));
+  funk2_gtk_callback_cons_t* cons = (funk2_gtk_callback_cons_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_cons_t)));
   cons->callback = callback;
   cons->next     = NULL;
   
@@ -221,7 +221,7 @@ void funk2_gtk__callback_handler(GtkWidget *widget, funk2_gtk_callback_t* callba
 }
 
 void funk2_gtk__signal_connect(funk2_gtk_t* this, GtkWidget* widget, u8* signal_name, f2ptr funk, f2ptr args) {
-  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)f2__malloc(sizeof(funk2_gtk_callback_t));
+  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_t)));
   callback->funk = funk;
   callback->args = args;
   funk2_gtk__add_callback(this, callback);
@@ -242,7 +242,7 @@ gboolean funk2_gtk__expose_event__signal_connect__callback_handler(GtkWidget *wi
 }
 
 void funk2_gtk__expose_event__signal_connect(funk2_gtk_t* this, GtkWidget* widget, f2ptr funk, f2ptr args) {
-  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)f2__malloc(sizeof(funk2_gtk_callback_t));
+  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_t)));
   callback->funk = funk;
   callback->args = args;
   funk2_gtk__add_callback(this, callback);
@@ -274,7 +274,18 @@ void funk2_gtk__widget__set_size_request(funk2_gtk_t* this, GtkWidget* widget, s
 
 //void gdk_draw_point    (GdkDrawable* drawable,                GdkGC* gc, gint x, gint y);
 //void gdk_draw_points   (GdkDrawable* drawable,                GdkGC* gc, GdkPoint* points, gint npoints); 
+
 //void gdk_draw_line     (GdkDrawable* drawable,                GdkGC* gc, gint x1, gint y1, gint x2, gint y2);
+
+void funk2_gtk__widget__draw_line(funk2_gtk_t* this, GtkWidget* widget, boolean_t filled, s64 x, s64 y, s64 width, s64 height) {
+  {
+    gdk_threads_enter();
+    gdk_draw_rectangle(widget->window, widget->style->fg_gc[GTK_WIDGET_STATE(widget)], filled ? TRUE : FALSE, x, y, width, height);
+    gdk_threads_leave();
+  }
+}
+
+
 //void gdk_draw_lines    (GdkDrawable* drawable,                GdkGC* gc, GdkPoint* points, gint npoints);
 //void gdk_draw_segments (GdkDrawable* drawable,                GdkGC* gc, GdkSegment* segments, gint nsegments); 
 

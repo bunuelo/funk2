@@ -146,9 +146,10 @@
     
     [have drawing_area expose_event-signal_connect
 	  [funk []
-		[have drawing_area draw_arc       t 0   0 100 100 0 [* 64 60]]
-		[have drawing_area draw_rectangle t 0  45 100  55]
-		[have drawing_area draw_rectangle t 45  0  55 100]
+		[have drawing_area draw_arc       nil  0  0 100 100 [* 64   0] [* 64  60]]
+		[have drawing_area draw_arc       nil  0  0 100 100 [* 64 270] [* 64 -60]]
+		[have drawing_area draw_rectangle nil  0  0 100 100]
+		[have drawing_area draw_rectangle nil 45 45  10  10]
 		[print 'expose!']]
 	  nil]
     

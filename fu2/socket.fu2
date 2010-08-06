@@ -30,7 +30,7 @@
 `[globalize socket:pf_ipx       [socket:f2-socket-pf_ipx]]
 `[globalize socket:pf_netlink   [socket:f2-socket-pf_netlink]]
 `[globalize socket:pf_x25       [socket:f2-socket-pf_x25]]
-[globalize socket:pf_ax25      [socket:f2-socket-pf_ax25]]
+`[globalize socket:pf_ax25      [socket:f2-socket-pf_ax25]]
 [globalize socket:pf_atmpvc    [socket:f2-socket-pf_atmpvc]]
 [globalize socket:pf_appletalk [socket:f2-socket-pf_appletalk]]
 [globalize socket:pf_packet    [socket:f2-socket-pf_packet]]

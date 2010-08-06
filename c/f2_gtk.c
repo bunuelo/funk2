@@ -1077,14 +1077,68 @@ f2ptr raw__gtk__widget__draw_arc(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr 
 }
 
 f2ptr f2__gtk__widget__draw_arc(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr x, f2ptr y, f2ptr width, f2ptr height, f2ptr angle1, f2ptr angle2) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
-      (! raw__integer__is_type(cause, x)) ||
-      (! raw__integer__is_type(cause, y)) ||
-      (! raw__integer__is_type(cause, width)) ||
-      (! raw__integer__is_type(cause, height)) ||
-      (! raw__integer__is_type(cause, angle1)) ||
-      (! raw__integer__is_type(cause, angle2))) {
-    return f2larva__new(cause, 1, nil);
+  if (! raw__gtk_widget__is_type(cause, widget)) {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),      new__symbol(cause, "unexpected_type"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_name"),     new__symbol(cause, "gtk-widget-draw_arc"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_name"), new__symbol(cause, "widget"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "expected_type"), new__symbol(cause, "gtk_widget"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "widget"),        widget);
+    return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
+  }
+  if (! raw__integer__is_type(cause, x)) {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),      new__symbol(cause, "unexpected_type"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_name"),     new__symbol(cause, "gtk-widget-draw_arc"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_name"), new__symbol(cause, "x"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "expected_type"), new__symbol(cause, "integer"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "x"),             x);
+    return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
+  }
+  if (! raw__integer__is_type(cause, y)) {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),      new__symbol(cause, "unexpected_type"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_name"),     new__symbol(cause, "gtk-widget-draw_arc"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_name"), new__symbol(cause, "y"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "expected_type"), new__symbol(cause, "integer"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "y"),             y);
+    return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
+  }
+  if (! raw__integer__is_type(cause, width)) {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),      new__symbol(cause, "unexpected_type"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_name"),     new__symbol(cause, "gtk-widget-draw_arc"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_name"), new__symbol(cause, "width"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "expected_type"), new__symbol(cause, "integer"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "width"),         width);
+    return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
+  }
+  if (! raw__integer__is_type(cause, height)) {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),      new__symbol(cause, "unexpected_type"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_name"),     new__symbol(cause, "gtk-widget-draw_arc"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_name"), new__symbol(cause, "height"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "expected_type"), new__symbol(cause, "integer"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "height"),        height);
+    return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
+  }
+  if (! raw__integer__is_type(cause, angle1)) {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),      new__symbol(cause, "unexpected_type"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_name"),     new__symbol(cause, "gtk-widget-draw_arc"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_name"), new__symbol(cause, "angle1"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "expected_type"), new__symbol(cause, "integer"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "angle1"),        angle1);
+    return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
+  }
+  if (! raw__integer__is_type(cause, angle2)) {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),      new__symbol(cause, "unexpected_type"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_name"),     new__symbol(cause, "gtk-widget-draw_arc"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_name"), new__symbol(cause, "angle2"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "expected_type"), new__symbol(cause, "integer"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "angle2"),        angle2);
+    return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
   }
   return raw__gtk__widget__draw_arc(cause, widget, filled, x, y, width, height, angle1, angle2);
 }

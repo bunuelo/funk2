@@ -57,6 +57,7 @@
 [reload_all_package_definitions]
 
 [require utilities]
+[require ansi]
 [require gtk]
 
 [defunk load-funk2-devrc []

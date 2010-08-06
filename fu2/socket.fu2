@@ -40,7 +40,7 @@
 [globalize socket:sock_seqpacket [socket:f2-socket-sock_seqpacket]]
 [globalize socket:sock_raw       [socket:f2-socket-sock_raw]]
 [globalize socket:sock_rdm       [socket:f2-socket-sock_rdm]]
-[globalize socket:sock_packet    [socket:f2-socket-sock_packet]]
+`[globalize socket:sock_packet    [socket:f2-socket-sock_packet]]
 
 
 

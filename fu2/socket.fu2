@@ -28,7 +28,7 @@
 [globalize socket:pf_inet      [socket:f2-socket-pf_inet]]
 [globalize socket:pf_inet6     [socket:f2-socket-pf_inet6]]
 `[globalize socket:pf_ipx       [socket:f2-socket-pf_ipx]]
-[globalize socket:pf_netlink   [socket:f2-socket-pf_netlink]]
+`[globalize socket:pf_netlink   [socket:f2-socket-pf_netlink]]
 [globalize socket:pf_x25       [socket:f2-socket-pf_x25]]
 [globalize socket:pf_ax25      [socket:f2-socket-pf_ax25]]
 [globalize socket:pf_atmpvc    [socket:f2-socket-pf_atmpvc]]

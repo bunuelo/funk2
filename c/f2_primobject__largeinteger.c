@@ -54,7 +54,9 @@ u64 u64__multiply(u64 this, u64 that, u64* overflow) {
 
 boolean_t s64__multiply_overflows(s64 this, s64 that) {
   u64 overflow;
-  u64__multiply((u64)this, ((u64)that) << 1, &overflow);
+  u64 abs_this = (this >= 0) ? this : -this;
+  u64 abs_that = (that >= 0) ? that : -that;
+  u64__multiply(abs_this, abs_that, &overflow);
   return overflow;
 }
 

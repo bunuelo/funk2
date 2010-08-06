@@ -49,11 +49,12 @@
 [load 'fu2/bootstrap-surrogate_parent.fu2']
 [load 'fu2/bootstrap-redblacktree.fu2']
 [load 'fu2/bootstrap-xmlrpc.fu2']
-[load 'fu2/bootstrap-package.fu2'] [reload_all_package_definitions]
 [load 'fu2/bootstrap-list.fu2']
 [load 'fu2/bootstrap-bruno_graph.fu2']
 [load 'fu2/bootstrap-graph_cluster.fu2']
 [load 'fu2/bootstrap-graph_match_error_correcting.fu2']
+[load 'fu2/bootstrap-package.fu2']
+[reload_all_package_definitions]
 
 [require gtk]
 

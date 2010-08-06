@@ -1083,6 +1083,7 @@ f2ptr f2__gtk__widget__draw_arc(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr x
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_name"),     new__symbol(cause, "gtk-widget-draw_arc"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_name"), new__symbol(cause, "widget"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "expected_type"), new__symbol(cause, "gtk_widget"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "actual_type"),   f2__object__type(cause, widget));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "widget"),        widget);
     return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
   }
@@ -1092,6 +1093,7 @@ f2ptr f2__gtk__widget__draw_arc(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr x
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_name"),     new__symbol(cause, "gtk-widget-draw_arc"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_name"), new__symbol(cause, "x"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "expected_type"), new__symbol(cause, "integer"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "actual_type"),   f2__object__type(cause, x));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "x"),             x);
     return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
   }
@@ -1101,6 +1103,7 @@ f2ptr f2__gtk__widget__draw_arc(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr x
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_name"),     new__symbol(cause, "gtk-widget-draw_arc"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_name"), new__symbol(cause, "y"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "expected_type"), new__symbol(cause, "integer"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "actual_type"),   f2__object__type(cause, y));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "y"),             y);
     return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
   }
@@ -1110,6 +1113,7 @@ f2ptr f2__gtk__widget__draw_arc(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr x
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_name"),     new__symbol(cause, "gtk-widget-draw_arc"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_name"), new__symbol(cause, "width"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "expected_type"), new__symbol(cause, "integer"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "actual_type"),   f2__object__type(cause, width));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "width"),         width);
     return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
   }
@@ -1119,6 +1123,7 @@ f2ptr f2__gtk__widget__draw_arc(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr x
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_name"),     new__symbol(cause, "gtk-widget-draw_arc"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_name"), new__symbol(cause, "height"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "expected_type"), new__symbol(cause, "integer"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "actual_type"),   f2__object__type(cause, height));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "height"),        height);
     return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
   }
@@ -1128,6 +1133,7 @@ f2ptr f2__gtk__widget__draw_arc(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr x
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_name"),     new__symbol(cause, "gtk-widget-draw_arc"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_name"), new__symbol(cause, "angle1"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "expected_type"), new__symbol(cause, "integer"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "actual_type"),   f2__object__type(cause, angle1));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "angle1"),        angle1);
     return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
   }
@@ -1137,6 +1143,7 @@ f2ptr f2__gtk__widget__draw_arc(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr x
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funk_name"),     new__symbol(cause, "gtk-widget-draw_arc"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_name"), new__symbol(cause, "angle2"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "expected_type"), new__symbol(cause, "integer"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "actual_type"),   f2__object__type(cause, angle2));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "angle2"),        angle2);
     return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
   }

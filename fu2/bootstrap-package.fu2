@@ -92,6 +92,7 @@
 
 [globalize packages_frame [frame]]
 [globalize packages_search_path `['built-in/alien/'
+				  'built-in/utilities/'
 				  'built-in/gtk/'
 				  'example/conceptnet/'
 				  'example/mind/'

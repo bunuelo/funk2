@@ -56,23 +56,8 @@
 [load 'fu2/bootstrap-package.fu2']
 [reload_all_package_definitions]
 
+[require utilities]
 [require gtk]
-
-[globalize load-utilities nil]
-[defunk load-utilities []
-  [load 'fu2/errno.fu2']
-  [load 'fu2/socket.fu2']
-  [load 'fu2/fcntl.fu2']
-  [load 'fu2/ioctl.fu2']]
-[if load-utilities [load-utilities]]
-
-[globalize load-basic-ai nil]
-[defunk load-basic-ai []
-  `[load 'fu2/link-grammar-wrapper.fu2']
-   [load 'fu2/conceptnet.fu2']
-   [load 'som-2009/blocks_world.fu2']
-   ]
-[if load-basic-ai [load-basic-ai]]
 
 [defunk load-funk2-devrc []
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]

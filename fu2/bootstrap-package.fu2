@@ -107,6 +107,7 @@
 				  'example/funk2_webpage/'
 				  'example/socket-client/'
 				  'example/socket-server/'
+				  'example/macbeth/'
 				  ]]
 
 [defmetro defpackage [name :rest dependencies]

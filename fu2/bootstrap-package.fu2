@@ -91,7 +91,8 @@
 [deftypefunk symbol get is-defined [] [not [is-type `bug [shelter [eval this]]]]]
 
 [globalize packages_frame [frame]]
-[globalize packages_search_path `['example/mind/'
+[globalize packages_search_path `['example/conceptnet/'
+				  'example/mind/'
 				  'example/isis_world/'
 				  'example/isis_toast/'
 				  'example/divisi2/'
@@ -102,6 +103,9 @@
 				  'example/little_carol_world/'
 				  'example/muddy_carol/'
 				  'example/roboverse/'
+				  'example/funk2_webpage/'
+				  'example/socket-client/'
+				  'example/socket-server/'
 				  ]]
 
 [defmetro defpackage [name :rest dependencies]

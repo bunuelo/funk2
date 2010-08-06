@@ -91,7 +91,8 @@
 [deftypefunk symbol get is-defined [] [not [is-type `bug [shelter [eval this]]]]]
 
 [globalize packages_frame [frame]]
-[globalize packages_search_path `['example/conceptnet/'
+[globalize packages_search_path `['built-in/alien/'
+				  'example/conceptnet/'
 				  'example/mind/'
 				  'example/isis_world/'
 				  'example/isis_toast/'
@@ -102,7 +103,6 @@
 				  'example/gtk-test/'
 				  'example/little_carol_world/'
 				  'example/muddy_carol/'
-				  'example/alien/'
 				  'example/roboverse/'
 				  'example/funk2_webpage/'
 				  'example/socket-client/'

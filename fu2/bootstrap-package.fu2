@@ -101,6 +101,7 @@
 				  'built-in/graphviz/'
 				  'built-in/xmlrpc/'
 				  'built-in/graph_match_error_correcting/'
+				  'built-in/graph_cluster/'
 				  'built-in/gtk/'
 				  'example/conceptnet/'
 				  'example/mind/'

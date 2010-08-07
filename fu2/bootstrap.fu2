@@ -46,7 +46,6 @@
 [load 'fu2/bootstrap-list.fu2']
 [load 'fu2/bootstrap-bruno_graph.fu2']
 [load 'fu2/bootstrap-graph_cluster.fu2']
-[load 'fu2/bootstrap-graph_match_error_correcting.fu2']
 [load 'fu2/bootstrap-package.fu2']
 [reload_all_package_definitions]
 
@@ -56,6 +55,7 @@
 [require number]
 [require graph]
 [require graphviz]
+[require graph_match_error_correcting]
 [require gtk]
 
 [defunk load-funk2-devrc []

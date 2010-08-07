@@ -65,7 +65,6 @@
 [primfunk:load 'fu2/primfunks-largeinteger.fu2']
 [primfunk:load 'fu2/primfunks-locale.fu2']
 [primfunk:load 'fu2/primfunks-management_thread.fu2']
-[primfunk:load 'fu2/primfunks-number.fu2']
 [primfunk:load 'fu2/primfunks-object.fu2']
 [primfunk:load 'fu2/primfunks-package.fu2']
 [primfunk:load 'fu2/primfunks-primes.fu2']

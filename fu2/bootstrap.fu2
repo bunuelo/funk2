@@ -41,7 +41,6 @@
 [load 'fu2/bootstrap-zlib.fu2']
 [load 'fu2/bootstrap-largeinteger.fu2']
 [load 'fu2/bootstrap-number.fu2']
-[load 'fu2/bootstrap-perception_lattice.fu2']
 [load 'fu2/bootstrap-surrogate_parent.fu2']
 [load 'fu2/bootstrap-redblacktree.fu2']
 [load 'fu2/bootstrap-xmlrpc.fu2']
@@ -54,6 +53,7 @@
 
 [require utilities]
 [require ansi]
+[require perception_lattice]
 [require graph]
 [require graphviz]
 [require gtk]

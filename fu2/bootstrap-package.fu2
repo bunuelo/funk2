@@ -99,6 +99,7 @@
 				  'built-in/math/'
 				  'built-in/graph/'
 				  'built-in/graphviz/'
+				  'built-in/graph_match_error_correcting/'
 				  'built-in/gtk/'
 				  'example/conceptnet/'
 				  'example/mind/'

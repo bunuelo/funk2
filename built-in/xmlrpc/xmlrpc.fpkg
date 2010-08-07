@@ -17,7 +17,9 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage isis_world
-  :packages [xmlrpc]
-   :sources ['isis_world.fu2']]
+[defpackage xmlrpc
+  :sources ['primfunks-xmlrpc.fu2'
+	    'bootstrap-xmlrpc.fu2']]
+
+
 

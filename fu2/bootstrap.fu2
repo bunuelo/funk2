@@ -41,7 +41,6 @@
 [load 'fu2/bootstrap-largeinteger.fu2']
 [load 'fu2/bootstrap-surrogate_parent.fu2']
 [load 'fu2/bootstrap-redblacktree.fu2']
-[load 'fu2/bootstrap-xmlrpc.fu2']
 [load 'fu2/bootstrap-list.fu2']
 [load 'fu2/bootstrap-bruno_graph.fu2']
 [load 'fu2/bootstrap-graph_cluster.fu2']
@@ -55,6 +54,7 @@
   [require math]
   [require graph]
   [require graphviz]
+  [require xmlrpc]
   [require graph_match_error_correcting]
   [require gtk]]
 

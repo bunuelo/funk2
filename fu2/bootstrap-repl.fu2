@@ -86,7 +86,6 @@
 [primfunk:load 'fu2/primfunks-garbage_collector.fu2']
 [primfunk:load 'fu2/primfunks-glwindow.fu2']
 [primfunk:load 'fu2/primfunks-physical_objects.fu2']
-[primfunk:load 'fu2/primfunks-object_lattice.fu2']
 [primfunk:load 'fu2/primfunks-cause.fu2']
 [primfunk:load 'fu2/primfunks-zlib.fu2']
 

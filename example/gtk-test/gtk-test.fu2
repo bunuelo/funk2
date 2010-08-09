@@ -27,7 +27,8 @@
 	[swindow       [gtk-scrolled_window-new]]
 	[notebook      [gtk-notebook-new]]
 	[drawing_area  [gtk-drawing_area-new]]
-	[text_view     [gtk-text_view-new]]]
+	[text_view     [gtk-text_view-new]]
+	[table         [gtk-table-new 2 4 t]]]
     
     [have hbox         pack_start   search_entry t t 0]
     [have hbox         pack_start   search_button nil nil 0]
@@ -36,9 +37,15 @@
     
     [have swindow      add          text_view]
     [have notebook     append_page  swindow [gtk-label-new 'Document']]
-    [have drawing_area request_size 100 100]
     
+    [have drawing_area request_size 100 100]
     [have notebook     append_page  drawing_area [gtk-label-new 'Drawing Area']]
+    
+    [dotimes [i 2]
+      [dotimes [j 4]
+	[have table attach [gtk-label-new [format nil 'i=' i ', j=' j]] i i j j 0 0]]]
+    [have notebook     append_page  table [gtk-label-new 'Table']]
+    
     [have vpaned       pack2        notebook t t]
     
     [have win          add          vpaned]

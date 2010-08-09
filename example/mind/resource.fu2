@@ -20,12 +20,13 @@
 
 'resource'
 
-[deframe          resource [frame] [name fiber active_mutex active active_funk active_args result finished done pole_nanoseconds]]
+[deframe          resource [frame] [name fiber active_mutex active active_funk active_args result finished done pole_nanoseconds trace_story]]
 [deftypeconstruct resource [name active_funk]
   [set this name             name]
   [set this active_funk      active_funk]
   [set this active_mutex     [new mutex]]
   [set this pole_nanoseconds 1000000000]
+  [set this trace_story      [new story]]
   [set this fiber            [fiber [funk []
 					  [cause-define cause-name    `resource]
 					  [cause-define resource-name name]
@@ -70,6 +71,7 @@
      this-resource]]
 
 [deftypefunk resource execute activate [:rest args]
+  [have [get this trace_story] add_new_event cause-time_step cause-name `activate [get this name]]
   [let [[successful_activation nil]
 	[active_mutex          [get this active_mutex]]]
     [prog [have active_mutex lock]
@@ -85,6 +87,7 @@
 	     error_type      `resource-is-already-activated]]]]
 
 [deftypefunk resource execute finish []
+  [have [get this trace_story] add_new_event cause-time_step cause-name `finish [get this name]]
   [let [[finished     nil]
 	[result       nil]
 	[active_mutex [get this active_mutex]]]
@@ -110,6 +113,7 @@
   [have [get this fiber] quit]]
 
 [deftypefunk resource execute call [:rest args]
+  [have [get this trace_story] add_new_event cause-time_step cause-name `calls [get this name]]
   [have-apply this activate args]
   [have this finish]]
 

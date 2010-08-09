@@ -35,7 +35,8 @@
 
 [deftypefunk mindmon_story execute redraw []
   [set [get [get this text_view] buffer] text [format nil  [get this story_name]
-						      '\n' 
+						      '\n'
+						      '\n' [get [get [get [get this mindmon] mind] resource layer_name agency_name resource_name] trace_story]
 						      ]]
   ]
 
@@ -70,7 +71,7 @@
   [set this story_hbox    [gtk-hbox-new [get this story_count]]]
   [set this story_array   [new array    [get this story_count]]]
   [dotimes [i [get this story_count]]
-    [let [[story_name i]]
+    [let [[story_name `trace_story]]
       [let [[mindmon_story [new mindmon_story mindmon layer_name agency_name resource_name story_name]]]
 	[set [get this story_array] elt i mindmon_story]
 	[have [get this story_hbox] pack_start [get mindmon_story widget] t t 0]]]]

@@ -43,7 +43,7 @@
     
     [dotimes [column 4]
       [dotimes [row 10]
-	[have table attach [gtk-label-new [format nil 'column=' column ', row=' row]] column [+ column 1] row [+ row 1] 0 0]]]
+	[have table attach [gtk-label-new [format nil 'column=' column '\nrow=' row]] column [+ column 1] row [+ row 1] 0 0]]]
     [have notebook     append_page  table [gtk-label-new 'Table']]
     
     [have vpaned       pack2        notebook t t]

@@ -1781,7 +1781,7 @@ f2ptr f2__gtk__table__new(f2ptr cause, f2ptr rows, f2ptr columns, f2ptr homogeno
   }
   return raw__gtk__table__new(cause, rows, columns, homogenous);
 }
-def_pcfunk3(gtk__table__new, rows, columns, homogenous, return f2__table__new(this_cause, rows, columns, homogenous));
+def_pcfunk3(gtk__table__new, rows, columns, homogenous, return f2__gtk__table__new(this_cause, rows, columns, homogenous));
 
 
 // **

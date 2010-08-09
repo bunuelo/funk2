@@ -24,10 +24,11 @@
 [deftypefunk gtk_widget execute expose_event-signal_connect [funk args]             [gtk-expose_event-signal_connect this funk args]]
 
 'GtkWidget'
-[deftypefunk gtk_widget execute show_all       []                                      [gtk-widget-show_all         this]]
-[deftypefunk gtk_widget execute request_size   [width height]                          [gtk-widget-set_size_request this width height]]
-[deftypefunk gtk_widget execute draw_arc       [filled x y width height angle1 angle2] [gtk-widget-draw_arc         this filled x y width height angle1 angle2]]
-[deftypefunk gtk_widget execute draw_rectangle [filled x y width height]               [gtk-widget-draw_rectangle   this filled x y width height]]
+[deftypefunk gtk_widget execute show_all        []                                      [gtk-widget-show_all         this]]
+[deftypefunk gtk_widget execute request_size    [width height]                          [gtk-widget-set_size_request this width height]]
+[deftypefunk gtk_widget execute queue_draw_area [x y width height]                      [gtk-widget-queue_draw_area  this x y width height]]
+[deftypefunk gtk_widget execute draw_arc        [filled x y width height angle1 angle2] [gtk-widget-draw_arc         this filled x y width height angle1 angle2]]
+[deftypefunk gtk_widget execute draw_rectangle  [filled x y width height]               [gtk-widget-draw_rectangle   this filled x y width height]]
 
 'GtkContainer'
 [deftypefunk gtk_widget execute add [that] [gtk-container-add this that]]
@@ -97,61 +98,4 @@
 
 [if [gtk-is_supported]
     [gtk-event_handling_fiber-start]]
-
-
-
-
-
-[defunk test-gtk []
-  [let [[win           [gtk-window-new]]
-	[vpaned        [gtk-vpaned-new]]
-	[hbox          [gtk-hbox-new 2]]
-	[search_entry  [gtk-entry-new]]
-	[search_button [gtk-button-new_with_label 'Search']]
-	[next_button   [gtk-button-new_with_label 'Next']]
-	[swindow       [gtk-scrolled_window-new]]
-	[notebook      [gtk-notebook-new]]
-	[drawing_area  [gtk-drawing_area-new]]
-	[text_view     [gtk-text_view-new]]]
-    
-    [have hbox         pack_start   search_entry t t 0]
-    [have hbox         pack_start   search_button nil nil 0]
-    [have hbox         pack_start   next_button nil nil 0]
-    [have vpaned       pack1        hbox nil nil]
-    
-    [have swindow      add          text_view]
-    [have notebook     append_page  swindow [gtk-label-new 'Document']]
-    [have drawing_area request_size 640 480]
-    
-    [have notebook     append_page  drawing_area [gtk-label-new 'Drawing Area']]
-    [have vpaned       pack2        notebook t t]
-    
-    [have win          add          vpaned]
-    [set  win          title        'test-gtk']
-    [set  win          default_size 128 64]
-    
-    [have search_button signal_connect 'clicked'
-	  [funk []
-		[let [[found_range [have [get [get text_view buffer] start_iter] forward_search [get search_entry text]]]]
-		  [if found_range
-		      [prog [format stdout '\n  found "' [get search_entry text] '"!']
-			    [have [get text_view buffer] select_range found_range]]
-		    [prog [format stdout '\n  could not find "' [get search_entry text] '".']]]]]
-	  nil]
-    
-    [have next_button signal_connect 'clicked'
-	  [funk [button]
-		[print 'Next button clicked!']]
-	  [cons next_button nil]]
-    
-    [have drawing_area expose_event-signal_connect
-	  [funk []
-		[have drawing_area draw_arc       nil  0  0 640 480 [* 64   0] [* 64  60]]
-		[have drawing_area draw_arc       nil  0  0 640 480 [* 64 270] [* 64 -60]]
-		[have drawing_area draw_rectangle nil  0  0 640 480]
-		[have drawing_area draw_rectangle nil 45 45  10  10]
-		[print 'expose!']]
-	  nil]
-    
-    [have win show_all]]]
 

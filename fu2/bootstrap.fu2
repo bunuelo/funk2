@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2010 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,8 +15,7 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
 [load 'fu2/bootstrap-primobject.fu2']
 [load 'fu2/bootstrap-reader.fu2']
@@ -29,7 +27,6 @@
 [load 'fu2/bootstrap-fiber.fu2']
 [load 'fu2/bootstrap-bugs.fu2']
 [load 'fu2/bootstrap-boot.fu2']
-[load 'fu2/bootstrap-math.fu2']
 [load 'fu2/bootstrap-critics-reactive.fu2']
 [load 'fu2/bootstrap-string.fu2']
 [load 'fu2/bootstrap-apropos.fu2']
@@ -37,40 +34,29 @@
 [load 'fu2/bootstrap-garbage_collector.fu2']
 [load 'fu2/bootstrap-compound_object.fu2']
 [load 'fu2/bootstrap-physical_objects.fu2']
-[load 'fu2/bootstrap-object_lattice.fu2']
 [load 'fu2/bootstrap-glwindow.fu2']
 [load 'fu2/bootstrap-cause.fu2']
 [load 'fu2/bootstrap-zlib.fu2']
 [load 'fu2/bootstrap-largeinteger.fu2']
-[load 'fu2/bootstrap-number.fu2']
-[load 'fu2/bootstrap-graph.fu2']
-[load 'fu2/bootstrap-perception_lattice.fu2']
-[load 'fu2/bootstrap-graphviz.fu2']
 [load 'fu2/bootstrap-surrogate_parent.fu2']
 [load 'fu2/bootstrap-redblacktree.fu2']
-[load 'fu2/bootstrap-xmlrpc.fu2']
-[load 'fu2/bootstrap-package.fu2']
 [load 'fu2/bootstrap-list.fu2']
 [load 'fu2/bootstrap-bruno_graph.fu2']
-[load 'fu2/bootstrap-graph_cluster.fu2']
-[load 'fu2/bootstrap-graph_match_error_correcting.fu2']
-[load 'fu2/bootstrap-gtk.fu2']
+[load 'fu2/bootstrap-package.fu2']
+[reload_all_package_definitions]
 
-[globalize load-utilities nil]
-[defunk load-utilities []
-  [load 'fu2/errno.fu2']
-  [load 'fu2/socket.fu2']
-  [load 'fu2/fcntl.fu2']
-  [load 'fu2/ioctl.fu2']]
-[if load-utilities [load-utilities]]
-
-[globalize load-basic-ai nil]
-[defunk load-basic-ai []
-  `[load 'fu2/link-grammar-wrapper.fu2']
-   [load 'fu2/conceptnet.fu2']
-   [load 'som-2009/blocks_world.fu2']
-   ]
-[if load-basic-ai [load-basic-ai]]
+[require utilities]
+[require ansi]
+[require perception_lattice]
+[require object_lattice]
+[require number]
+[require math]
+[require graph]
+[require graphviz]
+[require xmlrpc]
+[require graph_match_error_correcting]
+[require graph_cluster]
+[require gtk]
 
 [defunk load-funk2-devrc []
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]

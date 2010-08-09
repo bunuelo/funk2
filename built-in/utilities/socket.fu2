@@ -27,20 +27,20 @@
 [globalize socket:pf_local     [socket:f2-socket-pf_local]]
 [globalize socket:pf_inet      [socket:f2-socket-pf_inet]]
 [globalize socket:pf_inet6     [socket:f2-socket-pf_inet6]]
-[globalize socket:pf_ipx       [socket:f2-socket-pf_ipx]]
-[globalize socket:pf_netlink   [socket:f2-socket-pf_netlink]]
-[globalize socket:pf_x25       [socket:f2-socket-pf_x25]]
-[globalize socket:pf_ax25      [socket:f2-socket-pf_ax25]]
-[globalize socket:pf_atmpvc    [socket:f2-socket-pf_atmpvc]]
+`[globalize socket:pf_ipx       [socket:f2-socket-pf_ipx]]
+`[globalize socket:pf_netlink   [socket:f2-socket-pf_netlink]]
+`[globalize socket:pf_x25       [socket:f2-socket-pf_x25]]
+`[globalize socket:pf_ax25      [socket:f2-socket-pf_ax25]]
+`[globalize socket:pf_atmpvc    [socket:f2-socket-pf_atmpvc]]
 [globalize socket:pf_appletalk [socket:f2-socket-pf_appletalk]]
-[globalize socket:pf_packet    [socket:f2-socket-pf_packet]]
+`[globalize socket:pf_packet    [socket:f2-socket-pf_packet]]
 
 [globalize socket:sock_stream    [socket:f2-socket-sock_stream]]
 [globalize socket:sock_dgram     [socket:f2-socket-sock_dgram]]
 [globalize socket:sock_seqpacket [socket:f2-socket-sock_seqpacket]]
 [globalize socket:sock_raw       [socket:f2-socket-sock_raw]]
 [globalize socket:sock_rdm       [socket:f2-socket-sock_rdm]]
-[globalize socket:sock_packet    [socket:f2-socket-sock_packet]]
+`[globalize socket:sock_packet    [socket:f2-socket-sock_packet]]
 
 
 

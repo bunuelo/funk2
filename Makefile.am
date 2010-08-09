@@ -206,7 +206,7 @@ img/bootstrap.img: img/bootstrap-repl.img
 ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES = lib/libfunk2.la
-#bin_PROGRAMS    = bin/funk2
+bin_PROGRAMS    = bin/funk2-static
 
 lib_libfunk2_la_SOURCES = \
   c/f2_agent.c \
@@ -323,7 +323,7 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
-#bin_funk2_SOURCES = c/funk2_main.c
+bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 
 FUNK2_VERSION=`cat version`
 
@@ -345,8 +345,8 @@ FUNK2_LIBRARY_VERSION=0:0:0
 lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS)
 lib_libfunk2_la_CFLAGS  = $(cc_flags)
 
-#bin_funk2_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Llib/.libs -lfunk2
-#bin_funk2_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h

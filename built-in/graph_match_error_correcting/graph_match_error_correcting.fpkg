@@ -17,8 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage graph_match-test
-  :sources ['graph_match-test.fu2']]
+[defpackage graph_match_error_correcting
+  :sources ['primfunks-graph_match_error_correcting.fu2'
+	    'bootstrap-graph_match_error_correcting.fu2']]
 
-[defpackage basic_analogy
-  :sources ['basic_analogy.fu2']]

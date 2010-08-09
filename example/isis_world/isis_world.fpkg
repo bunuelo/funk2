@@ -18,5 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage isis_world
-  :sources ['isis_world.fu2']]
+  :packages [xmlrpc]
+   :sources ['isis_world.fu2']]
 

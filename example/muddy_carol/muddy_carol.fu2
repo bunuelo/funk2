@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[load 'fu2/bootstrap-little_carol_world.fu2']
-
 [deframe difference_engine [frame] [name fiber frame reduce_difference_funk active alive]]
 [deftypeconstruct difference_engine [name reduce_difference_funk]
   [set this name                   name]

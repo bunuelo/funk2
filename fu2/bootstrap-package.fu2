@@ -91,13 +91,36 @@
 [deftypefunk symbol get is-defined [] [not [is-type `bug [shelter [eval this]]]]]
 
 [globalize packages_frame [frame]]
-[globalize packages_search_path `['example/mind/'
+[globalize packages_search_path `['built-in/alien/'
+				  'built-in/ansi/'
+				  'built-in/utilities/'
+				  'built-in/perception_lattice/'
+				  'built-in/object_lattice/'
+				  'built-in/number/'
+				  'built-in/math/'
+				  'built-in/graph/'
+				  'built-in/graphviz/'
+				  'built-in/xmlrpc/'
+				  'built-in/graph_match_error_correcting/'
+				  'built-in/graph_cluster/'
+				  'built-in/gtk/'
+				  'example/conceptnet/'
+				  'example/mind/'
 				  'example/isis_world/'
 				  'example/isis_toast/'
 				  'example/divisi2/'
 				  'example/graph_match/'
 				  'example/fibermon/'
-				  'example/mindmon/']]
+				  'example/mindmon/'
+				  'example/gtk-test/'
+				  'example/little_carol_world/'
+				  'example/muddy_carol/'
+				  'example/roboverse/'
+				  'example/funk2_webpage/'
+				  'example/socket-client/'
+				  'example/socket-server/'
+				  'example/macbeth/'
+				  ]]
 
 [defmetro defpackage [name :rest dependencies]
   [let [[package_dependencies nil]

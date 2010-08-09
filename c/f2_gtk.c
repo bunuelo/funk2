@@ -720,17 +720,26 @@ GtkWidget* funk2_gtk__table__new(funk2_gtk_t* this, s64 rows, s64 columns, boole
   return table;
 }
 
-//void                gtk_table_attach                    (GtkTable *table,
-//                                                         GtkWidget *child,
-//                                                         guint left_attach,
-//                                                         guint right_attach,
-//                                                         guint top_attach,
-//                                                         guint bottom_attach,
-//                                                         GtkAttachOptions xoptions,
-//                                                         GtkAttachOptions yoptions,
-//                                                         guint xpadding,
-//                                                         guint ypadding);
+//void gtk_table_attach(GtkTable *table,
+//                      GtkWidget *child,
+//                      guint left_attach,
+//                      guint right_attach,
+//                      guint top_attach,
+//                      guint bottom_attach,
+//                      GtkAttachOptions xoptions,
+//                      GtkAttachOptions yoptions,
+//                      guint xpadding,
+//                      guint ypadding);
 
+void funk2_gtk__table__attach(funk2_gtk_t* this, GtkWidget* table, GtkWidget* child, u64 left_attach, u64 right_attach, u64 top_attach, u64 bottom_attach, u64 xpadding, u64 ypadding) {
+  GtkAttachOptions xoptions = GTK_EXPAND | GTK_SHRINK | GTK_FILL;
+  GtkAttachOptions yoptions = GTK_EXPAND | GTK_SHRINK | GTK_FILL;
+  {
+    gdk_threads_enter();
+    gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(child), left_attach, right_attach, top_attach, bottom_attach, xoptions, yoptions, xpadding, ypadding);
+    gdk_threads_leave();
+  }
+}
 
 
 #endif // F2__GTK__SUPPORTED
@@ -1784,6 +1793,36 @@ f2ptr f2__gtk__table__new(f2ptr cause, f2ptr rows, f2ptr columns, f2ptr homogeno
 def_pcfunk3(gtk__table__new, rows, columns, homogenous, return f2__gtk__table__new(this_cause, rows, columns, homogenous));
 
 
+//void funk2_gtk__table__attach(funk2_gtk_t* this, GtkWidget* table, GtkWidget* child, u64 left_attach, u64 right_attach, u64 top_attach, u64 bottom_attach, u64 xpadding, u64 ypadding) {
+
+f2ptr raw__gtk__table__attach(f2ptr cause, f2ptr table, f2ptr child, f2ptr left_attach, f2ptr right_attach, f2ptr top_attach, f2ptr bottom_attach, f2ptr xpadding, f2ptr ypadding) {
+  GtkWidget* gtk_table        = raw__gtk_widget__as__GtkWidget(cause, table);
+  GtkWidget* gtk_child        = raw__gtk_widget__as__GtkWidget(cause, child);
+  s64        left_attach__i   = f2integer__i(left_attach, cause);
+  s64        right_attach__i  = f2integer__i(right_attach, cause);
+  s64        top_attach__i    = f2integer__i(top_attach, cause);
+  s64        bottom_attach__i = f2integer__i(bottom_attach, cause);
+  s64        xpadding__i      = f2integer__i(xpadding, cause);
+  s64        ypadding__i      = f2integer__i(ypadding, cause);
+  funk2_gtk__table__attach(&(__funk2.gtk), gtk_table, gtk_child, left_attach__i, right_attach__i, top_attach__i, bottom_attach__i, xpadding__i, ypadding__i);
+}
+
+f2ptr f2__gtk__table__attach(f2ptr cause, f2ptr table, f2ptr child, f2ptr left_attach, f2ptr right_attach, f2ptr top_attach, f2ptr bottom_attach, f2ptr xpadding, f2ptr ypadding) {
+  if ((! raw__gtk_widget__is_type(cause, table)) ||
+      (! raw__gtk_widget__is_type(cause, child)) ||
+      (! raw__integer__is_type(cause, left_attach)) ||
+      (! raw__integer__is_type(cause, right_attach)) ||
+      (! raw__integer__is_type(cause, top_attach)) ||
+      (! raw__integer__is_type(cause, bottom_attach)) ||
+      (! raw__integer__is_type(cause, xpadding)) ||
+      (! raw__integer__is_type(cause, ypadding))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__table__attach(cause, table, child, left_attach, right_attach, top_attach, bottom_attach, xpadding, ypadding);
+}
+def_pcfunk8(gtk__table__attach, table, child, left_attach, right_attach, top_attach, bottom_attach, xpadding, ypadding, return f2__gtk__table__attach(this_cause, table, child, left_attach, right_attach, top_attach, bottom_attach, xpadding, ypadding));
+
+
 // **
 
 void f2__gtk__reinitialize_globalvars() {
@@ -1907,7 +1946,8 @@ void f2__gtk__initialize() {
   
   // table
   
-  f2__primcfunk__init__3(gtk__table__new, rows, columns, homogenous, "Returns a new GtkTable.");
+  f2__primcfunk__init__3(gtk__table__new,    rows, columns, homogenous,                                                              "Returns a new GtkTable.");
+  f2__primcfunk__init__8(gtk__table__attach, table, child, left_attach, right_attach, top_attach, bottom_attach, xpadding, ypadding, "Adds a child GtkWidget to the GtkTable.");
   
   
 }

@@ -189,24 +189,24 @@ config_bit_num.h: bin/configurator
 	echo ""
 
 # compile the repl prompt (garbage collection is disabled until funk2 is stopped and a new repl image is used).
-img/bootstrap-repl.img: bin/funk2-static$(EXEEXT)
+img/bootstrap-repl.img: bin/funk2$(EXEEXT)
 	mkdir -p img
 	rm -f img/bootstrap-repl.img
 	rm -f img/bootstrap.img
-	export LD_LIBRARY_PATH=lib/.libs; export DYLD_LIBRARY_PATH=lib/.libs; export PATH="lib/.libs:$$PATH"; bin/funk2-static fu2/bootstrap-repl.fu2
+	export LD_LIBRARY_PATH=lib/.libs; export DYLD_LIBRARY_PATH=lib/.libs; export PATH="lib/.libs:$$PATH"; bin/funk2 fu2/bootstrap-repl.fu2
 
 # bootstrap the funk2 processor from a basic repl-prompt.
 img/bootstrap.img: img/bootstrap-repl.img
 	mkdir -p img
 	rm -f img/bootstrap.img
-	export LD_LIBRARY_PATH=lib/.libs; export DYLD_LIBRARY_PATH=lib/.libs; export PATH="lib/.libs:$$PATH"; bin/funk2-static fu2/bootstrap.fu2
+	export LD_LIBRARY_PATH=lib/.libs; export DYLD_LIBRARY_PATH=lib/.libs; export PATH="lib/.libs:$$PATH"; bin/funk2 fu2/bootstrap.fu2
 
 ###### Makefile.am specifics below here ######
 
 ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES = lib/libfunk2.la
-bin_PROGRAMS    = bin/funk2-static
+#bin_PROGRAMS    = bin/funk2-static
 
 lib_libfunk2_la_SOURCES = \
   c/f2_agent.c \

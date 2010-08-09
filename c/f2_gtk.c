@@ -1774,10 +1774,10 @@ def_pcfunk0(gtk__drawing_area__new, return f2__gtk__drawing_area__new(this_cause
 
 f2ptr raw__gtk__table__new(f2ptr cause, f2ptr rows, f2ptr columns, f2ptr homogenous) {
 #if defined(F2__GTK__SUPPORTED)
-  s64 rows__i    = f2integer__i(rows,    cause);
-  s64 columns__i = f2integer__i(columns, cause);
-  funk2_gtk__table__new(&(__funk2.gtk), rows__i, columns__i, (homogenous != nil) ? TRUE : FALSE);
-  return nil;
+  s64        rows__i    = f2integer__i(rows,    cause);
+  s64        columns__i = f2integer__i(columns, cause);
+  GtkWidget* table      = funk2_gtk__table__new(&(__funk2.gtk), rows__i, columns__i, (homogenous != nil) ? TRUE : FALSE);
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(table)));
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif

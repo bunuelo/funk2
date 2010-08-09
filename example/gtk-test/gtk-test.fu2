@@ -28,7 +28,7 @@
 	[notebook      [gtk-notebook-new]]
 	[drawing_area  [gtk-drawing_area-new]]
 	[text_view     [gtk-text_view-new]]
-	[table         [gtk-table-new 2 4 t]]]
+	[table         [gtk-table-new 10 4 t]]]
     
     [have hbox         pack_start   search_entry t t 0]
     [have hbox         pack_start   search_button nil nil 0]
@@ -41,9 +41,9 @@
     [have drawing_area request_size 100 100]
     [have notebook     append_page  drawing_area [gtk-label-new 'Drawing Area']]
     
-    [dotimes [i 4]
-      [dotimes [j 2]
-	[have table attach [gtk-label-new [format nil 'i=' i ', j=' j]] i [+ i 1] j [+ j 1] 0 0]]]
+    [dotimes [column 4]
+      [dotimes [row 10]
+	[have table attach [gtk-label-new [format nil 'column=' column ', row=' row]] column [+ column 1] row [+ row 1] 0 0]]]
     [have notebook     append_page  table [gtk-label-new 'Table']]
     
     [have vpaned       pack2        notebook t t]

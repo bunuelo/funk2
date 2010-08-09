@@ -714,23 +714,11 @@ GtkWidget* funk2_gtk__table__new(funk2_gtk_t* this, s64 rows, s64 columns, boole
   GtkWidget* table;
   {
     gdk_threads_enter();
-    printf("\nfunk2_gtk__table__new: rows=" s64__fstr " columns=" s64__fstr "\n", rows, columns);
     table = gtk_table_new(rows, columns, homogenous);
     gdk_threads_leave();
   }
   return table;
 }
-
-//void gtk_table_attach(GtkTable *table,
-//                      GtkWidget *child,
-//                      guint left_attach,
-//                      guint right_attach,
-//                      guint top_attach,
-//                      guint bottom_attach,
-//                      GtkAttachOptions xoptions,
-//                      GtkAttachOptions yoptions,
-//                      guint xpadding,
-//                      guint ypadding);
 
 void funk2_gtk__table__attach(funk2_gtk_t* this, GtkWidget* table, GtkWidget* child, u64 left_attach, u64 right_attach, u64 top_attach, u64 bottom_attach, u64 xpadding, u64 ypadding) {
   GtkAttachOptions xoptions = GTK_EXPAND | GTK_SHRINK | GTK_FILL;

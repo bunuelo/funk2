@@ -1759,7 +1759,8 @@ f2ptr raw__gtk__label__set_text(f2ptr cause, f2ptr label, f2ptr text) {
   raw__string__str_copy(cause, text, text__str);
   text__str[text__length] = 0;
   
-  return funk2_gtk__label__set_text(&(__funk2.gtk), gtk_label, text__str);
+  funk2_gtk__label__set_text(&(__funk2.gtk), gtk_label, text__str);
+  return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif

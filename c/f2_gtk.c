@@ -1796,6 +1796,7 @@ def_pcfunk3(gtk__table__new, rows, columns, homogenous, return f2__gtk__table__n
 //void funk2_gtk__table__attach(funk2_gtk_t* this, GtkWidget* table, GtkWidget* child, u64 left_attach, u64 right_attach, u64 top_attach, u64 bottom_attach, u64 xpadding, u64 ypadding) {
 
 f2ptr raw__gtk__table__attach(f2ptr cause, f2ptr table, f2ptr child, f2ptr left_attach, f2ptr right_attach, f2ptr top_attach, f2ptr bottom_attach, f2ptr xpadding, f2ptr ypadding) {
+#if defined(F2__GTK__SUPPORTED)
   GtkWidget* gtk_table        = raw__gtk_widget__as__GtkWidget(cause, table);
   GtkWidget* gtk_child        = raw__gtk_widget__as__GtkWidget(cause, child);
   s64        left_attach__i   = f2integer__i(left_attach, cause);
@@ -1805,6 +1806,10 @@ f2ptr raw__gtk__table__attach(f2ptr cause, f2ptr table, f2ptr child, f2ptr left_
   s64        xpadding__i      = f2integer__i(xpadding, cause);
   s64        ypadding__i      = f2integer__i(ypadding, cause);
   funk2_gtk__table__attach(&(__funk2.gtk), gtk_table, gtk_child, left_attach__i, right_attach__i, top_attach__i, bottom_attach__i, xpadding__i, ypadding__i);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
 }
 
 f2ptr f2__gtk__table__attach(f2ptr cause, f2ptr table, f2ptr child, f2ptr left_attach, f2ptr right_attach, f2ptr top_attach, f2ptr bottom_attach, f2ptr xpadding, f2ptr ypadding) {

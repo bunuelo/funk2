@@ -694,6 +694,7 @@ GtkWidget* funk2_gtk__label__new(funk2_gtk_t* this, u8* text) {
   return label;
 }
 
+
 // drawing_area
 
 GtkWidget* funk2_gtk__drawing_area__new(funk2_gtk_t* this) {
@@ -705,6 +706,32 @@ GtkWidget* funk2_gtk__drawing_area__new(funk2_gtk_t* this) {
   }
   return drawing_area;
 }
+
+
+// table
+
+GtkWidget* funk2_gtk__table__new(funk2_gtk_t* this, s64 rows, s64 columns, boolean_t homogenous) {
+  GtkWidget* table;
+  {
+    gdk_threads_enter();
+    table = gtk_table_new(rows, columns, homogenous);
+    gdk_threads_leave();
+  }
+  return table;
+}
+
+//void                gtk_table_attach                    (GtkTable *table,
+//                                                         GtkWidget *child,
+//                                                         guint left_attach,
+//                                                         guint right_attach,
+//                                                         guint top_attach,
+//                                                         guint bottom_attach,
+//                                                         GtkAttachOptions xoptions,
+//                                                         GtkAttachOptions yoptions,
+//                                                         guint xpadding,
+//                                                         guint ypadding);
+
+
 
 #endif // F2__GTK__SUPPORTED
 
@@ -1734,7 +1761,27 @@ f2ptr f2__gtk__drawing_area__new(f2ptr cause) {
 def_pcfunk0(gtk__drawing_area__new, return f2__gtk__drawing_area__new(this_cause));
 
 
+// table
 
+f2ptr raw__gtk__table__new(f2ptr cause, f2ptr rows, f2ptr columns, f2ptr homogenous) {
+#if defined(F2__GTK__SUPPORTED)
+  s64 rows__i    = f2integer__i(rows,    cause);
+  s64 columns__i = f2integer__i(columns, cause);
+  funk2_gtk__table__new(&(__funk2.gtk), rows__i, columns__i, (homogenous != nil) ? TRUE : FALSE);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__table__new(f2ptr cause, f2ptr rows, f2ptr columns, f2ptr homogenous) {
+  if ((! raw__integer__is_type(cause, rows)) ||
+      (! raw__integer__is_type(cause, columns))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__table__new(cause, rows, columns, homogenous);
+}
+def_pcfunk3(gtk__table__new, rows, columns, homogenous, return f2__table__new(this_cause, rows, columns, homogenous));
 
 
 // **
@@ -1857,6 +1904,10 @@ void f2__gtk__initialize() {
   // drawing_area
   
   f2__primcfunk__init__0(gtk__drawing_area__new, "Returns a new GtkDrawingArea.");
+  
+  // table
+  
+  f2__primcfunk__init__3(gtk__table__new, rows, columns, homogenous, "Returns a new GtkTable.");
   
   
 }

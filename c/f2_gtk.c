@@ -714,6 +714,7 @@ GtkWidget* funk2_gtk__table__new(funk2_gtk_t* this, s64 rows, s64 columns, boole
   GtkWidget* table;
   {
     gdk_threads_enter();
+    printf("\nfunk2_gtk__table__new: rows=" s64__fstr " columns=" s64__fstr "\n", rows, columns);
     table = gtk_table_new(rows, columns, homogenous);
     gdk_threads_leave();
   }

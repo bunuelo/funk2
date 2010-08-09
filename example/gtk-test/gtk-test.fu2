@@ -41,15 +41,15 @@
     [have drawing_area request_size 100 100]
     [have notebook     append_page  drawing_area [gtk-label-new 'Drawing Area']]
     
-    [dotimes [i 2]
-      [dotimes [j 4]
-	[have table attach [gtk-label-new [format nil 'i=' i ', j=' j]] i i j j 0 0]]]
+    [dotimes [i 4]
+      [dotimes [j 2]
+	[have table attach [gtk-label-new [format nil 'i=' i ', j=' j]] i [+ i 1] j [+ j 1] 0 0]]]
     [have notebook     append_page  table [gtk-label-new 'Table']]
     
     [have vpaned       pack2        notebook t t]
     
     [have win          add          vpaned]
-    [set  win          title        'test-gtk']
+    [set  win          title        'gtk-test']
     [set  win          default_size 128 64]
     
     [have search_button signal_connect 'clicked'

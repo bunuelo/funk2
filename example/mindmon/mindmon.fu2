@@ -36,7 +36,7 @@
 [deftypefunk mindmon_story execute redraw []
   [set [get [get this text_view] buffer] text [format nil  [get this story_name]
 						      '\n'
-						      '\n' [get [get [get [get this mindmon] mind] resource layer_name agency_name resource_name] trace_story]
+						      '\n' [get [get [get [get this mindmon] mind] resource [get this layer_name] [get this agency_name] [get this resource_name]] trace_story]
 						      ]]
   ]
 

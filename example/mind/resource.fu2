@@ -71,7 +71,7 @@
      this-resource]]
 
 [deftypefunk resource execute activate [:rest args]
-  [have [get this trace_story] add_new_event cause-time_step cause-name `activate [get this name]]
+  [story-create_event [get this trace_story] cause-time_step cause-name `activate [get this name]]
   [let [[successful_activation nil]
 	[active_mutex          [get this active_mutex]]]
     [prog [have active_mutex lock]
@@ -87,7 +87,7 @@
 	     error_type      `resource-is-already-activated]]]]
 
 [deftypefunk resource execute finish []
-  [have [get this trace_story] add_new_event cause-time_step cause-name `finish [get this name]]
+  [story-create_event [get this trace_story] cause-time_step cause-name `finish [get this name]]
   [let [[finished     nil]
 	[result       nil]
 	[active_mutex [get this active_mutex]]]
@@ -113,7 +113,7 @@
   [have [get this fiber] quit]]
 
 [deftypefunk resource execute call [:rest args]
-  [have [get this trace_story] add_new_event cause-time_step cause-name `calls [get this name]]
+  [story-create_event [get this trace_story] cause-time_step cause-name `calls [get this name]]
   [have-apply this activate args]
   [have this finish]]
 

@@ -27,21 +27,24 @@
   [set this agency_name   agency_name]
   [set this resource_name resource_name]
   [set this story_name    story_name]
-  [set this text_view     [gtk-text_view-new]]
+  [set this label         [gtk-label-new '']]
   this]
 
 [deftypefunk mindmon_resource_trace_story get widget []
-  [get this text_view]]
+  [get this label]]
 
 [deftypefunk mindmon_resource_trace_story get story []
   [get [get [get [get this mindmon] mind] resource [get this layer_name] [get this agency_name] [get this resource_name]] trace_story]]
 
 [deftypefunk mindmon_resource_trace_story execute redraw []
   [let [[story [get this story]]]
-    [set [get [get this text_view] buffer] text [format nil  [get this story_name]
-							'\n'
-							'\n' [get story as-list] 
-							]]
+    [set [get this label] text [format nil  [get this story_name]
+				       '\n'
+				       '\n' [stringlist-concat [mapcar [funk [event]
+									     [format nil [get event as-list]
+										     '\n']]
+								       [get story events]]]
+				       ]]
     ]]
 
 

@@ -78,6 +78,10 @@
 
 [deftypefunk gtk_text_iter execute forward_search [text] [gtk-text_iter-forward_search this text]]
 
+'GtkLabel'
+
+[deftypefunk gtk_widget set text [text] [gtk-label-set_text this text]]
+
 'GtkTable'
 
 [deftypefunk gtk_widget execute attach [child left_attach right_attach top_attach bottom_attach xpadding ypadding] [gtk-table-attach this child left_attach right_attach top_attach bottom_attach xpadding ypadding]]

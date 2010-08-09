@@ -694,6 +694,14 @@ GtkWidget* funk2_gtk__label__new(funk2_gtk_t* this, u8* text) {
   return label;
 }
 
+void funk2_gtk__label__set_text(funk2_gtk_t* this, GtkWidget* label, u8* text) {
+  {
+    gdk_threads_enter();
+    gtk_label_set_text(GTK_LABEL(label), (char*)text);
+    gdk_threads_leave();
+  }
+}
+
 
 // drawing_area
 
@@ -1742,6 +1750,31 @@ f2ptr f2__gtk__label__new(f2ptr cause, f2ptr text) {
 def_pcfunk1(gtk__label__new, text, return f2__gtk__label__new(this_cause, text));
 
 
+f2ptr raw__gtk__label__set_text(f2ptr cause, f2ptr label, f2ptr text) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* label = raw__gtk_widget__as__GtkWidget(cause, label);
+  
+  u64 text__length = raw__string__length(cause, text);
+  u8* text__str    = (u8*)alloca(text__length + 1);
+  raw__string__str_copy(cause, text, text__str);
+  text__str[text__length] = 0;
+  
+  return funk2_gtk__label__set_text(&(__funk2.gtk), text__str);
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__label__set_text(f2ptr cause, f2ptr label, f2ptr text) {
+  if ((! raw__gtk_widget__is_type(cause, label)) ||
+      (! raw__string__is_type(cause, text))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__label__set_text(cause, label, text);
+}
+def_pcfunk2(gtk__label__set_text, label, text, return f2__gtk__label__set_text(this_cause, label, text));
+
+
 // drawing_area
 
 f2ptr raw__gtk__drawing_area__new(f2ptr cause) {
@@ -1930,7 +1963,8 @@ void f2__gtk__initialize() {
   
   // label
   
-  f2__primcfunk__init__1(gtk__label__new, text, "Returns a new GtkLabel.");
+  f2__primcfunk__init__1(gtk__label__new,      text,        "Returns a new GtkLabel.");
+  f2__primcfunk__init__2(gtk__label__set_text, label, text, "Sets the text displayed by a GtkLabel.");
   
   // drawing_area
   

@@ -98,6 +98,12 @@ void f2__print_environment_stack(f2ptr cause, f2ptr rte, f2ptr env);
 boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode);
 boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber);
 
+f2ptr raw__fiber__stack_trace(f2ptr cause, f2ptr this);
+f2ptr  f2__fiber__stack_trace(f2ptr cause, f2ptr this);
+void  raw__stack_trace__print(f2ptr cause, f2ptr this);
+f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this);
+f2ptr  f2__fiber__print_stack_trace(f2ptr cause, f2ptr this);
+
 void f2__fiber__initialize();
 
 #endif // F2__FIBER__H

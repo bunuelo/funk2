@@ -317,8 +317,22 @@ f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
 	  }
 	  f2ptr name = f2__funkable__name(cause, funk);
 	  {
-	    f2ptr arg_frame = f2__frame__lookup_var_value(cause, funkall_frame, new__symbol(cause, "arg_frame"), nil);
-	    f2__print(cause, f2list2__new(cause, name, arg_frame));
+	    f2ptr arg_frame   = f2__frame__lookup_var_value(cause, funkall_frame, new__symbol(cause, "arg_frame"), nil);
+	    f2ptr print_frame = f2__frame__new(cause, nil);
+	    frame__var__iteration(cause, arg_frame, slot_name, slot_value,
+				  boolean_t slot_value_is_printable;
+				  if (raw__array__is_type(cause, slot_value)) {
+				    slot_value_is_printable = boolean__false;
+				  } else {
+				    slot_value_is_printable = boolean__true;
+				  }
+				  if (slot_value_is_printable) {
+				    f2__frame__add_var_value(cause, print_frame, slot_name, slot_value);
+				  } else {
+				    f2__frame__add_var_value(cause, print_frame, slot_name, f2list2__new(cause, f2__type(cause, slot_value), new__symbol(cause, "<>")));
+				  }
+				  );
+	    f2__print(cause, f2list2__new(cause, name, print_frame));
 	  }
 	}
       }

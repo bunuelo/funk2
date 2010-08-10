@@ -329,7 +329,7 @@ f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
 				  if (slot_value_is_printable) {
 				    f2__frame__add_var_value(cause, print_frame, slot_name, slot_value);
 				  } else {
-				    f2__frame__add_var_value(cause, print_frame, slot_name, f2list2__new(cause, f2__type(cause, slot_value), new__symbol(cause, "<>")));
+				    f2__frame__add_var_value(cause, print_frame, slot_name, f2list2__new(cause, f2__object__type(cause, slot_value), new__symbol(cause, "<>")));
 				  }
 				  );
 	    f2__print(cause, f2list2__new(cause, name, print_frame));

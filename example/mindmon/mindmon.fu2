@@ -18,6 +18,13 @@
  rights to redistribute these changes.'
 
 
+[defunk gtk-left_label-new [text]
+  [let [[this [gtk-label-new text]]]
+    [set this alignment  0.0 0.0]
+    [set this selectable t]
+    this]]
+
+
 'mindmon_resource_trace_story'
 
 [deframe          mindmon_resource_trace_story [frame] [mindmon layer_name agency_name resource_name story_name label]]
@@ -27,9 +34,7 @@
   [set this agency_name   agency_name]
   [set this resource_name resource_name]
   [set this story_name    story_name]
-  [set this label         [gtk-label-new '']]
-  [set [get this label] alignment  0.0 0.0]
-  [set [get this label] selectable t]
+  [set this label         [gtk-left_label-new '']]
   this]
 
 [deftypefunk mindmon_resource_trace_story get widget []
@@ -76,7 +81,7 @@
   [set this agency_name   agency_name]
   [set this resource_name resource_name]
   [set this hbox          [gtk-hbox-new 2]]
-  [set this label         [gtk-label-new '']]
+  [set this label         [gtk-left_label-new '']]
   [set this story_hbox    [gtk-hbox-new [get this story_count]]]
   [set this story_array   [new array    [get this story_count]]]
   [dotimes [i [get this story_count]]
@@ -148,7 +153,7 @@
   [set this layer_name     layer_name]
   [set this agency_name    agency_name]
   [set this vbox           [gtk-vbox-new 2]]
-  [set this label          [gtk-label-new '']]
+  [set this label          [gtk-left_label-new '']]
   [set this resource_vbox  [gtk-vbox-new [get this resource_count]]]
   [set this resource_array [new array    [get this resource_count]]]
   [let [[resource_name_index 0]
@@ -198,7 +203,7 @@
   [set this layer_name   layer_name]
   
   [set this vbox         [gtk-vbox-new 2]]
-  [set this label        [gtk-label-new '']]
+  [set this label        [gtk-left_label-new '']]
   [set this agency_vbox  [gtk-vbox-new [get this agency_count]]]
   [set this agency_array [new array    [get this agency_count]]]
   
@@ -272,7 +277,7 @@
 				       
 				       [set this scrolled_window [gtk-scrolled_window-new]]
 				       [set this vbox            [gtk-vbox-new 2]]
-				       [set this label           [gtk-label-new '']]
+				       [set this label           [gtk-left_label-new '']]
 				       [set this layer_vbox      [gtk-vbox-new [get this layer_count]]]
 				       
 				       [have [get this vbox] pack_start [get this label]      nil nil 0]

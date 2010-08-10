@@ -296,7 +296,7 @@ f2ptr f2__fiber__stack_trace(f2ptr cause, f2ptr this) {
 def_pcfunk1(fiber__stack_trace, this, return f2__fiber__stack_trace(this_cause, this));
 
 
-void raw__stack_trace__print(f2ptr cause, f2ptr this) {
+f2ptr raw__stack_trace__print(f2ptr cause, f2ptr this) {
   f2ptr iter = this;
   while (iter) {
     f2ptr element = f2__cons__car(cause, iter);
@@ -335,6 +335,7 @@ void raw__stack_trace__print(f2ptr cause, f2ptr this) {
     }
     iter = f2__cons__cdr(cause, iter);
   }
+  return nil;
 }
 
 f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
@@ -342,8 +343,7 @@ f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
   if (raw__larva__is_type(cause, stack_trace)) {
     return stack_trace;
   }
-  raw__stack_trace__print(cause, stack_trace);
-  return nil;
+  return raw__stack_trace__print(cause, stack_trace);
 }
 
 f2ptr f2__fiber__print_stack_trace(f2ptr cause, f2ptr this) {

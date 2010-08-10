@@ -157,6 +157,7 @@
   [set [get this body] world world]]
 
 [deftypefunk isis_agent execute think_to_self [:rest expressions]
+  
   [have-apply [get this world] format `['\nAgent ' ,[get this name] ' Thinks: ' @expressions]]]
 
 [deftypefunk isis_agent execute destroy []

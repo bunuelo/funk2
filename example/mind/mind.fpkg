@@ -17,12 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage resource
-  :sources ['resource.fu2']]
-
-[defpackage self_model
-  :sources ['self_model.fu2']]
-
 [defpackage character
   :sources ['character.fu2']]
 
@@ -33,6 +27,13 @@
 [defpackage story-graph
   :packages [story]
    :sources ['story-graph.fu2']]
+
+[defpackage resource
+  :packages [story]
+   :sources ['resource.fu2']]
+
+[defpackage self_model
+  :sources ['self_model.fu2']]
 
 [defpackage propogator
   :packages [resource]

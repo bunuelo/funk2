@@ -31,7 +31,10 @@
   [ansi-stream-foreground stdout 10]
   [let [[value       [get fiber value]]
 	[bug_handled nil]]
-    [print value]
+    [if [is-type `bug value]
+	[let [[bug value]]
+	  [have bug pretty_print]]
+      [format stdout '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
     [have fiber print_stack_trace]
     [ansi-stream-reset stdout]]]
 

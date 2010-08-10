@@ -42,6 +42,32 @@ f2ptr f2__bug__new_from_larva(f2ptr cause, f2ptr larva) {
   return raw__bug__new_from_larva(cause, larva);
 }
 
+f2ptr raw__bug__pretty_print(f2ptr cause, f2ptr this) {
+  f2ptr print_frame = f2__frame__new(cause, nil);
+  frame__var__iteration(cause, this, slot_name, slot_value,
+			boolean_t value_printable = boolean__true;
+			if (raw__array__is_type(cause, slot_value)) {
+			  value_printable = boolean__false;
+			}
+			if (value_printable) {
+			  f2__frame__add_var_value(cause, print_frame, slot_name, slot_value);
+			} else {
+			  f2__frame__add_var_value(cause, print_frame, slot_name, f2list2__new(cause, f2__object__type(cause, slot_value), new__symbol(cause, "<>")));
+			}
+			);
+  f2__print(cause, f2__bug__new(cause, f2__bug__bug_type(cause, this), print_frame));
+  return nil;
+}
+
+f2ptr f2__bug__pretty_print(f2ptr cause, f2ptr this) {
+  if (! raw__bug__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bug__pretty_print(cause, this);
+}
+def_pcfunk1(bug__pretty_print, this, return f2__bug__pretty_print(this_cause, this));
+
+
 // **
 
 void f2__bug__reinitialize_globalvars() {
@@ -60,6 +86,8 @@ void f2__bug__initialize() {
   // bug
   
   initialize_primobject_2_slot(bug, bug_type, frame);
+  
+  f2__primcfunk__init__1(bug__pretty_print, this, "Prints a bug object for human readability, suppressing large objects from printing in their entirety.");
   
 }
 

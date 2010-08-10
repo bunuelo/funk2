@@ -65,7 +65,7 @@ f2ptr raw__bug__pretty_print(f2ptr cause, f2ptr this) {
   }
   f2__print(cause, f2__bug__new(cause, f2__bug__bug_type(cause, this), print_frame));
   
-  f2ptr fiber = f2__frame__lookup_var_value(cause, bug_frame, new__symbol(cause, "fiber"));
+  f2ptr fiber = f2__frame__lookup_var_value(cause, bug_frame, new__symbol(cause, "fiber"), nil);
   if (raw__fiber__is_type(cause, fiber)) {
     {
       raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout_stream, ansi_color__light_green);

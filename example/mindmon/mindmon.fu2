@@ -198,7 +198,7 @@
   [set this layer_name   layer_name]
   
   [set this vbox         [gtk-vbox-new 2]]
-  [set this label        [gtk-label-new]]
+  [set this label        [gtk-label-new '']]
   [set this agency_vbox  [gtk-vbox-new [get this agency_count]]]
   [set this agency_array [new array    [get this agency_count]]]
   
@@ -272,7 +272,7 @@
 				       
 				       [set this scrolled_window [gtk-scrolled_window-new]]
 				       [set this vbox            [gtk-vbox-new 2]]
-				       [set this label           [gtk-label-new]]
+				       [set this label           [gtk-label-new '']]
 				       [set this layer_vbox      [gtk-vbox-new [get this layer_count]]]
 				       
 				       [have [get this vbox] pack_start [get this label]      nil nil 0]

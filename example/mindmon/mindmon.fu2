@@ -27,7 +27,7 @@
   [set this agency_name   agency_name]
   [set this resource_name resource_name]
   [set this story_name    story_name]
-  [set this label         [gtk-label-new]]
+  [set this label         [gtk-label-new '']]
   this]
 
 [deftypefunk mindmon_resource_trace_story get widget []

@@ -86,8 +86,8 @@
            'font-lock-function-name-face)
      (cons (regexp-opt
             '("action" "actor" "act" "elt" "parlet" "partimes" "cond"
-              "defunk" "define-funk" "define" "defmetro" "deftypefunk" "deframe" "dotimes" "funk"
-              "globalize" "globalize-funk" "if" "let" "let*" "metro" "parlet" "prog" "put" "quote" "while" "nil")
+              "defunk" "define-funk" "define" "defmetro" "deftypefunk" "deframe" "deftypeconstruct" "dotimes" "funk"
+              "globalize" "globalize-funk" "if" "let" "let*" "metro" "parlet" "prog" "put" "quote" "while" "nil" "t")
             'words)
            'font-lock-keyword-face)
      ;;'("\\('[a-zA-Z0-9\n\t\\ _-~!@#$%^&*/()_+-={}]+'\\)" . font-lock-string-face)
@@ -103,7 +103,7 @@
      ;;'("\\([+-*/=]\\)" . font-lock-function-name-face)
      '("\\([a-zA-Z0-9_-~!@#$%^&*_+-=]+\\)" . font-lock-variable-name-face)
      ))
-  "My highlighting scheme for Funk mode")
+  "My hightlighting scheme for Funk mode")
      
 (defvar funk-font-lock-keywords funk-font-lock-keywords-i
   "Maximum highlighting for Funk major mode")

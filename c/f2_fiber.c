@@ -297,7 +297,7 @@ def_pcfunk1(fiber__stack_trace, this, return f2__fiber__stack_trace(this_cause, 
 
 
 void raw__stack_trace__print(f2ptr cause, f2ptr this) {
-  f2ptr iter = stack_trace;
+  f2ptr iter = this;
   while (iter) {
     f2ptr element = f2__cons__car(cause, iter);
     {

@@ -28,6 +28,7 @@
   [set this pole_nanoseconds 1000000000]
   [set this trace_story      [new story]]
   [set this fiber            [fiber [funk []
+					  [cause-enable_reactive_critics [this-cause]]
 					  [cause-define cause-name    `resource]
 					  [cause-define resource-name name]
 					  [let [[active_mutex [get this active_mutex]]

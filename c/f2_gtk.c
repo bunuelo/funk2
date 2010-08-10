@@ -319,7 +319,15 @@ void funk2_gtk__widget__draw_rectangle(funk2_gtk_t* this, GtkWidget* widget, boo
 }
 
 
+// misc
 
+void funk2_gtk__misc__set_alignment(funk2_gtk_t* this, GtkWidget* misc, double xalign, double yalign) {
+  {
+    gdk_threads_enter();
+    gdk_misc_set_alignment(GTK_MISC(misc), xalign, yalign);
+    gdk_threads_leave();
+  }
+}
 
 
 // window
@@ -1114,6 +1122,8 @@ f2ptr f2__gtk__widget__set_size_request(f2ptr cause, f2ptr widget, f2ptr width, 
 def_pcfunk3(gtk__widget__set_size_request, widget, width, height, return f2__gtk__widget__set_size_request(this_cause, widget, width, height));
 
 
+// beginning of GtkWidget drawing fuctions, which are not really GtkWidget functions in the GTK library.
+
 f2ptr raw__gtk__widget__queue_draw_area(f2ptr cause, f2ptr widget, f2ptr x, f2ptr y, f2ptr width, f2ptr height) {
 #if defined(F2__GTK__SUPPORTED)
   GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
@@ -1258,6 +1268,31 @@ f2ptr f2__gtk__widget__draw_rectangle(f2ptr cause, f2ptr widget, f2ptr filled, f
   return raw__gtk__widget__draw_rectangle(cause, widget, filled, x, y, width, height);
 }
 def_pcfunk6(gtk__widget__draw_rectangle, widget, filled, x, y, width, height, return f2__gtk__widget__draw_rectangle(this_cause, widget, filled, x, y, width, height));
+
+
+// misc (GtkMisc)
+
+f2ptr raw__gtk__misc__set_alignment(f2ptr cause, f2ptr misc, f2ptr xalign, f2ptr yalign) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_misc  = raw__gtk_widget__as__GtkWidget(cause, misc);
+  double     xalign__d = f2double__d(xalign, cause);
+  double     yalign__d = f2double__d(yalign, cause);
+  funk2_gtk__misc__set_alignment(&(__funk2.gtk), gtk_misc, xalign__d, yalign__d);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__misc__set_alignment(f2ptr cause, f2ptr misc, f2ptr xalign, f2ptr yalign) {
+  if ((! raw__gtk_widget__is_type(cause, misc)) ||
+      (! raw__double__is_type(cause, xalign)) ||
+      (! raw__double__is_type(cause, yalign))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__misc__set_alignment(cause, misc, xalign, yalign);
+}
+def_pcfunk3(gtk__misc__set_alignment, misc, xalign, yalign, return f2__gtk__misc__set_alignment(this_cause, misc, xalign, yalign));
 
 
 // box
@@ -1932,6 +1967,10 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__1(gtk__text_buffer__get_text,              text_buffer,                                         "Gets the text as a string from a gtk text_buffer widget.");
   f2__primcfunk__init__2(gtk__text_buffer__set_text,              text_buffer, text,                                   "Sets the text for a gtk text_buffer widget.");
   f2__primcfunk__init__2(gtk__text_iter__forward_search,          text_iter, text,                                     "Returns a range composed of two text_iters that represent the successful search forward from the text_iter for a string.  Returns nil on failure to find the text.");
+  
+  // misc
+  
+  f2__primcfunk__init__3(gtk__misc__set_alignment, misc, xalign, yalign, "Sets the alignment is the widget.  xalign and yalign should be between 0.0, left, and 1.0, right.  For example, 0.5 would be centered.");
   
   // paned
   

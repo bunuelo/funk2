@@ -31,7 +31,7 @@
 [globalize-funk gtk-widget-queue_draw_area            &primfunk:gtk__widget__queue_draw_area]
 [globalize-funk gtk-widget-draw_arc                   &primfunk:gtk__widget__draw_arc]
 [globalize-funk gtk-widget-draw_rectangle             &primfunk:gtk__widget__draw_rectangle]
-
+[globalize-funk gtk-misc-set_alignment                &primfunk:gtk__misc__set_alignment]
 [globalize-funk gtk-window-new                        &primfunk:gtk__window__new]
 [globalize-funk gtk-window-set_title                  &primfunk:gtk__window__set_title]
 [globalize-funk gtk-window-set_default_size           &primfunk:gtk__window__set_default_size]

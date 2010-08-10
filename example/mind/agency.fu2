@@ -37,11 +37,11 @@
 
 [deftypefunk agency execute call [name :rest args]
   [let [[resource [get this resource name]]]
-    [have-apply resource call `[,cause-outside_resource @args]]]]
+    [have-apply resource call args]]]
 
 [deftypefunk agency execute activate [name :rest args]
   [let [[resource [get this resource name]]]
-    [have-apply resource activate `[,cause-outside_resource @args]]]]
+    [have-apply resource activate args]]]
 
 [deftypefunk agency get resources []
   [get [get this resource_frame] values]]

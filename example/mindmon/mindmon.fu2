@@ -28,7 +28,8 @@
   [set this resource_name resource_name]
   [set this story_name    story_name]
   [set this label         [gtk-label-new '']]
-  [set [get this label] alignment 0.0 0.0]
+  [set [get this label] alignment  0.0 0.0]
+  [set [get this label] selectable t]
   this]
 
 [deftypefunk mindmon_resource_trace_story get widget []

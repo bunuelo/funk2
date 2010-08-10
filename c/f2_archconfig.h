@@ -70,14 +70,16 @@ typedef u64 f2size_t;
 #    define s64__fstr                   "%lld"
 #    define u64__fstr_without_percent    "llu"
 #    define u64__fstr                   "%" u64__fstr_without_percent
-#    define x64__fstr                   "%llx"
+#    define x64__fstr_without_percent   "llx"
+#    define x64__fstr                   "%" x64__fstr_without_percent
 #    define X64__fstr                   "%llX"
 #    define nano_decimal_fraction__fstr "%09lld"
 #  elif long__bit_num == 64
 #    define s64__fstr                   "%ld"
 #    define u64__fstr_without_percent    "lu"
 #    define u64__fstr                   "%" u64__fstr_without_percent
-#    define x64__fstr                   "%lx"
+#    define x64__fstr_without_percent   "lx"
+#    define x64__fstr                   "%" x64__fstr_without_percent
 #    define X64__fstr                   "%lX"
 #    define nano_decimal_fraction__fstr "%09ld"
 #  elif int__bit_num == 64
@@ -95,21 +97,24 @@ typedef u64 f2size_t;
 #    define s64__fstr                   "%d"
 #    define u64__fstr_without_percent    "u"
 #    define u64__fstr                   "%" u64__fstr_without_percent
-#    define x64__fstr                   "%X"
+#    define x64__fstr_without_percent   "X"
+#    define x64__fstr                   "%" x64__fstr_without_percent
 #    define X64__fstr                   "%x"
 #    define nano_decimal_fraction__fstr "%09d"
 #  elif long__bit_num == 64
 #    define s64__fstr                   "%ld"
 #    define u64__fstr_without_percent    "lu"
 #    define u64__fstr                   "%" u64__fstr_without_percent
-#    define x64__fstr                   "%lx"
+#    define x64__fstr_without_percent   "lx"
+#    define x64__fstr                   "%" x64__fstr_without_percent
 #    define X64__fstr                   "%lX"
 #    define nano_decimal_fraction__fstr "%09ld"
 #  elif long_long__bit_num == 64
 #    define s64__fstr                   "%lld"
 #    define u64__fstr_without_percent    "llu"
 #    define u64__fstr                   "%" u64__fstr_without_percent
-#    define x64__fstr                   "%llx"
+#    define x64__fstr_without_percent   "llx"
+#    define x64__fstr                   "%" x64__fstr_without_percent
 #    define X64__fstr                   "%llX"
 #    define nano_decimal_fraction__fstr "%09lld"
 #  else

@@ -36,7 +36,7 @@
   [have [get this resource_frame] lookup name]]
 
 [deftypefunk agency execute call [name :rest args]
-  [have [get this trace_story] add_new_event cause-time_step cause-name `calls name]
+  [story-create_event [get this trace_story] cause-time_step cause-name `calls name]
   [let [[resource [get this resource name]]]
     [have-apply resource call `[,cause-outside_resource @args]]]]
 

@@ -103,7 +103,7 @@
      ;;'("\\([+-*/=]\\)" . font-lock-function-name-face)
      '("\\([a-zA-Z0-9_-~!@#$%^&*_+-=]+\\)" . font-lock-variable-name-face)
      ))
-  "My hightlighting scheme for Funk mode")
+  "My highlighting scheme for Funk mode")
      
 (defvar funk-font-lock-keywords funk-font-lock-keywords-i
   "Maximum highlighting for Funk major mode")

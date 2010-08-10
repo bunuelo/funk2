@@ -206,7 +206,7 @@ img/bootstrap.img: img/bootstrap-repl.img
 ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES = lib/libfunk2.la
-bin_PROGRAMS    = bin/funk2-static
+#bin_PROGRAMS    = bin/funk2-static
 
 lib_libfunk2_la_SOURCES = \
   c/f2_agent.c \

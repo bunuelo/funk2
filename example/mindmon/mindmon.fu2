@@ -18,26 +18,35 @@
  rights to redistribute these changes.'
 
 
-'mindmon_story'
+'mindmon_resource_trace_story'
 
-[deframe          mindmon_story [frame] [mindmon layer_name agency_name resource_name story_name text_view]]
-[deftypeconstruct mindmon_story [mindmon layer_name agency_name resource_name story_name]
+[deframe          mindmon_resource_trace_story [frame] [mindmon layer_name agency_name resource_name story_name label]]
+[deftypeconstruct mindmon_resource_trace_story [mindmon layer_name agency_name resource_name story_name]
   [set this mindmon       mindmon]
   [set this layer_name    layer_name]
   [set this agency_name   agency_name]
   [set this resource_name resource_name]
   [set this story_name    story_name]
-  [set this text_view     [gtk-text_view-new]]
+  [set this label         [gtk-label-new '']]
+  [set [get this label] alignment 0.0 0.0]
   this]
 
-[deftypefunk mindmon_story get widget []
-  [get this text_view]]
+[deftypefunk mindmon_resource_trace_story get widget []
+  [get this label]]
 
-[deftypefunk mindmon_story execute redraw []
-  [set [get [get this text_view] buffer] text [format nil  [get this story_name]
-						      '\n' 
-						      ]]
-  ]
+[deftypefunk mindmon_resource_trace_story get story []
+  [get [get [get [get this mindmon] mind] resource [get this layer_name] [get this agency_name] [get this resource_name]] trace_story]]
+
+[deftypefunk mindmon_resource_trace_story execute redraw []
+  [let [[story [get this story]]]
+    [set [get this label] text [format nil  [get this story_name]
+				       '\n'
+				       '\n' [stringlist-concat [mapcar [funk [event]
+									     [format nil [get event as-list]
+										     '\n']]
+								       [get story events]]]
+				       ]]
+    ]]
 
 
 
@@ -70,10 +79,10 @@
   [set this story_hbox    [gtk-hbox-new [get this story_count]]]
   [set this story_array   [new array    [get this story_count]]]
   [dotimes [i [get this story_count]]
-    [let [[story_name i]]
-      [let [[mindmon_story [new mindmon_story mindmon layer_name agency_name resource_name story_name]]]
-	[set [get this story_array] elt i mindmon_story]
-	[have [get this story_hbox] pack_start [get mindmon_story widget] t t 0]]]]
+    [let [[story_name `trace_story]]
+      [let [[mindmon_resource_trace_story [new mindmon_resource_trace_story mindmon layer_name agency_name resource_name story_name]]]
+	[set [get this story_array] elt i mindmon_resource_trace_story]
+	[have [get this story_hbox] pack_start [get mindmon_resource_trace_story widget] t t 0]]]]
   [have [get this hbox] pack_start [get this text_view]  nil nil 0]
   [have [get this hbox] pack_start [get this story_hbox] t t 0]
   this]

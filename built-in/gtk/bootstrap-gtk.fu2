@@ -30,6 +30,10 @@
 [deftypefunk gtk_widget execute draw_arc        [filled x y width height angle1 angle2] [gtk-widget-draw_arc         this filled x y width height angle1 angle2]]
 [deftypefunk gtk_widget execute draw_rectangle  [filled x y width height]               [gtk-widget-draw_rectangle   this filled x y width height]]
 
+'GtkMisc'
+
+[deftypefunk gtk_widget set alignment [xalign yalign] [gtk-misc-set_alignment this xalign yalign]]
+
 'GtkContainer'
 [deftypefunk gtk_widget execute add [that] [gtk-container-add this that]]
 
@@ -74,7 +78,17 @@
 [deftypefunk gtk_text_buffer get     text         []      [gtk-text_buffer-get_text       this]]
 [deftypefunk gtk_text_buffer set     text         [text]  [gtk-text_buffer-set_text       this text]]
 
+'GtkTextIter'
+
 [deftypefunk gtk_text_iter execute forward_search [text] [gtk-text_iter-forward_search this text]]
+
+'GtkLabel'
+
+[deftypefunk gtk_widget set text [text] [gtk-label-set_text this text]]
+
+'GtkTable'
+
+[deftypefunk gtk_widget execute attach [child left_attach right_attach top_attach bottom_attach xpadding ypadding] [gtk-table-attach this child left_attach right_attach top_attach bottom_attach xpadding ypadding]]
 
 [globalize gtk-event_handling_fiber nil]
 

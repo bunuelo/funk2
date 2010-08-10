@@ -61,10 +61,6 @@
 [defunk load-funk2-devrc []
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]
 
-'specify core development package requirements here.'
-
-'done with loading core development bootstrap.img.'
-
 [load-funk2-devrc]
 
 [format stdout '\nforcing garbage collection.']

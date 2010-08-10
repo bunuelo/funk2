@@ -319,7 +319,15 @@ void funk2_gtk__widget__draw_rectangle(funk2_gtk_t* this, GtkWidget* widget, boo
 }
 
 
+// misc
 
+void funk2_gtk__misc__set_alignment(funk2_gtk_t* this, GtkWidget* misc, double xalign, double yalign) {
+  {
+    gdk_threads_enter();
+    gtk_misc_set_alignment(GTK_MISC(misc), xalign, yalign);
+    gdk_threads_leave();
+  }
+}
 
 
 // window
@@ -694,6 +702,15 @@ GtkWidget* funk2_gtk__label__new(funk2_gtk_t* this, u8* text) {
   return label;
 }
 
+void funk2_gtk__label__set_text(funk2_gtk_t* this, GtkWidget* label, u8* text) {
+  {
+    gdk_threads_enter();
+    gtk_label_set_text(GTK_LABEL(label), (char*)text);
+    gdk_threads_leave();
+  }
+}
+
+
 // drawing_area
 
 GtkWidget* funk2_gtk__drawing_area__new(funk2_gtk_t* this) {
@@ -705,6 +722,30 @@ GtkWidget* funk2_gtk__drawing_area__new(funk2_gtk_t* this) {
   }
   return drawing_area;
 }
+
+
+// table
+
+GtkWidget* funk2_gtk__table__new(funk2_gtk_t* this, s64 rows, s64 columns, boolean_t homogenous) {
+  GtkWidget* table;
+  {
+    gdk_threads_enter();
+    table = gtk_table_new(rows, columns, homogenous);
+    gdk_threads_leave();
+  }
+  return table;
+}
+
+void funk2_gtk__table__attach(funk2_gtk_t* this, GtkWidget* table, GtkWidget* child, u64 left_attach, u64 right_attach, u64 top_attach, u64 bottom_attach, u64 xpadding, u64 ypadding) {
+  GtkAttachOptions xoptions = GTK_EXPAND | GTK_SHRINK | GTK_FILL;
+  GtkAttachOptions yoptions = GTK_EXPAND | GTK_SHRINK | GTK_FILL;
+  {
+    gdk_threads_enter();
+    gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(child), left_attach, right_attach, top_attach, bottom_attach, xoptions, yoptions, xpadding, ypadding);
+    gdk_threads_leave();
+  }
+}
+
 
 #endif // F2__GTK__SUPPORTED
 
@@ -1081,6 +1122,8 @@ f2ptr f2__gtk__widget__set_size_request(f2ptr cause, f2ptr widget, f2ptr width, 
 def_pcfunk3(gtk__widget__set_size_request, widget, width, height, return f2__gtk__widget__set_size_request(this_cause, widget, width, height));
 
 
+// beginning of GtkWidget drawing fuctions, which are not really GtkWidget functions in the GTK library.
+
 f2ptr raw__gtk__widget__queue_draw_area(f2ptr cause, f2ptr widget, f2ptr x, f2ptr y, f2ptr width, f2ptr height) {
 #if defined(F2__GTK__SUPPORTED)
   GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
@@ -1225,6 +1268,31 @@ f2ptr f2__gtk__widget__draw_rectangle(f2ptr cause, f2ptr widget, f2ptr filled, f
   return raw__gtk__widget__draw_rectangle(cause, widget, filled, x, y, width, height);
 }
 def_pcfunk6(gtk__widget__draw_rectangle, widget, filled, x, y, width, height, return f2__gtk__widget__draw_rectangle(this_cause, widget, filled, x, y, width, height));
+
+
+// misc (GtkMisc)
+
+f2ptr raw__gtk__misc__set_alignment(f2ptr cause, f2ptr misc, f2ptr xalign, f2ptr yalign) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_misc  = raw__gtk_widget__as__GtkWidget(cause, misc);
+  double     xalign__d = f2double__d(xalign, cause);
+  double     yalign__d = f2double__d(yalign, cause);
+  funk2_gtk__misc__set_alignment(&(__funk2.gtk), gtk_misc, xalign__d, yalign__d);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__misc__set_alignment(f2ptr cause, f2ptr misc, f2ptr xalign, f2ptr yalign) {
+  if ((! raw__gtk_widget__is_type(cause, misc)) ||
+      (! raw__double__is_type(cause, xalign)) ||
+      (! raw__double__is_type(cause, yalign))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__misc__set_alignment(cause, misc, xalign, yalign);
+}
+def_pcfunk3(gtk__misc__set_alignment, misc, xalign, yalign, return f2__gtk__misc__set_alignment(this_cause, misc, xalign, yalign));
 
 
 // box
@@ -1717,6 +1785,32 @@ f2ptr f2__gtk__label__new(f2ptr cause, f2ptr text) {
 def_pcfunk1(gtk__label__new, text, return f2__gtk__label__new(this_cause, text));
 
 
+f2ptr raw__gtk__label__set_text(f2ptr cause, f2ptr label, f2ptr text) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_label = raw__gtk_widget__as__GtkWidget(cause, label);
+  
+  u64 text__length = raw__string__length(cause, text);
+  u8* text__str    = (u8*)alloca(text__length + 1);
+  raw__string__str_copy(cause, text, text__str);
+  text__str[text__length] = 0;
+  
+  funk2_gtk__label__set_text(&(__funk2.gtk), gtk_label, text__str);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__label__set_text(f2ptr cause, f2ptr label, f2ptr text) {
+  if ((! raw__gtk_widget__is_type(cause, label)) ||
+      (! raw__string__is_type(cause, text))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__label__set_text(cause, label, text);
+}
+def_pcfunk2(gtk__label__set_text, label, text, return f2__gtk__label__set_text(this_cause, label, text));
+
+
 // drawing_area
 
 f2ptr raw__gtk__drawing_area__new(f2ptr cause) {
@@ -1734,7 +1828,60 @@ f2ptr f2__gtk__drawing_area__new(f2ptr cause) {
 def_pcfunk0(gtk__drawing_area__new, return f2__gtk__drawing_area__new(this_cause));
 
 
+// table
 
+f2ptr raw__gtk__table__new(f2ptr cause, f2ptr rows, f2ptr columns, f2ptr homogenous) {
+#if defined(F2__GTK__SUPPORTED)
+  s64        rows__i    = f2integer__i(rows,    cause);
+  s64        columns__i = f2integer__i(columns, cause);
+  GtkWidget* table      = funk2_gtk__table__new(&(__funk2.gtk), rows__i, columns__i, (homogenous != nil) ? TRUE : FALSE);
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(table)));
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__table__new(f2ptr cause, f2ptr rows, f2ptr columns, f2ptr homogenous) {
+  if ((! raw__integer__is_type(cause, rows)) ||
+      (! raw__integer__is_type(cause, columns))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__table__new(cause, rows, columns, homogenous);
+}
+def_pcfunk3(gtk__table__new, rows, columns, homogenous, return f2__gtk__table__new(this_cause, rows, columns, homogenous));
+
+
+f2ptr raw__gtk__table__attach(f2ptr cause, f2ptr table, f2ptr child, f2ptr left_attach, f2ptr right_attach, f2ptr top_attach, f2ptr bottom_attach, f2ptr xpadding, f2ptr ypadding) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_table        = raw__gtk_widget__as__GtkWidget(cause, table);
+  GtkWidget* gtk_child        = raw__gtk_widget__as__GtkWidget(cause, child);
+  s64        left_attach__i   = f2integer__i(left_attach, cause);
+  s64        right_attach__i  = f2integer__i(right_attach, cause);
+  s64        top_attach__i    = f2integer__i(top_attach, cause);
+  s64        bottom_attach__i = f2integer__i(bottom_attach, cause);
+  s64        xpadding__i      = f2integer__i(xpadding, cause);
+  s64        ypadding__i      = f2integer__i(ypadding, cause);
+  funk2_gtk__table__attach(&(__funk2.gtk), gtk_table, gtk_child, left_attach__i, right_attach__i, top_attach__i, bottom_attach__i, xpadding__i, ypadding__i);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__table__attach(f2ptr cause, f2ptr table, f2ptr child, f2ptr left_attach, f2ptr right_attach, f2ptr top_attach, f2ptr bottom_attach, f2ptr xpadding, f2ptr ypadding) {
+  if ((! raw__gtk_widget__is_type(cause, table)) ||
+      (! raw__gtk_widget__is_type(cause, child)) ||
+      (! raw__integer__is_type(cause, left_attach)) ||
+      (! raw__integer__is_type(cause, right_attach)) ||
+      (! raw__integer__is_type(cause, top_attach)) ||
+      (! raw__integer__is_type(cause, bottom_attach)) ||
+      (! raw__integer__is_type(cause, xpadding)) ||
+      (! raw__integer__is_type(cause, ypadding))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__table__attach(cause, table, child, left_attach, right_attach, top_attach, bottom_attach, xpadding, ypadding);
+}
+def_pcfunk8(gtk__table__attach, table, child, left_attach, right_attach, top_attach, bottom_attach, xpadding, ypadding, return f2__gtk__table__attach(this_cause, table, child, left_attach, right_attach, top_attach, bottom_attach, xpadding, ypadding));
 
 
 // **
@@ -1821,6 +1968,10 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__2(gtk__text_buffer__set_text,              text_buffer, text,                                   "Sets the text for a gtk text_buffer widget.");
   f2__primcfunk__init__2(gtk__text_iter__forward_search,          text_iter, text,                                     "Returns a range composed of two text_iters that represent the successful search forward from the text_iter for a string.  Returns nil on failure to find the text.");
   
+  // misc
+  
+  f2__primcfunk__init__3(gtk__misc__set_alignment, misc, xalign, yalign, "Sets the alignment is the widget.  xalign and yalign should be between 0.0, left, and 1.0, right.  For example, 0.5 would be centered.");
+  
   // paned
   
   f2__primcfunk__init__4(gtk__paned__pack1,        paned, child, resize, shrink, "Packs the first child of the Paned.");
@@ -1852,11 +2003,17 @@ void f2__gtk__initialize() {
   
   // label
   
-  f2__primcfunk__init__1(gtk__label__new, text, "Returns a new GtkLabel.");
+  f2__primcfunk__init__1(gtk__label__new,      text,        "Returns a new GtkLabel.");
+  f2__primcfunk__init__2(gtk__label__set_text, label, text, "Sets the text displayed by a GtkLabel.");
   
   // drawing_area
   
   f2__primcfunk__init__0(gtk__drawing_area__new, "Returns a new GtkDrawingArea.");
+  
+  // table
+  
+  f2__primcfunk__init__3(gtk__table__new,    rows, columns, homogenous,                                                              "Returns a new GtkTable.");
+  f2__primcfunk__init__8(gtk__table__attach, table, child, left_attach, right_attach, top_attach, bottom_attach, xpadding, ypadding, "Adds a child GtkWidget to the GtkTable.");
   
   
 }

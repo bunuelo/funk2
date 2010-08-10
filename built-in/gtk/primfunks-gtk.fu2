@@ -31,7 +31,7 @@
 [globalize-funk gtk-widget-queue_draw_area            &primfunk:gtk__widget__queue_draw_area]
 [globalize-funk gtk-widget-draw_arc                   &primfunk:gtk__widget__draw_arc]
 [globalize-funk gtk-widget-draw_rectangle             &primfunk:gtk__widget__draw_rectangle]
-
+[globalize-funk gtk-misc-set_alignment                &primfunk:gtk__misc__set_alignment]
 [globalize-funk gtk-window-new                        &primfunk:gtk__window__new]
 [globalize-funk gtk-window-set_title                  &primfunk:gtk__window__set_title]
 [globalize-funk gtk-window-set_default_size           &primfunk:gtk__window__set_default_size]
@@ -68,8 +68,10 @@
 [globalize-funk gtk-notebook-get_current_page         &primfunk:gtk__notebook__get_current_page]
 [globalize-funk gtk-notebook-set_scrollable           &primfunk:gtk__notebook__set_scrollable]
 [globalize-funk gtk-label-new                         &primfunk:gtk__label__new]
+[globalize-funk gtk-label-set_text                    &primfunk:gtk__label__set_text]
 [globalize-funk gtk-drawing_area-new                  &primfunk:gtk__drawing_area__new]
-
+[globalize-funk gtk-table-new                         &primfunk:gtk__table__new]
+[globalize-funk gtk-table-attach                      &primfunk:gtk__table__attach]
 
 
 

@@ -324,7 +324,7 @@ void funk2_gtk__widget__draw_rectangle(funk2_gtk_t* this, GtkWidget* widget, boo
 void funk2_gtk__misc__set_alignment(funk2_gtk_t* this, GtkWidget* misc, double xalign, double yalign) {
   {
     gdk_threads_enter();
-    gdk_misc_set_alignment(GTK_MISC(misc), xalign, yalign);
+    gtk_misc_set_alignment(GTK_MISC(misc), xalign, yalign);
     gdk_threads_leave();
   }
 }

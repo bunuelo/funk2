@@ -26,6 +26,16 @@
 
 typedef struct funk2_object_type__ptypehash__slot_s funk2_object_type__ptypehash__slot_t;
 declare_object_type_4_slot(ptypehash, write_mutex, key_count, bin_num_power, bin_array,
+			   f2ptr contains__symbol;
+			   f2ptr contains__funk;
+			   f2ptr an_arbitrary_keyvalue_pair__symbol;
+			   f2ptr an_arbitrary_keyvalue_pair__funk;
+			   f2ptr an_arbitrary_key__symbol;
+			   f2ptr an_arbitrary_key__funk;
+			   f2ptr an_arbitrary_value__symbol;
+			   f2ptr an_arbitrary_value__funk;
+			   f2ptr copy__symbol;
+			   f2ptr copy__funk;
 			   f2ptr slot_names__symbol;
 			   f2ptr slot_names__funk;
 			   f2ptr slot_values__symbol;

@@ -77,7 +77,7 @@
   [get [get this fiber] bytecode_count]]
 
 [deftypefunk resource execute add_new_trace_story_event [character_name action_name prepositional_frame]
-  [have [get this trace_story] [get this local_time] character_name action_name prepositional_frame]]
+  [have [get this trace_story] add_new_event [get this local_time] character_name action_name prepositional_frame]]
 
 [deftypefunk resource execute activate [:rest args]
   [have this           add_new_trace_story_event [get cause-resource name] `activate [frame direct_object `me]]

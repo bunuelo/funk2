@@ -28,11 +28,11 @@
   `bug_not_handled]
 
 [defunk critic-reactive-unknown_bug [fiber]
-  [ansi-stream-foreground stdout 10]
   [let [[value       [get fiber value]]
 	[bug_handled nil]]
     [if [is-type `bug value]
 	[let [[bug value]]
+	  [ansi-stream-foreground stdout 10]
 	  [have bug pretty_print]]
       [format stdout '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
     `[prog [format stdout '\nrepl stack trace: ']

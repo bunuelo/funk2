@@ -73,9 +73,12 @@
      [set this-resource active_funk [funk ,args @body]]
      this-resource]]
 
+[deftypefunk resource get local_time []
+  [get [get this fiber] bytecode_count]]
+
 [deftypefunk resource execute activate [:rest args]
-  [story-create_event [get this           trace_story] cause-time_step [get cause-resource name] `activate `me]
-  [story-create_event [get cause-resource trace_story] cause-time_step `I                        `activate [get this name]]
+  [story-create_event [get this           trace_story] [get this local_time]           [get cause-resource name] `activate `me]
+  [story-create_event [get cause-resource trace_story] [get cause-resource local_time] `I                        `activate [get this name]]
   [let [[successful_activation nil]
 	[active_mutex          [get this active_mutex]]]
     [prog [have active_mutex lock]
@@ -91,8 +94,8 @@
 	     error_type      `resource-is-already-activated]]]]
 
 [deftypefunk resource execute finish []
-  [story-create_event [get this trace_story] cause-time_step [get cause-resource name] `finish `me]
-  [story-create_event [get this trace_story] cause-time_step `I                        `finish [get this name]]
+  [story-create_event [get this trace_story] [get this local_time]           [get cause-resource name] `finish `me]
+  [story-create_event [get this trace_story] [get cause-resource local_time] `I                        `finish [get this name]]
   [let [[finished     nil]
 	[result       nil]
 	[active_mutex [get this active_mutex]]]
@@ -118,8 +121,8 @@
   [have [get this fiber] quit]]
 
 [deftypefunk resource execute call [:rest args]
-  [story-create_event [get this trace_story] cause-time_step [get cause-resource name] `calls `me]
-  [story-create_event [get this trace_story] cause-time_step `I                        `calls [get this name]]
+  [story-create_event [get this trace_story] [get this local_time]           [get cause-resource name] `calls `me]
+  [story-create_event [get this trace_story] [get cause-resource local_time] `I                        `calls [get this name]]
   [have-apply this activate args]
   [have this finish]]
 

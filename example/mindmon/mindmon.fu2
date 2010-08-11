@@ -327,8 +327,11 @@
 					 
 					 [while [not mindmon-redraw-quit_now]
 					   [have this redraw]
+					   [if [not [get win visible]]
+					       [= mindmon-redraw-quit_now t]]
 					   [yield]]
 					 [= mindmon-redraw-is_done t]
+					 [have win destroy]
 					 nil]]]
 			       nil]]
   [set this vbox        nil]

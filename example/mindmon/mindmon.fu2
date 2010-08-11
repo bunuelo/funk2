@@ -67,6 +67,7 @@
 					    agency_name
 					    resource_name
 					    
+					    frame
 					    hbox
 					    label
 					    story_hbox
@@ -84,6 +85,7 @@
   [set this layer_name    layer_name]
   [set this agency_name   agency_name]
   [set this resource_name resource_name]
+  [set this frame         [gtk-frame-new [format nil layer_name '-' agency_name '-' resource_name]]]
   [set this hbox          [gtk-hbox-new 2]]
   [set this label         [gtk-left_label-new '']]
   [set this story_hbox    [gtk-hbox-new [get this story_count]]]
@@ -93,12 +95,13 @@
       [let [[mindmon_resource_trace_story [new mindmon_resource_trace_story mindmon layer_name agency_name resource_name story_name]]]
 	[set [get this story_array] elt i mindmon_resource_trace_story]
 	[have [get this story_hbox] pack_start [get mindmon_resource_trace_story widget] t t 0]]]]
-  [have [get this hbox] pack_start [get this label]      nil nil 0]
-  [have [get this hbox] pack_start [get this story_hbox] t t 0]
+  [have [get this hbox]  pack_start [get this label]      nil nil 0]
+  [have [get this hbox]  pack_start [get this story_hbox] t t 0]
+  [have [get this frame] add        [get this hbox]]
   this]
 
 [deftypefunk mindmon_resource get widget []
-  [get this hbox]]
+  [get this frame]]
 
 [deftypefunk mindmon_resource get resource []
   [get [get [get this mindmon] mind] resource [get this layer_name] [get this agency_name] [get this resource_name]]]

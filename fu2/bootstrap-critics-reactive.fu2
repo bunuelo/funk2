@@ -33,10 +33,9 @@
 	[bug_handled nil]]
     [if [is-type `bug value]
 	[let [[bug value]]
-	  [format stdout '\nbug: ']
 	  [have bug pretty_print]]
       [format stdout '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
-    [format stdout '\nstack trace: ']
+    [format stdout '\nstack trace 2: ']
     [have fiber print_stack_trace]
     [ansi-stream-reset stdout]]]
 
@@ -46,10 +45,9 @@
 	[bug_handled nil]]
     [if [is-type `bug value]
 	[let [[bug value]]
-	  [format stdout '\nbug: ']
 	  [have bug pretty_print]]
       [format stdout '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
-    [format stdout '\nstack trace: ']
+    [format stdout '\nstack trace 2: ']
     [have fiber print_stack_trace]
     [repl]]]
 

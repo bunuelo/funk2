@@ -147,14 +147,27 @@
 			    [isis-call [get [get this world] client] drop_from_right_hand agent [get this name]]]    
     
      
+    
      [mind-create_resource mind reactive physical pick_up_with_right_hand [activating_resource target]
 			   [format stdout '\n  pick_up_with_right_hand']
-			   [if [> arm_length [have [get this object] lookup `distance]]
-			       [if [null [have [get this sense] lookup `right_hand]]
-				   [isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target object]
-				 [mind-activate [get this mind] reactive physical drop_from_right_hand]]
-			     [prog [mind-activate [get this mind] reactive physical walk_towards object]
-				   [isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target target]]]]
+			   [while [null [get this sense]] 
+			     [millisleep 100]]
+			   [if [get this objects]
+			       [if [have [get this objects] lookup `target]
+				   [if [> arm_length [have [get this objects] lookup `distance]]
+				       [if [null [have [get this sense] lookup `right_hand]]
+					   [isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target target]
+					 [mind-activate [get this mind] reactive physical drop_from_right_hand]]
+				     [prog 
+				      [mind-activate [get this mind] reactive physical walk_directly_towards object]
+				      [isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target target]]]
+				 [prog 
+				  [mind-activate [get this mind] reactive physical walk_directly_towards object]
+				  [isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target target]]]
+			     [prog 
+			      [mind-activate [get this mind] reactive physical walk_directly_towards object]
+			      [isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target target]]]
+			   [get body sense]]
      
      
      [mind-create_resource mind reactive physical drop_from_left_hand [activating_resource]
@@ -163,13 +176,25 @@
      
      [mind-create_resource mind reactive physical pick_up_with_left_hand [activating_resource target]
 			   [format stdout '\n  pick_up_with_left_hand']
-			   [if [> arm_length [have [get this object] lookup `distance]]
-			       [if [null [have [get this sense] lookup `left_hand]]
-				   [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]
-				 [mind-activate [get this mind] reactive physical drop_from_left_hand]]
+			   [while [null [get this sense]] 
+			     [millisleep 100]]
+			   [if [get this objects]
+			       [if [have [get this objects] lookup `target]
+				   [if [> arm_length [have [get this objects] lookup `distance]]
+				       [if [null [have [get this sense] lookup `left_hand]]
+					   [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]
+					 [mind-activate [get this mind] reactive physical drop_from_left_hand]]
+				     [prog 
+				      [mind-activate [get this mind] reactive physical walk_directly_towards object]
+				      [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]]]
+				 [prog 
+				  [mind-activate [get this mind] reactive physical walk_directly_towards object]
+				  [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]]]
 			     [prog 
-				   [mind-activate [get this mind] reactive physical walk_directly_towards object]
-				   [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]]]]
+			      [mind-activate [get this mind] reactive physical walk_directly_towards object]
+			      [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]]]
+			   [get body sense]]
+     
      
      
      
@@ -381,13 +406,14 @@ why does it randomly exit the while loop/??'
 			    [while t
 			      [let [[time_step [get body time_step]]]
 				[if [eq last_time_step time_step]
-				    [prog [print 'continuous sensing still waiting.']
+				    [prog [print 'continuous sensing waiting for time_step.']
 					  [millisleep 100]]
 				  [let [[sense [get body sense]]]
-				    [print 'body already sensed']
+				    [print 'got body sense through xmlrpc']
 				    [have this think_to_self 'My body senses the world.']
 				    [set [mind-knowledge mind reactive sensory] value `sense `[time_step ,time_step] sense]
-				    [= last_time_step time_step]]]]
+				    [= last_time_step time_step]
+				    [print 'propagated sense']]]]
 			           ]]]
 
 
@@ -459,6 +485,7 @@ why does it randomly exit the while loop/??'
   [set [get this body] world world]]
 
 [deftypefunk isis_agent execute think_to_self [:rest expressions]
+  [story-create_event [get cause-resource trace_story] cause-time_step [get cause-resource name] `thinks-to-self expressions]
   [have-apply [get this world] format `['\nAgent ' ,[get this name] ' Thinks: ' @expressions]]]
 
 [deftypefunk isis_agent execute destroy []
@@ -559,7 +586,7 @@ why does it randomly exit the while loop/??'
 
 [defunk isis_world-initialize [hostname]
   [print 1]
-   [globalize arm_length 3]
+   [globalize arm_length 2]
   `[shelter [have isis_world destroy]]
   [print 2]
   [let [[client [new isis_world_client hostname]]]
@@ -576,9 +603,12 @@ why does it randomly exit the while loop/??'
       [cause-define cause-outside_resource [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
       [cause-define cause-time_step        [get isis_world time_step]]
       [cause-define cause-name             `isis_world-initialize]
-      [globalize cause-outside_resource 1]
-      [globalize cause-time_step        1]
-      [globalize cause-name             1]
+      [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
+
+      `[globalize cause-resource         1]
+      `[globalize cause-outside_resource 1]
+      `[globalize cause-time_step        1]
+      `[globalize cause-name             1]
       [print 8]
       [mind-activate [get isis_world agent_mind `Ralph]  reactive     sensory continuous_sensing]
       [mind-activate [get isis_world agent_mind `Ralph]  deliberative reality include_reactive_stories_into_deliberative_story]

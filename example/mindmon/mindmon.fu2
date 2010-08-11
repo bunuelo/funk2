@@ -38,6 +38,7 @@
   [set this title_label     [gtk-left_label-new [format nil story_name]]]
   [set this scrolled_window [gtk-scrolled_window-new]]
   [set this label           [gtk-left_label-new '']]
+  [have [get this scrolled_window] request_size      600 200]
   [have [get this scrolled_window] add_with_viewport [get this label]]
   [have [get this vbox]            pack_start        [get this title_label]     nil nil 0]
   [have [get this vbox]            pack_start        [get this scrolled_window] t t 0]

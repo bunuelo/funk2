@@ -755,6 +755,19 @@ void funk2_gtk__table__attach(funk2_gtk_t* this, GtkWidget* table, GtkWidget* ch
 }
 
 
+// frame
+
+GtkWidget* funk2_gtk__frame__new(funk2_gtk_t* this, u8* label) {
+  GtkWidget* frame;
+  {
+    gdk_threads_enter();
+    frame = gtk_frame_new((char*)label);
+    gdk_threads_leave();
+  }
+  return frame;
+}
+
+
 #endif // F2__GTK__SUPPORTED
 
 f2ptr f2__gtk_not_supported_larva__new(f2ptr cause) {
@@ -1911,6 +1924,39 @@ f2ptr f2__gtk__table__attach(f2ptr cause, f2ptr table, f2ptr child, f2ptr left_a
 def_pcfunk8(gtk__table__attach, table, child, left_attach, right_attach, top_attach, bottom_attach, xpadding, ypadding, return f2__gtk__table__attach(this_cause, table, child, left_attach, right_attach, top_attach, bottom_attach, xpadding, ypadding));
 
 
+// frame
+
+f2ptr raw__gtk__frame__new(f2ptr cause, f2ptr label) {
+#if defined(F2__GTK__SUPPORTED)
+  u64 label__length;
+  u8* label__str;
+  if (label) {
+    label__length = raw__string__length(cause, label);
+    label__str    = (u8*)alloca(label__length + 1);
+    raw__string__str_copy(cause, label, label__str);
+    label__str[label__length] = 0;
+  } else {
+    label__length = 0;
+    label__str    = NULL;
+  }
+  
+  GtkWidget* frame = funk2_gtk__frame__new(&(__funk2.gtk), label__str);
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(frame)));
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__frame__new(f2ptr cause, f2ptr label) {
+  if (label && (! raw__string__is_type(cause, label))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__frame__new(cause, label);
+}
+def_pcfunk1(gtk__frame__new, label, return f2__gtk__frame__new(this_cause, label));
+
+
+
 // **
 
 void f2__gtk__reinitialize_globalvars() {
@@ -2042,6 +2088,10 @@ void f2__gtk__initialize() {
   
   f2__primcfunk__init__3(gtk__table__new,    rows, columns, homogenous,                                                              "Returns a new GtkTable.");
   f2__primcfunk__init__8(gtk__table__attach, table, child, left_attach, right_attach, top_attach, bottom_attach, xpadding, ypadding, "Adds a child GtkWidget to the GtkTable.");
+  
+  // frame
+  
+  f2__primcfunk__init__1(gtk__frame__new, label, "Returns a new GtkFrame with optional label.");
   
   
 }

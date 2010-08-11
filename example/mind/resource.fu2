@@ -20,9 +20,10 @@
 
 'resource'
 
-[deframe          resource [frame] [name fiber active_mutex active active_funk active_args result finished done pole_nanoseconds trace_story]]
+[deframe          resource [frame] [name agency fiber active_mutex active active_funk active_args result finished done pole_nanoseconds trace_story]]
 [deftypeconstruct resource [name active_funk]
   [set this name             name]
+  [set this agency           nil]  'We set this when the resource is added to an agency.'
   [set this active_funk      active_funk]
   [set this active_mutex     [new mutex]]
   [set this pole_nanoseconds 1000000000]
@@ -72,9 +73,15 @@
      [set this-resource active_funk [funk ,args @body]]
      this-resource]]
 
+[deftypefunk resource get local_time []
+  [get [get this fiber] bytecode_count]]
+
+[deftypefunk resource execute add_new_trace_story_event [character_name action_name prepositional_frame]
+  [have [get this trace_story] add_new_event [get this local_time] character_name action_name prepositional_frame]]
+
 [deftypefunk resource execute activate [:rest args]
-  [story-create_event [get this           trace_story] cause-time_step [get cause-resource name] `activate `me]
-  [story-create_event [get cause-resource trace_story] cause-time_step `I                        `activate [get this name]]
+  [have this           add_new_trace_story_event [get cause-resource name] `activate [frame direct_object `me]]
+  [have cause-resource add_new_trace_story_event `I                        `activate [frame direct_object [get this name]]]
   [let [[successful_activation nil]
 	[active_mutex          [get this active_mutex]]]
     [prog [have active_mutex lock]
@@ -90,8 +97,8 @@
 	     error_type      `resource-is-already-activated]]]]
 
 [deftypefunk resource execute finish []
-  [story-create_event [get this trace_story] cause-time_step [get cause-resource name] `finish `me]
-  [story-create_event [get this trace_story] cause-time_step `I                        `finish [get this name]]
+  [have this           add_new_trace_story_event [get cause-resource name] `finish [frame direct_object `me]]
+  [have cause-resource add_new_trace_story_event `I                        `finish [frame direct_object [get this name]]]
   [let [[finished     nil]
 	[result       nil]
 	[active_mutex [get this active_mutex]]]
@@ -117,8 +124,8 @@
   [have [get this fiber] quit]]
 
 [deftypefunk resource execute call [:rest args]
-  [story-create_event [get this trace_story] cause-time_step [get cause-resource name] `calls `me]
-  [story-create_event [get this trace_story] cause-time_step `I                        `calls [get this name]]
+  [have this           add_new_trace_story_event [get cause-resource name] `call [frame direct_object `me]]
+  [have cause-resource add_new_trace_story_event `I                        `call [frame direct_object [get this name]]]
   [have-apply this activate args]
   [have this finish]]
 

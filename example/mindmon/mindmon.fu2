@@ -27,18 +27,20 @@
 
 'mindmon_resource_trace_story'
 
-[deframe          mindmon_resource_trace_story [frame] [mindmon layer_name agency_name resource_name story_name label]]
+[deframe          mindmon_resource_trace_story [frame] [mindmon layer_name agency_name resource_name story_name scrolled_window label]]
 [deftypeconstruct mindmon_resource_trace_story [mindmon layer_name agency_name resource_name story_name]
-  [set this mindmon       mindmon]
-  [set this layer_name    layer_name]
-  [set this agency_name   agency_name]
-  [set this resource_name resource_name]
-  [set this story_name    story_name]
-  [set this label         [gtk-left_label-new '']]
+  [set this mindmon         mindmon]
+  [set this layer_name      layer_name]
+  [set this agency_name     agency_name]
+  [set this resource_name   resource_name]
+  [set this story_name      story_name]
+  [set this scrolled_window [gtk-scrolled_window-new]]
+  [set this label           [gtk-left_label-new '']]
+  [have [get this scrolled_window] add_with_viewport [get this label]]
   this]
 
 [deftypefunk mindmon_resource_trace_story get widget []
-  [get this label]]
+  [get this scrolled_window]]
 
 [deftypefunk mindmon_resource_trace_story get story []
   [get [get [get [get this mindmon] mind] resource [get this layer_name] [get this agency_name] [get this resource_name]] trace_story]]

@@ -157,7 +157,7 @@
   [set [get this body] world world]]
 
 [deftypefunk isis_agent execute think_to_self [:rest expressions]
-  [story-create_event [get cause-resource trace_story] cause-time_step [get cause-resource name] `thinks-to-self expressions]
+  [have cause-resource add_new_trace_story_event [get cause-resource name] `thinks [frame direct_object expressions]]
   [have-apply [get this world] format `['\nAgent ' ,[get this name] ' Thinks: ' @expressions]]]
 
 [deftypefunk isis_agent execute destroy []

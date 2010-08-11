@@ -157,7 +157,7 @@
   [set [get this body] world world]]
 
 [deftypefunk isis_agent execute think_to_self [:rest expressions]
-  [story-create_event [get this trace_story] cause-time_step cause-name `finish [get this name]]
+  [story-create_event [get cause-resource trace_story] cause-time_step [get cause-resource name] `thinks-to-self expressions]
   [have-apply [get this world] format `['\nAgent ' ,[get this name] ' Thinks: ' @expressions]]]
 
 [deftypefunk isis_agent execute destroy []
@@ -247,9 +247,9 @@
       
       [have isis_world pause_simulation]
       
-      [cause-define cause-outside_resource [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
-      [cause-define cause-time_step        [get isis_world time_step]]
-      [cause-define cause-name             `isis_world-initialize]
+      [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
+      [cause-define cause-time_step [get isis_world time_step]]
+      [cause-define cause-name      `isis_world-initialize]
       
       [mind-activate [get isis_world agent_mind `Lauren] reactive     speech  say                                              'Bad Ralph!']
       [mind-activate [get isis_world agent_mind `Lauren] deliberative reality include_reactive_stories_into_deliberative_story]

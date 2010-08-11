@@ -29,8 +29,9 @@
   [set this trace_story      [new story]]
   [set this fiber            [fiber [funk []
 					  [cause-enable_reactive_critics [this-cause]]
-					  [cause-define cause-name    `resource]
-					  [cause-define resource-name name]
+					  [cause-define cause-name     `resource]
+					  [cause-define resource-name  name]
+					  [cause-define cause-resource this]
 					  [let [[active_mutex [get this active_mutex]]
 						[done         nil]]
 					    [while [not done]
@@ -72,7 +73,8 @@
      this-resource]]
 
 [deftypefunk resource execute activate [:rest args]
-  [story-create_event [get this trace_story] cause-time_step cause-name `activate [get this name]]
+  [story-create_event [get this           trace_story] cause-time_step [get cause-resource name] `activate `me]
+  [story-create_event [get cause-resource trace_story] cause-time_step `I                        `activate [get this name]]
   [let [[successful_activation nil]
 	[active_mutex          [get this active_mutex]]]
     [prog [have active_mutex lock]
@@ -88,7 +90,8 @@
 	     error_type      `resource-is-already-activated]]]]
 
 [deftypefunk resource execute finish []
-  [story-create_event [get this trace_story] cause-time_step cause-name `finish [get this name]]
+  [story-create_event [get this trace_story] cause-time_step [get cause-resource name] `finish `me]
+  [story-create_event [get this trace_story] cause-time_step `I                        `finish [get this name]]
   [let [[finished     nil]
 	[result       nil]
 	[active_mutex [get this active_mutex]]]
@@ -114,7 +117,8 @@
   [have [get this fiber] quit]]
 
 [deftypefunk resource execute call [:rest args]
-  [story-create_event [get this trace_story] cause-time_step cause-name `calls [get this name]]
+  [story-create_event [get this trace_story] cause-time_step [get cause-resource name] `calls `me]
+  [story-create_event [get this trace_story] cause-time_step `I                        `calls [get this name]]
   [have-apply this activate args]
   [have this finish]]
 

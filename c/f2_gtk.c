@@ -710,6 +710,14 @@ void funk2_gtk__label__set_text(funk2_gtk_t* this, GtkWidget* label, u8* text) {
   }
 }
 
+void funk2_gtk__label__set_selectable(funk2_gtk_t* this, GtkWidget* label, boolean_t selectable) {
+  {
+    gdk_threads_enter();
+    gtk_label_set_selectable(GTK_LABEL(label), selectable ? TRUE : FALSE);
+    gdk_threads_leave();
+  }
+}
+
 
 // drawing_area
 
@@ -1811,6 +1819,25 @@ f2ptr f2__gtk__label__set_text(f2ptr cause, f2ptr label, f2ptr text) {
 def_pcfunk2(gtk__label__set_text, label, text, return f2__gtk__label__set_text(this_cause, label, text));
 
 
+f2ptr raw__gtk__label__set_selectable(f2ptr cause, f2ptr label, f2ptr selectable) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_label = raw__gtk_widget__as__GtkWidget(cause, label);
+  funk2_gtk__label__set_selectable(&(__funk2.gtk), gtk_label, (selectable != nil));
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__label__set_selectable(f2ptr cause, f2ptr label, f2ptr selectable) {
+  if (! raw__gtk_widget__is_type(cause, label)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__label__set_selectable(cause, label, selectable);
+}
+def_pcfunk2(gtk__label__set_selectable, label, selectable, return f2__gtk__label__set_selectable(this_cause, label, selectable));
+
+
 // drawing_area
 
 f2ptr raw__gtk__drawing_area__new(f2ptr cause) {
@@ -2003,8 +2030,9 @@ void f2__gtk__initialize() {
   
   // label
   
-  f2__primcfunk__init__1(gtk__label__new,      text,        "Returns a new GtkLabel.");
-  f2__primcfunk__init__2(gtk__label__set_text, label, text, "Sets the text displayed by a GtkLabel.");
+  f2__primcfunk__init__1(gtk__label__new,            text,              "Returns a new GtkLabel.");
+  f2__primcfunk__init__2(gtk__label__set_text,       label, text,       "Sets the text displayed by a GtkLabel.");
+  f2__primcfunk__init__2(gtk__label__set_selectable, label, selectable, "Sets whether the text displayed by a GtkLabel is selectable for copy and paste.");
   
   // drawing_area
   

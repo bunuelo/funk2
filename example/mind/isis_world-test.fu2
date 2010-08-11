@@ -86,7 +86,7 @@
 			 story]]]]
       ]
     
-    [mind-create_resource mind reactive sensory continuous_sensing [activating_resource]
+    [mind-create_resource mind reactive sensory continuous_sensing []
 			  [have this think_to_self 'Continuous sensing is starting.']
 			  [let [[last_time_step nil]]
 			    [while t
@@ -99,14 +99,14 @@
 				    [= last_time_step time_step]]]]
 			      ]]]
     
-    [mind-create_resource mind reactive speech say [activating_resource string]
+    [mind-create_resource mind reactive speech say [string]
 			  [set body says [list string]]
 			  [let [[start_time_step [get body time_step]]]
 			    [while [< [- [get body time_step] 2] start_time_step]
 			      [millisleep 100]]]
 			  [set body says nil]]
     
-    [mind-create_resource mind reactive sensory sense_imprimer_scold [activating imprimer]
+    [mind-create_resource mind reactive sensory sense_imprimer_scold [imprimer]
 			  [if [get [get imprimer speech] is-scold]
 			      [prog [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', said something that sounds like a scold!']
 				    [cause-define cause-time_step [get body time_step]]
@@ -121,7 +121,7 @@
       
       [have [mind-knowledge mind deliberative reality] add_cell reality_story-cell]
       
-      [mind-create_resource mind deliberative reality include_reactive_stories_into_deliberative_story [activating]
+      [mind-create_resource mind deliberative reality include_reactive_stories_into_deliberative_story []
 			    [cause-define cause-time_step [get body time_step]]
 			    [cause-define cause-name      `[deliberative reality interpret_senses_into_current_story]]
 			    [let [[last_time_step     -1]
@@ -157,6 +157,7 @@
   [set [get this body] world world]]
 
 [deftypefunk isis_agent execute think_to_self [:rest expressions]
+  [story-create_event [get cause-resource trace_story] cause-time_step [get cause-resource name] `thinks-to-self expressions]
   [have-apply [get this world] format `['\nAgent ' ,[get this name] ' Thinks: ' @expressions]]]
 
 [deftypefunk isis_agent execute destroy []
@@ -246,9 +247,9 @@
       
       [have isis_world pause_simulation]
       
-      [cause-define cause-outside_resource [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
-      [cause-define cause-time_step        [get isis_world time_step]]
-      [cause-define cause-name             `isis_world-initialize]
+      [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
+      [cause-define cause-time_step [get isis_world time_step]]
+      [cause-define cause-name      `isis_world-initialize]
       
       [mind-activate [get isis_world agent_mind `Lauren] reactive     speech  say                                              'Bad Ralph!']
       [mind-activate [get isis_world agent_mind `Lauren] deliberative reality include_reactive_stories_into_deliberative_story]

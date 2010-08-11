@@ -111,7 +111,7 @@ f2ptr f2__frame__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr 
 }
 def_pcfunk4(frame__lookup_type_var_assignment_cons, this, type, var, not_defined_value, return f2__frame__lookup_type_var_assignment_cons(this_cause, this, type, var, not_defined_value));
 
-f2ptr f2__frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
+f2ptr raw__frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
   f2ptr type__keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, f2frame__type_ptypehash(this, cause), type);
   if (type__keyvalue_pair) {
     f2ptr type__ptypehash = f2cons__cdr(type__keyvalue_pair, cause);
@@ -123,9 +123,16 @@ f2ptr f2__frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2pt
   }
   return not_defined_value;
 }
+
+f2ptr f2__frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
+  if (! raw__frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__frame__lookup_type_var_value(cause, this, type, var, not_defined_value);
+}
 def_pcfunk4(frame__lookup_type_var_value, this, type, var, not_defined_value, return f2__frame__lookup_type_var_value(this_cause, this, type, var, not_defined_value));
 
-f2ptr f2__frame__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value, f2ptr not_defined_value) {
+f2ptr raw__frame__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value, f2ptr not_defined_value) {
   f2ptr type__keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, f2frame__type_ptypehash(this, cause), type);
   if (type__keyvalue_pair) {
     f2ptr type__ptypehash = f2cons__cdr(type__keyvalue_pair, cause);
@@ -137,7 +144,29 @@ f2ptr f2__frame__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr 
   }
   return not_defined_value;
 }
+
+f2ptr f2__frame__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value, f2ptr not_defined_value) {
+  if (! raw__frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__frame__type_var_value__set(cause, this, type, var, value, not_defined_value);
+}
 def_pcfunk5(frame__type_var_value__set, this, type, var, value, not_defined_value, return f2__frame__type_var_value__set(this_cause, this, type, var, value, not_defined_value));
+
+
+boolean_t raw__frame__contains_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+  f2ptr not_defined_value = __funk2.primobject__frame.type_variable_not_defined__symbol;
+  f2ptr value = raw__frame__lookup_type_var_value(cause, this, type, var, not_defined_value);
+  return (! raw__eq(cause, value, not_defined_value));
+}
+
+f2ptr f2__frame__contains_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+  if (! raw__frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2bool__new(raw__frame__contains_type_var(cause, this, type, var));
+}
+
 
 f2ptr raw__frame__type_var__mapc_slot_names(f2ptr cause, f2ptr this, f2ptr type, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data) {
   f2ptr retval = nil;
@@ -183,6 +212,18 @@ def_pcfunk3(frame__lookup_var_value, this, var, not_defined_value, return f2__fr
 
 f2ptr f2__frame__var_value__set(f2ptr cause, f2ptr this, f2ptr var, f2ptr value, f2ptr not_defined_value) {return f2__frame__type_var_value__set(cause, this, __funk2.primobject__frame.variable__symbol, var, value, not_defined_value);}
 def_pcfunk4(frame__var_value__set, this, var, value, not_defined_value, return f2__frame__var_value__set(this_cause, this, var, value, not_defined_value));
+
+boolean_t raw__frame__contains_var(f2ptr cause, f2ptr this, f2ptr var) {
+  return raw__frame__contains_type_var(cause, this, __funk2.primobject__frame.variable__symbol, var);
+}
+
+f2ptr f2__frame__contains_var(f2ptr cause, f2ptr this, f2ptr var) {
+  if (! raw__frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2bool__new(raw__frame__contains_var(cause, this, var));
+}
+
 
 f2ptr f2__frame__funkvar_ptypehash(f2ptr cause, f2ptr this) {return f2__ptypehash__lookup(cause, f2frame__type_ptypehash(this, cause), __funk2.primobject__frame.funk_variable__symbol);}
 

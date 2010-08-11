@@ -84,7 +84,8 @@
 
 'GtkLabel'
 
-[deftypefunk gtk_widget set text [text] [gtk-label-set_text this text]]
+[deftypefunk gtk_widget set text       [text]       [gtk-label-set_text       this text]]
+[deftypefunk gtk_widget set selectable [selectable] [gtk-label-set_selectable this selectable]]
 
 'GtkTable'
 

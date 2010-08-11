@@ -18,6 +18,13 @@
  rights to redistribute these changes.'
 
 
+[defunk gtk-left_label-new [text]
+  [let [[this [gtk-label-new text]]]
+    [set this alignment  0.0 0.0]
+    [set this selectable t]
+    this]]
+
+
 'mindmon_resource_trace_story'
 
 [deframe          mindmon_resource_trace_story [frame] [mindmon layer_name agency_name resource_name story_name label]]
@@ -27,8 +34,7 @@
   [set this agency_name   agency_name]
   [set this resource_name resource_name]
   [set this story_name    story_name]
-  [set this label         [gtk-label-new '']]
-  [set [get this label] alignment 0.0 0.0]
+  [set this label         [gtk-left_label-new '']]
   this]
 
 [deftypefunk mindmon_resource_trace_story get widget []
@@ -58,7 +64,7 @@
 					    resource_name
 					    
 					    hbox
-					    text_view
+					    label
 					    story_hbox
 					    story_array
 					    
@@ -75,7 +81,7 @@
   [set this agency_name   agency_name]
   [set this resource_name resource_name]
   [set this hbox          [gtk-hbox-new 2]]
-  [set this text_view     [gtk-text_view-new]]
+  [set this label         [gtk-left_label-new '']]
   [set this story_hbox    [gtk-hbox-new [get this story_count]]]
   [set this story_array   [new array    [get this story_count]]]
   [dotimes [i [get this story_count]]
@@ -83,7 +89,7 @@
       [let [[mindmon_resource_trace_story [new mindmon_resource_trace_story mindmon layer_name agency_name resource_name story_name]]]
 	[set [get this story_array] elt i mindmon_resource_trace_story]
 	[have [get this story_hbox] pack_start [get mindmon_resource_trace_story widget] t t 0]]]]
-  [have [get this hbox] pack_start [get this text_view]  nil nil 0]
+  [have [get this hbox] pack_start [get this label]      nil nil 0]
   [have [get this hbox] pack_start [get this story_hbox] t t 0]
   this]
 
@@ -117,13 +123,13 @@
 	      [set this last_fiber_bytecode_count_time     fiber_bytecode_count_time]
 	      ]]]]]
     
-    [set [get [get this text_view] buffer] text [format nil  '\t\t\t' [get this resource_name]
-							'\n' '\t\t\t\t' 'active\t\t'   [get resource active]
-							'\n' '\t\t\t\t' 'done\t\t'     [get resource done]
-							'\n' '\t\t\t\t' 'sleep time\t' [/ [get resource pole_nanoseconds] 1000000000.0] ' s'
-							'\n' '\t\t\t\t' 'speed\t\t'    [/ [get this bytecodes_per_second] 1024.0] ' kBc/s'
-							'\n' '\t\t\t\t' '\t\t\t\t\t\t\t\t\t\t'
-							]]
+    [set [get this label] text [format nil  '\t\t\t' [get this resource_name]
+				       '\n' '\t\t\t\t' 'active\t\t'   [get resource active]
+				       '\n' '\t\t\t\t' 'done\t\t'     [get resource done]
+				       '\n' '\t\t\t\t' 'sleep time\t' [/ [get resource pole_nanoseconds] 1000000000.0] ' s'
+				       '\n' '\t\t\t\t' 'speed\t\t'    [/ [get this bytecodes_per_second] 1024.0] ' kBc/s'
+				       '\n' '\t\t\t\t' '\t\t\t\t\t\t\t\t\t\t'
+				       ]]
     [dotimes [i [get this story_count]]
       [have [get [get this story_array] elt i] redraw]]]]
 
@@ -136,7 +142,7 @@
 					  agency_name
 					  
 					  vbox
-					  text_view
+					  label
 					  resource_vbox
 					  resource_array
 					  
@@ -147,7 +153,7 @@
   [set this layer_name     layer_name]
   [set this agency_name    agency_name]
   [set this vbox           [gtk-vbox-new 2]]
-  [set this text_view      [gtk-text_view-new]]
+  [set this label          [gtk-left_label-new '']]
   [set this resource_vbox  [gtk-vbox-new [get this resource_count]]]
   [set this resource_array [new array    [get this resource_count]]]
   [let [[resource_name_index 0]
@@ -158,7 +164,7 @@
 	[have [get this resource_vbox]  pack_start              [get [get [get this resource_array] elt resource_name_index] widget] t t 0]]
       [= resource_name_index [+    resource_name_index 1]]
       [= resource_name_iter  [next resource_name_iter]]]]
-  [have [get this vbox] pack_start [get this text_view]     nil nil 0]
+  [have [get this vbox] pack_start [get this label]         nil nil 0]
   [have [get this vbox] pack_start [get this resource_vbox] t t 0]
   this]
 
@@ -171,8 +177,8 @@
       [have [get [get this resource_array] elt i] redraw]
       [= agency_bytecodes_per_second [+ agency_bytecodes_per_second [get [get [get this resource_array] elt i] bytecodes_per_second]]]]
     [set this bytecodes_per_second agency_bytecodes_per_second]]
-  [set [get [get this text_view] buffer] text [format nil  '\t\t' [get this agency_name] ' agency'
-						      '\n' '\t\t' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
+  [set [get this label] text [format nil  '\t\t' [get this agency_name] ' agency'
+				     '\n' '\t\t' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
 
 [deftypefunk mindmon_agency get resource_count []
   [get [get [get this mindmon] mind] layer_agency_resource_count [get this layer_name] [get this agency_name]]]
@@ -187,7 +193,7 @@
 					 layer_name
 					 
 					 vbox
-					 text_view
+					 label
 					 agency_vbox
 					 agency_array
 					 
@@ -197,7 +203,7 @@
   [set this layer_name   layer_name]
   
   [set this vbox         [gtk-vbox-new 2]]
-  [set this text_view    [gtk-text_view-new]]
+  [set this label        [gtk-left_label-new '']]
   [set this agency_vbox  [gtk-vbox-new [get this agency_count]]]
   [set this agency_array [new array    [get this agency_count]]]
   
@@ -212,7 +218,7 @@
 	[= agency_name_index [+    agency_name_index 1]]
 	[= agency_name_iter  [next agency_name_iter]]]]]
   
-  [have [get this vbox] pack_start [get this text_view]   nil nil 0]
+  [have [get this vbox] pack_start [get this label]       nil nil 0]
   [have [get this vbox] pack_start [get this agency_vbox] t t 0]
   this]
 
@@ -236,8 +242,8 @@
 	[let [[bytecodes_per_second [get mindmon_agency bytecodes_per_second]]]
 	  [= layer_bytecodes_per_second [+ layer_bytecodes_per_second bytecodes_per_second]]]]]
     [set this bytecodes_per_second layer_bytecodes_per_second]]
-  [set [get [get this text_view] buffer] text [format nil  '\t' [get this layer_name] ' layer'
-						      '\n' '\t' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
+  [set [get this label] text [format nil  '\t' [get this layer_name] ' layer'
+				     '\n' '\t' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
 
 
 'mindmon'
@@ -248,7 +254,7 @@
 				   
 				   scrolled_window
 				   vbox
-				   text_view
+				   label
 				   layer_vbox
 				   layer_array
 				   
@@ -271,10 +277,10 @@
 				       
 				       [set this scrolled_window [gtk-scrolled_window-new]]
 				       [set this vbox            [gtk-vbox-new 2]]
-				       [set this text_view       [gtk-text_view-new]]
+				       [set this label           [gtk-left_label-new '']]
 				       [set this layer_vbox      [gtk-vbox-new [get this layer_count]]]
 				       
-				       [have [get this vbox] pack_start [get this text_view] nil nil 0]
+				       [have [get this vbox] pack_start [get this label]      nil nil 0]
 				       [have [get this vbox] pack_start [get this layer_vbox] t t 0]
 				       
 				       [have [get this scrolled_window] add_with_viewport [get this vbox]]
@@ -335,8 +341,8 @@
 	[have mindmon_layer redraw]
 	[= mind_bytecodes_per_second [+ mind_bytecodes_per_second [get mindmon_layer bytecodes_per_second]]]]]
     [set this bytecodes_per_second mind_bytecodes_per_second]]
-  [set [get [get this text_view] buffer] text [format nil  'mind'
-						      '\n' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
+  [set [get this label] text [format nil  'mind'
+				     '\n' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
 
 
 [defmetro mindmon [:rest args]

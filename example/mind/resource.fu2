@@ -20,9 +20,10 @@
 
 'resource'
 
-[deframe          resource [frame] [name fiber active_mutex active active_funk active_args result finished done pole_nanoseconds trace_story]]
+[deframe          resource [frame] [name agency fiber active_mutex active active_funk active_args result finished done pole_nanoseconds trace_story]]
 [deftypeconstruct resource [name active_funk]
   [set this name             name]
+  [set this agency           nil]  'We set this when the resource is added to an agency.'
   [set this active_funk      active_funk]
   [set this active_mutex     [new mutex]]
   [set this pole_nanoseconds 1000000000]

@@ -323,7 +323,7 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
-bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
+#bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 
 FUNK2_VERSION=`cat version`
 

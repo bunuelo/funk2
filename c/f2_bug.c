@@ -58,7 +58,21 @@ f2ptr raw__bug__pretty_print(f2ptr cause, f2ptr this) {
 			  }
 			  );
   }
+  printf("\nbug: ");
   f2__print(cause, f2__bug__new(cause, f2__bug__bug_type(cause, this), print_frame));
+  
+  f2ptr fiber = f2__frame__lookup_var_value(cause, bug_frame, new__symbol(cause, "fiber"), nil);
+  if (raw__fiber__is_type(cause, fiber)) {
+    printf("\nstack trace: ");
+    f2ptr result = raw__stack_trace__print(cause, f2__fiber__stack_trace(cause, fiber));
+    if (raw__larva__is_type(cause, result)) {
+      printf("bug printing stack trace (");
+      f2__print(cause, result);
+      printf(")\n");
+    }
+  } else {
+    printf("\nraw__bug__pretty_print: couldn't find fiber slot in bug frame.");
+  }
   return nil;
 }
 

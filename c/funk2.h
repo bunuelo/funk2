@@ -130,6 +130,7 @@
 #include "f2_time.h"
 #include "f2_trace.h"
 #include "f2_user_thread_controller.h"
+#include "f2_virtual_processor_thread.h"
 #include "f2_virtual_processor_thread_handler.h"
 #include "f2_xmlrpc.h"
 #include "f2_zlib.h"

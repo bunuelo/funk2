@@ -290,7 +290,7 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
 }
 
 f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
-  return f2__exp__as__string__with_hash(this_cause, exp, f2__ptypehash__new(cause));
+  return f2__exp__as__string__with_hash(cause, exp, f2__ptypehash__new(cause));
 }
 def_pcfunk1(exp__as__string, exp, return f2__exp__as__string(this_cause, exp));
 

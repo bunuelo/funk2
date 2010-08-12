@@ -33,6 +33,7 @@ void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* th
       this->virtual_processor[index] = virtual_processor;
     }
   }
+  funk2_hash__init(&(this->index_processor_thread_hash), 10);
 }
 
 
@@ -45,6 +46,7 @@ void funk2_virtual_processor_handler__destroy(funk2_virtual_processor_handler_t*
     }
   }
   f2__free(to_ptr(this->virtual_processor));
+  funk2_hash__destroy(&(this->index_processor_thread_hash));
 }
 
 

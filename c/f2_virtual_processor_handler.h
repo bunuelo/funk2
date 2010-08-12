@@ -26,8 +26,9 @@
 
 typedef struct funk2_virtual_processor_handler_s funk2_virtual_processor_handler_t;
 struct funk2_virtual_processor_handler_s {
-  u64                                virtual_processor_count;
+  u64                         virtual_processor_count;
   funk2_virtual_processor_t** virtual_processor;
+  funk2_hash_t                index_processor_thread_hash;
 };
 
 void funk2_virtual_processor_handler__init(   funk2_virtual_processor_handler_t* this, u64 virtual_processor_count);

@@ -284,7 +284,7 @@ boolean_t funk2_gtk__widget__get_visible(funk2_gtk_t* this, GtkWidget* widget) {
   boolean_t visible;
   {
     gdk_threads_enter();
-    visible = gtk_widget_get_visible(GTK_WIDGET(widget));
+    visible = gtk_widget_get_visible(GTK_WIDGET(widget)) ? boolean__true : boolean__false;
     gdk_threads_leave();
   }
   return visible;
@@ -1171,7 +1171,7 @@ f2ptr raw__gtk__widget__get_visible(f2ptr cause, f2ptr widget) {
 #endif
 }
 
-void f2__gtk__widget__get_visible(f2ptr cause, f2ptr widget) {
+f2ptr f2__gtk__widget__get_visible(f2ptr cause, f2ptr widget) {
   if (! raw__gtk_widget__is_type(cause, widget)) {
     return f2larva__new(cause, 1, nil);
   }
@@ -1183,7 +1183,8 @@ def_pcfunk1(gtk__widget__get_visible, widget, return f2__gtk__widget__get_visibl
 f2ptr raw__gtk__widget__destroy(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
   GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  return f2bool__new(funk2_gtk__widget__destroy(&(__funk2.gtk), gtk_widget));
+  funk2_gtk__widget__destroy(&(__funk2.gtk), gtk_widget);
+  return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif

@@ -106,11 +106,12 @@ f2ptr f2__stringlist__rawcode(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(stringlist__rawcode, this, return f2__stringlist__rawcode(this_cause, this));
 
+
 f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash) {
   if (! raw__ptypehash__is_type(cause, element_hash)) {
     return f2larva__new(cause, 1, nil);
   }
-  if (raw__ptypehash__contains(cause, element_hash, exp)) {
+  if (raw__array__is_type(cause, exp) && raw__ptypehash__contains(cause, element_hash, exp)) {
     return new__string(cause, "<>");
   }
   f2__ptypehash__add(cause, element_hash, exp, exp);

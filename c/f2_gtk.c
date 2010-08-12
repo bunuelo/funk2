@@ -362,7 +362,6 @@ GtkWidget* funk2_gtk__window__new(funk2_gtk_t* this) {
   {
     gdk_threads_enter();
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_widget_connect_hide_on_delete(window);
     gdk_threads_leave();
   }
   return window;

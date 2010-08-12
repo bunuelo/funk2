@@ -24,7 +24,7 @@
 
 typedef struct funk2_scheduler_thread_controller_s {
   boolean_t               please_wait;
-  u64                     waiting_count;
+  s64                     waiting_count;
   funk2_processor_mutex_t waiting_count_mutex;
 } funk2_scheduler_thread_controller_t;
 

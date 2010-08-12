@@ -33,8 +33,17 @@ void funk2_scheduler_thread_controller__destroy(funk2_scheduler_thread_controlle
 
 void funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(funk2_scheduler_thread_controller_t* this) {
   this->please_wait = boolean__true;
-  while (this->waiting_count < memory_pool_num) {
+  funk2_processor_mutex__lock(&(this->waiting_count_mutex));
+  s64 waiting_count = this->waiting_count;
+  if (waiting_count < 0 || waiting_count > memory_pool_num) {
+    error(nil, "funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait error: waiting_count is out of range (" s64__fstr ").", waiting_count);
+  }
+  funk2_processor_mutex__unlock(&(this->waiting_count_mutex));
+  while (waiting_count < memory_pool_num) {
     raw__fast_spin_sleep_yield();
+    funk2_processor_mutex__lock(&(this->waiting_count_mutex));
+    waiting_count = this->waiting_count;
+    funk2_processor_mutex__unlock(&(this->waiting_count_mutex));
   }
 }
 

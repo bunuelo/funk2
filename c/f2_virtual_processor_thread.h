@@ -24,9 +24,9 @@
 
 typedef struct funk2_processor_thread_array_s funk2_processor_thread_array_t;
 struct funk2_processor_thread_array_s {
-  u64                       alloc_length;
-  u64                       length;
-  funk2_processor_thread_t* array;
+  u64                        alloc_length;
+  u64                        length;
+  funk2_processor_thread_t** array;
 };
 
 void funk2_processor_thread_array__init(   funk2_processor_thread_array_t* this);

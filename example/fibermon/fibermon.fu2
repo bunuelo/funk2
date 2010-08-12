@@ -186,6 +186,7 @@
 	  
 	  [have scrolled_window add_with_viewport processor_hbox]
 	  
+	  [have win connect_hide_on_delete]
 	  [have win add scrolled_window]
 	  
 	  [have win signal_connect 'destroy'
@@ -204,8 +205,11 @@
 			 [mapc [funk [redraw_funk]
 				     [apply redraw_funk nil]]
 			       redraw_funks]
+			 [if [not [get win visible]]
+			     [= fibermon-redraw-quit_now t]]
 			 [yield]]
 		       [= fibermon-redraw-is_done t]
+		       [have win destroy]
 		       nil]
 		 nil]
 	  

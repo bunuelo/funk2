@@ -36,9 +36,9 @@ struct funk2_hash_bin_node_s {
 
 typedef struct funk2_hash_s funk2_hash_t;
 struct funk2_hash_s {
-  u64                         key_count;
-  u64                         bin_num_power;
-  funk2_hash_keyvalue_pair_t* bin_array;
+  u64                          key_count;
+  u64                          bin_num_power;
+  funk2_hash_keyvalue_pair_t** bin_array;
 };
 
 u64                         funk2_hash__bin_count(funk2_hash_t* this);

@@ -21,8 +21,8 @@
 
 #include "funk2.h"
 
-void funk2_virtual_processor_thread_handler__init(funk2_virtual_processor_thread_handler_t* this, u64 virtual_processor_thread_count) {
-  status("initializing virtual_processor_thread_handler with " u64__fstr " virtual processor threads.", virtual_processor_thread_count);
+void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* this, u64 virtual_processor_thread_count) {
+  status("initializing virtual_processor_handler with " u64__fstr " virtual processor threads.", virtual_processor_thread_count);
   this->virtual_processor_thread_count = virtual_processor_thread_count;
   this->virtual_processor_thread       = (funk2_virtual_processor_thread_t**)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_t*) * virtual_processor_thread_count));
   {
@@ -36,8 +36,8 @@ void funk2_virtual_processor_thread_handler__init(funk2_virtual_processor_thread
 }
 
 
-void funk2_virtual_processor_thread_handler__destroy(funk2_virtual_processor_thread_handler_t* this) {
-  status("destroying virtual_processor_thread_handler.");
+void funk2_virtual_processor_handler__destroy(funk2_virtual_processor_handler_t* this) {
+  status("destroying virtual_processor_handler.");
   {
     s64 index;
     for (index = 0; index < this->virtual_processor_thread_count; index ++) {

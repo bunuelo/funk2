@@ -19,8 +19,8 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__VIRTUAL_PROCESSOR_THREAD__H
-#define F2__VIRTUAL_PROCESSOR_THREAD__H
+#ifndef F2__VIRTUAL_PROCESSOR__H
+#define F2__VIRTUAL_PROCESSOR__H
 
 typedef struct funk2_processor_thread_array_s funk2_processor_thread_array_t;
 struct funk2_processor_thread_array_s {
@@ -33,13 +33,13 @@ void funk2_processor_thread_array__init(   funk2_processor_thread_array_t* this)
 void funk2_processor_thread_array__destroy(funk2_processor_thread_array_t* this);
 
 
-typedef struct funk2_virtual_processor_thread_s funk2_virtual_processor_thread_t;
-struct funk2_virtual_processor_thread_s {
+typedef struct funk2_virtual_processor_s funk2_virtual_processor_t;
+struct funk2_virtual_processor_s {
   funk2_processor_thread_array_t processor_thread_array;
 };
 
-void funk2_virtual_processor_thread__init(   funk2_virtual_processor_thread_t* this);
-void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* this);
+void funk2_virtual_processor__init(   funk2_virtual_processor_t* this);
+void funk2_virtual_processor__destroy(funk2_virtual_processor_t* this);
 
-#endif // F2__VIRTUAL_PROCESSOR_THREAD__H
+#endif // F2__VIRTUAL_PROCESSOR__H
 

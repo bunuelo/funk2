@@ -34,13 +34,13 @@ void funk2_processor_thread_array__destroy(funk2_processor_thread_array_t* this)
 }
 
 
-// funk2_virtual_processor_thread
+// funk2_virtual_processor
 
-void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this) {
+void funk2_virtual_processor__init(funk2_virtual_processor_t* this) {
   funk2_processor_thread_array__init(&(this->processor_thread_array));
 }
 
-void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* this) {
+void funk2_virtual_processor__destroy(funk2_virtual_processor_t* this) {
   funk2_processor_thread_array__destroy(&(this->processor_thread_array));
 }
 

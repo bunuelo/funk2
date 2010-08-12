@@ -130,8 +130,8 @@
 #include "f2_time.h"
 #include "f2_trace.h"
 #include "f2_user_thread_controller.h"
-#include "f2_virtual_processor_thread.h"
-#include "f2_virtual_processor_thread_handler.h"
+#include "f2_virtual_processor.h"
+#include "f2_virtual_processor_handler.h"
 #include "f2_xmlrpc.h"
 #include "f2_zlib.h"
 
@@ -141,53 +141,53 @@ void f2__destroy();
 #define raw_executable__to__relative_ptr(x) (to_ptr(x) - __funk2.funk2_main_code_position)
 
 typedef struct funk2_s {
-  ptr                                      funk2_main_code_position;
-  boolean_t                                exit_now;
-  node_id_t                                node_id;
-  event_id_t                               event_id;
-  funk2_processor_mutex_t                  event_id_mutex;
+  ptr                                 funk2_main_code_position;
+  boolean_t                           exit_now;
+  node_id_t                           node_id;
+  event_id_t                          event_id;
+  funk2_processor_mutex_t             event_id_mutex;
   // global variables in other source files
-  funk2_module_registration_t              module_registration;
-  funk2_command_line_t                     command_line;
-  funk2_memory_t                           memory;
-  funk2_globalenv_t                        globalenv;
-  funk2_compile_t                          compile;
-  funk2_operating_system_t                 operating_system;
-  funk2_thought_process_t                  thought_process;
-  funk2_bytecode_t                         bytecode;
-  funk2_peer_command_server_t              peer_command_server;
-  funk2_node_handler_t                     node_handler;
-  funk2_status_t                           status;
-  funk2_locale_t                           locale;
-  funk2_processor_thread_handler_t         processor_thread_handler;
-  funk2_primobject_type_handler_t          primobject_type_handler;
-  funk2_primobject__frame_t                primobject__frame;
-  funk2_primobject__environment_t          primobject__environment;
-  funk2_scheduler_thread_controller_t      scheduler_thread_controller;
-  funk2_management_thread_t                management_thread;
-  funk2_garbage_collector_t                garbage_collector;
-  funk2_user_thread_controller_t           user_thread_controller;
-  funk2_ptypes_t                           ptypes;
-  funk2_reader_t                           reader;
-  funk2_opengl_t                           opengl;
-  funk2_openglu_t                          openglu;
-  funk2_xxf86vm_t                          xxf86vm;
-  funk2_xlib_t                             xlib;
+  funk2_module_registration_t         module_registration;
+  funk2_command_line_t                command_line;
+  funk2_memory_t                      memory;
+  funk2_globalenv_t                   globalenv;
+  funk2_compile_t                     compile;
+  funk2_operating_system_t            operating_system;
+  funk2_thought_process_t             thought_process;
+  funk2_bytecode_t                    bytecode;
+  funk2_peer_command_server_t         peer_command_server;
+  funk2_node_handler_t                node_handler;
+  funk2_status_t                      status;
+  funk2_locale_t                      locale;
+  funk2_processor_thread_handler_t    processor_thread_handler;
+  funk2_primobject_type_handler_t     primobject_type_handler;
+  funk2_primobject__frame_t           primobject__frame;
+  funk2_primobject__environment_t     primobject__environment;
+  funk2_scheduler_thread_controller_t scheduler_thread_controller;
+  funk2_management_thread_t           management_thread;
+  funk2_garbage_collector_t           garbage_collector;
+  funk2_user_thread_controller_t      user_thread_controller;
+  funk2_ptypes_t                      ptypes;
+  funk2_reader_t                      reader;
+  funk2_opengl_t                      opengl;
+  funk2_openglu_t                     openglu;
+  funk2_xxf86vm_t                     xxf86vm;
+  funk2_xlib_t                        xlib;
 #if defined(F2__GLWINDOW__H)
-  funk2_glwindow_t                         glwindow;
+  funk2_glwindow_t                    glwindow;
 #endif
-  funk2_cpu_t                              cpu;
-  funk2_primes_t                           primes;
-  funk2_object_t                           object;
-  funk2_number_globalvars_t                number_globalvars;
-  funk2_surrogate_parent_t                 surrogate_parent;
-  funk2_graph_t                            graph;
-  funk2_xmlrpc_t                           xmlrpc;
-  funk2_trace_t                            trace;
+  funk2_cpu_t                         cpu;
+  funk2_primes_t                      primes;
+  funk2_object_t                      object;
+  funk2_number_globalvars_t           number_globalvars;
+  funk2_surrogate_parent_t            surrogate_parent;
+  funk2_graph_t                       graph;
+  funk2_xmlrpc_t                      xmlrpc;
+  funk2_trace_t                       trace;
 #if defined(F2__GTK__SUPPORTED)
-  funk2_gtk_t                              gtk;
+  funk2_gtk_t                         gtk;
 #endif
-  funk2_virtual_processor_thread_handler_t virtual_processor_thread_handler;
+  funk2_virtual_processor_handler_t   virtual_processor_thread_handler;
 } funk2_t;
 
 void      funk2__init(   funk2_t* this, int argc, char** argv);

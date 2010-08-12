@@ -259,7 +259,7 @@ void funk2_gtk__expose_event__signal_connect(funk2_gtk_t* this, GtkWidget* widge
 void funk2_gtk__widget__show_all(funk2_gtk_t* this, GtkWidget* widget) {
   {
     gdk_threads_enter();
-    gtk_widget_show_all(widget);
+    gtk_widget_show_all(GTK_WIDGET(widget));
     gdk_threads_leave();
   }
 }
@@ -267,7 +267,7 @@ void funk2_gtk__widget__show_all(funk2_gtk_t* this, GtkWidget* widget) {
 void funk2_gtk__widget__set_size_request(funk2_gtk_t* this, GtkWidget* widget, s64 width, s64 height) {
   {
     gdk_threads_enter();
-    gtk_widget_set_size_request(widget, width, height);
+    gtk_widget_set_size_request(GTK_WIDGET(widget), width, height);
     gdk_threads_leave();
   }
 }
@@ -275,7 +275,7 @@ void funk2_gtk__widget__set_size_request(funk2_gtk_t* this, GtkWidget* widget, s
 void funk2_gtk__widget__queue_draw_area(funk2_gtk_t* this, GtkWidget* widget, s64 x, s64 y, s64 width, s64 height) {
   {
     gdk_threads_enter();
-    gtk_widget_queue_draw_area(widget, x, y, width, height);
+    gtk_widget_queue_draw_area(GTK_WIDGET(widget), x, y, width, height);
     gdk_threads_leave();
   }
 }
@@ -293,11 +293,18 @@ boolean_t funk2_gtk__widget__get_visible(funk2_gtk_t* this, GtkWidget* widget) {
 void funk2_gtk__widget__destroy(funk2_gtk_t* this, GtkWidget* widget) {
   {
     gdk_threads_enter();
-    gtk_widget_destroy(widget);
+    gtk_widget_destroy(GTK_WIDGET(widget));
     gdk_threads_leave();
   }
 }
 
+void funk2_gtk__widget__hide_on_delete(funk2_gtk_t* this, GtkWidget* widget) {
+  {
+    gdk_threads_enter();
+    gtk_widget_hide_on_delete(widget);
+    gdk_threads_leave();
+  }
+}
 
 
 // GtkWidget.GdkWindow ? widget draw functions...
@@ -1199,6 +1206,25 @@ f2ptr f2__gtk__widget__destroy(f2ptr cause, f2ptr widget) {
 def_pcfunk1(gtk__widget__destroy, widget, return f2__gtk__widget__destroy(this_cause, widget));
 
 
+f2ptr raw__gtk__widget__hide_on_delete(f2ptr cause, f2ptr widget) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+  funk2_gtk__widget__hide_on_delete(&(__funk2.gtk), gtk_widget);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__widget__hide_on_delete(f2ptr cause, f2ptr widget) {
+  if (! raw__gtk_widget__is_type(cause, widget)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__widget__hide_on_delete(cause, widget);
+}
+def_pcfunk1(gtk__widget__hide_on_delete, widget, return f2__gtk__widget__hide_on_delete(this_cause, widget));
+
+
 // beginning of GtkWidget drawing fuctions, which are not really GtkWidget functions in the GTK library.
 
 f2ptr raw__gtk__widget__queue_draw_area(f2ptr cause, f2ptr widget, f2ptr x, f2ptr y, f2ptr width, f2ptr height) {
@@ -2073,6 +2099,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__5(gtk__widget__queue_draw_area,            widget, x, y, width, height,                         "Requests that a specific rectangle of the widget be redrawn.");
   f2__primcfunk__init__1(gtk__widget__get_visible,                widget,                                              "Returns whether or not a window is visible, which does not mean the window is viewable, which wouold require all parents to also be visible.");
   f2__primcfunk__init__1(gtk__widget__destroy,                    widget,                                              "Destroys the widget.");
+  f2__primcfunk__init__1(gtk__widget__hide_on_delete,             widget,                                              "Add a delete-event callback handler to the widget that hides the window rather than destroying the window.");
   f2__primcfunk__init__8(gtk__widget__draw_arc,                   widget, filled, x, y, width, height, angle1, angle2, "Draws an arc in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
   f2__primcfunk__init__6(gtk__widget__draw_rectangle,             widget, filled, x, y, width, height,                 "Draws a rectangle in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
   f2__primcfunk__init__0(gtk__window__new,                                                                             "Returns a new window widget.");
@@ -2087,7 +2114,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__2(gtk__scrolled_window__add_with_viewport, scrolled_window, child,                              "Adds a non-scrollable widget to a scroll window.");
   f2__primcfunk__init__0(gtk__text_view__new,                                                                          "Returns a new text_view widget.");
   f2__primcfunk__init__1(gtk__text_view__get_buffer,              text_view,                                           "Returns the buffer widget of a text_view widget.");
-
+  
   f2__primcfunk__init__2(gtk__container__add,                     widget, add_widget,                                  "Adds a widget to a container.");
   f2__primcfunk__init__5(gtk__box__pack_start,                    widget, child_widget, expand, fill, padding,         "Packs a child widget in a box.");
   f2__primcfunk__init__4(gtk__signal_connect,                     widget, signal_name, funk, args,                     "Creates a callback for a widget (see gtk-pop_callback_event).");

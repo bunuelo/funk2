@@ -31,6 +31,7 @@
 [globalize-funk gtk-widget-queue_draw_area            &primfunk:gtk__widget__queue_draw_area]
 [globalize-funk gtk-widget-get_visible                &primfunk:gtk__widget__get_visible]
 [globalize-funk gtk-widget-destroy                    &primfunk:gtk__widget__destroy]
+[globalize-funk gtk-widget-hide_on_delete             &primfunk:gtk__widget__hide_on_delete]
 [globalize-funk gtk-widget-draw_arc                   &primfunk:gtk__widget__draw_arc]
 [globalize-funk gtk-widget-draw_rectangle             &primfunk:gtk__widget__draw_rectangle]
 [globalize-funk gtk-misc-set_alignment                &primfunk:gtk__misc__set_alignment]

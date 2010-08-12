@@ -1190,7 +1190,7 @@ f2ptr raw__gtk__widget__destroy(f2ptr cause, f2ptr widget) {
 #endif
 }
 
-void f2__gtk__widget__destroy(f2ptr cause, f2ptr widget) {
+f2ptr f2__gtk__widget__destroy(f2ptr cause, f2ptr widget) {
   if (! raw__gtk_widget__is_type(cause, widget)) {
     return f2larva__new(cause, 1, nil);
   }

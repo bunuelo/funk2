@@ -37,4 +37,3 @@ void funk2_scheduler_thread_controller__check_user_wait_politely(funk2_scheduler
 
 #endif // F2__SCHEDULER_THREAD_CONTROLLER__H
 
-

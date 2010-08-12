@@ -68,7 +68,7 @@ void funk2_hash__add(funk2_hash_t* this, u64 key, u64 value) {
     keyvalue_pair->key                  = key;
     keyvalue_pair->value                = value;
     new_bin_node->next                  = this->bin_array[index];
-    bin_array[index] = new_bin_node;
+    this->bin_array[index] = new_bin_node;
     { // increase key count only if didn't already have this key.
       this->key_count ++;
       //

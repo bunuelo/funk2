@@ -323,7 +323,7 @@
 						       [millisleep 100]]]
 					       nil]
 					 
-					 [have win hide_on_delete]
+					 [have win connect_hide_on_delete]
 					 [have win show_all]
 					 
 					 [while [not mindmon-redraw-quit_now]

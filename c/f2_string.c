@@ -246,7 +246,7 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
 	f2ptr stringlist_iter = nil;
 	frame__var__iteration(cause, exp, slot_name, slot_value,
 			      {
-				f2ptr new_cons = f2cons__new(cause, f2__exp__as__string(cause, slot_name, element_hash), nil);
+				f2ptr new_cons = f2cons__new(cause, f2__exp__as__string__with_hash(cause, slot_name, element_hash), nil);
 				if (stringlist_iter) {
 				  f2__cons__cdr__set(cause, stringlist_iter, new_cons);
 				} else {
@@ -255,7 +255,7 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
 				stringlist_iter = new_cons;
 			      }
 			      {
-				f2ptr new_cons = f2cons__new(cause, f2__exp__as__string(cause, slot_value, element_hash), nil);
+				f2ptr new_cons = f2cons__new(cause, f2__exp__as__string__with_hash(cause, slot_value, element_hash), nil);
 				if (stringlist_iter) {
 				  f2__cons__cdr__set(cause, stringlist_iter, new_cons);
 				} else {
@@ -272,7 +272,7 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
 							new__string(cause, "]")));
     } else if (raw__list__is_type(cause, exp)) {
       f2ptr cons_cells = f2__list__cons_cells(cause, exp);
-      return f2__exp__as__string(cause, cons_cells, element_hash);
+      return f2__exp__as__string__with_hash(cause, cons_cells, element_hash);
     } else {
       char temp_str[1024];
       snprintf(temp_str, 1024, "<array " pointer__fstr ">", to_ptr(exp));

@@ -241,6 +241,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_frame_objects.c \
   c/f2_funk2_node.c \
   c/f2_funktional.c \
+  c/f2_hash.c \
   c/f2_html.c \
   c/f2_load.c \
   c/f2_malloc.c \

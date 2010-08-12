@@ -58,6 +58,7 @@
 #include "f2_graph_match_error_correcting.h"
 #include "f2_graphviz.h"
 #include "f2_gtk.h"
+#include "f2_hash.h"
 #include "f2_html.h"
 #include "f2_load.h"
 #include "f2_malloc.h"

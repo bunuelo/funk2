@@ -30,6 +30,7 @@ void funk2_virtual_processor_thread_handler__init(funk2_virtual_processor_thread
     for (index = 0; index < virtual_processor_thread_count; index ++) {
       funk2_virtual_processor_thread_t* virtual_processor_thread = (funk2_virtual_processor_thread_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_t)));
       funk2_virtual_processor_thread__init(virtual_processor_thread);
+      this->virtual_processor_thread[index] = virtual_processor_thread;
     }
   }
 }

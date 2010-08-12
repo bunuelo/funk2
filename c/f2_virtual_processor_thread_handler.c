@@ -39,7 +39,7 @@ void funk2_virtual_processor_thread_handler__destroy(funk2_virtual_processor_thr
   status("destroying virtual_processor_thread_handler.");
   {
     s64 index;
-    for (index = 0; index < virtual_processor_thread_count; index ++) {
+    for (index = 0; index < this->virtual_processor_thread_count; index ++) {
       funk2_virtual_processor_thread__destroy(this->virtual_processor_thread[index]);
     }
   }

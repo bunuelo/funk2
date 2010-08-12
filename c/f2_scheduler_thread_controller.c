@@ -36,7 +36,7 @@ void funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(funk2
   funk2_processor_mutex__lock(&(this->waiting_count_mutex));
   s64 waiting_count = this->waiting_count;
   if (waiting_count < 0 || waiting_count > memory_pool_num) {
-    error(nil, "funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait error: waiting_count is out of range (" s64__fstr ").", waiting_count);
+    error(nil, "funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait error: waiting_count is out of range.");
   }
   funk2_processor_mutex__unlock(&(this->waiting_count_mutex));
   while (waiting_count < memory_pool_num) {

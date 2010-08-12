@@ -106,7 +106,13 @@ f2ptr f2__stringlist__rawcode(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(stringlist__rawcode, this, return f2__stringlist__rawcode(this_cause, this));
 
-f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
+f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash) {
+  if (! raw__ptypehash__is_type(cause, element_hash)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  if (raw__ptypehash__contains(cause, element_hash, exp)) {
+    return new__string(cause, "<>");
+  }
   if (! exp) {
     return new__string(cause, "[]");
   }
@@ -220,7 +226,7 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
 	f2ptr iter            = exp;
 	while (iter) {
 	  f2ptr element = f2__cons__car(cause, iter);
-	  f2ptr new_cons = f2cons__new(cause, f2__exp__as__string(cause, element), nil);
+	  f2ptr new_cons = f2cons__new(cause, f2__exp__as__string__with_hash(cause, element, element_hash), nil);
 	  if (stringlist_iter) {
 	    f2__cons__cdr__set(cause, stringlist_iter, new_cons);
 	  } else {
@@ -240,7 +246,7 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
 	f2ptr stringlist_iter = nil;
 	frame__var__iteration(cause, exp, slot_name, slot_value,
 			      {
-				f2ptr new_cons = f2cons__new(cause, f2__exp__as__string(cause, slot_name), nil);
+				f2ptr new_cons = f2cons__new(cause, f2__exp__as__string(cause, slot_name, element_hash), nil);
 				if (stringlist_iter) {
 				  f2__cons__cdr__set(cause, stringlist_iter, new_cons);
 				} else {
@@ -249,7 +255,7 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
 				stringlist_iter = new_cons;
 			      }
 			      {
-				f2ptr new_cons = f2cons__new(cause, f2__exp__as__string(cause, slot_value), nil);
+				f2ptr new_cons = f2cons__new(cause, f2__exp__as__string(cause, slot_value, element_hash), nil);
 				if (stringlist_iter) {
 				  f2__cons__cdr__set(cause, stringlist_iter, new_cons);
 				} else {
@@ -266,7 +272,7 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
 							new__string(cause, "]")));
     } else if (raw__list__is_type(cause, exp)) {
       f2ptr cons_cells = f2__list__cons_cells(cause, exp);
-      return f2__exp__as__string(cause, cons_cells);
+      return f2__exp__as__string(cause, cons_cells, element_hash);
     } else {
       char temp_str[1024];
       snprintf(temp_str, 1024, "<array " pointer__fstr ">", to_ptr(exp));
@@ -281,6 +287,10 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
   } break;
   }
   return f2larva__new(cause, 1, nil);
+}
+
+f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
+  return f2__exp__as__string__with_hash(this_cause, exp, f2__ptypehash__new(cause));
 }
 def_pcfunk1(exp__as__string, exp, return f2__exp__as__string(this_cause, exp));
 

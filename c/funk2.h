@@ -187,7 +187,7 @@ typedef struct funk2_s {
 #if defined(F2__GTK__SUPPORTED)
   funk2_gtk_t                         gtk;
 #endif
-  funk2_virtual_processor_handler_t   virtual_processor_thread_handler;
+  funk2_virtual_processor_handler_t   virtual_processor_handler;
 } funk2_t;
 
 void      funk2__init(   funk2_t* this, int argc, char** argv);

@@ -133,6 +133,7 @@
 #include "f2_user_thread_controller.h"
 #include "f2_virtual_processor.h"
 #include "f2_virtual_processor_handler.h"
+#include "f2_virtual_processor_thread.h"
 #include "f2_xmlrpc.h"
 #include "f2_zlib.h"
 

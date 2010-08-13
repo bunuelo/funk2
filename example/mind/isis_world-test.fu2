@@ -1,3 +1,4 @@
+
 'Copyright (c) 2007-2010 Bo Morgan.
  All rights reserved.
  
@@ -85,7 +86,18 @@
 			 [have this think_to_self 'While propogating sense->story, I created this story: ' [get story as-list] '.']
 			 story]]]]
       ]
- [mind-create_resource mind reactive physical turn_right [ steps]
+    [mind-create_resource mind reactive physical funk_user []
+			  [if [null resource]
+			      [sleep 1]
+			    [if [null args]
+				[mind-activate [get this mind] reactive physical resource]
+			      [have-apply [mind-activate [get this mind] reactive physical resource @args]]]]
+			  ]
+
+
+
+
+    [mind-create_resource mind reactive physical turn_right [ steps]
 			  [format stdout '\n  turn_right']
 			  [let [[starting_time [get body time_step]]]			
 			    [isis-call [get [get this world] client] turn_right-start agent [get this name]]
@@ -189,7 +201,7 @@
 			   [have this think_to_self 'center_body_on_object activated']
 			   [deftypefunk isis_agent execute turn_left_and_right []
 			     [while [null [get this sense]] 
-     [millisleep 100]]
+			       [millisleep 100]]
 			     [if [get this objects]
 				 [if [have [get this objects] lookup desired_object] 
 				     [let [[x_pos [have [have [get this objects] lookup desired_object] lookup `x_pos]]]
@@ -578,6 +590,7 @@ why does it randomly exit the while loop/??'
       [mind-activate [get isis_world agent_mind `Lauren] reactive     speech  say                                              'Bad Ralph!']
       [mind-activate [get isis_world agent_mind `Lauren] deliberative reality include_reactive_stories_into_deliberative_story]
       [mind-activate [get isis_world agent_mind `Lauren] reactive     sensory continuous_sensing]
+      [mind-activate [get isis_world agent_mind `Lauren] reactive     speech  funk_user]
       
       [mind-activate [get isis_world agent_mind `Ralph]  deliberative reality include_reactive_stories_into_deliberative_story]
       [mind-activate [get isis_world agent_mind `Ralph]  reactive     sensory continuous_sensing]

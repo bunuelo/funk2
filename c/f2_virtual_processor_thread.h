@@ -24,14 +24,12 @@
 
 typedef struct funk2_virtual_processor_thread_s funk2_virtual_processor_thread_t;
 struct funk2_virtual_processor_thread_s {
-  funk2_processor_mutex_t                   command_mutex;
-  boolean_t                                 command_ready;
-  funk2_processor_thread_function_pointer_t command_start_function;
-  void*                                     command_args;
-  funk2_processor_thread_t*                 processor_thread;
+  u64                      virtual_processor_assignment_index;
+  funk2_processor_thread_t processor_thread;
 };
 
-
+void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this);
+void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* this);
 
 #endif // F2__VIRTUAL_PROCESSOR_THREAD__H
 

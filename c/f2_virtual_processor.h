@@ -35,10 +35,12 @@ void funk2_processor_thread_array__destroy(funk2_processor_thread_array_t* this)
 
 typedef struct funk2_virtual_processor_s funk2_virtual_processor_t;
 struct funk2_virtual_processor_s {
+  u64                            index;
+  u64                            current_processor_thread_index;
   funk2_processor_thread_array_t processor_thread_array;
 };
 
-void funk2_virtual_processor__init(   funk2_virtual_processor_t* this);
+void funk2_virtual_processor__init(   funk2_virtual_processor_t* this, u64 index);
 void funk2_virtual_processor__destroy(funk2_virtual_processor_t* this);
 
 #endif // F2__VIRTUAL_PROCESSOR__H

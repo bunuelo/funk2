@@ -29,7 +29,7 @@ void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* th
     s64 index;
     for (index = 0; index < virtual_processor_count; index ++) {
       funk2_virtual_processor_t* virtual_processor = (funk2_virtual_processor_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_t)));
-      funk2_virtual_processor__init(virtual_processor);
+      funk2_virtual_processor__init(virtual_processor, index);
       this->virtual_processor[index] = virtual_processor;
     }
   }
@@ -63,6 +63,12 @@ void funk2_virtual_processor_handler__destroy(funk2_virtual_processor_handler_t*
 //void funk2_virtual_processor_handler__yield(funk2_virtual_processor_handler_t* this) {
 //}
 
+
+funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__my_virtual_processor_thread(funk2_virtual_processor_handler_t* this) {
+  funk2_processor_thread_t*         processor_thread         = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
+  funk2_virtual_processor_thread_t* virtual_processor_thread = funk2_hash__lookup(this->index_processor_thread_hash, (u64)processor_thread);
+  return virtual_processor_thread;
+}
 
 //u64 funk2_virtual_processor_handler__myself(funk2_virtual_processor_handler_t* this) {
 //  funk2_processor_thread_t*  processor_thread  = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));

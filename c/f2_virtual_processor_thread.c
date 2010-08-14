@@ -21,3 +21,20 @@
 
 #include "funk2.h"
 
+void* funk2_virtual_processor_thread__start_function(void* args) {
+  funk2_virtual_processor_thread_t* this = (funk2_virtual_processor_thread_t*)args;
+  while(1) {
+    raw__spin_sleep_yield();
+  }
+  return NULL;
+}
+
+void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this) {
+  this->virtual_processor_assignment_index = -1;
+  funk2_processor_thread__init(&(this->processor_thread), funk2_virtual_processor_thread__start_function, this);
+}
+
+void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* this) {
+  funk2_processor_thread__destroy(&(this->processor_thread));
+}
+

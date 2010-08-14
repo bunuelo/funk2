@@ -70,9 +70,10 @@ void funk2_processor_thread_array__remove(funk2_processor_thread_array_t* this, 
 
 // funk2_virtual_processor
 
-void funk2_virtual_processor__init(funk2_virtual_processor_t* this) {
-  funk2_processor_thread_array__init(&(this->processor_thread_array));
+void funk2_virtual_processor__init(funk2_virtual_processor_t* this, u64 index) {
+  this->index                          = index;
   this->current_processor_thread_index = 0;
+  funk2_processor_thread_array__init(&(this->processor_thread_array));
   // start one virtual processor thread.
   funk2_virtual_processor__add_new_virtual_processor_thread(this);
 }

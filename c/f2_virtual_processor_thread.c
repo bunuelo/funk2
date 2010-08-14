@@ -31,7 +31,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 
 void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this) {
   this->virtual_processor_assignment_index = -1;
-  funk2_processor_thread__init(&(this->processor_thread), funk2_virtual_processor_thread__start_function, this);
+  funk2_processor_thread__init(&(this->processor_thread), -1, funk2_virtual_processor_thread__start_function, this);
 }
 
 void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* this) {

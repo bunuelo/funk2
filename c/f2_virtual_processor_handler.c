@@ -64,11 +64,11 @@ void funk2_virtual_processor_handler__destroy(funk2_virtual_processor_handler_t*
 //}
 
 
-funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__my_virtual_processor_thread(funk2_virtual_processor_handler_t* this) {
-  funk2_processor_thread_t*         processor_thread         = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
-  funk2_virtual_processor_thread_t* virtual_processor_thread = funk2_hash__lookup(this->index_processor_thread_hash, (u64)processor_thread);
-  return virtual_processor_thread;
-}
+//funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__my_virtual_processor_thread(funk2_virtual_processor_handler_t* this) {
+//  funk2_processor_thread_t*         processor_thread         = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
+//  funk2_virtual_processor_thread_t* virtual_processor_thread = funk2_hash__lookup(this->index_processor_thread_hash, (u64)processor_thread);
+//  return virtual_processor_thread;
+//}
 
 //u64 funk2_virtual_processor_handler__myself(funk2_virtual_processor_handler_t* this) {
 //  funk2_processor_thread_t*  processor_thread  = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));

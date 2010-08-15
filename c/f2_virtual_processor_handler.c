@@ -21,6 +21,8 @@
 
 #include "funk2.h"
 
+// funk2_virtual_processor_handler
+
 void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* this, u64 virtual_processor_count) {
   status("initializing virtual_processor_handler with " u64__fstr " virtual processor threads.", virtual_processor_count);
   this->virtual_processor_count = virtual_processor_count;

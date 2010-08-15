@@ -561,7 +561,13 @@ void f2__scheduler__initialize() {
 }
 
 void f2__scheduler__destroy() {
+#if defined(F2__USE_VIRTUAL_PROCESSORS)
+
+#else // not F2__USE_VIRTUAL_PROCESSORS
+
   f2__scheduler__stop_processors();
+
+#endif // F2__USE_VIRTUAL_PROCESSORS
 }
 
 

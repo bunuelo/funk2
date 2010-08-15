@@ -19,10 +19,19 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__VIRTUAL_PROCESSOR__TYPES__H
+#define F2__VIRTUAL_PROCESSOR__TYPES__H
+
+typedef struct funk2_processor_thread_array_s funk2_processor_thread_array_t;
+typedef struct funk2_virtual_processor_s funk2_virtual_processor_t;
+
+#endif // F2__VIRTUAL_PROCESSOR__TYPES__H
+
 #ifndef F2__VIRTUAL_PROCESSOR__H
 #define F2__VIRTUAL_PROCESSOR__H
 
-typedef struct funk2_processor_thread_array_s funk2_processor_thread_array_t;
+// processor_thread_array
+
 struct funk2_processor_thread_array_s {
   u64                        alloc_length;
   u64                        length;
@@ -33,7 +42,8 @@ void funk2_processor_thread_array__init(   funk2_processor_thread_array_t* this)
 void funk2_processor_thread_array__destroy(funk2_processor_thread_array_t* this);
 
 
-typedef struct funk2_virtual_processor_s funk2_virtual_processor_t;
+// virtual_processor
+
 struct funk2_virtual_processor_s {
   u64                               index;
   //funk2_processor_thread_array_t    processor_thread_array;

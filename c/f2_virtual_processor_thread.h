@@ -19,10 +19,16 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__VIRTUAL_PROCESSOR_THREAD__TYPES__H
+#define F2__VIRTUAL_PROCESSOR_THREAD__TYPES__H
+
+typedef struct funk2_virtual_processor_thread_s funk2_virtual_processor_thread_t;
+
+#endif // F2__VIRTUAL_PROCESSOR_THREAD__TYPES__H
+
 #ifndef F2__VIRTUAL_PROCESSOR_THREAD__H
 #define F2__VIRTUAL_PROCESSOR_THREAD__H
 
-typedef struct funk2_virtual_processor_thread_s funk2_virtual_processor_thread_t;
 struct funk2_virtual_processor_thread_s {
   funk2_processor_mutex_t  assignment_mutex;
   u64                      virtual_processor_assignment_index;

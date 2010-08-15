@@ -19,19 +19,25 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__VIRTUAL_PROCESSOR_HANDLER__TYPES__H
+#define F2__VIRTUAL_PROCESSOR_HANDLER__TYPES__H
+
+typedef struct funk2_virtual_processor_thread_cons_s funk2_virtual_processor_thread_cons_t;
+typedef struct funk2_virtual_processor_handler_s     funk2_virtual_processor_handler_t;
+
+#endif // F2__VIRTUAL_PROCESSOR_HANDLER__TYPES__H
+
 #ifndef F2__VIRTUAL_PROCESSOR_HANDLER__H
 #define F2__VIRTUAL_PROCESSOR_HANDLER__H
 
 #include "f2_virtual_processor.h"
 #include "f2_virtual_processor_thread.h"
 
-typedef struct funk2_virtual_processor_thread_cons_s funk2_virtual_processor_thread_cons_t;
 struct funk2_virtual_processor_thread_cons_s {
   funk2_virtual_processor_thread_t*             virtual_processor_thread;
   struct funk2_virtual_processor_thread_cons_s* next;
 };
 
-typedef struct funk2_virtual_processor_handler_s funk2_virtual_processor_handler_t;
 struct funk2_virtual_processor_handler_s {
   u64                                    virtual_processor_count;
   funk2_virtual_processor_t**            virtual_processor;

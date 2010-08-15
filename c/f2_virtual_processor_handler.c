@@ -25,6 +25,11 @@
 
 void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* this, u64 virtual_processor_count) {
   status("initializing virtual_processor_handler with " u64__fstr " virtual processor threads.", virtual_processor_count);
+  funk2_processor_mutex__init(&(this->virtual_processor_index_processor_thread_hash_mutex));
+  funk2_hash__init(&(this->virtual_processor_index_processor_thread_hash), 10);
+  this->free_processor_threads = NULL;
+  funk2_processor_mutex__init(&(this->virtual_processor_thread_processor_thread_hash_mutex));
+  funk2_hash__init(&(this->virtual_processor_thread_processor_thread_hash), 10);
   this->virtual_processor_count = virtual_processor_count;
   this->virtual_processor       = (funk2_virtual_processor_t**)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_t*) * virtual_processor_count));
   {
@@ -35,11 +40,6 @@ void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* th
       this->virtual_processor[index] = virtual_processor;
     }
   }
-  funk2_processor_mutex__init(&(this->virtual_processor_index_processor_thread_hash_mutex));
-  funk2_hash__init(&(this->virtual_processor_index_processor_thread_hash), 10);
-  this->free_processor_threads = NULL;
-  funk2_processor_mutex__init(&(this->virtual_processor_thread_processor_thread_hash_mutex));
-  funk2_hash__init(&(this->virtual_processor_thread_processor_thread_hash), 10);
 }
 
 

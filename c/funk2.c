@@ -168,7 +168,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     funk2_node_handler__add_node(&(this->node_handler), __funk2.node_id, &client_id);
   }
   
-  //funk2_virtual_processor_handler__init(&(this->virtual_processor_handler), memory_pool_num);
   funk2_memory__init(&(this->memory));
   funk2_garbage_collector__init(&(this->garbage_collector));
   funk2_garbage_collector__init_sets_from_memory(&(this->garbage_collector), &(this->memory));
@@ -307,6 +306,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   f2__scheduler__start_processors();
   status("bootstrapping complete.");
   this->memory.bootstrapping_mode = boolean__false;
+  
+  funk2_virtual_processor_handler__init(&(this->virtual_processor_handler), memory_pool_num);
 }
 
 void f2__destroy() {
@@ -361,7 +362,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_processor_mutex__destroy(&(this->event_id_mutex));
   funk2_cpu__destroy(&(this->cpu));
   funk2_surrogate_parent__destroy(&(this->surrogate_parent));
-  //funk2_virtual_processor_handler__destroy(&(this->virtual_processor_handler));
+  funk2_virtual_processor_handler__destroy(&(this->virtual_processor_handler));
 }
 
 boolean_t funk2__handle(funk2_t* this) {

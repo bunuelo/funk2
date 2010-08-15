@@ -24,6 +24,7 @@
 
 #define global_scheduler() __global__scheduler
 
+#include "f2_global.h"
 #include "f2_fiber.h"
 #include "f2_time.h"
 #include "f2_processor_mutex.h"

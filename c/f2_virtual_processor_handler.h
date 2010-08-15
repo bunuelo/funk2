@@ -30,10 +30,9 @@ typedef struct funk2_virtual_processor_handler_s     funk2_virtual_processor_han
 #ifndef F2__VIRTUAL_PROCESSOR_HANDLER__H
 #define F2__VIRTUAL_PROCESSOR_HANDLER__H
 
+#include "f2_global.h"
 #include "f2_virtual_processor.h"
 #include "f2_virtual_processor_thread.h"
-
-#define F2__USE_VIRTUAL_PROCESSORS 1
 
 struct funk2_virtual_processor_thread_cons_s {
   funk2_virtual_processor_thread_t*             virtual_processor_thread;

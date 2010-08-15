@@ -90,6 +90,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
   // let free processor execute some bytecodes before returning from yield...
   raw__spin_sleep_yield();
   funk2_processor_mutex__lock(&(this->execute_bytecodes_mutex));
+  this->execute_bytecodes_current_virtual_processor_thread = yielding_virtual_processor_thread;
 }
 
 //void* processor__start_routine(void *ptr) {

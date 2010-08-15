@@ -33,9 +33,11 @@ void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* th
       this->virtual_processor[index] = virtual_processor;
     }
   }
-  funk2_hash__init(&(this->index_processor_thread_hash), 10);
+  funk2_processor_mutex__init(&(this->virtual_processor_index_processor_thread_hash_mutex));
+  funk2_hash__init(&(this->virtual_processor_index_processor_thread_hash), 10);
   this->free_processor_threads = NULL;
-  funk2_hash__init(&(this->used_processor_thread_hash), 10);
+  funk2_processor_mutex__init(&(this->virtual_processor_thread_processor_thread_hash_mutex));
+  funk2_hash__init(&(this->virtual_processor_thread_processor_thread_hash, 10));
 }
 
 
@@ -48,31 +50,61 @@ void funk2_virtual_processor_handler__destroy(funk2_virtual_processor_handler_t*
     }
   }
   f2__free(to_ptr(this->virtual_processor));
-  funk2_hash__destroy(&(this->index_processor_thread_hash));
+  funk2_processor_mutex__destroy(&(this->virtual_processor_index_processor_thread_hash_mutex));
+  funk2_hash__destroy(&(this->virtual_processor_index_processor_thread_hash));
+  funk2_processor_mutex__destroy(&(this->virtual_processor_thread_processor_thread_hash_mutex));
+  funk2_hash__destroy(&(this->virtual_processor_thread_processor_thread_hash));
 }
 
-//funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virtual_processor_thread(funk2_virtual_processor_handler_t* this) {
-//  funk2_virtual_processor_thread_t* virtual_processor_thread = NULL;
-//  if (! (this->free_processor_threads)) {
-//    
-//  } else {
-//  }
-//  
-//}
+funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virtual_processor_thread(funk2_virtual_processor_handler_t* this) {
+  funk2_virtual_processor_thread_t* virtual_processor_thread = NULL;
+  if (! (this->free_processor_threads)) {
+    virtual_processor_thread = (funk2_virtual_processor_thread_t*)f2__malloc(sizeof(funk2_virtual_processor_thread_t));
+    funk2_virtual_processor_thread__init(virtual_processor_thread);
+    {
+      funk2_processor_mutex__lock(&(this->virtual_processor_thread_processor_thread_hash_mutex));
+      funk2_hash__add(&(this->virtual_processor_thread_processor_thread_hash), (u64)(&(virtual_processor_thread->processor_thread)), (u64)virtual_processor_thread);
+      funk2_processor_mutex__unlock(&(this->virtual_processor_thread_processor_thread_hash_mutex));
+    }
+  } else {
+    funk2_virtual_processor_thread_cons_t* cons = this->free_processor_threads;
+    virtual_processor_thread = cons->virtual_processor_thread;
+    f2__free(to_ptr(cons));
+  }
+  return virtual_processor_thread;
+}
 
-//void funk2_virtual_processor_handler__yield(funk2_virtual_processor_handler_t* this) {
-//}
+void funk2_virtual_processor_handler__know_of_virtual_processor_thread_assignment_to_virtual_processor(funk2_virtual_processor_handler_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread, u64 virtual_processor_index) {
+  funk2_processor_mutex__lock(&(this->virtual_processor_index_processor_thread_hash_mutex));
+  funk2_hash__add(&(this->virtual_processor_index_processor_thread_hash), (u64)virtual_processor_thread, virtual_processor_index);
+  funk2_processor_mutex__unlock(&(this->virtual_processor_index_processor_thread_hash_mutex));
+}
 
+funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__my_virtual_processor_thread(funk2_virtual_processor_handler_t* this) {
+  funk2_processor_thread_t*         processor_thread         = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
+  funk2_virtual_processor_thread_t* virtual_processor_thread = (funk2_virtual_processor_thread_t*)funk2_hash__lookup(&(this->virtual_processor_thread_processor_thread_hash), (u64)processor_thread);
+  return virtual_processor_thread;
+}
 
-//funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__my_virtual_processor_thread(funk2_virtual_processor_handler_t* this) {
-//  funk2_processor_thread_t*         processor_thread         = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
-//  funk2_virtual_processor_thread_t* virtual_processor_thread = funk2_hash__lookup(this->index_processor_thread_hash, (u64)processor_thread);
-//  return virtual_processor_thread;
-//}
+u64 funk2_virtual_processor_handler__my_virtual_processor_index(funk2_virtual_processor_handler_t* this) {
+  s64 virtual_processor_assignment_index = virtual_processor_thread->virtual_processor_assignment_index;
+  if (virtual_processor_assignment_index == -1) {
+    error(nil, "funk2_virtual_processor_handler__myself error: virtual_processor_assignment_index is not assigned to a virtual processor.");
+  }
+  if (virtual_processor_assignment_index < 0 || virtual_processor_assignment_index >= this->virtual_processor_count) {
+    error(nil, "funk2_virtual_processor_handler__myself error: virtual_processor_assignment_index is out of range.");
+  }
+  return virtual_processor_assignment_index;
+}
 
-//u64 funk2_virtual_processor_handler__myself(funk2_virtual_processor_handler_t* this) {
-//  funk2_processor_thread_t*  processor_thread  = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
-//  funk2_virtual_processor_t* virtual_processor = funk2_hash__lookup(this->index_processor_thread_hash, (u64)processor_thread);
-//  
-//}
+funk2_virtual_processor_t* funk2_virtual_processor_handler__my_virtual_processor(funk2_virtual_processor_handler_t* this) {
+  u64 virtual_processor_assignment_index = funk2_virtual_processor_handler__my_virtual_processor_index(this);
+  return this->virtual_processor[virtual_processor_assignment_index];
+}
+
+void funk2_virtual_processor_handler__yield(funk2_virtual_processor_handler_t* this) {
+  funk2_virtual_processor_t* virtual_processor = funk2_virtual_processor_handler__my_virtual_processor(this);
+  funk2_virtual_processor__yield(virtual_processor);
+}
+
 

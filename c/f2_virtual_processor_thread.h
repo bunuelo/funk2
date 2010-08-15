@@ -24,6 +24,7 @@
 
 typedef struct funk2_virtual_processor_thread_s funk2_virtual_processor_thread_t;
 struct funk2_virtual_processor_thread_s {
+  funk2_processor_mutex_t  assignment_mutex;
   u64                      virtual_processor_assignment_index;
   funk2_processor_thread_t processor_thread;
 };

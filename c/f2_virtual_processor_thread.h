@@ -35,8 +35,10 @@ struct funk2_virtual_processor_thread_s {
   funk2_processor_thread_t processor_thread;
 };
 
-void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this);
-void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* this);
+void* funk2_virtual_processor_thread__start_function(             void* args);
+void  funk2_virtual_processor_thread__init(                       funk2_virtual_processor_thread_t* this);
+void  funk2_virtual_processor_thread__destroy(                    funk2_virtual_processor_thread_t* this);
+void  funk2_virtual_processor_thread__assign_to_virtual_processor(funk2_virtual_processor_thread_t* this, u64 virtual_processor_assignment_index);
 
 #endif // F2__VIRTUAL_PROCESSOR_THREAD__H
 

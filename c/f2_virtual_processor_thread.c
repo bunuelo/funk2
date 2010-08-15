@@ -21,6 +21,8 @@
 
 #include "funk2.h"
 
+// funk2_virtual_processor_thread
+
 void* funk2_virtual_processor_thread__start_function(void* args) {
   funk2_virtual_processor_thread_t* this = (funk2_virtual_processor_thread_t*)args;
   while (1) {

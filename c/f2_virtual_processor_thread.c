@@ -38,7 +38,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
       }
     }
     funk2_virtual_processor_t* virtual_processor = __funk2.virtual_processor_handler.virtual_processor[virtual_processor_assignment_index];
-    boolean_t                  did_something;
+    boolean_t                  did_something     = boolean__true;
     while (did_something) {
       did_something = funk2_virtual_processor__execute_next_bytecodes(virtual_processor, this);
     }

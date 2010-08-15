@@ -312,9 +312,10 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
 
   status("bootstrapping complete.");
   this->memory.bootstrapping_mode = boolean__false;
-  
 #if defined(F2__USE_VIRTUAL_PROCESSORS)
+  pause_gc();
   funk2_virtual_processor_handler__init(&(this->virtual_processor_handler), memory_pool_num);
+  resume_gc();
 #endif // F2__USE_VIRTUAL_PROCESSORS
 }
 

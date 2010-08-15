@@ -89,7 +89,8 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__my_virtual_pr
 }
 
 u64 funk2_virtual_processor_handler__my_virtual_processor_index(funk2_virtual_processor_handler_t* this) {
-  s64 virtual_processor_assignment_index = virtual_processor_thread->virtual_processor_assignment_index;
+  funk2_virtual_processor_thread_t* virtual_processor_thread           = funk2_virtual_processor_handler__my_virtual_processor_thread(this);
+  s64                               virtual_processor_assignment_index = virtual_processor_thread->virtual_processor_assignment_index;
   if (virtual_processor_assignment_index == -1) {
     error(nil, "funk2_virtual_processor_handler__myself error: virtual_processor_assignment_index is not assigned to a virtual processor.");
   }

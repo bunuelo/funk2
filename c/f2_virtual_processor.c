@@ -67,7 +67,7 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
   f2ptr     cause         = nil;
   f2ptr     processors    = f2scheduler__processors(__funk2.operating_system.scheduler, cause);
   f2ptr     processor     = raw__array__elt(cause, processors, this->index);
-  boolean_t did_something = f2processor__execute_next_bytecodes(this->processor, cause);
+  boolean_t did_something = f2processor__execute_next_bytecodes(processor, cause);
   funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
   this->execute_bytecodes_current_virtual_processor_thread = NULL;
   {

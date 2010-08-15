@@ -46,7 +46,7 @@ void funk2_virtual_processor__assure_at_least_one_free_virtual_processor_thread(
   }
   while (free_virtual_processor_thread_count < 1) {
     funk2_virtual_processor_thread_t* virtual_processor_thread = funk2_virtual_processor_handler__get_free_virtual_processor_thread(&(__funk2.virtual_processor_handler));
-    funk2_virtual_processor_thread__assign_to_virtual_processor(virtual_processor_thread, index);
+    funk2_virtual_processor_thread__assign_to_virtual_processor(virtual_processor_thread, this->index);
     {
       funk2_processor_mutex__lock(&(this->free_virtual_processor_thread_count_mutex));
       this->free_virtual_processor_thread_count ++;

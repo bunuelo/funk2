@@ -33,6 +33,8 @@ typedef struct funk2_virtual_processor_handler_s     funk2_virtual_processor_han
 #include "f2_virtual_processor.h"
 #include "f2_virtual_processor_thread.h"
 
+//#define F2__USE_VIRTUAL_PROCESSORS 1
+
 struct funk2_virtual_processor_thread_cons_s {
   funk2_virtual_processor_thread_t*             virtual_processor_thread;
   struct funk2_virtual_processor_thread_cons_s* next;

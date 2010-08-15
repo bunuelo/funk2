@@ -307,7 +307,9 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   status("bootstrapping complete.");
   this->memory.bootstrapping_mode = boolean__false;
   
+#if defined(F2__USE_VIRTUAL_PROCESSORS)
   funk2_virtual_processor_handler__init(&(this->virtual_processor_handler), memory_pool_num);
+#endif // F2__USE_VIRTUAL_PROCESSORS
 }
 
 void f2__destroy() {
@@ -362,7 +364,9 @@ void funk2__destroy(funk2_t* this) {
   funk2_processor_mutex__destroy(&(this->event_id_mutex));
   funk2_cpu__destroy(&(this->cpu));
   funk2_surrogate_parent__destroy(&(this->surrogate_parent));
+#if defined(F2__USE_VIRTUAL_PROCESSORS)
   funk2_virtual_processor_handler__destroy(&(this->virtual_processor_handler));
+#endif // F2__USE_VIRTUAL_PROCESSORS
 }
 
 boolean_t funk2__handle(funk2_t* this) {

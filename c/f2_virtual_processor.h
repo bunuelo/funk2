@@ -30,6 +30,8 @@ typedef struct funk2_virtual_processor_s funk2_virtual_processor_t;
 #ifndef F2__VIRTUAL_PROCESSOR__H
 #define F2__VIRTUAL_PROCESSOR__H
 
+#include "f2_virtual_processor_thread.h"
+
 // processor_thread_array
 
 struct funk2_processor_thread_array_s {

@@ -302,8 +302,14 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     
   }
   
+#if defined(F2__USE_VIRTUAL_PROCESSORS)
+#else // not F2__USE_VIRTUAL_PROCESSORS
+
   // start pthreads for each processor (starts user repl once bootstrapping is done   this->memory.bootstrapping_mode = boolean__false;)
   f2__scheduler__start_processors();
+
+#endif // F2__USE_VIRTUAL_PROCESSORS
+
   status("bootstrapping complete.");
   this->memory.bootstrapping_mode = boolean__false;
   

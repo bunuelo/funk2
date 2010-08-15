@@ -37,7 +37,7 @@ void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* th
   funk2_hash__init(&(this->virtual_processor_index_processor_thread_hash), 10);
   this->free_processor_threads = NULL;
   funk2_processor_mutex__init(&(this->virtual_processor_thread_processor_thread_hash_mutex));
-  funk2_hash__init(&(this->virtual_processor_thread_processor_thread_hash, 10));
+  funk2_hash__init(&(this->virtual_processor_thread_processor_thread_hash), 10);
 }
 
 

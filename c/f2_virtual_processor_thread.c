@@ -50,11 +50,12 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this) {
   funk2_processor_mutex__init(&(this->assignment_mutex));
   this->virtual_processor_assignment_index = -1;
-  funk2_processor_thread__init(&(this->processor_thread), -1, funk2_virtual_processor_thread__start_function, this);
+  this->processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), funk2_virtual_processor_thread__start_function, this);
+  //funk2_processor_thread__init(&(this->processor_thread), -1, funk2_virtual_processor_thread__start_function, this);
 }
 
 void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* this) {
-  funk2_processor_thread__destroy(&(this->processor_thread));
+  funk2_processor_thread__destroy(this->processor_thread);
 }
 
 void funk2_virtual_processor_thread__assign_to_virtual_processor(funk2_virtual_processor_thread_t* this, u64 virtual_processor_assignment_index) {

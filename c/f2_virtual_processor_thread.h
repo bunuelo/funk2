@@ -30,9 +30,9 @@ typedef struct funk2_virtual_processor_thread_s funk2_virtual_processor_thread_t
 #define F2__VIRTUAL_PROCESSOR_THREAD__H
 
 struct funk2_virtual_processor_thread_s {
-  funk2_processor_mutex_t  assignment_mutex;
-  u64                      virtual_processor_assignment_index;
-  funk2_processor_thread_t processor_thread;
+  funk2_processor_mutex_t   assignment_mutex;
+  u64                       virtual_processor_assignment_index;
+  funk2_processor_thread_t* processor_thread;
 };
 
 void* funk2_virtual_processor_thread__start_function(             void* args);

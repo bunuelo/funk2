@@ -50,18 +50,18 @@ struct funk2_virtual_processor_s {
   u64                               index;
   funk2_processor_mutex_t           execute_bytecodes_mutex;
   funk2_virtual_processor_thread_t* execute_bytecodes_current_virtual_processor_thread;
-  funk2_processor_mutex_t           free_virtual_processor_thread_count_mutex;
-  s64                               free_virtual_processor_thread_count;
+  funk2_processor_mutex_t           spinning_virtual_processor_thread_count_mutex;
+  s64                               spinning_virtual_processor_thread_count;
 };
 
-void      funk2_virtual_processor__init(                                             funk2_virtual_processor_t* this, u64 index);
-void      funk2_virtual_processor__destroy(                                          funk2_virtual_processor_t* this);
-void      funk2_virtual_processor__assure_at_least_one_free_virtual_processor_thread(funk2_virtual_processor_t* this);
-boolean_t funk2_virtual_processor__already_executing_next_bytecodes(                 funk2_virtual_processor_t* this);
-boolean_t funk2_virtual_processor__execute_next_bytecodes(                           funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
-void      funk2_virtual_processor__know_of_one_less_free_virtual_processor_thread(   funk2_virtual_processor_t* this);
-void      funk2_virtual_processor__know_of_one_more_free_virtual_processor_thread(   funk2_virtual_processor_t* this);
-void      funk2_virtual_processor__yield(                                            funk2_virtual_processor_t* this);
+void      funk2_virtual_processor__init(                                                 funk2_virtual_processor_t* this, u64 index);
+void      funk2_virtual_processor__destroy(                                              funk2_virtual_processor_t* this);
+void      funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(funk2_virtual_processor_t* this);
+boolean_t funk2_virtual_processor__already_executing_next_bytecodes(                     funk2_virtual_processor_t* this);
+boolean_t funk2_virtual_processor__execute_next_bytecodes(                               funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
+void      funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(   funk2_virtual_processor_t* this);
+void      funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread(   funk2_virtual_processor_t* this);
+void      funk2_virtual_processor__yield(                                                funk2_virtual_processor_t* this);
 
 #endif // F2__VIRTUAL_PROCESSOR__H
 

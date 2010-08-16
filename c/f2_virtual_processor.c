@@ -93,12 +93,14 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
 void funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
   funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_count_mutex));
   this->spinning_virtual_processor_thread_count --;
+  status("funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread: this->spinning_virtual_processor_thread_count=" s64__fstr, this->spinning_virtual_processor_thread_count);
   funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_count_mutex));
 }
 
 void funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
   funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_count_mutex));
   this->spinning_virtual_processor_thread_count ++;
+  status("funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread: this->spinning_virtual_processor_thread_count=" s64__fstr, this->spinning_virtual_processor_thread_count);
   funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_count_mutex));
 }
 

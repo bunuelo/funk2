@@ -156,13 +156,13 @@
 					   [isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target target]
 					 [mind-activate [get this mind] reactive physical drop_from_right_hand]]
 				     [prog 
-				      [mind-activate [get this mind] reactive physical walk_directly_towards object]
+				      [mind-activate [get this mind] reactive physical walk_directly_towards target]
 				      [isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target target]]]
 				 [prog 
-				  [mind-activate [get this mind] reactive physical walk_directly_towards object]
+				  [mind-activate [get this mind] reactive physical walk_directly_towards target]
 				  [isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target target]]]
 			     [prog 
-			      [mind-activate [get this mind] reactive physical walk_directly_towards object]
+			      [mind-activate [get this mind] reactive physical walk_directly_towards target]
 			      [isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target target]]]
 			   [get body sense]]
      
@@ -182,14 +182,33 @@
 					   [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]
 					 [mind-activate [get this mind] reactive physical drop_from_left_hand]]
 				     [prog 
-				      [mind-activate [get this mind] reactive physical walk_directly_towards object]
+				      [mind-activate [get this mind] reactive physical walk_directly_towards target]
 				      [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]]]
 				 [prog 
-				  [mind-activate [get this mind] reactive physical walk_directly_towards object]
+				  [mind-activate [get this mind] reactive physical walk_directly_towards target]
 				  [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]]]
 			     [prog 
-			      [mind-activate [get this mind] reactive physical walk_directly_towards object]
+			      [mind-activate [get this mind] reactive physical walk_directly_towards target]
 			      [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]]]
+			   [get body sense]]
+
+     [mind-create_resource mind reactive physical open_fridge [fridge]
+			   [format stdout '\n  open_fridge']
+			   [while [null [get this sense]] 
+			     [millisleep 100]]
+			   [if [get this objects]
+			       [if [have [get this objects] lookup fridge]
+				   [if [> arm_length [have [get this objects] lookup `distance]]
+				       [isis-call [get [get this world] client] agent [get this name] open_fridge]
+				     [prog 
+				      [mind-activate [get this mind] reactive physical walk_directly_towards fridge]
+				      [isis-call [get [get this world] client] agent [get this name] open_fridge]]]
+				 [prog 
+				  [mind-activate [get this mind] reactive physical walk_directly_towards fridge]
+				  [isis-call [get [get this world] client] agent [get this name] open_fridge]]]
+			     [prog 
+			      [mind-activate [get this mind] reactive physical walk_directly_towards fridge]
+			      [isis-call [get [get this world] client] agent [get this name] open_fridge]]]
 			   [get body sense]]
      
      

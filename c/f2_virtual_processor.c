@@ -64,9 +64,15 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
     funk2_processor_mutex__unlock(&(this->free_virtual_processor_thread_count_mutex));
   }
   this->execute_bytecodes_current_virtual_processor_thread = virtual_processor_thread;
-  f2ptr     cause         = nil;
-  f2ptr     processors    = f2scheduler__processors(__funk2.operating_system.scheduler, cause);
-  f2ptr     processor     = raw__array__elt(cause, processors, this->index);
+  f2ptr     cause      = nil;
+  f2ptr     processors = f2scheduler__processors(__funk2.operating_system.scheduler, cause);
+  f2ptr     processor  = raw__array__elt(cause, processors, this->index);
+  { // assert processor has correct index.
+    int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
+    if (pool_index != this->index) {
+      error(nil, "funk2_virtual_processor__execute_next_bytecodes error: processor pool_index does not match processor position in scheduler array.");
+    }
+  }
   boolean_t did_something = f2processor__execute_next_bytecodes(processor, cause);
   funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
   this->execute_bytecodes_current_virtual_processor_thread = NULL;
@@ -92,45 +98,4 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
   funk2_processor_mutex__lock(&(this->execute_bytecodes_mutex));
   this->execute_bytecodes_current_virtual_processor_thread = yielding_virtual_processor_thread;
 }
-
-//void* processor__start_routine(void *ptr) {
-//  status("processor here, waiting for bootstrap to complete before starting.");
-//  while (__funk2.memory.bootstrapping_mode) {
-//    raw__fast_spin_sleep_yield();
-//  }
-//  status("processor starting.");
-//  f2ptr cause     = nil;
-//  f2ptr processor = f2__global_scheduler__this_processor(cause);
-//  int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
-//  release__assert(pool_index == this_processor_thread__pool_index(), nil, "pool_index does not match pthread_self() generated pool index.");
-//  
-//  status("starting processor " u64__fstr " (" u64__fstr ")", (u64)this_processor_thread__pool_index(), (u64)processor);
-//  while(1) {
-//    f2ptr did_something = nil;
-//    do {
-//      did_something = f2processor__execute_next_bytecodes(processor, cause);
-//      funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
-//      raw__fast_spin_sleep_yield();
-//    } while (did_something);
-//    //printf("\nprocessor %d sleeping", this_processor_thread__pool_index()); fflush(stdout);
-//    //printf("\nprocessor__start_routine: processor %d (%d) sleeping (fiber_num: %d)", this_processor_thread__pool_index(), processor, raw__simple_length(f2processor__fibers(processor))); fflush(stdout);
-//    raw__spin_sleep_yield();
-//  }
-//  return nil;
-//}
-//
-//void f2__scheduler__yield(f2ptr cause) {
-//  if (! __funk2.memory.bootstrapping_mode) {
-//    f2ptr processor = f2__global_scheduler__this_processor(cause);
-//    if(! f2processor__execute_next_bytecodes(processor, cause)) {
-//      //f2ptr processor = f2__global_scheduler__this_processor();
-//      //printf("\nscheduler__yield: processor %d (%d) sleeping (fiber_num: %d)", this_processor_thread__pool_index(), processor, raw__simple_length(f2processor__fibers(processor))); fflush(stdout);
-//      //f2__sleep(1000); // maybe this should be the average time to execute f2scheduler__execute_next_bytecodes (when it returns True)?
-//      raw__fast_spin_sleep_yield();
-//      if (__funk2.user_thread_controller.please_wait && pthread_self() != __funk2.memory.memory_handling_thread) {
-//	funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
-//      }
-//    }
-//  }
-//}
 

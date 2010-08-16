@@ -29,6 +29,7 @@ void funk2_hash__init(funk2_hash_t* this, u64 bin_num_power) {
   this->key_count     = 0;
   this->bin_num_power = bin_num_power;
   this->bin_array     = (funk2_hash_bin_node_t**)from_ptr(f2__malloc(sizeof(funk2_hash_bin_node_t*) * funk2_hash__bin_count(this)));
+  memset(this->bin_array, 0, sizeof(funk2_hash_bin_node_t*) * funk2_hash__bin_count(this));
 }
 
 void funk2_hash__destroy(funk2_hash_t* this) {

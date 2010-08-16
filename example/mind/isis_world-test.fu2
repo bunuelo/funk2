@@ -86,18 +86,25 @@
 			 [have this think_to_self 'While propogating sense->story, I created this story: ' [get story as-list] '.']
 			 story]]]]
       ]
+
+
     [mind-create_resource mind reactive physical funk_user []
-			  [if [null resource]
+			  [if [null fu_resource]
 			      [sleep 1]
-			    [if [null args]
-				[mind-activate [get this mind] reactive physical resource]
-			      [have-apply [mind-activate [get this mind] reactive physical resource @args]]]]
+			    [if [null fu_args]
+				[prog [mind-activate [get this mind] reactive physical resource]
+				      [= fu_resource nil]
+				      [= fu_args nil]]
+			      [prog [have [get this mind] activate `reactive `physical [quote ,fu_resource] @fu_args]
+				    [= fu_resource nil]
+				    [= fu_args nil]]]]
+
 			  ]
 
 
 
 
-    [mind-create_resource mind reactive physical turn_right [ steps]
+    [mind-create_resource mind reactive physical turn_right [steps]
 			  [format stdout '\n  turn_right']
 			  [let [[starting_time [get body time_step]]]			
 			    [isis-call [get [get this world] client] turn_right-start agent [get this name]]
@@ -105,28 +112,28 @@
 			      [millisleep 50]]
 			    [isis-call [get [get this world] client] turn_right-stop agent [get this name]]]]
     [print 'turn right']
-    [mind-create_resource mind reactive physical turn_left [ steps]
+    [mind-create_resource mind reactive physical turn_left [steps]
 			  [format stdout '\n  turn_left']
 			  [isis-call [get [get this world] client] turn_left-start agent [get this name]]
 			  [let [[start_steps [get body time_step]]]
 			    [while [< [- [get body time_step] start_steps] steps]
 			      [millisleep 50]]
 			    [isis-call [get [get this world] client] turn_left-stop agent [get this name]]]]
-    [mind-create_resource mind reactive physical look_right [ steps]
+    [mind-create_resource mind reactive physical look_right [steps]
 			  [format stdout '\n  look_right']
 			  [let [[starting_time [get body time_step]]]			
 			    [isis-call [get [get this world] client] look_right-start agent [get this name]]
 			    [while [< [- [get body time_step] starting_time] steps]
 			      [millisleep 50]]
 			    [isis-call [get [get this world] client] look_right-stop agent [get this name]]]]
-    [mind-create_resource mind reactive physical look_left [ steps]
+    [mind-create_resource mind reactive physical look_left [steps]
 			  [format stdout '\n  turn_left']
 			  [isis-call [get [get this world] client] look_left-start agent [get this name]]
 			  [let [[start_steps [get body time_step]]]
 			    [while [< [- [get body time_step] start_steps] steps]
 			      [millisleep 50]]
 			    [isis-call [get [get this world] client] look_left-stop agent [get this name]]]]
-    [mind-create_resource mind reactive physical move_forward [ steps]
+    [mind-create_resource mind reactive physical move_forward [steps]
 			  [format stdout '\n  move_forward']
 			  [let [[start_steps [get body time_step]]]
 			    [isis-call [get [get this world] client] move_forward-start agent [get this name]]
@@ -134,7 +141,7 @@
 			      [millisleep 50]]
 			    [isis-call [get [get this world] client] move_forward-stop agent [get this name]]]]
     
-    [mind-create_resource mind reactive physical move_backward [ steps]
+    [mind-create_resource mind reactive physical move_backward [steps]
 			  [format stdout '\n  move_backward']
 			  [isis-call [get [get this world] client] move_backward-start agent [get this name]]
 			  [let [[start_steps [get body time_step]]]
@@ -149,7 +156,7 @@
     
      
     
-     [mind-create_resource mind reactive physical pick_up_with_right_hand [ target]
+     [mind-create_resource mind reactive physical pick_up_with_right_hand [target]
 			   [format stdout '\n  pick_up_with_right_hand']
 			   [while [null [get this sense]] 
 			     [millisleep 100]]
@@ -175,7 +182,7 @@
 			   [format stdout '\n drop_from_left_hand']
 			   [isis-call [get [get this world] client] drop_from_left_hand agent [get this name]]]    
      
-     [mind-create_resource mind reactive physical pick_up_with_left_hand [ target]
+     [mind-create_resource mind reactive physical pick_up_with_left_hand [target]
 			   [format stdout '\n  pick_up_with_left_hand']
 			   [while [null [get this sense]] 
 			     [millisleep 100]]
@@ -197,7 +204,7 @@
 			   [get body sense]]
      
      
-       [mind-create_resource mind reactive physical center_body_on [ desired_object]
+       [mind-create_resource mind reactive physical center_body_on [desired_object]
 			   [have this think_to_self 'center_body_on_object activated']
 			   [deftypefunk isis_agent execute turn_left_and_right []
 			     [while [null [get this sense]] 
@@ -231,7 +238,7 @@
 				     [have this turn_left_and_right]]]]
 			   [have this turn_left_and_right]]
      
-     [mind-create_resource mind reactive physical center_head_on [ desired_object]
+     [mind-create_resource mind reactive physical center_head_on [desired_object]
 			   [print 'center_head_on_object']
 			   [deftypefunk isis_agent execute look_left_and_right []
 			     [print '0']
@@ -266,7 +273,7 @@
 
 
 
- [mind-create_resource mind reactive physical walk_towards [ desired_object]
+ [mind-create_resource mind reactive physical walk_towards [desired_object]
 			   [mind-activate [get this mind] reactive physical center_body_on desired_object]
 			   [deftypefunk isis_agent execute cautiously_walk []
 			     [cond [[and [null [have this check_obstacle]] 
@@ -283,7 +290,7 @@
 			   [have this cautiously_walk]]
      [print 'walk_towards']
 
-     [mind-create_resource mind reactive physical walk_directly_towards [ desired_object]
+     [mind-create_resource mind reactive physical walk_directly_towards [desired_object]
 			   [let [[achieved nil]]
 			     [have this think_to_self ' walk_directly_towards activated!']
 			     [while  [null achieved]
@@ -332,7 +339,7 @@
 why does it randomly exit the while loop/??'
      
   
-     [mind-create_resource mind reactive physical search_for [ desired_object]
+     [mind-create_resource mind reactive physical search_for [desired_object]
 			   [let [[patience 30]]
 			     [have this think_to_self 'search_for activated']
 			     [while 
@@ -366,7 +373,7 @@ why does it randomly exit the while loop/??'
     [print 'search_for']
   
      
-     [mind-create_resource mind reactive physical avoid_obstacle [ desired_object obstacle]
+     [mind-create_resource mind reactive physical avoid_obstacle [desired_object obstacle]
 			   [mind-activate [get this mind] reactive physical center_body_on desired_object]
 			   [deftypefunk isis_agent execute walk_around [if_left]
 			     [mind-activate [get this mind] reactive physical center_body_on obstacle]
@@ -590,10 +597,11 @@ why does it randomly exit the while loop/??'
       [mind-activate [get isis_world agent_mind `Lauren] reactive     speech  say                                              'Bad Ralph!']
       [mind-activate [get isis_world agent_mind `Lauren] deliberative reality include_reactive_stories_into_deliberative_story]
       [mind-activate [get isis_world agent_mind `Lauren] reactive     sensory continuous_sensing]
-      [mind-activate [get isis_world agent_mind `Lauren] reactive     speech  funk_user]
+      [mind-activate [get isis_world agent_mind `Lauren] reactive     physical  funk_user]
       
       [mind-activate [get isis_world agent_mind `Ralph]  deliberative reality include_reactive_stories_into_deliberative_story]
       [mind-activate [get isis_world agent_mind `Ralph]  reactive     sensory continuous_sensing]
+      [mind-activate [get isis_world agent_mind `Lauren] reactive     physical  funk_user]
       
       [format stdout '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
       

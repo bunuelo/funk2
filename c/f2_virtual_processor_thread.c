@@ -47,11 +47,11 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	did_something = funk2_virtual_processor__execute_next_bytecodes(virtual_processor, this);
       }
     } else {
-      //funk2_processor_mutex__lock(&(virtual_processor->free_virtual_processor_thread_count_mutex));
-      s64 free_virtual_processor_thread_count = virtual_processor->free_virtual_processor_thread_count;
-      //funk2_processor_mutex__unlock(&(virtual_processor->free_virtual_processor_thread_count_mutex));
-      //if (free_virtual_processor_thread_count > 8) {
-      //	funk2_virtual_processor__know_of_one_less_free_virtual_processor_thread(virtual_processor);
+      //funk2_processor_mutex__lock(&(virtual_processor->spinning_virtual_processor_thread_count_mutex));
+      s64 spinning_virtual_processor_thread_count = virtual_processor->spinning_virtual_processor_thread_count;
+      //funk2_processor_mutex__unlock(&(virtual_processor->spinning_virtual_processor_thread_count_mutex));
+      //if (spinning_virtual_processor_thread_count > 8) {
+      //	funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(virtual_processor);
       //	funk2_virtual_processor_thread__unassign_from_virtual_processor(this);
       //}
       //raw__spin_sleep_yield();

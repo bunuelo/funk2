@@ -25,6 +25,9 @@
 
 void* funk2_virtual_processor_thread__start_function(void* args) {
   funk2_virtual_processor_thread_t* this = (funk2_virtual_processor_thread_t*)args;
+  while (__funk2.memory.bootstrapping_mode) {
+    raw__spin_sleep_yield();
+  }
   while (1) {
     u64       virtual_processor_assignment_index = -1;
     boolean_t not_assigned_to_virtual_processor  = boolean__true;

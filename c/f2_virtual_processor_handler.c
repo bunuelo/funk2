@@ -66,7 +66,7 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virt
     funk2_virtual_processor_thread__init(virtual_processor_thread);
     {
       funk2_processor_mutex__lock(&(this->virtual_processor_thread_processor_thread_hash_mutex));
-      funk2_hash__add(&(this->virtual_processor_thread_processor_thread_hash), (u64)(&(virtual_processor_thread->processor_thread)), (u64)virtual_processor_thread);
+      funk2_hash__add(&(this->virtual_processor_thread_processor_thread_hash), (u64)(virtual_processor_thread->processor_thread), (u64)virtual_processor_thread);
       funk2_processor_mutex__unlock(&(this->virtual_processor_thread_processor_thread_hash_mutex));
     }
   } else {

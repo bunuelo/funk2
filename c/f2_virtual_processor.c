@@ -47,22 +47,22 @@ void funk2_virtual_processor__assure_at_least_one_free_virtual_processor_thread(
   while (free_virtual_processor_thread_count < 1) {
     funk2_virtual_processor_thread_t* virtual_processor_thread = funk2_virtual_processor_handler__get_free_virtual_processor_thread(&(__funk2.virtual_processor_handler));
     funk2_virtual_processor_thread__assign_to_virtual_processor(virtual_processor_thread, this->index);
+    funk2_virtual_processor__know_of_one_more_free_virtual_processor_thread(this);
     {
       funk2_processor_mutex__lock(&(this->free_virtual_processor_thread_count_mutex));
-      this->free_virtual_processor_thread_count ++;
       free_virtual_processor_thread_count = this->free_virtual_processor_thread_count;
       funk2_processor_mutex__unlock(&(this->free_virtual_processor_thread_count_mutex));
     }
   }
 }
 
+boolean_t funk2_virtual_processor__already_executing_next_bytecodes(funk2_virtual_processor_t* this) {
+  return funk2_processor_mutex__is_locked(&(this->execute_bytecodes_mutex));
+}
+
 boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
   funk2_processor_mutex__lock(&(this->execute_bytecodes_mutex));
-  {
-    funk2_processor_mutex__lock(&(this->free_virtual_processor_thread_count_mutex));
-    this->free_virtual_processor_thread_count --;
-    funk2_processor_mutex__unlock(&(this->free_virtual_processor_thread_count_mutex));
-  }
+  funk2_virtual_processor__know_of_one_less_free_virtual_processor_thread(this);
   this->execute_bytecodes_current_virtual_processor_thread = virtual_processor_thread;
   f2ptr     cause      = nil;
   f2ptr     processors = f2scheduler__processors(__funk2.operating_system.scheduler, cause);
@@ -84,13 +84,21 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
   boolean_t did_something = f2processor__execute_next_bytecodes(processor, cause);
   funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
   this->execute_bytecodes_current_virtual_processor_thread = NULL;
-  {
-    funk2_processor_mutex__lock(&(this->free_virtual_processor_thread_count_mutex));
-    this->free_virtual_processor_thread_count ++;
-    funk2_processor_mutex__unlock(&(this->free_virtual_processor_thread_count_mutex));
-  }
+  funk2_virtual_processor__know_of_one_more_free_virtual_processor_thread(this);
   funk2_processor_mutex__unlock(&(this->execute_bytecodes_mutex));
   return did_something;
+}
+
+void funk2_virtual_processor__know_of_one_less_free_virtual_processor_thread(funk2_virtual_processor_t* this) {
+  funk2_processor_mutex__lock(&(this->free_virtual_processor_thread_count_mutex));
+  this->free_virtual_processor_thread_count --;
+  funk2_processor_mutex__unlock(&(this->free_virtual_processor_thread_count_mutex));
+}
+
+void funk2_virtual_processor__know_of_one_more_free_virtual_processor_thread(funk2_virtual_processor_t* this) {
+  funk2_processor_mutex__lock(&(this->free_virtual_processor_thread_count_mutex));
+  this->free_virtual_processor_thread_count ++;
+  funk2_processor_mutex__unlock(&(this->free_virtual_processor_thread_count_mutex));
 }
 
 void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {

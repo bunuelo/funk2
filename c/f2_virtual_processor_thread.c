@@ -41,11 +41,16 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
       }
     }
     funk2_virtual_processor_t* virtual_processor = __funk2.virtual_processor_handler.virtual_processor[virtual_processor_assignment_index];
-    boolean_t                  did_something     = boolean__true;
-    while (did_something) {
-      did_something = funk2_virtual_processor__execute_next_bytecodes(virtual_processor, this);
+    if (! funk2_virtual_processor__already_executing_next_bytecodes(virtual_processor)) {
+      boolean_t did_something     = boolean__true;
+      while (did_something) {
+	did_something = funk2_virtual_processor__execute_next_bytecodes(virtual_processor, this);
+      }
+    } else {
+      funk2_virtual_processor_thread__unassign_from_virtual_processor(this);
+      funk2_virtual_processor__know_of_one_less_free_virtual_processor_thread(virtual_processor);
+      raw__spin_sleep_yield();
     }
-    raw__spin_sleep_yield();
   }
   return NULL;
 }
@@ -69,5 +74,16 @@ void funk2_virtual_processor_thread__assign_to_virtual_processor(funk2_virtual_p
   }
   this->virtual_processor_assignment_index = virtual_processor_assignment_index;
   funk2_virtual_processor_handler__know_of_virtual_processor_thread_assignment_to_virtual_processor(&(__funk2.virtual_processor_handler), this, virtual_processor_assignment_index);
+  funk2_processor_mutex__unlock(&(this->assignment_mutex));
+}
+
+void funk2_virtual_processor_thread__unassign_from_virtual_processor(funk2_virtual_processor_thread_t* this) {
+  funk2_processor_mutex__lock(&(this->assignment_mutex));
+  if (this->virtual_processor_assignment_index == -1) {
+    error(nil, "funk2_virtual_processor_thread__unassign_from_virtual_processor error: attempted to unassign virtual_processor_thread when already unassigned.");
+  }
+  status("funk2_virtual_processor_thread__unassign_from_virtual_processor: virtual_processor_thread unassigned from virtual_processor " u64__fstr ".", this->virtual_processor_assignment_index);
+  funk2_virtual_processor_handler__know_of_virtual_processor_thread_unassignment_from_virtual_processor(&(__funk2.virtual_processor_handler), this);
+  this->virtual_processor_assignment_index = -1;
   funk2_processor_mutex__unlock(&(this->assignment_mutex));
 }

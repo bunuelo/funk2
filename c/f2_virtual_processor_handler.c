@@ -35,9 +35,13 @@ void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* th
   {
     s64 index;
     for (index = 0; index < virtual_processor_count; index ++) {
-      funk2_virtual_processor_t* virtual_processor = (funk2_virtual_processor_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_t)));
-      funk2_virtual_processor__init(virtual_processor, index);
-      this->virtual_processor[index] = virtual_processor;
+      this->virtual_processor[index] = (funk2_virtual_processor_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_t)));
+    }
+  }
+  {
+    s64 index;
+    for (index = 0; index < virtual_processor_count; index ++) {
+      funk2_virtual_processor__init(this->virtual_processor[index], index);
     }
   }
   this->initialized = boolean__true;

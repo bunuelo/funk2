@@ -76,6 +76,7 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
   { // assert our virtual_processor_thread is known to have the correct index.
     int pool_index = this_processor_thread__pool_index();
     if (pool_index != this->index) {
+      status("funk2_virtual_processor__execute_next_bytecodes error: virtual processor pool_index does not match this_processor_thread__pool_index().  pool_index=%d  this->index=%d", (int)pool_index, (int)(this->index));
       error(nil, "funk2_virtual_processor__execute_next_bytecodes error: virtual processor pool_index does not match this_processor_thread__pool_index().");
     }
   }

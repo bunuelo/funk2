@@ -580,6 +580,8 @@ why does it randomly exit the while loop/??'
     this]]
 
 [defunk isis_world-initialize [hostname]
+  [globalize fu_resource nil]
+  [globalize fu_args nil]
   [shelter [have isis_world destroy]]
   [let [[client [new isis_world_client hostname]]]
     [let [[isis_world [new isis_world client]]]

@@ -90,7 +90,7 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__my_virtual_pr
 }
 
 u64 funk2_virtual_processor_handler__my_virtual_processor_index(funk2_virtual_processor_handler_t* this) {
-  if (! (this->initialized)) {
+  if (__funk2.memory.bootstrapping_mode) {
     return 0;
   }
   funk2_virtual_processor_thread_t* virtual_processor_thread           = funk2_virtual_processor_handler__my_virtual_processor_thread(this);

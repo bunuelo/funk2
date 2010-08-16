@@ -34,13 +34,16 @@
 
 
 
-[deframe          isis_agent [frame] [name mind body]]
+[deframe          isis_agent [frame] [name mind body fu_resource fu_args]]
 [deftypeconstruct isis_agent [name]
   [let [[mind [new mind]]
 	[body [new isis_world_body name]]]
     [set this name name]
     [set this mind mind]
     [set this body body]
+    [set this fu_resource nil]
+    [set this fu_args     nil]
+	 
     
     'All isis_agents inherit these basic features.'
     
@@ -88,21 +91,7 @@
       ]
 
 
-    [mind-create_resource mind reactive physical funk_user []
-			  [if [null fu_resource]
-			      [sleep 1]
-			    [if [null fu_args]
-				[prog [mind-activate [get this mind] reactive physical resource]
-				      [= fu_resource nil]
-				      [= fu_args nil]]
-			      [prog [have [get this mind] activate `reactive `physical [quote ,fu_resource] @fu_args]
-				    [= fu_resource nil]
-				    [= fu_args nil]]]]
-
-			  ]
-
-
-
+    
 
     [mind-create_resource mind reactive physical turn_right [steps]
 			  [format stdout '\n  turn_right']
@@ -470,9 +459,25 @@ why does it randomly exit the while loop/??'
     [mind-create_resource mind self_conscious imprimer_learning react_to_imprimer_scold [imprimer scold]
 			  [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', has scolded something about ' [get scold focus] '!  How should I react?']
 			  ]
+
+
+    [mind-create_resource mind reactive physical funk_user []
+			  [if [null [get this fu_resource]]
+			      [sleep 1]
+			    [if [null [get this fu_args]]
+				[prog [mind-activate [get this mind] reactive physical [get this fu_resource]]
+				      [set this fu_resource nil]
+				      [set this fu_args nil]]
+			      [prog [have [get this mind] activate `reactive `physical [quote ,[get this fu_resource]] @[get this fu_args]]
+				    [set this fu_resource nil]
+				    [set this fu_args nil]]]]]
     
     ]
   this]
+
+[deftypefunk isis_agent execute user_activate [resource args]
+  [set this fu_resource resource]
+  [set this fu_args args]]
 
 [deftypefunk isis_agent get world []
   [get [get this body] world]]
@@ -580,8 +585,7 @@ why does it randomly exit the while loop/??'
     this]]
 
 [defunk isis_world-initialize [hostname]
-  [globalize fu_resource nil]
-  [globalize fu_args nil]
+
   [shelter [have isis_world destroy]]
   [let [[client [new isis_world_client hostname]]]
     [let [[isis_world [new isis_world client]]]
@@ -597,13 +601,18 @@ why does it randomly exit the while loop/??'
       [cause-define cause-name      `isis_world-initialize]
       
       [mind-activate [get isis_world agent_mind `Lauren] reactive     speech  say                                              'Bad Ralph!']
+      [print 'lauren say']
       [mind-activate [get isis_world agent_mind `Lauren] deliberative reality include_reactive_stories_into_deliberative_story]
+      [print 'Lauren story']
       [mind-activate [get isis_world agent_mind `Lauren] reactive     sensory continuous_sensing]
+      [print 'lauren conti sense']
       [mind-activate [get isis_world agent_mind `Lauren] reactive     physical  funk_user]
+      [print 'lauren funk user']
       
       [mind-activate [get isis_world agent_mind `Ralph]  deliberative reality include_reactive_stories_into_deliberative_story]
+      [print 'ralph story']
       [mind-activate [get isis_world agent_mind `Ralph]  reactive     sensory continuous_sensing]
-      [mind-activate [get isis_world agent_mind `Lauren] reactive     physical  funk_user]
+      [mind-activate [get isis_world agent_mind `Ralph] reactive     physical  funk_user]
       
       [format stdout '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
       
@@ -623,3 +632,6 @@ why does it randomly exit the while loop/??'
     [millisleep 100]
     [print 'step']
     ]]
+
+[isis_world-initialize '18.85.59.46']
+

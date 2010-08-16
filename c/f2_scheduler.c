@@ -269,7 +269,13 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	}
 	if (! fiber_needs_sleep) {
 	  int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
-	  release__assert(pool_index == this_processor_thread__pool_index(), fiber, "f2processor__execute_next_bytecodes: pool_index != this_processor_thread__pool_index().");
+	  { // assert that we are sane.
+	    int this_processor_thread__pool_index__value = this_processor_thread__pool_index();
+	    if (pool_index != this_processor_thread__pool_index__value) {
+	      status("f2processor__execute_next_bytecodes: pool_index != this_processor_thread__pool_index().  pool_index=%d  this_processor_thread__pool_index()=%d", pool_index, this_processor_thread__pool_index__value);
+	      error(nil, "f2processor__execute_next_bytecodes: pool_index != this_processor_thread__pool_index().");
+	    }
+	  }
 	  f2ptr popped_fiber = __funk2.operating_system.processor_thread__current_fiber[pool_index];
 	  __funk2.operating_system.processor_thread__current_fiber[pool_index] = fiber;
 	  //printf("\n  got fiber lock.");

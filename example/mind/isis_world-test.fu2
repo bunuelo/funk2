@@ -100,7 +100,6 @@
 			    [while [< [- [get body time_step] starting_time] steps]
 			      [millisleep 50]]
 			    [isis-call [get [get this world] client] turn_right-stop agent [get this name]]]]
-    [print 'turn right']
     [mind-create_resource mind reactive physical turn_left [steps]
 			  [format stdout '\n  turn_left']
 			  [isis-call [get [get this world] client] turn_left-start agent [get this name]]
@@ -137,7 +136,6 @@
 			    [while [< [- [get body time_step] start_steps] steps]
 			      [millisleep 50]]
 			    [isis-call [get [get this world] client] move_backward-stop agent [get this name]]]]
-    [print 'turn left, move forward, etc']
     
      [mind-create_resource mind reactive physical drop_from_right_hand []
 			   [format stdout '\n drop_from_right_hand']
@@ -150,7 +148,7 @@
 			   [while [null [get this sense]] 
 			     [millisleep 100]]
 			   [if [get this objects]
-			       [if [have [get this objects] lookup `target]
+			       [if [have [get this objects] lookup target]
 				   [if [> arm_length [have [get this objects] lookup `distance]]
 				       [if [null [have [get this sense] lookup `right_hand]]
 					   [isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target target]
@@ -176,11 +174,13 @@
 			   [while [null [get this sense]] 
 			     [millisleep 100]]
 			   [if [get this objects]
-			       [if [have [get this objects] lookup `target]
+			       [if [have [get this objects] lookup target]
 				   [if [> arm_length [have [get this objects] lookup `distance]]
 				       [if [null [have [get this sense] lookup `left_hand]]
 					   [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]
-					 [mind-activate [get this mind] reactive physical drop_from_left_hand]]
+					[prog 
+					 [mind-activate [get this mind] reactive physical drop_from_left_hand]
+					 [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]]]
 				     [prog 
 				      [mind-activate [get this mind] reactive physical walk_directly_towards target]
 				      [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]]]
@@ -296,7 +296,6 @@
 				   [t
 				    [print 'weird, no conditions applied']]]]
 			   [have this cautiously_walk]]
-     [print 'walk_towards']
 
      [mind-create_resource mind reactive physical walk_directly_towards [desired_object]
 			   [let [[achieved nil]]
@@ -352,7 +351,7 @@ why does it randomly exit the while loop/??'
 			     [have this think_to_self 'search_for activated']
 			     [while 
 				 [> patience 0]
-			       [have this think_to_self 'patience > 0']
+			       [have this think_to_self 'I still have patience']
 	                       [while [null [get this sense]] 
 				 [millisleep 100]]
 			       [if [null [get this objects]]
@@ -378,7 +377,6 @@ why does it randomly exit the while loop/??'
 
      'problem now is lagg in perception, can fix by checking activeness of sensing resource?
       weird! step_simulation suddenly stopped controlling the simulator'
-    [print 'search_for']
   
      
      [mind-create_resource mind reactive physical avoid_obstacle [desired_object obstacle]
@@ -415,7 +413,6 @@ why does it randomly exit the while loop/??'
 					  [= patience [patience -1]]]]]]]]
 			  [have this walk_around [> 0 [have [have [get this objects] lookup obstacle] lookup `x_pos]]]		   
 			  [mind-activate [get this mind] reactive physical walk_directly_towards desired_object]]
-    [print 'avoid obstacle']
     
     
     [mind-create_resource mind reactive sensory continuous_sensing []
@@ -481,29 +478,34 @@ why does it randomly exit the while loop/??'
 
 
     [mind-create_resource mind reactive physical funk_user []
-			  [if [null [get this fu_resource]]
-			      [sleep 1]
-			    [if [null [get this fu_args]]
-				[prog [mind-activate [get this mind] reactive physical [get this fu_resource]]
-				      [set this fu_resource nil]
-				      [set this fu_args nil]]
-			      [prog [have [get this mind] activate `reactive `physical [quote ,[get this fu_resource]] @[get this fu_args]]
+			  [while t
+			    `[print 'waiting for user to activate']
+			    [if [null [get this fu_resource]]
+				[sleep 1]
+			      [prog [have-apply mind activate [print `[reactive physical ,[get this fu_resource] @[get this fu_args]]]]
 				    [set this fu_resource nil]
-				    [set this fu_args nil]]]]]
+				    [set this fu_args nil]
+				    ]]]]
     
     ]
   this]
 
-[deftypefunk isis_agent execute user_activate [resource args]
+
+
+[deftypefunk isis_agent execute user_activate [resource :rest args]
   [set this fu_resource resource]
   [set this fu_args args]]
+
+`[have [get isis_world agent `Ralph] user_activate `move_forward 3]
+`[have [get isis_world agent_mind `Ralph] activate [cons `reactive [cons `physical `[move_forward 3]]]]
+`[have-apply [get isis_world agent_mind `Lauren]  activate [cons `reactive [cons `physical `[`move_forward 3]]]]
 
 [deftypefunk isis_agent get world []
   [get [get this body] world]]
 
 [deftypefunk isis_agent get objects []
   [while [null [get this sense]]
-    [print 'sense not here yet, sleep']
+    [have this think_to_self 'sense not ready, sleep']
     [millisleep 100]]
   [have [get [mind-knowledge [get this mind] reactive sensory] value `sense `[time_step ,[get [get this body] time_step]]] lookup `objects]]
 
@@ -620,16 +622,11 @@ why does it randomly exit the while loop/??'
       [cause-define cause-name      `isis_world-initialize]
       
       [mind-activate [get isis_world agent_mind `Lauren] reactive     speech  say                                              'Bad Ralph!']
-      [print 'lauren say']
       [mind-activate [get isis_world agent_mind `Lauren] deliberative reality include_reactive_stories_into_deliberative_story]
-      [print 'Lauren story']
       [mind-activate [get isis_world agent_mind `Lauren] reactive     sensory continuous_sensing]
-      [print 'lauren conti sense']
       [mind-activate [get isis_world agent_mind `Lauren] reactive     physical  funk_user]
-      [print 'lauren funk user']
       
       [mind-activate [get isis_world agent_mind `Ralph]  deliberative reality include_reactive_stories_into_deliberative_story]
-      [print 'ralph story']
       [mind-activate [get isis_world agent_mind `Ralph]  reactive     sensory continuous_sensing]
       [mind-activate [get isis_world agent_mind `Ralph] reactive     physical  funk_user]
       
@@ -652,5 +649,5 @@ why does it randomly exit the while loop/??'
     [print 'step']
     ]]
 
-[isis_world-initialize '18.85.59.46']
+
 

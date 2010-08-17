@@ -35,7 +35,7 @@ void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* th
     funk2_hash__init(&(this->virtual_processor_thread_processor_thread_hash), 10);
   }
   {
-    funk2_processor_mutex__init(&(this->virtual_processor_index_pthread_id_hash_mutex));
+    funk2_processor_mutex__init(&(this->virtual_processor_index_pthread_hash_mutex));
     funk2_hash__init(&(this->virtual_processor_index_pthread_hash), 10);
   }
   { // virtual processors are the last to be initialized in the handler
@@ -75,7 +75,7 @@ void funk2_virtual_processor_handler__destroy(funk2_virtual_processor_handler_t*
     funk2_hash__destroy(&(this->virtual_processor_thread_processor_thread_hash));
   }
   {
-    funk2_processor_mutex__destroy(&(this->virtual_processor_index_pthread_id_hash_mutex));
+    funk2_processor_mutex__destroy(&(this->virtual_processor_index_pthread_hash_mutex));
     funk2_hash__destroy(&(this->virtual_processor_index_pthread_hash));
   }
 }

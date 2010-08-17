@@ -46,6 +46,8 @@ struct funk2_virtual_processor_handler_s {
   funk2_virtual_processor_thread_cons_t* free_processor_threads;
   funk2_processor_mutex_t                virtual_processor_thread_processor_thread_hash_mutex;
   funk2_hash_t                           virtual_processor_thread_processor_thread_hash;
+  funk2_processor_mutex_t                virtual_processor_index_pthread_hash_mutex;
+  funk2_hash_t                           virtual_processor_index_pthread_hash;
   u64                                    virtual_processor_count;
   funk2_virtual_processor_t**            virtual_processor;
 };

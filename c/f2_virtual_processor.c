@@ -27,11 +27,8 @@ void funk2_virtual_processor__init(funk2_virtual_processor_t* this, u64 index) {
   this->index = index;
   funk2_processor_mutex__init(&(this->execute_bytecodes_mutex));
   {
-    funk2_processor_mutex__init(&(this->assigned_virtual_processor_thread_count_mutex));
+    funk2_processor_mutex__init(&(this->virtual_processor_thread_count_mutex));
     this->assigned_virtual_processor_thread_count = 0;
-  }
-  {
-    funk2_processor_mutex__init(&(this->spinning_virtual_processor_thread_count_mutex));
     this->spinning_virtual_processor_thread_count = 0;
   }
   {
@@ -44,15 +41,15 @@ void funk2_virtual_processor__init(funk2_virtual_processor_t* this, u64 index) {
 
 void funk2_virtual_processor__destroy(funk2_virtual_processor_t* this) {
   funk2_processor_mutex__destroy(&(this->execute_bytecodes_mutex));
-  funk2_processor_mutex__destroy(&(this->spinning_virtual_processor_thread_count_mutex));
+  funk2_processor_mutex__destroy(&(this->virtual_processor_thread_count_mutex));
 }
 
 void funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
   s64 spinning_virtual_processor_thread_count;
   {
-    funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_count_mutex));
+    funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
     spinning_virtual_processor_thread_count = this->spinning_virtual_processor_thread_count;
-    funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_count_mutex));
+    funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
   }
   while (spinning_virtual_processor_thread_count < 1) {
     status("funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread: assigning free virtual_processor_thread to virtual_processor (" u64__fstr ")", this->index);
@@ -60,9 +57,9 @@ void funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thr
     funk2_virtual_processor_thread__assign_to_virtual_processor(virtual_processor_thread, this->index);
     funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread(this);
     {
-      funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_count_mutex));
+      funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
       spinning_virtual_processor_thread_count = this->spinning_virtual_processor_thread_count;
-      funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_count_mutex));
+      funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
     }
     {
       funk2_virtual_processor_thread_cons_t* cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
@@ -130,31 +127,31 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
 }
 
 void funk2_virtual_processor__know_of_one_less_assigned_virtual_processor_thread(funk2_virtual_processor_t* this) {
-  funk2_processor_mutex__lock(&(this->assigned_virtual_processor_thread_count_mutex));
+  funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
   this->assigned_virtual_processor_thread_count --;
   status("funk2_virtual_processor__know_of_one_less_assigned_virtual_processor_thread: this->assigned_virtual_processor_thread_count=" s64__fstr, this->assigned_virtual_processor_thread_count);
-  funk2_processor_mutex__unlock(&(this->assigned_virtual_processor_thread_count_mutex));
+  funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
 }
 
 void funk2_virtual_processor__know_of_one_more_assigned_virtual_processor_thread(funk2_virtual_processor_t* this) {
-  funk2_processor_mutex__lock(&(this->assigned_virtual_processor_thread_count_mutex));
+  funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
   this->assigned_virtual_processor_thread_count ++;
   status("funk2_virtual_processor__know_of_one_more_assigned_virtual_processor_thread: this->assigned_virtual_processor_thread_count=" s64__fstr, this->assigned_virtual_processor_thread_count);
-  funk2_processor_mutex__unlock(&(this->assigned_virtual_processor_thread_count_mutex));
+  funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
 }
 
 void funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
-  funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_count_mutex));
+  funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
   this->spinning_virtual_processor_thread_count --;
   //status("funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread: this->spinning_virtual_processor_thread_count=" s64__fstr, this->spinning_virtual_processor_thread_count);
-  funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_count_mutex));
+  funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
 }
 
 void funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
-  funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_count_mutex));
+  funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
   this->spinning_virtual_processor_thread_count ++;
   //status("funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread: this->spinning_virtual_processor_thread_count=" s64__fstr, this->spinning_virtual_processor_thread_count);
-  funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_count_mutex));
+  funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
 }
 
 void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {

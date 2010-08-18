@@ -28,7 +28,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
   while (__funk2.memory.bootstrapping_mode) {
     raw__spin_sleep_yield();
   }
-  while (1) {
+  while (! (this->exit)) {
     u64       virtual_processor_assignment_index = -1;
     boolean_t not_assigned_to_virtual_processor  = boolean__true;
     while(not_assigned_to_virtual_processor) {
@@ -47,8 +47,11 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	did_something = funk2_virtual_processor__execute_next_bytecodes(virtual_processor, this);
       }
     } else {
+      //
+      // We could unassign virtual_processor_thread from virtual_processor here, but only if we don't want to do this very often.
+      //
       //funk2_processor_mutex__lock(&(virtual_processor->spinning_virtual_processor_thread_count_mutex));
-      s64 spinning_virtual_processor_thread_count = virtual_processor->spinning_virtual_processor_thread_count;
+      //s64 spinning_virtual_processor_thread_count = virtual_processor->spinning_virtual_processor_thread_count;
       //funk2_processor_mutex__unlock(&(virtual_processor->spinning_virtual_processor_thread_count_mutex));
       //if (spinning_virtual_processor_thread_count > 8) {
       //	funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(virtual_processor);
@@ -57,18 +60,31 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
       //raw__spin_sleep_yield();
     }
   }
+  this->exited = boolean__true;
   return NULL;
 }
 
 void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this) {
   funk2_processor_mutex__init(&(this->assignment_mutex));
   this->virtual_processor_assignment_index = -1;
+  this->exit                               = boolean__false;
+  this->exited                             = boolean__false;
   this->processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), funk2_virtual_processor_thread__start_function, this);
   //funk2_processor_thread__init(&(this->processor_thread), -1, funk2_virtual_processor_thread__start_function, this);
 }
 
 void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* this) {
+  funk2_virtual_processor_thread__exit(this);
   funk2_processor_thread__destroy(this->processor_thread);
+}
+
+void funk2_virtual_processor_thread__exit(funk2_virtual_processor_thread_t* this) {
+  status("funk2_virtual_processor_thread__exit: waiting for virtual_processor_thread to exit.");
+  this->exit = boolean__true;
+  while (! (this->exited)) {
+    raw__spin_sleep_yield();
+  }
+  status("funk2_virtual_processor_thread__exit: virtual_processor_thread exited.");
 }
 
 void funk2_virtual_processor_thread__assign_to_virtual_processor(funk2_virtual_processor_thread_t* this, u64 virtual_processor_assignment_index) {

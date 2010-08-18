@@ -124,8 +124,8 @@ xmlrpc_value* funk2_xmlrpc__create_xmlrpc_value_from_exp(xmlrpc_env* env, f2ptr 
     return xmlrpc_nil_new(env);
   } else if (raw__integer__is_type(cause, exp)) {
     s64 i = f2integer__i(exp, cause);
-    if ((i <   0x100000000ull) &&
-	(i >= -0x100000000ull)) {
+    if ((i <   0x7FFFFFFF) && //0x100000000ull) &&
+        (i >= -0x7FFFFFFF)) {//100000000ull)) {
       // can be represented in 32 bits.
       s32 i32 = (s32)i;
       return xmlrpc_int_new(env, i32);
@@ -373,6 +373,7 @@ f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments
 		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "url"),          url);
 		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),     funkname);
 		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "arguments"),    arguments);
+                f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "argument"),     exp);
 		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_string"), ((env.fault_string != NULL) ? new__string(cause, env.fault_string) : nil));
 		f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_code"),   f2integer__new(cause, env.fault_code));
 		return_value = f2larva__new(cause, 5533, f2__bug__new(cause, f2integer__new(cause, 5533), bug_frame));

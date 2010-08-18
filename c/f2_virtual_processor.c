@@ -147,7 +147,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
   {
     boolean_t locked_mutex = boolean__false;
     while ((! locked_mutex) &&
-	   (! (this->exit))) {
+	   (! (yielding_virtual_processor_thread->exit))) {
       if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) == 0) {
 	locked_mutex = boolean__true;
       }
@@ -155,8 +155,8 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	raw__fast_spin_sleep_yield();
       }
     }
-    if (this->exit) {
-      this->exited = boolean__true;
+    if (yielding_virtual_processor_thread->exit) {
+      yielding_virtual_processor_thread->exited = boolean__true;
       pthread_exit(0);
     }
   }

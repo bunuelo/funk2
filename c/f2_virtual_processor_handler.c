@@ -106,7 +106,7 @@ void funk2_virtual_processor_handler__destroy(funk2_virtual_processor_handler_t*
 }
 
 void funk2_virtual_processor_handler__destroy_all_virtual_processor_threads(funk2_virtual_processor_handler_t* this) {
-  funk2_processor_mutex__lock(&(this->all_processor_threads_mutex));
+  funk2_processor_mutex__lock(&(this->all_virtual_processor_threads_mutex));
   funk2_virtual_processor_thread_cons_t* iter = this->all_virtual_processor_threads;
   while (iter) {
     funk2_virtual_processor_thread_t* virtual_processor_thread = iter->virtual_processor_thread;
@@ -114,7 +114,7 @@ void funk2_virtual_processor_handler__destroy_all_virtual_processor_threads(funk
     f2__free(to_ptr(virtual_processor_thread));
     iter = iter->next;
   }
-  funk2_processor_mutex__unlock(&(this->all_processor_threads_mutex));
+  funk2_processor_mutex__unlock(&(this->all_virtual_processor_threads_mutex));
 }
 
 funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virtual_processor_thread(funk2_virtual_processor_handler_t* this) {
@@ -131,18 +131,18 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virt
       funk2_virtual_processor_thread_cons_t* cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
       cons->virtual_processor_thread              = virtual_processor_thread;
       {
-	funk2_processor_mutex__lock(&(this->all_processor_threads_mutex));
-	cons->next                  = this->all_processor_threads;
-	this->all_processor_threads = cons;
-	funk2_processor_mutex__unlock(&(this->all_processor_threads_mutex));
+	funk2_processor_mutex__lock(&(this->all_virtual_processor_threads_mutex));
+	cons->next                  = this->all_virtual_processor_threads;
+	this->all_virtual_processor_threads = cons;
+	funk2_processor_mutex__unlock(&(this->all_virtual_processor_threads_mutex));
       }
     }
   } else {
     {
-      funk2_processor_mutex__lock(&(this->free_processor_threads_mutex));
+      funk2_processor_mutex__lock(&(this->free_virtual_processor_threads_mutex));
       funk2_virtual_processor_thread_cons_t* cons = this->free_virtual_processor_threads;
       this->free_virtual_processor_threads        = cons->next;
-      funk2_processor_mutex__unlock(&(this->free_processor_threads_mutex));
+      funk2_processor_mutex__unlock(&(this->free_virtual_processor_threads_mutex));
     }
     virtual_processor_thread = cons->virtual_processor_thread;
     f2__free(to_ptr(cons));

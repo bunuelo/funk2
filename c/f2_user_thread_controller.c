@@ -181,6 +181,9 @@ void funk2_user_thread_controller__exit__user_process(funk2_user_thread_controll
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count ++;
   funk2_processor_mutex__unlock(&(this->done_mutex));
+  funk2_virtual_processor_thread_t* virtual_processor_thread = funk2_virtual_processor_handler__my_virtual_processor_thread(&(__funk2.virtual_processor_handler));
+  virtual_processor_thread->exit   = boolean__true;
+  virtual_processor_thread->exited = boolean__true;
   pthread_exit(0);
 }
 

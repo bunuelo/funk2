@@ -68,7 +68,7 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
   boolean_t locked_mutex  = boolean__false;
   while ((! locked_mutex) &&
 	 (! (virtual_processor_thread->exit))) {
-    if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) != 0) {
+    if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) == 0) {
       locked_mutex = boolean__true;
     }
     if (! locked_mutex) {

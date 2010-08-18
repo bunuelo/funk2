@@ -190,12 +190,7 @@ u64 funk2_virtual_processor_handler__my_virtual_processor_index(funk2_virtual_pr
     return 0;
   }
   pthread_t pthread                 = pthread_self();
-  u64       virtual_processor_index;
-  {
-    funk2_processor_mutex__lock(&(this->virtual_processor_index_pthread_hash_mutex));
-    virtual_processor_index = funk2_hash__lookup(&(this->virtual_processor_index_pthread_hash), (u64)pthread);
-    funk2_processor_mutex__unlock(&(this->virtual_processor_index_pthread_hash_mutex));
-  }
+  u64       virtual_processor_index = funk2_hash__lookup(&(this->virtual_processor_index_pthread_hash), (u64)pthread);
   return virtual_processor_index;
 }
 

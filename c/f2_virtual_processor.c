@@ -71,7 +71,7 @@ void funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thr
       {
 	funk2_processor_mutex__lock(&(this->virtual_processor_thread_stack_mutex));
 	if (this->virtual_processor_thread_stack) {
-	  current_processor_stack_index = this->virtual_processor_thread_stack->virtual_processor_thread->virtual_processor_stack_index;
+	  current_virtual_processor_stack_index = this->virtual_processor_thread_stack->virtual_processor_thread->virtual_processor_stack_index;
 	}
 	cons->next                           = this->virtual_processor_thread_stack;
 	this->virtual_processor_thread_stack = cons;

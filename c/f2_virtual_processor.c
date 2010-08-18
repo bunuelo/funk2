@@ -65,7 +65,15 @@ boolean_t funk2_virtual_processor__already_executing_next_bytecodes(funk2_virtua
 
 boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
   boolean_t did_something = boolean__false;
-  if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) == 0) {
+  boolean_t locked_mutex  = boolean__false;
+  while ((! locked_mutex) &&
+	 (! (virtual_processor_thread->exit))) {
+    if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) != 0) {
+      locked_mutex = boolean__true;
+    }
+    raw__fast_spin_sleep_yield();
+  }
+  if (! (virtual_processor_thread->exit)) {
     funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(this);
     this->execute_bytecodes_current_virtual_processor_thread = virtual_processor_thread;
     f2ptr     cause      = nil;
@@ -89,6 +97,8 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
     funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
     this->execute_bytecodes_current_virtual_processor_thread = NULL;
     funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread(this);
+  }
+  if (locked_mutex) {
     funk2_processor_mutex__unlock(&(this->execute_bytecodes_mutex));
   }
   return did_something;

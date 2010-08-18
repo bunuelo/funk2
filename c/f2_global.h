@@ -25,6 +25,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define F2__USE_VIRTUAL_PROCESSORS 1
+
 #include "f2_archconfig.h"
 #include "f2_debug_macros.h"
 #include "f2_system_headers.h"

@@ -28,15 +28,15 @@
 
 [deftypefunk story_event get as-list []
   [let [[prepositional_frame [get this prepositional_frame]]]
-    `[At time ,[get this time] `|,| ,[get this character_name] ,[get this action_name] @[apply &append [cons [let [[direct_object [have prepositional_frame lookup `direct_object]]]
-													       [if direct_object
-														   `[,direct_object]
-														 nil]]
-													     [mapcar [funk [preposition]
-															   [if [eq preposition `direct_object]
-															       nil
-															     `[,preposition ,[have prepositional_frame lookup preposition]]]]
-														     [get prepositional_frame slots]]]]]]]
+    `[At time ,[get this time] ,[get this character_name] ,[get this action_name] @[apply &append [cons [let [[direct_object [have prepositional_frame lookup `direct_object]]]
+													  [if direct_object
+													      `[,direct_object]
+													    nil]]
+													[mapcar [funk [preposition]
+														      [if [eq preposition `direct_object]
+															  nil
+															`[,preposition ,[have prepositional_frame lookup preposition]]]]
+														[get prepositional_frame slots]]]]]]]
 
 [deframe          story [frame] [character_frame event_redblacktree]]
 [deftypeconstruct story []

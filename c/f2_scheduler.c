@@ -269,7 +269,13 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	}
 	if (! fiber_needs_sleep) {
 	  int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
-	  release__assert(pool_index == this_processor_thread__pool_index(), fiber, "f2processor__execute_next_bytecodes: pool_index != this_processor_thread__pool_index().");
+	  { // assert that we are sane.
+	    int this_processor_thread__pool_index__value = this_processor_thread__pool_index();
+	    if (pool_index != this_processor_thread__pool_index__value) {
+	      status("f2processor__execute_next_bytecodes: pool_index != this_processor_thread__pool_index().  pool_index=%d  this_processor_thread__pool_index()=%d", pool_index, this_processor_thread__pool_index__value);
+	      error(nil, "f2processor__execute_next_bytecodes: pool_index != this_processor_thread__pool_index().");
+	    }
+	  }
 	  f2ptr popped_fiber = __funk2.operating_system.processor_thread__current_fiber[pool_index];
 	  __funk2.operating_system.processor_thread__current_fiber[pool_index] = fiber;
 	  //printf("\n  got fiber lock.");
@@ -405,6 +411,51 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
   return did_something;
 }
 
+f2ptr f2__scheduler__active_fibers(f2ptr cause) {
+  f2ptr processors         = f2scheduler__processors(__funk2.operating_system.scheduler, cause);
+  u64   processors__length = raw__array__length(cause, processors);
+  f2ptr seq                = nil;
+  u64   processors_index;
+  for (processors_index = 0; processors_index < processors__length; processors_index ++) {
+    f2ptr processor = raw__array__elt(cause, processors, processors_index);
+    f2ptr active_fibers = f2processor__active_fibers(processor, cause);
+    {
+      f2ptr iter = active_fibers;
+      while (iter) {
+	f2ptr fiber = f2__cons__car(cause, iter);
+	seq = f2cons__new(cause, fiber, seq);
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+  }
+  return seq;
+}
+def_pcfunk0(scheduler__active_fibers, return f2__scheduler__active_fibers(this_cause));
+
+void f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
+  boolean_t complete = boolean__false;
+  do {
+    if(f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) {
+      if(f2fiber__is_complete(fiber, cause) ||
+	 (f2fiber__paused(fiber, cause) && raw__bug__is_type(cause, f2fiber__value(fiber, cause)))) {
+	complete = boolean__true;
+      }
+      f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
+    }
+    if (! complete) {
+      f2__scheduler__yield(cause);
+    }
+  } while (! complete);
+}
+
+#if defined(F2__USE_VIRTUAL_PROCESSORS)
+
+void f2__scheduler__yield(f2ptr cause) {
+  funk2_virtual_processor_handler__yield(&(__funk2.virtual_processor_handler));
+}
+
+#else // not F2__USE_VIRTUAL_PROCESSORS
+
 void* processor__start_routine(void *ptr) {
   status("processor here, waiting for bootstrap to complete before starting.");
   while (__funk2.memory.bootstrapping_mode) {
@@ -446,43 +497,6 @@ void f2__scheduler__yield(f2ptr cause) {
   }
 }
 
-f2ptr f2__scheduler__active_fibers(f2ptr cause) {
-  f2ptr processors         = f2scheduler__processors(__funk2.operating_system.scheduler, cause);
-  u64   processors__length = raw__array__length(cause, processors);
-  f2ptr seq                = nil;
-  u64   processors_index;
-  for (processors_index = 0; processors_index < processors__length; processors_index ++) {
-    f2ptr processor = raw__array__elt(cause, processors, processors_index);
-    f2ptr active_fibers = f2processor__active_fibers(processor, cause);
-    {
-      f2ptr iter = active_fibers;
-      while (iter) {
-	f2ptr fiber = f2__cons__car(cause, iter);
-	seq = f2cons__new(cause, fiber, seq);
-	iter = f2__cons__cdr(cause, iter);
-      }
-    }
-  }
-  return seq;
-}
-def_pcfunk0(scheduler__active_fibers, return f2__scheduler__active_fibers(this_cause));
-
-void f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
-  boolean_t complete = boolean__false;
-  do {
-    if(f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) {
-      if(f2fiber__is_complete(fiber, cause) ||
-	 (f2fiber__paused(fiber, cause) && raw__bug__is_type(cause, f2fiber__value(fiber, cause)))) {
-	complete = boolean__true;
-      }
-      f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
-    }
-    if (! complete) {
-      f2__scheduler__yield(cause);
-    }
-  } while (! complete);
-}
-
 void f2processor__start_new_processor_thread(f2ptr cause, long processor_index) {
   funk2_processor_thread_t* new_processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), processor__start_routine, (void*)(long)processor_index);
   pause_gc();
@@ -505,6 +519,8 @@ void f2__scheduler__start_processors() {
 void f2__scheduler__stop_processors() {
   status("f2__scheduler__stop_processors note: doing nothing.");
 }
+
+#endif // F2__USE_VIRTUAL_PROCESSORS
 
 void f2__scheduler__reinitialize_globalvars() {
   f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
@@ -551,7 +567,13 @@ void f2__scheduler__initialize() {
 }
 
 void f2__scheduler__destroy() {
+#if defined(F2__USE_VIRTUAL_PROCESSORS)
+
+#else // not F2__USE_VIRTUAL_PROCESSORS
+
   f2__scheduler__stop_processors();
+
+#endif // F2__USE_VIRTUAL_PROCESSORS
 }
 
 

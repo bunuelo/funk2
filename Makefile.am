@@ -241,6 +241,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_frame_objects.c \
   c/f2_funk2_node.c \
   c/f2_funktional.c \
+  c/f2_hash.c \
   c/f2_html.c \
   c/f2_load.c \
   c/f2_malloc.c \
@@ -318,6 +319,9 @@ lib_libfunk2_la_SOURCES = \
   c/f2_time.c \
   c/f2_trace.c \
   c/f2_user_thread_controller.c \
+  c/f2_virtual_processor.c \
+  c/f2_virtual_processor_handler.c \
+  c/f2_virtual_processor_thread.c \
   c/f2_xmlrpc.c \
   c/f2_zlib.c \
   c/funk2.c \

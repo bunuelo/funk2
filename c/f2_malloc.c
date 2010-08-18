@@ -24,6 +24,9 @@
 void assert_failed(f2ptr fiber, char* filename, int line_num, char* str) {
   status("*** %s:%d> assertion failed, '%s' ***", filename, line_num, str);
   fprintf(stderr, "\n*** %s:%d> assertion failed, '%s' ***\n", filename, line_num, str);
+  while (1) {
+    sched_yield();
+  }
   exit(-1);
 }
 

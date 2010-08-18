@@ -24,6 +24,7 @@
 
 #define global_scheduler() __global__scheduler
 
+#include "f2_global.h"
 #include "f2_fiber.h"
 #include "f2_time.h"
 #include "f2_processor_mutex.h"
@@ -63,13 +64,23 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause);
 
 f2ptr f2__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
 
-void f2__scheduler__yield(f2ptr cause);
 void f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber);
 
 void f2__print_fibers_stacks();
 
+
+#if defined(F2__USE_VIRTUAL_PROCESSORS)
+
+void f2__scheduler__yield(f2ptr cause);
+
+#else // not F2__USE_VIRTUAL_PROCESSORS
+
+void f2__scheduler__yield(f2ptr cause);
 void f2__scheduler__start_processors();
 void f2__scheduler__stop_processors();
+
+#endif // F2__USE_VIRTUAL_PROCESSORS
+
 
 void f2__scheduler__initialize();
 void f2__scheduler__destroy();

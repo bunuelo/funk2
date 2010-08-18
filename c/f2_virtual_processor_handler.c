@@ -193,7 +193,7 @@ u64 funk2_virtual_processor_handler__my_virtual_processor_index(funk2_virtual_pr
   u64       virtual_processor_index;
   {
     funk2_processor_mutex__lock(&(this->virtual_processor_index_pthread_hash_mutex));
-    u64 virtual_processor_index = funk2_hash__lookup(&(this->virtual_processor_index_pthread_hash), (u64)pthread);
+    virtual_processor_index = funk2_hash__lookup(&(this->virtual_processor_index_pthread_hash), (u64)pthread);
     funk2_processor_mutex__unlock(&(this->virtual_processor_index_pthread_hash_mutex));
   }
   return virtual_processor_index;

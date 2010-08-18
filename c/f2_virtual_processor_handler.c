@@ -138,13 +138,11 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virt
       }
     }
   } else {
-    {
-      funk2_processor_mutex__lock(&(this->free_virtual_processor_threads_mutex));
-      funk2_virtual_processor_thread_cons_t* cons = this->free_virtual_processor_threads;
-      this->free_virtual_processor_threads        = cons->next;
-      virtual_processor_thread                    = cons->virtual_processor_thread;
-      funk2_processor_mutex__unlock(&(this->free_virtual_processor_threads_mutex));
-    }
+    funk2_processor_mutex__lock(&(this->free_virtual_processor_threads_mutex));
+    funk2_virtual_processor_thread_cons_t* cons = this->free_virtual_processor_threads;
+    this->free_virtual_processor_threads        = cons->next;
+    virtual_processor_thread                    = cons->virtual_processor_thread;
+    funk2_processor_mutex__unlock(&(this->free_virtual_processor_threads_mutex));
     f2__free(to_ptr(cons));
   }
   return virtual_processor_thread;

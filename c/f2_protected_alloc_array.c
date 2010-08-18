@@ -129,11 +129,16 @@ boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc
 void funk2_protected_alloc_array__save_to_stream(funk2_protected_alloc_array_t* this, int fd) {
   u64 used_num = this->used_num;
   safe_write(fd, to_ptr(&used_num), sizeof(used_num));
-  u64 index;
-  for (index = 0; index < used_num; index ++) {
-    f2ptr exp = this->data[index];
-    safe_write(fd, to_ptr(&exp), sizeof(exp));
+  f2ptr* write_buffer = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * user_num));
+  {
+    u64 index;
+    for (index = 0; index < used_num; index ++) {
+      f2ptr exp = this->data[index];
+      write_buffer[index] = exp;
+    }
   }
+  safe_write(fd, to_ptr(write_buffer), sizeof(f2ptr) * user_num);
+  f2__free(to_ptr(write_buffer));
 }
 
 void funk2_protected_alloc_array__load_from_stream(funk2_protected_alloc_array_t* this, int fd) {

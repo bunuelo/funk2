@@ -67,6 +67,9 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
       while (did_something) {
 	did_something = funk2_virtual_processor__execute_next_bytecodes(virtual_processor, this);
       }
+      if (! did_something) {
+	f2__nanosleep(1000000);
+      }
     } else {
       //
       // We could unassign virtual_processor_thread from virtual_processor here, but only if we don't want to do this very often.

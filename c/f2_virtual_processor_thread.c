@@ -44,7 +44,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
     boolean_t                  we_are_next_in_line_to_execute = boolean__false;
     {
       s64 working_virtual_processor_thread_count = virtual_processor->assigned_virtual_processor_thread_count - virtual_processor->spinning_virtual_processor_thread_count;
-      s64 line_length                            = virtual_processor_thread->virtual_processor_stack_index - working_virtual_processor_thread_count;
+      s64 line_length                            = this->virtual_processor_stack_index - working_virtual_processor_thread_count;
       if (line_length == 1) {
 	we_are_next_in_line_to_execute = boolean__true;
       } else if (line_length < 1) {

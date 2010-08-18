@@ -71,7 +71,9 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
     if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) != 0) {
       locked_mutex = boolean__true;
     }
-    raw__fast_spin_sleep_yield();
+    if (! locked_mutex) {
+      raw__fast_spin_sleep_yield();
+    }
   }
   if (! (virtual_processor_thread->exit)) {
     funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(this);

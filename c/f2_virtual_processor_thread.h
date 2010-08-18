@@ -22,12 +22,18 @@
 #ifndef F2__VIRTUAL_PROCESSOR_THREAD__TYPES__H
 #define F2__VIRTUAL_PROCESSOR_THREAD__TYPES__H
 
-typedef struct funk2_virtual_processor_thread_s funk2_virtual_processor_thread_t;
+typedef struct funk2_virtual_processor_thread_cons_s funk2_virtual_processor_thread_cons_t;
+typedef struct funk2_virtual_processor_thread_s      funk2_virtual_processor_thread_t;
 
 #endif // F2__VIRTUAL_PROCESSOR_THREAD__TYPES__H
 
 #ifndef F2__VIRTUAL_PROCESSOR_THREAD__H
 #define F2__VIRTUAL_PROCESSOR_THREAD__H
+
+struct funk2_virtual_processor_thread_cons_s {
+  funk2_virtual_processor_thread_t*             virtual_processor_thread;
+  struct funk2_virtual_processor_thread_cons_s* next;
+};
 
 struct funk2_virtual_processor_thread_s {
   funk2_processor_mutex_t   assignment_mutex;
@@ -35,6 +41,7 @@ struct funk2_virtual_processor_thread_s {
   funk2_processor_thread_t* processor_thread;
   boolean_t                 exit;
   boolean_t                 exited;
+  u64                       virtual_processor_stack_index;
 };
 
 void* funk2_virtual_processor_thread__start_function(                 void* args);

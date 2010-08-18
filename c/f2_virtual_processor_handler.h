@@ -22,8 +22,7 @@
 #ifndef F2__VIRTUAL_PROCESSOR_HANDLER__TYPES__H
 #define F2__VIRTUAL_PROCESSOR_HANDLER__TYPES__H
 
-typedef struct funk2_virtual_processor_thread_cons_s funk2_virtual_processor_thread_cons_t;
-typedef struct funk2_virtual_processor_handler_s     funk2_virtual_processor_handler_t;
+typedef struct funk2_virtual_processor_handler_s funk2_virtual_processor_handler_t;
 
 #endif // F2__VIRTUAL_PROCESSOR_HANDLER__TYPES__H
 
@@ -33,11 +32,6 @@ typedef struct funk2_virtual_processor_handler_s     funk2_virtual_processor_han
 #include "f2_global.h"
 #include "f2_virtual_processor.h"
 #include "f2_virtual_processor_thread.h"
-
-struct funk2_virtual_processor_thread_cons_s {
-  funk2_virtual_processor_thread_t*             virtual_processor_thread;
-  struct funk2_virtual_processor_thread_cons_s* next;
-};
 
 struct funk2_virtual_processor_handler_s {
   funk2_processor_mutex_t                virtual_processor_index_processor_thread_hash_mutex;

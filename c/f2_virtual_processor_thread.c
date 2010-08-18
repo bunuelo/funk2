@@ -40,8 +40,19 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	raw__spin_sleep_yield();
       }
     }
-    funk2_virtual_processor_t* virtual_processor = __funk2.virtual_processor_handler.virtual_processor[virtual_processor_assignment_index];
-    if (! funk2_virtual_processor__already_executing_next_bytecodes(virtual_processor)) {
+    funk2_virtual_processor_t* virtual_processor              = __funk2.virtual_processor_handler.virtual_processor[virtual_processor_assignment_index];
+    boolean_t                  we_are_next_in_line_to_execute = boolean__false;
+    {
+      s64 working_virtual_processor_thread_count = virtual_processor->assigned_virtual_processor_thread_count - virtual_processor->spinning_virtual_processor_thread_count;
+      s64 line_length                            = virtual_processor_thread->virtual_processor_stack_index - working_virtual_processor_thread_count;
+      if (line_length == 1) {
+	we_are_next_in_line_to_execute = boolean__true;
+      } else if (line_length < 1) {
+	status("funk2_virtual_processor_thread__start_function error: line length is less than one.  line_length=" s64__fstr, line_length);
+	error(nil, "funk2_virtual_processor_thread__start_function error: line length is less than one.");
+      }
+    }
+    if (we_are_next_in_line_to_execute) {
       boolean_t did_something = boolean__true;
       while (did_something) {
 	did_something = funk2_virtual_processor__execute_next_bytecodes(virtual_processor, this);
@@ -57,7 +68,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
       //	funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(virtual_processor);
       //	funk2_virtual_processor_thread__unassign_from_virtual_processor(this);
       //}
-      //raw__spin_sleep_yield();
+      raw__spin_sleep_yield();
     }
   }
   this->exited = boolean__true;
@@ -69,6 +80,7 @@ void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this
   this->virtual_processor_assignment_index = -1;
   this->exit                               = boolean__false;
   this->exited                             = boolean__false;
+  this->virtual_processor_stack_index      = 0;
   this->processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), funk2_virtual_processor_thread__start_function, this);
   //funk2_processor_thread__init(&(this->processor_thread), -1, funk2_virtual_processor_thread__start_function, this);
 }

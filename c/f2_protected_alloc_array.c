@@ -144,11 +144,15 @@ void funk2_protected_alloc_array__save_to_stream(funk2_protected_alloc_array_t* 
 void funk2_protected_alloc_array__load_from_stream(funk2_protected_alloc_array_t* this, int fd) {
   u64 used_num;
   safe_read(fd, to_ptr(&used_num), sizeof(used_num));
-  u64 index;
-  for (index = 0; index < used_num; index ++) {
-    f2ptr exp;
-    safe_read(fd, to_ptr(&exp), sizeof(exp));
-    funk2_protected_alloc_array__add_protected_alloc_f2ptr(this, exp);
+  f2ptr* read_buffer = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * used_num));
+  safe_read(fd, to_ptr(read_buffer), sizeof(f2ptr) * used_num);
+  {
+    u64 index;
+    for (index = 0; index < used_num; index ++) {
+      f2ptr exp = read_buffer[index];
+      funk2_protected_alloc_array__add_protected_alloc_f2ptr(this, exp);
+    }
   }
+  f2__free(to_ptr(read_buffer));
 }
 

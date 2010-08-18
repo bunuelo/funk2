@@ -52,9 +52,9 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
       }
       if (line_length == 0) {
 	we_are_next_in_line_to_execute = boolean__true;
-      } else if (line_length < 0) {
-	status("funk2_virtual_processor_thread__start_function error: line length is less than zero.  line_length=" s64__fstr, line_length);
-	error(nil, "funk2_virtual_processor_thread__start_function error: line length is less than zero.");
+      } else if (line_length < 1) {
+	status("funk2_virtual_processor_thread__start_function error: line length is less than one.  line_length=" s64__fstr, line_length);
+	error(nil, "funk2_virtual_processor_thread__start_function error: line length is less than one.");
       }
     }
     if (we_are_next_in_line_to_execute) {

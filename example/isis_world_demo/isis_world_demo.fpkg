@@ -18,9 +18,10 @@
  rights to redistribute these changes.'
 
 [defpackage isis_world_demo
-  :packages [mind story isis_world]
+  :packages [mind isis_world]
    :sources ['isis_world_demo.fu2']]
 
 [defpackage jj
   :packages [isis_world_demo]
    :sources ['jj.fu2']]
+

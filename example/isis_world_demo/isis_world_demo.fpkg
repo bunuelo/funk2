@@ -21,3 +21,6 @@
   :packages [mind story isis_world]
    :sources ['isis_world_demo.fu2']]
 
+[defpackage jj
+  :packages [isis_world_demo]
+   :sources ['jj.fu2']]

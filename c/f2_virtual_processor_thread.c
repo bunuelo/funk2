@@ -32,9 +32,11 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
     u64       virtual_processor_assignment_index = -1;
     boolean_t not_assigned_to_virtual_processor  = boolean__true;
     while(not_assigned_to_virtual_processor) {
-      funk2_processor_mutex__lock(&(this->assignment_mutex));
-      virtual_processor_assignment_index = this->virtual_processor_assignment_index;
-      funk2_processor_mutex__unlock(&(this->assignment_mutex));
+      {
+	funk2_processor_mutex__lock(&(this->assignment_mutex));
+	virtual_processor_assignment_index = this->virtual_processor_assignment_index;
+	funk2_processor_mutex__unlock(&(this->assignment_mutex));
+      }
       not_assigned_to_virtual_processor = (virtual_processor_assignment_index == -1);
       if (not_assigned_to_virtual_processor) {
 	raw__spin_sleep_yield();
@@ -72,7 +74,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
       }
     } else {
       //
-      // We could unassign virtual_processor_thread from virtual_processor here, but only if we don't want to do this very often.
+      // We could unassign virtual_processor_thread from virtual_processor here, but we don't want to very often.
       //
       //funk2_processor_mutex__lock(&(virtual_processor->spinning_virtual_processor_thread_count_mutex));
       //s64 spinning_virtual_processor_thread_count = virtual_processor->spinning_virtual_processor_thread_count;

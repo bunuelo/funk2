@@ -179,6 +179,10 @@
   [let [[package             [lookup-package name]]
 	[loaded_a_dependency nil]
 	[package_was_loaded  nil]]
+    [if [null package]
+	[error bug_type     `package_definition_not_loaded
+	       description  [format nil 'We tried to load the package named \'' name '\', but the package does not exist.']
+	       package_name name]]
     [mapc [funk [package_dependency]
 		[let [[dependency_was_loaded [package-load_if_modified package_dependency]]]
 		  [if dependency_was_loaded

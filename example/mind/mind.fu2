@@ -98,6 +98,12 @@
 [defmetro mind-activate [mind layer_name agency_name resource_name :rest args]
   `[have ,mind activate [quote ,layer_name] [quote ,agency_name] [quote ,resource_name] @args]]
 
+[deftypefunk mind get knowledge [layer_name agency_name]
+  [get [get this agency layer_name agency_name] knowledge]]
+
+[defmetro mind-knowledge [mind layer_name agency_name]
+  `[get ,mind knowledge [quote ,layer_name] [quote ,agency_name]]]
+
 [deftypefunk mind get resource [layer_name agency_name resource_name]
   [get [get this layer layer_name] resource agency_name resource_name]]
 

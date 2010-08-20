@@ -20,12 +20,14 @@
 
 'agency'
 
-[deframe          agency [frame] [name layer resource_frame trace_story]]
+[deframe          agency [frame] [name layer resource_frame knowledge trace_story]]
 [deftypeconstruct agency [name]
   [set this name           name]
   [set this layer          nil] 'We set this when we add the resource to a layer.'
   [set this resource_frame [frame]]
+  [set this knowledge      [new propogator_resource [get [format nil name '_agency_knowledge'] as-symbol]]]
   [set this trace_story    [new story]]
+  [have this add_resource [get [get this knowledge] resource]]
   this]
 
 [deftypefunk agency execute add_resource [resource]

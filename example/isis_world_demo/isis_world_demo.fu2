@@ -34,16 +34,7 @@
 
 
 
-[deframe          isis_agent [frame] [name
-				      mind
-				      body
-				      
-				      fu_resource
-				      fu_args
-				      
-				      reactive_sensory_story
-				      reality_story
-				      ]]
+[deframe          isis_agent [frame] [name mind body fu_resource fu_args]]
 [deftypeconstruct isis_agent [name]
   [let [[mind [new mind]]
 	[body [new isis_world_body name]]]
@@ -72,28 +63,36 @@
     [mind-create_agency mind self_reflective physical]
     [mind-create_agency mind self_conscious  imprimer_learning]
     
-    [mind-create_resource mind reactive sensory interpret_sense_to_story [sense]
-			  [have this think_to_self 'Interpretting sense to story.']
-			  [let [[sense_agent_frame [have sense lookup `agents]]
-				[story             [new story]]]
-			    [let [[agent_names [get sense_agent_frame slots]]]
-			      [if agent_names
-				  [have this think_to_self 'While interpretting sense to story, I can see agents, ' agent_names '.']
-				[have this think_to_self 'While interpretting sense to story, I cannot see any other agents.']]
-			      [mapc [funk [agent_name]
-					  [let [[agent [have sense_agent_frame lookup agent_name]]]
-					    [have story add_new_character agent_name]
-					    [story-create_event story [get body time_step] `I `sees agent_name]
-					    [let [[says [have agent lookup `says]]]
-					      [if says
-						  [mapc [funk [say]
-							      [have this think_to_self 'While interpretting sense to story, I can hear ' agent_name ' saying, "' say '"']
-							      [story-create_event story [get body time_step] agent_name `says say]]
-							says]]]]]
-				    agent_names]]
-			    [have this think_to_self 'While interpretting sense to story, I created this story: ' [get story as-list] '.']
-			    story]]
+    [let [[sense-cell [new propogator_cell `sense]]
+	  [story-cell [new propogator_cell `story]]]
+      [have [mind-knowledge mind reactive sensory] add_constraint
+	    [new propogator_constraint `sense->story story-cell [list sense-cell]
+		 [funk [sense]
+		       [have this think_to_self 'Propogating sense->story.']
+		       [let [[sense_agent_frame [have sense lookup `agents]]
+			     [story             [new story]]]
+			 [let [[agent_names [get sense_agent_frame slots]]]
+			   [if agent_names
+			       [have this think_to_self 'While propogating sense->story, I can see agents, ' agent_names '.']
+			     [have this think_to_self 'While propogating sense->story, I cannot see any other agents.']]
+			   [mapc [funk [agent_name]
+				       [let [[agent [have sense_agent_frame lookup agent_name]]]
+					 [have story add_new_character agent_name]
+					 [story-create_event story [get body time_step] `I `sees agent_name]
+					 [let [[says [have agent lookup `says]]]
+					   [if says
+					       [mapc [funk [say]
+							   [have this think_to_self 'While propogating sense->story, I can hear ' agent_name ' saying, "' say '"']
+							   [story-create_event story [get body time_step] agent_name `says say]]
+						     says]]]]]
+				 agent_names]]
+			 [have this think_to_self 'While propogating sense->story, I created this story: ' [get story as-list] '.']
+			 story]]]]
+      ]
+
+
     
+
     [mind-create_resource mind reactive physical turn_right [steps]
 			  [format stdout '\n  turn_right']
 			  [let [[starting_time [get body time_step]]]			
@@ -198,7 +197,7 @@
 				  [mind-activate [get this mind] reactive physical walk_directly_towards target]
 				  [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]]]]
 			     [get body sense]]
-     
+
      [mind-create_resource mind reactive physical open_fridge [fridge]
 			   [format stdout '\n  open_fridge']
 			   [while [null [get this sense]] 
@@ -459,7 +458,7 @@ why does it randomly exit the while loop/??'
 				    [millisleep 100]
 				  [let [[sense [get body sense]]]
 				    [have this think_to_self 'My body senses the world.']
-				    [mind-activate [get this mind] reactive sensory interpret_sense_to_story sense]
+				    [set [mind-knowledge mind reactive sensory] value `sense `[time_step ,time_step] sense]
 				    [= last_time_step time_step]]]]
 			      ]]]
     
@@ -481,23 +480,31 @@ why does it randomly exit the while loop/??'
 			    [have this think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
 			  ]
     
-    [mind-create_resource mind deliberative reality include_reactive_stories_into_deliberative_story []
-			  [cause-define cause-time_step [get body time_step]]
-			  [cause-define cause-name      `[deliberative reality interpret_senses_into_current_story]]
-			  [let [[last_time_step     -1]
-				[last_reality_story [new story]]]
-			    [while t
-			      [let [[time_step [get body time_step]]]
-				[if [== last_time_step time_step]
-				    [millisleep 100]
-				  [let [[reactive_sensory_story [get this reactive_sensory_story]]]
-				    [if [null reactive_sensory_story]
-					[millisleep 1000]
-				      [prog [have this think_to_self 'Including reactive sensory story into deliberative story: ' [get reactive_sensory_story as-list]]
-					    [let [[reality_story [get last_reality_story union reactive_sensory_story]]]
-					      [set this reality_story reality_story]
-					      [= last_reality_story reality_story]]
-					    [= last_time_step time_step]]]]]]]]]
+    [let [[reality_story-cell [new propogator_cell `reality_story]]]
+      
+      [have [mind-knowledge mind deliberative reality] add_cell reality_story-cell]
+      
+      [mind-create_resource mind deliberative reality include_reactive_stories_into_deliberative_story []
+			    [cause-define cause-time_step [get body time_step]]
+			    [cause-define cause-name      `[deliberative reality interpret_senses_into_current_story]]
+			    [let [[last_time_step     -1]
+				  [last_reality_story [new story]]]
+			      [while t
+				[let [[time_step [get body time_step]]]
+				  [if [== last_time_step time_step]
+				      [millisleep 100]
+				    [let [[knowledge [mind-knowledge mind reactive sensory]]]
+				      [let [[reactive_sensory_story [get knowledge value `story `[time_step ,time_step]]]]
+					[if [null reactive_sensory_story]
+					    [millisleep 1000]
+					  [prog [have this think_to_self 'Including reactive sensory story into deliberative story: ' [get reactive_sensory_story as-list]]
+						[let [[reality_story [get last_reality_story union reactive_sensory_story]]]
+						  [set [mind-knowledge mind deliberative reality] value `reality_story `[time_step ,time_step]
+						       reality_story]
+						  [= last_reality_story reality_story]]
+						[= last_time_step time_step]]]]]]]]]]
+      
+      ]
     
     [mind-create_resource mind self_conscious imprimer_learning react_to_imprimer_scold [imprimer scold]
 			  [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', has scolded something about ' [get scold focus] '!  How should I react?']
@@ -635,6 +642,7 @@ why does it randomly exit the while loop/??'
 
 [defunk isis_world-initialize [hostname]
   [globalize arm_length 2]
+  [globalize focus_object `loaf+173696020]
   [shelter [have isis_world destroy]]
   [let [[client [new isis_world_client hostname]]]
     [let [[isis_world [new isis_world client]]]

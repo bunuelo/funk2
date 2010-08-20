@@ -107,16 +107,16 @@ void funk2_virtual_processor_handler__start_virtual_processors(funk2_virtual_pro
   if (this->virtual_processor != NULL) {
     error(nil, "funk2_virtual_processor_handler__start_virtual_processors error: virtual_processor array seems to already be initialized.");
   }
-  this->virtual_processor = (funk2_virtual_processor_t**)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_t*) * virtual_processor_count));
+  this->virtual_processor = (funk2_virtual_processor_t**)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_t*) * (this->virtual_processor_count)));
   {
     s64 index;
-    for (index = 0; index < virtual_processor_count; index ++) {
+    for (index = 0; index < (this->virtual_processor_count); index ++) {
       this->virtual_processor[index] = (funk2_virtual_processor_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_t)));
     }
   }
   {
     s64 index;
-    for (index = 0; index < virtual_processor_count; index ++) {
+    for (index = 0; index < (this->virtual_processor_count); index ++) {
       funk2_virtual_processor__init(this->virtual_processor[index], index);
     }
   }

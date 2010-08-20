@@ -34,7 +34,16 @@
 
 
 
-[deframe          isis_agent [frame] [name mind body fu_resource fu_args]]
+[deframe          isis_agent [frame] [name
+				      mind
+				      body
+				      
+				      fu_resource
+				      fu_args
+				      
+				      reactive_sensory_story
+				      reality_story
+				      ]]
 [deftypeconstruct isis_agent [name]
   [let [[mind [new mind]]
 	[body [new isis_world_body name]]]

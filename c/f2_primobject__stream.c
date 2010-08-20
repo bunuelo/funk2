@@ -23,7 +23,7 @@
 
 // stream
 
-def_primobject_10_slot(stream, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number);
+def_primobject_11_slot(stream, mutex, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number);
 
 f2ptr __file_stream__symbol        = -1;
 f2ptr __string_stream__symbol      = -1;
@@ -383,7 +383,7 @@ void f2__primobject__stream__initialize() {
   
   // stream
   
-  initialize_primobject_10_slot(stream, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number);
+  initialize_primobject_11_slot(stream, mutex, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number);
   
   {char* symbol_str = "try_read_character"; __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__try_read_character, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__funk = never_gc(cfunk);}

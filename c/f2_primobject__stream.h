@@ -25,7 +25,7 @@
 // stream
 
 typedef struct funk2_object_type__stream__slot_s funk2_object_type__stream__slot_t;
-declare_object_type_10_slot(stream, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number,
+declare_object_type_11_slot(stream, mutex, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number,
 			    f2ptr try_read_character__symbol;
 			    f2ptr try_read_character__funk;
 			    f2ptr rewind__symbol;
@@ -43,7 +43,7 @@ declare_object_type_10_slot(stream, stream_type, ungetc_stack, rewind_stack, rew
 
 // stream
 
-declare_primobject_10_slot(stream, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number);
+declare_primobject_11_slot(stream, mutex, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number);
 
 boolean_t raw__file_stream__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__file_stream__is_type(f2ptr cause, f2ptr this);

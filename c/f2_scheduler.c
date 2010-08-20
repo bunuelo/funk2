@@ -33,6 +33,9 @@ void funk2_operating_system__destroy(funk2_operating_system_t* this) {
 
 
 f2ptr f2__global_scheduler__this_processor(f2ptr cause) {
+  if (__funk2.operating_system.scheduler == nil) {
+    error(nil, "f2__global_scheduler__this_processor error: __funk2.operating_system.scheduler == nil");
+  }
   return raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), this_processor_thread__pool_index());
 }
 

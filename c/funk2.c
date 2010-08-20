@@ -168,6 +168,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     funk2_node_handler__add_node(&(this->node_handler), __funk2.node_id, &client_id);
   }
   
+  funk2_virtual_processor_handler__init(&(this->virtual_processor_handler), memory_pool_num);
   funk2_memory__init(&(this->memory));
   funk2_garbage_collector__init(&(this->garbage_collector));
   funk2_garbage_collector__init_sets_from_memory(&(this->garbage_collector), &(this->memory));
@@ -303,6 +304,11 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   }
   
 #if defined(F2__USE_VIRTUAL_PROCESSORS)
+  
+  pause_gc();
+  funk2_virtual_processor_handler__start_virtual_processors(&(this->virtual_processor_handler));
+  resume_gc();
+  
 #else // not F2__USE_VIRTUAL_PROCESSORS
   
   // start pthreads for each processor (starts user repl once bootstrapping is done   this->memory.bootstrapping_mode = boolean__false;)
@@ -311,11 +317,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
 #endif // F2__USE_VIRTUAL_PROCESSORS
 
   status("bootstrapping complete.");
-#if defined(F2__USE_VIRTUAL_PROCESSORS)
-  pause_gc();
-  funk2_virtual_processor_handler__init(&(this->virtual_processor_handler), memory_pool_num);
-  resume_gc();
-#endif // F2__USE_VIRTUAL_PROCESSORS
   this->memory.bootstrapping_mode = boolean__false;
 }
 

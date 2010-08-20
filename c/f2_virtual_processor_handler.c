@@ -45,22 +45,8 @@ void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* th
     funk2_processor_mutex__init(&(this->virtual_processor_index_pthread_hash_mutex));
     funk2_hash__init(&(this->virtual_processor_index_pthread_hash), 10);
   }
-  { // virtual processors are the last to be initialized in the handler
-    this->virtual_processor_count = virtual_processor_count;
-    this->virtual_processor       = (funk2_virtual_processor_t**)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_t*) * virtual_processor_count));
-    {
-      s64 index;
-      for (index = 0; index < virtual_processor_count; index ++) {
-	this->virtual_processor[index] = (funk2_virtual_processor_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_t)));
-      }
-    }
-    {
-      s64 index;
-      for (index = 0; index < virtual_processor_count; index ++) {
-	funk2_virtual_processor__init(this->virtual_processor[index], index);
-      }
-    }
-  }
+  this->virtual_processor_count = virtual_processor_count;
+  this->virtual_processor       = NULL;
 }
 
 void funk2_virtual_processor_handler__destroy(funk2_virtual_processor_handler_t* this) {
@@ -115,6 +101,25 @@ void funk2_virtual_processor_handler__destroy_all_virtual_processor_threads(funk
     iter = iter->next;
   }
   funk2_processor_mutex__unlock(&(this->all_virtual_processor_threads_mutex));
+}
+
+void funk2_virtual_processor_handler__start_virtual_processors(funk2_virtual_processor_handler_t* this) {
+  if (this->virtual_processor != NULL) {
+    error(nil, "funk2_virtual_processor_handler__start_virtual_processors error: virtual_processor array seems to already be initialized.");
+  }
+  this->virtual_processor = (funk2_virtual_processor_t**)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_t*) * virtual_processor_count));
+  {
+    s64 index;
+    for (index = 0; index < virtual_processor_count; index ++) {
+      this->virtual_processor[index] = (funk2_virtual_processor_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_t)));
+    }
+  }
+  {
+    s64 index;
+    for (index = 0; index < virtual_processor_count; index ++) {
+      funk2_virtual_processor__init(this->virtual_processor[index], index);
+    }
+  }
 }
 
 funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virtual_processor_thread(funk2_virtual_processor_handler_t* this) {

@@ -30,7 +30,7 @@ f2ptr __string_stream__symbol      = -1;
 f2ptr __text_window_stream__symbol = -1;
 
 f2ptr f2__stream__new(f2ptr cause, f2ptr stream_type, f2ptr ungetc_stack, f2ptr rewind_stack, f2ptr rewindable, f2ptr rewind_length, f2ptr file_descriptor, f2ptr string, f2ptr index) {
-  return f2stream__new(cause, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, f2integer__new(cause, 1), f2integer__new(cause, 1));
+  return f2stream__new(cause, f2__mutex__new(cause), stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, f2integer__new(cause, 1), f2integer__new(cause, 1));
 }
 def_pcfunk8(stream__new, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, return f2__stream__new(this_cause, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index));
 

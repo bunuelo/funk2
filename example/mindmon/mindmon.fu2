@@ -21,7 +21,7 @@
 [defunk gtk-left_label-new [text]
   [let [[this [gtk-label-new text]]]
     [set this alignment  0.0 0.0]
-    [set this selectable t]
+    `[set this selectable t]
     this]]
 
 

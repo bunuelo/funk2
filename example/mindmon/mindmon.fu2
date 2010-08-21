@@ -210,7 +210,7 @@
   [set this mindmon      mindmon]
   [set this layer_name   layer_name]
   
-  [set this label        [gtk-left_label-new [get layer_name as-string]]]
+  [set this label        [gtk-label-new [get layer_name as-string]]]
   [set this agency_vbox  [gtk-vbox-new [get this agency_count]]]
   [set this agency_array [new array    [get this agency_count]]]
   

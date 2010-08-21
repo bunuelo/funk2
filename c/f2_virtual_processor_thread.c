@@ -106,13 +106,21 @@ void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* t
   funk2_processor_thread__destroy(this->processor_thread);
 }
 
-void funk2_virtual_processor_thread__exit(funk2_virtual_processor_thread_t* this) {
+void funk2_virtual_processor_thread__signal_exit(funk2_virtual_processor_thread_t* this) {
   status("funk2_virtual_processor_thread__exit: waiting for virtual_processor_thread to exit.");
   this->exit = boolean__true;
+}
+
+void funk2_virtual_processor_thread__finalize_exit(funk2_virtual_processor_thread_t* this) {
   while (! (this->exited)) {
     raw__spin_sleep_yield();
   }
   status("funk2_virtual_processor_thread__exit: virtual_processor_thread exited.");
+}
+
+void funk2_virtual_processor_thread__exit(funk2_virtual_processor_thread_t* this) {
+  funk2_virtual_processor_thread__signal_exit(this);
+  funk2_virtual_processor_thread__finalize_exit(this);
 }
 
 void funk2_virtual_processor_thread__assign_to_virtual_processor(funk2_virtual_processor_thread_t* this, u64 virtual_processor_assignment_index) {

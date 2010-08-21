@@ -93,12 +93,30 @@ void funk2_virtual_processor_handler__destroy(funk2_virtual_processor_handler_t*
 
 void funk2_virtual_processor_handler__destroy_all_virtual_processor_threads(funk2_virtual_processor_handler_t* this) {
   funk2_processor_mutex__lock(&(this->all_virtual_processor_threads_mutex));
-  funk2_virtual_processor_thread_cons_t* iter = this->all_virtual_processor_threads;
-  while (iter) {
-    funk2_virtual_processor_thread_t* virtual_processor_thread = iter->virtual_processor_thread;
-    funk2_virtual_processor_thread__destroy(virtual_processor_thread);
-    f2__free(to_ptr(virtual_processor_thread));
-    iter = iter->next;
+  {
+    funk2_virtual_processor_thread_cons_t* iter = this->all_virtual_processor_threads;
+    while (iter) {
+      funk2_virtual_processor_thread_t* virtual_processor_thread = iter->virtual_processor_thread;
+      funk2_virtual_processor_thread__signal_exit(virtual_processor_thread);
+      iter = iter->next;
+    }
+  }
+  {
+    funk2_virtual_processor_thread_cons_t* iter = this->all_virtual_processor_threads;
+    while (iter) {
+      funk2_virtual_processor_thread_t* virtual_processor_thread = iter->virtual_processor_thread;
+      funk2_virtual_processor_thread__finalize_exit(virtual_processor_thread);
+      iter = iter->next;
+    }
+  }
+  {
+    funk2_virtual_processor_thread_cons_t* iter = this->all_virtual_processor_threads;
+    while (iter) {
+      funk2_virtual_processor_thread_t* virtual_processor_thread = iter->virtual_processor_thread;
+      funk2_virtual_processor_thread__destroy(virtual_processor_thread);
+      f2__free(to_ptr(virtual_processor_thread));
+      iter = iter->next;
+    }
   }
   funk2_processor_mutex__unlock(&(this->all_virtual_processor_threads_mutex));
 }

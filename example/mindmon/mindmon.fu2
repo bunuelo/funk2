@@ -252,6 +252,20 @@
   [set [get this label] text [format nil  '\t' [get this layer_name] ' layer'
 				     '\n' '\t' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
 
+'mindmon_mind'
+
+[deframe mindmon_mind [frame] [mind
+			       vbox
+			       label
+			       layer_vbox
+			       layer_array
+			       
+			       bytecodes_per_second]]
+
+
+[deftypefunk mindmon_mind get widget []
+  [get this vbox]]
+
 
 'mindmon'
 
@@ -260,6 +274,7 @@
 				   fiber
 				   
 				   scrolled_window
+				   mindmon_mind
 				   vbox
 				   label
 				   layer_vbox

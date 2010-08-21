@@ -288,7 +288,7 @@
   
   [dotimes [i [get mind layer_count]]
     [let [[mindmon_layer [get [get this layer_array] elt i]]]
-      [have [get this layer_notebook] append_page [get mindmon_layer widget] [gtk-label-new [get mindmon_layer layer_name]]]]]
+      [have [get this layer_notebook] append_page [get mindmon_layer widget] [gtk-label-new [get [get mindmon_layer layer_name] as-string]]]]]
   
   this]
 

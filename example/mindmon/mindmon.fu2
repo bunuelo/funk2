@@ -198,20 +198,18 @@
 
 'mindmon_layer'
 
-[deframe          mindmon_layer [frame] [mindmon
-					 layer_name
-					 
-					 vbox
-					 label
-					 agency_vbox
-					 agency_array
-					 
-					 bytecodes_per_second]]
+[deframe mindmon_layer [frame] [mindmon
+				layer_name
+				
+				label
+				agency_vbox
+				agency_array
+				
+				bytecodes_per_second]]
 [deftypeconstruct mindmon_layer [mindmon layer_name]
   [set this mindmon      mindmon]
   [set this layer_name   layer_name]
   
-  [set this vbox         [gtk-vbox-new 2]]
   [set this label        [gtk-left_label-new '']]
   [set this agency_vbox  [gtk-vbox-new [get this agency_count]]]
   [set this agency_array [new array    [get this agency_count]]]
@@ -227,8 +225,6 @@
 	[= agency_name_index [+    agency_name_index 1]]
 	[= agency_name_iter  [next agency_name_iter]]]]]
   
-  [have [get this vbox] pack_start [get this label]       nil nil 0]
-  [have [get this vbox] pack_start [get this agency_vbox] t t 0]
   this]
 
 [deftypefunk mindmon_layer get layer []
@@ -238,7 +234,7 @@
   [simple_length [get [get this layer] agencies]]]
 
 [deftypefunk mindmon_layer get widget []
-  [get this vbox]]
+  [get this agency_vbox]]
 
 [deftypefunk mindmon_layer get index []
   [get [get [get [get this mindmon] mind] layer [get this layer_name]] index]]
@@ -288,7 +284,7 @@
   
   [dotimes [i [get mind layer_count]]
     [let [[mindmon_layer [get [get this layer_array] elt i]]]
-      [have [get this layer_notebook] append_page [get mindmon_layer widget] [gtk-label-new [get [get mindmon_layer layer_name] as-string]]]]]
+      [have [get this layer_notebook] append_page [get mindmon_layer widget] [get mindmon_layer label]]]]
   
   this]
 

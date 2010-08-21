@@ -132,12 +132,12 @@
 	      [set this last_fiber_bytecode_count_time     fiber_bytecode_count_time]
 	      ]]]]]
     
-    [set [get this label] text [format nil  '\t\t\t' [get this resource_name]
-				       '\n' '\t\t\t\t' 'active\t\t'   [get resource active]
-				       '\n' '\t\t\t\t' 'done\t\t'     [get resource done]
-				       '\n' '\t\t\t\t' 'sleep time\t' [/ [get resource pole_nanoseconds] 1000000000.0] ' s'
-				       '\n' '\t\t\t\t' 'speed\t\t'    [/ [get this bytecodes_per_second] 1024.0] ' kBc/s'
-				       '\n' '\t\t\t\t' '\t\t\t\t\t\t\t\t\t\t'
+    [set [get this label] text [format nil  '\t' [get this resource_name]
+				       '\n' '\t\t' 'active\t\t'   [get resource active]
+				       '\n' '\t\t' 'done\t\t'     [get resource done]
+				       '\n' '\t\t' 'sleep time\t' [/ [get resource pole_nanoseconds] 1000000000.0] ' s'
+				       '\n' '\t\t' 'speed\t\t'    [/ [get this bytecodes_per_second] 1024.0] ' kBc/s'
+				       '\n' '\t\t' '\t\t\t\t\t\t\t\t\t\t'
 				       ]]
     [dotimes [i [get this story_count]]
       [have [get [get this story_array] elt i] redraw]]]]
@@ -150,7 +150,6 @@
 					  layer_name
 					  agency_name
 					  
-					  vbox
 					  label
 					  resource_vbox
 					  resource_array
@@ -161,7 +160,6 @@
   [set this mindmon        mindmon]
   [set this layer_name     layer_name]
   [set this agency_name    agency_name]
-  [set this vbox           [gtk-vbox-new 2]]
   [set this label          [gtk-left_label-new '']]
   [set this resource_vbox  [gtk-vbox-new [get this resource_count]]]
   [set this resource_array [new array    [get this resource_count]]]
@@ -173,8 +171,6 @@
 	[have [get this resource_vbox]  pack_start              [get [get [get this resource_array] elt resource_name_index] widget] t t 0]]
       [= resource_name_index [+    resource_name_index 1]]
       [= resource_name_iter  [next resource_name_iter]]]]
-  [have [get this vbox] pack_start [get this label]         nil nil 0]
-  [have [get this vbox] pack_start [get this resource_vbox] t t 0]
   this]
 
 [deftypefunk mindmon_agency get widget []
@@ -186,8 +182,8 @@
       [have [get [get this resource_array] elt i] redraw]
       [= agency_bytecodes_per_second [+ agency_bytecodes_per_second [get [get [get this resource_array] elt i] bytecodes_per_second]]]]
     [set this bytecodes_per_second agency_bytecodes_per_second]]
-  [set [get this label] text [format nil  '\t\t' [get this agency_name] ' agency'
-				     '\n' '\t\t' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
+  [set [get this label] text [format nil  [get this agency_name] ' agency'
+				     '\n' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
 
 [deftypefunk mindmon_agency get resource_count []
   [get [get [get this mindmon] mind] layer_agency_resource_count [get this layer_name] [get this agency_name]]]
@@ -202,7 +198,7 @@
 				layer_name
 				
 				label
-				agency_vbox
+				agency_notebook
 				agency_array
 				
 				bytecodes_per_second]]
@@ -210,9 +206,9 @@
   [set this mindmon      mindmon]
   [set this layer_name   layer_name]
   
-  [set this label        [gtk-label-new [get layer_name as-string]]]
-  [set this agency_vbox  [gtk-vbox-new [get this agency_count]]]
-  [set this agency_array [new array    [get this agency_count]]]
+  [set this label           [gtk-label-new [get layer_name as-string]]]
+  [set this agency_notebook [gtk-notebook-new]]
+  [set this agency_array    [new array [get this agency_count]]]
   
   [let [[agency_names [get [get mindmon mind] layer_agency_names layer_name]]]
     [let [[agency_name_index 0]
@@ -221,7 +217,7 @@
 	[let [[agency_name [first agency_name_iter]]]
 	  [let [[mindmon_agency [new mindmon_agency mindmon layer_name agency_name]]]
 	    [set  [get this agency_array] elt agency_name_index mindmon_agency]
-	    [have [get this agency_vbox]  pack_start [get mindmon_agency widget] t t 0]]]
+	    [have [get this agency_notebook] append_page [get mindmon_agency widget] [get mindmon_agency label]]]]
 	[= agency_name_index [+    agency_name_index 1]]
 	[= agency_name_iter  [next agency_name_iter]]]]]
   
@@ -234,7 +230,7 @@
   [simple_length [get [get this layer] agencies]]]
 
 [deftypefunk mindmon_layer get widget []
-  [get this agency_vbox]]
+  [get this agency_notebook]]
 
 [deftypefunk mindmon_layer get index []
   [get [get [get [get this mindmon] mind] layer [get this layer_name]] index]]

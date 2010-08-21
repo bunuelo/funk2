@@ -48,11 +48,10 @@
     'All isis_agents inherit these basic features.'
     
     [mind-create_layer mind 0 reactive]
-    [mind-create_layer mind 1 learned_reactive]
-    [mind-create_layer mind 2 deliberative]
-    [mind-create_layer mind 3 reflective]
-    [mind-create_layer mind 4 self_reflective]
-    [mind-create_layer mind 5 self_conscious]
+    [mind-create_layer mind 1 deliberative]
+    [mind-create_layer mind 2 reflective]
+    [mind-create_layer mind 3 self_reflective]
+    [mind-create_layer mind 4 self_conscious]
     
     [mind-create_agency mind reactive        sensory]
     [mind-create_agency mind reactive        physical]

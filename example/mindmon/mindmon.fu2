@@ -261,32 +261,57 @@
 			       layer_array
 			       
 			       bytecodes_per_second]]
-
+[deftypeconstruct mindmon_mind [mind]
+  [set this mind mind]
+  
+  [set this vbox            [gtk-vbox-new 2]]
+  [set this label           [gtk-left_label-new '']]
+  [set this layer_vbox      [gtk-vbox-new [get this layer_count]]]
+  
+  [have [get this vbox] pack_start [get this label]      nil nil 0]
+  [have [get this vbox] pack_start [get this layer_vbox] t t 0]
+  
+  [set this layer_array [new array [get this layer_count]]]
+  
+  [let [[layer_name_index 0]
+	[layer_name_iter  [get mind layer_names]]]
+    [while layer_name_iter
+      [let [[layer_name [first layer_name_iter]]]
+	[let [[mindmon_layer [new mindmon_layer this layer_name]]]
+	  [let [[layer [get [get this mind] layer layer_name]]]
+	    [let [[layer_index [get layer index]]]
+	      [set  [get this layer_array] elt layer_index mindmon_layer]]]]]
+      [= layer_name_index [+ layer_name_index 1]]
+      [= layer_name_iter  [next layer_name_iter]]]]
+  
+  [dotimes [i [get mind layer_count]]
+    [let [[mindmon_layer [get [get this layer_array] elt i]]]
+      [have [get this layer_vbox] pack_start [get mindmon_layer widget] t t 0]]]
+  
+  
+  this]
 
 [deftypefunk mindmon_mind get widget []
   [get this vbox]]
+
+[deftypefunk mindmon_mind get layer_count []
+  [simple_length [get [get this mind] layers]]]
+
 
 
 'mindmon'
 
 [deframe          mindmon [frame] [initialized
-				   mind
 				   fiber
 				   
 				   scrolled_window
 				   mindmon_mind
-				   vbox
-				   label
-				   layer_vbox
-				   layer_array
-				   
-				   bytecodes_per_second]]
+				   ]]
 [deftypeconstruct mindmon [mind mind_expression]
   [if [not [is-type `mind mind]]
       [error bug_type `mindmon_mind_is_not_mind
 	     was_type [type mind]]]
   [set this initialized nil]
-  [set this mind        mind]
   [set this fiber       [fiber [funk []
 				     [cause-define cause-name `mindmon]
 				     [cause-define cause-args [frame mind_expression mind_expression]]
@@ -298,45 +323,16 @@
 				     [let [[win [gtk-window-new]]]
 				       
 				       [set this scrolled_window [gtk-scrolled_window-new]]
-				       [set this vbox            [gtk-vbox-new 2]]
-				       [set this label           [gtk-left_label-new '']]
-				       [set this layer_vbox      [gtk-vbox-new [get this layer_count]]]
 				       
-				       [have [get this vbox] pack_start [get this label]      nil nil 0]
-				       [have [get this vbox] pack_start [get this layer_vbox] t t 0]
+				       [set this mindmon_mind [new mindmon_mind mind]]
 				       
-				       [have [get this scrolled_window] add_with_viewport [get this vbox]]
+				       [have [get this scrolled_window] add_with_viewport [get [get this mindmon_mind] widget]]
 				       
 				       [have win add          [get this scrolled_window]]
 				       [set  win default_size 640 800]
 				       [set  win title        [format nil 'mindmon ' mind_expression]]
 				       
-				       [set this layer_array [new array [get this layer_count]]]
-				       
-				       [let [[layer_name_index 0]
-					     [layer_name_iter  [get mind layer_names]]]
-					 [while layer_name_iter
-					   [let [[layer_name [first layer_name_iter]]]
-					     [let [[mindmon_layer [new mindmon_layer this layer_name]]]
-					       [let [[layer [get [get this mind] layer layer_name]]]
-						 [let [[layer_index [get layer index]]]
-						   [set  [get this layer_array] elt layer_index mindmon_layer]]]]]
-					   [= layer_name_index [+ layer_name_index 1]]
-					   [= layer_name_iter  [next layer_name_iter]]]]
-				       
-				       [dotimes [i [get mind layer_count]]
-					 [let [[mindmon_layer [get [get this layer_array] elt i]]]
-					   [have [get this layer_vbox] pack_start [get mindmon_layer widget] t t 0]]]
-				       
-				       [let [[mindmon-redraw-quit_now nil]
-					     [mindmon-redraw-is_done  nil]]
-					 
-					 [have win signal_connect 'destroy'
-					       [funk []
-						     [= mindmon-redraw-quit_now t]
-						     [while [not mindmon-redraw-is_done]
-						       [millisleep 100]]]
-					       nil]
+				       [let [[mindmon-redraw-quit_now nil]]
 					 
 					 [have win connect_hide_on_delete]
 					 [have win show_all]
@@ -346,18 +342,12 @@
 					   [if [not [get win visible]]
 					       [= mindmon-redraw-quit_now t]]
 					   [yield]]
-					 [= mindmon-redraw-is_done t]
+					 
 					 [have win destroy]
 					 nil]]]
 			       nil]]
-  [set this vbox        nil]
-  [set this layer_array nil]
-  [set this initialized t]
+  [set this initialized  t]
   this]
-
-
-[deftypefunk mindmon get layer_count []
-  [simple_length [get [get this mind] layers]]]
 
 
 [deftypefunk mindmon execute redraw []

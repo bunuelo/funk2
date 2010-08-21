@@ -210,7 +210,7 @@
   [set this mindmon      mindmon]
   [set this layer_name   layer_name]
   
-  [set this label        [gtk-left_label-new '']]
+  [set this label        [gtk-left_label-new [get layer_name as-string]]]
   [set this agency_vbox  [gtk-vbox-new [get this agency_count]]]
   [set this agency_array [new array    [get this agency_count]]]
   
@@ -247,8 +247,8 @@
 	[let [[bytecodes_per_second [get mindmon_agency bytecodes_per_second]]]
 	  [= layer_bytecodes_per_second [+ layer_bytecodes_per_second bytecodes_per_second]]]]]
     [set this bytecodes_per_second layer_bytecodes_per_second]]
-  [set [get this label] text [format nil  '\t' [get this layer_name] ' layer'
-				     '\n' '\t' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
+  [set [get this label] text [format nil  [get this layer_name] ' layer'
+				     '\n' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
 
 'mindmon_mind'
 

@@ -270,8 +270,8 @@
   [set this label           [gtk-left_label-new '']]
   [set this layer_notebook  [gtk-notebook-new]]
   
-  [have [get this vbox] pack_start [get this label]      nil nil 0]
-  [have [get this vbox] pack_start [get this layer_vbox] t t 0]
+  [have [get this vbox] pack_start [get this label]          nil nil 0]
+  [have [get this vbox] pack_start [get this layer_notebook] t t 0]
   
   [set this layer_array [new array [get this layer_count]]]
   

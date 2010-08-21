@@ -288,7 +288,6 @@
     [let [[mindmon_layer [get [get this layer_array] elt i]]]
       [have [get this layer_vbox] pack_start [get mindmon_layer widget] t t 0]]]
   
-  
   this]
 
 [deftypefunk mindmon_mind get widget []
@@ -297,6 +296,15 @@
 [deftypefunk mindmon_mind get layer_count []
   [simple_length [get [get this mind] layers]]]
 
+[deftypefunk mindmon_mind execute redraw []
+  [let [[mind_bytecodes_per_second 0]]
+    [dotimes [i [get this layer_count]]
+      [let [[mindmon_layer [get [get this layer_array] elt i]]]
+	[have mindmon_layer redraw]
+	[= mind_bytecodes_per_second [+ mind_bytecodes_per_second [get mindmon_layer bytecodes_per_second]]]]]
+    [set this bytecodes_per_second mind_bytecodes_per_second]]
+  [set [get this label] text [format nil  'mind'
+				     '\n' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
 
 
 'mindmon'
@@ -349,16 +357,8 @@
   [set this initialized  t]
   this]
 
-
 [deftypefunk mindmon execute redraw []
-  [let [[mind_bytecodes_per_second 0]]
-    [dotimes [i [get this layer_count]]
-      [let [[mindmon_layer [get [get this layer_array] elt i]]]
-	[have mindmon_layer redraw]
-	[= mind_bytecodes_per_second [+ mind_bytecodes_per_second [get mindmon_layer bytecodes_per_second]]]]]
-    [set this bytecodes_per_second mind_bytecodes_per_second]]
-  [set [get this label] text [format nil  'mind'
-				     '\n' [/ [get this bytecodes_per_second] 1024.0] ' kBc/s']]]
+  [have [get this mindmon_mind] redraw]]
 
 
 [defmetro mindmon [:rest args]

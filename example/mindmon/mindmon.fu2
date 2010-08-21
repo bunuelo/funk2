@@ -160,7 +160,7 @@
   [set this mindmon        mindmon]
   [set this layer_name     layer_name]
   [set this agency_name    agency_name]
-  [set this label          [gtk-left_label-new '']]
+  [set this label          [gtk-label-new [get agency_name as-string]]]
   [set this resource_vbox  [gtk-vbox-new [get this resource_count]]]
   [set this resource_array [new array    [get this resource_count]]]
   [let [[resource_name_index 0]
@@ -174,7 +174,7 @@
   this]
 
 [deftypefunk mindmon_agency get widget []
-  [get this vbox]]
+  [get this resource_vbox]]
 
 [deftypefunk mindmon_agency execute redraw []
   [let [[agency_bytecodes_per_second 0]]

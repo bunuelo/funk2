@@ -259,7 +259,7 @@
 [deframe mindmon_mind [frame] [mind
 			       vbox
 			       label
-			       layer_vbox
+			       layer_notebook
 			       layer_array
 			       
 			       bytecodes_per_second]]
@@ -268,7 +268,7 @@
   
   [set this vbox            [gtk-vbox-new 2]]
   [set this label           [gtk-left_label-new '']]
-  [set this layer_vbox      [gtk-vbox-new [get this layer_count]]]
+  [set this layer_notebook  [gtk-notebook-new]]
   
   [have [get this vbox] pack_start [get this label]      nil nil 0]
   [have [get this vbox] pack_start [get this layer_vbox] t t 0]
@@ -288,7 +288,7 @@
   
   [dotimes [i [get mind layer_count]]
     [let [[mindmon_layer [get [get this layer_array] elt i]]]
-      [have [get this layer_vbox] pack_start [get mindmon_layer widget] t t 0]]]
+      [have [get this layer_notebook] append_page [get mindmon_layer widget] [gtk-label-new [get mindmon_layer layer_name]]]]]
   
   this]
 

@@ -17,11 +17,3 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage isis_world_demo
-  :packages [soul isis_world]
-   :sources ['isis_world_demo.fu2']]
-
-[defpackage jj
-  :packages [isis_world_demo]
-   :sources ['jj.fu2']]
-

@@ -55,3 +55,7 @@
   :packages [mental_layer self_model]
    :sources ['mind.fu2']]
 
+[defpackage soul
+  :packages [mind]
+   :sources ['soul.fu2']]
+

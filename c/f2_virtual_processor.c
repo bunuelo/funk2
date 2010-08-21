@@ -93,7 +93,6 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
     }
     if (! locked_mutex) {
       raw__fast_spin_sleep_yield();
-      funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
     }
   }
   if (! (virtual_processor_thread->exit)) {
@@ -174,7 +173,6 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
       }
       if (! locked_mutex) {
 	raw__fast_spin_sleep_yield();
-	funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
       }
     }
     if (yielding_virtual_processor_thread->exit) {

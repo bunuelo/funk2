@@ -32,16 +32,17 @@
 
 [defmetro deframe [type_name parents slot_name_value_pairs]
   [print `[deframe ,type_name ,parents ,[mapcar &frametype-slotdef-name slot_name_value_pairs]]]
-  [let [[primobject_type [primobject_type-new nil]]]
+  [let [[primobject_type [primobject_type-new nil]]
+	[initialize_type_funk [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-initialize_type']] as-symbol] [this]
+							  [frame-add_var_value this `type [quote ,type_name]]
+							  [prog @[mapcar [funk [slot_name_value_pair]
+									       [let [[slot_name  [frametype-slotdef-name  slot_name_value_pair]]
+										     [slot_value [frametype-slotdef-value slot_name_value_pair]]]
+										 `[frame-add_var_value this [quote ,slot_name] ,slot_value]]]
+									 slot_name_value_pairs]]
+							  this]]]]
     [primobject_type-add_slot_type primobject_type `execute `initialize_type
-				   [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-initialize_type']] as-symbol] [this]
-							       [frame-add_var_value this `type [quote ,type_name]]
-							       [prog @[mapcar [funk [slot_name_value_pair]
-										    [let [[slot_name  [frametype-slotdef-name  slot_name_value_pair]]
-											  [slot_value [frametype-slotdef-value slot_name_value_pair]]]
-										      `[frame-add_var_value this [quote ,slot_name] ,slot_value]]]
-									      slot_name_value_pairs]]
-							       this]]]
+				   initialize_type_funk]
     [primobject_type-add_slot_type primobject_type `execute `new
 				   [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-new']] as-symbol] []
 							       [let [[this [frame-new]]]
@@ -53,8 +54,8 @@
 								       [conslist @[mapcar [funk [parent]
 												`[quote ,parent]]
 											  parents]]]
-								 [apply [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `initialize_type]
-									[cons this nil]]
+								 [apply ,initialize_type_funk
+									 [cons this nil]]
 								 this]]]]
     [primobject_type-add_slot_type primobject_type `get `type
 				   [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-type']] as-symbol] [this]
@@ -77,16 +78,18 @@
     [add_type type_name primobject_type]]
   nil]
 
-[defunk add_type_construct [type_name funk]
-  [primobject_type-add_slot_type [lookup_type type_name] `execute `new funk]]
-
 [defmetro deftypeconstruct [type_name args :rest body]
   [print `[deftypeconstruct ,type_name ,args]]
-  `[let [[previous_new_funk [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `new]]]
-     [add_type_construct [quote ,type_name]
-			 [funk ,args
-			       [let [[this [apply previous_new_funk nil]]]
-				 @body]]]]]
+  `[let [[previous_initialize_type_funk [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `initialize_type]]
+	 [previous_new_funk             [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `new]]]
+     [primobject_type-add_slot_type [lookup_type [quote ,type_name]] `execute `initialize_type
+				    [funk [this ,args]
+					  [apply previous_initialize_type_funk [cons this nil]]
+					  @body]]
+     [primobject_type-add_slot_type [lookup_type [quote ,type_name]] `execute `new
+				    [funk ,args
+					   [let [[this [apply previous_new_funk nil]]]
+					     @body]]]]]
 
 [defunk add_type_funk [type_name slot_type slot_name funk]
   [primobject_type-add_slot_type [lookup_type type_name] slot_type slot_name funk]]

@@ -1,0 +1,57 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[defpackage character
+  :sources ['character.fu2']]
+
+[defpackage story
+  :packages [character]
+   :sources ['story.fu2']]
+
+[defpackage story-graph
+  :packages [story]
+   :sources ['story-graph.fu2']]
+
+[defpackage resource
+  :packages [story]
+   :sources ['resource.fu2']]
+
+[defpackage self_model
+  :sources ['self_model.fu2']]
+
+[defpackage propogator
+  :packages [resource]
+   :sources ['propogator.fu2']]
+
+[defpackage knowledge_propogator
+  :packages [propogator]
+   :sources ['knowledge_propogator.fu2']]
+
+[defpackage agency
+  :packages [knowledge_propogator]
+   :sources ['agency.fu2']]
+
+[defpackage mental_layer
+  :packages [agency]
+   :sources ['mental_layer.fu2']]
+
+[defpackage mind
+  :packages [mental_layer self_model]
+   :sources ['mind.fu2']]
+

@@ -17,45 +17,90 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage character
-  :sources ['character.fu2']]
 
-[defpackage story
-  :packages [character]
-   :sources ['story.fu2']]
-
-[defpackage story-graph
-  :packages [story]
-   :sources ['story-graph.fu2']]
-
-[defpackage resource
-  :packages [story]
-   :sources ['resource.fu2']]
-
-[defpackage self_model
-  :sources ['self_model.fu2']]
-
-[defpackage propogator
-  :packages [resource]
-   :sources ['propogator.fu2']]
-
-[defpackage knowledge_propogator
-  :packages [propogator]
-   :sources ['knowledge_propogator.fu2']]
-
-[defpackage agency
-  :packages [knowledge_propogator]
-   :sources ['agency.fu2']]
-
-[defpackage mental_layer
-  :packages [agency]
-   :sources ['mental_layer.fu2']]
-
-[defpackage mind
-  :packages [mental_layer self_model]
-   :sources ['mind.fu2']]
+'soul: a human cognitive architecture'
 
 [defpackage soul
-  :packages [mind]
+  :packages [mind
+	     reactive_layer
+	     deliberative_layer
+	     reflective_layer
+	     self_reflective_layer
+	     self_conscious_layer]
    :sources ['soul.fu2']]
+
+
+'reactive_layer'
+
+[defpackage reactive_layer
+  :packages [mind
+	     reactive_physical_agency
+	     reactive_sensory_agency
+	     reactive_speech_agency]
+   :sources ['reactive_layer.fu2']]
+
+[defpackage reactive_physical_agency
+  :packages [mind]
+   :sources ['reactive_physical_agency.fu2']]
+
+[defpackage reactive_sensory_agency
+  :packages [mind]
+   :sources ['reactive_sensory_agency.fu2']]
+
+[defpackage reactive_speech_agency
+  :packages [mind]
+   :sources ['reactive_speech_agency.fu2']]
+
+
+'deliberative_layer'
+
+[defpackage deliberative_layer
+  :packages [mind
+	     deliberative_reality_agency
+	     deliberative_imagination_agency]
+   :sources ['deliberative_layer.fu2']]
+
+[defpackage deliberative_reality_agency
+  :packages [mind]
+   :sources ['deliberative_reality_agency.fu2']]
+
+[defpackage deliberative_imagination_agency
+  :packages [mind]
+   :sources ['deliberative_imagination_agency.fu2']]
+
+
+'reflective_layer'
+
+[defpackage reflective_layer
+  :packages [mind
+	     reflective_credit_assignment_agency]
+   :sources ['reflective_layer.fu2']]
+
+[defpackage reflective_credit_assignment_agency
+  :packages [mind]
+   :sources ['reflective_credit_assignment_agency.fu2']]
+
+
+'self_reflective_layer'
+
+[defpackage self_reflective_layer
+  :packages [mind
+	     self_reflective_personality_agency]
+   :sources ['self_reflective_layer.fu2']]
+
+[defpackage self_reflective_personality_agency
+  :packages [mind]
+   :sources ['self_reflective_personality_agency.fu2']]
+
+
+'self_conscious_layer'
+
+[defpackage self_conscious_layer
+  :packages [mind
+	     self_conscious_imprimer_agency]
+   :sources ['self_conscious_layer.fu2']]
+
+[defpackage self_conscious_imprimer_agency
+  :packages [mind]
+   :sources ['self_conscious_imprimer_agency.fu2']]
 

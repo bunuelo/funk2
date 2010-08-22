@@ -60,7 +60,7 @@
 				     [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-new']] as-symbol] ,initialize_funk_args
 								 [let [[this [frame-new]]]
 								   [apply ,initialize_type_funk
-									   [cons this @initialize_funk_args]]
+									   [conslist this @initialize_funk_args]]
 								   this]]]]
       [primobject_type-add_slot_type primobject_type `get `type
 				     [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-type']] as-symbol] [this]

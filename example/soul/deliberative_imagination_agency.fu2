@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 
-[deftypefunk deliberative_imagination_agency [frame] [agency]]
+[deframe deliberative_imagination_agency [frame] [agency]]
 [deftypeconstruct deliberative_imagination_agency []
   [set this agency [new agency `imagination]]
   this]

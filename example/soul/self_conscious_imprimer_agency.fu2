@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 
-[deftypefunk self_conscious_imprimer_agency [frame] [agency]]
+[deframe self_conscious_imprimer_agency [frame] [agency]]
 [deftypeconstruct self_conscious_imprimer_agency []
   [set this agency [new agency `imprimer]]
   this]

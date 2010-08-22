@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 
-[deftypefunk self_reflective_personality_agency [frame] [agency]]
+[deframe self_reflective_personality_agency [frame] [agency]]
 [deftypeconstruct self_reflective_personality_agency []
   [set this agency [new agency `personality]]
   this]

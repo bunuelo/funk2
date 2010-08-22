@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 
-[deftypefunk reactive_sensory_agency [frame] [agency]]
+[deframe reactive_sensory_agency [frame] [agency]]
 [deftypeconstruct reactive_sensory_agency []
   [set this agency [new agency `sensory]]
   this]

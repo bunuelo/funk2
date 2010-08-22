@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 
-[deftypefunk reflective_credit_assignment_agency [frame] [agency]]
+[deframe reflective_credit_assignment_agency [frame] [agency]]
 [deftypeconstruct reflective_credit_assignment_agency []
   [set this agency [new agency `credit_assignment]]
   this]

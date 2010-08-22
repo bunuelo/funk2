@@ -97,8 +97,8 @@
 					      @body]]]]]
 
 [defmetro initialize [type_name this :rest args]
-  `[let [[initialize_type_funk [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `initialize_type]]]
-     [apply initialize_type_funk [conslist this @args]]]]
+  [print `[let [[initialize_type_funk [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `initialize_type]]]
+	    [apply initialize_type_funk [conslist this @args]]]]]
 
 [defunk add_type_funk [type_name slot_type slot_name funk]
   [primobject_type-add_slot_type [lookup_type type_name] slot_type slot_name funk]]

@@ -30,58 +30,71 @@
 [defunk type-has_parent [type_name parent_name]
   [primobject_type-has_parent_type [lookup_type type_name] parent_name]]
 
-[defmetro deframe [type_name parents slot_name_value_pairs]
+[defmetro deframe [type_name parents slot_name_value_pairs :rest properties]
   [print `[deframe ,type_name ,parents ,[mapcar &frametype-slotdef-name slot_name_value_pairs]]]
-  [let [[primobject_type [primobject_type-new nil]]
-	[initialize_type_funk [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-initialize_type']] as-symbol] [this]
-							  [frame-add_var_value this `type [quote ,type_name]]
-							  [prog @[mapcar [funk [slot_name_value_pair]
-									       [let [[slot_name  [frametype-slotdef-name  slot_name_value_pair]]
-										     [slot_value [frametype-slotdef-value slot_name_value_pair]]]
-										 `[frame-add_var_value this [quote ,slot_name] ,slot_value]]]
-									 slot_name_value_pairs]]
-							  this]]]]
-    [primobject_type-add_slot_type primobject_type `execute `initialize_type
-				   initialize_type_funk]
-    [primobject_type-add_slot_type primobject_type `execute `new
-				   [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-new']] as-symbol] []
-							       [let [[this [frame-new]]]
-								 [apply ,initialize_type_funk
-									 [cons this nil]]
-								 this]]]]
-    [primobject_type-add_slot_type primobject_type `get `type
-				   [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-type']] as-symbol] [this]
-							       [quote ,type_name]]]]
-    [primobject_type-add_slot_type primobject_type `execute `is_type
-				   [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-is_type']] as-symbol] [exp]
-							       [and exp [frame-is_type exp] [let [[exp_frame_type_name [frame-lookup_var_value exp `type nil]]]
-											      [or [eq exp_frame_type_name [quote ,type_name]]
-												  [type-has_parent exp_frame_type_name [quote ,type_name]]]]]]]]
-    [mapc [funk [slot_name_value_pair]
-		[let [[slot_name [frametype-slotdef-name slot_name_value_pair]]]
-		  [primobject_type-add_slot_type primobject_type `get slot_name
-						 [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-' [exp-as-string slot_name]]] as-symbol] [this]
-									     [frame-lookup_var_value this [quote ,slot_name] `get-slot-does-not-exist]]]]
-		  [primobject_type-add_slot_type primobject_type `set slot_name
-						 [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-' [exp-as-string slot_name] '-set']] as-symbol] [this value]
-									     [frame-var_value-set this [quote ,slot_name] value `slot-does-not-exist]]]]]]
-	  slot_name_value_pairs]
-    [have primobject_type add_type_var_value `variable `parents parents]
-    [add_type type_name primobject_type]]
+  [let [[initialize_funk_args nil]
+	[initialize_funk_body nil]]
+    [mapc [funk [property]
+		[if [not [is-type `cons property]]
+		    [error bug_type `invalid_deframe_property
+			   property property]
+		  [let [[property_type [car property]]]
+		    [cond [[eq property_type `initialize] [prog [= initialize_funk_args [cadr property]]
+								[= initialize_funk_body [cddr property]]]]
+			  [t                              [error bug_type      `unrecognized_deframe_property_type
+								 property_type property_type]]]]]]
+	  properties]
+    [let [[primobject_type [primobject_type-new nil]]
+	  [initialize_type_funk [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-initialize_type']] as-symbol] [this @initialize_funk_args]
+							    [frame-add_var_value this `type [quote ,type_name]]
+							    [prog @[mapcar [funk [slot_name_value_pair]
+										 [let [[slot_name  [frametype-slotdef-name  slot_name_value_pair]]
+										       [slot_value [frametype-slotdef-value slot_name_value_pair]]]
+										   `[frame-add_var_value this [quote ,slot_name] ,slot_value]]]
+									   slot_name_value_pairs]]
+							    [prog @initialize_funk_body]
+							    this]]]]
+      [primobject_type-add_slot_type primobject_type `execute `initialize_type
+				     initialize_type_funk]
+      [primobject_type-add_slot_type primobject_type `execute `new
+				     [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-new']] as-symbol] ,initialize_type_args
+								 [let [[this [frame-new]]]
+								   [apply ,initialize_type_funk
+									   [cons this @initialize_type_args]]
+								   this]]]]
+      [primobject_type-add_slot_type primobject_type `get `type
+				     [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-type']] as-symbol] [this]
+								 [quote ,type_name]]]]
+      [primobject_type-add_slot_type primobject_type `execute `is_type
+				     [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-is_type']] as-symbol] [exp]
+								 [and exp [frame-is_type exp] [let [[exp_frame_type_name [frame-lookup_var_value exp `type nil]]]
+												[or [eq exp_frame_type_name [quote ,type_name]]
+												    [type-has_parent exp_frame_type_name [quote ,type_name]]]]]]]]
+      [mapc [funk [slot_name_value_pair]
+		  [let [[slot_name [frametype-slotdef-name slot_name_value_pair]]]
+		    [primobject_type-add_slot_type primobject_type `get slot_name
+						   [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-' [exp-as-string slot_name]]] as-symbol] [this]
+									       [frame-lookup_var_value this [quote ,slot_name] `get-slot-does-not-exist]]]]
+		    [primobject_type-add_slot_type primobject_type `set slot_name
+						   [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-' [exp-as-string slot_name] '-set']] as-symbol] [this value]
+									       [frame-var_value-set this [quote ,slot_name] value `slot-does-not-exist]]]]]]
+	    slot_name_value_pairs]
+      [have primobject_type add_type_var_value `variable `parents parents]
+      [add_type type_name primobject_type]]]
   nil]
 
-[defmetro deftypeconstruct [type_name args :rest body]
-  [print `[deftypeconstruct ,type_name ,args]]
-  `[let [[previous_initialize_type_funk [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `initialize_type]]
-	 [previous_new_funk             [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `new]]]
-     [primobject_type-add_slot_type [lookup_type [quote ,type_name]] `execute `initialize_type
-				    [funk [this @args]
-					  [apply previous_initialize_type_funk [cons this nil]]
-					  @body]]
-     [primobject_type-add_slot_type [lookup_type [quote ,type_name]] `execute `new
-				    [funk ,args
-					   [let [[this [apply previous_new_funk nil]]]
-					     @body]]]]]
+`[defmetro deftypeconstruct [type_name args :rest body]
+   [print `[deftypeconstruct ,type_name ,args]]
+   `[let [[previous_initialize_type_funk [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `initialize_type]]
+	  [previous_new_funk             [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `new]]]
+      [primobject_type-add_slot_type [lookup_type [quote ,type_name]] `execute `initialize_type
+				     [funk [this @args]
+					   [apply previous_initialize_type_funk [cons this nil]]
+					   @body]]
+      [primobject_type-add_slot_type [lookup_type [quote ,type_name]] `execute `new
+				     [funk ,args
+					    [let [[this [apply previous_new_funk nil]]]
+					      @body]]]]]
 
 [defmetro initialize [type_name this :rest args]
   `[let [[initialize_type_funk [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `initialize_type]]]

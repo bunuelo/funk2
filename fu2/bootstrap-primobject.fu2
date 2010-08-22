@@ -68,7 +68,7 @@
 						 [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [get type_name as-string] '-' [get slot_name as-string]]] as-symbol] [this]
 									     [frame-lookup_var_value this [quote ,slot_name] `get-slot-does-not-exist]]]]
 		  [primobject_type-add_slot_type primobject_type `set slot_name
-						 [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [get type_name as-string] '-' [get slot_name as-string]]] '-set'] as-symbol] [this value]
+						 [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [get type_name as-string] '-' [get slot_name as-string] '-set']] as-symbol] [this value]
 									     [frame-var_value-set this [quote ,slot_name] value `slot-does-not-exist]]]]]]
 	  slot_name_value_pairs]
     [have primobject_type add_type_var_value `variable `parents parents]

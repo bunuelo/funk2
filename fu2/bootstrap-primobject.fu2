@@ -39,10 +39,10 @@
 		    [error bug_type `invalid_deframe_property
 			   property property]
 		  [let [[property_type [car property]]]
-		    [cond [[eq property_type `initialize] [prog [= initialize_funk_args [cadr property]]
-								[= initialize_funk_body [cddr property]]]]
-			  [t                              [error bug_type      `unrecognized_deframe_property_type
-								 property_type property_type]]]]]]
+		    [cond [[eq property_type `new] [prog [= initialize_funk_args [cadr property]]
+							 [= initialize_funk_body [cddr property]]]]
+			  [t                       [error bug_type      `unrecognized_deframe_property_type
+							  property_type property_type]]]]]]
 	  properties]
     [let [[primobject_type [primobject_type-new nil]]
 	  [initialize_type_funk [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-initialize_type']] as-symbol] [this @initialize_funk_args]

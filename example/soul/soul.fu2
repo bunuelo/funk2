@@ -17,23 +17,23 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe soul [mind] [mind
+[deframe soul [frame] [mind
 		       reactive_layer
 		       deliberative_layer
 		       reflective_layer
 		       self_reflective_layer
-		       self_conscious_layer]
-  [initialize []
-    [set this mind                  [new mind]]
-    [set this reactive_layer        [new reactive_layer]]
-    [set this deliberative_layer    [new deliberative_layer]]
-    [set this reflective_layer      [new reflective_layer]]
-    [set this self_reflective_layer [new self_reflective_layer]]
-    [set this self_conscious_layer  [new self_conscious_layer]]
-    [have [get this mind] add_layer [get [get this reactive_layer]        mental_layer]]
-    [have [get this mind] add_layer [get [get this deliberative_layer]    mental_layer]]
-    [have [get this mind] add_layer [get [get this reflective_layer]      mental_layer]]
-    [have [get this mind] add_layer [get [get this self_reflective_layer] mental_layer]]
-    [have [get this mind] add_layer [get [get this self_conscious_layer]  mental_layer]]
-    this]]
+		       self_conscious_layer]]
+[deftypeconstruct soul []
+  [set this mind                  [new mind]]
+  [set this reactive_layer        [new reactive_layer]]
+  [set this deliberative_layer    [new deliberative_layer]]
+  [set this reflective_layer      [new reflective_layer]]
+  [set this self_reflective_layer [new self_reflective_layer]]
+  [set this self_conscious_layer  [new self_conscious_layer]]
+  [have [get this mind] add_layer [get [get this reactive_layer]        mental_layer]]
+  [have [get this mind] add_layer [get [get this deliberative_layer]    mental_layer]]
+  [have [get this mind] add_layer [get [get this reflective_layer]      mental_layer]]
+  [have [get this mind] add_layer [get [get this self_reflective_layer] mental_layer]]
+  [have [get this mind] add_layer [get [get this self_conscious_layer]  mental_layer]]
+  this]
 

@@ -46,11 +46,11 @@
 				   [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-new']] as-symbol] []
 							       [let [[this [frame-new]]]
 								 [mapc [funk [parent_type_name]
-									     [let [[parent_initialize_type_funk [primobject_type-lookup_slot_type [lookup_type [quote ,parent_type_name]] `execute `initialize_type]]]
+									     [let [[parent_initialize_type_funk [primobject_type-lookup_slot_type [lookup_type parent_type_name] `execute `initialize_type]]]
 									       [if parent_initialize_type_funk
 										   [apply parent_initialize_type_funk
 											  [cons this nil]]]]]
-								       [conslist @parents]]
+								       [conslist @[mapcar [funk [parent] `[quote ,parent]] parents]]]
 								 [apply [primobject_type-lookup_slot_type [lookup_type [quote ,type_name]] `execute `initialize_type]
 									[cons this nil]]
 								 this]]]]

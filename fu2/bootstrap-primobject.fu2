@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2010 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,8 +15,7 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
 [defunk frametype-slotdef-name [this]
   [cond [[is-type `symbol this] this]
@@ -35,15 +33,26 @@
 [defmetro deframe [type_name parents slot_name_value_pairs]
   [print `[deframe ,type_name ,parents ,[mapcar &frametype-slotdef-name slot_name_value_pairs]]]
   [let [[primobject_type [primobject_type-new nil]]]
+    [primobject_type-add_slot_type primobject_type `execute `initialize_type
+				   [eval `[funk-new_with_name ,[get [string-concat [get type_name as-string] '-initialize_type'] as-symbol] [this]
+							      [frame-add_var_value this `type [quote ,type_name]]
+							      [prog @[mapcar [funk [slot_name_value_pair]
+										   [let [[slot_name  [frametype-slotdef-name  slot_name_value_pair]]
+											 [slot_value [frametype-slotdef-value slot_name_value_pair]]]
+										     `[frame-add_var_value this [quote ,slot_name] ,slot_value]]]
+									     slot_name_value_pairs]]
+							      this]]]
     [primobject_type-add_slot_type primobject_type `execute `new
 				   [eval `[funk-new_with_name ,[get [string-concat [get type_name as-string] '-new'] as-symbol] []
 							      [let [[this [frame-new]]]
-								[frame-add_var_value this `type [quote ,type_name]]
-								[prog @[mapcar [funk [slot_name_value_pair]
-										     [let [[slot_name  [frametype-slotdef-name  slot_name_value_pair]]
-											   [slot_value [frametype-slotdef-value slot_name_value_pair]]]
-										       `[frame-add_var_value this [quote ,slot_name] ,slot_value]]]
-									       slot_name_value_pairs]]
+								[mapc [funk [parent_type_name]
+									    [let [[parent_initialize_type_funk [primobject_type-lookup_slot_type [lookup_type [quote ,parent_type_name]] `execute `initialize_type]]]
+									      [if parent_initialize_type_funk
+										  [apply parent_initialize_type_funk
+											 [cons this nil]]]]]
+								      [conslist @parents]]
+								[apply [primobject_type-lookup_slot_type [lookup_type [quote ,type_name]] `execute `initialize_type]
+								       [cons this nil]]
 								this]]]]
     [primobject_type-add_slot_type primobject_type `get `type
 				   [eval `[funk-new_with_name ,[get [string-concat [get type_name as-string] '-type'] as-symbol] [this]

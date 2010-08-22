@@ -25,6 +25,6 @@
 [deftypeconstruct self_conscious_layer []
   [set this mental_layer [new mental_layer 4 `self_conscious]]
   [set this imprimer_agency [new self_conscious_imprimer_agency]]
-  [have [get this mental_layer] add_agency [get this imprimer_agency]]
+  [have [get this mental_layer] add_agency [get [get this imprimer_agency] agency]]
   this]
 

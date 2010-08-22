@@ -29,8 +29,8 @@
   [set this sensory_agency  [new reactive_sensory_agency]]
   [set this physical_agency [new reactive_physical_agency]]
   [set this speech_agency   [new reactive_speech_agency]]
-  [have [get this mental_layer] add_agency [get this sensory_agency]]
-  [have [get this mental_layer] add_agency [get this physical_agency]]
-  [have [get this mental_layer] add_agency [get this speech_agency]]
+  [have [get this mental_layer] add_agency [get [get this sensory_agency]  agency]]
+  [have [get this mental_layer] add_agency [get [get this physical_agency] agency]]
+  [have [get this mental_layer] add_agency [get [get this speech_agency]   agency]]
   this]
 

@@ -25,6 +25,6 @@
 [deftypeconstruct self_reflective_layer []
   [set this mental_layer [new mental_layer 3 `self_reflective]]
   [set this personality_agency [new self_reflective_personality_agency]]
-  [have [get this mental_layer] add_agency [get this personality_agency]]
+  [have [get this mental_layer] add_agency [get [get this personality_agency] agency]]
   this]
 

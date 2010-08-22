@@ -34,33 +34,33 @@
 
 
 
-[deframe          isis_agent [frame] [name mind body fu_resource fu_args]]
+[deframe          isis_agent [frame] [name soul mind body fu_resource fu_args]]
 [deftypeconstruct isis_agent [name]
-  [let [[mind [new mind]]
+  [set this soul [new soul]]
+  [let [[mind [get [get this soul] mind]]
 	[body [new isis_world_body name]]]
     [set this name name]
     [set this mind mind]
     [set this body body]
     [set this fu_resource nil]
     [set this fu_args     nil]
-	 
     
     'All isis_agents inherit these basic features.'
     
-    [mind-create_layer mind 0 reactive]
-    [mind-create_layer mind 1 deliberative]
-    [mind-create_layer mind 2 reflective]
-    [mind-create_layer mind 3 self_reflective]
-    [mind-create_layer mind 4 self_conscious]
+    `[mind-create_layer mind 0 reactive]
+    `[mind-create_layer mind 1 deliberative]
+    `[mind-create_layer mind 2 reflective]
+    `[mind-create_layer mind 3 self_reflective]
+    `[mind-create_layer mind 4 self_conscious]
     
-    [mind-create_agency mind reactive        sensory]
-    [mind-create_agency mind reactive        physical]
-    [mind-create_agency mind reactive        speech]
-    [mind-create_agency mind deliberative    reality]
-    [mind-create_agency mind deliberative    imagination]
-    [mind-create_agency mind reflective      physical]
-    [mind-create_agency mind self_reflective physical]
-    [mind-create_agency mind self_conscious  imprimer_learning]
+    `[mind-create_agency mind reactive        sensory]
+    `[mind-create_agency mind reactive        physical]
+    `[mind-create_agency mind reactive        speech]
+    `[mind-create_agency mind deliberative    reality]
+    `[mind-create_agency mind deliberative    imagination]
+    `[mind-create_agency mind reflective      physical]
+    `[mind-create_agency mind self_reflective physical]
+    `[mind-create_agency mind self_conscious  imprimer_learning]
     
     [let [[sense-cell [new propogator_cell `sense]]
 	  [story-cell [new propogator_cell `story]]]

@@ -34,34 +34,34 @@
   [print `[deframe ,type_name ,parents ,[mapcar &frametype-slotdef-name slot_name_value_pairs]]]
   [let [[primobject_type [primobject_type-new nil]]]
     [primobject_type-add_slot_type primobject_type `execute `initialize_type
-				   [eval `[funk-new_with_name ,[get [string-concat [get type_name as-string] '-initialize_type'] as-symbol] [this]
-							      [frame-add_var_value this `type [quote ,type_name]]
-							      [prog @[mapcar [funk [slot_name_value_pair]
-										   [let [[slot_name  [frametype-slotdef-name  slot_name_value_pair]]
-											 [slot_value [frametype-slotdef-value slot_name_value_pair]]]
-										     `[frame-add_var_value this [quote ,slot_name] ,slot_value]]]
-									     slot_name_value_pairs]]
-							      this]]]
+				   [eval `[funk-new_with_name ,[get [string-concat [exp-as-string type_name] '-initialize_type'] as-symbol] [this]
+							       [frame-add_var_value this `type [quote ,type_name]]
+							       [prog @[mapcar [funk [slot_name_value_pair]
+										    [let [[slot_name  [frametype-slotdef-name  slot_name_value_pair]]
+											  [slot_value [frametype-slotdef-value slot_name_value_pair]]]
+										      `[frame-add_var_value this [quote ,slot_name] ,slot_value]]]
+									      slot_name_value_pairs]]
+							       this]]]
     [primobject_type-add_slot_type primobject_type `execute `new
 				   [eval `[funk-new_with_name ,[get [string-concat [get type_name as-string] '-new'] as-symbol] []
-							      [let [[this [frame-new]]]
-								[mapc [funk [parent_type_name]
-									    [let [[parent_initialize_type_funk [primobject_type-lookup_slot_type [lookup_type [quote ,parent_type_name]] `execute `initialize_type]]]
-									      [if parent_initialize_type_funk
-										  [apply parent_initialize_type_funk
-											 [cons this nil]]]]]
-								      [conslist @parents]]
-								[apply [primobject_type-lookup_slot_type [lookup_type [quote ,type_name]] `execute `initialize_type]
-								       [cons this nil]]
-								this]]]]
+							       [let [[this [frame-new]]]
+								 [mapc [funk [parent_type_name]
+									     [let [[parent_initialize_type_funk [primobject_type-lookup_slot_type [lookup_type [quote ,parent_type_name]] `execute `initialize_type]]]
+									       [if parent_initialize_type_funk
+										   [apply parent_initialize_type_funk
+											  [cons this nil]]]]]
+								       [conslist @parents]]
+								 [apply [primobject_type-lookup_slot_type [lookup_type [quote ,type_name]] `execute `initialize_type]
+									[cons this nil]]
+								 this]]]]
     [primobject_type-add_slot_type primobject_type `get `type
 				   [eval `[funk-new_with_name ,[get [string-concat [get type_name as-string] '-type'] as-symbol] [this]
-							      [quote ,type_name]]]]
+							       [quote ,type_name]]]]
     [primobject_type-add_slot_type primobject_type `execute `is_type
 				   [eval `[funk-new_with_name ,[get [string-concat [get type_name as-string] '-is_type'] as-symbol] [exp]
-							      [and exp [frame-is_type exp] [let [[exp_frame_type_name [frame-lookup_var_value exp `type nil]]]
-											     [or [eq exp_frame_type_name [quote ,type_name]]
-												 [type-has_parent exp_frame_type_name [quote ,type_name]]]]]]]]
+							       [and exp [frame-is_type exp] [let [[exp_frame_type_name [frame-lookup_var_value exp `type nil]]]
+											      [or [eq exp_frame_type_name [quote ,type_name]]
+												  [type-has_parent exp_frame_type_name [quote ,type_name]]]]]]]]
     [mapc [funk [slot_name_value_pair]
 		[let [[slot_name [frametype-slotdef-name slot_name_value_pair]]]
 		  [primobject_type-add_slot_type primobject_type `get slot_name
@@ -91,7 +91,7 @@
 
 [defmetro deftypefunk [type_name slot_type slot_name args :rest body]
   [print `[deftypefunk ,type_name ,slot_type ,slot_name ,args]]
-  `[add_type_funk [quote ,type_name] [quote ,slot_type] [quote ,slot_name]
-		  [funk-new_with_name ,slot_name [this @args]
+  `[add-type_funk [quote ,type_name] [quote ,slot_type] [quote ,slot_name]
+		  [funk-new_with_name ,[get [string-concat [exp-as-string type_name] '-' [exp-as-string slot_name]] as-symbol] [this @args]
 				       @body]]]
 

@@ -96,7 +96,7 @@
 					    [let [[this [apply previous_new_funk nil]]]
 					      @body]]]]]
 
-[defmetro initialize [type_name this :rest args]
+[defmetro type-initialize [type_name this :rest args]
   [print `[let [[initialize_type_funk [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `initialize_type]]]
 	    [apply initialize_type_funk [conslist this @args]]]]]
 

@@ -46,14 +46,6 @@
     [primobject_type-add_slot_type primobject_type `execute `new
 				   [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-new']] as-symbol] []
 							       [let [[this [frame-new]]]
-								 [mapc [funk [parent_type_name]
-									     [let [[parent_initialize_type_funk [primobject_type-lookup_slot_type_funk [lookup_type parent_type_name] `execute `initialize_type]]]
-									       [if parent_initialize_type_funk
-										   [apply parent_initialize_type_funk
-											  [cons this nil]]]]]
-								       [conslist @[mapcar [funk [parent]
-												`[quote ,parent]]
-											  parents]]]
 								 [apply ,initialize_type_funk
 									 [cons this nil]]
 								 this]]]]
@@ -83,13 +75,17 @@
   `[let [[previous_initialize_type_funk [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `initialize_type]]
 	 [previous_new_funk             [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `new]]]
      [primobject_type-add_slot_type [lookup_type [quote ,type_name]] `execute `initialize_type
-				    [funk [this ,args]
+				    [funk [this @args]
 					  [apply previous_initialize_type_funk [cons this nil]]
 					  @body]]
      [primobject_type-add_slot_type [lookup_type [quote ,type_name]] `execute `new
 				    [funk ,args
 					   [let [[this [apply previous_new_funk nil]]]
 					     @body]]]]]
+
+[defmetro initialize [type_name this :rest args]
+  `[let [[initialize_type_funk [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `initialize_type]]]
+     [apply initialize_type_funk [conslist this @args]]]]
 
 [defunk add_type_funk [type_name slot_type slot_name funk]
   [primobject_type-add_slot_type [lookup_type type_name] slot_type slot_name funk]]

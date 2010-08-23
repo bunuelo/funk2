@@ -616,7 +616,6 @@ why does it randomly exit the while loop/??'
 
 [defunk ralph_agent-new []
   [let [[this [new isis_agent `Ralph]]]
-    
     this]]
 
 [defunk lauren_agent-new []

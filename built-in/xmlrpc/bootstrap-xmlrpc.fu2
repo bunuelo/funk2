@@ -20,11 +20,10 @@
 [defunk xmlrpc-funkall [url funkname :rest args]
   [xmlrpc-apply url funkname args]]
 
-[deframe xmlrpc_client [frame] [xmlrpc_url]]
-
-[deftypeconstruct xmlrpc_client [xmlrpc_url]
-  [set this xmlrpc_url xmlrpc_url]
-  this]
+[deframe xmlrpc_client [frame] [xmlrpc_url]
+  [new [xmlrpc_url]
+       [set this xmlrpc_url xmlrpc_url]
+       this]]
 
 [deftypefunk xmlrpc_client execute call [command :rest args] [xmlrpc-apply [get this xmlrpc_url] command args]]
 

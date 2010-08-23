@@ -18,8 +18,9 @@
  rights to redistribute these changes.'
 
 
-[deframe deliberative_reality_agency [frame] [agency]]
-[deftypeconstruct deliberative_reality_agency []
-  [set this agency [new agency `reality]]
-  this]
+[deframe deliberative_reality_agency [frame] [agency]
+  [new []
+       [set this agency [new agency `reality]]
+       this]]
+
 

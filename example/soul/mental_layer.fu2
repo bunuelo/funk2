@@ -20,13 +20,13 @@
 
 'mental_layer'
 
-[deframe          mental_layer [frame] [index name mind agency_frame]]
-[deftypeconstruct mental_layer [index name]
-  [set this index        index]
-  [set this name         name]
-  [set this mind         nil] 'We set this when we add the layer to a mind.'
-  [set this agency_frame [frame]]
-  this]
+[deframe mental_layer [frame] [index name mind agency_frame]
+  [new [index name]
+       [set this index        index]
+       [set this name         name]
+       [set this mind         nil] 'We set this when we add the layer to a mind.'
+       [set this agency_frame [frame]]
+       this]]
 
 [deftypefunk mental_layer get agencies []
   [get [get this agency_frame] values]]

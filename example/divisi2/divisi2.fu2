@@ -2,11 +2,11 @@
 
 'Create an xmlrpc client.'
 
-[deframe crossbridge_client [frame] [xmlrpc_client]]
-[deftypeconstruct crossbridge_client [xmlrpc_hostname]
-  [let [[xmlrpc_url [string-concat 'http://' xmlrpc_hostname ':8002/RPC2']]]
-    [set this xmlrpc_client [new xmlrpc_client xmlrpc_url]]]
-  this]
+[deframe crossbridge_client [frame] [xmlrpc_client]
+  [new [xmlrpc_hostname]
+       [let [[xmlrpc_url [string-concat 'http://' xmlrpc_hostname ':8002/RPC2']]]
+	 [set this xmlrpc_client [new xmlrpc_client xmlrpc_url]]]
+       this]]
 [deftypefunk crossbridge_client execute call [:rest args] [have-apply [get this xmlrpc_client] call args]]
 [deftypefunk crossbridge_client execute adder [x y] [have this call `add x y]]
 

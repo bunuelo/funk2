@@ -20,17 +20,17 @@
 
 'reactive_layer'
 
-[deframe          reactive_layer [frame] [mental_layer
-					  sensory_agency
-					  physical_agency
-					  speech_agency]]
-[deftypeconstruct reactive_layer []
-  [set this mental_layer    [new mental_layer 0 `reactive]]
-  [set this sensory_agency  [new reactive_sensory_agency]]
-  [set this physical_agency [new reactive_physical_agency]]
-  [set this speech_agency   [new reactive_speech_agency]]
-  [have [get this mental_layer] add_agency [get [get this sensory_agency]  agency]]
-  [have [get this mental_layer] add_agency [get [get this physical_agency] agency]]
-  [have [get this mental_layer] add_agency [get [get this speech_agency]   agency]]
-  this]
+[deframe reactive_layer [frame] [mental_layer
+				 sensory_agency
+				 physical_agency
+				 speech_agency]
+  [new []
+       [set this mental_layer    [new mental_layer 0 `reactive]]
+       [set this sensory_agency  [new reactive_sensory_agency]]
+       [set this physical_agency [new reactive_physical_agency]]
+       [set this speech_agency   [new reactive_speech_agency]]
+       [have [get this mental_layer] add_agency [get [get this sensory_agency]  agency]]
+       [have [get this mental_layer] add_agency [get [get this physical_agency] agency]]
+       [have [get this mental_layer] add_agency [get [get this speech_agency]   agency]]
+       this]]
 

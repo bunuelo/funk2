@@ -18,11 +18,11 @@
  rights to redistribute these changes.'
 
 
-[deframe          character [frame] [name self_model]]
-[deftypeconstruct character [name]
-  [set this name       name]
-  [set this self_model [new self_model]]
-  this]
+[deframe          character [frame] [name self_model]
+  [new [name]
+       [set this name       name]
+       [set this self_model [new self_model]]
+       this]]
 
 [deftypefunk character get as-list []
   `[,[get this name] is part of this story.]]

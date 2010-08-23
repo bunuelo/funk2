@@ -20,12 +20,12 @@
 
 'knowledge_propogator'
 
-[deframe          knowledge_propogator [frame] [name cell_identity_hash propogator]]
-[deftypeconstruct knowledge_propogator [name]
-  [set this name               name]
-  [set this cell_identity_hash [hash]]
-  [set this propogator         [new propogator_resource [get [string-concat [get name as-string] '-resource'] as-symbol]]]
-  this]
+[deframe knowledge_propogator [frame] [name cell_identity_hash propogator]
+  [new [name]
+       [set this name               name]
+       [set this cell_identity_hash [hash]]
+       [set this propogator         [new propogator_resource [get [string-concat [get name as-string] '-resource'] as-symbol]]]
+       this]]
 
 [deftypefunk knowledge_propogator get resource []
   [get [get this propogator] resource]]

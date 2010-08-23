@@ -20,10 +20,10 @@
 
 'self_model'
 
-[deframe          self_model [frame] [activity_resource_hash]]
-[deftypeconstruct self_model []
-  [set this activity_resource_hash [hash]]
-  this]
+[deframe self_model [frame] [activity_resource_hash]
+  [new []
+       [set this activity_resource_hash [hash]]
+       this]]
 
 [deftypefunk self_model execute add_activity [layer_name agency_name resource_name activity]
   [have [get this activity_resource_hash] add `[,layer_name ,agency_name ,resource_name] activity]]

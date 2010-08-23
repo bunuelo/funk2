@@ -18,13 +18,13 @@
  rights to redistribute these changes.'
 
 
-[deframe          story_event [frame] [time character_name action_name prepositional_frame]]
-[deftypeconstruct story_event [time character_name action_name prepositional_frame]
-  [set this time                time]
-  [set this character_name      character_name]
-  [set this action_name         action_name]
-  [set this prepositional_frame prepositional_frame]
-  this]
+[deframe story_event [frame] [time character_name action_name prepositional_frame]
+  [new [time character_name action_name prepositional_frame]
+       [set this time                time]
+       [set this character_name      character_name]
+       [set this action_name         action_name]
+       [set this prepositional_frame prepositional_frame]
+       this]]
 
 [deftypefunk story_event get as-list []
   [let [[prepositional_frame [get this prepositional_frame]]]
@@ -38,12 +38,12 @@
 															`[,preposition ,[have prepositional_frame lookup preposition]]]]
 														[get prepositional_frame slots]]]]]]]
 
-[deframe          story [frame] [character_frame event_redblacktree]]
-[deftypeconstruct story []
-  [set this character_frame    [frame]]
-  [set this event_redblacktree [new redblacktree [funk [event-x event-y]
-						       [< [get event-x time] [get event-y time]]]]]
-  this]
+[deframe story [frame] [character_frame event_redblacktree]
+  [new []
+       [set this character_frame    [frame]]
+       [set this event_redblacktree [new redblacktree [funk [event-x event-y]
+							    [< [get event-x time] [get event-y time]]]]]
+       this]]
 
 [deftypefunk story get character [character_name]
   [have [get this character_frame] lookup character_name]]

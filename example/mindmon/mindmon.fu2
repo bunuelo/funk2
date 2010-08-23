@@ -27,22 +27,22 @@
 
 'mindmon_resource_trace_story'
 
-[deframe          mindmon_resource_trace_story [frame] [mindmon layer_name agency_name resource_name story_name title_label vbox scrolled_window label]]
-[deftypeconstruct mindmon_resource_trace_story [mindmon layer_name agency_name resource_name story_name]
-  [set this mindmon         mindmon]
-  [set this layer_name      layer_name]
-  [set this agency_name     agency_name]
-  [set this resource_name   resource_name]
-  [set this story_name      story_name]
-  [set this vbox            [gtk-vbox-new 2]]
-  [set this title_label     [gtk-left_label-new [format nil story_name]]]
-  [set this scrolled_window [gtk-scrolled_window-new]]
-  [set this label           [gtk-left_label-new '']]
-  [have [get this scrolled_window] request_size      600 200]
-  [have [get this scrolled_window] add_with_viewport [get this label]]
-  [have [get this vbox]            pack_start        [get this title_label]     nil nil 0]
-  [have [get this vbox]            pack_start        [get this scrolled_window] t t 0]
-  this]
+[deframe mindmon_resource_trace_story [frame] [mindmon layer_name agency_name resource_name story_name title_label vbox scrolled_window label]
+  [new [mindmon layer_name agency_name resource_name story_name]
+       [set this mindmon         mindmon]
+       [set this layer_name      layer_name]
+       [set this agency_name     agency_name]
+       [set this resource_name   resource_name]
+       [set this story_name      story_name]
+       [set this vbox            [gtk-vbox-new 2]]
+       [set this title_label     [gtk-left_label-new [format nil story_name]]]
+       [set this scrolled_window [gtk-scrolled_window-new]]
+       [set this label           [gtk-left_label-new '']]
+       [have [get this scrolled_window] request_size      600 200]
+       [have [get this scrolled_window] add_with_viewport [get this label]]
+       [have [get this vbox]            pack_start        [get this title_label]     nil nil 0]
+       [have [get this vbox]            pack_start        [get this scrolled_window] t t 0]
+       this]]
 
 [deftypefunk mindmon_resource_trace_story get widget []
   [get this vbox]]
@@ -79,26 +79,26 @@
 					    elapsed_bytecode_count
 					    elapsed_bytecode_count_nanoseconds
 					    bytecodes_per_second
-					    ]]
-[deftypeconstruct mindmon_resource [mindmon layer_name agency_name resource_name]
-  [set this mindmon       mindmon]
-  [set this layer_name    layer_name]
-  [set this agency_name   agency_name]
-  [set this resource_name resource_name]
-  [set this frame         [gtk-frame-new [format nil layer_name '-' agency_name '-' resource_name]]]
-  [set this hbox          [gtk-hbox-new 2]]
-  [set this label         [gtk-left_label-new '']]
-  [set this story_hbox    [gtk-hbox-new [get this story_count]]]
-  [set this story_array   [new array    [get this story_count]]]
-  [dotimes [i [get this story_count]]
-    [let [[story_name `trace_story]]
-      [let [[mindmon_resource_trace_story [new mindmon_resource_trace_story mindmon layer_name agency_name resource_name story_name]]]
-	[set [get this story_array] elt i mindmon_resource_trace_story]
-	[have [get this story_hbox] pack_start [get mindmon_resource_trace_story widget] t t 0]]]]
-  [have [get this hbox]  pack_start [get this label]      nil nil 0]
-  [have [get this hbox]  pack_start [get this story_hbox] t t 0]
-  [have [get this frame] add        [get this hbox]]
-  this]
+					    ]
+  [new [mindmon layer_name agency_name resource_name]
+       [set this mindmon       mindmon]
+       [set this layer_name    layer_name]
+       [set this agency_name   agency_name]
+       [set this resource_name resource_name]
+       [set this frame         [gtk-frame-new [format nil layer_name '-' agency_name '-' resource_name]]]
+       [set this hbox          [gtk-hbox-new 2]]
+       [set this label         [gtk-left_label-new '']]
+       [set this story_hbox    [gtk-hbox-new [get this story_count]]]
+       [set this story_array   [new array    [get this story_count]]]
+       [dotimes [i [get this story_count]]
+	 [let [[story_name `trace_story]]
+	   [let [[mindmon_resource_trace_story [new mindmon_resource_trace_story mindmon layer_name agency_name resource_name story_name]]]
+	     [set [get this story_array] elt i mindmon_resource_trace_story]
+	     [have [get this story_hbox] pack_start [get mindmon_resource_trace_story widget] t t 0]]]]
+       [have [get this hbox]  pack_start [get this label]      nil nil 0]
+       [have [get this hbox]  pack_start [get this story_hbox] t t 0]
+       [have [get this frame] add        [get this hbox]]
+       this]]
 
 [deftypefunk mindmon_resource get widget []
   [get this frame]]
@@ -155,23 +155,23 @@
 					  resource_array
 					  
 					  bytecodes_per_second
-					  ]]
-[deftypeconstruct mindmon_agency [mindmon layer_name agency_name]
-  [set this mindmon        mindmon]
-  [set this layer_name     layer_name]
-  [set this agency_name    agency_name]
-  [set this label          [gtk-label-new [get agency_name as-string]]]
-  [set this resource_vbox  [gtk-vbox-new [get this resource_count]]]
-  [set this resource_array [new array    [get this resource_count]]]
-  [let [[resource_name_index 0]
-	[resource_name_iter  [get this resource_names]]]
-    [while resource_name_iter
-      [let [[resource_name [first resource_name_iter]]]
-	[set  [get this resource_array] elt resource_name_index [new mindmon_resource mindmon layer_name agency_name resource_name]]
-	[have [get this resource_vbox]  pack_start              [get [get [get this resource_array] elt resource_name_index] widget] t t 0]]
-      [= resource_name_index [+    resource_name_index 1]]
-      [= resource_name_iter  [next resource_name_iter]]]]
-  this]
+					  ]
+  [new [mindmon layer_name agency_name]
+       [set this mindmon        mindmon]
+       [set this layer_name     layer_name]
+       [set this agency_name    agency_name]
+       [set this label          [gtk-label-new [get agency_name as-string]]]
+       [set this resource_vbox  [gtk-vbox-new [get this resource_count]]]
+       [set this resource_array [new array    [get this resource_count]]]
+       [let [[resource_name_index 0]
+	     [resource_name_iter  [get this resource_names]]]
+	 [while resource_name_iter
+	   [let [[resource_name [first resource_name_iter]]]
+	     [set  [get this resource_array] elt resource_name_index [new mindmon_resource mindmon layer_name agency_name resource_name]]
+	     [have [get this resource_vbox]  pack_start              [get [get [get this resource_array] elt resource_name_index] widget] t t 0]]
+	   [= resource_name_index [+    resource_name_index 1]]
+	   [= resource_name_iter  [next resource_name_iter]]]]
+       this]]
 
 [deftypefunk mindmon_agency get widget []
   [get this resource_vbox]]
@@ -201,27 +201,27 @@
 				agency_notebook
 				agency_array
 				
-				bytecodes_per_second]]
-[deftypeconstruct mindmon_layer [mindmon layer_name]
-  [set this mindmon      mindmon]
-  [set this layer_name   layer_name]
-  
-  [set this label           [gtk-label-new [get layer_name as-string]]]
-  [set this agency_notebook [gtk-notebook-new]]
-  [set this agency_array    [new array [get this agency_count]]]
-  
-  [let [[agency_names [get [get mindmon mind] layer_agency_names layer_name]]]
-    [let [[agency_name_index 0]
-	  [agency_name_iter  agency_names]]
-      [while agency_name_iter
-	[let [[agency_name [first agency_name_iter]]]
-	  [let [[mindmon_agency [new mindmon_agency mindmon layer_name agency_name]]]
-	    [set  [get this agency_array] elt agency_name_index mindmon_agency]
-	    [have [get this agency_notebook] append_page [get mindmon_agency widget] [get mindmon_agency label]]]]
-	[= agency_name_index [+    agency_name_index 1]]
-	[= agency_name_iter  [next agency_name_iter]]]]]
-  
-  this]
+				bytecodes_per_second]
+  [new [mindmon layer_name]
+       [set this mindmon      mindmon]
+       [set this layer_name   layer_name]
+       
+       [set this label           [gtk-label-new [get layer_name as-string]]]
+       [set this agency_notebook [gtk-notebook-new]]
+       [set this agency_array    [new array [get this agency_count]]]
+       
+       [let [[agency_names [get [get mindmon mind] layer_agency_names layer_name]]]
+	 [let [[agency_name_index 0]
+	       [agency_name_iter  agency_names]]
+	   [while agency_name_iter
+	     [let [[agency_name [first agency_name_iter]]]
+	       [let [[mindmon_agency [new mindmon_agency mindmon layer_name agency_name]]]
+		 [set  [get this agency_array] elt agency_name_index mindmon_agency]
+		 [have [get this agency_notebook] append_page [get mindmon_agency widget] [get mindmon_agency label]]]]
+	     [= agency_name_index [+    agency_name_index 1]]
+	     [= agency_name_iter  [next agency_name_iter]]]]]
+       
+       this]]
 
 [deftypefunk mindmon_layer get layer []
   [get [get [get this mindmon] mind] layer [get this layer_name]]]
@@ -254,35 +254,35 @@
 			       layer_notebook
 			       layer_array
 			       
-			       bytecodes_per_second]]
-[deftypeconstruct mindmon_mind [mind]
-  [set this mind mind]
-  
-  [set this vbox            [gtk-vbox-new 2]]
-  [set this label           [gtk-left_label-new '']]
-  [set this layer_notebook  [gtk-notebook-new]]
-  
-  [have [get this vbox] pack_start [get this label]          nil nil 0]
-  [have [get this vbox] pack_start [get this layer_notebook] t t 0]
-  
-  [set this layer_array [new array [get this layer_count]]]
-  
-  [let [[layer_name_index 0]
-	[layer_name_iter  [get mind layer_names]]]
-    [while layer_name_iter
-      [let [[layer_name [first layer_name_iter]]]
-	[let [[mindmon_layer [new mindmon_layer this layer_name]]]
-	  [let [[layer [get [get this mind] layer layer_name]]]
-	    [let [[layer_index [get layer index]]]
-	      [set  [get this layer_array] elt layer_index mindmon_layer]]]]]
-      [= layer_name_index [+ layer_name_index 1]]
-      [= layer_name_iter  [next layer_name_iter]]]]
-  
-  [dotimes [i [get mind layer_count]]
-    [let [[mindmon_layer [get [get this layer_array] elt i]]]
-      [have [get this layer_notebook] append_page [get mindmon_layer widget] [get mindmon_layer label]]]]
-  
-  this]
+			       bytecodes_per_second]
+  [new [mind]
+       [set this mind mind]
+       
+       [set this vbox            [gtk-vbox-new 2]]
+       [set this label           [gtk-left_label-new '']]
+       [set this layer_notebook  [gtk-notebook-new]]
+       
+       [have [get this vbox] pack_start [get this label]          nil nil 0]
+       [have [get this vbox] pack_start [get this layer_notebook] t t 0]
+       
+       [set this layer_array [new array [get this layer_count]]]
+       
+       [let [[layer_name_index 0]
+	     [layer_name_iter  [get mind layer_names]]]
+	 [while layer_name_iter
+	   [let [[layer_name [first layer_name_iter]]]
+	     [let [[mindmon_layer [new mindmon_layer this layer_name]]]
+	       [let [[layer [get [get this mind] layer layer_name]]]
+		 [let [[layer_index [get layer index]]]
+		   [set  [get this layer_array] elt layer_index mindmon_layer]]]]]
+	   [= layer_name_index [+ layer_name_index 1]]
+	   [= layer_name_iter  [next layer_name_iter]]]]
+       
+       [dotimes [i [get mind layer_count]]
+	 [let [[mindmon_layer [get [get this layer_array] elt i]]]
+	   [have [get this layer_notebook] append_page [get mindmon_layer widget] [get mindmon_layer label]]]]
+       
+       this]]
 
 [deftypefunk mindmon_mind get widget []
   [get this vbox]]
@@ -308,48 +308,48 @@
 				   
 				   scrolled_window
 				   mindmon_mind
-				   ]]
-[deftypeconstruct mindmon [mind mind_expression]
-  [if [not [is-type `mind mind]]
-      [error bug_type `mindmon_mind_is_not_mind
-	     was_type [type mind]]]
-  [set this initialized nil]
-  [set this fiber       [fiber [funk []
-				     [cause-define cause-name `mindmon]
-				     [cause-define cause-args [frame mind_expression mind_expression]]
-				     [cause-enable_reactive_critics [this-cause]]
-				     
-				     [while [not [get this initialized]]
-				       [yield]]
-				     
-				     [let [[win [gtk-window-new]]]
-				       
-				       [set this scrolled_window [gtk-scrolled_window-new]]
-				       
-				       [set this mindmon_mind [new mindmon_mind mind]]
-				       
-				       [have [get this scrolled_window] add_with_viewport [get [get this mindmon_mind] widget]]
-				       
-				       [have win add          [get this scrolled_window]]
-				       [set  win default_size 640 800]
-				       [set  win title        [format nil 'mindmon ' mind_expression]]
-				       
-				       [let [[mindmon-redraw-quit_now nil]]
-					 
-					 [have win connect_hide_on_delete]
-					 [have win show_all]
-					 
-					 [while [not mindmon-redraw-quit_now]
-					   [have this redraw]
-					   [if [not [get win visible]]
-					       [= mindmon-redraw-quit_now t]]
-					   [yield]]
-					 
-					 [have win destroy]
-					 nil]]]
-			       nil]]
-  [set this initialized  t]
-  this]
+				   ]
+  [new [mind mind_expression]
+       [if [not [is-type `mind mind]]
+	   [error bug_type `mindmon_mind_is_not_mind
+		  was_type [type mind]]]
+       [set this initialized nil]
+       [set this fiber       [fiber [funk []
+					  [cause-define cause-name `mindmon]
+					  [cause-define cause-args [frame mind_expression mind_expression]]
+					  [cause-enable_reactive_critics [this-cause]]
+					  
+					  [while [not [get this initialized]]
+					    [yield]]
+					  
+					  [let [[win [gtk-window-new]]]
+					    
+					    [set this scrolled_window [gtk-scrolled_window-new]]
+					    
+					    [set this mindmon_mind [new mindmon_mind mind]]
+					    
+					    [have [get this scrolled_window] add_with_viewport [get [get this mindmon_mind] widget]]
+					    
+					    [have win add          [get this scrolled_window]]
+					    [set  win default_size 640 800]
+					    [set  win title        [format nil 'mindmon ' mind_expression]]
+					    
+					    [let [[mindmon-redraw-quit_now nil]]
+					      
+					      [have win connect_hide_on_delete]
+					      [have win show_all]
+					      
+					      [while [not mindmon-redraw-quit_now]
+						[have this redraw]
+						[if [not [get win visible]]
+						    [= mindmon-redraw-quit_now t]]
+						[yield]]
+					      
+					      [have win destroy]
+					      nil]]]
+				    nil]]
+       [set this initialized  t]
+       this]]
 
 [deftypefunk mindmon execute redraw []
   [have [get this mindmon_mind] redraw]]

@@ -17,11 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe difference_engine [frame] [name fiber frame reduce_difference_funk active alive]]
-[deftypeconstruct difference_engine [name reduce_difference_funk]
-  [set this name                   name]
-  [set this reduce_difference_funk reduce_difference_funk]
-  this]
+[deframe difference_engine [frame] [name fiber frame reduce_difference_funk active alive]
+  [new [name reduce_difference_funk]
+       [set this name                   name]
+       [set this reduce_difference_funk reduce_difference_funk]
+       this]]
 
 [defmetro difference_engine [name :rest reduce_difference_body]
   `[new difference_engine [quote ,name]

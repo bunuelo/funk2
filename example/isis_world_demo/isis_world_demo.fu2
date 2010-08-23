@@ -37,7 +37,7 @@
 [deframe isis_agent [frame] [name soul mind body fu_resource fu_args]
   [new [name]
        [set this soul [new soul]]
-       [let [[mind [get [get this soul] mind]]
+       [let [[mind [get this soul]]
 	     [body [new isis_world_body name]]]
 	 [set this name name]
 	 [set this mind mind]

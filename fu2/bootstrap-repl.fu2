@@ -302,18 +302,18 @@
   `[object-execute-apply ,this [quote ,slot_name] ,args]]
 
 [defmetro have [this slot_name :rest args]
-  [let [[this-gensym [gensym]]]
-    `[let [[,this-gensym     ,this]
-	   [-have-slot_name- [quote ,slot_name]]
-	   [-have-args-      [quote ,args]]]
-       [execute ,this-gensym ,slot_name ,this-gensym @args]]]]
+  [define this-gensym [gensym]]
+  `[let [[,this-gensym     ,this]
+	 [-have-slot_name- [quote ,slot_name]]
+	 [-have-args-      [quote ,args]]]
+     [execute ,this-gensym ,slot_name ,this-gensym @args]]]
 
 [defmetro have-apply [this slot_name args]
-  [let [[this-gensym [gensym]]]
-    `[let [[,this-gensym      ,this]
-	   [-have-slot_name- [quote ,slot_name]]
-	   [-have-args-      [quote ,args]]]
-       [execute-apply ,this-gensym ,slot_name [cons ,this-gensym ,args]]]]]
+  [define this-gensym [gensym]]
+  `[let [[,this-gensym      ,this]
+	 [-have-slot_name- [quote ,slot_name]]
+	 [-have-args-      [quote ,args]]]
+     [execute-apply ,this-gensym ,slot_name [cons ,this-gensym ,args]]]]
 
 
 [globalize-funk type &object-type]

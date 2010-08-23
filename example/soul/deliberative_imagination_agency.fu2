@@ -18,9 +18,9 @@
  rights to redistribute these changes.'
 
 
-[deframe deliberative_imagination_agency [frame] [agency]
+[deframe deliberative_imagination_agency [agency] []
   [new []
-       [set this agency [new agency `imagination]]
+       [type-initialize agency this `imagination]
        this]]
 
 

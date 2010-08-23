@@ -20,14 +20,13 @@
 
 'deliberative_layer'
 
-[deframe deliberative_layer [frame] [mental_layer
-				     reality_agency
-				     imagination_agency]
+[deframe deliberative_layer [mental_layer] [reality_agency
+					    imagination_agency]
   [new []
-       [set this mental_layer       [new mental_layer 1 `deliberative]]
+       [type-initialize mental_layer this 1 `deliberative]
        [set this reality_agency     [new deliberative_reality_agency]]
        [set this imagination_agency [new deliberative_imagination_agency]]
-       [have [get this mental_layer] add_agency [get [get this reality_agency]     agency]]
-       [have [get this mental_layer] add_agency [get [get this imagination_agency] agency]]
+       [have this add_agency [get this reality_agency]]
+       [have this add_agency [get this imagination_agency]]
        this]]
 

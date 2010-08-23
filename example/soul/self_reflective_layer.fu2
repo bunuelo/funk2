@@ -20,11 +20,10 @@
 
 'self_reflective_layer'
 
-[deframe self_reflective_layer [frame] [mental_layer
-					personality_agency]
+[deframe self_reflective_layer [mental_layer] [personality_agency]
   [new []
-       [set this mental_layer [new mental_layer 3 `self_reflective]]
+       [type-initialize mental_layer this 3 `self_reflective]
        [set this personality_agency [new self_reflective_personality_agency]]
-       [have [get this mental_layer] add_agency [get [get this personality_agency] agency]]
+       [have this add_agency [get this personality_agency]]
        this]]
 

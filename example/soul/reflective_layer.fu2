@@ -20,11 +20,10 @@
 
 'reflective_layer'
 
-[deframe reflective_layer [frame] [mental_layer
-				   credit_assignment_agency]
+[deframe reflective_layer [mental_layer] [credit_assignment_agency]
   [new []
-       [set this mental_layer [new mental_layer 2 `reflective]]
+       [type-initialize mental_layer this 2 `reflective]
        [set this credit_assignment_agency [new reflective_credit_assignment_agency]]
-       [have [get this mental_layer] add_agency [get [get this credit_assignment_agency] agency]]
+       [have this add_agency [get this credit_assignment_agency]]
        this]]
 

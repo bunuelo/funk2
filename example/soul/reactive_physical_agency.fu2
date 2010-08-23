@@ -26,35 +26,35 @@
        [set this user_activate_resource nil]
        [set this user_activate_args     nil]
        
-       [have this add_resource [resource turn_right [steps]
+       `[have this add_resource [resource turn_right [steps]
 					 [format stdout '\n  turn_right']
 					 [let [[starting_time [get body time_step]]]			
 					   [isis-call [get [get this world] client] turn_right-start agent [get this name]]
 					   [while [< [- [get body time_step] starting_time] steps]
 					     [millisleep 50]]
 					   [isis-call [get [get this world] client] turn_right-stop agent [get this name]]]]]
-       [have this add_resource [resource physical turn_left [steps]
+       `[have this add_resource [resource physical turn_left [steps]
 					 [format stdout '\n  turn_left']
 					 [isis-call [get [get this world] client] turn_left-start agent [get this name]]
 					 [let [[start_steps [get body time_step]]]
 					   [while [< [- [get body time_step] start_steps] steps]
 					     [millisleep 50]]
 					   [isis-call [get [get this world] client] turn_left-stop agent [get this name]]]]]
-       [have this add_resource [resource look_right [steps]
+       `[have this add_resource [resource look_right [steps]
 					 [format stdout '\n  look_right']
 					 [let [[starting_time [get body time_step]]]			
 					   [isis-call [get [get this world] client] look_right-start agent [get this name]]
 					   [while [< [- [get body time_step] starting_time] steps]
 					     [millisleep 50]]
 					   [isis-call [get [get this world] client] look_right-stop agent [get this name]]]]]
-       [have this add_resource [resource look_left [steps]
+       `[have this add_resource [resource look_left [steps]
 					 [format stdout '\n  turn_left']
 					 [isis-call [get [get this world] client] look_left-start agent [get this name]]
 					 [let [[start_steps [get body time_step]]]
 					   [while [< [- [get body time_step] start_steps] steps]
 					     [millisleep 50]]
 					   [isis-call [get [get this world] client] look_left-stop agent [get this name]]]]]
-       [have this add_resource [resource move_forward [steps]
+       `[have this add_resource [resource move_forward [steps]
 					 [format stdout '\n  move_forward']
 					 [let [[start_steps [get body time_step]]]
 					   [isis-call [get [get this world] client] move_forward-start agent [get this name]]
@@ -62,7 +62,7 @@
 					     [millisleep 50]]
 					   [isis-call [get [get this world] client] move_forward-stop agent [get this name]]]]]
        
-       [have this add_resource [resource move_backward [steps]
+       `[have this add_resource [resource move_backward [steps]
 					 [format stdout '\n  move_backward']
 					 [isis-call [get [get this world] client] move_backward-start agent [get this name]]
 					 [let [[start_steps [get body time_step]]]
@@ -70,11 +70,11 @@
 					     [millisleep 50]]
 					   [isis-call [get [get this world] client] move_backward-stop agent [get this name]]]]]
        
-       [have this add_resource [resource drop_from_right_hand []
+       `[have this add_resource [resource drop_from_right_hand []
 					 [format stdout '\n drop_from_right_hand']
 					 [isis-call [get [get this world] client] drop_from_right_hand agent [get this name]]]]
        
-       [have this add_resource [resource pick_up_with_right_hand [target]
+       `[have this add_resource [resource pick_up_with_right_hand [target]
 					 [format stdout '\n  pick_up_with_right_hand']
 					 [while [null [get this sense]] 
 					   [millisleep 100]]
@@ -95,11 +95,11 @@
 					    [isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target target]]]
 					 [get body sense]]]
        
-       [have this add_resource [resource drop_from_left_hand []
+       `[have this add_resource [resource drop_from_left_hand []
 					 [format stdout '\n drop_from_left_hand']
 					 [isis-call [get [get this world] client] drop_from_left_hand agent [get this name]]]]
        
-       [have this add_resource [resource pick_up_with_left_hand [target]
+       `[have this add_resource [resource pick_up_with_left_hand [target]
 					 [format stdout '\n  pick_up_with_left_hand']
 					 [while [null [get this sense]] 
 					   [millisleep 100]]
@@ -128,7 +128,7 @@
 						[isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]]]]
 					 [get body sense]]]
        
-       [have this add_resource [resource open_fridge [fridge]
+       `[have this add_resource [resource open_fridge [fridge]
 					 [format stdout '\n  open_fridge']
 					 [while [null [get this sense]] 
 					   [millisleep 100]]
@@ -147,7 +147,7 @@
 					    [isis-call [get [get this world] client] agent [get this name] open_fridge]]]
 					 [get body sense]]]
        
-       [have this add_resource [resource slice_toast []
+       `[have this add_resource [resource slice_toast []
 					 [format stdout '/n slice_toast']
 					 [mind-activate [get this mind] reactive physical pick_up_with_left_hand knife]
 					 [while [have [get this sense] lookup `left_hand]
@@ -157,7 +157,7 @@
 					   [sleep 1]]
 					 [isis-call [get [get this world] client] agent [get this name] use_left_hand object knife target loaf]]]
        
-       [have this add_resource [resource center_body_on [desired_object]
+       `[have this add_resource [resource center_body_on [desired_object]
 					 [have this think_to_self 'center_body_on_object activated']
 					 [labels [[turn_left_and_right []
 								       [while [null [get this sense]] 
@@ -197,7 +197,7 @@
 									       [turn_left_and_right]]]]
 						  [turn_left_and_right]]]]]
        
-       [have this add_resource [resource center_head_on [desired_object]
+       `[have this add_resource [resource center_head_on [desired_object]
 					 [print 'center_head_on_object']
 					 [labels [[look_left_and_right []
 								       [print '0']
@@ -236,7 +236,7 @@
 									 [mind-activate [get this mind] reactive physical search_for desired_object]]]
 						  [look_left_and_right]]]]]
        
-       [have this add_resource [resource walk_towards [desired_object]
+       `[have this add_resource [resource walk_towards [desired_object]
 					 [mind-activate [get this mind] reactive physical center_body_on desired_object]
 					 [labels [[cautiously_walk []
 								   [cond [[and [null [have this check_obstacle]] 
@@ -252,7 +252,7 @@
 									  [print 'weird, no conditions applied']]]]
 						  [cautiously_walk]]]]]
        
-       [have this add_resource [resource walk_directly_towards [desired_object]
+       `[have this add_resource [resource walk_directly_towards [desired_object]
 					 [let [[achieved nil]]
 					   [have this think_to_self ' walk_directly_towards activated!']
 					   [while  [null achieved]
@@ -301,7 +301,7 @@
 why does it randomly exit the while loop/??'
        
        
-       [have this add_resource [resource search_for [desired_object]
+       `[have this add_resource [resource search_for [desired_object]
 					 [let [[patience 30]]
 					   [have this think_to_self 'search_for activated']
 					   [while 
@@ -335,7 +335,7 @@ why does it randomly exit the while loop/??'
        'problem now is lagg in perception, can fix by checking activeness of sensing resource?
       weird! step_simulation suddenly stopped controlling the simulator'
        
-       [have this add_resource [resource avoid_obstacle [desired_object obstacle]
+       `[have this add_resource [resource avoid_obstacle [desired_object obstacle]
 					 [mind-activate [get this mind] reactive physical center_body_on desired_object]
 					 [labels [[walk_around [if_left]
 							       [mind-activate [get this mind] reactive physical center_body_on obstacle]
@@ -370,7 +370,7 @@ why does it randomly exit the while loop/??'
 						 [walk_around [> 0 [have [have [get this objects] lookup obstacle] lookup `x_pos]]]]
 					 [mind-activate [get this mind] reactive physical walk_directly_towards desired_object]]]
        
-       [have this add_resource [resource funk_user []
+       `[have this add_resource [resource funk_user []
 					 [while t
 					   `[print 'waiting for user to activate']
 					    [if [null [get this user_activate_resource]]

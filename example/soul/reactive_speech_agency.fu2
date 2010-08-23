@@ -21,5 +21,13 @@
 [deframe reactive_speech_agency [agency] []
   [new []
        [type-initialize agency this `speech]
+       
+       [have this add_resource [resource say [string]
+					 [set body says [list string]]
+					 [let [[start_time_step [get body time_step]]]
+					   [while [< [- [get body time_step] 2] start_time_step]
+					     [millisleep 100]]]
+					 [set body says nil]]]
+       
        this]]
 

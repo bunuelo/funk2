@@ -30,6 +30,10 @@ void funk2_operating_system__init(funk2_operating_system_t* this) {
 }
 
 void funk2_operating_system__destroy(funk2_operating_system_t* this) {
+  int i;
+  for (i = 0; i < memory_pool_num; i++) {
+    funk2_processor_mutex__destroy(&(this->processor_thread__current_fiber__mutex[i]));
+  }
 }
 
 

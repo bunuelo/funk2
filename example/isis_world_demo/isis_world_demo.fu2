@@ -34,10 +34,9 @@
 
 
 
-[deframe isis_agent [frame] [name soul mind body fu_resource fu_args]
+[deframe isis_agent [frame] [name mind body fu_resource fu_args]
   [new [name]
-       [set this soul [new soul]]
-       [let [[mind [get this soul]]
+       [let [[mind [new soul]]
 	     [body [new isis_world_body name]]]
 	 [set this name name]
 	 [set this mind mind]
@@ -631,7 +630,7 @@ why does it randomly exit the while loop/??'
   [let [[client [new isis_world_client hostname]]]
     [let [[isis_world [new isis_world client]]]
       [have isis_world add_agent [ralph_agent-new]]
-      `[have isis_world add_agent [lauren_agent-new]]
+      [have isis_world add_agent [lauren_agent-new]]
       
       [globalize isis_world isis_world]
       
@@ -641,10 +640,10 @@ why does it randomly exit the while loop/??'
       [cause-define cause-time_step [get isis_world time_step]]
       [cause-define cause-name      `isis_world-initialize]
       
-      `[mind-activate [get isis_world agent_mind `Lauren] reactive     speech  say                                              'Bad Ralph!']
-      `[mind-activate [get isis_world agent_mind `Lauren] deliberative reality include_reactive_stories_into_deliberative_story]
-      `[mind-activate [get isis_world agent_mind `Lauren] reactive     sensory continuous_sensing]
-      `[mind-activate [get isis_world agent_mind `Lauren] reactive     physical  funk_user]
+      [mind-activate [get isis_world agent_mind `Lauren] reactive     speech  say                                              'Bad Ralph!']
+      [mind-activate [get isis_world agent_mind `Lauren] deliberative reality include_reactive_stories_into_deliberative_story]
+      [mind-activate [get isis_world agent_mind `Lauren] reactive     sensory continuous_sensing]
+      [mind-activate [get isis_world agent_mind `Lauren] reactive     physical  funk_user]
       
       [mind-activate [get isis_world agent_mind `Ralph]  deliberative reality include_reactive_stories_into_deliberative_story]
       [mind-activate [get isis_world agent_mind `Ralph]  reactive     sensory continuous_sensing]

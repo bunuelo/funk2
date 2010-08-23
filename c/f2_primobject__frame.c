@@ -223,6 +223,7 @@ f2ptr f2__frame__contains_var(f2ptr cause, f2ptr this, f2ptr var) {
   }
   return f2bool__new(raw__frame__contains_var(cause, this, var));
 }
+def_pcfunk2(frame__contains_var, this, var, return f2__frame__contains_var(this_cause, this, var));
 
 
 f2ptr f2__frame__funkvar_ptypehash(f2ptr cause, f2ptr this) {return f2__ptypehash__lookup(cause, f2frame__type_ptypehash(this, cause), __funk2.primobject__frame.funk_variable__symbol);}
@@ -452,6 +453,7 @@ void f2__primobject_frame__initialize() {
   f2__primcfunk__init(frame__add_var_value, "");
   f2__primcfunk__init(frame__lookup_var_value, "");
   f2__primcfunk__init(frame__var_value__set, "");
+  f2__primcfunk__init__2(frame__contains_var, this, var, "Returns True [t] if this frame contains variable, otherwise False [nil].");
   f2__primcfunk__init(frame__add_funkvar_value, "");
   f2__primcfunk__init(frame__lookup_funkvar_value, "");
   f2__primcfunk__init(frame__funkvar_value__set, "");

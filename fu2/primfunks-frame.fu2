@@ -24,6 +24,7 @@
 [globalize-funk frame-add_var_value        &primfunk:frame__add_var_value]
 [globalize-funk frame-lookup_var_value     &primfunk:frame__lookup_var_value]
 [globalize-funk frame-var_value-set        &primfunk:frame__var_value__set]
+[globalize-funk frame-contains_var         &primfunk:frame__contains_var]
 [globalize-funk frame-add_funkvar_value    &primfunk:frame__add_funkvar_value]
 [globalize-funk frame-lookup_funkvar_value &primfunk:frame__lookup_funkvar_value]
 [globalize-funk frame-funkvar_value-set    &primfunk:frame__funkvar_value__set]

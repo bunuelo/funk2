@@ -190,7 +190,7 @@
     [mapc [funk [source_dependency]
 		[let [[filename [pathname-concat [get package pathname] source_dependency]]]
 		  [if loaded_a_dependency
-		      [prog [filename-load filename]
+		      [prog [package_filename-load filename]
 			    [= package_was_loaded t]]
 		    [let [[a_file_was_loaded [load-if-modified filename]]]
 		      [if a_file_was_loaded

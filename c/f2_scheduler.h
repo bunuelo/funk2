@@ -33,6 +33,7 @@ typedef struct funk2_operating_system_s {
   //  funk2_processor_mutex_t scheduler__execute_mutex;
   f2ptr                   scheduler;
   f2ptr                   scheduler__symbol;
+  funk2_processor_mutex_t processor_thread__current_fiber__mutex[memory_pool_num];
   f2ptr                   processor_thread__current_fiber[memory_pool_num];
 } funk2_operating_system_t;
 

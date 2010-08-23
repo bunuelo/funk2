@@ -24,6 +24,7 @@
 void funk2_operating_system__init(funk2_operating_system_t* this) {
   int i;
   for (i = 0; i < memory_pool_num; i++) {
+    funk2_processor_mutex__init(&(this->processor_thread__current_fiber__mutex[i]));
     this->processor_thread__current_fiber[i] = nil;
   }
 }
@@ -151,7 +152,9 @@ void f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
 //}
 
 f2ptr f2__scheduler__processor_thread_current_fiber(int pool_index) {
+  funk2_processor_mutex__lock(&(__funk2.operating_system.processor_thread__current_fiber__mutex[pool_index]));
   f2ptr fiber = __funk2.operating_system.processor_thread__current_fiber[pool_index];
+  funk2_processor_mutex__unlock(&(__funk2.operating_system.processor_thread__current_fiber__mutex[pool_index]));
   if (! fiber) {
     error(nil, "f2__scheduler__processor_thread_current_fiber: fiber=nil");
   }
@@ -228,7 +231,7 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
     } 
     i --;
   }
-
+  
   {
     f2ptr bytecode_count     = f2fiber__bytecode_count(fiber, cause);
     u64   bytecode_count__i  = f2integer__i(bytecode_count, cause);
@@ -279,8 +282,10 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      error(nil, "f2processor__execute_next_bytecodes: pool_index != this_processor_thread__pool_index().");
 	    }
 	  }
+	  funk2_processor_mutex__lock(&(__funk2.operating_system.processor_thread__current_fiber__mutex[pool_index]));
 	  f2ptr popped_fiber = __funk2.operating_system.processor_thread__current_fiber[pool_index];
 	  __funk2.operating_system.processor_thread__current_fiber[pool_index] = fiber;
+	  funk2_processor_mutex__unlock(&(__funk2.operating_system.processor_thread__current_fiber__mutex[pool_index]));
 	  //printf("\n  got fiber lock.");
 	  if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
 	    //printf("\nfiber paused due to larva in value register.");
@@ -352,7 +357,9 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      }
 	    }
 	  }
+	  funk2_processor_mutex__lock(&(__funk2.operating_system.processor_thread__current_fiber__mutex[pool_index]));
 	  __funk2.operating_system.processor_thread__current_fiber[pool_index] = popped_fiber;
+	  funk2_processor_mutex__unlock(&(__funk2.operating_system.processor_thread__current_fiber__mutex[pool_index]));
 	}
       } else { // (fiber__paused)
       }

@@ -35,16 +35,8 @@
 [defpackage self_model
   :sources ['self_model.fu2']]
 
-[defpackage propogator
-  :packages [resource]
-   :sources ['propogator.fu2']]
-
-[defpackage knowledge_propogator
-  :packages [propogator]
-   :sources ['knowledge_propogator.fu2']]
-
 [defpackage agency
-  :packages [knowledge_propogator]
+  :packages [resource]
    :sources ['agency.fu2']]
 
 [defpackage mental_layer

@@ -299,29 +299,34 @@ def_pcfunk1(fiber__stack_trace, this, return f2__fiber__stack_trace(this_cause, 
 f2ptr raw__stack_trace_element__print_value(f2ptr cause, f2ptr this) {
   boolean_t this_is_printable;
   if (raw__cons__is_type(cause, this)) {
-    if (raw__simple_length(cause, this) < 10) {
-      f2ptr print_seq = nil;
-      {
-	f2ptr last_cons = nil;
-	f2ptr iter      = this;
-	while (iter) {
-	  f2ptr element = f2__cons__car(cause, iter);
-	  f2ptr element_print_value = raw__stack_trace_element__print_value(cause, element);
-	  if (last_cons) {
-	    f2ptr new_cons = f2cons__new(cause, element_print_value, nil);
-	    f2__cons__cdr__set(cause, last_cons, new_cons);
-	    last_cons = new_cons;
-	  } else {
-	    last_cons = f2cons__new(cause, element_print_value, nil);
-	    print_seq = last_cons;
-	  }
+    f2ptr print_seq = nil;
+    {
+      s64   list_element_count = 0;
+      f2ptr last_cons          = nil;
+      f2ptr iter               = this;
+      while (iter) {
+	f2ptr element = f2__cons__car(cause, iter);
+	f2ptr element_print_value = raw__stack_trace_element__print_value(cause, element);
+	if (last_cons) {
+	  f2ptr new_cons = f2cons__new(cause, element_print_value, nil);
+	  f2__cons__cdr__set(cause, last_cons, new_cons);
+	  last_cons = new_cons;
+	} else {
+	  last_cons = f2cons__new(cause, element_print_value, nil);
+	  print_seq = last_cons;
+	}
+	list_element_count ++;
+	if (list_element_count < 10) {
 	  iter = f2__cons__cdr(cause, iter);
+	} else {
+	  f2ptr new_cons = f2cons__new(cause, new__symbol(cause, "..."), nil);
+	  f2__cons__cdr__set(cause, last_cons, new_cons);
+	  last_cons = new_cons;
+	  iter = nil;
 	}
       }
-      return print_seq;
-    } else {
-      this_is_printable = boolean__false;
     }
+    return print_seq;
   } else if (raw__array__is_type(cause, this)) {
     this_is_printable = boolean__false;
   } else {

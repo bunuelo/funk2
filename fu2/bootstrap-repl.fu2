@@ -283,23 +283,23 @@
 [defmetro new-apply [type_name args]
   `[object_type-new-apply [quote ,type_name] ,args]]
 
-[defmetro get [exp slot_name :rest args]
-  `[object-get ,exp [quote ,slot_name] @args]]
+[defmetro get [this slot_name :rest args]
+  `[object-get ,this [quote ,slot_name] @args]]
 
-[defmetro get-apply [exp slot_name args]
-  `[object-get-apply ,exp [quote ,slot_name] ,args]]
+[defmetro get-apply [this slot_name args]
+  `[object-get-apply ,this [quote ,slot_name] ,args]]
 
-[defmetro set [exp slot_name :rest value_args]
-  `[object-set ,exp [quote ,slot_name] @value_args]]
+[defmetro set [this slot_name :rest value_args]
+  `[object-set ,this [quote ,slot_name] @value_args]]
 
-[defmetro set-apply [exp slot_name value_args]
-  `[object-set-apply ,exp [quote ,slot_name] ,value_args]]
+[defmetro set-apply [this slot_name value_args]
+  `[object-set-apply ,this [quote ,slot_name] ,value_args]]
 
-[defmetro execute [exp slot_name :rest args]
-  `[object-execute ,exp [quote ,slot_name] @args]]
+[defmetro execute [this slot_name :rest args]
+  `[object-execute ,this [quote ,slot_name] @args]]
 
-[defmetro execute-apply [exp slot_name args]
-  `[object-execute-apply ,exp [quote ,slot_name] ,args]]
+[defmetro execute-apply [this slot_name args]
+  `[object-execute-apply ,this [quote ,slot_name] ,args]]
 
 [defmetro have [this slot_name :rest args]
   `[let [[-have-this-      ,this]

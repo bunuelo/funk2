@@ -62,24 +62,24 @@
 
 'mindmon_resource'
 
-[deframe          mindmon_resource [frame] [mindmon
-					    layer_name
-					    agency_name
-					    resource_name
-					    
-					    frame
-					    hbox
-					    label
-					    story_hbox
-					    story_array
-					    
-					    last_fiber_bytecode_count
-					    last_fiber_bytecode_count_time
-					    
-					    elapsed_bytecode_count
-					    elapsed_bytecode_count_nanoseconds
-					    bytecodes_per_second
-					    ]
+[deframe mindmon_resource [frame] [mindmon
+				   layer_name
+				   agency_name
+				   resource_name
+				   
+				   frame
+				   hbox
+				   label
+				   story_hbox
+				   story_array
+				   
+				   last_fiber_bytecode_count
+				   last_fiber_bytecode_count_time
+				   
+				   elapsed_bytecode_count
+				   elapsed_bytecode_count_nanoseconds
+				   bytecodes_per_second
+				   ]
   [new [mindmon layer_name agency_name resource_name]
        [set this mindmon       mindmon]
        [set this layer_name    layer_name]
@@ -146,16 +146,16 @@
 
 'mindmon_agency'
 
-[deframe          mindmon_agency [frame] [mindmon
-					  layer_name
-					  agency_name
-					  
-					  label
-					  resource_vbox
-					  resource_array
-					  
-					  bytecodes_per_second
-					  ]
+[deframe mindmon_agency [frame] [mindmon
+				 layer_name
+				 agency_name
+				 
+				 label
+				 resource_vbox
+				 resource_array
+				 
+				 bytecodes_per_second
+				 ]
   [new [mindmon layer_name agency_name]
        [set this mindmon        mindmon]
        [set this layer_name     layer_name]
@@ -168,7 +168,7 @@
 	 [while resource_name_iter
 	   [let [[resource_name [first resource_name_iter]]]
 	     [set  [get this resource_array] elt resource_name_index [new mindmon_resource mindmon layer_name agency_name resource_name]]
-	     [have [get this resource_vbox]  pack_start              [get [get [get this resource_array] elt resource_name_index] widget] t t 0]]
+	     [have [get this resource_vbox]  pack_start              [get [get [get this resource_array] elt resource_name_index] widget] nil t 0]]
 	   [= resource_name_index [+    resource_name_index 1]]
 	   [= resource_name_iter  [next resource_name_iter]]]]
        this]]
@@ -303,12 +303,12 @@
 
 'mindmon'
 
-[deframe          mindmon [frame] [initialized
-				   fiber
-				   
-				   scrolled_window
-				   mindmon_mind
-				   ]
+[deframe mindmon [frame] [initialized
+			  fiber
+			  
+			  scrolled_window
+			  mindmon_mind
+			  ]
   [new [mind mind_expression]
        [if [not [is-type `mind mind]]
 	   [error bug_type `mindmon_mind_is_not_mind

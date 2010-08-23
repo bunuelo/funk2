@@ -319,11 +319,11 @@ f2ptr raw__stack_trace_element__print_value(f2ptr cause, f2ptr this) {
 	}
       }
       return print_seq;
-    } else if (raw__array__is_type(cause, this)) {
-      this_is_printable = boolean__false;
     } else {
       this_is_printable = boolean__false;
     }
+  } else if (raw__array__is_type(cause, this)) {
+    this_is_printable = boolean__false;
   } else {
     this_is_printable = boolean__true;
   }

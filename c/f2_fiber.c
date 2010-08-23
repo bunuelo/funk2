@@ -298,9 +298,7 @@ def_pcfunk1(fiber__stack_trace, this, return f2__fiber__stack_trace(this_cause, 
 
 f2ptr raw__stack_trace_element__print_value(f2ptr cause, f2ptr this) {
   boolean_t this_is_printable;
-  if (raw__array__is_type(cause, this)) {
-    this_is_printable = boolean__false;
-  } else if (raw__cons__is_type(cause, this)) {
+  if (raw__cons__is_type(cause, this)) {
     if (raw__simple_length(cause, this) < 10) {
       f2ptr print_seq = nil;
       {
@@ -321,6 +319,8 @@ f2ptr raw__stack_trace_element__print_value(f2ptr cause, f2ptr this) {
 	}
       }
       return print_seq;
+    } else if (raw__array__is_type(cause, this)) {
+      this_is_printable = boolean__false;
     } else {
       this_is_printable = boolean__false;
     }

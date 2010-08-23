@@ -46,7 +46,7 @@
 	  properties]
     [let [[primobject_type [primobject_type-new nil]]
 	  [initialize_type_funk [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-initialize_type']] as-symbol] [this @initialize_funk_args]
-							    [if [null [frame-lookup_var_value this `type]]
+							    [if [not [frame-contains_var this `type]]
 								[frame-add_var_value this `type [quote ,type_name]]]
 							    [prog @[mapcar [funk [slot_name_value_pair]
 										 [let [[slot_name  [frametype-slotdef-name  slot_name_value_pair]]

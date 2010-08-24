@@ -35,7 +35,7 @@
 						     [have this-resource think_to_self 'My body senses the world.']
 						     [set this reactive_sensory_sense sense]
 						     [= last_time_step time_step]
-						     [mind-activate [get this mind] reactive sensory propogate_sense_to_story]
+						     [shelter [mind-activate [get this mind] reactive sensory propogate_sense_to_story]]
 						     ]]]
 					       ]]]]]
        
@@ -60,6 +60,7 @@
 										 [story-create_event story [get body time_step] agent_name `says say]]
 									   says]]]]]
 						       agent_names]]
+					       [shelter [mind-activate [get this mind] deliberative include_reactive_stories_into_deliberative_story]]
 					       [have this-resource think_to_self 'While propogating sense->story, I created this story: ' [get story as-list] '.']
 					       story]]]]]
        
@@ -70,8 +71,8 @@
 						     [cause-define cause-time_step [get body time_step]]
 						     [cause-define cause-name      `[reactive sensory sense_imprimer_scold]]
 						     [let [[imprimer_focus [mind-call reactive sensory discover_person_focus imprimer]]]
-						       [mind-activate mind self_conscious imprimer react_to_imprimer_scold
-								      imprimer imprimer_focus]]]
+						       [shelter [mind-activate mind self_conscious imprimer react_to_imprimer_scold
+									       imprimer imprimer_focus]]]]
 					     [have this-resource think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
 					   ]]]
        

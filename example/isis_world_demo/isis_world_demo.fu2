@@ -59,8 +59,8 @@
 
 [deftypefunk isis_agent get objects []
   [while [null [get this sense]]
-    [have this think_to_self 'sense not ready, sleep']
-    [millisleep 100]]
+    `[have this think_to_self 'sense not ready, sleep']
+     [millisleep 100]]
   [have [get this reactive_sensory_sense] lookup `objects]]
 
 [deftypefunk isis_agent get sense []

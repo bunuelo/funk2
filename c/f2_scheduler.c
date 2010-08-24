@@ -65,8 +65,8 @@ void funk2_operating_system__push_current_fiber(funk2_operating_system_t* this, 
   funk2_operating_system_current_fiber_cons_t* cons = (funk2_operating_system_current_fiber_cons_t*)from_ptr(f2__malloc(sizeof(funk2_operating_system_current_fiber_cons_t)));
   cons->current_fiber = current_fiber;
   funk2_processor_mutex__lock(&(this->current_fiber_stack__mutex[pool_index]));
-  cons->next                = this->current_fiber_stack[pool_index];
-  this->current_fiber_stack = cons;
+  cons->next                            = this->current_fiber_stack[pool_index];
+  this->current_fiber_stack[pool_index] = cons;
   funk2_processor_mutex__unlock(&(this->current_fiber_stack__mutex[pool_index]));
 }
 
@@ -77,8 +77,8 @@ f2ptr funk2_operating_system__pop_current_fiber(funk2_operating_system_t* this, 
   if (cons == NULL) {
     error(nil, "funk2_operating_system__pop_current_fiber error: current_fiber_stack is NULL.");
   }
-  f2ptr current_fiber       = cons->current_fiber;
-  this->current_fiber_stack = cons->next;
+  f2ptr current_fiber                   = cons->current_fiber;
+  this->current_fiber_stack[pool_index] = cons->next;
   funk2_processor_mutex__unlock(&(this->current_fiber_stack__mutex[pool_index]));
   f2__free(to_ptr(cons));
   return current_fiber;

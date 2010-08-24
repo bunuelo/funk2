@@ -20,7 +20,19 @@
 
 'resource'
 
-[deframe resource [frame] [name agency fiber active_mutex active active_funk active_args result finished done pole_nanoseconds trace_story]
+[deframe resource [frame] [name
+			   agency
+			   fiber
+			   active_mutex
+			   active
+			   active_funk
+			   active_args
+			   result
+			   finished
+			   done
+			   pole_nanoseconds
+			   trace_story
+			   think_story]
   [new [name active_funk]
        [set this name             name]
        [set this agency           nil]  'We set this when the resource is added to an agency.'
@@ -28,6 +40,7 @@
        [set this active_mutex     [new mutex]]
        [set this pole_nanoseconds 1000000000]
        [set this trace_story      [new story]]
+       [set this think_story      [new story]]
        [set this fiber            [fiber [funk []
 					       [cause-enable_reactive_critics [this-cause]]
 					       [cause-define cause-name     `resource]
@@ -76,8 +89,21 @@
 [deftypefunk resource get local_time []
   [get [get this fiber] bytecode_count]]
 
+[deftypefunk resource get mind []
+  [get [get this agency] mind]]
+
 [deftypefunk resource execute add_new_trace_story_event [character_name action_name prepositional_frame]
   [have [get this trace_story] add_new_event [get this local_time] character_name action_name prepositional_frame]]
+
+[deftypefunk resource execute add_new_think_story_event [character_name action_name prepositional_frame]
+  [have [get this think_story] add_new_event [get this local_time] character_name action_name prepositional_frame]]
+
+[deftypefunk isis_agent execute think_to_self [:rest expressions]
+  [have cause-resource add_new_think_story_event `I `think [frame direct_object expressions]]
+  [apply &format [cons stdout `['\nResource ' ,[get this name] ' Thinks: ' @expressions]]]
+  `[have-apply [get this world] format `['\nAgent ' ,[get this name] ' Thinks: ' @expressions]]
+  nil
+  ]
 
 [deftypefunk resource execute activate [:rest args]
   [have this           add_new_trace_story_event [get cause-resource name] `activate [frame direct_object `me]]

@@ -20,8 +20,9 @@
 
 'mind'
 
-[deframe mind [frame] [body layer_frame]
-  [new [body]
+[deframe mind [frame] [name body layer_frame]
+  [new [name body]
+       [set this name        name]
        [set this body        body]
        [set this layer_frame [frame]]
        this]]

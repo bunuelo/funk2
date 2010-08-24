@@ -38,12 +38,12 @@ struct funk2_oeprating_system_current_fiber_cons_s {
 
 typedef struct funk2_operating_system_s {
   //  funk2_processor_mutex_t scheduler__execute_mutex;
-  f2ptr                                        scheduler;
-  f2ptr                                        scheduler__symbol;
-  funk2_processor_mutex_t                      processor_thread__current_fiber__mutex[memory_pool_num];
-  f2ptr                                        processor_thread__current_fiber[memory_pool_num];
-  funk2_processor_mutex_t                      current_fiber_stack__mutex[memory_pool_num];
-  funk2_operating_system_current_fiber_cons_t* current_fiber_stack[memory_pool_num];
+  f2ptr                                               scheduler;
+  f2ptr                                               scheduler__symbol;
+  funk2_processor_mutex_t                             processor_thread__current_fiber__mutex[memory_pool_num];
+  f2ptr                                               processor_thread__current_fiber[memory_pool_num];
+  funk2_processor_mutex_t                             current_fiber_stack__mutex[memory_pool_num];
+  struct funk2_operating_system_current_fiber_cons_t* current_fiber_stack[memory_pool_num];
 } funk2_operating_system_t;
 
 //extern f2ptr f2scheduler__new(f2ptr context, f2ptr processors, f2ptr fibers, f2ptr fiber_num);

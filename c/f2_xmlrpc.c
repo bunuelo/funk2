@@ -333,7 +333,7 @@ boolean_t funk2_xmlrpc__apply(funk2_xmlrpc_t* this, u8* url, u8* funkname, xmlrp
       call_successful = boolean__false;
     } else {
       xmlrpc_client_call2(&env, clientP, serverInfoP, (char*)funkname,
-			  argument_array, result);
+			  arguments, result);
       
       if (env.fault_occurred) {
 	xmlrpc_print_fault_status(&env);

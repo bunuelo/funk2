@@ -45,6 +45,7 @@ typedef struct funk2_xmlrpc_server_list_s {
 
 typedef struct funk2_xmlrpc_s {
   funk2_xmlrpc_server_list_t* servers;
+  funk2_processor_mutex_t     client_apply_mutex;
 } funk2_xmlrpc_t;
 
 void funk2_xmlrpc__handle(funk2_xmlrpc_t* this);

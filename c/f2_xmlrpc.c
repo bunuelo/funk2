@@ -312,6 +312,8 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
 }
 
 f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments) {
+  funk2_processor_mutex__lock(&(this->client_apply_mutex));
+  
   u64 url__length = raw__string__length(cause, url);
   u8* url__str    = (u8*)alloca(url__length + 1);
   raw__string__str_copy(cause, url, url__str);
@@ -426,16 +428,19 @@ f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments
   
   xmlrpc_client_teardown_global_const();
   
+  funk2_processor_mutex__unlock(&(this->client_apply_mutex));
   return return_value;
 }
 
 #endif // F2__XMLRPC_SUPPORTED
 
 void funk2_xmlrpc__init(funk2_xmlrpc_t* this) {
+  funk2_processor_mutex__init(&(this->client_apply_mutex));
   this->servers = NULL;
 }
 
 void funk2_xmlrpc__destroy(funk2_xmlrpc_t* this) {
+  funk2_processor_mutex__destroy(&(this->client_apply_mutex));
   // no servers could have been created without xmlrpc support.
 #if defined(F2__XMLRPC_SUPPORTED)
   funk2_xmlrpc_server_list_t* next;

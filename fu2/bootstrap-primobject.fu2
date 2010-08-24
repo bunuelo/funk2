@@ -88,7 +88,11 @@
      [apply initialize_type_funk [conslist this @args]]]]
 
 [defunk add_type_funk [type_name slot_type slot_name funk]
-  [primobject_type-add_slot_type [lookup_type type_name] slot_type slot_name funk]]
+  [let [[primobject_type [lookup_type type_name]]]
+    [if [null primobject_type]
+	[error bug_type    `object_type_does_not_exist
+	       object_type type_name]
+      [primobject_type-add_slot_type primobject_type slot_type slot_name funk]]]]
 
 [defmetro deftypefunk [type_name slot_type slot_name args :rest body]
   [print `[deftypefunk ,type_name ,slot_type ,slot_name ,args]]

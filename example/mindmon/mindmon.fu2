@@ -24,7 +24,6 @@
     `[set this selectable t]
     this]]
 
-
 'mindmon_resource_trace_story'
 
 [deframe mindmon_resource_trace_story [frame] [mindmon layer_name agency_name resource_name story_name title_label vbox scrolled_window label]

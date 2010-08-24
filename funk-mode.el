@@ -49,23 +49,10 @@
   (list
    '("\\('[a-zA-Z0-9\n\t\\ _-~!@#$%^&*/()_+-={}]+'\\)" . font-lock-string-face)
    '("\\(&\\)\\([a-zA-Z0-9]+\\)" . font-lock-function-name-face)
-   '("\\<action\\|actor\\|act\\>" . font-lock-keyword-face)
-   '("\\<elt\\>" . font-lock-keyword-face)
-   '("\\<f\\(?:irst\\|ourth\\)\\|make-\\(?:funk\\|metro\\)\\|s\\(?:econd\\|et-car\\|et-cdr\\)\\|t\\(?:hird\\|hread-\\(?:complete\\?\\|value\\)\\)\\>" . font-lock-function-name-face)
-   '("\\<format\\|or\\>" . font-lock-function-name-face)
-   ;;'("\\[\\<format\\|or\\> " . font-lock-function-name-face)
-   ;;'("\\<format\\|or\\> " . font-lock-function-name-face)
-   '("\\<range\\>" . font-lock-function-name-face)
-   '("\\<join\\>" . font-lock-function-name-face)
-   '("\\<parlet\\>" . font-lock-keyword-face)
-   '("\\<partimes\\>" . font-lock-keyword-face)
-   '("\\<act\\(?:ion\\|or\\|\\)\\|ca\\(?:dddr\\|ddr\\|dr\\)\\|cd\\(?:ddr\\|ddr\\|dr\\)\\|cond\\|def\\(?:unk\\|ine-funk\\|ine\\|metro\\)\\|dotimes\\|funk\\|g\\(?:lobalize-funk\\|lobalize\\)\\|if\\|let\\|metro\\|p\\(?:arlet\\|rog\\|ut\\)\\|quote\\|while\\>" . font-lock-keyword-face)
-   '("\\<and\\|apply\\|c\\(?:ar\\|dr\\|ons\\)\\|list\\|ma\\(?:pc\\(?:ar\\|\\)\\)\\|null\\|print\\|set\\|get\\|have\\>" . font-lock-function-name-face)
-   '("\\<nil\\>" . font-lock-keyword-face)
    '("\\(:\\)\\([a-zA-Z0-9]+\\)" . font-lock-type-face)
+   '("\\(`\\)\\([a-zA-Z0-9]+\\)" . font-lock-function-name-face)
    '("\\([a-zA-Z0-9]+\\)\\([?]\\)" . font-lock-type-face)
    '("\\(\\\\x\\)\\([a-fA-F0-9]+\\)" . font-lock-string-face)
-   '("\\([+-*/=]\\)" . font-lock-function-name-face)
    '("\\([a-zA-Z0-9_-~!@#$%^&*()_+-={}]+\\)" . font-lock-variable-name-face)
    ) 
   "Maximum highlighting for Funk major mode")
@@ -75,19 +62,44 @@
     (list
      ;;'("\\([a-zA-Z0-9_-~!@#$%^&*()_+-={}]+\\)" . font-lock-variable-name-face)
      (cons (regexp-opt
-            '("and" "apply" "car" "cdr" "cons" "list" "mapc" "mapcar" "null" "print"
-              "range" "join" "format" "or" "not" "cadr" "caddr" "cadddr" "cddr" "cdddr"
-              "first" "fourth" "make-funk" "make-metro" "second" "set-car" "set-cdr"
-              "third" "thread-complete" "thread-value" "eq" "equals" "set" "get" "have" "execute")
+            '("append" "apply"
+	      "car" "car-set" "cdr" "cdr-set" "cadr" "caddr" "cadddr" "cddr" "cdddr" "cons" "conslist"
+	      "demetropolize" "demetropolize1"
+	      "eq" "equals" "eval" "exit"
+	      "fiber" "filter" "first" "format" "fourth"
+	      "is-type"
+	      "join"
+	      "list" "load" "load_memory_image" "lookup_type"
+	      "make-funk" "make-metro" "maparray" "mapc" "mapcar" "microsleep" "millisleep"
+	      "nanosleep" "not" "null"
+	      "print"
+              "range"
+	      "save_memory_image" "second" "set-car" "set-cdr" "simple_length" "sleep" "sleep_for_nanoseconds" "slots"
+              "t" "third" "thread-complete" "thread-value" "type"
+	      "quit")
             'words)
            'font-lock-function-name-face)
      (cons (regexp-opt
-            '("+" "-" "*" "/" "=" "<" ">" "!=" "<=" ">=") 'words)
-           'font-lock-function-name-face)
-     (cons (regexp-opt
-            '("action" "actor" "act" "elt" "parlet" "partimes" "cond"
-              "defunk" "define-funk" "define" "defmetro" "deftypefunk" "deframe" "deftypeconstruct" "dotimes" "funk"
-              "globalize" "globalize-funk" "if" "let" "let*" "metro" "parlet" "prog" "put" "quote" "while" "nil" "t")
+            '("!=" "<=" ">=" "==" ">>" "<<" "+" "-" "*" "/" "=" "<" ">"
+	      "action" "actor" "act" "and"
+	      "cond" "cause-define" "cause-define-funk" "cause-defunk" "cause-lookup" "cause-lookup-funk"
+              "defunk" "define-funk" "defunk-local" "define" "defmetro" "deftypefunk" "deframe" "deftypeconstruct" "dotimes"
+	      "elt" "error" "execute"
+	      "frame" "funk" "funk-new_with_name" "funkall"
+              "get" "get-apply" "globalize" "globalize-funk"
+	      "have" "have-apply"
+	      "if"
+	      "label" "labels" "length" "let" "let*"
+	      "metro" "mutate"
+	      "new" "new-apply" "nil"
+	      "or"
+	      "parc" "parcar" "parlet" "parog" "partimes" "prog" "put"
+	      "quote"
+	      "set" "set-apply" "shelter"
+	      "type-initialize"
+	      "while" "with-new-cause"
+	      "yield"
+	      )
             'words)
            'font-lock-keyword-face)
      ;;'("\\('[a-zA-Z0-9\n\t\\ _-~!@#$%^&*/()_+-={}]+'\\)" . font-lock-string-face)

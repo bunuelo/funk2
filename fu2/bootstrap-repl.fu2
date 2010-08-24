@@ -603,11 +603,6 @@
 	[prog [conslist-set_cdr first_seq_copy [apply &append rest_seqs]]
 	      first_seq_copy]]]]]
 
-[defunk merge [:rest sets]
-  [if [null sets]
-      nil
-    [apply &append sets]]]
-
 [defunk format [stream :rest exps]
   [if [null stream]
       [apply &string-format exps]
@@ -851,7 +846,6 @@
     [while [not [management_thread-check_command_uid_finished uid result_place]]
       [yield]]
     [get result_place thing]]]
-
 
 [primfunk:load 'fu2/repl.fu2']
 

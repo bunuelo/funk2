@@ -63,7 +63,7 @@ void funk2_operating_system__destroy(funk2_operating_system_t* this) {
 
 void funk2_operating_system__push_current_fiber(funk2_operating_system_t* this, u64 pool_index, f2ptr current_fiber) {
   funk2_operating_system_current_fiber_cons_t* cons = (funk2_operating_system_current_fiber_cons_t*)from_ptr(f2__malloc(sizeof(funk2_operating_system_current_fiber_cons_t)));
-  cons->current_fiber = fiber;
+  cons->current_fiber = current_fiber;
   funk2_processor_mutex__lock(&(this->current_fiber_stack__mutex[pool_index]));
   cons->next                = this->current_fiber_stack;
   this->current_fiber_stack = cons;
@@ -77,11 +77,11 @@ f2ptr funk2_operating_system__pop_current_fiber(funk2_operating_system_t* this, 
   if (cons == NULL) {
     error(nil, "funk2_operating_system__pop_current_fiber error: current_fiber_stack is NULL.");
   }
-  f2ptr fiber               = cons->current_fiber;
+  f2ptr current_fiber       = cons->current_fiber;
   this->current_fiber_stack = cons->next;
   funk2_processor_mutex__unlock(&(this->current_fiber_stack__mutex[pool_index]));
   f2__free(to_ptr(cons));
-  return fiber;
+  return current_fiber;
 }
 
 f2ptr f2__global_scheduler__this_processor(f2ptr cause) {

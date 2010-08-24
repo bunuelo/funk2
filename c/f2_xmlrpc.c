@@ -315,10 +315,23 @@ boolean_t funk2_xmlrpc__apply(funk2_xmlrpc_t* this, u8* url, u8* funkname, xmlrp
   xmlrpc_client* clientP;
   boolean_t      call_successful = boolean__true;
   
+  *fault_string = NULL;
+  *fault_code   = 0;
+  
   xmlrpc_client_create(&(this->xmlrpc_environment), XMLRPC_CLIENT_NO_FLAGS, "Funk XML-RPC Client", "2.11.0", NULL, 0, &clientP);
   if (this->xmlrpc_environment.fault_occurred) {
     call_successful = boolean__false;
+    status("funk2_xmlrpc__apply error: creating client.");
     xmlrpc_print_fault_status(&(this->xmlrpc_environment));
+    if (this->xmlrpc_environment.fault_string != NULL) {
+      int fault_string__length = strlen(this->xmlrpc_environment.fault_string);
+      *fault_string = (char*)from_ptr(f2__malloc(fault_string__length + 1));
+      memcpy(*fault_string, this->xmlrpc_environment.fault_string, fault_string__length + 1);
+    } else {
+      *fault_string = (char*)from_ptr(f2__malloc(1));
+      (*fault_string)[0] = 0;
+    }
+    *fault_code = this->xmlrpc_environment.fault_code;
   } else {
     xmlrpc_server_info* serverInfoP;
     serverInfoP = xmlrpc_server_info_new(&(this->xmlrpc_environment), (char*)url);
@@ -426,11 +439,13 @@ f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments
 	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "url"),          url);
 	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),     funkname);
 	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "arguments"),    arguments);
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_string"), new__string(cause, fault_string));
+	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_string"), new__string(cause, fault_string ? fault_string : ""));
 	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_code"),   f2integer__new(cause, fault_code));
 	  return_value = f2larva__new(cause, 5533, f2__bug__new(cause, f2integer__new(cause, 5533), bug_frame));
 	}
-	f2__free(to_ptr(fault_string));
+	if (fault_string != NULL) {
+	  f2__free(to_ptr(fault_string));
+	}
       }
     }
     xmlrpc_DECREF(argument_array);

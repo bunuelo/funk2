@@ -33,7 +33,7 @@ void funk2_operating_system__init(funk2_operating_system_t* this) {
     int index;
     for (index = 0; index < memory_pool_num; index++) {
       funk2_processor_mutex__init(&(this->current_fiber_stack__mutex[index]));
-      current_fiber_stack[index] = NULL;
+      this->current_fiber_stack[index] = NULL;
     }
   }
 }

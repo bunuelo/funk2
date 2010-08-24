@@ -323,15 +323,21 @@ boolean_t funk2_xmlrpc__apply(funk2_xmlrpc_t* this, u8* url, u8* funkname, xmlrp
     call_successful = boolean__false;
     status("funk2_xmlrpc__apply error: creating client.");
     xmlrpc_print_fault_status(&(this->xmlrpc_environment));
-    if (this->xmlrpc_environment.fault_string != NULL) {
-      int fault_string__length = strlen(this->xmlrpc_environment.fault_string);
-      *fault_string = (char*)from_ptr(f2__malloc(fault_string__length + 1));
-      memcpy(*fault_string, this->xmlrpc_environment.fault_string, fault_string__length + 1);
-    } else {
-      *fault_string = (char*)from_ptr(f2__malloc(1));
-      (*fault_string)[0] = 0;
+    
+    {
+      if (this->xmlrpc_environment.fault_string != NULL) {
+	int fault_string__length = strlen(this->xmlrpc_environment.fault_string);
+	*fault_string = (char*)from_ptr(f2__malloc(fault_string__length + 1));
+	memcpy(*fault_string, this->xmlrpc_environment.fault_string, fault_string__length + 1);
+      } else {
+	*fault_string = (char*)from_ptr(f2__malloc(1));
+	(*fault_string)[0] = 0;
+      }
+      *fault_code = this->xmlrpc_environment.fault_code;
     }
-    *fault_code = this->xmlrpc_environment.fault_code;
+    
+    xmlrpc_env_clean(&(this->xmlrpc_environment));
+    xmlrpc_env_init(&(this->xmlrpc_environment));
   } else {
     xmlrpc_server_info* serverInfoP;
     serverInfoP = xmlrpc_server_info_new(&(this->xmlrpc_environment), (char*)url);
@@ -339,14 +345,8 @@ boolean_t funk2_xmlrpc__apply(funk2_xmlrpc_t* this, u8* url, u8* funkname, xmlrp
     if (this->xmlrpc_environment.fault_occurred) {
       xmlrpc_print_fault_status(&(this->xmlrpc_environment));
       call_successful = boolean__false;
-    } else {
-      xmlrpc_client_call2(&(this->xmlrpc_environment), clientP, serverInfoP, (char*)funkname,
-			  arguments, result);
       
-      if (this->xmlrpc_environment.fault_occurred) {
-	xmlrpc_print_fault_status(&(this->xmlrpc_environment));
-	call_successful = boolean__false;
-	
+      {
 	if (this->xmlrpc_environment.fault_string != NULL) {
 	  int fault_string__length = strlen(this->xmlrpc_environment.fault_string);
 	  *fault_string = (char*)from_ptr(f2__malloc(fault_string__length + 1));
@@ -356,6 +356,32 @@ boolean_t funk2_xmlrpc__apply(funk2_xmlrpc_t* this, u8* url, u8* funkname, xmlrp
 	  (*fault_string)[0] = 0;
 	}
 	*fault_code = this->xmlrpc_environment.fault_code;
+      }
+      
+      xmlrpc_env_clean(&(this->xmlrpc_environment));
+      xmlrpc_env_init(&(this->xmlrpc_environment));
+    } else {
+      xmlrpc_client_call2(&(this->xmlrpc_environment), clientP, serverInfoP, (char*)funkname,
+			  arguments, result);
+      
+      if (this->xmlrpc_environment.fault_occurred) {
+	xmlrpc_print_fault_status(&(this->xmlrpc_environment));
+	call_successful = boolean__false;
+	
+	{
+	  if (this->xmlrpc_environment.fault_string != NULL) {
+	    int fault_string__length = strlen(this->xmlrpc_environment.fault_string);
+	    *fault_string = (char*)from_ptr(f2__malloc(fault_string__length + 1));
+	    memcpy(*fault_string, this->xmlrpc_environment.fault_string, fault_string__length + 1);
+	  } else {
+	    *fault_string = (char*)from_ptr(f2__malloc(1));
+	    (*fault_string)[0] = 0;
+	  }
+	  *fault_code = this->xmlrpc_environment.fault_code;
+	}
+	
+	xmlrpc_env_clean(&(this->xmlrpc_environment));
+	xmlrpc_env_init(&(this->xmlrpc_environment));
       }
     }
     

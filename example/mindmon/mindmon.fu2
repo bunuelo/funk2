@@ -134,7 +134,6 @@
     [set [get this label] text [format nil  '\t' [get this resource_name]
 				       '\n' '\t\t' 'active\t\t'   [get resource active]
 				       '\n' '\t\t' 'done\t\t'     [get resource done]
-				       '\n' '\t\t' 'sleep time\t' [/ [get resource pole_nanoseconds] 1000000000.0] ' s'
 				       '\n' '\t\t' 'speed\t\t'    [/ [get this bytecodes_per_second] 1024.0] ' kBc/s'
 				       '\n' '\t\t' '\t\t\t\t\t\t\t\t\t\t'
 				       ]]

@@ -30,7 +30,6 @@
 			   result
 			   finished
 			   done
-			   pole_nanoseconds
 			   trace_story
 			   think_story]
   [new [name active_funk]
@@ -38,7 +37,6 @@
        [set this agency           nil]  'We set this when the resource is added to an agency.'
        [set this active_funk      active_funk]
        [set this active_mutex     [new mutex]]
-       [set this pole_nanoseconds 1000000000]
        [set this trace_story      [new story]]
        [set this think_story      [new story]]
        [set this fiber            [fiber [funk []
@@ -52,27 +50,30 @@
 						   [let [[active nil]]
 						     [have active_mutex lock]
 						     [= active [get this active]]
-						     [have active_mutex unlock]
-						     [if active
-							 [prog [let [[active_funk nil]]
-								 [have active_mutex lock]
-								 [= active_funk [get this active_funk]]
-								 [have active_mutex unlock]
-								 [if active_funk
-								     [let [[active_args nil]]
-								       [have active_mutex lock]
-								       [= active_args [get this active_args]]
-								       [have active_mutex unlock]
-								       [let [[result [apply active_funk active_args]]]
-									 [have active_mutex lock]
-									 [set this result result]
-									 [have active_mutex unlock]]]
-								   [format stdout '\nresource warning: active_funk is nil (name = ' [get this name] ').\n']]]
+						     [if [not active]
+							 [fiber [funk []
+								      [set [get this fiber] paused t]
+								      [have active_mutex unlock]]
+								nil]
+						       [prog [have active_mutex unlock]
+							     [let [[active_funk nil]]
 							       [have active_mutex lock]
-							       [set this active   nil]
-							       [set this finished t]
-							       [have active_mutex unlock]]
-						       [nanosleep [get this pole_nanoseconds]]]]
+							       [= active_funk [get this active_funk]]
+							       [have active_mutex unlock]
+							       [if active_funk
+								   [let [[active_args nil]]
+								     [have active_mutex lock]
+								     [= active_args [get this active_args]]
+								     [have active_mutex unlock]
+								     [let [[result [apply active_funk active_args]]]
+								       [have active_mutex lock]
+								       [set this result result]
+								       [have active_mutex unlock]]]
+								 [format stdout '\nresource warning: active_funk is nil (name = ' [get this name] ').\n']]]
+							     [have active_mutex lock]
+							     [set this active   nil]
+							     [set this finished t]
+							     [have active_mutex unlock]]]]
 						   [have active_mutex lock]
 						   [= done [get this done]]
 						   [have active_mutex unlock]
@@ -120,7 +121,8 @@
 	  [if [not [get this active]]
 	      [prog [set this active           t]
 		    [set this active_args      args]
-		    [=   successful_activation t]]]
+		    [set [get this fiber] paused nil]
+		    [= successful_activation t]]]
 	  [have active_mutex unlock]]
     [if successful_activation
 	nil

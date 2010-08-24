@@ -42,7 +42,7 @@
   [new [name]
        [set this name name]
        [set this body [new isis_world_body name]]
-       [set this mind [new soul [get this body]]]
+       [set this mind [new soul name [get this body]]]
        this]]
 
 [deftypefunk isis_agent execute user_activate [layer_name agency_name resource_name :rest args]

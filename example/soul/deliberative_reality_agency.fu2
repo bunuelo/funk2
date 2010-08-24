@@ -20,12 +20,12 @@
 
 [deframe deliberative_reality_agency [agency] [reactive_sensory_agency
 					       last_time_step
-					       last_reality_story]
+					       deliberative_reality_story]
   [new [reactive_sensory_agency]
        [type-initialize agency this `reality]
-       [set this reactive_sensory_agency reactive_sensory_agency]
-       [set this last_time_step          -1]
-       [set this last_reality_story      [new story]]
+       [set this reactive_sensory_agency    reactive_sensory_agency]
+       [set this last_time_step             -1]
+       [set this deliberative_reality_story [new story]]
        [have this add_resource [resource include_reactive_stories_into_deliberative_story []
 					 [let [[body [get this body]]]
 					   [cause-define cause-time_step [get body time_step]]
@@ -36,9 +36,8 @@
 						   [if [null reactive_sensory_story]
 						       [have this-resource think_to_self 'Reactive sensory story does not exist.']
 						     [prog [have this-resource think_to_self 'Including reactive sensory story into deliberative story: ' [get reactive_sensory_story as-list]]
-							   [let [[reality_story [get [get this last_reality_story] union reactive_sensory_story]]]
-							     [set this deliberative_reality_story reality_story]
-							     [set this last_reality_story reality_story]]
+							   [let [[reality_story [get [get this deliberative_reality_story] union reactive_sensory_story]]]
+							     [set this deliberative_reality_story reality_story]]
 							   [set this last_time_step time_step]]]]]]]]]
        this]]
 

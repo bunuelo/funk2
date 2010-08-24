@@ -344,10 +344,11 @@ boolean_t funk2_xmlrpc__apply(funk2_xmlrpc_t* this, u8* url, u8* funkname, xmlrp
 	*fault_code = this->xmlrpc_environment.fault_code;
       }
     }
+    
+    xmlrpc_client_destroy(clientP);
+    
     xmlrpc_server_info_free(serverInfoP);
   }
-  
-  xmlrpc_client_destroy(clientP);
   
   return call_successful;
 }

@@ -337,7 +337,7 @@ boolean_t funk2_xmlrpc__apply(funk2_xmlrpc_t* this, u8* url, u8* funkname, xmlrp
       
       if (env.fault_occurred) {
 	xmlrpc_print_fault_status(&env);
-	call_successful_so_far = boolean__false;
+	call_successful = boolean__false;
 	
 	if (env.fault_string != NULL) {
 	  int fault_string__length = strlen(env.fault_string);

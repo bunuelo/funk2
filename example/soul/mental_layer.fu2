@@ -44,7 +44,11 @@
   [have [get this agency_frame] add [get agency name] agency]]
 
 [deftypefunk mental_layer get agency [name]
-  [have [get this agency_frame] lookup name]]
+  [let [[agency [have [get this agency_frame] lookup name]]]
+    [if [null agency]
+	[error bug_type    `agency_does_not_exist_in_mental_layer
+	       agency_name name]
+      agency]]]
 
 [deftypefunk mental_layer get resource [agency_name resource_name]
   [get [get this agency agency_name] resource resource_name]]

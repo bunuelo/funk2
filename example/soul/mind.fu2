@@ -39,7 +39,11 @@
   `[have ,mind add_layer [new mental_layer ,layer_index [quote ,layer_name]]]]
 
 [deftypefunk mind get layer [name]
-  [have [get this layer_frame] lookup name]]
+  [let [[layer [have [get this layer_frame] lookup name]]]
+    [if [null layer]
+	[error bug_type   `layer_does_not_exist_in_mind
+	       layer_name name]
+      layer]]]
 
 [deftypefunk mind get layer_agency_names [name]
   [get [get this layer name] agency_names]]

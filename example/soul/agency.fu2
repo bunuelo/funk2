@@ -35,7 +35,11 @@
   [have [get this resource_frame] add [get resource name] resource]]
 
 [deftypefunk agency get resource [name]
-  [have [get this resource_frame] lookup name]]
+  [let [[resource [have [get this resource_frame] lookup name]]]
+    [if [null resource]
+	[error bug_type      `resource_does_not_exist_in_agency
+	       resource_name name]
+      resource]]]
 
 [deftypefunk agency get mind []
   [get [get this layer] mind]]

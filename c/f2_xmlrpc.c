@@ -344,6 +344,7 @@ boolean_t funk2_xmlrpc__apply(funk2_xmlrpc_t* this, u8* url, u8* funkname, xmlrp
 	*fault_code = this->xmlrpc_environment.fault_code;
       }
     }
+    xmlrpc_server_info_free(serverInfoP);
   }
   
   xmlrpc_client_destroy(clientP);
@@ -431,7 +432,6 @@ f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments
       }
     }
     xmlrpc_DECREF(argument_array);
-    xmlrpc_server_info_free(serverInfoP);
   }
   
   if (call_successful_so_far) {

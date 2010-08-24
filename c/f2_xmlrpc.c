@@ -312,52 +312,41 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
 }
 
 boolean_t funk2_xmlrpc__apply(funk2_xmlrpc_t* this, u8* url, u8* funkname, xmlrpc_value* arguments, xmlrpc_value** result, char** fault_string, int* fault_code) {
-  xmlrpc_env     env;
   xmlrpc_client* clientP;
   boolean_t      call_successful = boolean__true;
   
-  // Initialize our error-handling environment.
-  xmlrpc_env_init(&env);
-  
-  xmlrpc_client_setup_global_const(&env);
-  
-  xmlrpc_client_create(&env, XMLRPC_CLIENT_NO_FLAGS, "Funk XML-RPC Client", "2.11.0", NULL, 0, &clientP);
+  xmlrpc_client_create(&(this->xmlrpc_environment), XMLRPC_CLIENT_NO_FLAGS, "Funk XML-RPC Client", "2.11.0", NULL, 0, &clientP);
   if (env.fault_occurred) {
-    xmlrpc_print_fault_status(&env);
+    xmlrpc_print_fault_status(&(this->xmlrpc_environment));
   } else {
     xmlrpc_server_info* serverInfoP;
-    serverInfoP = xmlrpc_server_info_new(&env, (char*)url);
+    serverInfoP = xmlrpc_server_info_new(&(this->xmlrpc_environment), (char*)url);
     
-    if (env.fault_occurred) {
-      xmlrpc_print_fault_status(&env);
+    if (this->xmlrpc_environment.fault_occurred) {
+      xmlrpc_print_fault_status(&(this->xmlrpc_environment));
       call_successful = boolean__false;
     } else {
-      xmlrpc_client_call2(&env, clientP, serverInfoP, (char*)funkname,
+      xmlrpc_client_call2(&(this->xmlrpc_environment), clientP, serverInfoP, (char*)funkname,
 			  arguments, result);
       
-      if (env.fault_occurred) {
-	xmlrpc_print_fault_status(&env);
+      if (this->xmlrpc_environment.fault_occurred) {
+	xmlrpc_print_fault_status(&(this->xmlrpc_environment));
 	call_successful = boolean__false;
 	
-	if (env.fault_string != NULL) {
-	  int fault_string__length = strlen(env.fault_string);
+	if (this->xmlrpc_environment.fault_string != NULL) {
+	  int fault_string__length = strlen(this->xmlrpc_environment.fault_string);
 	  *fault_string = (char*)from_ptr(f2__malloc(fault_string__length + 1));
-	  memcpy(*fault_string, env.fault_string, fault_string__length + 1);
+	  memcpy(*fault_string, this->xmlrpc_environment.fault_string, fault_string__length + 1);
 	} else {
 	  *fault_string = (char*)from_ptr(f2__malloc(1));
 	  (*fault_string)[0] = 0;
 	}
-	*fault_code = env.fault_code;
+	*fault_code = this->xmlrpc_environment.fault_code;
       }
     }
-  }    
-  
-  // Clean up our error-handling environment.
-  xmlrpc_env_clean(&env);
+  }
   
   xmlrpc_client_destroy(clientP);
-  
-  xmlrpc_client_teardown_global_const();
   
   return call_successful;
 }
@@ -392,14 +381,14 @@ f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments
   {
     xmlrpc_value* argument_array;
     
-    argument_array = xmlrpc_array_new(&env);
+    argument_array = xmlrpc_array_new(&(__funk2.xmlrpc.xmlrpc_environment));
     
     {
       f2ptr iter = arguments;
       while (iter && call_successful_so_far) {
 	f2ptr exp = f2__first(cause, iter);
 	{
-	  xmlrpc_value* new_exp = funk2_xmlrpc__create_xmlrpc_value_from_exp(&env, cause, exp);
+	  xmlrpc_value* new_exp = funk2_xmlrpc__create_xmlrpc_value_from_exp(&(__funk2.xmlrpc.xmlrpc_environment), cause, exp);
 	  if (new_exp == NULL) {
 	    call_successful_so_far = boolean__false;
 	    status("f2_xmlrpc.c: error interpretting arguments.");
@@ -410,12 +399,12 @@ f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments
 	      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),     funkname);
 	      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "arguments"),    arguments);
 	      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "argument"),     exp);
-	      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_string"), ((env.fault_string != NULL) ? new__string(cause, env.fault_string) : nil));
-	      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_code"),   f2integer__new(cause, env.fault_code));
+	      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_string"), ((__funk2.xmlrpc.xmlrpc_environment.fault_string != NULL) ? new__string(cause, __funk2.xmlrpc.xmlrpc_environment.fault_string) : nil));
+	      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_code"),   f2integer__new(cause, __funk2.xmlrpc.xmlrpc_environment.fault_code));
 	      return_value = f2larva__new(cause, 5533, f2__bug__new(cause, f2integer__new(cause, 5533), bug_frame));
 	    }
 	  } else {
-	    xmlrpc_array_append_item(&env, argument_array, new_exp);
+	    xmlrpc_array_append_item(&(__funk2.xmlrpc.xmlrpc_environment), argument_array, new_exp);
 	    xmlrpc_DECREF(new_exp);
 	  }
 	}
@@ -446,7 +435,7 @@ f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments
   }
   
   if (call_successful_so_far) {
-    return_value = funk2_xmlrpc__new_exp_from_xmlrpc_value(&env, cause, resultP);
+    return_value = funk2_xmlrpc__new_exp_from_xmlrpc_value(&(__funk2.xmlrpc.xmlrpc_environment), cause, resultP);
     success = boolean__true;
     
     // Dispose of our result value.
@@ -458,7 +447,15 @@ f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments
 
 #endif // F2__XMLRPC_SUPPORTED
 
+
 void funk2_xmlrpc__init(funk2_xmlrpc_t* this) {
+#if defined(F2__XMLRPC_SUPPORTED)
+  // Initialize our error-handling environment.
+  xmlrpc_env_init(&(this->xmlrpc_environment));
+  
+  xmlrpc_client_setup_global_const(&(this->xmlrpc_environment));
+#endif // F2__XMLRPC_SUPPORTED
+  
   this->servers = NULL;
 }
 
@@ -474,6 +471,11 @@ void funk2_xmlrpc__destroy(funk2_xmlrpc_t* this) {
     f2__free(to_ptr(iter));
     iter = next;
   }
+  
+  // Clean up our error-handling environment.
+  xmlrpc_env_clean(&(this->xmlrpc_environment));
+  
+  xmlrpc_client_teardown_global_const();
 #endif
 }
 

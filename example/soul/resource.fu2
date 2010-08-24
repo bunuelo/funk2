@@ -130,6 +130,22 @@
 	     object_typefunk `activate
 	     error_type      `resource-is-already-activated]]]]
 
+[deftypefunk resource execute wait_to_activate [:rest args]
+  [have this           add_new_trace_story_event [get cause-resource name] `activate [frame direct_object `me]]
+  [have cause-resource add_new_trace_story_event `I                        `activate [frame direct_object [get this name]]]
+  [let [[successful_activation nil]
+	[active_mutex          [get this active_mutex]]]
+    [prog [have active_mutex lock]
+	  [if [not [get this active]]
+	      [prog [set this active           t]
+		    [set this active_args      args]
+		    [set [get this fiber] paused nil]
+		    [= successful_activation t]]]
+	  [have active_mutex unlock]]
+    [if successful_activation
+	nil
+      [have-apply this wait_to_activate args]]]]
+
 [deftypefunk resource execute finish []
   [have this           add_new_trace_story_event [get cause-resource name] `finish [frame direct_object `me]]
   [have cause-resource add_new_trace_story_event `I                        `finish [frame direct_object [get this name]]]

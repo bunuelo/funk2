@@ -55,6 +55,10 @@
   [let [[resource [get this resource name]]]
     [have-apply resource activate args]]]
 
+[deftypefunk agency execute wait_to_activate [name :rest args]
+  [let [[resource [get this resource name]]]
+    [have-apply resource wait_to_activate args]]]
+
 [deftypefunk agency get resources []
   [get [get this resource_frame] values]]
 

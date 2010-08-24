@@ -18,10 +18,10 @@
  rights to redistribute these changes.'
 
 
-[deframe deliberative_reality_agency [agency] []
-  [new []
+[deframe deliberative_reality_agency [agency] [reactive_sensory_agency]
+  [new [reactive_sensory_agency]
        [type-initialize agency this `reality]
-       
+       [set this reactive_sensory_agency reactive_sensory_agency]
        [have this add_resource [resource include_reactive_stories_into_deliberative_story []
 					 [let [[body [get this body]]]
 					   [cause-define cause-time_step [get body time_step]]
@@ -32,7 +32,7 @@
 					       [let [[time_step [get body time_step]]]
 						 [if [== last_time_step time_step]
 						     [millisleep 100]
-						   [let [[reactive_sensory_story [get this reactive_sensory_story]]]
+						   [let [[reactive_sensory_story [get reactive_sensory_agency reactive_sensory_story]]]
 						     [if [null reactive_sensory_story]
 							 [millisleep 1000]
 						       [prog [have this think_to_self 'Including reactive sensory story into deliberative story: ' [get reactive_sensory_story as-list]]

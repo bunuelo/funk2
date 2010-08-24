@@ -210,13 +210,13 @@ f2ptr f2__scheduler__processor_thread_current_fiber(int pool_index) {
   //  error(nil, "f2__scheduler__processor_thread_current_fiber: fiber=nil");
   //}
   //return fiber;
-  funk2_processor_mutex__lock(&(this->current_fiber_stack__mutex[pool_index]));
-  funk2_operating_system_current_fiber_cons_t* cons  = this->current_fiber_stack[pool_index];
+  funk2_processor_mutex__lock(&(__funk2.operating_system.current_fiber_stack__mutex[pool_index]));
+  funk2_operating_system_current_fiber_cons_t* cons  = __funk2.operating_system.current_fiber_stack[pool_index];
   if (cons == NULL) {
     error(nil, "f2__scheduler__processor_thread_current_fiber: this->current_fiber_stack[pool_index]=NULL");
   }
   f2ptr current_fiber = cons->current_fiber;
-  funk2_processor_mutex__unlock(&(this->current_fiber_stack__mutex[pool_index]));
+  funk2_processor_mutex__unlock(&(__funk2.operating_system.current_fiber_stack__mutex[pool_index]));
   return current_fiber;
 }
 

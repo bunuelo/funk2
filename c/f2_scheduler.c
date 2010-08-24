@@ -202,13 +202,22 @@ void f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
 //}
 
 f2ptr f2__scheduler__processor_thread_current_fiber(int pool_index) {
-  funk2_processor_mutex__lock(&(__funk2.operating_system.processor_thread__current_fiber__mutex[pool_index]));
-  f2ptr fiber = __funk2.operating_system.processor_thread__current_fiber[pool_index];
-  funk2_processor_mutex__unlock(&(__funk2.operating_system.processor_thread__current_fiber__mutex[pool_index]));
-  if (! fiber) {
-    error(nil, "f2__scheduler__processor_thread_current_fiber: fiber=nil");
+  //funk2_processor_mutex__lock(&(__funk2.operating_system.processor_thread__current_fiber__mutex[pool_index]));
+  //f2ptr fiber = __funk2.operating_system.processor_thread__current_fiber[pool_index];
+  //f2ptr fiber = __funk2.operating_system.processor_thread__current_fiber[pool_index];
+  //funk2_processor_mutex__unlock(&(__funk2.operating_system.processor_thread__current_fiber__mutex[pool_index]));
+  //if (! fiber) {
+  //  error(nil, "f2__scheduler__processor_thread_current_fiber: fiber=nil");
+  //}
+  //return fiber;
+  funk2_processor_mutex__lock(&(this->current_fiber_stack__mutex[pool_index]));
+  funk2_operating_system_current_fiber_cons_t* cons  = this->current_fiber_stack[pool_index];
+  if (cons == NULL) {
+    error(nil, "f2__scheduler__processor_thread_current_fiber: this->current_fiber_stack[pool_index]=NULL");
   }
-  return fiber;
+  f2ptr current_fiber = cons->current_fiber;
+  funk2_processor_mutex__unlock(&(this->current_fiber_stack__mutex[pool_index]));
+  return current_fiber;
 }
 
 f2ptr f2__this__fiber(f2ptr cause) {
@@ -415,11 +424,12 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  funk2_processor_mutex__unlock(&(__funk2.operating_system.processor_thread__current_fiber__mutex[pool_index]));
 	  
 	  {
-	    f2ptr os_popped_fiber = funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index);
-	    if (os_popped_fiber != popped_fiber) {
-	      status("f2processor__execute_next_bytecodes error: popped different fiber than expected.  pool_index=%d  os_popped_fiber=" u64__fstr "  popped_fiber=" u64__fstr, pool_index, os_popped_fiber, popped_fiber);
-	      error(nil, "f2processor__execute_next_bytecodes error: popped different fiber than expected.");
-	    }
+	    //f2ptr os_popped_fiber = 
+	    funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index);
+	    //if (os_popped_fiber != popped_fiber) {
+	    //  status("f2processor__execute_next_bytecodes error: popped different fiber than expected.  pool_index=%d  os_popped_fiber=" u64__fstr "  popped_fiber=" u64__fstr, pool_index, os_popped_fiber, popped_fiber);
+	    //  error(nil, "f2processor__execute_next_bytecodes error: popped different fiber than expected.");
+	    //}
 	  }
 	  
 	}

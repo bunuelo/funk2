@@ -370,15 +370,15 @@ why does it randomly exit the while loop/??'
 						 [walk_around [> 0 [have [have [get this objects] lookup obstacle] lookup `x_pos]]]]
 					 [mind-activate [get this mind] reactive physical walk_directly_towards desired_object]]]
        
-       `[have this add_resource [resource funk_user []
-					 [while t
-					   `[print 'waiting for user to activate']
-					    [if [null [get this user_activate_resource]]
-						[sleep 1]
-					      [prog [have-apply mind activate [print `[reactive physical ,[get this user_activate_resource] @[get this user_activate_args]]]]
-						    [set this user_activate_resource nil]
-						    [set this user_activate_args nil]
-						    ]]]]]
-       
-       this]]
+	[have this add_resource [resource funk_user []
+					  [while t
+					    `[print 'waiting for user to activate']
+					     [if [null [get this user_activate_resource]]
+						 [sleep 1]
+					       [prog [have-apply mind activate [print `[reactive physical ,[get this user_activate_resource] @[get this user_activate_args]]]]
+						     [set this user_activate_resource nil]
+						     [set this user_activate_args nil]
+						     ]]]]]
+	
+	this]]
 

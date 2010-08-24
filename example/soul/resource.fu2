@@ -85,7 +85,7 @@
   `[let [[this-resource [new resource [quote ,name] nil]]]
      [set this-resource active_funk [funk ,args
 					   [let [[resource-name   [quote ,name]]
-						 [source-filename [shelter source-filename]]]
+						 [source-filename ,[shelter source-filename]]]
 					     @body]]]
      this-resource]]
 

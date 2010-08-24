@@ -414,8 +414,12 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  __funk2.operating_system.processor_thread__current_fiber[pool_index] = popped_fiber;
 	  funk2_processor_mutex__unlock(&(__funk2.operating_system.processor_thread__current_fiber__mutex[pool_index]));
 	  
-	  if (funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index) != popped_fiber) {
-	    error(nil, "f2processor__execute_next_bytecodes error: popped different fiber than expected.");
+	  {
+	    f2ptr os_popped_fiber = funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index);
+	    if (os_popped_fiber != popped_fiber) {
+	      status("f2processor__execute_next_bytecodes error: popped different fiber than expected.  pool_index=%d  os_popped_fiber=" f2ptr__fstr "  popped_fiber=" f2ptr__fstr, pool_index, os_popped_fiber, popped_fiber);
+	      error(nil, "f2processor__execute_next_bytecodes error: popped different fiber than expected.");
+	    }
 	  }
 	  
 	}

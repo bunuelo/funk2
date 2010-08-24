@@ -18,16 +18,16 @@
  rights to redistribute these changes.'
 
 
-'soul: a human cognitive architecture'
+'moral_compass: a self-reflective and self-conscious cognitive architecture'
 
-[defpackage soul
+[defpackage moral_compass
   :packages [mind
 	     reactive_layer
 	     deliberative_layer
 	     reflective_layer
 	     self_reflective_layer
 	     self_conscious_layer]
-   :sources ['soul.fu2']]
+   :sources ['moral_compass.fu2']]
 
 
 'reactive_layer'

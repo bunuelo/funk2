@@ -17,11 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe soul [mind] [reactive_layer
-		      deliberative_layer
-		      reflective_layer
-		      self_reflective_layer
-		      self_conscious_layer]
+[deframe moral_compass [mind] [reactive_layer
+			       deliberative_layer
+			       reflective_layer
+			       self_reflective_layer
+			       self_conscious_layer]
   [new [name body]
        [type-initialize mind this name body]
        [set this reactive_layer        [new reactive_layer]]

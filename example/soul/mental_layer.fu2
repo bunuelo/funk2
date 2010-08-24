@@ -28,6 +28,9 @@
        [set this agency_frame [frame]]
        this]]
 
+[deftypefunk mental_layer get body []
+  [get [get this mind] body]]
+
 [deftypefunk mental_layer get agencies []
   [get [get this agency_frame] values]]
 

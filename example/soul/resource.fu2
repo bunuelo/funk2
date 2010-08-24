@@ -92,6 +92,9 @@
 [deftypefunk resource get mind []
   [get [get this agency] mind]]
 
+[deftypefunk resource get body []
+  [get [get this agency] body]]
+
 [deftypefunk resource execute add_new_trace_story_event [character_name action_name prepositional_frame]
   [have [get this trace_story] add_new_event [get this local_time] character_name action_name prepositional_frame]]
 

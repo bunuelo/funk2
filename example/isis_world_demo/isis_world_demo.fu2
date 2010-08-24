@@ -41,8 +41,8 @@
 			     reactive_sensory_story]
   [new [name]
        [set this name name]
-       [set this mind [new soul]]
        [set this body [new isis_world_body name]]
+       [set this mind [new soul [get this body]]]
        this]]
 
 [deftypefunk isis_agent execute user_activate [layer_name agency_name resource_name :rest args]

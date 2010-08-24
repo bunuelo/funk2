@@ -37,6 +37,12 @@
 [deftypefunk agency get resource [name]
   [have [get this resource_frame] lookup name]]
 
+[deftypefunk agency get mind []
+  [get [get this layer] mind]]
+
+[deftypefunk agency get body []
+  [get [get this layer] body]]
+
 [deftypefunk agency execute call [name :rest args]
   [let [[resource [get this resource name]]]
     [have-apply resource call args]]]

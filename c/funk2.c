@@ -187,6 +187,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_xlib__init(&(this->xlib));
   funk2_glwindow__init(&(this->glwindow), (u8*)"funk2 glwindow", 1024, 768, 24, boolean__false);
   funk2_cpu__init(&(this->cpu));
+  funk2_xmlrpc__init(&(this->xmlrpc));
   
   f2ptr cause = initial_cause();
   
@@ -372,6 +373,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_processor_mutex__destroy(&(this->event_id_mutex));
   funk2_cpu__destroy(&(this->cpu));
   funk2_surrogate_parent__destroy(&(this->surrogate_parent));
+  funk2_xmlrpc__destroy(&(this->xmlrpc));
 #if defined(F2__USE_VIRTUAL_PROCESSORS)
   funk2_virtual_processor_handler__destroy(&(this->virtual_processor_handler));
 #endif // F2__USE_VIRTUAL_PROCESSORS

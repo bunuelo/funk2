@@ -50,13 +50,13 @@ void funk2_operating_system__destroy(funk2_operating_system_t* this) {
     for (index = 0; index < memory_pool_num; index++) {
       funk2_processor_mutex__destroy(&(this->current_fiber_stack__mutex[index]));
     }
-  }
-  {
-    funk2_operating_system_current_fiber_cons_t* iter = this->current_fiber_stack;
-    while (iter) {
-      funk2_operating_system_current_fiber_cons_t* next = iter->next;
-      f2__free(to_ptr(iter));
-      iter = next;
+    {
+      funk2_operating_system_current_fiber_cons_t* iter = this->current_fiber_stack[index];
+      while (iter) {
+	funk2_operating_system_current_fiber_cons_t* next = iter->next;
+	f2__free(to_ptr(iter));
+	iter = next;
+      }
     }
   }
 }

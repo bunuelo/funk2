@@ -317,6 +317,7 @@ boolean_t funk2_xmlrpc__apply(funk2_xmlrpc_t* this, u8* url, u8* funkname, xmlrp
   
   xmlrpc_client_create(&(this->xmlrpc_environment), XMLRPC_CLIENT_NO_FLAGS, "Funk XML-RPC Client", "2.11.0", NULL, 0, &clientP);
   if (this->xmlrpc_environment.fault_occurred) {
+    call_successful = boolean__false;
     xmlrpc_print_fault_status(&(this->xmlrpc_environment));
   } else {
     xmlrpc_server_info* serverInfoP;
@@ -345,9 +346,9 @@ boolean_t funk2_xmlrpc__apply(funk2_xmlrpc_t* this, u8* url, u8* funkname, xmlrp
       }
     }
     
-    xmlrpc_client_destroy(clientP);
-    
     xmlrpc_server_info_free(serverInfoP);
+    
+    xmlrpc_client_destroy(clientP);
   }
   
   return call_successful;

@@ -18,29 +18,29 @@
  rights to redistribute these changes.'
 
 
-[deframe deliberative_reality_agency [agency] [reactive_sensory_agency]
+[deframe deliberative_reality_agency [agency] [reactive_sensory_agency
+					       last_time_step
+					       last_reality_story]
   [new [reactive_sensory_agency]
        [type-initialize agency this `reality]
        [set this reactive_sensory_agency reactive_sensory_agency]
+       [set this last_time_step          -1]
+       [set this last_reality_story      [new story]]
        [have this add_resource [resource include_reactive_stories_into_deliberative_story []
 					 [let [[body [get this body]]]
 					   [cause-define cause-time_step [get body time_step]]
 					   [cause-define cause-name      `[deliberative reality interpret_senses_into_current_story]]
-					   [let [[last_time_step     -1]
-						 [last_reality_story [new story]]]
-					     [while t
-					       [let [[time_step [get body time_step]]]
-						 [if [== last_time_step time_step]
-						     [millisleep 100]
-						   [let [[reactive_sensory_story [get reactive_sensory_agency reactive_sensory_story]]]
-						     [if [null reactive_sensory_story]
-							 [millisleep 1000]
-						       [prog [have this think_to_self 'Including reactive sensory story into deliberative story: ' [get reactive_sensory_story as-list]]
-							     [let [[reality_story [get last_reality_story union reactive_sensory_story]]]
-							       [set this deliberative_reality_story reality_story]
-							       [= last_reality_story reality_story]]
-							     [= last_time_step time_step]]]]]]]]]]]
-       
+					   [let [[time_step [get body time_step]]]
+					     [if [== [get this last_time_step] time_step]
+						 [millisleep 100]
+					       [let [[reactive_sensory_story [get reactive_sensory_agency reactive_sensory_story]]]
+						 [if [null reactive_sensory_story]
+						     [millisleep 1000]
+						   [prog [have this think_to_self 'Including reactive sensory story into deliberative story: ' [get reactive_sensory_story as-list]]
+							 [let [[reality_story [get [get this last_reality_story] union reactive_sensory_story]]]
+							   [set this deliberative_reality_story reality_story]
+							   [set this last_reality_story reality_story]]
+							 [set this last_time_step time_step]]]]]]]]]
        this]]
 
 

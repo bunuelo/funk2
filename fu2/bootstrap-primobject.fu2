@@ -33,9 +33,8 @@
 [defmetro with [frame_object :rest body]
   `[let [[frame_object_environment [new environment [this-env] nil]]]
      [set frame_object_environment frame ,frame_object]
-     [let [[with_funk [funk []
-			    @body]]]
-       [set with_funk env frame_object_environment]
+     [let [[with_funk [funk-new_with_name_and_environment `with frame_object_environment []
+							   @body]]]
        [apply with_funk nil]]]]
 
 [defmetro deframe [type_name parents slot_name_value_pairs :rest properties]

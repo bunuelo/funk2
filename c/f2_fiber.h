@@ -24,13 +24,11 @@
 
 // fiber
 
-declare_object_type_19_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, execution_nanoseconds, bytecode_count,
+declare_object_type_20_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, execution_nanoseconds, bytecode_count, is_complete,
 			    f2ptr do_sleep_until_time__symbol;   // execute
 			    f2ptr do_sleep_until_time__funk;
 			    f2ptr sleep_for_nanoseconds__symbol; // execute
 			    f2ptr sleep_for_nanoseconds__funk;
-			    f2ptr is_complete__symbol; // get
-			    f2ptr is_complete__funk;
 			    f2ptr quit__symbol; // execute
 			    f2ptr quit__funk;
 			    );
@@ -69,12 +67,12 @@ extern f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-declare_primobject_19_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, execution_nanoseconds, bytecode_count);
+declare_primobject_20_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, execution_nanoseconds, bytecode_count, is_complete);
 
 f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args);
 
-#define __pure__f2fiber__is_complete(this, cause)  (!f2fiber__program_counter(this, cause))
-#define f2fiber__is_complete(this, cause)          __pure__f2fiber__is_complete(this, cause)
+//#define __pure__f2fiber__is_complete(this, cause)  (!f2fiber__program_counter(this, cause))
+//#define f2fiber__is_complete(this, cause)          __pure__f2fiber__is_complete(this, cause)
 
 boolean_t raw__fiber__is_complete(f2ptr cause, f2ptr this);
 f2ptr      f2__fiber__is_complete(f2ptr cause, f2ptr this);

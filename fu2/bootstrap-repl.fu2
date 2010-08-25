@@ -107,7 +107,7 @@
 												nil]]
 								[define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
 								[define is_funktional [primfunk:array__elt compiled_funk 10]]
-								`[funk-new ,environment [quote ,name] [quote ,args]
+								`[funk-new [this-env] [quote ,name] [quote ,args]
 									   [quote ,demetroed]
 									   [quote ,body]
 									   [quote ,compiled_bcs]

@@ -145,10 +145,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   status("*******************************************************************");
   status("");
   
-#if defined(F2__GTK__SUPPORTED)
-  funk2_gtk__init(&(this->gtk), &argc, &argv);
-#endif
-  
   funk2_command_line__init(&(this->command_line), argc, argv);
   
   {
@@ -188,6 +184,10 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_cpu__init(&(this->cpu));
   funk2_xmlrpc__init(&(this->xmlrpc));
   funk2_virtual_processor_handler__init(&(this->virtual_processor_handler), memory_pool_num);
+  
+#if defined(F2__GTK__SUPPORTED)
+  funk2_gtk__init(&(this->gtk), &argc, &argv);
+#endif
   
   f2ptr cause = initial_cause();
   

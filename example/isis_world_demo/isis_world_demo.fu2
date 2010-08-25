@@ -19,8 +19,9 @@
  rights to redistribute these changes.'
 
 
-[deframe isis_world_body [frame] [name world says]
+[deframe isis_world_body [agent_body] [name world says]
   [new [name]
+       [type-initialize agent_body this world]
        [set this name  name]
        [set this world nil]
        [set this says  nil]
@@ -28,9 +29,6 @@
 
 [deftypefunk isis_world_body get sense []
   [get [get this world] agent_sense [get this name]]]
-
-[deftypefunk isis_world_body get time_step []
-  [get [get this world] time_step]]
 
 
 
@@ -78,12 +76,11 @@
   [have [get this mind] destroy]]
 
 
-[deframe isis_world [frame] [client agent_frame time_step format_mutex]
+[deframe isis_world [physical_world] [client agent_frame]
   [new [client]
+       [type-initialize physical_world this]
        [set this client       client]
        [set this agent_frame  [frame]]
-       [set this time_step    0]
-       [set this format_mutex [new mutex]]
        this]]
 
 [deftypefunk isis_world execute add_agent [agent]
@@ -127,11 +124,11 @@
 
 [deftypefunk isis_world execute step_simulation []
   [isis-call [get this client] meta_step seconds 0.15]
-  [set this time_step [+ 1 [get this time_step]]]]
+  [have this step_physical_world]]
 
 [deftypefunk isis_world execute mini_step []
   [isis-call [get this client] meta_step seconds 0.02]
-  [set this time_step [+ 1 [get this time_step]]]]
+  [have this step_physical_world]]
 
 [deftypefunk isis_world execute pause_simulation []
   [isis-call [get this client] meta_pause]]
@@ -140,12 +137,6 @@
   [mapc [funk [agent]
 	      [have agent destroy]]
 	[get this agents]]]
-
-[deftypefunk isis_world execute format [:rest expressions]
-  [let [[format_mutex [get this format_mutex]]]
-    [have format_mutex lock]
-    [apply &format [cons stdout expressions]]
-    [have format_mutex unlock]]]
 
 
 [defunk ralph_agent-new []
@@ -173,14 +164,12 @@
       [cause-define cause-time_step [get isis_world time_step]]
       [cause-define cause-name      `isis_world-initialize]
       
-      [mind-activate [get isis_world agent_mind `Lauren] reactive     speech   say                                              'Bad Ralph!']
-      [mind-activate [get isis_world agent_mind `Lauren] deliberative reality  include_reactive_stories_into_deliberative_story]
-      [mind-activate [get isis_world agent_mind `Lauren] reactive     sensory  continuous_sensing]
-      [mind-activate [get isis_world agent_mind `Lauren] reactive     physical funk_user]
+      [mind-activate [get isis_world agent_mind `Lauren] reactive speech   say                'Bad Ralph!']
+      [mind-activate [get isis_world agent_mind `Lauren] reactive sensory  continuous_sensing]
+      [mind-activate [get isis_world agent_mind `Lauren] reactive physical funk_user]
       
-      [mind-activate [get isis_world agent_mind `Ralph] deliberative reality  include_reactive_stories_into_deliberative_story]
-      [mind-activate [get isis_world agent_mind `Ralph] reactive     sensory  continuous_sensing]
-      [mind-activate [get isis_world agent_mind `Ralph] reactive     physical funk_user]
+      [mind-activate [get isis_world agent_mind `Ralph] reactive sensory  continuous_sensing]
+      [mind-activate [get isis_world agent_mind `Ralph] reactive physical funk_user]
       
       [format stdout '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
 

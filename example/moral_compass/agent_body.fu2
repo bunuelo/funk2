@@ -17,41 +17,14 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage character
-  :sources ['character.fu2']]
 
-[defpackage story
-  :packages [character]
-   :sources ['story.fu2']]
+'agent_body'
 
-[defpackage story-graph
-  :packages [story]
-   :sources ['story-graph.fu2']]
+[deframe agent_body [frame] [physical_world]
+  [new [physical_world]
+       [set this physical_world physical_world]
+       this]]
 
-[defpackage resource
-  :packages [story]
-   :sources ['resource.fu2']]
-
-[defpackage self_model
-  :sources ['self_model.fu2']]
-
-[defpackage agency
-  :packages [resource]
-   :sources ['agency.fu2']]
-
-[defpackage mental_layer
-  :packages [agency]
-   :sources ['mental_layer.fu2']]
-
-[defpackage physical_world
-  :packages []
-   :sources ['physical_world.fu2']]
-
-[defpackage agent_body
-  :packages [physical_world]
-   :sources ['agent_body.fu2']]
-
-[defpackage mind
-  :packages [agent_body mental_layer self_model]
-   :sources ['mind.fu2']]
+[deftypefunk agent_body get time_step []
+  [get [get this physical_world] time_step]]
 

@@ -84,8 +84,6 @@ struct funk2_compile_s {
 
 f2ptr check_bcs_valid(f2ptr bytecodes);
 
-extern f2ptr __wrong_argument_number__bcs;
-
 f2ptr f2__compile__funk_bc(f2ptr cause);
 
 f2ptr f2__compile__funk(f2ptr cause, f2ptr fiber, f2ptr metro);

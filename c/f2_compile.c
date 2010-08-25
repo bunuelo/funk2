@@ -138,7 +138,7 @@ f2ptr f2__compile__symbol(f2ptr cause, f2ptr exp, boolean_t* is_funktional, f2pt
 
 f2ptr f2__list_cdr__set(f2ptr cause, f2ptr seq, f2ptr cdr_value);
 
-f2ptr __wrong_argument_number__bcs = nil; // this is like an interrupt pointer... (nil causes fiber to fail silently [this is a bug])
+//f2ptr __wrong_argument_number__bcs = nil; // this is like an interrupt pointer... (nil causes fiber to fail silently [this is a bug])
 
 f2ptr f2__wrong_argument_number__bcs__set(f2ptr cause, f2ptr bytecodes) {
   environment__add_var_value(cause, global_environment(), new__symbol(cause, "--wrong_argument_number-bcs--"), bytecodes);
@@ -279,7 +279,7 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
     } else {
       
       iter = f2__list_cdr__set(cause, iter, f2__compile__copy_iter_to_value(cause));
-      iter = f2__list_cdr__set(cause, iter, f2__compile__else_jump(cause, __wrong_argument_number__bcs));
+      iter = f2__list_cdr__set(cause, iter, f2__compile__else_jump(cause, __funk2.compile.wrong_argument_number__bcs));
       
       iter = f2__list_cdr__set(cause, iter, f2__compile__car(cause));
       iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, var));

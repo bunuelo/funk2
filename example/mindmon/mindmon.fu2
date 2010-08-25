@@ -26,21 +26,18 @@
 
 'mindmon_resource_trace_story'
 
-[deframe mindmon_resource_trace_story [frame] [mindmon layer_name agency_name resource_name story_name title_label vbox scrolled_window label]
+[deframe mindmon_resource_trace_story [frame] [mindmon layer_name agency_name resource_name story_name title_label scrolled_window label]
   [new [mindmon layer_name agency_name resource_name story_name]
        [set this mindmon         mindmon]
        [set this layer_name      layer_name]
        [set this agency_name     agency_name]
        [set this resource_name   resource_name]
        [set this story_name      story_name]
-       [set this vbox            [gtk-vbox-new 2]]
        [set this title_label     [gtk-left_label-new [format nil story_name]]]
        [set this scrolled_window [gtk-scrolled_window-new]]
        [set this label           [gtk-left_label-new '']]
        [have [get this scrolled_window] request_size      600 200]
        [have [get this scrolled_window] add_with_viewport [get this label]]
-       [have [get this vbox]            pack_start        [get this title_label]     nil nil 0]
-       [have [get this vbox]            pack_start        [get this scrolled_window] t t 0]
        this]]
 
 [deftypefunk mindmon_resource_trace_story get widget []
@@ -69,7 +66,7 @@
 				   frame
 				   hbox
 				   label
-				   story_hbox
+				   story_notebook
 				   story_array
 				   
 				   last_fiber_bytecode_count
@@ -80,20 +77,20 @@
 				   bytecodes_per_second
 				   ]
   [new [mindmon layer_name agency_name resource_name]
-       [set this mindmon       mindmon]
-       [set this layer_name    layer_name]
-       [set this agency_name   agency_name]
-       [set this resource_name resource_name]
-       [set this frame         [gtk-frame-new [format nil layer_name '-' agency_name '-' resource_name]]]
-       [set this hbox          [gtk-hbox-new 2]]
-       [set this label         [gtk-left_label-new '']]
-       [set this story_hbox    [gtk-hbox-new [get this story_count]]]
-       [set this story_array   [new array    [get this story_count]]]
+       [set this mindmon        mindmon]
+       [set this layer_name     layer_name]
+       [set this agency_name    agency_name]
+       [set this resource_name  resource_name]
+       [set this frame          [gtk-frame-new [format nil layer_name '-' agency_name '-' resource_name]]]
+       [set this hbox           [gtk-hbox-new 2]]
+       [set this label          [gtk-left_label-new '']]
+       [set this story_notebook [gtk-notebook-new]]
+       [set this story_array    [new array    [get this story_count]]]
        [dotimes [i [get this story_count]]
 	 [let [[story_name `trace_story]]
 	   [let [[mindmon_resource_trace_story [new mindmon_resource_trace_story mindmon layer_name agency_name resource_name story_name]]]
 	     [set [get this story_array] elt i mindmon_resource_trace_story]
-	     [have [get this story_hbox] pack_start [get mindmon_resource_trace_story widget] t t 0]]]]
+	     [have [get this story_notebook] append_page [get mindmon_resource_trace_story widget] [get mindmon_resource_trace_story title_label]]]]]
        [have [get this hbox]  pack_start [get this label]      nil nil 0]
        [have [get this hbox]  pack_start [get this story_hbox] t t 0]
        [have [get this frame] add        [get this hbox]]

@@ -21,7 +21,7 @@
 'mind'
 
 [deframe mind [frame] [body layer_frame]
-  [new [name]
+  [new []
        [set this body        nil]
        [set this layer_frame [frame]]
        this]]

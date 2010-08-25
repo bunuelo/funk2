@@ -780,7 +780,12 @@
      [if [eq result `bug]
 	 [if [is-type `bug [get fiber value]]
 	     [get fiber value]
-	   result]
+	   [prog [format stdout '\nwith-new-cause warning: result is a bug, but there is not a bug in the fiber\'s value register.']
+		 [format stdout '\n  fiber: ' fiber]
+		 [format stdout '\n  value: ' [get fiber value]]
+		 [format stdout '\n  stack: ']
+		 [have fiber print_stack_trace]
+		 result]]
        result]]]
 
 [defmetro shelter [:rest codes]

@@ -19,60 +19,22 @@
  rights to redistribute these changes.'
 
 
-[deframe isis_world_body [agent_body] [name says]
+[deframe isis_agent [agent_body] [says]
   [new [name]
-       [type-initialize agent_body this]
-       [set this name  name]
-       [set this says  nil]
+       [type-initialize agent_body this name [new moral_compass]]
+       [set this says nil]
        this]]
 
-[deftypefunk isis_world_body get sense []
-  [get [get this world] agent_sense [get this name]]]
-
-
-
-[deframe isis_agent [frame] [name
-			     mind
-			     body
-			     reactive_sensory_sense
-			     reactive_sensory_story]
-  [new [name]
-       [set this name name]
-       [set this body [new isis_world_body name]]
-       [set this mind [new moral_compass name [get this body]]]
-       this]]
+[deftypefunk isis_agent get objects []
+  [let [[reactive_sensory_sense [get this reactive_sensory_sense]]]
+    [if reactive_sensory_sense
+	[have reactive_sensory_sense lookup `objects]
+      nil]]]
 
 [deftypefunk isis_agent execute user_activate [layer_name agency_name resource_name :rest args]
   [set [get [get this mind] agency layer_name agency_name] user_activate_resource resource_name]
   [set [get [get this mind] agency layer_name agency_name] user_activate_args     args]]
 
-`[have [get isis_world agent `Ralph] user_activate `pick_up_with_left_hand knife]
-`[mind-activate [get isis_world agent_mind `Ralph]  reactive  physical walk_directly_towards  `loaf+177603644]
-`[have [get isis_world agent_mind `Ralph] activate [cons `reactive [cons `physical `[move_forward 3]]]]
-`[have-apply [get isis_world agent_mind `Lauren]  activate [cons `reactive [cons `physical `[`move_forward 3]]]]
-
-[deftypefunk isis_agent get world []
-  [get [get this body] world]]
-
-[deftypefunk isis_agent get objects []
-  [while [null [get this sense]]
-    `[have this think_to_self 'sense not ready, sleep']
-     [millisleep 100]]
-  [have [get this reactive_sensory_sense] lookup `objects]]
-
-[deftypefunk isis_agent get sense []
-  [get this reactive_sensory_sense]]
-
-
-[deftypefunk isis_agent set world [world]
-  [set [get this body] world world]]
-
-[deftypefunk isis_agent execute think_to_self [:rest expressions]
-  [have cause-resource add_new_trace_story_event [get cause-resource name] `thinks [frame direct_object expressions]]
-  [have-apply [get this world] format `['\nAgent ' ,[get this name] ' Thinks: ' @expressions]]]
-
-[deftypefunk isis_agent execute destroy []
-  [have [get this mind] destroy]]
 
 
 [deframe isis_world [physical_world] [client]
@@ -81,28 +43,10 @@
        [set this client client]
        this]]
 
-[deftypefunk isis_world execute add_agent [agent]
-  [have this add_agent_body agent]]
-
-[deftypefunk isis_world get agents []
-  [get [get this agent_frame] values]]
-
-[deftypefunk isis_world get agent_names []
-  [get [get this agent_frame] slots]]
-
-[deftypefunk isis_world get agent [agent_name]
-  [have [get this agent_frame] lookup agent_name]]
-
-[deftypefunk isis_world get agent_mind [agent_name]
-  [get [get this agent agent_name] mind]]
-
-[deftypefunk isis_world get agent_body [agent_name]
-  [get [get this agent agent_name] body]]
-
 [deftypefunk isis_world get agent_says [agent_name]
   [get [get this agent_body agent_name] says]]
 
-[deftypefunk isis_world get agent_sense [agent_name]
+[deftypefunk isis_world execute sense_world [agent_name]
   [let [[sense [isis-call [get this client] sense agent agent_name]]]
     [let [[agent_frame [frame]]]
       [mapc [funk [sense_agent_name]
@@ -113,9 +57,6 @@
 	    [get this agent_names]]
       [have sense add `agents agent_frame]]
     sense]]
-
-[deftypefunk isis_world get agent_sense_info [agent_name]
-  [get [get this agent agent_name] sense]]
 
 [deftypefunk isis_world execute step_simulation []
   [isis-call [get this client] meta_step seconds 0.15]
@@ -128,19 +69,17 @@
 [deftypefunk isis_world execute pause_simulation []
   [isis-call [get this client] meta_pause]]
 
-[deftypefunk isis_world execute destroy []
-  [mapc [funk [agent]
-	      [have agent destroy]]
-	[get this agents]]]
 
+[deframe ralph_agent [isis_agent] []
+  [new []
+       [type-initialize isis_agent this `Ralph]
+       this]]
 
-[defunk ralph_agent-new []
-  [let [[this [new isis_agent `Ralph]]]
-    this]]
+[deframe lauren_agent [isis_agent] []
+  [new []
+       [type-initialize isis_agent this `Lauren]
+       this]]
 
-[defunk lauren_agent-new []
-  [let [[this [new isis_agent `Lauren]]]
-    this]]
 
 [defunk isis_world-initialize [hostname]
   [globalize arm_length 2]
@@ -148,8 +87,8 @@
   [shelter [have isis_world destroy]]
   [let [[client [new isis_world_client hostname]]]
     [let [[isis_world [new isis_world client]]]
-      [have isis_world add_agent [ralph_agent-new]]
-      [have isis_world add_agent [lauren_agent-new]]
+      [have isis_world add_agent [new ralph_agent]]
+      [have isis_world add_agent [new lauren_agent]]
       
       [globalize isis_world isis_world]
       
@@ -175,48 +114,10 @@
       'success']]]
 
 [defunk test-step []
-  [globalize step_fiber [fiber [funk [] [print [have isis_world step_simulation]]
-				     ]
+  [globalize step_fiber [fiber [funk [] [print [have isis_world step_simulation]]]
 			       nil]]]
 [defunk test-mini []
-  [globalize step_fiber [fiber [funk [] [print [have isis_world mini_step]]
-				     ]
+  [globalize step_fiber [fiber [funk [] [print [have isis_world mini_step]]]
 			       nil]]]
-[defunk step-loop []
-  [dotimes [i 100]
-    [have isis_world step_simulation]
-    [millisleep 100]
-    [print 'step']
-    ]]
 
 
-
-[deftypefunk isis_agent execute find_knife []
-  [let [[object_list [get  [get this objects] slots]]]
-    [defunk is_knife [a_list]
-      [if a_list
-	  [if [have [get [car a_list] as-string] contains 'knife']
-	      [globalize knife [car a_list]]
-	    [is_knife [cdr a_list]]]]]
-    [is_knife object_list]]]
-
-[deftypefunk isis_agent execute find_loaf []
-  [let [[object_list [get  [get this objects] slots]]]
-    [defunk is_loaf [a_list]
-      [if a_list
-	  [if [have [get [car a_list] as-string] contains 'loaf']
-	      [globalize loaf [car a_list]]
-	    [is_loaf [cdr a_list]]]]]
-    [is_loaf object_list]]]
-
-
-[deftypefunk isis_agent execute find_fridge []
-  [let [[object_list [get  [get this objects] slots]]]
-    [defunk is_fridge [a_list]
-      [if a_list
-	  [if [have [get [car a_list] as-string] contains 'fridge']
-	      [globalize fridge [car a_list]]
-	    [is_fridge [cdr a_list]]]]]
-    [is_fridge object_list]]]
-
-    

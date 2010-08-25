@@ -46,7 +46,7 @@
 [deftypefunk mindmon_resource_trace_story get story []
   [let [[resource [get [get [get this mindmon] mind] resource [get this layer_name] [get this agency_name] [get this resource_name]]]]
     [cond [[eq [get this story_name] `trace_story] [get resource trace_story]]
-	  [[eq [set this story_name] `think_story] [get resource think_story]]
+	  [[eq [get this story_name] `think_story] [get resource think_story]]
 	  [t                                       [error bug_type `invaliid_story_name]]]]]
 
 [deftypefunk mindmon_resource_trace_story execute redraw []

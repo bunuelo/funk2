@@ -18,12 +18,10 @@
  rights to redistribute these changes.'
 
 
-[deframe deliberative_reality_agency [agency] [reactive_sensory_agency
-					       last_time_step
+[deframe deliberative_reality_agency [agency] [last_time_step
 					       deliberative_reality_story]
-  [new [reactive_sensory_agency]
+  [new []
        [type-initialize agency this `reality]
-       [set this reactive_sensory_agency    reactive_sensory_agency]
        [set this last_time_step             -1]
        [set this deliberative_reality_story [new story]]
        [have this add_resource [resource include_reactive_stories_into_deliberative_story []
@@ -32,7 +30,7 @@
 					   [cause-define cause-name      `[deliberative reality interpret_senses_into_current_story]]
 					   [let [[time_step [get body time_step]]]
 					     [if [!= [get this last_time_step] time_step]
-						 [let [[reactive_sensory_story [get reactive_sensory_agency reactive_sensory_story]]]
+						 [let [[reactive_sensory_story [get [mind-agency reactive_layer sensory] reactive_sensory_story]]]
 						   [if [null reactive_sensory_story]
 						       [have this-resource think_to_self 'Reactive sensory story does not exist.']
 						     [prog [have this-resource think_to_self 'Including reactive sensory story into deliberative story: ' [get reactive_sensory_story as-list]]

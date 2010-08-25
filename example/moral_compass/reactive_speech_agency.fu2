@@ -23,6 +23,7 @@
        [type-initialize agency this `speech]
        
        [have this add_resource [resource say [string]
+					 [have this-resource think_to_self 'I am saying, "' string '"']
 					 [let [[body [get this body]]]
 					   [set body says [list string]]
 					   [let [[start_time_step [get body time_step]]]

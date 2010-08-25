@@ -25,7 +25,7 @@
   [new []
        [type-initialize mind this]
        [set this reactive_layer        [new reactive_layer]]
-       [set this deliberative_layer    [new deliberative_layer [get this reactive_layer]]]
+       [set this deliberative_layer    [new deliberative_layer]]
        [set this reflective_layer      [new reflective_layer]]
        [set this self_reflective_layer [new self_reflective_layer]]
        [set this self_conscious_layer  [new self_conscious_layer]]

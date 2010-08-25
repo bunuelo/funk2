@@ -108,7 +108,7 @@
 												nil]]
 								[define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
 								[define is_funktional [primfunk:array__elt compiled_funk 10]]
-								`[funk-new [this-env] [quote ,name] [quote ,args]
+								`[funk-new ,environment [quote ,name] [quote ,args]
 									   [quote ,demetroed]
 									   [quote ,body]
 									   [quote ,compiled_bcs]
@@ -121,7 +121,7 @@
 
 [primfunk:exp__format stdout '\nfunk-new_with_name']
 [globalize-funk funk-new_with_name [metro-new [this-env] `funk-new_with_name `[name args :rest body]
-					      `[funk-new_with_name_and_environment ,name [this-env] ,args @body]]]
+					      `[[funk-new_with_name_and_environment ,name [this-env] ,args @body]]]]
 
 `[globalize-funk funk-new_with_name [metro-new [this-env] `funk-new_with_name `[name args :rest body]
 					      `[[define demetroed     [exps-demetropolize_full body]]

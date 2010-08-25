@@ -91,8 +91,8 @@
 	   [let [[mindmon_resource_trace_story [new mindmon_resource_trace_story mindmon layer_name agency_name resource_name story_name]]]
 	     [set [get this story_array] elt i mindmon_resource_trace_story]
 	     [have [get this story_notebook] append_page [get mindmon_resource_trace_story widget] [get mindmon_resource_trace_story title_label]]]]]
-       [have [get this hbox]  pack_start [get this label]      nil nil 0]
-       [have [get this hbox]  pack_start [get this story_hbox] t t 0]
+       [have [get this hbox]  pack_start [get this label]          nil nil 0]
+       [have [get this hbox]  pack_start [get this story_notebook] t t 0]
        [have [get this frame] add        [get this hbox]]
        this]]
 

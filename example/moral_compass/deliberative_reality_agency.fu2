@@ -30,7 +30,7 @@
 					   [cause-define cause-name      `[deliberative reality interpret_senses_into_current_story]]
 					   [let [[time_step [get body time_step]]]
 					     [if [!= [get this last_time_step] time_step]
-						 [let [[reactive_sensory_story [get [mind-agency reactive_layer sensory] reactive_sensory_story]]]
+						 [let [[reactive_sensory_story [get [mind-agency reactive sensory] reactive_sensory_story]]]
 						   [if [null reactive_sensory_story]
 						       [have this-resource think_to_self 'Reactive sensory story does not exist.']
 						     [prog [have this-resource think_to_self 'Including reactive sensory story into deliberative story: ' [get reactive_sensory_story as-list]]

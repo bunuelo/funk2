@@ -31,7 +31,7 @@
 					       [let [[time_step [get body time_step]]]
 						 [if [eq last_time_step time_step]
 						     [millisleep 100]
-						   [let [[sense [get body sense]]]
+						   [let [[sense [have body sense_world]]]
 						     [have this-resource think_to_self 'My body senses the world.']
 						     [set this reactive_sensory_sense sense]
 						     [= last_time_step time_step]

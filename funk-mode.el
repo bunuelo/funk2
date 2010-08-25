@@ -70,7 +70,7 @@
 	      "is-type"
 	      "join"
 	      "list" "load" "load_memory_image" "lookup_type"
-	      "make-funk" "make-metro" "maparray" "mapc" "mapcar" "microsleep" "millisleep"
+	      "maparray" "mapc" "mapcar" "microsleep" "millisleep"
 	      "nanosleep" "not" "null"
 	      "print"
               "range"
@@ -97,7 +97,7 @@
 	      "quote"
 	      "set" "set-apply" "shelter"
 	      "type-initialize"
-	      "while" "with-new-cause"
+	      "while" "with" "with-new-cause"
 	      "yield"
 	      )
             'words)

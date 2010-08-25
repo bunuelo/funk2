@@ -1153,14 +1153,6 @@ f2ptr f2__lookup_funkvar(f2ptr cause, f2ptr env, f2ptr funkvar, f2ptr undefined_
 }
 def_pcfunk2(lookup_funkvar, funkvar, undefined_value, return f2__lookup_funkvar(this_cause, simple_env, funkvar, undefined_value));
 
-extern f2ptr __wrong_argument_number__bcs; // this is like an interrupt pointer (defined in compile.c)
-
-f2ptr f2__wrong_argument_number_error__set(f2ptr cause, f2ptr error_bcs) {
-  __wrong_argument_number__bcs = error_bcs;
-  return nil;
-}
-def_pcfunk1(wrong_argument_number_error__set, error_bcs, return f2__wrong_argument_number_error__set(this_cause, error_bcs));
-
 f2ptr f2__jump_to_chunk(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp, f2ptr args) {
   if((! exp)) {
     printf("\njump-to-pointer error: exp is nil."); 
@@ -1765,8 +1757,6 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(lookup_funkvar, "");
   f2__primcfunk__init(jump_to_chunk, "");
   f2__funktional_primcfunk__init(coerce_to_int, "");
-  
-  f2__primcfunk__init(wrong_argument_number_error__set, "");
   
   //f2__primcfunk__init(memory_image__save, "");
   //f2__primcfunk__init(memory_image__load, "");

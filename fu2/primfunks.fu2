@@ -104,8 +104,6 @@
 [globalize-funk jump-to-chunk                               &primfunk:jump_to_chunk]
 [globalize-funk coerce-to-int                               &primfunk:coerce_to_int]
 
-[globalize-funk wrong_argument_number_error-set             &primfunk:wrong_argument_number_error__set]
-
 [globalize-funk funkall-raw_c_funk-v-v                      &primfunk:funkall__raw_c_funk__v__v]
 [globalize-funk funkall-raw_c_funk-v-i                      &primfunk:funkall__raw_c_funk__v__i]
 [globalize-funk funkall-raw_c_funk-v-ii                     &primfunk:funkall__raw_c_funk__v__ii]

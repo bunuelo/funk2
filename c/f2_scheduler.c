@@ -319,7 +319,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
 	    //printf("\nfiber paused due to larva in value register.");
 	  } else {
-	    if (f2fiber__program_counter(fiber, cause)) {
+	    if (f2fiber__program_counter(fiber, cause) &&
+		(! f2fiber__is_complete(fiber, cause))) {
 	      //if (processor) {printf("\nprocessor "); f2__write(nil, f2processor__desc(processor));} else {printf("\nunknown processor");} printf(" executing fiber 0x%X", (int)fiber); fflush(stdout);
 	      
 	      did_something = __funk2.globalenv.true__symbol;

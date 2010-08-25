@@ -478,7 +478,7 @@ void f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
   boolean_t complete = boolean__false;
   do {
     if(f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) {
-      if((! f2fiber__program_counter(fiber, cause) ||
+      if((! f2fiber__program_counter(fiber, cause)) ||
 	  (f2fiber__paused(fiber, cause) && raw__bug__is_type(cause, f2fiber__value(fiber, cause)))) {
 	complete = boolean__true;
       }

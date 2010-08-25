@@ -30,7 +30,8 @@
 					     [while t
 					       [let [[time_step [get body time_step]]]
 						 [if [not [eq last_time_step time_step]]
-						     [millisleep 100]
+						     [prog [have this think_to_self 'time_step has not changed.']
+							   [millisleep 1000]]
 						   [let [[sense [have body sense_world]]]
 						     [have this-resource think_to_self 'My body senses the world.']
 						     [set this reactive_sensory_sense sense]

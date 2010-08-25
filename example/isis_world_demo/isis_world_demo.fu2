@@ -36,6 +36,8 @@
   [set [get [get this mind] agency layer_name agency_name] user_activate_resource resource_name]
   [set [get [get this mind] agency layer_name agency_name] user_activate_args     args]]
 
+[deftypefunk isis_agent execute sense_world []
+  [have [get this physical_world] sense_world]]
 
 
 [deframe isis_world [physical_world] [client]

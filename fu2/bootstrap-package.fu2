@@ -163,7 +163,7 @@
 
 [defunk reload_all_package_definitions []
   [mapc [funk [filename]
-	      [filename-load filename]]
+	      [package_filename-load filename]]
 	[pathnames-all_fpkg_filenames packages_search_path]]]
 
 [defunk package-load [name]

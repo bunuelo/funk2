@@ -41,7 +41,7 @@
        this]]
 
 [deftypefunk mindmon_resource_trace_story get widget []
-  [get this vbox]]
+  [get this scrolled_window]]
 
 [deftypefunk mindmon_resource_trace_story get story []
   [get [get [get [get this mindmon] mind] resource [get this layer_name] [get this agency_name] [get this resource_name]] trace_story]]

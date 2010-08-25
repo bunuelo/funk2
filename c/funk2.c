@@ -224,11 +224,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     status("warning: loading \"%s\" instead of loading \"%s\" because we are in a compile directory.", compile__bootstrap_repl_img__filename, install__bootstrap_img__filename);
   }
   
-  {
-    f2ptr wrong_argument_number__funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("wrong_argument_number"), (u8*)"wrong_argument_number"));
-    f2ptr wrong_argument_number__funk__body_bytecodes = f2__funk__body_bytecodes(cause, wrong_argument_number__funk);
-  }
-  
   cause = f2__cause__new_with_inherited_properties(cause, nil);
   never_gc(cause);
   

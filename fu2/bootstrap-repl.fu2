@@ -322,7 +322,7 @@
 [defmetro car-set [x y] `[object-set ,x `car ,y]]
 [defmetro cdr-set [x y] `[object-set ,x `cdr ,y]]
 
-[defunk wrong_argument_number [] [print 'wrong argument number.'] [error-new `bug_type `wrong_number_of_arguments] [print 'we should not get here, but this is necessary to not complete fiber.']]
+[defunk wrong_argument_number [] [error-new `bug_type `wrong_number_of_arguments] nil]
 [wrong_argument_number-bcs-set [get &wrong_argument_number body_bytecodes]]
 
 [defunk conslist [:rest seq]

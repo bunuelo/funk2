@@ -21,8 +21,6 @@
 
 #include "funk2.h"
 
-
-
 // bug
 
 def_primobject_2_slot(bug, bug_type, frame);

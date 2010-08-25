@@ -231,12 +231,7 @@ f2ptr raw__fiber__stack_trace(f2ptr cause, f2ptr this) {
 	if (iter_cdr) {
 	  f2ptr funkable = f2__cons__car(cause, iter_cdr);
 	  //printf("\nfunkable: ");
-	  //if (raw__funkable__is_type(cause, funkable)) {
-	  //  f2__print(cause, funkable);
-	  //} else {
-	  //  printf("<not funkable>");
-	  //}
-	  {
+	  if (raw__funkable__is_type(cause, funkable)) {
 	    f2ptr iter_cdr_cdr = f2__cons__cdr(cause, iter_cdr);
 	    if (iter_cdr_cdr) {
 	      f2ptr args = f2__cons__car(cause, iter_cdr_cdr);
@@ -344,7 +339,7 @@ f2ptr raw__stack_trace__print(f2ptr cause, f2ptr this) {
   while (iter) {
     f2ptr element = f2__cons__car(cause, iter);
     {
-      if (!raw__frame__is_type(cause, element)) {
+      if (! raw__frame__is_type(cause, element)) {
 	return f2larva__new(cause, 39, nil);
       }
       f2ptr funkall_frame = element;

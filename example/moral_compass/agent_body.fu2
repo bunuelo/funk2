@@ -21,8 +21,8 @@
 'agent_body'
 
 [deframe agent_body [frame] [physical_world]
-  [new [physical_world]
-       [set this physical_world physical_world]
+  [new []
+       [set this physical_world nil]
        this]]
 
 [deftypefunk agent_body get time_step []

@@ -20,11 +20,18 @@
 
 'physical_world'
 
-[deframe physical_world [frame] [time_step format_mutex]
+[deframe physical_world [frame] [time_step format_mutex agent_body_frame]
   [new []
-       [set this time_step    0]
-       [set this format_mutex [new mutex]]
+       [set this time_step        0]
+       [set this format_mutex     [new mutex]]
+       [set this agent_body_frame [frame]]
        this]]
+
+[deftypefunk physical_world execute add_agent_body [agent_body]
+  [if [get agent_body physical_world]
+      [error bug_type agent_body_is_already_in_a_physical_world agent_body agent_body]
+    [prog [set agent_body physical_world this]
+	  [have [get this agent_body_frame] add [get agent_body name] agent_body]]]]
 
 [deftypefunk physical_world execute step_physical_world []
   [set this time_step [+ 1 [get this time_step]]]]

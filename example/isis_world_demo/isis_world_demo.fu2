@@ -19,11 +19,10 @@
  rights to redistribute these changes.'
 
 
-[deframe isis_world_body [agent_body] [name world says]
+[deframe isis_world_body [agent_body] [name says]
   [new [name]
-       [type-initialize agent_body this world]
+       [type-initialize agent_body this]
        [set this name  name]
-       [set this world nil]
        [set this says  nil]
        this]]
 
@@ -76,18 +75,14 @@
   [have [get this mind] destroy]]
 
 
-[deframe isis_world [physical_world] [client agent_frame]
+[deframe isis_world [physical_world] [client]
   [new [client]
        [type-initialize physical_world this]
-       [set this client       client]
-       [set this agent_frame  [frame]]
+       [set this client client]
        this]]
 
 [deftypefunk isis_world execute add_agent [agent]
-  [if [get agent world]
-      [error bug_type isis_agent_is_already_in_a_world agent agent]
-    [prog [set agent world this]
-	  [have [get this agent_frame] add [get agent name] agent]]]]
+  [have this add_agent_body agent]]
 
 [deftypefunk isis_world get agents []
   [get [get this agent_frame] values]]

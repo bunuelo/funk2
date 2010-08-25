@@ -142,7 +142,7 @@ f2ptr f2__list_cdr__set(f2ptr cause, f2ptr seq, f2ptr cdr_value);
 
 f2ptr f2__wrong_argument_number__bcs__set(f2ptr cause, f2ptr bytecodes) {
   environment__add_var_value(cause, global_environment(), new__symbol(cause, "--wrong_argument_number-bcs--"), bytecodes);
-  __wrong_argument_number__bcs = bytecodes;
+  __funk2.compile.wrong_argument_number__bcs = bytecodes;
   return nil;
 }
 def_pcfunk1(wrong_argument_number__bcs__set, bytecodes, return f2__wrong_argument_number__bcs__set(this_cause, bytecodes));

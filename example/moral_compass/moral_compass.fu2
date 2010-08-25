@@ -22,8 +22,8 @@
 			       reflective_layer
 			       self_reflective_layer
 			       self_conscious_layer]
-  [new [name body]
-       [type-initialize mind this name body]
+  [new [name]
+       [type-initialize mind this name]
        [set this reactive_layer        [new reactive_layer]]
        [set this deliberative_layer    [new deliberative_layer [get this reactive_layer]]]
        [set this reflective_layer      [new reflective_layer]]

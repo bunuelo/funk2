@@ -19,10 +19,11 @@
  rights to redistribute these changes.'
 
 
-[deframe isis_agent [agent_body] [says]
+[deframe isis_agent [agent_body] [says arm_length]
   [new [name]
        [type-initialize agent_body this name [new moral_compass]]
-       [set this says nil]
+       [set this says       nil]
+       [set this arm_length 2]
        this]]
 
 [deftypefunk isis_agent get objects []
@@ -82,8 +83,6 @@
 
 
 [defunk isis_world-initialize [hostname]
-  [globalize arm_length 2]
-  [globalize focus_object `loaf+173696020]
   [shelter [have isis_world destroy]]
   [let [[client [new isis_world_client hostname]]]
     [let [[isis_world [new isis_world client]]]

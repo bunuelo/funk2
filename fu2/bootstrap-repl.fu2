@@ -121,7 +121,7 @@
 
 [primfunk:exp__format stdout '\nfunk-new_with_name']
 [globalize-funk funk-new_with_name [metro-new [this-env] `funk-new_with_name `[name args :rest body]
-					      `[[funk-new_with_name_and_environment ,name [this-env] ,args @body]]
+					      `[`[funk-new_with_name_and_environment ,name [this-env] ,args @body]]
 					       nil
 					       nil
 					       nil

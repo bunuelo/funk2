@@ -30,6 +30,14 @@
 [defunk type-has_parent [type_name parent_name]
   [primobject_type-has_parent_type [lookup_type type_name] parent_name]]
 
+[defmetro with [frame_object :rest body]
+  `[let [[frame_object_environment [new environment [this-env] nil]]]
+     [set frame_object_environment frame ,frame_object]
+     [let [[with_funk [funk []
+			    @body]]]
+       [set with_funk env frame_object_environment]
+       [apply with_funk nil]]]]
+
 [defmetro deframe [type_name parents slot_name_value_pairs :rest properties]
   [print `[deframe ,type_name ,parents ,[mapcar &frametype-slotdef-name slot_name_value_pairs]]]
   [let [[initialize_funk_args nil]
@@ -53,7 +61,8 @@
 										       [slot_value [frametype-slotdef-value slot_name_value_pair]]]
 										   `[frame-add_var_value this [quote ,slot_name] ,slot_value]]]
 									   slot_name_value_pairs]]
-							    @initialize_funk_body]]]]
+							    [with this
+								  @initialize_funk_body]]]]]
       [primobject_type-add_slot_type primobject_type `execute `initialize_type
 				     initialize_type_funk]
       [primobject_type-add_slot_type primobject_type `execute `new
@@ -98,5 +107,6 @@
   [print `[deftypefunk ,type_name ,slot_type ,slot_name ,args]]
   `[add_type_funk [quote ,type_name] [quote ,slot_type] [quote ,slot_name]
 		  [funk-new_with_name ,[string-as-symbol [stringlist-concat [conslist [exp-as-string type_name] '-' [exp-as-string slot_name]]]] [this @args]
-				       @body]]]
+				       [with this
+					     @body]]]]
 

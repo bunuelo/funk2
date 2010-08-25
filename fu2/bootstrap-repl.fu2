@@ -97,6 +97,7 @@
 
 [define -current_env_name- `global-environment]
 
+[primfunk:exp__format stdout '\nfunk-new_with_name_and_environment']
 [globalize-funk funk-new_with_name_and_environment [metro-new [this-env] `funk-new_with_name_and_environment `[name environment args :rest body]
 							      `[[define demetroed     [exps-demetropolize_full body]]
 								[define compiled_funk [funk-new [this-env] name args
@@ -118,6 +119,7 @@
 							       nil
 							       nil]]
 
+[primfunk:exp__format stdout '\nfunk-new_with_name']
 [globalize-funk funk-new_with_name [metro-new [this-env] `funk-new_with_name `[name args :rest body]
 					      `[funk-new_with_name_and_environment ,name [this-env] ,args @body]]]
 
@@ -142,6 +144,7 @@
 					       nil
 					       nil]]
 
+[primfunk:exp__format stdout '\nmetro-new_with_name']
 [globalize-funk metro-new_with_name [metro-new [this-env] `metro-new_with_name `[name args :rest body]
 					       `[[define demetroed     [exps-demetropolize_full body]]
 						 [define compiled_funk [funk-new [this-env] name args

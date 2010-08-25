@@ -145,6 +145,10 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   status("*******************************************************************");
   status("");
   
+#if defined(F2__GTK__SUPPORTED)
+  funk2_gtk__init(&(this->gtk), &argc, &argv);
+#endif
+  
   funk2_command_line__init(&(this->command_line), argc, argv);
   
   {
@@ -164,6 +168,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     funk2_node_handler__add_node(&(this->node_handler), __funk2.node_id, &client_id);
   }
   
+  funk2_virtual_processor_handler__init(&(this->virtual_processor_handler), memory_pool_num);
   funk2_memory__init(&(this->memory));
   funk2_garbage_collector__init(&(this->garbage_collector));
   funk2_garbage_collector__init_sets_from_memory(&(this->garbage_collector), &(this->memory));
@@ -183,11 +188,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_glwindow__init(&(this->glwindow), (u8*)"funk2 glwindow", 1024, 768, 24, boolean__false);
   funk2_cpu__init(&(this->cpu));
   funk2_xmlrpc__init(&(this->xmlrpc));
-  funk2_virtual_processor_handler__init(&(this->virtual_processor_handler), memory_pool_num);
-  
-#if defined(F2__GTK__SUPPORTED)
-  funk2_gtk__init(&(this->gtk), &argc, &argv);
-#endif
   
   f2ptr cause = initial_cause();
   

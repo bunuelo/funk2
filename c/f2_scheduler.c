@@ -255,7 +255,7 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
       execute_next_bytecodes__helper__found_larva_in_fiber(cause, fiber);
       exit_reason = exit_reason__found_larva;
       break;
-    } else if (! f2fiber__program_counter(fiber, cause)) {
+    } else if (f2fiber__is_complete(fiber, cause)) {
       exit_reason = exit_reason__is_complete;
       break;
     } 
@@ -319,8 +319,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
 	    //printf("\nfiber paused due to larva in value register.");
 	  } else {
-	    if (f2fiber__program_counter(fiber, cause)) {
-	      f2fiber__is_complete__set(fiber, cause, nil);
+	    if ((! f2fiber__is_complete(fiber, cause))) {
 	      //if (processor) {printf("\nprocessor "); f2__write(nil, f2processor__desc(processor));} else {printf("\nunknown processor");} printf(" executing fiber 0x%X", (int)fiber); fflush(stdout);
 	      
 	      did_something = __funk2.globalenv.true__symbol;
@@ -341,12 +340,9 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      
 	      if(exit_reason == exit_reason__found_larva) {
 		need_to_launch_larva_handling_critic_fiber = 1;
-	      } else {
-		f2fiber__is_complete__set(fiber, cause, __funk2.globalenv.true__symbol);
 	      }
 	      
 	    } else {
-	      f2fiber__is_complete__set(fiber, cause, __funk2.globalenv.true__symbol);
 	      if (! f2fiber__is_zombie(fiber, cause)) {
 		f2fiber__is_zombie__set(fiber, cause, __funk2.globalenv.true__symbol);
 	      } else {
@@ -478,8 +474,8 @@ void f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
   boolean_t complete = boolean__false;
   do {
     if(f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) {
-      if((! f2fiber__program_counter(fiber, cause)) ||
-	  (f2fiber__paused(fiber, cause) && raw__bug__is_type(cause, f2fiber__value(fiber, cause)))) {
+      if(f2fiber__is_complete(fiber, cause) ||
+	 (f2fiber__paused(fiber, cause) && raw__bug__is_type(cause, f2fiber__value(fiber, cause)))) {
 	complete = boolean__true;
       }
       f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);

@@ -129,16 +129,17 @@
 	      [set this bytecodes_per_second               bytecodes_per_second]
 	      [set this last_fiber_bytecode_count          fiber_bytecode_count]
 	      [set this last_fiber_bytecode_count_time     fiber_bytecode_count_time]
-	      ]]]]]
-    
-    [set [get this label] text [format nil  '\t' [get this resource_name]
-				       '\n' '\t\t' 'active\t\t'   [get resource active]
-				       '\n' '\t\t' 'done\t\t'     [get resource done]
-				       '\n' '\t\t' 'speed\t\t'    [/ [get this bytecodes_per_second] 1024.0] ' kBc/s'
-				       '\n' '\t\t' '\t\t\t\t\t\t\t\t\t\t'
-				       ]]
-    [dotimes [i [get this story_count]]
-      [have [get [get this story_array] elt i] redraw]]]]
+	      
+	      [set [get this label] text [format nil  '\t' [get this resource_name]
+						 '\n' '\t\t' 'active\t\t'   [get resource active]
+						 '\n' '\t\t' 'done\t\t'     [get resource done]
+						 '\n' '\t\t' 'speed\t\t'    [/ [get this bytecodes_per_second] 1024.0] ' kBc/s'
+						 '\n' '\t\t' 'paused\t\t'   [get fiber paused]
+						 '\n' '\t\t' 'complete\t\t' [get fiber is_complete]
+						 '\n' '\t\t' '\t\t\t\t\t\t\t\t\t\t'
+						 ]]
+	      [dotimes [i [get this story_count]]
+		[have [get [get this story_array] elt i] redraw]]]]]]]]]
 
 
 

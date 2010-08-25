@@ -29,7 +29,7 @@
 					   [let [[last_time_step nil]]
 					     [while t
 					       [let [[time_step [get body time_step]]]
-						 [if [eq last_time_step time_step]
+						 [if [not [eq last_time_step time_step]]
 						     [millisleep 100]
 						   [let [[sense [have body sense_world]]]
 						     [have this-resource think_to_self 'My body senses the world.']

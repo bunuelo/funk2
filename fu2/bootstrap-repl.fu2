@@ -316,18 +316,18 @@
   `[object-execute-apply ,this [quote ,slot_name] ,args]]
 
 [defmetro have [this slot_name :rest args]
-  [let [[-have-this- [gensym]]]
-    `[let [[,-have-this-     ,this]
-	   [-have-slot_name- [quote ,slot_name]]
-	   [-have-args-      [quote ,args]]]
-       [execute ,-have-this- ,slot_name ,-have-this- @args]]]]
+  [define -have-this- [gensym]]
+  `[let [[,-have-this-     ,this]
+	 [-have-slot_name- [quote ,slot_name]]
+	 [-have-args-      [quote ,args]]]
+     [execute ,-have-this- ,slot_name ,-have-this- @args]]]
 
 [defmetro have-apply [this slot_name args]
-  [let [[-have-this- [gensym]]]
-    `[let [[,-have-this-      ,this]
-	   [-have-slot_name- [quote ,slot_name]]
-	   [-have-args-      [quote ,args]]]
-       [execute-apply ,-have-this- ,slot_name [cons ,-have-this- ,args]]]]]
+  [define -have-this- [gensym]]
+  `[let [[,-have-this-      ,this]
+	 [-have-slot_name- [quote ,slot_name]]
+	 [-have-args-      [quote ,args]]]
+     [execute-apply ,-have-this- ,slot_name [cons ,-have-this- ,args]]]]
 
 
 [globalize-funk type &object-type]

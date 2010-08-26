@@ -49,6 +49,7 @@ void funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(funk2
     }
     funk2_processor_mutex__unlock(&(this->waiting_count_mutex));
   }
+  status("there are " u64__fstr " virtual_processors waiting politely.", ((u64)memory_pool_num));
 }
 
 void funk2_scheduler_thread_controller__let_scheduler_threads_continue(funk2_scheduler_thread_controller_t* this) {
@@ -56,6 +57,7 @@ void funk2_scheduler_thread_controller__let_scheduler_threads_continue(funk2_sch
 }
 
 void funk2_scheduler_thread_controller__user_wait_politely(funk2_scheduler_thread_controller_t* this) {
+  status("virtual processor " u64__fstr " waiting politely.", this_processor_thread__pool_index());
   funk2_processor_mutex__lock(&(this->waiting_count_mutex));
   this->waiting_count ++;
   if (this->waiting_count > memory_pool_num) {
@@ -63,7 +65,6 @@ void funk2_scheduler_thread_controller__user_wait_politely(funk2_scheduler_threa
     error(nil, "funk2_scheduler_thread_controller__user_wait_politely error: (waiting_count > memory_pool_num)");
   }
   funk2_processor_mutex__unlock(&(this->waiting_count_mutex));
-  status("virtual processor " u64__fstr " waiting politely.", this_processor_thread__pool_index());
   while (this->please_wait) {
     raw__fast_spin_sleep_yield();
   }

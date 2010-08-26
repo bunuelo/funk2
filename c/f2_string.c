@@ -161,9 +161,9 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
   } break;
   case ptype_string: {
     u64 exp__length = f2string__length(exp, cause);
-    u8* temp_old_str = alloca(exp__length);
+    u8* temp_old_str = (u8*)from_ptr(f2__malloc(exp__length));
     f2string__str_copy(exp, cause, temp_old_str);
-    u8* temp_str     = alloca(exp__length * 2);
+    u8* temp_str     = (u8*)from_ptr(f2__malloc(exp__length * 2));
     u64 index;
     u64 new_index = 0;
     temp_str[new_index] = f2char__ch(__funk2.reader.char__string_quote, cause);
@@ -179,12 +179,15 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
     }
     temp_str[new_index] = f2char__ch(__funk2.reader.char__string_quote, cause);
     new_index ++;
-    return f2string__new(cause, new_index, temp_str);
+    f2ptr new_string = f2string__new(cause, new_index, temp_str);
+    f2__free(to_ptr(temp_old_str));
+    f2__free(to_ptr(temp_str));
+    return new_string;
   } break;
   case ptype_symbol: {
     boolean_t all_cool = boolean__true;
     u64 exp__length = f2symbol__length(exp, cause);
-    u8* temp_old_str = alloca(exp__length);
+    u8* temp_old_str = (u8*)from_ptr(f2__malloc(exp__length));
     f2symbol__str_copy(exp, cause, temp_old_str);
     u64 index;
     for (index = 0; index < exp__length; index ++) {
@@ -194,10 +197,12 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
       }
     }
     if (all_cool) {
-      return f2string__new(cause, exp__length, temp_old_str);
+      f2ptr new_string = f2string__new(cause, exp__length, temp_old_str);
+      f2__free(to_ptr(temp_old_str));
+      return new_string;
     } else {
       u64 new_index = 0;
-      u8* temp_str = alloca(exp__length * 2);
+      u8* temp_str = (u8*)from_ptr(f2__malloc(exp__length * 2));
       temp_str[new_index] = f2char__ch(__funk2.reader.char__symbol_quote, cause);
       new_index ++;
       for (index = 0; index < exp__length; index ++) {
@@ -211,7 +216,10 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
       }
       temp_str[new_index] = f2char__ch(__funk2.reader.char__symbol_quote, cause);
       new_index ++;
-      return f2string__new(cause, new_index, temp_str);
+      new_string = f2string__new(cause, new_index, temp_str);
+      f2__free(to_ptr(temp_str));
+      f2__free(to_ptr(temp_old_str));
+      return new_string;
     }
   } break;
   case ptype_chunk: {
@@ -298,9 +306,10 @@ def_pcfunk1(exp__as__string, exp, return f2__exp__as__string(this_cause, exp));
 
 f2ptr raw__string__as__symbol(f2ptr cause, f2ptr this) {
   u64 this__length = f2string__length(this, cause);
-  u8* temp_str = alloca(this__length);
+  u8* temp_str     = (u8*)from_ptr(f2__malloc(this__length));
   f2string__str_copy(this, cause, temp_str);
   f2ptr new_symbol = f2symbol__new(cause, this__length, temp_str);
+  f2__free(to_ptr(temp_str));
   return new_symbol;
 }
 
@@ -317,11 +326,17 @@ f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
       (! raw__string__is_type(cause, filename))) {
     return f2larva__new(cause, 1, nil);
   }
-  u64 filename__length = f2string__length(filename, cause);
-  u8* filename__str = alloca(filename__length + 1);
-  f2string__str_copy(filename, cause, filename__str);
-  filename__str[filename__length] = 0;
-  int fd = open((char*)filename__str, O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+  int fd;
+  {
+    u64 filename__length = f2string__length(filename, cause);
+    u8* filename__str = (u8*)from_ptr(f2__malloc(filename__length + 1));
+    f2string__str_copy(filename, cause, filename__str);
+    filename__str[filename__length] = 0;
+    
+    fd = open((char*)filename__str, O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+    
+    f2__free(to_ptr(filename__str));
+  }
   if (fd == -1) {
     f2ptr bug_frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_open_file"));
@@ -330,10 +345,16 @@ f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "filename"), filename);
     return f2larva__new(cause, 89, f2__bug__new(cause, f2integer__new(cause, 89), bug_frame));
   }
-  u64 this__length = f2string__length(this, cause);
-  u8* this__str = alloca(this__length);
-  f2string__str_copy(this, cause, this__str);
-  u64 write_bytes = write(fd, this__str, this__length);
+  u64 write_bytes;
+  {
+    u64 this__length = f2string__length(this, cause);
+    u8* this__str    = (u8*)from_ptr(f2__malloc(this__length));
+    f2string__str_copy(this, cause, this__str);
+    
+    write_bytes = write(fd, this__str, this__length);
+    
+    f2__free(to_ptr(this__str));
+  }
   f2ptr result = nil;
   if (write_bytes != this__length) {
     f2ptr bug_frame = f2__frame__new(cause, nil);
@@ -352,11 +373,17 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
   if (! raw__string__is_type(cause, filename)) {
     return f2larva__new(cause, 1, nil);
   }
-  u64 filename__length = f2string__length(filename, cause);
-  u8* filename__str = alloca(filename__length + 1);
-  f2string__str_copy(filename, cause, filename__str);
-  filename__str[filename__length] = 0;
-  int fd = open((char*)filename__str, O_RDONLY);
+  int fd;
+  {
+    u64 filename__length = f2string__length(filename, cause);
+    u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
+    f2string__str_copy(filename, cause, filename__str);
+    filename__str[filename__length] = 0;
+    
+    fd = open((char*)filename__str, O_RDONLY);
+    
+    f2__free(to_ptr(filename__str));
+  }
   if (fd == -1) {
     f2ptr bug_frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_open_file_for_reading"));
@@ -476,17 +503,24 @@ boolean_t raw__string__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__string__is_type(cause, that)) {
     return f2larva__new(cause, 53, nil);
   }
-  u64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)alloca(this__length + 1);
-  raw__string__str_copy(cause, this, this__str);
-  this__str[this__length] = 0;
+  int comparison;
+  {
+    u64 this__length = raw__string__length(cause, this);
+    u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
+    raw__string__str_copy(cause, this, this__str);
+    this__str[this__length] = 0;
+    
+    u64 that__length = raw__string__length(cause, that);
+    u8* that__str    = (u8*)from_ptr(f2__malloc(that__length + 1));
+    raw__string__str_copy(cause, that, that__str);
+    that__str[that__length] = 0;
+    
+    comparison = memcmp(this__str, that__str, (this__length < that__length) ? this__length : that__length);
+    
+    f2__free(to_ptr(this__str));
+    f2__free(to_ptr(that__str));
+  }
   
-  u64 that__length = raw__string__length(cause, that);
-  u8* that__str    = (u8*)alloca(that__length + 1);
-  raw__string__str_copy(cause, that, that__str);
-  that__str[that__length] = 0;
-  
-  int comparison = memcmp(this__str, that__str, (this__length < that__length) ? this__length : that__length);
   if (comparison < 0) {
     return boolean__true;
   }
@@ -511,17 +545,24 @@ boolean_t raw__string__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__string__is_type(cause, that)) {
     return f2larva__new(cause, 53, nil);
   }
-  u64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)alloca(this__length + 1);
-  raw__string__str_copy(cause, this, this__str);
-  this__str[this__length] = 0;
+  int comparison;
+  {
+    u64 this__length = raw__string__length(cause, this);
+    u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
+    raw__string__str_copy(cause, this, this__str);
+    this__str[this__length] = 0;
+    
+    u64 that__length = raw__string__length(cause, that);
+    u8* that__str    = (u8*)from_ptr(f2__malloc(that__length + 1));
+    raw__string__str_copy(cause, that, that__str);
+    that__str[that__length] = 0;
+    
+    comparison = memcmp(this__str, that__str, (this__length < that__length) ? this__length : that__length);
+    
+    f2__free(to_ptr(this__str));
+    f2__free(to_ptr(that__str));
+  }
   
-  u64 that__length = raw__string__length(cause, that);
-  u8* that__str    = (u8*)alloca(that__length + 1);
-  raw__string__str_copy(cause, that, that__str);
-  that__str[that__length] = 0;
-  
-  int comparison = memcmp(this__str, that__str, (this__length < that__length) ? this__length : that__length);
   if (comparison < 0) {
     return boolean__false;
   }

@@ -346,8 +346,8 @@ f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
     return f2larva__new(cause, 89, f2__bug__new(cause, f2integer__new(cause, 89), bug_frame));
   }
   u64 write_bytes;
+  u64 this__length = f2string__length(this, cause);
   {
-    u64 this__length = f2string__length(this, cause);
     u8* this__str    = (u8*)from_ptr(f2__malloc(this__length));
     f2string__str_copy(this, cause, this__str);
     

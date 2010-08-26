@@ -262,6 +262,7 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
     i --;
   }
   
+  pause_gc();
   {
     f2ptr bytecode_count     = f2fiber__bytecode_count(fiber, cause);
     u64   bytecode_count__i  = f2integer__i(bytecode_count, cause);
@@ -269,6 +270,7 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
     bytecode_count           = f2integer__new(cause, bytecode_count__i);
     f2fiber__bytecode_count__set(fiber, cause, bytecode_count);
   }
+  resume_gc();
   
   //status("bytecode fast loop done with %d loop fast cycles.", 1000-i);
   return exit_reason;

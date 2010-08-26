@@ -64,6 +64,7 @@
 		  [let [[stat [pathname-stat this]]]
 		    [let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
 		      [have file_loaded_modification_time_hash add this time_of_last_modification]]]]
+  [format stdout '\nfilename-load finished loading ' this '.']
   nil]
 
 [defunk filename-load_if_modified [this carefully]

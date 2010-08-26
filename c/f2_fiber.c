@@ -366,7 +366,7 @@ f2ptr raw__stack_trace__print(f2ptr cause, f2ptr this) {
 				  f2ptr print_value = raw__stack_trace_element__print_value(cause, slot_value);
 				  f2__frame__add_var_value(cause, print_frame, slot_name, print_value);
 				  );
-	    f2__print(cause, f2list4__new(cause, name, print_frame, source_expression, funk__cause));
+	    f2__print(cause, f2list4__new(cause, name, print_frame, funk__cause__source_expression, funk__cause));
 	  }
 	}
       }

@@ -67,14 +67,14 @@
   [format stdout '\nfilename-load finished loading ' this '.']
   nil]
 
-[defunk filename-load_if_modified [this carefully]
+[defunk filename-load_if_modified [this]
   [let [[file_was_loaded nil]]
     [let [[last_loaded_modification_time [have file_loaded_modification_time_hash lookup this]]]
       [if [or [null last_loaded_modification_time]
 	      [let [[stat [pathname-stat this]]]
 		[let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
 		  [not [get last_loaded_modification_time equals time_of_last_modification]]]]]
-	  [prog [package_filename-load this carefully]
+	  [prog [package_filename-load this]
 		[= file_was_loaded t]]]]
     file_was_loaded]]
 

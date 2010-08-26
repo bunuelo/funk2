@@ -216,7 +216,7 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
       }
       temp_str[new_index] = f2char__ch(__funk2.reader.char__symbol_quote, cause);
       new_index ++;
-      new_string = f2string__new(cause, new_index, temp_str);
+      f2ptr new_string = f2string__new(cause, new_index, temp_str);
       f2__free(to_ptr(temp_str));
       f2__free(to_ptr(temp_old_str));
       return new_string;

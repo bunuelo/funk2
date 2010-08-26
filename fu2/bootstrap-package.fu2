@@ -55,7 +55,6 @@
 [defunk filename-load [this]
   [with-new-cause [cause-define source-filename this]
 		  [cause-define cause-name      `filename-load]
-		  [print 'filename-load here.']
 		  [if [have [this-cause] lookup `load_carefully]
 		      [prog [print `[filename-load loading ,this carefully]] 
 			    [source-eval [source-load this]]]
@@ -64,7 +63,6 @@
 		  [let [[stat [pathname-stat this]]]
 		    [let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
 		      [have file_loaded_modification_time_hash add this time_of_last_modification]]]]
-  [format stdout '\nfilename-load finished loading ' this '.']
   nil]
 
 [defunk filename-load_if_modified [this]
@@ -80,7 +78,6 @@
 
 [defunk package_filename-load [:rest filenames]
   [mapc [funk [filename]
-	      [print `[package_filename-load ,filename]]
 	      [filename-load filename]]
 	filenames]]
 

@@ -448,6 +448,8 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
     }
   }
   
+  funk2_memory__debug_memory_test(this, 1);
+  
   // temporarily unlocks all memory mutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));

@@ -349,7 +349,8 @@ f2ptr raw__stack_trace__print(f2ptr cause, f2ptr this) {
 	  if (! raw__funkable__is_type(cause, funk)) {
 	    return f2larva__new(cause, 39, nil);
 	  }
-	  f2ptr name = f2__funkable__name(cause, funk);
+	  f2ptr funk__cause = f2__ptype__cause(cause, funk);
+	  f2ptr name        = f2__funkable__name(cause, funk);
 	  {
 	    f2ptr arg_frame   = f2__frame__lookup_var_value(cause, funkall_frame, new__symbol(cause, "arg_frame"), nil);
 	    f2ptr print_frame = f2__frame__new(cause, nil);
@@ -357,7 +358,7 @@ f2ptr raw__stack_trace__print(f2ptr cause, f2ptr this) {
 				  f2ptr print_value = raw__stack_trace_element__print_value(cause, slot_value);
 				  f2__frame__add_var_value(cause, print_frame, slot_name, print_value);
 				  );
-	    f2__print(cause, f2list2__new(cause, name, print_frame));
+	    f2__print(cause, f2list3__new(cause, name, print_frame, funk__cause));
 	  }
 	}
       }

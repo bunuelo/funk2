@@ -349,6 +349,10 @@ void funk2__destroy(funk2_t* this) {
   status("*******************************************************************");
   status("");
   
+#if defined(F2__USE_VIRTUAL_PROCESSORS)
+  funk2_virtual_processor_handler__destroy(&(this->virtual_processor_handler));
+#endif // F2__USE_VIRTUAL_PROCESSORS
+  
   funk2_memory__print_gc_stats(&(this->memory));
   
   funk2_primobject_type_handler__destroy(&(this->primobject_type_handler));
@@ -374,9 +378,6 @@ void funk2__destroy(funk2_t* this) {
   funk2_cpu__destroy(&(this->cpu));
   funk2_surrogate_parent__destroy(&(this->surrogate_parent));
   funk2_xmlrpc__destroy(&(this->xmlrpc));
-#if defined(F2__USE_VIRTUAL_PROCESSORS)
-  funk2_virtual_processor_handler__destroy(&(this->virtual_processor_handler));
-#endif // F2__USE_VIRTUAL_PROCESSORS
 }
 
 boolean_t funk2__handle(funk2_t* this) {

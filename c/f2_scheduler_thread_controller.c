@@ -59,7 +59,8 @@ void funk2_scheduler_thread_controller__user_wait_politely(funk2_scheduler_threa
   funk2_processor_mutex__lock(&(this->waiting_count_mutex));
   this->waiting_count ++;
   if (this->waiting_count > memory_pool_num) {
-    error(nil, "funk2_scheduler_thread_controller__user_wait_politely error: (waiting_count > " u64__fstr ")", ((u64)memory_pool_num));
+    status(    "funk2_scheduler_thread_controller__user_wait_politely error: (waiting_count > " u64__fstr ")", ((u64)memory_pool_num));
+    error(nil, "funk2_scheduler_thread_controller__user_wait_politely error: (waiting_count > memory_pool_num)");
   }
   funk2_processor_mutex__unlock(&(this->waiting_count_mutex));
   status("virtual processor " u64__fstr " waiting politely.", this_processor_thread__pool_index());

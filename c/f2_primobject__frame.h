@@ -32,6 +32,10 @@ declare_object_type_2_slot(frame, new_type_mutex, type_ptypehash,
 			   f2ptr lookup_type_var_assignment_cons__funk;
 			   f2ptr lookup_type_var_value__symbol;
 			   f2ptr lookup_type_var_value__funk;
+			   f2ptr contains_type_var__symbol;
+			   f2ptr contains_type_var__funk;
+			   f2ptr contains__symbol;
+			   f2ptr contains__funk;
 			   f2ptr type_var_value__set__symbol;
 			   f2ptr type_var_value__set__funk;
 			   f2ptr type_var__slot_names__symbol;

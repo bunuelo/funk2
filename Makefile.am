@@ -143,7 +143,7 @@ endif
 
 #system_cflags = -Dbuild_os=\"$(build_os)\" -Dbuild_vendor=\"$(build_vendor)\"
 
-debug_flags    = -g -pg -fstack-check -DDEBUG -DDEBUG_MEMORY=0 # -DF2__PROCESSOR_MUTEX__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY_POINTERS -DDEBUG_LOAD #-DDEBUG_COMPILE -DDEBUG_REDBLACKTREE -DDEBUG_BYTECODES -DDEBUG_MEMORY_VALID_PTRS 
+debug_flags    = -g -pg -fstack-check -DDEBUG -DDEBUG_MEMORY=1 -DF2__PROCESSOR_MUTEX__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY_POINTERS -DDEBUG_LOAD #-DDEBUG_COMPILE -DDEBUG_REDBLACKTREE -DDEBUG_BYTECODES -DDEBUG_MEMORY_VALID_PTRS 
 
 optimize_flags = 
 
@@ -151,8 +151,8 @@ debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_f
 release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(optimize_flags)
 athena__cc_flags  = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
-cc_flags = $(debug__cc_flags)
-#cc_flags = $(release__cc_flags)
+#cc_flags = $(debug__cc_flags)
+cc_flags = $(release__cc_flags)
 #cc_flags = $(athena__cc_flags)
 
 

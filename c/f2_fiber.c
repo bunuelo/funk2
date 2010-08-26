@@ -82,7 +82,11 @@ boolean_t raw__fiber__is_complete(f2ptr cause, f2ptr this) {
   if (! raw__fiber__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return f2fiber__is_complete(this, cause);
+  f2ptr execute_mutex = f2fiber__execute_mutex(fiber, cause);
+  f2mutex__lock(execute_mutex, cause);
+  boolean_t is_complete = f2fiber__is_complete(this, cause);
+  f2mutex__unlock(execute_mutex, cause);
+  return is_complete;
 }
 
 f2ptr f2__fiber__is_complete(f2ptr cause, f2ptr this) {

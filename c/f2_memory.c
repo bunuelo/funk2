@@ -401,6 +401,8 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
+  funk2_memory__debug_memory_test(this, 1);
+  funk2_memory__print_gc_stats(this);
   return boolean__false;
 }
 

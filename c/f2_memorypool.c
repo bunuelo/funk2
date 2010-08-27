@@ -386,7 +386,7 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     
     safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
     this->total_global_memory = size_i;
-    status("funk2_memorypool__load_from_stream: total_global_memory=" f2size__fstr ".", (f2size_t)this->total_global_memory);
+    status("funk2_memorypool__load_from_stream: total_global_memory=" u64__fstr ".", (u64)(this->total_global_memory));
     
     safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
     this->next_unique_block_id = size_i;
@@ -407,7 +407,7 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
       if (failure) {
 	error(nil, "funk2_memorypool__load_from_stream error: failed to inflate image using zlib.");
       }
-      status("funk2_memorypool__load_from_stream: decompressed memory image.  dest_length=%d  total_global_memory=" f2size__fstr, dest_length, (f2size_t)this->total_global_memory);
+      status("funk2_memorypool__load_from_stream: decompressed memory image.  dest_length=%d  total_global_memory=" u64__fstr, dest_length, (u64)(this->total_global_memory));
       if (dest_length != this->total_global_memory) {
 	error(nil, "funk2_memorypool__load_from_stream error: decompressed memory image is not the correct size.");
       }

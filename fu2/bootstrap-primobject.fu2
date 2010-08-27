@@ -77,16 +77,16 @@
 										   [if [primobject_type-has_parent_type parent_primobject_type `frame]
 										       [= type_inherits_from_frame t]]]]]
 									 parents]]
-								 ,[if type_inherits_from_frame
-								      `[let [[,this-gensym this]
-									     @initialize_funk_arg_pairs]
-									 [with this
-									       [let [[this ,this-gensym]
-										     @[mapcar [funk [initialize_funk_arg_pair]
-												    [reverse initialize_funk_arg_pair]]
-											      initialize_funk_arg_pairs]]
-										 @initialize_funk_body]]]
-								    `[prog @initialize_funk_body]]]]]]]]
+								 [if type_inherits_from_frame
+								     `[let [[,this-gensym this]
+									    @initialize_funk_arg_pairs]
+									[with this
+									      [let [[this ,this-gensym]
+										    @[mapcar [funk [initialize_funk_arg_pair]
+												   [reverse initialize_funk_arg_pair]]
+											     initialize_funk_arg_pairs]]
+										@initialize_funk_body]]]
+								   `[prog @initialize_funk_body]]]]]]]]
       [primobject_type-add_slot_type primobject_type `execute `initialize_type
 				     initialize_type_funk]
       [primobject_type-add_slot_type primobject_type `execute `new

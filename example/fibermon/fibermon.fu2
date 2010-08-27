@@ -92,8 +92,10 @@
 										     [print 'debug 13']
 										     [format nil '[' [if cause_reg
 													 [let [[cause-frame [get cause_reg frame]]]
+													   [print 'debug 13.1']
 													   [format nil [have cause_reg lookup `cause-name] '\n'
 														   [stringlist-concat [mapcar [funk [slot]
+																		    [print 'debug 13.2']
 																		    [if [not [eq slot `cause-name]]
 																			[format nil ' - ' slot ': ' [have cause_reg lookup slot] '\n']
 																		      '']]

@@ -153,18 +153,20 @@
 				 agency_name
 				 
 				 label
+				 scrolled_window
 				 resource_vbox
 				 resource_array
 				 
 				 bytecodes_per_second
 				 ]
   [new [mindmon layer_name agency_name]
-       [set this mindmon        mindmon]
-       [set this layer_name     layer_name]
-       [set this agency_name    agency_name]
-       [set this label          [gtk-label-new [get agency_name as-string]]]
-       [set this resource_vbox  [gtk-vbox-new [get this resource_count]]]
-       [set this resource_array [new array    [get this resource_count]]]
+       [set this mindmon         mindmon]
+       [set this layer_name      layer_name]
+       [set this agency_name     agency_name]
+       [set this label           [gtk-label-new [get agency_name as-string]]]
+       [set this scrolled_window [gtk-scrolled_window-new]]
+       [set this resource_vbox   [gtk-vbox-new [get this resource_count]]]
+       [set this resource_array  [new array    [get this resource_count]]]
        [let [[resource_name_index 0]
 	     [resource_name_iter  [get this resource_names]]]
 	 [while resource_name_iter
@@ -173,10 +175,11 @@
 	     [have [get this resource_vbox]  pack_start              [get [get [get this resource_array] elt resource_name_index] widget] nil t 0]]
 	   [= resource_name_index [+    resource_name_index 1]]
 	   [= resource_name_iter  [next resource_name_iter]]]]
+       [have [get this scrolled_window] add_with_viewport [get this resource_vbox]]
        this]]
 
 [deftypefunk mindmon_agency get widget []
-  [get this resource_vbox]]
+  [get this scrolled_window]]
 
 [deftypefunk mindmon_agency execute redraw []
   [let [[agency_bytecodes_per_second 0]]
@@ -308,7 +311,6 @@
 [deframe mindmon [frame] [initialized
 			  fiber
 			  
-			  scrolled_window
 			  mindmon_mind
 			  ]
   [new [mind mind_expression]
@@ -326,13 +328,9 @@
 					  
 					  [let [[win [gtk-window-new]]]
 					    
-					    [set this scrolled_window [gtk-scrolled_window-new]]
-					    
 					    [set this mindmon_mind [new mindmon_mind mind]]
 					    
-					    [have [get this scrolled_window] add_with_viewport [get [get this mindmon_mind] widget]]
-					    
-					    [have win add          [get this scrolled_window]]
+					    [have win add          [get [get this mindmon_mind] widget]]
 					    [set  win default_size 640 800]
 					    [set  win title        [format nil 'mindmon ' mind_expression]]
 					    

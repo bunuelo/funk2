@@ -52,8 +52,10 @@ typedef struct funk2_operating_system_s {
 //extern f2ptr f2scheduler__fiber_num__set(f2ptr this, f2ptr value);
 //extern f2ptr f2scheduler__add_fiber(f2ptr context, f2ptr this, f2ptr fiber);
 
-void funk2_operating_system__init(funk2_operating_system_t* this);
-void funk2_operating_system__destroy(funk2_operating_system_t* this);
+void  funk2_operating_system__init(              funk2_operating_system_t* this);
+void  funk2_operating_system__destroy(           funk2_operating_system_t* this);
+void  funk2_operating_system__push_current_fiber(funk2_operating_system_t* this, u64 pool_index, f2ptr current_fiber);
+f2ptr funk2_operating_system__pop_current_fiber( funk2_operating_system_t* this, u64 pool_index);
 
 f2ptr f2__global_scheduler__processors();
 f2ptr f2__global_scheduler__processors__set(f2ptr cause, f2ptr value);

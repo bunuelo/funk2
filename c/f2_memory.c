@@ -375,7 +375,7 @@ f2ptr funk2_memory__global_environment(funk2_memory_t* this) {
 
 boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename) {
   status("funk2_memory__save_image_to_file: saving memory image.");
-  funk2_memory__debug_memory_test(this, 1);
+  funk2_memory__debug_memory_test(this, 0);
   funk2_memory__print_gc_stats(this);
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
@@ -401,7 +401,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
-  funk2_memory__debug_memory_test(this, 1);
+  funk2_memory__debug_memory_test(this, 0);
   funk2_memory__print_gc_stats(this);
   return boolean__false;
 }
@@ -450,6 +450,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
     }
   }
   
+  funk2_memory__print_gc_stats(this);
   funk2_memory__debug_memory_test(this, 0);
   
   // temporarily unlocks all memory mutexes
@@ -488,6 +489,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
   
+  funk2_memory__print_gc_stats(this);
   funk2_memory__debug_memory_test(this, 0);
   
   status("done rebuilding memory info from image."); fflush(stdout);

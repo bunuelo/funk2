@@ -85,13 +85,13 @@ void funk2_scheduler_thread_controller__user_wait_politely(funk2_scheduler_threa
   while (this->please_wait) {
     raw__fast_spin_sleep_yield();
   }
+  status("virtual processor " u64__fstr " continuing.", this_processor_thread__pool_index());
   funk2_processor_mutex__lock(&(this->waiting_count_mutex));
   this->waiting_count --;
   if (this->waiting_count < 0) {
     error(nil, "funk2_scheduler_thread_controller__user_wait_politely error: (waiting_count < 0)");
   }
   funk2_processor_mutex__unlock(&(this->waiting_count_mutex));
-  status("virtual processor " u64__fstr " continuing.", this_processor_thread__pool_index());
 }
 
 void funk2_scheduler_thread_controller__check_user_wait_politely(funk2_scheduler_thread_controller_t* this) {

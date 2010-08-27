@@ -434,6 +434,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
     rbt_tree__reinit(&(this->pool[pool_index].used_memory_tree), this->pool[pool_index].global_f2ptr_offset);
     
     {
+      this->pool[pool_index].total_free_memory = 0;
       funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(this->pool[pool_index].dynamic_memory.ptr);
       funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->pool[pool_index].dynamic_memory.ptr)) + this->pool[pool_index].total_global_memory);
       while(iter < end_of_blocks) {

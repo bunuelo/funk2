@@ -138,9 +138,8 @@
     [have vbox pack_start scrolled_window t t 0]
     [frame widget      vbox
 	   redraw_funk [funk []
-			     [format stdout '\nfibermon_processor_widget-new: beginning redrawing index=' index]
 			     [fibermon_processor_widget-redraw processor_text_view progress_bar processor info_fiber_hash text_view]
-			     [format stdout '\nfibermon_processor_widget-new: finished redrawing index=' index]]]]]
+			     ]]]]
 
 
 

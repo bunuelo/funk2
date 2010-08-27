@@ -97,7 +97,7 @@
 														   [stringlist-concat [mapcar [funk [slot]
 																		    [print 'debug 13.2']
 																		    [if [not [eq slot `cause-name]]
-																			[format nil ' - ' slot ': ' [have cause_reg lookup slot] '\n']
+																			[format nil ' - ' slot ': ' `[have cause_reg lookup slot] '\n']
 																		      '']]
 																	      [append `[cause-args]
 																		       [get cause-frame slots]]]]]]]

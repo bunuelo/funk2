@@ -389,7 +389,7 @@
     [prog [define exp    [car seq]]
 	  [define result [apply cond_proc [cons exp nil]]]
 	  [if result
-	      [cons result [filter cond_proc [cdr seq]]]
+	      [cons exp [filter cond_proc [cdr seq]]]
 	    [filter cond_proc [cdr seq]]]]]]
 
 [defunk is-type [type_name exp]

@@ -160,26 +160,30 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
   }
   funk2_virtual_processor_thread_t* yielding_virtual_processor_thread = this->execute_bytecodes_current_virtual_processor_thread;
   this->execute_bytecodes_current_virtual_processor_thread = NULL;
-  funk2_processor_mutex__unlock(&(this->execute_bytecodes_mutex));
-  funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
-  // let spinning processor execute some bytecodes before returning from yield...
-  raw__spin_sleep_yield();
+  f2ptr yielding_fiber = funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), this->index);
   {
-    boolean_t locked_mutex = boolean__false;
-    while ((! locked_mutex) &&
-	   (! (yielding_virtual_processor_thread->exit))) {
-      if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) == 0) {
-	locked_mutex = boolean__true;
+    funk2_processor_mutex__unlock(&(this->execute_bytecodes_mutex));
+    funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
+    // let spinning processor execute some bytecodes before returning from yield...
+    raw__spin_sleep_yield();
+    {
+      boolean_t locked_mutex = boolean__false;
+      while ((! locked_mutex) &&
+	     (! (yielding_virtual_processor_thread->exit))) {
+	if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) == 0) {
+	  locked_mutex = boolean__true;
+	}
+	if (! locked_mutex) {
+	  raw__fast_spin_sleep_yield();
+	}
       }
-      if (! locked_mutex) {
-	raw__fast_spin_sleep_yield();
+      if (yielding_virtual_processor_thread->exit) {
+	yielding_virtual_processor_thread->exited = boolean__true;
+	pthread_exit(0);
       }
-    }
-    if (yielding_virtual_processor_thread->exit) {
-      yielding_virtual_processor_thread->exited = boolean__true;
-      pthread_exit(0);
     }
   }
+  funk2_operating_system__push_current_fiber(&(__funk2.operating_system), this->index, yielding_fiber);
   this->execute_bytecodes_current_virtual_processor_thread = yielding_virtual_processor_thread;
 }
 

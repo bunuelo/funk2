@@ -48,7 +48,7 @@ f2ptr f2__environment__new(f2ptr cause, f2ptr frame, f2ptr parent_env, f2ptr des
       (parent_env && (! raw__environment__is_type(cause, parent_env)))) {
     return f2larva__new(cause, 1, nil);
   }
-  return f2environment__new(cause, frame, parent_env, desc);
+  return raw__environment__new(cause, frame, parent_env, desc);
 }
 def_pcfunk3(environment__new, frame, parent_env, desc, return f2__environment__new(this_cause, frame, parent_env, desc));
 
@@ -112,7 +112,7 @@ f2ptr f2__environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, 
     }
     env = f2environment__parent_env(env, cause);
   }
-  printf ("\nset-var not defined: "); f2__write(cause, nil, var); fflush(stdout);
+  printf("\nset-var not defined: "); f2__write(cause, nil, var); fflush(stdout);
   __funk2.primobject__environment.environment__last_23_larva_symbol = var;
   return __funk2.primobject__frame.type_variable_not_defined__larva;
 }

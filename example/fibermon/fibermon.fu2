@@ -211,9 +211,7 @@
 		       [= fibermon-redraw-is_done t]
 		       [have win destroy]
 		       nil]
-		 nil]
-	  
-	  nil]]]]]
+		 nil]]]]]]
 
 [defmetro fibermon [:rest args]
   `[fibermon-new @[mapcar [funk [arg] `[quote ,arg]] args]]]

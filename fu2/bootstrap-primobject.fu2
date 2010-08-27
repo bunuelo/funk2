@@ -95,8 +95,9 @@
   nil]
 
 [defmetro type-initialize [type_name this :rest args]
-  `[let [[initialize_type_funk [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `initialize_type]]]
-     [apply initialize_type_funk [conslist this @args]]]]
+  [let [[initialize_type_funk [get [stringlist-concat [conslist [exp-as-string type_name] '-initialize_type_funk-' [exp-as-string [gensym]]]] as-symbol]]]
+    `[let [[,initialize_type_funk [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `initialize_type]]]
+       [apply ,initialize_type_funk [conslist this @args]]]]]
 
 [defunk add_type_funk [type_name slot_type slot_name funk]
   [let [[primobject_type [lookup_type type_name]]]

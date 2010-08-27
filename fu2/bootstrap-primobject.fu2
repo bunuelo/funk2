@@ -63,7 +63,9 @@
 							    ,[let [[this-gensym               [gensym]]
 								   [initialize_funk_arg_pairs [mapcar [funk [initialize_funk_arg]
 													    `[,[gensym] ,initialize_funk_arg]]
-												      initialize_funk_args]]]
+												      [filter [funk [arg]
+														    [not [eq arg `:rest]]]
+													      initialize_funk_args]]]]
 							       `[let [[,this-gensym this]
 								      @initialize_funk_arg_pairs]
 								  [with this
@@ -120,7 +122,9 @@
 				       ,[let [[this-gensym [gensym]]
 					      [arg_pairs  [mapcar [funk [arg]
 									`[,[gensym] ,arg]]
-								  args]]]
+								  [filter [funk [arg]
+										[not [eq arg `:rest]]]
+									  args]]]]
 					  `[let [[,this-gensym this]
 						 @arg_pairs]
 					     [with this

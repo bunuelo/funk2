@@ -53,6 +53,7 @@ void funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(funk2
 }
 
 void funk2_scheduler_thread_controller__let_scheduler_threads_continue(funk2_scheduler_thread_controller_t* this) {
+  status("management thread letting " u64__fstr " virtual_processors to continue.", ((u64)memory_pool_num));
   this->please_wait = boolean__false;
 }
 
@@ -74,6 +75,7 @@ void funk2_scheduler_thread_controller__user_wait_politely(funk2_scheduler_threa
     error(nil, "funk2_scheduler_thread_controller__user_wait_politely error: (waiting_count < 0)");
   }
   funk2_processor_mutex__unlock(&(this->waiting_count_mutex));
+  status("virtual processor " u64__fstr " continuing.", this_processor_thread__pool_index());
 }
 
 void funk2_scheduler_thread_controller__check_user_wait_politely(funk2_scheduler_thread_controller_t* this) {

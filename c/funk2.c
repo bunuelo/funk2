@@ -316,7 +316,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   f2__scheduler__start_processors();
   
 #endif // F2__USE_VIRTUAL_PROCESSORS
-
+  
   status("bootstrapping complete.");
   this->memory.bootstrapping_mode = boolean__false;
 }

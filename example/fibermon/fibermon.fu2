@@ -97,15 +97,15 @@
 														   [stringlist-concat [mapcar [funk [slot]
 																		    [print 'debug 13.2']
 																		    [if [not [eq slot `cause-name]]
-																			[format nil ' - ' slot ': ' `[have cause_reg lookup slot] '\n']
+																			[format nil ' - ' slot ': ' [have cause_reg lookup slot] '\n']
 																		      '']]
 																	      [append `[cause-args]
 																		       [get cause-frame slots]]]]]]]
 											     '\t' [/ bytecodes_per_second 1024.0]       ' kBc/s' '\n'
-											     '\t' 'is' [if [get fiber paused]           ' ' ' not '] 'paused' '\n'
-											     '\t' 'is' [if [get fiber is_complete]      ' ' ' not '] 'complete' '\n'
-											     '\t' 'is' [if [get fiber sleep_until_time] ' ' ' not '] 'asleep' '\n'
-											     '\t' 'is' [if [get fiber is_zombie]        ' ' ' not '] 'zombie' ']' '\n']]
+											     '\t' 'is' [if [prog [print 'debug 13.3'] [get fiber paused]]           ' ' ' not '] 'paused' '\n'
+											     '\t' 'is' [if [prog [print 'debug 13.4'] [get fiber is_complete]]      ' ' ' not '] 'complete' '\n'
+											     '\t' 'is' [if [prog [print 'debug 13.5'] [get fiber sleep_until_time]] ' ' ' not '] 'asleep' '\n'
+											     '\t' 'is' [if [prog [print 'debug 13.6'] [get fiber is_zombie]]        ' ' ' not '] 'zombie' ']' '\n']]
 										   ]]]]]]]
 								[get processor active_fibers]]]]
     

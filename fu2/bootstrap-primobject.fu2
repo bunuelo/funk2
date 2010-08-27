@@ -64,7 +64,7 @@
 								   [initialize_funk_arg_pairs [mapcar [funk [initialize_funk_arg]
 													    `[,[gensym] ,initialize_funk_arg]]
 												      [filter [funk [arg]
-														    [not [eq arg `:rest]]
+														    [not [eq arg `:rest]]]
 													      initialize_funk_args]]]]
 							       `[let [[,this-gensym this]
 								      @initialize_funk_arg_pairs]

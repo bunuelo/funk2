@@ -142,8 +142,11 @@
 					    [if [eq type_name `frame]
 						[= type_inherits_from_frame t]
 					      [let [[primobject_type [lookup_type type_name]]]
-						[if [primobject_type-has_parent_type primobject_type `frame]
-						    [= type_inherits_from_frame t]]]]
+						[if [null primobject_type]
+						    [error bug_type `primobject_type_not_defined
+							   type_name type_name]
+						  [if [primobject_type-has_parent_type primobject_type `frame]
+						      [= type_inherits_from_frame t]]]]]
 					    [if type_inherits_from_frame
 						`[let [[,this-gensym this]
 						       @arg_pairs]

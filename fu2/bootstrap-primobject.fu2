@@ -31,7 +31,7 @@
   [primobject_type-has_parent_type [lookup_type type_name] parent_name]]
 
 [defmetro with [frame_object :rest body]
-  [let [[frame_object-gensym [get [stringlist-concat [conslist 'with-' [exp-as-string frame_object] '-' [gensym]]] as-symbol]]]
+  [let [[frame_object-gensym [get [stringlist-concat [conslist 'with-' [exp-as-string frame_object] '-' [exp-as-string [gensym]]]] as-symbol]]]
     `[let [[,frame_object-gensym ,frame_object]]
        [if [inherits-from frame frame_object-gensym]
 	   [let [[frame_object_environment [new environment [this-env] nil]]]
@@ -77,7 +77,7 @@
 								   [mapc [funk [parent]
 									       [let [[parent_primobject_type [lookup_type parent]]]
 										 [if [null parent_primobject_type]
-										     [error bug_type `parent_primobject_type_not_defined
+										     [error bug_type    `parent_primobject_type_not_defined
 											    parent_name parent]
 										   [if [primobject_type-has_parent_type parent_primobject_type `frame]
 										       [= type_inherits_from_frame t]]]]]

@@ -847,6 +847,10 @@
 
 [defunk exit [value]
   [management_thread-add_exit_command value]
+  [let [[signal_exit_fiber [this-fiber]]]
+    [fiber [funk []
+		 [have signal_exit_fiber quit]]
+	   nil]]
   [while t
     [yield]]]
 
@@ -858,7 +862,7 @@
 	[done         nil]
 	[result_place [new place nil]]]
     [while [not [management_thread-check_command_uid_finished uid result_place]]
-      [yield]]
+      [sleep 1]]
     [get result_place thing]]]
 
 [defunk load_memory_image [filename]
@@ -866,7 +870,7 @@
 	[done         nil]
 	[result_place [new place nil]]]
     [while [not [management_thread-check_command_uid_finished uid result_place]]
-      [yield]]
+      [sleep 1]]
     [get result_place thing]]]
 
 [primfunk:load 'fu2/repl.fu2']

@@ -256,7 +256,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
   {
     rbt_node_t* node = rbt_tree__minimum(&(this->free_memory_tree));
     while(node) {
-      funk2_memblock_t* next_block = (funk2_memblock_t*)(((u8*)node) + funk2_memblock__byte_num(node));
+      funk2_memblock_t* next_block = (funk2_memblock_t*)(((u8*)node) + funk2_memblock__byte_num(((funk2_memblock_t*)node)));
       if (! (next_block->used)) {
 	funk2_hash__add(&blocks_to_defragment, (u64)node, (u64)0);
       }

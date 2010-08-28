@@ -79,10 +79,11 @@ boolean_t funk2_memory__is_reasonably_valid_funk2_memblock_ptr(funk2_memory_t* t
   boolean_t is_within_memory_pool_range = boolean__false;
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr));
-    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr))) + (this->pool[pool_index].total_global_memory));
-    if (p >= to_ptr(iter) && p < to_ptr(end_of_blocks)) {
+    funk2_memblock_t* beginning_of_blocks = (funk2_memblock_t*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr));
+    funk2_memblock_t* end_of_blocks       = (funk2_memblock_t*)(((u8*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr))) + (this->pool[pool_index].total_global_memory));
+    if (p >= to_ptr(beginning_of_blocks) && p < to_ptr(end_of_blocks)) {
       is_within_memory_pool_range = boolean__true;
+      break;
     }
   }
   if (! is_within_memory_pool_range) {

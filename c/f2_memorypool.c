@@ -378,7 +378,7 @@ void funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd) {
     u8* compressed_data;
     {
       u8*       uncompressed_data   = (u8*)from_ptr(this->dynamic_memory.ptr);
-      int       uncompressed_length = this->total_global_memory;
+      u64       uncompressed_length = this->total_global_memory;
       compressed_length             = 0;
       boolean_t failure             = zlib__deflate_length(uncompressed_data, uncompressed_length, &compressed_length);
       if (failure) {
@@ -442,12 +442,12 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     
     status("funk2_memorypool__load_from_stream: decompressing memorypool image.");
     {
-      int dest_length = 0;
+      u64 dest_length = 0;
       boolean_t failure = zlib__inflate(from_ptr(this->dynamic_memory.ptr), &dest_length, compressed_data, compressed_length);
       if (failure) {
 	error(nil, "funk2_memorypool__load_from_stream error: failed to inflate image using zlib.");
       }
-      status("funk2_memorypool__load_from_stream: decompressed memory image.  dest_length=%d  total_global_memory=" u64__fstr, dest_length, (u64)(this->total_global_memory));
+      status("funk2_memorypool__load_from_stream: decompressed memory image.  dest_length=" u64__fstr "  total_global_memory=" u64__fstr, dest_length, (u64)(this->total_global_memory));
       if (dest_length != this->total_global_memory) {
 	error(nil, "funk2_memorypool__load_from_stream error: decompressed memory image is not the correct size.");
       }

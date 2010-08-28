@@ -317,38 +317,38 @@
        [if [not [is-type `mind mind]]
 	   [error bug_type `mindmon_mind_is_not_mind
 		  was_type [type mind]]]
-       [set this initialized nil]
-       [set this fiber       [fiber [funk []
-					  [cause-define cause-name `mindmon]
-					  [cause-define cause-args [frame mind_expression mind_expression]]
-					  [cause-enable_reactive_critics [this-cause]]
-					  
-					  [while [not [get this initialized]]
-					    [yield]]
-					  
-					  [let [[win [gtk-window-new]]]
-					    
-					    [set this mindmon_mind [new mindmon_mind mind]]
-					    
-					    [have win add          [get [get this mindmon_mind] widget]]
-					    [set  win default_size 640 800]
-					    [set  win title        [format nil 'mindmon ' mind_expression]]
-					    
-					    [let [[mindmon-redraw-quit_now nil]]
-					      
-					      [have win connect_hide_on_delete]
-					      [have win show_all]
-					      
-					      [while [not mindmon-redraw-quit_now]
-						[have this redraw]
-						[if [not [get win visible]]
-						    [= mindmon-redraw-quit_now t]]
-						[yield]]
-					      
-					      [have win destroy]
-					      nil]]]
-				    nil]]
-       [set this initialized  t]
+       [= initialized nil]
+       [= fiber [fiber [funk []
+			     [cause-define cause-name `mindmon]
+			     [cause-define cause-args [frame mind_expression mind_expression]]
+			     [cause-enable_reactive_critics [this-cause]]
+			     
+			     [while [not initialized]
+			       [yield]]
+			     
+			     [let [[win [gtk-window-new]]]
+			       
+			       [= mindmon_mind [new mindmon_mind mind]]
+			       
+			       [have win add          [get [get this mindmon_mind] widget]]
+			       [set  win default_size 640 800]
+			       [set  win title        [format nil 'mindmon ' mind_expression]]
+			       
+			       [let [[mindmon-redraw-quit_now nil]]
+				 
+				 [have win connect_hide_on_delete]
+				 [have win show_all]
+				 
+				 [while [not mindmon-redraw-quit_now]
+				   [have this redraw]
+				   [if [not [get win visible]]
+				       [= mindmon-redraw-quit_now t]]
+				   [yield]]
+				 
+				 [have win destroy]
+				 nil]]]
+		       nil]]
+       [= initialized t]
        this]]
 
 [deftypefunk mindmon execute redraw []

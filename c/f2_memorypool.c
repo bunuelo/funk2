@@ -248,9 +248,10 @@ u64 u64__log2(u64 this) {
 u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* this) {
   funk2_memorypool__debug_memory_test(this, 2);
   status("defragmenting funk2_memorypool");
-  u64          free_memory_tree__size        = rbt_tree__size(&(this->free_memory_tree));
-  u64          free_memory_tree__size__power = u64__log2(free_memory_tree__size);
-  funk2_hash_t blocks_to_defragment;
+  funk2_memblock_t* end_of_blocks                 = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
+  u64               free_memory_tree__size        = rbt_tree__size(&(this->free_memory_tree));
+  u64               free_memory_tree__size__power = u64__log2(free_memory_tree__size);
+  funk2_hash_t      blocks_to_defragment;
   funk2_hash__init(&blocks_to_defragment, free_memory_tree__size__power + 1);
   status("free_memory_tree__size=" u64__fstr, free_memory_tree__size);
   status("free_memory_tree__size__power=" u64__fstr, free_memory_tree__size__power);
@@ -277,7 +278,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
 	status("debug 0");
 	funk2_memblock_t* segment_first_free_block = (funk2_memblock_t*)(bin_node->keyvalue_pair.key);
 	funk2_memblock_t* iter                     = (funk2_memblock_t*)(((u8*)segment_first_free_block) + funk2_memblock__byte_num(((funk2_memblock_t*)segment_first_free_block)));
-	while (! (iter->used)) {
+	while ((! (iter->used)) && (iter < end_of_blocks)) {
 	  status("debug 1");
 	  funk2_memblock_t* next = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
 	  if (funk2_hash__contains(&blocks_to_defragment, (u64)iter)) {

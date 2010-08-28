@@ -249,7 +249,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
   funk2_memorypool__debug_memory_test(this, 2);
   status("defragmenting funk2_memorypool");
   u64          free_memory_tree__size        = rbt_tree__size(&(this->free_memory_tree));
-  u64          free_memory_tree__size__power = u64__pow2(free_memory_tree__size);
+  u64          free_memory_tree__size__power = u64__log2(free_memory_tree__size);
   funk2_hash_t blocks_to_defragment;
   funk2_hash__init(&blocks_to_defragment, free_memory_tree__size__power + 1);
   u8 did_something = 0;

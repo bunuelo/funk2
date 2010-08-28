@@ -259,7 +259,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
     rbt_node_t* node = rbt_tree__minimum(&(this->free_memory_tree));
     while(node) {
       funk2_memblock_t* next_block = (funk2_memblock_t*)(((u8*)node) + funk2_memblock__byte_num(((funk2_memblock_t*)node)));
-      if (! (next_block->used)) {
+      if ((next_block < end_of_blocks) && (! (next_block->used))) {
 	funk2_hash__add(&blocks_to_defragment, (u64)node, (u64)0);
       }
       node = rbt_node__next(node);
@@ -274,7 +274,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
       while (bin_node) {
 	funk2_memblock_t* segment_first_free_block = (funk2_memblock_t*)(bin_node->keyvalue_pair.key);
 	funk2_memblock_t* iter                     = (funk2_memblock_t*)(((u8*)segment_first_free_block) + funk2_memblock__byte_num(((funk2_memblock_t*)segment_first_free_block)));
-	while ((! (iter->used)) && (iter < end_of_blocks)) {
+	while ((iter < end_of_blocks) && (! (iter->used))) {
 	  funk2_memblock_t* next = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
 	  if (funk2_hash__contains(&blocks_to_defragment, (u64)iter)) {
 	    funk2_hash__remove(&blocks_to_defragment, (u64)iter);

@@ -252,6 +252,8 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
   u64          free_memory_tree__size__power = u64__log2(free_memory_tree__size);
   funk2_hash_t blocks_to_defragment;
   funk2_hash__init(&blocks_to_defragment, free_memory_tree__size__power + 1);
+  status("free_memory_tree__size=" u64__fstr, free_memory_tree__size);
+  status("free_memory_tree__size__power=" u64__fstr, free_memory_tree__size__power);
   u8 did_something = 0;
   {
     rbt_node_t* node = rbt_tree__minimum(&(this->free_memory_tree));
@@ -263,6 +265,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
       node = rbt_node__next(node);
     }
   }
+  status("blocks_to_defragment.key_count=" u64__fstr, (u64)(blocks_to_defragment.key_count));
   u64 bin_count = funk2_hash__bin_count(&blocks_to_defragment);
   {
     u64 index;
@@ -281,6 +284,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
 	  funk2_memblock__byte_num(segment_first_free_block) += funk2_memblock__byte_num(iter);
 	  rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)segment_first_free_block);
 	  iter = next;
+	  did_something = 1;
 	}
 	funk2_hash__remove(&blocks_to_defragment, (u64)bin_node);
 	bin_node = blocks_to_defragment.bin_array[index];
@@ -289,6 +293,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
   }
   funk2_hash__destroy(&blocks_to_defragment);
   funk2_memorypool__debug_memory_test(this, 2);
+  status("blocks_to_defragment.key_count=" u64__fstr, (u64)(blocks_to_defragment.key_count));
   return did_something;
 }
 

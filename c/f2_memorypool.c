@@ -267,9 +267,11 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
   }
   status("blocks_to_defragment.key_count=" u64__fstr, (u64)(blocks_to_defragment.key_count));
   u64 bin_count = funk2_hash__bin_count(&blocks_to_defragment);
+  status("blocks_to_defragment.bin_count=" u64__fstr, bin_count);
   {
     u64 index;
     for (index = 0; index < bin_count; index ++) {
+      status("index=" u64__fstr, index);
       funk2_hash_bin_node_t* bin_node = blocks_to_defragment.bin_array[index];
       while (bin_node) {
 	funk2_memblock_t* segment_first_free_block = (funk2_memblock_t*)(bin_node->keyvalue_pair.key);

@@ -25,7 +25,7 @@
 
 void* funk2_virtual_processor_thread__start_function(void* args) {
   funk2_virtual_processor_thread_t* this = (funk2_virtual_processor_thread_t*)args;
-  this->tid = gettid();
+  this->tid = (pid_t)syscall(SYS_gettid);
   while (__funk2.memory.bootstrapping_mode) {
     raw__spin_sleep_yield();
   }

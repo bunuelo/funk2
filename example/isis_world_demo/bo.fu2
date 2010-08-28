@@ -17,19 +17,10 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[format stdout 'Now starting fibermon, isis_world, and two mind monitors, one for Ralph and one for Lauren.']
 
-[deframe reactive_speech_agency [agency] []
-  [new []
-       [type-initialize agency this `speech]
-       
-       [have this add_resource [resource say [string]
-					 [have this-resource think_to_self 'I am saying, "' string '"']
-					 [let [[body [get this body]]]
-					   [set body says [list string]]
-					   [let [[start_time_step [get body time_step]]]
-					     [while [< [- [get body time_step] 2] start_time_step]
-					       [millisleep 1000]]]
-					   [set body says nil]]]]
-       
-       this]]
+[fibermon]
+[isis_world-initialize '18.85.58.18']
+[mindmon [get isis_world agent_mind `Ralph]]
+[mindmon [get isis_world agent_mind `Lauren]]
 

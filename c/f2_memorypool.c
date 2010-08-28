@@ -195,43 +195,6 @@ void funk2_memorypool__free_memory_tree__insert(funk2_memorypool_t* this, funk2_
   rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
 }
 
-// old version that scans through all memory.  new version below tries to only scan through free blocks.
-u8 __funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* this) {
-  funk2_memorypool__debug_memory_test(this, 2);
-  status("defragmenting funk2_memorypool");
-  u8 did_something = 0;
-  funk2_memblock_t* iter                     = (funk2_memblock_t*)from_ptr(this->dynamic_memory.ptr);
-  funk2_memblock_t* end_of_blocks            = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
-  funk2_memblock_t* segment_first_free_block = NULL;
-  rbt_tree__init(&(this->free_memory_tree), NULL, this->global_f2ptr_offset);
-  while(iter < end_of_blocks) {
-    if (segment_first_free_block) {
-      // we are currently in a segment of free blocks
-      if (iter->used) {
-	// we are no longer in a segment of free blocks
-	segment_first_free_block = NULL;
-      } else {
-	// we should combine this free block with the others in this segment
-	rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)segment_first_free_block);
-	funk2_memblock__byte_num(segment_first_free_block) += funk2_memblock__byte_num(iter);
-	rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)segment_first_free_block);
-	iter = segment_first_free_block;
-	// set did_something flag
-	did_something = 1;
-      }
-    } else {
-      if (! iter->used) {
-	segment_first_free_block = iter;
-	funk2_memorypool__free_memory_tree__insert(this, iter);
-      }
-    }
-    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-  }
-  release__assert(iter == end_of_blocks, nil, "failed.");
-  funk2_memorypool__debug_memory_test(this, 2);
-  return did_something;
-}
-
 u64 u64__log2(u64 this) {
   s64 power = 63;
   u64 mask  = 0x8000000000000000ull;

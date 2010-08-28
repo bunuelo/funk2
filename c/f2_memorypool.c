@@ -274,22 +274,33 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
       status("index=" u64__fstr, index);
       funk2_hash_bin_node_t* bin_node = blocks_to_defragment.bin_array[index];
       while (bin_node) {
+	status("debug 0");
 	funk2_memblock_t* segment_first_free_block = (funk2_memblock_t*)(bin_node->keyvalue_pair.key);
 	funk2_memblock_t* iter                     = (funk2_memblock_t*)(((u8*)segment_first_free_block) + funk2_memblock__byte_num(((funk2_memblock_t*)segment_first_free_block)));
 	while (! (iter->used)) {
+	  status("debug 1");
 	  funk2_memblock_t* next = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
 	  if (funk2_hash__contains(&blocks_to_defragment, (u64)iter)) {
+	    status("debug 2");
 	    funk2_hash__remove(&blocks_to_defragment, (u64)iter);
 	  }
+	  status("debug 3");
 	  rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)iter);
+	  status("debug 4");
 	  rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)segment_first_free_block);
+	  status("debug 5");
 	  funk2_memblock__byte_num(segment_first_free_block) += funk2_memblock__byte_num(iter);
+	  status("debug 6");
 	  rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)segment_first_free_block);
+	  status("debug 7");
 	  iter = next;
 	  did_something = 1;
 	}
+	status("debug 8");
 	funk2_hash__remove(&blocks_to_defragment, (u64)segment_first_free_block);
+	status("debug 9");
 	bin_node = blocks_to_defragment.bin_array[index];
+	status("debug 10");
       }
     }
   }

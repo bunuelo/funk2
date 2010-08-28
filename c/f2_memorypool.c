@@ -288,7 +288,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
 	  iter = next;
 	  did_something = 1;
 	}
-	funk2_hash__remove(&blocks_to_defragment, (u64)bin_node);
+	funk2_hash__remove(&blocks_to_defragment, (u64)segment_first_free_block);
 	bin_node = blocks_to_defragment.bin_array[index];
       }
     }

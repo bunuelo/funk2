@@ -374,7 +374,7 @@ void funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd) {
   // save compressed memory image
   {
     status("funk2_memorypool__save_to_stream: compressing memorypool.");
-    int compressed_length = 0;
+    u64 compressed_length = 0;
     u8* compressed_data;
     {
       u8*       uncompressed_data   = (u8*)from_ptr(this->dynamic_memory.ptr);

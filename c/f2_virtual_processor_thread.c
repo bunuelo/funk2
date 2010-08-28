@@ -25,6 +25,7 @@
 
 void* funk2_virtual_processor_thread__start_function(void* args) {
   funk2_virtual_processor_thread_t* this = (funk2_virtual_processor_thread_t*)args;
+  this->tid = gettid();
   while (__funk2.memory.bootstrapping_mode) {
     raw__spin_sleep_yield();
   }
@@ -94,6 +95,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 
 void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this) {
   funk2_processor_mutex__init(&(this->assignment_mutex));
+  this->tid                                = (pid_t)0;
   this->virtual_processor_assignment_index = -1;
   this->exit                               = boolean__false;
   this->exited                             = boolean__false;

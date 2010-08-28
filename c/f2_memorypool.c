@@ -369,8 +369,8 @@ funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_
     rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)perfect_size_block);
     perfect_size_block->used = 1;
   } else {
-    if (!perfect_size_block) {
-      status("there are no free memory blocks left.");
+    if (! perfect_size_block) {
+      status("there are no free memory blocks left that are at least " u64__fstr " bytes.", (u64)byte_num);
     } else {
       status("largest memory block is too small (need " f2size_t__fstr " bytes, have " f2size_t__fstr " bytes).", byte_num, funk2_memblock__byte_num(perfect_size_block));
     }

@@ -84,7 +84,7 @@ boolean_t raw__fiber__is_complete(f2ptr cause, f2ptr this) {
   }
   boolean_t is_complete;
   f2ptr     execute_mutex = f2fiber__execute_mutex(this, cause);
-  if (! raw__mutex__trylock(cause, execute_mutex)) {
+  if (! raw__mutex__trylock(cause, execute_mutex)) { // successful lock
     is_complete = (f2fiber__is_complete(this, cause) ? boolean__true : boolean__false);
     f2mutex__unlock(execute_mutex, cause);
   } else {

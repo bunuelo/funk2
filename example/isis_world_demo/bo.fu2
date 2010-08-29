@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[format stdout 'Now starting fibermon, isis_world, and two mind monitors, one for Ralph and one for Lauren.']
+[format stdout '\nNow starting fibermon, isis_world, and two mind monitors, one for Ralph and one for Lauren.']
 
 [fibermon]
 [isis_world-initialize '18.85.58.18']

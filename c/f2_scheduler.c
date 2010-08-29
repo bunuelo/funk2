@@ -82,12 +82,10 @@ void f2__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2p
   if (fiber_cause) {
     f2__cause__add_fiber(cause, fiber_cause, fiber);
   }
-  //f2ptr active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
-  //f2mutex__lock(active_fibers_mutex, cause);
   pause_gc();
   f2processor__active_fibers__set(this, cause, f2cons__new(cause, fiber, f2processor__active_fibers(this, cause)));
+  f2fiber__processor_assignment_index__set(fiber, cause, f2processor__pool_index(this, cause));
   resume_gc();
-  //f2mutex__unlock(active_fibers_mutex, cause);
 }
 
 void f2__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
@@ -106,8 +104,6 @@ boolean_t f2__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr t
     f2__cause__remove_fiber(cause, fiber_cause, fiber);
   }
   boolean_t found_and_removed_fiber = boolean__false;
-  //f2ptr active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
-  //f2mutex__lock(active_fibers_mutex, cause);
   f2ptr active_fibers_iter = f2processor__active_fibers(this, cause);
   f2ptr active_fibers_prev = nil;
   while (active_fibers_iter) {
@@ -119,11 +115,11 @@ boolean_t f2__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr t
       } else {
 	f2processor__active_fibers__set(this, cause, active_fibers_next);
       }
+      f2fiber__processor_assignment_index__set(fiber, cause, nil);
       found_and_removed_fiber = boolean__true;
     }
     active_fibers_iter = active_fibers_next;
   }
-  //f2mutex__unlock(active_fibers_mutex, cause);
   return found_and_removed_fiber;
 }
 

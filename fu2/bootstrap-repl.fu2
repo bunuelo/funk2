@@ -359,15 +359,20 @@
     [mutate seq [cdr seq]]]]
 
 [defunk cause-enable_reactive_critics [this]
-  [format stdout 'cause-enable_reactive_critics warning: reactive_critics not yet defined.\n']
+  [format stdout '\ncompile note: reactive_critics not yet defined.']
   nil]
 
-[defunk fiber [funk args]
+[defunk silent-fiber [funk args]
   [fiber_parallel [funk []
-			[cause-enable_reactive_critics [this-cause]]
 			[cause]
 			[apply funk args]]
 		  nil]]
+
+[defunk fiber [funk args]
+  [silent-fiber [funk []
+		      [cause-enable_reactive_critics [this-cause]]
+		      [apply funk args]]
+		nil]]
 
 [defunk parseq [proc seq]
   [if [null seq]

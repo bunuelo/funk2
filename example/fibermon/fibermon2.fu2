@@ -70,7 +70,7 @@
 
 [deftypefunk fibermon2 execute redraw []
   [dotimes [index processor_count]
-    [have [get processor_array index] redraw]]
+    [have [get processor_array elt index] redraw]]
   nil]
 
 

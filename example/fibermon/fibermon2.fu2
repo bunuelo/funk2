@@ -26,26 +26,54 @@
 	  [[or t [< i [* 1024 1024 1024 1024 1024]]] [format nil [/ i [* 1024.0 1024.0 1024.0]] 'T']]]]]
 
 
+'fibermon2_fiber'
+
+[deframe fibermon2_fiber [frame] [[fiber nil]
+				  [label [gtk-label-new 'fiber']]]
+  [new [fiber]
+       [set this fiber fiber]
+       this]]
+
+[deftypefunk fibermon2_fiber get widget []
+  label]
+
+
+'fibermon2_processor'
+
 [deframe fibermon2_processor [frame] [[index nil]
-				      [label [gtk-label-new 'processor']]]
+				      [label [gtk-label-new 'processor']]
+				      [vbox       [gtk-vbox-new 2]]
+				      [fiber_vbox [gtk-vbox-new 2]]]
   [new [index]
        [set this index index]
        [set label text [format nil 'processor #' index]]
+       [have vbox pack_start label      nil nil 0]
+       [have vbox pack_start fiber_vbox t t 0]
        this]]
 
 [deftypefunk fibermon2_processor get widget []
-  label]
+  vbox]
 
 [deftypefunk fibermon2_processor execute redraw []
   nil]
 
-[deframe fibermon2 [frame] [[win             [gtk-window-new]]
-			    [scrolled_window [gtk-scrolled_window-new]]
-			    [processor_hbox  [gtk-hbox-new 8]]
-			    [processor_array [new array 8]]
-			    [done            nil]
-			    [fiber           nil]
-			    [processor_count 8]]
+[deftypefunk fibermon2_processor execute add_fiber [fibermon2_fiber]
+  [have fiber_vbox pack_start fibermon2_fiber t t 0]]
+
+[deftypefunk fibermon2_processor execute remove_fiber [fibermon2_fiber]
+  [have fiber_vbox remove fibermon2_fiber]]
+
+
+'fibermon2'
+
+[deframe fibermon2 [frame] [[win                  [gtk-window-new]]
+			    [scrolled_window      [gtk-scrolled_window-new]]
+			    [processor_hbox       [gtk-hbox-new 2]]
+			    [processor_array      [new array 8]]
+			    [done                 nil]
+			    [fiber                nil]
+			    [processor_count      8]
+			    [fibermon2_fiber_hash [new ptypehash]]]
   [new []
        [set  win default_size 1900 800]
        [set  win title 'fibermon2']
@@ -59,12 +87,17 @@
 			     [format stdout '\nfibermon2 starting.\n']
 			     [have win show_all]
 			     [while [not done]
+			       [have this reorganize_fibers]
 			       [have this redraw]
 			       [if [not [get win visible]]
 				   [= done t]]]
 			     [format stdout '\nfibermon2 exiting.\n']]
 		       nil]]
        this]]
+
+[deftypefunk fibermon2 execute reorganize_fibers []
+  
+  nil]
 
 [deftypefunk fibermon2 execute redraw []
   [dotimes [index processor_count]

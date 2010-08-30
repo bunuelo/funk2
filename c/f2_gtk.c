@@ -386,11 +386,11 @@ void funk2_gtk__window__set_default_size(funk2_gtk_t* this, GtkWidget* window, s
 
 // vbox
 
-GtkWidget* funk2_gtk__vbox__new(funk2_gtk_t* this, int row_count) {
+GtkWidget* funk2_gtk__vbox__new(funk2_gtk_t* this, int spacing) {
   GtkWidget* vbox = NULL;
   {
     gdk_threads_enter();
-    vbox = gtk_vbox_new(FALSE, row_count);
+    vbox = gtk_vbox_new(FALSE, spacing);
     gdk_threads_leave();
   }
   return vbox;
@@ -399,11 +399,11 @@ GtkWidget* funk2_gtk__vbox__new(funk2_gtk_t* this, int row_count) {
 
 // hbox
 
-GtkWidget* funk2_gtk__hbox__new(funk2_gtk_t* this, int column_count) {
+GtkWidget* funk2_gtk__hbox__new(funk2_gtk_t* this, int spacing) {
   GtkWidget* hbox = NULL;
   {
     gdk_threads_enter();
-    hbox = gtk_hbox_new(FALSE, column_count);
+    hbox = gtk_hbox_new(FALSE, spacing);
     gdk_threads_leave();
   }
   return hbox;
@@ -498,7 +498,15 @@ GtkTextBuffer* funk2_gtk__text_view__get_buffer(funk2_gtk_t* this, GtkWidget* te
 void funk2_gtk__container__add(funk2_gtk_t* this, GtkWidget* widget, GtkWidget* add_widget) {
   {
     gdk_threads_enter();
-    gtk_container_add(GTK_CONTAINER(widget), add_widget);
+    gtk_container_add(GTK_CONTAINER(widget), GTK_WIDGET(add_widget));
+    gdk_threads_leave();
+  }
+}
+
+void funk2_gtk__container__remove(funk2_gtk_t* this, GtkWidget* widget, GtkWidget* remove_widget) {
+  {
+    gdk_threads_enter();
+    gtk_container_add(GTK_CONTAINER(widget), GTK_WIDGET(remove_widget));
     gdk_threads_leave();
   }
 }
@@ -882,42 +890,42 @@ f2ptr f2__gtk__window__set_default_size(f2ptr cause, f2ptr window, f2ptr width, 
 def_pcfunk3(gtk__window__set_default_size, window, width, height, return f2__gtk__window__set_default_size(this_cause, window, width, height));
 
 
-f2ptr raw__gtk__vbox__new(f2ptr cause, f2ptr row_count) {
+f2ptr raw__gtk__vbox__new(f2ptr cause, f2ptr spacing) {
 #if defined(F2__GTK__SUPPORTED)
-  u64        row_count__i = f2integer__i(row_count, cause);
-  GtkWidget* vbox         = funk2_gtk__vbox__new(&(__funk2.gtk), row_count__i);
+  u64        spacing__i = f2integer__i(spacing, cause);
+  GtkWidget* vbox       = funk2_gtk__vbox__new(&(__funk2.gtk), spacing__i);
   return f2__gtk_box__new(cause, f2pointer__new(cause, to_ptr(vbox)));
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
 }
 
-f2ptr f2__gtk__vbox__new(f2ptr cause, f2ptr row_count) {
-  if (! raw__integer__is_type(cause, row_count)) {
+f2ptr f2__gtk__vbox__new(f2ptr cause, f2ptr spacing) {
+  if (! raw__integer__is_type(cause, spacing)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__vbox__new(cause, row_count);
+  return raw__gtk__vbox__new(cause, spacing);
 }
-def_pcfunk1(gtk__vbox__new, row_count, return f2__gtk__vbox__new(this_cause, row_count));
+def_pcfunk1(gtk__vbox__new, spacing, return f2__gtk__vbox__new(this_cause, spacing));
 
 
-f2ptr raw__gtk__hbox__new(f2ptr cause, f2ptr column_count) {
+f2ptr raw__gtk__hbox__new(f2ptr cause, f2ptr spacing) {
 #if defined(F2__GTK__SUPPORTED)
-  u64        column_count__i = f2integer__i(column_count, cause);
-  GtkWidget* hbox            = funk2_gtk__hbox__new(&(__funk2.gtk), column_count__i);
+  u64        spacing__i = f2integer__i(spacing, cause);
+  GtkWidget* hbox       = funk2_gtk__hbox__new(&(__funk2.gtk), spacing__i);
   return f2__gtk_box__new(cause, f2pointer__new(cause, to_ptr(hbox)));
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
 }
 
-f2ptr f2__gtk__hbox__new(f2ptr cause, f2ptr column_count) {
-  if (! raw__integer__is_type(cause, column_count)) {
+f2ptr f2__gtk__hbox__new(f2ptr cause, f2ptr spacing) {
+  if (! raw__integer__is_type(cause, spacing)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__hbox__new(cause, column_count);
+  return raw__gtk__hbox__new(cause, spacing);
 }
-def_pcfunk1(gtk__hbox__new, column_count, return f2__gtk__hbox__new(this_cause, column_count));
+def_pcfunk1(gtk__hbox__new, spacing, return f2__gtk__hbox__new(this_cause, spacing));
 
 
 f2ptr raw__gtk__button__new_with_label(f2ptr cause, f2ptr label) {
@@ -1049,6 +1057,8 @@ f2ptr f2__gtk__text_view__get_buffer(f2ptr cause, f2ptr widget) {
 def_pcfunk1(gtk__text_view__get_buffer, widget, return f2__gtk__text_view__get_buffer(this_cause, widget));
 
 
+// container
+
 f2ptr raw__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
 #if defined(F2__GTK__SUPPORTED)
   GtkWidget* gtk_widget     = raw__gtk_widget__as__GtkWidget(cause, widget);
@@ -1068,6 +1078,27 @@ f2ptr f2__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
   return raw__gtk__container__add(cause, widget, add_widget);
 }
 def_pcfunk2(gtk__container__add, widget, add_widget, return f2__gtk__container__add(this_cause, widget, add_widget));
+
+
+f2ptr raw__gtk__container__remove(f2ptr cause, f2ptr widget, f2ptr remove_widget) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_widget        = raw__gtk_widget__as__GtkWidget(cause, widget);
+  GtkWidget* remove_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, remove_widget);
+  funk2_gtk__container__remove(&(__funk2.gtk), gtk_widget, remove_gtk_widget);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__container__remove(f2ptr cause, f2ptr widget, f2ptr remove_widget) {
+  if ((! raw__gtk_widget__is_type(cause, widget)) ||
+      (! raw__gtk_widget__is_type(cause, remove_widget))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__container__remove(cause, widget, remove_widget);
+}
+def_pcfunk2(gtk__container__remove, widget, remove_widget, return f2__gtk__container__remove(this_cause, widget, remove_widget));
 
 
 // expose_event
@@ -2104,8 +2135,8 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__0(gtk__window__new,                                                                             "Returns a new window widget.");
   f2__primcfunk__init__2(gtk__window__set_title,                  window, title,                                       "Sets the title of this gtk_window.");
   f2__primcfunk__init__3(gtk__window__set_default_size,           window, width, height,                               "Sets the default width and height of this gtk_window.");
-  f2__primcfunk__init__1(gtk__vbox__new,                          row_count,                                           "Returns a new vbox widget with row_count rows.");
-  f2__primcfunk__init__1(gtk__hbox__new,                          column_count,                                        "Returns a new hbox widget with column_count columns.");
+  f2__primcfunk__init__1(gtk__vbox__new,                          spacing,                                             "Returns a new vbox widget with spacing.");
+  f2__primcfunk__init__1(gtk__hbox__new,                          spacing,                                             "Returns a new hbox widget with spacing.");
   f2__primcfunk__init__1(gtk__button__new_with_label,             label,                                               "Returns a new button widget with label.");
   f2__primcfunk__init__0(gtk__entry__new,                                                                              "Returns a new entry widget.");
   f2__primcfunk__init__1(gtk__entry__get_text,                    widget,                                              "Returns the text of an entry widget as a string.");
@@ -2115,6 +2146,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__1(gtk__text_view__get_buffer,              text_view,                                           "Returns the buffer widget of a text_view widget.");
   
   f2__primcfunk__init__2(gtk__container__add,                     widget, add_widget,                                  "Adds a widget to a container.");
+  f2__primcfunk__init__2(gtk__container__remove,                  widget, remove_widget,                               "Removes a widget from a container.");
   f2__primcfunk__init__5(gtk__box__pack_start,                    widget, child_widget, expand, fill, padding,         "Packs a child widget in a box.");
   f2__primcfunk__init__4(gtk__signal_connect,                     widget, signal_name, funk, args,                     "Creates a callback for a widget (see gtk-pop_callback_event).");
   f2__primcfunk__init__0(gtk__pop_callback_event,                                                                      "Returns the next waiting callback event, if one exists, nil otherwise.");

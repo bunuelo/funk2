@@ -105,7 +105,6 @@
   [if gtk-event_handling_fiber
       [have gtk-event_handling_fiber quit]]
   [let [[event_handling_fiber [fiber [funk []
-					   [cause-enable_reactive_critics [this-cause]]
 					   [cause-define cause-name `gtk-event_handling_fiber]
 					   [while t
 					     [let [[callback_event [gtk-pop_callback_event]]]

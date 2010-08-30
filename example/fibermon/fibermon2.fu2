@@ -98,7 +98,7 @@
 
 [deftypefunk fibermon2 execute reorganize_fibers []
   [mapc [funk [fiber]
-	      [let [[current_index   [get fiber processor_asignment_index]]]
+	      [let [[current_index   [get fiber processor_assignment_index]]]
 		[if [get index_fiber_hash contains fiber]
 		    [let [[old_known_index [have index_fiber_hash lookup fiber]]]
 		      [if [not [== old_known_index current_index]]

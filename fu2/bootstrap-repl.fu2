@@ -360,6 +360,7 @@
 
 [defunk fiber [funk args]
   [fiber_parallel [funk []
+			[cause-enable_reactive_critics [this-cause]]
 			[cause]
 			[apply funk args]]
 		  nil]]

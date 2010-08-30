@@ -26,6 +26,7 @@
 
 'GtkWidget'
 [deftypefunk gtk_widget execute show_all               []                                      [gtk-widget-show_all               [get this widget]]]
+[deftypefunk gtk_widget execute hide_all               []                                      [gtk-widget-hide_all               [get this widget]]]
 [deftypefunk gtk_widget execute request_size           [width height]                          [gtk-widget-set_size_request       [get this widget] width height]]
 [deftypefunk gtk_widget execute queue_draw_area        [x y width height]                      [gtk-widget-queue_draw_area        [get this widget] x y width height]]
 [deftypefunk gtk_widget get     visible                []                                      [gtk-widget-get_visible            [get this widget]]]

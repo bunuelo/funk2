@@ -264,6 +264,14 @@ void funk2_gtk__widget__show_all(funk2_gtk_t* this, GtkWidget* widget) {
   }
 }
 
+void funk2_gtk__widget__hide_all(funk2_gtk_t* this, GtkWidget* widget) {
+  {
+    gdk_threads_enter();
+    gtk_widget_hide_all(GTK_WIDGET(widget));
+    gdk_threads_leave();
+  }
+}
+
 void funk2_gtk__widget__set_size_request(funk2_gtk_t* this, GtkWidget* widget, s64 width, s64 height) {
   {
     gdk_threads_enter();
@@ -1174,6 +1182,25 @@ f2ptr f2__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
   return raw__gtk__widget__show_all(cause, widget);
 }
 def_pcfunk1(gtk__widget__show_all, widget, return f2__gtk__widget__show_all(this_cause, widget));
+
+
+f2ptr raw__gtk__widget__hide_all(f2ptr cause, f2ptr widget) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+  funk2_gtk__widget__hide_all(&(__funk2.gtk), gtk_widget);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__widget__hide_all(f2ptr cause, f2ptr widget) {
+  if (! raw__gtk_widget__is_type(cause, widget)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__widget__hide_all(cause, widget);
+}
+def_pcfunk1(gtk__widget__hide_all, widget, return f2__gtk__widget__hide_all(this_cause, widget));
 
 
 f2ptr raw__gtk__widget__set_size_request(f2ptr cause, f2ptr widget, f2ptr width, f2ptr height) {
@@ -2125,6 +2152,7 @@ void f2__gtk__initialize() {
   // widget
   
   f2__primcfunk__init__1(gtk__widget__show_all,                   widget,                                              "Shows the widget and all children.");
+  f2__primcfunk__init__1(gtk__widget__hide_all,                   widget,                                              "Hides the widget and all children.");
   f2__primcfunk__init__3(gtk__widget__set_size_request,           widget, width, height,                               "Requests that the widget be a specific size.");
   f2__primcfunk__init__5(gtk__widget__queue_draw_area,            widget, x, y, width, height,                         "Requests that a specific rectangle of the widget be redrawn.");
   f2__primcfunk__init__1(gtk__widget__get_visible,                widget,                                              "Returns whether or not a window is visible, which does not mean the window is viewable, which wouold require all parents to also be visible.");

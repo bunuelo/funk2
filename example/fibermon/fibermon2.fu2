@@ -106,10 +106,10 @@
 			    [have index_fiber_hash remove fiber]
 			    [have [get processor_array elt old_known_index] remove fibermon2_fiber]
 			    [have index_fiber_hash add fiber current_index]
-			    [have [get processor_array elt old_known_index] add    fibermon2_fiber]]]]
+			    [have [get processor_array elt   current_index] add    fibermon2_fiber]]]]
 		  [let [[fibermon2_fiber [new fibermon2_fiber fiber]]]
 		    [have index_fiber_hash add fiber current_index]
-		    [have [get processor_array elt old_known_index] add fibermon2_fiber]]]]]
+		    [have [get processor_array elt   current_index] add fibermon2_fiber]]]]]
 	[scheduler-active_fibers]]
   nil]
 

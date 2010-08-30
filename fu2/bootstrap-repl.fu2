@@ -358,6 +358,10 @@
     [apply proc [cons [car seq] nil]]
     [mutate seq [cdr seq]]]]
 
+[defunk cause-enable_reactive_critics [this]
+  [format stdout 'cause-enable_reactive_critics warning: reactive_critics not yet defined.\n']
+  nil]
+
 [defunk fiber [funk args]
   [fiber_parallel [funk []
 			[cause-enable_reactive_critics [this-cause]]

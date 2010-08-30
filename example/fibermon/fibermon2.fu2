@@ -27,7 +27,7 @@
 
 
 [deframe fibermon2_processor [frame] [[index nil]
-				      [label [gtk-label-new]]]
+				      [label [gtk-label-new 'processor']]]
   [new [index]
        [set this index index]
        [set label text [format nil 'processor #' index]]

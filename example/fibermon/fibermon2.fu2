@@ -59,7 +59,8 @@
 				 [if [not [get win visible]]
 				     [= done t]]
 				 [format stdout '\nfibermon2 exiting.\n']
-				 ]]]]
+				 ]]
+			 nil]]
        this]]
 
 [deftypefunk fibermon2 execute redraw []

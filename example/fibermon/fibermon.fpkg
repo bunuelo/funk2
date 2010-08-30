@@ -20,3 +20,6 @@
 [defpackage fibermon
   :sources ['fibermon.fu2']]
 
+[defpackage fibermon2
+  :sources ['fibermon2.fu2']]
+

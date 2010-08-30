@@ -227,6 +227,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_cpu.c \
   c/f2_dlfcn.c \
   c/f2_dptr.c \
+  c/f2_dynamic_memory.c \
   c/f2_garbage_collector.c \
   c/f2_garbage_collector_pool.c \
   c/f2_globalenv.c \
@@ -311,7 +312,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_status.c \
   c/f2_string.c \
   c/f2_surrogate_parent.c \
-  c/f2_dynamic_memory.c \
   c/f2_termios.c \
   c/f2_thought_process.c \
   c/f2_tricolor_set.c \

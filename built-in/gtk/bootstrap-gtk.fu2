@@ -20,66 +20,69 @@
 
 'Lazy Porting: A technique for implementing object type functionality only when member functions for get/set/execute funks have the same names.'
 
-[deftypefunk gtk_widget execute signal_connect              [signal_name funk args] [gtk-signal_connect              this signal_name funk args]]
-[deftypefunk gtk_widget execute expose_event-signal_connect [funk args]             [gtk-expose_event-signal_connect this funk args]]
+[deftypefunk gtk_widget get     widget                      []                      this]
+[deftypefunk gtk_widget execute signal_connect              [signal_name funk args] [gtk-signal_connect              [get this widget] signal_name funk args]]
+[deftypefunk gtk_widget execute expose_event-signal_connect [funk args]             [gtk-expose_event-signal_connect [get this widget] funk args]]
 
 'GtkWidget'
-[deftypefunk gtk_widget execute show_all               []                                      [gtk-widget-show_all               this]]
-[deftypefunk gtk_widget execute request_size           [width height]                          [gtk-widget-set_size_request       this width height]]
-[deftypefunk gtk_widget execute queue_draw_area        [x y width height]                      [gtk-widget-queue_draw_area        this x y width height]]
-[deftypefunk gtk_widget get     visible                []                                      [gtk-widget-get_visible            this]]
-[deftypefunk gtk_widget execute destroy                []                                      [gtk-widget-destroy                this]]
-[deftypefunk gtk_widget execute connect_hide_on_delete []                                      [gtk-widget-connect_hide_on_delete this]]
-[deftypefunk gtk_widget execute draw_arc               [filled x y width height angle1 angle2] [gtk-widget-draw_arc               this filled x y width height angle1 angle2]]
-[deftypefunk gtk_widget execute draw_rectangle         [filled x y width height]               [gtk-widget-draw_rectangle         this filled x y width height]]
+[deftypefunk gtk_widget execute show_all               []                                      [gtk-widget-show_all               [get this widget]]]
+[deftypefunk gtk_widget execute request_size           [width height]                          [gtk-widget-set_size_request       [get this widget] width height]]
+[deftypefunk gtk_widget execute queue_draw_area        [x y width height]                      [gtk-widget-queue_draw_area        [get this widget] x y width height]]
+[deftypefunk gtk_widget get     visible                []                                      [gtk-widget-get_visible            [get this widget]]]
+[deftypefunk gtk_widget execute destroy                []                                      [gtk-widget-destroy                [get this widget]]]
+[deftypefunk gtk_widget execute connect_hide_on_delete []                                      [gtk-widget-connect_hide_on_delete [get this widget]]]
+[deftypefunk gtk_widget execute draw_arc               [filled x y width height angle1 angle2] [gtk-widget-draw_arc               [get this widget] filled x y width height angle1 angle2]]
+[deftypefunk gtk_widget execute draw_rectangle         [filled x y width height]               [gtk-widget-draw_rectangle         [get this widget] filled x y width height]]
 
 'GtkMisc'
 
-[deftypefunk gtk_widget set alignment [xalign yalign] [gtk-misc-set_alignment this xalign yalign]]
+[deftypefunk gtk_widget set alignment [xalign yalign] [gtk-misc-set_alignment [get widget] this xalign yalign]]
 
 'GtkContainer'
-[deftypefunk gtk_widget execute add [that] [gtk-container-add this that]]
+[deftypefunk gtk_widget execute add [that] [gtk-container-add [get this widget] [get that widget]]]
 
 'GtkScrolledWindow'
-[deftypefunk gtk_widget execute add_with_viewport [that] [gtk-scrolled_window-add_with_viewport this that]]
+[deftypefunk gtk_widget execute add_with_viewport [that] [gtk-scrolled_window-add_with_viewport [get this widget] [get that widget]]]
 
 'GtkPaned'
-[deftypefunk gtk_widget execute pack1    [child resize shrink] [gtk-paned-pack1        this child resize shrink]]
-[deftypefunk gtk_widget execute pack2    [child resize shrink] [gtk-paned-pack2        this child resize shrink]]
-[deftypefunk gtk_widget set     position [position]            [gtk-paned-set_position this position]]
+[deftypefunk gtk_widget execute pack1    [child resize shrink] [gtk-paned-pack1        [get this widget] [get child widget] resize shrink]]
+[deftypefunk gtk_widget execute pack2    [child resize shrink] [gtk-paned-pack2        [get this widget] [get child widget] resize shrink]]
+[deftypefunk gtk_widget set     position [position]            [gtk-paned-set_position [get this widget] position]]
 
 'GtkEntry'
-[deftypefunk gtk_widget get text [] [gtk-entry-get_text this]]
+[deftypefunk gtk_widget get text [] [gtk-entry-get_text [get this widget]]]
 
 'GtkTextView'
-[deftypefunk gtk_widget get buffer [] [gtk-text_view-get_buffer this]]
+[deftypefunk gtk_widget get buffer [] [gtk-text_view-get_buffer [get this widget]]]
 
 'GtkProgressBar'
-[deftypefunk gtk_widget set fraction [fraction] [gtk-progress_bar-set_fraction this fraction]]
+[deftypefunk gtk_widget set fraction [fraction] [gtk-progress_bar-set_fraction [get this widget] fraction]]
 
 'GtkWindow'
-[deftypefunk gtk_widget set title        [title]        [gtk-window-set_title        this title]]
-[deftypefunk gtk_widget set default_size [width height] [gtk-window-set_default_size this width height]]
+[deftypefunk gtk_widget set title        [title]        [gtk-window-set_title        [get this widget] title]]
+[deftypefunk gtk_widget set default_size [width height] [gtk-window-set_default_size [get this widget] width height]]
 
 'GtkNotebook'
-[deftypefunk gtk_widget execute append_page  [child tab_label]          [gtk-notebook-append_page      this child tab_label]]
-[deftypefunk gtk_widget execute prepend_page [child tab_label]          [gtk-notebook-prepend_page     this child tab_label]]
-[deftypefunk gtk_widget execute insert_page  [child tab_label position] [gtk-notebook-insert_page      this child tab_label position]]
-[deftypefunk gtk_widget execute remove_page  [position]                 [gtk-notebook-remove_page      this position]]
-[deftypefunk gtk_widget get     current_page []                         [gtk-notebook-get_current_page this]]
-[deftypefunk gtk_widget set     scrollable   [scrollable]               [gtk-notebook-set_scrollable   this scrollable]]
+[deftypefunk gtk_widget execute append_page  [child tab_label]          [gtk-notebook-append_page      [get this widget] [get child widget] [get tab_label widget]]]
+[deftypefunk gtk_widget execute prepend_page [child tab_label]          [gtk-notebook-prepend_page     [get this widget] [get child widget] [get tab_label widget]]]
+[deftypefunk gtk_widget execute insert_page  [child tab_label position] [gtk-notebook-insert_page      [get this widget] [get child widget] [get tab_label widget] position]]
+[deftypefunk gtk_widget execute remove_page  [position]                 [gtk-notebook-remove_page      [get this widget] position]]
+[deftypefunk gtk_widget get     current_page []                         [gtk-notebook-get_current_page [get this widget]]]
+[deftypefunk gtk_widget set     scrollable   [scrollable]               [gtk-notebook-set_scrollable   [get this widget] scrollable]]
 
 'GtkBox'
 
-[deftypefunk gtk_box execute pack_start [child expand fill padding] [gtk-box-pack_start this child expand fill padding]]
+[deftypefunk gtk_box get     widget     []                          this]
+[deftypefunk gtk_box execute pack_start [child expand fill padding] [gtk-box-pack_start [get this widget] [get child widget] expand fill padding]]
 
 'GtkTextBuffer'
 
-[deftypefunk gtk_text_buffer get     start_iter   []      [gtk-text_buffer-get_start_iter this]]
-[deftypefunk gtk_text_buffer execute select_range [range] [gtk-text_buffer-select_range   this range]]
-[deftypefunk gtk_text_buffer set     select_range [range] [gtk-text_buffer-select_range   this range]]
-[deftypefunk gtk_text_buffer get     text         []      [gtk-text_buffer-get_text       this]]
-[deftypefunk gtk_text_buffer set     text         [text]  [gtk-text_buffer-set_text       this text]]
+[deftypefunk gtk_text_buffer get     widget       []      this]
+[deftypefunk gtk_text_buffer get     start_iter   []      [gtk-text_buffer-get_start_iter [get this widget]]]
+[deftypefunk gtk_text_buffer execute select_range [range] [gtk-text_buffer-select_range   [get this widget] range]]
+[deftypefunk gtk_text_buffer set     select_range [range] [gtk-text_buffer-select_range   [get this widget] range]]
+[deftypefunk gtk_text_buffer get     text         []      [gtk-text_buffer-get_text       [get this widget]]]
+[deftypefunk gtk_text_buffer set     text         [text]  [gtk-text_buffer-set_text       [get this widget] text]]
 
 'GtkTextIter'
 
@@ -87,12 +90,12 @@
 
 'GtkLabel'
 
-[deftypefunk gtk_widget set text       [text]       [gtk-label-set_text       this text]]
-[deftypefunk gtk_widget set selectable [selectable] [gtk-label-set_selectable this selectable]]
+[deftypefunk gtk_widget set text       [text]       [gtk-label-set_text       [get this widget] text]]
+[deftypefunk gtk_widget set selectable [selectable] [gtk-label-set_selectable [get this widget] selectable]]
 
 'GtkTable'
 
-[deftypefunk gtk_widget execute attach [child left_attach right_attach top_attach bottom_attach xpadding ypadding] [gtk-table-attach this child left_attach right_attach top_attach bottom_attach xpadding ypadding]]
+[deftypefunk gtk_widget execute attach [child left_attach right_attach top_attach bottom_attach xpadding ypadding] [gtk-table-attach [get this widget] [get child widget] left_attach right_attach top_attach bottom_attach xpadding ypadding]]
 
 [globalize gtk-event_handling_fiber nil]
 

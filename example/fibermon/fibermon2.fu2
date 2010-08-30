@@ -40,7 +40,7 @@
   nil]
 
 [deframe fibermon2 [frame] [[win             [gtk-window-new]]
-			    [scrolled_window [gtk-scrolled-window]]
+			    [scrolled_window [gtk-scrolled_window-new]]
 			    [processor_hbox  [gtk-hbox-new 8]]
 			    [processor_array [new array 8]]
 			    [done            nil]
@@ -60,7 +60,7 @@
 				     [= done t]]
 				 [format stdout '\nfibermon2 exiting.\n']
 				 ]]]]
-       this]]]]]
+       this]]
 
 [deftypefunk fibermon2 execute redraw []
   [dotimes [index processor_count]

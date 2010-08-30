@@ -36,7 +36,7 @@
 
 'GtkMisc'
 
-[deftypefunk gtk_widget set alignment [xalign yalign] [gtk-misc-set_alignment [get this widget] this xalign yalign]]
+[deftypefunk gtk_widget set alignment [xalign yalign] [gtk-misc-set_alignment [get this widget] xalign yalign]]
 
 'GtkContainer'
 [deftypefunk gtk_widget execute add [that] [gtk-container-add [get this widget] [get that widget]]]

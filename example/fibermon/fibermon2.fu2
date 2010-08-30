@@ -1,0 +1,102 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[defunk number-to_memory_string [this]
+  [let [[i [get this as-integer]]]
+    [cond [      [< i                        1024]   [format nil    i]]
+	  [      [< i [*                1024 1024]]  [format nil [/ i                  1024.0]  'k']]
+	  [      [< i [*           1024 1024 1024]]  [format nil [/ i [*        1024.0 1024.0]] 'M']]
+	  [      [< i [*      1024 1024 1024 1024]]  [format nil [/ i [* 1024.0 1024.0 1024.0]] 'G']]
+	  [[or t [< i [* 1024 1024 1024 1024 1024]]] [format nil [/ i [* 1024.0 1024.0 1024.0]] 'T']]]]]
+
+
+[deframe fibermon2_processor [frame] [[index nil]
+				      [label [gtk-label-new]]]
+  [new [index]
+       [set this index index]
+       [set label text [format nil 'processor #' index]]
+       this]]
+
+[deftypefunk fibermon2_processor get widget []
+  label]
+
+[deftypefunk fibermon2_processor execute redraw []
+  nil]
+
+[deframe fibermon2 [frame] [[win             [gtk-window-new]]
+			    [scrolled_window [gtk-scrolled-window]]
+			    [processor_hbox  [gtk-hbox-new 8]]
+			    [processor_array [new array 8]]
+			    [done            nil]
+			    [fiber           nil]
+			    [processor_count 8]]
+  [new []
+       [set win default_size 1900 800]
+       [set win title 'fibermon2']
+       [dotimes [index processor_count]
+	 [set processor_array elt index [new fibermon2_processor index]]]
+       [dotimes [index processor_count]
+	 [have processor_hbox pack_start [get processor_array elt index] t t 0]]
+       [=   fiber [fiber [funk []
+			       [while [not done]
+				 [have this redraw]
+				 [if [not [get win visible]]
+				     [= done t]]
+				 [format stdout '\nfibermon2 exiting.\n']
+				 ]]]]
+       this]]]]]
+
+[deftypefunk fibermon2 execute redraw []
+  [dotimes [index processor_count]
+    [have [get processor_array index] redraw]]
+  nil]
+
+
+[defunk fibermon2-command_line [:rest args]
+  [let [[print_usage_message_and_exit nil]]
+    [if args
+	[let [[iter args]]
+	  [while iter
+	    [let [[arg [first iter]]]
+	      [cond [[or [eq arg `-h]
+			 [eq arg `help]] [prog [= print_usage_message_and_exit t]]]
+		    [t                   [prog [format stdout '\nfibermon2 fatal: unrecognized command line argument, ' arg '.\n']
+					       [= print_usage_message_and_exit t]]]]]
+	    [= iter [next iter]]]]]
+    [if print_usage_message_and_exit
+	[format stdout 'FIBERMON2(1)'
+		'\n'   'NAME'
+		'\n'   '       fibermon2 - display Funk fibers'
+		'\n'   ''
+		'\n'   'SYNOPSIS'
+		'\n'   '       fibermon2 -h'
+		'\n'   ''
+		'\n'   'DESCRIPTION'
+		'\n'   '       The fibermon2 program provides a dynamic real-time view of a running system.  It can '
+		'\n'   '       display system summary information as well as a list of tasks currently being managed '
+		'\n'   '       by the Funk kernel.'
+		'\n'   ''
+		'\n'   '       This description is inspired by the TOP Linux man page.']
+      [let [[fibermon2 [new fibermon2]]]
+	nil]]]]
+
+[defmetro fibermon2 [:rest args]
+  `[fibermon2-command_line @[mapcar [funk [arg] `[quote ,arg]] args]]]
+
+

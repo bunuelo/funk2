@@ -29,7 +29,6 @@
 'fibermon2_fiber'
 
 [deframe fibermon2_fiber [frame] [[fiber        nil]
-				  [frame_label  [gtk-label-new 'fiber']]
 				  [frame        nil]
 				  [table        [gtk-table-new 9 2 t]]
 				  [table_labels [new array 9 2]]]
@@ -38,7 +37,7 @@
        [set this fiber fiber]
        [print 'debug 1']
        [print frame_label]
-       [set this frame [gtk-frame-new frame_label]]
+       [set this frame [gtk-frame-new 'fiber']]
        [print 'debug 2']
        [dotimes [row 9]
 	 [print 'debug 3']

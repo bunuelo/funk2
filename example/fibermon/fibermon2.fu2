@@ -32,10 +32,26 @@
 				  [label [gtk-label-new 'fiber']]]
   [new [fiber]
        [set this fiber fiber]
+       [set label alignment 0.0 0.0]
        this]]
 
 [deftypefunk fibermon2_fiber get widget []
   label]
+
+[deftypefunk fibermon2_fiber execute redraw []
+  [set label text [format nil
+			  '[fiber'
+			  '\n\tkeep_undead\t'                [get fiber keep_undead]
+			  '\n\tis_zombie\t'                  [get fiber is_zombie]
+			  '\n\tis_complete\t'                [get fiber is_complete]
+			  '\n\texecute_mutex\t'              [get fiber execute_mutex]
+			  '\n\tpaused\t'                     [get fiber paused]
+			  '\n\tlast_executed_time\t'         [get fiber last_executed_time]
+			  '\n\tsleep_until_time\t'           [get fiber sleep_until_time]
+			  '\n\texecute_nanoseconds\t'        [get fiber execution_nanoseconds]
+			  '\n\tbytecode_count\t'             [get fiber bytecode_count]
+			  '\n\tprocessor_assignment_index\t' [get fiber processor_assignment_index]]]
+  ]
 
 
 'fibermon2_processor'
@@ -105,30 +121,20 @@
     [mapc [funk [fiber]
 		[= count [+ count 1]]
 		[print count]
-		[print 'debug 0']
 		[let [[current_index [get fiber processor_assignment_index]]]
 		  [if current_index
-		      [prog [print 'debug 1']
-			    [if [get index_fiber_hash contains fiber]
+		      [prog [if [get index_fiber_hash contains fiber]
 				[let [[old_known_index [have index_fiber_hash lookup fiber]]]
-				  [print 'debug 2']
 				  [if [not [== old_known_index current_index]]
 				      [let [[fibermon2_fiber [have fibermon2_fiber_hash lookup fiber]]]
-					[print 'debug 3']
 					[have index_fiber_hash remove fiber]
-					[print 'debug 4']
 					[have [get processor_array elt old_known_index] remove_fiber fiber]
-					[print 'debug 5']
 					[have index_fiber_hash add fiber current_index]
-					[print 'debug 6']
 					[have [get processor_array elt   current_index] add_fiber fibermon2_fiber]]]]
 			      [let [[fibermon2_fiber [new fibermon2_fiber fiber]]]
-				[print 'debug 7']
 				[have index_fiber_hash add fiber current_index]
-				[print 'debug 8']
 				[have [get processor_array elt   current_index] add_fiber fibermon2_fiber]]]]]]]
 	  [scheduler-active_fibers]]]
-  [print 'debug 9']
   nil]
 
 [deftypefunk fibermon2 execute redraw []

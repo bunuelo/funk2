@@ -36,10 +36,10 @@ declare_object_type_4_slot(ptypehash, write_mutex, key_count, bin_num_power, bin
 			   f2ptr an_arbitrary_value__funk;
 			   f2ptr copy__symbol;
 			   f2ptr copy__funk;
-			   f2ptr slot_names__symbol;
-			   f2ptr slot_names__funk;
-			   f2ptr slot_values__symbol;
-			   f2ptr slot_values__funk;
+			   f2ptr keys__symbol;
+			   f2ptr keys__funk;
+			   f2ptr values__symbol;
+			   f2ptr values__funk;
 			   f2ptr add__symbol;
 			   f2ptr add__funk;
 			   f2ptr remove__symbol;
@@ -83,10 +83,10 @@ f2ptr      f2__ptypehash__is_empty                  (f2ptr cause, f2ptr this);
 f2ptr     raw__ptypehash__as__frame                 (f2ptr cause, f2ptr this);
 f2ptr      f2__ptypehash__as__frame                 (f2ptr cause, f2ptr this);
 
-f2ptr raw__ptypehash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
+f2ptr raw__ptypehash__mapc_keys(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
 
-f2ptr f2__ptypehash__slot_names(f2ptr cause, f2ptr this);
-f2ptr f2__ptypehash__slot_values(f2ptr cause, f2ptr this);
+f2ptr f2__ptypehash__keys(f2ptr cause, f2ptr this);
+f2ptr f2__ptypehash__values(f2ptr cause, f2ptr this);
 
 f2ptr f2ptypehash__primobject_type__new(f2ptr cause);
 f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause);

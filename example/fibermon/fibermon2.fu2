@@ -28,11 +28,18 @@
 
 'fibermon2_fiber'
 
-[deframe fibermon2_fiber [frame] [[fiber nil]
-				  [label [gtk-label-new 'fiber']]]
+[deframe fibermon2_fiber [frame] [[fiber        nil]
+				  [frame_label  [gtk-label-new 'fiber']]
+				  [frame        nil]
+				  [table        [gtk-table-new 9 2 t]]
+				  [table_labels [new array 9 2]]]
+  
   [new [fiber]
        [set this fiber fiber]
-       [set label alignment 0.0 0.0]
+       [set this frame [gtk-frame-new frame_label]]
+       [dotimes [column 2]
+	 [dotimes [row 9]
+	   [have table attach [gtk-label-new [format nil 'column=' column '\nrow=' row]] column [+ column 1] row [+ row 1] 0 0]]]
        this]]
 
 [deftypefunk fibermon2_fiber get widget []
@@ -41,16 +48,15 @@
 [deftypefunk fibermon2_fiber execute redraw []
   [set label text [format nil
 			  '[fiber'
-			  '\n\tkeep_undead\t'                [get fiber keep_undead]
-			  '\n\tis_zombie\t'                  [get fiber is_zombie]
-			  '\n\tis_complete\t'                [get fiber is_complete]
-			  '\n\texecute_mutex\t'              [get fiber execute_mutex]
-			  '\n\tpaused\t'                     [get fiber paused]
-			  '\n\tlast_executed_time\t'         [get fiber last_executed_time]
-			  '\n\tsleep_until_time\t'           [get fiber sleep_until_time]
-			  '\n\texecute_nanoseconds\t'        [get fiber execution_nanoseconds]
-			  '\n\tbytecode_count\t'             [get fiber bytecode_count]
-			  '\n\tprocessor_assignment_index\t' [get fiber processor_assignment_index]]]
+			  '\n\tkeep_undead\t\t\t'      [get fiber keep_undead]
+			  '\n\tis_zombie\t\t\t\t'      [get fiber is_zombie]
+			  '\n\tis_complete\t\t\t\t'    [get fiber is_complete]
+			  '\n\texecute_mutex\t\t\t'    [get fiber execute_mutex]
+			  '\n\tpaused\t\t\t\t\t'       [get fiber paused]
+			  '\n\tlast_executed_time\t\t' [get fiber last_executed_time]
+			  '\n\tsleep_until_time\t\t\t' [get fiber sleep_until_time]
+			  '\n\texecute_nanoseconds\t'  [get fiber execution_nanoseconds]
+			  '\n\tbytecode_count\t\t\t'   [get fiber bytecode_count]]]
   ]
 
 

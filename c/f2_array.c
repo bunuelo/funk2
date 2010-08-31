@@ -78,16 +78,39 @@ f2ptr f2__array__new_1d(f2ptr cause, f2ptr length, f2ptr and_rest) {
 }
 def_pcfunk1_and_rest(array__new_1d, length, and_rest, return f2__array__new_1d(this_cause, length, and_rest));
 
-f2ptr f2__array__new(f2ptr cause, f2ptr length) {
-  if ((! length) || (! raw__integer__is_type(cause, length))) {
-    printf("\n[array_1d length &opt init] error: length must be integer.");
-    return f2larva__new(cause, 1, nil);
-    //return f2__argument_type_check_failure__exception__new(cause, nil);
-  }
-  int raw_length = f2integer__i(length, cause);
-  return raw__array__new(cause, raw_length);
+f2ptr f2__array__new(f2ptr cause, f2ptr lengths) {
+  return f2__array__new_multidimensional(cause, lengths);
 }
-def_pcfunk1(array__new, length, return f2__array__new(this_cause, length));
+def_pcfunk0_and_rest(array__new, lengths, return f2__array__new(this_cause, lengths));
+
+f2ptr raw__array__new_multidimensional(f2ptr cause, f2ptr lengths) {
+  f2ptr length    = f2cons__car(lengths, cause);
+  s64   length__i = f2integer__i(length, cause);
+  f2ptr this      = raw__array__new(cause, length__i);
+  {
+    u64 index;
+    for (index = 0; index < length__i; index ++) {
+      raw__array__elt__set(cause, this, index, raw__array__new_multidimensional(cause, f2cons__cdr(lengths, cause)));
+    }
+  }
+  return this;
+}
+
+f2ptr f2__array__new_multidimensional(f2ptr cause, f2ptr lengths) {
+  f2ptr iter = lengths;
+  while (iter) {
+    if (! raw__cons__is_type(cause, iter)) {
+      return f2larva__new(cause, 1, nil);
+    }
+    f2ptr length = f2cons__car(iter, cause);
+    if (! raw__integer__is_type(cause, length)) {
+      return f2larva__new(cause, 1, nil);
+    }
+    iter = f2cons__cdr(iter, cause);
+  }
+  return raw__array__new_multidimensional(cause, lengths);
+}
+
 
 f2ptr f2__array(f2ptr cause, f2ptr and_rest) {
   f2ptr iter = and_rest;
@@ -476,7 +499,7 @@ void f2__array__initialize() {
   {char* str = "type"; __funk2.globalenv.object_type.array.type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.type__funk = never_gc(cfunk);}
   {char* str = "new"; __funk2.globalenv.object_type.array.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.new__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__0_arg_and_rest(array__new, lengths, cfunk, 1, "Returns an array with the appropriate lengths for each provided dimension."); __funk2.globalenv.object_type.array.new__funk = never_gc(cfunk);}
   {char* str = "length"; __funk2.globalenv.object_type.array.length__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__length, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.length__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.array.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}

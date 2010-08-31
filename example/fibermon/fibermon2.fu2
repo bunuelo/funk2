@@ -117,7 +117,7 @@
 	       [set row_labels elt column table_label]
 	       [have table attach table_label column [+ column 1] row [+ row 1] 0 0]]]]]
        [have vbox pack_start table           nil nil 0]
-       [have vbox pack_start process_bar     nil nil 0]
+       [have vbox pack_start progress_bar    nil nil 0]
        [have vbox pack_start scrolled_window t t 0]
        [have frame add vbox]
        this]]

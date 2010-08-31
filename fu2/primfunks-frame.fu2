@@ -28,6 +28,6 @@
 [globalize-funk frame-add_funkvar_value    &primfunk:frame__add_funkvar_value]
 [globalize-funk frame-lookup_funkvar_value &primfunk:frame__lookup_funkvar_value]
 [globalize-funk frame-funkvar_value-set    &primfunk:frame__funkvar_value__set]
-[globalize-funk frame-var-slot_names       &primfunk:frame__var__slot_names]
-[globalize-funk frame-funkvar-slot_names   &primfunk:frame__funkvar__slot_names]
+[globalize-funk frame-var-keys             &primfunk:frame__var__keys]
+[globalize-funk frame-funkvar-keys         &primfunk:frame__funkvar__keys]
 

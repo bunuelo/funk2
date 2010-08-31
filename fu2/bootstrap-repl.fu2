@@ -407,7 +407,7 @@
   [apply [primobject_type-lookup_slot_type_funk [lookup_type type_name] `execute `is_type] [cons exp nil]]]
 
 [defunk slots [exp]
-  [primobject_type-type_funk-slot_names [lookup_type [type exp]] `get]]
+  [primobject_type-type_funk-keys [lookup_type [type exp]] `get]]
 
 [defmetro cadr [seq]
   `[car [cdr ,seq]]]

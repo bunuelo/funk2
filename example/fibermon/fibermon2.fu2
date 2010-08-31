@@ -33,20 +33,23 @@
 				  [frame        nil]
 				  [table        [gtk-table-new 9 2 t]]
 				  [table_labels [new array 9 2]]]
-  
   [new [fiber]
        [set this fiber fiber]
        [set this frame [gtk-frame-new frame_label]]
-       [dotimes [column 2]
-	 [dotimes [row 9]
-	   [have table attach [gtk-label-new [format nil 'column=' column '\nrow=' row]] column [+ column 1] row [+ row 1] 0 0]]]
+       [dotimes [row 9]
+	 [let [[row_labels [get table_labels elt row]]]
+	   [dotimes [column 2]
+	     [let [[table_label [gtk-label-new [format nil 'column=' column '\nrow=' row]]]]
+	       [set row_labels elt column table_label]
+	       [have table attach table_label column [+ column 1] row [+ row 1] 0 0]]]]]
+       [have frame add table]
        this]]
 
 [deftypefunk fibermon2_fiber get widget []
-  label]
+  frame]
 
 [deftypefunk fibermon2_fiber execute redraw []
-  [set label text [format nil
+  `[set label text [format nil
 			  '[fiber'
 			  '\n\tkeep_undead\t\t\t'      [get fiber keep_undead]
 			  '\n\tis_zombie\t\t\t\t'      [get fiber is_zombie]

@@ -40,8 +40,8 @@
 
 'fibermon2_processor'
 
-[deframe fibermon2_processor [frame] [[index nil]
-				      [label [gtk-label-new 'processor']]
+[deframe fibermon2_processor [frame] [[index      nil]
+				      [label      [gtk-label-new 'processor']]
 				      [vbox       [gtk-vbox-new 2]]
 				      [fiber_vbox [gtk-vbox-new 2]]]
   [new [index]
@@ -59,10 +59,10 @@
 
 [deftypefunk fibermon2_processor execute add_fiber [fibermon2_fiber]
   [have fiber_vbox pack_start fibermon2_fiber t t 0]
-  [have fibermon2_fiber show_all]]
+  [have [get fibermon2_fiber widget] show_all]]
 
 [deftypefunk fibermon2_processor execute remove_fiber [fibermon2_fiber]
-  [have fibermon2_fiber hide_all]
+  [have [get fibermon2_fiber widget] hide_all]
   [have fiber_vbox remove fibermon2_fiber]]
 
 

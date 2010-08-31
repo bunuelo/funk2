@@ -577,7 +577,7 @@ f2ptr object__property_scan__property_scan__by_type(f2ptr cause, f2ptr fiber, f2
 	raw__array__elt__set(cause, aux_data, 2, object);
 	raw__array__elt__set(cause, aux_data, 3, type_name);
 	raw__array__elt__set(cause, aux_data, 4, property_funk);
-	f2ptr result                = raw__primobject_type__type_funk__mapc_slot_names(cause, type, __funk2.globalenv.get__symbol, &object__property_scan__map_funk, aux_data);
+	f2ptr result                = raw__primobject_type__type_funk__mapc_keys(cause, type, __funk2.globalenv.get__symbol, &object__property_scan__map_funk, aux_data);
 	f2ptr larva_found_in_helper = raw__array__elt(cause, aux_data, 0);
 	if (raw__larva__is_type(cause, larva_found_in_helper)) {
 	  larva_found = larva_found_in_helper;

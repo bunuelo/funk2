@@ -36,7 +36,6 @@
        [print 'debug 0']
        [set this fiber fiber]
        [print 'debug 1']
-       [print frame_label]
        [set this frame [gtk-frame-new 'fiber']]
        [print 'debug 2']
        [dotimes [row 9]

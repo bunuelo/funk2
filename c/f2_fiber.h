@@ -89,7 +89,7 @@ extern f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-declare_primobject_20_slot(fiber,
+declare_primobject_21_slot(fiber,
 			   program_counter,
 			   stack,
 			   iter,

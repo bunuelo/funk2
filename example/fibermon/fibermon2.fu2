@@ -30,7 +30,7 @@
 
 [deframe fibermon2_fiber [frame] [[fiber                         nil]
 				  [frame                         nil]
-				  [table                         [gtk-table-new 11 2 t]]
+				  [table                         [gtk-table-new 11 2 nil]]
 				  [table_labels                  [new array 11 2]]
 				  [time                          nil]
 				  [execution_nanoseconds         nil]
@@ -94,7 +94,7 @@
 				      [scrolled_window               [gtk-scrolled_window-new]]
 				      [fiber_vbox                    [gtk-vbox-new 2]]
 				      [fibermon2_fiber_hash          [new ptypehash]]
-				      [table                         [gtk-table-new 4 2 t]]
+				      [table                         [gtk-table-new 4 2 nil]]
 				      [table_labels                  [new array 4 2]]
 				      [time                          nil]
 				      [execution_nanoseconds         nil]

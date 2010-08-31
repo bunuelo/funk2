@@ -49,8 +49,8 @@
        [set this index index]
        [set label text [format nil 'processor #' index]]
        [have scrolled_window add_with_viewport fiber_vbox]
-       [have vbox pack_start label      nil nil 0]
-       [have vbox pack_start scrolled_window nil nil 0]
+       [have vbox pack_start label           nil nil 0]
+       [have vbox pack_start scrolled_window t t 0]
        this]]
 
 [deftypefunk fibermon2_processor get widget []
@@ -60,7 +60,7 @@
   nil]
 
 [deftypefunk fibermon2_processor execute add_fiber [fibermon2_fiber]
-  [have fiber_vbox pack_start fibermon2_fiber t t 0]
+  [have fiber_vbox pack_start fibermon2_fiber nil nil 0]
   [have [get fibermon2_fiber widget] show_all]]
 
 [deftypefunk fibermon2_processor execute remove_fiber [fibermon2_fiber]

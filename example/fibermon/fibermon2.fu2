@@ -56,11 +56,12 @@
 
 'fibermon2_processor'
 
-[deframe fibermon2_processor [frame] [[index           nil]
-				      [label           [gtk-label-new 'processor']]
-				      [vbox            [gtk-vbox-new 2]]
-				      [scrolled_window [gtk-scrolled_window-new]]
-				      [fiber_vbox      [gtk-vbox-new 2]]]
+[deframe fibermon2_processor [frame] [[index                nil]
+				      [label                [gtk-label-new 'processor']]
+				      [vbox                 [gtk-vbox-new 2]]
+				      [scrolled_window      [gtk-scrolled_window-new]]
+				      [fiber_vbox           [gtk-vbox-new 2]]
+				      [fibermon2_fiber_hash [new ptypehash]]]
   [new [index]
        [set this index index]
        [set label text [format nil 'processor #' index]]
@@ -73,15 +74,20 @@
   vbox]
 
 [deftypefunk fibermon2_processor execute redraw []
+  [mapc [funk [fibermon2_fiber]
+	      [have fibermon2_fiber redraw]]
+	[get fibermon2_fiber_hash values]]
   nil]
 
 [deftypefunk fibermon2_processor execute add_fiber [fibermon2_fiber]
   [have fiber_vbox pack_start fibermon2_fiber nil nil 0]
-  [have [get fibermon2_fiber widget] show_all]]
+  [have [get fibermon2_fiber widget] show_all]
+  [have fibermon2_fiber_hash add [get fibermon2_fiber fiber] fibermon2_fiber]]
 
 [deftypefunk fibermon2_processor execute remove_fiber [fibermon2_fiber]
   [have [get fibermon2_fiber widget] hide_all]
-  [have fiber_vbox remove fibermon2_fiber]]
+  [have fiber_vbox remove fibermon2_fiber]
+  [have fibermon2_fiber_hash remove [get fibermon2_fiber fiber]]]
 
 
 'fibermon2'

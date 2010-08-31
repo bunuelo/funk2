@@ -75,7 +75,7 @@ void f2__object_lattice__scan_and_incorporate_leafs__expand_node__primobject_slo
     raw__array__elt__set(cause, aux_data, 0, object);
     raw__array__elt__set(cause, aux_data, 1, this);
     raw__array__elt__set(cause, aux_data, 2, start_nanoseconds_since_1970);
-    raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, __funk2.globalenv.get__symbol, &object_lattice__scan_and_incorporate_leafs__object_slot_helper, aux_data);
+    raw__primobject_type__type_funk__mapc_keys(cause, object_type, __funk2.globalenv.get__symbol, &object_lattice__scan_and_incorporate_leafs__object_slot_helper, aux_data);
   }
 }
 
@@ -84,7 +84,7 @@ void f2__object_lattice__scan_and_incorporate_leafs__expand_node__frame_slots(f2
   raw__array__elt__set(cause, aux_data, 0, frame);
   raw__array__elt__set(cause, aux_data, 1, this);
   raw__array__elt__set(cause, aux_data, 2, start_nanoseconds_since_1970);
-  raw__frame__type_var__mapc_slot_names(cause, frame, __funk2.globalenv.get__symbol, &object_lattice__scan_and_incorporate_leafs__frame_slot_helper, aux_data);
+  raw__frame__type_var__mapc_keys(cause, frame, __funk2.globalenv.get__symbol, &object_lattice__scan_and_incorporate_leafs__frame_slot_helper, aux_data);
 }
 
 void f2__object_lattice__scan_and_incorporate_leafs__expand_node__array_indices(f2ptr cause, f2ptr this, f2ptr array, f2ptr start_nanoseconds_since_1970) {
@@ -215,7 +215,7 @@ f2ptr f2__object_lattice__scan_leafs__expand_node__primobject_slots(f2ptr cause,
     raw__array__elt__set(cause, aux_data, 3, this);
     raw__array__elt__set(cause, aux_data, 4, start_nanoseconds_since_1970);
     raw__array__elt__set(cause, aux_data, 5, found_larva);
-    raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, __funk2.globalenv.get__symbol, &object_lattice__scan_leafs__object_slot_helper, aux_data);
+    raw__primobject_type__type_funk__mapc_keys(cause, object_type, __funk2.globalenv.get__symbol, &object_lattice__scan_leafs__object_slot_helper, aux_data);
     found_larva = raw__array__elt(cause, aux_data, 5);
   }
   return found_larva;
@@ -231,7 +231,7 @@ f2ptr f2__object_lattice__scan_leafs__expand_node__frame_slots(f2ptr cause, f2pt
     raw__array__elt__set(cause, aux_data, 3, this);
     raw__array__elt__set(cause, aux_data, 4, start_nanoseconds_since_1970);
     raw__array__elt__set(cause, aux_data, 5, found_larva);
-    raw__frame__type_var__mapc_slot_names(cause, frame, __funk2.globalenv.get__symbol, &object_lattice__scan_leafs__frame_slot_helper, aux_data);
+    raw__frame__type_var__mapc_keys(cause, frame, __funk2.globalenv.get__symbol, &object_lattice__scan_leafs__frame_slot_helper, aux_data);
     found_larva = raw__array__elt(cause, aux_data, 5);
   }
   return found_larva;

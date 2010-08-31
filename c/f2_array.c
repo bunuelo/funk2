@@ -84,13 +84,14 @@ f2ptr f2__array__new(f2ptr cause, f2ptr lengths) {
 def_pcfunk0_and_rest(array__new, lengths, return f2__array__new(this_cause, lengths));
 
 f2ptr raw__array__new_multidimensional(f2ptr cause, f2ptr lengths) {
-  f2ptr length    = f2cons__car(lengths, cause);
-  s64   length__i = f2integer__i(length, cause);
-  f2ptr this      = raw__array__new(cause, length__i);
-  {
+  f2ptr length       = f2cons__car(lengths, cause);
+  f2ptr rest_lengths = f2cons__cdr(lengths, cause);
+  s64   length__i    = f2integer__i(length, cause);
+  f2ptr this         = raw__array__new(cause, length__i);
+  if (rest_lengths != nil) {
     u64 index;
     for (index = 0; index < length__i; index ++) {
-      raw__array__elt__set(cause, this, index, raw__array__new_multidimensional(cause, f2cons__cdr(lengths, cause)));
+      raw__array__elt__set(cause, this, index, raw__array__new_multidimensional(cause, rest_lengths));
     }
   }
   return this;

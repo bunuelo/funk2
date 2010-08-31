@@ -1325,10 +1325,10 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    f2ptr primobject_type = f2__lookup_type(cause, type_name);
 	    if (primobject_type) {
 	      f2ptr keyvalue_pairs       = nil;
-	      f2ptr get_slot_names       = f2__primobject_type__type_funk__slot_names(cause, primobject_type, __funk2.globalenv.get__symbol);
+	      f2ptr get_keys             = f2__primobject_type__type_funk__keys(cause, primobject_type, __funk2.globalenv.get__symbol);
 	      u64   max_slot_name_length = 0;
 	      {
-		f2ptr slot_iter = get_slot_names;
+		f2ptr slot_iter = get_keys;
 		while (slot_iter) {
 		  f2ptr slot_name  = f2cons__car(slot_iter, cause);
 		  if (! raw__eq(cause, slot_name, __funk2.globalenv.type__symbol)) {

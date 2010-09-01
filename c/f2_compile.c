@@ -513,8 +513,10 @@ f2ptr f2__compile__metro(f2ptr simple_cause, f2ptr fiber, f2ptr metro) {
 	
 	// BYTECODE -- block_define_last_argument
 	
-	iter = f2__list_cdr__set(cause, iter, f2__compile__car(cause));
-	iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, var));
+	//iter = f2__list_cdr__set(cause, iter, f2__compile__car(cause));
+	//iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, var));
+	
+	iter = f2__list_cdr__set(cause, iter, f2__compile__define_last_argument(cause, var));
 	
       }
       
@@ -532,16 +534,20 @@ f2ptr f2__compile__metro(f2ptr simple_cause, f2ptr fiber, f2ptr metro) {
 
     // BYTECODE -- block_exit_and_pop
     
-    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
-    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
-    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
-    iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause));
+    //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
+    //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
+    //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
+    //iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause));
+    
+    iter = f2__list_cdr__set(cause, iter, f2__compile__block_exit_and_pop(cause, metro));
     
   } else {
     
     // BYTECODE -- block_exit_and_no_pop
     
-    iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause));
+    //iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause));
+    
+    iter = f2__list_cdr__set(cause, iter, f2__compile__block_exit_and_pop(cause, metro));
     
   }
   

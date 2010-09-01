@@ -43,6 +43,8 @@
 
 [defmetro deframe [type_name parents slot_name_value_pairs :rest properties]
   [print `[deframe ,type_name ,parents ,[mapcar &frametype-slotdef-name slot_name_value_pairs]]]
+  [if [null parents]
+      [= parents `[frame]]]
   [let [[initialize_funk_args nil]
 	[initialize_funk_body nil]]
     [mapc [funk [property]

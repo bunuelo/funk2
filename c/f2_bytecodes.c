@@ -1102,7 +1102,6 @@ int f2__fiber__bytecode__copy__value_reg__args_reg(f2ptr fiber, f2ptr bytecode) 
 
 int f2__fiber__bytecode__copy__iter_reg__value_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
   bytecode_status("bytecode copy beginning.");
-  f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
   

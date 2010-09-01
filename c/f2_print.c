@@ -1366,17 +1366,18 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 		while (keyvalue_pair_iter) {
 		  f2ptr keyvalue_pair = f2cons__car(keyvalue_pair_iter, cause);
 		  f2ptr slot_name     = f2cons__car(keyvalue_pair, cause);
-		  f2ptr slot_value    = f2cons__cdr(keyvalue_pair, cause);
-		  if (raw__symbol__is_type(cause, slot_name)) {
-		    f2symbol__str_copy(slot_name, cause, (u8*)temp_slot_name_str);
-		    temp_slot_name_str[f2symbol__length(slot_name, cause)] = (char)0;
-		  } else {
-		    temp_slot_name_str[0] = (char)0;
+		  if (! raw__eq(cause, slot_name, __funk2.globalenv.type__symbol)) {
+		    f2ptr slot_value    = f2cons__cdr(keyvalue_pair, cause);
+		    if (raw__symbol__is_type(cause, slot_name)) {
+		      f2symbol__str_copy(slot_name, cause, (u8*)temp_slot_name_str);
+		      temp_slot_name_str[f2symbol__length(slot_name, cause)] = (char)0;
+		    } else {
+		      temp_slot_name_str[0] = (char)0;
+		    }
+		    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
+		    {f2__write_pretty__slot_key_and_value(temp_slot_name_str, max_slot_name_length, cause, fiber, stream, slot_value, nil, nil, nil,
+							  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 		  }
-		  if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-		  {f2__write_pretty__slot_key_and_value(temp_slot_name_str, max_slot_name_length, cause, fiber, stream, slot_value, nil, nil, nil,
-							((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-		  
 		  keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
 		}
 	      }

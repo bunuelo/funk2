@@ -1101,10 +1101,6 @@ int f2__fiber__bytecode__copy__value_reg__args_reg(f2ptr fiber, f2ptr bytecode) 
 
 
 int f2__fiber__bytecode__copy__iter_reg__value_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
-  bytecode_status("bytecode copy beginning.");
-  
-  f2__fiber__increment_pc(fiber, cause);
-  
   f2fiber__value__set(fiber, cause, f2fiber__iter(fiber, cause));
   return 0;
 }
@@ -1403,16 +1399,20 @@ int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type
 
 // bytecode define_type_var [f2ptr f2ptr]
 
+int f2__fiber__bytecode__define_type_var__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var) {
+  f2ptr env   = f2fiber__env(fiber, cause);
+  f2ptr value = f2fiber__value(fiber, cause);
+  f2fiber__value__set(fiber, cause, f2__environment__define_type_var_value(cause, env, type, var, value));
+  return 0;
+}
+
 int f2__fiber__bytecode__define_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var) {
   bytecode_status("bytecode define_type_var beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr env   = f2fiber__env(fiber, cause);
-  f2ptr value = f2fiber__value(fiber, cause);
-  f2fiber__value__set(fiber, cause, f2__environment__define_type_var_value(cause, env, type, var, value));
-  return 0;
+  return f2__fiber__bytecode__define_type_var__no_increment_pc_reg(cause, fiber, bytecode, type, var);
 }
 
 

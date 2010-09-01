@@ -185,6 +185,44 @@ f2ptr f2__fiber__lookup_type_variable_value(f2ptr cause, f2ptr fiber, f2ptr type
   return value;
 }
 
+/*
+[c/f2_bytecodes.c                           128] tid=0x2b93383266c0     0x3A05_18_10_20.446480000 funk2 status:   bytecode__pop__execution_count                        = 2309676
+[c/f2_bytecodes.c                           127] tid=0x2b93383266c0     0x3A05_18_10_20.446467000 funk2 status:   bytecode__push__execution_count                       = 1872132
+[c/f2_bytecodes.c                           129] tid=0x2b93383266c0     0x3A05_18_10_20.446493000 funk2 status:   bytecode__copy__execution_count                       = 812439
+[c/f2_bytecodes.c                           125] tid=0x2b93383266c0     0x3A05_18_10_20.446429000 funk2 status:   bytecode__swap__execution_count                       = 708106
+[c/f2_bytecodes.c                           118] tid=0x2b93383266c0     0x3A05_18_10_20.446301000 funk2 status:   bytecode__cons__execution_count                       = 626553
+[c/f2_bytecodes.c                           122] tid=0x2b93383266c0     0x3A05_18_10_20.446392000 funk2 status:   bytecode__car__set__execution_count                   = 626548
+[c/f2_bytecodes.c                           130] tid=0x2b93383266c0     0x3A05_18_10_20.446505000 funk2 status:   bytecode__lookup_type_var__execution_count            = 596701
+[c/f2_bytecodes.c                           123] tid=0x2b93383266c0     0x3A05_18_10_20.446404000 funk2 status:   bytecode__cdr__set__execution_count                   = 358356
+[c/f2_bytecodes.c                           115] tid=0x2b93383266c0     0x3A05_18_10_20.446261000 funk2 status:   bytecode__funk__execution_count                       = 262511
+[c/f2_bytecodes.c                           146] tid=0x2b93383266c0     0x3A05_18_10_20.446745000 funk2 status:   bytecode__block_define_argument__execution_count      = 104625
+[c/f2_bytecodes.c                           144] tid=0x2b93383266c0     0x3A05_18_10_20.446721000 funk2 status:   bytecode__block_enter__execution_count                = 101809
+[c/f2_bytecodes.c                           145] tid=0x2b93383266c0     0x3A05_18_10_20.446733000 funk2 status:   bytecode__block_define_rest_argument__execution_count = 62142
+[c/f2_bytecodes.c                           149] tid=0x2b93383266c0     0x3A05_18_10_20.446782000 funk2 status:   bytecode__block_exit_and_no_pop__execution_count      = 59925
+[c/f2_bytecodes.c                           136] tid=0x2b93383266c0     0x3A05_18_10_20.446582000 funk2 status:   bytecode__else_jump__execution_count                  = 43925
+[c/f2_bytecodes.c                           147] tid=0x2b93383266c0     0x3A05_18_10_20.446758000 funk2 status:   bytecode__block_define_last_argument__execution_count = 35568
+[c/f2_bytecodes.c                           137] tid=0x2b93383266c0     0x3A05_18_10_20.446595000 funk2 status:   bytecode__nop__execution_count                        = 34541
+[c/f2_bytecodes.c                           134] tid=0x2b93383266c0     0x3A05_18_10_20.446557000 funk2 status:   bytecode__jump__execution_count                       = 17629
+[c/f2_bytecodes.c                           126] tid=0x2b93383266c0     0x3A05_18_10_20.446454000 funk2 status:   bytecode__push_constant__execution_count              = 15536
+[c/f2_bytecodes.c                           148] tid=0x2b93383266c0     0x3A05_18_10_20.446770000 funk2 status:   bytecode__block_exit_and_pop__execution_count         = 17336
+[c/f2_bytecodes.c                           131] tid=0x2b93383266c0     0x3A05_18_10_20.446520000 funk2 status:   bytecode__define_type_var__execution_count            = 13010
+[c/f2_bytecodes.c                           132] tid=0x2b93383266c0     0x3A05_18_10_20.446532000 funk2 status:   bytecode__type_var__mutate__execution_count           = 5639
+[c/f2_bytecodes.c                           141] tid=0x2b93383266c0     0x3A05_18_10_20.446667000 funk2 status:   bytecode__yield__execution_count                      = 4642
+[c/f2_bytecodes.c                           133] tid=0x2b93383266c0     0x3A05_18_10_20.446545000 funk2 status:   bytecode__globalize_type_var__execution_count         = 350
+[c/f2_bytecodes.c                           116] tid=0x2b93383266c0     0x3A05_18_10_20.446275000 funk2 status:   bytecode__jump_funk__execution_count                  = 0
+[c/f2_bytecodes.c                           117] tid=0x2b93383266c0     0x3A05_18_10_20.446288000 funk2 status:   bytecode__array__execution_count                      = 0
+[c/f2_bytecodes.c                           119] tid=0x2b93383266c0     0x3A05_18_10_20.446353000 funk2 status:   bytecode__consp__execution_count                      = 0
+[c/f2_bytecodes.c                           120] tid=0x2b93383266c0     0x3A05_18_10_20.446367000 funk2 status:   bytecode__car__execution_count                        = 0
+[c/f2_bytecodes.c                           121] tid=0x2b93383266c0     0x3A05_18_10_20.446379000 funk2 status:   bytecode__cdr__execution_count                        = 0
+[c/f2_bytecodes.c                           124] tid=0x2b93383266c0     0x3A05_18_10_20.446417000 funk2 status:   bytecode__array_elt__execution_count                  = 0
+[c/f2_bytecodes.c                           135] tid=0x2b93383266c0     0x3A05_18_10_20.446569000 funk2 status:   bytecode__if_jump__execution_count                    = 0
+[c/f2_bytecodes.c                           138] tid=0x2b93383266c0     0x3A05_18_10_20.446620000 funk2 status:   bytecode__debug__execution_count                      = 0
+[c/f2_bytecodes.c                           139] tid=0x2b93383266c0     0x3A05_18_10_20.446633000 funk2 status:   bytecode__tracer__execution_count                     = 0
+[c/f2_bytecodes.c                           140] tid=0x2b93383266c0     0x3A05_18_10_20.446645000 funk2 status:   bytecode__compile__execution_count                    = 0
+[c/f2_bytecodes.c                           142] tid=0x2b93383266c0     0x3A05_18_10_20.446690000 funk2 status:   bytecode__newenv__execution_count                     = 0
+[c/f2_bytecodes.c                           143] tid=0x2b93383266c0     0x3A05_18_10_20.446703000 funk2 status:   bytecode__machine_code__execution_count               = 0
+*/
+
 boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
   debug__assert(raw__fiber__is_type(nil, fiber), nil, "fiber type assertion failed.");
   debug__assert(raw__bytecode__is_type(nil, bytecode), nil, "bytecode type assertion failed.");
@@ -192,46 +230,46 @@ boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) 
   //f2ptr cause = f2fiber__execute_bytecode__cause__new(f2fiber__cause_reg(fiber), fiber, f2fiber__env(fiber), bytecode);
   //f2fiber__cause_reg__set(fiber, cause, cause);
   f2ptr command = f2bytecode__command(bytecode, cause);
-  if      (command == __funk2.bytecode.bytecode__push__symbol)                       {f2__fiber__bytecode__push(               fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__pop__symbol)                        {f2__fiber__bytecode__pop(                fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  if      (command == __funk2.bytecode.bytecode__pop__symbol)                        {f2__fiber__bytecode__pop(                fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__push__symbol)                       {f2__fiber__bytecode__push(               fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__copy__symbol)                       {f2__fiber__bytecode__copy(               fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__swap__symbol)                       {f2__fiber__bytecode__swap(               fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__array__symbol)                      {f2__fiber__bytecode__array(              fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__cons__symbol)                       {f2__fiber__bytecode__cons(               fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__car__set__symbol)                   {f2__fiber__bytecode__car__set(           fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__lookup_type_var__symbol)            {f2__fiber__bytecode__lookup_type_var(    fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__cdr__set__symbol)                   {f2__fiber__bytecode__cdr__set(           fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__funk__symbol)                       {f2__fiber__bytecode__funk(               fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__block_define_argument__symbol)      {f2__fiber__bytecode__block_define_argument(     fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__block_enter__symbol)                {f2__fiber__bytecode__block_enter(               fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__block_define_rest_argument__symbol) {f2__fiber__bytecode__block_define_rest_argument(fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__block_exit_and_no_pop__symbol)      {f2__fiber__bytecode__block_exit_and_no_pop(     fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__else_jump__symbol)                  {f2__fiber__bytecode__else_jump(          fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__block_define_last_argument__symbol) {f2__fiber__bytecode__block_define_last_argument(fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__nop__symbol)                        {f2__fiber__bytecode__nop(                fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__jump__symbol)                       {f2__fiber__bytecode__jump(               fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__push_constant__symbol)              {f2__fiber__bytecode__push_constant(      fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__block_exit_and_pop__symbol)         {f2__fiber__bytecode__block_exit_and_pop(        fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__define_type_var__symbol)            {f2__fiber__bytecode__define_type_var(    fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__type_var__mutate__symbol)           {f2__fiber__bytecode__type_var__mutate(   fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__yield__symbol)                      {f2__fiber__bytecode__yield(              fiber, bytecode); return boolean__true;}
+  else if (command == __funk2.bytecode.bytecode__globalize_type_var__symbol)         {f2__fiber__bytecode__globalize_type_var( fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  
+  else if (command == __funk2.bytecode.bytecode__array__symbol)                      {f2__fiber__bytecode__array(              fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__reg_array__elt__symbol)             {f2__fiber__bytecode__reg_array__elt(     fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__reg_array__elt__set__symbol)        {f2__fiber__bytecode__reg_array__elt__set(fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__cons__symbol)                       {f2__fiber__bytecode__cons(               fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__consp__symbol)                      {f2__fiber__bytecode__consp(              fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__car__set__symbol)                   {f2__fiber__bytecode__car__set(           fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__funk__symbol)                       {f2__fiber__bytecode__funk(               fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__jump_funk__symbol)                  {f2__fiber__bytecode__jump_funk(          fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__set__symbol)                        {f2__fiber__bytecode__set(                fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__cdr__set__symbol)                   {f2__fiber__bytecode__cdr__set(           fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__array_elt__symbol)                  {f2__fiber__bytecode__array_elt(          fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__lookup_type_var__symbol)            {f2__fiber__bytecode__lookup_type_var(    fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__define_type_var__symbol)            {f2__fiber__bytecode__define_type_var(    fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__if_jump__symbol)                    {f2__fiber__bytecode__if_jump(            fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__else_jump__symbol)                  {f2__fiber__bytecode__else_jump(          fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__car__symbol)                        {f2__fiber__bytecode__car(                fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__cdr__symbol)                        {f2__fiber__bytecode__cdr(                fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__type_var__mutate__symbol)           {f2__fiber__bytecode__type_var__mutate(   fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__globalize_type_var__symbol)         {f2__fiber__bytecode__globalize_type_var( fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__jump__symbol)                       {f2__fiber__bytecode__jump(               fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__nop__symbol)                        {f2__fiber__bytecode__nop(                fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__debug__symbol)                      {f2__fiber__bytecode__debug(              fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__tracer__symbol)                     {f2__fiber__bytecode__tracer(             fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__endfunk__symbol)                    {f2__fiber__bytecode__endfunk(            fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__compile__symbol)                    {f2__fiber__bytecode__compile(            fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__yield__symbol)                      {f2__fiber__bytecode__yield(              fiber, bytecode); return boolean__true;}
   else if (command == __funk2.bytecode.bytecode__newenv__symbol)                     {f2__fiber__bytecode__newenv(             fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__machine_code__symbol)               {f2__fiber__bytecode__machine_code(       fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  
-  else if (command == __funk2.bytecode.bytecode__block_enter__symbol)                {f2__fiber__bytecode__block_enter(               fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__block_define_rest_argument__symbol) {f2__fiber__bytecode__block_define_rest_argument(fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__block_define_argument__symbol)      {f2__fiber__bytecode__block_define_argument(     fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__block_define_last_argument__symbol) {f2__fiber__bytecode__block_define_last_argument(fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__block_exit_and_pop__symbol)         {f2__fiber__bytecode__block_exit_and_pop(        fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__block_exit_and_no_pop__symbol)      {f2__fiber__bytecode__block_exit_and_no_pop(     fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   
   else {
     f2__fiber__print(cause, fiber, bytecode);

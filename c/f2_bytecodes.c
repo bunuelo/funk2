@@ -1983,7 +1983,7 @@ int f2__fiber__bytecode__block_enter(f2ptr fiber, f2ptr bytecode) {
   if (f2__fiber__bytecode__push__env_reg(   fiber, bytecode)) {return 1;}
   if (f2__fiber__bytecode__push__args_reg(  fiber, bytecode)) {return 1;}
   if (f2__fiber__bytecode__push__value_reg( fiber, bytecode)) {return 1;}
-  if (f2__fiber__bytecode__push__constant(  fiber, bytecode, __funk2.compile.debug_funk_call__symbol)) {return 1;}
+  if (f2__fiber__bytecode__push_constant(   fiber, bytecode, __funk2.compile.debug_funk_call__symbol)) {return 1;}
   if (f2__fiber__bytecode__newenv(          fiber, bytecode)) {return 1;}
   
   return 0;

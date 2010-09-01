@@ -547,7 +547,7 @@ f2ptr f2__compile__metro(f2ptr simple_cause, f2ptr fiber, f2ptr metro) {
     
     //iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause));
     
-    iter = f2__list_cdr__set(cause, iter, f2__compile__block_exit_and_pop(cause, metro));
+    iter = f2__list_cdr__set(cause, iter, f2__compile__block_exit_and_no_pop(cause, metro));
     
   }
   

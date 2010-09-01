@@ -516,7 +516,7 @@ f2ptr f2__compile__metro(f2ptr simple_cause, f2ptr fiber, f2ptr metro) {
 	//iter = f2__list_cdr__set(cause, iter, f2__compile__car(cause));
 	//iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, var));
 	
-	iter = f2__list_cdr__set(cause, iter, f2__compile__define_last_argument(cause, var));
+	iter = f2__list_cdr__set(cause, iter, f2__compile__block_define_last_argument(cause, var));
 	
       }
       

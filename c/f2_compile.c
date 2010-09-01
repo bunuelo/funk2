@@ -489,9 +489,10 @@ f2ptr f2__compile__metro(f2ptr simple_cause, f2ptr fiber, f2ptr metro) {
       
       // BYTECODE -- block_define_rest_argument
       
-      iter = f2__list_cdr__set(cause, iter, f2__compile__copy_iter_to_value(cause));
-      iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, f2cons__car(cdr, cause)));
+      //iter = f2__list_cdr__set(cause, iter, f2__compile__copy_iter_to_value(cause));
+      //iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, f2cons__car(cdr, cause)));
       
+      iter = f2__list_cdr__set(cause, iter, f2__compile__block_define_rest_argument(cause, f2cons__car(cdr, cause)));
       
       var_iter = nil;
       

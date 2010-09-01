@@ -1516,11 +1516,7 @@ int f2__fiber__bytecode__if_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_
 
 // bytecode else_jump [f2ptr]
 
-int f2__fiber__bytecode__else_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter) {
-  bytecode_status("bytecode else_jump beginning.");
-  f2ptr cause = f2fiber__cause_reg(fiber, nil);
-  
-  f2__fiber__increment_pc(fiber, cause);
+int f2__fiber__bytecode__else_jump__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter) {
   f2ptr value = f2fiber__value(fiber, cause);
   
   if (cause) {
@@ -1563,6 +1559,16 @@ int f2__fiber__bytecode__else_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_progra
     }
   }
   return 1;
+}
+
+
+int f2__fiber__bytecode__else_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter) {
+  bytecode_status("bytecode else_jump beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  
+  f2__fiber__increment_pc(fiber, cause);
+
+  return f2__fiber__bytecode__else_jump__no_increment_pc_reg(cause, fiber, bytecode, new_program_counter);
 }
 
 

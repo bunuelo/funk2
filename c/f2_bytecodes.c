@@ -1520,7 +1520,7 @@ int f2__fiber__bytecode__type_var__mutate(f2ptr fiber, f2ptr bytecode, f2ptr typ
 int f2__fiber__bytecode__globalize_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var) {
   bytecode_status("bytecode globalize_type_var beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
-  __funk2.bytecode.bytecode__globalize_type_var__mutate__execution_count ++;
+  __funk2.bytecode.bytecode__globalize_type_var__execution_count ++;
   
   f2__fiber__increment_pc(fiber, cause);
   

@@ -432,11 +432,13 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
     
     // BYTECODE -- block_exit_and_pop
     
-    iter = f2__list_cdr__set(cause, iter, f2__compile__endfunk(cause, funk));
-    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
-    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
-    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
-    iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause));
+    //iter = f2__list_cdr__set(cause, iter, f2__compile__endfunk(cause, funk));
+    //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
+    //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
+    //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
+    //iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause));
+    
+    iter = f2__list_cdr__set(cause, iter, f2__compile__block_exit_and_pop(cause, funk));
     
   } else {
     

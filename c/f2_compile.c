@@ -475,7 +475,7 @@ f2ptr f2__compile__metro(f2ptr simple_cause, f2ptr fiber, f2ptr metro) {
   //iter           = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause));
   //iter           = f2__list_cdr__set(cause, iter, f2__compile__newenv(cause));
   
-  iter = f2__list_cdr__set(cause, iter, f2__compile__block_enter(cause));
+  f2ptr full_bcs = f2__compile__block_enter(cause); f2ptr iter = full_bcs;
   
   
   // define args in metro environment

@@ -389,11 +389,7 @@ int f2__fiber__bytecode__car(f2ptr fiber, f2ptr bytecode) {
 
 // bytecode cdr []
 
-int f2__fiber__bytecode__cdr(f2ptr fiber, f2ptr bytecode) {
-  bytecode_status("bytecode cdr beginning.");
-  f2ptr cause = f2fiber__cause_reg(fiber, nil);
-  
-  f2__fiber__increment_pc(fiber, cause);
+int f2__fiber__bytecode__cdr__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
   f2ptr fiber__iter  = f2fiber__iter(fiber, cause);
   f2ptr fiber__value;
   if (! raw__cons__is_type(cause, fiber__iter)) {
@@ -405,6 +401,14 @@ int f2__fiber__bytecode__cdr(f2ptr fiber, f2ptr bytecode) {
   }
   f2fiber__value__set(fiber, cause, fiber__value);
   return 0;
+}
+
+int f2__fiber__bytecode__cdr(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode cdr beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  
+  f2__fiber__increment_pc(fiber, cause);
+  return f2__fiber__bytecode__cdr__no_increment_pc_reg(cause, fiber, bytecode);
 }
 
 

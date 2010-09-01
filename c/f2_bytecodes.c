@@ -786,14 +786,18 @@ int f2__fiber__bytecode__swap(f2ptr fiber, f2ptr bytecode, f2ptr reg0, f2ptr reg
 
 // bytecode push_constant [constant]
 
+int f2__fiber__bytecode__push_constant__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr constant) {
+  f2__fiber__stack__push_constant(cause, fiber, constant);
+  return 0;
+}
+
 int f2__fiber__bytecode__push_constant(f2ptr fiber, f2ptr bytecode, f2ptr constant) {
   bytecode_status("bytecode push_constant beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2__fiber__stack__push_constant(cause, fiber, constant);
-  return 0;
+  return f2__fiber__bytecode__push_constant__no_increment_pc_reg(cause, fiber, bytecode, constant);
 }
 
 // bytecode push [reg]

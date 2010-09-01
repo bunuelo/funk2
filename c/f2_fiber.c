@@ -192,39 +192,47 @@ boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) 
   //f2ptr cause = f2fiber__execute_bytecode__cause__new(f2fiber__cause_reg(fiber), fiber, f2fiber__env(fiber), bytecode);
   //f2fiber__cause_reg__set(fiber, cause, cause);
   f2ptr command = f2bytecode__command(bytecode, cause);
-  if      (command == __funk2.bytecode.bytecode__push__symbol)                {f2__fiber__bytecode__push(               fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__pop__symbol)                 {f2__fiber__bytecode__pop(                fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__copy__symbol)                {f2__fiber__bytecode__copy(               fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__swap__symbol)                {f2__fiber__bytecode__swap(               fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__array__symbol)               {f2__fiber__bytecode__array(              fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__push_constant__symbol)       {f2__fiber__bytecode__push_constant(      fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__reg_array__elt__symbol)      {f2__fiber__bytecode__reg_array__elt(     fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__reg_array__elt__set__symbol) {f2__fiber__bytecode__reg_array__elt__set(fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__cons__symbol)                {f2__fiber__bytecode__cons(               fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__consp__symbol)               {f2__fiber__bytecode__consp(              fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__car__set__symbol)            {f2__fiber__bytecode__car__set(           fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__funk__symbol)                {f2__fiber__bytecode__funk(               fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__jump_funk__symbol)           {f2__fiber__bytecode__jump_funk(          fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__set__symbol)                 {f2__fiber__bytecode__set(                fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__cdr__set__symbol)            {f2__fiber__bytecode__cdr__set(           fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__array_elt__symbol)           {f2__fiber__bytecode__array_elt(          fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__lookup_type_var__symbol)     {f2__fiber__bytecode__lookup_type_var(    fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__define_type_var__symbol)     {f2__fiber__bytecode__define_type_var(    fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__if_jump__symbol)             {f2__fiber__bytecode__if_jump(            fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__else_jump__symbol)           {f2__fiber__bytecode__else_jump(          fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__car__symbol)                 {f2__fiber__bytecode__car(                fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__cdr__symbol)                 {f2__fiber__bytecode__cdr(                fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__type_var__mutate__symbol)    {f2__fiber__bytecode__type_var__mutate(   fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__globalize_type_var__symbol)  {f2__fiber__bytecode__globalize_type_var( fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__jump__symbol)                {f2__fiber__bytecode__jump(               fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__nop__symbol)                 {f2__fiber__bytecode__nop(                fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__debug__symbol)               {f2__fiber__bytecode__debug(              fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__tracer__symbol)              {f2__fiber__bytecode__tracer(             fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__endfunk__symbol)             {f2__fiber__bytecode__endfunk(            fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__compile__symbol)             {f2__fiber__bytecode__compile(            fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__yield__symbol)               {f2__fiber__bytecode__yield(              fiber, bytecode); return boolean__true;}
-  else if (command == __funk2.bytecode.bytecode__newenv__symbol)              {f2__fiber__bytecode__newenv(             fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__machine_code__symbol)        {f2__fiber__bytecode__machine_code(       fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  if      (command == __funk2.bytecode.bytecode__push__symbol)                       {f2__fiber__bytecode__push(               fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__pop__symbol)                        {f2__fiber__bytecode__pop(                fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__copy__symbol)                       {f2__fiber__bytecode__copy(               fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__swap__symbol)                       {f2__fiber__bytecode__swap(               fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__array__symbol)                      {f2__fiber__bytecode__array(              fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__push_constant__symbol)              {f2__fiber__bytecode__push_constant(      fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__reg_array__elt__symbol)             {f2__fiber__bytecode__reg_array__elt(     fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__reg_array__elt__set__symbol)        {f2__fiber__bytecode__reg_array__elt__set(fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__cons__symbol)                       {f2__fiber__bytecode__cons(               fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__consp__symbol)                      {f2__fiber__bytecode__consp(              fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__car__set__symbol)                   {f2__fiber__bytecode__car__set(           fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__funk__symbol)                       {f2__fiber__bytecode__funk(               fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__jump_funk__symbol)                  {f2__fiber__bytecode__jump_funk(          fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__set__symbol)                        {f2__fiber__bytecode__set(                fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__cdr__set__symbol)                   {f2__fiber__bytecode__cdr__set(           fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__array_elt__symbol)                  {f2__fiber__bytecode__array_elt(          fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__lookup_type_var__symbol)            {f2__fiber__bytecode__lookup_type_var(    fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__define_type_var__symbol)            {f2__fiber__bytecode__define_type_var(    fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__if_jump__symbol)                    {f2__fiber__bytecode__if_jump(            fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__else_jump__symbol)                  {f2__fiber__bytecode__else_jump(          fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__car__symbol)                        {f2__fiber__bytecode__car(                fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__cdr__symbol)                        {f2__fiber__bytecode__cdr(                fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__type_var__mutate__symbol)           {f2__fiber__bytecode__type_var__mutate(   fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__globalize_type_var__symbol)         {f2__fiber__bytecode__globalize_type_var( fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__jump__symbol)                       {f2__fiber__bytecode__jump(               fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__nop__symbol)                        {f2__fiber__bytecode__nop(                fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__debug__symbol)                      {f2__fiber__bytecode__debug(              fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__tracer__symbol)                     {f2__fiber__bytecode__tracer(             fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__endfunk__symbol)                    {f2__fiber__bytecode__endfunk(            fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__compile__symbol)                    {f2__fiber__bytecode__compile(            fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__yield__symbol)                      {f2__fiber__bytecode__yield(              fiber, bytecode); return boolean__true;}
+  else if (command == __funk2.bytecode.bytecode__newenv__symbol)                     {f2__fiber__bytecode__newenv(             fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__machine_code__symbol)               {f2__fiber__bytecode__machine_code(       fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+
+  else if (command == __funk2.bytecode.bytecode__block_enter__symbol)                {f2__fiber__bytecode__block_enter(               fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__block_define_rest_argument__symbol) {f2__fiber__bytecode__block_define_rest_argument(fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__block_define_argument__symbol)      {f2__fiber__bytecode__block_define_argument(     fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__block_define_last_argument__symbol) {f2__fiber__bytecode__block_define_last_argument(fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__block_exit_and_pop__symbol)         {f2__fiber__bytecode__block_exit_and_pop(        fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__block_exit_and_no_pop__symbol)      {f2__fiber__bytecode__block_exit_and_no_pop(     fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  
   else {
     f2__fiber__print(cause, fiber, bytecode);
     f2fiber__value__set(fiber, cause, f2larva__new(cause, 21, nil));

@@ -22,35 +22,42 @@
 #include "funk2.h"
 
 void funk2_bytecode__init(funk2_bytecode_t* this) {
-  this->bytecode__funk__symbol               = -1;
-  this->bytecode__jump_funk__symbol          = -1;
-  this->bytecode__array__symbol              = -1;
-  this->bytecode__cons__symbol               = -1;
-  this->bytecode__consp__symbol              = -1;
-  this->bytecode__car__symbol                = -1;
-  this->bytecode__cdr__symbol                = -1;
-  this->bytecode__car__set__symbol           = -1;
-  this->bytecode__cdr__set__symbol           = -1;
-  this->bytecode__array_elt__symbol          = -1;
-  this->bytecode__swap__symbol               = -1;
-  this->bytecode__push_constant__symbol      = -1;
-  this->bytecode__push__symbol               = -1;
-  this->bytecode__pop__symbol                = -1;
-  this->bytecode__copy__symbol               = -1;
-  this->bytecode__lookup_type_var__symbol    = -1;
-  this->bytecode__define_type_var__symbol    = -1;
-  this->bytecode__type_var__mutate__symbol   = -1;
-  this->bytecode__globalize_type_var__symbol = -1;
-  this->bytecode__jump__symbol               = -1;
-  this->bytecode__if_jump__symbol            = -1;
-  this->bytecode__else_jump__symbol          = -1;
-  this->bytecode__nop__symbol                = -1; // null operation (should be stripped out before executing [ideally])
-  this->bytecode__debug__symbol              = -1;
-  this->bytecode__tracer__symbol             = -1;
-  this->bytecode__compile__symbol            = -1;
-  this->bytecode__yield__symbol              = -1;
-  this->bytecode__newenv__symbol             = -1;
-  this->bytecode__machine_code__symbol       = -1;
+  this->bytecode__funk__symbol                       = -1;
+  this->bytecode__jump_funk__symbol                  = -1;
+  this->bytecode__array__symbol                      = -1;
+  this->bytecode__cons__symbol                       = -1;
+  this->bytecode__consp__symbol                      = -1;
+  this->bytecode__car__symbol                        = -1;
+  this->bytecode__cdr__symbol                        = -1;
+  this->bytecode__car__set__symbol                   = -1;
+  this->bytecode__cdr__set__symbol                   = -1;
+  this->bytecode__array_elt__symbol                  = -1;
+  this->bytecode__swap__symbol                       = -1;
+  this->bytecode__push_constant__symbol              = -1;
+  this->bytecode__push__symbol                       = -1;
+  this->bytecode__pop__symbol                        = -1;
+  this->bytecode__copy__symbol                       = -1;
+  this->bytecode__lookup_type_var__symbol            = -1;
+  this->bytecode__define_type_var__symbol            = -1;
+  this->bytecode__type_var__mutate__symbol           = -1;
+  this->bytecode__globalize_type_var__symbol         = -1;
+  this->bytecode__jump__symbol                       = -1;
+  this->bytecode__if_jump__symbol                    = -1;
+  this->bytecode__else_jump__symbol                  = -1;
+  this->bytecode__nop__symbol                        = -1; // null operation (should be stripped out before executing [ideally])
+  this->bytecode__debug__symbol                      = -1;
+  this->bytecode__tracer__symbol                     = -1;
+  this->bytecode__compile__symbol                    = -1;
+  this->bytecode__yield__symbol                      = -1;
+  this->bytecode__newenv__symbol                     = -1;
+  this->bytecode__machine_code__symbol               = -1;
+  
+  this->bytecode__block_enter__symbol                = -1;
+  this->bytecode__block_define_rest_argument__symbol = -1;
+  this->bytecode__block_define_argument__symbol      = -1;
+  this->bytecode__block_define_last_argument__symbol = -1;
+  this->bytecode__block_exit_and_pop__symbol         = -1;
+  this->bytecode__block_exit_and_no_pop__symbol      = -1;
   
   this->bytecode_trace__print_depth = 3;
   
@@ -1953,45 +1960,200 @@ int f2__fiber__bytecode__reg_array__elt__set(f2ptr fiber, f2ptr bytecode, f2ptr 
   return (f2__compile__bytecode__reg_array__elt__set(cause, reg))(fiber, bytecode);
 }
 
+// bytecode block_enter []
+
+int f2__fiber__bytecode__block_enter(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode block_enter beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  //f2ptr full_bcs =                                f2__compile__push_return(cause); f2ptr iter = full_bcs;
+  //iter           = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause));
+  //iter           = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause));
+  //
+  //   where, push_debug_funk_call is defined as:
+  //    f2ptr full_bcs =                      f2__compile__push_args( cause); f2ptr iter = full_bcs;
+  //    iter = f2__list_cdr__set(cause, iter, f2__compile__push_value(cause));
+  //    iter = f2__list_cdr__set(cause, iter, f2__compile__push_constant(cause, __funk2.compile.debug_funk_call__symbol));
+  //
+  //iter           = f2__list_cdr__set(cause, iter, f2__compile__newenv(cause));
+  
+  if (f2__fiber__bytecode__push__return_reg(fiber, bytecode)) {return 1;}
+  if (f2__fiber__bytecode__push__env_reg(   fiber, bytecode)) {return 1;}
+  if (f2__fiber__bytecode__push__args_reg(  fiber, bytecode)) {return 1;}
+  if (f2__fiber__bytecode__push__value_reg( fiber, bytecode)) {return 1;}
+  if (f2__fiber__bytecode__push__constant(  fiber, bytecode, __funk2.compile.debug_funk_call__symbol)) {return 1;}
+  if (f2__fiber__bytecode__newenv(          fiber, bytecode)) {return 1;}
+  
+  return 0;
+}
+
+
+// bytecode block_define_rest_argument []
+
+int f2__fiber__bytecode__block_define_rest_argument(f2ptr fiber, f2ptr bytecode, f2ptr argument) {
+  bytecode_status("bytecode block_define_rest_argument beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__copy_iter_to_value(cause));
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, f2cons__car(cdr, cause)));
+  
+  if (f2__fiber__bytecode__copy__iter_reg__value_reg(fiber, bytecode)) {return 1;}
+  if (f2__fiber__bytecode__define_type_var(          fiber, bytecode, __funk2.primobject__frame.variable__symbol, argument)) {return 1;}
+  
+  return 0;
+}
+
+
+// bytecode block_define_argument []
+
+int f2__fiber__bytecode__block_define_argument(f2ptr fiber, f2ptr bytecode, f2ptr argument) {
+  bytecode_status("bytecode block_define_argument beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__copy_iter_to_value(cause));
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__else_jump(cause, __funk2.compile.wrong_argument_number__bcs));
+  //
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__car(cause));
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, var));
+  //
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__cdr(cause));
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__copy_value_to_iter(cause));
+  
+  if (f2__fiber__bytecode__copy__iter_reg__value_reg(fiber, bytecode)) {return 1;}
+  if (f2__fiber__bytecode__else_jump(                fiber, bytecode, __funk2.compile.wrong_argument_number__bcs)) {return 1;}
+  if (f2__fiber__bytecode__car(                      fiber, bytecode)) {return 1;}
+  if (f2__fiber__bytecode__define_type_var(          fiber, bytecode, __funk2.primobject__frame.variable__symbol, argument)) {return 1;}
+  if (f2__fiber__bytecode__cdr(                      fiber, bytecode)) {return 1;}
+  if (f2__fiber__bytecode__copy__value_reg__iter_reg(fiber, bytecode)) {return 1;}
+  
+  return 0;
+}
+
+
+// bytecode block_define_last_argument []
+
+int f2__fiber__bytecode__block_define_last_argument(f2ptr fiber, f2ptr bytecode, f2ptr argument) {
+  bytecode_status("bytecode block_last_argument beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__copy_iter_to_value(cause));
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__else_jump(cause, __funk2.compile.wrong_argument_number__bcs));
+  //
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__car(cause));
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, var));
+  
+  if (f2__fiber__bytecode__copy__iter_reg__value_reg(fiber, bytecode)) {return 1;}
+  if (f2__fiber__bytecode__else_jump(                fiber, bytecode, __funk2.compile.wrong_argument_number__bcs)) {return 1;}
+  if (f2__fiber__bytecode__car(                      fiber, bytecode)) {return 1;}
+  if (f2__fiber__bytecode__define_type_var(          fiber, bytecode, __funk2.primobject__frame.variable__symbol, argument)) {return 1;}
+  
+  return 0;
+}
+
+
+// bytecode block_exit_and_pop []
+
+int f2__fiber__bytecode__block_exit_and_pop(f2ptr fiber, f2ptr bytecode, f2ptr funk) {
+  bytecode_status("bytecode block_exit_and_pop beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__endfunk(cause, funk));
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
+  //
+  //  where, pop_debug_funk_call is defined as:
+  //    f2ptr full_bcs =                      f2__compile__pop_nil(cause); f2ptr iter = full_bcs;
+  //    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause));
+  //    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause));
+  //
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause));
+  
+  if (f2__fiber__bytecode__endfunk(                              fiber, bytecode, funk)) {return 1;}
+  if (f2__fiber__bytecode__pop__nil(                             fiber, bytecode)) {return 1;}
+  if (f2__fiber__bytecode__pop__nil(                             fiber, bytecode)) {return 1;}
+  if (f2__fiber__bytecode__pop__nil(                             fiber, bytecode)) {return 1;}
+  if (f2__fiber__bytecode__pop__env_reg(                         fiber, bytecode)) {return 1;}
+  if (f2__fiber__bytecode__pop__return_reg(                      fiber, bytecode)) {return 1;}
+  if (f2__fiber__bytecode__copy__return_reg__program_counter_reg(fiber, bytecode)) {return 1;}
+  
+  return 0;
+}
+
+
+// bytecode block_exit_and_no_pop []
+
+int f2__fiber__bytecode__block_exit_and_no_pop(f2ptr fiber, f2ptr bytecode, f2ptr funk) {
+  bytecode_status("bytecode block_exit_and_no_pop beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__endfunk(cause, funk));
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause));
+  
+  if (f2__fiber__bytecode__endfunk(                              fiber, bytecode, funk)) {return 1;}
+  if (f2__fiber__bytecode__copy__return_reg__program_counter_reg(fiber, bytecode)) {return 1;}
+  
+  return 0;
+}
+
 
 // initialization of f2_bytecodes.c
 
 void f2__bytecodes__reinitialize_globalvars() {
   f2ptr cause = f2_bytecodes_c__cause__new(initial_cause());
   
-  __funk2.bytecode.bytecode__jump_funk__symbol           = new__symbol(cause, "jump-funk");
-  __funk2.bytecode.bytecode__funk__symbol                = new__symbol(cause, "funk");
-  __funk2.bytecode.bytecode__array__symbol               = new__symbol(cause, "array");
-  __funk2.bytecode.bytecode__cons__symbol                = new__symbol(cause, "cons");
-  __funk2.bytecode.bytecode__consp__symbol               = new__symbol(cause, "consp");
-  __funk2.bytecode.bytecode__car__symbol                 = new__symbol(cause, "car");
-  __funk2.bytecode.bytecode__cdr__symbol                 = new__symbol(cause, "cdr");
-  __funk2.bytecode.bytecode__car__set__symbol            = new__symbol(cause, "car-set");
-  __funk2.bytecode.bytecode__cdr__set__symbol            = new__symbol(cause, "cdr-set");
-  __funk2.bytecode.bytecode__array_elt__symbol           = new__symbol(cause, "array_elt");
-  __funk2.bytecode.bytecode__set__symbol                 = new__symbol(cause, "set");
-  __funk2.bytecode.bytecode__swap__symbol                = new__symbol(cause, "swap");
-  __funk2.bytecode.bytecode__push__symbol                = new__symbol(cause, "push");
-  __funk2.bytecode.bytecode__push_constant__symbol       = new__symbol(cause, "push_constant");
-  __funk2.bytecode.bytecode__pop__symbol                 = new__symbol(cause, "pop");
-  __funk2.bytecode.bytecode__copy__symbol                = new__symbol(cause, "copy");
-  __funk2.bytecode.bytecode__lookup_type_var__symbol     = new__symbol(cause, "lookup");
-  __funk2.bytecode.bytecode__define_type_var__symbol     = new__symbol(cause, "define");
-  __funk2.bytecode.bytecode__type_var__mutate__symbol    = new__symbol(cause, "mutate-type_var");
-  __funk2.bytecode.bytecode__globalize_type_var__symbol  = new__symbol(cause, "globalize-type_var");
-  __funk2.bytecode.bytecode__jump__symbol                = new__symbol(cause, "jump");
-  __funk2.bytecode.bytecode__if_jump__symbol             = new__symbol(cause, "if-jump");
-  __funk2.bytecode.bytecode__else_jump__symbol           = new__symbol(cause, "else-jump");
-  __funk2.bytecode.bytecode__nop__symbol                 = new__symbol(cause, "nop");
-  __funk2.bytecode.bytecode__debug__symbol               = new__symbol(cause, "debug");
-  __funk2.bytecode.bytecode__tracer__symbol              = new__symbol(cause, "tracer");
-  __funk2.bytecode.bytecode__endfunk__symbol             = new__symbol(cause, "endfunk");
-  __funk2.bytecode.bytecode__compile__symbol             = new__symbol(cause, "compile");
-  __funk2.bytecode.bytecode__yield__symbol               = new__symbol(cause, "yield");
-  __funk2.bytecode.bytecode__newenv__symbol              = new__symbol(cause, "newenv");
-  __funk2.bytecode.bytecode__machine_code__symbol        = new__symbol(cause, "machine_code");
-  __funk2.bytecode.bytecode__reg_array__elt__symbol      = new__symbol(cause, "reg_array-elt");
-  __funk2.bytecode.bytecode__reg_array__elt__set__symbol = new__symbol(cause, "reg_array-elt-set");
+  __funk2.bytecode.bytecode__jump_funk__symbol                  = new__symbol(cause, "jump-funk");
+  __funk2.bytecode.bytecode__funk__symbol                       = new__symbol(cause, "funk");
+  __funk2.bytecode.bytecode__array__symbol                      = new__symbol(cause, "array");
+  __funk2.bytecode.bytecode__cons__symbol                       = new__symbol(cause, "cons");
+  __funk2.bytecode.bytecode__consp__symbol                      = new__symbol(cause, "consp");
+  __funk2.bytecode.bytecode__car__symbol                        = new__symbol(cause, "car");
+  __funk2.bytecode.bytecode__cdr__symbol                        = new__symbol(cause, "cdr");
+  __funk2.bytecode.bytecode__car__set__symbol                   = new__symbol(cause, "car-set");
+  __funk2.bytecode.bytecode__cdr__set__symbol                   = new__symbol(cause, "cdr-set");
+  __funk2.bytecode.bytecode__array_elt__symbol                  = new__symbol(cause, "array_elt");
+  __funk2.bytecode.bytecode__set__symbol                        = new__symbol(cause, "set");
+  __funk2.bytecode.bytecode__swap__symbol                       = new__symbol(cause, "swap");
+  __funk2.bytecode.bytecode__push__symbol                       = new__symbol(cause, "push");
+  __funk2.bytecode.bytecode__push_constant__symbol              = new__symbol(cause, "push_constant");
+  __funk2.bytecode.bytecode__pop__symbol                        = new__symbol(cause, "pop");
+  __funk2.bytecode.bytecode__copy__symbol                       = new__symbol(cause, "copy");
+  __funk2.bytecode.bytecode__lookup_type_var__symbol            = new__symbol(cause, "lookup");
+  __funk2.bytecode.bytecode__define_type_var__symbol            = new__symbol(cause, "define");
+  __funk2.bytecode.bytecode__type_var__mutate__symbol           = new__symbol(cause, "mutate-type_var");
+  __funk2.bytecode.bytecode__globalize_type_var__symbol         = new__symbol(cause, "globalize-type_var");
+  __funk2.bytecode.bytecode__jump__symbol                       = new__symbol(cause, "jump");
+  __funk2.bytecode.bytecode__if_jump__symbol                    = new__symbol(cause, "if-jump");
+  __funk2.bytecode.bytecode__else_jump__symbol                  = new__symbol(cause, "else-jump");
+  __funk2.bytecode.bytecode__nop__symbol                        = new__symbol(cause, "nop");
+  __funk2.bytecode.bytecode__debug__symbol                      = new__symbol(cause, "debug");
+  __funk2.bytecode.bytecode__tracer__symbol                     = new__symbol(cause, "tracer");
+  __funk2.bytecode.bytecode__endfunk__symbol                    = new__symbol(cause, "endfunk");
+  __funk2.bytecode.bytecode__compile__symbol                    = new__symbol(cause, "compile");
+  __funk2.bytecode.bytecode__yield__symbol                      = new__symbol(cause, "yield");
+  __funk2.bytecode.bytecode__newenv__symbol                     = new__symbol(cause, "newenv");
+  __funk2.bytecode.bytecode__machine_code__symbol               = new__symbol(cause, "machine_code");
+  __funk2.bytecode.bytecode__reg_array__elt__symbol             = new__symbol(cause, "reg_array-elt");
+  __funk2.bytecode.bytecode__reg_array__elt__set__symbol        = new__symbol(cause, "reg_array-elt-set");
+  
+  __funk2.bytecode.bytecode__block_enter__symbol                = new__symbol(cause, "block_enter");
+  __funk2.bytecode.bytecode__block_define_rest_argument__symbol = new__symbol(cause, "block_define_rest_argument");
+  __funk2.bytecode.bytecode__block_define_argument__symbol      = new__symbol(cause, "block_define_argument");
+  __funk2.bytecode.bytecode__block_define_last_argument__symbol = new__symbol(cause, "block_define_last_argument");
+  __funk2.bytecode.bytecode__block_exit_and_pop__symbol         = new__symbol(cause, "block_exit_and_pop");
+  __funk2.bytecode.bytecode__block_exit_and_no_pop__symbol      = new__symbol(cause, "block_exit_and_no_pop");
   
   __funk2.bytecode.expression_not_funkable__exception__tag = new__symbol(cause, "expression-not-funkable");
   __funk2.bytecode.expression_not_funkable__exception      = f2exception__new(cause, __funk2.bytecode.expression_not_funkable__exception__tag, nil);

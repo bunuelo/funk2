@@ -62,6 +62,13 @@ typedef struct funk2_bytecode_s {
   f2ptr bytecode__reg_array__elt__symbol;
   f2ptr bytecode__reg_array__elt__set__symbol;
   
+  f2ptr bytecode__block_enter;
+  f2ptr bytecode__block_define_rest_argument;
+  f2ptr bytecode__block_define_argument;
+  f2ptr bytecode__block_define_last_argument;
+  f2ptr bytecode__block_exit_and_pop;
+  f2ptr bytecode__block_exit_and_no_pop;
+  
   f2ptr expression_not_funkable__exception__tag;
   f2ptr expression_not_funkable__exception;
   
@@ -143,6 +150,14 @@ int                    f2__fiber__bytecode__newenv(                          f2p
 int                    f2__fiber__bytecode__machine_code(                    f2ptr fiber, f2ptr bytecode, f2ptr chunk);
 int                    f2__fiber__bytecode__reg_array__elt(                  f2ptr fiber, f2ptr bytecode, f2ptr reg);
 int                    f2__fiber__bytecode__reg_array__elt__set(             f2ptr fiber, f2ptr bytecode, f2ptr reg);
+
+int                    f2__fiber__bytecode__block_enter(                     f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__block_define_rest_argument(      f2ptr fiber, f2ptr bytecode, f2ptr argument);
+int                    f2__fiber__bytecode__block_define_argument(           f2ptr fiber, f2ptr bytecode, f2ptr argument);
+int                    f2__fiber__bytecode__block_define_last_argument(      f2ptr fiber, f2ptr bytecode, f2ptr argument);
+int                    f2__fiber__bytecode__block_exit_and_pop(              f2ptr fiber, f2ptr bytecode, f2ptr funk);
+int                    f2__fiber__bytecode__block_exit_and_no_pop(           f2ptr fiber, f2ptr bytecode, f2ptr funk);
+
 
 bytecode_jump__f2ptr_t f2__compile__bytecode__set(    f2ptr cause, f2ptr reg);
 bytecode_jump_t        f2__compile__bytecode__swap(   f2ptr cause, f2ptr reg0, f2ptr reg1);

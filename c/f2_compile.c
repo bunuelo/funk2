@@ -114,6 +114,14 @@ f2ptr f2__compile__funkvar__mutate(f2ptr cause, f2ptr var) {return bcs_valid(f2_
 f2ptr f2__compile__globalize_var(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__globalize_type_var(cause, __funk2.primobject__frame.variable__symbol,      var));}
 f2ptr f2__compile__globalize_funkvar(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__globalize_type_var(cause, __funk2.primobject__frame.funk_variable__symbol, var));}
 
+f2ptr f2__compile__block_enter(               f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_enter__symbol,                nil,      nil, nil), nil));}
+f2ptr f2__compile__block_define_rest_argument(f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_rest_argument__symbol, argument, nil, nil), nil));}
+f2ptr f2__compile__block_define_argument(     f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_argument__symbol,      argument, nil, nil), nil));}
+f2ptr f2__compile__block_define_last_argument(f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_last_argument__symbol, argument, nil, nil), nil));}
+f2ptr f2__compile__block_exit_and_pop(        f2ptr cause, f2ptr funk)     {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_exit_and_pop__symbol,         funk,     nil, nil), nil));}
+f2ptr f2__compile__block_exit_and_no_pop(     f2ptr cause, f2ptr funk)     {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_exit_and_no_pop__symbol,      funk,     nil, nil), nil));}
+
+
 f2ptr f2__compile__symbol(f2ptr cause, f2ptr exp, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
   if (is_locally_funktional) {
     boolean_t exp__is_local_variable = boolean__false;
@@ -342,13 +350,16 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   f2ptr     local_variables             = f2funk__args(funk, cause);
   boolean_t funk__is_locally_funktional = boolean__true;
   
-  // MACRO-BYTECODE -- block_enter
+  
+  // BYTECODE -- block_enter
   
   // save return and environment registers
   f2ptr full_bcs =                                f2__compile__push_return(cause); f2ptr iter = full_bcs;
   iter           = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause));
   iter           = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause));
   iter           = f2__list_cdr__set(cause, iter, f2__compile__newenv(cause));
+  
+  
   
   // define args in funk environment
   iter = f2__list_cdr__set(cause, iter, f2__compile__copy_args_to_iter(cause));
@@ -363,6 +374,7 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
       
       iter = f2__list_cdr__set(cause, iter, f2__compile__copy_iter_to_value(cause));
       iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, f2cons__car(cdr, cause)));
+      
       var_iter = nil;
       
     } else {
@@ -413,12 +425,9 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
     // BYTECODE -- block_exit_and_pop
     
     iter = f2__list_cdr__set(cause, iter, f2__compile__endfunk(cause, funk));
-    
     iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
     iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
     iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
-    //printf("\nnot popped_env_and_return!!!!"); fflush(stdout);
-    
     iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause));
     
   } else {
@@ -426,7 +435,6 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
     // BYTECODE -- block_exit_and_no_pop
     
     iter = f2__list_cdr__set(cause, iter, f2__compile__endfunk(cause, funk));
-    
     iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause));
     
   }

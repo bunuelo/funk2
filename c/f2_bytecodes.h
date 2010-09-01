@@ -62,12 +62,12 @@ typedef struct funk2_bytecode_s {
   f2ptr bytecode__reg_array__elt__symbol;
   f2ptr bytecode__reg_array__elt__set__symbol;
   
-  f2ptr bytecode__block_enter;
-  f2ptr bytecode__block_define_rest_argument;
-  f2ptr bytecode__block_define_argument;
-  f2ptr bytecode__block_define_last_argument;
-  f2ptr bytecode__block_exit_and_pop;
-  f2ptr bytecode__block_exit_and_no_pop;
+  f2ptr bytecode__block_enter__symbol;
+  f2ptr bytecode__block_define_rest_argument__symbol;
+  f2ptr bytecode__block_define_argument__symbol;
+  f2ptr bytecode__block_define_last_argument__symbol;
+  f2ptr bytecode__block_exit_and_pop__symbol;
+  f2ptr bytecode__block_exit_and_no_pop__symbol;
   
   f2ptr expression_not_funkable__exception__tag;
   f2ptr expression_not_funkable__exception;

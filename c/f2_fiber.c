@@ -407,7 +407,7 @@ f2ptr raw__stack_trace__print(f2ptr cause, f2ptr this) {
 	  if (! raw__funkable__is_type(cause, funk)) {
 	    return f2larva__new(cause, 39, nil);
 	  }
-	  //f2ptr funk__cause = f2__ptype__cause(cause, funk);
+	  f2ptr funk__cause = f2__ptype__cause(cause, funk);
 	  f2ptr funk__cause__source_expression = nil;
 	  if (raw__cause__is_type(cause, funk__cause)) {
 	    funk__cause__source_expression = f2__cause__lookup(cause, funk__cause, new__symbol(cause, "source_expression"));

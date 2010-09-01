@@ -919,18 +919,22 @@ int f2__fiber__bytecode__pop__return_reg(f2ptr fiber, f2ptr bytecode) {
   return 0;
 }
 
-int f2__fiber__bytecode__pop__env_reg(f2ptr fiber, f2ptr bytecode) {
-  bytecode_status("bytecode pop beginning.");
-  f2ptr cause = f2fiber__cause_reg(fiber, nil);
-  
-  f2__fiber__increment_pc(fiber, cause);
-  
+int f2__fiber__bytecode__pop__env_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
   f2__fiber__stack__pop_env(fiber, cause);
   release__assert(f2fiber__env(fiber, cause), fiber, "env popped to nil.");
   release__assert(raw__environment__is_type(cause, f2fiber__env(fiber, cause)), fiber, "assertion failed: popped to non-environment");
   //f2__print(nil, f2fiber__env(fiber));
   //fflush(stdout);
   return 0;
+}
+
+int f2__fiber__bytecode__pop__env_reg(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode pop beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__pop__env_reg__no_increment_pc_reg(cause, fiber, bytecode);
 }
 
 int f2__fiber__bytecode__pop__value_reg(f2ptr fiber, f2ptr bytecode) {

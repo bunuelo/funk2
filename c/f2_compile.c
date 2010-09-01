@@ -387,14 +387,16 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
 	
 	// BYTECODE -- block_define_argument
 	
-	iter = f2__list_cdr__set(cause, iter, f2__compile__copy_iter_to_value(cause));
-	iter = f2__list_cdr__set(cause, iter, f2__compile__else_jump(cause, __funk2.compile.wrong_argument_number__bcs));
+	//iter = f2__list_cdr__set(cause, iter, f2__compile__copy_iter_to_value(cause));
+	//iter = f2__list_cdr__set(cause, iter, f2__compile__else_jump(cause, __funk2.compile.wrong_argument_number__bcs));
+	//
+	//iter = f2__list_cdr__set(cause, iter, f2__compile__car(cause));
+	//iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, var));
+	//
+	//iter = f2__list_cdr__set(cause, iter, f2__compile__cdr(cause));
+	//iter = f2__list_cdr__set(cause, iter, f2__compile__copy_value_to_iter(cause));
 	
-	iter = f2__list_cdr__set(cause, iter, f2__compile__car(cause));
-	iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, var));
-	
-	iter = f2__list_cdr__set(cause, iter, f2__compile__cdr(cause));
-	iter = f2__list_cdr__set(cause, iter, f2__compile__copy_value_to_iter(cause));
+	iter = f2__list_cdr__set(cause, iter, f2__compile__block_define_argument(cause, var));
 	
       } else {
 	

@@ -354,12 +354,12 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   // BYTECODE -- block_enter
   
   // save return and environment registers
-  //f2ptr full_bcs =                                f2__compile__push_return(cause); f2ptr iter = full_bcs;
-  //iter           = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause));
-  //iter           = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause));
-  //iter           = f2__list_cdr__set(cause, iter, f2__compile__newenv(cause));
+  f2ptr full_bcs =                                f2__compile__push_return(cause); f2ptr iter = full_bcs;
+  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause));
+  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause));
+  iter           = f2__list_cdr__set(cause, iter, f2__compile__newenv(cause));
   
-  f2ptr full_bcs = f2__compile__block_enter(cause); f2ptr iter = full_bcs;
+  //f2ptr full_bcs = f2__compile__block_enter(cause); f2ptr iter = full_bcs;
   
   
   
@@ -374,8 +374,10 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
       
       // BYTECODE -- block_define_rest_argument
       
-      iter = f2__list_cdr__set(cause, iter, f2__compile__copy_iter_to_value(cause));
-      iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, f2cons__car(cdr, cause)));
+      //iter = f2__list_cdr__set(cause, iter, f2__compile__copy_iter_to_value(cause));
+      //iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, f2cons__car(cdr, cause)));
+      
+      iter = f2__list_cdr__set(cause, iter, f2__compile__block_define_rest_argument(cause, f2cons__car(cdr, cause)));
       
       var_iter = nil;
       

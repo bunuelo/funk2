@@ -225,7 +225,7 @@ boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) 
   else if (command == __funk2.bytecode.bytecode__yield__symbol)                      {f2__fiber__bytecode__yield(              fiber, bytecode); return boolean__true;}
   else if (command == __funk2.bytecode.bytecode__newenv__symbol)                     {f2__fiber__bytecode__newenv(             fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__machine_code__symbol)               {f2__fiber__bytecode__machine_code(       fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-
+  
   else if (command == __funk2.bytecode.bytecode__block_enter__symbol)                {f2__fiber__bytecode__block_enter(               fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__block_define_rest_argument__symbol) {f2__fiber__bytecode__block_define_rest_argument(fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__block_define_argument__symbol)      {f2__fiber__bytecode__block_define_argument(     fiber, bytecode, f2bytecode__arg0(bytecode, cause));}

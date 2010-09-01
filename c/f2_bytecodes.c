@@ -1711,12 +1711,7 @@ int f2__fiber__bytecode__yield(f2ptr fiber, f2ptr bytecode) {
 
 // bytecode newenv []
 
-int f2__fiber__bytecode__newenv(f2ptr fiber, f2ptr bytecode) {
-  bytecode_status("bytecode newenv beginning.");
-  f2ptr cause = f2fiber__cause_reg(fiber, nil);
-  
-  f2__fiber__increment_pc(fiber, cause);
-  
+int f2__fiber__bytecode__newenv__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
   f2ptr parent_env = f2fiber__env(fiber, cause);
   f2ptr new_env    = f2environment__new(cause,
 					f2__frame__new(cause, nil),
@@ -1726,6 +1721,15 @@ int f2__fiber__bytecode__newenv(f2ptr fiber, f2ptr bytecode) {
   release__assert(raw__environment__is_type(cause, new_env), fiber, "new_env is not environment");
   f2fiber__env__set(fiber, cause, new_env);
   return 0;
+}
+
+int f2__fiber__bytecode__newenv(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode newenv beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__newenv__no_increment_pc_reg(cause, fiber, bytecode);
 }
 
 

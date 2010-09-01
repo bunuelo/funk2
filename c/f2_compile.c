@@ -354,10 +354,12 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   // BYTECODE -- block_enter
   
   // save return and environment registers
-  f2ptr full_bcs =                                f2__compile__push_return(cause); f2ptr iter = full_bcs;
-  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause));
-  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause));
-  iter           = f2__list_cdr__set(cause, iter, f2__compile__newenv(cause));
+  //f2ptr full_bcs =                                f2__compile__push_return(cause); f2ptr iter = full_bcs;
+  //iter           = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause));
+  //iter           = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause));
+  //iter           = f2__list_cdr__set(cause, iter, f2__compile__newenv(cause));
+  
+  f2ptr full_bcs = f2__compile__block_enter(cause); f2ptr iter = full_bcs;
   
   
   

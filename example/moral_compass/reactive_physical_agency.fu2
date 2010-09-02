@@ -18,13 +18,10 @@
  rights to redistribute these changes.'
 
 
-[deframe reactive_physical_agency [agency] [user_activate_resource
-					    user_activate_args]
+[deframe reactive_physical_agency [agency] [[user_activate_resource nil]
+					    [user_activate_args     nil]]
   [new []
        [construct agency `physical]
-       
-       [set this user_activate_resource nil]
-       [set this user_activate_args     nil]
        
        `[have this add_resource [resource turn_right [steps]
 					 [format stdout '\n  turn_right']

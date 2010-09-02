@@ -1840,7 +1840,7 @@ f2ptr raw__gtk__progress_bar__set_orientation(f2ptr cause, f2ptr this, f2ptr ori
   else {
     f2ptr bug_frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "invalid_progress_bar_orientation_symbol"));
-    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "valid_orientation_symbols"), list4__new(cause, new__symbol(cause, "left_to_right"), new__symbol(cause, "right_to_left"), new__symbol(cause, "bottom_to_top"), new__symbol(cause, "top_to_bottom")));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "valid_orientation_symbols"), f2list4__new(cause, new__symbol(cause, "left_to_right"), new__symbol(cause, "right_to_left"), new__symbol(cause, "bottom_to_top"), new__symbol(cause, "top_to_bottom")));
     return f2larva__new(cause, 636, f2__bug__new(cause, f2integer__new(cause, 636), bug_frame));
   }
   

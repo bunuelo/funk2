@@ -669,7 +669,7 @@ GtkProgressBar* funk2_gtk__progress_bar__new(funk2_gtk_t* this) {
   GtkProgressBar* progress_bar;
   {
     gdk_threads_enter();
-    progress_bar = gtk_progress_bar_new();
+    progress_bar = GTK_PROGRESS_BAR(gtk_progress_bar_new());
     gdk_threads_leave();
   }
   return progress_bar;

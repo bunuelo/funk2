@@ -691,6 +691,14 @@ void funk2_gtk__progress_bar__set_text(GtkProgressBar* progress_bar, u8* text) {
   }
 }
 
+void funk2_gtk__progress_bar__set_orientation(GtkProgressBar* progress_bar, GtkProgressBarOrientation orientation) {
+  {
+    gdk_threads_enter();
+    gtk_progress_bar_set_orientation(GTK_PROGRESS_BAR(progress_bar), orientation);
+    gdk_threads_leave();
+  }
+}
+
 
 // notebook
 
@@ -1820,6 +1828,39 @@ f2ptr f2__gtk__progress_bar__set_text(f2ptr cause, f2ptr this, f2ptr text) {
 def_pcfunk2(gtk__progress_bar__set_text, this, text, return f2__gtk__progress_bar__set_text(this_cause, this, text));
 
 
+f2ptr raw__gtk__progress_bar__set_orientation(f2ptr cause, f2ptr this, f2ptr orientation) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
+  
+  GtkProgressBarOrientation gtk_orientation;
+  if      (raw__eq(cause, orientation, new__symbol(cause, "left_to_right"))) {gtk_orientation = GTK_PROGRESS_LEFT_TO_RIGHT;}
+  else if (raw__eq(cause, orientation, new__symbol(cause, "right_to_left"))) {gtk_orientation = GTK_PROGRESS_RIGHT_TO_LEFT;}
+  else if (raw__eq(cause, orientation, new__symbol(cause, "bottom_to_top"))) {gtk_orientation = GTK_PROGRESS_BOTTOM_TO_TOP;}
+  else if (raw__eq(cause, orientation, new__symbol(cause, "top_to_bottom"))) {gtk_orientation = GTK_PROGRESS_TOP_TO_BOTTOM;}
+  else {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "invalid_progress_bar_orientation_symbol"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "valid_orientation_symbols"), list4__new(cause, new__symbol(cause, "left_to_right"), new__symbol(cause, "right_to_left"), new__symbol(cause, "bottom_to_top"), new__symbol(cause, "top_to_bottom")));
+    return f2larva__new(cause, 636, f2__bug__new(cause, f2integer__new(cause, 636), bug_frame));
+  }
+  
+  funk2_gtk__progress_bar__set_text(gtk_this, gtk_orientation);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__progress_bar__set_orientation(f2ptr cause, f2ptr this, f2ptr orientation) {
+  if ((! raw__gtk_progress_bar__is_type(cause, this)) ||
+      (! raw__symbol__is_type(cause, orientation))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__progress_bar__set_orientation(cause, this, orientation);
+}
+def_pcfunk2(gtk__progress_bar__set_orientation, this, orientation, return f2__gtk__progress_bar__set_orientation(this_cause, this, orientation));
+
+
 // notebook
 
 f2ptr raw__gtk__notebook__new(f2ptr cause) {
@@ -2268,9 +2309,10 @@ void f2__gtk__initialize() {
   
   // progress_bar
   
-  f2__primcfunk__init__0(gtk__progress_bar__new,                          "Returns a new GtkProgressBar widget.");
-  f2__primcfunk__init__2(gtk__progress_bar__set_fraction, this, fraction, "Sets the fraction done of the progress bar.");
-  f2__primcfunk__init__2(gtk__progress_bar__set_text,     this, text,     "Sets the text of the progress bar.");
+  f2__primcfunk__init__0(gtk__progress_bar__new,                                "Returns a new GtkProgressBar widget.");
+  f2__primcfunk__init__2(gtk__progress_bar__set_fraction,    this, fraction,    "Sets the fraction done of the progress bar.");
+  f2__primcfunk__init__2(gtk__progress_bar__set_text,        this, text,        "Sets the text of the progress bar.");
+  f2__primcfunk__init__2(gtk__progress_bar__set_orientation, this, orientation, "Sets the orientation of the progress bar to one of four possible symbolic values: left_to_right, right_to_left, top_to_bottom, or bottom_to_top.");
   
   // notebook
   

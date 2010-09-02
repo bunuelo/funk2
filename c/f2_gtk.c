@@ -1796,7 +1796,7 @@ def_pcfunk2(gtk__progress_bar__set_fraction, this, fraction, return f2__gtk__pro
 
 f2ptr raw__gtk__progress_bar__set_text(f2ptr cause, f2ptr this, f2ptr text) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkWidget(cause, this);
+  GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
   
   u64 text__length = raw__string__length(cause, text);
   u8* text__str    = (u8*)alloca(text__length + 1);

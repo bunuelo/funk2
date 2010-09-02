@@ -940,7 +940,7 @@ GtkWidget* funk2_gtk__menu_item__new(funk2_gtk_t* this, u8* label) {
 void funk2_gtk__menu_item__set_submenu(funk2_gtk_t* this, GtkWidget* widget, GtkWidget* submenu) {
   {
     gdk_threads_enter();
-    gtk_menu_append(GTK_MENU_ITEM(widget), GTK_WIDGET(submenu));
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(widget), GTK_WIDGET(submenu));
     gdk_threads_leave();
   }
 }

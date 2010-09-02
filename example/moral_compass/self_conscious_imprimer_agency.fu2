@@ -20,7 +20,7 @@
 
 [deframe self_conscious_imprimer_agency [agency] []
   [new []
-       [type-initialize agency this `imprimer]
+       [construct agency `imprimer]
        
        [have this add_resource [resource react_to_imprimer_scold [imprimer scold]
 					 [have this think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', has scolded something about ' [get scold focus] '!  How should I react?']

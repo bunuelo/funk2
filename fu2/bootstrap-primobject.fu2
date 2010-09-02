@@ -44,12 +44,14 @@
 [defmetro create [type_name]
   [let [[type_create_funk [get [stringlist-concat [conslist [exp-as-string type_name] '-type_create_funk-' [exp-as-string [gensym]]]] as-symbol]]]
     `[let [[,type_create_funk [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `type_create]]]
-       [apply ,type_create_funk [cons this nil]]]]]
+       [if ,type_create_funk
+	   [apply ,type_create_funk [cons this nil]]]]]]
 
 [defmetro construct [type_name :rest args]
   [let [[type_construct_funk [get [stringlist-concat [conslist [exp-as-string type_name] '-type_construct_funk-' [exp-as-string [gensym]]]] as-symbol]]]
     `[let [[,type_construct_funk [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `type_construct]]]
-       [apply ,type_construct_funk [cons this args]]]]]
+       [if ,type_construct_funk
+	   [apply ,type_construct_funk [conslist this @args]]]]]]
 
 [defmetro deframe [type_name parents slot_name_value_pairs :rest properties]
   [let [[type_inherits_from_frame nil]]

@@ -21,7 +21,7 @@
 [deframe deliberative_reality_agency [agency] [last_time_step
 					       deliberative_reality_story]
   [new []
-       [type-initialize agency this `reality]
+       [construct agency `reality]
        [set this last_time_step             -1]
        [set this deliberative_reality_story [new story]]
        [have this add_resource [resource include_reactive_stories_into_deliberative_story []

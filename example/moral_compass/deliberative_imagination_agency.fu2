@@ -20,7 +20,7 @@
 
 [deframe deliberative_imagination_agency [agency] []
   [new []
-       [type-initialize agency this `imagination]
+       [construct agency `imagination]
        this]]
 
 

@@ -20,6 +20,6 @@
 
 [deframe reflective_credit_assignment_agency [agency] []
   [new []
-       [type-initialize agency this `credit_assignment]
+       [construct agency `credit_assignment]
        this]]
 

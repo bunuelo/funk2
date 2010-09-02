@@ -21,7 +21,7 @@
 [deframe reactive_sensory_agency [agency] [reactive_sensory_sense
 					   reactive_sensory_story]
   [new []
-       [type-initialize agency this `sensory]
+       [construct agency `sensory]
        
        [have this add_resource [resource continuous_sensing []
 					 [let [[body [get this body]]]

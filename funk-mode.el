@@ -82,7 +82,7 @@
      (cons (regexp-opt
             '("!=" "<=" ">=" "==" ">>" "<<" "+" "-" "*" "/" "=" "<" ">"
 	      "action" "actor" "act" "and"
-	      "cond" "cause-define" "cause-define-funk" "cause-defunk" "cause-lookup" "cause-lookup-funk"
+	      "cause-define" "cause-define-funk" "cause-defunk" "cause-lookup" "cause-lookup-funk" "cond" "construct"
               "defunk" "define-funk" "defunk-local" "define" "defmetro" "deftypefunk" "deframe" "deftypeconstruct" "dotimes"
 	      "elt" "error" "execute"
 	      "frame" "funk" "funk-new_with_name" "funkall"
@@ -96,7 +96,6 @@
 	      "parc" "parcar" "parlet" "parog" "partimes" "prog" "put"
 	      "quote"
 	      "set" "set-apply" "shelter"
-	      "type-initialize"
 	      "while" "with" "with-new-cause"
 	      "yield"
 	      )

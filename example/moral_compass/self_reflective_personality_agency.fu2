@@ -20,6 +20,6 @@
 
 [deframe self_reflective_personality_agency [agency] []
   [new []
-       [type-initialize agency this `personality]
+       [construct agency `personality]
        this]]
 

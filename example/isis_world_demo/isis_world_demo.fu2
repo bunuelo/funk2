@@ -21,7 +21,7 @@
 
 [deframe isis_agent [agent_body] [says arm_length]
   [new [name]
-       [type-initialize agent_body this name [new moral_compass]]
+       [construct agent_body name [new moral_compass]]
        [set this says       nil]
        [set this arm_length 2]
        this]]
@@ -42,7 +42,7 @@
 
 [deframe isis_world [physical_world] [client]
   [new [client]
-       [type-initialize physical_world this]
+       [construct physical_world]
        [set this client client]
        this]]
 
@@ -75,12 +75,12 @@
 
 [deframe ralph_agent [isis_agent] []
   [new []
-       [type-initialize isis_agent this `Ralph]
+       [construct isis_agent `Ralph]
        this]]
 
 [deframe lauren_agent [isis_agent] []
   [new []
-       [type-initialize isis_agent this `Lauren]
+       [construct isis_agent `Lauren]
        this]]
 
 

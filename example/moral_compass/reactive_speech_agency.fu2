@@ -20,7 +20,7 @@
 
 [deframe reactive_speech_agency [agency] []
   [new []
-       [type-initialize agency this `speech]
+       [construct agency `speech]
        
        [have this add_resource [resource say [string]
 					 [have this-resource think_to_self 'I am saying, "' string '"']

@@ -24,7 +24,7 @@
 					physical_agency
 					speech_agency]
   [new []
-       [type-initialize mental_layer this 0 `reactive]
+       [construct mental_layer 0 `reactive]
        [set this sensory_agency  [new reactive_sensory_agency]]
        [set this physical_agency [new reactive_physical_agency]]
        [set this speech_agency   [new reactive_speech_agency]]

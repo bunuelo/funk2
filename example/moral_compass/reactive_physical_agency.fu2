@@ -21,7 +21,7 @@
 [deframe reactive_physical_agency [agency] [user_activate_resource
 					    user_activate_args]
   [new []
-       [type-initialize agency this `physical]
+       [construct agency `physical]
        
        [set this user_activate_resource nil]
        [set this user_activate_args     nil]

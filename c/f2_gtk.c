@@ -2463,7 +2463,7 @@ f2ptr raw__gtk__menu__append(f2ptr cause, f2ptr menu, f2ptr append_widget) {
 #if defined(F2__GTK__SUPPORTED)
   GtkMenu*   gtk_menu          = raw__gtk_menu__as__GtkMenu(cause, menu);
   GtkWidget* append_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, append_widget);
-  funk2_gtk__menu__append(&(__funk2.gtk), gtk_widget, append_gtk_widget);
+  funk2_gtk__menu__append(&(__funk2.gtk), gtk_menu, append_gtk_widget);
   return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);

@@ -1844,7 +1844,7 @@ f2ptr raw__gtk__progress_bar__set_orientation(f2ptr cause, f2ptr this, f2ptr ori
     return f2larva__new(cause, 636, f2__bug__new(cause, f2integer__new(cause, 636), bug_frame));
   }
   
-  funk2_gtk__progress_bar__set_text(gtk_this, gtk_orientation);
+  funk2_gtk__progress_bar__set_orientation(gtk_this, gtk_orientation);
   return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);

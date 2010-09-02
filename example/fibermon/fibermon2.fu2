@@ -52,7 +52,7 @@
        [set this frame [gtk-frame-new 'fiber']]
        [have view_menu append view_details_menu_item]
        [have menu_bar  append view_menu_item]
-       `[set view_menu_item submenu view_menu]
+       [set view_menu_item submenu view_menu]
        [set progress_bar orientation `bottom_to_top]
        [dotimes [row 12]
 	 [let [[row_labels [get table_labels elt row]]]

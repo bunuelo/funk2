@@ -100,6 +100,16 @@ f2ptr f2gtk_text_range__primobject_type__new(f2ptr cause);
 f2ptr f2gtk_progress_bar__primobject_type__new_aux(f2ptr cause);
 
 
+// gtk_menu_bar
+
+f2ptr f2gtk_menu_bar__primobject_type__new_aux(f2ptr cause);
+
+
+// gtk_menu
+
+f2ptr f2gtk_menu__primobject_type__new_aux(f2ptr cause);
+
+
 // funk2_gtk
 
 void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc);

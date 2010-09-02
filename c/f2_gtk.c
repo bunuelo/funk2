@@ -131,6 +131,44 @@ f2ptr f2gtk_progress_bar__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// gtk_menu
+
+def_frame_object__global__1_slot(gtk_menu, pointer);
+
+#if defined(F2__GTK__SUPPORTED)
+
+GtkMenu* raw__gtk_menu__as__GtkMenu(f2ptr cause, f2ptr this) {
+  return (GtkMenu*)from_ptr(f2pointer__p(f2__gtk_menu__pointer(cause, this), cause));
+}
+
+#endif // F2__GTK__SUPPORTED
+
+f2ptr f2gtk_menu__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2gtk_menu__primobject_type__new(cause);
+  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  return this;
+}
+
+
+// gtk_menu_bar
+
+def_frame_object__global__1_slot(gtk_menu_bar, pointer);
+
+#if defined(F2__GTK__SUPPORTED)
+
+GtkMenuBar* raw__gtk_menu_bar__as__GtkMenuBar(f2ptr cause, f2ptr this) {
+  return (GtkMenuBar*)from_ptr(f2pointer__p(f2__gtk_menu_bar__pointer(cause, this), cause));
+}
+
+#endif // F2__GTK__SUPPORTED
+
+f2ptr f2gtk_menu_bar__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2gtk_menu_bar__primobject_type__new(cause);
+  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  return this;
+}
+
+
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -863,6 +901,70 @@ GtkWidget* funk2_gtk__frame__new(funk2_gtk_t* this, u8* label) {
     gdk_threads_leave();
   }
   return frame;
+}
+
+
+// menu_bar
+
+GtkMenuBar* funk2_gtk__menu_bar__new(funk2_gtk_t* this) {
+  GtkMenuBar* menu_bar;
+  {
+    gdk_threads_enter();
+    menu_bar = GTK_MENU_BAR(gtk_menu_bar_new());
+    gdk_threads_leave();
+  }
+  return menu_bar;
+}
+
+void funk2_gtk__menu_bar__append(funk2_gtk_t* this, GtkMenuBar* menu_bar, GtkWidget* append_widget) {
+  {
+    gdk_threads_enter();
+    gtk_menu_bar_append(GTK_MENU_BAR(menu_bar), GTK_WIDGET(append_widget));
+    gdk_threads_leave();
+  }
+}
+
+
+// menu_item
+
+GtkWidget* funk2_gtk__menu_item__new(funk2_gtk_t* this, u8* label) {
+  GtkWidget* menu_item;
+  {
+    gdk_threads_enter();
+    menu_item = gtk_menu_item_new_with_label((char*)label);
+    gdk_threads_leave();
+  }
+  return menu_item;
+}
+
+void funk2_gtk__menu_item__set_submenu(funk2_gtk_t* this, GtkWidget* widget, GtkWidget* submenu) {
+  {
+    gdk_threads_enter();
+    gtk_menu_append(GTK_MENU_ITEM(widget), GTK_WIDGET(submenu));
+    gdk_threads_leave();
+  }
+}
+
+
+
+// menu
+
+GtkMenu* funk2_gtk__menu__new(funk2_gtk_t* this) {
+  GtkMenu* menu;
+  {
+    gdk_threads_enter();
+    menu = GTK_MENU(gtk_menu_new());
+    gdk_threads_leave();
+  }
+  return menu;
+}
+
+void funk2_gtk__menu__append(funk2_gtk_t* this, GtkMenu* menu, GtkWidget* append_widget) {
+  {
+    gdk_threads_enter();
+    gtk_menu_append(GTK_MENU(menu), GTK_WIDGET(append_widget));
+    gdk_threads_leave();
+  }
 }
 
 
@@ -2254,6 +2356,130 @@ f2ptr f2__gtk__frame__new(f2ptr cause, f2ptr label) {
 def_pcfunk1(gtk__frame__new, label, return f2__gtk__frame__new(this_cause, label));
 
 
+// menu_bar
+
+f2ptr raw__gtk__menu_bar__new(f2ptr cause) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkMenuBar* menu_bar = funk2_gtk__menu_bar__new(&(__funk2.gtk));
+  return f2__gtk_menu_bar__new(cause, f2pointer__new(cause, to_ptr(menu_bar)));
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__menu_bar__new(f2ptr cause) {
+  return raw__gtk__menu_bar__new(cause);
+}
+def_pcfunk0(gtk__menu_bar__new, return f2__gtk__menu_bar__new(this_cause));
+
+
+f2ptr raw__gtk__menu_bar__append(f2ptr cause, f2ptr menu_bar, f2ptr append_widget) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkMenuBar* gtk_menu_bar      = raw__gtk_menu_bar__as__GtkMenuBar(cause, menu_bar);
+  GtkWidget*  append_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, append_widget);
+  funk2_gtk__menu_bar__append(&(__funk2.gtk), gtk_menu_bar, append_gtk_widget);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__menu_bar__append(f2ptr cause, f2ptr menu_bar, f2ptr append_widget) {
+  if ((! raw__gtk_menu_bar__is_type(cause, menu_bar)) ||
+      (! raw__gtk_widget__is_type(cause, append_widget))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__menu_bar__append(cause, menu_bar, append_widget);
+}
+def_pcfunk2(gtk__menu_bar__append, menu_bar, append_widget, return f2__gtk__menu_bar__append(this_cause, menu_bar, append_widget));
+
+
+// menu_item
+
+f2ptr raw__gtk__menu_item__new(f2ptr cause, f2ptr label) {
+#if defined(F2__GTK__SUPPORTED)
+  u64 label__length;
+  u8* label__str;
+  label__length = raw__string__length(cause, label);
+  label__str    = (u8*)alloca(label__length + 1);
+  raw__string__str_copy(cause, label, label__str);
+  label__str[label__length] = 0;
+  
+  GtkWidget* menu_item = funk2_gtk__menu_item__new(&(__funk2.gtk), label__str);
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(menu_item)));
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__menu_item__new(f2ptr cause, f2ptr label) {
+  if (! raw__string__is_type(cause, label)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__menu_item__new(cause, label);
+}
+def_pcfunk1(gtk__menu_item__new, label, return f2__gtk__menu_item__new(this_cause, label));
+
+
+f2ptr raw__gtk__menu_item__set_submenu(f2ptr cause, f2ptr widget, f2ptr submenu) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget* gtk_widget         = raw__gtk_widget__as__GtkWidget(cause, widget);
+  GtkWidget* submenu_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, submenu);
+  funk2_gtk__menu_item__set_submenu(&(__funk2.gtk), gtk_widget, submenu_gtk_widget);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__menu_item__set_submenu(f2ptr cause, f2ptr widget, f2ptr submenu) {
+  if ((! raw__gtk_widget__is_type(cause, widget)) ||
+      (! raw__gtk_widget__is_type(cause, submenu))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__menu_item__set_submenu(cause, widget, submenu);
+}
+def_pcfunk2(gtk__menu_item__set_submenu, widget, submenu, return f2__gtk__menu_item__set_submenu(this_cause, widget, submenu));
+
+
+// menu
+
+f2ptr raw__gtk__menu__new(f2ptr cause) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkMenu* menu = funk2_gtk__menu__new(&(__funk2.gtk));
+  return f2__gtk_menu__new(cause, f2pointer__new(cause, to_ptr(menu)));
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__menu__new(f2ptr cause) {
+  return raw__gtk__menu__new(cause);
+}
+def_pcfunk0(gtk__menu__new, return f2__gtk__menu__new(this_cause));
+
+
+f2ptr raw__gtk__menu__append(f2ptr cause, f2ptr menu, f2ptr append_widget) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkMenu*   gtk_menu          = raw__gtk_menu__as__GtkMenu(cause, menu);
+  GtkWidget* append_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, append_widget);
+  funk2_gtk__menu__append(&(__funk2.gtk), gtk_widget, append_gtk_widget);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__menu__append(f2ptr cause, f2ptr menu, f2ptr append_widget) {
+  if ((! raw__gtk_menu__is_type(cause, menu)) ||
+      (! raw__gtk_widget__is_type(cause, append_widget))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__menu__append(cause, menu, append_widget);
+}
+def_pcfunk2(gtk__menu__append, menu, append_widget, return f2__gtk__menu__append(this_cause, menu, append_widget));
+
+
 
 // **
 
@@ -2404,6 +2630,20 @@ void f2__gtk__initialize() {
   
   f2__primcfunk__init__1(gtk__frame__new, label, "Returns a new GtkFrame with optional label.");
   
+  // menu_bar
+  
+  f2__primcfunk__init__0(gtk__menu_bar__new,                          "Returns a new GtkMenuBar.");
+  f2__primcfunk__init__2(gtk__menu_bar__append, menu_bar, add_widget, "Appends a widget to a menu_bar.");
+  
+  // menu_item
+  
+  f2__primcfunk__init__1(gtk__menu_item__new,         label,           "Returns a new GtkMenuItem with label.");
+  f2__primcfunk__init__2(gtk__menu_item__set_submenu, widget, submenu, "Sets the submenu for a menu_item.");
+  
+  // menu
+  
+  f2__primcfunk__init__0(gtk__menu__new,                      "Returns a new GtkMenu.");
+  f2__primcfunk__init__2(gtk__menu__append, menu, add_widget, "Appends a widget to a menu.");
   
 }
 

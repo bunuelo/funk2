@@ -83,6 +83,12 @@
 [globalize-funk gtk-table-new                         &primfunk:gtk__table__new]
 [globalize-funk gtk-table-attach                      &primfunk:gtk__table__attach]
 [globalize-funk gtk-frame-new                         &primfunk:gtk__frame__new]
+[globalize-funk gtk-menu_bar-new                      &primfunk:gtk__menu_bar__new]
+[globalize-funk gtk-menu_bar-append                   &primfunk:gtk__menu_bar__append]
+[globalize-funk gtk-menu_item-new                     &primfunk:gtk__menu_item__new]
+[globalize-funk gtk-menu_item-set_submenu             &primfunk:gtk__menu_item__set_submenu]
+[globalize-funk gtk-menu-new                          &primfunk:gtk__menu__new]
+[globalize-funk gtk-menu-append                       &primfunk:gtk__menu__append]
 
 
 

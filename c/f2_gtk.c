@@ -699,6 +699,22 @@ void funk2_gtk__progress_bar__set_orientation(GtkProgressBar* progress_bar, GtkP
   }
 }
 
+void funk2_gtk__progress_bar__pulse(GtkProgressBar* progress_bar) {
+  {
+    gdk_threads_enter();
+    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(progress_bar));
+    gdk_threads_leave();
+  }
+}
+
+void funk2_gtk__progress_bar__set_pulse_step(GtkProgressBar* progress_bar, double fraction) {
+  {
+    gdk_threads_enter();
+    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(progress_bar), fraction);
+    gdk_threads_leave();
+  }
+}
+
 
 // notebook
 
@@ -1861,6 +1877,49 @@ f2ptr f2__gtk__progress_bar__set_orientation(f2ptr cause, f2ptr this, f2ptr orie
 def_pcfunk2(gtk__progress_bar__set_orientation, this, orientation, return f2__gtk__progress_bar__set_orientation(this_cause, this, orientation));
 
 
+f2ptr raw__gtk__progress_bar__pulse(f2ptr cause, f2ptr this) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
+  funk2_gtk__progress_bar__pulse(gtk_this);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__progress_bar__pulse(f2ptr cause, f2ptr this) {
+  if (! raw__gtk_progress_bar__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__progress_bar__pulse(cause, this);
+}
+def_pcfunk1(gtk__progress_bar__pulse, this, return f2__gtk__progress_bar__pulse(this_cause, this));
+
+
+f2ptr raw__gtk__progress_bar__set_pulse_step(f2ptr cause, f2ptr this, f2ptr fraction) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkProgressBar* gtk_this        = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
+  f2ptr           fraction_double = f2__number__as__double(cause, fraction);
+  if (! raw__double__is_type(cause, fraction_double)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  double fraction_double__d = f2double__d(fraction_double, cause);
+  funk2_gtk__progress_bar__set_pulse_step(gtk_this, fraction_double__d);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__progress_bar__set_pulse_step(f2ptr cause, f2ptr this, f2ptr fraction) {
+  if (! raw__gtk_progress_bar__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__progress_bar__set_pulse_step(cause, this, fraction);
+}
+def_pcfunk2(gtk__progress_bar__set_pulse_step, this, fraction, return f2__gtk__progress_bar__set_pulse_step(this_cause, this, fraction));
+
+
 // notebook
 
 f2ptr raw__gtk__notebook__new(f2ptr cause) {
@@ -2313,6 +2372,8 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__2(gtk__progress_bar__set_fraction,    this, fraction,    "Sets the fraction done of the progress bar.");
   f2__primcfunk__init__2(gtk__progress_bar__set_text,        this, text,        "Sets the text of the progress bar.");
   f2__primcfunk__init__2(gtk__progress_bar__set_orientation, this, orientation, "Sets the orientation of the progress bar to one of four possible symbolic values: left_to_right, right_to_left, top_to_bottom, or bottom_to_top.");
+  f2__primcfunk__init__1(gtk__progress_bar__pulse,           this,              "Pulses the progress bar to indicate that an unknown amount of progress has been made.");
+  f2__primcfunk__init__2(gtk__progress_bar__set_pulse_step,  this, fraction,    "Sets the pulse step of the progress bar.");
   
   // notebook
   

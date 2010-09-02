@@ -113,3 +113,28 @@
 [defunk double [x]
   [get x as-double]]
 
+
+[defmetro += [variable value]
+  `[= ,variable [+ ,variable ,value]]]
+
+[defmetro -= [variable value]
+  `[= ,variable [- ,variable ,value]]]
+
+[defmetro *= [variable value]
+  `[= ,variable [* ,variable ,value]]]
+
+[defmetro /= [variable value]
+  `[= ,variable [/ ,variable ,value]]]
+
+[defmetro >>= [variable value]
+  `[= ,variable [>> ,variable ,value]]]
+
+[defmetro <<= [variable value]
+  `[= ,variable [<< ,variable ,value]]]
+
+[defmetro ++ [variable]
+  `[= ,variable [+ ,variable 1]]]
+
+[defmetro -- [variable]
+  `[= ,variable [- ,variable 1]]]
+

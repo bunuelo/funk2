@@ -76,6 +76,15 @@
   frame]
 
 [deftypefunk fibermon2_fiber execute redraw []
+  [let [[progress_fraction [if execution_efficiency
+			       [if [< execution_efficiency 0.0]
+				   0.0
+				   [if [> execution_efficiency 1.0]
+				       1.0
+				       execution_efficiency]]
+			     0.0]]]
+    [set progress_bar fraction progress_fraction]
+    [have progress_bar pulse]]
   [set [get [get table_labels elt  0] elt 1] text [format nil [let [[cause_reg [get fiber cause_reg]]]
 								[if cause_reg
 								    [have cause_reg lookup `cause-name]]]]]
@@ -166,36 +175,12 @@
 				       execution_efficiency]]
 			     0.0]]]
     [set progress_bar text     [format nil [* 100.0 progress_fraction] '%']]
-    [set progress_bar fraction progress_fraction]]
+    [set progress_bar fraction progress_fraction]
+    [have progress_bar pulse]]
   [mapc [funk [fibermon2_fiber]
 	      [have fibermon2_fiber redraw]]
 	[get fibermon2_fiber_hash values]]
   nil]
-
-[defmetro += [variable value]
-  `[= ,variable [+ ,variable ,value]]]
-
-[defmetro -= [variable value]
-  `[= ,variable [- ,variable ,value]]]
-
-[defmetro *= [variable value]
-  `[= ,variable [* ,variable ,value]]]
-
-[defmetro /= [variable value]
-  `[= ,variable [/ ,variable ,value]]]
-
-[defmetro >>= [variable value]
-  `[= ,variable [>> ,variable ,value]]]
-
-[defmetro <<= [variable value]
-  `[= ,variable [<< ,variable ,value]]]
-
-[defmetro ++ [variable]
-  `[= ,variable [+ ,variable 1]]]
-
-[defmetro -- [variable]
-  `[= ,variable [- ,variable 1]]]
-
 
 [deftypefunk fibermon2_processor execute recompute_statistics []
   [let [[elapsed_nanoseconds__count 0]]

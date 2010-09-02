@@ -58,10 +58,12 @@
 [deftypefunk gtk_widget get buffer [] [gtk-text_view-get_buffer [get this widget]]]
 
 'GtkProgressBar'
-[deftypefunk gtk_progress_bar get widget      []            this]
-[deftypefunk gtk_progress_bar set fraction    [fraction]    [gtk-progress_bar-set_fraction    [get this widget] fraction]]
-[deftypefunk gtk_progress_bar set text        [text]        [gtk-progress_bar-set_text        [get this widget] text]]
-[deftypefunk gtk_progress_bar set orientation [orientation] [gtk-progress_bar-set_orientation [get this widget] orientation]]
+[deftypefunk gtk_progress_bar get     widget      []            this]
+[deftypefunk gtk_progress_bar set     fraction    [fraction]    [gtk-progress_bar-set_fraction    [get this widget] fraction]]
+[deftypefunk gtk_progress_bar set     text        [text]        [gtk-progress_bar-set_text        [get this widget] text]]
+[deftypefunk gtk_progress_bar set     orientation [orientation] [gtk-progress_bar-set_orientation [get this widget] orientation]]
+[deftypefunk gtk_progress_bar execute pulse       []            [gtk-progress_bar-pulse           [get this widget]]]
+[deftypefunk gtk_progress_bar set     pulse_step  [fraction]    [gtk-progress_bar-set_pulse_step  [get this widget] fraction]]
 
 'GtkWindow'
 [deftypefunk gtk_widget set title        [title]        [gtk-window-set_title        [get this widget] title]]

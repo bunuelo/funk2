@@ -153,12 +153,15 @@
   [set [get [get table_labels elt 1] elt 1] text [format nil bytecode_count]]
   [set [get [get table_labels elt 2] elt 1] text [format nil bytecodes_per_second]]
   [set [get [get table_labels elt 3] elt 1] text [format nil execution_efficiency]]
-  [if execution_efficiency
-      [if [< execution_efficiency 0.0]
-	  [set progress_bar fraction 0.0]
-	[if [> execution_efficiency 1.0]
-	    [set progress_bar fraction 1.0]
-	  [set progress_bar fraction execution_efficiency]]]]
+  [let [[progress_fraction [if execution_efficiency
+			       [if [< execution_efficiency 0.0]
+				   0.0
+				   [if [> execution_efficiency 1.0]
+				       1.0
+				       execution_efficiency]]
+			     0.0]]]
+    [set progress_bar text     [format nil progress_fraction]]
+    [set progress_bar fraction progress_fraction]]
   [mapc [funk [fibermon2_fiber]
 	      [have fibermon2_fiber redraw]]
 	[get fibermon2_fiber_hash values]]

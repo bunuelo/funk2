@@ -67,6 +67,13 @@ GtkTextBuffer* raw__gtk_text_buffer__as__GtkTextBuffer(f2ptr cause, f2ptr this) 
 
 #endif // F2__GTK__SUPPORTED
 
+f2ptr f2gtk_text_buffer__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2gtk_text_buffer__primobject_type__new(cause);
+  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  return this;
+}
+
+
 
 // gtk_text_iter
 
@@ -104,6 +111,24 @@ def_frame_object__global__2_slot(gtk_callback, funk, args);
 
 def_frame_object__global__2_slot(gtk_text_range, start, end);
 
+
+// gtk_progress_bar
+
+def_frame_object__global__1_slot(gtk_progress_bar, pointer);
+
+#if defined(F2__GTK__SUPPORTED)
+
+GtkProgressBar* raw__gtk_progress_bar__as__GtkProgressBar(f2ptr cause, f2ptr this) {
+  return (GtkProgressBar*)from_ptr(f2pointer__p(f2__gtk_progress_bar__pointer(cause, this), cause));
+}
+
+#endif // F2__GTK__SUPPORTED
+
+f2ptr f2gtk_progress_bar__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2gtk_progress_bar__primobject_type__new(cause);
+  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  return this;
+}
 
 
 
@@ -640,8 +665,8 @@ GtkWidget* funk2_gtk__hpaned__new(funk2_gtk_t* this) {
 
 // progress_bar
 
-GtkWidget* funk2_gtk__progress_bar__new(funk2_gtk_t* this) {
-  GtkWidget* progress_bar;
+GtkProgressBar* funk2_gtk__progress_bar__new(funk2_gtk_t* this) {
+  GtkProgressBar* progress_bar;
   {
     gdk_threads_enter();
     progress_bar = gtk_progress_bar_new();
@@ -650,10 +675,18 @@ GtkWidget* funk2_gtk__progress_bar__new(funk2_gtk_t* this) {
   return progress_bar;
 }
 
-void funk2_gtk__progress_bar__set_fraction(GtkWidget* progress_bar, double fraction) {
+void funk2_gtk__progress_bar__set_fraction(GtkProgressBar* progress_bar, double fraction) {
   {
     gdk_threads_enter();
     gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(progress_bar), fraction);
+    gdk_threads_leave();
+  }
+}
+
+void funk2_gtk__progress_bar__set_text(GtkProgressBar* progress_bar, u8* text) {
+  {
+    gdk_threads_enter();
+    gtk_progress_bar_set_text(GTK_PROGRESS_BAR(progress_bar), (char*)text);
     gdk_threads_leave();
   }
 }
@@ -1724,8 +1757,8 @@ def_pcfunk0(gtk__hpaned__new, return f2__gtk__hpaned__new(this_cause));
 
 f2ptr raw__gtk__progress_bar__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = funk2_gtk__progress_bar__new(&(__funk2.gtk));
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(gtk_widget)));
+  GtkProgressBar* gtk_progress_bar = funk2_gtk__progress_bar__new(&(__funk2.gtk));
+  return f2__gtk_progress_bar__new(cause, f2pointer__new(cause, to_ptr(gtk_progress_bar)));
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1739,8 +1772,8 @@ def_pcfunk0(gtk__progress_bar__new, return f2__gtk__progress_bar__new(this_cause
 
 f2ptr raw__gtk__progress_bar__set_fraction(f2ptr cause, f2ptr this, f2ptr fraction) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_this        = raw__gtk_widget__as__GtkWidget(cause, this);
-  f2ptr      fraction_double = f2__number__as__double(cause, fraction);
+  GtkProgressBar* gtk_this        = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
+  f2ptr           fraction_double = f2__number__as__double(cause, fraction);
   if (! raw__double__is_type(cause, fraction_double)) {
     return f2larva__new(cause, 1, nil);
   }
@@ -1753,12 +1786,38 @@ f2ptr raw__gtk__progress_bar__set_fraction(f2ptr cause, f2ptr this, f2ptr fracti
 }
 
 f2ptr f2__gtk__progress_bar__set_fraction(f2ptr cause, f2ptr this, f2ptr fraction) {
-  if (! raw__gtk_widget__is_type(cause, this)) {
+  if (! raw__gtk_progress_bar__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__gtk__progress_bar__set_fraction(cause, this, fraction);
 }
 def_pcfunk2(gtk__progress_bar__set_fraction, this, fraction, return f2__gtk__progress_bar__set_fraction(this_cause, this, fraction));
+
+
+f2ptr raw__gtk__progress_bar__set_text(f2ptr cause, f2ptr this, f2ptr text) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkWidget(cause, this);
+  
+  u64 text__length = raw__string__length(cause, text);
+  u8* text__str    = (u8*)alloca(text__length + 1);
+  raw__string__str_copy(cause, text, text__str);
+  text__str[text__length] = 0;
+  
+  funk2_gtk__progress_bar__set_text(gtk_this, text__str);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__progress_bar__set_text(f2ptr cause, f2ptr this, f2ptr text) {
+  if ((! raw__gtk_progress_bar__is_type(cause, this)) ||
+      (! raw__string__is_type(cause, text))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__progress_bar__set_text(cause, this, text);
+}
+def_pcfunk2(gtk__progress_bar__set_text, this, text, return f2__gtk__progress_bar__set_text(this_cause, this, text));
 
 
 // notebook
@@ -2143,6 +2202,11 @@ void f2__gtk__initialize() {
   init_frame_object__2_slot(gtk_text_range, start, end);
   
 
+  // gtk_progress_bar
+  
+  init_frame_object__1_slot(gtk_progress_bar, pointer);
+  
+
   f2__primcfunk__init__0(gtk__is_supported,                                                                            "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
   
   // expose_event
@@ -2206,6 +2270,7 @@ void f2__gtk__initialize() {
   
   f2__primcfunk__init__0(gtk__progress_bar__new,                          "Returns a new GtkProgressBar widget.");
   f2__primcfunk__init__2(gtk__progress_bar__set_fraction, this, fraction, "Sets the fraction done of the progress bar.");
+  f2__primcfunk__init__2(gtk__progress_bar__set_text,     this, text,     "Sets the text of the progress bar.");
   
   // notebook
   

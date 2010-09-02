@@ -72,7 +72,7 @@ f2ptr f2gtk_box__primobject_type__new_aux(f2ptr cause);
 
 // gtk_text_buffer
 
-f2ptr f2gtk_text_buffer__primobject_type__new(f2ptr cause);
+f2ptr f2gtk_text_buffer__primobject_type__new_aux(f2ptr cause);
 
 
 // gtk_text_iter
@@ -93,6 +93,11 @@ f2ptr f2gtk_text_mark__primobject_type__new(f2ptr cause);
 // gtk_text_range
 
 f2ptr f2gtk_text_range__primobject_type__new(f2ptr cause);
+
+
+// gtk_progress_bar
+
+f2ptr f2gtk_progress_bar__primobject_type__new_aux(f2ptr cause);
 
 
 // funk2_gtk

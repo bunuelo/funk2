@@ -58,7 +58,9 @@
 [deftypefunk gtk_widget get buffer [] [gtk-text_view-get_buffer [get this widget]]]
 
 'GtkProgressBar'
-[deftypefunk gtk_widget set fraction [fraction] [gtk-progress_bar-set_fraction [get this widget] fraction]]
+[deftypefunk gtk_progress_bar get widget   []         this]
+[deftypefunk gtk_progress_bar set fraction [fraction] [gtk-progress_bar-set_fraction [get this widget] fraction]]
+[deftypefunk gtk_progress_bar set text     [text]     [gtk-progress_bar-set_text     [get this widget] text]]
 
 'GtkWindow'
 [deftypefunk gtk_widget set title        [title]        [gtk-window-set_title        [get this widget] title]]

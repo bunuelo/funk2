@@ -91,9 +91,9 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 11), 0), new__string(cause, "execution_efficiency"));
   
   raw__gtk__box__pack_start(cause, this__hbox, this__progress_bar, nil, nil, f2integer__new(cause, 0));
-  raw__gtk__box__pack_start(cause, this__hbox, this__table,        f2bool_new(boolean__true), f2bool_new(boolean__true), f2integer__new(cause, 0));
+  raw__gtk__box__pack_start(cause, this__hbox, this__table,        f2bool__new(boolean__true), f2bool__new(boolean__true), f2integer__new(cause, 0));
   raw__gtk__box__pack_start(cause, this__vbox, this__menu_bar,     nil, nil, f2integer__new(cause, 0));
-  raw__gtk__box__pack_start(cause, this__vbox, this__hbox,         f2bool_new(boolean__true), f2bool_new(boolean__true), f2integer__new(cause, 0));
+  raw__gtk__box__pack_start(cause, this__vbox, this__hbox,         f2bool__new(boolean__true), f2bool__new(boolean__true), f2integer__new(cause, 0));
   
   raw__gtk__container__add(cause, this__frame, this__vbox);
   

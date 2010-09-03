@@ -58,6 +58,7 @@
 [require graph_match_error_correcting]
 [require graph_cluster]
 [require gtk]
+[require fibermon]
 
 [defunk load-funk2-devrc []
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]

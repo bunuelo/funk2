@@ -22,24 +22,24 @@
 #include "funk2.h"
 
 f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "frame"),                              raw__gtk__frame__new(cause, new__string(cause, "fiber")));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "vbox"),                               raw__gtk__vbox__new(cause, f2integer__new(cause, 2)));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "menu_bar"),                           raw__gtk__menu_bar__new(cause));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "command_menu_item"),                  raw__gtk__menu_item__new(cause, new__string(cause, "Command")));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "command_menu"),                       raw__gtk__menu__new(cause));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "command_pause_menu_item"),            raw__gtk__menu_item__new(cause, new__string(cause, "Pause")));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "command_continue_menu_item"),         raw__gtk__menu_item__new(cause, new__string(cause, "Continue")));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "command_keep_undead_menu_item"),      raw__gtk__menu_item__new(cause, new__string(cause, "Keep Undead")));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "command_dont_keep_undead_menu_item"), raw__gtk__menu_item__new(cause, new__string(cause, "Don't Keep Undead")));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "command_quit_menu_item"),             raw__gtk__menu_item__new(cause, new__string(cause, "Quit")));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "view_menu_item"),                     raw__gtk__menu_item__new(cause, new__string(cause, "View")));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "view_menu"),                          raw__gtk__menu__new(cause));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "view_print_to_screen_menu_item"),     raw__gtk__menu_item__new(cause, new__string(cause, "Print to Screen")));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "view_stack_trace_menu_item"),         raw__gtk__menu_item__new(cause, new__string(cause, "Stack Trace")));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "hbox"),                               raw__gtk__hbox__new(cause, f2integer__new(cause, 2)));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "progress_bar"),                       raw__gtk__progress_bar__new(cause));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "table"),                              raw__gtk__table__new(cause, f2integer__new(cause, 12), f2integer__new(cause, 2), nil));
-  f2__fiber__add_var_value(cause, this, new__symbol(cause, "table_labels"),                       f2__array__new(cause, f2list2__new(f2integer__new(cause, 12), f2integer__new(cause, 2))));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "frame"),                              raw__gtk__frame__new(cause, new__string(cause, "fiber")));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "vbox"),                               raw__gtk__vbox__new(cause, f2integer__new(cause, 2)));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "menu_bar"),                           raw__gtk__menu_bar__new(cause));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "command_menu_item"),                  raw__gtk__menu_item__new(cause, new__string(cause, "Command")));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "command_menu"),                       raw__gtk__menu__new(cause));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "command_pause_menu_item"),            raw__gtk__menu_item__new(cause, new__string(cause, "Pause")));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "command_continue_menu_item"),         raw__gtk__menu_item__new(cause, new__string(cause, "Continue")));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "command_keep_undead_menu_item"),      raw__gtk__menu_item__new(cause, new__string(cause, "Keep Undead")));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "command_dont_keep_undead_menu_item"), raw__gtk__menu_item__new(cause, new__string(cause, "Don't Keep Undead")));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "command_quit_menu_item"),             raw__gtk__menu_item__new(cause, new__string(cause, "Quit")));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "view_menu_item"),                     raw__gtk__menu_item__new(cause, new__string(cause, "View")));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "view_menu"),                          raw__gtk__menu__new(cause));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "view_print_to_screen_menu_item"),     raw__gtk__menu_item__new(cause, new__string(cause, "Print to Screen")));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "view_stack_trace_menu_item"),         raw__gtk__menu_item__new(cause, new__string(cause, "Stack Trace")));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "hbox"),                               raw__gtk__hbox__new(cause, f2integer__new(cause, 2)));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "progress_bar"),                       raw__gtk__progress_bar__new(cause));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "table"),                              raw__gtk__table__new(cause, f2integer__new(cause, 12), f2integer__new(cause, 2), nil));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "table_labels"),                       f2__array__new(cause, f2list2__new(f2integer__new(cause, 12), f2integer__new(cause, 2))));
   return this;
 }
 

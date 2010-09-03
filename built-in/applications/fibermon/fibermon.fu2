@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defunk number-to_memory_string [this]
+[defunk bytes-to_memory_string [this]
   [let [[i [get this as-integer]]]
     [cond [      [< i                        1024]   [format nil    i]]
 	  [      [< i [*                1024 1024]]  [format nil [/ i                  1024.0]  'k']]
@@ -25,7 +25,7 @@
 	  [      [< i [*      1024 1024 1024 1024]]  [format nil [/ i [* 1024.0 1024.0 1024.0]] 'G']]
 	  [[or t [< i [* 1024 1024 1024 1024 1024]]] [format nil [/ i [* 1024.0 1024.0 1024.0]] 'T']]]]]
 
-[defunk number-to_time_string [this]
+[defunk nanoseconds-to_time_string [this]
   [let [[i [get this as-integer]]]
     [cond [[< i                       1000]  [format nil    i                                          'ns']]
 	  [[< i               [* 1000 1000]] [format nil [/ i                                 1000.0]  'us']]
@@ -124,7 +124,7 @@
        [set [get [get table_labels elt  5] elt 0] text 'paused']
        [set [get [get table_labels elt  6] elt 0] text 'last_executed_time']
        [set [get [get table_labels elt  7] elt 0] text 'sleep_until_time']
-       [set [get [get table_labels elt  8] elt 0] text 'execution_seconds']
+       [set [get [get table_labels elt  8] elt 0] text 'execution_time']
        [set [get [get table_labels elt  9] elt 0] text 'bytecode_count']
        [set [get [get table_labels elt 10] elt 0] text 'bytecodes_per_second']
        [set [get [get table_labels elt 11] elt 0] text 'execution_efficiency']
@@ -159,9 +159,9 @@
   [set [get [get table_labels elt  5] elt 1] text [format nil [if [get fiber paused] 'Yes' 'No']]]
   [set [get [get table_labels elt  6] elt 1] text [format nil [get fiber last_executed_time]]]
   [set [get [get table_labels elt  7] elt 1] text [format nil [get fiber sleep_until_time]]]
-  [set [get [get table_labels elt  8] elt 1] text [format nil [/ [if execution_nanoseconds execution_nanoseconds 0] 1000000000.0]]]
-  [set [get [get table_labels elt  9] elt 1] text [format nil [number-to_memory_string [if bytecode_count bytecode_count 0]] 'Bc']]
-  [set [get [get table_labels elt 10] elt 1] text [format nil [number-to_memory_string [if bytecodes_per_second bytecodes_per_second 0]] 'Bc/s']]
+  [set [get [get table_labels elt  8] elt 1] text [format nil [nanoseconds-to_time_string [if execution_nanoseconds execution_nanoseconds 0]]]]
+  [set [get [get table_labels elt  9] elt 1] text [format nil [bytes-to_memory_string [if bytecode_count bytecode_count 0]] 'Bc']]
+  [set [get [get table_labels elt 10] elt 1] text [format nil [bytes-to_memory_string [if bytecodes_per_second bytecodes_per_second 0]] 'Bc/s']]
   [set [get [get table_labels elt 11] elt 1] text [format nil [* 100.0 [if execution_efficiency execution_efficiency 0]] '%']]
   ]
 
@@ -228,10 +228,10 @@
   frame]
 
 [deftypefunk fibermon_processor execute redraw []
-  [set [get [get table_labels elt 0] elt 1] text [format nil [if bytecodes_per_second [number-to_memory_string bytecodes_per_second] ''] 'Bc/s']]
+  [set [get [get table_labels elt 0] elt 1] text [format nil [if bytecodes_per_second [bytes-to_memory_string bytecodes_per_second] ''] 'Bc/s']]
   [set [get [get table_labels elt 1] elt 1] text [format nil [* 100.0 [if execution_efficiency execution_efficiency 0.0]] '%']]
-  [set [get [get table_labels elt 2] elt 1] text [format nil [if total_used_memory [number-to_memory_string total_used_memory] ''] 'b']]
-  [set [get [get table_labels elt 3] elt 1] text [format nil [if total_free_memory [number-to_memory_string total_free_memory] ''] 'b']]
+  [set [get [get table_labels elt 2] elt 1] text [format nil [if total_used_memory [bytes-to_memory_string total_used_memory] ''] 'b']]
+  [set [get [get table_labels elt 3] elt 1] text [format nil [if total_free_memory [bytes-to_memory_string total_free_memory] ''] 'b']]
   [let [[progress_fraction [if execution_efficiency execution_efficiency 0.0]]]
     [set progress_bar text     [format nil [* 100.0 progress_fraction] '%']]
     [set progress_bar fraction progress_fraction]]

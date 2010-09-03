@@ -66,7 +66,7 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
 	u64 column;
 	for (column = 0; column < 2; column ++) {
 	  f2ptr table_label = raw__gtk__label__new(cause, new__string(cause, ""));
-	  raw__gtk__label__set_alignment(cause, table_label, f2double__new(cause, 0.0), f2double__new(cause, 0.0));
+	  raw__gtk__misc__set_alignment(cause, table_label, f2double__new(cause, 0.0), f2double__new(cause, 0.0));
 	  raw__array__elt__set(cause, row_labels, column, table_label);
 	  raw__gtk__table__attach(cause, table_label, f2integer__new(cause, column), f2integer__new(cause, column + 1), f2integer__new(cause, row), f2integer__new(cause, row + 1), f2integer__new(cause, 0), f2integer__new(cause, 0));
 	}

@@ -66,65 +66,19 @@
 				 elapsed_bytecode_count]
   [new [fiber]
        [fibermon_fiber-construct_fast this]
-       `[set this frame [gtk-frame-new 'fiber']]
-       `[= vbox                               [gtk-vbox-new 2]]
-       `[= menu_bar                           [gtk-menu_bar-new]]
-       `[= command_menu_item                  [gtk-menu_item-new 'Command']]
-       `[= command_menu                       [gtk-menu-new]]
-       `[= command_pause_menu_item            [gtk-menu_item-new 'Pause']]
-       `[= command_continue_menu_item         [gtk-menu_item-new 'Continue']]
-       `[= command_keep_undead_menu_item      [gtk-menu_item-new 'Keep Undead']]
-       `[= command_dont_keep_undead_menu_item [gtk-menu_item-new 'Don\'t Keep Undead']]
-       `[= command_quit_menu_item             [gtk-menu_item-new 'Quit']]
-       `[= view_menu_item                     [gtk-menu_item-new 'View']]
-       `[= view_menu                          [gtk-menu-new]]
-       `[= view_print_to_screen_menu_item     [gtk-menu_item-new 'Print to Screen']]
-       `[= view_stack_trace_menu_item         [gtk-menu_item-new 'Stack Trace']]
-       `[= hbox                               [gtk-hbox-new 2]]
-       `[= progress_bar                       [gtk-progress_bar-new]]
-       `[= table                              [gtk-table-new 12 2 nil]]
-       `[= table_labels                       [new array 12 2]]
-       
-       [set this fiber fiber]
        
        [have command_menu append command_pause_menu_item]
-       [have command_pause_menu_item signal_connect 'activate'
-	     [funk []
-		   [set fiber paused t]]
-	     nil]
        [have command_menu append command_continue_menu_item]
-       [have command_continue_menu_item signal_connect 'activate'
-	     [funk []
-		   [set fiber paused nil]]
-	     nil]
        [have command_menu append command_keep_undead_menu_item]
-       [have command_keep_undead_menu_item signal_connect 'activate'
-	     [funk []
-		   [set fiber keep_undead t]]
-	     nil]
-       [have command_dont_keep_undead_menu_item signal_connect 'activate'
-	     [funk []
-		   [set fiber keep_undead nil]]
-	     nil]
-       [have command_quit_menu_item signal_connect 'activate'
-	     [funk []
-		   [have fiber quit]]
-	     nil]
+       
        [have command_menu append command_dont_keep_undead_menu_item]
        [have command_menu append command_quit_menu_item]
        [have menu_bar append command_menu_item]
        [set command_menu_item submenu command_menu]
        
        [have view_menu append view_print_to_screen_menu_item]
-       [have view_print_to_screen_menu_item signal_connect 'activate'
-	     [funk []
-		   [print fiber]]
-	     nil]
+
        [have view_menu append view_stack_trace_menu_item]
-       [have view_stack_trace_menu_item signal_connect 'activate'
-	     [funk []
-		   [have fiber print_stack_trace]]
-	     nil]
        [have menu_bar append view_menu_item]
        [set view_menu_item submenu view_menu]
        [set progress_bar orientation `bottom_to_top]
@@ -152,6 +106,38 @@
        [have vbox pack_start menu_bar nil nil 0]
        [have vbox pack_start hbox     t t 0]
        [have frame add vbox]
+       
+       [set this fiber fiber]
+       
+       [have command_pause_menu_item signal_connect 'activate'
+	     [funk []
+		   [set fiber paused t]]
+	     nil]
+       [have command_continue_menu_item signal_connect 'activate'
+	     [funk []
+		   [set fiber paused nil]]
+	     nil]
+       [have command_keep_undead_menu_item signal_connect 'activate'
+	     [funk []
+		   [set fiber keep_undead t]]
+	     nil]
+       [have command_dont_keep_undead_menu_item signal_connect 'activate'
+	     [funk []
+		   [set fiber keep_undead nil]]
+	     nil]
+       [have command_quit_menu_item signal_connect 'activate'
+	     [funk []
+		   [have fiber quit]]
+	     nil]
+       [have view_print_to_screen_menu_item signal_connect 'activate'
+	     [funk []
+		   [print fiber]]
+	     nil]
+       [have view_stack_trace_menu_item signal_connect 'activate'
+	     [funk []
+		   [have fiber print_stack_trace]]
+	     nil]
+       
        [have this recompute_statistics]
        [have this redraw]
        this]]

@@ -26,7 +26,7 @@
 
 // **
 
-void f2__application_fibermon__initialize();
+void f2__application__fibermon__initialize();
 
 #endif // F2__APPLICATION__FIBERMON__H
 

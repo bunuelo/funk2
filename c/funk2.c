@@ -125,7 +125,7 @@ void f2__initialize() {
   f2__graph_cluster__initialize();
   f2__graph_match_error_correcting__initialize();
   f2__gtk__initialize();
-  f2__application_fibermon__initialize();
+  f2__application__fibermon__initialize();
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)

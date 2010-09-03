@@ -42,6 +42,7 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   f2__frame__add_var_value(cause, this, new__symbol(cause, "table_labels"),                       f2__array__new(cause, f2list2__new(cause, f2integer__new(cause, 12), f2integer__new(cause, 2))));
   return this;
 }
+def_pcfunk1(fibermon_fiber__construct_fast, this, return f2__fibermon_fiber__construct_fast(this_cause, this));
 
 
 // **

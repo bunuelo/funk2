@@ -47,7 +47,7 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   raw__gtk__menu__append(cause, this__command_menu, this__command_dont_keep_undead_menu_item);
   raw__gtk__menu__append(cause, this__command_menu, this__command_quit_menu_item);
   
-  raw__gtk__menu_bar__append(cause, this__menu_bar, this__command_menu);
+  raw__gtk__menu_bar__append(cause, this__menu_bar, this__command_menu_item);
   raw__gtk__menu_item__set_submenu(cause, this__command_menu_item, this__command_menu);
   
   raw__gtk__menu__append(cause, this__view_menu, this__view_print_to_screen_menu_item);

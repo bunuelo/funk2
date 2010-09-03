@@ -183,25 +183,33 @@
 
 'fibermon_processor'
 
-[deframe fibermon_processor [frame] [[index                          nil]
-				      [frame                         nil]
-				      [vbox                          [gtk-vbox-new 2]]
-				      [progress_bar                  [gtk-progress_bar-new]]
-				      [scrolled_window               [gtk-scrolled_window-new]]
-				      [fiber_vbox                    [gtk-vbox-new 2]]
-				      [fibermon_fiber_hash           [new ptypehash]]
-				      [table                         [gtk-table-new 4 2 nil]]
-				      [table_labels                  [new array 4 2]]
-				      [execution_nanoseconds         nil]
-				      [bytecode_count                nil]
-				      [bytecodes_per_second          nil]
-				      [execution_efficiency          nil]
-				      [elapsed_nanoseconds           nil]
-				      [elapsed_execution_nanoseconds nil]
-				      [elapsed_bytecode_count        nil]
-				      [total_used_memory             nil]
-				      [total_free_memory             nil]]
+[deframe fibermon_processor [frame] [index
+				     frame
+				     vbox
+				     progress_bar
+				     scrolled_window
+				     fiber_vbox
+				     fibermon_fiber_hash
+				     table
+				     table_labels
+				     execution_nanoseconds
+				     bytecode_count
+				     bytecodes_per_second
+				     execution_efficiency
+				     elapsed_nanoseconds
+				     elapsed_execution_nanoseconds
+				     elapsed_bytecode_count
+				     total_used_memory
+				     total_free_memory]
   [new [index]
+       [= vbox                [gtk-vbox-new 2]]
+       [= progress_bar        [gtk-progress_bar-new]]
+       [= scrolled_window     [gtk-scrolled_window-new]]
+       [= fiber_vbox          [gtk-vbox-new 2]]
+       [= fibermon_fiber_hash [new ptypehash]]
+       [= table               [gtk-table-new 4 2 nil]]
+       [= table_labels        [new array 4 2]]
+       
        [set this index index]
        [set this frame [gtk-frame-new [format nil 'processor #' index]]]
        [have scrolled_window add_with_viewport fiber_vbox]

@@ -27,7 +27,7 @@
 
 [defunk number-to_time_string [this]
   [let [[i [get this as-integer]]]
-    [cond [[< i                       1000]  [format nil i                                             'ns']]
+    [cond [[< i                       1000]  [format nil    i                                          'ns']]
 	  [[< i               [* 1000 1000]] [format nil [/ i                                 1000.0]  'us']]
 	  [[< i          [* 1000 1000 1000]] [format nil [/ i                       [* 1000.0 1000.0]] 'ms']]
 	  [[< i       [* 60 1000 1000 1000]] [format nil [/ i                [* 1000.0 1000.0 1000.0]] 's']]
@@ -59,6 +59,10 @@
   [new [fiber]
        [set this fiber fiber]
        [set this frame [gtk-frame-new 'fiber']]
+       [have view_details_menu_item signal_connect 'activate'
+	     [funk []
+		   [print fiber]]
+	     nil]
        [have view_menu append view_details_menu_item]
        [have menu_bar  append view_menu_item]
        [set view_menu_item submenu view_menu]
@@ -187,16 +191,10 @@
   [set [get [get table_labels elt 0] elt 1] text [format nil [if execution_nanoseconds [number-to_time_string execution_nanoseconds] '']]]
   [set [get [get table_labels elt 1] elt 1] text [format nil [if bytecode_count [number-to_memory_string bytecode_count] ''] 'Bc']]
   [set [get [get table_labels elt 2] elt 1] text [format nil [if bytecodes_per_second [number-to_memory_string bytecodes_per_second] ''] 'Bc/s']]
-  [set [get [get table_labels elt 3] elt 1] text [format nil execution_efficiency '%']]
+  [set [get [get table_labels elt 3] elt 1] text [format nil [* 100.0 [if execution_efficiency execution_efficiency 0.0]] '%']]
   [set [get [get table_labels elt 4] elt 1] text [format nil [if total_used_memory [number-to_memory_string total_used_memory] ''] 'b']]
   [set [get [get table_labels elt 5] elt 1] text [format nil [if total_free_memory [number-to_memory_string total_free_memory] ''] 'b']]
-  [let [[progress_fraction [if execution_efficiency
-			       [if [< execution_efficiency 0.0]
-				   0.0
-				   [if [> execution_efficiency 1.0]
-				       1.0
-				       execution_efficiency]]
-			     0.0]]]
+  [let [[progress_fraction [if execution_efficiency execution_efficiency 0.0]]]
     [set progress_bar text     [format nil [* 100.0 progress_fraction] '%']]
     [set progress_bar fraction progress_fraction]]
   [mapc [funk [fibermon2_fiber]
@@ -231,6 +229,10 @@
 		  [if fiber_elapsed_bytecode_count              [+= elapsed_bytecode_count        fiber_elapsed_bytecode_count]]
 		  ]]
 	  [get fibermon2_fiber_hash values]]
+    [if [< execution_efficiency 0.0]
+	[= execution_efficiency 0.0]
+      [if [> execution_efficiency 1.0]
+	  [= execution_efficiency 1.0]]]
     [if [!= elapsed_nanoseconds__count 0]
 	[/= elapsed_nanoseconds elapsed_nanoseconds__count]]
     [if index

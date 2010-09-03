@@ -317,6 +317,14 @@ void funk2_gtk__expose_event__signal_connect(funk2_gtk_t* this, GtkWidget* widge
 }
 
 
+// activate_event
+
+//gtk_signal_connect_object (GTK_OBJECT (menu_items), "activate",
+//                GTK_SIGNAL_FUNC (menuitem_response), (gpointer) g_strdup (buf));
+
+void funk2_gtk__activate_event__signal_connect_object(funk2_gtk_t* this, GtkObject* object, f2ptr 
+
+
 // widget
 
 void funk2_gtk__widget__show_all(funk2_gtk_t* this, GtkWidget* widget) {

@@ -51,7 +51,7 @@ void f2__application__fibermon__reinitialize_globalvars() {
 }
 
 void f2__application__fibermon__initialize() {
-  f2ptr cause = initial_cause();
+  //f2ptr cause = initial_cause();
   
   funk2_module_registration__add_module(&(__funk2.module_registration), "application-fibermon", "", &f2__application__fibermon__reinitialize_globalvars);
   

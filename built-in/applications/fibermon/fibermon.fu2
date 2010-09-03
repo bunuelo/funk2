@@ -37,34 +37,52 @@
 
 'fibermon_fiber'
 
-[deframe fibermon_fiber [frame] [[fiber                              nil]
-				 [frame                              nil]
-				 [vbox                               [gtk-vbox-new 2]]
-				 [menu_bar                           [gtk-menu_bar-new]]
-				 [command_menu_item                  [gtk-menu_item-new 'Command']]
-				 [command_menu                       [gtk-menu-new]]
-				 [command_pause_menu_item            [gtk-menu_item-new 'Pause']]
-				 [command_continue_menu_item         [gtk-menu_item-new 'Continue']]
-				 [command_keep_undead_menu_item      [gtk-menu_item-new 'Keep Undead']]
-				 [command_dont_keep_undead_menu_item [gtk-menu_item-new 'Don\'t Keep Undead']]
-				 [command_quit_menu_item             [gtk-menu_item-new 'Quit']]
-				 [view_menu_item                     [gtk-menu_item-new 'View']]
-				 [view_menu                          [gtk-menu-new]]
-				 [view_print_to_screen_menu_item     [gtk-menu_item-new 'Print to Screen']]
-				 [view_stack_trace_menu_item         [gtk-menu_item-new 'Stack Trace']]
-				 [hbox                               [gtk-hbox-new 2]]
-				 [progress_bar                       [gtk-progress_bar-new]]
-				 [table                              [gtk-table-new 12 2 nil]]
-				 [table_labels                       [new array 12 2]]
-				 [time                               nil]
-				 [execution_nanoseconds              nil]
-				 [bytecode_count                     nil]
-				 [bytecodes_per_second               nil]
-				 [execution_efficiency               nil]
-				 [elapsed_nanoseconds                nil]
-				 [elapsed_execution_nanoseconds      nil]
-				 [elapsed_bytecode_count             nil]]
+[deframe fibermon_fiber [frame] [fiber
+				 frame
+				 vbox
+				 menu_bar
+				 command_menu_item
+				 command_menu
+				 command_pause_menu_item
+				 command_continue_menu_item
+				 command_keep_undead_menu_item
+				 command_dont_keep_undead_menu_item
+				 command_quit_menu_item
+				 view_menu_item
+				 view_menu
+				 view_print_to_screen_menu_item
+				 view_stack_trace_menu_item
+				 hbox
+				 progress_bar
+				 table
+				 table_labels
+				 time
+				 execution_nanoseconds
+				 bytecode_count
+				 bytecodes_per_second
+				 execution_efficiency
+				 elapsed_nanoseconds
+				 elapsed_execution_nanoseconds
+				 elapsed_bytecode_count]
   [new [fiber]
+       [= vbox                               [gtk-vbox-new 2]]
+       [= menu_bar                           [gtk-menu_bar-new]]
+       [= command_menu_item                  [gtk-menu_item-new 'Command']]
+       [= command_menu                       [gtk-menu-new]]
+       [= command_pause_menu_item            [gtk-menu_item-new 'Pause']]
+       [= command_continue_menu_item         [gtk-menu_item-new 'Continue']]
+       [= command_keep_undead_menu_item      [gtk-menu_item-new 'Keep Undead']]
+       [= command_dont_keep_undead_menu_item [gtk-menu_item-new 'Don\'t Keep Undead']]
+       [= command_quit_menu_item             [gtk-menu_item-new 'Quit']]
+       [= view_menu_item                     [gtk-menu_item-new 'View']]
+       [= view_menu                          [gtk-menu-new]]
+       [= view_print_to_screen_menu_item     [gtk-menu_item-new 'Print to Screen']]
+       [= view_stack_trace_menu_item         [gtk-menu_item-new 'Stack Trace']]
+       [= hbox                               [gtk-hbox-new 2]]
+       [= progress_bar                       [gtk-progress_bar-new]]
+       [= table                              [gtk-table-new 12 2 nil]]
+       [= table_labels                       [new array 12 2]]
+       
        [set this fiber fiber]
        [set this frame [gtk-frame-new 'fiber']]
        

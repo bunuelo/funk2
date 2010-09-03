@@ -18,8 +18,10 @@
  rights to redistribute these changes.'
 
 [defpackage fibermon
-  :sources ['fibermon.fu2']]
+  :packages []
+   :sources ['fibermon.fu2']]
 
-[defpackage fibermon2
-  :sources ['fibermon2.fu2']]
+[defpackage fibermon1
+  :packages []
+   :sources ['fibermon1.fu2']]
 

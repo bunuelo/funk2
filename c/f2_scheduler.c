@@ -357,6 +357,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		      if (fiber_cause) {
 			f2__cause__remove_fiber(cause, fiber_cause, fiber);
 		      }
+		      f2fiber__processor_assignment_index__set(fiber, cause, nil);
 		      // bug: removing a fiber here seems to drop needed fibers sometimes.  (why?)
 		      {
 		      	f2ptr processor__active_fibers_mutex;

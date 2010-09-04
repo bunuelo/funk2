@@ -91,26 +91,7 @@
 
 [deftypefunk fibermon_fiber execute redraw []
   [fibermon_fiber-redraw_fast this]
-  
-  `[let [[progress_fraction [if execution_efficiency
-			       execution_efficiency
-			     0.0]]]
-    [set progress_bar fraction progress_fraction]]
-  `[set [get [get table_labels elt  0] elt 1] text [format nil [let [[cause_reg [get fiber cause_reg]]]
-								[if cause_reg
-								    [have cause_reg lookup `cause-name]]]]]
-  `[set [get [get table_labels elt  1] elt 1] text [format nil [if [get fiber keep_undead] 'Yes' 'No']]]
-  `[set [get [get table_labels elt  2] elt 1] text [format nil [if [get fiber is_zombie] 'Yes' 'No']]]
-  `[set [get [get table_labels elt  3] elt 1] text [format nil [if [get fiber is_complete] 'Yes' 'No']]]
-  `[set [get [get table_labels elt  4] elt 1] text [format nil [get fiber execute_mutex]]]
-  `[set [get [get table_labels elt  5] elt 1] text [format nil [if [get fiber paused] 'Yes' 'No']]]
-  `[set [get [get table_labels elt  6] elt 1] text [format nil [get fiber last_executed_time]]]
-  `[set [get [get table_labels elt  7] elt 1] text [format nil [get fiber sleep_until_time]]]
-  `[set [get [get table_labels elt  8] elt 1] text [format nil [fibermon-nanoseconds-to_time_string [if execution_nanoseconds execution_nanoseconds 0]]]]
-  `[set [get [get table_labels elt  9] elt 1] text [format nil [fibermon-bytes-to_memory_string [if bytecode_count bytecode_count 0]] 'Bc']]
-  `[set [get [get table_labels elt 10] elt 1] text [format nil [fibermon-bytes-to_memory_string [if bytecodes_per_second bytecodes_per_second 0]] 'Bc/s']]
-  `[set [get [get table_labels elt 11] elt 1] text [format nil [* 100.0 [if execution_efficiency execution_efficiency 0]] '%']]
-  ]
+  nil]
 
 [deftypefunk fibermon_fiber execute recompute_statistics []
   [let [[last_time                  time]
@@ -235,15 +216,15 @@
 
 'fibermon'
 
-[deframe fibermon [frame] [[win                  [gtk-window-new]]
-			    [scrolled_window      [gtk-scrolled_window-new]]
-			    [processor_hbox       [gtk-hbox-new 2]]
-			    [processor_array      [new array 8]]
-			    [done                 nil]
-			    [fiber                nil]
-			    [processor_count      8]
-			    [index_fiber_hash     [new ptypehash]]
-			    [fibermon_fiber_hash [new ptypehash]]]
+[deframe fibermon [frame] [[win                 [gtk-window-new]]
+			   [scrolled_window     [gtk-scrolled_window-new]]
+			   [processor_hbox      [gtk-hbox-new 2]]
+			   [processor_array     [new array 8]]
+			   [done                nil]
+			   [fiber               nil]
+			   [processor_count     8]
+			   [index_fiber_hash    [new ptypehash]]
+			   [fibermon_fiber_hash [new ptypehash]]]
   [new []
        [set  win default_size 1900 800]
        [set  win title 'fibermon']
@@ -271,7 +252,8 @@
 [deftypefunk fibermon execute reorganize_fibers []
   [mapc [funk [fibermon_fiber]
 	      [if [null [get [get fibermon_fiber fiber] processor_assignment_index]]
-		  [prog [have index_fiber_hash remove fiber]
+		  [prog [have index_fiber_hash    remove fiber]
+			[have fibermon_fiber_hash remove fiber]
 			[have [get processor_array elt [have index_fiber_hash lookup fiber]] remove_fiber fiber]]]]
 	[get fibermon_fiber_hash values]]
   [mapc [funk [fiber]

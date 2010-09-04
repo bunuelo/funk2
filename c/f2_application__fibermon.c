@@ -21,6 +21,44 @@
 
 #include "funk2.h"
 
+f2ptr f2__fibermon__bytes__to_memory_string(f2ptr cause, f2ptr this) {
+  f2ptr i = object__get_0(cause, this, "as-integer");
+  if (! raw__integer__is_type(cause, value)) {
+    if (raw__larva__is_type(cause, i)) {
+      return i;
+    }
+    return f2larva__new(cause, 1, nil);
+  }
+  s64 i__i = f2integer__i(i, cause);
+  if      (i__i <                                1024ull)  {return f2__exp__as_string(cause, i);}
+  else if (i__i <                     (1024ull * 1024ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /                             1024.0)),  new__string(cause, "k")));}
+  else if (i__i <           (1024ull * 1024ull * 1024ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /                   (1024.0 * 1024.0))), new__string(cause, "M")));}
+  else if (i__i < (1024ull * 1024ull * 1024ull * 1024ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /          (1024.0 * 1024.0 * 1024.0))), new__string(cause, "G")));}
+  else                                                     {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i / (1024.0 * 1024.0 * 1024.0 * 1024.0))), new__string(cause, "T")));}
+}
+def_pcfunk1(fibermon__bytes__to_memory_string, this, return f2__fibermon__bytes__to_memory_string(this_cause, this));
+
+
+f2ptr f2__fibermon__nanoseconds__to_time_string(f2ptr cause, f2ptr this) {
+  f2ptr i = object__get_0(cause, this, "as-integer");
+  if (! raw__integer__is_type(cause, value)) {
+    if (raw__larva__is_type(cause, i)) {
+      return i;
+    }
+    return f2larva__new(cause, 1, nil);
+  }
+  s64 i__i = f2integer__i(i, cause);
+  if      (i__i <                                              1000ull)  {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, i),                                                                                    new__string(cause, "ns")));}
+  else if (i__i <                                   (1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /                                         1000.0)),  new__string(cause, "us")));}
+  else if (i__i <                         (1000ull * 1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /                               (1000.0 * 1000.0))), new__string(cause, "ms")));}
+  else if (i__i <                 (60ull * 1000ull * 1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /                      (1000.0 * 1000.0 * 1000.0))), new__string(cause, "s")));}
+  else if (i__i <         (60ull * 60ull * 1000ull * 1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /               (60.0 * 1000.0 * 1000.0 * 1000.0))), new__string(cause, "m")));}
+  else if (i__i < (24ull * 60ull * 60ull * 1000ull * 1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /        (60.0 * 60.0 * 1000.0 * 1000.0 * 1000.0))), new__string(cause, "h")));}
+  else                                                                   {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i / (24.0 * 60.0 * 60.0 * 1000.0 * 1000.0 * 1000.0))), new__string(cause, "d")));}
+}
+def_pcfunk1(fibermon__nanoseconds__to_time_string, this, return f2__fibermon__nanoseconds__to_time_string(this_cause, this));
+
+
 f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   f2ptr this__frame                              = raw__gtk__frame__new(cause, new__string(cause, "fiber"));                                        f2__frame__add_var_value(cause, this, new__symbol(cause, "frame"),                              this__frame);
   f2ptr this__vbox                               = raw__gtk__vbox__new(cause, f2integer__new(cause, 2));                                            f2__frame__add_var_value(cause, this, new__symbol(cause, "vbox"),                               this__vbox);
@@ -52,7 +90,7 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   
   raw__gtk__menu__append(cause, this__view_menu, this__view_print_to_screen_menu_item);
   raw__gtk__menu__append(cause, this__view_menu, this__view_stack_trace_menu_item);
-
+  
   raw__gtk__menu_bar__append(cause, this__menu_bar, this__view_menu_item);
   raw__gtk__menu_item__set_submenu(cause, this__view_menu_item, this__view_menu);
   
@@ -102,6 +140,11 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
 def_pcfunk1(fibermon_fiber__construct_fast, this, return f2__fibermon_fiber__construct_fast(this_cause, this));
 
 
+f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
+  
+}
+
+
 // **
 
 void f2__application__fibermon__reinitialize_globalvars() {
@@ -114,7 +157,9 @@ void f2__application__fibermon__initialize() {
   
   f2__application__fibermon__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(fibermon_fiber__construct_fast, this, "");
+  f2__primcfunk__init__1(fibermon__bytes__to_memory_string,     this, "");
+  f2__primcfunk__init__1(fibermon__nanoseconds__to_time_string, this, "");
+  f2__primcfunk__init__1(fibermon_fiber__construct_fast,        this, "");
   
 }
 

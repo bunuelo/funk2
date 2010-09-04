@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defunk bytes-to_memory_string [this]
+`[defunk fibermon-bytes-to_memory_string [this]
   [let [[i [get this as-integer]]]
     [cond [      [< i                        1024]   [format nil    i]]
 	  [      [< i [*                1024 1024]]  [format nil [/ i                  1024.0]  'k']]
@@ -25,7 +25,7 @@
 	  [      [< i [*      1024 1024 1024 1024]]  [format nil [/ i [* 1024.0 1024.0 1024.0]] 'G']]
 	  [[or t [< i [* 1024 1024 1024 1024 1024]]] [format nil [/ i [* 1024.0 1024.0 1024.0]] 'T']]]]]
 
-[defunk nanoseconds-to_time_string [this]
+`[defunk fibermon-nanoseconds-to_time_string [this]
   [let [[i [get this as-integer]]]
     [cond [[< i                       1000]  [format nil    i                                          'ns']]
 	  [[< i               [* 1000 1000]] [format nil [/ i                                 1000.0]  'us']]
@@ -59,6 +59,7 @@
 				 time
 				 execution_nanoseconds
 				 bytecode_count
+				 bytecode_count__string
 				 bytecodes_per_second
 				 execution_efficiency
 				 elapsed_nanoseconds
@@ -66,46 +67,6 @@
 				 elapsed_bytecode_count]
   [new [fiber]
        [fibermon_fiber-construct_fast this]
-       
-       `[have command_menu append command_pause_menu_item]
-       `[have command_menu append command_continue_menu_item]
-       `[have command_menu append command_keep_undead_menu_item]
-       
-       `[have command_menu append command_dont_keep_undead_menu_item]
-       `[have command_menu append command_quit_menu_item]
-       `[have menu_bar append command_menu_item]
-       `[set command_menu_item submenu command_menu]
-       
-       `[have view_menu append view_print_to_screen_menu_item]
-
-       `[have view_menu append view_stack_trace_menu_item]
-       `[have menu_bar append view_menu_item]
-       `[set view_menu_item submenu view_menu]
-       `[set progress_bar orientation `bottom_to_top]
-       `[dotimes [row 12]
-	 [let [[row_labels [get table_labels elt row]]]
-	   [dotimes [column 2]
-	     [let [[table_label [gtk-label-new '']]]
-	       [set table_label alignment 0.0 0.0]
-	       [set row_labels elt column table_label]
-	       [have table attach table_label column [+ column 1] row [+ row 1] 0 0]]]]]
-       `[set [get [get table_labels elt  0] elt 0] text 'cause-name']
-       `[set [get [get table_labels elt  1] elt 0] text 'keep_undead']
-       `[set [get [get table_labels elt  2] elt 0] text 'is_zombie']
-       `[set [get [get table_labels elt  3] elt 0] text 'is_complete']
-       `[set [get [get table_labels elt  4] elt 0] text 'execute_mutex']
-       `[set [get [get table_labels elt  5] elt 0] text 'paused']
-       `[set [get [get table_labels elt  6] elt 0] text 'last_executed_time']
-       `[set [get [get table_labels elt  7] elt 0] text 'sleep_until_time']
-       `[set [get [get table_labels elt  8] elt 0] text 'execution_time']
-       `[set [get [get table_labels elt  9] elt 0] text 'bytecode_count']
-       `[set [get [get table_labels elt 10] elt 0] text 'bytecodes_per_second']
-       `[set [get [get table_labels elt 11] elt 0] text 'execution_efficiency']
-       `[have hbox pack_start progress_bar nil nil 0]
-       `[have hbox pack_start table        t t 0]
-       `[have vbox pack_start menu_bar nil nil 0]
-       `[have vbox pack_start hbox     t t 0]
-       `[have frame add vbox]
        
        [set this fiber fiber]
        
@@ -146,12 +107,10 @@
   frame]
 
 [deftypefunk fibermon_fiber execute redraw []
+  [fibermon_fiber-redraw_fast this]
+  
   [let [[progress_fraction [if execution_efficiency
-			       [if [< execution_efficiency 0.0]
-				   0.0
-				   [if [> execution_efficiency 1.0]
-				       1.0
-				       execution_efficiency]]
+			       execution_efficiency
 			     0.0]]]
     [set progress_bar fraction progress_fraction]]
   [set [get [get table_labels elt  0] elt 1] text [format nil [let [[cause_reg [get fiber cause_reg]]]
@@ -164,9 +123,9 @@
   [set [get [get table_labels elt  5] elt 1] text [format nil [if [get fiber paused] 'Yes' 'No']]]
   [set [get [get table_labels elt  6] elt 1] text [format nil [get fiber last_executed_time]]]
   [set [get [get table_labels elt  7] elt 1] text [format nil [get fiber sleep_until_time]]]
-  [set [get [get table_labels elt  8] elt 1] text [format nil [nanoseconds-to_time_string [if execution_nanoseconds execution_nanoseconds 0]]]]
-  [set [get [get table_labels elt  9] elt 1] text [format nil [bytes-to_memory_string [if bytecode_count bytecode_count 0]] 'Bc']]
-  [set [get [get table_labels elt 10] elt 1] text [format nil [bytes-to_memory_string [if bytecodes_per_second bytecodes_per_second 0]] 'Bc/s']]
+  [set [get [get table_labels elt  8] elt 1] text [format nil [fibermon-nanoseconds-to_time_string [if execution_nanoseconds execution_nanoseconds 0]]]]
+  [set [get [get table_labels elt  9] elt 1] text [format nil [fibermon-bytes-to_memory_string [if bytecode_count bytecode_count 0]] 'Bc']]
+  [set [get [get table_labels elt 10] elt 1] text [format nil [fibermon-bytes-to_memory_string [if bytecodes_per_second bytecodes_per_second 0]] 'Bc/s']]
   [set [get [get table_labels elt 11] elt 1] text [format nil [* 100.0 [if execution_efficiency execution_efficiency 0]] '%']]
   ]
 
@@ -183,7 +142,12 @@
     [if [and elapsed_bytecode_count elapsed_nanoseconds]
 	[= bytecodes_per_second [/ [* 1000000000.0 elapsed_bytecode_count] elapsed_nanoseconds]]]
     [if [and elapsed_execution_nanoseconds elapsed_nanoseconds]
-	[= execution_efficiency [/ [get elapsed_execution_nanoseconds as-double] elapsed_nanoseconds]]]
+	[= execution_efficiency [let [[fraction [/ [get elapsed_execution_nanoseconds as-double] elapsed_nanoseconds]]]
+				  [if [< fraction 0.0]
+				      0.0
+				      [if [> fraction 1.0]
+					  1.0
+					  fraction]]]]]
     nil]]
 
 'fibermon_processor'
@@ -241,10 +205,10 @@
   frame]
 
 [deftypefunk fibermon_processor execute redraw []
-  [set [get [get table_labels elt 0] elt 1] text [format nil [if bytecodes_per_second [bytes-to_memory_string bytecodes_per_second] ''] 'Bc/s']]
+  [set [get [get table_labels elt 0] elt 1] text [format nil [if bytecodes_per_second [fibermon-bytes-to_memory_string bytecodes_per_second] ''] 'Bc/s']]
   [set [get [get table_labels elt 1] elt 1] text [format nil [* 100.0 [if execution_efficiency execution_efficiency 0.0]] '%']]
-  [set [get [get table_labels elt 2] elt 1] text [format nil [if total_used_memory [bytes-to_memory_string total_used_memory] ''] 'b']]
-  [set [get [get table_labels elt 3] elt 1] text [format nil [if total_free_memory [bytes-to_memory_string total_free_memory] ''] 'b']]
+  [set [get [get table_labels elt 2] elt 1] text [format nil [if total_used_memory [fibermon-bytes-to_memory_string total_used_memory] ''] 'b']]
+  [set [get [get table_labels elt 3] elt 1] text [format nil [if total_free_memory [fibermon-bytes-to_memory_string total_free_memory] ''] 'b']]
   [let [[progress_fraction [if execution_efficiency execution_efficiency 0.0]]]
     [set progress_bar text     [format nil [* 100.0 progress_fraction] '%']]
     [set progress_bar fraction progress_fraction]]

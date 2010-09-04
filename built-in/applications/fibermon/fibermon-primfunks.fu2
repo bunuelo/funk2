@@ -17,5 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk fibermon_fiber-construct_fast &primfunk:fibermon_fiber__construct_fast]
+[globalize-funk fibermon-bytes-to_memory_string     &primfunk:fibermon__bytes__to_memory_string]
+[globalize-funk fibermon-nanoseconds-to_time_string &primfunk:fibermon__nanoseconds__to_time_string]
+[globalize-funk fibermon_fiber-construct_fast       &primfunk:fibermon_fiber__construct_fast]
 

@@ -107,7 +107,7 @@
   frame]
 
 [deftypefunk fibermon_fiber execute redraw []
-  [fibermon_fiber-redraw_fast this]
+  `[fibermon_fiber-redraw_fast this]
   
   [let [[progress_fraction [if execution_efficiency
 			       execution_efficiency

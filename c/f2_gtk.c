@@ -577,7 +577,7 @@ void funk2_gtk__container__add(funk2_gtk_t* this, GtkWidget* widget, GtkWidget* 
 void funk2_gtk__container__remove(funk2_gtk_t* this, GtkWidget* widget, GtkWidget* remove_widget) {
   {
     gdk_threads_enter();
-    gtk_container_add(GTK_CONTAINER(widget), GTK_WIDGET(remove_widget));
+    gtk_container_remove(GTK_CONTAINER(widget), GTK_WIDGET(remove_widget));
     gdk_threads_leave();
   }
 }

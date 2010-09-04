@@ -343,43 +343,42 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	    } else {
 	      if (! f2fiber__is_zombie(fiber, cause)) {
 		f2fiber__is_zombie__set(fiber, cause, __funk2.globalenv.true__symbol);
-	      } else {
-		//printf("\n  fiber completed.");
-		if (! f2fiber__keep_undead(fiber, cause)) {
-		  f2ptr last_executed_time = f2fiber__last_executed_time(fiber, cause);
-		  if (last_executed_time) {
-		    f2ptr nanoseconds_since_1970 = f2time__nanoseconds_since_1970(last_executed_time, cause);
-		    u64 nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
-		    // This is a hack to avoid accidental fiber removal.  As one would expect, it doesn't really work.
-		    if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > nanoseconds_per_second) {
-		      // anytime a fiber is removed from processor active fibers, it should be removed from it's cause so that it can be garbage collected.
-		      f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
-		      if (fiber_cause) {
-			f2__cause__remove_fiber(cause, fiber_cause, fiber);
-		      }
-		      f2fiber__processor_assignment_index__set(fiber, cause, nil);
-		      // bug: removing a fiber here seems to drop needed fibers sometimes.  (why?)
-		      {
-		      	f2ptr processor__active_fibers_mutex;
-		      	int lock_failed;
-		      	do {
-		      	  //f2__global_scheduler__execute_mutex__lock(cause);
-		      	  processor__active_fibers_mutex = f2processor__active_fibers_mutex(processor, cause);
-		      	  lock_failed = f2mutex__trylock(processor__active_fibers_mutex, cause);
-		      	  //f2__global_scheduler__execute_mutex__unlock(cause);
-		      	  if (lock_failed) {
-			    raw__fast_spin_sleep_yield();
-		      	  }
-		      	} while (lock_failed);
-		      	if (f2processor__active_fibers_prev(processor, cause)) {
-		      	  f2cons__cdr__set(f2processor__active_fibers_prev(processor, cause), cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
-		      	} else {
-		      	  f2processor__active_fibers__set(processor, cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
-		      	}
-		      	f2mutex__unlock(processor__active_fibers_mutex, cause);
-		      }
-		      prev_fiber_iter__already_set = 1;
+	      }
+	      //printf("\n  fiber completed.");
+	      if (! f2fiber__keep_undead(fiber, cause)) {
+		f2ptr last_executed_time = f2fiber__last_executed_time(fiber, cause);
+		if (last_executed_time) {
+		  f2ptr nanoseconds_since_1970 = f2time__nanoseconds_since_1970(last_executed_time, cause);
+		  u64 nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
+		  // This is a hack to avoid accidental fiber removal.  As one would expect, it doesn't really work.
+		  if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > nanoseconds_per_second) {
+		    // anytime a fiber is removed from processor active fibers, it should be removed from it's cause so that it can be garbage collected.
+		    f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
+		    if (fiber_cause) {
+		      f2__cause__remove_fiber(cause, fiber_cause, fiber);
 		    }
+		    f2fiber__processor_assignment_index__set(fiber, cause, nil);
+		    // bug: removing a fiber here seems to drop needed fibers sometimes.  (why?)
+		    {
+		      f2ptr processor__active_fibers_mutex;
+		      int lock_failed;
+		      do {
+			//f2__global_scheduler__execute_mutex__lock(cause);
+			processor__active_fibers_mutex = f2processor__active_fibers_mutex(processor, cause);
+			lock_failed = f2mutex__trylock(processor__active_fibers_mutex, cause);
+			//f2__global_scheduler__execute_mutex__unlock(cause);
+			if (lock_failed) {
+			  raw__fast_spin_sleep_yield();
+			}
+		      } while (lock_failed);
+		      if (f2processor__active_fibers_prev(processor, cause)) {
+			f2cons__cdr__set(f2processor__active_fibers_prev(processor, cause), cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
+		      } else {
+			f2processor__active_fibers__set(processor, cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
+		      }
+		      f2mutex__unlock(processor__active_fibers_mutex, cause);
+		    }
+		    prev_fiber_iter__already_set = 1;
 		  }
 		}
 	      }

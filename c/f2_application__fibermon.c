@@ -23,7 +23,7 @@
 
 f2ptr f2__fibermon__bytes__to_memory_string(f2ptr cause, f2ptr this) {
   f2ptr i = object__get_0(cause, this, "as-integer");
-  if (! raw__integer__is_type(cause, value)) {
+  if (! raw__integer__is_type(cause, i)) {
     if (raw__larva__is_type(cause, i)) {
       return i;
     }
@@ -41,7 +41,7 @@ def_pcfunk1(fibermon__bytes__to_memory_string, this, return f2__fibermon__bytes_
 
 f2ptr f2__fibermon__nanoseconds__to_time_string(f2ptr cause, f2ptr this) {
   f2ptr i = object__get_0(cause, this, "as-integer");
-  if (! raw__integer__is_type(cause, value)) {
+  if (! raw__integer__is_type(cause, i)) {
     if (raw__larva__is_type(cause, i)) {
       return i;
     }

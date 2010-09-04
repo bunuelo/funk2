@@ -176,6 +176,7 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
   }
   return nil;
 }
+def_pcfunk1(fibermon_fiber__redraw_fast, this, return f2__fibermon_fiber__redraw_fast(this_cause, this));
 
 
 // **

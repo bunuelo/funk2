@@ -140,9 +140,42 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
 def_pcfunk1(fibermon_fiber__construct_fast, this, return f2__fibermon_fiber__construct_fast(this_cause, this));
 
 
-//f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
-//  
-//}
+f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
+  f2ptr this__fiber                 = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "fiber"),                 nil); if (! this__fiber)                 {return f2larva__new(cause, 1, nil);}
+  f2ptr this__progress_bar          = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "progress_bar"),          nil); if (! this__progress_bar)          {return f2larva__new(cause, 1, nil);}
+  f2ptr this__execution_efficiency  = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "execution_efficiency"),  nil); if (! this__execution_efficiency)  {return f2larva__new(cause, 1, nil);}
+  f2ptr this__execution_nanoseconds = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "execution_nanoseconds"), nil); if (! this__execution_nanoseconds) {return f2larva__new(cause, 1, nil);}
+  f2ptr this__bytecode_count        = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "bytecode_count"),        nil); if (! this__bytecode_count)        {return f2larva__new(cause, 1, nil);}
+  f2ptr this__bytecodes_per_second  = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "bytecodes_per_second"),  nil); if (! this__bytecodes_per_second)  {return f2larva__new(cause, 1, nil);}
+  f2__gtk__progress_bar__set_fraction(cause, this__progress_bar, (this__execution_efficiency != nil) ? this__execution_efficiency : f2integer__new(cause, 0));
+  
+  {
+    f2ptr this__table_labels = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "table_labels"), nil); if (! this__table_labels) {return f2larva__new(cause, 1, nil);}
+    
+    {
+      f2ptr cause_reg          = f2fiber__cause_reg(this__fiber, cause);
+      f2ptr cause__name__value = raw__cause__is_type(cause, cause_reg) ? f2__cause__lookup(cause, cause_reg, new__symbol(cause, "cause-name")) : nil;
+      f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  0), 1), f2__exp__as__string(cause, cause__name__value));
+    }
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  1), 1), (f2fiber__keep_undead(fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  2), 1), (f2fiber__is_zombie(  fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  3), 1), (f2fiber__complete(   fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  4), 1), f2__exp__as__string(cause, f2fiber__execute_mutex(fiber, cause)));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  5), 1), (f2fiber__paused(     fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  6), 1), f2__exp__as__string(cause, f2fiber__last_executed_time(fiber, cause)));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  7), 1), f2__exp__as__string(cause, f2fiber__sleep_until_time(fiber, cause)));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  8), 1), f2__fibermon__nanoseconds__to_time_string(cause, ((this__execution_nanoseconds != nil) ? this__execution_nanoseconds : f2integer__new(cause, 0))));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  9), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__bytecode_count != nil) ? this__bytecode_count : f2integer__new(cause, 0))),
+																			  new__string(cause, "Bc"))));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 10), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__bytecodes_per_second != nil) ? this__bytecodes_per_second : f2integer__new(cause, 0))),
+																			  new__string(cause, "Bc/s"))));
+    
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 11), 1),
+			     f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, ((this__bytecodes_per_second != nil) ? this__bytecodes_per_second : f2integer__new(cause, 0)), f2double__new(cause, 100.0)))
+									new__string(cause, "%"))));
+  }
+  return nil;
+}
 
 
 // **
@@ -160,6 +193,7 @@ void f2__application__fibermon__initialize() {
   f2__primcfunk__init__1(fibermon__bytes__to_memory_string,     this, "");
   f2__primcfunk__init__1(fibermon__nanoseconds__to_time_string, this, "");
   f2__primcfunk__init__1(fibermon_fiber__construct_fast,        this, "");
+  f2__primcfunk__init__1(fibermon_fiber__redraw_fast,           this, "");
   
 }
 

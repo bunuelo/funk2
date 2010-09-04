@@ -20,4 +20,5 @@
 [globalize-funk fibermon-bytes-to_memory_string     &primfunk:fibermon__bytes__to_memory_string]
 [globalize-funk fibermon-nanoseconds-to_time_string &primfunk:fibermon__nanoseconds__to_time_string]
 [globalize-funk fibermon_fiber-construct_fast       &primfunk:fibermon_fiber__construct_fast]
+[globalize-funk fibermon_fiber-redraw_fast          &primfunk:fibermon_fiber__redraw_fast]
 

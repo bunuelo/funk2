@@ -171,7 +171,7 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
 																			  new__string(cause, "Bc/s"))));
     
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 11), 1),
-			     f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, ((this__bytecodes_per_second != nil) ? this__bytecodes_per_second : f2integer__new(cause, 0)), f2double__new(cause, 100.0))),
+			     f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, ((this__execution_efficiency != nil) ? this__execution_efficiency : f2integer__new(cause, 0)), f2double__new(cause, 100.0))),
 									new__string(cause, "%"))));
   }
   return nil;

@@ -268,7 +268,7 @@ f2ptr raw__array__elt(f2ptr cause, f2ptr this, u64 index) {
   }
 }
 f2ptr f2__array__elt(f2ptr cause, f2ptr this, f2ptr index) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1, nil);}
+  if (! raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1, nil);}
   return raw__array__elt(cause, this, f2integer__i(index, cause));
 }
 def_pcfunk2(array__elt, x, y, return f2__array__elt(this_cause, x, y));

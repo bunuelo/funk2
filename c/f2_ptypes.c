@@ -3385,10 +3385,21 @@ f2ptr f2__traced_array__new(f2ptr cause, f2ptr length) {
 }
 
 u64   raw__traced_array__length(f2ptr cause, f2ptr this) {return f2traced_array__length(this, cause);}
-f2ptr  f2__traced_array__length(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__traced_array__length(cause, this));}
+f2ptr  f2__traced_array__length(f2ptr cause, f2ptr this) {
+  if (! raw__traced_array__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2integer__new(cause, raw__traced_array__length(cause, this));
+}
 
 f2ptr raw__traced_array__elt(f2ptr cause, f2ptr this, u64   index) {return f2traced_array__elt(this, index, cause);}
-f2ptr  f2__traced_array__elt(f2ptr cause, f2ptr this, f2ptr index) {return raw__traced_array__elt(cause, this, f2integer__i(index, cause));}
+f2ptr  f2__traced_array__elt(f2ptr cause, f2ptr this, f2ptr index) {
+  if ((! raw__traced_array__is_type(cause, this)) ||
+      (! raw__integer__is_type(cause, index))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__traced_array__elt(cause, this, f2integer__i(index, cause));
+}
 
 f2ptr f2__traced_array__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2traced_array__elt__set(x, f2integer__i(y, cause), cause, z); return nil;}
 f2ptr f2__traced_array__elt__tracing_on(f2ptr cause, f2ptr x, f2ptr y) {return f2traced_array__elt__tracing_on(x, f2integer__i(y, cause), cause);}

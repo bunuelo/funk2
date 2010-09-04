@@ -141,16 +141,16 @@ def_pcfunk1(fibermon_fiber__construct_fast, this, return f2__fibermon_fiber__con
 
 
 f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
-  f2ptr this__fiber                 = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "fiber"),                 nil); if (raw__fiber__is_type(cause, this__fiber)) {return f2larva__new(cause, 1, nil);}
+  f2ptr this__fiber                 = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "fiber"),                 nil); if (! raw__fiber__is_type(cause, this__fiber)) {return f2larva__new(cause, 1, nil);}
   f2ptr this__progress_bar          = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "progress_bar"),          nil); if (! this__progress_bar)                    {return f2larva__new(cause, 1, nil);}
   f2ptr this__execution_efficiency  = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "execution_efficiency"),  nil);
   f2ptr this__execution_nanoseconds = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "execution_nanoseconds"), nil);
   f2ptr this__bytecode_count        = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "bytecode_count"),        nil);
   f2ptr this__bytecodes_per_second  = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "bytecodes_per_second"),  nil);
+  f2ptr this__table_labels          = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "table_labels"),          nil); if (! raw__array__is_type(cause, this__table_labels)) {return f2larva__new(cause, 1, nil);}
   f2__gtk__progress_bar__set_fraction(cause, this__progress_bar, (this__execution_efficiency != nil) ? this__execution_efficiency : f2integer__new(cause, 0));
   
   {
-    f2ptr this__table_labels = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "table_labels"), nil); if (! this__table_labels) {return f2larva__new(cause, 1, nil);}
     
     {
       f2ptr cause_reg          = f2fiber__cause_reg(this__fiber, cause);

@@ -159,7 +159,7 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
     }
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  1), 1), (f2fiber__keep_undead(this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  2), 1), (f2fiber__is_zombie(  this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
-    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  3), 1), (f2fiber__is_complete(this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  3), 1), raw__fiber__is_complete(cause, this__fiber) ? new__string(cause, "Yes") : new__string(cause, "No"));
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  4), 1), f2__exp__as__string(cause, f2fiber__execute_mutex(this__fiber, cause)));
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  5), 1), (f2fiber__paused(     this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  6), 1), f2__exp__as__string(cause, f2fiber__last_executed_time(this__fiber, cause)));

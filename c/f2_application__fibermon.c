@@ -30,11 +30,11 @@ f2ptr f2__fibermon__bytes__to_memory_string(f2ptr cause, f2ptr this) {
     return f2larva__new(cause, 1, nil);
   }
   s64 i__i = f2integer__i(i, cause);
-  if      (i__i <                                1024ull)  {return f2__exp__as_string(cause, i);}
-  else if (i__i <                     (1024ull * 1024ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /                             1024.0)),  new__string(cause, "k")));}
-  else if (i__i <           (1024ull * 1024ull * 1024ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /                   (1024.0 * 1024.0))), new__string(cause, "M")));}
-  else if (i__i < (1024ull * 1024ull * 1024ull * 1024ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /          (1024.0 * 1024.0 * 1024.0))), new__string(cause, "G")));}
-  else                                                     {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i / (1024.0 * 1024.0 * 1024.0 * 1024.0))), new__string(cause, "T")));}
+  if      (i__i <                                1024ull)  {return f2__exp__as__string(cause, i);}
+  else if (i__i <                     (1024ull * 1024ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i /                             1024.0)),  new__string(cause, "k")));}
+  else if (i__i <           (1024ull * 1024ull * 1024ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i /                   (1024.0 * 1024.0))), new__string(cause, "M")));}
+  else if (i__i < (1024ull * 1024ull * 1024ull * 1024ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i /          (1024.0 * 1024.0 * 1024.0))), new__string(cause, "G")));}
+  else                                                     {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i / (1024.0 * 1024.0 * 1024.0 * 1024.0))), new__string(cause, "T")));}
 }
 def_pcfunk1(fibermon__bytes__to_memory_string, this, return f2__fibermon__bytes__to_memory_string(this_cause, this));
 
@@ -48,13 +48,13 @@ f2ptr f2__fibermon__nanoseconds__to_time_string(f2ptr cause, f2ptr this) {
     return f2larva__new(cause, 1, nil);
   }
   s64 i__i = f2integer__i(i, cause);
-  if      (i__i <                                              1000ull)  {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, i),                                                                                    new__string(cause, "ns")));}
-  else if (i__i <                                   (1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /                                         1000.0)),  new__string(cause, "us")));}
-  else if (i__i <                         (1000ull * 1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /                               (1000.0 * 1000.0))), new__string(cause, "ms")));}
-  else if (i__i <                 (60ull * 1000ull * 1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /                      (1000.0 * 1000.0 * 1000.0))), new__string(cause, "s")));}
-  else if (i__i <         (60ull * 60ull * 1000ull * 1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /               (60.0 * 1000.0 * 1000.0 * 1000.0))), new__string(cause, "m")));}
-  else if (i__i < (24ull * 60ull * 60ull * 1000ull * 1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i /        (60.0 * 60.0 * 1000.0 * 1000.0 * 1000.0))), new__string(cause, "h")));}
-  else                                                                   {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as_string(cause, f2double__new(cause, (double)i__i / (24.0 * 60.0 * 60.0 * 1000.0 * 1000.0 * 1000.0))), new__string(cause, "d")));}
+  if      (i__i <                                              1000ull)  {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, i),                                                                                    new__string(cause, "ns")));}
+  else if (i__i <                                   (1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i /                                         1000.0)),  new__string(cause, "us")));}
+  else if (i__i <                         (1000ull * 1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i /                               (1000.0 * 1000.0))), new__string(cause, "ms")));}
+  else if (i__i <                 (60ull * 1000ull * 1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i /                      (1000.0 * 1000.0 * 1000.0))), new__string(cause, "s")));}
+  else if (i__i <         (60ull * 60ull * 1000ull * 1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i /               (60.0 * 1000.0 * 1000.0 * 1000.0))), new__string(cause, "m")));}
+  else if (i__i < (24ull * 60ull * 60ull * 1000ull * 1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i /        (60.0 * 60.0 * 1000.0 * 1000.0 * 1000.0))), new__string(cause, "h")));}
+  else                                                                   {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i / (24.0 * 60.0 * 60.0 * 1000.0 * 1000.0 * 1000.0))), new__string(cause, "d")));}
 }
 def_pcfunk1(fibermon__nanoseconds__to_time_string, this, return f2__fibermon__nanoseconds__to_time_string(this_cause, this));
 

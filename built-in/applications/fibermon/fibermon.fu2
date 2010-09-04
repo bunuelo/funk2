@@ -271,6 +271,7 @@
 				      [have index_fiber_hash remove fiber]
 				      [have [get processor_array elt old_known_index] remove_fiber fiber]
 				      [have index_fiber_hash add fiber current_index]
+				      [have index_fiber_hash add fiber fibermon_fiber]
 				      [have [get processor_array elt   current_index] add_fiber fibermon_fiber]]]]
 			    [let [[fibermon_fiber [new fibermon_fiber fiber]]]
 			      [have index_fiber_hash add fiber current_index]

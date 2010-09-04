@@ -317,7 +317,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
 	    //printf("\nfiber paused due to larva in value register.");
 	  } else {
-	    if ((! f2fiber__is_complete(fiber, cause))) {
+	    if (! f2fiber__is_complete(fiber, cause)) {
 	      //if (processor) {printf("\nprocessor "); f2__write(nil, f2processor__desc(processor));} else {printf("\nunknown processor");} printf(" executing fiber 0x%X", (int)fiber); fflush(stdout);
 	      
 	      did_something = __funk2.globalenv.true__symbol;
@@ -341,10 +341,10 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      }
 	      
 	    } else {
+	      //printf("\n  fiber completed.");
 	      if (! f2fiber__is_zombie(fiber, cause)) {
 		f2fiber__is_zombie__set(fiber, cause, __funk2.globalenv.true__symbol);
 	      }
-	      //printf("\n  fiber completed.");
 	      if (! f2fiber__keep_undead(fiber, cause)) {
 		f2ptr last_executed_time = f2fiber__last_executed_time(fiber, cause);
 		if (last_executed_time) {
@@ -356,6 +356,9 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		    f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
 		    if (fiber_cause) {
 		      f2__cause__remove_fiber(cause, fiber_cause, fiber);
+		    }
+		    if (f2fiber__is_zombie(fiber, cause)) {
+		      f2fiber__is_zombie__set(fiber, cause, nil);
 		    }
 		    f2fiber__processor_assignment_index__set(fiber, cause, nil);
 		    // bug: removing a fiber here seems to drop needed fibers sometimes.  (why?)
@@ -394,7 +397,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
       //printf("\nfiber locked couldn't execute...");
     }
     
-    if(need_to_launch_larva_handling_critic_fiber) {
+    if (need_to_launch_larva_handling_critic_fiber) {
       f2ptr cause_reg = f2fiber__cause_reg(fiber, cause);
       f2ptr critics   = cause_reg ? f2cause__critics(cause_reg, cause) : nil;
       if (critics) {

@@ -417,6 +417,14 @@ int f2__fiber__bytecode__array(f2ptr fiber, f2ptr bytecode, f2ptr length) {
 
 // bytecode cons []
 
+int f2__fiber__bytecode__cons__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  f2ptr new_cons = f2cons__new(cause, nil, nil);
+  if (! new_cons) {error(nil, "cons bytecode error: new cons is nil");}
+  f2fiber__iter__set(fiber, cause, new_cons);
+  return 0;
+}
+
+
 int f2__fiber__bytecode__cons(f2ptr fiber, f2ptr bytecode) {
   bytecode_status("bytecode cons beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
@@ -424,10 +432,7 @@ int f2__fiber__bytecode__cons(f2ptr fiber, f2ptr bytecode) {
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr new_cons = f2cons__new(cause, nil, nil);
-  if (! new_cons) {error(nil, "cons bytecode error: new cons is nil");}
-  f2fiber__iter__set(fiber, cause, new_cons);
-  return 0;
+  return f2__fiber__bytecode__cons__no_increment_pc_reg(cause, fiber, bytecode);
 }
 
 

@@ -926,8 +926,8 @@ f2ptr f2__compile__eval_args(f2ptr simple_cause, f2ptr fiber, f2ptr args, boolea
   
   f2ptr exp_bcs = f2__compile__cons(cause); f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
   exp_bcs       = f2__compile__copy_iter_to_args(cause);                    iter = f2__list_cdr__set(cause, iter, exp_bcs);
-  exp_bcs       = f2__compile__push_iter(arg_cause);                            iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
-  exp_bcs       = f2__compile__push_args(arg_cause);                            iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__push_iter(cause);                            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__push_args(cause);                            iter = f2__list_cdr__set(cause, iter, exp_bcs);
   
   while (args) {
     f2ptr current_arg = f2cons__car(args, cause);
@@ -939,23 +939,23 @@ f2ptr f2__compile__eval_args(f2ptr simple_cause, f2ptr fiber, f2ptr args, boolea
       return exp_bcs;
     }
     if (exp_bcs && (! raw__cons__is_type(cause, exp_bcs))) {return exp_bcs;}
-    iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
+    iter = f2__list_cdr__set(cause, iter, exp_bcs);
     
     if (next_args) {
-      exp_bcs = f2__compile__pop_args(arg_cause);            iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
-      exp_bcs = f2__compile__pop_iter(arg_cause);            iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
-      exp_bcs = f2__compile__car__set(arg_cause);            iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
-      exp_bcs = f2__compile__copy_iter_to_value(arg_cause);  iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
-      exp_bcs = f2__compile__cons(arg_cause);                iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
-      exp_bcs = f2__compile__swap_value_and_iter(arg_cause); iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
-      exp_bcs = f2__compile__cdr__set(arg_cause);            iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
-      exp_bcs = f2__compile__swap_value_and_iter(arg_cause); iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
-      exp_bcs = f2__compile__push_iter(arg_cause);           iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
-      exp_bcs = f2__compile__push_args(arg_cause);           iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
+      exp_bcs = f2__compile__pop_args(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      exp_bcs = f2__compile__pop_iter(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      exp_bcs = f2__compile__car__set(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      exp_bcs = f2__compile__copy_iter_to_value(cause);  iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      exp_bcs = f2__compile__cons(cause);                iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      exp_bcs = f2__compile__swap_value_and_iter(cause); iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      exp_bcs = f2__compile__cdr__set(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      exp_bcs = f2__compile__swap_value_and_iter(cause); iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      exp_bcs = f2__compile__push_iter(cause);           iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      exp_bcs = f2__compile__push_args(cause);           iter = f2__list_cdr__set(cause, iter, exp_bcs);
     } else {
-      exp_bcs = f2__compile__pop_args(arg_cause);            iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
-      exp_bcs = f2__compile__pop_iter(arg_cause);            iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
-      exp_bcs = f2__compile__car__set(arg_cause);            iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
+      exp_bcs = f2__compile__pop_args(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      exp_bcs = f2__compile__pop_iter(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      exp_bcs = f2__compile__car__set(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
     }
     args = next_args;
   }

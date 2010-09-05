@@ -103,6 +103,8 @@ typedef struct funk2_bytecode_s {
   u64   bytecode__block_define_argument__execution_count;
   f2ptr bytecode__block_define_last_argument__symbol;
   u64   bytecode__block_define_last_argument__execution_count;
+  f2ptr bytecode__block_pop__symbol;
+  u64   bytecode__block_pop__execution_count;
   f2ptr bytecode__block_exit_and_pop__symbol;
   u64   bytecode__block_exit_and_pop__execution_count;
   f2ptr bytecode__block_exit_and_no_pop__symbol;
@@ -194,6 +196,7 @@ int                    f2__fiber__bytecode__block_enter(                     f2p
 int                    f2__fiber__bytecode__block_define_rest_argument(      f2ptr fiber, f2ptr bytecode, f2ptr argument);
 int                    f2__fiber__bytecode__block_define_argument(           f2ptr fiber, f2ptr bytecode, f2ptr argument);
 int                    f2__fiber__bytecode__block_define_last_argument(      f2ptr fiber, f2ptr bytecode, f2ptr argument);
+int                    f2__fiber__bytecode__block_pop(                       f2ptr fiber, f2ptr bytecode);
 int                    f2__fiber__bytecode__block_exit_and_pop(              f2ptr fiber, f2ptr bytecode, f2ptr funk);
 int                    f2__fiber__bytecode__block_exit_and_no_pop(           f2ptr fiber, f2ptr bytecode, f2ptr funk);
 

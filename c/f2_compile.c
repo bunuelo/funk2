@@ -118,6 +118,7 @@ f2ptr f2__compile__block_enter(               f2ptr cause)                 {retu
 f2ptr f2__compile__block_define_rest_argument(f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_rest_argument__symbol, argument, nil, nil), nil));}
 f2ptr f2__compile__block_define_argument(     f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_argument__symbol,      argument, nil, nil), nil));}
 f2ptr f2__compile__block_define_last_argument(f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_last_argument__symbol, argument, nil, nil), nil));}
+f2ptr f2__compile__block_pop(                 f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_pop__symbol,                  nil,      nil, nil), nil));}
 f2ptr f2__compile__block_exit_and_pop(        f2ptr cause, f2ptr funk)     {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_exit_and_pop__symbol,         funk,     nil, nil), nil));}
 f2ptr f2__compile__block_exit_and_no_pop(     f2ptr cause, f2ptr funk)     {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_exit_and_no_pop__symbol,      funk,     nil, nil), nil));}
 
@@ -510,6 +511,7 @@ f2ptr __f2__compile__metro(f2ptr simple_cause, f2ptr fiber, f2ptr metro) {
   return bcs_valid(metro_bcs);
 }
 
+
 /*
 f2ptr f2__compile__funk__backup(f2ptr cause, boolean_t bytecode_tracing_on, f2ptr fiber, f2ptr funk) {
   if (!funk) {error(fiber, "\nf2__compile__funk error: funk is nil.");}
@@ -708,7 +710,7 @@ f2ptr f2__compile__if_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t
   if (true__popped_env_and_return || false__popped_env_and_return) {
     *popped_env_and_return = boolean__true;
     
-    if (!true__popped_env_and_return) {
+    if (! true__popped_env_and_return) {
       // add pop env and pop return to true_bcs
       f2ptr iter;
       {
@@ -723,7 +725,7 @@ f2ptr f2__compile__if_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t
       iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
     }
     
-    if (!false__popped_env_and_return) {
+    if (! false__popped_env_and_return) {
       // add pop env and pop return to false_bcs
       f2ptr iter;
       {

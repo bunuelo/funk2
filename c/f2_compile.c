@@ -711,20 +711,20 @@ f2ptr f2__compile__if_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t
     *popped_env_and_return = boolean__true;
     
     if (! true__popped_env_and_return) {
-      f2ptr pop_block = f2__compile__pop_block(cause);
+      f2ptr block_pop = f2__compile__block_pop(cause);
       if (true_bcs) {
-	f2__list_cdr__set(cause, true_bcs, pop_block);
+	f2__list_cdr__set(cause, true_bcs, block_pop);
       } else {
-	true_bcs = pop_block;
+	true_bcs = block_pop;
       }
     }
     
     if (! false__popped_env_and_return) {
-      f2ptr pop_block = f2__compile__pop_block(cause);
+      f2ptr block_pop = f2__compile__block_pop(cause);
       if (false_bcs) {
-	f2__list_cdr__set(cause, false_bcs, pop_block);
+	f2__list_cdr__set(cause, false_bcs, block_pop);
       } else {
-	false_bcs = pop_block;
+	false_bcs = block_pop;
       }
     }
   }

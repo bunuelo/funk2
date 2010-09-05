@@ -95,6 +95,8 @@ typedef struct funk2_bytecode_s {
   f2ptr bytecode__reg_array__elt__set__symbol;
   u64   bytecode__reg_array__elt__set__execution_count;
   
+  f2ptr bytecode__block_push__symbol;
+  u64   bytecode__block_push__execution_count;
   f2ptr bytecode__block_enter__symbol;
   u64   bytecode__block_enter__execution_count;
   f2ptr bytecode__block_define_rest_argument__symbol;
@@ -198,6 +200,7 @@ int                    f2__fiber__bytecode__machine_code(                    f2p
 int                    f2__fiber__bytecode__reg_array__elt(                  f2ptr fiber, f2ptr bytecode, f2ptr reg);
 int                    f2__fiber__bytecode__reg_array__elt__set(             f2ptr fiber, f2ptr bytecode, f2ptr reg);
 
+int                    f2__fiber__bytecode__block_push(                      f2ptr fiber, f2ptr bytecode);
 int                    f2__fiber__bytecode__block_enter(                     f2ptr fiber, f2ptr bytecode);
 int                    f2__fiber__bytecode__block_define_rest_argument(      f2ptr fiber, f2ptr bytecode, f2ptr argument);
 int                    f2__fiber__bytecode__block_define_argument(           f2ptr fiber, f2ptr bytecode, f2ptr argument);

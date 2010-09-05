@@ -114,6 +114,7 @@ f2ptr f2__compile__funkvar__mutate(f2ptr cause, f2ptr var) {return bcs_valid(f2_
 f2ptr f2__compile__globalize_var(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__globalize_type_var(cause, __funk2.primobject__frame.variable__symbol,      var));}
 f2ptr f2__compile__globalize_funkvar(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__globalize_type_var(cause, __funk2.primobject__frame.funk_variable__symbol, var));}
 
+f2ptr f2__compile__block_push(                f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_push__symbol,                 nil,      nil, nil), nil));}
 f2ptr f2__compile__block_enter(               f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_enter__symbol,                nil,      nil, nil), nil));}
 f2ptr f2__compile__block_define_rest_argument(f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_rest_argument__symbol, argument, nil, nil), nil));}
 f2ptr f2__compile__block_define_argument(     f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_argument__symbol,      argument, nil, nil), nil));}
@@ -803,9 +804,10 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolea
     iter = f2__list_cdr__set(cause, iter, f2__compile__block_pop(cause));
   }
   if (protect_environment) {
-    iter = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause));
-    iter = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause));
-    iter = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause));
+    //iter = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause));
+    //iter = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause));
+    //iter = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause));
+    iter = f2__list_cdr__set(cause, iter, f2__compile__block_push(cause));
     iter = f2__list_cdr__set(cause, iter, f2__compile__funk_bc(cause));
     //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
     //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));

@@ -81,6 +81,8 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->bytecode__machine_code__symbol                        = -1;
   this->bytecode__machine_code__execution_count               = 0;
   
+  this->bytecode__block_push__symbol                          = -1;
+  this->bytecode__block_push__execution_count                 = 0;
   this->bytecode__block_enter__symbol                         = -1;
   this->bytecode__block_enter__execution_count                = 0;
   this->bytecode__block_define_rest_argument__symbol          = -1;
@@ -129,6 +131,7 @@ void funk2_bytecode__destroy(funk2_bytecode_t* this) {
   status("  bytecode__block_eval_args_end__execution_count        = " u64__fstr, this->bytecode__block_eval_args_end__execution_count);
   status("  bytecode__copy__execution_count                       = " u64__fstr, this->bytecode__copy__execution_count);
   status("  bytecode__block_define_argument__execution_count      = " u64__fstr, this->bytecode__block_define_argument__execution_count);
+  status("  bytecode__block_push__execution_count                 = " u64__fstr, this->bytecode__block_push__execution_count);
   status("  bytecode__block_enter__execution_count                = " u64__fstr, this->bytecode__block_enter__execution_count);
   status("  bytecode__block_define_rest_argument__execution_count = " u64__fstr, this->bytecode__block_define_rest_argument__execution_count);
   status("  bytecode__block_exit_and_no_pop__execution_count      = " u64__fstr, this->bytecode__block_exit_and_no_pop__execution_count);
@@ -2179,6 +2182,29 @@ int f2__fiber__bytecode__reg_array__elt__set(f2ptr fiber, f2ptr bytecode, f2ptr 
   return (f2__compile__bytecode__reg_array__elt__set(cause, reg))(fiber, bytecode);
 }
 
+// bytecode block_push []
+
+int f2__fiber__bytecode__block_push__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  int yield_after_this_bytecode = 0;
+  yield_after_this_bytecode |= f2__fiber__bytecode__push__return_reg__no_increment_pc_reg(cause, fiber, bytecode);
+  yield_after_this_bytecode |= f2__fiber__bytecode__push__env_reg__no_increment_pc_reg(   cause, fiber, bytecode);
+  yield_after_this_bytecode |= f2__fiber__bytecode__push__args_reg__no_increment_pc_reg(  cause, fiber, bytecode);
+  yield_after_this_bytecode |= f2__fiber__bytecode__push__value_reg__no_increment_pc_reg( cause, fiber, bytecode);
+  yield_after_this_bytecode |= f2__fiber__bytecode__push_constant__no_increment_pc_reg(   cause, fiber, bytecode, __funk2.compile.debug_funk_call__symbol);
+  return yield_after_this_bytecode;
+}
+
+int f2__fiber__bytecode__block_push(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode block_push beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__block_push__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__block_push__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
 // bytecode block_enter []
 
 int f2__fiber__bytecode__block_enter(f2ptr fiber, f2ptr bytecode) {
@@ -2189,12 +2215,8 @@ int f2__fiber__bytecode__block_enter(f2ptr fiber, f2ptr bytecode) {
   f2__fiber__increment_pc(fiber, cause);
   
   int yield_after_this_bytecode = 0;
-  yield_after_this_bytecode |= f2__fiber__bytecode__push__return_reg__no_increment_pc_reg(cause, fiber, bytecode);
-  yield_after_this_bytecode |= f2__fiber__bytecode__push__env_reg__no_increment_pc_reg(   cause, fiber, bytecode);
-  yield_after_this_bytecode |= f2__fiber__bytecode__push__args_reg__no_increment_pc_reg(  cause, fiber, bytecode);
-  yield_after_this_bytecode |= f2__fiber__bytecode__push__value_reg__no_increment_pc_reg( cause, fiber, bytecode);
-  yield_after_this_bytecode |= f2__fiber__bytecode__push_constant__no_increment_pc_reg(   cause, fiber, bytecode, __funk2.compile.debug_funk_call__symbol);
-  yield_after_this_bytecode |= f2__fiber__bytecode__newenv__no_increment_pc_reg(          cause, fiber, bytecode);
+  yield_after_this_bytecode |= f2__fiber__bytecode__block_push__no_increment_pc_reg(cause, fiber, bytecode);
+  yield_after_this_bytecode |= f2__fiber__bytecode__newenv__no_increment_pc_reg(    cause, fiber, bytecode);
   return yield_after_this_bytecode;
 }
 
@@ -2449,6 +2471,7 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.bytecode__reg_array__elt__symbol             = new__symbol(cause, "reg_array-elt");
   __funk2.bytecode.bytecode__reg_array__elt__set__symbol        = new__symbol(cause, "reg_array-elt-set");
   
+  __funk2.bytecode.bytecode__block_push__symbol                 = new__symbol(cause, "block_push");
   __funk2.bytecode.bytecode__block_enter__symbol                = new__symbol(cause, "block_enter");
   __funk2.bytecode.bytecode__block_define_rest_argument__symbol = new__symbol(cause, "block_define_rest_argument");
   __funk2.bytecode.bytecode__block_define_argument__symbol      = new__symbol(cause, "block_define_argument");

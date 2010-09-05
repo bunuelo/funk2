@@ -924,6 +924,8 @@ f2ptr f2__compile__eval_args(f2ptr simple_cause, f2ptr fiber, f2ptr args, boolea
     return bcs_valid(f2__compile__args__set(cause, nil));
   }
   
+  // BLOCK BYTECODE -- block_eval_args_begin
+  
   f2ptr exp_bcs = f2__compile__cons(cause); f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
   exp_bcs       = f2__compile__copy_iter_to_args(cause);                    iter = f2__list_cdr__set(cause, iter, exp_bcs);
   exp_bcs       = f2__compile__push_iter(cause);                            iter = f2__list_cdr__set(cause, iter, exp_bcs);
@@ -942,6 +944,9 @@ f2ptr f2__compile__eval_args(f2ptr simple_cause, f2ptr fiber, f2ptr args, boolea
     iter = f2__list_cdr__set(cause, iter, exp_bcs);
     
     if (next_args) {
+      
+      // BLOCK BYTECODE -- block_eval_args_next_argument
+      
       exp_bcs = f2__compile__pop_args(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
       exp_bcs = f2__compile__pop_iter(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
       exp_bcs = f2__compile__car__set(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
@@ -952,7 +957,11 @@ f2ptr f2__compile__eval_args(f2ptr simple_cause, f2ptr fiber, f2ptr args, boolea
       exp_bcs = f2__compile__swap_value_and_iter(cause); iter = f2__list_cdr__set(cause, iter, exp_bcs);
       exp_bcs = f2__compile__push_iter(cause);           iter = f2__list_cdr__set(cause, iter, exp_bcs);
       exp_bcs = f2__compile__push_args(cause);           iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      
     } else {
+      
+      // BLOCK BYTECODE -- block_eval_args_end
+      
       exp_bcs = f2__compile__pop_args(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
       exp_bcs = f2__compile__pop_iter(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
       exp_bcs = f2__compile__car__set(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);

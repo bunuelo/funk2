@@ -109,6 +109,12 @@ typedef struct funk2_bytecode_s {
   u64   bytecode__block_exit_and_pop__execution_count;
   f2ptr bytecode__block_exit_and_no_pop__symbol;
   u64   bytecode__block_exit_and_no_pop__execution_count;
+  f2ptr bytecode__block_eval_args_begin__symbol;
+  u64   bytecode__block_eval_args_begin__execution_count;
+  f2ptr bytecode__block_eval_args_next__symbol;
+  u64   bytecode__block_eval_args_next__execution_count;
+  f2ptr bytecode__block_eval_args_end__symbol;
+  u64   bytecode__block_eval_args_end__execution_count;
   
   f2ptr expression_not_funkable__exception__tag;
   f2ptr expression_not_funkable__exception;
@@ -199,6 +205,10 @@ int                    f2__fiber__bytecode__block_define_last_argument(      f2p
 int                    f2__fiber__bytecode__block_pop(                       f2ptr fiber, f2ptr bytecode);
 int                    f2__fiber__bytecode__block_exit_and_pop(              f2ptr fiber, f2ptr bytecode, f2ptr funk);
 int                    f2__fiber__bytecode__block_exit_and_no_pop(           f2ptr fiber, f2ptr bytecode, f2ptr funk);
+int                    f2__fiber__bytecode__block_eval_args_begin(           f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__block_eval_args_next(            f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__block_eval_args_end(             f2ptr fiber, f2ptr bytecode);
+
 
 
 bytecode_jump__f2ptr_t f2__compile__bytecode__set(    f2ptr cause, f2ptr reg);

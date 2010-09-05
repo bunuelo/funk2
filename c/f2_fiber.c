@@ -214,6 +214,9 @@ boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) 
   else if (command == __funk2.bytecode.bytecode__block_exit_and_pop__symbol)         {f2__fiber__bytecode__block_exit_and_pop(        fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__type_var__mutate__symbol)           {f2__fiber__bytecode__type_var__mutate(          fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__yield__symbol)                      {f2__fiber__bytecode__yield(                     fiber, bytecode); return boolean__true;}
+  else if (command == __funk2.bytecode.bytecode__block_eval_args_begin__symbol)      {f2__fiber__bytecode__block_eval_args_begin(     fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__block_eval_args_next__symbol)       {f2__fiber__bytecode__block_eval_args_next(      fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__block_eval_args_end__symbol)        {f2__fiber__bytecode__block_eval_args_end(       fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__define_type_var__symbol)            {f2__fiber__bytecode__define_type_var(           fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__globalize_type_var__symbol)         {f2__fiber__bytecode__globalize_type_var(        fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   

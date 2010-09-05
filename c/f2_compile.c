@@ -952,24 +952,28 @@ f2ptr f2__compile__eval_args(f2ptr simple_cause, f2ptr fiber, f2ptr args, boolea
       
       // BLOCK BYTECODE -- block_eval_args_next_argument
       
-      exp_bcs = f2__compile__pop_args(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
-      exp_bcs = f2__compile__pop_iter(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
-      exp_bcs = f2__compile__car__set(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
-      exp_bcs = f2__compile__copy_iter_to_value(cause);  iter = f2__list_cdr__set(cause, iter, exp_bcs);
-      exp_bcs = f2__compile__cons(cause);                iter = f2__list_cdr__set(cause, iter, exp_bcs);
-      exp_bcs = f2__compile__swap_value_and_iter(cause); iter = f2__list_cdr__set(cause, iter, exp_bcs);
-      exp_bcs = f2__compile__cdr__set(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
-      exp_bcs = f2__compile__swap_value_and_iter(cause); iter = f2__list_cdr__set(cause, iter, exp_bcs);
-      exp_bcs = f2__compile__push_iter(cause);           iter = f2__list_cdr__set(cause, iter, exp_bcs);
-      exp_bcs = f2__compile__push_args(cause);           iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      //exp_bcs = f2__compile__pop_args(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      //exp_bcs = f2__compile__pop_iter(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      //exp_bcs = f2__compile__car__set(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      //exp_bcs = f2__compile__copy_iter_to_value(cause);  iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      //exp_bcs = f2__compile__cons(cause);                iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      //exp_bcs = f2__compile__swap_value_and_iter(cause); iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      //exp_bcs = f2__compile__cdr__set(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      //exp_bcs = f2__compile__swap_value_and_iter(cause); iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      //exp_bcs = f2__compile__push_iter(cause);           iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      //exp_bcs = f2__compile__push_args(cause);           iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      
+      exp_bcs = f2__compile__block_eval_args_next(cause); iter = f2__list_cdr__set(cause, iter, exp_bcs);
       
     } else {
       
       // BLOCK BYTECODE -- block_eval_args_end
       
-      exp_bcs = f2__compile__pop_args(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
-      exp_bcs = f2__compile__pop_iter(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
-      exp_bcs = f2__compile__car__set(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      //exp_bcs = f2__compile__pop_args(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      //exp_bcs = f2__compile__pop_iter(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      //exp_bcs = f2__compile__car__set(cause);            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+      
+      exp_bcs = f2__compile__block_eval_args_end(cause); iter = f2__list_cdr__set(cause, iter, exp_bcs);
       
     }
     args = next_args;

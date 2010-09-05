@@ -714,16 +714,20 @@ int f2__fiber__bytecode__swap__return_reg__args_reg(f2ptr fiber, f2ptr bytecode)
 }
 
 
+int f2__fiber__bytecode__swap__value_reg__iter_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  f2ptr temp =                        f2fiber__value(fiber, cause);
+  f2fiber__value__set(fiber, cause, f2fiber__iter( fiber, cause));
+  f2fiber__iter__set( fiber, cause, temp);
+  return 0;
+}
+
 int f2__fiber__bytecode__swap__value_reg__iter_reg(f2ptr fiber, f2ptr bytecode) {
   bytecode_status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                        f2fiber__value(fiber, cause);
-  f2fiber__value__set(fiber, cause, f2fiber__iter( fiber, cause));
-  f2fiber__iter__set( fiber, cause, temp);
-  return 0;
+  return f2__fiber__bytecode__swap__value_reg__iter_reg__no_increment_pc_reg(cause, fiber, bytecode);
 }
 
 int f2__fiber__bytecode__swap__value_reg__program_counter_reg(f2ptr fiber, f2ptr bytecode) {

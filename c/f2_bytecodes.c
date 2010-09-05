@@ -1276,14 +1276,18 @@ int f2__fiber__bytecode__copy__iter_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
   return 0;
 }
 
+int f2__fiber__bytecode__copy__iter_reg__args_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  f2fiber__args__set(fiber, cause, f2fiber__iter(fiber, cause));
+  return 0;
+}
+
 int f2__fiber__bytecode__copy__iter_reg__args_reg(f2ptr fiber, f2ptr bytecode) {
   bytecode_status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2fiber__args__set(fiber, cause, f2fiber__iter(fiber, cause));
-  return 0;
+  return f2__fiber__bytecode__copy__iter_reg__args_reg__no_increment_pc_reg(cause, fiber, bytecode);
 }
 
 

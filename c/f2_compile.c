@@ -711,6 +711,62 @@ f2ptr f2__compile__if_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t
     *popped_env_and_return = boolean__true;
     
     if (! true__popped_env_and_return) {
+      f2ptr pop_block = f2__compile__pop_block(cause);
+      if (true_bcs) {
+	f2__list_cdr__set(cause, true_bcs, pop_block);
+      } else {
+	true_bcs = pop_block;
+      }
+    }
+    
+    if (! false__popped_env_and_return) {
+      f2ptr pop_block = f2__compile__pop_block(cause);
+      if (false_bcs) {
+	f2__list_cdr__set(cause, false_bcs, pop_block);
+      } else {
+	false_bcs = pop_block;
+      }
+    }
+  }
+  
+  return bcs_valid(f2__compile__if(cause, cond_bcs, true_bcs, false_bcs));
+}
+
+// this is a backup of the f2__compile__if_exp function before trying to use the block_pop bytecode.
+f2ptr __f2__compile__if_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t* popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
+  release__assert(__funk2.compile.f2__compile__if_exp__symbol != -1, nil, "__funk2.compile.f2__compile__if_exp__symbol not yet defined.");
+  f2ptr cause = f2cause__compiled_from__new(simple_cause, __funk2.compile.f2__compile__if_exp__symbol, exps);
+  
+  if (! raw__cons__is_type(cause, exps)) {return __funk2.compile.compile__exception;}
+  exps = f2cons__cdr(exps, cause); // skip |if|
+  f2ptr cond_exp   = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause); if (!raw__cons__is_type(cause, exps)) {return __funk2.compile.compile__exception;}
+  f2ptr true_exp   = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause);
+  
+  f2ptr false_exps = exps;
+  if (false_exps && (! raw__cons__is_type(cause, false_exps))) {return false_exps;}
+  
+  f2ptr cond_bcs   = raw__compile(cause, fiber, cond_exp, boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
+  if (raw__larva__is_type(cause, cond_bcs)) {
+    return cond_bcs;
+  }
+  if (cond_bcs && (! raw__cons__is_type(cause, cond_bcs))) {return cond_bcs;}
+  
+  boolean_t true__popped_env_and_return = boolean__false;
+  f2ptr true_bcs   = raw__compile(cause, fiber, true_exp, protect_environment, optimize_tail_recursion, &true__popped_env_and_return, is_funktional, local_variables, is_locally_funktional);
+  if (raw__larva__is_type(cause, true_bcs)) {
+    return true_bcs;
+  }
+  if (true_bcs && (! raw__cons__is_type(cause, true_bcs))) {return true_bcs;}
+  
+  boolean_t false__popped_env_and_return = boolean__false;
+  boolean_t optimize_unused_beginning = boolean__true;
+  f2ptr false_bcs = f2__compile__rawcode(cause, fiber, false_exps, protect_environment, optimize_tail_recursion, &false__popped_env_and_return, is_funktional, local_variables, is_locally_funktional, optimize_unused_beginning);
+  if (false_bcs && (! raw__cons__is_type(cause, false_bcs))) {return false_bcs;}
+  
+  if (true__popped_env_and_return || false__popped_env_and_return) {
+    *popped_env_and_return = boolean__true;
+    
+    if (! true__popped_env_and_return) {
       // add pop env and pop return to true_bcs
       f2ptr iter;
       {

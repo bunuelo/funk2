@@ -121,6 +121,9 @@ f2ptr f2__compile__block_define_last_argument(f2ptr cause, f2ptr argument) {retu
 f2ptr f2__compile__block_pop(                 f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_pop__symbol,                  nil,      nil, nil), nil));}
 f2ptr f2__compile__block_exit_and_pop(        f2ptr cause, f2ptr funk)     {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_exit_and_pop__symbol,         funk,     nil, nil), nil));}
 f2ptr f2__compile__block_exit_and_no_pop(     f2ptr cause, f2ptr funk)     {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_exit_and_no_pop__symbol,      funk,     nil, nil), nil));}
+f2ptr f2__compile__block_eval_args_begin(     f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_eval_args_begin__symbol,      nil,      nil, nil), nil));}
+f2ptr f2__compile__block_eval_args_next(      f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_eval_args_next__symbol,       nil,      nil, nil), nil));}
+f2ptr f2__compile__block_eval_args_end(       f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_eval_args_end__symbol,        nil,      nil, nil), nil));}
 
 
 f2ptr f2__compile__symbol(f2ptr cause, f2ptr exp, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
@@ -926,10 +929,12 @@ f2ptr f2__compile__eval_args(f2ptr simple_cause, f2ptr fiber, f2ptr args, boolea
   
   // BLOCK BYTECODE -- block_eval_args_begin
   
-  f2ptr exp_bcs = f2__compile__cons(cause); f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
-  exp_bcs       = f2__compile__copy_iter_to_args(cause);                    iter = f2__list_cdr__set(cause, iter, exp_bcs);
-  exp_bcs       = f2__compile__push_iter(cause);                            iter = f2__list_cdr__set(cause, iter, exp_bcs);
-  exp_bcs       = f2__compile__push_args(cause);                            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+  //f2ptr exp_bcs = f2__compile__cons(cause); f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  //exp_bcs       = f2__compile__copy_iter_to_args(cause);                    iter = f2__list_cdr__set(cause, iter, exp_bcs);
+  //exp_bcs       = f2__compile__push_iter(cause);                            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+  //exp_bcs       = f2__compile__push_args(cause);                            iter = f2__list_cdr__set(cause, iter, exp_bcs);
+  
+  f2ptr exp_bcs = f2__compile__block_eval_args_begin(cause); f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
   
   while (args) {
     f2ptr current_arg = f2cons__car(args, cause);

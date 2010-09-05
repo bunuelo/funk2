@@ -210,7 +210,7 @@ boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) 
   else if (command == __funk2.bytecode.bytecode__nop__symbol)                        {f2__fiber__bytecode__nop(                fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__jump__symbol)                       {f2__fiber__bytecode__jump(               fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__push_constant__symbol)              {f2__fiber__bytecode__push_constant(      fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__pop__symbol)                        {f2__fiber__bytecode__block_pop(          fiber, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__block_pop__symbol)                  {f2__fiber__bytecode__block_pop(          fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__block_exit_and_pop__symbol)         {f2__fiber__bytecode__block_exit_and_pop( fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__define_type_var__symbol)            {f2__fiber__bytecode__define_type_var(    fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__type_var__mutate__symbol)           {f2__fiber__bytecode__type_var__mutate(   fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}

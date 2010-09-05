@@ -508,6 +508,11 @@ int f2__fiber__bytecode__cdr(f2ptr fiber, f2ptr bytecode) {
 
 // bytecode car__set []
 
+int f2__fiber__bytecode__car__set__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  f2cons__car__set(f2fiber__iter(fiber, cause), cause, f2fiber__value(fiber, cause));
+  return 0;
+}
+
 int f2__fiber__bytecode__car__set(f2ptr fiber, f2ptr bytecode) {
   bytecode_status("bytecode car-set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
@@ -515,8 +520,7 @@ int f2__fiber__bytecode__car__set(f2ptr fiber, f2ptr bytecode) {
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2cons__car__set(f2fiber__iter(fiber, cause), cause, f2fiber__value(fiber, cause));
-  return 0;
+  return f2__fiber__bytecode__car__set__no_increment_pc_reg(cause, fiber, bytecode);
 }
 
 

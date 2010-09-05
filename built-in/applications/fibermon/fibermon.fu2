@@ -42,7 +42,6 @@
 				 time
 				 execution_nanoseconds
 				 bytecode_count
-				 bytecode_count__string
 				 bytecodes_per_second
 				 execution_efficiency
 				 elapsed_nanoseconds

@@ -1067,14 +1067,18 @@ int f2__fiber__bytecode__pop__iter_reg(f2ptr fiber, f2ptr bytecode) {
   return 0;
 }
 
+int f2__fiber__bytecode__pop__args_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  f2__fiber__stack__pop_args(fiber, cause);
+  return 0;
+}
+
 int f2__fiber__bytecode__pop__args_reg(f2ptr fiber, f2ptr bytecode) {
   bytecode_status("bytecode pop beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2__fiber__stack__pop_args(fiber, cause);
-  return 0;
+  return f2__fiber__bytecode__pop__args_reg__no_increment_pc_reg(cause, fiber, bytecode);
 }
 
 int f2__fiber__bytecode__pop__program_counter_reg(f2ptr fiber, f2ptr bytecode) {

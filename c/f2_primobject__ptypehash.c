@@ -391,12 +391,14 @@ f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__primobject_ptypehash__reinitialize_globalvars() {
+void f2__primobject__ptypehash__reinitialize_globalvars() {
   __ptypehash__symbol = f2symbol__new(initial_cause(), strlen("ptypehash"), (u8*)"ptypehash");
 }
 
-void f2__primobject_ptypehash__initialize() {
-  f2__primobject_ptypehash__reinitialize_globalvars();
+void f2__primobject__ptypehash__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-ptypehash", "", &f2__primobject__ptypehash__reinitialize_globalvars);
+  
+  f2__primobject__ptypehash__reinitialize_globalvars();
   
   environment__add_var_value(initial_cause(), global_environment(), __ptypehash__symbol, nil);
   

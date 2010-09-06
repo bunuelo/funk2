@@ -128,8 +128,7 @@ f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause);
 
 // **
 
-void f2__primobject_ptypehash__reinitialize_globalvars();
-void f2__primobject_ptypehash__initialize();
+void f2__primobject__ptypehash__initialize();
 
 #endif // F2__PRIMOBJECT__PTYPEHASH__H
 

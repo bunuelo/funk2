@@ -101,12 +101,14 @@ f2ptr f2traced_mutex__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__primobject_traced_mutex__reinitialize_globalvars() {
+void f2__primobject__traced_mutex__reinitialize_globalvars() {
   __traced_mutex__symbol = f2symbol__new(initial_cause(), strlen("traced_mutex"), (u8*)"traced_mutex");
 }
 
-void f2__primobject_traced_mutex__initialize() {
-  f2__primobject_traced_mutex__reinitialize_globalvars();
+void f2__primobject__traced_mutex__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-traced_mutex", "", &f2__primobject__traced_mutex__reinitialize_globalvars);
+  
+  f2__primobject__traced_mutex__reinitialize_globalvars();
   
   environment__add_var_value(initial_cause(), global_environment(), __traced_mutex__symbol, nil);
   

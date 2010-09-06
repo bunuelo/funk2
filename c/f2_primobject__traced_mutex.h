@@ -62,7 +62,7 @@ f2ptr f2traced_mutex__primobject_type__new_aux(f2ptr cause);
 
 // **
 
-void f2__primobject_traced_mutex__initialize();
+void f2__primobject__traced_mutex__initialize();
 
 #endif // F2__PRIMOBJECT__TRACED_MUTEX__H
 

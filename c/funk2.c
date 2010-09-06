@@ -46,7 +46,7 @@ void f2__initialize() {
     }
     f2__primobject_environment__initialize();
     f2__globalenv__initialize();
-    f2__primobject_ptypehash__initialize();
+    f2__primobject__ptypehash__initialize();
     f2__primobject_frame__initialize();
   }
   // ** 

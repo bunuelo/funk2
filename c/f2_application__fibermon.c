@@ -218,9 +218,9 @@ f2ptr f2__fibermon_fiber__recompute_statistics_fast(f2ptr cause, f2ptr this) {
   if ((this__elapsed_execution_nanoseconds != nil) &&
       (this__elapsed_nanoseconds           != nil)) {
     double fraction = ((double)f2integer__i(this__elapsed_execution_nanoseconds, cause)) / ((double)f2integer__i(this__elapsed_nanoseconds, cause));
-    f2ptr this__execution_efficiency = ((fraction < 0.0) ?
-					0.0 : ((fraction > 1.0) ?
-					       1.0 : fraction)); 
+    f2ptr this__execution_efficiency = f2double__new(cause, ((fraction < 0.0) ?
+							     0.0 : ((fraction > 1.0) ?
+								    1.0 : fraction))); 
     f2__frame__add_var_value(cause, this, new__symbol(cause, "execution_efficiency"), this__execution_efficiency);
   }
   return nil;

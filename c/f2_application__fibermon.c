@@ -279,6 +279,8 @@ f2ptr f2__fibermon_processor__redraw_fast(f2ptr cause, f2ptr this) {
   f2ptr this__table_labels         = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "table_labels"),         nil); if (! raw__array__is_type(cause, this__table_labels)) {return f2larva__new(cause, 93, nil);}
   f2ptr this__bytecodes_per_second = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "bytecodes_per_second"), nil);
   f2ptr this__execution_efficiency = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "execution_efficiency"), nil);
+  f2ptr this__total_used_memory    = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "total_used_memory"),    nil);
+  f2ptr this__total_free_memory    = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "total_free_memory"),    nil);
   
   //  [set [get [get table_labels elt 0] elt 1] text [format nil [if bytecodes_per_second [fibermon-bytes-to_memory_string bytecodes_per_second] ''] 'Bc/s']]
   //  [set [get [get table_labels elt 1] elt 1] text [format nil [* 100.0 [if execution_efficiency execution_efficiency 0.0]] '%']]

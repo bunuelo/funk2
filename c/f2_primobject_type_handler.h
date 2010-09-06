@@ -30,6 +30,7 @@
 #include "f2_primobject__list.h"
 #include "f2_primobject__doublelinklist.h"
 #include "f2_primobject__circular_buffer.h"
+#include "f2_primobject__traced_mutex.h"
 #include "f2_bug.h"
 #include "f2_physical_objects.h"
 #include "f2_agent.h"

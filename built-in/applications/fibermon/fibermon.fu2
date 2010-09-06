@@ -80,7 +80,7 @@
 	     [funk []
 		   [format stdout '\n\nfibermon stack trace:\n']
 		   [have fiber print_stack_trace]
-		   [format stdout '\n\n']
+		   [format stdout '\n\n']]
 	     nil]
        
        [have this recompute_statistics]

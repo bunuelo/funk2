@@ -63,6 +63,7 @@ void f2__initialize() {
   f2__primobject_doublelinklist__initialize();
   f2__primobject__stream__initialize();
   f2__primobject__text_buffer__initialize();
+  f2__primobject__traced_mutex__initialize();
   f2__primcfunks__initialize();
   f2__array__initialize();
   f2__reader__initialize();

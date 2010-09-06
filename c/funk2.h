@@ -103,6 +103,7 @@
 #include "f2_primobject__dynamic_library.h"
 #include "f2_primobject__semantic_graph.h"
 #include "f2_primobject__text_buffer.h"
+#include "f2_primobject__traced_mutex.h"
 #include "f2_primobject_type.h"
 #include "f2_primobject_type_handler.h"
 #include "f2_primobjects.h"

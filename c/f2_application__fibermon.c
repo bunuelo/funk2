@@ -302,24 +302,6 @@ def_pcfunk1(fibermon_processor__redraw_fast, this, return f2__fibermon_processor
 
 
 f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this) {
-  //  [= bytecodes_per_second 0]
-  //  [= execution_efficiency 0]
-  //  [mapc [funk [fibermon_fiber]
-  //	          [let [[fiber_bytecodes_per_second          [get fibermon_fiber bytecodes_per_second]]
-  //		        [fiber_execution_efficiency          [get fibermon_fiber execution_efficiency]]
-  //		        [fiber_elapsed_execution_nanoseconds [get fibermon_fiber elapsed_execution_nanoseconds]]]
-  //		    [if fiber_bytecodes_per_second [+= bytecodes_per_second fiber_bytecodes_per_second]]
-  //		    [if fiber_execution_efficiency [+= execution_efficiency fiber_execution_efficiency]]
-  //		    ]]
-  //	    [get fibermon_fiber_hash values]]
-  //  [if [< execution_efficiency 0.0]
-  //      [= execution_efficiency 0.0]
-  //    [if [> execution_efficiency 1.0]
-  //	    [= execution_efficiency 1.0]]]
-  //  [if index
-  //      [prog [= total_free_memory    [system-memorypool-total_free_memory   index]]
-  //	    [= total_used_memory [- [system-memorypool-total_global_memory index] total_free_memory]]
-  //	    ]]
   f2ptr this__fibermon_fiber_hash  = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "fibermon_fiber_hash"), nil); if (! raw__ptypehash__is_type(cause, this__fibermon_fiber_hash)) {return f2larva__new(cause, 91, nil);}
   f2ptr this__index                = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "index"),               nil); if (! raw__integer__is_type(  cause, this__index))               {return f2larva__new(cause, 92, nil);}
   {

@@ -78,6 +78,7 @@
 	     nil]
        [have view_stack_trace_menu_item signal_connect 'activate'
 	     [funk []
+		   [format stdout '\n\nStack Trace:\n']
 		   [have fiber print_stack_trace]]
 	     nil]
        

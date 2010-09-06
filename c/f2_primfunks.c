@@ -376,7 +376,7 @@ f2ptr f2__conslist__new(f2ptr cause, f2ptr conslist) {
   }
   return raw__conslist__new(cause, conslist);
 }
-def_pcfunk0_and_rest(conslist, conslist, return f2__conslist__new(cause, conslist));
+def_pcfunk0_and_rest(conslist, conslist, return f2__conslist__new(this_cause, conslist));
 
 
 f2ptr raw__conslist__as__array(f2ptr cause, f2ptr this) {
@@ -890,30 +890,6 @@ f2ptr f2__mkdir(f2ptr cause, f2ptr directory_name) {
   return raw__mkdir(cause, directory_name);
 }
 def_pcfunk1(mkdir, directory_name, return f2__mkdir(this_cause, directory_name));
-
-f2ptr f2__conslist(f2ptr cause, f2ptr seq) {
-  //debug_memory_test();
-  if (! seq) {return nil;}
-  if (! raw__cons__is_type(cause, seq)) {
-    printf("\nlist error: sequence must be type cons."); fflush(stdout);
-    return f2__argument_type_check_failure__larva__new(cause, seq);
-  }
-  f2ptr new_cons = f2cons__new(cause, f2cons__car(seq, cause), nil);
-  f2ptr new_seq  = new_cons;
-  f2ptr new_iter = new_cons;
-  f2ptr iter     = f2cons__cdr(seq, cause);
-  while(iter) {
-    release__assert(raw__cons__is_type(cause, iter), nil, "args cons type check failure in list.");
-    new_cons = f2cons__new(cause, f2cons__car(iter, cause), nil);
-    release__assert(raw__cons__is_type(cause, new_cons), nil, "new cons type check failure in list.");
-    f2cons__cdr__set(new_iter, cause, new_cons);
-    iter     = f2cons__cdr(iter, cause);
-    new_iter = new_cons;
-  }
-  //debug_memory_test();
-  return new_seq;
-}
-def_pcfunk0_and_rest(conslist, seq, return f2__conslist(this_cause, seq));
 
 f2ptr f2__seq_elt__set(f2ptr this, f2ptr index, f2ptr cause, f2ptr value) {
   if (!this || !index || ! raw__integer__is_type(cause, index)) {

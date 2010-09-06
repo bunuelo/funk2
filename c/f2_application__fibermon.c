@@ -179,6 +179,55 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
 def_pcfunk1(fibermon_fiber__redraw_fast, this, return f2__fibermon_fiber__redraw_fast(this_cause, this));
 
 
+f2ptr f2__fibermon_fiber__recompute_statistics_fast(f2ptr cause, f2ptr this) {
+  //  [let [[last_time                  time]
+  //        [last_execution_nanoseconds execution_nanoseconds]
+  //        [last_bytecode_count        bytecode_count]]
+  //    [= time                          [time]]
+  //    [= execution_nanoseconds         [get fiber execution_nanoseconds]]
+  //    [= bytecode_count                [get fiber bytecode_count]]
+  //    [= elapsed_nanoseconds           [if last_time                  [- [get time nanoseconds_since_1970] [get last_time nanoseconds_since_1970]]]]
+  //    [= elapsed_execution_nanoseconds [if last_execution_nanoseconds [- execution_nanoseconds             last_execution_nanoseconds]]]
+  //    [= elapsed_bytecode_count        [if last_bytecode_count        [- bytecode_count                    last_bytecode_count]]]
+  //    [if [and elapsed_bytecode_count elapsed_nanoseconds]
+  //        [= bytecodes_per_second [/ [* 1000000000.0 elapsed_bytecode_count] elapsed_nanoseconds]]]
+  //    [if [and elapsed_execution_nanoseconds elapsed_nanoseconds]
+  //        [= execution_efficiency [let [[fraction [/ [get elapsed_execution_nanoseconds as-double] elapsed_nanoseconds]]]
+  //                                  [if [< fraction 0.0]
+  //                                      0.0
+  //                                      [if [> fraction 1.0]
+  //                                          1.0
+  //                                          fraction]]]]]]
+  f2ptr this__fiber                         = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "fiber"),                 nil); if (! raw__fiber__is_type(cause, this__fiber)) {return f2larva__new(cause, 71, nil);}
+  f2ptr last_time                           = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "time"),                  nil);
+  f2ptr last_execution_nanoseconds          = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "execution_nanoseconds"), nil);
+  f2ptr last_bytecode_count                 = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "bytecode_count"),        nil);
+  f2ptr this__time                          = f2__time(cause);                                f2__frame__add_var_value(cause, this, new__symbol(cause, "time"),                  this__time);
+  f2ptr this__execution_nanoseconds         = f2__fiber__execution_nanoseconds(cause, fiber); f2__frame__add_var_value(cause, this, new__symbol(cause, "execution_nanoseconds"), this__time);
+  f2ptr this__bytecode_count                = f2__fiber__execution_nanoseconds(cause, fiber); f2__frame__add_var_value(cause, this, new__symbol(cause, "bytecode_count"),        this__bytecode_count);
+  f2ptr this__elapsed_nanoseconds           = (last_time                  != nil) ? f2integer__new(cause, (f2integer__i(f2time__nanoseconds_since_1970(this__time, cause), cause) - f2integer__i(f2time__nanoseconds_since_1970(last_time, cause), cause))) : nil;
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "elapsed_nanoseconds"), this__elapsed_nanoseconds);
+  f2ptr this__elapsed_execution_nanoseconds = (last_execution_nanoseconds != nil) ? f2integer__new(cause, (f2integer__i(this__execution_nanoseconds,                       cause) - f2integer__i(last_execution_nanoseconds,                       cause))) : nil;
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "elapsed_execution_nanoseconds"), this__elapsed_execution_nanoseconds);
+  f2ptr this__elapsed_bytecode_count        = (last_bytecode_count        != nil) ? f2integer__new(cause, (f2integer__i(this__bytecode_count,                              cause) - f2integer__i(last_bytecode_count,                              cause))) : nil;
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "elapsed_bytecode_count"), this__elapsed_bytecode_count);
+  if ((this__elapsed_bytecode_count != nil) &&
+      (this__elapsed_nanoseconds    != nil)) {
+    f2ptr this__bytecodes_per_second = f2double__new(cause, ((1000000000.0 * f2integer__i(this__elapsed_bytecode_count, cause)) / f2integer__i(this__elapsed_nanoseconds, cause))); f2__frame__add_var_value(cause, this, new__symbol(cause, "bytecodes_per_second"), this__bytecodes_per_second);
+  }
+  if ((this__elapsed_execution_nanoseconds != nil) &&
+      (this__elapsed_nanoseconds           != nil)) {
+    double fraction = ((double)f2integer__i(this__elapsed_execution_nanoseconds, cause)) / ((double)f2integer__i(this__elapsed_nanoseconds, cause));
+    f2ptr this__execution_efficiency = ((fraction < 0.0) ?
+					0.0 : ((fraction > 1.0) ?
+					       1.0 : fraction)); 
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "execution_efficiency"), this__execution_efficiency);
+  }
+  return nil;
+}
+def_pcfunk1(fibermon_fiber__recompute_statistics_fast, this, return f2__fibermon_fiber__recompute_statistics_fast(this_cause, this));
+
+
 // **
 
 void f2__application__fibermon__reinitialize_globalvars() {
@@ -191,10 +240,11 @@ void f2__application__fibermon__initialize() {
   
   f2__application__fibermon__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(fibermon__bytes__to_memory_string,     this, "");
-  f2__primcfunk__init__1(fibermon__nanoseconds__to_time_string, this, "");
-  f2__primcfunk__init__1(fibermon_fiber__construct_fast,        this, "");
-  f2__primcfunk__init__1(fibermon_fiber__redraw_fast,           this, "");
+  f2__primcfunk__init__1(fibermon__bytes__to_memory_string,         this, "");
+  f2__primcfunk__init__1(fibermon__nanoseconds__to_time_string,     this, "");
+  f2__primcfunk__init__1(fibermon_fiber__construct_fast,            this, "");
+  f2__primcfunk__init__1(fibermon_fiber__redraw_fast,               this, "");
+  f2__primcfunk__init__1(fibermon_fiber__recompute_statistics_fast, this, "");
   
 }
 

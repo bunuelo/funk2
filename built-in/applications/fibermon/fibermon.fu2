@@ -93,7 +93,8 @@
   nil]
 
 [deftypefunk fibermon_fiber execute recompute_statistics []
-  [let [[last_time                  time]
+  [fibermon_fiber-recompute_statistics_fast this]
+  `[let [[last_time                  time]
 	[last_execution_nanoseconds execution_nanoseconds]
 	[last_bytecode_count        bytecode_count]]
     [= time                          [time]]
@@ -110,8 +111,8 @@
 				      0.0
 				      [if [> fraction 1.0]
 					  1.0
-					  fraction]]]]]
-    nil]]
+					  fraction]]]]]]
+  nil]
 
 'fibermon_processor'
 

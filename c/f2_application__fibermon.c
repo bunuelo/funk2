@@ -350,6 +350,8 @@ f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this)
   f2__frame__add_var_value(cause, this, new__symbol(cause, "total_used_memory"), this__total_used_memory);
   return nil;
 }
+def_pcfunk1(fibermon_processor__recompute_statistics_fast, this, return f2__fibermon_processor__recompute_statistics_fast(this_cause, this));
+
 
 // **
 
@@ -363,13 +365,14 @@ void f2__application__fibermon__initialize() {
   
   f2__application__fibermon__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(fibermon__bytes__to_memory_string,         this, "");
-  f2__primcfunk__init__1(fibermon__nanoseconds__to_time_string,     this, "");
-  f2__primcfunk__init__1(fibermon_fiber__construct_fast,            this, "");
-  f2__primcfunk__init__1(fibermon_fiber__redraw_fast,               this, "");
-  f2__primcfunk__init__1(fibermon_fiber__recompute_statistics_fast, this, "");
-  f2__primcfunk__init__1(fibermon_processor__construct_fast,        this, "");
-  f2__primcfunk__init__1(fibermon_processor__redraw_fast,           this, "");
+  f2__primcfunk__init__1(fibermon__bytes__to_memory_string,             this, "");
+  f2__primcfunk__init__1(fibermon__nanoseconds__to_time_string,         this, "");
+  f2__primcfunk__init__1(fibermon_fiber__construct_fast,                this, "");
+  f2__primcfunk__init__1(fibermon_fiber__redraw_fast,                   this, "");
+  f2__primcfunk__init__1(fibermon_fiber__recompute_statistics_fast,     this, "");
+  f2__primcfunk__init__1(fibermon_processor__construct_fast,            this, "");
+  f2__primcfunk__init__1(fibermon_processor__redraw_fast,               this, "");
+  f2__primcfunk__init__1(fibermon_processor__recompute_statistics_fast, this, "");
   
 }
 

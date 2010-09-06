@@ -361,6 +361,24 @@ f2ptr f2__conslist__is_type(f2ptr cause, f2ptr this) {
   return f2bool__new(raw__conslist__is_type(cause, this));
 }
 
+f2ptr raw__conslist__new(f2ptr cause, f2ptr conslist) {
+  if (conslist == nil) {
+    return nil;
+  }
+  f2ptr car = f2cons__car(conslist, cause);
+  f2ptr cdr = f2cons__cdr(conslist, cause);
+  return f2cons__new(cause, car, raw__conslist__new(cause, cdr));
+}
+
+f2ptr f2__conslist__new(f2ptr cause, f2ptr conslist) {
+  if (! raw__conslist__is_type(cause, conslist)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__conslist__new(cause, conslist);
+}
+def_pcfunk0_and_rest(conslist, conslist, return f2__conslist__new(cause, conslist));
+
+
 f2ptr raw__conslist__as__array(f2ptr cause, f2ptr this) {
   u64 length = 0;
   {
@@ -1682,9 +1700,10 @@ void f2__primcfunks__initialize() {
   
   // cons
   
-  f2__primcfunk__init__1(conslist__as__array,  this,    "returns a conslist represented as a new array.");
-  f2__primcfunk__init__2(conslist__first_n,    this, n, "returns a new representation of the first n elements of the list, this.");
-  f2__primcfunk__init__1(conslistlist__append, this,    "append a list of lists.");
+  f2__primcfunk__init__0_and_rest(conslist,             conslist, "returns a new conslist.");
+  f2__primcfunk__init__1(         conslist__as__array,  this,     "returns a conslist represented as a new array.");
+  f2__primcfunk__init__2(         conslist__first_n,    this, n,  "returns a new representation of the first n elements of the list, this.");
+  f2__primcfunk__init__1(         conslistlist__append, this,     "append a list of lists.");
   
   // cause
   

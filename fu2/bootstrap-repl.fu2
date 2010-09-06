@@ -342,12 +342,12 @@
 [defunk wrong_argument_number [] [error-new `bug_type `wrong_number_of_arguments] nil]
 [wrong_argument_number-bcs-set [get &wrong_argument_number body_bytecodes]]
 
-[defunk conslist [:rest seq]
-  [if [null seq]
-      nil
-    [cons [car seq]
-	  [apply &conslist
-		 [cdr seq]]]]]
+`[defunk conslist [:rest seq]
+   [if [null seq]
+       nil
+     [cons [car seq]
+	   [apply &conslist
+		  [cdr seq]]]]]
 
 [defmetro label [name args :rest body]
   `[define-funk ,name

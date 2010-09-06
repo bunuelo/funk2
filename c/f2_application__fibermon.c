@@ -203,8 +203,8 @@ f2ptr f2__fibermon_fiber__recompute_statistics_fast(f2ptr cause, f2ptr this) {
   f2ptr last_execution_nanoseconds          = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "execution_nanoseconds"), nil);
   f2ptr last_bytecode_count                 = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "bytecode_count"),        nil);
   f2ptr this__time                          = f2__time(cause);                                f2__frame__add_var_value(cause, this, new__symbol(cause, "time"),                  this__time);
-  f2ptr this__execution_nanoseconds         = f2__fiber__execution_nanoseconds(cause, fiber); f2__frame__add_var_value(cause, this, new__symbol(cause, "execution_nanoseconds"), this__time);
-  f2ptr this__bytecode_count                = f2__fiber__execution_nanoseconds(cause, fiber); f2__frame__add_var_value(cause, this, new__symbol(cause, "bytecode_count"),        this__bytecode_count);
+  f2ptr this__execution_nanoseconds         = f2__fiber__execution_nanoseconds(cause, this__fiber); f2__frame__add_var_value(cause, this, new__symbol(cause, "execution_nanoseconds"), this__time);
+  f2ptr this__bytecode_count                = f2__fiber__execution_nanoseconds(cause, this__fiber); f2__frame__add_var_value(cause, this, new__symbol(cause, "bytecode_count"),        this__bytecode_count);
   f2ptr this__elapsed_nanoseconds           = (last_time                  != nil) ? f2integer__new(cause, (f2integer__i(f2time__nanoseconds_since_1970(this__time, cause), cause) - f2integer__i(f2time__nanoseconds_since_1970(last_time, cause), cause))) : nil;
   f2__frame__add_var_value(cause, this, new__symbol(cause, "elapsed_nanoseconds"), this__elapsed_nanoseconds);
   f2ptr this__elapsed_execution_nanoseconds = (last_execution_nanoseconds != nil) ? f2integer__new(cause, (f2integer__i(this__execution_nanoseconds,                       cause) - f2integer__i(last_execution_nanoseconds,                       cause))) : nil;

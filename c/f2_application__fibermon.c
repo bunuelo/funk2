@@ -274,6 +274,39 @@ f2ptr f2__fibermon_processor__construct_fast(f2ptr cause, f2ptr this) {
 def_pcfunk1(fibermon_processor__construct_fast, this, return f2__fibermon_processor__construct_fast(this_cause, this));
 
 
+f2ptr f2__fibermon_processor__redraw_fast(f2ptr cause, f2ptr this) {
+  f2ptr this__progress_bar         = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "progress_bar"),         nil); if (! this__progress_bar) {return f2larva__new(cause, 92, nil);}
+  f2ptr this__table_labels         = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "table_labels"),         nil); if (! raw__array__is_type(cause, this__table_labels)) {return f2larva__new(cause, 93, nil);}
+  f2ptr this__bytecodes_per_second = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "bytecodes_per_second"), nil);
+  f2ptr this__execution_efficiency = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "execution_efficiency"), nil);
+  
+  //  [set [get [get table_labels elt 0] elt 1] text [format nil [if bytecodes_per_second [fibermon-bytes-to_memory_string bytecodes_per_second] ''] 'Bc/s']]
+  //  [set [get [get table_labels elt 1] elt 1] text [format nil [* 100.0 [if execution_efficiency execution_efficiency 0.0]] '%']]
+  //  [set [get [get table_labels elt 2] elt 1] text [format nil [if total_used_memory [fibermon-bytes-to_memory_string total_used_memory] ''] 'b']]
+  //  [set [get [get table_labels elt 3] elt 1] text [format nil [if total_free_memory [fibermon-bytes-to_memory_string total_free_memory] ''] 'b']]
+  //  [let [[progress_fraction [if execution_efficiency execution_efficiency 0.0]]]
+  //    [set progress_bar text     [format nil [* 100.0 progress_fraction] '%']]
+  //    [set progress_bar fraction progress_fraction]]
+  
+  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 0), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__bytecodes_per_second != nil) ? this__bytecodes_per_second : f2integer__new(cause, 0))),
+																		       new__string(cause, "Bc/s"))));
+  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 1), 1),
+			   f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, ((this__execution_efficiency != nil) ? this__execution_efficiency : f2integer__new(cause, 0)), f2double__new(cause, 100.0))),
+								      new__string(cause, "%"))));
+  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 2), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__total_used_memory != nil) ? this__total_used_memory : f2integer__new(cause, 0))),
+																		       new__string(cause, "b"))));
+  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 3), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__total_free_memory != nil) ? this__total_free_memory : f2integer__new(cause, 0))),
+																		       new__string(cause, "b"))));
+  {
+    f2ptr progress_fraction = (this__execution_efficiency != nil) ? this__execution_efficiency : f2double__new(cause, 0.0);
+    f2__gtk__progress_bar__set_text(    cause, this__progress_bar, f2__exp__as__string(cause, f2__number__multiplied_by(cause, progress_fraction, f2double__new(cause, 100.0))));
+    f2__gtk__progress_bar__set_fraction(cause, this__progress_bar, progress_fraction);
+  }
+  return nil;
+}
+def_pcfunk1(fibermon_processor__redraw_fast, this, return f2__fibermon_processor__redraw_fast(this_cause, this));
+
+
 // **
 
 void f2__application__fibermon__reinitialize_globalvars() {
@@ -292,6 +325,7 @@ void f2__application__fibermon__initialize() {
   f2__primcfunk__init__1(fibermon_fiber__redraw_fast,               this, "");
   f2__primcfunk__init__1(fibermon_fiber__recompute_statistics_fast, this, "");
   f2__primcfunk__init__1(fibermon_processor__construct_fast,        this, "");
+  f2__primcfunk__init__1(fibermon_processor__redraw_fast,           this, "");
   
 }
 

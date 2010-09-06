@@ -282,14 +282,6 @@ f2ptr f2__fibermon_processor__redraw_fast(f2ptr cause, f2ptr this) {
   f2ptr this__total_used_memory    = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "total_used_memory"),    nil);
   f2ptr this__total_free_memory    = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "total_free_memory"),    nil);
   
-  //  [set [get [get table_labels elt 0] elt 1] text [format nil [if bytecodes_per_second [fibermon-bytes-to_memory_string bytecodes_per_second] ''] 'Bc/s']]
-  //  [set [get [get table_labels elt 1] elt 1] text [format nil [* 100.0 [if execution_efficiency execution_efficiency 0.0]] '%']]
-  //  [set [get [get table_labels elt 2] elt 1] text [format nil [if total_used_memory [fibermon-bytes-to_memory_string total_used_memory] ''] 'b']]
-  //  [set [get [get table_labels elt 3] elt 1] text [format nil [if total_free_memory [fibermon-bytes-to_memory_string total_free_memory] ''] 'b']]
-  //  [let [[progress_fraction [if execution_efficiency execution_efficiency 0.0]]]
-  //    [set progress_bar text     [format nil [* 100.0 progress_fraction] '%']]
-  //    [set progress_bar fraction progress_fraction]]
-  
   f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 0), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__bytecodes_per_second != nil) ? this__bytecodes_per_second : f2integer__new(cause, 0))),
 																		       new__string(cause, "Bc/s"))));
   f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 1), 1),
@@ -301,13 +293,63 @@ f2ptr f2__fibermon_processor__redraw_fast(f2ptr cause, f2ptr this) {
 																		       new__string(cause, "b"))));
   {
     f2ptr progress_fraction = (this__execution_efficiency != nil) ? this__execution_efficiency : f2double__new(cause, 0.0);
-    f2__gtk__progress_bar__set_text(    cause, this__progress_bar, f2__exp__as__string(cause, f2__number__multiplied_by(cause, progress_fraction, f2double__new(cause, 100.0))));
+    f2__gtk__progress_bar__set_text(    cause, this__progress_bar, f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, progress_fraction, f2double__new(cause, 100.0))), new__string(cause, "%"))));
     f2__gtk__progress_bar__set_fraction(cause, this__progress_bar, progress_fraction);
   }
   return nil;
 }
 def_pcfunk1(fibermon_processor__redraw_fast, this, return f2__fibermon_processor__redraw_fast(this_cause, this));
 
+
+f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this) {
+  //  [= bytecodes_per_second 0]
+  //  [= execution_efficiency 0]
+  //  [mapc [funk [fibermon_fiber]
+  //	          [let [[fiber_bytecodes_per_second          [get fibermon_fiber bytecodes_per_second]]
+  //		        [fiber_execution_efficiency          [get fibermon_fiber execution_efficiency]]
+  //		        [fiber_elapsed_execution_nanoseconds [get fibermon_fiber elapsed_execution_nanoseconds]]]
+  //		    [if fiber_bytecodes_per_second [+= bytecodes_per_second fiber_bytecodes_per_second]]
+  //		    [if fiber_execution_efficiency [+= execution_efficiency fiber_execution_efficiency]]
+  //		    ]]
+  //	    [get fibermon_fiber_hash values]]
+  //  [if [< execution_efficiency 0.0]
+  //      [= execution_efficiency 0.0]
+  //    [if [> execution_efficiency 1.0]
+  //	    [= execution_efficiency 1.0]]]
+  //  [if index
+  //      [prog [= total_free_memory    [system-memorypool-total_free_memory   index]]
+  //	    [= total_used_memory [- [system-memorypool-total_global_memory index] total_free_memory]]
+  //	    ]]
+  f2ptr this__fibermon_fiber_hash  = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "fibermon_fiber_hash"), nil); if (! raw__ptypehash__is_type(cause, this__fibermon_fiber_hash)) {return f2larva__new(cause, 91, nil);}
+  f2ptr this__index                = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "index"),               nil); if (! raw__integer__is_type(  cause, this__index))               {return f2larva__new(cause, 92, nil);}
+  {
+    f2ptr this__bytecodes_per_second = f2integer__new(cause, 0);
+    f2ptr this__execution_efficiency = f2integer__new(cause, 0);
+    ptypehash__value__iteration(cause, this__fibermon_fiber_hash, fibermon_fiber,
+				f2ptr fiber_bytecodes_per_second = f2__frame__lookup_var_value(cause, fibermon_fiber, new__symbol(cause, "bytecodes_per_second"), nil);
+				f2ptr fiber_execution_efficiency = f2__frame__lookup_var_value(cause, fibermon_fiber, new__symbol(cause, "execution_efficiency"), nil);
+				if (fiber_bytecodes_per_second != nil) {
+				  this__bytecodes_per_second = f2__number__plus(cause, this__bytecodes_per_second, fiber_bytecodes_per_second);
+				}
+				if (fiber_execution_efficiency != nil) {
+				  this__execution_efficiency = f2__number__plus(cause, this__execution_efficiency, fiber_execution_efficiency);
+				}
+				);
+    if (f2__number__is_less_than(cause, this__execution_efficiency, f2double__new(cause, 0.0)) != nil) {
+      this__execution_efficiency = f2double__new(cause, 0.0);
+    } else if (f2__number__is_greater_than(cause, this__execution_efficiency, f2double__new(cause, 1.0)) != nil) {
+      this__execution_efficiency = f2double__new(cause, 1.0);
+    }
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "bytecodes_per_second"), this__bytecodes_per_second);
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "execution_efficiency"), this__execution_efficiency);
+  }
+  f2ptr this__total_global_memory = f2__system__memorypool__total_global_memory(cause, f2integer__i(index, cause));
+  f2ptr this__total_free_memory   = f2__system__memorypool__total_free_memory(  cause, f2integer__i(index, cause));
+  f2ptr this__total_used_memory   = f2__number__minus(cause, this__total_global_memory, this__total_free_memory);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "total_free_memory"), this__total_free_memory);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "total_used_memory"), this__total_used_memory);
+  return nil;
+}
 
 // **
 

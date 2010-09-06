@@ -180,24 +180,6 @@ def_pcfunk1(fibermon_fiber__redraw_fast, this, return f2__fibermon_fiber__redraw
 
 
 f2ptr f2__fibermon_fiber__recompute_statistics_fast(f2ptr cause, f2ptr this) {
-  //  [let [[last_time                  time]
-  //        [last_execution_nanoseconds execution_nanoseconds]
-  //        [last_bytecode_count        bytecode_count]]
-  //    [= time                          [time]]
-  //    [= execution_nanoseconds         [get fiber execution_nanoseconds]]
-  //    [= bytecode_count                [get fiber bytecode_count]]
-  //    [= elapsed_nanoseconds           [if last_time                  [- [get time nanoseconds_since_1970] [get last_time nanoseconds_since_1970]]]]
-  //    [= elapsed_execution_nanoseconds [if last_execution_nanoseconds [- execution_nanoseconds             last_execution_nanoseconds]]]
-  //    [= elapsed_bytecode_count        [if last_bytecode_count        [- bytecode_count                    last_bytecode_count]]]
-  //    [if [and elapsed_bytecode_count elapsed_nanoseconds]
-  //        [= bytecodes_per_second [/ [* 1000000000.0 elapsed_bytecode_count] elapsed_nanoseconds]]]
-  //    [if [and elapsed_execution_nanoseconds elapsed_nanoseconds]
-  //        [= execution_efficiency [let [[fraction [/ [get elapsed_execution_nanoseconds as-double] elapsed_nanoseconds]]]
-  //                                  [if [< fraction 0.0]
-  //                                      0.0
-  //                                      [if [> fraction 1.0]
-  //                                          1.0
-  //                                          fraction]]]]]]
   f2ptr this__fiber                         = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "fiber"),                 nil); if (! raw__fiber__is_type(cause, this__fiber)) {return f2larva__new(cause, 71, nil);}
   f2ptr last_time                           = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "time"),                  nil);
   f2ptr last_execution_nanoseconds          = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "execution_nanoseconds"), nil);
@@ -228,6 +210,70 @@ f2ptr f2__fibermon_fiber__recompute_statistics_fast(f2ptr cause, f2ptr this) {
 def_pcfunk1(fibermon_fiber__recompute_statistics_fast, this, return f2__fibermon_fiber__recompute_statistics_fast(this_cause, this));
 
 
+f2ptr f2__fibermon_processor__construct_fast(f2ptr cause, f2ptr this) {
+  //       [= vbox                [gtk-vbox-new 2]]
+  //       [= progress_bar        [gtk-progress_bar-new]]
+  //       [= scrolled_window     [gtk-scrolled_window-new]]
+  //       [= fiber_vbox          [gtk-vbox-new 2]]
+  //       [= fibermon_fiber_hash [new ptypehash]]
+  //       [= table               [gtk-table-new 4 2 nil]]
+  //       [= table_labels        [new array 4 2]]
+  //       
+  //       [set this frame [gtk-frame-new [format nil 'processor #' index]]]
+  //       [have scrolled_window add_with_viewport fiber_vbox]
+  //       [dotimes [row 4]
+  //	     [let [[row_labels [get table_labels elt row]]]
+  //	       [dotimes [column 2]
+  //	         [let [[table_label [gtk-label-new '']]]
+  //	           [set table_label alignment 0.0 0.0]
+  //	           [set row_labels elt column table_label]
+  //	           [have table attach table_label column [+ column 1] row [+ row 1] 0 0]]]]]
+  //       [set [get [get table_labels elt 0] elt 0] text 'bytecodes_per_second']
+  //       [set [get [get table_labels elt 1] elt 0] text 'execution_efficiency']
+  //       [set [get [get table_labels elt 2] elt 0] text 'total_used_memory']
+  //       [set [get [get table_labels elt 3] elt 0] text 'total_free_memory']
+  //       [have vbox pack_start table           nil nil 0]
+  //       [have vbox pack_start progress_bar    nil nil 0]
+  //       [have vbox pack_start scrolled_window t t 0]
+  //       [have frame add vbox]
+  f2ptr this__vbox                = raw__gtk__vbox__new(           cause, f2integer__new(cause, 2));                                                           f2__frame__add_var_value(cause, this, new__symbol(cause, "vbox"),                this__vbox);
+  f2ptr this__progress_bar        = raw__gtk__progress_bar__new(   cause);                                                                                     f2__frame__add_var_value(cause, this, new__symbol(cause, "progress_bar"),        this__progress_bar);
+  f2ptr this__scrolled_window     = raw__gtk__scrolled_window__new(cause);                                                                                     f2__frame__add_var_value(cause, this, new__symbol(cause, "scrolled_window"),     this__scrolled_window);
+  f2ptr this__fiber_vbox          = raw__gtk__vbox__new(           cause, f2integer__new(cause, 2));                                                           f2__frame__add_var_value(cause, this, new__symbol(cause, "fiber_vbox"),          this__fiber_vbox);
+  f2ptr this__fibermon_fiber_hash = f2__ptypehash__new(            cause);                                                                                     f2__frame__add_var_value(cause, this, new__symbol(cause, "fibermon_fiber_hash"), this__fibermon_fiber_hash);
+  f2ptr this__table               = raw__gtk__table__new(          cause, f2integer__new(cause, 4), f2integer__new(cause, 2), nil);                            f2__frame__add_var_value(cause, this, new__symbol(cause, "table"),               this__table);
+  f2ptr this__table_labels        = f2__array__new(cause, f2list2__new(cause, f2integer__new(cause, 4), f2integer__new(cause, 2)));                            f2__frame__add_var_value(cause, this, new__symbol(cause, "table_labels"),        this__table_labels);
+  f2ptr this__index               = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "index"), nil); if (! raw__integer__is_type(cause, this__index)) {return f2larva__new(cause, 81, nil);}
+  f2ptr this__frame               = raw__gtk__frame__new(          cause, f2__stringlist__concat(cause, f2list2__new(cause, new__string(cause, "processor #"), f2__exp__as__string(cause, this__index)))); f2__frame__add_var_value(cause, this, new__symbol(cause, "frame"), this__frame);
+  f2__gtk__scrolled_window__add_with_viewport(cause, this__scrolled_window, this__fiber_vbox);
+  {
+    u64 row;
+    for (row = 0; row < 4; row ++) {
+      f2ptr row_labels = raw__array__elt(cause, this__table_labels, row);
+      {
+	u64 column;
+	for (column = 0; column < 2; column ++) {
+	  f2ptr table_label = raw__gtk__label__new(cause, new__string(cause, ""));
+	  raw__gtk__misc__set_alignment(cause, table_label, f2double__new(cause, 0.0), f2double__new(cause, 0.0));
+	  raw__array__elt__set(cause, row_labels, column, table_label);
+	  raw__gtk__table__attach(cause, this__table, table_label, f2integer__new(cause, column), f2integer__new(cause, column + 1), f2integer__new(cause, row), f2integer__new(cause, row + 1), f2integer__new(cause, 0), f2integer__new(cause, 0));
+	}
+      }
+    }
+  }
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  0), 0), new__string(cause, "bytecodes_per_second"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  1), 0), new__string(cause, "execution_efficiency"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  2), 0), new__string(cause, "total_used_memory"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  3), 0), new__string(cause, "total_free_memory"));
+  f2__gtk__box__pack_start(cause, this__vbox, this__table,           nil, nil, f2integer__new(cause, 0));
+  f2__gtk__box__pack_start(cause, this__vbox, this__progress_bar,    nil, nil, f2integer__new(cause, 0));
+  f2__gtk__box__pack_start(cause, this__vbox, this__scrolled_window, f2bool__new(boolean__true), f2bool__new(boolean__true), f2integer__new(cause, 0));
+  f2__gtk__container__add(cause, this__frame, this__vbox);
+  return nil;
+}
+def_pcfunk1(fibermon_processor__construct_fast, this, return f2__fibermon_processor__construct_fast(this_cause, this));
+
+
 // **
 
 void f2__application__fibermon__reinitialize_globalvars() {
@@ -245,6 +291,7 @@ void f2__application__fibermon__initialize() {
   f2__primcfunk__init__1(fibermon_fiber__construct_fast,            this, "");
   f2__primcfunk__init__1(fibermon_fiber__redraw_fast,               this, "");
   f2__primcfunk__init__1(fibermon_fiber__recompute_statistics_fast, this, "");
+  f2__primcfunk__init__1(fibermon_processor__construct_fast,        this, "");
   
 }
 

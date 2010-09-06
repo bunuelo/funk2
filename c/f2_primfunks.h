@@ -790,6 +790,14 @@ boolean_t s64__add_overflows(s64 this, s64 that);
 
 u64 u64__sqrt(u64 this);
 
+// system
+
+f2ptr raw__system__memorypool__total_global_memory(f2ptr cause, s64   index);
+f2ptr f2__system__memorypool__total_global_memory( f2ptr cause, f2ptr index);
+f2ptr raw__system__memorypool__total_free_memory(  f2ptr cause, s64   index);
+f2ptr f2__system__memorypool__total_free_memory(   f2ptr cause, f2ptr index);
+
+
 // funk2 pointer (f2ptr)
 
 f2ptr f2__pointer(f2ptr cause, f2ptr x);

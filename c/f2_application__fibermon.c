@@ -343,8 +343,8 @@ f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this)
     f2__frame__add_var_value(cause, this, new__symbol(cause, "bytecodes_per_second"), this__bytecodes_per_second);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "execution_efficiency"), this__execution_efficiency);
   }
-  f2ptr this__total_global_memory = f2__system__memorypool__total_global_memory(cause, f2integer__i(index, cause));
-  f2ptr this__total_free_memory   = f2__system__memorypool__total_free_memory(  cause, f2integer__i(index, cause));
+  f2ptr this__total_global_memory = f2__system__memorypool__total_global_memory(cause, index);
+  f2ptr this__total_free_memory   = f2__system__memorypool__total_free_memory(  cause, index);
   f2ptr this__total_used_memory   = f2__number__minus(cause, this__total_global_memory, this__total_free_memory);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "total_free_memory"), this__total_free_memory);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "total_used_memory"), this__total_used_memory);

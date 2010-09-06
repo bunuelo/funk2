@@ -108,28 +108,36 @@ f2ptr f2__system__environment(f2ptr cause, f2ptr node_id) {
 }
 def_pcfunk1(system__environment, node_id, return f2__system__environment(this_cause, node_id));
 
+f2ptr raw__system__memorypool__total_global_memory(f2ptr cause, s64 index) {
+  if (index < 0 || index > 7) {
+    return f2larva__new(cause, 2, nil);
+  }
+  return f2integer__new(cause, __funk2.memory.pool[index].total_global_memory);
+}
+
 f2ptr f2__system__memorypool__total_global_memory(f2ptr cause, f2ptr index) {
   if (! raw__integer__is_type(cause, index)) {
     return f2larva__new(cause, 1, nil);
   }
   s64 index__i = f2integer__i(index, cause);
-  if (index__i < 0 || index__i > 7) {
-    return f2larva__new(cause, 2, nil);
-  }
-  return f2integer__new(cause, __funk2.memory.pool[index__i].total_global_memory);
+  return raw__system__memorypool__total_global_memory(cause, index__i);
 }
 def_pcfunk1(system__memorypool__total_global_memory, index, return f2__system__memorypool__total_global_memory(this_cause, index));
 
+
+f2ptr raw__system__memorypool__total_free_memory(f2ptr cause, s64 index) {
+  if (index < 0 || index > 7) {
+    return f2larva__new(cause, 2, nil);
+  }
+  return f2integer__new(cause, __funk2.memory.pool[index].total_free_memory);
+}
 
 f2ptr f2__system__memorypool__total_free_memory(f2ptr cause, f2ptr index) {
   if (! raw__integer__is_type(cause, index)) {
     return f2larva__new(cause, 1, nil);
   }
   s64 index__i = f2integer__i(index, cause);
-  if (index__i < 0 || index__i > 7) {
-    return f2larva__new(cause, 2, nil);
-  }
-  return f2integer__new(cause, __funk2.memory.pool[index__i].total_free_memory);
+  return raw__system__memorypool__total_free_memory(cause, index__i);
 }
 def_pcfunk1(system__memorypool__total_free_memory, index, return f2__system__memorypool__total_free_memory(this_cause, index));
 

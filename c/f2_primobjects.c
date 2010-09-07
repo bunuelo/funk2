@@ -597,7 +597,6 @@ void f2__primobjects__reinitialize_globalvars() {
   __metro__symbol            = new__symbol(cause, "metro");
   __exception__symbol        = new__symbol(cause, "exception");
   __bytecode__symbol         = new__symbol(cause, "bytecode");
-  __fiber__symbol            = new__symbol(cause, "fiber");
   __processor__symbol        = new__symbol(cause, "processor");
   __scheduler__symbol        = new__symbol(cause, "scheduler");
   __transframe__symbol       = new__symbol(cause, "transframe");

@@ -496,15 +496,22 @@ f2ptr f2fiber_stack_trace__primobject_type__new_aux(f2ptr cause) {
 
 void f2__fiber__reinitialize_globalvars() {
   f2ptr cause = f2_fiber_c__cause__new(initial_cause());
-  char* symbol_str;
   
-  symbol_str = "program_counter";       __fiber__program_counter_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "iter";                  __fiber__iter_reg__symbol            = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "env";                   __fiber__env_reg__symbol             = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "args";                  __fiber__args_reg__symbol            = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "return";                __fiber__return_reg__symbol          = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "value";                 __fiber__value_reg__symbol           = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "-environment_critics-"; __fiber__environment_critics__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  // initialize type symbols
+  __fiber__symbol             = new__symbol(cause, "fiber");
+  __fiber_stack_trace__symbol = new__symbol(cause, "fiber_stack_trace");
+  
+  // initialize fiber register symbols
+  __fiber__program_counter_reg__symbol = new__symbol(cause, "program_counter");
+  __fiber__iter_reg__symbol            = new__symbol(cause, "iter");
+  __fiber__env_reg__symbol             = new__symbol(cause, "env");
+  __fiber__args_reg__symbol            = new__symbol(cause, "args");
+  __fiber__return_reg__symbol          = new__symbol(cause, "return");
+  __fiber__value_reg__symbol           = new__symbol(cause, "value");
+  
+  // initialize other misc. symbols
+  __fiber__environment_critics__symbol = new__symbol(cause, "-environment_critics-");
+  
 }
 
 void f2__fiber__initialize() {

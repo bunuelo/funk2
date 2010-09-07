@@ -285,10 +285,10 @@ def_pcfunk1(fiber__fiber_stack_trace, this, return f2__fiber__fiber_stack_trace(
 
 f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
   f2ptr fiber_stack_trace = raw__fiber__fiber_stack_trace(cause, this);
-  if (raw__larva__is_type(cause, stack_trace)) {
+  if (raw__larva__is_type(cause, fiber_stack_trace)) {
     return fiber_stack_trace;
   }
-  return f2__fiber_stack_trace__pretty_print(cause, stack_trace);
+  return f2__fiber_stack_trace__print(cause, fiber_stack_trace);
 }
 
 f2ptr f2__fiber__print_stack_trace(f2ptr cause, f2ptr this) {

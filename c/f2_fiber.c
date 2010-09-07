@@ -459,7 +459,7 @@ def_pcfunk1(fiber_stack_trace__print, this, return f2__fiber_stack_trace__print(
 
 
 f2ptr raw__fiber_stack_trace__as__printable(f2ptr cause, f2ptr this) {
-  f2ptr printable_seq = nil;
+  f2ptr printable_seq_reverse = nil;
   {
     f2ptr iter = this;
     while (iter) {
@@ -467,15 +467,15 @@ f2ptr raw__fiber_stack_trace__as__printable(f2ptr cause, f2ptr this) {
 	return f2larva__new(cause, 1, nil);
       }
       f2ptr block           = f2__fiber_stack_trace__first(cause, iter);
-      f2ptr printable_block = f2__fiber_stack_trace_block__as__printable(cause, this);
+      f2ptr printable_block = f2__fiber_stack_trace_block__as__printable(cause, block);
       if (raw__larva__is_type(cause, printable_block)) {
 	return printable_block;
       }
-      printable_seq = f2cons__new(cause, printable_block, printable_seq);
+      printable_seq_reverse = f2cons__new(cause, printable_block, printable_seq_reverse);
       iter = f2__fiber_stack_trace__next(cause, iter);
     }
   }
-  return printable_seq;
+  return f2__reverse(causem, printable_seq_reverse);
 }
 
 f2ptr f2__fiber_stack_trace__as__printable(f2ptr cause, f2ptr this) {

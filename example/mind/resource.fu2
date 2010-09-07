@@ -37,7 +37,7 @@
        [= name         initial-name]
        [= agency       nil]  'We set this when the resource is added to an agency.'
        [= active_funk  initial-active_funk]
-       [= active_mutex [new mutex]]
+       [= active_mutex [new traced_mutex]]
        [= trace_story  [new story]]
        [= think_story  [new story]]
        [= initialized  nil]

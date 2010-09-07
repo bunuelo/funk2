@@ -1022,6 +1022,11 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("fibers_waiting_for_lock", 23, cause, fiber, stream, f2traced_mutex__fibers_waiting_for_lock(exp, cause), f2traced_mutex__fibers_waiting_for_lock__tracing_on(exp, cause), f2traced_mutex__fibers_waiting_for_lock__trace(exp, cause), f2traced_mutex__fibers_waiting_for_lock__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
+	  } else if (f2primobject__is__fiber_stack_trace(exp, cause)) {
+	    int subexp_size[2];
+	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
+	    {f2__write_pretty__slot_key_and_value("as-string", 9, cause, fiber, stream, f2__fiber_stack_trace__as__string(cause, exp), nil, nil, nil,
+						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	  } else if (f2primobject__is__list(exp, cause)) {
 	    f2ptr cons_cells = f2list__cons_cells(exp, cause);
 	    {

@@ -56,6 +56,15 @@ declare_object_type_20_slot(fiber,
 			    );
 
 
+// fiber_stack_trace
+
+declare_object_type_1_slot(fiber_stack_trace,
+			   stack,
+			   f2ptr as__string__symbol; // get
+			   f2ptr as__string__funk;
+			   );
+
+
 #endif // F2__FIBER__TYPE__H
 
 
@@ -143,6 +152,16 @@ f2ptr  f2__fiber__stack_trace(f2ptr cause, f2ptr this);
 f2ptr raw__stack_trace__print(f2ptr cause, f2ptr this);
 f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this);
 f2ptr  f2__fiber__print_stack_trace(f2ptr cause, f2ptr this);
+
+// fiber_stack_trace
+
+declare_primobject_1_slot(fiber_stack_trace,
+			  stack);
+
+f2ptr f2fiber_stack_trace__primobject_type__new_aux(f2ptr cause);
+
+
+// **
 
 void f2__fiber__initialize();
 

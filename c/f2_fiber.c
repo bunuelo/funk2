@@ -475,7 +475,7 @@ f2ptr raw__fiber_stack_trace__as__printable(f2ptr cause, f2ptr this) {
       iter = f2__fiber_stack_trace__next(cause, iter);
     }
   }
-  return f2__reverse(causem, printable_seq_reverse);
+  return f2__reverse(cause, printable_seq_reverse);
 }
 
 f2ptr f2__fiber_stack_trace__as__printable(f2ptr cause, f2ptr this) {

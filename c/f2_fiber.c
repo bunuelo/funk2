@@ -440,7 +440,7 @@ f2ptr raw__fiber_stack_trace__print(f2ptr cause, f2ptr this) {
       return f2larva__new(cause, 1, nil);
     }
     f2ptr block  = f2__fiber_stack_trace__first(cause, iter);
-    f2ptr result = f2__fiber_stack_trace_block__print(cause, this);
+    f2ptr result = f2__fiber_stack_trace_block__print(cause, block);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

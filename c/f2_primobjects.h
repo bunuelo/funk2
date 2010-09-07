@@ -227,6 +227,10 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   declare_primobject_inline_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19); \
   declare_primobject_slot(name, slot_20);
 
+#define declare_primobject_inline_21_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21) \
+  declare_primobject_inline_20_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20); \
+  declare_primobject_slot(name, slot_21);
+
 
 #define declare_primobject_1_slot(name, slot_1) \
   extern f2ptr __##name##__symbol; \

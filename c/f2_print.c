@@ -1596,7 +1596,7 @@ f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr p
   }
   boolean_t this_is_printable;
   if (raw__cons__is_type(cause, this)) {
-    f2__ptypehash__add(cause, ptypehash, this);
+    f2__ptypehash__add(cause, ptypehash, this, f2bool__new(boolean__true));
     {
       f2ptr print_seq = nil;
       {
@@ -1630,7 +1630,7 @@ f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr p
   } else if (raw__traced_mutex__is_type(cause, this)) {
     this_is_printable = boolean__true;
   } else if (raw__frame__is_type(cause, this)) {
-    f2__ptypehash__add(cause, ptypehash, this);
+    f2__ptypehash__add(cause, ptypehash, this, f2bool__new(boolean__true));
     {
       f2ptr printable_frame = f2__frame__new(cause, nil);
       frame__var__iteration(cause, this, slot_name, slot_value,

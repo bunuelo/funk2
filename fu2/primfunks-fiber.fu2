@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk fiber-stack_trace       &primfunk:fiber__stack_trace]
+[globalize-funk fiber-fiber_stack_trace &primfunk:fiber__fiber_stack_trace]
 [globalize-funk fiber-print_stack_trace &primfunk:fiber__print_stack_trace]
 
 

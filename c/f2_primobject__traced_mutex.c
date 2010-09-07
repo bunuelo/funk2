@@ -23,19 +23,25 @@
 
 // traced_mutex
 
-def_primobject_4_slot(traced_mutex, mutex, fiber_with_lock, lock_stack_trace, fibers_waiting_for_lock);
+def_primobject_4_slot(traced_mutex, mutex, fiber_with_lock, lock_stack, fibers_waiting_for_lock);
 
 f2ptr f2__traced_mutex__new(f2ptr cause) {
   f2ptr mutex                   = f2mutex__new(cause);
   f2ptr fiber_with_lock         = nil;
-  f2ptr lock_stack_trace        = nil;
-  f2ptr fibers_waiting_for_lock = nil;
-  return f2traced_mutex__new(cause, mutex, fiber_with_lock, lock_stack_trace, fibers_waiting_for_lock);
+  f2ptr lock_stack              = nil;
+  f2ptr fibers_waiting_for_lock = f2__ptypehash__new(cause);
+  return f2traced_mutex__new(cause, mutex, fiber_with_lock, lock_stack, fibers_waiting_for_lock);
 }
 def_pcfunk0(traced_mutex__new, return f2__traced_mutex__new(this_cause));
 
 f2ptr raw__traced_mutex__lock(f2ptr cause, f2ptr this) {
+  f2ptr fiber                   = f2__this__fiber(cause);
+  f2ptr fibers_waiting_for_lock = f2traced_mutex__fibers_waiting_for_lock(cause, this);
+  f2__ptypehash__add(cause, fibers_waiting_for_lock, fiber, f2bool__new(boolean__true));
   f2__mutex__lock(cause, f2__traced_mutex__mutex(cause, this));
+  f2__ptypehash__remove(cause, fibers_waiting_for_lock, fiber);
+  f2traced_mutex__fiber_with_lock__set(cause, this, f2__this__fiber(cause));
+  f2traced_mutex__lock_stack__set(     cause, this, f2fiber__stack(fiber, cause));
   return nil;
 }
 
@@ -49,6 +55,14 @@ def_pcfunk1(traced_mutex__lock, this, return f2__traced_mutex__lock(this_cause, 
 
 
 f2ptr raw__traced_mutex__unlock(f2ptr cause, f2ptr this) {
+  if (! raw__mutex__is_locked(cause, f2traced_mutex__mutex(this, cause))) {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),     new__symbol(cause, "traced_mutex_already_unlocked"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "traced_mutex"), this);
+    return f2larva__new(cause, 5467, f2__bug__new(cause, f2integer__new(cause, 5467), bug_frame));
+  }
+  f2traced_mutex__fiber_with_lock__set(cause, this, nil);
+  f2traced_mutex__lock_stack__set(     cause, this, nil);
   f2__mutex__unlock(cause, f2__traced_mutex__mutex(cause, this));
   return nil;
 }
@@ -116,7 +130,7 @@ void f2__primobject__traced_mutex__initialize() {
   
   // traced_mutex
   
-  initialize_primobject_4_slot(traced_mutex, mutex, fiber_with_lock, lock_stack_trace, fibers_waiting_for_lock);
+  initialize_primobject_4_slot(traced_mutex, mutex, fiber_with_lock, lock_stack, fibers_waiting_for_lock);
   
   {char* symbol_str = "lock"; __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.lock__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(traced_mutex__lock, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.lock__funk = never_gc(cfunk);}

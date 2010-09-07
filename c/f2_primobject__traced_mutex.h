@@ -25,7 +25,7 @@
 // traced_mutex
 
 typedef struct funk2_object_type__traced_mutex__slot_s funk2_object_type__traced_mutex__slot_t;
-declare_object_type_4_slot(traced_mutex, mutex, fiber_with_lock, lock_stack_trace, fibers_waiting_for_lock,
+declare_object_type_4_slot(traced_mutex, mutex, fiber_with_lock, lock_stack, fibers_waiting_for_lock,
 			   f2ptr lock__symbol;
 			   f2ptr lock__funk;
 			   f2ptr unlock__symbol;
@@ -45,7 +45,7 @@ declare_object_type_4_slot(traced_mutex, mutex, fiber_with_lock, lock_stack_trac
 
 // traced_mutex
 
-declare_primobject_4_slot(traced_mutex, mutex, fiber_with_lock, lock_stack_trace, fibers_waiting_for_lock);
+declare_primobject_4_slot(traced_mutex, mutex, fiber_with_lock, lock_stack, fibers_waiting_for_lock);
 
 f2ptr      f2__traced_mutex__new(      f2ptr cause);
 f2ptr     raw__traced_mutex__lock(     f2ptr cause, f2ptr this);

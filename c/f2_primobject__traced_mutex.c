@@ -55,7 +55,7 @@ def_pcfunk1(traced_mutex__lock, this, return f2__traced_mutex__lock(this_cause, 
 
 
 f2ptr raw__traced_mutex__unlock(f2ptr cause, f2ptr this) {
-  if (! raw__mutex__is_locked(cause, f2__traced_mutex__mutex(cause, cause))) {
+  if (! raw__mutex__is_locked(cause, f2__traced_mutex__mutex(cause, this))) {
     f2ptr bug_frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),     new__symbol(cause, "traced_mutex_already_unlocked"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "traced_mutex"), this);

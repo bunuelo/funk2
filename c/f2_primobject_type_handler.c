@@ -177,6 +177,7 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "edit_sequence";                    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                    f2edit_sequence__primobject_type__new(cause));}
   {char* type_name = "traced_mutex";                     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                     f2traced_mutex__primobject_type__new_aux(cause));}
   {char* type_name = "fiber_stack_trace";                funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                f2fiber_stack_trace__primobject_type__new_aux(cause));}
+  {char* type_name = "fiber_stack_trace_block";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2fiber_stack_trace_block__primobject_type__new_aux(cause));}
 }
 
 void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_type_handler_t* this, f2ptr cause) {

@@ -55,6 +55,8 @@ declare_object_type_20_slot(fiber,
 			    f2ptr is_complete__funk;
 			    f2ptr quit__symbol; // execute
 			    f2ptr quit__funk;
+			    f2ptr fiber_stack_trace__symbol; // get
+			    f2ptr fiber_stack_trace__funk;
 			    );
 
 
@@ -64,6 +66,18 @@ typedef struct funk2_object_type__fiber_stack_trace__slot_s funk2_object_type__f
 
 declare_object_type_1_slot(fiber_stack_trace,
 			   stack,
+			   f2ptr as__string__symbol; // get
+			   f2ptr as__string__funk;
+			   );
+
+
+// fiber_stack_trace_block
+
+typedef struct funk2_object_type__fiber_stack_trace_block__slot_s funk2_object_type__fiber_stack_trace_block__slot_t;
+
+declare_object_type_2_slot(fiber_stack_trace,
+			   funk,
+			   args,
 			   f2ptr as__string__symbol; // get
 			   f2ptr as__string__funk;
 			   );
@@ -166,6 +180,18 @@ f2ptr f2__fiber_stack_trace__as__string(f2ptr cause, f2ptr this);
 
 
 f2ptr f2fiber_stack_trace__primobject_type__new_aux(f2ptr cause);
+
+
+// fiber_stack_trace_block
+
+declare_primobject_2_slot(fiber_stack_trace_block,
+			  funk,
+			  args);
+
+f2ptr f2__fiber_stack_trace_block__as__string(f2ptr cause, f2ptr this);
+
+
+f2ptr f2fiber_stack_trace_block__primobject_type__new_aux(f2ptr cause);
 
 
 // **

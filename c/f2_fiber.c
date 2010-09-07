@@ -144,10 +144,7 @@ f2ptr f2__fiber__is_complete(f2ptr cause, f2ptr this) {
 def_pcfunk1(fiber__is_complete, this, return f2__fiber__is_complete(this_cause, this));
 
 void raw__fiber__quit(f2ptr cause, f2ptr this) {
-  f2ptr execute_mutex = f2__fiber__execute_mutex(cause, this);
-  f2__mutex__lock(cause, execute_mutex);
-  f2__fiber__program_counter__set(cause, this, nil);
-  f2__mutex__unlock(cause, execute_mutex);
+  f2__fiber__should_quit__set(cause, this, f2bool__new(boolean__true));
 }
 
 f2ptr f2__fiber__quit(f2ptr cause, f2ptr this) {

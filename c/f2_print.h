@@ -52,4 +52,6 @@ f2ptr f2__fprint_prompt_debug(f2ptr cause, f2ptr fiber, f2ptr stream, char* prom
 f2ptr f2__print_prompt      (f2ptr cause, f2ptr fiber, char* prompt, f2ptr exp);
 f2ptr f2__print_prompt_debug(f2ptr cause, f2ptr fiber, char* prompt, f2ptr exp);
 
+f2ptr f2__exp__printable_value(f2ptr cause, f2ptr this);
+
 #endif // F2__PRINT__H

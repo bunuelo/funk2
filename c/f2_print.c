@@ -871,7 +871,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 						    ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    }
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("frame",                22, cause, fiber, stream, f2cause__frame(exp, cause), f2cause__frame__tracing_on(exp, cause), f2cause__frame__trace(exp, cause), f2cause__frame__imagination_frame(exp, cause),
+	    {f2__write_pretty__slot_key_and_value("frame",                22, cause, fiber, stream, f2__exp__printable_value(cause, f2cause__frame(exp, cause)), nil, nil, nil,
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("allocate_traced_arrays", 22, cause, fiber, stream, f2cause__allocate_traced_arrays(exp, cause), f2cause__allocate_traced_arrays__tracing_on(exp, cause), f2cause__allocate_traced_arrays__trace(exp, cause), f2cause__allocate_traced_arrays__imagination_frame(exp, cause),
@@ -1590,3 +1590,64 @@ f2ptr f2__print_prompt_debug(f2ptr cause, f2ptr fiber, char* prompt, f2ptr exp) 
 }
 
 
+f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr ptypehash) {
+  if (raw__ptypehash__contains(cause, ptypehash, this)) {
+    return new__symbol(cause, "<...>");
+  }
+  boolean_t this_is_printable;
+  if (raw__cons__is_type(cause, this)) {
+    f2__ptypehash__add(cause, ptypehash, this);
+    {
+      f2ptr print_seq = nil;
+      {
+	s64   list_element_count = 0;
+	f2ptr last_cons          = nil;
+	f2ptr iter               = this;
+	while (iter) {
+	  f2ptr element             = f2__cons__car(cause, iter);
+	  f2ptr element_print_value = raw__exp__printable_value__with_ptypehash(cause, element, ptypehash);
+	  if (last_cons) {
+	    f2ptr new_cons = f2cons__new(cause, element_print_value, nil);
+	    f2__cons__cdr__set(cause, last_cons, new_cons);
+	    last_cons = new_cons;
+	  } else {
+	    last_cons = f2cons__new(cause, element_print_value, nil);
+	    print_seq = last_cons;
+	  }
+	  list_element_count ++;
+	  if (list_element_count < 10) {
+	    iter = f2__cons__cdr(cause, iter);
+	  } else {
+	    f2ptr new_cons = f2cons__new(cause, new__symbol(cause, "..."), nil);
+	    f2__cons__cdr__set(cause, last_cons, new_cons);
+	    last_cons = new_cons;
+	    iter = nil;
+	  }
+	}
+      }
+      return print_seq;
+    }
+  } else if (raw__traced_mutex__is_type(cause, this)) {
+    this_is_printable = boolean__true;
+  } else if (raw__frame__is_type(cause, this)) {
+    f2__ptypehash__add(cause, ptypehash, this);
+    {
+      f2ptr printable_frame = f2__frame__new(cause, nil);
+      frame__var__iteration(cause, this, slot_name, slot_value,
+			    f2__frame__add_var_value(cause, printable_frame, slot_name, raw__exp__printable_value__with_ptypehash(cause, slot_value, ptypehash)));
+      return printable_frame;
+    }
+  } else if (raw__array__is_type(cause, this)) {
+    this_is_printable = boolean__false;
+  } else {
+    this_is_printable = boolean__true;
+  }
+  if (this_is_printable) {
+    return this;
+  }
+  return f2list2__new(cause, f2__object__type(cause, this), new__symbol(cause, "<>"));
+}
+
+f2ptr f2__exp__printable_value(f2ptr cause, f2ptr this) {
+  return raw__exp__printable_value__with_ptypehash(cause, this, f2__ptypehash__new(cause));
+}

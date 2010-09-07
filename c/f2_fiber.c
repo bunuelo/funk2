@@ -526,57 +526,9 @@ f2ptr f2__fiber_stack_trace_block__as__string(f2ptr cause, f2ptr this) {
 def_pcfunk1(fiber_stack_trace_block__as__string, this, return f2__fiber_stack_trace_block__as__string(this_cause, this));
 
 
-f2ptr f2__fiber_stack_trace_block_element__printable_value(f2ptr cause, f2ptr this) {
-  boolean_t this_is_printable;
-  if (raw__cons__is_type(cause, this)) {
-    f2ptr print_seq = nil;
-    {
-      s64   list_element_count = 0;
-      f2ptr last_cons          = nil;
-      f2ptr iter               = this;
-      while (iter) {
-	f2ptr element = f2__cons__car(cause, iter);
-	f2ptr element_print_value = f2__fiber_stack_trace_block_element__printable_value(cause, element);
-	if (last_cons) {
-	  f2ptr new_cons = f2cons__new(cause, element_print_value, nil);
-	  f2__cons__cdr__set(cause, last_cons, new_cons);
-	  last_cons = new_cons;
-	} else {
-	  last_cons = f2cons__new(cause, element_print_value, nil);
-	  print_seq = last_cons;
-	}
-	list_element_count ++;
-	if (list_element_count < 10) {
-	  iter = f2__cons__cdr(cause, iter);
-	} else {
-	  f2ptr new_cons = f2cons__new(cause, new__symbol(cause, "..."), nil);
-	  f2__cons__cdr__set(cause, last_cons, new_cons);
-	  last_cons = new_cons;
-	  iter = nil;
-	}
-      }
-    }
-    return print_seq;
-  } else if (raw__traced_mutex__is_type(cause, this)) {
-    this_is_printable = boolean__true;
-  } else if (raw__array__is_type(cause, this)) {
-    this_is_printable = boolean__false;
-  } else {
-    this_is_printable = boolean__true;
-  }
-  if (this_is_printable) {
-    return this;
-  }
-  return f2list2__new(cause, f2__object__type(cause, this), new__symbol(cause, "<>"));
-}
-
-
 f2ptr raw__fiber_stack_trace_block__printable_argument_frame(f2ptr cause, f2ptr this) {
   f2ptr argument_frame  = f2__fiber_stack_trace_block__argument_frame(cause, this);
-  f2ptr printable_frame = f2__frame__new(cause, nil);
-  frame__var__iteration(cause, argument_frame, slot_name, slot_value,
-			f2__frame__add_var_value(cause, printable_frame, slot_name, f2__fiber_stack_trace_block_element__printable_value(cause, slot_value)));
-  return printable_frame;
+  return f2__exp__printable_value(cause, argument_frame);
 }
 
 f2ptr f2__fiber_stack_trace_block__printable_argument_frame(f2ptr cause, f2ptr this) {

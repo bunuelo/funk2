@@ -532,7 +532,7 @@ f2ptr f2__fiber_stack_trace_block_element__printable_value(f2ptr cause, f2ptr th
       f2ptr iter               = this;
       while (iter) {
 	f2ptr element = f2__cons__car(cause, iter);
-	f2ptr element_print_value = raw__stack_trace_element__print_value(cause, element);
+	f2ptr element_print_value = f2__fiber_stack_trace_block_element__printable_value(cause, element);
 	if (last_cons) {
 	  f2ptr new_cons = f2cons__new(cause, element_print_value, nil);
 	  f2__cons__cdr__set(cause, last_cons, new_cons);

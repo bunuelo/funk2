@@ -62,7 +62,7 @@ f2ptr raw__bug__pretty_print(f2ptr cause, f2ptr this) {
   f2ptr fiber = f2__frame__lookup_var_value(cause, bug_frame, new__symbol(cause, "fiber"), nil);
   if (raw__fiber__is_type(cause, fiber)) {
     printf("\nstack trace: ");
-    f2ptr result = raw__stack_trace__print(cause, f2__fiber__stack_trace(cause, fiber));
+    f2ptr result = f2__fiber_stack_trace__print(cause, f2__fiber__fiber_stack_trace(cause, fiber));
     if (raw__larva__is_type(cause, result)) {
       printf("bug printing stack trace (");
       f2__print(cause, result);

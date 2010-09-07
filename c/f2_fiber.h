@@ -55,8 +55,8 @@ declare_object_type_20_slot(fiber,
 			    f2ptr is_complete__funk;
 			    f2ptr quit__symbol; // execute
 			    f2ptr quit__funk;
-			    f2ptr fiber_stack_trace__symbol; // get
-			    f2ptr fiber_stack_trace__funk;
+			    f2ptr stack_trace__symbol; // get
+			    f2ptr stack_trace__funk;
 			    );
 
 
@@ -179,8 +179,8 @@ void f2__print_environment_stack(f2ptr cause, f2ptr rte, f2ptr env);
 boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode);
 boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber);
 
-f2ptr raw__fiber__fiber_stack_trace(f2ptr cause, f2ptr this);
-f2ptr  f2__fiber__fiber_stack_trace(f2ptr cause, f2ptr this);
+f2ptr raw__fiber__stack_trace(f2ptr cause, f2ptr this);
+f2ptr  f2__fiber__stack_trace(f2ptr cause, f2ptr this);
 f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this);
 f2ptr  f2__fiber__print_stack_trace(f2ptr cause, f2ptr this);
 

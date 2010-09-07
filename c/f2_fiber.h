@@ -176,6 +176,7 @@ f2ptr  f2__fiber__print_stack_trace(f2ptr cause, f2ptr this);
 declare_primobject_1_slot(fiber_stack_trace,
 			  stack);
 
+f2ptr f2__fiber_stack_trace__new(       f2ptr cause, f2ptr stack);
 f2ptr f2__fiber_stack_trace__as__string(f2ptr cause, f2ptr this);
 
 
@@ -188,6 +189,7 @@ declare_primobject_2_slot(fiber_stack_trace_block,
 			  funk,
 			  args);
 
+f2ptr f2__fiber_stack_trace_block__new(       f2ptr cause, f2ptr funk, f2ptr args);
 f2ptr f2__fiber_stack_trace_block__as__string(f2ptr cause, f2ptr this);
 
 

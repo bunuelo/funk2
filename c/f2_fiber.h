@@ -68,6 +68,14 @@ declare_object_type_1_slot(fiber_stack_trace,
 			   stack,
 			   f2ptr as__string__symbol; // get
 			   f2ptr as__string__funk;
+			   f2ptr next__symbol; // get
+			   f2ptr next__funk;
+			   f2ptr first__symbol; // get
+			   f2ptr first__funk;
+			   f2ptr print__symbol; // execute
+			   f2ptr print__funk;
+			   f2ptr as__printable__symbol; // get
+			   f2ptr as__printable__funk;
 			   );
 
 
@@ -77,9 +85,15 @@ typedef struct funk2_object_type__fiber_stack_trace_block__slot_s funk2_object_t
 
 declare_object_type_2_slot(fiber_stack_trace_block,
 			   funk,
-			   args,
+			   argument_frame,
 			   f2ptr as__string__symbol; // get
 			   f2ptr as__string__funk;
+			   f2ptr printable_argument_frame__symbol; // get
+			   f2ptr printable_argument_frame__funk;
+			   f2ptr print__symbol; // execute
+			   f2ptr print__funk;
+			   f2ptr as__printable__symbol; // get
+			   f2ptr as__printable__funk;
 			   );
 
 
@@ -176,8 +190,12 @@ f2ptr  f2__fiber__print_stack_trace(f2ptr cause, f2ptr this);
 declare_primobject_1_slot(fiber_stack_trace,
 			  stack);
 
-f2ptr f2__fiber_stack_trace__new(       f2ptr cause, f2ptr stack);
-f2ptr f2__fiber_stack_trace__as__string(f2ptr cause, f2ptr this);
+f2ptr f2__fiber_stack_trace__new(          f2ptr cause, f2ptr stack);
+f2ptr f2__fiber_stack_trace__as__string(   f2ptr cause, f2ptr this);
+f2ptr f2__fiber_stack_trace__next(         f2ptr cause, f2ptr this);
+f2ptr f2__fiber_stack_trace__first(        f2ptr cause, f2ptr this);
+f2ptr f2__fiber_stack_trace__print(        f2ptr cause, f2ptr this);
+f2ptr f2__fiber_stack_trace__as__printable(f2ptr cause, f2ptr this);
 
 
 f2ptr f2fiber_stack_trace__primobject_type__new_aux(f2ptr cause);
@@ -187,10 +205,13 @@ f2ptr f2fiber_stack_trace__primobject_type__new_aux(f2ptr cause);
 
 declare_primobject_2_slot(fiber_stack_trace_block,
 			  funk,
-			  args);
+			  argument_frame);
 
-f2ptr f2__fiber_stack_trace_block__new(       f2ptr cause, f2ptr funk, f2ptr args);
-f2ptr f2__fiber_stack_trace_block__as__string(f2ptr cause, f2ptr this);
+f2ptr f2__fiber_stack_trace_block__new(                     f2ptr cause, f2ptr funk, f2ptr argument_frame);
+f2ptr f2__fiber_stack_trace_block__as__string(              f2ptr cause, f2ptr this);
+f2ptr f2__fiber_stack_trace_block__printable_argument_frame(f2ptr cause, f2ptr this);
+f2ptr f2__fiber_stack_trace_block__print(                   f2ptr cause, f2ptr this);
+f2ptr f2__fiber_stack_trace_block__as__printable(           f2ptr cause, f2ptr this);
 
 
 f2ptr f2fiber_stack_trace_block__primobject_type__new_aux(f2ptr cause);

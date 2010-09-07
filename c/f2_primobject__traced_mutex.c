@@ -36,12 +36,12 @@ def_pcfunk0(traced_mutex__new, return f2__traced_mutex__new(this_cause));
 
 f2ptr raw__traced_mutex__lock(f2ptr cause, f2ptr this) {
   f2ptr fiber                   = f2__this__fiber(cause);
-  f2ptr fibers_waiting_for_lock = f2traced_mutex__fibers_waiting_for_lock(cause, this);
+  f2ptr fibers_waiting_for_lock = f2__traced_mutex__fibers_waiting_for_lock(cause, this);
   f2__ptypehash__add(cause, fibers_waiting_for_lock, fiber, f2bool__new(boolean__true));
   f2__mutex__lock(cause, f2__traced_mutex__mutex(cause, this));
   f2__ptypehash__remove(cause, fibers_waiting_for_lock, fiber);
-  f2traced_mutex__fiber_with_lock__set(cause, this, f2__this__fiber(cause));
-  f2traced_mutex__lock_stack__set(     cause, this, f2fiber__stack(fiber, cause));
+  f2__traced_mutex__fiber_with_lock__set(cause, this, f2__this__fiber(cause));
+  f2__traced_mutex__lock_stack__set(     cause, this, f2fiber__stack(fiber, cause));
   return nil;
 }
 
@@ -55,14 +55,14 @@ def_pcfunk1(traced_mutex__lock, this, return f2__traced_mutex__lock(this_cause, 
 
 
 f2ptr raw__traced_mutex__unlock(f2ptr cause, f2ptr this) {
-  if (! raw__mutex__is_locked(cause, f2traced_mutex__mutex(this, cause))) {
+  if (! raw__mutex__is_locked(cause, f2__traced_mutex__mutex(cause, cause))) {
     f2ptr bug_frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),     new__symbol(cause, "traced_mutex_already_unlocked"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "traced_mutex"), this);
     return f2larva__new(cause, 5467, f2__bug__new(cause, f2integer__new(cause, 5467), bug_frame));
   }
-  f2traced_mutex__fiber_with_lock__set(cause, this, nil);
-  f2traced_mutex__lock_stack__set(     cause, this, nil);
+  f2__traced_mutex__fiber_with_lock__set(cause, this, nil);
+  f2__traced_mutex__lock_stack__set(     cause, this, nil);
   f2__mutex__unlock(cause, f2__traced_mutex__mutex(cause, this));
   return nil;
 }
@@ -77,7 +77,7 @@ def_pcfunk1(traced_mutex__unlock, this, return f2__traced_mutex__unlock(this_cau
 
 
 boolean_t raw__traced_mutex__trylock(f2ptr cause, f2ptr this) {
-  boolean_t failure = raw__mutex__trylock(cause, f2traced_mutex__mutex(this, cause));
+  boolean_t failure = raw__mutex__trylock(cause, f2__traced_mutex__mutex(cause, this));
   return failure;
 }
 
@@ -91,7 +91,7 @@ def_pcfunk1(traced_mutex__trylock, this, return f2__traced_mutex__trylock(this_c
 
 
 boolean_t raw__traced_mutex__is_locked(f2ptr cause, f2ptr this) {
-  return raw__mutex__is_locked(cause, f2traced_mutex__mutex(this, cause));
+  return raw__mutex__is_locked(cause, f2__traced_mutex__mutex(cause, this));
 }
 
 f2ptr f2__traced_mutex__is_locked(f2ptr cause, f2ptr this) {
@@ -133,13 +133,13 @@ void f2__primobject__traced_mutex__initialize() {
   initialize_primobject_4_slot(traced_mutex, mutex, fiber_with_lock, lock_stack, fibers_waiting_for_lock);
   
   {char* symbol_str = "lock"; __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.lock__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(traced_mutex__lock, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.lock__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_mutex__lock, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.lock__funk = never_gc(cfunk);}
   {char* symbol_str = "unlock"; __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.unlock__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(traced_mutex__unlock, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.unlock__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_mutex__unlock, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.unlock__funk = never_gc(cfunk);}
   {char* symbol_str = "trylock"; __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.trylock__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(traced_mutex__trylock, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.trylock__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_mutex__trylock, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.trylock__funk = never_gc(cfunk);}
   {char* symbol_str = "is_locked"; __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.is_locked__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(traced_mutex__is_locked, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.is_locked__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_mutex__is_locked, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.is_locked__funk = never_gc(cfunk);}
   
 }
 

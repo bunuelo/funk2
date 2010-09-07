@@ -122,10 +122,10 @@
     nil]]
 
 [deftypefunk resource execute add_new_trace_story_event [character_name action_name prepositional_frame]
-  [have trace_story add_new_event local_time character_name action_name prepositional_frame]]
+  [have trace_story add_new_event [get this local_time] character_name action_name prepositional_frame]]
 
 [deftypefunk resource execute add_new_think_story_event [character_name action_name prepositional_frame]
-  [have think_story add_new_event local_time character_name action_name prepositional_frame]]
+  [have think_story add_new_event [get this local_time] character_name action_name prepositional_frame]]
 
 [deftypefunk resource execute think_to_self [:rest expressions]
   [have cause-resource add_new_think_story_event `I `think [frame direct_object expressions]]

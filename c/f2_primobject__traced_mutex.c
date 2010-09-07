@@ -103,12 +103,26 @@ f2ptr f2__traced_mutex__is_locked(f2ptr cause, f2ptr this) {
 def_pcfunk1(traced_mutex__is_locked, this, return f2__traced_mutex__is_locked(this_cause, this));
 
 
+f2ptr raw__traced_mutex__lock_stack_trace(f2ptr cause, f2ptr this) {
+  return f2__fiber_stack_trace__new(cause, f2__traced_mutex__lock_stack(cause, this));
+}
+
+f2ptr f2__traced_mutex__lock_stack_trace(f2ptr cause, f2ptr this) {
+  if (! raw__traced_mutex__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__traced_mutex__lock_stack_trace(cause, this);
+}
+def_pcfunk1(traced_mutex__lock_stack_trace, this, return f2__traced_mutex__lock_stack_trace(this_cause, this));
+
+
 f2ptr f2traced_mutex__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2traced_mutex__primobject_type__new(cause);
-  {char* slot_name = "lock";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.lock__funk);}
-  {char* slot_name = "unlock";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.unlock__funk);}
-  {char* slot_name = "trylock";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.trylock__funk);}
-  {char* slot_name = "is_locked"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.is_locked__funk);}
+  {char* slot_name = "lock";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.lock__funk);}
+  {char* slot_name = "unlock";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.unlock__funk);}
+  {char* slot_name = "trylock";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.trylock__funk);}
+  {char* slot_name = "is_locked";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.is_locked__funk);}
+  {char* slot_name = "lock_stack_trace"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.lock_stack_trace__funk);}
   return this;
 }
 
@@ -140,6 +154,8 @@ void f2__primobject__traced_mutex__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_mutex__trylock, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.trylock__funk = never_gc(cfunk);}
   {char* symbol_str = "is_locked"; __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.is_locked__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_mutex__is_locked, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.is_locked__funk = never_gc(cfunk);}
+  {char* symbol_str = "lock_stack_trace"; __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.lock_stack_trace__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_mutex__lock_stack_trace, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_mutex.lock_stack_trace__funk = never_gc(cfunk);}
   
 }
 

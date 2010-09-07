@@ -34,6 +34,8 @@ declare_object_type_4_slot(traced_mutex, mutex, fiber_with_lock, lock_stack, fib
 			   f2ptr trylock__funk;
 			   f2ptr is_locked__symbol;
 			   f2ptr is_locked__funk;
+			   f2ptr lock_stack_trace__symbol;
+			   f2ptr lock_stack_trace__funk;
 			   );
 
 #endif // F2__PRIMOBJECT__TRACED_MUTEX__TYPES__H
@@ -47,15 +49,16 @@ declare_object_type_4_slot(traced_mutex, mutex, fiber_with_lock, lock_stack, fib
 
 declare_primobject_4_slot(traced_mutex, mutex, fiber_with_lock, lock_stack, fibers_waiting_for_lock);
 
-f2ptr      f2__traced_mutex__new(      f2ptr cause);
-f2ptr     raw__traced_mutex__lock(     f2ptr cause, f2ptr this);
-f2ptr      f2__traced_mutex__lock(     f2ptr cause, f2ptr this);
-f2ptr     raw__traced_mutex__unlock(   f2ptr cause, f2ptr this);
-f2ptr      f2__traced_mutex__unlock(   f2ptr cause, f2ptr this);
-boolean_t raw__traced_mutex__trylock(  f2ptr cause, f2ptr this);
-f2ptr      f2__traced_mutex__trylock(  f2ptr cause, f2ptr this);
-boolean_t raw__traced_mutex__is_locked(f2ptr cause, f2ptr this);
-f2ptr      f2__traced_mutex__is_locked(f2ptr cause, f2ptr this);
+f2ptr      f2__traced_mutex__new(             f2ptr cause);
+f2ptr     raw__traced_mutex__lock(            f2ptr cause, f2ptr this);
+f2ptr      f2__traced_mutex__lock(            f2ptr cause, f2ptr this);
+f2ptr     raw__traced_mutex__unlock(          f2ptr cause, f2ptr this);
+f2ptr      f2__traced_mutex__unlock(          f2ptr cause, f2ptr this);
+boolean_t raw__traced_mutex__trylock(         f2ptr cause, f2ptr this);
+f2ptr      f2__traced_mutex__trylock(         f2ptr cause, f2ptr this);
+boolean_t raw__traced_mutex__is_locked(       f2ptr cause, f2ptr this);
+f2ptr      f2__traced_mutex__is_locked(       f2ptr cause, f2ptr this);
+f2ptr      f2__traced_mutex__lock_stack_trace(f2ptr cause, f2ptr this);
 
 
 f2ptr f2traced_mutex__primobject_type__new_aux(f2ptr cause);

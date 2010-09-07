@@ -24,6 +24,8 @@
 
 // fiber
 
+typedef struct funk2_object_type__fiber__slot_s funk2_object_type__fiber__slot_t;
+
 declare_object_type_20_slot(fiber,
 			    program_counter,
 			    stack,
@@ -57,6 +59,8 @@ declare_object_type_20_slot(fiber,
 
 
 // fiber_stack_trace
+
+typedef struct funk2_object_type__fiber_stack_trace__slot_s funk2_object_type__fiber_stack_trace__slot_t;
 
 declare_object_type_1_slot(fiber_stack_trace,
 			   stack,

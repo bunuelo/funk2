@@ -361,7 +361,7 @@ f2ptr raw__fiber_stack_trace__next(f2ptr cause, f2ptr this) {
     }
     iter = f2__cons__cdr(cause, iter);
   }
-  return f2__fiber_stack_trace__new(cause, iter);
+  return (iter != nil) ? f2__fiber_stack_trace__new(cause, iter) : nil;
 }
 
 f2ptr f2__fiber_stack_trace__next(f2ptr cause, f2ptr this) {
@@ -439,10 +439,12 @@ f2ptr raw__fiber_stack_trace__print(f2ptr cause, f2ptr this) {
     if (! raw__fiber_stack_trace__is_type(cause, iter)) {
       return f2larva__new(cause, 1, nil);
     }
-    f2ptr block  = f2__fiber_stack_trace__first(cause, iter);
-    f2ptr result = f2__fiber_stack_trace_block__print(cause, block);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
+    f2ptr block = f2__fiber_stack_trace__first(cause, iter);
+    if (block != nil) {
+      f2ptr result = f2__fiber_stack_trace_block__print(cause, block);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
     }
     iter = f2__fiber_stack_trace__next(cause, iter);
   }
@@ -466,12 +468,14 @@ f2ptr raw__fiber_stack_trace__as__printable(f2ptr cause, f2ptr this) {
       if (! raw__fiber_stack_trace__is_type(cause, iter)) {
 	return f2larva__new(cause, 1, nil);
       }
-      f2ptr block           = f2__fiber_stack_trace__first(cause, iter);
-      f2ptr printable_block = f2__fiber_stack_trace_block__as__printable(cause, block);
-      if (raw__larva__is_type(cause, printable_block)) {
-	return printable_block;
+      f2ptr block = f2__fiber_stack_trace__first(cause, iter);
+      if (block != nil) {
+	f2ptr printable_block = f2__fiber_stack_trace_block__as__printable(cause, block);
+	if (raw__larva__is_type(cause, printable_block)) {
+	  return printable_block;
+	}
+	printable_seq_reverse = f2cons__new(cause, printable_block, printable_seq_reverse);
       }
-      printable_seq_reverse = f2cons__new(cause, printable_block, printable_seq_reverse);
       iter = f2__fiber_stack_trace__next(cause, iter);
     }
   }

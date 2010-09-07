@@ -162,6 +162,9 @@ f2ptr  f2__fiber__print_stack_trace(f2ptr cause, f2ptr this);
 declare_primobject_1_slot(fiber_stack_trace,
 			  stack);
 
+f2ptr f2__fiber_stack_trace__as__string(f2ptr cause, f2ptr this);
+
+
 f2ptr f2fiber_stack_trace__primobject_type__new_aux(f2ptr cause);
 
 

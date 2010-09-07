@@ -469,8 +469,15 @@ f2ptr f2__fiber_stack_trace__new(f2ptr cause, f2ptr stack) {
 }
 def_pcfunk1(fiber_stack_trace__new, stack, return f2__fiber_stack_trace__new(this_cause, stack));
 
-f2ptr f2__fiber_stack_trace__as__string(f2ptr cause, f2ptr this) {
+f2ptr raw__fiber_stack_trace__as__string(f2ptr cause, f2ptr this) {
   return new__string(cause, "<fiber_stack_trace>");
+}
+
+f2ptr f2__fiber_stack_trace__as__string(f2ptr cause, f2ptr this) {
+  if (! raw__fiber_stack_trace__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__fiber_stack_trace__as__string(cause, this);
 }
 def_pcfunk1(fiber_stack_trace__as__string, this, return f2__fiber_stack_trace__as__string(this_cause, this));
 

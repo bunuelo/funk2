@@ -75,7 +75,7 @@ declare_object_type_1_slot(fiber_stack_trace,
 
 typedef struct funk2_object_type__fiber_stack_trace_block__slot_s funk2_object_type__fiber_stack_trace_block__slot_t;
 
-declare_object_type_2_slot(fiber_stack_trace,
+declare_object_type_2_slot(fiber_stack_trace_block,
 			   funk,
 			   args,
 			   f2ptr as__string__symbol; // get

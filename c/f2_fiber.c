@@ -557,6 +557,8 @@ f2ptr f2__fiber_stack_trace_block_element__printable_value(f2ptr cause, f2ptr th
       }
     }
     return print_seq;
+  } else if (raw__traced_mutex__is_type(cause, this)) {
+    this_is_printable = boolean__true;
   } else if (raw__array__is_type(cause, this)) {
     this_is_printable = boolean__false;
   } else {

@@ -47,7 +47,7 @@ def_frame_object__global__19_slot(terminal_print_frame,
 				  failed_max_x_constraint,
 				  failed_max_y_constraint);
 
-f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr min_x, f2ptr min_y, f2ptr max_x, f2ptr max_y, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes, f2ptr x, f2ptr y) {
+f2ptr f2__terminal_print_frame__new_default(f2ptr cause, f2ptr stream, f2ptr min_x, f2ptr min_y, f2ptr max_x, f2ptr max_y, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes, f2ptr x, f2ptr y) {
   if (((stream != nil) && (! raw__stream__is_type(cause, stream))) ||
       (! raw__integer__is_type(cause, min_x)) ||
       (! raw__integer__is_type(cause, min_y)) ||
@@ -216,7 +216,7 @@ f2ptr f2__exp__terminal_stream_print(f2ptr cause, f2ptr this, f2ptr stream) {
   f2ptr use_html_codes       = f2bool__new(boolean__false);
   f2ptr x                    = f2integer__new(cause, 0);
   f2ptr y                    = f2integer__new(cause, 0);
-  f2ptr terminal_print_frame = f2__terminal_print_frame__new(cause, stream, min_x, min_y, max_x, max_y, max_size, use_ansi_codes, use_html_codes, x, y);
+  f2ptr terminal_print_frame = f2__terminal_print_frame__new_default(cause, stream, min_x, min_y, max_x, max_y, max_size, use_ansi_codes, use_html_codes, x, y);
   if (raw__larva__is_type(cause, terminal_print_frame)) {
     return terminal_print_frame;
   }

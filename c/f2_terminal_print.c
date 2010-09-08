@@ -89,17 +89,6 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr min_x, f2pt
 				     failed_max_y_constraint);
 }
 
-f2ptr f2__object__eq(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, __funk2.globalenv.eq__symbol);
-  if (! raw__funkable__is_type(cause, funk)) {
-    return f2bool__new(this == that);
-  }
-  return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, that, nil)));
-}
-def_pcfunk2(object__eq, this, that, return f2__object__eq(this_cause, this, that));
-
-
 f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));

@@ -24,7 +24,6 @@
 #include "funk2.h"
 
 
-/*
 // terminal_print_frame
 
 def_frame_object__global__17_slot(terminal_print_frame,
@@ -224,7 +223,6 @@ f2ptr f2__exp__terminal_stream_print(f2ptr cause, f2ptr this, f2ptr stream) {
   return f2__exp__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(exp__terminal_stream_print, this, stream, return f2__exp__terminal_stream_print(this_cause, this, stream));
-*/
 
 
 // **
@@ -245,9 +243,7 @@ void f2__terminal_print__initialize() {
   init_frame_object__3_slot(terminal_print_frame, max_size, size, already_printed_hash);
   
   
-  /*
   f2__primcfunk__init__2(exp__terminal_print,        this, terminal_print_frame, "Prints a value given a terminal_print_frame.");
   f2__primcfunk__init__2(exp__terminal_stream_print, this, stream,               "Prints a value to the given terminal stream, using a new default terminal_print_frame.");
-  */
 }
 

@@ -710,8 +710,26 @@
 #define def_f2frame_object__primobject_type__new__10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
   def_f2frame_object__primobject_type__new__slot_body(name, def_f2frame_object__primobject_type__new__10_slot__slots(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10))
 
-#define def_f2frame_object__primobject_type__new__11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
-  def_f2frame_object__primobject_type__new__slot_body(name, def_f2frame_object__primobject_type__new__10_slot__slots(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10))
+#define def_f2frame_object__primobject_type__new__11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  def_f2frame_object__primobject_type__new__slot_body(name, def_f2frame_object__primobject_type__new__11_slot__slots(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11))
+
+#define def_f2frame_object__primobject_type__new__12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  def_f2frame_object__primobject_type__new__slot_body(name, def_f2frame_object__primobject_type__new__12_slot__slots(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12))
+
+#define def_f2frame_object__primobject_type__new__13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  def_f2frame_object__primobject_type__new__slot_body(name, def_f2frame_object__primobject_type__new__13_slot__slots(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13))
+
+#define def_f2frame_object__primobject_type__new__14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  def_f2frame_object__primobject_type__new__slot_body(name, def_f2frame_object__primobject_type__new__14_slot__slots(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14))
+
+#define def_f2frame_object__primobject_type__new__15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  def_f2frame_object__primobject_type__new__slot_body(name, def_f2frame_object__primobject_type__new__15_slot__slots(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15))
+
+#define def_f2frame_object__primobject_type__new__16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  def_f2frame_object__primobject_type__new__slot_body(name, def_f2frame_object__primobject_type__new__16_slot__slots(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16))
+
+#define def_f2frame_object__primobject_type__new__17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  def_f2frame_object__primobject_type__new__slot_body(name, def_f2frame_object__primobject_type__new__17_slot__slots(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17))
 
 
   /*
@@ -767,68 +785,204 @@
   f2ptr f2__frame_object__funk__funkvar(name, type)(f2ptr cause, f2ptr this) {return new__symbol(cause, #name);} \
   def_pcfunk1(frame_object__funk__pcfunkvar(name, type), this, return f2__frame_object__funk__funkvar(name, type)(this_cause, this))
 
-#define def_frame_object__global__0_slot(name) \
-  def_frame_object__global__sans_slots(name); \
+
+#define def_frame_object__global__0_slot__body(name)
+
+#define def_frame_object__global__1_slot__body(name, slot_1) \
+  def_frame_object__global__0_slot__body(name) \
+  def_frame_object__funk__slot(name, slot_1);
+
+#define def_frame_object__global__2_slot__body(name, slot_1, slot_2) \
+  def_frame_object__global__1_slot__body(name, slot_1)		     \
+  def_frame_object__funk__slot(name, slot_2);
+
+#define def_frame_object__global__3_slot__body(name, slot_1, slot_2, slot_3) \
+  def_frame_object__global__2_slot__body(name, slot_1, slot_2)		\
+  def_frame_object__funk__slot(name, slot_3);
+
+#define def_frame_object__global__4_slot__body(name, slot_1, slot_2, slot_3, slot_4) \
+  def_frame_object__global__3_slot__body(name, slot_1, slot_2, slot_3)	\
+  def_frame_object__funk__slot(name, slot_4);
+
+#define def_frame_object__global__5_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  def_frame_object__global__4_slot__body(name, slot_1, slot_2, slot_3, slot_4) \
+  def_frame_object__funk__slot(name, slot_5);
+
+#define def_frame_object__global__6_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  def_frame_object__global__5_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  def_frame_object__funk__slot(name, slot_6);
+
+#define def_frame_object__global__7_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  def_frame_object__global__6_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  def_frame_object__funk__slot(name, slot_7);
+
+#define def_frame_object__global__8_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  def_frame_object__global__7_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  def_frame_object__funk__slot(name, slot_8);
+
+#define def_frame_object__global__9_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  def_frame_object__global__8_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  def_frame_object__funk__slot(name, slot_9);
+
+#define def_frame_object__global__10_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  def_frame_object__global__9_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  def_frame_object__funk__slot(name, slot_10);
+
+#define def_frame_object__global__11_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  def_frame_object__global__10_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  def_frame_object__funk__slot(name, slot_11);
+
+#define def_frame_object__global__12_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  def_frame_object__global__11_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  def_frame_object__funk__slot(name, slot_12);
+
+#define def_frame_object__global__13_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  def_frame_object__global__12_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  def_frame_object__funk__slot(name, slot_13);
+
+#define def_frame_object__global__14_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  def_frame_object__global__13_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  def_frame_object__funk__slot(name, slot_14);
+
+#define def_frame_object__global__15_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  def_frame_object__global__14_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  def_frame_object__funk__slot(name, slot_15);
+
+#define def_frame_object__global__16_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  def_frame_object__global__15_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  def_frame_object__funk__slot(name, slot_16);
+
+#define def_frame_object__global__17_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  def_frame_object__global__16_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  def_frame_object__funk__slot(name, slot_17);
+
+
+#define def_frame_object__global__0_slot(name)	\
+  def_frame_object__global__sans_slots(name);	    \
   def_frame_object__slot_global_vars__0_slot(name); \
-  def_f2__frame__object__new__0_slot(name); \
-   \
-   \
+  def_f2__frame__object__new__0_slot(name);	    \
+  def_frame_object__global__0_slot__body(name)			\
   def_f2frame_object__primobject_type__new__0_slot(name)
-
-#define def_frame_object__global__1_slot(name, slot_1) \
-  def_frame_object__global__sans_slots(name); \
+  
+#define def_frame_object__global__1_slot(name, slot_1)	\
+  def_frame_object__global__sans_slots(name);		    \
   def_frame_object__slot_global_vars__1_slot(name, slot_1); \
-  def_f2__frame__object__new__1_slot(name, slot_1); \
-   \
-  def_frame_object__funk__slot(name, slot_1); \
-   \
+  def_f2__frame__object__new__1_slot(name, slot_1);			\
+  def_frame_object__global__1_slot__body(name, slot_1)			\
   def_f2frame_object__primobject_type__new__1_slot(name, slot_1)
-
-#define def_frame_object__global__2_slot(name, slot_1, slot_2) \
-  def_frame_object__global__sans_slots(name); \
-  def_frame_object__slot_global_vars__2_slot(name, slot_1, slot_2); \
-  def_f2__frame__object__new__2_slot(name, slot_1, slot_2); \
-   \
-  def_frame_object__funk__slot(name, slot_1); \
-  def_frame_object__funk__slot(name, slot_2); \
-   \
+  
+#define def_frame_object__global__2_slot(name, slot_1, slot_2)	\
+  def_frame_object__global__sans_slots(name);			    \
+  def_frame_object__slot_global_vars__2_slot(name, slot_1, slot_2);	\
+  def_f2__frame__object__new__2_slot(name, slot_1, slot_2);		\
+  def_frame_object__global__2_slot__body(name, slot_1, slot_2)		\
   def_f2frame_object__primobject_type__new__2_slot(name, slot_1, slot_2)
 
-#define def_frame_object__global__3_slot(name, slot_1, slot_2, slot_3) \
-  def_frame_object__global__sans_slots(name); \
+#define def_frame_object__global__3_slot(name, slot_1, slot_2, slot_3)	\
+  def_frame_object__global__sans_slots(name);				\
   def_frame_object__slot_global_vars__3_slot(name, slot_1, slot_2, slot_3); \
-  def_f2__frame__object__new__3_slot(name, slot_1, slot_2, slot_3); \
-   \
-  def_frame_object__funk__slot(name, slot_1); \
-  def_frame_object__funk__slot(name, slot_2); \
-  def_frame_object__funk__slot(name, slot_3); \
-   \
+  def_f2__frame__object__new__3_slot(name, slot_1, slot_2, slot_3);	\
+  def_frame_object__global__3_slot__body(name, slot_1, slot_2, slot_3)	\
   def_f2frame_object__primobject_type__new__3_slot(name, slot_1, slot_2, slot_3)
-
+  
 #define def_frame_object__global__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
   def_frame_object__global__sans_slots(name); \
   def_frame_object__slot_global_vars__4_slot(name, slot_1, slot_2, slot_3, slot_4); \
   def_f2__frame__object__new__4_slot(name, slot_1, slot_2, slot_3, slot_4); \
-   \
-  def_frame_object__funk__slot(name, slot_1); \
-  def_frame_object__funk__slot(name, slot_2); \
-  def_frame_object__funk__slot(name, slot_3); \
-  def_frame_object__funk__slot(name, slot_4); \
-   \
+  def_frame_object__global__4_slot__body(name, slot_1, slot_2, slot_3, slot_4) \
   def_f2frame_object__primobject_type__new__4_slot(name, slot_1, slot_2, slot_3, slot_4)
 
 #define def_frame_object__global__5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
-  def_frame_object__global__sans_slots(name); \
+  def_frame_object__global__sans_slots(name);				\
   def_frame_object__slot_global_vars__5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
   def_f2__frame__object__new__5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
-   \
-  def_frame_object__funk__slot(name, slot_1); \
-  def_frame_object__funk__slot(name, slot_2); \
-  def_frame_object__funk__slot(name, slot_3); \
-  def_frame_object__funk__slot(name, slot_4); \
-  def_frame_object__funk__slot(name, slot_5); \
-   \
+  def_frame_object__global__5_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
   def_f2frame_object__primobject_type__new__5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5)
+  
+#define def_frame_object__global__6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  def_frame_object__global__sans_slots(name);				\
+  def_frame_object__slot_global_vars__6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
+  def_f2__frame__object__new__6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
+  def_frame_object__global__6_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  def_f2frame_object__primobject_type__new__6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6)
+  
+#define def_frame_object__global__7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  def_frame_object__global__sans_slots(name);				\
+  def_frame_object__slot_global_vars__7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
+  def_f2__frame__object__new__7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
+  def_frame_object__global__7_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  def_f2frame_object__primobject_type__new__7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7)
+  
+#define def_frame_object__global__8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  def_frame_object__global__sans_slots(name);				\
+  def_frame_object__slot_global_vars__8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
+  def_f2__frame__object__new__8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
+  def_frame_object__global__8_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  def_f2frame_object__primobject_type__new__8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8)
+  
+#define def_frame_object__global__9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  def_frame_object__global__sans_slots(name);				\
+  def_frame_object__slot_global_vars__9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
+  def_f2__frame__object__new__9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
+  def_frame_object__global__9_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  def_f2frame_object__primobject_type__new__9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9)
+  
+#define def_frame_object__global__10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  def_frame_object__global__sans_slots(name);				\
+  def_frame_object__slot_global_vars__10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
+  def_f2__frame__object__new__10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
+  def_frame_object__global__10_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  def_f2frame_object__primobject_type__new__10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10)
+  
+#define def_frame_object__global__11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  def_frame_object__global__sans_slots(name);				\
+  def_frame_object__slot_global_vars__11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
+  def_f2__frame__object__new__11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
+  def_frame_object__global__11_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  def_f2frame_object__primobject_type__new__11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11)
+  
+#define def_frame_object__global__12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  def_frame_object__global__sans_slots(name);				\
+  def_frame_object__slot_global_vars__12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
+  def_f2__frame__object__new__12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
+  def_frame_object__global__12_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  def_f2frame_object__primobject_type__new__12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12)
+  
+#define def_frame_object__global__13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  def_frame_object__global__sans_slots(name);				\
+  def_frame_object__slot_global_vars__13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
+  def_f2__frame__object__new__13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
+  def_frame_object__global__13_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  def_f2frame_object__primobject_type__new__13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13)
+  
+#define def_frame_object__global__14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  def_frame_object__global__sans_slots(name);				\
+  def_frame_object__slot_global_vars__14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
+  def_f2__frame__object__new__14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
+  def_frame_object__global__14_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  def_f2frame_object__primobject_type__new__14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14)
+  
+#define def_frame_object__global__15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  def_frame_object__global__sans_slots(name);				\
+  def_frame_object__slot_global_vars__15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
+  def_f2__frame__object__new__15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
+  def_frame_object__global__15_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  def_f2frame_object__primobject_type__new__15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15)
+  
+#define def_frame_object__global__16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  def_frame_object__global__sans_slots(name);				\
+  def_frame_object__slot_global_vars__16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
+  def_f2__frame__object__new__16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
+  def_frame_object__global__16_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  def_f2frame_object__primobject_type__new__16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16)
+  
+#define def_frame_object__global__17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  def_frame_object__global__sans_slots(name);				\
+  def_frame_object__slot_global_vars__17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17); \
+  def_f2__frame__object__new__17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17); \
+  def_frame_object__global__17_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  def_f2frame_object__primobject_type__new__17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17)
+  
 
 #define init_frame_object__funk(name, funk_name) \
   {char* symbol_str = #funk_name; frame_object__slot__symbol__var(name, funk_name) = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);} \
@@ -847,34 +1001,72 @@
   init_frame_object__sans_slots(name);
 
 #define init_frame_object__1_slot(name, slot_1) \
-  init_frame_object__sans_slots(name); \
+  init_frame_object__0_slot(name);		\
   init_frame_object__slot(name, slot_1);
 
 #define init_frame_object__2_slot(name, slot_1, slot_2) \
-  init_frame_object__sans_slots(name); \
-  init_frame_object__slot(name, slot_1); \
+  init_frame_object__1_slot(name, slot_1) \
   init_frame_object__slot(name, slot_2);
 
 #define init_frame_object__3_slot(name, slot_1, slot_2, slot_3) \
-  init_frame_object__sans_slots(name); \
-  init_frame_object__slot(name, slot_1); \
-  init_frame_object__slot(name, slot_2); \
+  init_frame_object__2_slot(name, slot_1, slot_2) \
   init_frame_object__slot(name, slot_3);
 
 #define init_frame_object__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
-  init_frame_object__sans_slots(name); \
-  init_frame_object__slot(name, slot_1); \
-  init_frame_object__slot(name, slot_2); \
-  init_frame_object__slot(name, slot_3); \
+  init_frame_object__3_slot(name, slot_1, slot_2, slot_3) \
   init_frame_object__slot(name, slot_4);
 
 #define init_frame_object__5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
-  init_frame_object__sans_slots(name); \
-  init_frame_object__slot(name, slot_1); \
-  init_frame_object__slot(name, slot_2); \
-  init_frame_object__slot(name, slot_3); \
-  init_frame_object__slot(name, slot_4); \
+  init_frame_object__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
   init_frame_object__slot(name, slot_5);
+
+#define init_frame_object__6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  init_frame_object__5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5)	\
+  init_frame_object__slot(name, slot_6);
+
+#define init_frame_object__7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  init_frame_object__6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  init_frame_object__slot(name, slot_7);
+
+#define init_frame_object__8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  init_frame_object__7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  init_frame_object__slot(name, slot_8);
+
+#define init_frame_object__9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  init_frame_object__8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  init_frame_object__slot(name, slot_9);
+
+#define init_frame_object__10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  init_frame_object__9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  init_frame_object__slot(name, slot_10);
+
+#define init_frame_object__11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  init_frame_object__10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  init_frame_object__slot(name, slot_11);
+
+#define init_frame_object__12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  init_frame_object__11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  init_frame_object__slot(name, slot_12);
+
+#define init_frame_object__13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  init_frame_object__12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  init_frame_object__slot(name, slot_13);
+
+#define init_frame_object__14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  init_frame_object__13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  init_frame_object__slot(name, slot_14);
+
+#define init_frame_object__15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  init_frame_object__14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  init_frame_object__slot(name, slot_15);
+
+#define init_frame_object__16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  init_frame_object__15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  init_frame_object__slot(name, slot_16);
+
+#define init_frame_object__17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  init_frame_object__16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  init_frame_object__slot(name, slot_17);
 
 
 // physical_sim_object

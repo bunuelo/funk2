@@ -28,11 +28,9 @@
 
 // terminal_print_frame
 
-/*
 f2ptr f2terminal_print_frame__primobject_type__new(f2ptr cause);
 
 f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr max_size);
-*/
 
 // **
 

@@ -165,6 +165,11 @@
 #define def_pcfunk0(def_name, def_body)	\
   def_pcfunk__defargs(def_name, 0, , def_body)
 
+#define def_pcfunk0_and_rest(def_name, and_rest, def_body)	\
+  def_pcfunk__defargs(def_name, 0,					\
+		      f2ptr and_rest = simple_args__iter; simple_args__iter = nil, \
+		      def_body)
+
 #define def_pcfunk1(def_name, var1, def_body)				\
   def_pcfunk__defargs(def_name, 1,					\
 		      def_pcfunk__argument__1_slot(1, var1),		\

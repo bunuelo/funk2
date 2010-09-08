@@ -365,7 +365,7 @@
   f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_18), slot_18);
 
 #define def_f2__frame__object__new__19_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
-  def_f2__frame__object__new__19_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  def_f2__frame__object__new__18_slot__body(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
   f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_19), slot_19);
 
 

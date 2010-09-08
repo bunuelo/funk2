@@ -47,7 +47,7 @@ def_frame_object__global__19_slot(terminal_print_frame,
 				  failed_max_x_constraint,
 				  failed_max_y_constraint);
 
-f2ptr f2__terminal_print_frame__new_default(f2ptr cause, f2ptr stream, f2ptr min_x, f2ptr min_y, f2ptr max_x, f2ptr max_y, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes, f2ptr x, f2ptr y) {
+f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr min_x, f2ptr min_y, f2ptr max_x, f2ptr max_y, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes, f2ptr x, f2ptr y) {
   if (((stream != nil) && (! raw__stream__is_type(cause, stream))) ||
       (! raw__integer__is_type(cause, min_x)) ||
       (! raw__integer__is_type(cause, min_y)) ||

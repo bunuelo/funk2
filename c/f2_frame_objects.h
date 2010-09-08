@@ -41,71 +41,71 @@
 #define def_frame_object__slot_global_vars__0_slot(name)
 
 #define def_frame_object__slot_global_vars__1_slot(name, slot_1) \
-  def_frame_object__slot_global_vars__0_slot(name)		 \
+  def_frame_object__slot_global_vars__0_slot(name);		 \
   def_frame_object__slot__global_vars(name, slot_1)
 
 #define def_frame_object__slot_global_vars__2_slot(name, slot_1, slot_2) \
-  def_frame_object__slot_global_vars__1_slot(name, slot_1)		\
+  def_frame_object__slot_global_vars__1_slot(name, slot_1);		\
   def_frame_object__slot__global_vars(name, slot_2)
 
 #define def_frame_object__slot_global_vars__3_slot(name, slot_1, slot_2, slot_3) \
-  def_frame_object__slot_global_vars__2_slot(name, slot_1, slot_2)	\
+  def_frame_object__slot_global_vars__2_slot(name, slot_1, slot_2);	\
   def_frame_object__slot__global_vars(name, slot_3)
 
 #define def_frame_object__slot_global_vars__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
-  def_frame_object__slot_global_vars__3_slot(name, slot_1, slot_2, slot_3) \
+  def_frame_object__slot_global_vars__3_slot(name, slot_1, slot_2, slot_3); \
   def_frame_object__slot__global_vars(name, slot_4)
 
 #define def_frame_object__slot_global_vars__5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
-  def_frame_object__slot_global_vars__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  def_frame_object__slot_global_vars__4_slot(name, slot_1, slot_2, slot_3, slot_4); \
   def_frame_object__slot__global_vars(name, slot_5)
 
 #define def_frame_object__slot_global_vars__6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
-  def_frame_object__slot_global_vars__5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  def_frame_object__slot_global_vars__5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
   def_frame_object__slot__global_vars(name, slot_6)
 
 #define def_frame_object__slot_global_vars__7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
-  def_frame_object__slot_global_vars__6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  def_frame_object__slot_global_vars__6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
   def_frame_object__slot__global_vars(name, slot_7)
 
 #define def_frame_object__slot_global_vars__8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
-  def_frame_object__slot_global_vars__7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  def_frame_object__slot_global_vars__7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
   def_frame_object__slot__global_vars(name, slot_8)
 
 #define def_frame_object__slot_global_vars__9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
-  def_frame_object__slot_global_vars__8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  def_frame_object__slot_global_vars__8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
   def_frame_object__slot__global_vars(name, slot_9)
 
 #define def_frame_object__slot_global_vars__10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
-  def_frame_object__slot_global_vars__9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  def_frame_object__slot_global_vars__9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
   def_frame_object__slot__global_vars(name, slot_10)
 
 #define def_frame_object__slot_global_vars__11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
-  def_frame_object__slot_global_vars__10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  def_frame_object__slot_global_vars__10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
   def_frame_object__slot__global_vars(name, slot_11)
 
 #define def_frame_object__slot_global_vars__12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
-  def_frame_object__slot_global_vars__11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  def_frame_object__slot_global_vars__11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
   def_frame_object__slot__global_vars(name, slot_12)
 
 #define def_frame_object__slot_global_vars__13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
-  def_frame_object__slot_global_vars__12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  def_frame_object__slot_global_vars__12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
   def_frame_object__slot__global_vars(name, slot_13)
 
 #define def_frame_object__slot_global_vars__14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
-  def_frame_object__slot_global_vars__13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  def_frame_object__slot_global_vars__13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
   def_frame_object__slot__global_vars(name, slot_14)
 
 #define def_frame_object__slot_global_vars__15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
-  def_frame_object__slot_global_vars__14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  def_frame_object__slot_global_vars__14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
   def_frame_object__slot__global_vars(name, slot_15)
 
 #define def_frame_object__slot_global_vars__16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
-  def_frame_object__slot_global_vars__15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  def_frame_object__slot_global_vars__15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
   def_frame_object__slot__global_vars(name, slot_16)
 
 #define def_frame_object__slot_global_vars__17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
-  def_frame_object__slot_global_vars__16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  def_frame_object__slot_global_vars__16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
   def_frame_object__slot__global_vars(name, slot_17)
 
 

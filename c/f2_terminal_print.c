@@ -202,7 +202,7 @@ f2ptr f2__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal
   }
   return raw__exp__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(exp__terminal_print, this, terminal_print_frame, return f2__exp__terminal_print(this_cause, this, terminal_print_frame));
+def_pcfunk2(exp__terminal_print_with_frame, this, terminal_print_frame, return f2__exp__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2__exp__terminal_stream_print(f2ptr cause, f2ptr this, f2ptr stream) {
@@ -262,7 +262,7 @@ void f2__terminal_print__initialize() {
 			     failed_max_y_constraint);
   
   
-  f2__primcfunk__init__2(exp__terminal_print,        this, terminal_print_frame, "Prints a value given a terminal_print_frame.");
-  f2__primcfunk__init__2(exp__terminal_stream_print, this, stream,               "Prints a value to the given terminal stream, using a new default terminal_print_frame.");
+  f2__primcfunk__init__2(exp__terminal_print_with_frame, this, terminal_print_frame, "Prints a value given a terminal_print_frame.");
+  f2__primcfunk__init__2(exp__terminal_stream_print,     this, stream,               "Prints a value to the given terminal stream, using a new default terminal_print_frame.");
 }
 

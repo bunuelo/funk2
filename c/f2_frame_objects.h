@@ -1082,7 +1082,7 @@
 #define init_frame_object__sans_slots(name) \
   init_frame_object__funk(name, is_type); \
   init_frame_object__funk(name, type); \
-  init_frame_object__funk(name, new)
+  init_frame_object__funk(name, create)
 
 #define init_frame_object__slot(name, slot_name) \
   init_frame_object__funk(name, slot_name); \

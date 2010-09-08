@@ -25,6 +25,10 @@
 
 def_frame_object__global__1_slot(gtk_widget, pointer);
 
+f2ptr f2__gtk_widget__new(f2ptr cause, f2ptr pointer) {
+  return f2gtk_widget__new(cause, pointer);
+}
+
 #if defined(F2__GTK__SUPPORTED)
 
 GtkWidget* raw__gtk_widget__as__GtkWidget(f2ptr cause, f2ptr this) {
@@ -37,6 +41,10 @@ GtkWidget* raw__gtk_widget__as__GtkWidget(f2ptr cause, f2ptr this) {
 // gtk_box
 
 def_frame_object__global__1_slot(gtk_box, pointer);
+
+f2ptr f2__gtk_box__new(f2ptr cause, f2ptr pointer) {
+  return f2gtk_box__new(cause, pointer);
+}
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -59,6 +67,10 @@ f2ptr f2gtk_box__primobject_type__new_aux(f2ptr cause) {
 
 def_frame_object__global__1_slot(gtk_text_buffer, pointer);
 
+f2ptr f2__gtk_text_buffer__new(f2ptr cause, f2ptr pointer) {
+  return f2gtk_text_buffer__new(cause, pointer);
+}
+
 #if defined(F2__GTK__SUPPORTED)
 
 GtkTextBuffer* raw__gtk_text_buffer__as__GtkTextBuffer(f2ptr cause, f2ptr this) {
@@ -79,6 +91,10 @@ f2ptr f2gtk_text_buffer__primobject_type__new_aux(f2ptr cause) {
 
 def_frame_object__global__1_slot(gtk_text_iter, chunk);
 
+f2ptr f2__gtk_text_iter__new(f2ptr cause, f2ptr chunk) {
+  return f2gtk_text_iter__new(cause, chunk);
+}
+
 #if defined(F2__GTK__SUPPORTED)
 
 void raw__gtk_text_iter__as__GtkTextIter(f2ptr cause, f2ptr this, GtkTextIter* text_iter) {
@@ -93,6 +109,10 @@ void raw__gtk_text_iter__as__GtkTextIter(f2ptr cause, f2ptr this, GtkTextIter* t
 
 def_frame_object__global__1_slot(gtk_text_mark, pointer);
 
+f2ptr f2__gtk_text_mark__new(f2ptr cause, f2ptr pointer) {
+  return f2gtk_text_mark__new(cause, pointer);
+}
+
 #if defined(F2__GTK__SUPPORTED)
 
 GtkTextMark* raw__gtk_text_mark__as__GtkTextMark(f2ptr cause, f2ptr this) {
@@ -106,15 +126,27 @@ GtkTextMark* raw__gtk_text_mark__as__GtkTextMark(f2ptr cause, f2ptr this) {
 
 def_frame_object__global__2_slot(gtk_callback, funk, args);
 
+f2ptr f2__gtk_callback__new(f2ptr cause, f2ptr funk, f2ptr args) {
+  return f2gtk_callback__new(cause, funk, args);
+}
+
 
 // gtk_text_range
 
 def_frame_object__global__2_slot(gtk_text_range, start, end);
 
+f2ptr f2__gtk_text_range__new(f2ptr cause, f2ptr start, f2ptr end) {
+  return f2gtk_text_range__new(cause, start, end);
+}
+
 
 // gtk_progress_bar
 
 def_frame_object__global__1_slot(gtk_progress_bar, pointer);
+
+f2ptr f2__gtk_progress_bar__new(f2ptr cause, f2ptr pointer) {
+  return f2gtk_progress_bar__new(cause, pointer);
+}
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -135,6 +167,10 @@ f2ptr f2gtk_progress_bar__primobject_type__new_aux(f2ptr cause) {
 
 def_frame_object__global__1_slot(gtk_menu, pointer);
 
+f2ptr f2__gtk_menu__new(f2ptr cause, f2ptr pointer) {
+  return f2gtk_menu__new(cause, pointer);
+}
+
 #if defined(F2__GTK__SUPPORTED)
 
 GtkMenu* raw__gtk_menu__as__GtkMenu(f2ptr cause, f2ptr this) {
@@ -153,6 +189,10 @@ f2ptr f2gtk_menu__primobject_type__new_aux(f2ptr cause) {
 // gtk_menu_bar
 
 def_frame_object__global__1_slot(gtk_menu_bar, pointer);
+
+f2ptr f2__gtk_menu_bar__new(f2ptr cause, f2ptr pointer) {
+  return f2gtk_menu_bar__new(cause, pointer);
+}
 
 #if defined(F2__GTK__SUPPORTED)
 

@@ -268,7 +268,7 @@
   f2ptr this = f2__frame__new(cause, nil);				\
   f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),  new__symbol(cause, #name));
 
-#define def_f2__frame__object__new__1_slot__body(slot_1)
+#define def_f2__frame__object__new__1_slot__body(slot_1) \
   def_f2__frame__object__new__0_slot__body \
   f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_1), slot_1);
 

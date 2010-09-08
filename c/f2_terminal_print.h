@@ -30,7 +30,6 @@
 
 f2ptr f2terminal_print_frame__primobject_type__new(f2ptr cause);
 
-f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr min_x, f2ptr min_y, f2ptr max_x, f2ptr max_y, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes, f2ptr x, f2ptr y);
 
 // **
 

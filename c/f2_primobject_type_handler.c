@@ -181,17 +181,18 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
 }
 
 void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_type_handler_t* this, f2ptr cause) {
-  {char* type_name = "physical_sim_object"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2physical_sim_object__primobject_type__new(cause));}
-  {char* type_name = "gtk_widget";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2gtk_widget__primobject_type__new(cause));}
-  {char* type_name = "gtk_box";             funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),             f2gtk_box__primobject_type__new_aux(cause));}
-  {char* type_name = "gtk_text_buffer";     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),     f2gtk_text_buffer__primobject_type__new_aux(cause));}
-  {char* type_name = "gtk_text_iter";       funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),       f2gtk_text_iter__primobject_type__new(cause));}
-  {char* type_name = "gtk_callback";        funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),        f2gtk_callback__primobject_type__new(cause));}
-  {char* type_name = "gtk_text_mark";       funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),       f2gtk_text_mark__primobject_type__new(cause));}
-  {char* type_name = "gtk_text_range";      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),      f2gtk_text_range__primobject_type__new(cause));}
-  {char* type_name = "gtk_progress_bar";    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),    f2gtk_progress_bar__primobject_type__new_aux(cause));}
-  {char* type_name = "gtk_menu_bar";        funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),        f2gtk_menu_bar__primobject_type__new_aux(cause));}
-  {char* type_name = "gtk_menu";            funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),            f2gtk_menu__primobject_type__new_aux(cause));}
+  {char* type_name = "physical_sim_object";  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),  f2physical_sim_object__primobject_type__new(cause));}
+  {char* type_name = "gtk_widget";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),           f2gtk_widget__primobject_type__new(cause));}
+  {char* type_name = "gtk_box";              funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),              f2gtk_box__primobject_type__new_aux(cause));}
+  {char* type_name = "gtk_text_buffer";      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),      f2gtk_text_buffer__primobject_type__new_aux(cause));}
+  {char* type_name = "gtk_text_iter";        funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),        f2gtk_text_iter__primobject_type__new(cause));}
+  {char* type_name = "gtk_callback";         funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),         f2gtk_callback__primobject_type__new(cause));}
+  {char* type_name = "gtk_text_mark";        funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),        f2gtk_text_mark__primobject_type__new(cause));}
+  {char* type_name = "gtk_text_range";       funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),       f2gtk_text_range__primobject_type__new(cause));}
+  {char* type_name = "gtk_progress_bar";     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),     f2gtk_progress_bar__primobject_type__new_aux(cause));}
+  {char* type_name = "gtk_menu_bar";         funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),         f2gtk_menu_bar__primobject_type__new_aux(cause));}
+  {char* type_name = "gtk_menu";             funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),             f2gtk_menu__primobject_type__new_aux(cause));}
+  {char* type_name = "terminal_print_frame"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2terminal_print_frame__primobject_type__new(cause));}
 }
 
 // **

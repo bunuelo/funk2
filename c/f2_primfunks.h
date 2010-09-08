@@ -64,13 +64,13 @@
 
 
 #define def_pcfunk__defargs(def_name, correct_arg_num, defargs, def_body) \
-  def_pcfunk__symbolvar__define(def_name);			\
-  def_pcfunk__documentationvar__define(def_name);		\
-  def_pcfunk__prototype__declare(def_name) {			\
-    def_pcfunk__this_cause__define(def_name);			\
-    def_pcfunk__this_symbol__define(def_name);			\
-    def_pcfunk__this_documentation__define(def_name);		\
-    f2ptr simple_args__iter = simple_args;
+  def_pcfunk__symbolvar__define(def_name);				\
+  def_pcfunk__documentationvar__define(def_name);			\
+  def_pcfunk__prototype__declare(def_name) {				\
+    def_pcfunk__this_cause__define(def_name);				\
+    def_pcfunk__this_symbol__define(def_name);				\
+    def_pcfunk__this_documentation__define(def_name);			\
+    f2ptr simple_args__iter = simple_args;				\
     defargs;								\
     if(simple_args__iter != nil) {return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, correct_arg_num, simple_args);} \
     def_body;								\

@@ -26,7 +26,7 @@
 
 // terminal_print_frame
 
-def_frame_object__global__17_slot(terminal_print_frame,
+def_frame_object__global__19_slot(terminal_print_frame,
 				  test_constraints,
 				  stream,
 				  min_x,
@@ -240,7 +240,26 @@ void f2__terminal_print__initialize() {
   
   // terminal_print_frame
   
-  init_frame_object__3_slot(terminal_print_frame, max_size, size, already_printed_hash);
+  init_frame_object__19_slot(terminal_print_frame,
+			     test_constraints,
+			     stream,
+			     min_x,
+			     min_y,
+			     max_x,
+			     max_y,
+			     max_size,
+			     use_ansi_codes,
+			     use_html_codes,
+			     x,
+			     y,
+			     size,
+			     subexp_width,
+			     subexp_height,
+			     subexp_size,
+			     already_printed_hash,
+			     use_one_line,
+			     failed_max_x_constraint,
+			     failed_max_y_constraint);
   
   
   f2__primcfunk__init__2(exp__terminal_print,        this, terminal_print_frame, "Prints a value given a terminal_print_frame.");

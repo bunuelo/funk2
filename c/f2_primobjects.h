@@ -1103,6 +1103,8 @@ declare_primobject_1_slot(primobject_type, parents);
 
 declare_primobject_1_slot(place, thing);
 
+f2ptr f2__place__new(f2ptr cause, f2ptr thing);
+
 // cons
 
 declare_primobject_2_slot(cons, car, cdr);

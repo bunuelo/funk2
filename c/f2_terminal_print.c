@@ -67,26 +67,26 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr min_x, f2pt
   f2ptr use_one_line            = f2bool__new(boolean__true);
   f2ptr failed_max_x_constraint = f2bool__new(boolean__false);
   f2ptr failed_max_y_constraint = f2bool__new(boolean__false);
-  return f2terminal_frame__new(cause,
-			       test_constraints,
-			       stream,
-			       min_x,
-			       min_y,
-			       max_x,
-			       max_y,
-			       max_size,
-			       use_ansi_codes,
-			       use_html_codes,
-			       x,
-			       y,
-			       size,
-			       subexp_width,
-			       subexp_height,
-			       subexp_size,
-			       already_printed_hash,
-			       use_one_line,
-			       failed_max_x_constraint,
-			       failed_max_y_constraint);
+  return f2terminal_print_frame__new(cause,
+				     test_constraints,
+				     stream,
+				     min_x,
+				     min_y,
+				     max_x,
+				     max_y,
+				     max_size,
+				     use_ansi_codes,
+				     use_html_codes,
+				     x,
+				     y,
+				     size,
+				     subexp_width,
+				     subexp_height,
+				     subexp_size,
+				     already_printed_hash,
+				     use_one_line,
+				     failed_max_x_constraint,
+				     failed_max_y_constraint);
 }
 
 f2ptr f2__object__eq(f2ptr cause, f2ptr this, f2ptr that) {

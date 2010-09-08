@@ -1243,7 +1243,16 @@ f2ptr f2__stream__try_read(f2ptr cause, f2ptr stream) {
   return __funk2.reader.could_not_read_type_exception;
 }
 
-def_pcfunk1(stream__try_read, stream, return f2__stream__try_read(this_cause, stream));
+f2ptr f2__stream__try_read__thread_safe(f2ptr cause, f2ptr stream) {
+  if (raw__mutex__trylock(cause, f2__stream__mutex(cause, stream))) {
+    return __funk2.reader.no_character_waiting_exception__symbol; // this should actually be an "already being read by another process" exception.
+  }
+  f2ptr result = f2__stream__try_read(cause, stream);
+  raw__mutex__unlock(cause, f2__stream__mutex(cause, stream));
+  return result;
+}
+def_pcfunk1(stream__try_read, stream, return f2__stream__try_read__thread_safe(this_cause, stream));
+
 
 void funk2_reader__init(funk2_reader_t* this) {
   f2ptr cause = f2_reader_c__cause__new(initial_cause());

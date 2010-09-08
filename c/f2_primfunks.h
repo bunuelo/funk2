@@ -77,7 +77,7 @@
   }
 
 #define def_pcfunk__argument(correct_arg_num, var) \
-  if(! raw__cons__is_type(cause, simple_args__iter)) {return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, correct_arg_num, simple_args);} f2ptr var = f2cons__car(simple_args__iter, this_cause); simple_args__iter = f2cons__cdr(simple_args__iter, this_cause), \
+  if(! raw__cons__is_type(this_cause, simple_args__iter)) {return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, correct_arg_num, simple_args);} f2ptr var = f2cons__car(simple_args__iter, this_cause); simple_args__iter = f2cons__cdr(simple_args__iter, this_cause), \
 
 #define def_pcfunk__argument__1_slot(correct_arg_num, var1) \
   def_pcfunk__argument(correct_arg_num, var1)

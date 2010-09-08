@@ -871,7 +871,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 						    ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    }
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("frame",                22, cause, fiber, stream, f2__exp__printable_value(cause, f2cause__frame(exp, cause)), nil, nil, nil,
+	    {f2__write_pretty__slot_key_and_value("frame",                  22, cause, fiber, stream, f2__exp__printable_value(cause, f2cause__frame(exp, cause)), nil, nil, nil,
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("allocate_traced_arrays", 22, cause, fiber, stream, f2cause__allocate_traced_arrays(exp, cause), f2cause__allocate_traced_arrays__tracing_on(exp, cause), f2cause__allocate_traced_arrays__trace(exp, cause), f2cause__allocate_traced_arrays__imagination_frame(exp, cause),
@@ -1590,22 +1590,48 @@ f2ptr f2__print_prompt_debug(f2ptr cause, f2ptr fiber, char* prompt, f2ptr exp) 
 }
 
 
-f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr ptypehash) {
+f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr max_size, f2ptr size, f2ptr ptypehash, f2ptr subexp_size_place) {
   if (raw__ptypehash__contains(cause, ptypehash, this)) {
+    f2__place__thing__set(cause, subexp_size_place, f2integer__new(cause, 1));
     return new__symbol(cause, "<...>");
+  }
+  s64 max_size__i = f2integer__i(max_size, cause);
+  s64 size__i     = f2integer__i(size, cause);
+  if (size__i >= max_size__i) {
+    f2__place__thing__set(cause, subexp_size_place, f2integer__new(cause, 1));
+    return new__symbol(cause, "...");
   }
   boolean_t this_is_printable;
   if (raw__cons__is_type(cause, this)) {
     f2__ptypehash__add(cause, ptypehash, this, f2bool__new(boolean__true));
     {
+      s64   exp_size_i = 0;
       f2ptr print_seq = nil;
       {
 	s64   list_element_count = 0;
 	f2ptr last_cons          = nil;
 	f2ptr iter               = this;
 	while (iter) {
-	  f2ptr element             = f2__cons__car(cause, iter);
-	  f2ptr element_print_value = raw__exp__printable_value__with_ptypehash(cause, element, ptypehash);
+	  f2ptr element = f2__cons__car(cause, iter);
+	  {
+	    exp_size_i ++;
+	    {
+	      size__i ++;
+	      size = f2integer__new(cause, size__i);
+	    }
+	  }
+	  f2ptr element_print_value = raw__exp__printable_value__with_ptypehash(cause, element, max_size, size, ptypehash, subexp_size_place);
+	  {
+	    f2ptr subexp_size    = f2__place__thing(cause, subexp_size_place);
+	    s64   subexp_size__i = f2integer__i(subexp_size, cause);
+	    {
+	      exp_size_i += subexp_size__i;
+	      {
+		size__i += subexp_size__i;
+		size = f2integer__new(cause, size__i);
+	      }
+	    }
+	  }
 	  if (last_cons) {
 	    f2ptr new_cons = f2cons__new(cause, element_print_value, nil);
 	    f2__cons__cdr__set(cause, last_cons, new_cons);
@@ -1625,6 +1651,7 @@ f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr p
 	  }
 	}
       }
+      f2__place__thing__set(cause, subexp_size_place, f2integer__new(cause, exp_size_i));
       return print_seq;
     }
   } else if (raw__traced_mutex__is_type(cause, this)) {
@@ -1632,9 +1659,30 @@ f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr p
   } else if (raw__frame__is_type(cause, this)) {
     f2__ptypehash__add(cause, ptypehash, this, f2bool__new(boolean__true));
     {
+      s64   exp_size_i = 0;
       f2ptr printable_frame = f2__frame__new(cause, nil);
       frame__var__iteration(cause, this, slot_name, slot_value,
-			    f2__frame__add_var_value(cause, printable_frame, slot_name, raw__exp__printable_value__with_ptypehash(cause, slot_value, ptypehash)));
+			    {
+			      exp_size_i ++;
+			      {
+				size__i ++;
+				size = f2integer__new(cause, size__i);
+			      }
+			    }
+			    f2__frame__add_var_value(cause, printable_frame, slot_name, raw__exp__printable_value__with_ptypehash(cause, slot_value, max_size, size, ptypehash, subexp_size_place));
+			    {
+			      f2ptr subexp_size    = f2__place__thing(cause, subexp_size_place);
+			      s64   subexp_size__i = f2integer__i(subexp_size, cause);
+			      {
+				exp_size_i += subexp_size__i;
+				{
+				  size__i += subexp_size__i;
+				  size = f2integer__new(cause, size__i);
+				}
+			      }
+			    }
+			    );
+      f2__place__thing__set(cause, subexp_size_place, f2integer__new(cause, exp_size_i));
       return printable_frame;
     }
   } else if (raw__array__is_type(cause, this)) {
@@ -1643,11 +1691,36 @@ f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr p
     this_is_printable = boolean__true;
   }
   if (this_is_printable) {
+    f2__place__thing__set(cause, subexp_size_place, f2integer__new(cause, 1));
     return this;
   }
+  f2__place__thing__set(cause, subexp_size_place, f2integer__new(cause, 1));
   return f2list2__new(cause, f2__object__type(cause, this), new__symbol(cause, "<>"));
 }
 
 f2ptr f2__exp__printable_value(f2ptr cause, f2ptr this) {
-  return raw__exp__printable_value__with_ptypehash(cause, this, f2__ptypehash__new(cause));
+  f2ptr max_size          = f2integer__new(cause, 100);
+  f2ptr size              = f2integer__new(cause, 0);
+  f2ptr ptypehash         = f2__ptypehash__new(cause);
+  f2ptr subexp_size_place = f2__place__new(cause, nil);
+  return raw__exp__printable_value__with_ptypehash(cause, this, max_size, size, ptypehash, subexp_size_place);
 }
+def_pcfunk1(exp__printable_value, this, return f2__exp__printable_value(this_cause, this));
+
+
+// **
+
+void f2__print__reinitialize_globalvars() {
+}
+
+void f2__print__initialize() {
+  //f2ptr cause = initial_cause();
+  
+  funk2_module_registration__add_module(&(__funk2.module_registration), "print", "", &f2__print__reinitialize_globalvars);
+  
+  f2__print__reinitialize_globalvars();
+  
+  f2__primcfunk__init__1(exp__printable_value, this, "Converts an object into a form that can be directly printed to the screen.");
+  
+}
+

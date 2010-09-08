@@ -93,6 +93,7 @@ void f2__initialize() {
   f2__dlfcn__initialize();
   f2__gmodule__initialize();
   f2__string__initialize();
+  f2__print__initialize();
   f2__apropos__initialize();
   f2__object__initialize();
   f2__primobject_type_handler__initialize();

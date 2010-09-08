@@ -54,4 +54,9 @@ f2ptr f2__print_prompt_debug(f2ptr cause, f2ptr fiber, char* prompt, f2ptr exp);
 
 f2ptr f2__exp__printable_value(f2ptr cause, f2ptr this);
 
+
+// **
+
+void f2__print__initialize();
+
 #endif // F2__PRINT__H

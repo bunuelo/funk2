@@ -25,6 +25,10 @@
 
 def_frame_object__global__1_slot(primobject_type, parents);
 
+f2ptr f2__primobject_type__new(f2ptr cause, f2ptr parents) {
+  return f2primobject_type__new(cause, parents);
+}
+
 f2ptr f2__primobject_type__add_slot_type(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name, f2ptr funkable) {
   if ((! raw__frame__is_type(   cause, this)) ||
       (! raw__symbol__is_type(  cause, slot_type)) ||

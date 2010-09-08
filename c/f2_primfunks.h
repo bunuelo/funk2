@@ -72,90 +72,92 @@
     def_pcfunk__this_documentation__define(def_name);			\
     f2ptr simple_args__iter = simple_args;				\
     defargs;								\
-    if(simple_args__iter != nil) {return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, correct_arg_num, simple_args);} \
+    if (simple_args__iter != nil) {					\
+      return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, correct_arg_num, simple_args); \
+    }									\
     def_body;								\
   }
 
-#define def_pcfunk__argument(correct_arg_num, var) \
-  if(! raw__cons__is_type(this_cause, simple_args__iter)) {		\
+#define def_pcfunk__argument(correct_arg_num, var)			\
+  if (! raw__cons__is_type(this_cause, simple_args__iter)) {		\
     return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, correct_arg_num, simple_args); \
   }									\
-  f2ptr var = f2cons__car(simple_args__iter, this_cause);		\
+  f2ptr var         = f2cons__car(simple_args__iter, this_cause);	\
   simple_args__iter = f2cons__cdr(simple_args__iter, this_cause)
 
 #define def_pcfunk__argument__1_slot(correct_arg_num, var1) \
   def_pcfunk__argument(correct_arg_num, var1)
 
 #define def_pcfunk__argument__2_slot(correct_arg_num, var1, var2)	\
-  def_pcfunk__argument__1_slot(correct_arg_num, var1)			\
+  def_pcfunk__argument__1_slot(correct_arg_num, var1);			\
   def_pcfunk__argument(correct_arg_num, var2)
 
 #define def_pcfunk__argument__3_slot(correct_arg_num, var1, var2, var3)	\
-  def_pcfunk__argument__2_slot(correct_arg_num, var1, var2)		\
+  def_pcfunk__argument__2_slot(correct_arg_num, var1, var2);		\
   def_pcfunk__argument(correct_arg_num, var3)
 
 #define def_pcfunk__argument__4_slot(correct_arg_num, var1, var2, var3, var4) \
-  def_pcfunk__argument__3_slot(correct_arg_num, var1, var2, var3)	\
+  def_pcfunk__argument__3_slot(correct_arg_num, var1, var2, var3);	\
   def_pcfunk__argument(correct_arg_num, var4)
 
 #define def_pcfunk__argument__5_slot(correct_arg_num, var1, var2, var3, var4, var5) \
-  def_pcfunk__argument__4_slot(correct_arg_num, var1, var2, var3, var4)	\
+  def_pcfunk__argument__4_slot(correct_arg_num, var1, var2, var3, var4); \
   def_pcfunk__argument(correct_arg_num, var5)
 
 #define def_pcfunk__argument__6_slot(correct_arg_num, var1, var2, var3, var4, var5, var6) \
-  def_pcfunk__argument__5_slot(correct_arg_num, var1, var2, var3, var4, var5) \
+  def_pcfunk__argument__5_slot(correct_arg_num, var1, var2, var3, var4, var5); \
   def_pcfunk__argument(correct_arg_num, var6)
 
 #define def_pcfunk__argument__7_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7) \
-  def_pcfunk__argument__6_slot(correct_arg_num, var1, var2, var3, var4, var5, var6) \
+  def_pcfunk__argument__6_slot(correct_arg_num, var1, var2, var3, var4, var5, var6); \
   def_pcfunk__argument(correct_arg_num, var7)
 
 #define def_pcfunk__argument__8_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8) \
-  def_pcfunk__argument__7_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7) \
+  def_pcfunk__argument__7_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7); \
   def_pcfunk__argument(correct_arg_num, var8)
 
 #define def_pcfunk__argument__9_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9) \
-  def_pcfunk__argument__8_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8) \
+  def_pcfunk__argument__8_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8); \
   def_pcfunk__argument(correct_arg_num, var9)
 
 #define def_pcfunk__argument__10_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10) \
-  def_pcfunk__argument__9_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9) \
+  def_pcfunk__argument__9_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9); \
   def_pcfunk__argument(correct_arg_num, var10)
 
 #define def_pcfunk__argument__11_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11) \
-  def_pcfunk__argument__10_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10) \
+  def_pcfunk__argument__10_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10); \
   def_pcfunk__argument(correct_arg_num, var11)
 
 #define def_pcfunk__argument__12_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12) \
-  def_pcfunk__argument__11_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11) \
+  def_pcfunk__argument__11_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11); \
   def_pcfunk__argument(correct_arg_num, var12)
 
 #define def_pcfunk__argument__13_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13) \
-  def_pcfunk__argument__12_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12) \
+  def_pcfunk__argument__12_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12); \
   def_pcfunk__argument(correct_arg_num, var13)
 
 #define def_pcfunk__argument__14_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14) \
-  def_pcfunk__argument__13_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13) \
+  def_pcfunk__argument__13_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13); \
   def_pcfunk__argument(correct_arg_num, var14)
 
 #define def_pcfunk__argument__15_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15) \
-  def_pcfunk__argument__14_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14) \
+  def_pcfunk__argument__14_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14); \
   def_pcfunk__argument(correct_arg_num, var15)
 
 #define def_pcfunk__argument__16_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16) \
-  def_pcfunk__argument__15_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15) \
+  def_pcfunk__argument__15_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15); \
   def_pcfunk__argument(correct_arg_num, var16)
 
 #define def_pcfunk__argument__17_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17) \
-  def_pcfunk__argument__16_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16) \
+  def_pcfunk__argument__16_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16); \
   def_pcfunk__argument(correct_arg_num, var17)
 
 #define def_pcfunk__argument__18_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18) \
-  def_pcfunk__argument__17_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17) \
+  def_pcfunk__argument__17_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17); \
   def_pcfunk__argument(correct_arg_num, var18)
 
 #define def_pcfunk__argument__19_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19) \
-  def_pcfunk__argument__18_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18) \
+  def_pcfunk__argument__18_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18); \
   def_pcfunk__argument(correct_arg_num, var19)
 
 

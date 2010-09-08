@@ -200,7 +200,7 @@ f2ptr f2__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal
   if (! raw__terminal_print_frame__is_type(cause, terminal_print_frame)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__exp__terminal_print(cause, this, terminal_print_frame);
+  return raw__exp__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(exp__terminal_print, this, terminal_print_frame, return f2__exp__terminal_print(this_cause, this, terminal_print_frame));
 

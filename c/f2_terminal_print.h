@@ -26,6 +26,10 @@
 
 
 
+// terminal_print_frame
+
+f2ptr f2terminal_print_frame__primobject_type__new(f2ptr cause);
+
 
 // **
 

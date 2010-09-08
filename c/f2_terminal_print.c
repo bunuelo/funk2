@@ -106,28 +106,28 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   if (raw__funkable__is_type(cause, funk)) {
     // try to print on one line.
     {
-      f2__terminal_print_frame__use_one_line__set(       cause, terminal_print_frame, f2bool__new(boolean__true));
-      f2__terminal_print_frame__failed_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-      f2__terminal_print_frame__failed_y_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-      f2__terminal_print_frame__test_constraints__set(   cause, terminal_print_frame, f2bool__new(boolean__true));
-      f2__terminal_print_frame__subexp_width__set(       cause, terminal_print_frame, f2integer__new(cause, 0));
-      f2__terminal_print_frame__subexp_height__set(      cause, terminal_print_frame, f2integer__new(cause, 0));
-      f2__terminal_print_frame__subexp_size__set(        cause, terminal_print_frame, f2integer__new(cause, 0));
+      f2__terminal_print_frame__use_one_line__set(           cause, terminal_print_frame, f2bool__new(boolean__true));
+      f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+      f2__terminal_print_frame__failed_max_y_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+      f2__terminal_print_frame__test_constraints__set(       cause, terminal_print_frame, f2bool__new(boolean__true));
+      f2__terminal_print_frame__subexp_width__set(           cause, terminal_print_frame, f2integer__new(cause, 0));
+      f2__terminal_print_frame__subexp_height__set(          cause, terminal_print_frame, f2integer__new(cause, 0));
+      f2__terminal_print_frame__subexp_size__set(            cause, terminal_print_frame, f2integer__new(cause, 0));
       f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }
     }
-    if (f2__terminal_print_frame__failed_x_constraint(cause, terminal_print_frame) != nil) {
+    if (f2__terminal_print_frame__failed_max_x_constraint(cause, terminal_print_frame) != nil) {
       // failed x constraint, so forget trying to print on one line.
       {
-	f2__terminal_print_frame__use_one_line__set(       cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__failed_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__failed_y_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__test_constraints__set(   cause, terminal_print_frame, f2bool__new(boolean__true));
-	f2__terminal_print_frame__subexp_width__set(       cause, terminal_print_frame, f2integer__new(cause, 0));
-	f2__terminal_print_frame__subexp_height__set(      cause, terminal_print_frame, f2integer__new(cause, 0));
-	f2__terminal_print_frame__subexp_size__set(        cause, terminal_print_frame, f2integer__new(cause, 0));
+	f2__terminal_print_frame__use_one_line__set(           cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__failed_max_y_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__test_constraints__set(       cause, terminal_print_frame, f2bool__new(boolean__true));
+	f2__terminal_print_frame__subexp_width__set(           cause, terminal_print_frame, f2integer__new(cause, 0));
+	f2__terminal_print_frame__subexp_height__set(          cause, terminal_print_frame, f2integer__new(cause, 0));
+	f2__terminal_print_frame__subexp_size__set(            cause, terminal_print_frame, f2integer__new(cause, 0));
 	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
 	if (raw__larva__is_type(cause, result)) {
 	  return result;
@@ -146,13 +146,13 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	  }
 	}
 	{
-	  f2__terminal_print_frame__use_one_line__set(       cause, terminal_print_frame, f2bool__new(boolean__false));
-	  f2__terminal_print_frame__failed_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	  f2__terminal_print_frame__failed_y_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	  f2__terminal_print_frame__test_constraints__set(   cause, terminal_print_frame, f2bool__new(boolean__true));
-	  f2__terminal_print_frame__subexp_width__set(       cause, terminal_print_frame, f2integer__new(cause, 0));
-	  f2__terminal_print_frame__subexp_height__set(      cause, terminal_print_frame, f2integer__new(cause, 0));
-	  f2__terminal_print_frame__subexp_size__set(        cause, terminal_print_frame, f2integer__new(cause, 0));
+	  f2__terminal_print_frame__use_one_line__set(           cause, terminal_print_frame, f2bool__new(boolean__false));
+	  f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+	  f2__terminal_print_frame__failed_max_y_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+	  f2__terminal_print_frame__test_constraints__set(       cause, terminal_print_frame, f2bool__new(boolean__true));
+	  f2__terminal_print_frame__subexp_width__set(           cause, terminal_print_frame, f2integer__new(cause, 0));
+	  f2__terminal_print_frame__subexp_height__set(          cause, terminal_print_frame, f2integer__new(cause, 0));
+	  f2__terminal_print_frame__subexp_size__set(            cause, terminal_print_frame, f2integer__new(cause, 0));
 	  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
 	  if (raw__larva__is_type(cause, result)) {
 	    return result;
@@ -161,13 +161,13 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
       }
       // failed x constraint and y constraint so reduced max_size, now ready to print.
       {
-	f2__terminal_print_frame__use_one_line__set(       cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__failed_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__failed_y_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__test_constraints__set(   cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__subexp_width__set(       cause, terminal_print_frame, f2integer__new(cause, 0));
-	f2__terminal_print_frame__subexp_height__set(      cause, terminal_print_frame, f2integer__new(cause, 0));
-	f2__terminal_print_frame__subexp_size__set(        cause, terminal_print_frame, f2integer__new(cause, 0));
+	f2__terminal_print_frame__use_one_line__set(           cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__failed_max_y_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__test_constraints__set(       cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__subexp_width__set(           cause, terminal_print_frame, f2integer__new(cause, 0));
+	f2__terminal_print_frame__subexp_height__set(          cause, terminal_print_frame, f2integer__new(cause, 0));
+	f2__terminal_print_frame__subexp_size__set(            cause, terminal_print_frame, f2integer__new(cause, 0));
 	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
 	if (raw__larva__is_type(cause, result)) {
 	  return result;
@@ -176,13 +176,13 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
     } else {
       // we successfully satisfied all constraints by printing on one line, so go for it.
       {
-	f2__terminal_print_frame__use_one_line__set(       cause, terminal_print_frame, f2bool__new(boolean__true));
-	f2__terminal_print_frame__failed_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__failed_y_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__test_constraints__set(   cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__subexp_width__set(       cause, terminal_print_frame, f2integer__new(cause, 0));
-	f2__terminal_print_frame__subexp_height__set(      cause, terminal_print_frame, f2integer__new(cause, 0));
-	f2__terminal_print_frame__subexp_size__set(        cause, terminal_print_frame, f2integer__new(cause, 0));
+	f2__terminal_print_frame__use_one_line__set(           cause, terminal_print_frame, f2bool__new(boolean__true));
+	f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__failed_max_y_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__test_constraints__set(       cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__subexp_width__set(           cause, terminal_print_frame, f2integer__new(cause, 0));
+	f2__terminal_print_frame__subexp_height__set(          cause, terminal_print_frame, f2integer__new(cause, 0));
+	f2__terminal_print_frame__subexp_size__set(            cause, terminal_print_frame, f2integer__new(cause, 0));
 	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
 	if (raw__larva__is_type(cause, result)) {
 	  return result;

@@ -1655,61 +1655,65 @@ f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr m
       return print_seq;
     }
   } else if (raw__traced_mutex__is_type(cause, this)) {
-    f2ptr printable_frame = f2__frame__new(cause, nil);
-    f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "printable_object_type"), new__symbol(cause, "traced_mutex"));
+    f2__ptypehash__add(cause, ptypehash, this, f2bool__new(boolean__true));
     {
-      exp_size_i ++;
+      s64   exp_size_i = 0;
+      f2ptr printable_frame = f2__frame__new(cause, nil);
+      f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "printable_object_type"), new__symbol(cause, "traced_mutex"));
       {
-	size__i ++;
-	size = f2integer__new(cause, size__i);
-      }
-    }
-    f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "mutex"), f2__traced_mutex__mutex(cause, this));
-    {
-      exp_size_i ++;
-      {
-	size__i ++;
-	size = f2integer__new(cause, size__i);
-      }
-    }
-    f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "fiber_with_lock"), raw__exp__printable_value__with_ptypehash(cause, f2__traced_mutex__fiber_with_lock(cause, this), max_size, size, ptypehash, subexp_size_place));
-    {
-      f2ptr subexp_size    = f2__place__thing(cause, subexp_size_place);
-      s64   subexp_size__i = f2integer__i(subexp_size, cause);
-      {
-	exp_size_i += subexp_size__i;
+	exp_size_i ++;
 	{
-	  size__i += subexp_size__i;
+	  size__i ++;
 	  size = f2integer__new(cause, size__i);
 	}
       }
-    }
-    f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "lock_stack_trace"), raw__exp__printable_value__with_ptypehash(cause, f2__traced_mutex__lock_stack_trace(cause, this), max_size, size, ptypehash, subexp_size_place));
-    {
-      f2ptr subexp_size    = f2__place__thing(cause, subexp_size_place);
-      s64   subexp_size__i = f2integer__i(subexp_size, cause);
+      f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "mutex"), f2__traced_mutex__mutex(cause, this));
       {
-	exp_size_i += subexp_size__i;
+	exp_size_i ++;
 	{
-	  size__i += subexp_size__i;
+	  size__i ++;
 	  size = f2integer__new(cause, size__i);
 	}
       }
-    }
-    f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "fibers_waiting_for_lock"), raw__exp__printable_value__with_ptypehash(cause, f2__traced_mutex__fibers_waiting_for_lock(cause, this), max_size, size, ptypehash, subexp_size_place));
-    {
-      f2ptr subexp_size    = f2__place__thing(cause, subexp_size_place);
-      s64   subexp_size__i = f2integer__i(subexp_size, cause);
+      f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "fiber_with_lock"), raw__exp__printable_value__with_ptypehash(cause, f2__traced_mutex__fiber_with_lock(cause, this), max_size, size, ptypehash, subexp_size_place));
       {
-	exp_size_i += subexp_size__i;
+	f2ptr subexp_size    = f2__place__thing(cause, subexp_size_place);
+	s64   subexp_size__i = f2integer__i(subexp_size, cause);
 	{
-	  size__i += subexp_size__i;
-	  size = f2integer__new(cause, size__i);
+	  exp_size_i += subexp_size__i;
+	  {
+	    size__i += subexp_size__i;
+	    size = f2integer__new(cause, size__i);
+	  }
 	}
       }
+      f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "lock_stack_trace"), raw__exp__printable_value__with_ptypehash(cause, f2__traced_mutex__lock_stack_trace(cause, this), max_size, size, ptypehash, subexp_size_place));
+      {
+	f2ptr subexp_size    = f2__place__thing(cause, subexp_size_place);
+	s64   subexp_size__i = f2integer__i(subexp_size, cause);
+	{
+	  exp_size_i += subexp_size__i;
+	  {
+	    size__i += subexp_size__i;
+	    size = f2integer__new(cause, size__i);
+	  }
+	}
+      }
+      f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "fibers_waiting_for_lock"), raw__exp__printable_value__with_ptypehash(cause, f2__traced_mutex__fibers_waiting_for_lock(cause, this), max_size, size, ptypehash, subexp_size_place));
+      {
+	f2ptr subexp_size    = f2__place__thing(cause, subexp_size_place);
+	s64   subexp_size__i = f2integer__i(subexp_size, cause);
+	{
+	  exp_size_i += subexp_size__i;
+	  {
+	    size__i += subexp_size__i;
+	    size = f2integer__new(cause, size__i);
+	  }
+	}
+      }
+      f2__place__thing__set(cause, subexp_size_place, f2integer__new(cause, exp_size_i));
+      return printable_frame;
     }
-    f2__place__thing__set(cause, subexp_size_place, f2integer__new(cause, exp_size_i));
-    return printable_frame;
   } else if (raw__frame__is_type(cause, this)) {
     f2__ptypehash__add(cause, ptypehash, this, f2bool__new(boolean__true));
     {

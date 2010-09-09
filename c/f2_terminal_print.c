@@ -82,6 +82,8 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
 				     failed_max_x_constraint,
 				     failed_max_height_constraint);
 }
+def_pcfunk7(terminal_print_frame__new, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, return f2__terminal_print_frame__new(cause, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes));
+
 
 void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length, u8* string) {
   f2ptr test_constraints   = f2__terminal_print_frame__test_constraints(cause, this);

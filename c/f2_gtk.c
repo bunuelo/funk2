@@ -1561,11 +1561,11 @@ boolean_t raw__gtk_state_type__is_type(f2ptr cause, f2ptr this) {
 }
 
 GtkStateType raw__gtk_state_type__as__GtkStateType(f2ptr cause, f2ptr this) {
-  if      (raw__eq(cause, state, new__symbol(cause, "normal")))      {return GTK_STATE_NORMAL;}
-  else if (raw__eq(cause, state, new__symbol(cause, "active")))      {return GTK_STATE_ACTIVE;}
-  else if (raw__eq(cause, state, new__symbol(cause, "prelight")))    {return GTK_STATE_PRELIGHT;}
-  else if (raw__eq(cause, state, new__symbol(cause, "selected")))    {return GTK_STATE_SELECTED;}
-  else if (raw__eq(cause, state, new__symbol(cause, "insensitive"))) {return GTK_STATE_INSENSITIVE;}
+  if      (raw__eq(cause, this, new__symbol(cause, "normal")))      {return GTK_STATE_NORMAL;}
+  else if (raw__eq(cause, this, new__symbol(cause, "active")))      {return GTK_STATE_ACTIVE;}
+  else if (raw__eq(cause, this, new__symbol(cause, "prelight")))    {return GTK_STATE_PRELIGHT;}
+  else if (raw__eq(cause, this, new__symbol(cause, "selected")))    {return GTK_STATE_SELECTED;}
+  else if (raw__eq(cause, this, new__symbol(cause, "insensitive"))) {return GTK_STATE_INSENSITIVE;}
   error(nil, "raw__gtk_state_type__as__GtkStateType error: received wrong type of value.");
   return 0; // won't ever get here.
 }

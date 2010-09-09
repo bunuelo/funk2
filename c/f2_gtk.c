@@ -117,9 +117,9 @@ f2ptr f2__gdk_color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr
 
 void raw__gdk_color__as__GdkColor(f2ptr cause, f2ptr this, GdkColor* color) {
   f2ptr pixel = f2__gdk_color__pixel(cause, this);
-  f2ptr red   = f2__gdk_color__pixel(cause, this);
-  f2ptr green = f2__gdk_color__pixel(cause, this);
-  f2ptr blue  = f2__gdk_color__pixel(cause, this);
+  f2ptr red   = f2__gdk_color__red(  cause, this);
+  f2ptr green = f2__gdk_color__green(cause, this);
+  f2ptr blue  = f2__gdk_color__blue( cause, this);
   color->pixel = f2integer__i(pixel, cause);
   color->red   = f2integer__i(red,   cause);
   color->green = f2integer__i(green, cause);

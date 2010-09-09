@@ -92,7 +92,8 @@
 
 [deftypefunk fibermon_fiber execute redraw []
   [fibermon_fiber-redraw_fast this]
-  [have command_quit_menu_item modify_bg `normal [gdk-rgb_color-new 0.5 0.0 0.0]]
+  [have menu_bar modify_bg `normal nil]
+  `[have menu_bar modify_bg `normal [gdk-rgb_color-new 0.5 0.0 0.0]]
   nil]
 
 [deftypefunk fibermon_fiber execute recompute_statistics []

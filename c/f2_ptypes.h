@@ -643,6 +643,8 @@ typedef struct funk2_object_type__float__slot_s {
   f2ptr is_numerically_equal_to__funk;
   f2ptr square_root__symbol;
   f2ptr square_root__funk;
+  f2ptr terminal_print_with_frame__symbol;
+  f2ptr terminal_print_with_frame__funk;
 } funk2_object_type__float__slot_t;
 
 // pointer
@@ -674,6 +676,8 @@ typedef struct funk2_object_type__pointer__slot_s {
   f2ptr is_less_than__funk;
   f2ptr is_numerically_equal_to__symbol;
   f2ptr is_numerically_equal_to__funk;
+  f2ptr terminal_print_with_frame__symbol;
+  f2ptr terminal_print_with_frame__funk;
 } funk2_object_type__pointer__slot_t;
 
 // gfunkptr

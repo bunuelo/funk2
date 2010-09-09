@@ -115,7 +115,7 @@ f2ptr f2__gtk_color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr
 
 #if defined(F2__GTK__SUPPORTED)
 
-void raw__gtk_color__as__GtkColor(f2ptr cause, f2ptr this, GtkColor* color) {
+void raw__gtk_color__as__GdkColor(f2ptr cause, f2ptr this, GdkColor* color) {
   f2ptr pixel = f2__gtk_color__pixel(cause, this);
   f2ptr red   = f2__gtk_color__pixel(cause, this);
   f2ptr green = f2__gtk_color__pixel(cause, this);

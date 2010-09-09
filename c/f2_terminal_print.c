@@ -88,7 +88,7 @@ def_pcfunk7(terminal_print_frame__new, stream, indent_distance, max_x, max_heigh
 void raw__terminal_print_frame__write_color(f2ptr cause, f2ptr this, ansi_color_t color) {
   f2ptr test_constraints   = f2__terminal_print_frame__test_constraints(cause, this);
   f2ptr stream             = f2__terminal_print_frame__stream(cause, this);
-  f2ptr use_ansi_codes     = f2__terminal_print_frame__use_html_codes(cause, this);
+  f2ptr use_ansi_codes     = f2__terminal_print_frame__use_ansi_codes(cause, this);
   f2ptr use_html_codes     = f2__terminal_print_frame__use_html_codes(cause, this);
   if ((test_constraints == nil) && (use_ansi_codes != nil)) {f2__ansi__stream__reset(cause, stream); raw__ansi__stream__foreground(cause, stream, color);}
   if ((test_constraints == nil) && (use_html_codes != nil)) {html__stream__ansi_foreground(cause, stream, color);}

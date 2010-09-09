@@ -46,12 +46,11 @@ def_frame_object__global__17_slot(terminal_print_frame,
 				  failed_max_height_constraint);
 
 f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_distance, f2ptr max_x, f2ptr max_height, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes) {
-  if (((stream != nil) && (! raw__stream__is_type(cause, stream))) ||
+  if ((! raw__stream__is_type(cause, stream)) ||
       (! raw__integer__is_type(cause, indent_distance)) ||
       (! raw__integer__is_type(cause, max_x)) ||
       (! raw__integer__is_type(cause, max_height)) ||
-      (! raw__integer__is_type(cause, max_size)) ||
-      (! raw__integer__is_type(cause, x))) {
+      (! raw__integer__is_type(cause, max_size))) {
     return f2larva__new(cause, 1, nil);
   }
   f2ptr test_constraints             = nil;

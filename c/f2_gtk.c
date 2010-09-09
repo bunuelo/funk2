@@ -1574,8 +1574,12 @@ f2ptr raw__gtk__widget__modify_fg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr 
 #if defined(F2__GTK__SUPPORTED)
   GtkWidget*   gtk_widget = raw__gtk_widget__as__GtkWidget(       cause, widget);
   GtkStateType gtk_state  = raw__gtk_state_type__as__GtkStateType(cause, state);
-  GdkColor     gdk_color;   raw__gdk_color__as__GdkColor(         cause, color, &gdk_color);
-  funk2_gtk__widget__modify_fg(&(__funk2.gtk), gtk_widget, gtk_state, &gdk_color);
+  if (color != nil) {
+    GdkColor     gdk_color;   raw__gdk_color__as__GdkColor(         cause, color, &gdk_color);
+    funk2_gtk__widget__modify_fg(&(__funk2.gtk), gtk_widget, gtk_state, &gdk_color);
+  } else {
+    funk2_gtk__widget__modify_fg(&(__funk2.gtk), gtk_widget, gtk_state, NULL);
+  }
   return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);
@@ -1585,7 +1589,7 @@ f2ptr raw__gtk__widget__modify_fg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr 
 f2ptr f2__gtk__widget__modify_fg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr color) {
   if ((! raw__gtk_widget__is_type(cause, widget)) ||
       (! raw__gtk_state_type__is_type(cause, state)) ||
-      (! raw__gdk_color__is_type(cause, color))) {
+      ((color != nil) && (! raw__gdk_color__is_type(cause, color)))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__gtk__widget__modify_fg(cause, widget, state, color);
@@ -1597,8 +1601,12 @@ f2ptr raw__gtk__widget__modify_bg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr 
 #if defined(F2__GTK__SUPPORTED)
   GtkWidget*   gtk_widget = raw__gtk_widget__as__GtkWidget(       cause, widget);
   GtkStateType gtk_state  = raw__gtk_state_type__as__GtkStateType(cause, state);
-  GdkColor     gdk_color;   raw__gdk_color__as__GdkColor(         cause, color, &gdk_color);
-  funk2_gtk__widget__modify_bg(&(__funk2.gtk), gtk_widget, gtk_state, &gdk_color);
+  if (color != nil) {
+    GdkColor     gdk_color;   raw__gdk_color__as__GdkColor(         cause, color, &gdk_color);
+    funk2_gtk__widget__modify_bg(&(__funk2.gtk), gtk_widget, gtk_state, &gdk_color);
+  } else {
+    funk2_gtk__widget__modify_bg(&(__funk2.gtk), gtk_widget, gtk_state, NULL);
+  }
   return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);
@@ -1608,7 +1616,7 @@ f2ptr raw__gtk__widget__modify_bg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr 
 f2ptr f2__gtk__widget__modify_bg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr color) {
   if ((! raw__gtk_widget__is_type(cause, widget)) ||
       (! raw__gtk_state_type__is_type(cause, state)) ||
-      (! raw__gdk_color__is_type(cause, color))) {
+      ((color != nil) && (! raw__gdk_color__is_type(cause, color)))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__gtk__widget__modify_bg(cause, widget, state, color);

@@ -52,8 +52,6 @@
        
        [set this fiber fiber]
        
-       [have table modify_bg `normal [gdk-rgb_color-new 1.0 0.0 0.0]]
-       
        [have command_pause_menu_item signal_connect 'activate'
 	     [funk []
 		   [set fiber paused t]]
@@ -94,6 +92,7 @@
 
 [deftypefunk fibermon_fiber execute redraw []
   [fibermon_fiber-redraw_fast this]
+  [have command_quit_menu_item modify_bg `normal [gdk-rgb_color-new 0.5 0.0 0.0]]
   nil]
 
 [deftypefunk fibermon_fiber execute recompute_statistics []

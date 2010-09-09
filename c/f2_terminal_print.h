@@ -47,8 +47,6 @@ declare_frame_object_17_slot(terminal_print_frame,
 			     failed_max_x_constraint,
 			     failed_max_height_constraint);
 
-//f2ptr f2terminal_print_frame__primobject_type__new(f2ptr cause);
-
 void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length, u8* string);
 
 // **

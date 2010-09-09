@@ -1553,11 +1553,11 @@ def_pcfunk1(gtk__widget__connect_hide_on_delete, widget, return f2__gtk__widget_
 
 boolean_t raw__gtk_state_type__is_type(f2ptr cause, f2ptr this) {
   return (raw__symbol__is_type(cause, this) &&
-	  (raw__eq(cause, state, new__symbol(cause, "normal"))   ||
-	   raw__eq(cause, state, new__symbol(cause, "active"))   ||
-	   raw__eq(cause, state, new__symbol(cause, "prelight")) ||
-	   raw__eq(cause, state, new__symbol(cause, "selected")) ||
-	   raw__eq(cause, state, new__symbol(cause, "insensitive"))));
+	  (raw__eq(cause, this, new__symbol(cause, "normal"))   ||
+	   raw__eq(cause, this, new__symbol(cause, "active"))   ||
+	   raw__eq(cause, this, new__symbol(cause, "prelight")) ||
+	   raw__eq(cause, this, new__symbol(cause, "selected")) ||
+	   raw__eq(cause, this, new__symbol(cause, "insensitive"))));
 }
 
 GtkStateType raw__gtk_state_type__as__GtkStateType(f2ptr cause, f2ptr this) {

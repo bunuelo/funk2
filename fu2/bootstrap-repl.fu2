@@ -828,6 +828,8 @@
 	     `bug]]]
      result]]
 
+'these versions of with-new-cause and shelter check four times to make sure a child fiber is actually done...
+ this used to be necessary because of no execute mutex locking in the is_complete funk.'
 `[defmetro with-new-cause [:rest codes]
   `[let* [[result `bug]
 	  [fiber  [fiber [funk []

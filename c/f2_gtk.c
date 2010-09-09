@@ -444,7 +444,7 @@ void funk2_gtk__widget__connect_hide_on_delete(funk2_gtk_t* this, GtkWidget* wid
 void funk2_gtk__widget__modify_fg(funk2_gtk_t* this, GtkWidget* widget, GtkStateType state, GdkColor* color) {
   {
     gdk_threads_enter();
-    gtk_widget_modify_fg(GTK_WIDGET(widget), state, GDK_COLOR(color));
+    gtk_widget_modify_fg(GTK_WIDGET(widget), state, color);
     gdk_threads_leave();
   }
 }
@@ -452,7 +452,7 @@ void funk2_gtk__widget__modify_fg(funk2_gtk_t* this, GtkWidget* widget, GtkState
 void funk2_gtk__widget__modify_bg(funk2_gtk_t* this, GtkWidget* widget, GtkStateType state, GdkColor* color) {
   {
     gdk_threads_enter();
-    gtk_widget_modify_bg(GTK_WIDGET(widget), state, GDK_COLOR(color));
+    gtk_widget_modify_bg(GTK_WIDGET(widget), state, color);
     gdk_threads_leave();
   }
 }

@@ -19,11 +19,8 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__ANSI__H
-#define F2__ANSI__H
-
-#include "f2_primfunks.h"
-#include "f2_status.h"
+#ifndef F2__ANSI__TYPES__H
+#define F2__ANSI__TYPES__H
 
 typedef enum ansi_color_e {
   ansi_color__black        =  0,
@@ -43,6 +40,15 @@ typedef enum ansi_color_e {
   ansi_color__yellow       = 14,
   ansi_color__white        = 15
 } ansi_color_t;
+
+#endif // F2__ANSI__TYPES__H
+
+
+#ifndef F2__ANSI__H
+#define F2__ANSI__H
+
+#include "f2_primfunks.h"
+#include "f2_status.h"
 
 f2ptr f2__ansi__stream__begin_command(f2ptr cause, f2ptr stream);
 void raw__ansi__stream__print_code(f2ptr cause, f2ptr stream, int code);

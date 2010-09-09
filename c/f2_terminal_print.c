@@ -245,7 +245,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	}
       }
       // iteratively reduce max size if we fail to satisfy y constraint.
-      while (f2__terminal_print_frame__failed_max_y_constraint(cause, terminal_print_frame) != nil) {
+      while (f2__terminal_print_frame__failed_max_height_constraint(cause, terminal_print_frame) != nil) {
 	{
 	  f2ptr max_size    = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
 	  s64   max_size__i = f2integer__i(max_size, cause);

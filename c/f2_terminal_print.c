@@ -26,81 +26,79 @@
 
 // terminal_print_frame
 
-def_frame_object__global__19_slot(terminal_print_frame,
+def_frame_object__global__17_slot(terminal_print_frame,
 				  test_constraints,
 				  stream,
-				  min_x,
-				  min_y,
+				  indent_distance,
 				  max_x,
-				  max_y,
+				  max_height,
 				  max_size,
 				  use_ansi_codes,
 				  use_html_codes,
 				  x,
-				  y,
+				  height,
 				  size,
-				  subexp_width,
-				  subexp_height,
-				  subexp_size,
+				  left_extent,
+				  right_extent,
 				  already_printed_hash,
 				  use_one_line,
 				  failed_max_x_constraint,
-				  failed_max_y_constraint);
+				  failed_max_height_constraint);
 
-f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr min_x, f2ptr min_y, f2ptr max_x, f2ptr max_y, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes, f2ptr x, f2ptr y) {
+f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_distance, f2ptr max_x, f2ptr max_height, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes) {
   if (((stream != nil) && (! raw__stream__is_type(cause, stream))) ||
-      (! raw__integer__is_type(cause, min_x)) ||
-      (! raw__integer__is_type(cause, min_y)) ||
+      (! raw__integer__is_type(cause, indent_distance)) ||
       (! raw__integer__is_type(cause, max_x)) ||
-      (! raw__integer__is_type(cause, max_y)) ||
+      (! raw__integer__is_type(cause, max_height)) ||
       (! raw__integer__is_type(cause, max_size)) ||
-      (! raw__integer__is_type(cause, x)) ||
-      (! raw__integer__is_type(cause, y))) {
+      (! raw__integer__is_type(cause, x))) {
     return f2larva__new(cause, 1, nil);
   }
-  f2ptr test_constraints        = nil;
-  f2ptr size                    = f2integer__new(cause, 0);
-  f2ptr subexp_width            = nil;
-  f2ptr subexp_height           = nil;
-  f2ptr subexp_size             = nil;
-  f2ptr already_printed_hash    = f2__ptypehash__new(cause);
-  f2ptr use_one_line            = f2bool__new(boolean__true);
-  f2ptr failed_max_x_constraint = f2bool__new(boolean__false);
-  f2ptr failed_max_y_constraint = f2bool__new(boolean__false);
+  f2ptr test_constraints             = nil;
+  f2ptr x                            = f2integer__new(cause, 0);
+  f2ptr height                       = f2integer__new(cause, 0);
+  f2ptr size                         = f2integer__new(cause, 0);
+  f2ptr left_extent                  = nil;
+  f2ptr right_extent                 = nil;
+  f2ptr subexp_size                  = nil;
+  f2ptr already_printed_hash         = f2__ptypehash__new(cause);
+  f2ptr use_one_line                 = f2bool__new(boolean__true);
+  f2ptr failed_max_x_constraint      = f2bool__new(boolean__false);
+  f2ptr failed_max_height_constraint = f2bool__new(boolean__false);
   return f2terminal_print_frame__new(cause,
 				     test_constraints,
 				     stream,
-				     min_x,
+				     indent_distance,
 				     max_x,
-				     max_y,
+				     max_height,
 				     max_size,
 				     use_ansi_codes,
 				     use_html_codes,
 				     x,
-				     y,
+				     height,
 				     size,
 				     left_extent,
 				     right_extent,
 				     already_printed_hash,
 				     use_one_line,
 				     failed_max_x_constraint,
-				     failed_max_y_constraint);
+				     failed_max_height_constraint);
 }
 
 void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length, u8* string) {
-  f2ptr test_constraints = f2__terminal_print_frame__test_constraints(cause, this);
-  f2ptr stream           = f2__terminal_print_frame__stream(cause, this);
-  f2ptr min_x            = f2__terminal_print_frame__min_x(cause, terminal_print_frame);
-  s64   min_x__i         = f2integer__i(min_x, cause);
-  f2ptr x                = f2__terminal_print_frame__x(cause, this);
-  s64   x__i             = f2integer__i(x, cause);
-  f2ptr y                = f2__terminal_print_frame__y(cause, this);
-  s64   y__i             = f2integer__i(y, cause);
-  f2ptr left_extent      = f2__terminal_print_frame__left_extent(cause, this);
-  s64   left_extent__i   = f2integer__i(left_extent, cause);
-  f2ptr right_extent     = f2__terminal_print_frame__right_extent(cause, this);
-  s64   right_extent__i  = f2integer__i(right_extent, cause);
-  f2ptr use_html_codes   = f2__terminal_print_frame__use_html_codes(cause, this);
+  f2ptr test_constraints   = f2__terminal_print_frame__test_constraints(cause, this);
+  f2ptr stream             = f2__terminal_print_frame__stream(cause, this);
+  f2ptr indent_distance    = f2__terminal_print_frame__indent_distance(cause, terminal_print_frame);
+  s64   indent_distance__i = f2integer__i(indent_distance, cause);
+  f2ptr x                  = f2__terminal_print_frame__x(cause, this);
+  s64   x__i               = f2integer__i(x, cause);
+  f2ptr y                  = f2__terminal_print_frame__y(cause, this);
+  s64   y__i               = f2integer__i(y, cause);
+  f2ptr left_extent        = f2__terminal_print_frame__left_extent(cause, this);
+  s64   left_extent__i     = left_extent ? f2integer__i(left_extent, cause) : 0;
+  f2ptr right_extent       = f2__terminal_print_frame__right_extent(cause, this);
+  s64   right_extent__i    = right_extent ? f2integer__i(right_extent, cause) : 0;
+  f2ptr use_html_codes     = f2__terminal_print_frame__use_html_codes(cause, this);
   {
     u64 index;
     for (index = 0; index < length; index ++) {
@@ -117,9 +115,12 @@ void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length
 	if (test_constraints == nil) {
 	  raw__stream__writef(cause, stream, "\n");
 	}
-	x__i = min_x__i;
-	if (x__i < left_extent__i) {
+	x__i = indent_distance__i;
+	if ((! left_extent) || x__i < left_extent__i) {
 	  left_extent__i = x__i;
+	  if (! left_extent) {
+	    left_extent = f2bool__new(boolean__true);
+	  }
 	}
 	y__i ++;
 	break;
@@ -140,8 +141,11 @@ void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length
 	  }
 	}
 	x__i += spaces_until_next_tab;
-	if (x__i > right_extent__i) {
+	if ((! right_extent) || x__i > right_extent__i) {
 	  right_extent__i = x__i;
+	  if (! right_extent) {
+	    right_extent = f2bool__new(boolean__true);
+	  }
 	}
 	break;
       default:
@@ -170,27 +174,30 @@ void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length
 	  }
 	}
 	x__i ++;
-	if (x__i > right_extent__i) {
+	if ((! right_extent) || x__i > right_extent__i) {
 	  right_extent__i = x__i;
+	  if (! right_extent) {
+	    right_extent = f2bool__new(boolean__true);
+	  }
 	}
 	break;
       }
     }
   }
   if (test_constraints != nil) {
-    f2ptr max_x    = f2__terminal_print_frame__max_x(cause, this);
-    s64   max_x__i = f2integer__i(max_x, cause);
-    f2ptr max_y    = f2__terminal_print_frame__max_y(cause, this);
-    s64   max_y__i = f2integer__i(max_y, cause);
+    f2ptr max_x         = f2__terminal_print_frame__max_x(cause, this);
+    s64   max_x__i      = f2integer__i(max_x, cause);
+    f2ptr max_height    = f2__terminal_print_frame__max_height(cause, this);
+    s64   max_height__i = f2integer__i(max_height, cause);
     if (right_extent__i > max_x__i) {
       f2__terminal_print_frame__failed_max_x_constraint__set(cause, this, f2bool__new(boolean__true));
     }
-    if (y__i > max_y__i) {
-      f2__terminal_print_frame__failed_max_y_constraint__set(cause, this, f2bool__new(boolean__true));
+    if (height__i > max_height__i) {
+      f2__terminal_print_frame__failed_max_height_constraint__set(cause, this, f2bool__new(boolean__true));
     }
   }
   f2__terminal_print_frame__x__set(           cause, this, f2integer__new(cause, x__i));
-  f2__terminal_print_frame__y__set(           cause, this, f2integer__new(cause, y__i));
+  f2__terminal_print_frame__height__set(      cause, this, f2integer__new(cause, height__i));
   f2__terminal_print_frame__left_extent__set( cause, this, f2integer__new(cause, left_extent__i));
   f2__terminal_print_frame__right_extent__set(cause, this, f2integer__new(cause, right_extent__i));
 }
@@ -215,13 +222,10 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   if (raw__funkable__is_type(cause, funk)) {
     // try to print on one line.
     {
-      f2__terminal_print_frame__use_one_line__set(           cause, terminal_print_frame, f2bool__new(boolean__true));
-      f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-      f2__terminal_print_frame__failed_max_y_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-      f2__terminal_print_frame__test_constraints__set(       cause, terminal_print_frame, f2bool__new(boolean__true));
-      f2__terminal_print_frame__subexp_width__set(           cause, terminal_print_frame, f2integer__new(cause, 0));
-      f2__terminal_print_frame__subexp_height__set(          cause, terminal_print_frame, f2integer__new(cause, 0));
-      f2__terminal_print_frame__subexp_size__set(            cause, terminal_print_frame, f2integer__new(cause, 0));
+      f2__terminal_print_frame__use_one_line__set(                cause, terminal_print_frame, f2bool__new(boolean__true));
+      f2__terminal_print_frame__failed_max_x_constraint__set(     cause, terminal_print_frame, f2bool__new(boolean__false));
+      f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+      f2__terminal_print_frame__test_constraints__set(            cause, terminal_print_frame, f2bool__new(boolean__true));
       f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
       if (raw__larva__is_type(cause, result)) {
 	return result;
@@ -230,13 +234,10 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
     if (f2__terminal_print_frame__failed_max_x_constraint(cause, terminal_print_frame) != nil) {
       // failed x constraint, so forget trying to print on one line.
       {
-	f2__terminal_print_frame__use_one_line__set(           cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__failed_max_y_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__test_constraints__set(       cause, terminal_print_frame, f2bool__new(boolean__true));
-	f2__terminal_print_frame__subexp_width__set(           cause, terminal_print_frame, f2integer__new(cause, 0));
-	f2__terminal_print_frame__subexp_height__set(          cause, terminal_print_frame, f2integer__new(cause, 0));
-	f2__terminal_print_frame__subexp_size__set(            cause, terminal_print_frame, f2integer__new(cause, 0));
+	f2__terminal_print_frame__use_one_line__set(                cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__failed_max_x_constraint__set(     cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__test_constraints__set(            cause, terminal_print_frame, f2bool__new(boolean__true));
 	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
 	if (raw__larva__is_type(cause, result)) {
 	  return result;
@@ -255,13 +256,10 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	  }
 	}
 	{
-	  f2__terminal_print_frame__use_one_line__set(           cause, terminal_print_frame, f2bool__new(boolean__false));
-	  f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	  f2__terminal_print_frame__failed_max_y_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	  f2__terminal_print_frame__test_constraints__set(       cause, terminal_print_frame, f2bool__new(boolean__true));
-	  f2__terminal_print_frame__subexp_width__set(           cause, terminal_print_frame, f2integer__new(cause, 0));
-	  f2__terminal_print_frame__subexp_height__set(          cause, terminal_print_frame, f2integer__new(cause, 0));
-	  f2__terminal_print_frame__subexp_size__set(            cause, terminal_print_frame, f2integer__new(cause, 0));
+	  f2__terminal_print_frame__use_one_line__set(                cause, terminal_print_frame, f2bool__new(boolean__false));
+	  f2__terminal_print_frame__failed_max_x_constraint__set(     cause, terminal_print_frame, f2bool__new(boolean__false));
+	  f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+	  f2__terminal_print_frame__test_constraints__set(            cause, terminal_print_frame, f2bool__new(boolean__true));
 	  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
 	  if (raw__larva__is_type(cause, result)) {
 	    return result;
@@ -270,13 +268,10 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
       }
       // failed x constraint and y constraint so reduced max_size, now ready to print.
       {
-	f2__terminal_print_frame__use_one_line__set(           cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__failed_max_y_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__test_constraints__set(       cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__subexp_width__set(           cause, terminal_print_frame, f2integer__new(cause, 0));
-	f2__terminal_print_frame__subexp_height__set(          cause, terminal_print_frame, f2integer__new(cause, 0));
-	f2__terminal_print_frame__subexp_size__set(            cause, terminal_print_frame, f2integer__new(cause, 0));
+	f2__terminal_print_frame__use_one_line__set(                cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__failed_max_x_constraint__set(     cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__test_constraints__set(            cause, terminal_print_frame, f2bool__new(boolean__false));
 	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
 	if (raw__larva__is_type(cause, result)) {
 	  return result;
@@ -285,13 +280,10 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
     } else {
       // we successfully satisfied all constraints by printing on one line, so go for it.
       {
-	f2__terminal_print_frame__use_one_line__set(           cause, terminal_print_frame, f2bool__new(boolean__true));
-	f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__failed_max_y_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__test_constraints__set(       cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__subexp_width__set(           cause, terminal_print_frame, f2integer__new(cause, 0));
-	f2__terminal_print_frame__subexp_height__set(          cause, terminal_print_frame, f2integer__new(cause, 0));
-	f2__terminal_print_frame__subexp_size__set(            cause, terminal_print_frame, f2integer__new(cause, 0));
+	f2__terminal_print_frame__use_one_line__set(                cause, terminal_print_frame, f2bool__new(boolean__true));
+	f2__terminal_print_frame__failed_max_x_constraint__set(     cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__test_constraints__set(            cause, terminal_print_frame, f2bool__new(boolean__false));
 	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
 	if (raw__larva__is_type(cause, result)) {
 	  return result;
@@ -315,16 +307,13 @@ def_pcfunk2(exp__terminal_print_with_frame, this, terminal_print_frame, return f
 
 
 f2ptr f2__exp__terminal_stream_print(f2ptr cause, f2ptr this, f2ptr stream) {
-  f2ptr min_x                = f2integer__new(cause, 0);
-  f2ptr min_y                = f2integer__new(cause, 0);
-  f2ptr max_x                = f2integer__new(cause, raw__termios__width());
-  f2ptr max_y                = f2integer__new(cause, raw__termios__height());
+  f2ptr indent_distance      = f2integer__new(cause, 0);
+  f2ptr indent_distance      = f2integer__new(cause, raw__termios__width());
+  f2ptr max_height           = f2integer__new(cause, raw__termios__height());
   f2ptr max_size             = f2integer__new(cause, 1024);
   f2ptr use_ansi_codes       = f2bool__new(boolean__true);
   f2ptr use_html_codes       = f2bool__new(boolean__false);
-  f2ptr x                    = f2integer__new(cause, 0);
-  f2ptr y                    = f2integer__new(cause, 0);
-  f2ptr terminal_print_frame = f2__terminal_print_frame__new(cause, stream, min_x, min_y, max_x, max_y, max_size, use_ansi_codes, use_html_codes, x, y);
+  f2ptr terminal_print_frame = f2__terminal_print_frame__new(cause, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes);
   if (raw__larva__is_type(cause, terminal_print_frame)) {
     return terminal_print_frame;
   }
@@ -348,26 +337,24 @@ void f2__terminal_print__initialize() {
   
   // terminal_print_frame
   
-  init_frame_object__19_slot(terminal_print_frame,
+  init_frame_object__17_slot(terminal_print_frame,
 			     test_constraints,
 			     stream,
-			     min_x,
-			     min_y,
+			     indent_distance,
 			     max_x,
-			     max_y,
+			     max_height,
 			     max_size,
 			     use_ansi_codes,
 			     use_html_codes,
 			     x,
-			     y,
+			     height,
 			     size,
-			     subexp_width,
-			     subexp_height,
-			     subexp_size,
+			     left_extent,
+			     right_extent,
 			     already_printed_hash,
 			     use_one_line,
 			     failed_max_x_constraint,
-			     failed_max_y_constraint);
+			     failed_max_height_constraint);
   
   f2__primcfunk__init__2(terminal_print_frame__write_string, this, string, "");
   

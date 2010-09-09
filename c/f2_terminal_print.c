@@ -90,8 +90,8 @@ void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length
   s64   indent_distance__i = f2integer__i(indent_distance, cause);
   f2ptr x                  = f2__terminal_print_frame__x(cause, this);
   s64   x__i               = f2integer__i(x, cause);
-  f2ptr y                  = f2__terminal_print_frame__y(cause, this);
-  s64   y__i               = f2integer__i(y, cause);
+  f2ptr height             = f2__terminal_print_frame__height(cause, this);
+  s64   height__i          = f2integer__i(height, cause);
   f2ptr left_extent        = f2__terminal_print_frame__left_extent(cause, this);
   s64   left_extent__i     = left_extent ? f2integer__i(left_extent, cause) : 0;
   f2ptr right_extent       = f2__terminal_print_frame__right_extent(cause, this);

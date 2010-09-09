@@ -28,6 +28,7 @@
 #include "f2_primobject__frame.h"
 #include "f2_primobject__environment.h"
 #include "f2_reader.h"
+#include "f2_ansi.h"
 
 #define default_print_recursion_depth 20
 

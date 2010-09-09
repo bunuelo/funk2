@@ -1400,7 +1400,9 @@ def_pcfunk2(pointer__is_numerically_equal_to, this, that, return f2__pointer__is
 
 f2ptr raw__pointer__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   u8  pointer_string[128];
-  u64 pointer_string__length = snprintf((char*)pointer_string, 128, "%c%c" ptr__fstr, f2char__ch(__funk2.reader.char__escape, cause), f2char__ch(__funk2.reader.char__escape_hex, cause), f2pointer__p(this, cause));
+  pointer_string[0] = f2char__ch(__funk2.reader.char__escape, cause);
+  pointer_string[1] = f2char__ch(__funk2.reader.char__escape_hex, cause);
+  u64 pointer_string__length = snprintf((char*)pointer_string + 2, 128, ptr__fstr, f2pointer__p(this, cause));
   raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__pointer__foreground);
   raw__terminal_print_frame__write_string(cause, terminal_print_frame, pointer_string__length, pointer_string);
   raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);

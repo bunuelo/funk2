@@ -17,6 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-`[globalize-funk exp-terminal_print_with_frame &primfunk:exp__terminal_print_with_frame]
-`[globalize-funk exp-terminal_stream_print     &primfunk:exp__terminal_stream_print]
+[globalize-funk exp-terminal_print_with_frame &primfunk:exp__terminal_print_with_frame]
+[globalize-funk exp-terminal_stream_print     &primfunk:exp__terminal_stream_print]
 

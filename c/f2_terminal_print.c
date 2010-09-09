@@ -71,7 +71,6 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr min_x, f2pt
 				     test_constraints,
 				     stream,
 				     min_x,
-				     min_y,
 				     max_x,
 				     max_y,
 				     max_size,
@@ -80,14 +79,135 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr min_x, f2pt
 				     x,
 				     y,
 				     size,
-				     subexp_width,
-				     subexp_height,
-				     subexp_size,
+				     left_extent,
+				     right_extent,
 				     already_printed_hash,
 				     use_one_line,
 				     failed_max_x_constraint,
 				     failed_max_y_constraint);
 }
+
+void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length, u8* string) {
+  f2ptr test_constraints = f2__terminal_print_frame__test_constraints(cause, this);
+  f2ptr stream           = f2__terminal_print_frame__stream(cause, this);
+  f2ptr min_x            = f2__terminal_print_frame__min_x(cause, terminal_print_frame);
+  s64   min_x__i         = f2integer__i(min_x, cause);
+  f2ptr x                = f2__terminal_print_frame__x(cause, this);
+  s64   x__i             = f2integer__i(x, cause);
+  f2ptr y                = f2__terminal_print_frame__y(cause, this);
+  s64   y__i             = f2integer__i(y, cause);
+  f2ptr left_extent      = f2__terminal_print_frame__left_extent(cause, this);
+  s64   left_extent__i   = f2integer__i(left_extent, cause);
+  f2ptr right_extent     = f2__terminal_print_frame__right_extent(cause, this);
+  s64   right_extent__i  = f2integer__i(right_extent, cause);
+  f2ptr use_html_codes   = f2__terminal_print_frame__use_html_codes(cause, this);
+  {
+    u64 index;
+    for (index = 0; index < length; index ++) {
+      u8 ch;
+      switch(ch) {
+      case '\r':
+	break;
+      case '\n':
+	if (use_html_codes) {
+	  if (test_constraints == nil) {
+	    raw__stream__writef(cause, stream, "<br>");
+	  }
+	}
+	if (test_constraints == nil) {
+	  raw__stream__writef(cause, stream, "\n");
+	}
+	x__i = min_x__i;
+	if (x__i < left_extent__i) {
+	  left_extent__i = x__i;
+	}
+	y__i ++;
+	break;
+      case '\t':
+	u64 spaces_until_next_tab = x__i - ((x__i >> 3) << 3);
+	{
+	  u64 subindex;
+	  for (subindex = 0; subindex < spaces_until_next_tab; subindex ++) {
+	    if (use_html_codes != nil) {
+	      if (test_constraints == nil) {
+		raw__stream__writef(cause, stream, "&nbsp;");
+	      }
+	    } else {
+	      if (test_constraints == nil) {
+		raw__stream__writef(cause, stream, " ");
+	      }
+	    }
+	  }
+	}
+	x__i += spaces_until_next_tab;
+	if (x__i > right_extent__i) {
+	  right_extent__i = x__i;
+	}
+	break;
+      default:
+	if (ch >= 28 && ch <= 255) {
+	  switch(ch) {
+	  case ' ':
+	    if (use_html_codes != nil) {
+	      if (test_constraints == nil) {
+		raw__stream__writef(cause, stream, "&nbsp;");
+	      }
+	    } else {
+	      if (test_constraints == nil) {
+		raw__stream__writef(cause, stream, "%c", ch);
+	      }
+	    }
+	    break;
+	  default:
+	    if (test_constraints == nil) {
+	      raw__stream__writef(cause, stream, "%c", ch);
+	    }
+	    break;
+	  }
+	} else {
+	  if (test_constraints == nil) {
+	    raw__stream__writef(cause, stream, "?");
+	  }
+	}
+	x__i ++;
+	if (x__i > right_extent__i) {
+	  right_extent__i = x__i;
+	}
+	break;
+      }
+    }
+  }
+  if (test_constraints != nil) {
+    f2ptr max_x    = f2__terminal_print_frame__max_x(cause, this);
+    s64   max_x__i = f2integer__i(max_x, cause);
+    f2ptr max_y    = f2__terminal_print_frame__max_y(cause, this);
+    s64   max_y__i = f2integer__i(max_y, cause);
+    if (right_extent__i > max_x__i) {
+      f2__terminal_print_frame__failed_max_x_constraint__set(cause, this, f2bool__new(boolean__true));
+    }
+    if (y__i > max_y__i) {
+      f2__terminal_print_frame__failed_max_y_constraint__set(cause, this, f2bool__new(boolean__true));
+    }
+  }
+  f2__terminal_print_frame__x__set(           cause, this, f2integer__new(cause, x__i));
+  f2__terminal_print_frame__y__set(           cause, this, f2integer__new(cause, y__i));
+  f2__terminal_print_frame__left_extent__set( cause, this, f2integer__new(cause, left_extent__i));
+  f2__terminal_print_frame__right_extent__set(cause, this, f2integer__new(cause, right_extent__i));
+}
+
+f2ptr f2__terminal_print_frame__write_string(f2ptr cause, f2ptr this, f2ptr string) {
+  if ((! raw__terminal_print_frame__is_type(cause, this)) ||
+      (! raw__string__is_type(cause, string))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  u64 string__length = f2string__length(string, cause);
+  u8* string__str    = (u8*)alloca(string__length);
+  raw__string__str_copy(cause, string, string__str);
+  string__str[string__length] = '\0';
+  return raw__terminal_print_frame__write_string(cause, this, string__length, string__str);
+}
+def_pcfunk2(terminal_print_frame__write_string, this, string, return f2__terminal_print_frame__write_string(this_cause, this, string));
+
 
 f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr fiber = f2__this__fiber(cause);
@@ -249,8 +369,10 @@ void f2__terminal_print__initialize() {
 			     failed_max_x_constraint,
 			     failed_max_y_constraint);
   
+  f2__primcfunk__init__2(terminal_print_frame__write_string, this, string, "");
   
   f2__primcfunk__init__2(exp__terminal_print_with_frame, this, terminal_print_frame, "Prints a value given a terminal_print_frame.");
   f2__primcfunk__init__2(exp__terminal_stream_print,     this, stream,               "Prints a value to the given terminal stream, using a new default terminal_print_frame.");
+  
 }
 

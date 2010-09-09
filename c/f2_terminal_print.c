@@ -59,7 +59,6 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
   f2ptr size                         = f2integer__new(cause, 0);
   f2ptr left_extent                  = nil;
   f2ptr right_extent                 = nil;
-  f2ptr subexp_size                  = nil;
   f2ptr already_printed_hash         = f2__ptypehash__new(cause);
   f2ptr use_one_line                 = f2bool__new(boolean__true);
   f2ptr failed_max_x_constraint      = f2bool__new(boolean__false);

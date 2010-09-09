@@ -498,7 +498,7 @@ def_pcfunk1(integer__square_root, this, return f2__integer__square_root(this_cau
 
 f2ptr raw__integer__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   u8  integer_string[128];
-  u64 integer_string__length = snprintf(integer_string, 128, s64__fstr, f2integer__i(this, cause));
+  u64 integer_string__length = snprintf((char*)integer_string, 128, s64__fstr, f2integer__i(this, cause));
   raw__terminal_print_frame__write_string(cause, terminal_print_frame, integer_string__length, integer_string);
   return nil;
 }

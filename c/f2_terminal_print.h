@@ -28,24 +28,24 @@
 
 // terminal_print_frame
 
-declare_frame_object__17_slot(terminal_print_frame,
-			      test_constraints,
-			      stream,
-			      indent_distance,
-			      max_x,
-			      max_height,
-			      max_size,
-			      use_ansi_codes,
-			      use_html_codes,
-			      x,
-			      height,
-			      size,
-			      left_extent,
-			      right_extent,
-			      already_printed_hash,
-			      use_one_line,
-			      failed_max_x_constraint,
-			      failed_max_height_constraint);
+declare_frame_object_17_slot(terminal_print_frame,
+			     test_constraints,
+			     stream,
+			     indent_distance,
+			     max_x,
+			     max_height,
+			     max_size,
+			     use_ansi_codes,
+			     use_html_codes,
+			     x,
+			     height,
+			     size,
+			     left_extent,
+			     right_extent,
+			     already_printed_hash,
+			     use_one_line,
+			     failed_max_x_constraint,
+			     failed_max_height_constraint);
 
 //f2ptr f2terminal_print_frame__primobject_type__new(f2ptr cause);
 

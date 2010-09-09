@@ -100,7 +100,7 @@ void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length
   {
     u64 index;
     for (index = 0; index < length; index ++) {
-      u8 ch;
+      u8 ch = string[index];
       switch(ch) {
       case '\r':
 	break;

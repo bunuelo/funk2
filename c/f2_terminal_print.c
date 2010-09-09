@@ -120,7 +120,7 @@ void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length
 	    left_extent = f2bool__new(boolean__true);
 	  }
 	}
-	y__i ++;
+	height__i ++;
 	break;
       case '\t':
 	u64 spaces_until_next_tab = x__i - ((x__i >> 3) << 3);

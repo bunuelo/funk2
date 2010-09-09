@@ -86,7 +86,7 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
 void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length, u8* string) {
   f2ptr test_constraints   = f2__terminal_print_frame__test_constraints(cause, this);
   f2ptr stream             = f2__terminal_print_frame__stream(cause, this);
-  f2ptr indent_distance    = f2__terminal_print_frame__indent_distance(cause, terminal_print_frame);
+  f2ptr indent_distance    = f2__terminal_print_frame__indent_distance(cause, this);
   s64   indent_distance__i = f2integer__i(indent_distance, cause);
   f2ptr x                  = f2__terminal_print_frame__x(cause, this);
   s64   x__i               = f2integer__i(x, cause);

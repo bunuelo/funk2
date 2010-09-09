@@ -31,6 +31,26 @@
 
 #define default_print_recursion_depth 20
 
+extern ansi_color_t print__ansi__default__foreground;
+extern ansi_color_t print__ansi__integer__foreground;
+extern ansi_color_t print__ansi__double__foreground;
+extern ansi_color_t print__ansi__float__foreground;
+extern ansi_color_t print__ansi__pointer__foreground;
+extern ansi_color_t print__ansi__gfunkptr__foreground;
+extern ansi_color_t print__ansi__mutex__foreground;
+extern ansi_color_t print__ansi__char__foreground;
+extern ansi_color_t print__ansi__string__foreground;
+extern ansi_color_t print__ansi__symbol__foreground;
+extern ansi_color_t print__ansi__symbol__key__foreground;
+extern ansi_color_t print__ansi__chunk__foreground;
+extern ansi_color_t print__ansi__simple_array__foreground;
+extern ansi_color_t print__ansi__traced_array__foreground;
+extern ansi_color_t print__ansi__larva__foreground;
+extern ansi_color_t print__ansi__end_recursion__foreground;
+extern ansi_color_t print__ansi__error__foreground;
+
+
+
 void f2__fwrite__raw_char  (f2ptr cause, f2ptr fptr, char ch, int return_size[2], boolean_t use_html);
 void f2__fwrite__raw_string(f2ptr cause, f2ptr fptr, f2ptr str, f2ptr use_html);
 

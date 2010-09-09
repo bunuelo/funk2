@@ -52,6 +52,8 @@
        
        [set this fiber fiber]
        
+       [have table modify_bg `normal [gdk-rgb_color-new 1.0 0.0 0.0]]
+       
        [have command_pause_menu_item signal_connect 'activate'
 	     [funk []
 		   [set fiber paused t]]

@@ -441,6 +441,22 @@ void funk2_gtk__widget__connect_hide_on_delete(funk2_gtk_t* this, GtkWidget* wid
   }
 }
 
+void funk2_gtk__widget__modify_fg(funk2_gtk_t* this, GtkWidget* widget, GtkStateType state, GdkColor* color) {
+  {
+    gdk_threads_enter();
+    gtk_widget_modify_fg(GTK_WIDGET(widget), state, GDK_COLOR(color));
+    gdk_threads_leave();
+  }
+}
+
+void funk2_gtk__widget__modify_bg(funk2_gtk_t* this, GtkWidget* widget, GtkStateType state, GdkColor* color) {
+  {
+    gdk_threads_enter();
+    gtk_widget_modify_bg(GTK_WIDGET(widget), state, GDK_COLOR(color));
+    gdk_threads_leave();
+  }
+}
+
 
 // GtkWidget.GdkWindow ? widget draw functions...
 
@@ -1533,6 +1549,71 @@ f2ptr f2__gtk__widget__connect_hide_on_delete(f2ptr cause, f2ptr widget) {
   return raw__gtk__widget__connect_hide_on_delete(cause, widget);
 }
 def_pcfunk1(gtk__widget__connect_hide_on_delete, widget, return f2__gtk__widget__connect_hide_on_delete(this_cause, widget));
+
+
+boolean_t raw__gtk_state_type__is_type(f2ptr cause, f2ptr this) {
+  return (raw__symbol__is_type(cause, this) &&
+	  (raw__eq(cause, state, new__symbol(cause, "normal"))   ||
+	   raw__eq(cause, state, new__symbol(cause, "active"))   ||
+	   raw__eq(cause, state, new__symbol(cause, "prelight")) ||
+	   raw__eq(cause, state, new__symbol(cause, "selected")) ||
+	   raw__eq(cause, state, new__symbol(cause, "insensitive"))));
+}
+
+GtkStateType raw__gtk_state_type__as__GtkStateType(f2ptr cause, f2ptr this) {
+  if      (raw__eq(cause, state, new__symbol(cause, "normal")))      {return GTK_STATE_NORMAL;}
+  else if (raw__eq(cause, state, new__symbol(cause, "active")))      {return GTK_STATE_ACTIVE;}
+  else if (raw__eq(cause, state, new__symbol(cause, "prelight")))    {return GTK_STATE_PRELIGHT;}
+  else if (raw__eq(cause, state, new__symbol(cause, "selected")))    {return GTK_STATE_SELECTED;}
+  else if (raw__eq(cause, state, new__symbol(cause, "insensitive"))) {return GTK_STATE_INSENSITIVE;}
+  error(nil, "raw__gtk_state_type__as__GtkStateType error: received wrong type of value.");
+  return 0; // won't ever get here.
+}
+
+f2ptr raw__gtk__widget__modify_fg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr color) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget*   gtk_widget = raw__gtk_widget__as__GtkWidget(       cause, widget);
+  GtkStateType gtk_state  = raw__gtk_state_type__as__GtkStateType(cause, state);
+  GdkColor     color;       raw__gdk_color__as__GdkColor(         cause, color, &color);
+  funk2_gtk__widget__modify_fg(&(__funk2.gtk), gtk_widget, gtk_state, gtk_color);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__widget__modify_fg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr color) {
+  if ((! raw__gtk_widget__is_type(cause, widget)) ||
+      (! raw__gtk_state_type__is_type(cause, state)) ||
+      (! raw__gdk_color__is_type(cause, color))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__widget__modify_fg(cause, widget, state, color);
+}
+def_pcfunk3(gtk__widget__modify_fg, widget, state, color, return f2__gtk__widget__modify_fg(this_cause, widget, state, color));
+
+
+f2ptr raw__gtk__widget__modify_bg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr color) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget*   gtk_widget = raw__gtk_widget__as__GtkWidget(       cause, widget);
+  GtkStateType gtk_state  = raw__gtk_state_type__as__GtkStateType(cause, state);
+  GdkColor     color;       raw__gdk_color__as__GdkColor(         cause, color, &color);
+  funk2_gtk__widget__modify_bg(&(__funk2.gtk), gtk_widget, gtk_state, gtk_color);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__widget__modify_bg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr color) {
+  if ((! raw__gtk_widget__is_type(cause, widget)) ||
+      (! raw__gtk_state_type__is_type(cause, state)) ||
+      (! raw__gdk_color__is_type(cause, color))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__widget__modify_bg(cause, widget, state, color);
+}
+def_pcfunk3(gtk__widget__modify_bg, widget, state, color, return f2__gtk__widget__modify_bg(this_cause, widget, state, color));
 
 
 // beginning of GtkWidget drawing fuctions, which are not really GtkWidget functions in the GTK library.
@@ -2647,11 +2728,15 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__1(gtk__widget__get_visible,                widget,                                              "Returns whether or not a window is visible, which does not mean the window is viewable, which wouold require all parents to also be visible.");
   f2__primcfunk__init__1(gtk__widget__destroy,                    widget,                                              "Destroys the widget.");
   f2__primcfunk__init__1(gtk__widget__connect_hide_on_delete,     widget,                                              "Add a delete-event callback handler to the widget that hides the window rather than destroying the window.");
+  f2__primcfunk__init__3(gtk__widget__modify_fg,                  widget, state, color,                                "Sets the foreground color of a widget.  State must be one of the following symbolic values: normal, active, prelight, selected, or insensitive.  Color must be a GdkColor object (see gdk-color-new).");
+  f2__primcfunk__init__3(gtk__widget__modify_bg,                  widget, state, color,                                "Sets the background color of a widget.  State must be one of the following symbolic values: normal, active, prelight, selected, or insensitive.  Color must be a GdkColor object (see gdk-color-new).");
+  // widget draw funks
   f2__primcfunk__init__8(gtk__widget__draw_arc,                   widget, filled, x, y, width, height, angle1, angle2, "Draws an arc in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
   f2__primcfunk__init__6(gtk__widget__draw_rectangle,             widget, filled, x, y, width, height,                 "Draws a rectangle in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
   f2__primcfunk__init__0(gtk__window__new,                                                                             "Returns a new window widget.");
   f2__primcfunk__init__2(gtk__window__set_title,                  window, title,                                       "Sets the title of this gtk_window.");
   f2__primcfunk__init__3(gtk__window__set_default_size,           window, width, height,                               "Sets the default width and height of this gtk_window.");
+  
   f2__primcfunk__init__1(gtk__vbox__new,                          spacing,                                             "Returns a new vbox widget with spacing.");
   f2__primcfunk__init__1(gtk__hbox__new,                          spacing,                                             "Returns a new hbox widget with spacing.");
   f2__primcfunk__init__1(gtk__button__new_with_label,             label,                                               "Returns a new button widget with label.");
@@ -2686,9 +2771,9 @@ void f2__gtk__initialize() {
   // vpaned
   
   f2__primcfunk__init__0(gtk__vpaned__new, "Returns a new GtkVPaned widget.");
-
+  
   // hpaned
-
+  
   f2__primcfunk__init__0(gtk__hpaned__new, "Returns a new GtkHPaned widget.");
   
   // color

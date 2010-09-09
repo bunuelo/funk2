@@ -1575,7 +1575,7 @@ f2ptr raw__gtk__widget__modify_fg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr 
   GtkWidget*   gtk_widget = raw__gtk_widget__as__GtkWidget(       cause, widget);
   GtkStateType gtk_state  = raw__gtk_state_type__as__GtkStateType(cause, state);
   GdkColor     gdk_color;   raw__gdk_color__as__GdkColor(         cause, color, &gdk_color);
-  funk2_gtk__widget__modify_fg(&(__funk2.gtk), gtk_widget, gtk_state, gdk_color);
+  funk2_gtk__widget__modify_fg(&(__funk2.gtk), gtk_widget, gtk_state, &gdk_color);
   return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);

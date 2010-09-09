@@ -105,21 +105,21 @@ void raw__gtk_text_iter__as__GtkTextIter(f2ptr cause, f2ptr this, GtkTextIter* t
 #endif // F2__GTK__SUPPORTED
 
 
-// gtk_color
+// gdk_color
 
-def_frame_object__global__4_slot(gtk_color, pixel, red, green, blue);
+def_frame_object__global__4_slot(gdk_color, pixel, red, green, blue);
 
-f2ptr f2__gtk_color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr blue) {
-  return f2gtk_color__new(cause, pixel, red, green, blue);
+f2ptr f2__gdk_color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr blue) {
+  return f2gdk_color__new(cause, pixel, red, green, blue);
 }
 
 #if defined(F2__GTK__SUPPORTED)
 
-void raw__gtk_color__as__GdkColor(f2ptr cause, f2ptr this, GdkColor* color) {
-  f2ptr pixel = f2__gtk_color__pixel(cause, this);
-  f2ptr red   = f2__gtk_color__pixel(cause, this);
-  f2ptr green = f2__gtk_color__pixel(cause, this);
-  f2ptr blue  = f2__gtk_color__pixel(cause, this);
+void raw__gdk_color__as__GdkColor(f2ptr cause, f2ptr this, GdkColor* color) {
+  f2ptr pixel = f2__gdk_color__pixel(cause, this);
+  f2ptr red   = f2__gdk_color__pixel(cause, this);
+  f2ptr green = f2__gdk_color__pixel(cause, this);
+  f2ptr blue  = f2__gdk_color__pixel(cause, this);
   color->pixel = f2integer__i(pixel, cause);
   color->red   = f2integer__i(red,   cause);
   color->green = f2integer__i(green, cause);
@@ -767,7 +767,7 @@ GtkWidget* funk2_gtk__hpaned__new(funk2_gtk_t* this) {
 
 // color
 
-f2ptr f2__gtk__color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr blue) {
+f2ptr f2__gdk__color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr blue) {
   if ((! raw__integer__is_type(cause, pixel)) ||
       (! raw__integer__is_type(cause, red)) ||
       (! raw__integer__is_type(cause, green)) ||
@@ -790,9 +790,9 @@ f2ptr f2__gtk__color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2pt
   if (blue__i < 0 || blue__i >= (1ull << 16)) {
     return f2larva__new(cause, 2, nil);
   }
-  return f2gtk_color__new(cause, pixel, red, green, blue);
+  return f2gdk_color__new(cause, pixel, red, green, blue);
 }
-def_pcfunk4(gtk__color__new, pixel, red, green, blue, return f2__gtk__color__new(this_cause, pixel, red, green, blue));
+def_pcfunk4(gdk__color__new, pixel, red, green, blue, return f2__gdk__color__new(this_cause, pixel, red, green, blue));
 
 
 // progress_bar
@@ -2607,9 +2607,9 @@ void f2__gtk__initialize() {
   init_frame_object__1_slot(gtk_text_iter, chunk);
   
   
-  // gtk_color
+  // gdk_color
   
-  init_frame_object__4_slot(gtk_color, pixel, red, green, blue);
+  init_frame_object__4_slot(gdk_color, pixel, red, green, blue);
   
   
   // gtk_text_mark
@@ -2693,7 +2693,7 @@ void f2__gtk__initialize() {
   
   // color
   
-  f2__primcfunk__init__4(gtk__color__new, pixel, red, green, blue, "Returns a new GtkColor object.");
+  f2__primcfunk__init__4(gdk__color__new, pixel, red, green, blue, "Returns a new GtkColor object.");
   
   // progress_bar
   

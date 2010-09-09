@@ -1,4 +1,5 @@
-'Copyright (c) 2007-2010 Bo Morgan.
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -15,11 +16,7 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.'
+ rights to redistribute these changes.
+'
 
-[globalize-funk terminal_print_frame-new          &primfunk:terminal_print_frame__new]
-[globalize-funk terminal_print_frame-write_string &primfunk:terminal_print_frame__write_string]
-
-[globalize-funk exp-terminal_print_with_frame &primfunk:exp__terminal_print_with_frame]
-[globalize-funk exp-terminal_stream_print     &primfunk:exp__terminal_stream_print]
-
+[deftypefunk terminal_print_frame execute write_string [string] [terminal_print_frame-write_string this string]]

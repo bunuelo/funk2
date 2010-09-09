@@ -359,6 +359,7 @@ void f2__terminal_print__initialize() {
 			     failed_max_x_constraint,
 			     failed_max_height_constraint);
   
+  f2__primcfunk__init__7(terminal_print_frame__new, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, "");
   f2__primcfunk__init__2(terminal_print_frame__write_string, this, string, "");
   
   f2__primcfunk__init__2(exp__terminal_print_with_frame, this, terminal_print_frame, "Prints a value given a terminal_print_frame.");

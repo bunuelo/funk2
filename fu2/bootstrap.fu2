@@ -43,6 +43,7 @@
 [load 'fu2/bootstrap-list.fu2']
 [load 'fu2/bootstrap-bruno_graph.fu2']
 [load 'fu2/bootstrap-bug.fu2']
+[load 'fu2/bootstrap-terminal_print.fu2']
 [load 'fu2/bootstrap-package.fu2']
 [reload_all_package_definitions]
 

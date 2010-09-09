@@ -35,8 +35,7 @@
 
 #define def_frame_object__shared_global_vars(name) \
   def_frame_object__symbol_funk__global_vars(name, is_type); \
-  def_frame_object__symbol_funk__global_vars(name, type); \
-  def_frame_object__symbol_funk__global_vars(name, new)
+  def_frame_object__symbol_funk__global_vars(name, type)
 
 #define def_frame_object__slot_global_vars__0_slot(name)
 

@@ -211,7 +211,8 @@ f2ptr f2__terminal_print_frame__write_string(f2ptr cause, f2ptr this, f2ptr stri
   u8* string__str    = (u8*)alloca(string__length);
   raw__string__str_copy(cause, string, string__str);
   string__str[string__length] = '\0';
-  return raw__terminal_print_frame__write_string(cause, this, string__length, string__str);
+  raw__terminal_print_frame__write_string(cause, this, string__length, string__str);
+  return nil;
 }
 def_pcfunk2(terminal_print_frame__write_string, this, string, return f2__terminal_print_frame__write_string(this_cause, this, string));
 

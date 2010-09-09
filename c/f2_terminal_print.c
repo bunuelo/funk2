@@ -309,7 +309,7 @@ def_pcfunk2(exp__terminal_print_with_frame, this, terminal_print_frame, return f
 
 f2ptr f2__exp__terminal_stream_print(f2ptr cause, f2ptr this, f2ptr stream) {
   f2ptr indent_distance      = f2integer__new(cause, 0);
-  f2ptr indent_distance      = f2integer__new(cause, raw__termios__width());
+  f2ptr max_x                = f2integer__new(cause, raw__termios__width());
   f2ptr max_height           = f2integer__new(cause, raw__termios__height());
   f2ptr max_size             = f2integer__new(cause, 1024);
   f2ptr use_ansi_codes       = f2bool__new(boolean__true);

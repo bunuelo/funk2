@@ -492,7 +492,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	      f2ptr car = f2cons__car(exp, cause);
 	      if (car == __funk2.globalenv.quote__symbol) {
 		if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__backquote, cause));} width ++;
-		//putchar(__quote_char);
 		int subexp_size[2];
 		f2__write_pretty(cause, fiber, stream, f2cons__car(f2cons__cdr(exp, cause), cause), ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	      } else if (car == __funk2.globalenv.funkvar__symbol) {

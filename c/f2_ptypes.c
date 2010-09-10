@@ -2275,6 +2275,11 @@ f2ptr raw__string__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
 	string_string__length ++;
 	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_escape_newline, cause);
 	string_string__length ++;
+      } else if (ch == (u8)f2char__ch(__funk2.reader.char__escape_char, cause)) {
+	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
+	string_string__length ++;
+	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
+	string_string__length ++;
       } else if (ch == '\r') {
 	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
 	string_string__length ++;
@@ -2881,13 +2886,26 @@ boolean_t raw__chunk__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__chunk__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__chunk__is_type(cause, x));}
 f2ptr f2__chunk__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen("chunk"), (u8*)"chunk");}
-f2ptr f2__chunk__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2chunk__length(x, cause));}
+
+u64 raw__chunk__length(f2ptr cause, f2ptr this) {
+  return f2chunk__length(this, cause);
+}
+
+f2ptr f2__chunk__length(f2ptr cause, f2ptr this) {
+  if (! raw__chunk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2integer__new(cause, raw__chunk__length(cause, this));
+}
 
 boolean_t raw__chunk__eq(f2ptr cause, f2ptr this, f2ptr that) {
   return this == that;
 }
 
 f2ptr f2__chunk__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__chunk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
   return f2bool__new(raw__chunk__eq(cause, this, that));
 }
 def_pcfunk2(chunk__eq, this, that, return f2__chunk__eq(this_cause, this, that));
@@ -2924,6 +2942,121 @@ def_pcfunk2(chunk__bit64__elt, this, index, return f2pointer__new(this_cause, f2
 def_pcfunk3(chunk__bit64__elt__set, this, index, value, f2chunk__bit64__elt__set(this, this_cause, f2integer__i(index, this_cause), f2pointer__p(value, this_cause)); return nil);
 def_pcfunk4(chunk__cfunk_jump, this, fiber, env, args, return f2chunk__cfunk_jump(this, this_cause, fiber, env, args));
 def_pcfunk2(chunk__bytecode_jump, this, fiber, return f2integer__new(this_cause, f2chunk__bytecode_jump(this, this_cause, fiber)));
+
+
+f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  {
+    f2__write__ansi_color(cause, stream, print__ansi__chunk__foreground, use_ansi_colors, use_html);
+    char temp_str[128]; 
+    int  subexp_size[2];
+    if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(chunk__begin_char, cause));} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
+    if (show_slot_causes) {
+      f2__write_pretty(cause, fiber, stream, f2gfunkptr__new_from_f2ptr(cause, exp), ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
+      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
+    }
+    f2__write__ansi_color(cause, stream, print__ansi__symbol__foreground, use_ansi_colors, use_html);
+    sprintf(temp_str, "chunk"); int temp_str__length = strlen(temp_str); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} indent_space_num += (temp_str__length + 1); available_width -= (temp_str__length + 1); if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
+    if (show_slot_causes) {
+      f2__write__ansi_color(cause, stream, print__ansi__symbol__key__foreground, use_ansi_colors, use_html);
+      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
+      sprintf(temp_str, "cause ");     if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
+      f2__write_pretty(cause, fiber, stream, f2ptype__cause(exp, cause), ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
+    }
+    f2__write__ansi_color(cause, stream, print__ansi__symbol__key__foreground, use_ansi_colors, use_html);
+    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
+    sprintf(temp_str, "gfunkptr "); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
+    f2__write_pretty(cause, fiber, stream, f2gfunkptr__new_from_f2ptr(cause, exp), ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
+    f2__write__ansi_color(cause, stream, print__ansi__symbol__key__foreground, use_ansi_colors, use_html);
+    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
+    sprintf(temp_str, "bytes"); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
+    
+    f2__write__ansi_color(cause, stream, print__ansi__pointer__foreground, use_ansi_colors, use_html);
+    // this should print a 2d block when too wide, rather than a vertical line (amen).
+    int i;
+    int length = f2chunk__length(exp, cause);
+    for(i = 0; i < length; i ++) {
+      
+      if (width < available_width) {
+	f2__write__space(cause, stream, use_html); width ++;
+      } else {
+	if (wide_success) {
+	  wide_success[0] = 0;
+	}
+	f2__write__line_break(cause, stream, use_html); width = 0; height ++;
+	int i;
+	for (i = 0; i < indent_space_num + width; i++) {
+	  f2__write__space(cause, stream, use_html);
+	}
+      }
+      
+      sprintf(temp_str, "#x%02x", f2chunk__bit8__elt(exp, i, cause)); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
+    }
+    f2__write__ansi_color(cause, stream, print__ansi__chunk__foreground, use_ansi_colors, use_html);
+    if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(chunk__end_char, cause));} width ++;
+    f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
+  }
+  
+  f2ptr indent_distance      = f2__terminal_print_frame__indent_distance(cause, terminal_print_frame);
+  u64   indent_distance__i   = f2integer__i(indent_distance, cause);
+  {
+    indent_distance__i += 7;
+    indent_distance     = f2integer__new(cause, indent_distance__i);
+    f2__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
+  }
+  f2ptr max_x                = f2__terminal_print_frame__max_x(cause, terminal_print_frame);
+  u64   max_x__i             = f2integer__i(max_x, cause);
+  u64   chunk__length        = raw__chunk__length(cause, this);
+  u8*   chunk_string         = (u8*)from_ptr(f2__malloc((chunk__length * 5) + max_x__i + 128));
+  u64   chunk_string__length = 0;
+  {
+    chunk_string[0]      = (u8)f2char__ch(__funk2.reader.char__left_paren, cause);
+    chunk_string__length = 1;
+    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__traced_array__foreground);
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, chunk_string__length, chunk_string);
+  }
+  {
+    chunk_string__length = sprintf(chunk_string, "chunk");
+    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, chunk_string__length, chunk_string);
+  }
+  {
+    f2ptr x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+    u64   x__i = f2integer__i(x, cause);
+    chunk_string__length = 0;
+    {
+      u64 index;
+      for (index = 0; index < chunk__length; index ++) {
+	u64 increment_distance = sprintf(chunk_string + chunk_string__length, " #x%02x", f2chunk__bit8__elt(this, i, cause));
+	chunk_string__length += increment_distance;
+	x__i                 += increment_distance;
+	if ((max_x__i - x__i <= 5) && (index < (chunk__length - 1))) {
+	  chunk_string__length += sprintf(chunk_string + chunk_string__length, "\n");
+	  x__i                  = indent_distance__i;
+	}
+      }
+    }
+    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__pointer__foreground);
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, chunk_string__length, chunk_string);
+  }
+  {
+    chunk_string[0]      = (u8)f2char__ch(__funk2.reader.char__right_paren, cause);
+    chunk_string__length = 1;
+    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__traced_array__foreground);
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, chunk_string__length, chunk_string);
+  }
+  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  f2__free(to_ptr(chunk_string));
+  return nil;
+}
+
+f2ptr f2__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__chunk__is_type(cause, this)) ||
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__chunk__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(chunk__terminal_print_with_frame, this, terminal_print_frame, return f2__chunk__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2__chunk__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
@@ -2971,25 +3104,26 @@ f2ptr f2__chunk__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr
 
 f2ptr f2chunk__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("ptype"), (u8*)"ptype"), nil));
-  {char* slot_name = "is_type";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.is_type__funk);}
-  {char* slot_name = "type";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_chunk.type__funk);}
-  {char* slot_name = "new";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.new__funk);}
-  {char* slot_name = "new_copy";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.new_copy__funk);}
-  {char* slot_name = "length";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_chunk.length__funk);}
-  {char* slot_name = "eq";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_chunk.eq__funk);}
-  {char* slot_name = "eq_hash_value";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_chunk.eq_hash_value__funk);}
-  {char* slot_name = "equals";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_chunk.equals__funk);}
-  {char* slot_name = "equals_hash_value"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_chunk.equals_hash_value__funk);}
-  {char* slot_name = "bit8-elt";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__funk);}
-  {char* slot_name = "bit8-elt";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__set__funk);}
-  {char* slot_name = "bit16-elt";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__funk);}
-  {char* slot_name = "bit16-elt";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__set__funk);}
-  {char* slot_name = "bit32-elt";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__funk);}
-  {char* slot_name = "bit32-elt";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__set__funk);}
-  {char* slot_name = "bit64-elt";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__funk);}
-  {char* slot_name = "bit64-elt";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__set__funk);}
-  {char* slot_name = "cfunk_jump";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.cfunk_jump__funk);}
-  {char* slot_name = "bytecode_jump";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__funk);}
+  {char* slot_name = "is_type";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.is_type__funk);}
+  {char* slot_name = "type";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.type__funk);}
+  {char* slot_name = "new";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.new__funk);}
+  {char* slot_name = "new_copy";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.new_copy__funk);}
+  {char* slot_name = "length";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.length__funk);}
+  {char* slot_name = "eq";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.eq__funk);}
+  {char* slot_name = "eq_hash_value";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.eq_hash_value__funk);}
+  {char* slot_name = "equals";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.equals__funk);}
+  {char* slot_name = "equals_hash_value";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.equals_hash_value__funk);}
+  {char* slot_name = "bit8-elt";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__funk);}
+  {char* slot_name = "bit8-elt";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__set__funk);}
+  {char* slot_name = "bit16-elt";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__funk);}
+  {char* slot_name = "bit16-elt";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__set__funk);}
+  {char* slot_name = "bit32-elt";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__funk);}
+  {char* slot_name = "bit32-elt";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__set__funk);}
+  {char* slot_name = "bit64-elt";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__funk);}
+  {char* slot_name = "bit64-elt";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__set__funk);}
+  {char* slot_name = "cfunk_jump";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.cfunk_jump__funk);}
+  {char* slot_name = "bytecode_jump";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__funk);}
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -4497,6 +4631,8 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__4_arg(chunk__cfunk_jump, this, fiber, env, args, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.cfunk_jump__funk = never_gc(cfunk);}
   {char* str = "bytecode_jump"; __funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__bytecode_jump, this, fiber, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__funk = never_gc(cfunk);}
+  {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_chunk.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // simple_array
   

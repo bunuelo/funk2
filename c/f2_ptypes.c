@@ -3315,7 +3315,7 @@ def_pcfunk1(simple_array__length, x, return f2__simple_array__length(this_cause,
 def_pcfunk2(simple_array__elt, x, y, return f2__simple_array__elt(this_cause, x, y));
 def_pcfunk3(simple_array__elt__set, x, y, z, return f2__simple_array__elt__set(this_cause, x, y, z));
 
-
+/*
 f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr test_constraints   = f2__terminal_print_frame__test_constraints(cause, terminal_print_frame);
   f2ptr use_one_line       = f2__terminal_print_frame__use_one_line(    cause, terminal_print_frame);
@@ -3404,7 +3404,7 @@ f2ptr f2__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
   return raw__chunk__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(chunk__terminal_print_with_frame, this, terminal_print_frame, return f2__chunk__terminal_print_with_frame(this_cause, this, terminal_print_frame));
-
+*/
 
 f2ptr f2__simple_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {

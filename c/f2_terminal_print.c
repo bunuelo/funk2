@@ -245,10 +245,11 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   if (raw__funkable__is_type(cause, funk)) {
     // try to print on one line.
     {
-      f2ptr x            = f2__terminal_print_frame__x(           cause, terminal_print_frame);
-      f2ptr height       = f2__terminal_print_frame__height(      cause, terminal_print_frame);
-      f2ptr left_extent  = f2__terminal_print_frame__left_extent( cause, terminal_print_frame);
-      f2ptr right_extent = f2__terminal_print_frame__right_extent(cause, terminal_print_frame);
+      f2ptr x               = f2__terminal_print_frame__x(           cause, terminal_print_frame);
+      f2ptr height          = f2__terminal_print_frame__height(      cause, terminal_print_frame);
+      f2ptr left_extent     = f2__terminal_print_frame__left_extent( cause, terminal_print_frame);
+      f2ptr right_extent    = f2__terminal_print_frame__right_extent(cause, terminal_print_frame);
+      f2ptr indent_distance = f2__terminal_print_frame__indent_distance(cause, terminal_print_frame);
       {
 	f2__terminal_print_frame__use_one_line__set(                cause, terminal_print_frame, f2bool__new(boolean__true));
 	f2__terminal_print_frame__failed_max_x_constraint__set(     cause, terminal_print_frame, f2bool__new(boolean__false));
@@ -259,18 +260,20 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	  return result;
 	}
       }
-      f2__terminal_print_frame__x__set(           cause, terminal_print_frame, x);
-      f2__terminal_print_frame__height__set(      cause, terminal_print_frame, height);
-      f2__terminal_print_frame__left_extent__set( cause, terminal_print_frame, left_extent);
-      f2__terminal_print_frame__right_extent__set(cause, terminal_print_frame, right_extent);
+      f2__terminal_print_frame__x__set(              cause, terminal_print_frame, x);
+      f2__terminal_print_frame__height__set(         cause, terminal_print_frame, height);
+      f2__terminal_print_frame__left_extent__set(    cause, terminal_print_frame, left_extent);
+      f2__terminal_print_frame__right_extent__set(   cause, terminal_print_frame, right_extent);
+      f2__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
     }
     if (f2__terminal_print_frame__failed_max_x_constraint(cause, terminal_print_frame) != nil) {
       // failed x constraint, so forget trying to print on one line.
       {
-	f2ptr x            = f2__terminal_print_frame__x(           cause, terminal_print_frame);
-	f2ptr height       = f2__terminal_print_frame__height(      cause, terminal_print_frame);
-	f2ptr left_extent  = f2__terminal_print_frame__left_extent( cause, terminal_print_frame);
-	f2ptr right_extent = f2__terminal_print_frame__right_extent(cause, terminal_print_frame);
+	f2ptr x               = f2__terminal_print_frame__x(           cause, terminal_print_frame);
+	f2ptr height          = f2__terminal_print_frame__height(      cause, terminal_print_frame);
+	f2ptr left_extent     = f2__terminal_print_frame__left_extent( cause, terminal_print_frame);
+	f2ptr right_extent    = f2__terminal_print_frame__right_extent(cause, terminal_print_frame);
+	f2ptr indent_distance = f2__terminal_print_frame__indent_distance(cause, terminal_print_frame);
 	{
 	  f2__terminal_print_frame__use_one_line__set(                cause, terminal_print_frame, f2bool__new(boolean__false));
 	  f2__terminal_print_frame__failed_max_x_constraint__set(     cause, terminal_print_frame, f2bool__new(boolean__false));
@@ -281,10 +284,11 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	    return result;
 	  }
 	}
-	f2__terminal_print_frame__x__set(           cause, terminal_print_frame, x);
-	f2__terminal_print_frame__height__set(      cause, terminal_print_frame, height);
-	f2__terminal_print_frame__left_extent__set( cause, terminal_print_frame, left_extent);
-	f2__terminal_print_frame__right_extent__set(cause, terminal_print_frame, right_extent);
+	f2__terminal_print_frame__x__set(              cause, terminal_print_frame, x);
+	f2__terminal_print_frame__height__set(         cause, terminal_print_frame, height);
+	f2__terminal_print_frame__left_extent__set(    cause, terminal_print_frame, left_extent);
+	f2__terminal_print_frame__right_extent__set(   cause, terminal_print_frame, right_extent);
+	f2__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
       }
       // iteratively reduce max size if we fail to satisfy y constraint.
       while (f2__terminal_print_frame__failed_max_height_constraint(cause, terminal_print_frame) != nil) {
@@ -299,10 +303,11 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	  }
 	}
 	{
-	  f2ptr x            = f2__terminal_print_frame__x(           cause, terminal_print_frame);
-	  f2ptr height       = f2__terminal_print_frame__height(      cause, terminal_print_frame);
-	  f2ptr left_extent  = f2__terminal_print_frame__left_extent( cause, terminal_print_frame);
-	  f2ptr right_extent = f2__terminal_print_frame__right_extent(cause, terminal_print_frame);
+	  f2ptr x               = f2__terminal_print_frame__x(           cause, terminal_print_frame);
+	  f2ptr height          = f2__terminal_print_frame__height(      cause, terminal_print_frame);
+	  f2ptr left_extent     = f2__terminal_print_frame__left_extent( cause, terminal_print_frame);
+	  f2ptr right_extent    = f2__terminal_print_frame__right_extent(cause, terminal_print_frame);
+	  f2ptr indent_distance = f2__terminal_print_frame__indent_distance(cause, terminal_print_frame);
 	  {
 	    f2__terminal_print_frame__use_one_line__set(                cause, terminal_print_frame, f2bool__new(boolean__false));
 	    f2__terminal_print_frame__failed_max_x_constraint__set(     cause, terminal_print_frame, f2bool__new(boolean__false));
@@ -313,10 +318,11 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	      return result;
 	    }
 	  }
-	  f2__terminal_print_frame__x__set(           cause, terminal_print_frame, x);
-	  f2__terminal_print_frame__height__set(      cause, terminal_print_frame, height);
-	  f2__terminal_print_frame__left_extent__set( cause, terminal_print_frame, left_extent);
-	  f2__terminal_print_frame__right_extent__set(cause, terminal_print_frame, right_extent);
+	  f2__terminal_print_frame__x__set(              cause, terminal_print_frame, x);
+	  f2__terminal_print_frame__height__set(         cause, terminal_print_frame, height);
+	  f2__terminal_print_frame__left_extent__set(    cause, terminal_print_frame, left_extent);
+	  f2__terminal_print_frame__right_extent__set(   cause, terminal_print_frame, right_extent);
+	  f2__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
 	}
       }
       // failed x constraint and y constraint so reduced max_size, now ready to print (if we're not ultimately just testing).

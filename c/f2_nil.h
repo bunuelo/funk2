@@ -22,6 +22,8 @@
 #ifndef F2__NIL__TYPES__H
 #define F2__NIL__TYPES__H
 
+#include "f2_global.h"
+
 typedef struct funk2_object_type__nil__slot_s funk2_object_type__nil__slot_t
 
 struct funk2_object_type__nil__slot_s {

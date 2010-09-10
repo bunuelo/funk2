@@ -1856,7 +1856,7 @@ def_pcfunk1(mutex__equals_hash_value, this, return f2__mutex__equals_hash_value(
 
 f2ptr raw__mutex__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   u8  mutex_string[128];
-  u64 mutex_string__length = snprintf((char*)mutex_string, 128, "%c" f2ptr__fstr " " f2ptr__fstr " " f2ptr__fstr, f2mutex__computer_id(this, cause), f2mutex__pool_index(this, cause), f2mutex__pool_address(this, cause));
+  u64 mutex_string__length;
   {
     raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__mutex__foreground);
     mutex_string__length = snprintf((char*)mutex_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));

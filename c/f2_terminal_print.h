@@ -50,6 +50,8 @@ declare_frame_object_17_slot(terminal_print_frame,
 void raw__terminal_print_frame__write_color(f2ptr cause, f2ptr this, ansi_color_t color);
 void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length, u8* string);
 
+f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+
 // **
 
 void f2__terminal_print__initialize();

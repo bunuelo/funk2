@@ -23,7 +23,7 @@
 
 f2ptr raw__nil__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__nil__foreground);
-  raw__terminal_print_frame__write_string(cause, terminal_print_frame, 2, "[]");
+  raw__terminal_print_frame__write_string(cause, terminal_print_frame, 2, (u8*)"[]");
   raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
   return nil;
 }

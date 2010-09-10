@@ -1400,9 +1400,7 @@ def_pcfunk2(pointer__is_numerically_equal_to, this, that, return f2__pointer__is
 
 f2ptr raw__pointer__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   u8  pointer_string[128];
-  pointer_string[0] = f2char__ch(__funk2.reader.char__escape,     cause);
-  pointer_string[1] = f2char__ch(__funk2.reader.char__escape_hex, cause);
-  u64 pointer_string__length = 2 + snprintf((char*)pointer_string + 2, 128 - 2, ptr__fstr, f2pointer__p(this, cause));
+  u64 pointer_string__length = snprintf((char*)pointer_string, 128, "%c%c" ptr__fstr, (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_hex, cause), f2pointer__p(this, cause));
   raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__pointer__foreground);
   raw__terminal_print_frame__write_string(cause, terminal_print_frame, pointer_string__length, pointer_string);
   raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
@@ -1603,12 +1601,14 @@ def_pcfunk1(gfunkptr__equals_hash_value, this, return f2__gfunkptr__equals_hash_
 
 f2ptr raw__gfunkptr__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   u8  gfunkptr_string[128];
-  gfunkptr_string[0] = f2char__ch(__funk2.reader.char__escape,           cause);
-  gfunkptr_string[1] = f2char__ch(__funk2.reader.char__escape_gfunkptr,  cause);
-  gfunkptr_string[2] = f2char__ch(__funk2.reader.char__array_left_paren, cause);
-  u64 gfunkptr_string__length = 3 + snprintf((char*)gfunkptr_string + 3, 128, f2ptr__fstr " " f2ptr__fstr " " f2ptr__fstr, (f2ptr)f2gfunkptr__computer_id(this, cause), (f2ptr)f2gfunkptr__pool_index(this, cause), (f2ptr)f2gfunkptr__pool_address(this, cause));
-  gfunkptr_string[gfunkptr_string__length] = f2char__ch(__funk2.reader.char__array_right_paren, cause);
-  gfunkptr_string__length ++;
+  u64 gfunkptr_string__length = snprintf((char*)gfunkptr_string, 128, "%c%c%c" f2ptr__fstr " " f2ptr__fstr " " f2ptr__fstr "%c",
+					 (char)f2char__ch(__funk2.reader.char__escape, cause),
+					 (char)f2char__ch(__funk2.reader.char__escape_gfunkptr, cause),
+					 (char)f2char__ch(__funk2.reader.char__array_left_paren, cause),
+					 (f2ptr)f2gfunkptr__computer_id(this, cause),
+					 (f2ptr)f2gfunkptr__pool_index(this, cause),
+					 (f2ptr)f2gfunkptr__pool_address(this, cause),
+					 (char)f2char__ch(__funk2.reader.char__array_right_paren, cause));
   raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__gfunkptr__foreground);
   raw__terminal_print_frame__write_string(cause, terminal_print_frame, gfunkptr_string__length, gfunkptr_string);
   raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);

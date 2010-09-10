@@ -2975,7 +2975,7 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     {
       u64 index;
       for (index = 0; index < chunk__length; index ++) {
-	u64 increment_distance = sprintf(chunk_string + chunk_string__length, " #x%02x", f2chunk__bit8__elt(this, i, cause));
+	u64 increment_distance = sprintf(chunk_string + chunk_string__length, " #x%02x", f2chunk__bit8__elt(this, index, cause));
 	chunk_string__length += increment_distance;
 	x__i                 += increment_distance;
 	if ((max_x__i - x__i <= 5) && (index < (chunk__length - 1))) {

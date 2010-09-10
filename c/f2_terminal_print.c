@@ -135,7 +135,7 @@ void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length
 	break;
       case '\t':
 	{
-	  u64 spaces_until_next_tab = x__i - ((x__i >> 3) << 3);
+	  u64 spaces_until_next_tab = x__i - (((x__i + 7) >> 3) << 3);
 	  {
 	    u64 subindex;
 	    for (subindex = 0; subindex < spaces_until_next_tab; subindex ++) {

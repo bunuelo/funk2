@@ -2945,7 +2945,9 @@ def_pcfunk2(chunk__bytecode_jump, this, fiber, return f2integer__new(this_cause,
 
 
 f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr indent_distance    = f2__terminal_print_frame__indent_distance(cause, terminal_print_frame);
+  f2ptr test_constraints   = f2__terminal_print_frame__test_constraints(cause, terminal_print_frame);
+  f2ptr use_one_line       = f2__terminal_print_frame__use_one_line(    cause, terminal_print_frame);
+  f2ptr indent_distance    = f2__terminal_print_frame__indent_distance( cause, terminal_print_frame);
   u64   indent_distance__i = f2integer__i(indent_distance, cause);
   {
     indent_distance__i += 7;
@@ -2982,6 +2984,9 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	  if (max_x__i - x__i <= 5) {
 	    chunk_string__length += sprintf((char*)(chunk_string + chunk_string__length), "\n");
 	    x__i                  = indent_distance__i;
+	    if ((test_constraints != nil) && (use_one_line != nil)) {
+	      f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
+	    }
 	  } else {
 	    u64 increment_distance = sprintf((char*)(chunk_string + chunk_string__length), " ");
 	    chunk_string__length += increment_distance;

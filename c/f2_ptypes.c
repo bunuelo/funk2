@@ -1606,7 +1606,7 @@ f2ptr raw__gfunkptr__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr te
   gfunkptr_string[0] = f2char__ch(__funk2.reader.char__escape,           cause);
   gfunkptr_string[1] = f2char__ch(__funk2.reader.char__escape_gfunkptr,  cause);
   gfunkptr_string[2] = f2char__ch(__funk2.reader.char__array_left_paren, cause);
-  u64 gfunkptr_string__length = 3 + snprintf((char*)gfunkptr_string + 3, 128, f2ptr__fstr " " f2ptr__fstr " " f2ptr__fstr, f2gfunkptr__computer_id(this, cause), f2gfunkptr__pool_index(this, cause), f2gfunkptr__pool_address(this, cause));
+  u64 gfunkptr_string__length = 3 + snprintf((char*)gfunkptr_string + 3, 128, f2ptr__fstr " " f2ptr__fstr " " f2ptr__fstr, (f2ptr)f2gfunkptr__computer_id(this, cause), (f2ptr)f2gfunkptr__pool_index(this, cause), (f2ptr)f2gfunkptr__pool_address(this, cause));
   gfunkptr_string[gfunkptr_string__length] = f2char__ch(__funk2.reader.char__array_right_paren, cause);
   gfunkptr_string__length ++;
   raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__gfunkptr__foreground);

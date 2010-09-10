@@ -32,7 +32,7 @@ f2ptr f2__nil__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal
   if (this != nil) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__nil__terminal_print_with_frame(cause, this);
+  return raw__nil__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(nil__terminal_print_with_frame, this, terminal_print_frame, return f2__nil__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 

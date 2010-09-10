@@ -784,6 +784,8 @@ typedef struct funk2_object_type__string__slot_s {
   f2ptr equals__funk;
   f2ptr equals_hash_value__symbol;
   f2ptr equals_hash_value__funk;
+  f2ptr terminal_print_with_frame__symbol;
+  f2ptr terminal_print_with_frame__funk;
   // defined in f2_string.c
   f2ptr as__symbol__symbol;
   f2ptr as__symbol__funk;

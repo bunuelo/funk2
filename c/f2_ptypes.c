@@ -2979,7 +2979,7 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	chunk_string__length += increment_distance;
 	x__i                 += increment_distance;
 	if ((max_x__i - x__i <= 5) && (index < (chunk__length - 1))) {
-	  chunk_string__length += sprintf(chunk_string + chunk_string__length, "\n");
+	  chunk_string__length += sprintf((char*)(chunk_string + chunk_string__length), "\n");
 	  x__i                  = indent_distance__i;
 	}
       }

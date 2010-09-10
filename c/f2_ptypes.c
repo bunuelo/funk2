@@ -2257,16 +2257,17 @@ def_pcfunk1(string__equals_hash_value, this, return f2__string__equals_hash_valu
 f2ptr raw__string__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   u64 string__length        = raw__string__length(cause, this);
   u8* string__str           = (u8*)from_ptr(f2__malloc(string__length + 1)); raw__string__str_copy(cause, this, string__str); string__str[string__length] = 0;
-  u8* string_string         = (u8*)from_ptr(f2__malloc(string__length << 1));
-  u64 string_string__length = 0;
+  u8* string_string         = (u8*)from_ptr(f2__malloc((string__length << 1) + 128));
+  string_string[0]          = (u8)f2char__ch(__funk2.reader.char__string_quote, cause);
+  u64 string_string__length = 1;
   {
     u64 index;
     for (index = 0; index < string__length; index ++) {
       u8 ch = string__str[index];
-      if (ch == (u8)'\'') {
-	string_string[string_string__length] = '\\';
+      if (ch == (u8)f2char__ch(__funk2.reader.char__string_quote, cause)) {
+	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
 	string_string__length ++;
-	string_string[string_string__length] = '\'';
+	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_quote, cause);
 	string_string__length ++;
       } else {
 	string_string[string_string__length] = ch;
@@ -2274,6 +2275,8 @@ f2ptr raw__string__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
       }
     }
   }
+  string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_quote, cause);
+  string_string__length ++;
   raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__string__foreground);
   raw__terminal_print_frame__write_string(cause, terminal_print_frame, string_string__length, string_string);
   raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
@@ -2485,6 +2488,64 @@ def_pcfunk1(symbol__type, x, return f2__symbol__type(this_cause, x));
 def_pcfunk1(symbol__new, str, return f2__symbol__new(this_cause, str));
 def_pcfunk1(symbol__length, this, return f2__symbol__length(this_cause, this));
 def_pcfunk2(symbol__elt, this, index, return f2__symbol__elt(this_cause, this, index));
+
+f2ptr raw__symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  u64       symbol__length     = raw__symbol__length(cause, this);
+  u8*       symbol__str        = (u8*)from_ptr(f2__malloc(symbol__length + 1)); raw__symbol__str_copy(cause, this, symbol__str); symbol__str[symbol__length] = 0;
+  boolean_t symbol_needs_quote = boolean__false;
+  {
+    u64 index;
+    for (index = 0; index < symbol__length; index ++) {
+      char ch = symbol__str[index];
+      if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == f2char__ch(__funk2.reader.char__left_paren, cause) || ch == f2char__ch(__funk2.reader.char__right_paren, cause) || ch == f2char__ch(__funk2.reader.char__symbol_quote, cause) || ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
+	symbol_needs_quote = boolean__true;
+	break;
+      }
+    }
+  }
+  if (symbol_needs_quote) {
+    u8* symbol_string         = (u8*)from_ptr(f2__malloc((symbol__length << 1) + 128));
+    symbol_string[0]          = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
+    u64 symbol_string__length = 1;
+    {
+      u64 index;
+      for (index = 0; index < symbol__length; index ++) {
+	u8 ch = symbol__str[index];
+	if (ch == (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause)) {
+	  symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_escape, cause);
+	  symbol_string__length ++;
+	  symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
+	  symbol_string__length ++;
+	} else {
+	  symbol_string[symbol_string__length] = ch;
+	  symbol_string__length ++;
+	}
+      }
+    }
+    symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
+    symbol_string__length ++;
+    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, symbol_string__length, symbol_string);
+    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+    f2__free(to_ptr(symbol_string));
+  } else {
+    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, symbol__length, symbol__str);
+    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  }
+  f2__free(to_ptr(symbol__str));
+  return nil;
+}
+
+f2ptr f2__symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__symbol__is_type(cause, this)) ||
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__symbol__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(symbol__terminal_print_with_frame, this, terminal_print_frame, return f2__symbol__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
 
 f2ptr f2__symbol__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {

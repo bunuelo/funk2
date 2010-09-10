@@ -2344,7 +2344,7 @@ f2ptr raw__string__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
       size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
     }
     if (index < string__length) {
-      string_string__length += sprintf(string_string + string_string__length, "...");
+      string_string__length += sprintf((char*)(string_string + string_string__length), "...");
     }
   }
   string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_quote, cause);

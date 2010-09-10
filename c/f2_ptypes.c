@@ -2975,12 +2975,18 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     {
       u64 index;
       for (index = 0; index < chunk__length; index ++) {
-	u64 increment_distance = sprintf((char*)(chunk_string + chunk_string__length), " #x%02x", f2chunk__bit8__elt(this, index, cause));
+	u64 increment_distance = sprintf((char*)(chunk_string + chunk_string__length), "#x%02x", f2chunk__bit8__elt(this, index, cause));
 	chunk_string__length += increment_distance;
 	x__i                 += increment_distance;
-	if ((max_x__i - x__i <= 5) && (index < (chunk__length - 1))) {
-	  chunk_string__length += sprintf((char*)(chunk_string + chunk_string__length), "\n");
-	  x__i                  = indent_distance__i;
+	if (index < (chunk__length - 1)) {
+	  if (max_x__i - x__i <= 5) {
+	    chunk_string__length += sprintf((char*)(chunk_string + chunk_string__length), "\n");
+	    x__i                  = indent_distance__i;
+	  } else {
+	    u64 increment_distance = sprintf((char*)(chunk_string + chunk_string__length), " ");
+	    chunk_string__length += increment_distance;
+	    x__i                 += increment_distance;
+	  }
 	}
       }
     }

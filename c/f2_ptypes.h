@@ -707,6 +707,8 @@ typedef struct funk2_object_type__gfunkptr__slot_s {
   f2ptr equals__funk;
   f2ptr equals_hash_value__symbol;
   f2ptr equals_hash_value__funk;
+  f2ptr terminal_print_with_frame__symbol;
+  f2ptr terminal_print_with_frame__funk;
 } funk2_object_type__gfunkptr__slot_t;
 
 // mutex

@@ -1402,7 +1402,7 @@ f2ptr raw__pointer__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr ter
   u8  pointer_string[128];
   pointer_string[0] = f2char__ch(__funk2.reader.char__escape, cause);
   pointer_string[1] = f2char__ch(__funk2.reader.char__escape_hex, cause);
-  u64 pointer_string__length = snprintf((char*)pointer_string + 2, 128, ptr__fstr, f2pointer__p(this, cause));
+  u64 pointer_string__length = 2 + snprintf((char*)pointer_string + 2, 128, ptr__fstr, f2pointer__p(this, cause));
   raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__pointer__foreground);
   raw__terminal_print_frame__write_string(cause, terminal_print_frame, pointer_string__length, pointer_string);
   raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
@@ -1600,6 +1600,31 @@ f2ptr f2__gfunkptr__equals_hash_value(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(gfunkptr__equals_hash_value, this, return f2__gfunkptr__equals_hash_value(this_cause, this));
 
+
+f2ptr raw__gfunkptr__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  u8  gfunkptr_string[128];
+  gfunkptr_string[0] = f2char__ch(__funk2.reader.char__escape,           cause);
+  gfunkptr_string[1] = f2char__ch(__funk2.reader.char__escape_gfunkptr,  cause);
+  gfunkptr_string[2] = f2char__ch(__funk2.reader.char__array_left_paren, cause);
+  u64 gfunkptr_string__length = 3 + snprintf((char*)gfunkptr_string + 3, 128, f2ptr__fstr " " f2ptr__fstr " " f2ptr__fstr, f2gfunkptr__computer_id(this, cause), f2gfunkptr__pool_index(this, cause), f2gfunkptr__pool_address(this, cause));
+  gfunkptr_string[gfunkptr_string__length] = f2char__ch(__funk2.reader.char__array_right_paren, cause);
+  gfunkptr_string__length ++;
+  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__gfunkptr__foreground);
+  raw__terminal_print_frame__write_string(cause, terminal_print_frame, gfunkptr_string__length, gfunkptr_string);
+  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  return nil;
+}
+
+f2ptr f2__gfunkptr__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__gfunkptr__is_type(cause, this)) ||
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gfunkptr__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(gfunkptr__terminal_print_with_frame, this, terminal_print_frame, return f2__gfunkptr__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
 f2ptr f2__gfunkptr__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.gfunkptr__symbol)) {
@@ -1632,18 +1657,19 @@ f2ptr f2__gfunkptr__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2
 
 f2ptr f2gfunkptr__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("ptype"), (u8*)"ptype"), nil));
-  {char* slot_name = "is_type";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.is_type__funk);}
-  {char* slot_name = "type";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_gfunkptr.type__funk);}
-  {char* slot_name = "new";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new__funk);}
-  {char* slot_name = "new_from_f2ptr";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new_from_f2ptr__funk);}
-  {char* slot_name = "gfunkptr";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_gfunkptr.gfunkptr__funk);}
-  {char* slot_name = "computer_id";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_gfunkptr.computer_id__funk);}
-  {char* slot_name = "pool_index";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_index__funk);}
-  {char* slot_name = "pool_address";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_address__funk);}
-  {char* slot_name = "eq";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq__funk);}
-  {char* slot_name = "eq_hash_value";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq_hash_value__funk);}
-  {char* slot_name = "equals";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals__funk);}
-  {char* slot_name = "equals_hash_value"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals_hash_value__funk);}
+  {char* slot_name = "is_type";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.is_type__funk);}
+  {char* slot_name = "type";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.type__funk);}
+  {char* slot_name = "new";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new__funk);}
+  {char* slot_name = "new_from_f2ptr";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new_from_f2ptr__funk);}
+  {char* slot_name = "gfunkptr";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.gfunkptr__funk);}
+  {char* slot_name = "computer_id";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.computer_id__funk);}
+  {char* slot_name = "pool_index";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_index__funk);}
+  {char* slot_name = "pool_address";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_address__funk);}
+  {char* slot_name = "eq";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq__funk);}
+  {char* slot_name = "eq_hash_value";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq_hash_value__funk);}
+  {char* slot_name = "equals";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals__funk);}
+  {char* slot_name = "equals_hash_value";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals_hash_value__funk);}
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -4140,6 +4166,8 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(gfunkptr__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals_hash_value__funk = never_gc(cfunk);}
+  {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(gfunkptr__terminal_print_with_frame, this, terminal_print_frame, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // mutex
   

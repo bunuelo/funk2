@@ -24,7 +24,7 @@
 
 #include "f2_global.h"
 
-typedef struct funk2_object_type__nil__slot_s funk2_object_type__nil__slot_t
+typedef struct funk2_object_type__nil__slot_s funk2_object_type__nil__slot_t;
 
 struct funk2_object_type__nil__slot_s {
   f2ptr terminal_print_with_frame__symbol;

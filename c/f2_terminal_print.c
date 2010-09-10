@@ -229,8 +229,9 @@ def_pcfunk2(terminal_print_frame__write_string, this, string, return f2__termina
 
 
 f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
+  f2ptr fiber            = f2__this__fiber(cause);
+  f2ptr funk             = f2__object__slot__type_funk(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
+  f2ptr test_constraints = f2__terminal_print_frame__test_constraints(cause, terminal_print_frame);
   if (raw__funkable__is_type(cause, funk)) {
     // try to print on one line.
     {
@@ -308,8 +309,8 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	  f2__terminal_print_frame__right_extent__set(cause, terminal_print_frame, right_extent);
 	}
       }
-      // failed x constraint and y constraint so reduced max_size, now ready to print.
-      {
+      // failed x constraint and y constraint so reduced max_size, now ready to print (if we're not ultimately just testing).
+      if (test_constraints == nil) {
 	f2__terminal_print_frame__use_one_line__set(                cause, terminal_print_frame, f2bool__new(boolean__false));
 	f2__terminal_print_frame__failed_max_x_constraint__set(     cause, terminal_print_frame, f2bool__new(boolean__false));
 	f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
@@ -320,8 +321,8 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	}
       }
     } else {
-      // we successfully satisfied all constraints by printing on one line, so go for it.
-      {
+      // we successfully satisfied all constraints by printing on one line, so go for it (if we're not ultimately just testing).
+      if (test_constraints == nil) {
 	f2__terminal_print_frame__use_one_line__set(                cause, terminal_print_frame, f2bool__new(boolean__true));
 	f2__terminal_print_frame__failed_max_x_constraint__set(     cause, terminal_print_frame, f2bool__new(boolean__false));
 	f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));

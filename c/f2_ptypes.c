@@ -2255,11 +2255,12 @@ def_pcfunk1(string__equals_hash_value, this, return f2__string__equals_hash_valu
 
 
 f2ptr raw__string__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  u64 string__length        = raw__string__length(cause, this);
-  u8* string__str           = (u8*)from_ptr(f2__malloc(string__length + 1)); raw__string__str_copy(cause, this, string__str); string__str[string__length] = 0;
-  u8* string_string         = (u8*)from_ptr(f2__malloc((string__length << 1) + 128));
-  string_string[0]          = (u8)f2char__ch(__funk2.reader.char__string_quote, cause);
-  u64 string_string__length = 1;
+  f2ptr use_one_line          = f2__terminal_print_frame__use_one_line(cause, terminal_print_frame);
+  u64   string__length        = raw__string__length(cause, this);
+  u8*   string__str           = (u8*)from_ptr(f2__malloc(string__length + 1)); raw__string__str_copy(cause, this, string__str); string__str[string__length] = 0;
+  u8*   string_string         = (u8*)from_ptr(f2__malloc((string__length << 1) + 128));
+  string_string[0]            = (u8)f2char__ch(__funk2.reader.char__string_quote, cause);
+  u64   string_string__length = 1;
   {
     u64 index;
     for (index = 0; index < string__length; index ++) {
@@ -2268,6 +2269,26 @@ f2ptr raw__string__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
 	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
 	string_string__length ++;
 	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_quote, cause);
+	string_string__length ++;
+      } else if ((use_one_line != nil) && (ch == '\n')) {
+	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
+	string_string__length ++;
+	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_escape_newline, cause);
+	string_string__length ++;
+      } else if (ch == '\r') {
+	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
+	string_string__length ++;
+	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_escape_return, cause);
+	string_string__length ++;
+      } else if (ch == '\t') {
+	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
+	string_string__length ++;
+	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_escape_tab, cause);
+	string_string__length ++;
+      } else if (ch == '\b') {
+	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
+	string_string__length ++;
+	string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_escape_backspace, cause);
 	string_string__length ++;
       } else {
 	string_string[string_string__length] = ch;
@@ -2903,6 +2924,7 @@ def_pcfunk2(chunk__bit64__elt, this, index, return f2pointer__new(this_cause, f2
 def_pcfunk3(chunk__bit64__elt__set, this, index, value, f2chunk__bit64__elt__set(this, this_cause, f2integer__i(index, this_cause), f2pointer__p(value, this_cause)); return nil);
 def_pcfunk4(chunk__cfunk_jump, this, fiber, env, args, return f2chunk__cfunk_jump(this, this_cause, fiber, env, args));
 def_pcfunk2(chunk__bytecode_jump, this, fiber, return f2integer__new(this_cause, f2chunk__bytecode_jump(this, this_cause, fiber)));
+
 
 f2ptr f2__chunk__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {

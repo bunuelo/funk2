@@ -123,6 +123,16 @@ void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length
 	}
 	if (test_constraints == nil) {
 	  raw__stream__writef(cause, stream, "\n");
+	  {
+	    u64 index;
+	    for (index = 0; index < indent_distance__i; index ++) {
+	      if (use_html_codes) {
+		raw__stream__writef(cause, stream, "&nbsp;");
+	      } else {
+		raw__stream__writef(cause, stream, " ");
+	      }
+	    }
+	  }
 	}
 	x__i = indent_distance__i;
 	if ((! left_extent) || x__i < left_extent__i) {

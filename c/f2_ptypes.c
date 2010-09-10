@@ -2023,7 +2023,7 @@ def_pcfunk1(char__equals_hash_value, this, return f2__char__equals_hash_value(th
 
 
 f2ptr raw__char__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  char          char_string[128];
+  u8            char_string[128];
   u64           char_string__length;
   unsigned char ch = f2char__ch(this, cause);
   if (ch >= 28) {

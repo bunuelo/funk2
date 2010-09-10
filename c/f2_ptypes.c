@@ -2025,7 +2025,7 @@ def_pcfunk1(char__equals_hash_value, this, return f2__char__equals_hash_value(th
 f2ptr raw__char__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   char          char_string[128];
   u64           char_string__length;
-  unsigned char ch = f2char__ch(exp, cause);
+  unsigned char ch = f2char__ch(this, cause);
   if (ch >= 28) {
     char_string__length = snprintf((char*)char_string, 128, "%c%c%c", (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_char, cause), (char)ch);
   } else {

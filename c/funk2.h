@@ -68,6 +68,7 @@
 #include "f2_memory.h"
 #include "f2_memorypool.h"
 #include "f2_module_registration.h"
+#include "f2_nil.h"
 #include "f2_number.h"
 #include "f2_object.h"
 #include "f2_object_lattice.h"

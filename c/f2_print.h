@@ -33,6 +33,7 @@
 #define default_print_recursion_depth 20
 
 extern ansi_color_t print__ansi__default__foreground;
+extern ansi_color_t print__ansi__nil__foreground;
 extern ansi_color_t print__ansi__integer__foreground;
 extern ansi_color_t print__ansi__double__foreground;
 extern ansi_color_t print__ansi__float__foreground;

@@ -45,6 +45,7 @@
 #include "f2_bruno_graph.h"
 #include "f2_graph_match_error_correcting.h"
 #include "f2_gtk.h"
+#include "f2_nil.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;
@@ -55,6 +56,7 @@ void  funk2_primobject_type_handler__init(funk2_primobject_type_handler_t* this)
 void  funk2_primobject_type_handler__destroy(funk2_primobject_type_handler_t* this);
 void  funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name, f2ptr type);
 f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name);
+void  funk2_primobject_type_handler__add_nil_primobject(funk2_primobject_type_handler_t* this, f2ptr cause);
 void  funk2_primobject_type_handler__add_builtin_ptype_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause);
 void  funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause);
 void  funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_type_handler_t* this, f2ptr cause);

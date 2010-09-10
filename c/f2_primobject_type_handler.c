@@ -93,6 +93,10 @@ f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t
 f2ptr f2__lookup_type(f2ptr cause, f2ptr type_name) {return funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, type_name);}
 def_pcfunk1(lookup_type, type_name, return f2__lookup_type(this_cause, type_name));
 
+void funk2_primobject_type_handler__add_nil_primobject(funk2_primobject_type_handler_t* this, f2ptr cause) {
+  funk2_primobject_type_handler__add_type(this, cause, nil, f2nil__primobject_type__new(cause));
+}
+
 void funk2_primobject_type_handler__add_builtin_ptype_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause) {
   {char* type_name = "ptype";        funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),        f2ptype__primobject_type__new(cause));}
   {char* type_name = "integer";      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),      f2integer__primobject_type__new(cause));}

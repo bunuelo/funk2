@@ -2964,7 +2964,7 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     raw__terminal_print_frame__write_string(cause, terminal_print_frame, chunk_string__length, chunk_string);
   }
   {
-    chunk_string__length = sprintf((char*)chunk_string, "chunk");
+    chunk_string__length = sprintf((char*)chunk_string, "chunk ");
     raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
     raw__terminal_print_frame__write_string(cause, terminal_print_frame, chunk_string__length, chunk_string);
   }

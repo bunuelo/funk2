@@ -3396,7 +3396,7 @@ f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
       }
     }
     f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, size__i));
-    f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, f2integer__new(cause, max_size__i));
+    f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
   }
   {
     simple_array_string[0]      = (u8)f2char__ch(__funk2.reader.char__array_right_paren, cause);

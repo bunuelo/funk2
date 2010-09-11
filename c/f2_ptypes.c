@@ -2304,7 +2304,7 @@ f2ptr raw__string__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
     u64 size_index = 0;
     u64 index      = 0;
     while ((index < string__length) && (size__i < max_size__i)) {
-      for (; (size_index < 8) && (index < string__length); index ++, size_index ++) {
+      for (size_index = 0; (size_index < 8) && (index < string__length); index ++, size_index ++) {
 	u8 ch = string__str[index];
 	if (ch == (u8)f2char__ch(__funk2.reader.char__string_quote, cause)) {
 	  string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
@@ -2996,6 +2996,10 @@ def_pcfunk2(chunk__bytecode_jump, this, fiber, return f2integer__new(this_cause,
 
 
 f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr size               = f2__terminal_print_frame__size(cause, terminal_print_frame);
+  u64   size__i            = f2integer__i(size, cause);
+  f2ptr max_size           = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
+  u64   max_size__i        = f2integer__i(max_size, cause);
   f2ptr test_constraints   = f2__terminal_print_frame__test_constraints(cause, terminal_print_frame);
   f2ptr use_one_line       = f2__terminal_print_frame__use_one_line(    cause, terminal_print_frame);
   f2ptr indent_distance    = f2__terminal_print_frame__indent_distance( cause, terminal_print_frame);
@@ -3021,6 +3025,7 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
     raw__terminal_print_frame__write_string(cause, terminal_print_frame, chunk_string__length, chunk_string);
   }
+  size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
   {
     f2ptr x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
     u64   x__i = f2integer__i(x, cause);
@@ -3028,21 +3033,29 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     {
       u64 index;
       for (index = 0; index < chunk__length; index ++) {
-	u64 increment_distance = sprintf((char*)(chunk_string + chunk_string__length), "#x%02x", f2chunk__bit8__elt(this, index, cause));
-	chunk_string__length += increment_distance;
-	x__i                 += increment_distance;
-	if (index < (chunk__length - 1)) {
-	  if (max_x__i - x__i <= 5) {
-	    chunk_string__length += sprintf((char*)(chunk_string + chunk_string__length), "\n");
-	    x__i                  = indent_distance__i;
-	    if ((test_constraints != nil) && (use_one_line != nil)) {
-	      f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
+	if (size__i < max_size__i) {
+	  size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
+	  u64 increment_distance = sprintf((char*)(chunk_string + chunk_string__length), "#x%02x", f2chunk__bit8__elt(this, index, cause));
+	  chunk_string__length += increment_distance;
+	  x__i                 += increment_distance;
+	  if (index < (chunk__length - 1)) {
+	    if (max_x__i - x__i <= 5) {
+	      chunk_string__length += sprintf((char*)(chunk_string + chunk_string__length), "\n");
+	      x__i                  = indent_distance__i;
+	      if ((test_constraints != nil) && (use_one_line != nil)) {
+		f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
+	      }
+	    } else {
+	      u64 increment_distance = sprintf((char*)(chunk_string + chunk_string__length), " ");
+	      chunk_string__length += increment_distance;
+	      x__i                 += increment_distance;
 	    }
-	  } else {
-	    u64 increment_distance = sprintf((char*)(chunk_string + chunk_string__length), " ");
-	    chunk_string__length += increment_distance;
-	    x__i                 += increment_distance;
 	  }
+	} else {
+	  u64 increment_distance = sprintf((char*)(chunk_string + chunk_string__length), "...");
+	  chunk_string__length += increment_distance;
+	  x__i                 += increment_distance;
+	  break;
 	}
       }
     }

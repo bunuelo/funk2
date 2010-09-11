@@ -3358,7 +3358,7 @@ f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
     u64 index;
     for (index = 0; index < simple_array__length; index ++) {
       if (size__i >= max_size__i) {
-	simple_array_string__length = sprintf(simple_array_string, " ...");
+	simple_array_string__length = sprintf((char*)simple_array_string, " ...");
 	raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
 	raw__terminal_print_frame__write_string(cause, terminal_print_frame, simple_array_string__length, simple_array_string);
 	break;

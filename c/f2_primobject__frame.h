@@ -100,6 +100,10 @@ f2ptr      f2__frame__funkvar_value__set             (f2ptr cause, f2ptr this, f
 f2ptr     raw__frame__type_var__mapc_keys            (f2ptr cause, f2ptr this, f2ptr type, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
 f2ptr      f2__frame__type_var__keys                 (f2ptr cause, f2ptr this, f2ptr type);
 f2ptr      f2__frame__type_var__values               (f2ptr cause, f2ptr this, f2ptr type);
+void      raw__frame__copy                           (f2ptr cause, f2ptr this, f2ptr source);
+f2ptr      f2__frame__copy                           (f2ptr cause, f2ptr this, f2ptr source);
+f2ptr     raw__frame__new_copy                       (f2ptr cause, f2ptr this);
+f2ptr      f2__frame__new_copy                       (f2ptr cause, f2ptr this);
 
 boolean_t raw__frame__check_has_type_slot(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr slot_name);
 f2ptr      f2__frame__check_has_type_slot(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr slot_name);

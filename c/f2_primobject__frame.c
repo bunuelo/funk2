@@ -256,16 +256,36 @@ f2ptr f2__frame__funkvar__keys(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(frame__funkvar__keys, this, return f2__frame__funkvar__keys(this_cause, this));
 
+
+void raw__frame__copy(f2ptr cause, f2ptr this, f2ptr source) {
+  frame__iteration(cause, source, type_slot_name, slot_name, slot_value, 
+		   f2__frame__add_type_var_value(cause, this, type_slot_name, slot_name, slot_value));
+}
+
 f2ptr f2__frame__copy(f2ptr cause, f2ptr this, f2ptr source) {
   if ((! raw__frame__is_type(cause, this)) ||
       (! raw__frame__is_type(cause, source))) {
     return f2larva__new(cause, 1, nil);
   }
-  frame__iteration(cause, source, type_slot_name, slot_name, slot_value, 
-		   f2__frame__add_type_var_value(cause, this, type_slot_name, slot_name, slot_value));
+  raw__frame__copy(cause, this, source);
   return nil;
 }
 def_pcfunk2(frame__copy, this, source, return f2__frame__copy(this_cause, this, source));
+
+
+f2ptr raw__frame__new_copy(f2ptr cause, f2ptr this) {
+  f2ptr copy = f2__frame__new(cause, nil);
+  raw__frame__copy(cause, copy, this);
+  return copy;
+}
+
+f2ptr f2__frame__new_copy(f2ptr cause, f2ptr this) {
+  if (! raw__frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__frame__new_copy(cause, this);
+}
+
 
 f2ptr f2__frame__copy_slots(f2ptr cause, f2ptr this, f2ptr source, f2ptr map_keys) {
   if ((! raw__frame__is_type(cause, this)) ||

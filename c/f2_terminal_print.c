@@ -271,7 +271,7 @@ boolean_t raw__terminal_print_frame__can_print_expression_on_one_line(f2ptr caus
       f2__terminal_print_frame__size__set(           cause, this, size);
     }
     
-    // check if we failed x constraint, and if so, forget trying to print on one line.
+    // check if we failed x constraint.
     can_print_on_one_line = (f2__terminal_print_frame__failed_max_x_constraint(cause, this) == nil);
     
     f2__terminal_print_frame__failed_max_x_constraint__set(     cause, this, failed_max_x_constraint);

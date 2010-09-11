@@ -3381,11 +3381,17 @@ f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
 	  }
 	  
 	  {
+	    if (use_one_line == nil) {
+	      f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
+	    }
 	    f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, 0));
 	    f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, f2integer__new(cause, subexp_max_size__i));
 	    f2ptr result = raw__exp__terminal_print_with_frame(cause, subexp, terminal_print_frame);
 	    if (raw__larva__is_type(cause, result)) {
 	      return result;
+	    }
+	    if (use_one_line == nil) {
+	      f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
 	    }
 	  }
 	  

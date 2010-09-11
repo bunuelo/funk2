@@ -235,7 +235,7 @@ def_pcfunk2(terminal_print_frame__write_string, this, string, return f2__termina
 
 boolean_t raw__terminal_print_frame__can_print_expression_on_one_line(f2ptr cause, f2ptr this, f2ptr expression) {
   f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
+  f2ptr funk  = f2__object__slot__type_funk(cause, expression, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
   if (! raw__funkable__is_type(cause, funk)) {
     return boolean__true;
   }
@@ -280,7 +280,7 @@ boolean_t raw__terminal_print_frame__can_print_expression_on_one_line(f2ptr caus
 
 boolean_t raw__terminal_print_frame__expression_fits_within_height_constraint(f2ptr cause, f2ptr this, f2ptr expression) {
   f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
+  f2ptr funk  = f2__object__slot__type_funk(cause, expression, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
   if (! raw__funkable__is_type(cause, funk)) {
     return boolean__true;
   }

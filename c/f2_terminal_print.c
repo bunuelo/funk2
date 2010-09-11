@@ -284,7 +284,6 @@ boolean_t raw__terminal_print_frame__expression_fits_within_height_constraint(f2
   if (! raw__funkable__is_type(cause, funk)) {
     return boolean__true;
   }
-  f2ptr test_constraints = f2__terminal_print_frame__test_constraints(cause, terminal_print_frame);
   boolean_t satisfies_height_constraint;
   {
     f2ptr failed_max_x_constraint      = f2__terminal_print_frame__failed_max_x_constraint(     cause, this);

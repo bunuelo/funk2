@@ -346,6 +346,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	}
       }
     } else {
+      f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
       // iteratively reduce max size if we fail to satisfy y constraint.
       while (! raw__terminal_print_frame__expression_fits_within_height_constraint(cause, terminal_print_frame, this)) {
 	f2ptr max_size    = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
@@ -359,7 +360,6 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
       }
       // failed x constraint and y constraint so reduced max_size, now ready to print (if we're not ultimately just testing).
       if (test_constraints == nil) {
-	f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
 	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
 	if (raw__larva__is_type(cause, result)) {
 	  return result;

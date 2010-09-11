@@ -339,8 +339,8 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   if (raw__funkable__is_type(cause, funk)) {
     if (raw__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, this)) {
       // we successfully satisfied all constraints by printing on one line, so go for it (if we're not ultimately just testing).
+      f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
       if (test_constraints == nil) {
-	f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
 	if (raw__larva__is_type(cause, result)) {
 	  return result;
@@ -361,7 +361,6 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	  return f2larva__new(cause, 3342, nil);
 	}
       }
-      // failed x constraint and y constraint so reduced max_size, now ready to print (if we're not ultimately just testing).
       if (test_constraints == nil) {
 	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
 	if (raw__larva__is_type(cause, result)) {

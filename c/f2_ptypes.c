@@ -3386,7 +3386,7 @@ f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
 	  {
 	    f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, 0));
 	    f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, f2integer__new(cause, subexp_max_size__i));
-	    f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
+	    f2ptr result = raw__exp__terminal_print_with_frame(cause, subexp, terminal_print_frame);
 	    if (raw__larva__is_type(cause, result)) {
 	      return result;
 	    }

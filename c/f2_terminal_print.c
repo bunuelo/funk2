@@ -345,6 +345,8 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	if (raw__larva__is_type(cause, result)) {
 	  return result;
 	}
+      } else {
+	f2__terminal_print_frame__failed_max_x_constraint(cause, terminal_print_frame, f2bool__new(boolean__true));
       }
     } else {
       f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
@@ -365,6 +367,8 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	if (raw__larva__is_type(cause, result)) {
 	  return result;
 	}
+      } else {
+	f2__terminal_print_frame__failed_max_height_constraint(cause, terminal_print_frame, f2bool__new(boolean__true));
       }
     }
   } else {

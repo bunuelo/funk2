@@ -90,7 +90,16 @@ f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t
   return result;
 }
 
-f2ptr f2__lookup_type(f2ptr cause, f2ptr type_name) {return funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, type_name);}
+f2ptr f2__lookup_type(f2ptr cause, f2ptr type_name) {
+  f2ptr type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, type_name);
+  if (type == nil) {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "type_does_not_exist"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "type_name"), type_name);
+    return f2larva__new(cause, 3500, f2__bug__new(cause, f2integer__new(cause, 3500), bug_frame));
+  }
+  return type;
+}
 def_pcfunk1(lookup_type, type_name, return f2__lookup_type(this_cause, type_name));
 
 void funk2_primobject_type_handler__add_nil_primobject(funk2_primobject_type_handler_t* this, f2ptr cause) {

@@ -276,8 +276,8 @@ boolean_t raw__terminal_print_frame__can_print_expression_on_one_line(f2ptr caus
     
     f2__terminal_print_frame__failed_max_x_constraint__set(     cause, this, failed_max_x_constraint);
     f2__terminal_print_frame__failed_max_height_constraint__set(cause, this, failed_max_height_constraint);
-    f2__terminal_print_frame__test_constraints(                 cause, this, test_constraints);
-    f2__terminal_print_frame__use_one_line(                     cause, this, use_one_line);
+    f2__terminal_print_frame__test_constraints__set(            cause, this, test_constraints);
+    f2__terminal_print_frame__use_one_line__set(                cause, this, use_one_line);
   }
   return can_print_on_one_line;
 }
@@ -324,8 +324,8 @@ boolean_t raw__terminal_print_frame__expression_fits_within_height_constraint(f2
     
     f2__terminal_print_frame__failed_max_x_constraint__set(     cause, this, failed_max_x_constraint);
     f2__terminal_print_frame__failed_max_height_constraint__set(cause, this, failed_max_height_constraint);
-    f2__terminal_print_frame__test_constraints(                 cause, this, test_constraints);
-    f2__terminal_print_frame__use_one_line(                     cause, this, use_one_line);
+    f2__terminal_print_frame__test_constraints__set(            cause, this, test_constraints);
+    f2__terminal_print_frame__use_one_line__set(                cause, this, use_one_line);
   }
   return satisfies_height_constraint;
 }

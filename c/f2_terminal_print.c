@@ -116,12 +116,11 @@ void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length
       case '\r':
 	break;
       case '\n':
-	if (use_html_codes) {
-	  if (test_constraints == nil) {
+	if ((test_constraints == nil) && (height__i < max_height__i)) {
+	  if (use_html_codes) {
 	    raw__stream__writef(cause, stream, "<br>");
 	  }
-	}
-	if (test_constraints == nil) {
+	  
 	  raw__stream__writef(cause, stream, "\n");
 	  {
 	    u64 index;
@@ -134,71 +133,67 @@ void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length
 	    }
 	  }
 	}
-	x__i = indent_distance__i;
-	if ((! left_extent) || x__i < left_extent__i) {
-	  left_extent__i = x__i;
-	  if (! left_extent) {
-	    left_extent = f2bool__new(boolean__true);
+	if ((test_constraints != nil) || (height__i < max_height__i)) {
+	  x__i = indent_distance__i;
+	  if ((! left_extent) || x__i < left_extent__i) {
+	    left_extent__i = x__i;
+	    if (! left_extent) {
+	      left_extent = f2bool__new(boolean__true);
+	    }
 	  }
+	  height__i ++;
 	}
-	height__i ++;
 	break;
       case '\t':
 	{
 	  u64 spaces_until_next_tab = x__i - (((x__i + 7) >> 3) << 3);
-	  {
+	  if ((test_constraints == nil) && (x__i + spaces_until_next_tab < max_x__i)) {
 	    u64 subindex;
 	    for (subindex = 0; subindex < spaces_until_next_tab; subindex ++) {
 	      if (use_html_codes != nil) {
-		if (test_constraints == nil) {
-		  raw__stream__writef(cause, stream, "&nbsp;");
-		}
+		raw__stream__writef(cause, stream, "&nbsp;");
 	      } else {
-		if (test_constraints == nil) {
-		  raw__stream__writef(cause, stream, " ");
-		}
+		raw__stream__writef(cause, stream, " ");
 	      }
 	    }
 	  }
-	  x__i += spaces_until_next_tab;
-	  if ((! right_extent) || x__i > right_extent__i) {
-	    right_extent__i = x__i;
-	    if (! right_extent) {
-	      right_extent = f2bool__new(boolean__true);
+	  if ((test_constraints != nil) || (x__i + spaces_until_next_tab < max_x__i)) {
+	    x__i += spaces_until_next_tab;
+	    if ((! right_extent) || x__i > right_extent__i) {
+	      right_extent__i = x__i;
+	      if (! right_extent) {
+		right_extent = f2bool__new(boolean__true);
+	      }
 	    }
 	  }
 	}
 	break;
       default:
-	if (ch >= 28 && ch <= 255) {
-	  switch(ch) {
-	  case ' ':
-	    if (use_html_codes != nil) {
-	      if (test_constraints == nil) {
+	if ((test_constraints == nil) && (x__i < max_x__i)) {
+	  if (ch >= 28 && ch <= 255) {
+	    switch(ch) {
+	    case ' ':
+	      if (use_html_codes != nil) {
 		raw__stream__writef(cause, stream, "&nbsp;");
+	      } else {
+		raw__stream__writef(cause, stream, " ");
 	      }
-	    } else {
-	      if (test_constraints == nil) {
-		raw__stream__writef(cause, stream, "%c", ch);
-	      }
-	    }
-	    break;
-	  default:
-	    if (test_constraints == nil) {
+	      break;
+	    default:
 	      raw__stream__writef(cause, stream, "%c", ch);
+	      break;
 	    }
-	    break;
-	  }
-	} else {
-	  if (test_constraints == nil) {
+	  } else {
 	    raw__stream__writef(cause, stream, "?");
 	  }
 	}
-	x__i ++;
-	if ((! right_extent) || x__i > right_extent__i) {
-	  right_extent__i = x__i;
-	  if (! right_extent) {
-	    right_extent = f2bool__new(boolean__true);
+	if ((test_constraints != nil) || (x__i < max_x__i)) {
+	  x__i ++;
+	  if ((! right_extent) || x__i > right_extent__i) {
+	    right_extent__i = x__i;
+	    if (! right_extent) {
+	      right_extent = f2bool__new(boolean__true);
+	    }
 	  }
 	}
 	break;

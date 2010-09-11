@@ -3371,13 +3371,13 @@ f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
 	{
 	  if (index > 0) {
 	    {
-	      simple_array_string__length = sprintf(simple_array_string, " ");
+	      simple_array_string__length = sprintf((char*)simple_array_string, " ");
 	      raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__simple_array__foreground);
 	      raw__terminal_print_frame__write_string(cause, terminal_print_frame, simple_array_string__length, simple_array_string);
 	    }
 	    if (use_one_line == nil) {
 	      if (! raw__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, subexp)) {
-		simple_array_string__length = sprintf(simple_array_string, "\n");
+		simple_array_string__length = sprintf((char*)simple_array_string, "\n");
 		raw__terminal_print_frame__write_string(cause, terminal_print_frame, simple_array_string__length, simple_array_string);
 	      }
 	    }

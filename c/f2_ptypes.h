@@ -898,6 +898,8 @@ typedef struct funk2_object_type__simple_array__slot_s {
   f2ptr elt__funk;
   f2ptr elt__set__symbol;
   f2ptr elt__set__funk;
+  f2ptr terminal_print_with_frame__symbol;
+  f2ptr terminal_print_with_frame__funk;
 } funk2_object_type__simple_array__slot_t;
 
 // traced_array

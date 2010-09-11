@@ -243,6 +243,8 @@ boolean_t raw__terminal_print_frame__can_print_expression_on_one_line(f2ptr caus
   {
     f2ptr failed_max_x_constraint      = f2__terminal_print_frame__failed_max_x_constraint(     cause, this);
     f2ptr failed_max_height_constraint = f2__terminal_print_frame__failed_max_height_constraint(cause, this);
+    f2ptr test_constraints             = f2__terminal_print_frame__test_constraints(            cause, this);
+    f2ptr use_one_line                 = f2__terminal_print_frame__use_one_line(                cause, this);
     
     {
       f2ptr x               = f2__terminal_print_frame__x(              cause, this);
@@ -274,6 +276,8 @@ boolean_t raw__terminal_print_frame__can_print_expression_on_one_line(f2ptr caus
     
     f2__terminal_print_frame__failed_max_x_constraint__set(     cause, this, failed_max_x_constraint);
     f2__terminal_print_frame__failed_max_height_constraint__set(cause, this, failed_max_height_constraint);
+    f2__terminal_print_frame__test_constraints(                 cause, this, test_constraints);
+    f2__terminal_print_frame__use_one_line(                     cause, this, use_one_line);
   }
   return can_print_on_one_line;
 }
@@ -288,6 +292,9 @@ boolean_t raw__terminal_print_frame__expression_fits_within_height_constraint(f2
   {
     f2ptr failed_max_x_constraint      = f2__terminal_print_frame__failed_max_x_constraint(     cause, this);
     f2ptr failed_max_height_constraint = f2__terminal_print_frame__failed_max_height_constraint(cause, this);
+    f2ptr test_constraints             = f2__terminal_print_frame__test_constraints(            cause, this);
+    f2ptr use_one_line                 = f2__terminal_print_frame__use_one_line(                cause, this);
+    
     {
       f2ptr x               = f2__terminal_print_frame__x(              cause, this);
       f2ptr height          = f2__terminal_print_frame__height(         cause, this);
@@ -317,6 +324,8 @@ boolean_t raw__terminal_print_frame__expression_fits_within_height_constraint(f2
     
     f2__terminal_print_frame__failed_max_x_constraint__set(     cause, this, failed_max_x_constraint);
     f2__terminal_print_frame__failed_max_height_constraint__set(cause, this, failed_max_height_constraint);
+    f2__terminal_print_frame__test_constraints(                 cause, this, test_constraints);
+    f2__terminal_print_frame__use_one_line(                     cause, this, use_one_line);
   }
   return satisfies_height_constraint;
 }
@@ -327,7 +336,16 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   f2ptr funk             = f2__object__slot__type_funk(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
   f2ptr test_constraints = f2__terminal_print_frame__test_constraints(cause, terminal_print_frame);
   if (raw__funkable__is_type(cause, funk)) {
-    if (! raw__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, this)) {
+    if (raw__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, this)) {
+      // we successfully satisfied all constraints by printing on one line, so go for it (if we're not ultimately just testing).
+      if (test_constraints == nil) {
+	f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
+	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
+	if (raw__larva__is_type(cause, result)) {
+	  return result;
+	}
+      }
+    } else {
       // iteratively reduce max size if we fail to satisfy y constraint.
       while (! raw__terminal_print_frame__expression_fits_within_height_constraint(cause, terminal_print_frame, this)) {
 	f2ptr max_size    = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
@@ -341,22 +359,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
       }
       // failed x constraint and y constraint so reduced max_size, now ready to print (if we're not ultimately just testing).
       if (test_constraints == nil) {
-	f2__terminal_print_frame__use_one_line__set(                cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__failed_max_x_constraint__set(     cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__test_constraints__set(            cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
-	if (raw__larva__is_type(cause, result)) {
-	  return result;
-	}
-      }
-    } else {
-      // we successfully satisfied all constraints by printing on one line, so go for it (if we're not ultimately just testing).
-      if (test_constraints == nil) {
-	f2__terminal_print_frame__use_one_line__set(                cause, terminal_print_frame, f2bool__new(boolean__true));
-	f2__terminal_print_frame__failed_max_x_constraint__set(     cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	f2__terminal_print_frame__test_constraints__set(            cause, terminal_print_frame, f2bool__new(boolean__false));
+	f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
 	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
 	if (raw__larva__is_type(cause, result)) {
 	  return result;

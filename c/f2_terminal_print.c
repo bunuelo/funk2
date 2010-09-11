@@ -205,10 +205,10 @@ void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length
     }
   }
   if (test_constraints != nil) {
-    if (right_extent__i > max_x__i) {
+    if (right_extent__i >= max_x__i) {
       f2__terminal_print_frame__failed_max_x_constraint__set(cause, this, f2bool__new(boolean__true));
     }
-    if (height__i > max_height__i) {
+    if (height__i >= max_height__i) {
       f2__terminal_print_frame__failed_max_height_constraint__set(cause, this, f2bool__new(boolean__true));
     }
   }

@@ -103,6 +103,8 @@ void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length
   s64   x__i               = f2integer__i(x, cause);
   f2ptr height             = f2__terminal_print_frame__height(cause, this);
   s64   height__i          = f2integer__i(height, cause);
+  f2ptr max_x              = f2__terminal_print_frame__max_x(cause, this);
+  s64   max_x__i           = f2integer__i(max_x, cause);
   f2ptr max_height         = f2__terminal_print_frame__max_height(cause, this);
   s64   max_height__i      = f2integer__i(max_height, cause);
   f2ptr left_extent        = f2__terminal_print_frame__left_extent(cause, this);
@@ -203,10 +205,6 @@ void raw__terminal_print_frame__write_string(f2ptr cause, f2ptr this, u64 length
     }
   }
   if (test_constraints != nil) {
-    f2ptr max_x         = f2__terminal_print_frame__max_x(cause, this);
-    s64   max_x__i      = f2integer__i(max_x, cause);
-    f2ptr max_height    = f2__terminal_print_frame__max_height(cause, this);
-    s64   max_height__i = f2integer__i(max_height, cause);
     if (right_extent__i > max_x__i) {
       f2__terminal_print_frame__failed_max_x_constraint__set(cause, this, f2bool__new(boolean__true));
     }

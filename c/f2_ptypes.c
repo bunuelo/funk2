@@ -3355,7 +3355,7 @@ f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
     u64 index;
     for (index = 0; index < simple_array__length; index ++) {
       //printf("\nindex = " u64__fstr, index);
-      if (size__i >= max_size__i) {
+      if (size__i >= (max_size__i - 1)) {
 	//printf("\ndebug 0");
 	simple_array_string__length = sprintf((char*)simple_array_string, " ...");
 	raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
@@ -3366,6 +3366,7 @@ f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
 	f2ptr subexp                    = f2simple_array__elt(this, index, cause);
 	u64   simple_array__length_left = simple_array__length - index;
 	u64   subexp_max_size__i        = (max_size__i - size__i + (simple_array__length_left - 1)) / simple_array__length_left;
+	printf("{subexp_max_size__i=" u64__fstr "}", subexp_max_size__i);
 	f2ptr subexp_size;
 	u64   subexp_size__i;
 	{

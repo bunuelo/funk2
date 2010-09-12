@@ -237,7 +237,7 @@ f2ptr f2__terminal_print_frame__can_print_expression_on_one_line(f2ptr cause, f2
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, expression, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
   if (! raw__funkable__is_type(cause, funk)) {
-    return boolean__true;
+    return f2bool__new(boolean__true);
   }
   f2ptr     encountered_larva = nil;
   boolean_t can_print_on_one_line;
@@ -285,11 +285,11 @@ f2ptr f2__terminal_print_frame__can_print_expression_on_one_line(f2ptr cause, f2
   return f2bool__new(can_print_on_one_line);
 }
 
-boolean_t raw__terminal_print_frame__expression_fits_within_height_constraint(f2ptr cause, f2ptr this, f2ptr expression) {
+f2ptr f2__terminal_print_frame__expression_fits_within_height_constraint(f2ptr cause, f2ptr this, f2ptr expression) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, expression, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
   if (! raw__funkable__is_type(cause, funk)) {
-    return boolean__true;
+    return f2bool__new(boolean__false);
   }
   f2ptr     encountered_larva = nil;
   boolean_t satisfies_height_constraint;

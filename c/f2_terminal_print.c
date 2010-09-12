@@ -332,6 +332,8 @@ boolean_t raw__terminal_print_frame__expression_fits_within_height_constraint(f2
 
 
 f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  printf("\nentering raw__exp__terminal_print_with_frame\n");
+  f2__print(cause, terminal_print_frame);
   f2ptr fiber            = f2__this__fiber(cause);
   f2ptr funk             = f2__object__slot__type_funk(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
   f2ptr test_constraints = f2__terminal_print_frame__test_constraints(cause, terminal_print_frame);

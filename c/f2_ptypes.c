@@ -3366,7 +3366,7 @@ f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
 	f2ptr subexp                    = f2simple_array__elt(this, index, cause);
 	u64   simple_array__length_left = simple_array__length - index;
 	u64   subexp_max_size__i        = (max_size__i - size__i + (simple_array__length_left - 1)) / simple_array__length_left;
-	printf("{subexp_max_size__i=" u64__fstr "}", subexp_max_size__i);
+	//printf("\n{subexp_max_size__i=" u64__fstr "}", subexp_max_size__i);
 	f2ptr subexp_size;
 	u64   subexp_size__i;
 	{
@@ -3384,7 +3384,9 @@ f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
 		return can_print_on_one_line;
 	      }
 	      if (can_print_on_one_line == nil) {
-		//printf("\ndebug 4");
+		printf("\ndebug 4");
+		f2__print(cause, terminal_print_frame);
+		f2__print(cause, subexp);
 		simple_array_string__length = sprintf((char*)simple_array_string, "\n");
 		raw__terminal_print_frame__write_string(cause, terminal_print_frame, simple_array_string__length, simple_array_string);
 	      }

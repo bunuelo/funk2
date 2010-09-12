@@ -381,7 +381,11 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
 	if (max_size__i == 0) {
 	  //if (test_constraints == nil) {
-	  return f2larva__new(cause, 3342, nil);
+	  f2ptr bug_frame = f2__frame__new(cause, nil);
+	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),             new__symbol(cause, "reduced_expression_to_print_at_size_zero_and_still_failed_height_constraint"));
+	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),                 this);
+	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "terminal_print_frame"), terminal_print_frame);
+	  return f2larva__new(cause, 3342, f2__bug__new(cause, f2integer__new(cause, 3342), bug_frame));
 	  //} else {
 	  //f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	  //}

@@ -338,6 +338,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
     s64   max_size__i = f2integer__i(max_size, cause);
     if (max_size__i > 1) {
       f2__print(cause, terminal_print_frame);
+      f2__print(cause, this);
     }
   }
   f2ptr fiber            = f2__this__fiber(cause);

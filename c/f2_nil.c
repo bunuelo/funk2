@@ -34,7 +34,8 @@ f2ptr raw__nil__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 }
 
 f2ptr f2__nil__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if (this != nil) {
+  if ((this != nil) ||
+      (raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__nil__terminal_print_with_frame(cause, this, terminal_print_frame);

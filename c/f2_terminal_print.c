@@ -336,10 +336,8 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   {
     f2ptr max_size    = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
     s64   max_size__i = f2integer__i(max_size, cause);
-    //if (max_size__i > 1) {
     f2__print(cause, terminal_print_frame);
     f2__print(cause, this);
-    //}
   }
   f2ptr fiber            = f2__this__fiber(cause);
   f2ptr funk             = f2__object__slot__type_funk(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
@@ -349,12 +347,12 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
     if (raw__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, this)) {
       // we successfully satisfied all constraints by printing on one line, so go for it (if we're not ultimately just testing).
       f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
-      if (test_constraints == nil) {
-	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
-	if (raw__larva__is_type(cause, result)) {
-	  return result;
-	}
-      }// else {
+      //if (test_constraints == nil) {
+      f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+      //} else {
       //	f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
       //}
     } else {
@@ -367,19 +365,19 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	max_size      = f2integer__new(cause, max_size__i);
 	f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
 	if (max_size__i == 0) {
-	  if (test_constraints == nil) {
-	    return f2larva__new(cause, 3342, nil);
-	  } else {
-	    f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
-	  }
+	  //if (test_constraints == nil) {
+	  return f2larva__new(cause, 3342, nil);
+	  //} else {
+	  //f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
+	  //}
 	}
       }
-      if ((test_constraints == nil) && (max_size__i > 0)) {
-	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
-	if (raw__larva__is_type(cause, result)) {
-	  return result;
-	}
-      }// else {
+      //if ((test_constraints == nil) && (max_size__i > 0)) {
+      f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+      //} else {
       //	f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
       //}
     }

@@ -3384,9 +3384,9 @@ f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
 		return can_print_on_one_line;
 	      }
 	      if (can_print_on_one_line == nil) {
-		printf("\ndebug 4");
-		f2__print(cause, terminal_print_frame);
-		f2__print(cause, subexp);
+		//printf("\ndebug 4");
+		//f2__print(cause, terminal_print_frame);
+		//f2__print(cause, subexp);
 		simple_array_string__length = sprintf((char*)simple_array_string, "\n");
 		raw__terminal_print_frame__write_string(cause, terminal_print_frame, simple_array_string__length, simple_array_string);
 	      }

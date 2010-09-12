@@ -272,8 +272,7 @@ f2ptr f2__terminal_print_frame__can_print_expression_on_one_line(f2ptr cause, f2
       f2__terminal_print_frame__size__set(           cause, this, size);
     }
     
-    can_print_on_one_line = ((f2__terminal_print_frame__failed_max_x_constraint(     cause, this) == nil) &&
-			     (f2__terminal_print_frame__failed_max_height_constraint(cause, this) == nil));
+    can_print_on_one_line = (f2__terminal_print_frame__failed_max_x_constraint(cause, this) == nil);
     
     f2__terminal_print_frame__failed_max_x_constraint__set(     cause, this, failed_max_x_constraint);
     f2__terminal_print_frame__failed_max_height_constraint__set(cause, this, failed_max_height_constraint);
@@ -395,7 +394,6 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 																			    new__symbol(cause, "this"),                 this,
 																			    new__symbol(cause, "terminal_print_frame"), terminal_print_frame))))));
 	    } else {
-	      f2__terminal_print_frame__failed_max_x_constraint__set(     cause, terminal_print_frame, f2bool__new(boolean__true));
 	      f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	    }
 	  } else {

@@ -239,6 +239,7 @@ boolean_t raw__terminal_print_frame__can_print_expression_on_one_line(f2ptr caus
   if (! raw__funkable__is_type(cause, funk)) {
     return boolean__true;
   }
+  boolean_t encountered_larva = boolean__false;
   boolean_t can_print_on_one_line;
   {
     f2ptr failed_max_x_constraint      = f2__terminal_print_frame__failed_max_x_constraint(     cause, this);
@@ -260,7 +261,7 @@ boolean_t raw__terminal_print_frame__can_print_expression_on_one_line(f2ptr caus
 	f2__terminal_print_frame__test_constraints__set(            cause, this, f2bool__new(boolean__true));
 	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, expression, f2cons__new(cause, this, nil)));
 	if (raw__larva__is_type(cause, result)) {
-	  return result;
+	  encountered_larva = boolean__true;
 	}
       }
       f2__terminal_print_frame__x__set(              cause, this, x);
@@ -271,8 +272,11 @@ boolean_t raw__terminal_print_frame__can_print_expression_on_one_line(f2ptr caus
       f2__terminal_print_frame__size__set(           cause, this, size);
     }
     
-    // check if we failed x constraint.
-    can_print_on_one_line = (f2__terminal_print_frame__failed_max_x_constraint(cause, this) == nil);
+    if (encountered_larva) {
+      can_print_on_one_line = boolean__false;
+    } else {
+      can_print_on_one_line = (f2__terminal_print_frame__failed_max_x_constraint(cause, this) == nil);
+    }
     
     f2__terminal_print_frame__failed_max_x_constraint__set(     cause, this, failed_max_x_constraint);
     f2__terminal_print_frame__failed_max_height_constraint__set(cause, this, failed_max_height_constraint);
@@ -288,6 +292,7 @@ boolean_t raw__terminal_print_frame__expression_fits_within_height_constraint(f2
   if (! raw__funkable__is_type(cause, funk)) {
     return boolean__true;
   }
+  boolean_t encountered_larva = boolean__false;
   boolean_t satisfies_height_constraint;
   {
     f2ptr failed_max_x_constraint      = f2__terminal_print_frame__failed_max_x_constraint(     cause, this);
@@ -309,7 +314,7 @@ boolean_t raw__terminal_print_frame__expression_fits_within_height_constraint(f2
 	f2__terminal_print_frame__test_constraints__set(            cause, this, f2bool__new(boolean__true));
 	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, expression, f2cons__new(cause, this, nil)));
 	if (raw__larva__is_type(cause, result)) {
-	  return result;
+	  encountered_larva = boolean__true;
 	}
       }
       f2__terminal_print_frame__x__set(              cause, this, x);
@@ -320,7 +325,11 @@ boolean_t raw__terminal_print_frame__expression_fits_within_height_constraint(f2
       f2__terminal_print_frame__size__set(           cause, this, size);
     }
     
-    satisfies_height_constraint = (f2__terminal_print_frame__failed_max_height_constraint(cause, this) == nil);
+    if (encountered_larva) {
+      satisfies_height_constraint = boolean__false;
+    } else {
+      satisfies_height_constraint = (f2__terminal_print_frame__failed_max_height_constraint(cause, this) == nil);
+    }
     
     f2__terminal_print_frame__failed_max_x_constraint__set(     cause, this, failed_max_x_constraint);
     f2__terminal_print_frame__failed_max_height_constraint__set(cause, this, failed_max_height_constraint);

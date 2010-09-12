@@ -3354,15 +3354,15 @@ f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
   {
     u64 index;
     for (index = 0; index < simple_array__length; index ++) {
-      printf("\nindex = " u64__fstr, index);
+      //printf("\nindex = " u64__fstr, index);
       if (size__i >= max_size__i) {
-	printf("\ndebug 0");
+	//printf("\ndebug 0");
 	simple_array_string__length = sprintf((char*)simple_array_string, " ...");
 	raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
 	raw__terminal_print_frame__write_string(cause, terminal_print_frame, simple_array_string__length, simple_array_string);
 	break;
       } else {
-	printf("\ndebug 1");
+	//printf("\ndebug 1");
 	f2ptr subexp                    = f2simple_array__elt(this, index, cause);
 	u64   simple_array__length_left = simple_array__length - index;
 	u64   subexp_max_size__i        = (max_size__i - size__i + (simple_array__length_left - 1)) / simple_array__length_left;
@@ -3370,52 +3370,52 @@ f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
 	u64   subexp_size__i;
 	{
 	  if (index > 0) {
-	    printf("\ndebug 2");
+	    //printf("\ndebug 2");
 	    {
 	      simple_array_string__length = sprintf((char*)simple_array_string, " ");
 	      raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__simple_array__foreground);
 	      raw__terminal_print_frame__write_string(cause, terminal_print_frame, simple_array_string__length, simple_array_string);
 	    }
 	    if (use_one_line == nil) {
-	      printf("\ndebug 3");
+	      //printf("\ndebug 3");
 	      if (! raw__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, subexp)) {
-		printf("\ndebug 4");
+		//printf("\ndebug 4");
 		simple_array_string__length = sprintf((char*)simple_array_string, "\n");
 		raw__terminal_print_frame__write_string(cause, terminal_print_frame, simple_array_string__length, simple_array_string);
 	      }
 	    }
 	  }
-	  printf("\ndebug 5");
+	  //printf("\ndebug 5");
 	  
 	  {
 	    if (use_one_line == nil) {
-	      printf("\ndebug 6");
+	      //printf("\ndebug 6");
 	      f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	    }
-	    printf("\ndebug 7");
+	    //printf("\ndebug 7");
 	    f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, 0));
 	    f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, f2integer__new(cause, subexp_max_size__i));
 	    f2ptr result = raw__exp__terminal_print_with_frame(cause, subexp, terminal_print_frame);
 	    if (raw__larva__is_type(cause, result)) {
-	      printf("\ndebug 8");
+	      //printf("\ndebug 8");
 	      return result;
 	    }
-	    printf("\ndebug 9");
+	    //printf("\ndebug 9");
 	    if (use_one_line == nil) {
-	      printf("\ndebug 10");
+	      //printf("\ndebug 10");
 	      f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
 	    }
 	  }
 	  
-	  printf("\ndebug 11");
+	  //printf("\ndebug 11");
 	  subexp_size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
 	  subexp_size__i = f2integer__i(subexp_size, cause);
 	}
 	size__i += subexp_size__i;
       }
-      printf("\ndebug 12");
+      //printf("\ndebug 12");
     }
-    printf("\ndebug 13");
+    //printf("\ndebug 13");
     f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, size__i));
     f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
   }

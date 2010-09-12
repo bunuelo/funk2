@@ -47,10 +47,10 @@ declare_frame_object_17_slot(terminal_print_frame,
 			     failed_max_x_constraint,
 			     failed_max_height_constraint);
 
-void      raw__terminal_print_frame__write_color(                             f2ptr cause, f2ptr this, ansi_color_t color);
-void      raw__terminal_print_frame__write_string(                            f2ptr cause, f2ptr this, u64 length, u8* string);
-boolean_t raw__terminal_print_frame__can_print_expression_on_one_line(        f2ptr cause, f2ptr this, f2ptr expression);
-boolean_t raw__terminal_print_frame__expression_fits_within_height_constraint(f2ptr cause, f2ptr this, f2ptr expression);
+void  raw__terminal_print_frame__write_color(                             f2ptr cause, f2ptr this, ansi_color_t color);
+void  raw__terminal_print_frame__write_string(                            f2ptr cause, f2ptr this, u64 length, u8* string);
+f2ptr  f2__terminal_print_frame__can_print_expression_on_one_line(        f2ptr cause, f2ptr this, f2ptr expression);
+f2ptr  f2__terminal_print_frame__expression_fits_within_height_constraint(f2ptr cause, f2ptr this, f2ptr expression);
 
 f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 

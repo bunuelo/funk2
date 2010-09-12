@@ -360,11 +360,11 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
     } else {
       f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
       // iteratively reduce max size if we fail to satisfy y constraint.
+      f2ptr max_size    = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
+      s64   max_size__i = f2integer__i(max_size, cause);
       while (! raw__terminal_print_frame__expression_fits_within_height_constraint(cause, terminal_print_frame, this)) {
-	f2ptr max_size    = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
-	s64   max_size__i = f2integer__i(max_size, cause);
 	max_size__i >>= 1;
-	max_size = f2integer__new(cause, max_size__i);
+	max_size      = f2integer__new(cause, max_size__i);
 	f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
 	if (max_size__i == 0) {
 	  if (test_constraints == nil) {

@@ -332,7 +332,7 @@ boolean_t raw__terminal_print_frame__expression_fits_within_height_constraint(f2
 
 
 f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  printf("\nentering raw__exp__terminal_print_with_frame\n");
+  //printf("\nentering raw__exp__terminal_print_with_frame\n");
   {
     //f2ptr max_size    = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
     //s64   max_size__i = f2integer__i(max_size, cause);

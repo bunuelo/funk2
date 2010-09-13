@@ -369,8 +369,10 @@ f2ptr raw__terminal_print_frame__expression_x_offset(f2ptr cause, f2ptr this, f2
   f2ptr encountered_larva = nil;
   s64   x_offset;
   {
-    f2ptr test_constraints = f2__terminal_print_frame__test_constraints(            cause, this);
-    f2ptr use_one_line     = f2__terminal_print_frame__use_one_line(                cause, this);
+    f2ptr failed_max_x_constraint      = f2__terminal_print_frame__failed_max_x_constraint(     cause, this);
+    f2ptr failed_max_height_constraint = f2__terminal_print_frame__failed_max_height_constraint(cause, this);
+    f2ptr test_constraints             = f2__terminal_print_frame__test_constraints(            cause, this);
+    f2ptr use_one_line                 = f2__terminal_print_frame__use_one_line(                cause, this);
     
     {
       f2ptr x               = f2__terminal_print_frame__x(              cause, this);

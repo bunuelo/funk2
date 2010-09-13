@@ -4179,7 +4179,7 @@ f2ptr raw__larva__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   }
   {
     raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__integer__foreground);
-    larva_string__length = snprintf((char*)larva_string, 128, u64__fstr " ", f2larva__larva_type(this, cause));
+    larva_string__length = snprintf((char*)larva_string, 128, u64__fstr " ", (u64)(f2larva__larva_type(this, cause)));
     raw__terminal_print_frame__write_string(cause, terminal_print_frame, larva_string__length, larva_string);
   }
   {

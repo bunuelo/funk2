@@ -338,8 +338,7 @@ f2ptr raw__terminal_print_frame__expression_fits_within_height_constraint(f2ptr 
       f2__terminal_print_frame__size__set(           cause, this, size);
     }
     
-    satisfies_height_constraint = ((f2__terminal_print_frame__failed_max_height_constraint(cause, this) == nil) &&
-				   (f2__terminal_print_frame__failed_max_x_constraint(     cause, this) == nil));
+    satisfies_height_constraint = (f2__terminal_print_frame__failed_max_height_constraint(cause, this) == nil);
     
     f2__terminal_print_frame__failed_max_x_constraint__set(     cause, this, failed_max_x_constraint);
     f2__terminal_print_frame__failed_max_height_constraint__set(cause, this, failed_max_height_constraint);

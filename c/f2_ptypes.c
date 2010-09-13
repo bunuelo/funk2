@@ -3332,6 +3332,8 @@ def_pcfunk3(simple_array__elt__set, x, y, z, return f2__simple_array__elt__set(t
 f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr max_size           = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
   s64   max_size__i        = f2integer__i(max_size, cause);
+  f2ptr max_x              = f2__terminal_print_frame__max_x(cause, terminal_print_frame);
+  s64   max_x__i           = f2integer__i(max_x, cause);
   f2ptr size               = f2__terminal_print_frame__size(cause, terminal_print_frame);
   s64   size__i            = f2integer__i(size, cause);
   f2ptr use_one_line       = f2__terminal_print_frame__use_one_line(    cause, terminal_print_frame);
@@ -3358,8 +3360,10 @@ f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
     for (index = 0; index < simple_array__length; index ++) {
       //printf("\nindex = " u64__fstr, index);
       if (size__i >= (max_size__i - 1)) {
+	x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+	x__i = f2integer__i(x, cause);
 	//printf("\ndebug 0");
-	simple_array_string__length = sprintf((char*)simple_array_string, " ...");
+	simple_array_string__length = sprintf((char*)simple_array_string, "%c...", ((x__i + 4) < max_x__i) ? ' ' : '\n');
 	raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
 	raw__terminal_print_frame__write_string(cause, terminal_print_frame, simple_array_string__length, simple_array_string);
 	break;

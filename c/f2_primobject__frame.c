@@ -450,6 +450,11 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   u8    frame_string[128];
   u64   frame_string__length;
   {
+    f2ptr x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+    s64   x__i = f2integer__i(x, cause);
+    f2__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, f2integer__i(cause, x__i + 2));
+  }
+  {
     raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__frame__foreground);
     frame_string__length = snprintf((char*)frame_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));
     raw__terminal_print_frame__write_string(cause, terminal_print_frame, frame_string__length, frame_string);
@@ -459,6 +464,13 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     f2ptr result = raw__exp__terminal_print_with_frame(cause, object_type, terminal_print_frame);
     if (raw__larva__is_type(cause, result)) {
       return result;
+    }
+  }
+  {
+    if (use_one_line != nil) {
+      raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)"\n");
+    } else {
+      raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
     }
   }
   s64 slot_count                 = 0;
@@ -487,11 +499,11 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		   }
 		   slot_count ++;
 		   );
-  s64 slot_index                    = 0;
-  u8* type_slot_name_string         = (u8*)from_ptr(f2__malloc(type_slot_name__max_length + 1));
+  s64 slot_index                     = 0;
+  u8* type_slot_name_string          = (u8*)from_ptr(f2__malloc(type_slot_name__max_length + 1));
   s64 type_slot_name_string__length;
-  u8* slot_name_string              = (u8*)from_ptr(f2__malloc(slot_name__max_length + 1));
-  s64 slot_name_string__length      = 0;
+  u8* slot_name_string               = (u8*)from_ptr(f2__malloc(slot_name__max_length + 1));
+  s64 slot_name_string__length       = 0;
   frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
 		   {
 		     f2ptr before_type_slot_name_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
@@ -507,7 +519,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		       s64   new_x__i = f2integer__i(new_x, cause);
 		       {
 			 u64 index;
-			 for (index = 0; (index < (new_x__i - before_type_slot_name_x__i)) && (index < type_slot_name__max_length); index ++) {
+			 for (index = 0; (index < (type_slot_name__max_length - (new_x__i - before_type_slot_name_x__i))) && (index < type_slot_name__max_length); index ++) {
 			   type_slot_name_string[index] = ' ';
 			 }
 			 type_slot_name_string[index]  = 0;
@@ -531,7 +543,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		       s64   new_x__i = f2integer__i(new_x, cause);
 		       {
 			 u64 index;
-			 for (index = 0; (index < (new_x__i - before_slot_name_x__i)) && (index < slot_name__max_length); index ++) {
+			 for (index = 0; (index < (slot_name__max_length - (new_x__i - before_slot_name_x__i))) && (index < slot_name__max_length); index ++) {
 			   slot_name_string[index] = ' ';
 			 }
 			 slot_name_string[index]  = 0;

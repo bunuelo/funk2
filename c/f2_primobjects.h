@@ -1475,7 +1475,10 @@ f2ptr f2__cons__new(f2ptr cause, f2ptr x, f2ptr y);
 
 // doublelink
 
-declare_object_type_3_slot(doublelink, prev, next, value, );
+declare_object_type_3_slot(doublelink, prev, next, value,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 // imagination_link
 

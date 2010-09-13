@@ -1466,6 +1466,8 @@ declare_object_type_1_slot(place, thing, );
 declare_object_type_2_slot(cons, car, cdr,
 			   f2ptr length__symbol;
 			   f2ptr length__funk;
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
 			   );
 
 f2ptr f2__cons__new(f2ptr cause, f2ptr x, f2ptr y);

@@ -50,6 +50,7 @@ ansi_color_t print__ansi__traced_array__foreground  = ansi_color__light_gray;
 ansi_color_t print__ansi__larva__foreground         = ansi_color__dark_red;
 ansi_color_t print__ansi__end_recursion__foreground = ansi_color__white;
 ansi_color_t print__ansi__error__foreground         = ansi_color__dark_red;
+ansi_color_t print__ansi__cons__foreground          = ansi_color__light_gray;
 
 void f2__write__ansi_color(f2ptr cause, f2ptr stream, ansi_color_t color, boolean_t use_ansi_colors, boolean_t use_html) {
   if (use_ansi_colors && stream) {f2__ansi__stream__reset(cause, stream); raw__ansi__stream__foreground(cause, stream, color);}

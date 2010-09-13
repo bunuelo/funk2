@@ -149,9 +149,123 @@ u64 raw__cons__length(f2ptr cause, f2ptr this) {
 f2ptr f2__cons__length(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__cons__length(cause, this));}
 def_pcfunk1(cons__length, this, return f2__cons__length(this_cause, this));
 
+
+f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr max_size           = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
+  s64   max_size__i        = f2integer__i(max_size, cause);
+  f2ptr max_x              = f2__terminal_print_frame__max_x(cause, terminal_print_frame);
+  s64   max_x__i           = f2integer__i(max_x, cause);
+  f2ptr size               = f2__terminal_print_frame__size(cause, terminal_print_frame);
+  s64   size__i            = f2integer__i(size, cause);
+  f2ptr use_one_line       = f2__terminal_print_frame__use_one_line(    cause, terminal_print_frame);
+  f2ptr indent_distance    = f2__terminal_print_frame__indent_distance( cause, terminal_print_frame);
+  s64   indent_distance__i = f2integer__i(indent_distance, cause);
+  f2ptr x                  = f2__terminal_print_frame__x(               cause, terminal_print_frame);
+  s64   x__i               = f2integer__i(x, cause);
+  {
+    indent_distance__i = x__i + 1;
+    indent_distance = f2integer__new(cause, indent_distance__i);
+    f2__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
+  }
+  u64 cons__length        = raw__simple_length(cause, this);
+  u8  cons_string[128];
+  u64 cons_string__length = 0;
+  {
+    cons_string[0]      = (u8)f2char__ch(__funk2.reader.char__left_paren, cause);
+    cons_string__length = 1;
+    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__cons__foreground);
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, array_string__length, array_string);
+  }
+  {
+    f2ptr iter  = this;
+    u64   index = 0;
+    while (iter != nil) {
+      if (size__i >= (max_size__i - 1)) {
+	x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+	x__i = f2integer__i(x, cause);
+	cons_string__length = sprintf((char*)cons_string, "%c...", ((x__i + 4) < max_x__i) ? ' ' : '\n');
+	raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
+	raw__terminal_print_frame__write_string(cause, terminal_print_frame, cons_string__length, cons_string);
+	break;
+      } else {
+	f2ptr subexp            = f2__cons__car(cause, iter);
+	u64   cons__length_left = cons__length - index;
+	u64   subexp_max_size__i = (max_size__i - size__i + (cons__length_left - 1)) / cons__length_left;
+	f2ptr subexp_size;
+	u64   subexp_size__i;
+	{
+	  if (index > 0) {
+	    {
+	      x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+	      x__i = f2integer__i(x, cause);
+	      if ((x__i + 1) < max_x__i) {
+		cons_string__length = sprintf((char*)cons_string, " ");
+		raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__cons__foreground);
+		raw__terminal_print_frame__write_string(cause, terminal_print_frame, cons_string__length, cons_string);
+	      }
+	    }
+	    if (use_one_line == nil) {
+	      f2ptr can_print_on_one_line = f2__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, subexp);
+	      if (raw__larva__is_type(cause, can_print_on_one_line)) {
+		return can_print_on_one_line;
+	      }
+	      if (can_print_on_one_line == nil) {
+		cons_string__length = sprintf((char*)cons_string, "\n");
+		raw__terminal_print_frame__write_string(cause, terminal_print_frame, cons_string__length, cons_string);
+	      }
+	    }
+	  }
+	  
+	  {
+	    if (use_one_line == nil) {
+	      f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
+	    }
+	    f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, 0));
+	    f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, f2integer__new(cause, subexp_max_size__i));
+	    f2ptr result = raw__exp__terminal_print_with_frame(cause, subexp, terminal_print_frame);
+	    if (raw__larva__is_type(cause, result)) {
+	      return result;
+	    }
+	    if (use_one_line == nil) {
+	      f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+	    }
+	  }
+	  
+	  subexp_size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
+	  subexp_size__i = f2integer__i(subexp_size, cause);
+	}
+	size__i += subexp_size__i;
+      }
+      index ++;
+      iter = f2__cons__cdr(cause, iter);
+    }
+    f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, size__i));
+    f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
+  }
+  {
+    cons_string[0]      = (u8)f2char__ch(__funk2.reader.char__right_paren, cause);
+    cons_string__length = 1;
+    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__traced_array__foreground);
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, cons_string__length, cons_string);
+  }
+  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  return nil;
+}
+
+f2ptr f2__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__cons__is_type(cause, this)) &&
+      (! raw__terminal_print_frame(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cons__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(cons__terminal_print_with_frame, this, terminal_print_frame, return f2__cons__terminal_print_with_frame(cause, this, terminal_print_frame));
+
+
 f2ptr f2cons__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2cons__primobject_type__new(cause);
-  {char* slot_name = "length"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cons.length__funk);}
+  {char* slot_name = "length";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cons.length__funk);}
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cons.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -647,6 +761,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "length"; __funk2.globalenv.object_type.primobject.primobject_type_cons.length__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cons__length, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cons.length__funk = never_gc(cfunk);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cons.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cons__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cons.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // doublelink
   

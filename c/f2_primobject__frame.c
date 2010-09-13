@@ -469,6 +469,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   s64 type_slot_name__max_length = 0;
   s64 slot_name__max_length      = 0;
   frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
+		   slot_value;
 		   {
 		     f2ptr x_offset = f2__terminal_print_frame__expression_x_offset(cause, terminal_print_frame, type_slot_name);
 		     if (raw__larva__is_type(cause, x_offset)) {

@@ -425,10 +425,13 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	    fits_within_height_constraint = f2__terminal_print_frame__expression_fits_within_height_constraint(cause, terminal_print_frame, this);
 	    if (raw__larva__is_type(cause, fits_within_height_constraint)) {
 	      return fits_within_height_constraint;
+	    } else {
+	      working_size = max_size__i;
+	      max_size     = original_max_size;
+	      max_size__i  = f2integer__i(max_size, cause);
 	    }
 	  }
 	}
-	// increase working size until doesn't work.
 	if (working_size > 0) {
 	  max_size__i = working_size;
 	  max_size    = f2integer__new(cause, max_size__i);

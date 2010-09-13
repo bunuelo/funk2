@@ -67,6 +67,8 @@ f2ptr      f2__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2pt
 f2ptr      f2__array__equals_hash_value(f2ptr cause, f2ptr this);
 f2ptr     raw__array__as__conslist(f2ptr cause, f2ptr this);
 f2ptr      f2__array__as__conslist(f2ptr cause, f2ptr this);
+f2ptr     raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 
 f2ptr f2array__primobject_type__new(f2ptr cause);
 
@@ -115,6 +117,8 @@ typedef struct funk2_object_type__array__slot_s {
   f2ptr elt__read_funks__funk;
   f2ptr elt__read_funks__set__symbol;
   f2ptr elt__read_funks__set__funk;
+  f2ptr terminal_print_with_frame__symbol;
+  f2ptr terminal_print_with_frame__funk;
 } funk2_object_type__array__slot_t;
 
 // **

@@ -435,29 +435,139 @@ f2ptr f2__array__as__conslist(f2ptr cause, f2ptr this) {
 def_pcfunk1(array__as__conslist, this, return f2__array__as__conslist(this_cause, this));
 
 
+f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr max_size           = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
+  s64   max_size__i        = f2integer__i(max_size, cause);
+  f2ptr max_x              = f2__terminal_print_frame__max_x(cause, terminal_print_frame);
+  s64   max_x__i           = f2integer__i(max_x, cause);
+  f2ptr size               = f2__terminal_print_frame__size(cause, terminal_print_frame);
+  s64   size__i            = f2integer__i(size, cause);
+  f2ptr use_one_line       = f2__terminal_print_frame__use_one_line(    cause, terminal_print_frame);
+  f2ptr indent_distance    = f2__terminal_print_frame__indent_distance( cause, terminal_print_frame);
+  s64   indent_distance__i = f2integer__i(indent_distance, cause);
+  f2ptr x                  = f2__terminal_print_frame__x(               cause, terminal_print_frame);
+  s64   x__i               = f2integer__i(x, cause);
+  {
+    indent_distance__i = x__i + 1;
+    indent_distance = f2integer__new(cause, indent_distance__i);
+    f2__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
+  }
+  u64 array__length        = raw__array__length(cause, this);
+  u8  array_string[128];
+  u64 array_string__length = 0;
+  {
+    array_string[0]      = (u8)f2char__ch(__funk2.reader.char__array_left_paren, cause);
+    array_string__length = 1;
+    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__array__foreground);
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, array_string__length, array_string);
+  }
+  {
+    u64 index;
+    for (index = 0; index < array__length; index ++) {
+      if (size__i >= (max_size__i - 1)) {
+	x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+	x__i = f2integer__i(x, cause);
+	array_string__length = sprintf((char*)array_string, "%c...", ((x__i + 4) < max_x__i) ? ' ' : '\n');
+	raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
+	raw__terminal_print_frame__write_string(cause, terminal_print_frame, array_string__length, array_string);
+	break;
+      } else {
+	f2ptr subexp                    = raw__array__elt(cause, this, index);
+	u64   array__length_left = array__length - index;
+	u64   subexp_max_size__i        = (max_size__i - size__i + (array__length_left - 1)) / array__length_left;
+	f2ptr subexp_size;
+	u64   subexp_size__i;
+	{
+	  if (index > 0) {
+	    {
+	      x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+	      x__i = f2integer__i(x, cause);
+	      if ((x__i + 1) < max_x__i) {
+		array_string__length = sprintf((char*)array_string, " ");
+		raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__array__foreground);
+		raw__terminal_print_frame__write_string(cause, terminal_print_frame, array_string__length, array_string);
+	      }
+	    }
+	    if (use_one_line == nil) {
+	      f2ptr can_print_on_one_line = f2__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, subexp);
+	      if (raw__larva__is_type(cause, can_print_on_one_line)) {
+		return can_print_on_one_line;
+	      }
+	      if (can_print_on_one_line == nil) {
+		array_string__length = sprintf((char*)array_string, "\n");
+		raw__terminal_print_frame__write_string(cause, terminal_print_frame, array_string__length, array_string);
+	      }
+	    }
+	  }
+	  
+	  {
+	    if (use_one_line == nil) {
+	      f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
+	    }
+	    f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, 0));
+	    f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, f2integer__new(cause, subexp_max_size__i));
+	    f2ptr result = raw__exp__terminal_print_with_frame(cause, subexp, terminal_print_frame);
+	    if (raw__larva__is_type(cause, result)) {
+	      return result;
+	    }
+	    if (use_one_line == nil) {
+	      f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+	    }
+	  }
+	  
+	  subexp_size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
+	  subexp_size__i = f2integer__i(subexp_size, cause);
+	}
+	size__i += subexp_size__i;
+      }
+    }
+    f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, size__i));
+    f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
+  }
+  {
+    array_string[0]      = (u8)f2char__ch(__funk2.reader.char__array_right_paren, cause);
+    array_string__length = 1;
+    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__array__foreground);
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, array_string__length, array_string);
+  }
+  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  return nil;
+}
+
+f2ptr f2__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__array__is_type(cause, this)) ||
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__array__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(array__terminal_print_with_frame, this, terminal_print_frame, return f2__array__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
 f2ptr f2array__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("ptype"), (u8*)"ptype"), nil));
   {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.is_type__funk);}
-  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.type__funk);}
+  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.type__funk);}
   {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.new__funk);}
-  {char* slot_name = "length";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.length__funk);}
-  {char* slot_name = "eq";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.eq__funk);}
-  {char* slot_name = "eq_hash_value";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.eq_hash_value__funk);}
-  {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.equals__funk);}
-  {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.equals_hash_value__funk);}
-  {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.equals_hash_value__loop_free__funk);}
-  {char* slot_name = "elt";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__funk);}
-  {char* slot_name = "elt";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__set__funk);}
-  {char* slot_name = "elt-tracing_on";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__tracing_on__funk);}
-  {char* slot_name = "elt-tracing_on";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__tracing_on__set__funk);}
-  {char* slot_name = "elt-trace";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__trace__funk);}
-  {char* slot_name = "elt-trace";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__trace__set__funk);}
-  {char* slot_name = "elt-imagination_frame";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__imagination_frame__funk);}
-  {char* slot_name = "elt-imagination_frame";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__imagination_frame__set__funk);}
-  {char* slot_name = "elt-mutate_funks";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__mutate_funks__funk);}
-  {char* slot_name = "elt-mutate_funks";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__mutate_funks__set__funk);}
-  {char* slot_name = "elt-read_funks";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__read_funks__funk);}
-  {char* slot_name = "elt-read_funks";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__read_funks__set__funk);}
+  {char* slot_name = "length";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.length__funk);}
+  {char* slot_name = "eq";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.eq__funk);}
+  {char* slot_name = "eq_hash_value";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.eq_hash_value__funk);}
+  {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.equals__funk);}
+  {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.equals_hash_value__funk);}
+  {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.equals_hash_value__loop_free__funk);}
+  {char* slot_name = "elt";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.elt__funk);}
+  {char* slot_name = "elt";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.elt__set__funk);}
+  {char* slot_name = "elt-tracing_on";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.elt__tracing_on__funk);}
+  {char* slot_name = "elt-tracing_on";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.elt__tracing_on__set__funk);}
+  {char* slot_name = "elt-trace";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.elt__trace__funk);}
+  {char* slot_name = "elt-trace";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.elt__trace__set__funk);}
+  {char* slot_name = "elt-imagination_frame";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.elt__imagination_frame__funk);}
+  {char* slot_name = "elt-imagination_frame";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.elt__imagination_frame__set__funk);}
+  {char* slot_name = "elt-mutate_funks";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.elt__mutate_funks__funk);}
+  {char* slot_name = "elt-mutate_funks";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.elt__mutate_funks__set__funk);}
+  {char* slot_name = "elt-read_funks";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.elt__read_funks__funk);}
+  {char* slot_name = "elt-read_funks";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.elt__read_funks__set__funk);}
+  {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -537,6 +647,8 @@ void f2__array__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(array__elt__read_funks, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.elt__read_funks__funk = never_gc(cfunk);}
   {char* str = "elt-read_funks-set"; __funk2.globalenv.object_type.array.elt__read_funks__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(array__elt__read_funks__set, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.elt__read_funks__set__funk = never_gc(cfunk);}
+  {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.array.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(array__terminal_print_with_frame, this, terminal_print_frame, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 }
 

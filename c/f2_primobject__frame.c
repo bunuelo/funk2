@@ -446,13 +446,9 @@ def_pcfunk1(frame__as__graph, this, return f2__frame__as__graph(this_cause, this
 
 
 f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  {
-    f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
-    u64   size__i = f2integer__i(size, cause);
-    size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
-  }
-  u8  frame_string[128];
-  u64 frame_string__length;
+  f2ptr use_one_line = f2__terminal_print_frame__use_one_line(cause, terminal_print_frame);
+  u8    frame_string[128];
+  u64   frame_string__length;
   {
     raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__frame__foreground);
     frame_string__length = snprintf((char*)frame_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));

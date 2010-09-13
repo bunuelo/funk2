@@ -338,6 +338,8 @@ f2ptr      f2__symbol__eq(f2ptr cause, f2ptr x, f2ptr y);
 boolean_t raw__symbol__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__symbol__equals(f2ptr cause, f2ptr this, f2ptr that);
 
+f2ptr raw__key_symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+
 // chunk
 
 f2ptr pfunk2__f2chunk__new(f2ptr cause, u64 length, byte* bytes);

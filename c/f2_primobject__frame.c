@@ -508,7 +508,12 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		   {
 		     f2ptr before_type_slot_name_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
 		     s64   before_type_slot_name_x__i = f2integer__i(before_type_slot_name_x, cause);
-		     {
+		     if (raw__symbol__is_type(cause, type_slot_name)) {
+		       f2ptr result = raw__key_symbol__terminal_print_with_frame(cause, type_slot_name, terminal_print_frame);
+		       if (raw__larva__is_type(cause, result)) {
+			 return result;
+		       }
+		     } else {
 		       f2ptr result = raw__exp__terminal_print_with_frame(cause, type_slot_name, terminal_print_frame);
 		       if (raw__larva__is_type(cause, result)) {
 			 return result;
@@ -534,7 +539,12 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		   {
 		     f2ptr before_slot_name_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
 		     s64   before_slot_name_x__i = f2integer__i(before_slot_name_x, cause);
-		     {
+		     if (raw__symbol__is_type(cause, slot_name)) {
+		       f2ptr result = raw__key_symbol__terminal_print_with_frame(cause, slot_name, terminal_print_frame);
+		       if (raw__larva__is_type(cause, result)) {
+			 return result;
+		       }
+		     } else {
 		       f2ptr result = raw__exp__terminal_print_with_frame(cause, slot_name, terminal_print_frame);
 		       if (raw__larva__is_type(cause, result)) {
 			 return result;

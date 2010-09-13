@@ -259,7 +259,7 @@ f2ptr f2__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   }
   return raw__cons__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(cons__terminal_print_with_frame, this, terminal_print_frame, return f2__cons__terminal_print_with_frame(cause, this, terminal_print_frame));
+def_pcfunk2(cons__terminal_print_with_frame, this, terminal_print_frame, return f2__cons__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2cons__primobject_type__new_aux(f2ptr cause) {

@@ -1413,6 +1413,7 @@ f2ptr f2__pointer__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr intege
 }
 def_pcfunk2(pointer__is_numerically_equal_to, this, that, return f2__pointer__is_numerically_equal_to(this_cause, this, that));
 
+
 f2ptr raw__pointer__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   {
     f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
@@ -4349,6 +4350,63 @@ f2ptr f2__larva__equals_hash_value(f2ptr cause, f2ptr this) {
   return f2integer__new(cause, raw__larva__equals_hash_value(cause, this));
 }
 def_pcfunk1(larva__equals_hash_value, this, return f2__larva__equals_hash_value(this_cause, this));
+
+
+f2ptr raw__larva__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  {
+    f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
+    u64   size__i = f2integer__i(size, cause);
+    size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
+  }
+  u8  larva_string[128];
+  u64 larva_string__length;
+  {
+    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__larva__foreground);
+    larva_string__length = snprintf((char*)larva_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, larva_string__length, larva_string);
+  }
+  {
+    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__symbol__foreground);
+    larva_string__length = snprintf((char*)larva_string, 128, "larva ");
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, larva_string__length, larva_string);
+  }
+  {
+    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__symbol__key__foreground);
+    larva_string__length = snprintf((char*)larva_string, 128, "larva_type ");
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, larva_string__length, larva_string);
+  }
+  {
+    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__integer__foreground);
+    larva_string__length = snprintf((char*)larva_string, 128, u64__fstr " ", f2larva__larva_type(this, cause));
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, larva_string__length, larva_string);
+  }
+  {
+    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__symbol__key__foreground);
+    larva_string__length = snprintf((char*)larva_string, 128, "bug ");
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, larva_string__length, larva_string);
+  }
+  f2ptr result = raw__exp__terminal_print_with_frame(cause, f2larva__bug(this, cause), terminal_print_frame);
+  if (raw__larva__is_type(cause, result)) {
+    return result;
+  }
+  {
+    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__larva__foreground);
+    larva_string__length = snprintf((char*)larva_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__right_paren, cause));
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, larva_string__length, larva_string);
+  }
+  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  return nil;
+}
+
+f2ptr f2__larva__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__larva__is_type(cause, this)) ||
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__larva__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(larva__terminal_print_with_frame, this, terminal_print_frame, return f2__larva__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
 
 f2ptr f2__larva__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {

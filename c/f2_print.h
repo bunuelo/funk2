@@ -51,6 +51,7 @@ extern ansi_color_t print__ansi__larva__foreground;
 extern ansi_color_t print__ansi__end_recursion__foreground;
 extern ansi_color_t print__ansi__error__foreground;
 extern ansi_color_t print__ansi__cons__foreground;
+extern ansi_color_t print__ansi__doublelink__foreground;
 
 
 

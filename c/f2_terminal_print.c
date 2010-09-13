@@ -406,7 +406,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	  while (max_size__i != working_size) {
 	    last_max_size__i = max_size__i;
 	    max_size__i      = working_size + ((max_size__i - working_size) >> 1);
-	    printf("\nfailed size = " s64__fstr ", try size = " s64__fstr, last_max_size__i, max_size__i);
+	    //printf("\nfailed size = " s64__fstr ", try size = " s64__fstr, last_max_size__i, max_size__i);
 	    max_size         = f2integer__new(cause, max_size__i);
 	    f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
 	    if (max_size__i == 0) {

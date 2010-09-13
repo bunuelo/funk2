@@ -3331,14 +3331,16 @@ def_pcfunk3(simple_array__elt__set, x, y, z, return f2__simple_array__elt__set(t
 
 f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr max_size           = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
-  u64   max_size__i        = f2integer__i(max_size, cause);
+  s64   max_size__i        = f2integer__i(max_size, cause);
   f2ptr size               = f2__terminal_print_frame__size(cause, terminal_print_frame);
-  u64   size__i            = f2integer__i(size, cause);
+  s64   size__i            = f2integer__i(size, cause);
   f2ptr use_one_line       = f2__terminal_print_frame__use_one_line(    cause, terminal_print_frame);
   f2ptr indent_distance    = f2__terminal_print_frame__indent_distance( cause, terminal_print_frame);
-  u64   indent_distance__i = f2integer__i(indent_distance, cause);
+  s64   indent_distance__i = f2integer__i(indent_distance, cause);
+  f2ptr x                  = f2__terminal_print_frame__x(               cause, terminal_print_frame);
+  s64   x__i               = f2integer__i(x, cause);
   {
-    indent_distance__i ++;
+    indent_distance__i = x__i + 1;
     indent_distance = f2integer__new(cause, indent_distance__i);
     f2__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
   }

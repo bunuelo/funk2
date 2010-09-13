@@ -372,36 +372,39 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   f2ptr funk             = f2__object__slot__type_funk(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
   f2ptr test_constraints = f2__terminal_print_frame__test_constraints(cause, terminal_print_frame);
   f2ptr use_one_line     = f2__terminal_print_frame__use_one_line(    cause, terminal_print_frame);
+  f2ptr indent_distance  = f2__terminal_print_frame__indent_distance( cause, terminal_print_frame);
   if (raw__funkable__is_type(cause, funk)) {
     f2ptr can_print_on_one_line = f2__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, this);
     if (raw__larva__is_type(cause, can_print_on_one_line)) {
       return can_print_on_one_line;
     }
     if (can_print_on_one_line != nil) {
-      // we successfully satisfied all constraints by printing on one line, so go for it (if we're not ultimately just testing).
+      // we successfully satisfied all constraints by printing on one line, so go for it.
       f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
-      //if (test_constraints == nil) {
       f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }
-      //} else {
-      //	f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
-      //}
     } else {
       f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
       // iteratively reduce max size if we fail to satisfy y constraint.
       f2ptr original_max_size = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
       {
-	f2ptr max_size    = original_max_size;
-	s64   max_size__i = f2integer__i(max_size, cause);
+	s64   working_size                  = 0;
+	f2ptr max_size                      = original_max_size;
+	s64   max_size__i                   = f2integer__i(max_size, cause);
 	f2ptr fits_within_height_constraint = f2__terminal_print_frame__expression_fits_within_height_constraint(cause, terminal_print_frame, this);
 	if (raw__larva__is_type(cause, fits_within_height_constraint)) {
 	  return fits_within_height_constraint;
 	}
-	while ((fits_within_height_constraint == nil) && (max_size__i > 0)) {
-	  max_size__i >>= 1;
-	  max_size      = f2integer__new(cause, max_size__i);
+	while ((fits_within_height_constraint == nil) && (max_size__i > working_size)) {
+	  s64 next_max_size__i = working_size + ((max_size__i - working_size) >> 1);
+	  if (next_max_size__i != max_size__i) {
+	    max_size__i = next_max_size__i;
+	  } else {
+	    break;
+	  }
+	  max_size    = f2integer__new(cause, max_size__i);
 	  f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
 	  if (max_size__i == 0) {
 	    if (test_constraints == nil) {
@@ -425,7 +428,11 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	    }
 	  }
 	}
-	if (max_size__i > 0) {
+	// increase working size until doesn't work.
+	if (working_size > 0) {
+	  max_size__i = working_size;
+	  max_size    = f2integer__new(cause, max_size__i);
+	  f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
 	  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
 	  if (raw__larva__is_type(cause, result)) {
 	    return result;
@@ -438,7 +445,8 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
     // this object type doesn't have a terminal_print_with_frame funktion.
     //  ... we should print object type here and some short opaque, non-recursive description with size one.
   }
-  f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, use_one_line);
+  f2__terminal_print_frame__use_one_line__set(   cause, terminal_print_frame, use_one_line);
+  f2__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
   return nil;
 }
 

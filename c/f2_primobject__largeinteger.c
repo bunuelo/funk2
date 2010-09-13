@@ -679,12 +679,12 @@ void raw__largeinteger__unsigned_array__terminal_print_with_frame(f2ptr cause, f
 	u64   max_x__i = f2integer__i(max_x, cause);
 	if (x__i + 12 < max_x__i) {
 	  raw__largeinteger__unsigned_array__terminal_print_with_frame(cause, remaining_decimals_to_print, terminal_print_frame, boolean__true);
-	} else {
+	} else if (x__i + 3 < max_x__i) {
 	  char temp_str[32];
 	  snprintf(temp_str, 32, "...");
 	  raw__terminal_print_frame__write_string(cause, terminal_print_frame, strlen(temp_str), (u8*)temp_str);
 	}
-      } else {
+      } else if (size__i + 1 == max_size__i) {
 	char temp_str[32];
 	snprintf(temp_str, 32, "...");
 	raw__terminal_print_frame__write_string(cause, terminal_print_frame, strlen(temp_str), (u8*)temp_str);

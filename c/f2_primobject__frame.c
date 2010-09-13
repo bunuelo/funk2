@@ -467,7 +467,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     }
   }
   {
-    if (use_one_line != nil) {
+    if (use_one_line == nil) {
       raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)"\n");
     } else {
       raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
@@ -514,7 +514,9 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 			 return result;
 		       }
 		     }
-		     {
+		     if (use_one_line != nil) {
+		       raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
+		     } else {
 		       f2ptr new_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
 		       s64   new_x__i = f2integer__i(new_x, cause);
 		       {
@@ -538,7 +540,9 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 			 return result;
 		       }
 		     }
-		     {
+		     if (use_one_line != nil) {
+		       raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
+		     } else {
 		       f2ptr new_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
 		       s64   new_x__i = f2integer__i(new_x, cause);
 		       {
@@ -560,7 +564,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		     }
 		   }
 		   if (slot_index < slot_count - 1) {
-		     if (use_one_line != nil) {
+		     if (use_one_line == nil) {
 		       raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)"\n");
 		     } else {
 		       raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");

@@ -1144,6 +1144,7 @@ declare_primobject_3_slot(doublelink, prev, next, value);
 f2ptr f2__doublelink(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value);
 f2ptr f2__doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value);
 
+f2ptr f2doublelink__primobject_type__new_aux(f2ptr cause);
 
 // imagination_link
 

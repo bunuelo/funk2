@@ -666,7 +666,7 @@ void raw__largeinteger__unsigned_array__terminal_print_with_frame(f2ptr cause, f
   } else {
     f2ptr remaining_decimals_to_print;
     f2ptr first_decimals_to_print = raw__largeinteger__unsigned_array__divide(cause, this, max_decimals_at_once, &remaining_decimals_to_print);
-    raw__largeinteger__unsigned_array__terminal_print_with_frame(cause, first_decimals_to_print,     terminal_print_frame, boolean__false);
+    raw__largeinteger__unsigned_array__terminal_print_with_frame(cause, first_decimals_to_print, terminal_print_frame, boolean__false);
     {
       f2ptr size        = f2__terminal_print_frame__size(cause, terminal_print_frame);
       u64   size__i     = f2integer__i(size, cause);

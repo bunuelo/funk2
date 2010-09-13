@@ -174,7 +174,7 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
     cons_string[0]      = (u8)f2char__ch(__funk2.reader.char__left_paren, cause);
     cons_string__length = 1;
     raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__cons__foreground);
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, array_string__length, array_string);
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, cons_string__length, cons_string);
   }
   {
     f2ptr iter  = this;

@@ -322,7 +322,7 @@ f2ptr raw__doublelink__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
   u8  doublelink_string[128];
   u64 doublelink_string__length = 0;
   {
-    doublelink_string[0]      = (u8)f2char__ch(__funk2.reader.char__left_paren, cause);
+    doublelink_string[0]      = (u8)f2char__ch(__funk2.reader.char__doublelink_left_paren, cause);
     doublelink_string__length = 1;
     raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__doublelink__foreground);
     raw__terminal_print_frame__write_string(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
@@ -397,7 +397,7 @@ f2ptr raw__doublelink__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
     f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
   }
   {
-    doublelink_string[0]      = (u8)f2char__ch(__funk2.reader.char__right_paren, cause);
+    doublelink_string[0]      = (u8)f2char__ch(__funk2.reader.char__doublelink_right_paren, cause);
     doublelink_string__length = 1;
     raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__traced_array__foreground);
     raw__terminal_print_frame__write_string(cause, terminal_print_frame, doublelink_string__length, doublelink_string);

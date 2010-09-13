@@ -360,6 +360,72 @@ f2ptr f2__terminal_print_frame__expression_fits_within_height_constraint(f2ptr c
 def_pcfunk2(terminal_print_frame__expression_fits_within_height_constraint, this, expression, return f2__terminal_print_frame__expression_fits_within_height_constraint(this_cause, this, expression));
 
 
+f2ptr raw__terminal_print_frame__expression_x_offset(f2ptr cause, f2ptr this, f2ptr expression) {
+  f2ptr fiber = f2__this__fiber(cause);
+  f2ptr funk  = f2__object__slot__type_funk(cause, expression, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
+  if (! raw__funkable__is_type(cause, funk)) {
+    return f2bool__new(boolean__false);
+  }
+  f2ptr encountered_larva = nil;
+  s64   x_offset;
+  {
+    f2ptr test_constraints = f2__terminal_print_frame__test_constraints(            cause, this);
+    f2ptr use_one_line     = f2__terminal_print_frame__use_one_line(                cause, this);
+    
+    {
+      f2ptr x               = f2__terminal_print_frame__x(              cause, this);
+      s64   x__i            = f2integer__i(x, cause);
+      f2ptr height          = f2__terminal_print_frame__height(         cause, this);
+      f2ptr left_extent     = f2__terminal_print_frame__left_extent(    cause, this);
+      f2ptr right_extent    = f2__terminal_print_frame__right_extent(   cause, this);
+      f2ptr indent_distance = f2__terminal_print_frame__indent_distance(cause, this);
+      f2ptr size            = f2__terminal_print_frame__size(           cause, this);
+      {
+	f2__terminal_print_frame__left_extent__set(                 cause, this, nil);
+	f2__terminal_print_frame__right_extent__set(                cause, this, nil);
+	f2__terminal_print_frame__use_one_line__set(                cause, this, f2bool__new(boolean__false));
+	f2__terminal_print_frame__failed_max_x_constraint__set(     cause, this, f2bool__new(boolean__false));
+	f2__terminal_print_frame__failed_max_height_constraint__set(cause, this, f2bool__new(boolean__false));
+	f2__terminal_print_frame__test_constraints__set(            cause, this, f2bool__new(boolean__true));
+	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, expression, f2cons__new(cause, this, nil)));
+	if (raw__larva__is_type(cause, result)) {
+	  encountered_larva = result;
+	}
+      }
+      
+      f2ptr new_x    = f2__terminal_print_frame__x(cause, this);
+      s64   new_x__i = f2integer__i(new_x, cause);
+      
+      x_offset = new_x__i - x__i;
+      
+      f2__terminal_print_frame__x__set(              cause, this, x);
+      f2__terminal_print_frame__height__set(         cause, this, height);
+      f2__terminal_print_frame__left_extent__set(    cause, this, left_extent);
+      f2__terminal_print_frame__right_extent__set(   cause, this, right_extent);
+      f2__terminal_print_frame__indent_distance__set(cause, this, indent_distance);
+      f2__terminal_print_frame__size__set(           cause, this, size);
+    }
+    
+    f2__terminal_print_frame__failed_max_x_constraint__set(     cause, this, failed_max_x_constraint);
+    f2__terminal_print_frame__failed_max_height_constraint__set(cause, this, failed_max_height_constraint);
+    f2__terminal_print_frame__test_constraints__set(            cause, this, test_constraints);
+    f2__terminal_print_frame__use_one_line__set(                cause, this, use_one_line);
+  }
+  if (encountered_larva != nil) {
+    return encountered_larva;
+  }
+  return f2integer__new(cause, x_offset);
+}
+
+f2ptr f2__terminal_print_frame__expression_x_offset(f2ptr cause, f2ptr this, f2ptr expression) {
+  if (! raw__terminal_print_frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__terminal_print_frame__expression_x_offset(cause, this, expression);
+}
+def_pcfunk2(terminal_print_frame__expression_x_offset, this, expression, return f2__terminal_print_frame__expression_x_offset(this_cause, this, expression));
+
+
 f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr fiber            = f2__this__fiber(cause);
   f2ptr funk             = f2__object__slot__type_funk(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
@@ -512,6 +578,7 @@ void f2__terminal_print__initialize() {
   f2__primcfunk__init__2(terminal_print_frame__write_string,                             this, string,                                                                         "");
   f2__primcfunk__init__2(terminal_print_frame__can_print_expression_on_one_line,         this, expression,                                                                     "");
   f2__primcfunk__init__2(terminal_print_frame__expression_fits_within_height_constraint, this, expression,                                                                     "");
+  f2__primcfunk__init__2(terminal_print_frame__expression_x_offset,                      this, expression,                                                                     "");
   
   f2__primcfunk__init__2(exp__terminal_print_with_frame, this, terminal_print_frame, "Prints a value given a terminal_print_frame.");
   f2__primcfunk__init__2(exp__terminal_stream_print,     this, stream,               "Prints a value to the given terminal stream, using a new default terminal_print_frame.");

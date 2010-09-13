@@ -51,6 +51,7 @@ void  raw__terminal_print_frame__write_color(                             f2ptr 
 void  raw__terminal_print_frame__write_string(                            f2ptr cause, f2ptr this, u64 length, u8* string);
 f2ptr  f2__terminal_print_frame__can_print_expression_on_one_line(        f2ptr cause, f2ptr this, f2ptr expression);
 f2ptr  f2__terminal_print_frame__expression_fits_within_height_constraint(f2ptr cause, f2ptr this, f2ptr expression);
+f2ptr  f2__terminal_print_frame__expression_x_offset(                     f2ptr cause, f2ptr this, f2ptr expression);
 
 f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 

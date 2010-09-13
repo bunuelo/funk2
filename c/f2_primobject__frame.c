@@ -444,6 +444,137 @@ f2ptr f2__frame__as__graph(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(frame__as__graph, this, return f2__frame__as__graph(this_cause, this));
 
+
+f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  {
+    f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
+    u64   size__i = f2integer__i(size, cause);
+    size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
+  }
+  u8  frame_string[128];
+  u64 frame_string__length;
+  {
+    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__frame__foreground);
+    frame_string__length = snprintf((char*)frame_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, frame_string__length, frame_string);
+  }
+  f2ptr object_type = f2__object__type(cause, this);
+  {
+    f2ptr result = raw__exp__terminal_print_with_frame(cause, object_type, terminal_print_frame);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  s64 slot_count                 = 0;
+  s64 type_slot_name__max_length = 0;
+  s64 slot_name__max_length      = 0;
+  frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
+		   {
+		     f2ptr x_offset = f2__terminal_print_frame__expression_x_offset(cause, terminal_print_frame, type_slot_name);
+		     if (raw__larva__is_type(cause, x_offset)) {
+		       return x_offset;
+		     }
+		     s64 x_offset__i = f2integer__i(x_offset, cause);
+		     if (x_offset__i > type_slot_name__max_length) {
+		       type_slot_name__max_length = x_offset__i;
+		     }
+		   }
+		   {
+		     f2ptr x_offset = f2__terminal_print_frame__expression_x_offset(cause, terminal_print_frame, slot_name);
+		     if (raw__larva__is_type(cause, x_offset)) {
+		       return x_offset;
+		     }
+		     s64 x_offset__i = f2integer__i(x_offset, cause);
+		     if (x_offset__i > slot_name__max_length) {
+		       slot_name__max_length = x_offset__i;
+		     }
+		   }
+		   slot_count ++;
+		   );
+  s64 slot_index            = 0;
+  u8* type_slot_name_string = (u8*)from_ptr(f2__malloc(type_slot_name__max_length + 1));
+  u8* slot_name_string      = (u8*)from_ptr(f2__malloc(slot_name__max_length + 1));
+  frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
+		   {
+		     f2ptr before_type_slot_name_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+		     s64   before_type_slot_name_x__i = f2integer__i(before_slot_name_x, cause);
+		     {
+		       f2ptr result = raw__exp__terminal_print_with_frame(cause, type_slot_name, terminal_print_frame);
+		       if (raw__larva__is_type(cause, result)) {
+			 return result;
+		       }
+		     }
+		     {
+		       f2ptr new_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+		       s64   new_x__i = f2integer__i(new_x, cause);
+		       {
+			 u64 index;
+			 for (index = 0; (index < (new_x__i - before_type_slot_name_x__i)) && (index < type_slot_name__max_length); index ++) {
+			   type_slot_name_string[index] = ' ';
+			 }
+			 type_slot_name_string[index] = 0;
+		       }
+		       raw__terminal_print_frame__write_string(cause, terminal_print_frame, strlen(type_slot_name_string), type_slot_name_string);
+		     }
+		   }
+		   raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, " ");
+		   {
+		     f2ptr before_slot_name_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+		     s64   before_slot_name_x__i = f2integer__i(before_slot_name_x, cause);
+		     {
+		       f2ptr result = raw__exp__terminal_print_with_frame(cause, slot_name, terminal_print_frame);
+		       if (raw__larva__is_type(cause, result)) {
+			 return result;
+		       }
+		     }
+		     {
+		       f2ptr new_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+		       s64   new_x__i = f2integer__i(new_x, cause);
+		       {
+			 u64 index;
+			 for (index = 0; (index < (new_x__i - before_slot_name_x__i)) && (index < slot_name__max_length); index ++) {
+			   slot_name_string[index] = ' ';
+			 }
+			 slot_name_string[index] = 0;
+		       }
+		       raw__terminal_print_frame__write_string(cause, terminal_print_frame, strlen(slot_name_string), slot_name_string);
+		     }
+		   }
+		   raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, " ");
+		   {
+		     f2ptr result = raw__exp__terminal_print_with_frame(cause, slot_value, terminal_print_frame);
+		     if (raw__larva__is_type(cause, result)) {
+		       return result;
+		     }
+		   }
+		   if (slot_index < slot_count - 1) {
+		     if (use_one_line != nil) {
+		       raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, "\n");
+		     } else {
+		       raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, " ");
+		     }
+		   }
+		   slot_index ++;
+		   );
+  {
+    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__frame__foreground);
+    frame_string__length = snprintf((char*)frame_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__right_paren, cause));
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, frame_string__length, frame_string);
+  }
+  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  return nil;
+}
+
+f2ptr f2__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__frame__is_type(cause, this)) ||
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__frame__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(frame__terminal_print_with_frame, this, terminal_print_frame, return f2__frame__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
 f2ptr f2frame__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2frame__primobject_type__new(cause);
   {char* slot_name = "add_type_var_value";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.add_type_var_value__funk);}
@@ -461,6 +592,7 @@ f2ptr f2frame__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.equals_hash_value__funk);}
   {char* slot_name = "part_not_contained_by";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.part_not_contained_by__funk);}
   {char* slot_name = "as-graph";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.as__graph__funk);}
+  {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -527,6 +659,8 @@ void f2__primobject_frame__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__part_not_contained_by, this, that, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.part_not_contained_by__funk = never_gc(cfunk);}
   {char* symbol_str = "as-graph"; __funk2.globalenv.object_type.primobject.primobject_type_frame.as__graph__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(frame__as__graph, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.as__graph__funk = never_gc(cfunk);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_frame.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 }
 

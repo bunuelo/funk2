@@ -25,7 +25,10 @@
 // largeinteger
 
 typedef struct funk2_object_type__largeinteger__slot_s funk2_object_type__largeinteger__slot_t;
-declare_object_type_2_slot(largeinteger, is_negative, integer_array, );
+declare_object_type_2_slot(largeinteger, is_negative, integer_array,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 #endif // F2__PRIMOBJECT__LARGEINTEGER__TYPES__H
 
@@ -100,6 +103,8 @@ f2ptr      f2__largeinteger__minus(f2ptr cause, f2ptr this, f2ptr number);
 f2ptr      f2__largeinteger__is_greater_than(f2ptr cause, f2ptr this, f2ptr number);
 f2ptr      f2__largeinteger__is_less_than(f2ptr cause, f2ptr this, f2ptr number);
 f2ptr      f2__largeinteger__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number);
+
+f2ptr f2largeinteger__primobject_type__new_aux(f2ptr cause);
 
 // **
 

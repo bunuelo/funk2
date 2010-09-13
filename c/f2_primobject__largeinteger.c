@@ -641,6 +641,48 @@ void raw__largeinteger__unsigned_array__print(f2ptr cause, f2ptr this, boolean_t
   }
 }
 
+void raw__largeinteger__unsigned_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame, boolean_t pad_front_with_zeros) {
+  f2ptr max_decimals_at_once = raw__largeinteger__unsigned_array__new(cause, 1000000000ull);
+  if (raw__largeinteger__unsigned_array__less_than(cause, this, max_decimals_at_once)) {
+    {
+      f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
+      u64   size__i = f2integer__i(size, cause);
+      size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
+    }
+    u64 this__length = raw__array__length(cause, this);
+    u64 this__elt__value;
+    if (this__length == 0) {
+      this__elt__value = 0;
+    } else if (this__length != 1) {
+      error(nil, "array should have length of one.");
+    } else {
+      f2ptr this__elt  = raw__array__elt(cause, this, 0);
+      this__elt__value = f2integer__i(this__elt, cause);
+    }
+    char temp_str[32];
+    snprintf(temp_str, 32, pad_front_with_zeros ? ("%09" u64__fstr_without_percent) : u64__fstr, this__elt__value);
+    //safe_write(1, to_ptr(temp_str), );
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, strlen(temp_str), (u8*)temp_str);
+  } else {
+    f2ptr remaining_decimals_to_print;
+    f2ptr first_decimals_to_print = raw__largeinteger__unsigned_array__divide(cause, this, max_decimals_at_once, &remaining_decimals_to_print);
+    raw__largeinteger__unsigned_array__terminal_print_with_frame(cause, first_decimals_to_print,     terminal_print_frame, boolean__false);
+    {
+      f2ptr size        = f2__terminal_print_frame__size(cause, terminal_print_frame);
+      u64   size__i     = f2integer__i(size, cause);
+      f2ptr max_size    = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
+      u64   max_size__i = f2integer__i(max_size, cause);
+      if (size__i + 1 < max_size__i) {
+	raw__largeinteger__unsigned_array__terminal_print_with_frame(cause, remaining_decimals_to_print, terminal_print_frame, boolean__true);
+      } else {
+	char temp_str[32];
+	snprintf(temp_str, 32, "...");
+	raw__terminal_print_frame__write_string(cause, terminal_print_frame, strlen(temp_str), (u8*)temp_str);
+      }
+    }
+  }
+}
+
 // largeinteger
 
 def_primobject_2_slot(largeinteger, is_negative, integer_array);
@@ -920,7 +962,7 @@ f2ptr f2__largeinteger__print(f2ptr cause, f2ptr this) {
   if (! raw__largeinteger__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  f2ptr is_negative   = f2__largeinteger__is_negative(cause, this);
+  f2ptr is_negative   = f2__largeinteger__is_negative(  cause, this);
   f2ptr integer_array = f2__largeinteger__integer_array(cause, this);
   if (is_negative) {
     char* negative_sign = "-";
@@ -1325,6 +1367,36 @@ f2ptr f2__largeinteger__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr n
 def_pcfunk2(largeinteger__is_numerically_equal_to, this, that, return f2__largeinteger__is_numerically_equal_to(this_cause, this, that));
 
 
+f2ptr raw__largeinteger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__integer__foreground);
+  f2ptr is_negative   = f2__largeinteger__is_negative(  cause, this);
+  f2ptr integer_array = f2__largeinteger__integer_array(cause, this);
+  if (is_negative != nil) {
+    char* negative_sign = "-";
+    raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)negative_sign);
+  }
+  raw__largeinteger__unsigned_array__terminal_print_with_frame(cause, integer_array, terminal_print_frame, boolean__false);
+  raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__default__foreground);
+  return nil;
+}
+
+f2ptr f2__largeinteger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__largeinteger__is_type(        cause, this)) ||
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__largeinteger__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(largeinteger__terminal_print_with_frame, this, terminal_print_frame, return f2__largeinteger__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr f2largeinteger__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2largeinteger__primobject_type__new(cause);
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_largeinteger.terminal_print_with_frame__funk);}
+  return this;
+}
+
+
 // **
 
 void f2__primobject_largeinteger__reinitialize_globalvars() {
@@ -1365,6 +1437,9 @@ void f2__primobject_largeinteger__initialize() {
   f2__primcfunk__init__2(largeinteger__is_greater_than, this, that, "returns whether a largeinteger is greater than any other type of number.");
   f2__primcfunk__init__2(largeinteger__is_less_than, this, that, "returns whether a largeinteger is less than any other type of number.");
   f2__primcfunk__init__2(largeinteger__is_numerically_equal_to, this, that, "returns whether a largeinteger is numerically equal to any other type of number.");
+  
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_largeinteger.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(largeinteger__terminal_print_with_frame, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_largeinteger.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 }
 

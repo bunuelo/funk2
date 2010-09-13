@@ -466,7 +466,7 @@ f2ptr f2__exp__terminal_stream_print(f2ptr cause, f2ptr this, f2ptr stream) {
   f2ptr indent_distance      = f2integer__new(cause, 0);
   s64   max_x__i             = raw__termios__width();
   f2ptr max_x                = f2integer__new(cause, max_x__i);
-  s64   max_height__i        = raw__termios__height() - 3;
+  s64   max_height__i        = raw__termios__height();
   if (max_height__i <= 0) {
     max_height__i = 1;
   }

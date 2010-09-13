@@ -3379,9 +3379,13 @@ f2ptr raw__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
 	  if (index > 0) {
 	    //printf("\ndebug 2");
 	    {
-	      simple_array_string__length = sprintf((char*)simple_array_string, " ");
-	      raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__simple_array__foreground);
-	      raw__terminal_print_frame__write_string(cause, terminal_print_frame, simple_array_string__length, simple_array_string);
+	      x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+	      x__i = f2integer__i(x, cause);
+	      if ((x__i + 1) < max_x__i) {
+		simple_array_string__length = sprintf((char*)simple_array_string, " ");
+		raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__simple_array__foreground);
+		raw__terminal_print_frame__write_string(cause, terminal_print_frame, simple_array_string__length, simple_array_string);
+	      }
 	    }
 	    if (use_one_line == nil) {
 	      //printf("\ndebug 3");

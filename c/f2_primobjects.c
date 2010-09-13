@@ -167,7 +167,17 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
     indent_distance = f2integer__new(cause, indent_distance__i);
     f2__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
   }
-  u64 cons__length        = raw__simple_length(cause, this);
+  u64 cons__length = 0;
+  {
+    f2ptr iter = this;
+    while (raw__cons__is_type(cause, iter)) {
+      cons__length ++;
+      iter = f2__cons__cdr(cause, iter);
+      if ((iter != nil) && (! raw__cons__is_type(cause, iter))) {
+	iter = f2list2__new(cause, new__symbol(cause, "."), iter);
+      }
+    }
+  }
   u8  cons_string[128];
   u64 cons_string__length = 0;
   {
@@ -179,7 +189,7 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
   {
     f2ptr iter  = this;
     u64   index = 0;
-    while (iter != nil) {
+    while (raw__cons__is_type(cause, iter)) {
       if (size__i >= (max_size__i - 1)) {
 	x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
 	x__i = f2integer__i(x, cause);
@@ -238,6 +248,9 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
       }
       index ++;
       iter = f2__cons__cdr(cause, iter);
+      if ((iter != nil) && (! raw__cons__is_type(cause, iter))) {
+	iter = f2list2__new(cause, new__symbol(cause, "."), iter);
+      }
     }
     f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, size__i));
     f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);

@@ -528,6 +528,9 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		       s64   new_x__i = f2integer__i(new_x, cause);
 		       {
 			 u64 index;
+			 printf("\ntype_slot_name__max_length=" s64__fstr, type_slot_name__max_length);
+			 printf("\nnew_x__i=" s64__fstr, new_x__i);
+			 printf("\nbefore_type_slot_name_x__i=" s64__fstr, before_type_slot_name_x__i);
 			 for (index = 0; (index < (type_slot_name__max_length - (new_x__i - before_type_slot_name_x__i))) && (index < type_slot_name__max_length); index ++) {
 			   type_slot_name_string[index] = ' ';
 			 }
@@ -557,6 +560,9 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		       s64   new_x__i = f2integer__i(new_x, cause);
 		       {
 			 u64 index;
+			 printf("\nslot_name__max_length=" s64__slot_name__max_length);
+			 printf("\nnew_x__i=" s64__fstr, new_x__i);
+			 printf("\nbefore_slot_name_x__i=" s64__fstr, before_slot_name_x__i);
 			 for (index = 0; (index < (slot_name__max_length - (new_x__i - before_slot_name_x__i))) && (index < slot_name__max_length); index ++) {
 			   slot_name_string[index] = ' ';
 			 }

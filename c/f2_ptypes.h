@@ -947,6 +947,8 @@ typedef struct funk2_object_type__traced_array__slot_s {
   f2ptr elt__read_funks__funk;
   f2ptr elt__read_funks__set__symbol;
   f2ptr elt__read_funks__set__funk;
+  f2ptr terminal_print_with_frame__symbol;
+  f2ptr terminal_print_with_frame__funk;
 } funk2_object_type__traced_array__slot_t;
 
 // larva

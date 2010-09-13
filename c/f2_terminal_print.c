@@ -361,13 +361,6 @@ def_pcfunk2(terminal_print_frame__expression_fits_within_height_constraint, this
 
 
 f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  //printf("\nentering raw__exp__terminal_print_with_frame\n");
-  {
-    //f2ptr max_size    = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
-    //s64   max_size__i = f2integer__i(max_size, cause);
-    //f2__print(cause, terminal_print_frame);
-    //f2__print(cause, this);
-  }
   f2ptr fiber            = f2__this__fiber(cause);
   f2ptr funk             = f2__object__slot__type_funk(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
   f2ptr test_constraints = f2__terminal_print_frame__test_constraints(cause, terminal_print_frame);
@@ -381,14 +374,10 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
     if (can_print_on_one_line != nil) {
       // we successfully satisfied all constraints by printing on one line, so go for it.
       f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
-      //if (test_constraints == nil) {
       f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }
-      //} else {
-      //	f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
-      //}
     } else {
       f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
       // iteratively reduce max size if we fail to satisfy y constraint.
@@ -406,7 +395,6 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	  while (max_size__i != working_size) {
 	    last_max_size__i = max_size__i;
 	    max_size__i      = working_size + ((max_size__i - working_size) >> 1);
-	    //printf("\nfailed size = " s64__fstr ", try size = " s64__fstr, last_max_size__i, max_size__i);
 	    max_size         = f2integer__new(cause, max_size__i);
 	    f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
 	    if (max_size__i == 0) {

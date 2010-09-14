@@ -447,6 +447,8 @@ def_pcfunk1(frame__as__graph, this, return f2__frame__as__graph(this_cause, this
 
 f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr use_one_line = f2__terminal_print_frame__use_one_line(cause, terminal_print_frame);
+  f2ptr max_size     = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
+  s64   max_size__i  = f2integer__i(max_size, cause);
   u8    frame_string[128];
   u64   frame_string__length;
   {
@@ -516,11 +518,12 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		     slot_count ++;
 		   }
 		   );
-  s64 slot_index                     = 0;
-  u8* type_slot_name_string          = (u8*)from_ptr(f2__malloc(type_slot_name__max_length + 1));
-  s64 type_slot_name_string__length;
-  u8* slot_name_string               = (u8*)from_ptr(f2__malloc(slot_name__max_length + 1));
-  s64 slot_name_string__length       = 0;
+  s64       slot_index                     = 0;
+  u8*       type_slot_name_string          = (u8*)from_ptr(f2__malloc(type_slot_name__max_length + 1));
+  s64       type_slot_name_string__length;
+  u8*       slot_name_string               = (u8*)from_ptr(f2__malloc(slot_name__max_length + 1));
+  s64       slot_name_string__length       = 0;
+  boolean_t failed_size_constraint         = boolean__false;
   //f2__print(cause, terminal_print_frame);
   frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
 		   boolean_t slot_should_be_printed = boolean__true;
@@ -531,86 +534,103 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		     }
 		   }
 		   if (slot_should_be_printed) {
-		     if (types_exist_besides_variables) {
-		       f2ptr before_type_slot_name_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
-		       s64   before_type_slot_name_x__i = f2integer__i(before_type_slot_name_x, cause);
-		       if (raw__symbol__is_type(cause, type_slot_name)) {
-			 f2ptr result = raw__key_symbol__terminal_print_with_frame(cause, type_slot_name, terminal_print_frame);
-			 if (raw__larva__is_type(cause, result)) {
-			   return result;
-			 }
-		       } else {
-			 f2ptr result = raw__exp__terminal_print_with_frame(cause, type_slot_name, terminal_print_frame);
-			 if (raw__larva__is_type(cause, result)) {
-			   return result;
-			 }
-		       }
-		       if (use_one_line == nil) {
-			 f2ptr new_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
-			 //f2__print(cause, new_x);
-			 s64   new_x__i = f2integer__i(new_x, cause);
-			 {
-			   u64 index;
-			   //printf("\ntype_slot_name__max_length=" s64__fstr, type_slot_name__max_length);
-			   //printf("\nnew_x__i=" s64__fstr, new_x__i);
-			   //printf("\nbefore_type_slot_name_x__i=" s64__fstr, before_type_slot_name_x__i);
-			   for (index = 0; (index < (type_slot_name__max_length - (new_x__i - before_type_slot_name_x__i))) && (index < type_slot_name__max_length); index ++) {
-			     type_slot_name_string[index] = ' ';
-			   }
-			   type_slot_name_string[index]  = 0;
-			   type_slot_name_string__length = index;
-			 }
-			 raw__terminal_print_frame__write_string(cause, terminal_print_frame, type_slot_name_string__length, type_slot_name_string);
-		       }
-		       raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
-		     }
+		     boolean_t already_failed_size_constraint = failed_size_constraint;
 		     {
-		       f2ptr before_slot_name_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
-		       s64   before_slot_name_x__i = f2integer__i(before_slot_name_x, cause);
-		       if (raw__symbol__is_type(cause, slot_name)) {
-			 f2ptr result = raw__key_symbol__terminal_print_with_frame(cause, slot_name, terminal_print_frame);
-			 if (raw__larva__is_type(cause, result)) {
-			   return result;
-			 }
-		       } else {
-			 f2ptr result = raw__exp__terminal_print_with_frame(cause, slot_name, terminal_print_frame);
+		       f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
+		       s64   size__i = f2integer__i(size, cause);
+		       if (size__i >= max_size__i) {
+			 failed_size_constraint = boolean__true;
+		       }
+		     }
+		     if (failed_size_constraint) {
+		       if (! already_failed_size_constraint) {
+			 f2ptr result = raw__key_symbol__terminal_print_with_frame(cause, new__symbol(cause, "..."), terminal_print_frame);
 			 if (raw__larva__is_type(cause, result)) {
 			   return result;
 			 }
 		       }
-		       if (use_one_line == nil) {
-			 f2ptr new_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
-			 //f2__print(cause, new_x);
-			 s64   new_x__i = f2integer__i(new_x, cause);
-			 {
-			   u64 index;
-			   //printf("\nslot_name__max_length=" s64__fstr, slot_name__max_length);
-			   //printf("\nnew_x__i=" s64__fstr, new_x__i);
-			   //printf("\nbefore_slot_name_x__i=" s64__fstr, before_slot_name_x__i);
-			   for (index = 0; (index < (slot_name__max_length - (new_x__i - before_slot_name_x__i))) && (index < slot_name__max_length); index ++) {
-			     slot_name_string[index] = ' ';
+		     } else {
+		       if (types_exist_besides_variables) {
+			 f2ptr before_type_slot_name_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+			 s64   before_type_slot_name_x__i = f2integer__i(before_type_slot_name_x, cause);
+			 if (raw__symbol__is_type(cause, type_slot_name)) {
+			   f2ptr result = raw__key_symbol__terminal_print_with_frame(cause, type_slot_name, terminal_print_frame);
+			   if (raw__larva__is_type(cause, result)) {
+			     return result;
 			   }
-			   slot_name_string[index]  = 0;
-			   slot_name_string__length = index;
+			 } else {
+			   f2ptr result = raw__exp__terminal_print_with_frame(cause, type_slot_name, terminal_print_frame);
+			   if (raw__larva__is_type(cause, result)) {
+			     return result;
+			   }
 			 }
-			 raw__terminal_print_frame__write_string(cause, terminal_print_frame, slot_name_string__length, slot_name_string);
-		       }
-		     }
-		     raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
-		     {
-		       f2ptr result = raw__exp__terminal_print_with_frame(cause, slot_value, terminal_print_frame);
-		       if (raw__larva__is_type(cause, result)) {
-			 return result;
-		       }
-		     }
-		     if (slot_index < slot_count - 1) {
-		       if (use_one_line == nil) {
-			 raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)"\n");
-		       } else {
+			 if (use_one_line == nil) {
+			   f2ptr new_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+			   //f2__print(cause, new_x);
+			   s64   new_x__i = f2integer__i(new_x, cause);
+			   {
+			     u64 index;
+			     //printf("\ntype_slot_name__max_length=" s64__fstr, type_slot_name__max_length);
+			     //printf("\nnew_x__i=" s64__fstr, new_x__i);
+			     //printf("\nbefore_type_slot_name_x__i=" s64__fstr, before_type_slot_name_x__i);
+			     for (index = 0; (index < (type_slot_name__max_length - (new_x__i - before_type_slot_name_x__i))) && (index < type_slot_name__max_length); index ++) {
+			       type_slot_name_string[index] = ' ';
+			     }
+			     type_slot_name_string[index]  = 0;
+			     type_slot_name_string__length = index;
+			   }
+			   raw__terminal_print_frame__write_string(cause, terminal_print_frame, type_slot_name_string__length, type_slot_name_string);
+			 }
 			 raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
 		       }
+		       {
+			 f2ptr before_slot_name_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+			 s64   before_slot_name_x__i = f2integer__i(before_slot_name_x, cause);
+			 if (raw__symbol__is_type(cause, slot_name)) {
+			   f2ptr result = raw__key_symbol__terminal_print_with_frame(cause, slot_name, terminal_print_frame);
+			   if (raw__larva__is_type(cause, result)) {
+			     return result;
+			   }
+			 } else {
+			   f2ptr result = raw__exp__terminal_print_with_frame(cause, slot_name, terminal_print_frame);
+			   if (raw__larva__is_type(cause, result)) {
+			     return result;
+			   }
+			 }
+			 if (use_one_line == nil) {
+			   f2ptr new_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+			   //f2__print(cause, new_x);
+			   s64   new_x__i = f2integer__i(new_x, cause);
+			   {
+			     u64 index;
+			     //printf("\nslot_name__max_length=" s64__fstr, slot_name__max_length);
+			     //printf("\nnew_x__i=" s64__fstr, new_x__i);
+			     //printf("\nbefore_slot_name_x__i=" s64__fstr, before_slot_name_x__i);
+			     for (index = 0; (index < (slot_name__max_length - (new_x__i - before_slot_name_x__i))) && (index < slot_name__max_length); index ++) {
+			       slot_name_string[index] = ' ';
+			     }
+			     slot_name_string[index]  = 0;
+			     slot_name_string__length = index;
+			   }
+			   raw__terminal_print_frame__write_string(cause, terminal_print_frame, slot_name_string__length, slot_name_string);
+			 }
+		       }
+		       raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
+		       {
+			 f2ptr result = raw__exp__terminal_print_with_frame(cause, slot_value, terminal_print_frame);
+			 if (raw__larva__is_type(cause, result)) {
+			   return result;
+			 }
+		       }
+		       if (slot_index < slot_count - 1) {
+			 if (use_one_line == nil) {
+			   raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)"\n");
+			 } else {
+			   raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
+			 }
+		       }
+		       slot_index ++;
 		     }
-		     slot_index ++;
 		   }
 		   );
   {

@@ -116,7 +116,18 @@ boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return(f2
     if (failed_max_height_constraint) {
       return boolean__true;
     }
-  }
+  } else if (testing_max_x_constraint &&
+	     testing_max_height_constraint &&
+	     (! testing_x_offset)) {
+    boolean_t failed_max_x_constraint = (f2__terminal_print_frame__failed_max_x_constraint(cause, this) != nil);
+    if (failed_max_x_constraint) {
+      return boolean__true;
+    }
+    boolean_t failed_max_height_constraint = (f2__terminal_print_frame__failed_max_height_constraint(cause, this) != nil);
+    if (failed_max_height_constraint) {
+      return boolean__true;
+    }
+  } 
   return boolean__false;
 }
 
@@ -373,7 +384,7 @@ f2ptr raw__terminal_print_frame__expression_fits_within_height_constraint(f2ptr 
 	f2__terminal_print_frame__failed_max_x_constraint__set(      cause, this, f2bool__new(boolean__false));
 	f2__terminal_print_frame__failed_max_height_constraint__set( cause, this, f2bool__new(boolean__false));
 	f2__terminal_print_frame__testing__set(                      cause, this, f2bool__new(boolean__true));
-	f2__terminal_print_frame__testing_max_x_constraint__set(     cause, this, f2bool__new(boolean__true));
+	f2__terminal_print_frame__testing_max_x_constraint__set(     cause, this, f2bool__new(boolean__false));
 	f2__terminal_print_frame__testing_max_height_constraint__set(cause, this, f2bool__new(boolean__true));
 	f2__terminal_print_frame__testing_x_offset__set(             cause, this, f2bool__new(boolean__false));
 	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, expression, f2cons__new(cause, this, nil)));

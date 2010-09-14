@@ -562,7 +562,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 		f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	      }
 	    } else {
-	      size_that_fails_to_fit_within_height_constraint = f2__terminal_print_frame__size_that_fails_to_fit_within_height_constraint(cause, terminal_print_frame, this);
+	      size_that_fails_to_fit_within_height_constraint = f2__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(cause, terminal_print_frame, this);
 	      if (raw__larva__is_type(cause, size_that_fails_to_fit_within_height_constraint)) {
 		return size_that_fails_to_fit_within_height_constraint;
 	      }
@@ -660,11 +660,11 @@ void f2__terminal_print__initialize() {
 			     failed_max_x_constraint,
 			     failed_max_height_constraint);
   
-  f2__primcfunk__init__7(terminal_print_frame__new,                                             stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, "");
-  f2__primcfunk__init__2(terminal_print_frame__write_string,                                    this, string,                                                                         "");
-  f2__primcfunk__init__2(terminal_print_frame__can_print_expression_on_one_line,                this, expression,                                                                     "");
-  f2__primcfunk__init__2(terminal_print_frame__size_that_fails_to_fit_within_height_constraint, this, expression,                                                                     "");
-  f2__primcfunk__init__2(terminal_print_frame__expression_x_offset,                             this, expression,                                                                     "");
+  f2__primcfunk__init__7(terminal_print_frame__new,                                                        stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, "");
+  f2__primcfunk__init__2(terminal_print_frame__write_string,                                               this, string,                                                                         "");
+  f2__primcfunk__init__2(terminal_print_frame__can_print_expression_on_one_line,                           this, expression,                                                                     "");
+  f2__primcfunk__init__2(terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint, this, expression,                                                                     "");
+  f2__primcfunk__init__2(terminal_print_frame__expression_x_offset,                                        this, expression,                                                                     "");
   
   f2__primcfunk__init__2(exp__terminal_print_with_frame, this, terminal_print_frame, "Prints a value given a terminal_print_frame.");
   f2__primcfunk__init__2(exp__terminal_stream_print,     this, stream,               "Prints a value to the given terminal stream, using a new default terminal_print_frame.");

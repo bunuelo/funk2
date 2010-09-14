@@ -23,6 +23,8 @@
 
 #include "funk2.h"
 
+#define extreme_max_size (300ull * 200ull)
+
 
 // terminal_print_frame
 
@@ -526,8 +528,9 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
       }
     } else {
       f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-      f2ptr original_max_size = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
-      if (original_max_size == nil) {
+      f2ptr original_max_size    = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
+      s64   original_max_size__i = f2integer__i(original_max_size, cause);
+      if (original_max_size__i == extreme_max_size) {
 	// iteratively increase max size if we satisfy y constraint.
 	s64   working_size = 0;
 	s64   max_size__i  = 1;
@@ -637,7 +640,7 @@ f2ptr f2__exp__terminal_stream_print(f2ptr cause, f2ptr this, f2ptr stream) {
     max_height__i = 1;
   }
   f2ptr max_height           = f2integer__new(cause, max_height__i);
-  f2ptr max_size             = nil;
+  f2ptr max_size             = f2integer__new(cause, extreme_max_size);
   f2ptr use_ansi_codes       = f2bool__new(boolean__true);
   f2ptr use_html_codes       = f2bool__new(boolean__false);
   f2ptr terminal_print_frame = f2__terminal_print_frame__new(cause, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes);

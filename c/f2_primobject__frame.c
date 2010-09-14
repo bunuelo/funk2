@@ -476,27 +476,28 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   s64 slot_count                 = 0;
   s64 type_slot_name__max_length = 0;
   s64 slot_name__max_length      = 0;
+  f2__print(cause, terminal_print_frame);
   frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
 		   {
 		     f2ptr x_offset = f2__terminal_print_frame__expression_x_offset(cause, terminal_print_frame, type_slot_name);
-		     //f2__print(cause, x_offset);
+		     f2__print(cause, x_offset);
 		     if (raw__larva__is_type(cause, x_offset)) {
 		       return x_offset;
 		     }
 		     s64 x_offset__i = f2integer__i(x_offset, cause);
-		     //printf("\nx_offset__i=" s64__fstr, x_offset__i);
+		     printf("\nx_offset__i=" s64__fstr, x_offset__i);
 		     if (x_offset__i > type_slot_name__max_length) {
 		       type_slot_name__max_length = x_offset__i;
 		     }
 		   }
 		   {
 		     f2ptr x_offset = f2__terminal_print_frame__expression_x_offset(cause, terminal_print_frame, slot_name);
-		     //f2__print(cause, x_offset);
+		     f2__print(cause, x_offset);
 		     if (raw__larva__is_type(cause, x_offset)) {
 		       return x_offset;
 		     }
 		     s64 x_offset__i = f2integer__i(x_offset, cause);
-		     //printf("\nx_offset__i=" s64__fstr, x_offset__i);
+		     printf("\nx_offset__i=" s64__fstr, x_offset__i);
 		     if (x_offset__i > slot_name__max_length) {
 		       slot_name__max_length = x_offset__i;
 		     }
@@ -508,6 +509,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   s64 type_slot_name_string__length;
   u8* slot_name_string               = (u8*)from_ptr(f2__malloc(slot_name__max_length + 1));
   s64 slot_name_string__length       = 0;
+  f2__print(cause, terminal_print_frame);
   frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
 		   {
 		     f2ptr before_type_slot_name_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
@@ -525,13 +527,13 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		     }
 		     if (use_one_line == nil) {
 		       f2ptr new_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
-		       //f2__print(cause, new_x);
+		       f2__print(cause, new_x);
 		       s64   new_x__i = f2integer__i(new_x, cause);
 		       {
 			 u64 index;
-			 //printf("\ntype_slot_name__max_length=" s64__fstr, type_slot_name__max_length);
-			 //printf("\nnew_x__i=" s64__fstr, new_x__i);
-			 //printf("\nbefore_type_slot_name_x__i=" s64__fstr, before_type_slot_name_x__i);
+			 printf("\ntype_slot_name__max_length=" s64__fstr, type_slot_name__max_length);
+			 printf("\nnew_x__i=" s64__fstr, new_x__i);
+			 printf("\nbefore_type_slot_name_x__i=" s64__fstr, before_type_slot_name_x__i);
 			 for (index = 0; (index < (type_slot_name__max_length - (new_x__i - before_type_slot_name_x__i))) && (index < type_slot_name__max_length); index ++) {
 			   type_slot_name_string[index] = ' ';
 			 }

@@ -479,34 +479,41 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   s64 slot_name__max_length               = 0;
   //f2__print(cause, terminal_print_frame);
   frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
-		   if (! raw__eq(cause, type_slot_name, new__symbol(cause, "variable"))) {
+		   boolean_t slot_should_be_printed = boolean__true;
+		   if (raw__eq(cause, type_slot_name, new__symbol(cause, "variable"))) {
+		     if (raw__eq(cause, slot_name, new__symbol(cause, "type"))) {
+		       slot_should_be_printed = boolean__false;
+		     }
+		   } else {
 		     types_exist_besides_variables = boolean__true;
 		   }
-		   {
-		     f2ptr x_offset = f2__terminal_print_frame__expression_x_offset(cause, terminal_print_frame, type_slot_name);
-		     //f2__print(cause, x_offset);
-		     if (raw__larva__is_type(cause, x_offset)) {
-		       return x_offset;
+		   if (slot_should_be_printed) {
+		     {
+		       f2ptr x_offset = f2__terminal_print_frame__expression_x_offset(cause, terminal_print_frame, type_slot_name);
+		       //f2__print(cause, x_offset);
+		       if (raw__larva__is_type(cause, x_offset)) {
+			 return x_offset;
+		       }
+		       s64 x_offset__i = f2integer__i(x_offset, cause);
+		       //printf("\nx_offset__i=" s64__fstr, x_offset__i);
+		       if (x_offset__i > type_slot_name__max_length) {
+			 type_slot_name__max_length = x_offset__i;
+		       }
 		     }
-		     s64 x_offset__i = f2integer__i(x_offset, cause);
-		     //printf("\nx_offset__i=" s64__fstr, x_offset__i);
-		     if (x_offset__i > type_slot_name__max_length) {
-		       type_slot_name__max_length = x_offset__i;
+		     {
+		       f2ptr x_offset = f2__terminal_print_frame__expression_x_offset(cause, terminal_print_frame, slot_name);
+		       //f2__print(cause, x_offset);
+		       if (raw__larva__is_type(cause, x_offset)) {
+			 return x_offset;
+		       }
+		       s64 x_offset__i = f2integer__i(x_offset, cause);
+		       //printf("\nx_offset__i=" s64__fstr, x_offset__i);
+		       if (x_offset__i > slot_name__max_length) {
+			 slot_name__max_length = x_offset__i;
+		       }
 		     }
+		     slot_count ++;
 		   }
-		   {
-		     f2ptr x_offset = f2__terminal_print_frame__expression_x_offset(cause, terminal_print_frame, slot_name);
-		     //f2__print(cause, x_offset);
-		     if (raw__larva__is_type(cause, x_offset)) {
-		       return x_offset;
-		     }
-		     s64 x_offset__i = f2integer__i(x_offset, cause);
-		     //printf("\nx_offset__i=" s64__fstr, x_offset__i);
-		     if (x_offset__i > slot_name__max_length) {
-		       slot_name__max_length = x_offset__i;
-		     }
-		   }
-		   slot_count ++;
 		   );
   s64 slot_index                     = 0;
   u8* type_slot_name_string          = (u8*)from_ptr(f2__malloc(type_slot_name__max_length + 1));
@@ -515,86 +522,94 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   s64 slot_name_string__length       = 0;
   //f2__print(cause, terminal_print_frame);
   frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
-		   if (types_exist_besides_variables) {
-		     f2ptr before_type_slot_name_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
-		     s64   before_type_slot_name_x__i = f2integer__i(before_type_slot_name_x, cause);
-		     if (raw__symbol__is_type(cause, type_slot_name)) {
-		       f2ptr result = raw__key_symbol__terminal_print_with_frame(cause, type_slot_name, terminal_print_frame);
-		       if (raw__larva__is_type(cause, result)) {
-			 return result;
-		       }
-		     } else {
-		       f2ptr result = raw__exp__terminal_print_with_frame(cause, type_slot_name, terminal_print_frame);
-		       if (raw__larva__is_type(cause, result)) {
-			 return result;
-		       }
+		   boolean_t slot_should_be_printed = boolean__true;
+		   if (raw__eq(cause, type_slot_name, new__symbol(cause, "variable"))) {
+		     if (raw__eq(cause, slot_name, new__symbol(cause, "type"))) {
+		       slot_should_be_printed = boolean__false;
 		     }
-		     if (use_one_line == nil) {
-		       f2ptr new_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
-		       //f2__print(cause, new_x);
-		       s64   new_x__i = f2integer__i(new_x, cause);
-		       {
-			 u64 index;
-			 //printf("\ntype_slot_name__max_length=" s64__fstr, type_slot_name__max_length);
-			 //printf("\nnew_x__i=" s64__fstr, new_x__i);
-			 //printf("\nbefore_type_slot_name_x__i=" s64__fstr, before_type_slot_name_x__i);
-			 for (index = 0; (index < (type_slot_name__max_length - (new_x__i - before_type_slot_name_x__i))) && (index < type_slot_name__max_length); index ++) {
-			   type_slot_name_string[index] = ' ';
+		   }
+		   if (slot_should_be_printed) {
+		     if (types_exist_besides_variables) {
+		       f2ptr before_type_slot_name_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+		       s64   before_type_slot_name_x__i = f2integer__i(before_type_slot_name_x, cause);
+		       if (raw__symbol__is_type(cause, type_slot_name)) {
+			 f2ptr result = raw__key_symbol__terminal_print_with_frame(cause, type_slot_name, terminal_print_frame);
+			 if (raw__larva__is_type(cause, result)) {
+			   return result;
 			 }
-			 type_slot_name_string[index]  = 0;
-			 type_slot_name_string__length = index;
-		       }
-		       raw__terminal_print_frame__write_string(cause, terminal_print_frame, type_slot_name_string__length, type_slot_name_string);
-		     }
-		     raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
-		   }
-		   {
-		     f2ptr before_slot_name_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
-		     s64   before_slot_name_x__i = f2integer__i(before_slot_name_x, cause);
-		     if (raw__symbol__is_type(cause, slot_name)) {
-		       f2ptr result = raw__key_symbol__terminal_print_with_frame(cause, slot_name, terminal_print_frame);
-		       if (raw__larva__is_type(cause, result)) {
-			 return result;
-		       }
-		     } else {
-		       f2ptr result = raw__exp__terminal_print_with_frame(cause, slot_name, terminal_print_frame);
-		       if (raw__larva__is_type(cause, result)) {
-			 return result;
-		       }
-		     }
-		     if (use_one_line == nil) {
-		       f2ptr new_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
-		       //f2__print(cause, new_x);
-		       s64   new_x__i = f2integer__i(new_x, cause);
-		       {
-			 u64 index;
-			 //printf("\nslot_name__max_length=" s64__fstr, slot_name__max_length);
-			 //printf("\nnew_x__i=" s64__fstr, new_x__i);
-			 //printf("\nbefore_slot_name_x__i=" s64__fstr, before_slot_name_x__i);
-			 for (index = 0; (index < (slot_name__max_length - (new_x__i - before_slot_name_x__i))) && (index < slot_name__max_length); index ++) {
-			   slot_name_string[index] = ' ';
+		       } else {
+			 f2ptr result = raw__exp__terminal_print_with_frame(cause, type_slot_name, terminal_print_frame);
+			 if (raw__larva__is_type(cause, result)) {
+			   return result;
 			 }
-			 slot_name_string[index]  = 0;
-			 slot_name_string__length = index;
 		       }
-		       raw__terminal_print_frame__write_string(cause, terminal_print_frame, slot_name_string__length, slot_name_string);
-		     }
-		   }
-		   raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
-		   {
-		     f2ptr result = raw__exp__terminal_print_with_frame(cause, slot_value, terminal_print_frame);
-		     if (raw__larva__is_type(cause, result)) {
-		       return result;
-		     }
-		   }
-		   if (slot_index < slot_count - 1) {
-		     if (use_one_line == nil) {
-		       raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)"\n");
-		     } else {
+		       if (use_one_line == nil) {
+			 f2ptr new_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+			 //f2__print(cause, new_x);
+			 s64   new_x__i = f2integer__i(new_x, cause);
+			 {
+			   u64 index;
+			   //printf("\ntype_slot_name__max_length=" s64__fstr, type_slot_name__max_length);
+			   //printf("\nnew_x__i=" s64__fstr, new_x__i);
+			   //printf("\nbefore_type_slot_name_x__i=" s64__fstr, before_type_slot_name_x__i);
+			   for (index = 0; (index < (type_slot_name__max_length - (new_x__i - before_type_slot_name_x__i))) && (index < type_slot_name__max_length); index ++) {
+			     type_slot_name_string[index] = ' ';
+			   }
+			   type_slot_name_string[index]  = 0;
+			   type_slot_name_string__length = index;
+			 }
+			 raw__terminal_print_frame__write_string(cause, terminal_print_frame, type_slot_name_string__length, type_slot_name_string);
+		       }
 		       raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
 		     }
+		     {
+		       f2ptr before_slot_name_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+		       s64   before_slot_name_x__i = f2integer__i(before_slot_name_x, cause);
+		       if (raw__symbol__is_type(cause, slot_name)) {
+			 f2ptr result = raw__key_symbol__terminal_print_with_frame(cause, slot_name, terminal_print_frame);
+			 if (raw__larva__is_type(cause, result)) {
+			   return result;
+			 }
+		       } else {
+			 f2ptr result = raw__exp__terminal_print_with_frame(cause, slot_name, terminal_print_frame);
+			 if (raw__larva__is_type(cause, result)) {
+			   return result;
+			 }
+		       }
+		       if (use_one_line == nil) {
+			 f2ptr new_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+			 //f2__print(cause, new_x);
+			 s64   new_x__i = f2integer__i(new_x, cause);
+			 {
+			   u64 index;
+			   //printf("\nslot_name__max_length=" s64__fstr, slot_name__max_length);
+			   //printf("\nnew_x__i=" s64__fstr, new_x__i);
+			   //printf("\nbefore_slot_name_x__i=" s64__fstr, before_slot_name_x__i);
+			   for (index = 0; (index < (slot_name__max_length - (new_x__i - before_slot_name_x__i))) && (index < slot_name__max_length); index ++) {
+			     slot_name_string[index] = ' ';
+			   }
+			   slot_name_string[index]  = 0;
+			   slot_name_string__length = index;
+			 }
+			 raw__terminal_print_frame__write_string(cause, terminal_print_frame, slot_name_string__length, slot_name_string);
+		       }
+		     }
+		     raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
+		     {
+		       f2ptr result = raw__exp__terminal_print_with_frame(cause, slot_value, terminal_print_frame);
+		       if (raw__larva__is_type(cause, result)) {
+			 return result;
+		       }
+		     }
+		     if (slot_index < slot_count - 1) {
+		       if (use_one_line == nil) {
+			 raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)"\n");
+		       } else {
+			 raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
+		       }
+		     }
+		     slot_index ++;
 		   }
-		   slot_index ++;
 		   );
   {
     raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__frame__foreground);

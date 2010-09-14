@@ -353,14 +353,14 @@ f2ptr f2__terminal_print_frame__can_print_expression_on_one_line(f2ptr cause, f2
 def_pcfunk2(terminal_print_frame__can_print_expression_on_one_line, this, expression, return f2__terminal_print_frame__can_print_expression_on_one_line(this_cause, this, expression));
 
 
-f2ptr raw__terminal_print_frame__expression_fits_within_height_constraint(f2ptr cause, f2ptr this, f2ptr expression) {
+f2ptr raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(f2ptr cause, f2ptr this, f2ptr expression) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, expression, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
   if (! raw__funkable__is_type(cause, funk)) {
     return f2bool__new(boolean__false);
   }
-  f2ptr     encountered_larva = nil;
-  boolean_t satisfies_height_constraint;
+  f2ptr encountered_larva                 = nil;
+  f2ptr size_that_fails_height_constraint = nil;
   {
     f2ptr failed_max_x_constraint       = f2__terminal_print_frame__failed_max_x_constraint(      cause, this);
     f2ptr failed_max_height_constraint  = f2__terminal_print_frame__failed_max_height_constraint( cause, this);
@@ -393,6 +393,11 @@ f2ptr raw__terminal_print_frame__expression_fits_within_height_constraint(f2ptr 
 	  encountered_larva = result;
 	}
       }
+      
+      if (f2__terminal_print_frame__failed_max_height_constraint(cause, this) != nil) {
+	size_that_fails_height_constraint = f2__terminal_print_frame__size(cause, nil);
+      }
+      
       f2__terminal_print_frame__x__set(              cause, this, x);
       f2__terminal_print_frame__height__set(         cause, this, height);
       f2__terminal_print_frame__left_extent__set(    cause, this, left_extent);
@@ -400,8 +405,6 @@ f2ptr raw__terminal_print_frame__expression_fits_within_height_constraint(f2ptr 
       f2__terminal_print_frame__indent_distance__set(cause, this, indent_distance);
       f2__terminal_print_frame__size__set(           cause, this, size);
     }
-    
-    satisfies_height_constraint = (f2__terminal_print_frame__failed_max_height_constraint(cause, this) == nil);
     
     f2__terminal_print_frame__failed_max_x_constraint__set(      cause, this, failed_max_x_constraint);
     f2__terminal_print_frame__failed_max_height_constraint__set( cause, this, failed_max_height_constraint);
@@ -415,16 +418,16 @@ f2ptr raw__terminal_print_frame__expression_fits_within_height_constraint(f2ptr 
   if (encountered_larva != nil) {
     return encountered_larva;
   }
-  return f2bool__new(satisfies_height_constraint);
+  return size_that_fails_height_constraint;
 }
 
-f2ptr f2__terminal_print_frame__expression_fits_within_height_constraint(f2ptr cause, f2ptr this, f2ptr expression) {
+f2ptr f2__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(f2ptr cause, f2ptr this, f2ptr expression) {
   if (! raw__terminal_print_frame__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__terminal_print_frame__expression_fits_within_height_constraint(cause, this, expression);
+  return raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(cause, this, expression);
 }
-def_pcfunk2(terminal_print_frame__expression_fits_within_height_constraint, this, expression, return f2__terminal_print_frame__expression_fits_within_height_constraint(this_cause, this, expression));
+def_pcfunk2(terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint, this, expression, return f2__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(this_cause, this, expression));
 
 
 f2ptr raw__terminal_print_frame__expression_x_offset(f2ptr cause, f2ptr this, f2ptr expression) {
@@ -533,11 +536,11 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	f2ptr max_size                      = original_max_size;
 	s64   max_size__i                   = f2integer__i(max_size, cause);
 	s64   last_max_size__i;
-	f2ptr fits_within_height_constraint = f2__terminal_print_frame__expression_fits_within_height_constraint(cause, terminal_print_frame, this);
-	if (raw__larva__is_type(cause, fits_within_height_constraint)) {
-	  return fits_within_height_constraint;
+	f2ptr size_that_fails_to_fit_within_height_constraint = f2__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(cause, terminal_print_frame, this);
+	if (raw__larva__is_type(cause, size_that_fails_to_fit_within_height_constraint)) {
+	  return size_that_fails_to_fit_within_height_constraint;
 	}
-	if (fits_within_height_constraint == nil) {
+	if (size_that_fails_to_fit_within_height_constraint != nil) {
 	  while (max_size__i != working_size) {
 	    last_max_size__i = max_size__i;
 	    max_size__i      = working_size + ((max_size__i - working_size) >> 1);
@@ -559,11 +562,11 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 		f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	      }
 	    } else {
-	      fits_within_height_constraint = f2__terminal_print_frame__expression_fits_within_height_constraint(cause, terminal_print_frame, this);
-	      if (raw__larva__is_type(cause, fits_within_height_constraint)) {
-		return fits_within_height_constraint;
+	      size_that_fails_to_fit_within_height_constraint = f2__terminal_print_frame__size_that_fails_to_fit_within_height_constraint(cause, terminal_print_frame, this);
+	      if (raw__larva__is_type(cause, size_that_fails_to_fit_within_height_constraint)) {
+		return size_that_fails_to_fit_within_height_constraint;
 	      }
-	      if (fits_within_height_constraint != nil) {
+	      if (size_that_fails_to_fit_within_height_constraint == nil) {
 		working_size = max_size__i;
 		if (last_max_size__i > max_size__i + 1) {
 		  max_size__i = last_max_size__i;
@@ -657,11 +660,11 @@ void f2__terminal_print__initialize() {
 			     failed_max_x_constraint,
 			     failed_max_height_constraint);
   
-  f2__primcfunk__init__7(terminal_print_frame__new,                                      stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, "");
-  f2__primcfunk__init__2(terminal_print_frame__write_string,                             this, string,                                                                         "");
-  f2__primcfunk__init__2(terminal_print_frame__can_print_expression_on_one_line,         this, expression,                                                                     "");
-  f2__primcfunk__init__2(terminal_print_frame__expression_fits_within_height_constraint, this, expression,                                                                     "");
-  f2__primcfunk__init__2(terminal_print_frame__expression_x_offset,                      this, expression,                                                                     "");
+  f2__primcfunk__init__7(terminal_print_frame__new,                                             stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, "");
+  f2__primcfunk__init__2(terminal_print_frame__write_string,                                    this, string,                                                                         "");
+  f2__primcfunk__init__2(terminal_print_frame__can_print_expression_on_one_line,                this, expression,                                                                     "");
+  f2__primcfunk__init__2(terminal_print_frame__size_that_fails_to_fit_within_height_constraint, this, expression,                                                                     "");
+  f2__primcfunk__init__2(terminal_print_frame__expression_x_offset,                             this, expression,                                                                     "");
   
   f2__primcfunk__init__2(exp__terminal_print_with_frame, this, terminal_print_frame, "Prints a value given a terminal_print_frame.");
   f2__primcfunk__init__2(exp__terminal_stream_print,     this, stream,               "Prints a value to the given terminal stream, using a new default terminal_print_frame.");

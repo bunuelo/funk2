@@ -28,8 +28,11 @@
 
 // terminal_print_frame
 
-declare_frame_object_17_slot(terminal_print_frame,
-			     test_constraints,
+declare_frame_object_20_slot(terminal_print_frame,
+			     testing,
+			     testing_max_x_constraint,
+			     testing_max_height_constraint,
+			     testing_x_offset,
 			     stream,
 			     indent_distance,
 			     max_x,

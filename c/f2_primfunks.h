@@ -160,6 +160,10 @@
   def_pcfunk__argument__18_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18); \
   def_pcfunk__argument(correct_arg_num, var19)
 
+#define def_pcfunk__argument__20_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20) \
+  def_pcfunk__argument__19_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19); \
+  def_pcfunk__argument(correct_arg_num, var20)
+
 
 
 #define def_pcfunk0(def_name, def_body)	\
@@ -376,6 +380,17 @@
 #define def_pcfunk19_and_rest(def_name, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, and_rest, def_body) \
   def_pcfunk__defargs(def_name, 19,					\
 		      def_pcfunk__argument__19_slot(19, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19); \
+		      f2ptr and_rest = simple_args__iter; simple_args__iter = nil, \
+		      def_body)
+
+#define def_pcfunk20(def_name, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20, def_body) \
+  def_pcfunk__defargs(def_name, 20,					\
+		      def_pcfunk__argument__20_slot(20, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20), \
+		      def_body)
+
+#define def_pcfunk20_and_rest(def_name, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20, and_rest, def_body) \
+  def_pcfunk__defargs(def_name, 20,					\
+		      def_pcfunk__argument__20_slot(20, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20); \
 		      f2ptr and_rest = simple_args__iter; simple_args__iter = nil, \
 		      def_body)
 

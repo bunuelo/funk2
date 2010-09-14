@@ -669,9 +669,10 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 			 }
 			 subexp_size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
 			 subexp_size__i = f2integer__i(subexp_size, cause);
+			 
+		         size__i += subexp_size__i;
+			 size     = f2integer__new(cause, size__i);
 		       }
-		       size__i += subexp_size__i;
-		       size     = f2integer__new(cause, size__i);
 		       f2__terminal_print_frame__size__set(    cause, terminal_print_frame, size);
 		       f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
 		       slot_index ++;

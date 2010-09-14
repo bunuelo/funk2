@@ -472,9 +472,9 @@ f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	raw__terminal_print_frame__write_string(cause, terminal_print_frame, array_string__length, array_string);
 	break;
       } else {
-	f2ptr subexp                    = raw__array__elt(cause, this, index);
+	f2ptr subexp             = raw__array__elt(cause, this, index);
 	u64   array__length_left = array__length - index;
-	u64   subexp_max_size__i        = (max_size__i - size__i + (array__length_left - 1)) / array__length_left;
+	u64   subexp_max_size__i = (max_size__i - size__i + (array__length_left - 1)) / array__length_left;
 	f2ptr subexp_size;
 	u64   subexp_size__i;
 	{

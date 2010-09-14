@@ -552,7 +552,8 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		     } else {
 		       f2ptr size               = f2__terminal_print_frame__size(cause, terminal_print_frame);
 		       s64   size__i            = f2integer__i(size, cause);
-		       u64   subexp_max_size__i = (max_size__i - size__i + (array__length_left - 1)) / array__length_left;
+		       s64   frame__length_left = slot_count - slot_index;
+		       u64   subexp_max_size__i = (max_size__i - size__i + (frame__length_left - 1)) / frame__length_left;
 		       f2ptr subexp_max_size    = f2integer__new(cause, subexp_max_size__i);
 		       u64   subexp_size__i     = 0;
 		       f2ptr subexp_size        = f2integer__new(cause, subexp_size__i);

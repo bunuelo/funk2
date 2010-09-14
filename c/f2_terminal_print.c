@@ -526,56 +526,85 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
       }
     } else {
       f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-      // iteratively reduce max size if we fail to satisfy y constraint.
       f2ptr original_max_size = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
-      {
-	s64   working_size                  = 0;
-	f2ptr max_size                      = original_max_size;
-	s64   max_size__i                   = f2integer__i(max_size, cause);
-	s64   last_max_size__i;
-	f2ptr fits_within_height_constraint = f2__terminal_print_frame__expression_fits_within_height_constraint(cause, terminal_print_frame, this);
-	if (raw__larva__is_type(cause, fits_within_height_constraint)) {
-	  return fits_within_height_constraint;
-	}
-	if (fits_within_height_constraint == nil) {
-	  while (max_size__i != working_size) {
-	    last_max_size__i = max_size__i;
-	    max_size__i      = working_size + ((max_size__i - working_size) >> 1);
-	    max_size         = f2integer__new(cause, max_size__i);
+      if (original_max_size == nil) {
+	// iteratively increase max size if we satisfy y constraint.
+	s64   working_size = 0;
+	s64   max_size__i  = 1;
+	f2ptr max_size     = f2integer__new(cause, max_size__i);
+	f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
+	do {
+	  f2ptr fits_within_height_constraint = f2__terminal_print_frame__expression_fits_within_height_constraint(cause, terminal_print_frame, this);
+	  if (raw__larva__is_type(cause, fits_within_height_constraint)) {
+	    return fits_within_height_constraint;
+	  }
+	  if (fits_within_height_constraint != nil) {
+	    working_size = max_size__i;
+	    max_size__i  = max_size__i << 1;
+	    max_size     = f2integer__new(cause, max_size__i);
 	    f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
-	    if (max_size__i == 0) {
-	      if (testing == nil) {
-		return f2larva__new(cause, 3342,
-				    f2__bug__new(cause, f2integer__new(cause, 3342),
-						 f2__frame__new(cause, f2list10__new(cause, 
-										     new__symbol(cause, "bug_type"),       new__symbol(cause, "reduced_expression_to_print_at_size_zero_and_still_failed_height_constraint"),
-										     new__symbol(cause, "funk_name"),      new__symbol(cause, "raw__exp__terminal_print_with_frame"),
-										     new__symbol(cause, "source_file"),    new__string(cause, __FILE__),
-										     new__symbol(cause, "source_line"),    f2integer__new(cause, __LINE__),
-										     new__symbol(cause, "argument_frame"), f2__frame__new(cause, f2list4__new(cause,
-																			      new__symbol(cause, "this"),                 this,
-																			      new__symbol(cause, "terminal_print_frame"), terminal_print_frame))))));
+	  }
+	} while (working_size != max_size__i);
+	if (working_size > 0) {
+	  max_size__i  = working_size;
+	  max_size     = f2integer__new(cause, max_size__i);
+	  f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
+	  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
+	  if (raw__larva__is_type(cause, result)) {
+	    return result;
+	  }
+	}
+      } else {
+	// iteratively decrease max size until we satisfy y constraint.
+	{
+	  s64   working_size                  = 0;
+	  f2ptr max_size                      = original_max_size;
+	  s64   max_size__i                   = f2integer__i(max_size, cause);
+	  s64   last_max_size__i;
+	  f2ptr fits_within_height_constraint = f2__terminal_print_frame__expression_fits_within_height_constraint(cause, terminal_print_frame, this);
+	  if (raw__larva__is_type(cause, fits_within_height_constraint)) {
+	    return fits_within_height_constraint;
+	  }
+	  if (fits_within_height_constraint == nil) {
+	    while (max_size__i != working_size) {
+	      last_max_size__i = max_size__i;
+	      max_size__i      = working_size + ((max_size__i - working_size) >> 1);
+	      max_size         = f2integer__new(cause, max_size__i);
+	      f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
+	      if (max_size__i == 0) {
+		if (testing == nil) {
+		  return f2larva__new(cause, 3342,
+				      f2__bug__new(cause, f2integer__new(cause, 3342),
+						   f2__frame__new(cause, f2list10__new(cause, 
+										       new__symbol(cause, "bug_type"),       new__symbol(cause, "reduced_expression_to_print_at_size_zero_and_still_failed_height_constraint"),
+										       new__symbol(cause, "funk_name"),      new__symbol(cause, "raw__exp__terminal_print_with_frame"),
+										       new__symbol(cause, "source_file"),    new__string(cause, __FILE__),
+										       new__symbol(cause, "source_line"),    f2integer__new(cause, __LINE__),
+										       new__symbol(cause, "argument_frame"), f2__frame__new(cause, f2list4__new(cause,
+																				new__symbol(cause, "this"),                 this,
+																				new__symbol(cause, "terminal_print_frame"), terminal_print_frame))))));
+		} else {
+		  f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
+		}
 	      } else {
-		f2__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
-	      }
-	    } else {
-	      fits_within_height_constraint = f2__terminal_print_frame__expression_fits_within_height_constraint(cause, terminal_print_frame, this);
-	      if (raw__larva__is_type(cause, fits_within_height_constraint)) {
-		return fits_within_height_constraint;
-	      }
-	      if (fits_within_height_constraint != nil) {
-		working_size = max_size__i;
-		if (last_max_size__i > max_size__i + 1) {
-		  max_size__i = last_max_size__i;
+		fits_within_height_constraint = f2__terminal_print_frame__expression_fits_within_height_constraint(cause, terminal_print_frame, this);
+		if (raw__larva__is_type(cause, fits_within_height_constraint)) {
+		  return fits_within_height_constraint;
+		}
+		if (fits_within_height_constraint != nil) {
+		  working_size = max_size__i;
+		  if (last_max_size__i > max_size__i + 1) {
+		    max_size__i = last_max_size__i;
+		  }
 		}
 	      }
 	    }
 	  }
-	}
-	if (max_size__i > 0) {
-	  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
-	  if (raw__larva__is_type(cause, result)) {
-	    return result;
+	  if (max_size__i > 0) {
+	    f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
+	    if (raw__larva__is_type(cause, result)) {
+	      return result;
+	    }
 	  }
 	}
       }
@@ -608,7 +637,7 @@ f2ptr f2__exp__terminal_stream_print(f2ptr cause, f2ptr this, f2ptr stream) {
     max_height__i = 1;
   }
   f2ptr max_height           = f2integer__new(cause, max_height__i);
-  f2ptr max_size             = f2integer__new(cause, ((max_x__i * max_height__i) >> 1));
+  f2ptr max_size             = nil;
   f2ptr use_ansi_codes       = f2bool__new(boolean__true);
   f2ptr use_html_codes       = f2bool__new(boolean__false);
   f2ptr terminal_print_frame = f2__terminal_print_frame__new(cause, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes);

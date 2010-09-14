@@ -3052,14 +3052,15 @@ def_pcfunk2(chunk__bytecode_jump, this, fiber, return f2integer__new(this_cause,
 
 
 f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr size               = f2__terminal_print_frame__size(cause, terminal_print_frame);
-  u64   size__i            = f2integer__i(size, cause);
-  f2ptr max_size           = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
-  u64   max_size__i        = f2integer__i(max_size, cause);
-  f2ptr test_constraints   = f2__terminal_print_frame__test_constraints(cause, terminal_print_frame);
-  f2ptr use_one_line       = f2__terminal_print_frame__use_one_line(    cause, terminal_print_frame);
-  f2ptr indent_distance    = f2__terminal_print_frame__indent_distance( cause, terminal_print_frame);
-  u64   indent_distance__i = f2integer__i(indent_distance, cause);
+  f2ptr size                     = f2__terminal_print_frame__size(cause, terminal_print_frame);
+  u64   size__i                  = f2integer__i(size, cause);
+  f2ptr max_size                 = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
+  u64   max_size__i              = f2integer__i(max_size, cause);
+  f2ptr testing                  = f2__terminal_print_frame__testing(              cause, terminal_print_frame);
+  f2ptr testing_max_x_constraint = f2__terminal_print_frame__test_max_x_constraint(cause, terminal_print_frame);
+  f2ptr use_one_line             = f2__terminal_print_frame__use_one_line(         cause, terminal_print_frame);
+  f2ptr indent_distance          = f2__terminal_print_frame__indent_distance(      cause, terminal_print_frame);
+  u64   indent_distance__i       = f2integer__i(indent_distance, cause);
   {
     indent_distance__i += 7;
     indent_distance     = f2integer__new(cause, indent_distance__i);
@@ -3098,7 +3099,7 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	    if (max_x__i - x__i <= 5) {
 	      chunk_string__length += sprintf((char*)(chunk_string + chunk_string__length), "\n");
 	      x__i                  = indent_distance__i;
-	      if ((test_constraints != nil) && (use_one_line != nil)) {
+	      if ((testing != nil) && (testing_max_x_constraint != nil) && (use_one_line != nil)) {
 		f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	      }
 	    } else {

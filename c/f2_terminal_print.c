@@ -104,14 +104,14 @@ boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return(f2
   boolean_t testing_x_offset              = (f2__terminal_print_frame__testing_x_offset(             cause, this) != nil);
   if (testing_max_x_constraint &&
       (! testing_max_height_constraint) &&
-      (! testing_x_constraint)) {
+      (! testing_x_offset)) {
     boolean_t failed_max_x_constraint = (f2__terminal_print_frame__failed_max_x_constraint(cause, this) != nil);
     if (failed_max_x_constraint) {
       return boolean__true;
     }
   } else if ((! testing_max_x_constraint) &&
 	     testing_max_height_constraint &&
-	     (! testing_x_constraint)) {
+	     (! testing_x_offset)) {
     boolean_t failed_max_height_constraint = (f2__terminal_print_frame__failed_max_height_constraint(cause, this) != nil);
     if (failed_max_height_constraint) {
       return boolean__true;

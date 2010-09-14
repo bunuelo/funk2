@@ -395,7 +395,7 @@ f2ptr raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height
       }
       
       if (f2__terminal_print_frame__failed_max_height_constraint(cause, this) != nil) {
-	size_that_fails_height_constraint = f2__terminal_print_frame__size(cause, nil);
+	size_that_fails_height_constraint = f2__terminal_print_frame__size(cause, this);
       }
       
       f2__terminal_print_frame__x__set(              cause, this, x);

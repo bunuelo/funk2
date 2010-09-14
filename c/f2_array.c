@@ -522,6 +522,9 @@ f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	  subexp_size__i = f2integer__i(subexp_size, cause);
 	}
 	size__i += subexp_size__i;
+	if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
+	  return nil;
+	}
       }
     }
     f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, size__i));

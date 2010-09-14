@@ -117,7 +117,15 @@ boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return(f2
     if (failed_max_height_constraint) {
       return boolean__true;
     }
-  } 
+  } else if (testing_max_x_constraint &&
+	     testing_max_height_constraint) {
+    boolean_t failed_max_x_constraint      = (f2__terminal_print_frame__failed_max_x_constraint(     cause, this) != nil);
+    boolean_t failed_max_height_constraint = (f2__terminal_print_frame__failed_max_height_constraint(cause, this) != nil);
+    if (failed_max_height_constraint &&
+	failed_max_x_constraint) {
+      return boolean__true;
+    }
+  }
   return boolean__false;
 }
 
@@ -287,6 +295,7 @@ f2ptr raw__terminal_print_frame__can_print_expression_on_one_line(f2ptr cause, f
     f2ptr testing_max_height_constraint = f2__terminal_print_frame__testing_max_height_constraint(cause, this);
     f2ptr testing_x_offset              = f2__terminal_print_frame__testing_x_offset(             cause, this);
     f2ptr use_one_line                  = f2__terminal_print_frame__use_one_line(                 cause, this);
+    f2ptr max_size                      = f2__terminal_print_frame__max_size(                     cause, this);
     
     {
       f2ptr x               = f2__terminal_print_frame__x(              cause, this);
@@ -327,6 +336,7 @@ f2ptr raw__terminal_print_frame__can_print_expression_on_one_line(f2ptr cause, f
     f2__terminal_print_frame__testing_max_height_constraint__set(cause, this, testing_max_height_constraint);
     f2__terminal_print_frame__testing_x_offset__set(             cause, this, testing_x_offset);
     f2__terminal_print_frame__use_one_line__set(                 cause, this, use_one_line);
+    f2__terminal_print_frame__max_size__set(                     cause, this, max_size);
   }
   if (encountered_larva != nil) {
     return encountered_larva;
@@ -359,6 +369,7 @@ f2ptr raw__terminal_print_frame__expression_fits_within_height_constraint(f2ptr 
     f2ptr testing_max_height_constraint = f2__terminal_print_frame__testing_max_height_constraint(cause, this);
     f2ptr testing_x_offset              = f2__terminal_print_frame__testing_x_offset(             cause, this);
     f2ptr use_one_line                  = f2__terminal_print_frame__use_one_line(                 cause, this);
+    f2ptr max_size                      = f2__terminal_print_frame__max_size(                     cause, this);
     
     {
       f2ptr x               = f2__terminal_print_frame__x(              cause, this);
@@ -399,6 +410,7 @@ f2ptr raw__terminal_print_frame__expression_fits_within_height_constraint(f2ptr 
     f2__terminal_print_frame__testing_max_height_constraint__set(cause, this, testing_max_height_constraint);
     f2__terminal_print_frame__testing_x_offset__set(             cause, this, testing_x_offset);
     f2__terminal_print_frame__use_one_line__set(                 cause, this, use_one_line);
+    f2__terminal_print_frame__max_size__set(                     cause, this, max_size);
   }
   if (encountered_larva != nil) {
     return encountered_larva;
@@ -431,6 +443,7 @@ f2ptr raw__terminal_print_frame__expression_x_offset(f2ptr cause, f2ptr this, f2
     f2ptr testing_max_height_constraint = f2__terminal_print_frame__testing_max_height_constraint(cause, this);
     f2ptr testing_x_offset              = f2__terminal_print_frame__testing_x_offset(             cause, this);
     f2ptr use_one_line                  = f2__terminal_print_frame__use_one_line(                 cause, this);
+    f2ptr max_size                      = f2__terminal_print_frame__max_size(                     cause, this);
     
     {
       f2ptr x               = f2__terminal_print_frame__x(              cause, this);
@@ -476,6 +489,7 @@ f2ptr raw__terminal_print_frame__expression_x_offset(f2ptr cause, f2ptr this, f2
     f2__terminal_print_frame__testing_max_height_constraint__set(cause, this, testing_max_height_constraint);
     f2__terminal_print_frame__testing_x_offset__set(             cause, this, testing_x_offset);
     f2__terminal_print_frame__use_one_line__set(                 cause, this, use_one_line);
+    f2__terminal_print_frame__max_size__set(                     cause, this, max_size);
   }
   if (encountered_larva != nil) {
     return encountered_larva;

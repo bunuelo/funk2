@@ -510,6 +510,9 @@ f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	    if (raw__larva__is_type(cause, result)) {
 	      return result;
 	    }
+	    if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
+	      return nil;
+	    }
 	    if (use_one_line == nil) {
 	      f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
 	    }

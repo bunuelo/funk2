@@ -1907,6 +1907,9 @@ f2ptr raw__mutex__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   if (raw__larva__is_type(cause, result)) {
     return result;
   }
+  if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
+    return nil;
+  }
   {
     raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__mutex__foreground);
     mutex_string__length = snprintf((char*)mutex_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__right_paren, cause));
@@ -4246,6 +4249,9 @@ f2ptr raw__larva__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   f2ptr result = raw__exp__terminal_print_with_frame(cause, f2larva__bug(this, cause), terminal_print_frame);
   if (raw__larva__is_type(cause, result)) {
     return result;
+  }
+  if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
+    return nil;
   }
   {
     raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__larva__foreground);

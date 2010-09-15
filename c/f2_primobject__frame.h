@@ -122,6 +122,9 @@ void funk2_primobject__frame__init(   funk2_primobject__frame_t* this);
 void funk2_primobject__frame__reinit( funk2_primobject__frame_t* this);
 void funk2_primobject__frame__destroy(funk2_primobject__frame_t* this);
 
+f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr  f2__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+
 f2ptr f2frame__primobject_type__new_aux(f2ptr cause);
 
 #define frame__iteration(cause, this, type_slot_name, slot_name, slot_value, code) \

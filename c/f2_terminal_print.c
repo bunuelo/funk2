@@ -172,7 +172,8 @@ f2ptr f2__terminal_print_frame__write_color(f2ptr cause, f2ptr this, f2ptr color
     return f2larva__new(cause, 2, nil);
   }
   ansi_color_t ansi_color = (ansi_color_t)color__i;
-  return raw__terminal_print_frame__write_color(cause, this, ansi_color);
+  raw__terminal_print_frame__write_color(cause, this, ansi_color);
+  return nil;
 }
 def_pcfunk2(terminal_print_frame__write_color, this, color, return f2__terminal_print_frame__write_color(this_cause, this, color));
 

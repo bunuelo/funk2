@@ -554,9 +554,9 @@ f2ptr f2__terminal_print_frame__expression_x_offset(f2ptr cause, f2ptr this, f2p
 def_pcfunk2(terminal_print_frame__expression_x_offset, this, expression, return f2__terminal_print_frame__expression_x_offset(this_cause, this, expression));
 
 
-f2ptr raw__terminal_print_frame__prepare_for_printing(f2ptr cause, f2ptr this, f2ptr max_width, f2ptr additional_height) {
-  if (max_width != nil) {
-    raw__terminal_print_frame__max_width__set(cause, this, max_width);
+f2ptr raw__terminal_print_frame__prepare_for_printing(f2ptr cause, f2ptr this, f2ptr max_x, f2ptr additional_height) {
+  if (max_x != nil) {
+    raw__terminal_print_frame__max_x__set(cause, this, max_x);
   }
   if (additional_height != nil) {
     s64   additional_height__i = f2integer__i(additional_height, cause);
@@ -568,14 +568,14 @@ f2ptr raw__terminal_print_frame__prepare_for_printing(f2ptr cause, f2ptr this, f
   }
 }
 
-f2ptr f2__terminal_print_frame__prepare_for_printing(f2ptr cause, f2ptr this, f2ptr max_width, f2ptr additional_height) {
-  if (((max_width         != nil) && (! raw__integer__is_type(cause, max_width))) ||
+f2ptr f2__terminal_print_frame__prepare_for_printing(f2ptr cause, f2ptr this, f2ptr max_x, f2ptr additional_height) {
+  if (((max_x             != nil) && (! raw__integer__is_type(cause, max_x))) ||
       ((additional_height != nil) && (! raw__integer__is_type(cause, additional_height)))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__terminal_print_frame__prepare_for_printing(cause, this, max_width, additional_height);
+  return raw__terminal_print_frame__prepare_for_printing(cause, this, max_x, additional_height);
 }
-def_pcfunk3(terminal_print_frame__prepare_for_printing, this, max_width, additional_height, return f2__terminal_print_frame__prepare_for_printing(this_cause, this, max_width, additional_height));
+def_pcfunk3(terminal_print_frame__prepare_for_printing, this, max_x, additional_height, return f2__terminal_print_frame__prepare_for_printing(this_cause, this, max_x, additional_height));
 
 
 f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -761,7 +761,7 @@ void f2__terminal_print__initialize() {
   f2__primcfunk__init__2(terminal_print_frame__can_print_expression_on_one_line,                           this, expression,                                                                                    "");
   f2__primcfunk__init__2(terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint, this, expression,                                                                                    "");
   f2__primcfunk__init__2(terminal_print_frame__expression_x_offset,                                        this, expression,                                                                                    "");
-  f2__primcfunk__init__3(terminal_print_frame__prepare_for_printing,                                       this, max_width, additional_height,                                                                  "");
+  f2__primcfunk__init__3(terminal_print_frame__prepare_for_printing,                                       this, max_x, additional_height,                                                                      "");
   
   f2__primcfunk__init__2(exp__terminal_print_with_frame, this, terminal_print_frame, "Prints a value given a terminal_print_frame.");
   f2__primcfunk__init__2(exp__terminal_stream_print,     this, stream,               "Prints a value to the given terminal stream, using a new default terminal_print_frame.");

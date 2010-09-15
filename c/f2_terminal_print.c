@@ -579,17 +579,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	    while (max_size__i != working_size) {
 	      last_max_size__i = max_size__i;
 	      s64 binary_search_size = working_size + ((max_size__i - working_size) >> 1);
-	      //if (size_that_fails_to_fit_within_height_constraint != nil) {
-	      //s64 size_that_fails_to_fit_within_height_constraint__i = f2integer__i(size_that_fails_to_fit_within_height_constraint, cause);
-	      //printf("\nsize_that_fails_to_fit_within_height_constraint__i=" s64__fstr, size_that_fails_to_fit_within_height_constraint__i);
-	      //if (binary_search_size < size_that_fails_to_fit_within_height_constraint__i) {
-	      //  max_size__i = binary_search_size;
-	      //} else {
-	      //  max_size__i = size_that_fails_to_fit_within_height_constraint__i;
-	      //}
-	      //} else {
 	      max_size__i = binary_search_size;
-	      //}
 	      max_size = f2integer__new(cause, max_size__i);
 	      printf("\nlast_max_size__i=" s64__fstr ", max_size__i=" s64__fstr, last_max_size__i, max_size__i);
 	      raw__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
@@ -671,7 +661,7 @@ f2ptr f2__exp__terminal_stream_print(f2ptr cause, f2ptr this, f2ptr stream) {
     max_height__i = 1;
   }
   f2ptr max_height           = f2integer__new(cause, max_height__i);
-  f2ptr max_size             = f2integer__new(cause, ((max_x__i * max_height__i) >> 1));
+  f2ptr max_size             = f2integer__new(cause, ((max_x__i * max_height__i) >> 2));
   f2ptr use_ansi_codes       = f2bool__new(boolean__true);
   f2ptr use_html_codes       = f2bool__new(boolean__false);
   f2ptr shrink_to_fit        = f2bool__new(boolean__true);

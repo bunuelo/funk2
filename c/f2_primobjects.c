@@ -549,10 +549,10 @@ def_pcfunk3(cfunk__apply, x, y, z, return f2__cfunk__apply(this_cause, x, y, z))
 
 f2ptr raw__cfunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr frame = f2__frame__new(cause, f2list8__new(cause,
-						   new__symbol(cause, "name"),          raw__cfunk__name(cause, this),
-						   new__symbol(cause, "args"),          raw__chunk__args(cause, this),
-						   new__symbol(cause, "is_funktional"), raw__cfunk__is_funktional(cause, this),
-						   new__symbol(cause, "documentation"), raw__cfunk__documentation(cause, this)));
+						   new__symbol(cause, "name"),          f2__cfunk__name(cause, this),
+						   new__symbol(cause, "args"),          f2__chunk__args(cause, this),
+						   new__symbol(cause, "is_funktional"), f2__cfunk__is_funktional(cause, this),
+						   new__symbol(cause, "documentation"), f2__cfunk__documentation(cause, this)));
   f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }

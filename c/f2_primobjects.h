@@ -1169,6 +1169,7 @@ void   f2__imagination_link__set_value_from_name_stack__trace_depth(f2ptr cause,
 
 declare_primobject_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation);
 
+f2ptr f2cfunk__primobject_type__new_aux(f2ptr cause);
 
 // metrocfunk
 
@@ -1486,7 +1487,10 @@ declare_object_type_5_slot(imagination_link, next, name, value, trace, imaginati
 
 // cfunk
 
-declare_object_type_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation, );
+declare_object_type_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 // metrocfunk
 

@@ -58,6 +58,8 @@ declare_object_type_21_slot(fiber,
 			    f2ptr quit__funk;
 			    f2ptr stack_trace__symbol; // get
 			    f2ptr stack_trace__funk;
+			    f2ptr terminal_print_with_frame__symbol; // execute
+			    f2ptr terminal_print_with_frame__funk;
 			    );
 
 

@@ -679,9 +679,12 @@
 
 [defunk hashtable-new [bin_num_power] [hashtable bin_num_power [array-new [integer-bitshift_left 1 bin_num_power]]]]
 
+`[defunk print [x]
+   [format stdout '\n']
+   [exp-print x]]
+
 [defunk print [x]
-  [format stdout '\n']
-  [exp-print x]]
+  [exp-terminal_stream_print x stdout]]
 
 [defunk demetropolize [x]
   [let [[demetro_pair [demetropolize_once x]]]

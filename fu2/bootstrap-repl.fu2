@@ -696,8 +696,8 @@
    [exp-print x]]
 
 [defunk terminal_print [terminal_print_frame x]
-  [terminal_print_frame-write_string terminal_print_frame '\n']
   [terminal_print_frame-prepare_for_printing terminal_print_frame [termios-width] [termios-height]]
+  [terminal_print_frame-write_string terminal_print_frame '\n']
   [exp-terminal_print_with_frame x terminal_print_frame]
   x]
 

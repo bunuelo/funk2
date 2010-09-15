@@ -1171,9 +1171,12 @@ declare_primobject_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, docum
 
 f2ptr f2cfunk__primobject_type__new_aux(f2ptr cause);
 
+
 // metrocfunk
 
 declare_primobject_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation);
+
+f2ptr f2metrocfunk__primobject_type__new_aux(f2ptr cause);
 
 
 // funk
@@ -1494,7 +1497,10 @@ declare_object_type_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, docu
 
 // metrocfunk
 
-declare_object_type_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation, );
+declare_object_type_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 // funk
 

@@ -587,6 +587,9 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
     return nil;
   }
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  if (! raw__ptypehash__is_type(cause, print_as_frame_hash)) {
+    return f2larva__new(cause, 1232, nil);
+  }
   if ((! raw__frame__is_type(cause, this)) &&
       raw__ptypehash__contains(cause, print_as_frame_hash, this)) {
     f2ptr this_as_frame = raw__ptypehash__lookup(cause, print_as_frame_hash, this);

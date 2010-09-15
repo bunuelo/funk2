@@ -74,7 +74,7 @@
 	     nil]
        [have view_print_to_screen_menu_item signal_connect 'activate'
 	     [funk []
-		   [print fiber]]
+		   [exp-terminal_stream_print fiber stdout]]
 	     nil]
        [have view_stack_trace_menu_item signal_connect 'activate'
 	     [funk []

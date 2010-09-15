@@ -521,9 +521,9 @@ def_pcfunk1(fiber_stack_trace__as__printable, this, return f2__fiber_stack_trace
 
 
 f2ptr raw__fiber_stack_trace__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr frame = f2__frame__new(cause, f2list26__new(cause,
-						    new__symbol(cause, "type"),         new__symbol(cause, "fiber_stack_trace"),
-						    new__symbol(cause, "as-printable"), f2__fiber_stack_trace__as__printable(cause, this)));
+  f2ptr frame = f2__frame__new(cause, f2list4__new(cause,
+						   new__symbol(cause, "type"),         new__symbol(cause, "fiber_stack_trace"),
+						   new__symbol(cause, "as-printable"), f2__fiber_stack_trace__as__printable(cause, this)));
   f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }

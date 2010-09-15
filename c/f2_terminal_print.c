@@ -103,12 +103,23 @@ boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return(f2
   }
   boolean_t testing_x_offset = (raw__terminal_print_frame__testing_x_offset(cause, this) != nil);
   if (testing_x_offset) {
-    f2ptr x        = raw__terminal_print_frame__x(cause, this);
-    s64   x__i     = f2integer__i(x, cause);
-    f2ptr max_x    = raw__terminal_print_frame__max_x(cause, this);
-    s64   max_x__i = f2integer__i(max_x, cause);
-    if (x__i > max_x__i) {
-      return boolean__true;
+    {
+      f2ptr x             = raw__terminal_print_frame__x(cause, this);
+      s64   x__i          = f2integer__i(x, cause);
+      f2ptr max_x         = raw__terminal_print_frame__max_x(cause, this);
+      s64   max_x__i      = f2integer__i(max_x, cause);
+      if (x__i > max_x__i) {
+	return boolean__true;
+      }
+    }
+    {
+      f2ptr height        = raw__terminal_print_frame__height(cause, this);
+      s64   height__i     = f2integer__i(height, cause);
+      f2ptr max_height    = raw__terminal_print_frame__max_height(cause, this);
+      s64   max_height__i = f2integer__i(max_height, cause);
+      if (height__i > max_height__i) {
+	return boolean__true;
+      }
     }
     return boolean__false;
   }
@@ -539,7 +550,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   if (raw__funkable__is_type(cause, funk)) {
     f2ptr can_print_on_one_line = nil;
     if (use_one_line == nil) {
-      raw__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, this);
+      can_print_on_one_line = raw__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, this);
       if (raw__larva__is_type(cause, can_print_on_one_line)) {
 	return can_print_on_one_line;
       }

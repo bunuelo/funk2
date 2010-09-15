@@ -687,7 +687,7 @@
     if (! raw__frame_object__funk__funkvar(name, is_type)(cause, this)) { \
       return f2larva__new(cause, 1, nil);				\
     }									\
-    return raw__frame_object__funk__funkvar(name, slot_name##__set)(cause, this); \
+    return raw__frame_object__funk__funkvar(name, slot_name##__set)(cause, this, value); \
   }									\
   def_pcfunk2(frame_object__funk__pcfunkvar(name, slot_name##__set), this, value, return f2__frame_object__funk__funkvar(name, slot_name##__set)(this_cause, this, value))
 

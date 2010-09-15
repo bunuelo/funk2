@@ -596,7 +596,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
     if (! raw__frame__is_type(cause, this_as_frame)) {
       return f2larva__new(cause, 4939, nil);
     }
-    return raw__exp__terminal_print_with_frame(cause, this_as_frame, terminal_print_frame);
+    return raw__frame__terminal_print_with_frame(cause, this_as_frame, terminal_print_frame);
   }
   f2ptr fiber            = f2__this__fiber(cause);
   f2ptr funk             = f2__object__slot__type_funk(cause, this, __funk2.globalenv.execute__symbol, __funk2.globalenv.terminal_print_with_frame__symbol);

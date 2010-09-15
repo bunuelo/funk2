@@ -586,7 +586,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
     return nil;
   }
-  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, this);
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   if ((! raw__frame__is_type(cause, this)) &&
       raw__ptypehash__contains(cause, print_as_frame_hash, this)) {
     f2ptr this_as_frame = raw__ptypehash__lookup(cause, print_as_frame_hash, this);

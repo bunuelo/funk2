@@ -26,7 +26,7 @@
 
 // terminal_print_frame
 
-def_frame_object__global__20_slot(terminal_print_frame,
+def_frame_object__global__21_slot(terminal_print_frame,
 				  testing,
 				  testing_max_x_constraint,
 				  testing_max_height_constraint,
@@ -46,7 +46,8 @@ def_frame_object__global__20_slot(terminal_print_frame,
 				  already_printed_hash,
 				  use_one_line,
 				  failed_max_x_constraint,
-				  failed_max_height_constraint);
+				  failed_max_height_constraint,
+				  shrink_to_fit);
 
 f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_distance, f2ptr max_x, f2ptr max_height, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes) {
   if ((! raw__stream__is_type(cause, stream)) ||
@@ -659,7 +660,7 @@ void f2__terminal_print__initialize() {
   
   // terminal_print_frame
   
-  init_frame_object__20_slot(terminal_print_frame,
+  init_frame_object__21_slot(terminal_print_frame,
 			     testing,
 			     testing_max_x_constraint,
 			     testing_max_height_constraint,
@@ -679,7 +680,8 @@ void f2__terminal_print__initialize() {
 			     already_printed_hash,
 			     use_one_line,
 			     failed_max_x_constraint,
-			     failed_max_height_constraint);
+			     failed_max_height_constraint,
+			     shrink_to_fit);
   
   f2__primcfunk__init__7(terminal_print_frame__new,                                                        stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, "");
   f2__primcfunk__init__2(terminal_print_frame__write_string,                                               this, string,                                                                         "");

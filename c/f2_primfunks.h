@@ -172,6 +172,10 @@
   def_pcfunk__argument__21_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20, var21); \
   def_pcfunk__argument(correct_arg_num, var22)
 
+#define def_pcfunk__argument__23_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20, var21, var22, var23) \
+  def_pcfunk__argument__22_slot(correct_arg_num, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20, var21, var22); \
+  def_pcfunk__argument(correct_arg_num, var23)
+
 
 
 #define def_pcfunk0(def_name, def_body)	\
@@ -415,12 +419,23 @@
 
 #define def_pcfunk22(def_name, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20, var21, var22, def_body) \
   def_pcfunk__defargs(def_name, 22,					\
-		      def_pcfunk__argument__22_slot(21, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20, var21, var22), \
+		      def_pcfunk__argument__22_slot(22, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20, var21, var22), \
 		      def_body)
 
 #define def_pcfunk22_and_rest(def_name, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20, var21, var22, and_rest, def_body) \
   def_pcfunk__defargs(def_name, 22,					\
-		      def_pcfunk__argument__22_slot(21, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20, var21, var22); \
+		      def_pcfunk__argument__22_slot(22, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20, var21, var22); \
+		      f2ptr and_rest = simple_args__iter; simple_args__iter = nil, \
+		      def_body)
+
+#define def_pcfunk23(def_name, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20, var21, var22, var23, def_body) \
+  def_pcfunk__defargs(def_name, 23,					\
+		      def_pcfunk__argument__23_slot(23, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20, var21, var22, var23), \
+		      def_body)
+
+#define def_pcfunk23_and_rest(def_name, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20, var21, var22, var23, and_rest, def_body) \
+  def_pcfunk__defargs(def_name, 23,					\
+		      def_pcfunk__argument__23_slot(23, var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12, var13, var14, var15, var16, var17, var18, var19, var20, var21, var22, var23); \
 		      f2ptr and_rest = simple_args__iter; simple_args__iter = nil, \
 		      def_body)
 

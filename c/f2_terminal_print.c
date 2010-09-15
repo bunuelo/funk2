@@ -26,7 +26,8 @@
 
 // terminal_print_frame
 
-def_frame_object__global__22_slot(terminal_print_frame,
+def_frame_object__global__23_slot(terminal_print_frame,
+				  mutex,
 				  testing,
 				  testing_max_x_constraint,
 				  testing_max_height_constraint,
@@ -58,6 +59,7 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
       (! raw__integer__is_type(cause, max_size))) {
     return f2larva__new(cause, 1, nil);
   }
+  f2ptr mutex                         = f2__mutex__new(cause);
   f2ptr testing                       = nil;
   f2ptr testing_max_x_constraint      = nil;
   f2ptr testing_max_height_constraint = nil;
@@ -73,6 +75,7 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
   f2ptr failed_max_height_constraint  = f2bool__new(boolean__false);
   f2ptr print_as_frame_hash           = f2__ptypehash__new(cause);
   return f2terminal_print_frame__new(cause,
+				     mutex,
 				     testing,
 				     testing_max_x_constraint,
 				     testing_max_height_constraint,
@@ -747,7 +750,8 @@ void f2__terminal_print__initialize() {
   
   // terminal_print_frame
   
-  init_frame_object__22_slot(terminal_print_frame,
+  init_frame_object__23_slot(terminal_print_frame,
+			     mutex,
 			     testing,
 			     testing_max_x_constraint,
 			     testing_max_height_constraint,

@@ -28,7 +28,8 @@
 
 // terminal_print_frame
 
-declare_frame_object_22_slot(terminal_print_frame,
+declare_frame_object_23_slot(terminal_print_frame,
+			     mutex,
 			     testing,
 			     testing_max_x_constraint,
 			     testing_max_height_constraint,

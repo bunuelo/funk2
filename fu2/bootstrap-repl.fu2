@@ -98,6 +98,8 @@
 [globalize stdout-stream [file_stream-new 1]]
 [globalize stderr-stream [file_stream-new 2]]
 
+[globalize standard-terminal [terminal_print_frame-new stdout-stream 0 [termios-width] [termios-height] 2000 t nil t]]
+
 [define -current_env_name- `global-environment]
 
 [globalize-funk funk-new_with_name_and_environment [metro-new [this-env] `funk-new_with_name_and_environment `[name environment args :rest body]
@@ -632,6 +634,16 @@
 	[prog [conslist-set_cdr first_seq_copy [apply &append rest_seqs]]
 	      first_seq_copy]]]]]
 
+[defunk terminal_format [terminal_print_frame :rest exps]
+  [if [null terminal_print_frame]
+      [apply &string-format exps]
+    [mapc [funk [exp]
+		[terminal_print_frame-prepare_for_printing terminal_print_frame [termios-width] [termios-height]]
+		[if [is-type `string exp]
+		    [terminal_print_frame-write_string terminal_print_frame exp]
+		  [exp-terminal_print_with_frame exp terminal_print_frame]]]
+	  exps]]]
+
 [defunk format [stream :rest exps]
   [if [null stream]
       [apply &string-format exps]
@@ -683,9 +695,14 @@
    [format stdout '\n']
    [exp-print x]]
 
-[defunk print [x]
-  [exp-terminal_stream_print x stdout]
+[defunk terminal_print [terminal_print_frame x]
+  [terminal_print_frame-write_string terminal_print_frame '\n']
+  [terminal_print_frame-prepare_for_printing terminal_print_frame [termios-width] [termios-height]]
+  [exp-terminal_print_with_frame x terminal_print_frame]
   x]
+
+[defunk print [x]
+  [terminal_print standard-terminal x]]
 
 [defunk demetropolize [x]
   [let [[demetro_pair [demetropolize_once x]]]

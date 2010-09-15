@@ -1513,7 +1513,10 @@ declare_object_type_9_slot(funk, name, body_bytecodes, args, demetropolized_body
 
 // metro
 
-declare_object_type_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation, );
+declare_object_type_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 // exception
 

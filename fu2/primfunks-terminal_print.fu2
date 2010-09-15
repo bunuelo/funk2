@@ -18,10 +18,12 @@
  rights to redistribute these changes.'
 
 [globalize-funk terminal_print_frame-new                                                        &primfunk:terminal_print_frame__new]
+[globalize-funk terminal_print_frame-write_color                                                &primfunk:terminal_print_frame__write_color]
 [globalize-funk terminal_print_frame-write_string                                               &primfunk:terminal_print_frame__write_string]
 [globalize-funk terminal_print_frame-can_print_expression_on_one_line                           &primfunk:terminal_print_frame__can_print_expression_on_one_line]
 [globalize-funk terminal_print_frame-expression_size_that_fails_to_fit_within_height_constraint &primfunk:terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint]
 [globalize-funk terminal_print_frame-expression_x_offset                                        &primfunk:terminal_print_frame__expression_x_offset]
+[globalize-funk terminal_print_frame-prepare_for_printing                                       &primfunk:terminal_print_frame__prepare_for_printing]
 
 [globalize-funk exp-terminal_print_with_frame &primfunk:exp__terminal_print_with_frame]
 [globalize-funk exp-terminal_stream_print     &primfunk:exp__terminal_stream_print]

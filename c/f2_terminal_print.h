@@ -28,7 +28,7 @@
 
 // terminal_print_frame
 
-declare_frame_object_21_slot(terminal_print_frame,
+declare_frame_object_22_slot(terminal_print_frame,
 			     testing,
 			     testing_max_x_constraint,
 			     testing_max_height_constraint,
@@ -49,7 +49,8 @@ declare_frame_object_21_slot(terminal_print_frame,
 			     use_one_line,
 			     failed_max_x_constraint,
 			     failed_max_height_constraint,
-			     shrink_to_fit);
+			     shrink_to_fit,
+			     print_as_frame_hash);
 
 boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return(                  f2ptr cause, f2ptr this);
 void      raw__terminal_print_frame__write_color(                                               f2ptr cause, f2ptr this, ansi_color_t color);

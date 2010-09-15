@@ -26,7 +26,7 @@
 
 // terminal_print_frame
 
-def_frame_object__global__21_slot(terminal_print_frame,
+def_frame_object__global__22_slot(terminal_print_frame,
 				  testing,
 				  testing_max_x_constraint,
 				  testing_max_height_constraint,
@@ -47,7 +47,8 @@ def_frame_object__global__21_slot(terminal_print_frame,
 				  use_one_line,
 				  failed_max_x_constraint,
 				  failed_max_height_constraint,
-				  shrink_to_fit);
+				  shrink_to_fit,
+				  print_as_frame_hash);
 
 f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_distance, f2ptr max_x, f2ptr max_height, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes, f2ptr shrink_to_fit) {
   if ((! raw__stream__is_type(cause, stream)) ||
@@ -70,6 +71,7 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
   f2ptr use_one_line                  = f2bool__new(boolean__false);
   f2ptr failed_max_x_constraint       = f2bool__new(boolean__false);
   f2ptr failed_max_height_constraint  = f2bool__new(boolean__false);
+  f2ptr print_as_frame_hash           = f2__ptypehassh__new(cause);
   return f2terminal_print_frame__new(cause,
 				     testing,
 				     testing_max_x_constraint,
@@ -91,7 +93,8 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
 				     use_one_line,
 				     failed_max_x_constraint,
 				     failed_max_height_constraint,
-				     shrink_to_fit);
+				     shrink_to_fit,
+				     print_as_frame_hash);
 }
 def_pcfunk8(terminal_print_frame__new, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, shrink_to_fit, return f2__terminal_print_frame__new(this_cause, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, shrink_to_fit));
 
@@ -689,7 +692,7 @@ void f2__terminal_print__initialize() {
   
   // terminal_print_frame
   
-  init_frame_object__21_slot(terminal_print_frame,
+  init_frame_object__22_slot(terminal_print_frame,
 			     testing,
 			     testing_max_x_constraint,
 			     testing_max_height_constraint,
@@ -710,7 +713,8 @@ void f2__terminal_print__initialize() {
 			     use_one_line,
 			     failed_max_x_constraint,
 			     failed_max_height_constraint,
-			     shrink_to_fit);
+			     shrink_to_fit,
+			     print_as_frame_hash);
   
   f2__primcfunk__init__8(terminal_print_frame__new,                                                        stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, shrink_to_fit, "");
   f2__primcfunk__init__2(terminal_print_frame__write_string,                                               this, string,                                                                                        "");

@@ -343,53 +343,57 @@ f2ptr raw__doublelink__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
 	raw__terminal_print_frame__write_string(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
 	break;
       } else {
-	f2ptr subexp            = f2__doublelink__value(cause, iter);
-	u64   doublelink__length_left = doublelink__length - index;
-	u64   subexp_max_size__i = (max_size__i - size__i + (doublelink__length_left - 1)) / doublelink__length_left;
-	f2ptr subexp_size;
-	u64   subexp_size__i;
+	f2ptr indent_distance = f2__terminal_print_frame__indent_distance(cause, terminal_print_frame);
 	{
-	  if (index > 0) {
-	    {
-	      x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
-	      x__i = f2integer__i(x, cause);
-	      if ((x__i + 1) < max_x__i) {
-		doublelink_string__length = sprintf((char*)doublelink_string, " ");
-		raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__doublelink__foreground);
-		raw__terminal_print_frame__write_string(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
-	      }
-	    }
-	    if (use_one_line == nil) {
-	      f2ptr can_print_on_one_line = f2__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, subexp);
-	      if (raw__larva__is_type(cause, can_print_on_one_line)) {
-		return can_print_on_one_line;
-	      }
-	      if (can_print_on_one_line == nil) {
-		doublelink_string__length = sprintf((char*)doublelink_string, "\n");
-		raw__terminal_print_frame__write_string(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
-	      }
-	    }
-	  }
-	  
+	  f2ptr subexp            = f2__doublelink__value(cause, iter);
+	  u64   doublelink__length_left = doublelink__length - index;
+	  u64   subexp_max_size__i = (max_size__i - size__i + (doublelink__length_left - 1)) / doublelink__length_left;
+	  f2ptr subexp_size;
+	  u64   subexp_size__i;
 	  {
-	    if (use_one_line == nil) {
-	      f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
+	    if (index > 0) {
+	      {
+		x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
+		x__i = f2integer__i(x, cause);
+		if ((x__i + 1) < max_x__i) {
+		  doublelink_string__length = sprintf((char*)doublelink_string, " ");
+		  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__doublelink__foreground);
+		  raw__terminal_print_frame__write_string(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
+		}
+	      }
+	      if (use_one_line == nil) {
+		f2ptr can_print_on_one_line = f2__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, subexp);
+		if (raw__larva__is_type(cause, can_print_on_one_line)) {
+		  return can_print_on_one_line;
+		}
+		if (can_print_on_one_line == nil) {
+		  doublelink_string__length = sprintf((char*)doublelink_string, "\n");
+		  raw__terminal_print_frame__write_string(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
+		}
+	      }
 	    }
-	    f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, 0));
-	    f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, f2integer__new(cause, subexp_max_size__i));
-	    f2ptr result = raw__exp__terminal_print_with_frame(cause, subexp, terminal_print_frame);
-	    if (raw__larva__is_type(cause, result)) {
-	      return result;
+	    
+	    {
+	      if (use_one_line == nil) {
+		f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
+	      }
+	      f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, 0));
+	      f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, f2integer__new(cause, subexp_max_size__i));
+	      f2ptr result = raw__exp__terminal_print_with_frame(cause, subexp, terminal_print_frame);
+	      if (raw__larva__is_type(cause, result)) {
+		return result;
+	      }
+	      if (use_one_line == nil) {
+		f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+	      }
 	    }
-	    if (use_one_line == nil) {
-	      f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-	    }
+	    
+	    subexp_size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
+	    subexp_size__i = f2integer__i(subexp_size, cause);
 	  }
-	  
-	  subexp_size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
-	  subexp_size__i = f2integer__i(subexp_size, cause);
+	  size__i += subexp_size__i;
 	}
-	size__i += subexp_size__i;
+	f2__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
       }
       index ++;
       iter = f2__doublelink__next(cause, iter);

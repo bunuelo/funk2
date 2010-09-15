@@ -504,8 +504,7 @@ f2ptr raw__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 						    new__symbol(cause, "execution_nanoseconds"),      f2__fiber__execution_nanoseconds(     cause, this),
 						    new__symbol(cause, "bytecode_count"),             f2__fiber__bytecode_count(            cause, this),
 						    new__symbol(cause, "processor_assignment_index"), f2__fiber__processor_assignment_index(cause, this),
-						    new__symbol(cause, "stack_trace"),                f2__fiber__stack_trace(               cause, this),
-						    ));
+						    new__symbol(cause, "stack_trace"),                f2__fiber__stack_trace(               cause, this)));
   f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }

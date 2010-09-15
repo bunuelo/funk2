@@ -1190,15 +1190,21 @@ f2ptr f2funk__primobject_type__new_aux(f2ptr cause);
 
 declare_primobject_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
 
+f2ptr f2metro__primobject_type__new_aux(f2ptr cause);
+
 
 // exception
 
 declare_primobject_2_slot(exception, tag, value);
 
+f2ptr f2exception__primobject_type__new_aux(f2ptr cause);
+
 
 // bytecode
 
 declare_primobject_4_slot(bytecode, command, arg0, arg1, arg2);
+
+f2ptr f2bytecode__primobject_type__new_aux(f2ptr cause);
 
 
 // processor
@@ -1520,11 +1526,17 @@ declare_object_type_9_slot(metro, name, body_bytecodes, args, demetropolized_bod
 
 // exception
 
-declare_object_type_2_slot(exception, tag, value, );
+declare_object_type_2_slot(exception, tag, value,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 // bytecode
 
-declare_object_type_4_slot(bytecode, command, arg0, arg1, arg2, );
+declare_object_type_4_slot(bytecode, command, arg0, arg1, arg2,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 // processor
 

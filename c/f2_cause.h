@@ -67,6 +67,8 @@ declare_object_type_18_slot(cause,
 			    f2ptr add_graph_event__read_other_memory__funk;
 			    f2ptr add_graph_event__write_other_memory__symbol;
 			    f2ptr add_graph_event__write_other_memory__funk;
+			    f2ptr terminal_print_with_frame__symbol;
+			    f2ptr terminal_print_with_frame__funk;
 			    );
 
 #endif // F2__CAUSE__TYPES__H

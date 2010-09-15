@@ -497,6 +497,27 @@ f2ptr f2__cause__add_graph_event__write_other_memory(f2ptr cause, f2ptr this, f2
 }
 def_pcfunk4(cause__add_graph_event__write_other_memory, this, array, index, old_value, return f2__cause__add_graph_event__write_other_memory(this_cause, this, array, index, old_value));
 
+
+f2ptr raw__cause__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr frame = f2__frame__new(cause, f2list8__new(cause,
+						   new__symbol(cause, "type"),                   new__symbol(cause, "cause"),
+						   new__symbol(cause, "frame"),                  f2__cause__frame(                 cause, this),
+						   new__symbol(cause, "allocate_traced_arrays"), f2__cause__allocate_traced_arrays(cause, this),
+						   new__symbol(cause, "imagination_stack"),      f2__cause__imagination_stack(     cause, this)));
+  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__cause__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__cause__is_type(cause, this)) &&
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cause__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(cause__terminal_print_with_frame, this, terminal_print_frame, return f2__cause__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
 f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2cause__primobject_type__new(cause);
   {char* slot_name = "define";                             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk);}
@@ -509,6 +530,7 @@ f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "add_graph_event-complete_funk";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__complete_funk__funk);}
   {char* slot_name = "add_graph_event-read_other_memory";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__read_other_memory__funk);}
   {char* slot_name = "add_graph_event-write_other_memory"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__write_other_memory__funk);}
+  {char* slot_name = "terminal_print_with_frame";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -568,6 +590,8 @@ void f2__cause__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__add_graph_event__read_other_memory, this, object, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__read_other_memory__funk = never_gc(cfunk);}
   {char* symbol_str = "add_graph_event-write_other_memory"; __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__write_other_memory__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__4_arg(cause__add_graph_event__write_other_memory, this, object, slot_name, old_value, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.add_graph_event__write_other_memory__funk = never_gc(cfunk);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cause.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   f2__primcfunk__init__0(cause, "Sets the current cause to be a new cause.  Properties are inherited from the previous cause.");
   

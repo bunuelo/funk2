@@ -556,6 +556,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		       f2ptr size               = f2__terminal_print_frame__size(cause, terminal_print_frame);
 		       s64   size__i            = f2integer__i(size, cause);
 		       s64   frame__length_left = slot_count - slot_index;
+		       f2ptr indent_distance    = raw__terminal_print_frame__indent_distance(cause, terminal_print_frame);
 		       {
 			 u64   subexp_max_size__i = (max_size__i - size__i + (frame__length_left - 1)) / frame__length_left;
 			 f2ptr subexp_max_size    = f2integer__new(cause, subexp_max_size__i);
@@ -692,8 +693,9 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		         size__i += subexp_size__i;
 			 size     = f2integer__new(cause, size__i);
 		       }
-		       f2__terminal_print_frame__size__set(    cause, terminal_print_frame, size);
-		       f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
+		       f2__terminal_print_frame__indent_distance(cause, terminal_print_frame, indent_distance);
+		       f2__terminal_print_frame__size__set(      cause, terminal_print_frame, size);
+		       f2__terminal_print_frame__max_size__set(  cause, terminal_print_frame, max_size);
 		       slot_index ++;
 		     }
 		   }

@@ -616,12 +616,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
     if ((use_one_line != nil) || (can_print_on_one_line != nil)) {
       // we successfully satisfied all constraints by printing on one line, so go for it.
       raw__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
-      f2ptr result;
-      {
-	f2ptr indent_distance = raw__terminal_print_frame__indent_distance(cause, this);
-        result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
-	raw__terminal_print_frame__indent_distance__set(cause, this, indent_distance);
-      }
+      f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }
@@ -676,12 +671,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	    }
 	  }
 	  if (max_size__i > 0) {
-	    f2ptr result;
-	    {
-	      f2ptr indent_distance = raw__terminal_print_frame__indent_distance(cause, this);
-	      result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
-	      raw__terminal_print_frame__indent_distance__set(cause, this, indent_distance);
-	    }
+	    f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
 	    if (raw__larva__is_type(cause, result)) {
 	      return result;
 	    }

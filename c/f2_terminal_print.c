@@ -101,6 +101,13 @@ boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return(f2
   }
   boolean_t testing_x_offset = (f2__terminal_print_frame__testing_x_offset(cause, this) != nil);
   if (testing_x_offset) {
+    f2ptr x        = f2__terminal_print_frame__x(cause, this);
+    s64   x__i     = f2integer__i(x, cause);
+    f2ptr max_x    = f2__terminal_print_frame__max_x(cause, this);
+    s64   max_x__i = f2integer__i(max_x, cause);
+    if (x__i > max_x__i) {
+      return boolean__true;
+    }
     return boolean__false;
   }
   boolean_t testing_max_x_constraint      = (f2__terminal_print_frame__testing_max_x_constraint(     cause, this) != nil);

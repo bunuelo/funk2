@@ -471,13 +471,6 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
       return nil;
     }
   }
-  {
-    if (use_one_line == nil) {
-      raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)"\n");
-    } else {
-      raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
-    }
-  }
   boolean_t types_exist_besides_variables = boolean__false;
   s64 slot_count                          = 0;
   s64 type_slot_name__max_length          = 0;
@@ -521,6 +514,13 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		     slot_count ++;
 		   }
 		   );
+  if (slot_count > 0) {
+    if (use_one_line == nil) {
+      raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)"\n");
+    } else {
+      raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
+    }
+  }
   s64       slot_index                     = 0;
   u8*       type_slot_name_string          = (u8*)from_ptr(f2__malloc(type_slot_name__max_length + 1));
   s64       type_slot_name_string__length;

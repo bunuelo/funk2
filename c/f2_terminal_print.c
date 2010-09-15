@@ -581,7 +581,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	      s64 binary_search_size = working_size + ((max_size__i - working_size) >> 1);
 	      max_size__i = binary_search_size;
 	      max_size = f2integer__new(cause, max_size__i);
-	      printf("\nlast_max_size__i=" s64__fstr ", max_size__i=" s64__fstr, last_max_size__i, max_size__i);
+	      //printf("\nlast_max_size__i=" s64__fstr ", max_size__i=" s64__fstr, last_max_size__i, max_size__i);
 	      raw__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
 	      if (max_size__i == 0) {
 		if (testing == nil) {

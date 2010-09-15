@@ -127,6 +127,8 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   
   this->asterisk__symbol = new__symbol(cause, "*");
   
+  this->terminal_print_with_frame__symbol = new__symbol(cause, "terminal_print_with_frame");
+  
 }
 
 void funk2_globalenv__init(funk2_globalenv_t* this) {

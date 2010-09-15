@@ -123,6 +123,8 @@ typedef struct funk2_globalenv_s {
   
   f2ptr asterisk__symbol;
   
+  f2ptr terminal_print_with_frame__symbol;
+  
   funk2_object_types_t object_type;
   funk2_blocks_world_t blocks_world;
   

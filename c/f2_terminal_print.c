@@ -706,11 +706,11 @@ void f2__terminal_print__initialize() {
 			     failed_max_height_constraint,
 			     shrink_to_fit);
   
-  f2__primcfunk__init__7(terminal_print_frame__new,                                                        stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, "");
-  f2__primcfunk__init__2(terminal_print_frame__write_string,                                               this, string,                                                                         "");
-  f2__primcfunk__init__2(terminal_print_frame__can_print_expression_on_one_line,                           this, expression,                                                                     "");
-  f2__primcfunk__init__2(terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint, this, expression,                                                                     "");
-  f2__primcfunk__init__2(terminal_print_frame__expression_x_offset,                                        this, expression,                                                                     "");
+  f2__primcfunk__init__8(terminal_print_frame__new,                                                        stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, shrink_to_fit, "");
+  f2__primcfunk__init__2(terminal_print_frame__write_string,                                               this, string,                                                                                        "");
+  f2__primcfunk__init__2(terminal_print_frame__can_print_expression_on_one_line,                           this, expression,                                                                                    "");
+  f2__primcfunk__init__2(terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint, this, expression,                                                                                    "");
+  f2__primcfunk__init__2(terminal_print_frame__expression_x_offset,                                        this, expression,                                                                                    "");
   
   f2__primcfunk__init__2(exp__terminal_print_with_frame, this, terminal_print_frame, "Prints a value given a terminal_print_frame.");
   f2__primcfunk__init__2(exp__terminal_stream_print,     this, stream,               "Prints a value to the given terminal stream, using a new default terminal_print_frame.");

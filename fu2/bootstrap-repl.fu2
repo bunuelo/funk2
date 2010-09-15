@@ -410,6 +410,16 @@
 [defunk is-type [type_name exp]
   [apply [primobject_type-lookup_slot_type_funk [lookup_type type_name] `execute `is_type] [cons exp nil]]]
 
+[defunk terminal_format [terminal_print_frame :rest exps]
+  [if [null terminal_print_frame]
+      [apply &string-format exps]
+    [mapc [funk [exp]
+		[terminal_print_frame-prepare_for_printing terminal_print_frame [termios-width] [termios-height]]
+		[if [is-type `string exp]
+		    [terminal_print_frame-write_string terminal_print_frame exp]
+		  [exp-terminal_print_with_frame exp terminal_print_frame]]]
+	  exps]]]
+
 [defunk slots [exp]
   [primobject_type-type_funk-keys [lookup_type [type exp]] `get]]
 
@@ -634,16 +644,6 @@
 	[prog [conslist-set_cdr first_seq_copy [apply &append rest_seqs]]
 	      first_seq_copy]]]]]
 
-[defunk terminal_format [terminal_print_frame :rest exps]
-  [if [null terminal_print_frame]
-      [apply &string-format exps]
-    [mapc [funk [exp]
-		[terminal_print_frame-prepare_for_printing terminal_print_frame [termios-width] [termios-height]]
-		[if [is-type `string exp]
-		    [terminal_print_frame-write_string terminal_print_frame exp]
-		  [exp-terminal_print_with_frame exp terminal_print_frame]]]
-	  exps]]]
-
 [defunk format [stream :rest exps]
   [if [null stream]
       [apply &string-format exps]
@@ -836,10 +836,10 @@
      [if [eq result `bug]
 	 [if [is-type `bug [get fiber value]]
 	     [get fiber value]
-	   [prog [format stdout '\nwith-new-cause warning: result is a bug, but there is not a bug in the fiber\'s value register.']
-		 [format stdout '\n  fiber: ' fiber]
-		 [format stdout '\n  value: ' [get fiber value]]
-		 [format stdout '\n  stack: ']
+	   [prog [terminal_format standard-terminal '\nwith-new-cause warning: result is a bug, but there is not a bug in the fiber\'s value register.']
+		 [terminal_format standard-terminal '\n  fiber: ' fiber]
+		 [terminal_format standard-terminal '\n  value: ' [get fiber value]]
+		 [terminal_format standard-terminal '\n  stack: ']
 		 [have fiber print_stack_trace]
 		 result]]
        result]]]
@@ -914,9 +914,9 @@
 
 [primfunk:load 'fu2/repl.fu2']
 
-[format stdout '\n'
-	'funk2: done compiling fu2/bootstrap-repl.fu2.' '\n'
-	'funk2: saving half-baked memory_image to img/bootstrap-repl.img.' '\n']
+[terminal_format standard-terminal '\n'
+		 'funk2: done compiling fu2/bootstrap-repl.fu2.' '\n'
+		 'funk2: saving half-baked memory_image to img/bootstrap-repl.img.' '\n']
 
 `[primfunk:memory_image__save 'img/bootstrap-repl.img']
 

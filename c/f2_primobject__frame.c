@@ -578,12 +578,11 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 			       if (raw__larva__is_type(cause, result)) {
 				 return result;
 			       }
-			       
-			       if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
-				 f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, size__i + subexp_size__i));
-				 f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
-				 return nil;
-			       }
+			     }
+			     if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
+			       f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, size__i + subexp_size__i));
+			       f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
+			       return nil;
 			     }
 			     if (use_one_line == nil) {
 			       f2ptr new_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
@@ -631,11 +630,11 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 			       if (raw__larva__is_type(cause, result)) {
 				 return result;
 			       }
-			       if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
-				 f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, size__i + subexp_size__i));
-				 f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
-				 return nil;
-			       }
+			     }
+			     if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
+			       f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, size__i + subexp_size__i));
+			       f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
+			       return nil;
 			     }
 			     if (use_one_line == nil) {
 			       f2ptr new_x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
@@ -673,11 +672,11 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 			     if (raw__larva__is_type(cause, result)) {
 			       return result;
 			     }
-			     if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
-			       f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, size__i + subexp_size__i));
-			       f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
-			       return nil;
-			     }
+			   }
+			   if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
+			     f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, size__i + subexp_size__i));
+			     f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
+			     return nil;
 			   }
 			 }
 			 if (slot_index < slot_count - 1) {

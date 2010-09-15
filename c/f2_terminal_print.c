@@ -534,6 +534,8 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   f2ptr testing          = f2__terminal_print_frame__testing(         cause, terminal_print_frame);
   f2ptr use_one_line     = f2__terminal_print_frame__use_one_line(    cause, terminal_print_frame);
   f2ptr indent_distance  = f2__terminal_print_frame__indent_distance( cause, terminal_print_frame);
+  f2ptr shrink_to_fit    = f2__terminal_print_frame__shrink_to_fit(cause, terminal_print_frame);
+  f2__terminal_print_frame__shrink_to_fit__set(cause, terminal_print_frame, f2bool__new(boolean__false));
   if (raw__funkable__is_type(cause, funk)) {
     f2ptr can_print_on_one_line = f2__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, this);
     if (raw__larva__is_type(cause, can_print_on_one_line)) {
@@ -548,9 +550,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
       }
     } else {
       f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
-      f2ptr shrink_to_fit = f2__terminal_print_frame__shrink_to_fit(cause, terminal_print_frame);
       if (shrink_to_fit != nil) {
-	f2__terminal_print_frame__shrink_to_fit__set(cause, terminal_print_frame, f2bool__new(boolean__false));
 	// iteratively reduce max size if we fail to satisfy y constraint.
 	f2ptr original_max_size = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
 	{
@@ -634,6 +634,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   }
   f2__terminal_print_frame__use_one_line__set(   cause, terminal_print_frame, use_one_line);
   f2__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
+  f2__terminal_print_frame__shrink_to_fit__set(  cause, terminal_print_frame, shrink_to_fit);
   return nil;
 }
 

@@ -311,7 +311,7 @@ f2ptr raw__doublelink__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
   u64 doublelink__length = 0;
   {
     f2ptr iter = this;
-    while (raw__doublelink__is_type(cause, iter)) {
+    while (raw__doublelink__is_type(cause, iter) && (doublelink__length < (max_size__i - size__i))) {
       doublelink__length ++;
       iter = f2__doublelink__next(cause, iter);
       if ((iter != nil) && (! raw__doublelink__is_type(cause, iter))) {

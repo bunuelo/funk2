@@ -79,6 +79,8 @@ declare_object_type_1_slot(fiber_stack_trace,
 			   f2ptr print__funk;
 			   f2ptr as__printable__symbol; // get
 			   f2ptr as__printable__funk;
+			   f2ptr terminal_print_with_frame__symbol; // execute
+			   f2ptr terminal_print_with_frame__funk;
 			   );
 
 

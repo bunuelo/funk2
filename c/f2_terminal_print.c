@@ -67,7 +67,7 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
   f2ptr left_extent                   = nil;
   f2ptr right_extent                  = nil;
   f2ptr already_printed_hash          = f2__ptypehash__new(cause);
-  f2ptr use_one_line                  = f2bool__new(boolean__true);
+  f2ptr use_one_line                  = f2bool__new(boolean__false);
   f2ptr failed_max_x_constraint       = f2bool__new(boolean__false);
   f2ptr failed_max_height_constraint  = f2bool__new(boolean__false);
   return f2terminal_print_frame__new(cause,
@@ -537,11 +537,14 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   f2ptr shrink_to_fit    = raw__terminal_print_frame__shrink_to_fit(cause, terminal_print_frame);
   raw__terminal_print_frame__shrink_to_fit__set(cause, terminal_print_frame, f2bool__new(boolean__false));
   if (raw__funkable__is_type(cause, funk)) {
-    f2ptr can_print_on_one_line = raw__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, this);
-    if (raw__larva__is_type(cause, can_print_on_one_line)) {
-      return can_print_on_one_line;
+    f2ptr can_print_on_one_line = nil;
+    if (use_one_line == nil) {
+      raw__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, this);
+      if (raw__larva__is_type(cause, can_print_on_one_line)) {
+	return can_print_on_one_line;
+      }
     }
-    if (can_print_on_one_line != nil) {
+    if ((use_one_line != nil) || (can_print_on_one_line != nil)) {
       // we successfully satisfied all constraints by printing on one line, so go for it.
       raw__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
       f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
@@ -549,7 +552,6 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	return result;
       }
     } else {
-      raw__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
       if (shrink_to_fit != nil) {
 	// iteratively reduce max size if we fail to satisfy y constraint.
 	f2ptr original_max_size = raw__terminal_print_frame__max_size(cause, terminal_print_frame);

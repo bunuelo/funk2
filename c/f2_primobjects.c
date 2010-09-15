@@ -635,6 +635,34 @@ f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2p
 def_pcfunk8(funk__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__funk__new(this_cause, simple_fiber, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
 
 
+f2ptr raw__funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr frame = f2__frame__new(cause, f2list10__new(cause,
+						    new__symbol(cause, "type"),          new__symbol(cause, "funk"),
+						    new__symbol(cause, "name"),          f2__funk__name(         cause, this),
+						    new__symbol(cause, "args"),          f2__funk__args(         cause, this),
+						    new__symbol(cause, "is_funktional"), f2__funk__is_funktional(cause, this),
+						    new__symbol(cause, "documentation"), f2__funk__documentation(cause, this)));
+  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__funk__is_type(cause, this)) &&
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__funk__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pfunk2(funk__terminal_print_with_frame, this, terminal_print_frame, return f2__funk__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr f2funk__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2funk__primobject_type__new(cause);
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_funk.terminal_print_with_frame__funk);}
+  return this;
+}
+
+
 // metro
 
 def_primobject_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
@@ -1000,6 +1028,9 @@ void f2__primobjects__initialize() {
   initialize_primobject_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
   
   f2__primcfunk__init__8(funk__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, "");
+  
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_funk.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(funk__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_funk.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   
   // metro

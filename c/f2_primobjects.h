@@ -1183,6 +1183,8 @@ f2ptr f2metrocfunk__primobject_type__new_aux(f2ptr cause);
 
 declare_primobject_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
 
+f2ptr f2funk__primobject_type__new_aux(f2ptr cause);
+
 
 // metro
 
@@ -1504,7 +1506,10 @@ declare_object_type_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional,
 
 // funk
 
-declare_object_type_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation, );
+declare_object_type_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 // metro
 

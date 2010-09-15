@@ -32,6 +32,8 @@ declare_object_type_11_slot(stream, mutex, stream_type, ungetc_stack, rewind_sta
 			    f2ptr rewind__funk;
 			    f2ptr rewind_to_length__symbol;
 			    f2ptr rewind_to_length__funk;
+			    f2ptr terminal_print_with_frame__symbol;
+			    f2ptr terminal_print_with_frame__funk;
 			    );
 
 #endif // F2__PRIMOBJECT__STREAM__TYPES__H

@@ -33,6 +33,8 @@ declare_object_type_3_slot(environment, frame, parent_env, desc,
 			   f2ptr lookup_type_var_value__funk;
 			   f2ptr type_var_value__set__symbol;
 			   f2ptr type_var_value__set__funk;
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
 			   );
 
 

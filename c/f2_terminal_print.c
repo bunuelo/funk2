@@ -108,7 +108,7 @@ boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return(f2
       s64   x__i          = f2integer__i(x, cause);
       f2ptr max_x         = raw__terminal_print_frame__max_x(cause, this);
       s64   max_x__i      = f2integer__i(max_x, cause);
-      if (x__i > max_x__i) {
+      if (x__i >= max_x__i) {
 	return boolean__true;
       }
     }
@@ -117,7 +117,7 @@ boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return(f2
       s64   height__i     = f2integer__i(height, cause);
       f2ptr max_height    = raw__terminal_print_frame__max_height(cause, this);
       s64   max_height__i = f2integer__i(max_height, cause);
-      if (height__i > max_height__i) {
+      if (height__i >= max_height__i) {
 	return boolean__true;
       }
     }
@@ -141,7 +141,7 @@ boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return(f2
 	     testing_max_height_constraint) {
     boolean_t failed_max_x_constraint      = (raw__terminal_print_frame__failed_max_x_constraint(     cause, this) != nil);
     boolean_t failed_max_height_constraint = (raw__terminal_print_frame__failed_max_height_constraint(cause, this) != nil);
-    if (failed_max_height_constraint &&
+    if (failed_max_height_constraint ||
 	failed_max_x_constraint) {
       return boolean__true;
     }

@@ -1287,6 +1287,8 @@ f2ptr f2processor__primobject_type__new_aux(f2ptr cause);
 
 declare_primobject_1_slot(scheduler, processors);
 
+f2ptr f2scheduler__primobject_type__new_aux(f2ptr cause);
+
 
 // transframe
 
@@ -1618,7 +1620,10 @@ declare_object_type_11_slot(processor, scheduler, processor_thread, active_fiber
 
 // scheduler
 
-declare_object_type_1_slot(scheduler, processors, );
+declare_object_type_1_slot(scheduler, processors,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 // transframe
 

@@ -2606,12 +2606,20 @@ f2ptr raw__symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
     }
     symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
     symbol_string__length ++;
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
+    if ((symbol__length > 0) && (symbol__str[0] == (u8)f2char__ch(__funk2.reader.char__symbol_key, cause))) {
+      raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__key__foreground);
+    } else {
+      raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
+    }
     raw__terminal_print_frame__write_string(cause, terminal_print_frame, symbol_string__length, symbol_string);
     raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
     f2__free(to_ptr(symbol_string));
   } else {
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
+    if ((symbol__length > 0) && (symbol__str[0] == (u8)f2char__ch(__funk2.reader.char__symbol_key, cause))) {
+      raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__key__foreground);
+    } else {
+      raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
+    }
     raw__terminal_print_frame__write_string(cause, terminal_print_frame, symbol__length, symbol__str);
     raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
   }

@@ -170,7 +170,7 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
   u64 cons__length = 0;
   {
     f2ptr iter = this;
-    while (raw__cons__is_type(cause, iter)) {
+    while (raw__cons__is_type(cause, iter) && cons__length < (max_size__i - size__i)) {
       cons__length ++;
       iter = f2__cons__cdr(cause, iter);
       if ((iter != nil) && (! raw__cons__is_type(cause, iter))) {

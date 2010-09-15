@@ -789,6 +789,38 @@ f2ptr f2__processor__new(f2ptr cause) {
 }
 def_pcfunk0(processor__new, return f2__processor__new(this_cause));
 
+
+f2ptr raw__processor__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr frame = f2__frame__new(cause, f2list16__new(cause,
+						    new__symbol(cause, "type"),                  new__symbol(cause, "processor"),
+						    new__symbol(cause, "processor_thread"),      f2__processor__processor_thread(     cause, this),
+						    new__symbol(cause, "active_fibers_mutex"),   f2__processor__active_fibers_mutex(  cause, this),
+						    new__symbol(cause, "active_fibers"),         f2__processor__active_fibers(        cause, this),
+						    new__symbol(cause, "sleeping_fibers_mutex"), f2__processor__sleeping_fibers_mutex(cause, this),
+						    new__symbol(cause, "sleeping_fibers"),       f2__processor__sleeping_fibers(      cause, this),
+						    new__symbol(cause, "pool_index"),            f2__processor__pool_index(           cause, this),
+						    new__symbol(cause, "desc"),                  f2__processor__desc(                 cause, this)));
+  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__processor__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__processor__is_type(cause, this)) &&
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__processor__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(processor__terminal_print_with_frame, this, terminal_print_frame, return f2__processor__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr f2processor__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2processor__primobject_type__new(cause);
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_processor.terminal_print_with_frame__funk);}
+  return this;
+}
+
+
 // scheduler
 
 def_primobject_1_slot(scheduler, processors);
@@ -1143,6 +1175,10 @@ void f2__primobjects__initialize() {
   // processor
   
   initialize_primobject_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc);
+  
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_processor.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.terminal_print_with_frame__funk = never_gc(cfunk);}
+  
   
   // scheduler
   

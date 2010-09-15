@@ -1113,16 +1113,55 @@ f2ptr f2cons__primobject_type__new_aux(f2ptr cause);
 
 // deprecated cons macros
 
-#define  f2list1__new(cause, elt0)                                                       f2cons__new(cause, elt0, nil)
-#define  f2list2__new(cause, elt0, elt1)                                                 f2cons__new(cause, elt0, f2cons__new(cause, elt1, nil))
-#define  f2list3__new(cause, elt0, elt1, elt2)                                           f2cons__new(cause, elt0, f2cons__new(cause, elt1, f2cons__new(cause, elt2, nil)))
-#define  f2list4__new(cause, elt0, elt1, elt2, elt3)                                     f2cons__new(cause, elt0, f2cons__new(cause, elt1, f2cons__new(cause, elt2, f2cons__new(cause, elt3, nil))))
-#define  f2list5__new(cause, elt0, elt1, elt2, elt3, elt4)                               f2cons__new(cause, elt0, f2cons__new(cause, elt1, f2cons__new(cause, elt2, f2cons__new(cause, elt3, f2cons__new(cause, elt4, nil)))))
-#define  f2list6__new(cause, elt0, elt1, elt2, elt3, elt4, elt5)                         f2cons__new(cause, elt0, f2cons__new(cause, elt1, f2cons__new(cause, elt2, f2cons__new(cause, elt3, f2cons__new(cause, elt4, f2cons__new(cause, elt5, nil))))))
-#define  f2list7__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6)                   f2cons__new(cause, elt0, f2cons__new(cause, elt1, f2cons__new(cause, elt2, f2cons__new(cause, elt3, f2cons__new(cause, elt4, f2cons__new(cause, elt5, f2cons__new(cause, elt6, nil)))))))
-#define  f2list8__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7)             f2cons__new(cause, elt0, f2cons__new(cause, elt1, f2cons__new(cause, elt2, f2cons__new(cause, elt3, f2cons__new(cause, elt4, f2cons__new(cause, elt5, f2cons__new(cause, elt6, f2cons__new(cause, elt7, nil))))))))
-#define  f2list9__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8)       f2cons__new(cause, elt0, f2cons__new(cause, elt1, f2cons__new(cause, elt2, f2cons__new(cause, elt3, f2cons__new(cause, elt4, f2cons__new(cause, elt5, f2cons__new(cause, elt6, f2cons__new(cause, elt7, f2cons__new(cause, elt8, nil)))))))))
-#define f2list10__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9) f2cons__new(cause, elt0, f2cons__new(cause, elt1, f2cons__new(cause, elt2, f2cons__new(cause, elt3, f2cons__new(cause, elt4, f2cons__new(cause, elt5, f2cons__new(cause, elt6, f2cons__new(cause, elt7, f2cons__new(cause, elt8, f2cons__new(cause, elt9, nil))))))))))
+#define  f2list1__new(cause, elt0)		\
+  f2cons__new(cause, elt0, nil)
+
+#define  f2list2__new(cause, elt0, elt1)		\
+  f2cons__new(cause, elt0, f2list1__new(cause, elt1))
+
+#define  f2list3__new(cause, elt0, elt1, elt2)			\
+  f2cons__new(cause, elt0, f2list2__new(cause, elt1, elt2))
+
+#define  f2list4__new(cause, elt0, elt1, elt2, elt3)			\
+  f2cons__new(cause, elt0, f2list3__new(cause, elt1, elt2, elt3))
+
+#define  f2list5__new(cause, elt0, elt1, elt2, elt3, elt4)		\
+  f2cons__new(cause, elt0, f2list4__new(cause, elt1, elt2, elt3, elt4))
+
+#define  f2list6__new(cause, elt0, elt1, elt2, elt3, elt4, elt5)	\
+  f2cons__new(cause, elt0, f2list5__new(cause, elt1, elt2, elt3, elt4, elt5))
+
+#define  f2list7__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6)	\
+  f2cons__new(cause, elt0, f2list6__new(cause, elt1, elt2, elt3, elt4, elt5, elt6))
+
+#define  f2list8__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7) \
+  f2cons__new(cause, elt0, f2list7__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7))
+
+#define  f2list9__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8) \
+  f2cons__new(cause, elt0, f2list8__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8))
+
+#define f2list10__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9) \
+  f2cons__new(cause, elt0, f2list9__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9))
+
+#define f2list11__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10) \
+  f2cons__new(cause, elt0, f2list10__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10))
+
+#define f2list12__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11) \
+  f2cons__new(cause, elt0, f2list11__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11))
+
+#define f2list13__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12) \
+  f2cons__new(cause, elt0, f2list12__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12))
+
+#define f2list14__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13) \
+  f2cons__new(cause, elt0, f2list13__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13))
+
+#define f2list15__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14) \
+  f2cons__new(cause, elt0, f2list14__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14))
+
+#define f2list16__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15) \
+  f2cons__new(cause, elt0, f2list15__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15))
+
+
 
 #define f2list__elt_0(     this, cause)        f2cons__car(                                                     this, cause)
 #define f2list__elt_0__set(this, cause, value) f2cons__car__set(                                                this, cause,                                        value)
@@ -1210,6 +1249,8 @@ f2ptr f2bytecode__primobject_type__new_aux(f2ptr cause);
 // processor
 
 declare_primobject_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc);
+
+f2ptr f2processor__primobject_type__new_aux(f2ptr cause);
 
 
 // scheduler
@@ -1540,7 +1581,10 @@ declare_object_type_4_slot(bytecode, command, arg0, arg1, arg2,
 
 // processor
 
-declare_object_type_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc, );
+declare_object_type_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc,
+			    f2ptr terminal_print_with_frame__symbol;
+			    f2ptr terminal_print_with_frame__funk;
+			    );
 
 // scheduler
 

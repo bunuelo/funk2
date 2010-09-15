@@ -50,6 +50,8 @@ declare_object_type_4_slot(ptypehash, write_mutex, key_count, bin_num_power, bin
 			   f2ptr is_empty__funk;
 			   f2ptr as__frame__symbol;
 			   f2ptr as__frame__funk;
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
 			   );
 
 #endif // F2__PRIMOBJECT__PTYPEHASH__TYPES__H

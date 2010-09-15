@@ -566,7 +566,9 @@ void raw__terminal_print_frame__prepare_for_printing(f2ptr cause, f2ptr this, f2
     f2ptr new_max_height       = f2integer__new(cause, new_max_height__i);
     raw__terminal_print_frame__max_height__set(cause, this, new_max_height);
   }
-  raw__terminal_print_frame__size__set(cause, this, f2integer__new(cause, 0));
+  raw__terminal_print_frame__size__set(                cause, this, f2integer__new(cause, 0));
+  raw__terminal_print_frame__already_printed_hash__set(cause, this, f2__ptypehash__new(cause));
+  raw__terminal_print_frame__print_as_frame_hash__set( cause, this, f2__ptypehash__new(cause));
 }
 
 f2ptr f2__terminal_print_frame__prepare_for_printing(f2ptr cause, f2ptr this, f2ptr max_x, f2ptr additional_height) {

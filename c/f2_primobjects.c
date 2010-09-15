@@ -1015,19 +1015,44 @@ f2ptr f2__time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(time__is_numerically_equal_to, this, that, return f2__time__is_numerically_equal_to(this_cause, this, that));
 
 
+f2ptr raw__time__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr frame = f2__frame__new(cause, f2list16__new(cause,
+						    new__symbol(cause, "type"),        new__symbol(cause, "time"),
+						    new__symbol(cause, "years"),       f2__time__years(      cause, this),
+						    new__symbol(cause, "months"),      f2__time__months(     cause, this),
+						    new__symbol(cause, "days"),        f2__time__days(       cause, this),
+						    new__symbol(cause, "hours"),       f2__time__hours(      cause, this),
+						    new__symbol(cause, "minutes"),     f2__time__minutes(    cause, this),
+						    new__symbol(cause, "seconds"),     f2__time__seconds(    cause, this),
+						    new__symbol(cause, "nanoseconds"), f2__time__nanoseconds(cause, this)));
+  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__time__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__time__is_type(cause, this)) &&
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__time__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(time__terminal_print_with_frame, this, terminal_print_frame, return f2__time__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
 f2ptr f2time__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2time__primobject_type__new(cause);
-  {char* slot_name = "equals";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.equals__funk);}
-  {char* slot_name = "years";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.years__funk);}
-  {char* slot_name = "months";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.months__funk);}
-  {char* slot_name = "days";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.days__funk);}
-  {char* slot_name = "hours";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.hours__funk);}
-  {char* slot_name = "minutes";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.minutes__funk);}
-  {char* slot_name = "seconds";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.seconds__funk);}
-  {char* slot_name = "nanoseconds";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds__funk);}
-  {char* slot_name = "is_less_than";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_less_than__funk);}
-  {char* slot_name = "is_greater_than";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_greater_than__funk);}
-  {char* slot_name = "is_numerically_equal_to"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_numerically_equal_to__funk);}
+  {char* slot_name = "equals";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.equals__funk);}
+  {char* slot_name = "years";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.years__funk);}
+  {char* slot_name = "months";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.months__funk);}
+  {char* slot_name = "days";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.days__funk);}
+  {char* slot_name = "hours";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.hours__funk);}
+  {char* slot_name = "minutes";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.minutes__funk);}
+  {char* slot_name = "seconds";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.seconds__funk);}
+  {char* slot_name = "nanoseconds";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds__funk);}
+  {char* slot_name = "is_less_than";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_less_than__funk);}
+  {char* slot_name = "is_greater_than";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_greater_than__funk);}
+  {char* slot_name = "is_numerically_equal_to";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_numerically_equal_to__funk);}
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.terminal_print_with_frame__funk);}
   return this;
 }
 

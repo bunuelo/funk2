@@ -510,6 +510,9 @@ def_pcfunk2(terminal_print_frame__expression_x_offset, this, expression, return 
 
 
 f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
+    return nil;
+  }
   f2ptr fiber            = f2__this__fiber(cause);
   f2ptr funk             = f2__object__slot__type_funk(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"));
   f2ptr testing          = f2__terminal_print_frame__testing(         cause, terminal_print_frame);

@@ -479,6 +479,7 @@ f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	  u64   subexp_max_size__i = (max_size__i - size__i + (array__length_left - 1)) / array__length_left;
 	  f2ptr subexp_size;
 	  u64   subexp_size__i;
+	  f2ptr can_print_on_one_line = nil;
 	  {
 	    if (index > 0) {
 	      {
@@ -491,7 +492,7 @@ f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		}
 	      }
 	      if (use_one_line == nil) {
-		f2ptr can_print_on_one_line = f2__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, subexp);
+		can_print_on_one_line = f2__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, subexp);
 		if (raw__larva__is_type(cause, can_print_on_one_line)) {
 		  return can_print_on_one_line;
 		}
@@ -503,7 +504,7 @@ f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	    }
 	    
 	    {
-	      if (use_one_line == nil) {
+	      if ((use_one_line == nil) && (can_print_on_one_line != nil)) {
 		f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	      }
 	      f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, 0));
@@ -515,7 +516,7 @@ f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	      if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
 		return nil;
 	      }
-	      if (use_one_line == nil) {
+	      if ((use_one_line == nil) && (can_print_on_one_line != nil)) {
 		f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
 	      }
 	    }

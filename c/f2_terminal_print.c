@@ -645,9 +645,18 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	      while (max_size__i != working_size) {
 		last_max_size__i = max_size__i;
 		s64 binary_search_size = working_size + ((max_size__i - working_size) >> 1);
-		max_size__i = binary_search_size;
+		if (size_that_fails_to_fit_within_height_constraint != nil) {
+		  s64 size_that_fails_to_fit_within_height_constraint__i = f2integer__i(size_that_fails_to_fit_within_height_constraint, cause);
+		  if (size_that_fails_to_fit_within_height_constraint__i < binary_search_size) {
+		    max_size__i = size_that_fails_to_fit_within_height_constraint__i;
+		  } else {
+		    max_size__i = binary_search_size;
+		  }
+		} else {
+		  max_size__i = binary_search_size;
+		}
 		max_size = f2integer__new(cause, max_size__i);
-		//printf("\nlast_max_size__i=" s64__fstr ", max_size__i=" s64__fstr, last_max_size__i, max_size__i);
+		printf("\nsize_that_fails_height_constraint=" s64__fstr ", last_max_size__i=" s64__fstr ", max_size__i=" s64__fstr, size_that_fails_to_fit_within_height_constraint__i, last_max_size__i, max_size__i);
 		raw__terminal_print_frame__max_size__set(cause, shrink_to_fit__terminal_print_frame, max_size);
 		if (max_size__i == 0) {
 		  if (testing == nil) {

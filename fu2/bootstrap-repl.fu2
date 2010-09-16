@@ -98,7 +98,7 @@
 [globalize stdout-stream [file_stream-new 1]]
 [globalize stderr-stream [file_stream-new 2]]
 
-[globalize standard-terminal [terminal_print_frame-new stdout-stream 0 [termios-width] [termios-height] 2000 t nil t]]
+[globalize standard-terminal [terminal_print_frame-new stdout-stream 0 [termios-width] [termios-height] 500 t nil t]]
 
 [define -current_env_name- `global-environment]
 

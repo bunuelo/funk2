@@ -209,6 +209,7 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
 	  u64   subexp_max_size__i = (max_size__i - size__i + (cons__length_left - 1)) / cons__length_left;
 	  f2ptr subexp_size;
 	  u64   subexp_size__i;
+	  f2ptr can_print_on_one_line = nil;
 	  {
 	    if (index > 0) {
 	      {
@@ -233,7 +234,7 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
 	    }
 	    
 	    {
-	      if (use_one_line == nil) {
+	      if ((use_one_line == nil) && (can_print_on_one_line != nil)) {
 		f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	      }
 	      f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, 0));
@@ -242,7 +243,7 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
 	      if (raw__larva__is_type(cause, result)) {
 		return result;
 	      }
-	      if (use_one_line == nil) {
+	      if ((use_one_line == nil) && (can_print_on_one_line != nil)) {
 		f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__false));
 	      }
 	    }

@@ -79,17 +79,17 @@
 	     nil]
        [have view_stack_trace_menu_item signal_connect 'activate'
 	     [funk []
-		   [format stdout '\n\nfibermon stack trace blocks:\n']
+		   [terminal_format standard-terminal '\n\nfibermon stack trace blocks:\n']
 		   `[have fiber print_stack_trace]
 		    [print [get [get fiber stack_trace] blocks]]
-		    [format stdout '\n\n']]
+		    [terminal_format standard-terminal '\n\n']]
 	     nil]
        [have view_stack_trace_first_block_menu_item signal_connect 'activate'
 	     [funk []
-		   [format stdout '\n\nfibermon stack trace first block:\n']
+		   [terminal_format standard-terminal '\n\nfibermon stack trace first block:\n']
 		   `[have fiber print_stack_trace]
 		    [print [first [get [get fiber stack_trace] blocks]]]
-		    [format stdout '\n\n']]
+		    [terminal_format standard-terminal '\n\n']]
 	     nil]
        
        [have this recompute_statistics]
@@ -194,7 +194,7 @@
        [have win add scrolled_window]
        [= fiber [fiber [funk []
 			     [cause-define cause-name `fibermon]
-			     [format stdout '\nfibermon starting.\n']
+			     [terminal_format standard-terminal '\nfibermon starting.\n']
 			     [have win show_all]
 			     [while [not done]
 			       [have this reorganize_fibers]
@@ -203,7 +203,7 @@
 			       [if [not [get win visible]]
 				   [= done t]]]
 			     [have win destroy]
-			     [format stdout '\nfibermon exiting.\n']]
+			     [terminal_format standard-terminal '\nfibermon exiting.\n']]
 		       nil]]
        this]]
 
@@ -252,23 +252,23 @@
 	    [let [[arg [first iter]]]
 	      [cond [[or [eq arg `-h]
 			 [eq arg `help]] [prog [= print_usage_message_and_exit t]]]
-		    [t                   [prog [format stdout '\nfibermon fatal: unrecognized command line argument, ' arg '.\n']
+		    [t                   [prog [terminal_format standard-terminal '\nfibermon fatal: unrecognized command line argument, ' arg '.\n']
 					       [= print_usage_message_and_exit t]]]]]
 	    [= iter [next iter]]]]]
     [if print_usage_message_and_exit
-	[format stdout 'FIBERMON(1)'
-		'\n'   'NAME'
-		'\n'   '       fibermon - display Funk fibers'
-		'\n'   ''
-		'\n'   'SYNOPSIS'
-		'\n'   '       fibermon -h'
-		'\n'   ''
-		'\n'   'DESCRIPTION'
-		'\n'   '       The fibermon program provides a dynamic real-time view of a running system.  It can '
-		'\n'   '       display system summary information as well as a list of tasks currently being managed '
-		'\n'   '       by the Funk kernel.'
-		'\n'   ''
-		'\n'   '       This description is inspired by the TOP Linux man page.']
+	[terminal_format standard-terminal 'FIBERMON(1)'
+			 '\n'   'NAME'
+			 '\n'   '       fibermon - display Funk fibers'
+			 '\n'   ''
+			 '\n'   'SYNOPSIS'
+			 '\n'   '       fibermon -h'
+			 '\n'   ''
+			 '\n'   'DESCRIPTION'
+			 '\n'   '       The fibermon program provides a dynamic real-time view of a running system.  It can '
+			 '\n'   '       display system summary information as well as a list of tasks currently being managed '
+			 '\n'   '       by the Funk kernel.'
+			 '\n'   ''
+			 '\n'   '       This description is inspired by the TOP Linux man page.']
       [let [[fibermon [new fibermon]]]
 	nil]]]]
 

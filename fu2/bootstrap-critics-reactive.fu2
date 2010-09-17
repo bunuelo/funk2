@@ -19,11 +19,11 @@
 
 [defunk critic-reactive-integer_type_bug [fiber bug]
   [ansi-stream-reset stdout]
-  [format stdout
-	  '\n\n'
-	  [append `[A bug has occurred.]
-		   [bug-english_sentence_conslist bug]]
-	  '\n\n']
+  [terminal_format standard-terminal
+		   '\n\n'
+		   [append `[A bug has occurred.]
+			    [bug-english_sentence_conslist bug]]
+		   '\n\n']
   [globalize last-error-fiber fiber]
   `bug_not_handled]
 
@@ -39,8 +39,8 @@
 	   [terminal_format standard-terminal '\nstack trace:\n']
 	   [print [get fiber stack_trace]]
 	   ]
-      [format stdout '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
-    `[prog [format stdout '\nrepl stack trace: ']
+      [terminal_format standard-terminal '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
+    `[prog [terminal_format standard-terminal '\nrepl stack trace: ']
 	   [print [get fiber stack_trace]]]
      [ansi-stream-reset stdout]]]
 
@@ -50,9 +50,13 @@
 	[bug_handled nil]]
     [if [is-type `bug value]
 	[let [[bug value]]
-	  [have bug pretty_print]]
-      [format stdout '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
-    `[prog [format stdout '\nrepl stack trace: ']
+	  `[have bug pretty_print]
+	   [terminal_format standard-terminal '\n\nbug:']
+	   [print bug]
+	   [terminal_format standard-terminal '\nstack trace:\n']
+	   [print [get fiber stack_trace]]]
+      [terminal_format standard-terminal '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
+    `[prog [terminal_format standard-terminal '\nrepl stack trace: ']
 	   [have fiber print_stack_trace]]
      [repl]]]
 

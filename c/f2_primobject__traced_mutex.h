@@ -36,6 +36,8 @@ declare_object_type_4_slot(traced_mutex, mutex, fiber_with_lock, lock_stack, fib
 			   f2ptr is_locked__funk;
 			   f2ptr lock_stack_trace__symbol;
 			   f2ptr lock_stack_trace__funk;
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
 			   );
 
 #endif // F2__PRIMOBJECT__TRACED_MUTEX__TYPES__H

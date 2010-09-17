@@ -425,9 +425,9 @@
 
 [defunk terminal_format [terminal_print_frame :rest exps]
   [have [get terminal_print_frame mutex] lock]
-  [let [[result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]
-    [have [get terminal_print_frame mutex] unlock]
-    result]]
+  [define result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]
+  [have [get terminal_print_frame mutex] unlock]
+  result]
 
 [defunk slots [exp]
   [primobject_type-type_funk-keys [lookup_type [type exp]] `get]]

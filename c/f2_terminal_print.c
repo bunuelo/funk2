@@ -647,9 +647,15 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	      return size_that_fails_to_fit_within_height_constraint;
 	    }
 	    if (size_that_fails_to_fit_within_height_constraint != nil) {
-	      high_unsuccessful_size = max_size__i;
+	      if (high_unsuccessful_size == 0) {
+		high_unsuccessful_size = max_size__i;
+	      } else if (max_size__i < high_unsuccessful_size) {
+		high_unsuccessful_size = max_size__i;
+	      }
 	    } else {
-	      low_successful_size = max_size__i;
+	      if (max_size__i > low_successful_size) {
+		low_successful_size = max_size__i;
+	      }
 	    }
 	    printf("\nfailed_max_size_constraint=%s", (failed_max_size_constraint != nil) ? "t" : "nil");
 	    if ((size_that_fails_to_fit_within_height_constraint != nil) ||
@@ -657,17 +663,6 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	      while (((high_unsuccessful_size != 0) && ((low_successful_size + 1) != high_unsuccessful_size)) ||
 		     ((high_unsuccessful_size == 0) && (failed_max_size_constraint != nil))) {
 		last_max_size__i = max_size__i;
-		if (size_that_fails_to_fit_within_height_constraint != nil) {
-		  if (high_unsuccessful_size == 0) {
-		    high_unsuccessful_size = max_size__i;
-		  } else if (max_size__i < high_unsuccessful_size) {
-		    high_unsuccessful_size = max_size__i;
-		  }
-		} else {
-		  if (max_size__i > low_successful_size) {
-		    low_successful_size = max_size__i;
-		  }
-		}
 		s64 binary_search_size;
 		if (high_unsuccessful_size == 0) {
 		  binary_search_size = ((low_successful_size + 1) << 1);
@@ -701,6 +696,17 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 		  printf("\nfailed_max_size_constraint=%s", (failed_max_size_constraint != nil) ? "t" : "nil");
 		  if (raw__larva__is_type(cause, size_that_fails_to_fit_within_height_constraint)) {
 		    return size_that_fails_to_fit_within_height_constraint;
+		  }
+		  if (size_that_fails_to_fit_within_height_constraint != nil) {
+		    if (high_unsuccessful_size == 0) {
+		      high_unsuccessful_size = max_size__i;
+		    } else if (max_size__i < high_unsuccessful_size) {
+		      high_unsuccessful_size = max_size__i;
+		    }
+		  } else {
+		    if (max_size__i > low_successful_size) {
+		      low_successful_size = max_size__i;
+		    }
 		  }
 		}
 	      }

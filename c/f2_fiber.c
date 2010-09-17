@@ -520,6 +520,34 @@ f2ptr f2__fiber_stack_trace__as__printable(f2ptr cause, f2ptr this) {
 def_pcfunk1(fiber_stack_trace__as__printable, this, return f2__fiber_stack_trace__as__printable(this_cause, this));
 
 
+f2ptr raw__fiber_stack_trace__blocks(f2ptr cause, f2ptr this) {
+  f2ptr blocks      = nil;
+  f2ptr blocks_iter = nil;
+  f2ptr iter   = this;
+  while (iter) {
+    f2ptr block = raw__fiber_stack_trace__first(cause, iter);
+    if (blocks == nil) {
+      blocks      = f2cons__new(cause, block, nil);
+      blocks_iter = blocks;
+    } else {
+      f2ptr next_blocks_iter = f2cons__new(cause, block, nil);
+      f2__cons__cdr__set(cause, blocks_iter, next_blocks_iter);
+      blocks_iter = next_blocks_iter;
+    }
+    iter = raw__fiber_stack_trace__next(cause, iter);
+  }
+  return blocks;
+}
+
+f2ptr f2__fiber_stack_trace__blocks(f2ptr cause, f2ptr this) {
+  if (! raw__fiber_stack_trace__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__fiber_stack_trace__blocks(cause, this);
+}
+def_pcfunk1(fiber_stack_trace__blocks, this, return f2__fiber_stack_trace__blocks(this_cause, this));
+
+
 f2ptr raw__fiber_stack_trace__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr frame = f2__frame__new(cause, f2list4__new(cause,
 						   new__symbol(cause, "type"),         new__symbol(cause, "fiber_stack_trace"),
@@ -545,6 +573,7 @@ f2ptr f2fiber_stack_trace__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "first";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.first__funk);}
   {char* slot_name = "print";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.print__funk);}
   {char* slot_name = "as-printable";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.as__printable__funk);}
+  {char* slot_name = "blocks";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.blocks__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.terminal_print_with_frame__funk);}
   return this;
 }
@@ -618,12 +647,32 @@ f2ptr f2__fiber_stack_trace_block__as__printable(f2ptr cause, f2ptr this) {
 def_pcfunk1(fiber_stack_trace_block__as__printable, this, return f2__fiber_stack_trace_block__as__printable(this_cause, this));
 
 
+f2ptr raw__fiber_stack_trace_block__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr frame = f2__frame__new(cause, f2list6__new(cause,
+						   new__symbol(cause, "type"),           new__symbol(cause, "fiber_stack_trace_block"),
+						   new__symbol(cause, "funk"),           f2__fiber_stack_trace_block__funk(cause, this),
+						   new__symbol(cause, "argument_frame"), f2__fiber_stack_trace_block__argument_frame(cause, this)));
+  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__fiber_stack_trace_block__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__fiber_stack_trace_block__is_type(cause, this)) &&
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__fiber_stack_trace_block__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(fiber_stack_trace_block__terminal_print_with_frame, this, terminal_print_frame, return f2__fiber_stack_trace_block__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
 f2ptr f2fiber_stack_trace_block__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2fiber_stack_trace_block__primobject_type__new(cause);
-  {char* slot_name = "as-string";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.as__string__funk);}
-  {char* slot_name = "printable_argument_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.printable_argument_frame__funk);}
-  {char* slot_name = "print";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.print__funk);}
-  {char* slot_name = "as-printable";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.as__printable__funk);}
+  {char* slot_name = "as-string";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.as__string__funk);}
+  {char* slot_name = "printable_argument_frame";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.printable_argument_frame__funk);}
+  {char* slot_name = "print";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.print__funk);}
+  {char* slot_name = "as-printable";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.as__printable__funk);}
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -745,7 +794,10 @@ void f2__fiber__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber_stack_trace__as__printable, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.as__printable__funk = never_gc(cfunk);}
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber_stack_trace__terminal_print_with_frame, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber_stack_trace__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.terminal_print_with_frame__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "blocks"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.blocks__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber_stack_trace__blocks, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.blocks__funk = never_gc(cfunk);}
   
   
   // fiber_stack_trace_block
@@ -762,6 +814,9 @@ void f2__fiber__initialize() {
   
   {char* symbol_str = "print"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.print__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber_stack_trace_block__print, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.print__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber_stack_trace_block__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   
 }

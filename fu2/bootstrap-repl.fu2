@@ -411,7 +411,7 @@
   [apply [primobject_type-lookup_slot_type_funk [lookup_type type_name] `execute `is_type] [cons exp nil]]]
 
 [defunk terminal_print_frame-prepare_for_printing_to_standard_terminal [this]
-  [terminal_print_frame-prepare_for_printing this [termios-width] [- [termios-height] 3]]]
+  [terminal_print_frame-prepare_for_printing this [termios-width] [integer-minus [termios-height] 3]]]
 
 [defunk terminal_format [terminal_print_frame :rest exps]
   [if [null terminal_print_frame]

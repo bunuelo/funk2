@@ -658,7 +658,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 		}
 		s64 binary_search_size;
 		if (high_unsuccessful_size == 0) {
-		  binary_search_size = (low_successful_size + 1 << 1);
+		  binary_search_size = ((low_successful_size + 1) << 1);
 		} else {
 		  binary_search_size = low_successful_size + ((high_unsuccessful_size - low_successful_size) >> 1);
 		}

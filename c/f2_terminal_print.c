@@ -654,7 +654,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	    }
 	    printf("\nfailed_max_size_constraint=%s", (failed_max_size_constraint != nil) ? "t" : "nil");
 	    if ((size_that_fails_to_fit_within_height_constraint != nil) ||
-		(failed_max_size_constraint                      != nil)) {
+		(failed_max_size_constraint                      == nil)) {
 	      while (((low_successful_size + 1) != high_unsuccessful_size) ||
 		     ((high_unsuccessful_size == 0) && (failed_max_size_constraint != nil))) {
 		last_max_size__i = max_size__i;

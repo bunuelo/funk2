@@ -3121,7 +3121,7 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	    }
 	  }
 	} else {
-	  f2__terminal_print_frame__failed_max_size_constraint__set(cause, termiinal_print_frame, f2bool__new(boolean__true));
+	  f2__terminal_print_frame__failed_max_size_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	  u64 increment_distance = sprintf((char*)(chunk_string + chunk_string__length), "...");
 	  chunk_string__length += increment_distance;
 	  x__i                 += increment_distance;

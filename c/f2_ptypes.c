@@ -504,9 +504,9 @@ f2ptr raw__integer__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr ter
   }
   u8  integer_string[128];
   u64 integer_string__length = snprintf((char*)integer_string, 128, s64__fstr, f2integer__i(this, cause));
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__integer__foreground);
-  raw__terminal_print_frame__write_string(cause, terminal_print_frame, integer_string__length, integer_string);
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__integer__foreground);
+  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, integer_string__length, integer_string);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   return nil;
 }
 
@@ -852,9 +852,9 @@ f2ptr raw__double__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
   }
   u8  double_string[128];
   u64 double_string__length = snprintf((char*)double_string, 128, "%1.16f", f2double__d(this, cause));
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__double__foreground);
-  raw__terminal_print_frame__write_string(cause, terminal_print_frame, double_string__length, double_string);
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__double__foreground);
+  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, double_string__length, double_string);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   return nil;
 }
 
@@ -1206,9 +1206,9 @@ f2ptr raw__float__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   }
   u8  float_string[128];
   u64 float_string__length = snprintf((char*)float_string, 128, "%1.8f", f2float__f(this, cause));
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__float__foreground);
-  raw__terminal_print_frame__write_string(cause, terminal_print_frame, float_string__length, float_string);
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__float__foreground);
+  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, float_string__length, float_string);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   return nil;
 }
 
@@ -1422,9 +1422,9 @@ f2ptr raw__pointer__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr ter
   }
   u8  pointer_string[128];
   u64 pointer_string__length = snprintf((char*)pointer_string, 128, "%c%c" ptr__fstr, (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_hex, cause), f2pointer__p(this, cause));
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__pointer__foreground);
-  raw__terminal_print_frame__write_string(cause, terminal_print_frame, pointer_string__length, pointer_string);
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__pointer__foreground);
+  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, pointer_string__length, pointer_string);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   return nil;
 }
 
@@ -1635,9 +1635,9 @@ f2ptr raw__gfunkptr__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr te
 					 (f2ptr)f2gfunkptr__pool_index(this, cause),
 					 (f2ptr)f2gfunkptr__pool_address(this, cause),
 					 (char)f2char__ch(__funk2.reader.char__array_right_paren, cause));
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__gfunkptr__foreground);
-  raw__terminal_print_frame__write_string(cause, terminal_print_frame, gfunkptr_string__length, gfunkptr_string);
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__gfunkptr__foreground);
+  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, gfunkptr_string__length, gfunkptr_string);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   return nil;
 }
 
@@ -1889,21 +1889,21 @@ f2ptr raw__mutex__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   u8  mutex_string[128];
   u64 mutex_string__length;
   {
-    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__mutex__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__mutex__foreground);
     mutex_string__length = snprintf((char*)mutex_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, mutex_string__length, mutex_string);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, mutex_string__length, mutex_string);
   }
   {
-    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__symbol__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__foreground);
     mutex_string__length = snprintf((char*)mutex_string, 128, "mutex ");
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, mutex_string__length, mutex_string);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, mutex_string__length, mutex_string);
   }
   {
-    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__symbol__key__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__key__foreground);
     mutex_string__length = snprintf((char*)mutex_string, 128, "is_locked ");
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, mutex_string__length, mutex_string);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, mutex_string__length, mutex_string);
   }
-  f2ptr result = raw__exp__terminal_print_with_frame(cause, f2bool__new(f2mutex__is_locked(this, cause)), terminal_print_frame);
+  f2ptr result = raw__exp__terminal_print_with_frame__thread_unsafe(cause, f2bool__new(f2mutex__is_locked(this, cause)), terminal_print_frame);
   if (raw__larva__is_type(cause, result)) {
     return result;
   }
@@ -1911,11 +1911,11 @@ f2ptr raw__mutex__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     return nil;
   }
   {
-    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__mutex__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__mutex__foreground);
     mutex_string__length = snprintf((char*)mutex_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__right_paren, cause));
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, mutex_string__length, mutex_string);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, mutex_string__length, mutex_string);
   }
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   return nil;
 }
 
@@ -2070,9 +2070,9 @@ f2ptr raw__char__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
   } else {
     char_string__length = snprintf((char*)char_string, 128, "%c%c%X", (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_hex_char, cause), (uint)ch);
   }
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__char__foreground);
-  raw__terminal_print_frame__write_string(cause, terminal_print_frame, char_string__length, char_string);
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__char__foreground);
+  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, char_string__length, char_string);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   return nil;
 }
 
@@ -2354,9 +2354,9 @@ f2ptr raw__string__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
   }
   string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_quote, cause);
   string_string__length ++;
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__string__foreground);
-  raw__terminal_print_frame__write_string(cause, terminal_print_frame, string_string__length, string_string);
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__string__foreground);
+  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, string_string__length, string_string);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   f2__free(to_ptr(string__str));
   f2__free(to_ptr(string_string));
   return nil;
@@ -2608,21 +2608,21 @@ f2ptr raw__symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
     symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
     symbol_string__length ++;
     if ((symbol__length > 0) && (symbol__str[0] == (u8)f2char__ch(__funk2.reader.char__symbol_key, cause))) {
-      raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__key__foreground);
+      raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__key__foreground);
     } else {
-      raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
+      raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__foreground);
     }
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, symbol_string__length, symbol_string);
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, symbol_string__length, symbol_string);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
     f2__free(to_ptr(symbol_string));
   } else {
     if ((symbol__length > 0) && (symbol__str[0] == (u8)f2char__ch(__funk2.reader.char__symbol_key, cause))) {
-      raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__key__foreground);
+      raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__key__foreground);
     } else {
-      raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
+      raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__foreground);
     }
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, symbol__length, symbol__str);
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, symbol__length, symbol__str);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   }
   f2__free(to_ptr(symbol__str));
   return nil;
@@ -2678,14 +2678,14 @@ f2ptr raw__key_symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
     }
     symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
     symbol_string__length ++;
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__key__foreground);
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, symbol_string__length, symbol_string);
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__key__foreground);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, symbol_string__length, symbol_string);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
     f2__free(to_ptr(symbol_string));
   } else {
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__key__foreground);
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, symbol__length, symbol__str);
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__key__foreground);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, symbol__length, symbol__str);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   }
   f2__free(to_ptr(symbol__str));
   return nil;
@@ -3086,13 +3086,13 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   {
     chunk_string[0]      = (u8)f2char__ch(__funk2.reader.char__left_paren, cause);
     chunk_string__length = 1;
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__traced_array__foreground);
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, chunk_string__length, chunk_string);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__traced_array__foreground);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, chunk_string__length, chunk_string);
   }
   {
     chunk_string__length = sprintf((char*)chunk_string, "chunk ");
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, chunk_string__length, chunk_string);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__foreground);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, chunk_string__length, chunk_string);
   }
   size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
   {
@@ -3129,16 +3129,16 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	}
       }
     }
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__pointer__foreground);
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, chunk_string__length, chunk_string);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__pointer__foreground);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, chunk_string__length, chunk_string);
   }
   {
     chunk_string[0]      = (u8)f2char__ch(__funk2.reader.char__right_paren, cause);
     chunk_string__length = 1;
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__traced_array__foreground);
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, chunk_string__length, chunk_string);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__traced_array__foreground);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, chunk_string__length, chunk_string);
   }
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   f2__free(to_ptr(chunk_string));
   return nil;
 }
@@ -4232,31 +4232,31 @@ f2ptr raw__larva__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   u8  larva_string[128];
   u64 larva_string__length;
   {
-    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__larva__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__larva__foreground);
     larva_string__length = snprintf((char*)larva_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, larva_string__length, larva_string);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, larva_string__length, larva_string);
   }
   {
-    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__symbol__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__foreground);
     larva_string__length = snprintf((char*)larva_string, 128, "larva ");
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, larva_string__length, larva_string);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, larva_string__length, larva_string);
   }
   {
-    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__symbol__key__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__key__foreground);
     larva_string__length = snprintf((char*)larva_string, 128, "larva_type ");
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, larva_string__length, larva_string);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, larva_string__length, larva_string);
   }
   {
-    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__integer__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__integer__foreground);
     larva_string__length = snprintf((char*)larva_string, 128, u64__fstr " ", (u64)(f2larva__larva_type(this, cause)));
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, larva_string__length, larva_string);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, larva_string__length, larva_string);
   }
   {
-    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__symbol__key__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__key__foreground);
     larva_string__length = snprintf((char*)larva_string, 128, "bug ");
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, larva_string__length, larva_string);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, larva_string__length, larva_string);
   }
-  f2ptr result = raw__exp__terminal_print_with_frame(cause, f2larva__bug(this, cause), terminal_print_frame);
+  f2ptr result = raw__exp__terminal_print_with_frame__thread_unsafe(cause, f2larva__bug(this, cause), terminal_print_frame);
   if (raw__larva__is_type(cause, result)) {
     return result;
   }
@@ -4264,11 +4264,11 @@ f2ptr raw__larva__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     return nil;
   }
   {
-    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__larva__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__larva__foreground);
     larva_string__length = snprintf((char*)larva_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__right_paren, cause));
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, larva_string__length, larva_string);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, larva_string__length, larva_string);
   }
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   return nil;
 }
 

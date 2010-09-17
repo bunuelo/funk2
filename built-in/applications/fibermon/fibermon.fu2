@@ -78,9 +78,9 @@
 	     nil]
        [have view_stack_trace_menu_item signal_connect 'activate'
 	     [funk []
-		   [format stdout '\n\nfibermon stack trace:\n']
+		   [format stdout '\n\nfibermon stack trace blocks:\n']
 		   `[have fiber print_stack_trace]
-		    [print [get fiber stack_trace]]
+		    [print [get [get fiber stack_trace] blocks]]
 		    [format stdout '\n\n']]
 	     nil]
        

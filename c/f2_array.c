@@ -510,7 +510,7 @@ f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	      }
 	      f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, 0));
 	      f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, f2integer__new(cause, subexp_max_size__i));
-	      f2ptr result = raw__exp__terminal_print_with_frame(cause, subexp, terminal_print_frame);
+	      f2ptr result = raw__exp__terminal_print_with_frame__thread_unsafe(cause, subexp, terminal_print_frame);
 	      if (raw__larva__is_type(cause, result)) {
 		return result;
 	      }

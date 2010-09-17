@@ -413,22 +413,6 @@
 [defunk terminal_print_frame-prepare_for_printing_to_standard_terminal-thread_unsafe [this]
   [terminal_print_frame-prepare_for_printing-thread_unsafe this [termios-width] [integer-subtract [termios-height] 3]]]
 
-[defunk terminal_format-thread_unsafe [terminal_print_frame :rest exps]
-  [if [null terminal_print_frame]
-      [apply &string-format exps]
-    [mapc [funk [exp]
-		[terminal_print_frame-prepare_for_printing_to_standard_terminal-thread_unsafe terminal_print_frame]
-		[if [is-type `string exp]
-		    [terminal_print_frame-write_string-thread_unsafe terminal_print_frame exp]
-		  [exp-terminal_print_with_frame-thread_unsafe exp terminal_print_frame]]]
-	  exps]]]
-
-[defunk terminal_format [terminal_print_frame :rest exps]
-  [have [get terminal_print_frame mutex] lock]
-  [define result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]
-  [have [get terminal_print_frame mutex] unlock]
-  result]
-
 [defunk slots [exp]
   [primobject_type-type_funk-keys [lookup_type [type exp]] `get]]
 
@@ -461,6 +445,22 @@
   `[apply [funk-new_with_name let ,let-vars
 			      @body]
 	  [conslist @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]
+
+[defunk terminal_format-thread_unsafe [terminal_print_frame :rest exps]
+  [if [null terminal_print_frame]
+      [apply &string-format exps]
+    [mapc [funk [exp]
+		[terminal_print_frame-prepare_for_printing_to_standard_terminal-thread_unsafe terminal_print_frame]
+		[if [is-type `string exp]
+		    [terminal_print_frame-write_string-thread_unsafe terminal_print_frame exp]
+		  [exp-terminal_print_with_frame-thread_unsafe exp terminal_print_frame]]]
+	  exps]]]
+
+[defunk terminal_format [terminal_print_frame :rest exps]
+  [have [get terminal_print_frame mutex] lock]
+  [let [[result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]
+    [have [get terminal_print_frame mutex] unlock]
+    result]]
 
 [defmetro parlet [varpairs :rest body]
   `[let ,[mapcar [funk [varpair]

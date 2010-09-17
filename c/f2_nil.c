@@ -27,9 +27,9 @@ f2ptr raw__nil__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
     u64   size__i = f2integer__i(size, cause);
     size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
   }
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__nil__foreground);
-  raw__terminal_print_frame__write_string(cause, terminal_print_frame, 2, (u8*)"[]");
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__nil__foreground);
+  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 2, (u8*)"[]");
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   return nil;
 }
 

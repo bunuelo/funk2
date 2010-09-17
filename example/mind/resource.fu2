@@ -54,7 +54,7 @@
 				    [let [[done nil]]
 				      [while [not done]
 					[if [null mind-name]
-					    [if agency
+					    [if [get this body]
 						[prog [cause-define agency-name [get agency name]]
 						      [if [null layer-name]
 							  [let [[mental_layer [get agency layer]]]

@@ -54,12 +54,12 @@ declare_frame_object_24_slot(terminal_print_frame,
 			     resize_to_fit,
 			     print_as_frame_hash);
 
-boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return(                  f2ptr cause, f2ptr this);
-void      raw__terminal_print_frame__write_color(                                               f2ptr cause, f2ptr this, ansi_color_t color);
-void      raw__terminal_print_frame__write_string(                                              f2ptr cause, f2ptr this, u64 length, u8* string);
-f2ptr      f2__terminal_print_frame__can_print_expression_on_one_line(                          f2ptr cause, f2ptr this, f2ptr expression);
-f2ptr      f2__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(f2ptr cause, f2ptr this, f2ptr expression);
-f2ptr      f2__terminal_print_frame__expression_x_offset(                                       f2ptr cause, f2ptr this, f2ptr expression);
+boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return(                                 f2ptr cause, f2ptr this);
+void      raw__terminal_print_frame__write_color__thread_unsafe(                                               f2ptr cause, f2ptr this, ansi_color_t color);
+void      raw__terminal_print_frame__write_string__thread_unsafe(                                              f2ptr cause, f2ptr this, u64 length, u8* string);
+f2ptr      f2__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(                          f2ptr cause, f2ptr this, f2ptr expression);
+f2ptr      f2__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe(f2ptr cause, f2ptr this, f2ptr expression);
+f2ptr      f2__terminal_print_frame__expression_x_offset__thread_unsafe(                                       f2ptr cause, f2ptr this, f2ptr expression);
 
 f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 

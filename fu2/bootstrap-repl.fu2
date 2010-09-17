@@ -410,11 +410,14 @@
 [defunk is-type [type_name exp]
   [apply [primobject_type-lookup_slot_type_funk [lookup_type type_name] `execute `is_type] [cons exp nil]]]
 
+[defunk terminal_print_frame-prepare_for_printing_to_standard_terminal [this]
+  [terminal_print_frame-prepare_for_printing this [termios-width] [- [termios-height] 3]]]
+
 [defunk terminal_format [terminal_print_frame :rest exps]
   [if [null terminal_print_frame]
       [apply &string-format exps]
     [mapc [funk [exp]
-		[terminal_print_frame-prepare_for_printing terminal_print_frame [termios-width] [termios-height]]
+		[terminal_print_frame-prepare_for_printing_to_standard_terminal terminal_print_frame]
 		[if [is-type `string exp]
 		    [terminal_print_frame-write_string terminal_print_frame exp]
 		  [exp-terminal_print_with_frame exp terminal_print_frame]]]
@@ -696,12 +699,12 @@
    [exp-print x]]
 
 [defunk terminal_write [terminal_print_frame x]
-  [terminal_print_frame-prepare_for_printing terminal_print_frame [termios-width] [termios-height]]
+  [terminal_print_frame-prepare_for_printing_to_standard_terminal terminal_print_frame]
   [exp-terminal_print_with_frame x terminal_print_frame]
   x]
 
 [defunk terminal_print [terminal_print_frame x]
-  [terminal_print_frame-prepare_for_printing terminal_print_frame [termios-width] [termios-height]]
+  [terminal_print_frame-prepare_for_printing_to_standard_terminal terminal_print_frame]
   [terminal_print_frame-write_string terminal_print_frame '\n']
   [exp-terminal_print_with_frame x terminal_print_frame]
   x]

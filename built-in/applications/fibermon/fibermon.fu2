@@ -35,6 +35,7 @@
 				 view_menu
 				 view_print_to_screen_menu_item
 				 view_stack_trace_menu_item
+				 view_stack_trace_first_block_menu_item
 				 hbox
 				 progress_bar
 				 table
@@ -81,6 +82,13 @@
 		   [format stdout '\n\nfibermon stack trace blocks:\n']
 		   `[have fiber print_stack_trace]
 		    [print [get [get fiber stack_trace] blocks]]
+		    [format stdout '\n\n']]
+	     nil]
+       [have view_stack_trace_first_block_menu_item signal_connect 'activate'
+	     [funk []
+		   [format stdout '\n\nfibermon stack trace first block:\n']
+		   `[have fiber print_stack_trace]
+		    [print [first [get [get fiber stack_trace] blocks]]]
 		    [format stdout '\n\n']]
 	     nil]
        

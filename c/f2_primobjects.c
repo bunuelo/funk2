@@ -183,8 +183,8 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
   {
     cons_string[0]      = (u8)f2char__ch(__funk2.reader.char__left_paren, cause);
     cons_string__length = 1;
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__cons__foreground);
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, cons_string__length, cons_string);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__cons__foreground);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cons_string__length, cons_string);
   }
   {
     f2ptr iter  = this;
@@ -199,8 +199,8 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
 	} else {
 	  cons_string__length = sprintf((char*)cons_string, "%c...", ((x__i + 4) < max_x__i) ? ' ' : '\n');
 	}
-	raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
-	raw__terminal_print_frame__write_string(cause, terminal_print_frame, cons_string__length, cons_string);
+	raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__foreground);
+	raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cons_string__length, cons_string);
 	break;
       } else {
 	f2ptr indent_distance = f2__terminal_print_frame__indent_distance(cause, terminal_print_frame);
@@ -218,18 +218,18 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
 		x__i = f2integer__i(x, cause);
 		if ((x__i + 1) < max_x__i) {
 		  cons_string__length = sprintf((char*)cons_string, " ");
-		  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__cons__foreground);
-		  raw__terminal_print_frame__write_string(cause, terminal_print_frame, cons_string__length, cons_string);
+		  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__cons__foreground);
+		  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cons_string__length, cons_string);
 		}
 	      }
 	      if (use_one_line == nil) {
-		f2ptr can_print_on_one_line = f2__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, subexp);
+		f2ptr can_print_on_one_line = f2__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(cause, terminal_print_frame, subexp);
 		if (raw__larva__is_type(cause, can_print_on_one_line)) {
 		  return can_print_on_one_line;
 		}
 		if (can_print_on_one_line == nil) {
 		  cons_string__length = sprintf((char*)cons_string, "\n");
-		  raw__terminal_print_frame__write_string(cause, terminal_print_frame, cons_string__length, cons_string);
+		  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cons_string__length, cons_string);
 		}
 	      }
 	    }
@@ -240,7 +240,7 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
 	      }
 	      f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, 0));
 	      f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, f2integer__new(cause, subexp_max_size__i));
-	      f2ptr result = raw__exp__terminal_print_with_frame(cause, subexp, terminal_print_frame);
+	      f2ptr result = raw__exp__terminal_print_with_frame__thread_unsafe(cause, subexp, terminal_print_frame);
 	      if (raw__larva__is_type(cause, result)) {
 		return result;
 	      }
@@ -268,10 +268,10 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
   {
     cons_string[0]      = (u8)f2char__ch(__funk2.reader.char__right_paren, cause);
     cons_string__length = 1;
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__traced_array__foreground);
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, cons_string__length, cons_string);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__traced_array__foreground);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cons_string__length, cons_string);
   }
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   return nil;
 }
 
@@ -334,8 +334,8 @@ f2ptr raw__doublelink__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
   {
     doublelink_string[0]      = (u8)f2char__ch(__funk2.reader.char__doublelink_left_paren, cause);
     doublelink_string__length = 1;
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__doublelink__foreground);
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__doublelink__foreground);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
   }
   {
     f2ptr iter  = this;
@@ -346,8 +346,8 @@ f2ptr raw__doublelink__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
 	x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
 	x__i = f2integer__i(x, cause);
 	doublelink_string__length = sprintf((char*)doublelink_string, "%c...", ((x__i + 4) < max_x__i) ? ' ' : '\n');
-	raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__symbol__foreground);
-	raw__terminal_print_frame__write_string(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
+	raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__foreground);
+	raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
 	break;
       } else {
 	f2ptr indent_distance = f2__terminal_print_frame__indent_distance(cause, terminal_print_frame);
@@ -365,18 +365,18 @@ f2ptr raw__doublelink__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
 		x__i = f2integer__i(x, cause);
 		if ((x__i + 1) < max_x__i) {
 		  doublelink_string__length = sprintf((char*)doublelink_string, " ");
-		  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__doublelink__foreground);
-		  raw__terminal_print_frame__write_string(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
+		  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__doublelink__foreground);
+		  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
 		}
 	      }
 	      if (use_one_line == nil) {
-		can_print_on_one_line = f2__terminal_print_frame__can_print_expression_on_one_line(cause, terminal_print_frame, subexp);
+		can_print_on_one_line = f2__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(cause, terminal_print_frame, subexp);
 		if (raw__larva__is_type(cause, can_print_on_one_line)) {
 		  return can_print_on_one_line;
 		}
 		if (can_print_on_one_line == nil) {
 		  doublelink_string__length = sprintf((char*)doublelink_string, "\n");
-		  raw__terminal_print_frame__write_string(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
+		  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
 		}
 	      }
 	    }
@@ -387,7 +387,7 @@ f2ptr raw__doublelink__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
 	      }
 	      f2__terminal_print_frame__size__set(    cause, terminal_print_frame, f2integer__new(cause, 0));
 	      f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, f2integer__new(cause, subexp_max_size__i));
-	      f2ptr result = raw__exp__terminal_print_with_frame(cause, subexp, terminal_print_frame);
+	      f2ptr result = raw__exp__terminal_print_with_frame__thread_unsafe(cause, subexp, terminal_print_frame);
 	      if (raw__larva__is_type(cause, result)) {
 		return result;
 	      }
@@ -415,10 +415,10 @@ f2ptr raw__doublelink__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
   {
     doublelink_string[0]      = (u8)f2char__ch(__funk2.reader.char__doublelink_right_paren, cause);
     doublelink_string__length = 1;
-    raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__traced_array__foreground);
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__traced_array__foreground);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
   }
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   return nil;
 }
 

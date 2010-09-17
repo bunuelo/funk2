@@ -2349,7 +2349,7 @@ f2ptr raw__string__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
     }
     if (index < string__length) {
       string_string__length += sprintf((char*)(string_string + string_string__length), "...");
-      f2__terminal_print_frame__failed_max_size_constraint__set(cause, termiinal_print_frame, f2bool__new(boolean__true));
+      f2__terminal_print_frame__failed_max_size_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
     }
   }
   string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_quote, cause);

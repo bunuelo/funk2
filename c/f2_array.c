@@ -465,7 +465,7 @@ f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     u64 index;
     for (index = 0; index < array__length; index ++) {
       if (size__i >= (max_size__i - 1)) {
-	f2__terminal_print_frame__failed_max_size_constraint__set(cause, termiinal_print_frame, f2bool__new(boolean__true));
+	f2__terminal_print_frame__failed_max_size_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
 	x__i = f2integer__i(x, cause);
 	array_string__length = sprintf((char*)array_string, "%c...", ((x__i + 4) < max_x__i) ? ' ' : '\n');

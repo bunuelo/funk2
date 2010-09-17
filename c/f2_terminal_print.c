@@ -688,7 +688,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 		  }
 		} else {
 		  size_that_fails_to_fit_within_height_constraint = raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(cause, resize_to_fit__terminal_print_frame, this);
-		  f2ptr failed_max_size_constraint                = f2__terminal_print_frame__failed_max_size_constraint(cause, resize_to_fit__terminal_print_frame);
+		  failed_max_size_constraint                      = f2__terminal_print_frame__failed_max_size_constraint(cause, resize_to_fit__terminal_print_frame);
 		  if (raw__larva__is_type(cause, size_that_fails_to_fit_within_height_constraint)) {
 		    return size_that_fails_to_fit_within_height_constraint;
 		  }

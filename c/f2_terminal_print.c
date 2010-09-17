@@ -48,10 +48,10 @@ def_frame_object__global__23_slot(terminal_print_frame,
 				  use_one_line,
 				  failed_max_x_constraint,
 				  failed_max_height_constraint,
-				  shrink_to_fit,
+				  resize_to_fit,
 				  print_as_frame_hash);
 
-f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_distance, f2ptr max_x, f2ptr max_height, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes, f2ptr shrink_to_fit) {
+f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_distance, f2ptr max_x, f2ptr max_height, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes, f2ptr resize_to_fit) {
   if ((! raw__stream__is_type(cause, stream)) ||
       (! raw__integer__is_type(cause, indent_distance)) ||
       (! raw__integer__is_type(cause, max_x)) ||
@@ -96,10 +96,10 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
 				     use_one_line,
 				     failed_max_x_constraint,
 				     failed_max_height_constraint,
-				     shrink_to_fit,
+				     resize_to_fit,
 				     print_as_frame_hash);
 }
-def_pcfunk8(terminal_print_frame__new, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, shrink_to_fit, return f2__terminal_print_frame__new(this_cause, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, shrink_to_fit));
+def_pcfunk8(terminal_print_frame__new, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, resize_to_fit, return f2__terminal_print_frame__new(this_cause, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, resize_to_fit));
 
 
 boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return(f2ptr cause, f2ptr this) {
@@ -337,7 +337,7 @@ f2ptr raw__terminal_print_frame__can_print_expression_on_one_line(f2ptr cause, f
     f2ptr testing_x_offset              = raw__terminal_print_frame__testing_x_offset(             cause, this);
     f2ptr use_one_line                  = raw__terminal_print_frame__use_one_line(                 cause, this);
     f2ptr max_size                      = raw__terminal_print_frame__max_size(                     cause, this);
-    f2ptr shrink_to_fit                 = raw__terminal_print_frame__shrink_to_fit(                cause, this);
+    f2ptr resize_to_fit                 = raw__terminal_print_frame__resize_to_fit(                cause, this);
     
     {
       f2ptr x               = raw__terminal_print_frame__x(              cause, this);
@@ -379,7 +379,7 @@ f2ptr raw__terminal_print_frame__can_print_expression_on_one_line(f2ptr cause, f
     raw__terminal_print_frame__testing_x_offset__set(             cause, this, testing_x_offset);
     raw__terminal_print_frame__use_one_line__set(                 cause, this, use_one_line);
     raw__terminal_print_frame__max_size__set(                     cause, this, max_size);
-    raw__terminal_print_frame__shrink_to_fit__set(                cause, this, shrink_to_fit);
+    raw__terminal_print_frame__resize_to_fit__set(                cause, this, resize_to_fit);
   }
   if (encountered_larva != nil) {
     return encountered_larva;
@@ -413,7 +413,7 @@ f2ptr raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height
     f2ptr testing_x_offset              = raw__terminal_print_frame__testing_x_offset(             cause, this);
     f2ptr use_one_line                  = raw__terminal_print_frame__use_one_line(                 cause, this);
     f2ptr max_size                      = raw__terminal_print_frame__max_size(                     cause, this);
-    f2ptr shrink_to_fit                 = raw__terminal_print_frame__shrink_to_fit(                cause, this);
+    f2ptr resize_to_fit                 = raw__terminal_print_frame__resize_to_fit(                cause, this);
     
     {
       f2ptr x               = raw__terminal_print_frame__x(              cause, this);
@@ -462,7 +462,7 @@ f2ptr raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height
     raw__terminal_print_frame__testing_x_offset__set(             cause, this, testing_x_offset);
     raw__terminal_print_frame__use_one_line__set(                 cause, this, use_one_line);
     raw__terminal_print_frame__max_size__set(                     cause, this, max_size);
-    raw__terminal_print_frame__shrink_to_fit__set(                cause, this, shrink_to_fit);
+    raw__terminal_print_frame__resize_to_fit__set(                cause, this, resize_to_fit);
   }
   if (encountered_larva != nil) {
     return encountered_larva;
@@ -496,7 +496,7 @@ f2ptr raw__terminal_print_frame__expression_x_offset(f2ptr cause, f2ptr this, f2
     f2ptr testing_x_offset              = raw__terminal_print_frame__testing_x_offset(             cause, this);
     f2ptr use_one_line                  = raw__terminal_print_frame__use_one_line(                 cause, this);
     f2ptr max_size                      = raw__terminal_print_frame__max_size(                     cause, this);
-    f2ptr shrink_to_fit                 = raw__terminal_print_frame__shrink_to_fit(                cause, this);
+    f2ptr resize_to_fit                 = raw__terminal_print_frame__resize_to_fit(                cause, this);
     
     {
       f2ptr x               = raw__terminal_print_frame__x(              cause, this);
@@ -543,7 +543,7 @@ f2ptr raw__terminal_print_frame__expression_x_offset(f2ptr cause, f2ptr this, f2
     raw__terminal_print_frame__testing_x_offset__set(             cause, this, testing_x_offset);
     raw__terminal_print_frame__use_one_line__set(                 cause, this, use_one_line);
     raw__terminal_print_frame__max_size__set(                     cause, this, max_size);
-    raw__terminal_print_frame__shrink_to_fit__set(                cause, this, shrink_to_fit);
+    raw__terminal_print_frame__resize_to_fit__set(                cause, this, resize_to_fit);
   }
   if (encountered_larva != nil) {
     return encountered_larva;
@@ -609,8 +609,8 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   f2ptr testing          = raw__terminal_print_frame__testing(         cause, terminal_print_frame);
   f2ptr use_one_line     = raw__terminal_print_frame__use_one_line(    cause, terminal_print_frame);
   f2ptr indent_distance  = raw__terminal_print_frame__indent_distance( cause, terminal_print_frame);
-  f2ptr shrink_to_fit    = raw__terminal_print_frame__shrink_to_fit(cause, terminal_print_frame);
-  raw__terminal_print_frame__shrink_to_fit__set(cause, terminal_print_frame, f2bool__new(boolean__false));
+  f2ptr resize_to_fit    = raw__terminal_print_frame__resize_to_fit(cause, terminal_print_frame);
+  raw__terminal_print_frame__resize_to_fit__set(cause, terminal_print_frame, f2bool__new(boolean__false));
   if (raw__funkable__is_type(cause, funk)) {
     f2ptr can_print_on_one_line = nil;
     if (use_one_line == nil) {
@@ -627,23 +627,23 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	return result;
       }
     } else {
-      if (shrink_to_fit != nil) {
-	f2ptr shrink_to_fit__terminal_print_frame = f2__frame__new_copy(cause, terminal_print_frame);
+      if (resize_to_fit != nil) {
+	f2ptr resize_to_fit__terminal_print_frame = f2__frame__new_copy(cause, terminal_print_frame);
 	{
 	  // iteratively reduce max size if we fail to satisfy y constraint.
-	  f2ptr original_max_size = raw__terminal_print_frame__max_size(cause, shrink_to_fit__terminal_print_frame);
+	  f2ptr original_max_size = raw__terminal_print_frame__max_size(cause, resize_to_fit__terminal_print_frame);
 	  {
 	    s64   low_successful_size           = 0;
 	    s64   high_unsuccessful_size        = 0;
 	    f2ptr max_size                      = original_max_size;
 	    s64   max_size__i                   = f2integer__i(max_size, cause);
 	    s64   last_max_size__i;
-	    f2ptr size_that_fails_to_fit_within_height_constraint = raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(cause, shrink_to_fit__terminal_print_frame, this);
+	    f2ptr size_that_fails_to_fit_within_height_constraint = raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(cause, resize_to_fit__terminal_print_frame, this);
 	    if (raw__larva__is_type(cause, size_that_fails_to_fit_within_height_constraint)) {
 	      return size_that_fails_to_fit_within_height_constraint;
 	    }
 	    if (size_that_fails_to_fit_within_height_constraint != nil) {
-	      while (max_size__i != low_successful_size) {
+	      while ((low_successful_size + 1) != high_unsuccessful_size) {
 		last_max_size__i = max_size__i;
 		if (size_that_fails_to_fit_within_height_constraint != nil) {
 		  if (high_unsuccessful_size == 0) {
@@ -662,22 +662,11 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 		} else {
 		  binary_search_size = low_successful_size + ((high_unsuccessful_size - low_successful_size) >> 1);
 		}
-		//if (size_that_fails_to_fit_within_height_constraint != nil) {
-		//  s64 size_that_fails_to_fit_within_height_constraint__i = f2integer__i(size_that_fails_to_fit_within_height_constraint, cause);
-		//  printf("\nsize_that_fails_height_constraint=" s64__fstr, size_that_fails_to_fit_within_height_constraint__i);
-		//  if (size_that_fails_to_fit_within_height_constraint__i < binary_search_size) {
-		//    //max_size__i = size_that_fails_to_fit_within_height_constraint__i;
-		//    max_size__i = binary_search_size;
-		//  } else {
-		//    max_size__i = binary_search_size;
-		//  }
-		//} else {
-		//  max_size__i = binary_search_size;
-		//}
 		max_size__i = binary_search_size;
 		max_size = f2integer__new(cause, max_size__i);
+		raw__terminal_print_frame__max_size__set(cause, resize_to_fit__terminal_print_frame, max_size);
+		printf("\nlow_successful_size=" s64__fstr ", high_unsuccessful_size=" s64__fstr, low_successful_size, high_unsuccessful_size);
 		printf("\nlast_max_size__i=" s64__fstr ", max_size__i=" s64__fstr, last_max_size__i, max_size__i);
-		raw__terminal_print_frame__max_size__set(cause, shrink_to_fit__terminal_print_frame, max_size);
 		if (max_size__i == 0) {
 		  if (testing == nil) {
 		    return f2larva__new(cause, 3342,
@@ -689,38 +678,35 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 											 new__symbol(cause, "source_line"),    f2integer__new(cause, __LINE__),
 											 new__symbol(cause, "argument_frame"), f2__frame__new(cause, f2list4__new(cause,
 																				  new__symbol(cause, "this"),                 this,
-																				  new__symbol(cause, "terminal_print_frame"), shrink_to_fit__terminal_print_frame))))));
+																				  new__symbol(cause, "terminal_print_frame"), resize_to_fit__terminal_print_frame))))));
 		  } else {
-		    raw__terminal_print_frame__failed_max_height_constraint__set(cause, shrink_to_fit__terminal_print_frame, f2bool__new(boolean__true));
+		    raw__terminal_print_frame__failed_max_height_constraint__set(cause, resize_to_fit__terminal_print_frame, f2bool__new(boolean__true));
 		  }
 		} else {
-		  size_that_fails_to_fit_within_height_constraint = raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(cause, shrink_to_fit__terminal_print_frame, this);
+		  size_that_fails_to_fit_within_height_constraint = raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(cause, resize_to_fit__terminal_print_frame, this);
 		  if (raw__larva__is_type(cause, size_that_fails_to_fit_within_height_constraint)) {
 		    return size_that_fails_to_fit_within_height_constraint;
-		  }
-		  if (size_that_fails_to_fit_within_height_constraint == nil) {
-		    low_successful_size = max_size__i;
-		    if (last_max_size__i > max_size__i + 1) {
-		      max_size__i = last_max_size__i;
-		    }
 		  }
 		}
 	      }
 	    }
-	    if (max_size__i > 0) {
-	      f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, shrink_to_fit__terminal_print_frame, nil)));
+	    if (low_successful_size > 0) {
+	      max_size__i = low_successful_size;
+	      max_size    = f2integer__new(cause, max_size__i);
+	      raw__terminal_print_frame__max_size__set(cause, resize_to_fit__terminal_print_frame, max_size);
+	      f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, resize_to_fit__terminal_print_frame, nil)));
 	      if (raw__larva__is_type(cause, result)) {
 		return result;
 	      }
-	      if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, shrink_to_fit__terminal_print_frame)) {
-		f2__frame__copy(cause, terminal_print_frame, shrink_to_fit__terminal_print_frame);
+	      if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, resize_to_fit__terminal_print_frame)) {
+		f2__frame__copy(cause, terminal_print_frame, resize_to_fit__terminal_print_frame);
 		return nil;
 	      }
 	    }
 	  }
-	  raw__terminal_print_frame__max_size__set(cause, shrink_to_fit__terminal_print_frame, original_max_size);
+	  raw__terminal_print_frame__max_size__set(cause, resize_to_fit__terminal_print_frame, original_max_size);
 	}
-	f2__frame__copy(cause, terminal_print_frame, shrink_to_fit__terminal_print_frame);
+	f2__frame__copy(cause, terminal_print_frame, resize_to_fit__terminal_print_frame);
       } else {
 	f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, terminal_print_frame, nil)));
 	if (raw__larva__is_type(cause, result)) {
@@ -737,7 +723,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   }
   raw__terminal_print_frame__use_one_line__set(   cause, terminal_print_frame, use_one_line);
   raw__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
-  raw__terminal_print_frame__shrink_to_fit__set(  cause, terminal_print_frame, shrink_to_fit);
+  raw__terminal_print_frame__resize_to_fit__set(  cause, terminal_print_frame, resize_to_fit);
   return nil;
 }
 
@@ -762,8 +748,8 @@ f2ptr f2__exp__terminal_stream_print(f2ptr cause, f2ptr this, f2ptr stream) {
   f2ptr max_size             = f2integer__new(cause, ((max_x__i * max_height__i) >> 2));
   f2ptr use_ansi_codes       = f2bool__new(boolean__true);
   f2ptr use_html_codes       = f2bool__new(boolean__false);
-  f2ptr shrink_to_fit        = f2bool__new(boolean__true);
-  f2ptr terminal_print_frame = f2__terminal_print_frame__new(cause, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, shrink_to_fit);
+  f2ptr resize_to_fit        = f2bool__new(boolean__true);
+  f2ptr terminal_print_frame = f2__terminal_print_frame__new(cause, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, resize_to_fit);
   if (raw__larva__is_type(cause, terminal_print_frame)) {
     return terminal_print_frame;
   }
@@ -809,10 +795,10 @@ void f2__terminal_print__initialize() {
 			     use_one_line,
 			     failed_max_x_constraint,
 			     failed_max_height_constraint,
-			     shrink_to_fit,
+			     resize_to_fit,
 			     print_as_frame_hash);
   
-  f2__primcfunk__init__8(terminal_print_frame__new,                                                        stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, shrink_to_fit, "");
+  f2__primcfunk__init__8(terminal_print_frame__new,                                                        stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, resize_to_fit, "");
   f2__primcfunk__init__2(terminal_print_frame__write_color,                                                this, color,                                                                                         "");
   f2__primcfunk__init__2(terminal_print_frame__write_string,                                               this, string,                                                                                        "");
   f2__primcfunk__init__2(terminal_print_frame__can_print_expression_on_one_line,                           this, expression,                                                                                    "");

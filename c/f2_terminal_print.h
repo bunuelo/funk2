@@ -50,7 +50,7 @@ declare_frame_object_23_slot(terminal_print_frame,
 			     use_one_line,
 			     failed_max_x_constraint,
 			     failed_max_height_constraint,
-			     shrink_to_fit,
+			     resize_to_fit,
 			     print_as_frame_hash);
 
 boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return(                  f2ptr cause, f2ptr this);

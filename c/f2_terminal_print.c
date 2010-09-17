@@ -632,13 +632,15 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	f2ptr resize_to_fit__terminal_print_frame = f2__frame__new_copy(cause, terminal_print_frame);
 	{
 	  // iteratively reduce max size if we fail to satisfy y constraint.
-	  f2ptr original_max_size = raw__terminal_print_frame__max_size(cause, resize_to_fit__terminal_print_frame);
+	  f2ptr original_max_size                   = raw__terminal_print_frame__max_size(                  cause, resize_to_fit__terminal_print_frame);
+	  f2ptr original_failed_max_size_constraint = raw__terminal_print_frame__failed_max_size_constraint(cause, resize_to_fit__terminal_print_frame);
 	  {
 	    s64   low_successful_size           = 0;
 	    s64   high_unsuccessful_size        = 0;
 	    f2ptr max_size                      = original_max_size;
 	    s64   max_size__i                   = f2integer__i(max_size, cause);
 	    s64   last_max_size__i;
+	    raw__terminal_print_frame__failed_max_size_constraint__set(cause, resize_to_fit__terminal_print_frame, f2bool__new(boolean__false));
 	    f2ptr size_that_fails_to_fit_within_height_constraint = raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(cause, resize_to_fit__terminal_print_frame, this);
 	    f2ptr failed_max_size_constraint                      = f2__terminal_print_frame__failed_max_size_constraint(cause, resize_to_fit__terminal_print_frame);
 	    if (raw__larva__is_type(cause, size_that_fails_to_fit_within_height_constraint)) {
@@ -687,6 +689,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 		    raw__terminal_print_frame__failed_max_height_constraint__set(cause, resize_to_fit__terminal_print_frame, f2bool__new(boolean__true));
 		  }
 		} else {
+		  raw__terminal_print_frame__failed_max_size_constraint__set(cause, resize_to_fit__terminal_print_frame, f2bool__new(boolean__false));
 		  size_that_fails_to_fit_within_height_constraint = raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(cause, resize_to_fit__terminal_print_frame, this);
 		  failed_max_size_constraint                      = f2__terminal_print_frame__failed_max_size_constraint(cause, resize_to_fit__terminal_print_frame);
 		  if (raw__larva__is_type(cause, size_that_fails_to_fit_within_height_constraint)) {
@@ -709,7 +712,8 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	      }
 	    }
 	  }
-	  raw__terminal_print_frame__max_size__set(cause, resize_to_fit__terminal_print_frame, original_max_size);
+	  raw__terminal_print_frame__max_size__set(                  cause, resize_to_fit__terminal_print_frame, original_max_size);
+	  raw__terminal_print_frame__failed_max_size_constraint__set(cause, resize_to_fit__terminal_print_frame, original_failed_max_size_constraint);
 	}
 	f2__frame__copy(cause, terminal_print_frame, resize_to_fit__terminal_print_frame);
       } else {

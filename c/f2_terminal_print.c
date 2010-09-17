@@ -647,7 +647,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	      return size_that_fails_to_fit_within_height_constraint;
 	    }
 	    if (size_that_fails_to_fit_within_height_constraint != nil) {
-	      high_unsuccessul_size = max_size__i;
+	      high_unsuccessful_size = max_size__i;
 	    } else {
 	      low_successful_size = max_size__i;
 	    }

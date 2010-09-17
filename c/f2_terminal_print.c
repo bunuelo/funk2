@@ -657,7 +657,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 		low_successful_size = max_size__i;
 	      }
 	    }
-	    printf("\nfailed_max_size_constraint=%s", (failed_max_size_constraint != nil) ? "t" : "nil");
+	    //printf("\nfailed_max_size_constraint=%s", (failed_max_size_constraint != nil) ? "t" : "nil");
 	    if ((size_that_fails_to_fit_within_height_constraint != nil) ||
 		(failed_max_size_constraint                      != nil)) {
 	      while (((high_unsuccessful_size != 0) && ((low_successful_size + 1) != high_unsuccessful_size)) ||
@@ -672,8 +672,8 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 		max_size__i = binary_search_size;
 		max_size = f2integer__new(cause, max_size__i);
 		raw__terminal_print_frame__max_size__set(cause, resize_to_fit__terminal_print_frame, max_size);
-		printf("\nlow_successful_size=" s64__fstr ", high_unsuccessful_size=" s64__fstr, low_successful_size, high_unsuccessful_size);
-		printf("\nlast_max_size__i=" s64__fstr ", max_size__i=" s64__fstr, last_max_size__i, max_size__i);
+		//printf("\nlow_successful_size=" s64__fstr ", high_unsuccessful_size=" s64__fstr, low_successful_size, high_unsuccessful_size);
+		//printf("\nlast_max_size__i=" s64__fstr ", max_size__i=" s64__fstr, last_max_size__i, max_size__i);
 		if (max_size__i == 0) {
 		  if (testing == nil) {
 		    return f2larva__new(cause, 3342,

@@ -191,6 +191,7 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
     u64   index = 0;
     while (raw__cons__is_type(cause, iter)) {
       if ((size__i >= (max_size__i - 1)) || (index >= cons__length)) {
+	f2__terminal_print_frame__failed_max_size_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
 	x__i = f2integer__i(x, cause);
 	if (use_one_line != nil) {
@@ -341,6 +342,7 @@ f2ptr raw__doublelink__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
     u64   index = 0;
     while (raw__doublelink__is_type(cause, iter)) {
       if ((size__i >= (max_size__i - 1)) || (index >= doublelink__length)) {
+	f2__terminal_print_frame__failed_max_size_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
 	x__i = f2integer__i(x, cause);
 	doublelink_string__length = sprintf((char*)doublelink_string, "%c...", ((x__i + 4) < max_x__i) ? ' ' : '\n');

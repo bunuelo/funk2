@@ -26,7 +26,7 @@
 
 // terminal_print_frame
 
-def_frame_object__global__23_slot(terminal_print_frame,
+def_frame_object__global__24_slot(terminal_print_frame,
 				  mutex,
 				  testing,
 				  testing_max_x_constraint,
@@ -48,6 +48,7 @@ def_frame_object__global__23_slot(terminal_print_frame,
 				  use_one_line,
 				  failed_max_x_constraint,
 				  failed_max_height_constraint,
+				  failed_max_size_constraint,
 				  resize_to_fit,
 				  print_as_frame_hash);
 
@@ -73,6 +74,7 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
   f2ptr use_one_line                  = f2bool__new(boolean__false);
   f2ptr failed_max_x_constraint       = f2bool__new(boolean__false);
   f2ptr failed_max_height_constraint  = f2bool__new(boolean__false);
+  f2ptr failed_max_size_constraint    = f2bool__new(boolean__false);
   f2ptr print_as_frame_hash           = f2__ptypehash__new(cause);
   return f2terminal_print_frame__new(cause,
 				     mutex,
@@ -96,6 +98,7 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
 				     use_one_line,
 				     failed_max_x_constraint,
 				     failed_max_height_constraint,
+				     failed_max_size_constraint,
 				     resize_to_fit,
 				     print_as_frame_hash);
 }
@@ -773,7 +776,7 @@ void f2__terminal_print__initialize() {
   
   // terminal_print_frame
   
-  init_frame_object__23_slot(terminal_print_frame,
+  init_frame_object__24_slot(terminal_print_frame,
 			     mutex,
 			     testing,
 			     testing_max_x_constraint,
@@ -795,6 +798,7 @@ void f2__terminal_print__initialize() {
 			     use_one_line,
 			     failed_max_x_constraint,
 			     failed_max_height_constraint,
+			     failed_max_size_constraint,
 			     resize_to_fit,
 			     print_as_frame_hash);
   

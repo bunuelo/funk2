@@ -28,7 +28,7 @@
 
 // terminal_print_frame
 
-declare_frame_object_23_slot(terminal_print_frame,
+declare_frame_object_24_slot(terminal_print_frame,
 			     mutex,
 			     testing,
 			     testing_max_x_constraint,
@@ -50,6 +50,7 @@ declare_frame_object_23_slot(terminal_print_frame,
 			     use_one_line,
 			     failed_max_x_constraint,
 			     failed_max_height_constraint,
+			     failed_max_size_constraint,
 			     resize_to_fit,
 			     print_as_frame_hash);
 

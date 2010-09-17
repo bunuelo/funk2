@@ -332,7 +332,6 @@ f2ptr raw__terminal_print_frame__can_print_expression_on_one_line(f2ptr cause, f
   {
     f2ptr failed_max_x_constraint       = raw__terminal_print_frame__failed_max_x_constraint(      cause, this);
     f2ptr failed_max_height_constraint  = raw__terminal_print_frame__failed_max_height_constraint( cause, this);
-    f2ptr failed_max_size_constraint    = raw__terminal_print_frame__failed_max_size_constraint(   cause, this);
     f2ptr testing                       = raw__terminal_print_frame__testing(                      cause, this);
     f2ptr testing_max_x_constraint      = raw__terminal_print_frame__testing_max_x_constraint(     cause, this);
     f2ptr testing_max_height_constraint = raw__terminal_print_frame__testing_max_height_constraint(cause, this);
@@ -375,7 +374,6 @@ f2ptr raw__terminal_print_frame__can_print_expression_on_one_line(f2ptr cause, f
     
     raw__terminal_print_frame__failed_max_x_constraint__set(      cause, this, failed_max_x_constraint);
     raw__terminal_print_frame__failed_max_height_constraint__set( cause, this, failed_max_height_constraint);
-    raw__terminal_print_frame__failed_max_size_constraint__set(   cause, this, failed_max_size_constraint);
     raw__terminal_print_frame__testing__set(                      cause, this, testing);
     raw__terminal_print_frame__testing_max_x_constraint__set(     cause, this, testing_max_x_constraint);
     raw__terminal_print_frame__testing_max_height_constraint__set(cause, this, testing_max_height_constraint);
@@ -410,7 +408,6 @@ f2ptr raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height
   {
     f2ptr failed_max_x_constraint       = raw__terminal_print_frame__failed_max_x_constraint(      cause, this);
     f2ptr failed_max_height_constraint  = raw__terminal_print_frame__failed_max_height_constraint( cause, this);
-    f2ptr failed_max_size_constraint    = raw__terminal_print_frame__failed_max_size_constraint(   cause, this);
     f2ptr testing                       = raw__terminal_print_frame__testing(                      cause, this);
     f2ptr testing_max_x_constraint      = raw__terminal_print_frame__testing_max_x_constraint(     cause, this);
     f2ptr testing_max_height_constraint = raw__terminal_print_frame__testing_max_height_constraint(cause, this);
@@ -460,7 +457,6 @@ f2ptr raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height
     
     raw__terminal_print_frame__failed_max_x_constraint__set(      cause, this, failed_max_x_constraint);
     raw__terminal_print_frame__failed_max_height_constraint__set( cause, this, failed_max_height_constraint);
-    raw__terminal_print_frame__failed_max_size_constraint__set(   cause, this, failed_max_size_constraint);
     raw__terminal_print_frame__testing__set(                      cause, this, testing);
     raw__terminal_print_frame__testing_max_x_constraint__set(     cause, this, testing_max_x_constraint);
     raw__terminal_print_frame__testing_max_height_constraint__set(cause, this, testing_max_height_constraint);
@@ -495,7 +491,6 @@ f2ptr raw__terminal_print_frame__expression_x_offset(f2ptr cause, f2ptr this, f2
   {
     f2ptr failed_max_x_constraint       = raw__terminal_print_frame__failed_max_x_constraint(      cause, this);
     f2ptr failed_max_height_constraint  = raw__terminal_print_frame__failed_max_height_constraint( cause, this);
-    f2ptr failed_max_size_constraint    = raw__terminal_print_frame__failed_max_size_constraint(   cause, this);
     f2ptr testing                       = raw__terminal_print_frame__testing(                      cause, this);
     f2ptr testing_max_x_constraint      = raw__terminal_print_frame__testing_max_x_constraint(     cause, this);
     f2ptr testing_max_height_constraint = raw__terminal_print_frame__testing_max_height_constraint(cause, this);
@@ -543,7 +538,6 @@ f2ptr raw__terminal_print_frame__expression_x_offset(f2ptr cause, f2ptr this, f2
     
     raw__terminal_print_frame__failed_max_x_constraint__set(      cause, this, failed_max_x_constraint);
     raw__terminal_print_frame__failed_max_height_constraint__set( cause, this, failed_max_height_constraint);
-    raw__terminal_print_frame__failed_max_size_constraint__set(   cause, this, failed_max_size_constraint);
     raw__terminal_print_frame__testing__set(                      cause, this, testing);
     raw__terminal_print_frame__testing_max_x_constraint__set(     cause, this, testing_max_x_constraint);
     raw__terminal_print_frame__testing_max_height_constraint__set(cause, this, testing_max_height_constraint);

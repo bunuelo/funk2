@@ -662,7 +662,7 @@ void raw__largeinteger__unsigned_array__terminal_print_with_frame(f2ptr cause, f
     char temp_str[32];
     snprintf(temp_str, 32, pad_front_with_zeros ? ("%09" u64__fstr_without_percent) : u64__fstr, this__elt__value);
     //safe_write(1, to_ptr(temp_str), );
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, strlen(temp_str), (u8*)temp_str);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, strlen(temp_str), (u8*)temp_str);
   } else {
     f2ptr remaining_decimals_to_print;
     f2ptr first_decimals_to_print = raw__largeinteger__unsigned_array__divide(cause, this, max_decimals_at_once, &remaining_decimals_to_print);
@@ -682,7 +682,7 @@ void raw__largeinteger__unsigned_array__terminal_print_with_frame(f2ptr cause, f
 	} else if (x__i + 6 < max_x__i) {
 	  char temp_str[32];
 	  snprintf(temp_str, 32, "...");
-	  raw__terminal_print_frame__write_string(cause, terminal_print_frame, strlen(temp_str), (u8*)temp_str);
+	  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, strlen(temp_str), (u8*)temp_str);
 	}
       } else if (size__i + 1 == max_size__i) {
 	{
@@ -692,7 +692,7 @@ void raw__largeinteger__unsigned_array__terminal_print_with_frame(f2ptr cause, f
 	}
 	char temp_str[32];
 	snprintf(temp_str, 32, "...");
-	raw__terminal_print_frame__write_string(cause, terminal_print_frame, strlen(temp_str), (u8*)temp_str);
+	raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, strlen(temp_str), (u8*)temp_str);
       }
     }
   }
@@ -1383,15 +1383,15 @@ def_pcfunk2(largeinteger__is_numerically_equal_to, this, that, return f2__largei
 
 
 f2ptr raw__largeinteger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__integer__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__integer__foreground);
   f2ptr is_negative   = f2__largeinteger__is_negative(  cause, this);
   f2ptr integer_array = f2__largeinteger__integer_array(cause, this);
   if (is_negative != nil) {
     char* negative_sign = "-";
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)negative_sign);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, (u8*)negative_sign);
   }
   raw__largeinteger__unsigned_array__terminal_print_with_frame(cause, integer_array, terminal_print_frame, boolean__false);
-  raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__default__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__default__foreground);
   return nil;
 }
 

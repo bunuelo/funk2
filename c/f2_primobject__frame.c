@@ -457,13 +457,13 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     f2__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, f2integer__new(cause, x__i + 2));
   }
   {
-    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__frame__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__frame__foreground);
     frame_string__length = snprintf((char*)frame_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, frame_string__length, frame_string);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, frame_string__length, frame_string);
   }
   f2ptr object_type = f2__object__type(cause, this);
   {
-    f2ptr result = raw__exp__terminal_print_with_frame(cause, object_type, terminal_print_frame);
+    f2ptr result = raw__exp__terminal_print_with_frame__thread_unsafe(cause, object_type, terminal_print_frame);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -488,7 +488,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		   }
 		   if (slot_should_be_printed) {
 		     {
-		       f2ptr x_offset = f2__terminal_print_frame__expression_x_offset(cause, terminal_print_frame, type_slot_name);
+		       f2ptr x_offset = f2__terminal_print_frame__expression_x_offset__thread_unsafe(cause, terminal_print_frame, type_slot_name);
 		       //f2__print(cause, x_offset);
 		       if (raw__larva__is_type(cause, x_offset)) {
 			 return x_offset;
@@ -500,7 +500,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		       }
 		     }
 		     {
-		       f2ptr x_offset = f2__terminal_print_frame__expression_x_offset(cause, terminal_print_frame, slot_name);
+		       f2ptr x_offset = f2__terminal_print_frame__expression_x_offset__thread_unsafe(cause, terminal_print_frame, slot_name);
 		       //f2__print(cause, x_offset);
 		       if (raw__larva__is_type(cause, x_offset)) {
 			 return x_offset;
@@ -516,9 +516,9 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		   );
   if (slot_count > 0) {
     if (use_one_line == nil) {
-      raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)"\n");
+      raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, (u8*)"\n");
     } else {
-      raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
+      raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, (u8*)" ");
     }
   }
   s64       slot_index                     = 0;
@@ -577,7 +577,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 				   return result;
 				 }
 			       } else {
-				 f2ptr result = raw__exp__terminal_print_with_frame(cause, type_slot_name, terminal_print_frame);
+				 f2ptr result = raw__exp__terminal_print_with_frame__thread_unsafe(cause, type_slot_name, terminal_print_frame);
 				 if (raw__larva__is_type(cause, result)) {
 				   return result;
 				 }
@@ -602,9 +602,9 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 				   type_slot_name_string[index]  = 0;
 				   type_slot_name_string__length = index;
 				 }
-				 raw__terminal_print_frame__write_string(cause, terminal_print_frame, type_slot_name_string__length, type_slot_name_string);
+				 raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, type_slot_name_string__length, type_slot_name_string);
 			       }
-			       raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
+			       raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, (u8*)" ");
 			     }
 			   }
 			   {
@@ -630,7 +630,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 				   return result;
 				 }
 			       } else {
-				 f2ptr result = raw__exp__terminal_print_with_frame(cause, slot_name, terminal_print_frame);
+				 f2ptr result = raw__exp__terminal_print_with_frame__thread_unsafe(cause, slot_name, terminal_print_frame);
 				 if (raw__larva__is_type(cause, result)) {
 				   return result;
 				 }
@@ -655,10 +655,10 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 				   slot_name_string[index]  = 0;
 				   slot_name_string__length = index;
 				 }
-				 raw__terminal_print_frame__write_string(cause, terminal_print_frame, slot_name_string__length, slot_name_string);
+				 raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, slot_name_string__length, slot_name_string);
 			       }
 			     }
-			     raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
+			     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, (u8*)" ");
 			     {
 			       f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
 			       s64   size__i = f2integer__i(size, cause);
@@ -673,7 +673,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 				 return result;
 			       }
 			     } else {
-			       f2ptr result = raw__exp__terminal_print_with_frame(cause, slot_value, terminal_print_frame);
+			       f2ptr result = raw__exp__terminal_print_with_frame__thread_unsafe(cause, slot_value, terminal_print_frame);
 			       if (raw__larva__is_type(cause, result)) {
 				 return result;
 			       }
@@ -688,9 +688,9 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 			 raw__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
 			 if (slot_index < slot_count - 1) {
 			   if (use_one_line == nil) {
-			     raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)"\n");
+			     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, (u8*)"\n");
 			   } else {
-			     raw__terminal_print_frame__write_string(cause, terminal_print_frame, 1, (u8*)" ");
+			     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, (u8*)" ");
 			   }
 			 }
 			 subexp_size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
@@ -706,11 +706,11 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		   }
 		   );
   {
-    raw__terminal_print_frame__write_color(cause, terminal_print_frame, print__ansi__frame__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__frame__foreground);
     frame_string__length = snprintf((char*)frame_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__right_paren, cause));
-    raw__terminal_print_frame__write_string(cause, terminal_print_frame, frame_string__length, frame_string);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, frame_string__length, frame_string);
   }
-  raw__terminal_print_frame__write_color( cause, terminal_print_frame, print__ansi__default__foreground);
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
   return nil;
 }
 

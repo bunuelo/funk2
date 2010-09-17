@@ -547,6 +547,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		     }
 		     if (failed_size_constraint) {
 		       if (! already_failed_size_constraint) {
+			 f2__terminal_print_frame__failed_max_size_constraint__set(cause, termiinal_print_frame, f2bool__new(boolean__true));
 			 f2ptr result = raw__key_symbol__terminal_print_with_frame(cause, new__symbol(cause, "..."), terminal_print_frame);
 			 if (raw__larva__is_type(cause, result)) {
 			   return result;
@@ -614,6 +615,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 			     }
 			   }
 			   if (failed_size_constraint) {
+			     f2__terminal_print_frame__failed_max_size_constraint__set(cause, termiinal_print_frame, f2bool__new(boolean__true));
 			     f2ptr result = raw__key_symbol__terminal_print_with_frame(cause, new__symbol(cause, "..."), terminal_print_frame);
 			     if (raw__larva__is_type(cause, result)) {
 			       return result;
@@ -665,6 +667,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 			       }
 			     }
 			     if (failed_size_constraint) {
+			       f2__terminal_print_frame__failed_max_size_constraint__set(cause, termiinal_print_frame, f2bool__new(boolean__true));
 			       f2ptr result = raw__key_symbol__terminal_print_with_frame(cause, new__symbol(cause, "..."), terminal_print_frame);
 			       if (raw__larva__is_type(cause, result)) {
 				 return result;

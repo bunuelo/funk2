@@ -1,5 +1,3 @@
-
-
 // 
 // Copyright (c) 2007-2010 Bo Morgan.
 // All rights reserved.
@@ -642,11 +640,14 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	    s64   max_size__i                   = f2integer__i(max_size, cause);
 	    s64   last_max_size__i;
 	    f2ptr size_that_fails_to_fit_within_height_constraint = raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(cause, resize_to_fit__terminal_print_frame, this);
+	    f2ptr failed_max_size_constraint                      = f2__terminal_print_frame__failed_max_size_constraint(cause, resize_to_fit__terminal_print_frame);
 	    if (raw__larva__is_type(cause, size_that_fails_to_fit_within_height_constraint)) {
 	      return size_that_fails_to_fit_within_height_constraint;
 	    }
-	    if (size_that_fails_to_fit_within_height_constraint != nil) {
-	      while ((low_successful_size + 1) != high_unsuccessful_size) {
+	    if ((size_that_fails_to_fit_within_height_constraint != nil) ||
+		(failed_max_size_constraint                      != nil)) {
+	      while ((((low_successful_size + 1) != high_unsuccessful_size) && (failed_max_size_constraint != nil)) ||
+		     ((high_unsuccessful_size == 0)                         && (failed_max_size_constraint == nil))) {
 		last_max_size__i = max_size__i;
 		if (size_that_fails_to_fit_within_height_constraint != nil) {
 		  if (high_unsuccessful_size == 0) {
@@ -687,6 +688,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 		  }
 		} else {
 		  size_that_fails_to_fit_within_height_constraint = raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(cause, resize_to_fit__terminal_print_frame, this);
+		  f2ptr failed_max_size_constraint                = f2__terminal_print_frame__failed_max_size_constraint(cause, resize_to_fit__terminal_print_frame);
 		  if (raw__larva__is_type(cause, size_that_fails_to_fit_within_height_constraint)) {
 		    return size_that_fails_to_fit_within_height_constraint;
 		  }

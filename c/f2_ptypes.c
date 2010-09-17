@@ -2349,6 +2349,7 @@ f2ptr raw__string__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
     }
     if (index < string__length) {
       string_string__length += sprintf((char*)(string_string + string_string__length), "...");
+      f2__terminal_print_frame__failed_max_size_constraint__set(cause, termiinal_print_frame, f2bool__new(boolean__true));
     }
   }
   string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_quote, cause);
@@ -3120,6 +3121,7 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	    }
 	  }
 	} else {
+	  f2__terminal_print_frame__failed_max_size_constraint__set(cause, termiinal_print_frame, f2bool__new(boolean__true));
 	  u64 increment_distance = sprintf((char*)(chunk_string + chunk_string__length), "...");
 	  chunk_string__length += increment_distance;
 	  x__i                 += increment_distance;

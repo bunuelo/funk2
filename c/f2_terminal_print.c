@@ -646,6 +646,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 	    if (raw__larva__is_type(cause, size_that_fails_to_fit_within_height_constraint)) {
 	      return size_that_fails_to_fit_within_height_constraint;
 	    }
+	    printf("\nfailed_max_size_constraint=%s", (failed_max_size_constraint != nil) ? "t" : "nil");
 	    if ((size_that_fails_to_fit_within_height_constraint != nil) ||
 		(failed_max_size_constraint                      != nil)) {
 	      while ((((low_successful_size + 1) != high_unsuccessful_size) && (failed_max_size_constraint != nil)) ||
@@ -692,6 +693,7 @@ f2ptr raw__exp__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 		  raw__terminal_print_frame__failed_max_size_constraint__set(cause, resize_to_fit__terminal_print_frame, f2bool__new(boolean__false));
 		  size_that_fails_to_fit_within_height_constraint = raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint(cause, resize_to_fit__terminal_print_frame, this);
 		  failed_max_size_constraint                      = f2__terminal_print_frame__failed_max_size_constraint(cause, resize_to_fit__terminal_print_frame);
+		  printf("\nfailed_max_size_constraint=%s", (failed_max_size_constraint != nil) ? "t" : "nil");
 		  if (raw__larva__is_type(cause, size_that_fails_to_fit_within_height_constraint)) {
 		    return size_that_fails_to_fit_within_height_constraint;
 		  }

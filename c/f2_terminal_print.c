@@ -108,7 +108,7 @@ f2ptr raw__terminal_print_frame__new_copy(f2ptr cause, f2ptr this) {
   f2ptr already_printed_hash = f2__ptypehash__new(cause);
   f2ptr print_as_frame_hash  = f2__ptypehash__new(cause);
   return f2terminal_print_frame__new(cause,
-				     mutex
+				     mutex,
 				     f2__terminal_print_frame__testing(cause, this),
 				     f2__terminal_print_frame__testing_max_x_constraint(cause, this),
 				     f2__terminal_print_frame__testing_max_height_constraint(cause, this),

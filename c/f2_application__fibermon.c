@@ -183,7 +183,7 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
   if ((this__bytecodes_per_second != nil) &&
       (f2__number__is_numerically_equal_to(cause, this__bytecodes_per_second, f2integer__new(cause, 0)) != nil) &&
       raw__mutex__is_locked(cause, f2__fiber__execute_mutex(cause, this__fiber))) {
-    f2__print(cause, f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), f2__print(cause, f2__gdk__rgb_color__new(cause, f2double__new(cause, 1.0), f2double__new(cause, 0.75), f2double__new(cause, 0.75)))));
+    f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), f2__gdk__rgb_color__new(cause, f2double__new(cause, 1.0), f2double__new(cause, 0.75), f2double__new(cause, 0.75)));
   } else {
     f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), nil);
   }

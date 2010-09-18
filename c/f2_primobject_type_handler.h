@@ -146,6 +146,8 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__traced_mutex__slot_t                     primobject_type_traced_mutex;
   funk2_object_type__fiber_stack_trace__slot_t                primobject_type_fiber_stack_trace;
   funk2_object_type__fiber_stack_trace_block__slot_t          primobject_type_fiber_stack_trace_block;
+  // frame objects
+  funk2_object_type__terminal_print_frame__slot_t             primobject_type_terminal_print_frame;
 };
 
 // **

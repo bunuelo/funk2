@@ -18,6 +18,7 @@
  rights to redistribute these changes.'
 
 [globalize-funk terminal_print_frame-new                                                                      &primfunk:terminal_print_frame__new]
+[globalize-funk terminal_print_frame-new_copy                                                                 &primfunk:terminal_print_frame__new_copy]
 [globalize-funk terminal_print_frame-write_color-thread_unsafe                                                &primfunk:terminal_print_frame__write_color__thread_unsafe]
 [globalize-funk terminal_print_frame-write_string-thread_unsafe                                               &primfunk:terminal_print_frame__write_string__thread_unsafe]
 [globalize-funk terminal_print_frame-can_print_expression_on_one_line-thread_unsafe                           &primfunk:terminal_print_frame__can_print_expression_on_one_line__thread_unsafe]

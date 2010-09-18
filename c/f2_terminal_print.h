@@ -19,6 +19,18 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__TERMINAL_PRINT__TYPES__H
+#define F2__TERMINAL_PRINT__TYPES__H
+
+typedef struct funk2_object_type__terminal_print_frame__slot_s funk2_object_type__terminal_print_frame__slot_t;
+struct funk2_object_type__terminal_print_frame__slot_s {
+  f2ptr new_copy__symbol;
+  f2ptr new_copy__funk;
+};
+
+
+#endif // F2__TERMINAL_PRINT__TYPES__H
+
 #ifndef F2__TERMINAL_PRINT__H
 #define F2__TERMINAL_PRINT__H
 
@@ -54,12 +66,15 @@ declare_frame_object_24_slot(terminal_print_frame,
 			     resize_to_fit,
 			     print_as_frame_hash);
 
+f2ptr f2terminal_print_frame__primobject_type__new_aux(f2ptr cause);
+
 boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return(                                 f2ptr cause, f2ptr this);
 void      raw__terminal_print_frame__write_color__thread_unsafe(                                               f2ptr cause, f2ptr this, ansi_color_t color);
 void      raw__terminal_print_frame__write_string__thread_unsafe(                                              f2ptr cause, f2ptr this, u64 length, u8* string);
 f2ptr      f2__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(                          f2ptr cause, f2ptr this, f2ptr expression);
 f2ptr      f2__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe(f2ptr cause, f2ptr this, f2ptr expression);
 f2ptr      f2__terminal_print_frame__expression_x_offset__thread_unsafe(                                       f2ptr cause, f2ptr this, f2ptr expression);
+
 
 f2ptr raw__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 

@@ -725,7 +725,6 @@
 
 [defunk print [x]
   [let [[terminal_print_frame [get standard-terminal new_copy]]]
-    [set terminal_print_frame mutex [new mutex]]
     [terminal_print [get standard-terminal new_copy] x]]]
 
 [defunk demetropolize [x]

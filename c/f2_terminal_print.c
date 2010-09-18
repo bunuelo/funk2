@@ -24,7 +24,7 @@
 
 // terminal_print_frame
 
-def_frame_object__global__24_slot(terminal_print_frame,
+def_frame_object__global__25_slot(terminal_print_frame,
 				  mutex,
 				  testing,
 				  testing_max_x_constraint,
@@ -48,6 +48,7 @@ def_frame_object__global__24_slot(terminal_print_frame,
 				  failed_max_height_constraint,
 				  failed_max_size_constraint,
 				  resize_to_fit,
+				  max_nanoseconds_for_resize,
 				  print_as_frame_hash);
 
 f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_distance, f2ptr max_x, f2ptr max_height, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes, f2ptr resize_to_fit) {
@@ -839,7 +840,7 @@ void f2__terminal_print__initialize() {
   
   // terminal_print_frame
   
-  init_frame_object__24_slot(terminal_print_frame,
+  init_frame_object__25_slot(terminal_print_frame,
 			     mutex,
 			     testing,
 			     testing_max_x_constraint,
@@ -863,6 +864,7 @@ void f2__terminal_print__initialize() {
 			     failed_max_height_constraint,
 			     failed_max_size_constraint,
 			     resize_to_fit,
+			     max_nanoseconds_for_resize,
 			     print_as_frame_hash);
   
   {char* symbol_str = "new_copy"; __funk2.globalenv.object_type.primobject.primobject_type_terminal_print_frame.new_copy__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

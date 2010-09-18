@@ -40,7 +40,7 @@ struct funk2_object_type__terminal_print_frame__slot_s {
 
 // terminal_print_frame
 
-declare_frame_object_24_slot(terminal_print_frame,
+declare_frame_object_25_slot(terminal_print_frame,
 			     mutex,
 			     testing,
 			     testing_max_x_constraint,
@@ -64,6 +64,7 @@ declare_frame_object_24_slot(terminal_print_frame,
 			     failed_max_height_constraint,
 			     failed_max_size_constraint,
 			     resize_to_fit,
+			     max_nanoseconds_for_resize,
 			     print_as_frame_hash);
 
 f2ptr f2terminal_print_frame__primobject_type__new_aux(f2ptr cause);

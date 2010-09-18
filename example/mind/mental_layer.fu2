@@ -21,30 +21,32 @@
 'mental_layer'
 
 [deframe mental_layer [frame] [index name mind agency_frame]
-  [new [index name]
-       [set this index        index]
-       [set this name         name]
-       [set this mind         nil] 'We set this when we add the layer to a mind.'
-       [set this agency_frame [frame]]
+  [new [new-index new-name]
+       [= index        new-index]
+       [= name         new-name]
+       [= mind         nil] 'We set this when we add the layer to a mind.'
+       [= agency_frame [frame]]
        this]]
 
 [deftypefunk mental_layer get body []
-  [get [get this mind] body]]
+  [if mind
+      [get mind body]
+    nil]]
 
 [deftypefunk mental_layer get agencies []
-  [get [get this agency_frame] values]]
+  [get agency_frame values]]
 
 [deftypefunk mental_layer get agency_names []
-  [get [get this agency_frame] slots]]
+  [get agency_frame slots]]
 
 [deftypefunk mental_layer execute add_agency [agency]
   [if [get agency layer]
       [error bug_type `agency_is_already_part_of_a_mental_layer agency agency layer this]]
   [set agency layer this]
-  [have [get this agency_frame] add [get agency name] agency]]
+  [have agency_frame add [get agency name] agency]]
 
 [deftypefunk mental_layer get agency [name]
-  [let [[agency [have [get this agency_frame] lookup name]]]
+  [let [[agency [have agency_frame lookup name]]]
     [if [null agency]
 	[error bug_type    `agency_does_not_exist_in_mental_layer
 	       agency_name name]
@@ -54,19 +56,16 @@
   [get [get this agency agency_name] resource resource_name]]
 
 [deftypefunk mental_layer execute call [agency_name resource_name :rest args]
-  [let [[agency_frame [get this agency_frame]]]
-    [let [[agency [have agency_frame lookup agency_name]]]
-      [have-apply agency call [cons resource_name args]]]]]
+  [let [[agency [have agency_frame lookup agency_name]]]
+    [have-apply agency call [cons resource_name args]]]]
 
 [deftypefunk mental_layer execute activate [agency_name resource_name :rest args]
-  [let [[agency_frame [get this agency_frame]]]
-    [let [[agency [have agency_frame lookup agency_name]]]
-      [have-apply agency activate [cons resource_name args]]]]]
+  [let [[agency [have agency_frame lookup agency_name]]]
+    [have-apply agency activate [cons resource_name args]]]]
 
 [deftypefunk mental_layer execute wait_to_activate [agency_name resource_name :rest args]
-  [let [[agency_frame [get this agency_frame]]]
-    [let [[agency [have agency_frame lookup agency_name]]]
-      [have-apply agency wait_to_activate [cons resource_name args]]]]]
+  [let [[agency [have agency_frame lookup agency_name]]]
+    [have-apply agency wait_to_activate [cons resource_name args]]]]
 
 [deftypefunk mental_layer get agency_resource_count [agency_name]
   [get [get this agency agency_name] resource_count]]

@@ -743,7 +743,12 @@
 
 #define def_frame_object__funk__slot(name, slot_name) \
   f2ptr raw__frame_object__funk__funkvar(name, slot_name)(f2ptr cause, f2ptr this) { \
-    return f2__frame__lookup_var_value(cause, this, new__symbol(cause, #slot_name), f2larva__new(cause, 325, nil)); \
+    f2ptr not_defined_value = __funk2.primobject__frame.type_variable_not_defined__symbol; \
+    f2ptr result            = f2__frame__lookup_var_value(cause, this, new__symbol(cause, #slot_name), not_defined_value); \
+    if (result == not_defined_value) {					\
+      return f2larva__new(cause, 325, nil);				\
+    }									\
+    return result;							\
   }									\
 									\
   f2ptr f2__frame_object__funk__funkvar(name, slot_name)(f2ptr cause, f2ptr this) { \
@@ -755,9 +760,14 @@
   def_pcfunk1(frame_object__funk__pcfunkvar(name, slot_name), this, return f2__frame_object__funk__funkvar(name, slot_name)(this_cause, this)); \
   									\
   f2ptr raw__frame_object__funk__funkvar(name, slot_name##__set)(f2ptr cause, f2ptr this, f2ptr value) { \
-    return f2__frame__var_value__set(cause, this, new__symbol(cause, #slot_name), value, f2larva__new(cause, 325, nil)); \
+    f2ptr not_defined_value = __funk2.primobject__frame.type_variable_not_defined__symbol; \
+    f2ptr result            = f2__frame__var_value__set(cause, this, new__symbol(cause, #slot_name), value, not_defined_value); \
+    if (result == not_defined_value) {					\
+      return f2larva__new(cause, 325, nil);				\
+    }									\
+    return result;							\
   }									\
-									\
+  									\
   f2ptr f2__frame_object__funk__funkvar(name, slot_name##__set)(f2ptr cause, f2ptr this, f2ptr value) { \
     if (! raw__frame_object__funk__funkvar(name, is_type)(cause, this)) { \
       return f2larva__new(cause, 1, nil);				\

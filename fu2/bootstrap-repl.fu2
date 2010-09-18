@@ -724,7 +724,7 @@
     result]]
 
 [defunk print [x]
-  [terminal_print standard-terminal x]]
+  [terminal_print [get standard-terminal new_copy] x]]
 
 [defunk demetropolize [x]
   [let [[demetro_pair [demetropolize_once x]]]

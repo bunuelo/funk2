@@ -56,7 +56,8 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
       (! raw__integer__is_type(cause, indent_distance)) ||
       (! raw__integer__is_type(cause, max_x)) ||
       (! raw__integer__is_type(cause, max_height)) ||
-      (! raw__integer__is_type(cause, max_size))) {
+      (! raw__integer__is_type(cause, max_size)) ||
+      (! raw__integer__is_type(cause, max_nanoseconds_for_resize))) {
     return f2larva__new(cause, 1, nil);
   }
   f2ptr mutex                         = f2__mutex__new(cause);
@@ -112,29 +113,29 @@ f2ptr raw__terminal_print_frame__new_copy(f2ptr cause, f2ptr this) {
   f2ptr print_as_frame_hash  = f2__ptypehash__new(cause);
   return f2terminal_print_frame__new(cause,
 				     mutex,
-				     f2__terminal_print_frame__testing(cause, this),
-				     f2__terminal_print_frame__testing_max_x_constraint(cause, this),
+				     f2__terminal_print_frame__testing(                      cause, this),
+				     f2__terminal_print_frame__testing_max_x_constraint(     cause, this),
 				     f2__terminal_print_frame__testing_max_height_constraint(cause, this),
-				     f2__terminal_print_frame__testing_x_offset(cause, this),
-				     f2__terminal_print_frame__stream(cause, this),
-				     f2__terminal_print_frame__indent_distance(cause, this),
-				     f2__terminal_print_frame__max_x(cause, this),
-				     f2__terminal_print_frame__max_height(cause, this),
-				     f2__terminal_print_frame__max_size(cause, this),
-				     f2__terminal_print_frame__use_ansi_codes(cause, this),
-				     f2__terminal_print_frame__use_html_codes(cause, this),
-				     f2__terminal_print_frame__x(cause, this),
-				     f2__terminal_print_frame__height(cause, this),
-				     f2__terminal_print_frame__size(cause, this),
-				     f2__terminal_print_frame__left_extent(cause, this),
-				     f2__terminal_print_frame__right_extent(cause, this),
+				     f2__terminal_print_frame__testing_x_offset(             cause, this),
+				     f2__terminal_print_frame__stream(                       cause, this),
+				     f2__terminal_print_frame__indent_distance(              cause, this),
+				     f2__terminal_print_frame__max_x(                        cause, this),
+				     f2__terminal_print_frame__max_height(                   cause, this),
+				     f2__terminal_print_frame__max_size(                     cause, this),
+				     f2__terminal_print_frame__use_ansi_codes(               cause, this),
+				     f2__terminal_print_frame__use_html_codes(               cause, this),
+				     f2__terminal_print_frame__x(                            cause, this),
+				     f2__terminal_print_frame__height(                       cause, this),
+				     f2__terminal_print_frame__size(                         cause, this),
+				     f2__terminal_print_frame__left_extent(                  cause, this),
+				     f2__terminal_print_frame__right_extent(                 cause, this),
 				     already_printed_hash,
-				     f2__terminal_print_frame__use_one_line(cause, this),
-				     f2__terminal_print_frame__failed_max_x_constraint(cause, this),
-				     f2__terminal_print_frame__failed_max_height_constraint(cause, this),
-				     f2__terminal_print_frame__failed_max_size_constraint(cause, this),
-				     f2__terminal_print_frame__resize_to_fit(cause, this),
-				     f2__terminal_print_frame__max_nanoseconds_for_resize(cause, this),
+				     f2__terminal_print_frame__use_one_line(                 cause, this),
+				     f2__terminal_print_frame__failed_max_x_constraint(      cause, this),
+				     f2__terminal_print_frame__failed_max_height_constraint( cause, this),
+				     f2__terminal_print_frame__failed_max_size_constraint(   cause, this),
+				     f2__terminal_print_frame__resize_to_fit(                cause, this),
+				     f2__terminal_print_frame__max_nanoseconds_for_resize(   cause, this),
 				     print_as_frame_hash);
 }
 

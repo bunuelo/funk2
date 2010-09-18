@@ -33,7 +33,8 @@
 				 command_quit_menu_item
 				 view_menu_item
 				 view_menu
-				 view_print_to_screen_menu_item
+				 view_fiber_menu_item
+				 view_cause_menu_item
 				 view_stack_trace_menu_item
 				 view_stack_trace_first_block_menu_item
 				 hbox
@@ -73,9 +74,13 @@
 	     [funk []
 		   [have fiber quit]]
 	     nil]
-       [have view_print_to_screen_menu_item signal_connect 'activate'
+       [have view_fiber_menu_item signal_connect 'activate'
 	     [funk []
 		   [print fiber]]
+	     nil]
+       [have view_cause_menu_item signal_connect 'activate'
+	     [funk []
+		   [print [get fiber cause_reg]]]
 	     nil]
        [have view_stack_trace_menu_item signal_connect 'activate'
 	     [funk []

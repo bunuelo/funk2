@@ -676,7 +676,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 			     } else {
 			       f2ptr can_print_on_one_line = raw__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(cause, terminal_print_frame, slot_value);
 			       if (raw__larva__is_type(cause, can_print_on_one_line)) {
-				 return result;
+				 return can_print_on_one_line;
 			       }
 			       if (can_print_on_one_line != nil) {
 				 f2__terminal_print_frame__use_one_line__set(cause, terminal_print_frame, f2bool__new(boolean__true));

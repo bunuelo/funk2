@@ -811,6 +811,31 @@ f2ptr f2__gdk__color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2pt
 def_pcfunk4(gdk__color__new, pixel, red, green, blue, return f2__gdk__color__new(this_cause, pixel, red, green, blue));
 
 
+f2ptr f2__gdk__rgb_color__new(f2ptr cause, f2ptr red, f2ptr green, f2ptr blue) {
+  f2ptr red__double   = f2__number__as__raw_double(cause, red);
+  f2ptr green__double = f2__number__as__raw_double(cause, green);
+  f2ptr blue__double  = f2__number__as__raw_double(cause, blue);
+  if ((! raw__double__is_type(cause, red__double)) ||
+      (! raw__double__is_type(cause, green__double)) ||
+      (! raw__double__is_type(cause, blue__double))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  double red__d   = f2double__d(red__double,   cause);
+  double green__d = f2double__d(green__double, cause);
+  double blue__d  = f2double__d(blue__double,  cause);
+  if ((red__d   < 0.0 || red__d   > 1.0) ||
+      (green__d < 0.0 || green__d > 1.0) ||
+      (blue__d  < 0.0 || blue__d  > 1.0)) {
+    return f2larva__new(cause, 2, nil);
+  }
+  s64 red__i   = 65535.0 * red__d;
+  s64 green__i = 65535.0 * green__d;
+  s64 blue__i  = 65535.0 * blue__d;
+  return f2__gdk__color__new(cause, f2integer__new(cause, 0), f2integer__new(cause, red__i), f2integer__new(cause, green__i), f2integer__new(cause, blue__i));
+}
+def_pcfunk3(gdk__rgb_color__new, red, green, blue, return f2__gdk__rgb_color__new(this_cause, red, green, blue));
+
+
 // progress_bar
 
 GtkProgressBar* funk2_gtk__progress_bar__new(funk2_gtk_t* this) {
@@ -2786,7 +2811,8 @@ void f2__gtk__initialize() {
   
   // color
   
-  f2__primcfunk__init__4(gdk__color__new, pixel, red, green, blue, "Returns a new GtkColor object.");
+  f2__primcfunk__init__4(gdk__color__new,     pixel, red, green, blue, "Accepts integer pixel, red, green, and blue values.  Returns a new GtkColor object.");
+  f2__primcfunk__init__3(gdk__rgb_color__new, red, green, blue,        "Accepts red, green, and blue values between 0 and 1.  Returns a new GtkColor object.");
   
   // progress_bar
   

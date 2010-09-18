@@ -20,7 +20,7 @@
 
 'Lazy Porting: A technique for implementing object type functionality only when member functions for get/set/execute funks have the same names.'
 
-[defunk gdk-rgb_color-new [red green blue] [gdk-color-new 0 [get [* 65535.0 red] as-integer] [get [* 65535.0 green] as-integer] [get [* 65535.0 blue] as-integer]]]
+`[defunk gdk-rgb_color-new [red green blue] [gdk-color-new 0 [get [* 65535.0 red] as-integer] [get [* 65535.0 green] as-integer] [get [* 65535.0 blue] as-integer]]]
 
 [deftypefunk gtk_widget get     widget                      []                      this]
 [deftypefunk gtk_widget execute signal_connect              [signal_name funk args] [gtk-signal_connect              [get this widget] signal_name funk args]]

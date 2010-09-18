@@ -268,6 +268,12 @@ f2ptr raw__gtk__hpaned__new(f2ptr cause);
 f2ptr  f2__gtk__hpaned__new(f2ptr cause);
 
 
+// color
+
+f2ptr f2__gdk__color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr blue);
+f2ptr f2__gdk__rgb_color__new(f2ptr cause, f2ptr red, f2ptr green, f2ptr blue);
+
+
 // progress_bar
 
 f2ptr raw__gtk__progress_bar__new(f2ptr cause);

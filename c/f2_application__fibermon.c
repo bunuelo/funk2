@@ -147,6 +147,7 @@ def_pcfunk1(fibermon_fiber__construct_fast, this, return f2__fibermon_fiber__con
 f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
   f2ptr this__fiber                 = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "fiber"),                 nil); if (! raw__fiber__is_type(cause, this__fiber))        {return f2larva__new(cause, 61, nil);}
   f2ptr this__progress_bar          = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "progress_bar"),          nil); if (! this__progress_bar)                             {return f2larva__new(cause, 62, nil);}
+  f2ptr this__menu_bar              = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "menu_bar"),              nil); if (! this__menu_bar)                                 {return f2larva__new(cause, 62, nil);}
   f2ptr this__execution_efficiency  = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "execution_efficiency"),  nil);
   f2ptr this__execution_nanoseconds = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "execution_nanoseconds"), nil);
   f2ptr this__bytecode_count        = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "bytecode_count"),        nil);
@@ -177,6 +178,14 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 11), 1),
 			     f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, ((this__execution_efficiency != nil) ? this__execution_efficiency : f2integer__new(cause, 0)), f2double__new(cause, 100.0))),
 									new__string(cause, "%"))));
+  }
+  // paint menu_bar as pink if fiber has locked-up since last redraw.
+  if ((this__bytecodes_per_second != nil) &&
+      (f2__number__is_numerically_equal_to(cause, this__bytecodes_per_second, f2integer__new(cause, 0)) != nil) &&
+      raw__mutex__is_locked(cause, f2__fiber__execute_mutex(cause, fiber))) {
+    f2__gtk__widget__modify_fg(cause, this__menu_bar, new__symbol(cause, "normal"), f2__gdk__rgb_color__new(cause, f2double__new(cause, 1.0), f2double__new(cause, 0.75), f2double__new(cause, 0.75)));
+  } else {
+    f2__gtk__widget__modify_fg(cause, this__menu_bar, new__symbol(cause, "normal"), nil);
   }
   return nil;
 }

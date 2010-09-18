@@ -106,11 +106,6 @@
 
 [deftypefunk fibermon_fiber execute redraw []
   [fibermon_fiber-redraw_fast this]
-  [if [and [not [null bytecodes_per_second]]
-	   [== bytecodes_per_second 0]
-	   [get [get fiber execute_mutex] is_locked]]
-      [have menu_bar modify_bg `normal [gdk-rgb_color-new 1.0 0.75 0.75]]
-    [have menu_bar modify_bg `normal nil]]
   nil]
 
 [deftypefunk fibermon_fiber execute recompute_statistics []

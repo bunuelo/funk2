@@ -46,6 +46,7 @@
 #include "f2_graph_match_error_correcting.h"
 #include "f2_gtk.h"
 #include "f2_nil.h"
+#include "f2_terminal_print.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;

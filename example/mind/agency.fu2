@@ -21,31 +21,35 @@
 'agency'
 
 [deframe agency [frame] [name layer resource_frame trace_story]
-  [new [name]
-       [set this name           name]
-       [set this layer          nil] 'We set this when we add the resource to a layer.'
-       [set this resource_frame [frame]]
-       [set this trace_story    [new story]]
+  [new [new-name]
+       [= name           new-name]
+       [= layer          nil] 'We set this when we add the resource to a layer.'
+       [= resource_frame [frame]]
+       [= trace_story    [new story]]
        this]]
 
 [deftypefunk agency execute add_resource [resource]
   [if [get resource agency]
       [error bug_type `resource_already_part_of_an_agency resource resource agency this]]
   [set resource agency this]
-  [have [get this resource_frame] add [get resource name] resource]]
+  [have resource_frame add [get resource name] resource]]
 
 [deftypefunk agency get resource [name]
-  [let [[resource [have [get this resource_frame] lookup name]]]
+  [let [[resource [have resource_frame lookup name]]]
     [if [null resource]
 	[error bug_type      `resource_does_not_exist_in_agency
 	       resource_name name]
       resource]]]
 
 [deftypefunk agency get mind []
-  [get [get this layer] mind]]
+  [if layer
+      [get layer mind]
+    nil]]
 
 [deftypefunk agency get body []
-  [get [get this layer] body]]
+  [if layer
+      [get layer body]
+    nil]]
 
 [deftypefunk agency execute call [name :rest args]
   [let [[resource [get this resource name]]]
@@ -60,10 +64,10 @@
     [have-apply resource wait_to_activate args]]]
 
 [deftypefunk agency get resources []
-  [get [get this resource_frame] values]]
+  [get resource_frame values]]
 
 [deftypefunk agency get resource_names []
-  [get [get this resource_frame] slots]]
+  [get resource_frame slots]]
 
 [deftypefunk agency get resource_count []
   [simple_length [get this resources]]]

@@ -54,16 +54,15 @@
 				    [let [[done nil]]
 				      [while [not done]
 					[if [null mind-name]
-					    [if agency
-						[if [get this body]
-						    [prog [cause-define agency-name [get agency name]]
-							  [if [null layer-name]
-							      [let [[mental_layer [get agency layer]]]
-								[if mental_layer
-								    [prog [cause-define layer-name [get mental_layer name]]
-									  [let [[mind [get mental_layer mind]]]
-									    [if mind
-										[cause-define mind-name [get mind name]]]]]]]]]]]]
+					    [if [get this body]
+						[prog [cause-define agency-name [get agency name]]
+						      [if [null layer-name]
+							  [let [[mental_layer [get agency layer]]]
+							    [if mental_layer
+								[prog [cause-define layer-name [get mental_layer name]]
+								      [let [[mind [get mental_layer mind]]]
+									[if mind
+									    [cause-define mind-name [get mind name]]]]]]]]]]]
 					[let [[active nil]]
 					  [have active_mutex lock]
 					  [= active [get this active]]

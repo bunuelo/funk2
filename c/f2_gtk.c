@@ -812,9 +812,9 @@ def_pcfunk4(gdk__color__new, pixel, red, green, blue, return f2__gdk__color__new
 
 
 f2ptr f2__gdk__rgb_color__new(f2ptr cause, f2ptr red, f2ptr green, f2ptr blue) {
-  f2ptr red__double   = f2__number__as__raw_double(cause, red);
-  f2ptr green__double = f2__number__as__raw_double(cause, green);
-  f2ptr blue__double  = f2__number__as__raw_double(cause, blue);
+  f2ptr red__double   = f2__number__as__double(cause, red);
+  f2ptr green__double = f2__number__as__double(cause, green);
+  f2ptr blue__double  = f2__number__as__double(cause, blue);
   if ((! raw__double__is_type(cause, red__double)) ||
       (! raw__double__is_type(cause, green__double)) ||
       (! raw__double__is_type(cause, blue__double))) {

@@ -631,7 +631,7 @@ def_pcfunk3(terminal_print_frame__prepare_for_printing__thread_unsafe, this, max
 
 f2ptr f2terminal_print_frame__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2terminal_print_frame__primobject_type__new(cause);
-  {char* slot_name = "new_copy"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_terminal_print_frame.new_copy__funk);}
+  {char* slot_name = "new_copy"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_terminal_print_frame.new_copy__funk);}
   return this;
 }
 

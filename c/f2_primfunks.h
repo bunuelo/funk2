@@ -858,8 +858,8 @@
 #define f2__primcfunk__init__7_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, and_rest, doc_string)             { f2__primcfunk__init__with_c_cfunk_var__7_arg_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, and_rest,             temp_c_cfunk_var, 0, doc_string); }
 #define f2__primcfunk__init__8(         name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, doc_string)                 { f2__primcfunk__init__with_c_cfunk_var__8_arg(         name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7,                 temp_c_cfunk_var, 0, doc_string); }
 #define f2__primcfunk__init__8_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, and_rest, doc_string)       { f2__primcfunk__init__with_c_cfunk_var__8_arg_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, and_rest,       temp_c_cfunk_var, 0, doc_string); }
-#define f2__primcfunk__init__9(         name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, doc_string)           { f2__primcfunk__init__with_c_cfunk_var__8_arg(         name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8,           temp_c_cfunk_var, 0, doc_string); }
-#define f2__primcfunk__init__9_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, and_rest, doc_string) { f2__primcfunk__init__with_c_cfunk_var__8_arg_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, and_rest, temp_c_cfunk_var, 0, doc_string); }
+#define f2__primcfunk__init__9(         name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, doc_string)           { f2__primcfunk__init__with_c_cfunk_var__9_arg(         name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8,           temp_c_cfunk_var, 0, doc_string); }
+#define f2__primcfunk__init__9_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, and_rest, doc_string) { f2__primcfunk__init__with_c_cfunk_var__9_arg_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, and_rest, temp_c_cfunk_var, 0, doc_string); }
 
 #define f2__primcfunk__init(name, doc_string) f2__primcfunk__init__0(name, doc_string)
 
@@ -881,8 +881,8 @@
 #define f2__funktional_primcfunk__init__7_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, and_rest, doc_string)             { f2__primcfunk__init__with_c_cfunk_var__7_arg_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, and_rest,             temp_c_cfunk_var, 1, doc_string); }
 #define f2__funktional_primcfunk__init__8(         name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, doc_string)                 { f2__primcfunk__init__with_c_cfunk_var__8_arg(         name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7,                 temp_c_cfunk_var, 1, doc_string); }
 #define f2__funktional_primcfunk__init__8_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, and_rest, doc_string)       { f2__primcfunk__init__with_c_cfunk_var__8_arg_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, and_rest,       temp_c_cfunk_var, 1, doc_string); }
-#define f2__funktional_primcfunk__init__9(         name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, doc_string)           { f2__primcfunk__init__with_c_cfunk_var__8_arg(         name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8,           temp_c_cfunk_var, 1, doc_string); }
-#define f2__funktional_primcfunk__init__9_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, and_rest, doc_string) { f2__primcfunk__init__with_c_cfunk_var__8_arg_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, and_rest, temp_c_cfunk_var, 1, doc_string); }
+#define f2__funktional_primcfunk__init__9(         name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, doc_string)           { f2__primcfunk__init__with_c_cfunk_var__9_arg(         name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8,           temp_c_cfunk_var, 1, doc_string); }
+#define f2__funktional_primcfunk__init__9_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, and_rest, doc_string) { f2__primcfunk__init__with_c_cfunk_var__9_arg_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, and_rest, temp_c_cfunk_var, 1, doc_string); }
 
 #define f2__funktional_primcfunk__init(name, doc_string) f2__funktional_primcfunk__init__0(name, doc_string)
 

@@ -179,7 +179,10 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
 			     f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, ((this__execution_efficiency != nil) ? this__execution_efficiency : f2integer__new(cause, 0)), f2double__new(cause, 100.0))),
 									new__string(cause, "%"))));
   }
-  if        ((this__bytecodes_per_second != nil) &&
+  if        (f2fiber__is_complete(this__fiber, cause) != nil) {
+    // paint menu_bar if fiber is dead.
+    f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), f2__gdk__rgb_color__new(cause, f2double__new(cause, 0.5), f2double__new(cause, 0.5), f2double__new(cause, 0.5)));
+  } else if ((this__bytecodes_per_second != nil) &&
 	     (f2__number__is_numerically_equal_to(cause, this__bytecodes_per_second, f2integer__new(cause, 0)) != nil) &&
 	     raw__mutex__is_locked(cause, f2__fiber__execute_mutex(cause, this__fiber))) {
     // paint menu_bar if fiber has locked-up since last redraw.

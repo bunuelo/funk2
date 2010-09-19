@@ -317,14 +317,14 @@
   `[object-execute-apply ,this [quote ,slot_name] ,args]]
 
 [defmetro have [this slot_name :rest args]
-  [define -have-this- [gensym]]
+  [define -have-this- [get [format nil '-have-this-' [get [gensym] as-string]] as-symbol]]
   `[let [[,-have-this-     ,this]
 	 [-have-slot_name- [quote ,slot_name]]
 	 [-have-args-      [quote ,args]]]
      [execute ,-have-this- ,slot_name ,-have-this- @args]]]
 
 [defmetro have-apply [this slot_name args]
-  [define -have-this- [gensym]]
+  [define -have-this- [get [format nil '-have-this-' [get [gensym] as-string]] as-symbol]]
   `[let [[,-have-this-      ,this]
 	 [-have-slot_name- [quote ,slot_name]]
 	 [-have-args-      [quote ,args]]]

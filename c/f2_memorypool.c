@@ -245,7 +245,8 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
 	funk2_memblock_t* iter                     = (funk2_memblock_t*)(((u8*)segment_first_free_block) + funk2_memblock__byte_num(((funk2_memblock_t*)segment_first_free_block)));
 	while ((iter < end_of_blocks) && (! (iter->used))) {
 	  if (funk2_memblock__byte_num(iter) == 0) {
-	    status(nil, "funk2_memorypool__defragment_free_memory_blocks_in_place WARNING: memblock__byte_num = 0.");
+	    status(nil, "funk2_memorypool__defragment_free_memory_blocks_in_place MEMORY BUG: memblock__byte_num = 0.");
+	    printf( "\n\nfunk2_memorypool__defragment_free_memory_blocks_in_place MEMORY BUG: memblock__byte_num = 0.\n\n");
 	    break;
 	  }
 	  funk2_memblock_t* next = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));

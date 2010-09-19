@@ -358,7 +358,7 @@ def_pcfunk2(stream__rewind_to_length, this, length, return f2__stream__rewind_to
 
 f2ptr raw__stream__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr frame = f2__frame__new(cause, f2list24__new(cause,
-						    new__symbol(cause, "type"),            new__symbol(cause, "stream"),
+						    new__symbol(cause, "print_object_type"), new__symbol(cause, "stream"),
 						    new__symbol(cause, "mutex"),           f2__stream__mutex(          cause, this),
 						    new__symbol(cause, "stream_type"),     f2__stream__stream_type(    cause, this),
 						    new__symbol(cause, "ungetc_stack"),    f2__stream__ungetc_stack(   cause, this),

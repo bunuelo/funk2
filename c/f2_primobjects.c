@@ -564,13 +564,17 @@ def_pcfunk3(cfunk__apply, x, y, z, return f2__cfunk__apply(this_cause, x, y, z))
 
 
 f2ptr raw__cfunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr frame = f2__frame__new(cause, f2list10__new(cause,
-						    new__symbol(cause, "print_object_type"), new__symbol(cause, "cfunk"),
-						    new__symbol(cause, "name"),          f2__cfunk__name(         cause, this),
-						    new__symbol(cause, "args"),          f2__cfunk__args(         cause, this),
-						    new__symbol(cause, "is_funktional"), f2__cfunk__is_funktional(cause, this),
-						    new__symbol(cause, "documentation"), f2__cfunk__documentation(cause, this)));
-  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list10__new(cause,
+						new__symbol(cause, "print_object_type"), new__symbol(cause, "cfunk"),
+						new__symbol(cause, "name"),          f2__cfunk__name(         cause, this),
+						new__symbol(cause, "args"),          f2__cfunk__args(         cause, this),
+						new__symbol(cause, "is_funktional"), f2__cfunk__is_funktional(cause, this),
+						new__symbol(cause, "documentation"), f2__cfunk__documentation(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
@@ -608,13 +612,17 @@ def_pcfunk3(metrocfunk__apply, x, y, z, return f2__metrocfunk__apply(this_cause,
 
 
 f2ptr raw__metrocfunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr frame = f2__frame__new(cause, f2list10__new(cause,
-						    new__symbol(cause, "print_object_type"), new__symbol(cause, "metrocfunk"),
-						    new__symbol(cause, "name"),          f2__metrocfunk__name(         cause, this),
-						    new__symbol(cause, "args"),          f2__metrocfunk__args(         cause, this),
-						    new__symbol(cause, "is_funktional"), f2__metrocfunk__is_funktional(cause, this),
-						    new__symbol(cause, "documentation"), f2__metrocfunk__documentation(cause, this)));
-  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list10__new(cause,
+						new__symbol(cause, "print_object_type"), new__symbol(cause, "metrocfunk"),
+						new__symbol(cause, "name"),          f2__metrocfunk__name(         cause, this),
+						new__symbol(cause, "args"),          f2__metrocfunk__args(         cause, this),
+						new__symbol(cause, "is_funktional"), f2__metrocfunk__is_funktional(cause, this),
+						new__symbol(cause, "documentation"), f2__metrocfunk__documentation(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
@@ -652,13 +660,17 @@ def_pcfunk8(funk__new, environment, name, args, demetropolized_body, body, bytec
 
 
 f2ptr raw__funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr frame = f2__frame__new(cause, f2list10__new(cause,
-						    new__symbol(cause, "print_object_type"), new__symbol(cause, "funk"),
-						    new__symbol(cause, "name"),          f2__funk__name(         cause, this),
-						    new__symbol(cause, "args"),          f2__funk__args(         cause, this),
-						    new__symbol(cause, "is_funktional"), f2__funk__is_funktional(cause, this),
-						    new__symbol(cause, "documentation"), f2__funk__documentation(cause, this)));
-  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list10__new(cause,
+						new__symbol(cause, "print_object_type"), new__symbol(cause, "funk"),
+						new__symbol(cause, "name"),          f2__funk__name(         cause, this),
+						new__symbol(cause, "args"),          f2__funk__args(         cause, this),
+						new__symbol(cause, "is_funktional"), f2__funk__is_funktional(cause, this),
+						new__symbol(cause, "documentation"), f2__funk__documentation(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
@@ -699,13 +711,17 @@ def_pcfunk8(metro__new, environment, name, args, demetropolized_body, body, byte
 
 
 f2ptr raw__metro__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr frame = f2__frame__new(cause, f2list10__new(cause,
-						    new__symbol(cause, "print_object_type"), new__symbol(cause, "metro"),
-						    new__symbol(cause, "name"),          f2__metro__name(         cause, this),
-						    new__symbol(cause, "args"),          f2__metro__args(         cause, this),
-						    new__symbol(cause, "is_funktional"), f2__metro__is_funktional(cause, this),
-						    new__symbol(cause, "documentation"), f2__metro__documentation(cause, this)));
-  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list10__new(cause,
+						new__symbol(cause, "print_object_type"), new__symbol(cause, "metro"),
+						new__symbol(cause, "name"),          f2__metro__name(         cause, this),
+						new__symbol(cause, "args"),          f2__metro__args(         cause, this),
+						new__symbol(cause, "is_funktional"), f2__metro__is_funktional(cause, this),
+						new__symbol(cause, "documentation"), f2__metro__documentation(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
@@ -735,11 +751,15 @@ def_pcfunk2(exception__new, tag, value, return f2__exception__new(this_cause, ta
 
 
 f2ptr raw__exception__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr frame = f2__frame__new(cause, f2list6__new(cause,
-						   new__symbol(cause, "print_object_type"), new__symbol(cause, "exception"),
-						   new__symbol(cause, "tag"),   f2__exception__tag(  cause, this),
-						   new__symbol(cause, "value"), f2__exception__value(cause, this)));
-  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list6__new(cause,
+					       new__symbol(cause, "print_object_type"), new__symbol(cause, "exception"),
+					       new__symbol(cause, "tag"),   f2__exception__tag(  cause, this),
+					       new__symbol(cause, "value"), f2__exception__value(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
@@ -769,13 +789,17 @@ def_pcfunk4(bytecode__new, command, arg0, arg1, arg2, return f2__bytecode__new(t
 
 
 f2ptr raw__bytecode__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr frame = f2__frame__new(cause, f2list10__new(cause,
-						    new__symbol(cause, "print_object_type"), new__symbol(cause, "bytecode"),
-						    new__symbol(cause, "command"), f2__bytecode__command(cause, this),
-						    new__symbol(cause, "arg0"),    f2__bytecode__arg0(   cause, this),
-						    new__symbol(cause, "arg1"),    f2__bytecode__arg1(   cause, this),
-						    new__symbol(cause, "arg2"),    f2__bytecode__arg2(   cause, this)));
-  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list10__new(cause,
+						new__symbol(cause, "print_object_type"), new__symbol(cause, "bytecode"),
+						new__symbol(cause, "command"), f2__bytecode__command(cause, this),
+						new__symbol(cause, "arg0"),    f2__bytecode__arg0(   cause, this),
+						new__symbol(cause, "arg1"),    f2__bytecode__arg1(   cause, this),
+						new__symbol(cause, "arg2"),    f2__bytecode__arg2(   cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
@@ -807,16 +831,20 @@ def_pcfunk0(processor__new, return f2__processor__new(this_cause));
 
 
 f2ptr raw__processor__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr frame = f2__frame__new(cause, f2list16__new(cause,
-						    new__symbol(cause, "print_object_type"),     new__symbol(cause, "processor"),
-						    new__symbol(cause, "processor_thread"),      f2__processor__processor_thread(     cause, this),
-						    new__symbol(cause, "active_fibers_mutex"),   f2__processor__active_fibers_mutex(  cause, this),
-						    new__symbol(cause, "active_fibers"),         f2__processor__active_fibers(        cause, this),
-						    new__symbol(cause, "sleeping_fibers_mutex"), f2__processor__sleeping_fibers_mutex(cause, this),
-						    new__symbol(cause, "sleeping_fibers"),       f2__processor__sleeping_fibers(      cause, this),
-						    new__symbol(cause, "pool_index"),            f2__processor__pool_index(           cause, this),
-						    new__symbol(cause, "desc"),                  f2__processor__desc(                 cause, this)));
-  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list16__new(cause,
+						new__symbol(cause, "print_object_type"),     new__symbol(cause, "processor"),
+						new__symbol(cause, "processor_thread"),      f2__processor__processor_thread(     cause, this),
+						new__symbol(cause, "active_fibers_mutex"),   f2__processor__active_fibers_mutex(  cause, this),
+						new__symbol(cause, "active_fibers"),         f2__processor__active_fibers(        cause, this),
+						new__symbol(cause, "sleeping_fibers_mutex"), f2__processor__sleeping_fibers_mutex(cause, this),
+						new__symbol(cause, "sleeping_fibers"),       f2__processor__sleeping_fibers(      cause, this),
+						new__symbol(cause, "pool_index"),            f2__processor__pool_index(           cause, this),
+						new__symbol(cause, "desc"),                  f2__processor__desc(                 cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
@@ -846,10 +874,14 @@ def_pcfunk1(scheduler__new, processors, return f2__scheduler__new(this_cause, pr
 
 
 f2ptr raw__scheduler__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr frame = f2__frame__new(cause, f2list4__new(cause,
-						   new__symbol(cause, "print_object_type"), new__symbol(cause, "scheduler"),
-						   new__symbol(cause, "processors"), f2__scheduler__processors(cause, this)));
-  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list4__new(cause,
+					       new__symbol(cause, "print_object_type"), new__symbol(cause, "scheduler"),
+					       new__symbol(cause, "processors"), f2__scheduler__processors(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
@@ -1032,16 +1064,20 @@ def_pcfunk2(time__is_numerically_equal_to, this, that, return f2__time__is_numer
 
 
 f2ptr raw__time__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr frame = f2__frame__new(cause, f2list16__new(cause,
-						    new__symbol(cause, "print_object_type"), new__symbol(cause, "time"),
-						    new__symbol(cause, "years"),       f2__time__years(      cause, this),
-						    new__symbol(cause, "months"),      f2__time__months(     cause, this),
-						    new__symbol(cause, "days"),        f2__time__days(       cause, this),
-						    new__symbol(cause, "hours"),       f2__time__hours(      cause, this),
-						    new__symbol(cause, "minutes"),     f2__time__minutes(    cause, this),
-						    new__symbol(cause, "seconds"),     f2__time__seconds(    cause, this),
-						    new__symbol(cause, "nanoseconds"), f2__time__nanoseconds(cause, this)));
-  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list16__new(cause,
+						new__symbol(cause, "print_object_type"), new__symbol(cause, "time"),
+						new__symbol(cause, "years"),       f2__time__years(      cause, this),
+						new__symbol(cause, "months"),      f2__time__months(     cause, this),
+						new__symbol(cause, "days"),        f2__time__days(       cause, this),
+						new__symbol(cause, "hours"),       f2__time__hours(      cause, this),
+						new__symbol(cause, "minutes"),     f2__time__minutes(    cause, this),
+						new__symbol(cause, "seconds"),     f2__time__seconds(    cause, this),
+						new__symbol(cause, "nanoseconds"), f2__time__nanoseconds(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 

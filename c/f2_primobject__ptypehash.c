@@ -379,8 +379,6 @@ f2ptr raw__ptypehash__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr t
   if (frame == nil) {
     frame = raw__ptypehash__as__frame(cause, this);
     f2__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"), new__symbol(cause, "ptypehash"));
-    printf("\nptypehash__terminal_print_with_frame this=" u64__fstr, (u64)this);
-    printf("\nptypehash__terminal_print_with_frame print_as_frame_hash=" u64__fstr, (u64)print_as_frame_hash);
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);

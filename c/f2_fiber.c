@@ -300,21 +300,25 @@ def_pcfunk1(fiber__print_stack_trace, this, return f2__fiber__print_stack_trace(
 
 
 f2ptr raw__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr frame = f2__frame__new(cause, f2list26__new(cause,
-						    new__symbol(cause, "print_object_type"),          new__symbol(cause, "fiber"),
-						    new__symbol(cause, "cause_reg"),                  f2__fiber__cause_reg(                 cause, this),
-						    new__symbol(cause, "keep_undead"),                f2__fiber__keep_undead(               cause, this),
-						    new__symbol(cause, "is_zombie"),                  f2__fiber__is_zombie(                 cause, this),
-						    new__symbol(cause, "is_complete"),                f2__fiber__is_complete(               cause, this),
-						    new__symbol(cause, "execute_mutex"),              f2__fiber__execute_mutex(             cause, this),
-						    new__symbol(cause, "paused"),                     f2__fiber__paused(                    cause, this),
-						    new__symbol(cause, "last_executed_time"),         f2__fiber__last_executed_time(        cause, this),
-						    new__symbol(cause, "sleep_until_time"),           f2__fiber__sleep_until_time(          cause, this),
-						    new__symbol(cause, "execution_nanoseconds"),      f2__fiber__execution_nanoseconds(     cause, this),
-						    new__symbol(cause, "bytecode_count"),             f2__fiber__bytecode_count(            cause, this),
-						    new__symbol(cause, "processor_assignment_index"), f2__fiber__processor_assignment_index(cause, this),
-						    new__symbol(cause, "stack_trace"),                f2__fiber__stack_trace(               cause, this)));
-  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list26__new(cause,
+						new__symbol(cause, "print_object_type"),          new__symbol(cause, "fiber"),
+						new__symbol(cause, "cause_reg"),                  f2__fiber__cause_reg(                 cause, this),
+						new__symbol(cause, "keep_undead"),                f2__fiber__keep_undead(               cause, this),
+						new__symbol(cause, "is_zombie"),                  f2__fiber__is_zombie(                 cause, this),
+						new__symbol(cause, "is_complete"),                f2__fiber__is_complete(               cause, this),
+						new__symbol(cause, "execute_mutex"),              f2__fiber__execute_mutex(             cause, this),
+						new__symbol(cause, "paused"),                     f2__fiber__paused(                    cause, this),
+						new__symbol(cause, "last_executed_time"),         f2__fiber__last_executed_time(        cause, this),
+						new__symbol(cause, "sleep_until_time"),           f2__fiber__sleep_until_time(          cause, this),
+						new__symbol(cause, "execution_nanoseconds"),      f2__fiber__execution_nanoseconds(     cause, this),
+						new__symbol(cause, "bytecode_count"),             f2__fiber__bytecode_count(            cause, this),
+						new__symbol(cause, "processor_assignment_index"), f2__fiber__processor_assignment_index(cause, this),
+						new__symbol(cause, "stack_trace"),                f2__fiber__stack_trace(               cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
@@ -549,10 +553,14 @@ def_pcfunk1(fiber_stack_trace__blocks, this, return f2__fiber_stack_trace__block
 
 
 f2ptr raw__fiber_stack_trace__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr frame = f2__frame__new(cause, f2list4__new(cause,
-						   new__symbol(cause, "print_object_type"), new__symbol(cause, "fiber_stack_trace"),
-						   new__symbol(cause, "as-printable"), f2__fiber_stack_trace__as__printable(cause, this)));
-  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list4__new(cause,
+					       new__symbol(cause, "print_object_type"), new__symbol(cause, "fiber_stack_trace"),
+					       new__symbol(cause, "as-printable"), f2__fiber_stack_trace__as__printable(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
@@ -648,11 +656,15 @@ def_pcfunk1(fiber_stack_trace_block__as__printable, this, return f2__fiber_stack
 
 
 f2ptr raw__fiber_stack_trace_block__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr frame = f2__frame__new(cause, f2list6__new(cause,
-						   new__symbol(cause, "print_object_type"), new__symbol(cause, "fiber_stack_trace_block"),
-						   new__symbol(cause, "funk"),              f2__fiber_stack_trace_block__funk(cause, this),
-						   new__symbol(cause, "argument_frame"),    f2__fiber_stack_trace_block__argument_frame(cause, this)));
-  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list6__new(cause,
+					       new__symbol(cause, "print_object_type"), new__symbol(cause, "fiber_stack_trace_block"),
+					       new__symbol(cause, "funk"),              f2__fiber_stack_trace_block__funk(cause, this),
+					       new__symbol(cause, "argument_frame"),    f2__fiber_stack_trace_block__argument_frame(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 

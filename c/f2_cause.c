@@ -499,12 +499,16 @@ def_pcfunk4(cause__add_graph_event__write_other_memory, this, array, index, old_
 
 
 f2ptr raw__cause__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr frame = f2__frame__new(cause, f2list8__new(cause,
-						   new__symbol(cause, "print_object_type"),      new__symbol(cause, "cause"),
-						   new__symbol(cause, "frame"),                  f2__cause__frame(                 cause, this),
-						   new__symbol(cause, "allocate_traced_arrays"), f2__cause__allocate_traced_arrays(cause, this),
-						   new__symbol(cause, "imagination_stack"),      f2__cause__imagination_stack(     cause, this)));
-  f2__ptypehash__add(cause, raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame), this, frame);
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list8__new(cause,
+					       new__symbol(cause, "print_object_type"),      new__symbol(cause, "cause"),
+					       new__symbol(cause, "frame"),                  f2__cause__frame(                 cause, this),
+					       new__symbol(cause, "allocate_traced_arrays"), f2__cause__allocate_traced_arrays(cause, this),
+					       new__symbol(cause, "imagination_stack"),      f2__cause__imagination_stack(     cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 

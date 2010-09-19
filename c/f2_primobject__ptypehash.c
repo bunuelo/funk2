@@ -375,7 +375,7 @@ def_pcfunk1(ptypehash__as__frame, this, return f2__ptypehash__as__frame(this_cau
 
 f2ptr raw__ptypehash__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
-  f2ptr frame               = raw__ptypehash__lookup_var_value(cause, print_as_frame_hash, this, nil);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
     frame = raw__ptypehash__as__frame(cause, this);
     f2__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"), new__symbol(cause, "ptypehash"));

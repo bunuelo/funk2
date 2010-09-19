@@ -182,11 +182,17 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
   if        ((this__bytecodes_per_second != nil) &&
 	     (f2__number__is_numerically_equal_to(cause, this__bytecodes_per_second, f2integer__new(cause, 0)) != nil) &&
 	     raw__mutex__is_locked(cause, f2__fiber__execute_mutex(cause, this__fiber))) {
-    // paint menu_bar as pink if fiber has locked-up since last redraw.
+    // paint menu_bar if fiber has locked-up since last redraw.
     f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), f2__gdk__rgb_color__new(cause, f2double__new(cause, 1.0), f2double__new(cause, 0.75), f2double__new(cause, 0.75)));
+  } else if (this__bytecodes_per_second != nil) {
+    // paint menu_bar if fiber has executed bytecodes since last redraw.
+    f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), f2__gdk__rgb_color__new(cause, f2double__new(cause, 0.75), f2double__new(cause, 1.0), f2double__new(cause, 0.75)));
+  } else if (f2fiber__paused(this__fiber, cause) != nil) {
+    // paint menu_bar if fiber is paused.
+    f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), f2__gdk__rgb_color__new(cause, f2double__new(cause, 0.0), f2double__new(cause, 0.5), f2double__new(cause, 0.5)));
   } else if (f2fiber__sleep_until_time(this__fiber, cause) != nil) {
-    // paint menu_bar as black if fiber is asleep.
-    f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), f2__gdk__rgb_color__new(cause, f2double__new(cause, 0.5), f2double__new(cause, 0.5), f2double__new(cause, 0.5)));
+    // paint menu_bar if fiber is asleep.
+    f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), f2__gdk__rgb_color__new(cause, f2double__new(cause, 0.0), f2double__new(cause, 0.5), f2double__new(cause, 0.0)));
   } else {
     // paint menu_bar as the default theme color if fiber is in none of the above states.
     f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), nil);

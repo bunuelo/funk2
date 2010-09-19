@@ -25,7 +25,10 @@
 #include "f2_primobjects.h"
 
 typedef struct funk2_object_type__bug__slot_s funk2_object_type__bug__slot_t;
-declare_object_type_2_slot(bug, bug_type, frame, );
+declare_object_type_2_slot(bug, bug_type, frame,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 #endif // F2__PRIMOBJECTS__TYPE__H
 
@@ -41,6 +44,7 @@ declare_primobject_2_slot(bug, bug_type, frame);
 f2ptr f2__bug__new(f2ptr cause, f2ptr type, f2ptr frame);
 f2ptr f2__bug__new_from_larva(f2ptr cause, f2ptr bug);
 
+f2ptr f2bug__primobject_type__new_aux(f2ptr cause);
 
 // **
 

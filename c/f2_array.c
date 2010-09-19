@@ -468,7 +468,11 @@ f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	f2__terminal_print_frame__failed_max_size_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
 	x__i = f2integer__i(x, cause);
-	array_string__length = sprintf((char*)array_string, "%c...", ((x__i + 4) < max_x__i) ? ' ' : '\n');
+	if (index > 0) {
+	  array_string__length = sprintf((char*)array_string, "%c...", ((x__i + 4) < max_x__i) ? ' ' : '\n');
+	} else {
+	  array_string__length = sprintf((char*)array_string, "...");
+	}
 	raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__foreground);
 	raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, array_string__length, array_string);
 	break;

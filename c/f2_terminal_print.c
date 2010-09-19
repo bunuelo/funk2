@@ -716,7 +716,7 @@ f2ptr raw__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this
 	      (failed_max_size_constraint                      != nil)) {
 	    while ((((high_unsuccessful_size != 0) && ((low_successful_size + 1) != high_unsuccessful_size)) ||
 		    ((high_unsuccessful_size == 0) && (failed_max_size_constraint != nil))) &&
-		   (((raw__nanoseconds_since_1970() - start_nanoseconds_since_1970()) < max_nanoseconds_for_resize__i) ||
+		   (((raw__nanoseconds_since_1970() - start_nanoseconds_since_1970) < max_nanoseconds_for_resize__i) ||
 		    (low_successful_size == 0))) {
 	      last_max_size__i = max_size__i;
 	      s64 binary_search_size;

@@ -374,7 +374,20 @@ def_pcfunk1(ptypehash__as__frame, this, return f2__ptypehash__as__frame(this_cau
 
 
 f2ptr raw__ptypehash__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr frame = raw__ptypehash__as__frame(cause, this);
+  f2ptr size        = raw__terminal_print_frame__size(    cause, terminal_print_frame);
+  s64   size__i     = f2integer__i(size, cause);
+  f2ptr max_size    = raw__terminal_print_frame__max_size(cause, terminal_print_frame);
+  s64   max_size__i = f2integer__i(max_size, cause);
+  f2ptr frame = f2__frame__new(cause, nil);
+  s64   index = 0;
+  ptypehash__iteration(cause, this, key, value,
+		       f2__frame__add_var_value(cause, new_frame, key, value);
+		       if (size__i + index > max_size__i + 2) {
+			 goto raw__ptypehash__terminal_print_with_frame__break_iteration;
+		       }
+		       index ++;
+		       );
+ raw__ptypehash__terminal_print_with_frame__break_iteration:
   f2__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"), new__symbol(cause, "ptypehash"));
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2__ptypehash__add(cause, print_as_frame_hash, this, frame);

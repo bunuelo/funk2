@@ -184,7 +184,7 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
 	     raw__mutex__is_locked(cause, f2__fiber__execute_mutex(cause, this__fiber))) {
     // paint menu_bar as pink if fiber has locked-up since last redraw.
     f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), f2__gdk__rgb_color__new(cause, f2double__new(cause, 1.0), f2double__new(cause, 0.75), f2double__new(cause, 0.75)));
-  } else if (f2fiber__sleep_until_time(fiber, cause) != nil) {
+  } else if (f2fiber__sleep_until_time(this__fiber, cause) != nil) {
     // paint menu_bar as black if fiber is asleep.
     f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), f2__gdk__rgb_color__new(cause, f2double__new(cause, 0.0), f2double__new(cause, 0.0), f2double__new(cause, 0.0)));
   } else {

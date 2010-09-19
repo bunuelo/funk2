@@ -90,7 +90,7 @@ f2ptr raw__bug__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
     frame = f2__frame__new(cause, f2list6__new(cause,
 					       new__symbol(cause, "print_object_type"), new__symbol(cause, "bug"),
 					       new__symbol(cause, "bug_type"), f2__bug__bug_type(cause, this),
-					       new__symbol(cause, "frame"),    f2__bug__framme(  cause, this)));
+					       new__symbol(cause, "frame"),    f2__bug__frame(   cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);

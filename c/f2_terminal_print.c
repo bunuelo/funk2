@@ -685,6 +685,9 @@ f2ptr raw__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this
 	// iteratively reduce max size if we fail to satisfy y constraint.
 	f2ptr original_max_size                   = raw__terminal_print_frame__max_size(                  cause, terminal_print_frame);
 	f2ptr original_failed_max_size_constraint = raw__terminal_print_frame__failed_max_size_constraint(cause, terminal_print_frame);
+	f2ptr max_nanoseconds_for_resize          = raw__terminal_print_frame__max_nanoseconds_for_resize(cause, terminal_print_frame);
+	s64   max_nanoseconds_for_resize__i       = f2integer__i(max_nanoseconds_for_resize, cause);
+	s64   start_nanoseconds_since_1970        = raw__nanoseconds_since_1970();
 	{
 	  s64   low_successful_size           = 0;
 	  s64   high_unsuccessful_size        = 0;
@@ -711,8 +714,10 @@ f2ptr raw__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this
 	  status("raw__exp__terminal_print_with_frame__thread_unsafe: failed_max_size_constraint=%s", (failed_max_size_constraint != nil) ? "t" : "nil");
 	  if ((size_that_fails_to_fit_within_height_constraint != nil) ||
 	      (failed_max_size_constraint                      != nil)) {
-	    while (((high_unsuccessful_size != 0) && ((low_successful_size + 1) != high_unsuccessful_size)) ||
-		   ((high_unsuccessful_size == 0) && (failed_max_size_constraint != nil))) {
+	    while ((((high_unsuccessful_size != 0) && ((low_successful_size + 1) != high_unsuccessful_size)) ||
+		    ((high_unsuccessful_size == 0) && (failed_max_size_constraint != nil))) &&
+		   (((raw__nanoseconds_since_1970() - start_nanoseconds_since_1970()) < max_nanoseconds_for_resize__i) ||
+		    (low_successful_size == 0))) {
 	      last_max_size__i = max_size__i;
 	      s64 binary_search_size;
 	      if (high_unsuccessful_size == 0) {

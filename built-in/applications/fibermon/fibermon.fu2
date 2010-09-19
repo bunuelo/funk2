@@ -24,6 +24,7 @@
 				 frame
 				 vbox
 				 menu_bar
+				 
 				 command_menu_item
 				 command_menu
 				 command_pause_menu_item
@@ -31,12 +32,18 @@
 				 command_keep_undead_menu_item
 				 command_dont_keep_undead_menu_item
 				 command_quit_menu_item
+				 
 				 view_menu_item
 				 view_menu
 				 view_fiber_menu_item
 				 view_cause_menu_item
 				 view_stack_trace_menu_item
 				 view_stack_trace_first_block_menu_item
+				 
+				 environment_menu_item
+				 environment_menu
+				 environment_globally_define_fiber_menu_item
+				 
 				 hbox
 				 progress_bar
 				 table
@@ -101,6 +108,13 @@
 	     [funk []
 		   [terminal_format standard-terminal '\n\nfibermon printing fiber first block of stack trace:\n']
 		   [print [first [get [get fiber stack_trace] blocks]]]
+		   [terminal_format standard-terminal '\n\n']]
+	     nil]
+       
+       [have environment_globally_define_fiber_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\n\nenvironment globally define fiber here.\n']
+		   [print 'Not yet implemented.']
 		   [terminal_format standard-terminal '\n\n']]
 	     nil]
        

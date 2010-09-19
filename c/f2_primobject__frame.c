@@ -464,7 +464,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   }
   f2ptr object_type = f2__object__type(cause, this);
   if (raw__eq(cause, object_type, __frame__symbol)) {
-    f2ptr print_object_type = f2__frame__lookup_var_value(cause, new__symbol(cause, "print_object_type"), nil);
+    f2ptr print_object_type = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "print_object_type"), nil);
     if (print_object_type != nil) {
       object_type = print_object_type;
     }

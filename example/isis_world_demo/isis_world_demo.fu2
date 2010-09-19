@@ -50,12 +50,12 @@
 	     [load_task_result     [isis-call client meta_load_task task 'toast is in view']]
 	     [train_result         [isis-call client meta_train]]
 	     [pause_result         [isis-call client meta_pause]]]
-	 [format stdout '\n  scenarios.................: ' scenario_list]
-	 [format stdout '\n  load make_toast scenario..: ' load_scenario_result]
-	 [format stdout '\n  tasks.....................: ' task_list]
-	 [format stdout '\n  load toast is in view task: ' load_task_result]
-	 [format stdout '\n  train.....................: ' train_result]
-	 [format stdout '\n  pause.....................: ' pause_result]
+	 [terminal_format standard-terminal '\n  scenarios.................: ' scenario_list]
+	 [terminal_format standard-terminal '\n  load make_toast scenario..: ' load_scenario_result]
+	 [terminal_format standard-terminal '\n  tasks.....................: ' task_list]
+	 [terminal_format standard-terminal '\n  load toast is in view task: ' load_task_result]
+	 [terminal_format standard-terminal '\n  train.....................: ' train_result]
+	 [terminal_format standard-terminal '\n  pause.....................: ' pause_result]
 	 ]
        this]]
 
@@ -119,7 +119,7 @@
       [mind-activate [get isis_world agent_mind `Ralph] reactive sensory  continuous_sensing]
       [mind-activate [get isis_world agent_mind `Ralph] reactive physical funk_user]
       
-      [format stdout '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
+      [terminal_format standard-terminal '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
 
       `[have [get isis_world agent `Ralph] find_knife]
       `[have [get isis_world agent `Ralph] find_loaf]

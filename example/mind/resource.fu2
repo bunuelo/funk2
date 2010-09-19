@@ -62,7 +62,8 @@
 								[prog [cause-define layer-name [get mental_layer name]]
 								      [let [[mind [get mental_layer mind]]]
 									[if mind
-									    [cause-define mind-name [get mind name]]]]]]]]]]]
+									    [prog [cause-define mind-name [get mind name]]
+										  [cause-define cause-name `[,mind-name ,layer-name ,agency-name ,resource-name resource]]]]]]]]]]]]
 					[let [[active nil]]
 					  [have active_mutex lock]
 					  [= active [get this active]]

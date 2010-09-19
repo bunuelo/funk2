@@ -75,6 +75,7 @@ void      raw__terminal_print_frame__write_string__thread_unsafe(               
 f2ptr     raw__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(                          f2ptr cause, f2ptr this, f2ptr expression);
 f2ptr      f2__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(                          f2ptr cause, f2ptr this, f2ptr expression);
 f2ptr      f2__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe(f2ptr cause, f2ptr this, f2ptr expression);
+f2ptr     raw__terminal_print_frame__expression_x_offset__thread_unsafe(                                       f2ptr cause, f2ptr this, f2ptr expression);
 f2ptr      f2__terminal_print_frame__expression_x_offset__thread_unsafe(                                       f2ptr cause, f2ptr this, f2ptr expression);
 
 

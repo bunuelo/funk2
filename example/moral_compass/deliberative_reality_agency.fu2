@@ -43,7 +43,7 @@
 							   [let [[reality_story [get [get this deliberative_reality_story] union reactive_sensory_story]]]
 							     [set this deliberative_reality_story reality_story]]
 							   [set this last_time_step time_step]]]]]
-					     [print 'cheech 6']
+					     [have this-resource think_to_self 'cheech 6']
 					     ]]]]
        this]]
 

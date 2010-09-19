@@ -2706,7 +2706,7 @@ f2ptr f2__symbol__as__string(f2ptr cause, f2ptr this) {
   }
   return raw__symbol__as__string(cause, this);
 }
-def_pcfunk1(symbol__as__string, this, return f2__symbol__as__string(cause, this));
+def_pcfunk1(symbol__as__string, this, return f2__symbol__as__string(this_cause, this));
 
 
 f2ptr f2__symbol__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {

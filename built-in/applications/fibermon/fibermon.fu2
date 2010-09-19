@@ -104,6 +104,8 @@
 		   [terminal_format standard-terminal '\n\n']]
 	     nil]
        
+       [have command_menu_item modify_fg [gdk-rgb_color-new 1 1 1]]
+       
        [have this recompute_statistics]
        [have this redraw]
        this]]

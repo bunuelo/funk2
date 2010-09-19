@@ -194,10 +194,14 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
 	f2__terminal_print_frame__failed_max_size_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
 	x__i = f2integer__i(x, cause);
-	if (use_one_line != nil) {
-	  cons_string__length = sprintf((char*)cons_string, " ...");
+	if (index > 0) {
+	  if (use_one_line != nil) {
+	    cons_string__length = sprintf((char*)cons_string, " ...");
+	  } else {
+	    cons_string__length = sprintf((char*)cons_string, "%c...", ((x__i + 4) < max_x__i) ? ' ' : '\n');
+	  }
 	} else {
-	  cons_string__length = sprintf((char*)cons_string, "%c...", ((x__i + 4) < max_x__i) ? ' ' : '\n');
+	  cons_string__length = sprintf((char*)cons_string, "...");
 	}
 	raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__foreground);
 	raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cons_string__length, cons_string);
@@ -345,7 +349,15 @@ f2ptr raw__doublelink__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
 	f2__terminal_print_frame__failed_max_size_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
 	x__i = f2integer__i(x, cause);
-	doublelink_string__length = sprintf((char*)doublelink_string, "%c...", ((x__i + 4) < max_x__i) ? ' ' : '\n');
+	if (index > 0) {
+	  if (use_one_line != nil) {
+	    doublelink_string__length = sprintf((char*)doublelink_string, " ...");
+	  } else {
+	    doublelink_string__length = sprintf((char*)doublelink_string, "%c...", ((x__i + 4) < max_x__i) ? ' ' : '\n');
+	  }
+	} else {
+	  doublelink_string__length = sprintf((char*)doublelink_string, "...");
+	}
 	raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__foreground);
 	raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
 	break;

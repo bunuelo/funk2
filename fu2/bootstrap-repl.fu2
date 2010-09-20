@@ -365,15 +365,15 @@
   nil]
 
 [defunk silent-fiber [funk args]
-  [fiber_parallel [funk []
-			[cause]
-			[apply funk args]]
+  [fiber_parallel [funk-new_with_name silent-fiber []
+				      [cause]
+				      [apply funk args]]
 		  nil]]
 
 [defunk fiber [funk args]
-  [silent-fiber [funk []
-		      [cause-enable_reactive_critics [this-cause]]
-		      [apply funk args]]
+  [silent-fiber [funk-new_with_name fiber []
+				    [cause-enable_reactive_critics [this-cause]]
+				    [apply funk args]]
 		nil]]
 
 [defunk parseq [proc seq]
@@ -653,13 +653,13 @@
 [defunk format [stream :rest exps]
   [if [null stream]
       [apply &string-format exps]
-    [mapc [funk [exp] [exp-format stream exp]] exps]]]
+    [mapc [funk-new_with_name format-mapc [exp] [exp-format stream exp]] exps]]]
 
 [defunk format-html [stream :rest exps]
-  [mapc [funk [exp] [exp-format-html stream exp]] exps]]
+  [mapc [funk-new_with_name format-html-mapc [exp] [exp-format-html stream exp]] exps]]
 
 [defunk fwrite_html [stream :rest exps]
-  [mapc [funk [exp] [exp-fwrite_html stream exp]] exps]]
+  [mapc [funk-new_with_name fwrite_html-mapc [exp] [exp-fwrite_html stream exp]] exps]]
 
 [defunk print-html [exp] [format-html stdout '\n'] [fwrite_html stdout exp]]
 
@@ -814,19 +814,19 @@
 [defmetro = [var value] `[mutate ,var ,value]]
 
 [defmetro labels [label_definitions :rest body]
-  [append [cons `prog [mapcar [funk [label_definition]
-				    [let [[name [car  label_definition]]
-					  [args [cadr label_definition]]
-					  [body [cddr label_definition]]]
-				      `[define-funk ,name [funk-new_with_name ,name ,args @body]]]]
+  [append [cons `prog [mapcar [funk-new_with_name compile-labels [label_definition]
+						  [let [[name [car  label_definition]]
+							[args [cadr label_definition]]
+							[body [cddr label_definition]]]
+						    `[define-funk ,name [funk-new_with_name ,name ,args @body]]]]
 			      label_definitions]]
 	  body]]
 
 [defmetro with-new-cause [:rest codes]
   `[let* [[result `bug]
-	  [fiber  [fiber [funk []
-			       [set [this-cause] critics nil]
-			       [= result [prog @codes]]] nil]]]
+	  [fiber  [fiber [funk-new_with_name with-new-cause []
+					     [set [this-cause] critics nil]
+					     [= result [prog @codes]]] nil]]]
      'This is a bad hack to deal with noisy values in [get fiber is_complete] or [get fiber paused].'
      [while [and [not [get fiber is_complete]]
 		 [or [not [get fiber paused]] [not [is-type `bug [get fiber value]]]]]
@@ -865,9 +865,9 @@
 
 [defmetro shelter [:rest codes]
   `[let* [[result `bug]
-	  [fiber  [silent-fiber [funk []
-				      [set [this-cause] critics nil]
-				      [= result [prog @codes]]]
+	  [fiber  [silent-fiber [funk-new_with_name shelter []
+						    [set [this-cause] critics nil]
+						    [= result [prog @codes]]]
 				nil]]]
      'This is a bad hack to deal with noisy values in [get fiber is_complete] or [get fiber paused].'
      [while [and [not [get fiber is_complete]]
@@ -906,8 +906,8 @@
 [defunk exit [value]
   [management_thread-add_exit_command value]
   [let [[signal_exit_fiber [this-fiber]]]
-    [fiber [funk []
-		 [have signal_exit_fiber quit]]
+    [fiber [funk-new_with_name exit []
+			       [have signal_exit_fiber quit]]
 	   nil]]
   [while t
     [yield]]]

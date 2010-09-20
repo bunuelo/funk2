@@ -28,7 +28,6 @@
 							[okay_button   [gtk-button-new_with_label 'Okay']]]
   [new [define_fiber]
        [= fiber define_fiber]
-       [set  window default_size 1900 800]
        [set  window title 'fibermon - globally define fiber dialog']
        [have window connect_hide_on_delete]
        [have window add vbox]

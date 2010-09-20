@@ -106,6 +106,13 @@
        [have vbox pack_start menu_bar nil nil 0]
        [have vbox pack_start hbox     t t 0]
        
+       [have command_activate_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\n\nmindmon activating resource.\n']
+		   'activate resource here.'
+		   ]
+	     nil]
+       
        [let [[index 0]]
 	 [mapc [funk [story_name]
 		     [let [[mindmon_resource_trace_story [new mindmon_resource_trace_story mindmon layer_name agency_name resource_name story_name]]]

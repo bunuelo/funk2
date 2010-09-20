@@ -93,6 +93,8 @@ typedef struct funk2_object_type__fiber_stack_trace_block__slot_s funk2_object_t
 declare_object_type_2_slot(fiber_stack_trace_block,
 			   funk,
 			   argument_frame,
+			   f2ptr funk_name__symbol; // get
+			   f2ptr funk_name__funk;
 			   f2ptr as__string__symbol; // get
 			   f2ptr as__string__funk;
 			   f2ptr printable_argument_frame__symbol; // get

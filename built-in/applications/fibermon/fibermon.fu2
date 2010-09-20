@@ -39,12 +39,10 @@
        [have hbox pack_start okay_button   nil nil 0]
        [have cancel_button signal_connect 'clicked'
 	     [funk []
-		   [print 'clicked cancel.']
 		   [= done t]]
 	     nil]
        [have okay_button signal_connect 'clicked'
 	     [funk []
-		   [print 'clicked okay.']
 		   [let [[fiber_name [get [get entry text] as-symbol]]]
 		     [terminal_format standard-terminal '\nGlobally defining fiber as ' fiber_name '.\n']
 		     [eval `[globalize ,fiber_name ,fiber]]]

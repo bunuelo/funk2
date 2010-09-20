@@ -95,6 +95,7 @@
 
 
 [defunk isis_world-initialize [hostname]
+  [cause-define cause-name `isis_world-initialize]
   [print 'destroying old isis_world.']
   [shelter [have isis_world destroy]]
   [print 'creating new client.']
@@ -110,7 +111,6 @@
       
       [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
       [cause-define cause-time_step [get isis_world time_step]]
-      [cause-define cause-name      `isis_world-initialize]
       
       [mind-activate [get isis_world agent_mind `Lauren] reactive speech   say                'Bad Ralph!']
       [mind-activate [get isis_world agent_mind `Lauren] reactive sensory  continuous_sensing]

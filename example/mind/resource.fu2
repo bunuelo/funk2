@@ -22,7 +22,7 @@
 
 [deframe resource [frame] [name
 			   agency
-			   fiber_started
+			   fiber_starting_mutex
 			   fiber
 			   active_mutex
 			   active
@@ -33,9 +33,10 @@
 			   done
 			   trace_story
 			   think_story
-			   initialized]
+			   resource_initializing_mutex]
   [new [initial-name initial-active_funk]
-       [= fiber_started nil]
+       [= resource_initializing_mutex [new traced_mutex]] [have resource_initializing_mutex lock]
+       [= fiber_starting_mutex        [new traced_mutex]] [have fiber_starting_mutex        lock]
        [= fiber         [fiber [funk []
 				     [cause-enable_reactive_critics [this-cause]]
 				     [= name         initial-name]
@@ -44,16 +45,15 @@
 				     [= active_mutex [new traced_mutex]]
 				     [= trace_story  [new story]]
 				     [= think_story  [new story]]
-				     [= initialized  nil]
 				     [cause-define cause-name     `resource]
 				     [cause-define resource-name  name]
 				     [cause-define agency-name    nil]
 				     [cause-define layer-name     nil]
 				     [cause-define mind-name      nil]
 				     [cause-define cause-resource this]
-				     [while [not initialized]
-				       [sleep 100]]
-				     [= fiber_started t]
+				     [have resource_initializing_mutex lock]
+				     [have resource_initializing_mutex unlock]
+				     [have fiber_starting_mutex unlock]
 				     [let [[done nil]]
 				       [while [not done]
 					 [if [null mind-name]
@@ -96,9 +96,9 @@
 					 ]
 				       [format stdout '\nresource status: done.  (name = ' name ').\n']]]
 			       nil]]
-       [= initialized   t]
-       [while [not fiber_started]
-	 [sleep 100]]
+       [have resource_initializing_mutex unlock]
+       [have fiber_starting_mutex lock]
+       [have fiber_starting_mutex unlock]
        this]]
 
 [defmetro resource [name args :rest body]

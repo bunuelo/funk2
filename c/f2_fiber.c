@@ -600,7 +600,7 @@ def_pcfunk2(fiber_stack_trace_block__new, funk, argument_frame, return f2__fiber
 
 
 f2ptr raw__fiber_stack_trace_block__funk_name(f2ptr cause, f2ptr this) {
-  f2ptr funk      = f2__fiber_stack_trace__funk(cause, this);
+  f2ptr funk      = f2__fiber_stack_trace_block__funk(cause, this);
   f2ptr funk_name = nil;
   if (raw__funkable__is_type(cause, funk)) {
     funk_name = f2__funkable__name(cause, funk);

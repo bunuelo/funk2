@@ -41,7 +41,7 @@ f2ptr raw__traced_mutex__lock(f2ptr cause, f2ptr this) {
   f2__mutex__lock(cause, f2__traced_mutex__mutex(cause, this));
   f2__ptypehash__remove(cause, fibers_waiting_for_lock, fiber);
   f2__traced_mutex__fiber_with_lock__set(cause, this, f2__this__fiber(cause));
-  f2__traced_mutex__lock_stack__set(     cause, this, f2fiber__stack(fiber, cause));
+  f2__traced_mutex__lock_stack__set(     cause, this, f2__fiber__stack_trace(cause, fiber));
   return nil;
 }
 

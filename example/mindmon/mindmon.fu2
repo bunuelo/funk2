@@ -67,6 +67,11 @@
 				   resource_name
 				   
 				   frame
+				   vbox
+				   menu_bar
+				   command_menu_item
+				   command_menu
+				   command_activate_menu_item
 				   hbox
 				   label
 				   story_notebook
@@ -80,15 +85,27 @@
 				   bytecodes_per_second
 				   ]
   [new [mindmon layer_name agency_name resource_name]
-       [set this mindmon        mindmon]
-       [set this layer_name     layer_name]
-       [set this agency_name    agency_name]
-       [set this resource_name  resource_name]
-       [set this frame          [gtk-frame-new [format nil layer_name '-' agency_name '-' resource_name]]]
-       [set this hbox           [gtk-hbox-new 2]]
-       [set this label          [gtk-left_label-new '']]
-       [set this story_notebook [gtk-notebook-new]]
-       [set this story_array    [new array [get this story_count]]]
+       [= mindmon                    mindmon]
+       [= layer_name                 layer_name]
+       [= agency_name                agency_name]
+       [= resource_name              resource_name]
+       [= frame                      [gtk-frame-new [format nil layer_name '-' agency_name '-' resource_name]]]
+       [= vbox                       [gtk-vbox-new 2]]
+       [= menu_bar                   [gtk-menu_bar-new]]
+       [= command_menu_item          [gtk-menu_item-new 'Command']]
+       [= command_menu               [gtk-menu-new]]
+       [= command_activate_menu_item [gtk-menu_item-new 'Activate Resource']]
+       [= hbox                       [gtk-hbox-new 2]]
+       [= label                      [gtk-left_label-new '']]
+       [= story_notebook             [gtk-notebook-new]]
+       [= story_array                [new array [get this story_count]]]
+       
+       [have menu_bar append command_menu_item]
+       [have command_menu append command_activate_menu_item]
+       [set command_menu_item submenu command_menu]
+       [have vbox pack_start menu_bar nil nil 0]
+       [have vbox pack_start hbox     t t 0]
+       
        [let [[index 0]]
 	 [mapc [funk [story_name]
 		     [let [[mindmon_resource_trace_story [new mindmon_resource_trace_story mindmon layer_name agency_name resource_name story_name]]]
@@ -97,9 +114,9 @@
 		     [= index [+ 1 index]]]
 	       `[trace_story
 		 think_story]]]
-       [have [get this hbox]  pack_start [get this label]          nil nil 0]
-       [have [get this hbox]  pack_start [get this story_notebook] t t 0]
-       [have [get this frame] add        [get this hbox]]
+       [have hbox  pack_start label          nil nil 0]
+       [have hbox  pack_start story_notebook t t 0]
+       [have frame add        vbox]
        this]]
 
 [deftypefunk mindmon_resource get widget []

@@ -18,6 +18,46 @@
  rights to redistribute these changes.'
 
 
+[deframe fibermon_globally_define_fiber_dialog [frame] [[fiber         nil]
+							[window        [gtk-window-new]]
+							[vbox          [gtk-vbox-new 2]]
+							[label         [gtk-label-new 'You have chosen to globally define this fiber.\nPlease enter a global name for this fiber.']]
+							[entry         [gtk-entry-new]]
+							[hbox          [gtk-hbox-new 2]]
+							[cancel_button [gtk-button-new_with_label 'Cancel']]
+							[okay_button   [gtk-button-new_with_label 'Okay']]]
+  [new [define_fiber]
+       [= fiber define_fiber]
+       [set  window default_size 1900 800]
+       [set  window title 'fibermon - globally define fiber dialog']
+       [have window connect_hide_on_delete]
+       [have window add vbox]
+       [have vbox pack_start label nil nil 0]
+       [have vbox pack_start entry nil nil 0]
+       [have vbox pack_start hbox  nil nil 0]
+       [have hbox pack_start cancel_button nil nil 0]
+       [have hbox pack_start okay_button   nil nil 0]
+       [have cancel_button signal_connect 'clicked'
+	     [funk []
+		   [print 'clicked cancel.']
+		   [have window destroy]]
+	     nil]
+       [have okay_button signal_connect 'clicked'
+	     [funk []
+		   [print 'clicked okay.']
+		   [let [[fiber_name [get [get entry text] as-symbol]]]
+		     [terminal_format standard-terminal '\nGlobally defining fiber as ' fiber_name '.\n']
+		     [eval `[globalize ,fiber_name ,fiber]]]
+		   [have window destroy]]
+	     nil]
+       [have window show_all]
+       [fiber [funk []
+		    [while [get window visible]
+		      [sleep 1]]
+		    [have window destroy]]
+	      nil]
+       ]]
+
 'fibermon_fiber'
 
 [deframe fibermon_fiber [frame] [fiber
@@ -113,8 +153,8 @@
        
        [have environment_globally_define_fiber_menu_item signal_connect 'activate'
 	     [funk []
-		   [terminal_format standard-terminal '\n\nenvironment globally define fiber here.\n']
-		   [print 'Not yet implemented.']
+		   [terminal_format standard-terminal '\n\nenvironment globally define fiber.\n']
+		   [new fibermon_globally_define_fiber_dialog fiber]
 		   [terminal_format standard-terminal '\n\n']]
 	     nil]
        

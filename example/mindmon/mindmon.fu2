@@ -84,11 +84,11 @@
 				   elapsed_bytecode_count_nanoseconds
 				   bytecodes_per_second
 				   ]
-  [new [mindmon layer_name agency_name resource_name]
-       [= mindmon                    mindmon]
-       [= layer_name                 layer_name]
-       [= agency_name                agency_name]
-       [= resource_name              resource_name]
+  [new [new-mindmon new-layer_name new-agency_name new-resource_name]
+       [= mindmon                    new-mindmon]
+       [= layer_name                 new-layer_name]
+       [= agency_name                new-agency_name]
+       [= resource_name              new-resource_name]
        [= frame                      [gtk-frame-new [format nil layer_name '-' agency_name '-' resource_name]]]
        [= vbox                       [gtk-vbox-new 2]]
        [= menu_bar                   [gtk-menu_bar-new]]

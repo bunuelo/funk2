@@ -132,10 +132,10 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   raw__gtk__menu_bar__append(cause, this__menu_bar, this__view_menu_item);
   raw__gtk__menu_item__set_submenu(cause, this__view_menu_item, this__view_menu);
   
-  raw__gtk__menu__append(cause, this__environment_menu, this__environment_globally_define_fiber_menu_item);
-  raw__gtk__menu__append(cause, this__environment_menu, this__environment_globally_define_cause_menu_item);
-  raw__gtk__menu__append(cause, this__environment_menu, this__environment_globally_define_stack_trace_menu_item);
-  raw__gtk__menu__append(cause, this__environment_menu, this__environment_globally_define_stack_trace_first_block_menu_item);
+  raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_fiber_menu_item);
+  raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_cause_menu_item);
+  raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_stack_trace_menu_item);
+  raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_stack_trace_first_block_menu_item);
   raw__gtk__menu_bar__append(cause, this__menu_bar, this__environment_menu_item);
   raw__gtk__menu_item__set_submenu(cause, this__environment_menu_item, this__environment_menu);
   

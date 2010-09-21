@@ -18,18 +18,21 @@
  rights to redistribute these changes.'
 
 
-[deframe fibermon_globally_define_fiber_dialog [frame] [[fiber         nil]
-							[window        [gtk-window-new]]
-							[vbox          [gtk-vbox-new 2]]
-							[label         [gtk-label-new 'You have chosen to globally define this fiber.\nPlease enter a global name for this fiber.']]
-							[entry         [gtk-entry-new]]
-							[hbox          [gtk-hbox-new 2]]
-							[cancel_button [gtk-button-new_with_label 'Cancel']]
-							[okay_button   [gtk-button-new_with_label 'Okay']]
-							[done          nil]]
-  [new [define_fiber]
-       [= fiber define_fiber]
-       [set  window title 'fibermon - globally define fiber dialog']
+[deframe fibermon_globally_define_object_dialog [frame] [[object        nil]
+							 [object_type   nil]
+							 [window        [gtk-window-new]]
+							 [vbox          [gtk-vbox-new 2]]
+							 [label         nil]
+							 [entry         [gtk-entry-new]]
+							 [hbox          [gtk-hbox-new 2]]
+							 [cancel_button [gtk-button-new_with_label 'Cancel']]
+							 [okay_button   [gtk-button-new_with_label 'Okay']]
+							 [done          nil]]
+  [new [define_object define_object_type]
+       [= object      define_object]
+       [= object_type define_object_type]
+       [= label       [gtk-label-new [format nil 'You have chosen to globally define this ' object_type '.\nPlease enter a global name for this ' object_type '.']]]
+       [set  window title 'fibermon - globally define ' object_type ' dialog']
        [have window connect_hide_on_delete]
        [have window add vbox]
        [have vbox pack_start label nil nil 0]
@@ -43,9 +46,9 @@
 	     nil]
        [have okay_button signal_connect 'clicked'
 	     [funk []
-		   [let [[fiber_name [get [get entry text] as-symbol]]]
-		     [terminal_format standard-terminal '\nGlobally defining fiber as ' fiber_name '.\n']
-		     [eval `[globalize ,fiber_name ,fiber]]]
+		   [let [[objeet_name [get [get entry text] as-symbol]]]
+		     [terminal_format standard-terminal '\nGlobally defining ' object_type ' as ' object_name '.\n']
+		     [eval `[globalize ,object_name ,object]]]
 		   [= done t]]
 	     nil]
        [have window show_all]
@@ -152,7 +155,28 @@
        [have environment_globally_define_fiber_menu_item signal_connect 'activate'
 	     [funk []
 		   [terminal_format standard-terminal '\n\nenvironment globally define fiber.\n']
-		   [new fibermon_globally_define_fiber_dialog fiber]
+		   [new fibermon_globally_define_object_dialog fiber `fiber]
+		   [terminal_format standard-terminal '\n\n']]
+	     nil]
+       
+       [have environment_globally_define_cause_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\n\nenvironment globally define cause.\n']
+		   [new fibermon_globally_define_object_dialog [get fiber cause_reg] `cause]
+		   [terminal_format standard-terminal '\n\n']]
+	     nil]
+       
+       [have environment_globally_define_stack_trace_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\n\nenvironment globally define stack trace.\n']
+		   [new fibermon_globally_define_object_dialog [get fiber stack_trace] `fiber_stack_trace]
+		   [terminal_format standard-terminal '\n\n']]
+	     nil]
+       
+       [have environment_globally_define_stack_trace_first_block_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\n\nenvironment globally define first block of stack trace.\n']
+		   [new fibermon_globally_define_object_dialog [first [get fiber stack_trace]] `fiber_stack_trace_block]
 		   [terminal_format standard-terminal '\n\n']]
 	     nil]
        

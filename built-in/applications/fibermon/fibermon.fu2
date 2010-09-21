@@ -18,6 +18,34 @@
  rights to redistribute these changes.'
 
 
+[deframe fibermon_notice_dialog [frame] [[window        [gtk-window-new]]
+					 [vbox          [gtk-vbox-new 2]]
+					 [label         nil]
+					 [entry         [gtk-entry-new]]
+					 [hbox          [gtk-hbox-new 2]]
+					 [okay_button   [gtk-button-new_with_label 'Okay']]
+					 [done          nil]]
+  [new [note_string]
+       [= label [gtk-label-new note_string]]
+       [set  window title 'fibermon - notice dialog']
+       [have window connect_hide_on_delete]
+       [have window add vbox]
+       [have vbox pack_start label nil nil 0]
+       [have vbox pack_start entry nil nil 0]
+       [have vbox pack_start hbox  nil nil 0]
+       [have hbox pack_start okay_button nil nil 0]
+       [have okay_button signal_connect 'clicked'
+	     [funk []
+		   [= done t]]
+	     nil]
+       [have window show_all]
+       [fiber [funk []
+		    [while [and [get window visible] [not done]]
+		      [sleep 1]]
+		    [have window destroy]]
+	      nil]
+       ]]
+
 [deframe fibermon_define_object_dialog [frame] [[object        nil]
 						[object_type   nil]
 						[window        [gtk-window-new]]
@@ -46,7 +74,7 @@
 	     nil]
        [have okay_button signal_connect 'clicked'
 	     [funk []
-		   [let [[objeet_name [get [get entry text] as-symbol]]]
+		   [let [[object_name [get [get entry text] as-symbol]]]
 		     [terminal_format standard-terminal '\nDefining ' object_type ' as ' object_name '.\n']
 		     [eval `[globalize ,object_name ,object]]]
 		   [= done t]]
@@ -179,7 +207,12 @@
        [have environment_define_stack_trace_first_block_menu_item signal_connect 'activate'
 	     [funk []
 		   [terminal_format standard-terminal '\n\nenvironment define first block of stack trace.\n']
-		   [new fibermon_define_object_dialog [first [get fiber stack_trace]] `fiber_stack_trace_block]
+		   [let [[blocks [get [get fiber stack_trace] blocks]]]
+		     [if [== [length blocks] 0]
+			 [new fibermon_notice_dialog [format nil 'You have chosen to define the first block of this fiber\'s stack trace,\n'
+							     'but this fiber does not have any stack trace blocks,\n'
+							     'so there is no first block to define.']]
+		       [new fibermon_define_object_dialog [first blocks] `fiber_stack_trace_block]]]
 		   [terminal_format standard-terminal '\n\n']]
 	     nil]
        

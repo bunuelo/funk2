@@ -81,7 +81,7 @@
 					      [have this-resource think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
 					    ]]]]
        
-       [have this add_resource [new resource `object_in_view
+       `[have this add_resource [new resource `object_in_view
 				    [new [object_name]
 					 [labels [[is_object [a_list]
 							     [if a_list

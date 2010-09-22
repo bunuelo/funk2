@@ -18,27 +18,38 @@
  rights to redistribute these changes.'
 
 
+[deframe include_reactive_stories_into_deliberative_story [resource] []
+  [new []
+       [construct resource [type this]
+		  [funk []
+			[let [[body [get this body]]]
+			  [cause-define cause-time_step [get body time_step]]
+			  [cause-define cause-name      `[deliberative reality interpret_senses_into_current_story]]
+			  [let [[time_step [get body time_step]]]
+			    [if [!= [get this last_time_step] time_step]
+				[let [[reactive_sensory_story [get [mind-agency [get this mind] reactive sensory] reactive_sensory_story]]]
+				  [if [null reactive_sensory_story]
+				      [have this-resource think_to_self 'Reactive sensory story does not exist.']
+				    [prog [have this-resource think_to_self 'Including reactive sensory story into deliberative story: ' [get reactive_sensory_story as-list]]
+					  [let [[reality_story [get [get this deliberative_reality_story] union reactive_sensory_story]]]
+					    [set this deliberative_reality_story reality_story]]
+					  [set this last_time_step time_step]]]]]
+			    ]]]]
+       nil]]
+
+
+
+
+
 [deframe deliberative_reality_agency [agency] [last_time_step
 					       deliberative_reality_story]
   [new []
        [construct agency `reality]
        [set this last_time_step             -1]
        [set this deliberative_reality_story [new story]]
-       [have this add_resource [new resource `include_reactive_stories_into_deliberative_story
-				    [funk []
-					  [let [[body [get this body]]]
-					    [cause-define cause-time_step [get body time_step]]
-					    [cause-define cause-name      `[deliberative reality interpret_senses_into_current_story]]
-					    [let [[time_step [get body time_step]]]
-					      [if [!= [get this last_time_step] time_step]
-						  [let [[reactive_sensory_story [get [mind-agency [get this mind] reactive sensory] reactive_sensory_story]]]
-						    [if [null reactive_sensory_story]
-							[have this-resource think_to_self 'Reactive sensory story does not exist.']
-						      [prog [have this-resource think_to_self 'Including reactive sensory story into deliberative story: ' [get reactive_sensory_story as-list]]
-							    [let [[reality_story [get [get this deliberative_reality_story] union reactive_sensory_story]]]
-							      [set this deliberative_reality_story reality_story]]
-							    [set this last_time_step time_step]]]]]
-					      ]]]]]
+       
+       [have this add_resource [new include_reactive_stories_into_deliberative_story]]
+       
        this]]
 
 

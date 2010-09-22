@@ -57,7 +57,8 @@
 [defpackage deliberative_layer
   :packages [mind
 	     deliberative_reality_agency
-	     deliberative_imagination_agency]
+	     deliberative_imagination_agency
+	     deliberative_execution_agency]
    :sources ['deliberative_layer.fu2']]
 
 [defpackage deliberative_reality_agency
@@ -67,6 +68,10 @@
 [defpackage deliberative_imagination_agency
   :packages [mind]
    :sources ['deliberative_imagination_agency.fu2']]
+
+[defpackage deliberative_execution_agency
+  :packages [mind]
+   :sources ['deliberative_execution_agency.fu2']]
 
 
 'reflective_layer'

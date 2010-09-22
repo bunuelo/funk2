@@ -17,13 +17,21 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe moral_compass [mind] []
+[deframe monitor_execution_of_current_plan [resource] []
   [new []
-       [construct mind]
-       [have this add_layer [new reactive_layer]]
-       [have this add_layer [new deliberative_layer]]
-       [have this add_layer [new reflective_layer]]
-       [have this add_layer [new self_reflective_layer]]
-       [have this add_layer [new self_conscious_layer]]
+       [construct resource [type this]
+		  [funk []
+			[have this-resource think_to_self 'Monitoring execution of current plan.']
+			nil]]
+       nil]]
+
+
+[deframe deliberative_execution_agency [agency] []
+  [new []
+       [construct agency `execution]
+       
+       [have this add_resource [new monitor_execution_of_current_plan]]
+       
        this]]
+
 

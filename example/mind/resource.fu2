@@ -94,10 +94,7 @@
        this]]
 
 [defmetro resource [name args :rest body]
-  `[new resource [quote ,name] [funk ,args
-				      [let [[resource-name   [quote ,name]]
-					    [source-filename ,[shelter source-filename]]]
-					@body]]]]
+  `[new resource [quote ,name] [funk ,args @body]]]
 
 [deftypefunk resource get local_time []
   [get fiber bytecode_count]]

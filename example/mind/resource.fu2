@@ -51,6 +51,7 @@
 				     [cause-define layer-name     nil]
 				     [cause-define mind-name      nil]
 				     [cause-define cause-resource this]
+				     [cause-define this-resource  this]
 				     [have resource_initializing_mutex lock]
 				     [have resource_initializing_mutex unlock]
 				     [have fiber_starting_mutex unlock]
@@ -93,12 +94,10 @@
        this]]
 
 [defmetro resource [name args :rest body]
-  `[let [[this-resource [new resource [quote ,name] nil]]]
-     [set this-resource active_funk [funk ,args
-					   [let [[resource-name   [quote ,name]]
-						 [source-filename ,[shelter source-filename]]]
-					     @body]]]
-     this-resource]]
+  `[new resource [quote ,name] [funk ,args
+				      [let [[resource-name   [quote ,name]]
+					    [source-filename ,[shelter source-filename]]]
+					@body]]]]
 
 [deftypefunk resource get local_time []
   [get fiber bytecode_count]]

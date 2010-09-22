@@ -19,7 +19,7 @@
 
 [deframe recall_most_similar_story_with_goal_state [resource] []
   [new []
-       [construct resource `recall_most_similar_story_with_goal_state
+       [construct resource [type this]
 		  [funk [goal_state]
 			[have this-resource think_to_self 'Recalling most similar story to goal.']
 			nil]]

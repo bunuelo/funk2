@@ -47,6 +47,7 @@
 #include "f2_gtk.h"
 #include "f2_nil.h"
 #include "f2_terminal_print.h"
+#include "f2_knowledge.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;

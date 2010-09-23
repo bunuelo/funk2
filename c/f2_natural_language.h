@@ -36,7 +36,7 @@ struct funk2_object_type__sentence__slot_s {
 
 // sentence
 
-declare_frame_object_1_slot(sentence, object);
+declare_frame_object_4_slot(sentence, subject, verb, direct_object, prepositional_frame);
 
 f2ptr f2sentence__primobject_type__new_aux(f2ptr cause);
 

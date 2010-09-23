@@ -55,5 +55,7 @@ void f2__knowledge__initialize() {
   
   init_frame_object__1_slot(knowledge, object);
   
+  f2__primcfunk__init__1(knowledge__new, object, "");
+  
 }
 

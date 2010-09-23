@@ -58,9 +58,9 @@
        [construct resource [type this]
 		  [funk [agent facial_expression]
 			[have this think_to_self 'Inferring ' agent '\'s mental state for facial expression, ' facial_expression '.']
-			[cond [[eq facial_expression `smile]            [have this think_to_self 'Smiling generally means happiness, which means a goal was just successfully accomplished.']]
-			      [[eq facial_expression `lowered_eyebrows] [have this think_to_self 'Lowered eyebrows generally means beginning a new plan toward a goal.']]
-			      [[eq facial_expression `raised_eyebrows]  [have this think_to_self 'Raised eyebrows generally means finishing deliberation and finding a potentially successful plan for accomplishing a goal.']]
+			[cond [[eq facial_expression `smile]            [have this think_to_self 'Smiling sometimes means happiness, which means a goal was just successfully accomplished.']]
+			      [[eq facial_expression `lowered_eyebrows] [have this think_to_self 'Lowered eyebrows sometimes means beginning a new plan toward a goal.']]
+			      [[eq facial_expression `raised_eyebrows]  [have this think_to_self 'Raised eyebrows sometimes means finishing deliberation and finding a potentially successful plan for accomplishing a goal.']]
 			      [t                                        [have this think_to_self 'I do not recognize the facial expression, ' facial_expression ', on ' agent '\'s face.']]]]]
        nil]]
 

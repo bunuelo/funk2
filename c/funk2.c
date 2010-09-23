@@ -130,6 +130,7 @@ void f2__initialize() {
   f2__application__fibermon__initialize();
   f2__terminal_print__initialize();
   f2__nil__initialize();
+  f2__knowledge__initialize();
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)

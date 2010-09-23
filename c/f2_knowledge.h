@@ -19,6 +19,18 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__KNOWLEDGE__TYPES__H
+#define F2__KNOWLEDGE__TYPES__H
+
+typedef struct funk2_object_type__knowledge__slot_s funk2_object_type__knowledge__slot_t;
+struct funk2_object_type__knowledge__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
+#endif // F2__KNOWLEDGE__TYPES__H
+
 #ifndef F2__KNOWLEDGE__H
 #define F2__KNOWLEDGE__H
 

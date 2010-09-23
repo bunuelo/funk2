@@ -34,6 +34,7 @@ def_pcfunk1(knowledge__new, object, return f2__knowledge__new(this_cause, object
 
 f2ptr f2knowledge__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2knowledge__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_knowledge.new__funk);}
   return this;
 }
 
@@ -55,7 +56,8 @@ void f2__knowledge__initialize() {
   
   init_frame_object__1_slot(knowledge, object);
   
-  f2__primcfunk__init__1(knowledge__new, object, "");
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_knowledge.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(knowledge__new, object, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_knowledge.new__funk = never_gc(cfunk);}
   
 }
 

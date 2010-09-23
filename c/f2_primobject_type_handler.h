@@ -152,7 +152,7 @@ struct funk2_primobject_object_types_s {
   // frame objects
   funk2_object_type__terminal_print_frame__slot_t             primobject_type_terminal_print_frame;
   funk2_object_type__knowledge__slot_t                        primobject_type_knowledge;
-  funk2_object_type__natural_language__slot_t                 primobject_type_natural_language;
+  funk2_object_type__sentence__slot_t                         primobject_type_sentence;
 };
 
 // **

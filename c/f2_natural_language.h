@@ -58,7 +58,7 @@ struct funk2_object_type__sentence__slot_s {
 
 // noun_group
 
-declare_frame_object_10_slot(noun_group, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
+declare_frame_object_7_slot(noun_group, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
 
 f2ptr f2noun_group__primobject_type__new_aux(f2ptr cause);
 

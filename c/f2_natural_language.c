@@ -22,6 +22,26 @@
 #include "funk2.h"
 
 
+
+
+
+// verb
+
+def_frame_object__global__10_slot(verb, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
+
+f2ptr f2__verb__new(f2ptr cause, f2ptr symbol, f2ptr imperative, f2ptr en, f2ptr ing, f2ptr to, f2ptr todel, f2ptr tense, f2ptr be, f2ptr passive, f2ptr negative) {
+  return f2verb__new(cause, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
+}
+def_pcfunk10(verb__new, symbol, imperative, en, ing, to, todel, tense, be, passive, negative, return f2__verb__new(this_cause, symbol, imperative, en, ing, to, todel, tense, be, passive, negative));
+
+
+f2ptr f2verb__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2verb__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_verb.new__funk);}
+  return this;
+}
+
+
 // sentence
 
 def_frame_object__global__4_slot(sentence, subject, verb, direct_object, prepositional_frame);
@@ -50,6 +70,14 @@ void f2__natural_language__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "natural_language", "", &f2__natural_language__reinitialize_globalvars);
   
   f2__natural_language__reinitialize_globalvars();
+  
+  
+  // verb
+  
+  init_frame_object__10_slot(verb, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__10_arg(verb__new, symbol, imperative, en, ing, to, todel, tense, be, passive, negative, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_verb.new__funk = never_gc(cfunk);}
   
   
   // sentence

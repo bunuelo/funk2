@@ -22,6 +22,17 @@
 #ifndef F2__NATURAL_LANGUAGE__TYPES__H
 #define F2__NATURAL_LANGUAGE__TYPES__H
 
+// verb
+
+typedef struct funk2_object_type__verb__slot_s funk2_object_type__verb__slot_t;
+struct funk2_object_type__verb__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
+// sentence
+
 typedef struct funk2_object_type__sentence__slot_s funk2_object_type__sentence__slot_t;
 struct funk2_object_type__sentence__slot_s {
   f2ptr new__symbol;
@@ -34,11 +45,19 @@ struct funk2_object_type__sentence__slot_s {
 #ifndef F2__NATURAL_LANGUAGE__H
 #define F2__NATURAL_LANGUAGE__H
 
+// verb
+
+declare_frame_object_10_slot(verb, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
+
+f2ptr f2verb__primobject_type__new_aux(f2ptr cause);
+
+
 // sentence
 
 declare_frame_object_4_slot(sentence, subject, verb, direct_object, prepositional_frame);
 
 f2ptr f2sentence__primobject_type__new_aux(f2ptr cause);
+
 
 // **
 

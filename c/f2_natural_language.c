@@ -32,7 +32,7 @@ def_frame_object__global__7_slot(noun_group, determiner, ordinal, number, adject
 f2ptr f2__noun_group__new(f2ptr cause, f2ptr determiner, f2ptr ordinal, f2ptr number, f2ptr adjectives, f2ptr classifiers, f2ptr noun, f2ptr qualifiers) {
   return f2noun_group__new(cause, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
 }
-def_pcfunk7(noun_group__new, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, return f2__verb__new(this_cause, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers));
+def_pcfunk7(noun_group__new, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, return f2__noun_group__new(this_cause, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers));
 
 
 f2ptr f2noun_group__primobject_type__new_aux(f2ptr cause) {

@@ -40,10 +40,19 @@ struct funk2_object_type__noun_group__slot_s {
 };
 
 
-// preposition_groupp
+// preposition_group
 
 typedef struct funk2_object_type__preposition_group__slot_s funk2_object_type__preposition_group__slot_t;
 struct funk2_object_type__preposition_group__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
+// adjective_group
+
+typedef struct funk2_object_type__adjective_group__slot_s funk2_object_type__adjective_group__slot_t;
+struct funk2_object_type__adjective_group__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
 };
@@ -84,6 +93,13 @@ f2ptr f2noun_group__primobject_type__new_aux(f2ptr cause);
 declare_frame_object_8_slot(preposition_group, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
 
 f2ptr f2preposition_group__primobject_type__new_aux(f2ptr cause);
+
+
+// adjective_group
+
+declare_frame_object_7_slot(adjective_group, complement, qualifier, adjunct, than, as, comparitive, question);
+
+f2ptr f2adjective_group__primobject_type__new_aux(f2ptr cause);
 
 
 // verb

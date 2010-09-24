@@ -76,6 +76,23 @@ f2ptr f2preposition_group__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// adjective_group
+
+def_frame_object__global__7_slot(adjective_group, complement, qualifier, adjunct, than, as, comparitive, question);
+
+f2ptr f2__adjective_group__new(f2ptr cause, f2ptr complement, f2ptr qualifier, f2ptr adjunct, f2ptr than, f2ptr as, f2ptr comparitive, f2ptr question) {
+  return f2adjective_group__new(cause, complement, qualifier, adjunct, than, as, comparitive, question);
+}
+def_pcfunk7(adjective_group__new, complement, qualifier, adjunct, than, as, comparitive, question, return f2__adjective_group__new(this_cause, complement, qualifier, adjunct, than, as, comparitive, question));
+
+
+f2ptr f2adjective_group__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2verb__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_adjective_group.new__funk);}
+  return this;
+}
+
+
 // verb
 
 def_frame_object__global__10_slot(verb, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
@@ -128,6 +145,14 @@ void f2__natural_language__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_preposition_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__8_arg(preposition_group__new, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_preposition_group.new__funk = never_gc(cfunk);}
+  
+  
+  // adjective_group
+  
+  init_frame_object__7_slot(adjective_group, complement, qualifier, adjunct, than, as, comparitive, question);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_adjective_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__7_arg(adjective_group__new, complement, qualifier, adjunct, than, as, comparitive, question, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_adjective_group.new__funk = never_gc(cfunk);}
   
   
   // verb

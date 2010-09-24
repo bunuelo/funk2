@@ -94,7 +94,7 @@ void f2__natural_language__initialize() {
   init_frame_object__7_slot(noun_group, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__7_arg(noun_group__new, symbol, imperative, en, ing, to, todel, tense, be, passive, negative, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__7_arg(noun_group__new, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__funk = never_gc(cfunk);}
   
   
   // verb

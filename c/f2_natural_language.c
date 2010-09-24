@@ -63,10 +63,10 @@ f2ptr f2noun_group__primobject_type__new_aux(f2ptr cause) {
 
 def_frame_object__global__8_slot(preposition_group, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
 
-f2ptr f2__preposition_group__new(f2ptr cause, f2ptr determiner, f2ptr ordinal, f2ptr number, f2ptr adjectives, f2ptr classifiers, f2ptr noun, f2ptr qualifiers) {
-  return f2preposition_group__new(cause, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
+f2ptr f2__preposition_group__new(f2ptr cause, f2ptr complement, f2ptr locational_object, f2ptr adjunct, f2ptr agent, f2ptr question, f2ptr missing_up_relative, f2ptr missing_up_question, f2ptr relative_preposition_group) {
+  return f2preposition_group__new(cause, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
 }
-def_pcfunk7(preposition_group__new, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, return f2__preposition_group__new(this_cause, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers));
+def_pcfunk8(preposition_group__new, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group, return f2__preposition_group__new(this_cause, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group));
 
 
 f2ptr f2preposition_group__primobject_type__new_aux(f2ptr cause) {

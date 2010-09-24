@@ -22,10 +22,28 @@
 #ifndef F2__NATURAL_LANGUAGE__TYPES__H
 #define F2__NATURAL_LANGUAGE__TYPES__H
 
+// clause
+
+typedef struct funk2_object_type__clause__slot_s funk2_object_type__clause__slot_t;
+struct funk2_object_type__clause__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
 // noun_group
 
 typedef struct funk2_object_type__noun_group__slot_s funk2_object_type__noun_group__slot_t;
 struct funk2_object_type__noun_group__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
+// preposition_groupp
+
+typedef struct funk2_object_type__preposition_group__slot_s funk2_object_type__preposition_group__slot_t;
+struct funk2_object_type__preposition_group__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
 };
@@ -40,20 +58,18 @@ struct funk2_object_type__verb__slot_s {
 };
 
 
-// clause
-
-typedef struct funk2_object_type__clause__slot_s funk2_object_type__clause__slot_t;
-struct funk2_object_type__clause__slot_s {
-  f2ptr new__symbol;
-  f2ptr new__funk;
-};
-
-
 #endif // F2__NATURAL_LANGUAGE__TYPES__H
 
 #ifndef F2__NATURAL_LANGUAGE__H
 #define F2__NATURAL_LANGUAGE__H
 
+
+
+// clause
+
+declare_frame_object_6_slot(clause, secondary, imperative, declarative, question, yes_no, wh);
+
+f2ptr f2clause__primobject_type__new_aux(f2ptr cause);
 
 
 // noun_group
@@ -63,18 +79,18 @@ declare_frame_object_7_slot(noun_group, determiner, ordinal, number, adjectives,
 f2ptr f2noun_group__primobject_type__new_aux(f2ptr cause);
 
 
+// preposition_group
+
+declare_frame_object_8_slot(preposition_group, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
+
+f2ptr f2preposition_group__primobject_type__new_aux(f2ptr cause);
+
+
 // verb
 
 declare_frame_object_10_slot(verb, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
 
 f2ptr f2verb__primobject_type__new_aux(f2ptr cause);
-
-
-// clause
-
-declare_frame_object_6_slot(clause, secondary, imperative, declarative, question, yes_no, wh);
-
-f2ptr f2clause__primobject_type__new_aux(f2ptr cause);
 
 
 // **

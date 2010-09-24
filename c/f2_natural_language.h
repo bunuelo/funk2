@@ -22,6 +22,15 @@
 #ifndef F2__NATURAL_LANGUAGE__TYPES__H
 #define F2__NATURAL_LANGUAGE__TYPES__H
 
+// noun_group
+
+typedef struct funk2_object_type__noun_group__slot_s funk2_object_type__noun_group__slot_t;
+struct funk2_object_type__noun_group__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
 // verb
 
 typedef struct funk2_object_type__verb__slot_s funk2_object_type__verb__slot_t;
@@ -44,6 +53,15 @@ struct funk2_object_type__sentence__slot_s {
 
 #ifndef F2__NATURAL_LANGUAGE__H
 #define F2__NATURAL_LANGUAGE__H
+
+
+
+// noun_group
+
+declare_frame_object_10_slot(noun_group, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
+
+f2ptr f2noun_group__primobject_type__new_aux(f2ptr cause);
+
 
 // verb
 

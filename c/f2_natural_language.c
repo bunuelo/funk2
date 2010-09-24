@@ -25,6 +25,23 @@
 
 
 
+// noun_group
+
+def_frame_object__global__7_slot(noun_group, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
+
+f2ptr f2__noun_group__new(f2ptr cause, f2ptr determiner, f2ptr ordinal, f2ptr number, f2ptr adjectives, f2ptr classifiers, f2ptr noun, f2ptr qualifiers) {
+  return f2noun_group__new(cause, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
+}
+def_pcfunk7(noun_group__new, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, return f2__verb__new(this_cause, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers));
+
+
+f2ptr f2noun_group__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2verb__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__funk);}
+  return this;
+}
+
+
 // verb
 
 def_frame_object__global__10_slot(verb, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
@@ -70,6 +87,14 @@ void f2__natural_language__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "natural_language", "", &f2__natural_language__reinitialize_globalvars);
   
   f2__natural_language__reinitialize_globalvars();
+  
+  
+  // noun_group
+  
+  init_frame_object__7_slot(noun_group, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__7_arg(noun_group__new, symbol, imperative, en, ing, to, todel, tense, be, passive, negative, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__funk = never_gc(cfunk);}
   
   
   // verb

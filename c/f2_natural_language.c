@@ -59,19 +59,19 @@ f2ptr f2verb__primobject_type__new_aux(f2ptr cause) {
 }
 
 
-// sentence
+// clause
 
-def_frame_object__global__4_slot(sentence, subject, verb, direct_object, prepositional_frame);
+def_frame_object__global__6_slot(clause, secondary, imperative, declarative, question, yes_no, wh);
 
-f2ptr f2__sentence__new(f2ptr cause, f2ptr subject, f2ptr verb, f2ptr direct_object, f2ptr prepositional_frame) {
-  return f2sentence__new(cause, subject, verb, direct_object, prepositional_frame);
+f2ptr f2__clause__new(f2ptr cause, f2ptr secondary, f2ptr imperative, f2ptr declarative, f2ptr question, f2ptr yes_no, f2ptr wh) {
+  return f2clause__new(cause, secondary, imperative, declarative, question, yes_no, wh);
 }
-def_pcfunk4(sentence__new, subject, verb, direct_object, prepositional_frame, return f2__sentence__new(this_cause, subject, verb, direct_object, prepositional_frame));
+def_pcfunk6(clause__new, secondary, imperative, declarative, question, yes_no, wh, return f2__clause__new(this_cause, secondary, imperative, declarative, question, yes_no, wh));
 
 
-f2ptr f2sentence__primobject_type__new_aux(f2ptr cause) {
-  f2ptr this = f2sentence__primobject_type__new(cause);
-  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_sentence.new__funk);}
+f2ptr f2clause__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2clause__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_clause.new__funk);}
   return this;
 }
 
@@ -105,12 +105,12 @@ void f2__natural_language__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__10_arg(verb__new, symbol, imperative, en, ing, to, todel, tense, be, passive, negative, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_verb.new__funk = never_gc(cfunk);}
   
   
-  // sentence
+  // clause
   
-  init_frame_object__4_slot(sentence, subject, verb, direct_object, prepositional_frame);
+  init_frame_object__6_slot(clause, secondary, imperative, declarative, question, yes_no, wh);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_sentence.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__4_arg(sentence__new, subject, verb, direct_object, prepositional_frame, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_sentence.new__funk = never_gc(cfunk);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_clause.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__6_arg(clause__new, secondary, imperative, declarative, question, yes_no, wh, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_clause.new__funk = never_gc(cfunk);}
   
 }
 

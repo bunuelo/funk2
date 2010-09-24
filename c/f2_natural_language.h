@@ -40,10 +40,10 @@ struct funk2_object_type__verb__slot_s {
 };
 
 
-// sentence
+// clause
 
-typedef struct funk2_object_type__sentence__slot_s funk2_object_type__sentence__slot_t;
-struct funk2_object_type__sentence__slot_s {
+typedef struct funk2_object_type__clause__slot_s funk2_object_type__clause__slot_t;
+struct funk2_object_type__clause__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
 };
@@ -70,11 +70,11 @@ declare_frame_object_10_slot(verb, symbol, imperative, en, ing, to, todel, tense
 f2ptr f2verb__primobject_type__new_aux(f2ptr cause);
 
 
-// sentence
+// clause
 
-declare_frame_object_4_slot(sentence, subject, verb, direct_object, prepositional_frame);
+declare_frame_object_6_slot(clause, secondary, imperative, declarative, question, yes_no, wh);
 
-f2ptr f2sentence__primobject_type__new_aux(f2ptr cause);
+f2ptr f2clause__primobject_type__new_aux(f2ptr cause);
 
 
 // **

@@ -226,6 +226,7 @@ void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_t
   {char* type_name = "proper_noun_word";       funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),       f2proper_noun_word__primobject_type__new_aux(cause));}
   {char* type_name = "particle_word";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2particle_word__primobject_type__new_aux(cause));}
   {char* type_name = "question_adjunct_word";  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),  f2question_adjunct_word__primobject_type__new_aux(cause));}
+  {char* type_name = "thing_pronoun_word";     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),     f2thing_pronoun_word__primobject_type__new_aux(cause));}
 }
 
 // **

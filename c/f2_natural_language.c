@@ -230,6 +230,23 @@ f2ptr f2number_word__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// number_determiner_word
+
+def_frame_object__global__5_slot(number_determiner_word, symbol, than_modifier, as_as_modifier, at_modifier, alone);
+
+f2ptr f2__number_determiner_word__new(f2ptr cause, f2ptr symbol, f2ptr than_modifier, f2ptr as_as_modifier, f2ptr at_modifier, f2ptr alone) {
+  return f2number_determiner_word__new(cause, symbol, than_modifier, as_as_modifier, at_modifier, alone);
+}
+def_pcfunk3(number_determiner_word__new, symbol, singular, plural, return f2__number_determiner_word__new(this_cause, symbol, singular, plural));
+
+
+f2ptr f2number_determiner_word__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2number_determiner_word__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_number_determiner_word.new__funk);}
+  return this;
+}
+
+
 
 
 // **
@@ -341,6 +358,14 @@ void f2__natural_language__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_number_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(number_word__new, symbol, singular, plural, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_number_word.new__funk = never_gc(cfunk);}
+  
+  
+  // number_determiner_word
+  
+  init_frame_object__5_slot(number_determiner_word, symbol, than_modifier, as_as_modifier, at_modifier, alone);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_number_determiner_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__5_arg(number_determiner_word__new, symbol, than_modifier, as_as_modifier, at_modifier, alone, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_number_determiner_word.new__funk = never_gc(cfunk);}
   
   
 }

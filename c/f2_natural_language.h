@@ -130,6 +130,15 @@ struct funk2_object_type__number_word__slot_s {
 };
 
 
+// number_determiner_word
+
+typedef struct funk2_object_type__number_determiner_word__slot_s funk2_object_type__number_determiner_word__slot_t;
+struct funk2_object_type__number_determiner_word__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
 #endif // F2__NATURAL_LANGUAGE__TYPES__H
 
 #ifndef F2__NATURAL_LANGUAGE__H
@@ -219,6 +228,13 @@ f2ptr f2noun_word__primobject_type__new_aux(f2ptr cause);
 declare_frame_object_3_slot(number_word, symbol, singular, plural);
 
 f2ptr f2number_word__primobject_type__new_aux(f2ptr cause);
+
+
+// number_determiner_word
+
+declare_frame_object_5_slot(number_determiner_word, symbol, than_modifier, as_as_modifier, at_modifier, alone);
+
+f2ptr f2number_determiner_word__primobject_type__new_aux(f2ptr cause);
 
 
 // **

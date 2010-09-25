@@ -20,7 +20,7 @@
 
 [deframe dictionary_frame [frame] []]
 
-[deftypefunk dictionary_frame add_word [type symbol features]
+[deftypefunk dictionary_frame execute add_word [type symbol features]
   [let [[word [object_type-new type]]] 
     [have word add `symbol symbol]
     [mapc [funk [feature]

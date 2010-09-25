@@ -53,7 +53,7 @@ def_pcfunk7(noun_group__new, determiner, ordinal, number, adjectives, classifier
 
 
 f2ptr f2noun_group__primobject_type__new_aux(f2ptr cause) {
-  f2ptr this = f2verb__primobject_type__new(cause);
+  f2ptr this = f2noun_group__primobject_type__new(cause);
   {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__funk);}
   return this;
 }
@@ -70,7 +70,7 @@ def_pcfunk8(preposition_group__new, complement, locational_object, adjunct, agen
 
 
 f2ptr f2preposition_group__primobject_type__new_aux(f2ptr cause) {
-  f2ptr this = f2verb__primobject_type__new(cause);
+  f2ptr this = f2preposition_group__primobject_type__new(cause);
   {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_preposition_group.new__funk);}
   return this;
 }
@@ -87,25 +87,25 @@ def_pcfunk7(adjective_group__new, complement, qualifier, adjunct, than, as, comp
 
 
 f2ptr f2adjective_group__primobject_type__new_aux(f2ptr cause) {
-  f2ptr this = f2verb__primobject_type__new(cause);
+  f2ptr this = f2adjective_group__primobject_type__new(cause);
   {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_adjective_group.new__funk);}
   return this;
 }
 
 
-// verb
+// verb_group
 
-def_frame_object__global__10_slot(verb, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
+def_frame_object__global__10_slot(verb_group, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
 
-f2ptr f2__verb__new(f2ptr cause, f2ptr symbol, f2ptr imperative, f2ptr en, f2ptr ing, f2ptr to, f2ptr todel, f2ptr tense, f2ptr be, f2ptr passive, f2ptr negative) {
-  return f2verb__new(cause, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
+f2ptr f2__verb_group__new(f2ptr cause, f2ptr symbol, f2ptr imperative, f2ptr en, f2ptr ing, f2ptr to, f2ptr todel, f2ptr tense, f2ptr be, f2ptr passive, f2ptr negative) {
+  return f2verb_group__new(cause, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
 }
-def_pcfunk10(verb__new, symbol, imperative, en, ing, to, todel, tense, be, passive, negative, return f2__verb__new(this_cause, symbol, imperative, en, ing, to, todel, tense, be, passive, negative));
+def_pcfunk10(verb_group__new, symbol, imperative, en, ing, to, todel, tense, be, passive, negative, return f2__verb_group__new(this_cause, symbol, imperative, en, ing, to, todel, tense, be, passive, negative));
 
 
-f2ptr f2verb__primobject_type__new_aux(f2ptr cause) {
-  f2ptr this = f2verb__primobject_type__new(cause);
-  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_verb.new__funk);}
+f2ptr f2verb_group__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2verb_group__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__funk);}
   return this;
 }
 
@@ -155,12 +155,12 @@ void f2__natural_language__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__7_arg(adjective_group__new, complement, qualifier, adjunct, than, as, comparitive, question, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_adjective_group.new__funk = never_gc(cfunk);}
   
   
-  // verb
+  // verb_group
   
-  init_frame_object__10_slot(verb, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
+  init_frame_object__10_slot(verb_group, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__10_arg(verb__new, symbol, imperative, en, ing, to, todel, tense, be, passive, negative, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_verb.new__funk = never_gc(cfunk);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__10_arg(verb_group__new, symbol, imperative, en, ing, to, todel, tense, be, passive, negative, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__funk = never_gc(cfunk);}
   
   
 }

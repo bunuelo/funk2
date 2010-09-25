@@ -211,7 +211,7 @@ void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_t
   {char* type_name = "noun_group";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),           f2noun_group__primobject_type__new_aux(cause));}
   {char* type_name = "preposition_group";    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),    f2preposition_group__primobject_type__new_aux(cause));}
   {char* type_name = "adjective_group";      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),      f2adjective_group__primobject_type__new_aux(cause));}
-  {char* type_name = "verb";                 funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                 f2verb__primobject_type__new_aux(cause));}
+  {char* type_name = "verb_group";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),           f2verb_group__primobject_type__new_aux(cause));}
 }
 
 // **

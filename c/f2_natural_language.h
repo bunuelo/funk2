@@ -58,10 +58,10 @@ struct funk2_object_type__adjective_group__slot_s {
 };
 
 
-// verb
+// verb_group
 
-typedef struct funk2_object_type__verb__slot_s funk2_object_type__verb__slot_t;
-struct funk2_object_type__verb__slot_s {
+typedef struct funk2_object_type__verb_group__slot_s funk2_object_type__verb_group__slot_t;
+struct funk2_object_type__verb_group__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
 };
@@ -102,11 +102,11 @@ declare_frame_object_7_slot(adjective_group, complement, qualifier, adjunct, tha
 f2ptr f2adjective_group__primobject_type__new_aux(f2ptr cause);
 
 
-// verb
+// verb_group
 
-declare_frame_object_10_slot(verb, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
+declare_frame_object_10_slot(verb_group, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
 
-f2ptr f2verb__primobject_type__new_aux(f2ptr cause);
+f2ptr f2verb_group__primobject_type__new_aux(f2ptr cause);
 
 
 // **

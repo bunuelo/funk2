@@ -237,7 +237,7 @@ def_frame_object__global__5_slot(number_determiner_word, symbol, than_modifier, 
 f2ptr f2__number_determiner_word__new(f2ptr cause, f2ptr symbol, f2ptr than_modifier, f2ptr as_as_modifier, f2ptr at_modifier, f2ptr alone) {
   return f2number_determiner_word__new(cause, symbol, than_modifier, as_as_modifier, at_modifier, alone);
 }
-def_pcfunk3(number_determiner_word__new, symbol, singular, plural, return f2__number_determiner_word__new(this_cause, symbol, singular, plural));
+def_pcfunk5(number_determiner_word__new, symbol, than_modifier, as_as_modifier, at_modifier, alone, return f2__number_determiner_word__new(this_cause, symbol, than_modifier, as_as_modifier, at_modifier, alone));
 
 
 f2ptr f2number_determiner_word__primobject_type__new_aux(f2ptr cause) {

@@ -264,6 +264,23 @@ f2ptr f2ordinal_word__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// preposition_word
+
+def_frame_object__global__3_slot(preposition_word, symbol, combination_first, combination_second);
+
+f2ptr f2__preposition_word__new(f2ptr cause, f2ptr symbol, f2ptr combination_first, f2ptr combination_second) {
+  return f2preposition_word__new(cause, symbol, combination_first, combination_second);
+}
+def_pcfunk3(preposition_word__new, symbol, combination_first, combination_second, return f2__preposition_word__new(this_cause, symbol, combination_first, combination_second));
+
+
+f2ptr f2preposition_word__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2preposition_word__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_preposition_word.new__funk);}
+  return this;
+}
+
+
 
 
 // **
@@ -391,6 +408,14 @@ void f2__natural_language__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_ordinal_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(ordinal_word__new, symbol, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_ordinal_word.new__funk = never_gc(cfunk);}
+  
+  
+  // preposition_word
+  
+  init_frame_object__3_slot(preposition_word, symbol, combination_first, combination_second);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_preposition_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(preposition_word__new, symbol, combination_first, combination_second, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_preposition_word.new__funk = never_gc(cfunk);}
   
   
 }

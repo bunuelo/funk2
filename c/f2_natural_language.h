@@ -148,6 +148,15 @@ struct funk2_object_type__ordinal_word__slot_s {
 };
 
 
+// preposition_word
+
+typedef struct funk2_object_type__preposition_word__slot_s funk2_object_type__preposition_word__slot_t;
+struct funk2_object_type__preposition_word__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
 #endif // F2__NATURAL_LANGUAGE__TYPES__H
 
 #ifndef F2__NATURAL_LANGUAGE__H
@@ -251,6 +260,13 @@ f2ptr f2number_determiner_word__primobject_type__new_aux(f2ptr cause);
 declare_frame_object_1_slot(ordinal_word, symbol);
 
 f2ptr f2ordinal_word__primobject_type__new_aux(f2ptr cause);
+
+
+// preposition_word
+
+declare_frame_object_3_slot(preposition_word, symbol, combination_first, combination_second);
+
+f2ptr f2preposition_word__primobject_type__new_aux(f2ptr cause);
 
 
 // **

@@ -33,7 +33,7 @@ f2ptr f2__clause__new(f2ptr cause) {
   f2ptr secondary   = nil;
   f2ptr imperative  = nil;
   f2ptr declarative = nil;
-  f2ptr question    = nill;
+  f2ptr question    = nil;
   f2ptr yes_no      = nil;
   f2ptr wh          = nil;
   return f2clause__new(cause, secondary, imperative, declarative, question, yes_no, wh);

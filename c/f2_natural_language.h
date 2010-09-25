@@ -157,6 +157,15 @@ struct funk2_object_type__preposition_word__slot_s {
 };
 
 
+// pronoun_word
+
+typedef struct funk2_object_type__pronoun_word__slot_s funk2_object_type__pronoun_word__slot_t;
+struct funk2_object_type__pronoun_word__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
 #endif // F2__NATURAL_LANGUAGE__TYPES__H
 
 #ifndef F2__NATURAL_LANGUAGE__H
@@ -267,6 +276,13 @@ f2ptr f2ordinal_word__primobject_type__new_aux(f2ptr cause);
 declare_frame_object_3_slot(preposition_word, symbol, combination_first, combination_second);
 
 f2ptr f2preposition_word__primobject_type__new_aux(f2ptr cause);
+
+
+// pronoun_word
+
+declare_frame_object_10_slot(pronoun_word, symbol, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
+
+f2ptr f2pronoun_word__primobject_type__new_aux(f2ptr cause);
 
 
 // **

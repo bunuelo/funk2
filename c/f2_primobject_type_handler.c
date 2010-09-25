@@ -222,6 +222,7 @@ void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_t
   {char* type_name = "number_determiner_word"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2number_determiner_word__primobject_type__new_aux(cause));}
   {char* type_name = "ordinal_word";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),           f2ordinal_word__primobject_type__new_aux(cause));}
   {char* type_name = "preposition_word";       funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),       f2preposition_word__primobject_type__new_aux(cause));}
+  {char* type_name = "pronoun_word";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),           f2pronoun_word__primobject_type__new_aux(cause));}
 }
 
 // **

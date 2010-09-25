@@ -281,6 +281,24 @@ f2ptr f2preposition_word__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// pronoun_word
+
+def_frame_object__global__10_slot(pronoun_word, symbol, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
+
+f2ptr f2__pronoun_word__new(f2ptr cause, f2ptr symbol, f2ptr singular, f2ptr plural, f2ptr first_person_singular, f2ptr possessive, f2ptr subject, f2ptr object, f2ptr demonstrative, f2ptr relative_clause, f2ptr question) {
+  return f2pronoun_word__new(cause, symbol, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
+}
+def_pcfunk10(pronoun_word__new, symbol, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question,
+	     return f2__pronoun_word__new(this_cause, symbol, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question));
+
+
+f2ptr f2pronoun_word__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2pronoun_word__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_pronoun_word.new__funk);}
+  return this;
+}
+
+
 
 
 // **
@@ -416,6 +434,14 @@ void f2__natural_language__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_preposition_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(preposition_word__new, symbol, combination_first, combination_second, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_preposition_word.new__funk = never_gc(cfunk);}
+  
+  
+  // pronoun_word
+  
+  init_frame_object__10_slot(pronoun_word, symbol, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_pronoun_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__10_arg(pronoun_word__new, symbol, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_pronoun_word.new__funk = never_gc(cfunk);}
   
   
 }

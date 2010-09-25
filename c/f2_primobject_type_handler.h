@@ -167,6 +167,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__number_determiner_word__slot_t           primobject_type_number_determiner_word;
   funk2_object_type__ordinal_word__slot_t                     primobject_type_ordinal_word;
   funk2_object_type__preposition_word__slot_t                 primobject_type_preposition_word;
+  funk2_object_type__pronoun_word__slot_t                     primobject_type_pronoun_word;
 };
 
 // **

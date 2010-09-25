@@ -18,7 +18,9 @@
  rights to redistribute these changes.'
 
 
-`[globalize pick 
-	    SEMANTICS [[VB [[TRANS [NOTICE]]]
-	    FEATURES [VPRT VB INF TRANS]]]]
+[globalize word_hash [new ptypehash]]
+
+`[have word_hash add `pick [new verb_word 
+				SEMANTICS [[VB [[TRANS [NOTICE]]]
+					       FEATURES [VPRT VB INF TRANS]]]]]
 

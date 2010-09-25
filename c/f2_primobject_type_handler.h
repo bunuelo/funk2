@@ -158,6 +158,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__adjective_group__slot_t                  primobject_type_adjective_group;
   funk2_object_type__verb_group__slot_t                       primobject_type_verb_group;
   funk2_object_type__adjective_word__slot_t                   primobject_type_adjective_word;
+  funk2_object_type__adverb_word__slot_t                      primobject_type_adverb_word;
 };
 
 // **

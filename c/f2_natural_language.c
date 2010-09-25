@@ -127,6 +127,23 @@ f2ptr f2adjective_word__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// adverb_word
+
+def_frame_object__global__5_slot(adverb_word, symbol, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier);
+
+f2ptr f2__adverb_word__new(f2ptr cause, f2ptr symbol, f2ptr adverb_modifier, f2ptr verb_modifier, f2ptr preposition_modifier, f2ptr clause_modifier) {
+  return f2adverb_word__new(cause, symbol, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier);
+}
+def_pcfunk5(adverb_word__new, symbol, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier, return f2__adverb_word__new(this_cause, symbol, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier));
+
+
+f2ptr f2adverb_word__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2adverb_word__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_adverb_word.new__funk);}
+  return this;
+}
+
+
 
 
 // **
@@ -188,6 +205,14 @@ void f2__natural_language__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_adjective_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(adjective_word__new, symbol, superlative, comparative, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_adjective_word.new__funk = never_gc(cfunk);}
+  
+  
+  // adverb_word
+  
+  init_frame_object__5_slot(adverb_word, symbol, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_adverb_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__5_arg(adverb_word__new, symbol, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_adverb_word.new__funk = never_gc(cfunk);}
   
   
 }

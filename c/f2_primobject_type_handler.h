@@ -162,6 +162,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__binder_word__slot_t                      primobject_type_binder_word;
   funk2_object_type__classifier_word__slot_t                  primobject_type_classifier_word;
   funk2_object_type__determiner_word__slot_t                  primobject_type_determiner_word;
+  funk2_object_type__noun_word__slot_t                        primobject_type_noun_word;
 };
 
 // **

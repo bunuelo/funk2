@@ -196,6 +196,23 @@ f2ptr f2determiner_word__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// noun_word
+
+def_frame_object__global__7_slot(noun_word, symbol, singular, plural, mass, possessive, time_unit, time_specific);
+
+f2ptr f2__noun_word__new(f2ptr cause, f2ptr symbol, f2ptr singular, f2ptr plural, f2ptr mass, f2ptr possessive, f2ptr time_unit, f2ptr time_specific) {
+  return f2noun_word__new(cause, symbol, singular, plural, mass, possessive, time_unit, time_specific);
+}
+def_pcfunk7(noun_word__new, symbol, singular, plural, mass, possessive, time_unit, time_specific, return f2__noun_word__new(this_cause, symbol, singular, plural, mass, possessive, time_unit, time_specific));
+
+
+f2ptr f2noun_word__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2noun_word__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_noun_word.new__funk);}
+  return this;
+}
+
+
 
 
 // **
@@ -291,6 +308,15 @@ void f2__natural_language__initialize() {
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_determiner_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__12_arg(determiner_word__new, symbol, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass, cfunk, 0, "");
     __funk2.globalenv.object_type.primobject.primobject_type_determiner_word.new__funk = never_gc(cfunk);}
+  
+  
+  // noun_word
+  
+  init_frame_object__7_slot(noun_word, symbol, singular, plural, mass, possessive, time_unit, time_specific);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_noun_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__7_arg(noun_word__new, symbol, singular, plural, mass, possessive, time_unit, time_specific, cfunk, 0, "");
+    __funk2.globalenv.object_type.primobject.primobject_type_noun_word.new__funk = never_gc(cfunk);}
   
   
 }

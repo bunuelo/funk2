@@ -18,34 +18,32 @@
  rights to redistribute these changes.'
 
 
-[globalize dictionary_frame [frame]]
+[deframe dictionary_frame [frame] []]
 
-[have dictionary_frame add_type_var_value `verb `pick [let [[this [new verb_word]]]
-							[have this add `symbol         `pick]
-							[have this add `takes_particle t]
-							[have this add `infinitive     t]
-							[have this add `transitive     t]
-							this]]
+[deftypefunk dictionary_frame add_word [type symbol features]
+  [let [[word [object_type-new type]]] 
+    [have word add `symbol symbol]
+    [mapc [funk [feature]
+		[have word add feature t]]
+	  features]
+    [have this add_type_var_value type symbol word]]]
 
-[have dictionary_frame add_type_var_value `particle `up [let [[this [new particle_word]]]
-							  [have this add `symbol `up]
-							  this]]
+[defmetro dictionary-add_word [this type symbol :rest features]
+  `[have ,this add_word [quote ,type] [quote ,symbol] [conslist @[mapcar [funk [feature] `[quote ,feature]] features]]]]
 
-[have dictionary_frame add_type_var_value `determiner `a [let [[this [new determiner_word]]]
-							   [have this add `symbol     `a]
-							   [have this add `indefinite t]
-							   [have this add `singular   t]
-							   this]]
+[globalize dictionary [frame]]
 
-[have dictionary_frame add_type_var_value `determiner `the [let [[this [new determiner_word]]]
-							     [have this add `symbol   `the]
-							     [have this add `plural   t]
-							     [have this add `singular t]
-							     [have this add `definite t]
-							     this]]
+[dictionary-add_word verb_word pick [takes_particle infinitive transitive]]
 
-[have dictionary_frame add_type_var_value `noun `knife [let [[this [new noun_word]]]
-							 [have this add `symbol   `knife]
-							 [have this add `singular t]
-							 this]]
+[dictionary-add_word particle up []]
+
+[dictionary-add_word determiner a [indefinite singular]]
+
+[dictionary-add_word determiner the [plural singular definite]]
+
+[dictionary-add_word noun knife [singular]]
+
+
+[deftypefunk dictionary_frame parse_sequence_as_main_clause [sequence]
+  [print sequence]]
 

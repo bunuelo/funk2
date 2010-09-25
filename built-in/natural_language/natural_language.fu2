@@ -28,7 +28,7 @@
 	  features]
     [have this add_type_var_value type symbol word]]]
 
-[defmetro dictionary-add_word [this type symbol :rest features]
+[defmetro dictionary-add_word [this type symbol features]
   `[have ,this add_word [quote ,type] [quote ,symbol] [conslist @[mapcar [funk [feature] `[quote ,feature]] features]]]]
 
 [globalize dictionary [frame]]

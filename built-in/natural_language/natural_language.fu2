@@ -33,15 +33,15 @@
 
 [globalize dictionary [frame]]
 
-[dictionary-add_word verb_word pick [takes_particle infinitive transitive]]
+[dictionary-add_word dictionary verb_word pick [takes_particle infinitive transitive]]
 
-[dictionary-add_word particle up []]
+[dictionary-add_word dictionary particle up []]
 
-[dictionary-add_word determiner a [indefinite singular]]
+[dictionary-add_word dictionary determiner a [indefinite singular]]
 
-[dictionary-add_word determiner the [plural singular definite]]
+[dictionary-add_word dictionary determiner the [plural singular definite]]
 
-[dictionary-add_word noun knife [singular]]
+[dictionary-add_word dictionary noun knife [singular]]
 
 
 [deftypefunk dictionary_frame parse_sequence_as_main_clause [sequence]

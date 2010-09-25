@@ -94,6 +94,24 @@ struct funk2_object_type__binder_word__slot_s {
 };
 
 
+// classifier_word
+
+typedef struct funk2_object_type__classifier_word__slot_s funk2_object_type__classifier_word__slot_t;
+struct funk2_object_type__classifier_word__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
+// determiner_word
+
+typedef struct funk2_object_type__determiner_word__slot_s funk2_object_type__determiner_word__slot_t;
+struct funk2_object_type__determiner_word__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
 #endif // F2__NATURAL_LANGUAGE__TYPES__H
 
 #ifndef F2__NATURAL_LANGUAGE__H
@@ -155,6 +173,20 @@ f2ptr f2adverb_word__primobject_type__new_aux(f2ptr cause);
 declare_frame_object_1_slot(binder_word, symbol);
 
 f2ptr f2binder_word__primobject_type__new_aux(f2ptr cause);
+
+
+// classifier_word
+
+declare_frame_object_1_slot(classifier_word, symbol);
+
+f2ptr f2classifier_word__primobject_type__new_aux(f2ptr cause);
+
+
+// determiner_word
+
+declare_frame_object_12_slot(determiner_word, symbol, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
+
+f2ptr f2determiner_word__primobject_type__new_aux(f2ptr cause);
 
 
 // **

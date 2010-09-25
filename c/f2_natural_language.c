@@ -161,6 +161,41 @@ f2ptr f2binder_word__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// classifier_word
+
+def_frame_object__global__1_slot(classifier_word, symbol);
+
+f2ptr f2__classifier_word__new(f2ptr cause, f2ptr symbol) {
+  return f2classifier_word__new(cause, symbol);
+}
+def_pcfunk1(classifier_word__new, symbol, return f2__classifier_word__new(this_cause, symbol));
+
+
+f2ptr f2classifier_word__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2classifier_word__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_classifier_word.new__funk);}
+  return this;
+}
+
+
+// determiner_word
+
+def_frame_object__global__12_slot(determiner_word, symbol, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
+
+f2ptr f2__determiner_word__new(f2ptr cause, f2ptr symbol, f2ptr indefinite, f2ptr question, f2ptr definite, f2ptr demonstrative, f2ptr quantifier, f2ptr incomplete_of, f2ptr negative, f2ptr no_number, f2ptr singular, f2ptr plural, f2ptr mass) {
+  return f2determiner_word__new(cause, symbol, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
+}
+def_pcfunk12(determiner_word__new, symbol, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass,
+	     return f2__determiner_word__new(this_cause, symbol, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass));
+
+
+f2ptr f2determiner_word__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2determiner_word__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_determiner_word.new__funk);}
+  return this;
+}
+
+
 
 
 // **
@@ -197,7 +232,8 @@ void f2__natural_language__initialize() {
   init_frame_object__8_slot(preposition_group, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_preposition_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__8_arg(preposition_group__new, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_preposition_group.new__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__8_arg(preposition_group__new, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group, cfunk, 0, "");
+    __funk2.globalenv.object_type.primobject.primobject_type_preposition_group.new__funk = never_gc(cfunk);}
   
   
   // adjective_group
@@ -238,6 +274,23 @@ void f2__natural_language__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_binder_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(binder_word__new, symbol, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_binder_word.new__funk = never_gc(cfunk);}
+  
+  
+  // classifier_word
+  
+  init_frame_object__1_slot(classifier_word, symbol);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_classifier_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(classifier_word__new, symbol, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_classifier_word.new__funk = never_gc(cfunk);}
+  
+  
+  // determiner_word
+  
+  init_frame_object__12_slot(determiner_word, symbol, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_determiner_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__12_arg(determiner_word__new, symbol, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass, cfunk, 0, "");
+    __funk2.globalenv.object_type.primobject.primobject_type_determiner_word.new__funk = never_gc(cfunk);}
   
   
 }

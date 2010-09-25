@@ -214,6 +214,7 @@ void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_t
   {char* type_name = "verb_group";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),           f2verb_group__primobject_type__new_aux(cause));}
   {char* type_name = "adjective_word";       funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),       f2adjective_word__primobject_type__new_aux(cause));}
   {char* type_name = "adverb_word";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2adverb_word__primobject_type__new_aux(cause));}
+  {char* type_name = "binder_word";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2binder_word__primobject_type__new_aux(cause));}
 }
 
 // **

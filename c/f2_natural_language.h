@@ -121,6 +121,15 @@ struct funk2_object_type__noun_word__slot_s {
 };
 
 
+// number_word
+
+typedef struct funk2_object_type__number_word__slot_s funk2_object_type__number_word__slot_t;
+struct funk2_object_type__number_word__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
 #endif // F2__NATURAL_LANGUAGE__TYPES__H
 
 #ifndef F2__NATURAL_LANGUAGE__H
@@ -203,6 +212,13 @@ f2ptr f2determiner_word__primobject_type__new_aux(f2ptr cause);
 declare_frame_object_7_slot(noun_word, symbol, singular, plural, mass, possessive, time_unit, time_specific);
 
 f2ptr f2noun_word__primobject_type__new_aux(f2ptr cause);
+
+
+// number_word
+
+declare_frame_object_3_slot(number_word, symbol, singular, plural);
+
+f2ptr f2number_word__primobject_type__new_aux(f2ptr cause);
 
 
 // **

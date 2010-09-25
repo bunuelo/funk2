@@ -213,6 +213,23 @@ f2ptr f2noun_word__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// number_word
+
+def_frame_object__global__3_slot(number_word, symbol, singular, plural);
+
+f2ptr f2__number_word__new(f2ptr cause, f2ptr symbol, f2ptr singular, f2ptr plural) {
+  return f2number_word__new(cause, symbol, singular, plural);
+}
+def_pcfunk3(number_word__new, symbol, singular, plural, return f2__number_word__new(this_cause, symbol, singular, plural));
+
+
+f2ptr f2number_word__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2number_word__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_number_word.new__funk);}
+  return this;
+}
+
+
 
 
 // **
@@ -315,8 +332,15 @@ void f2__natural_language__initialize() {
   init_frame_object__7_slot(noun_word, symbol, singular, plural, mass, possessive, time_unit, time_specific);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_noun_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__7_arg(noun_word__new, symbol, singular, plural, mass, possessive, time_unit, time_specific, cfunk, 0, "");
-    __funk2.globalenv.object_type.primobject.primobject_type_noun_word.new__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__7_arg(noun_word__new, symbol, singular, plural, mass, possessive, time_unit, time_specific, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_noun_word.new__funk = never_gc(cfunk);}
+  
+  
+  // number_word
+  
+  init_frame_object__3_slot(number_word, symbol, singular, plural);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_number_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(number_word__new, symbol, singular, plural, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_number_word.new__funk = never_gc(cfunk);}
   
   
 }

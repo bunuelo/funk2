@@ -44,6 +44,6 @@
 [dictionary-add_word dictionary noun knife [singular]]
 
 
-[deftypefunk dictionary_frame parse_sequence_as_main_clause [sequence]
+[deftypefunk dictionary_frame execute parse_sequence_as_main_clause [sequence]
   [print sequence]]
 

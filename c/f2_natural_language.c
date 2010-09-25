@@ -367,6 +367,25 @@ f2ptr f2thing_pronoun_word__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// verb_word
+
+def_frame_object__global__19_slot(verb_word, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, transitive, transitive_two, ing, en, infinitive, past, present);
+
+f2ptr f2__verb_word__new(f2ptr cause, f2ptr symbol, f2ptr auxiliary, f2ptr be, f2ptr Do, f2ptr have, f2ptr will, f2ptr modal, f2ptr negative, f2ptr question_auxiliary, f2ptr third_person_singular, f2ptr plural, f2ptr first_person_singular, f2ptr transitive, f2ptr transitive_two, f2ptr ing, f2ptr en,
+			 f2ptr infinitive, f2ptr past, f2ptr present) {
+  return f2verb_word__new(cause, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, transitive, transitive_two, ing, en, infinitive, past, present);
+}
+def_pcfunk19(verb_word__new, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, transitive, transitive_two, ing, en, infinitive, past, present,
+	     return f2__verb_word__new(this_cause, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, transitive, transitive_two, ing, en, infinitive, past, present));
+
+
+f2ptr f2verb_word__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2verb_word__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_verb_word.new__funk);}
+  return this;
+}
+
+
 
 
 // **
@@ -542,6 +561,15 @@ void f2__natural_language__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_thing_pronoun_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(thing_pronoun_word__new, symbol, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_thing_pronoun_word.new__funk = never_gc(cfunk);}
+  
+  
+  // verb_word
+  
+  init_frame_object__19_slot(verb_word, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, transitive, transitive_two, ing, en, infinitive, past, present);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__19_arg(verb_word__new, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, transitive, transitive_two, ing, en, infinitive, past, present, cfunk, 0, "");
+    __funk2.globalenv.object_type.primobject.primobject_type_verb_word.new__funk = never_gc(cfunk);}
   
   
 }

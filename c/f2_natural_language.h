@@ -202,6 +202,15 @@ struct funk2_object_type__thing_pronoun_word__slot_s {
 };
 
 
+// verb_word
+
+typedef struct funk2_object_type__verb_word__slot_s funk2_object_type__verb_word__slot_t;
+struct funk2_object_type__verb_word__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
 #endif // F2__NATURAL_LANGUAGE__TYPES__H
 
 #ifndef F2__NATURAL_LANGUAGE__H
@@ -347,6 +356,13 @@ f2ptr f2question_adjunct_word__primobject_type__new_aux(f2ptr cause);
 declare_frame_object_1_slot(thing_pronoun_word, symbol);
 
 f2ptr f2thing_pronoun_word__primobject_type__new_aux(f2ptr cause);
+
+
+// verb_word
+
+declare_frame_object_19_slot(verb_word, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, transitive, transitive_two, ing, en, infinitive, past, present);
+
+f2ptr f2verb_word__primobject_type__new_aux(f2ptr cause);
 
 
 // **

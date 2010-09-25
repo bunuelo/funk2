@@ -316,6 +316,23 @@ f2ptr f2proper_noun_word__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// particle_word
+
+def_frame_object__global__1_slot(particle_word, symbol);
+
+f2ptr f2__particle_word__new(f2ptr cause, f2ptr symbol) {
+  return f2particle_word__new(cause, symbol);
+}
+def_pcfunk1(particle_word__new, symbol, return f2__particle_word__new(this_cause, symbol));
+
+
+f2ptr f2particle_word__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2particle_word__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_particle_word.new__funk);}
+  return this;
+}
+
+
 
 
 // **
@@ -467,6 +484,14 @@ void f2__natural_language__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_proper_noun_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(proper_noun_word__new, symbols, singular, plural, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_proper_noun_word.new__funk = never_gc(cfunk);}
+  
+  
+  // particle_word
+  
+  init_frame_object__1_slot(particle_word, symbol);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_particle_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(particle_word__new, symbol, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_particle_word.new__funk = never_gc(cfunk);}
   
   
 }

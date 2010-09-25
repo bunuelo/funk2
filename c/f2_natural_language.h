@@ -175,6 +175,15 @@ struct funk2_object_type__proper_noun_word__slot_s {
 };
 
 
+// particle_word
+
+typedef struct funk2_object_type__particle_word__slot_s funk2_object_type__particle_word__slot_t;
+struct funk2_object_type__particle_word__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
 #endif // F2__NATURAL_LANGUAGE__TYPES__H
 
 #ifndef F2__NATURAL_LANGUAGE__H
@@ -299,6 +308,13 @@ f2ptr f2pronoun_word__primobject_type__new_aux(f2ptr cause);
 declare_frame_object_3_slot(proper_noun_word, symbols, singular, plural);
 
 f2ptr f2proper_noun_word__primobject_type__new_aux(f2ptr cause);
+
+
+// particle_word
+
+declare_frame_object_1_slot(particle_word, symbol);
+
+f2ptr f2particle_word__primobject_type__new_aux(f2ptr cause);
 
 
 // **

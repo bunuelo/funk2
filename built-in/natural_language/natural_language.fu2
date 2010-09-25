@@ -20,7 +20,32 @@
 
 [globalize word_hash [new ptypehash]]
 
-`[have word_hash add `pick [new verb_word 
-				SEMANTICS [[VB [[TRANS [NOTICE]]]
-					       FEATURES [VPRT VB INF TRANS]]]]]
+[have word_hash add `pick [let [[this [new verb_word]]]
+			    [have this add `symbol         `pick]
+			    [have this add `takes_particle t]
+			    [have this add `infinitive     t]
+			    [have this add `transitive     t]
+			    this]]
+
+[have word_hash add `up [let [[this [new particle_word]]]
+			  [have this add `symbol `up]
+			  this]]
+
+[have word_hash add `a [let [[this [new determiner_word]]]
+			 [have this add `symbol     `a]
+			 [have this add `indefinite t]
+			 [have this add `singular   t]
+			 this]]
+
+[have word_hash add `the [let [[this [new determiner_word]]]
+			   [have this add `symbol   `the]
+			   [have this add `plural   t]
+			   [have this add `singular t]
+			   [have this add `definite t]
+			   this]]
+
+[have word_hash add `knife [let [[this [new noun_word]]]
+			     [have this add `symbol   `knife]
+			     [have this add `singular t]
+			     this]]
 

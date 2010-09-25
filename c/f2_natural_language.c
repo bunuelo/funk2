@@ -95,12 +95,12 @@ f2ptr f2adjective_group__primobject_type__new_aux(f2ptr cause) {
 
 // verb_group
 
-def_frame_object__global__10_slot(verb_group, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
+def_frame_object__global__9_slot(verb_group, imperative, en, ing, to, todel, tense, be, passive, negative);
 
-f2ptr f2__verb_group__new(f2ptr cause, f2ptr symbol, f2ptr imperative, f2ptr en, f2ptr ing, f2ptr to, f2ptr todel, f2ptr tense, f2ptr be, f2ptr passive, f2ptr negative) {
-  return f2verb_group__new(cause, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
+f2ptr f2__verb_group__new(f2ptr cause, f2ptr imperative, f2ptr en, f2ptr ing, f2ptr to, f2ptr todel, f2ptr tense, f2ptr be, f2ptr passive, f2ptr negative) {
+  return f2verb_group__new(cause, imperative, en, ing, to, todel, tense, be, passive, negative);
 }
-def_pcfunk10(verb_group__new, symbol, imperative, en, ing, to, todel, tense, be, passive, negative, return f2__verb_group__new(this_cause, symbol, imperative, en, ing, to, todel, tense, be, passive, negative));
+def_pcfunk9(verb_group__new, imperative, en, ing, to, todel, tense, be, passive, negative, return f2__verb_group__new(this_cause, imperative, en, ing, to, todel, tense, be, passive, negative));
 
 
 f2ptr f2verb_group__primobject_type__new_aux(f2ptr cause) {
@@ -108,6 +108,25 @@ f2ptr f2verb_group__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__funk);}
   return this;
 }
+
+
+// adjective_word
+
+def_frame_object__global__3_slot(adjective_word, symbol, superlative, comparative);
+
+f2ptr f2__adjective_word__new(f2ptr cause, f2ptr symbol, f2ptr superlative, f2ptr comparative) {
+  return f2adjective_word__new(cause, symbol, superlative, comparative);
+}
+def_pcfunk3(adjective_word__new, symbol, superlative, comparative, return f2__adjective_word__new(this_cause, symbol, superlative, comparative));
+
+
+f2ptr f2adjective_word__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2adjective_word__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_adjective_word.new__funk);}
+  return this;
+}
+
+
 
 
 // **
@@ -157,10 +176,18 @@ void f2__natural_language__initialize() {
   
   // verb_group
   
-  init_frame_object__10_slot(verb_group, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
+  init_frame_object__9_slot(verb_group, imperative, en, ing, to, todel, tense, be, passive, negative);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__10_arg(verb_group__new, symbol, imperative, en, ing, to, todel, tense, be, passive, negative, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__9_arg(verb_group__new, imperative, en, ing, to, todel, tense, be, passive, negative, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__funk = never_gc(cfunk);}
+  
+  
+  // adjective_word
+  
+  init_frame_object__3_slot(adjective_word, symbol, superlative, comparative);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_adjective_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(adjective_word__new, symbol, superlative, comparative, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_adjective_word.new__funk = never_gc(cfunk);}
   
   
 }

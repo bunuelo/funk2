@@ -67,6 +67,15 @@ struct funk2_object_type__verb_group__slot_s {
 };
 
 
+// adjective_word
+
+typedef struct funk2_object_type__adjective_word__slot_s funk2_object_type__adjective_word__slot_t;
+struct funk2_object_type__adjective_word__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
 #endif // F2__NATURAL_LANGUAGE__TYPES__H
 
 #ifndef F2__NATURAL_LANGUAGE__H
@@ -104,9 +113,16 @@ f2ptr f2adjective_group__primobject_type__new_aux(f2ptr cause);
 
 // verb_group
 
-declare_frame_object_10_slot(verb_group, symbol, imperative, en, ing, to, todel, tense, be, passive, negative);
+declare_frame_object_9_slot(verb_group, imperative, en, ing, to, todel, tense, be, passive, negative);
 
 f2ptr f2verb_group__primobject_type__new_aux(f2ptr cause);
+
+
+// adjective_word
+
+declare_frame_object_3_slot(adjective_word, symbol, superlative, comparative);
+
+f2ptr f2adjective_word__primobject_type__new_aux(f2ptr cause);
 
 
 // **

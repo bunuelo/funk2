@@ -51,9 +51,10 @@ f2ptr f2clause__primobject_type__new_aux(f2ptr cause) {
 
 // noun_group
 
-def_frame_object__global__7_slot(noun_group, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
+def_frame_object__global__8_slot(noun_group, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
 
 f2ptr f2__noun_group__new(f2ptr cause) {
+  f2ptr symbols     = nil;
   f2ptr determiner  = nil;
   f2ptr ordinal     = nil;
   f2ptr number      = nil;
@@ -61,7 +62,7 @@ f2ptr f2__noun_group__new(f2ptr cause) {
   f2ptr classifiers = nil;
   f2ptr noun        = nil;
   f2ptr qualifiers  = nil;
-  return f2noun_group__new(cause, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
+  return f2noun_group__new(cause, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
 }
 def_pcfunk0(noun_group__new, return f2__noun_group__new(this_cause));
 
@@ -75,9 +76,10 @@ f2ptr f2noun_group__primobject_type__new_aux(f2ptr cause) {
 
 // preposition_group
 
-def_frame_object__global__8_slot(preposition_group, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
+def_frame_object__global__9_slot(preposition_group, symbols, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
 
 f2ptr f2__preposition_group__new(f2ptr cause) {
+  f2ptr symbols                    = nil;
   f2ptr complement                 = nil;
   f2ptr locational_object          = nil;
   f2ptr adjunct                    = nil;
@@ -86,7 +88,7 @@ f2ptr f2__preposition_group__new(f2ptr cause) {
   f2ptr missing_up_relative        = nil;
   f2ptr missing_up_question        = nil;
   f2ptr relative_preposition_group = nil;
-  return f2preposition_group__new(cause, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
+  return f2preposition_group__new(cause, symbols, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
 }
 def_pcfunk0(preposition_group__new, return f2__preposition_group__new(this_cause));
 
@@ -100,9 +102,10 @@ f2ptr f2preposition_group__primobject_type__new_aux(f2ptr cause) {
 
 // adjective_group
 
-def_frame_object__global__7_slot(adjective_group, complement, qualifier, adjunct, than, as, comparitive, question);
+def_frame_object__global__8_slot(adjective_group, symbols, complement, qualifier, adjunct, than, as, comparitive, question);
 
 f2ptr f2__adjective_group__new(f2ptr cause) {
+  f2ptr symbols     = nil;
   f2ptr complement  = nil;
   f2ptr qualifier   = nil;
   f2ptr adjunct     = nil;
@@ -110,7 +113,7 @@ f2ptr f2__adjective_group__new(f2ptr cause) {
   f2ptr as          = nil;
   f2ptr comparitive = nil;
   f2ptr question    = nil;
-  return f2adjective_group__new(cause, complement, qualifier, adjunct, than, as, comparitive, question);
+  return f2adjective_group__new(cause, symbols, complement, qualifier, adjunct, than, as, comparitive, question);
 }
 def_pcfunk0(adjective_group__new, return f2__adjective_group__new(this_cause));
 
@@ -124,9 +127,10 @@ f2ptr f2adjective_group__primobject_type__new_aux(f2ptr cause) {
 
 // verb_group
 
-def_frame_object__global__9_slot(verb_group, imperative, en, ing, to, todel, tense, be, passive, negative);
+def_frame_object__global__10_slot(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative);
 
 f2ptr f2__verb_group__new(f2ptr cause) {
+  f2ptr symbols    = nil;
   f2ptr imperative = nil;
   f2ptr en         = nil;
   f2ptr ing        = nil;
@@ -136,7 +140,7 @@ f2ptr f2__verb_group__new(f2ptr cause) {
   f2ptr be         = nil;
   f2ptr passive    = nil;
   f2ptr negative   = nil;
-  return f2verb_group__new(cause, imperative, en, ing, to, todel, tense, be, passive, negative);
+  return f2verb_group__new(cause, symbosl, imperative, en, ing, to, todel, tense, be, passive, negative);
 }
 def_pcfunk0(verb_group__new, return f2__verb_group__new(this_cause));
 
@@ -522,7 +526,7 @@ void f2__natural_language__initialize() {
   
   // noun_group
   
-  init_frame_object__7_slot(noun_group, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
+  init_frame_object__8_slot(noun_group, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(noun_group__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__funk = never_gc(cfunk);}
@@ -530,7 +534,7 @@ void f2__natural_language__initialize() {
   
   // preposition_group
   
-  init_frame_object__8_slot(preposition_group, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
+  init_frame_object__9_slot(preposition_group, symbols, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_preposition_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(preposition_group__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_preposition_group.new__funk = never_gc(cfunk);}
@@ -538,7 +542,7 @@ void f2__natural_language__initialize() {
   
   // adjective_group
   
-  init_frame_object__7_slot(adjective_group, complement, qualifier, adjunct, than, as, comparitive, question);
+  init_frame_object__8_slot(adjective_group, symbols, complement, qualifier, adjunct, than, as, comparitive, question);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_adjective_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(adjective_group__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_adjective_group.new__funk = never_gc(cfunk);}
@@ -546,7 +550,7 @@ void f2__natural_language__initialize() {
   
   // verb_group
   
-  init_frame_object__9_slot(verb_group, imperative, en, ing, to, todel, tense, be, passive, negative);
+  init_frame_object__10_slot(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(verb_group__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__funk = never_gc(cfunk);}

@@ -227,28 +227,28 @@ f2ptr f2clause__primobject_type__new_aux(f2ptr cause);
 
 // noun_group
 
-declare_frame_object_7_slot(noun_group, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
+declare_frame_object_8_slot(noun_group, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
 
 f2ptr f2noun_group__primobject_type__new_aux(f2ptr cause);
 
 
 // preposition_group
 
-declare_frame_object_8_slot(preposition_group, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
+declare_frame_object_9_slot(preposition_group, symbols, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
 
 f2ptr f2preposition_group__primobject_type__new_aux(f2ptr cause);
 
 
 // adjective_group
 
-declare_frame_object_7_slot(adjective_group, complement, qualifier, adjunct, than, as, comparitive, question);
+declare_frame_object_10_slot(adjective_group, symbols, complement, qualifier, adjunct, than, as, comparitive, question);
 
 f2ptr f2adjective_group__primobject_type__new_aux(f2ptr cause);
 
 
 // verb_group
 
-declare_frame_object_9_slot(verb_group, imperative, en, ing, to, todel, tense, be, passive, negative);
+declare_frame_object_10_slot(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative);
 
 f2ptr f2verb_group__primobject_type__new_aux(f2ptr cause);
 

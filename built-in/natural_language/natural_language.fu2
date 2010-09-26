@@ -84,7 +84,7 @@
 
 [deframe parse_tree [frame] [root_node]]
 
-[deftypefunk parse_tree add_last [parse_object]
+[deftypefunk parse_tree execute add_last [parse_object]
   [let [[node [new parse_tree_node]]]
     [set node parse_object parse_object]
     [if [null root_node]

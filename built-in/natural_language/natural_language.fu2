@@ -23,19 +23,18 @@
 [deframe parse_tree_node [frame] [parse_object parent_node previous_node next_node first_child_node last_child_node]]
 
 [deftypefunk parse_tree_node get last_node []
-  [let [[node this]]
-    [if next_node
-	[get next_node last_node]
-      [if last_child_node
-	  [get last_child_node last_node]
-	this]]]]
+  [if next_node
+      [get next_node last_node]
+    [if last_child_node
+	[get last_child_node last_node]
+      this]]]
 
 [deftypefunk parse_tree_node execute map_nodes [funk]
   [apply funk [cons this nil]]
-  [let [[iter first_child_node]]
-    [while iter
-      [apply funk [cons iter node]]
-      [= iter [get iter next_node]]]]]
+  [if next_node
+      [have next_node map_nodes funk]]
+  [if first_child_node
+      [have first_child_node map_nodes funk]]]
 
 [deftypefunk parse_tree_node execute insert_after [node]
   [let [[old-next_node next_node]]

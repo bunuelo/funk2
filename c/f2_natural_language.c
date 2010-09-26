@@ -140,7 +140,7 @@ f2ptr f2__verb_group__new(f2ptr cause) {
   f2ptr be         = nil;
   f2ptr passive    = nil;
   f2ptr negative   = nil;
-  return f2verb_group__new(cause, symbosl, imperative, en, ing, to, todel, tense, be, passive, negative);
+  return f2verb_group__new(cause, symbols, imperative, en, ing, to, todel, tense, be, passive, negative);
 }
 def_pcfunk0(verb_group__new, return f2__verb_group__new(this_cause));
 

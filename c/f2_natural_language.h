@@ -241,7 +241,7 @@ f2ptr f2preposition_group__primobject_type__new_aux(f2ptr cause);
 
 // adjective_group
 
-declare_frame_object_10_slot(adjective_group, symbols, complement, qualifier, adjunct, than, as, comparitive, question);
+declare_frame_object_8_slot(adjective_group, symbols, complement, qualifier, adjunct, than, as, comparitive, question);
 
 f2ptr f2adjective_group__primobject_type__new_aux(f2ptr cause);
 

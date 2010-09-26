@@ -37,7 +37,7 @@
 			   feature   feature]
 		  [have word add feature t]]]
 	  features]
-    [have this add_type_var_value type symbol word]]]
+    [have this add_type_var_value type symbol [cons word [get this type_var_value type symbol nil]]]]]
 
 [defmetro dictionary-add_word [this type symbol features]
   `[have ,this add_word [quote ,type] [quote ,symbol] [conslist @[mapcar [funk [feature] `[quote ,feature]] features]]]]
@@ -70,9 +70,13 @@
 
 
 [deftypefunk dictionary_frame execute parse_sequence_as_main_clause [sequence]
-  
-  [print sequence]]
-
+  [let [[first_word [first sequence]]]
+    [let [[first_word_verbs [get this type_var_value `verb_word first_word]]]
+      [if first_word_verbs
+	  [mapc [funk [first_word_verb]
+		      [terminal_format standard-terminal '\n  ' first_word ' is a verb_word.']]
+		first_word_verbs]]
+      ]]]
 
 
 

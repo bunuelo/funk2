@@ -18,6 +18,8 @@
  rights to redistribute these changes.'
 
 
+'dictionary_frame'
+
 [deframe dictionary_frame [frame] []]
 
 [deftypefunk dictionary_frame execute add_word [type symbol features]
@@ -41,6 +43,55 @@
 
 [defmetro dictionary-add_word [this type symbol features]
   `[have ,this add_word [quote ,type] [quote ,symbol] [conslist @[mapcar [funk [feature] `[quote ,feature]] features]]]]
+
+[deftypefunk dictionary_frame get definitions_by_type [type symbol]
+  [get this type_var_value type symbol nil]]
+
+[deftypefunk dictionary_frame get definitions [symbol]
+  [let [[definitions nil]]
+    [mapc [funk [type]
+		[= definitions [append definitions [get this definitions_by_type type symbol]]]]
+	  [get [get this type_ptypehash] keys]]
+    definitions]]
+
+
+
+'parse_tree_node'
+
+[deframe parse_tree_node [frame] [parse_object parent_node previous_node next_node first_child_node last_child_node]]
+
+[deftypefunk parse_tree_node get last_node []
+  [let [[node this]]
+    [if next_node
+	[get next_node last_node]
+      [if last_child_node
+	  [get last_child_node last_node]
+	this]]]]
+
+[deftypefunk parse_tree_node execute insert_after [node]
+  [let [[old-next_node next_node]]
+    [= next_node node]
+    [if old-next_node
+	[set old-next_node previous_node this]
+      [if parent_node
+	  [set parent_node last_child_node node]]]]]
+
+[deftypefunk parse_tree_node execute add_last [node]
+  [let [[last_node [get this last_node]]]
+    [have last_node insert_after node]]]
+
+'parse_tree'
+
+[deframe parse_tree [frame] [root_node]]
+
+[deftypefunk parse_tree add_last [parse_object]
+  [let [[node [new parse_tree_node]]]
+    [set node parse_object parse_object]
+    [if [null root_node]
+	[= root_node node]
+      [have root_node add_last node]]]]
+
+
 
 [globalize dictionary [new dictionary_frame]]
 
@@ -69,23 +120,38 @@
 [dictionary-add_word dictionary verb_word saw [past infinitive]]
 
 
-[deftypefunk dictionary_frame execute parse_sequence_as_verb_group [sequence verb_group]
-  [terminal_format standard-terminal '\n  parsing ' sequence ' as a verb_group.']
-  [if [get verb_group imperative]
-      [prog [terminal_format standard-terminal '\n  parsing ' sequence ' as an imperative verb_group.']
-	    ]]
-  ]
+[deftypefunk dictionary_frame execute parse_sequence_as_verb_group [sequence parse_tree verb_group]
+  [let [[parses nil]]
+    [terminal_format standard-terminal '\n  parsing ' sequence ' as a verb_group.']
+    [if [get verb_group imperative]
+	[prog [terminal_format standard-terminal '\n  parsing ' sequence ' as an imperative verb_group.']
+	      [let [[first_word [first sequence]]]
+		[let [[first_word_verbs [get this type_var_value `verb_word first_word nil]]]
+		  [mapc [funk [first_word_verb]
+			      [if [get first_word_verb Do]
+				  [prog [terminal_format standard-terminal '\n  parsing ' sequence ' as an imperative verb_group with first word as a form of "do".']
+					]
+				[prog [if [get first_word_verb infinitive]
+					  [let [[new_parse_tree [get parse_tree new_copy]]]
+					    [have new_parse_tree add_last [get first_word_verb new_copy]]
+					    [= parses [cons [frame verb_group [get verb_group new_copy]
+								   parse_tree new_parse_tree]
+							    parses]]
+					    ]
+					]]]]
+			first_word_verbs]]]]]
+    ]]
 
-[deftypefunk dictionary_frame execute parse_sequence_as_preposition_group [sequence]
+[deftypefunk dictionary_frame execute parse_sequence_as_preposition_group [sequence parse_tree]
   [terminal_format standard-terminal '\n  parsing ' sequence ' as a preposition_group.']
   ]
 
-[deftypefunk dictionary_frame execute parse_sequence_as_bound_clause [sequence]
+[deftypefunk dictionary_frame execute parse_sequence_as_bound_clause [sequence parse_tree]
   [terminal_format standard-terminal '\n  parsing ' sequence ' as a bound clause.']
   ]
 
 
-[deftypefunk dictionary_frame execute parse_sequence_as_main_clause [sequence]
+[deftypefunk dictionary_frame execute parse_sequence_as_main_clause [sequence parse_tree]
   [let [[first_word [first sequence]]]
     [let [[first_word_adverbs [get this type_var_value `adverb_word first_word nil]]]
       [if first_word_adverbs
@@ -112,7 +178,12 @@
 		      [terminal_format standard-terminal '\n  ' first_word ' is a verb_word.']
 		      [let [[verb_group [new verb_group]]]
 			[set verb_group imperative t]
-			[have this parse_sequence_as_verb_group sequence verb_group]]]
+			[let [[parses [have this parse_sequence_as_verb_group sequence verb_group]]]
+			  [mapc [funk [parse]
+				      [terminal_format standard-terminal '\n    found successful verb_group parse: ' parse]
+				      'mark verb as main verb'
+				      ]
+				parses]]]]
 		first_word_verbs]]]
     ]]
 

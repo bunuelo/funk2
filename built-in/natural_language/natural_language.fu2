@@ -244,8 +244,18 @@
 
 [terminal_format standard-terminal '\nDefining global ' `english_dictionary ' variable!']
 
-[globalize english_dictionary [new english_dictionary]]
-
 [defunk english_language-test []
   [have english_dictionary parse_sequence_as_main_clause `[pick up the knife] [new parse_tree] [new clause]]]
+
+
+`[globalize example_major_clauses `[[pick up the knife]
+				    [pick up the knife before cutting the bread]
+				    [Lauren picked up the knife]
+				    [Ralph saw Lauren cut the bread]]]
+
+`[print 'hi']
+
+
+
+[globalize english_dictionary [new english_dictionary]]
 

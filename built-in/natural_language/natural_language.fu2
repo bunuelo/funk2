@@ -169,9 +169,11 @@
       [let [[first_word_particles [get this type_var_value `particle_word first_word nil]]]
 	[mapc [funk [first_word_particle]
 		    [terminal_format standard-terminal '\n    found first word to be particle: ' first_word]
-		    [let [[new_parse_tree [get parse_tree new_copy]]]
+		    [let [[new_parse_tree    [get parse_tree          new_copy]]
+			  [new_particle_word [get first_word_particle new_copy]]]
+		      [have new_parse_tree add_last new_particle_word]
 		      [= parses [cons [frame parse_tree    new_parse_tree
-					     particle_word first_word_particle]
+					     particle_word new_particle_word]
 				      parses]]]]
 	      first_word_particles]]]
     parses]]

@@ -24,7 +24,11 @@
   [let [[word [object_type-new type]]] 
     [have word add `symbol symbol]
     [mapc [funk [feature]
-		[have word add feature t]]
+		[if [not [get word contains feature]]
+		    [error bug_type  `invalid_feature_when_adding_word_to_dictionary_frame
+			   word_type type
+			   feature   feature]
+		  [have word add feature t]]]
 	  features]
     [have this add_type_var_value type symbol word]]]
 
@@ -45,5 +49,15 @@
 
 
 [deftypefunk dictionary_frame execute parse_sequence_as_main_clause [sequence]
+  
   [print sequence]]
+
+
+
+
+[globalize example-major-clauses `[[pick up the knife]
+				   [pick up the knife before cutting the bread]
+				   [Lauren picked up the knife]
+				   [Ralph saw Lauren cut the bread]]]
+
 

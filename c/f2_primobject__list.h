@@ -42,6 +42,8 @@ declare_object_type_3_slot(list, write_mutex, length, cons_cells,
 			   f2ptr equals_hash_value__loop_free__funk;
 			   f2ptr equals_hash_value__symbol;
 			   f2ptr equals_hash_value__funk;
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
 			   );
 
 #endif // F2__PRIMOBJECT__LIST__TYPES__H

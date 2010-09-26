@@ -225,7 +225,15 @@
 										    [let [[particle_parses [have this parse_sequence_as_particle_word [cdr sequence] [have parse lookup `parse_tree]]]]
 										      [mapc [funk [particle_parse]
 												  [terminal_format standard-terminal '\n      found successful particle parse: ' particle_parse]
-												  ]
+												  [let [[new_clause [get clause new_copy]]]
+												    [set new_clause particle t]
+												    [if [get combination_definition transitive]
+													[prog [terminal_format standard-terminal '\n      combination is transitive: ' combination]
+													      
+													      ]
+												      [prog [terminal_format standard-terminal '\n      combination is not transitive: ' combination]
+													    
+													    ]]]]
 											    particle_parses]]]
 									      combination_definitions]]]]
 							      second_word_particles]]]]

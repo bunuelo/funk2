@@ -143,7 +143,7 @@
 					  [prog [terminal_format standard-terminal '\n  parsing ' sequence ' as an imperative verb_group with first word as an infinitive verb.']
 						[let [[new_parse_tree [get parse_tree new_copy]]
 						      [new_verb_word  [get first_word_verb new_copy]]]
-						  [set new_verb_word main t]
+						  [set new_verb_word Main t]
 						  [have new_parse_tree add_last new_verb_word]
 						  [= parses [cons [frame verb_word  new_verb_word
 									 verb_group [get verb_group new_copy]

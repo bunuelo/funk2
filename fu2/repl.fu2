@@ -106,7 +106,8 @@
 	      [stream_repl-html]]]]]
 
 [defunk terminal_repl-io [input-stream output-terminal]
-  [if output-terminal [terminal_format output-terminal '\nin--> ']]
+  [if output-terminal
+      [prog [ansi-stream-foreground stdout 10] [terminal_format standard-terminal '\nin--> '] [ansi-stream-foreground stdout 15]]]
   [let [[read_successful   nil]
 	[read-exp          nil]]
     [while [not read_successful]
@@ -132,7 +133,8 @@
 								  t]]
 		    [t                                      [prog [if output-terminal [terminal_format output-terminal [list 'error stream_repl-io: unexpected exception ' eval-exp]]]
 								  eval-exp]]]]
-	  [prog [if output-terminal [prog [terminal_format output-terminal '\nout-> '] [terminal_write output-terminal eval-exp]]]
+	  [prog [if output-terminal [prog [ansi-stream-foreground stdout 10] [terminal_format standard-terminal '\nout-> '] [ansi-stream-foreground stdout 15]
+					  [terminal_write output-terminal eval-exp]]]
 		[terminal_repl-io input-stream output-terminal]]]]]]]
 
 [defunk repl []

@@ -385,7 +385,7 @@
 
 
 [defunk english_language-test []
-  [have english_dictionary parse_sequence_as_main_clause `[pick up a big knife] [new parse_tree] [new clause]]]
+  [have english_dictionary parse_sequence_as_main_clause `[pick up a big red knife] [new parse_tree] [new clause]]]
 
 
 `[globalize example_major_clauses `[[pick up the knife]

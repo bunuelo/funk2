@@ -156,7 +156,7 @@ f2ptr f2verb_group__primobject_type__new_aux(f2ptr cause) {
 
 def_frame_object__global__2_slot(combination_group, symbols, transitive);
 
-f2ptr f2__verb_group__new(f2ptr cause) {
+f2ptr f2__combination_group__new(f2ptr cause) {
   f2ptr symbols    = nil;
   f2ptr transitive = nil;
   return f2combination_group__new(cause, symbols, transitive);

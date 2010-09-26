@@ -578,7 +578,7 @@ void f2__natural_language__initialize() {
   
   // combination_group
   
-  init_frame_object__10_slot(combination_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative);
+  init_frame_object__2_slot(combination_group, symbols, transitive);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_combination_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(combination_group__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_combination_group.new__funk = never_gc(cfunk);}

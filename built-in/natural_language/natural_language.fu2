@@ -69,20 +69,19 @@
 [dictionary-add_word dictionary verb_word saw [past infinitive]]
 
 
-[deftypefunk dictionary_frame execute parse_sequence_as_verb_group [sequence]
-  [terminal_format standard-terminal '\n  parsing ' sequence ' as verb_group']
-  ]
-
-[deftypefunk dictionary_frame execute parse_sequence_as_imperative_verb_group [sequence]
-  [terminal_format standard-terminal '\n  parsing ' sequence ' as imperative verb_group']
+[deftypefunk dictionary_frame execute parse_sequence_as_verb_group [sequence verb_group]
+  [terminal_format standard-terminal '\n  parsing ' sequence ' as a verb_group.']
+  [if [get verb_group imperative]
+      [prog [terminal_format standard-terminal '\n  parsing ' sequence ' as an imperative verb_group.']
+	    ]]
   ]
 
 [deftypefunk dictionary_frame execute parse_sequence_as_preposition_group [sequence]
-  [terminal_format standard-terminal '\n  parsing ' sequence ' as preposition_group']
+  [terminal_format standard-terminal '\n  parsing ' sequence ' as a preposition_group.']
   ]
 
 [deftypefunk dictionary_frame execute parse_sequence_as_bound_clause [sequence]
-  [terminal_format standard-terminal '\n  parsing ' sequence ' as bound clause.']
+  [terminal_format standard-terminal '\n  parsing ' sequence ' as a bound clause.']
   ]
 
 
@@ -111,7 +110,9 @@
       [if first_word_verbs
 	  [mapc [funk [first_word_verb]
 		      [terminal_format standard-terminal '\n  ' first_word ' is a verb_word.']
-		      [have this parse_sequence_as_imperative_verb_group sequence]]
+		      [let [[verb_group [new verb_group]]]
+			[set verb_group imperative t]
+			[have this parse_sequence_as_verb_group sequence verb_group]]]
 		first_word_verbs]]]
     ]]
 

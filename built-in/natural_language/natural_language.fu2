@@ -267,7 +267,7 @@
 
 [deftypefunk dictionary_frame execute parse_sequence_as_noun_group-after_adjectives [sequence parse_tree noun_group]
   [let [[parses nil]]
-    [let [[classifier_words_parses [have this parse_sequence_as_classifier_words adjective_words_rest_sequence parse_tree]]]
+    [let [[classifier_words_parses [have this parse_sequence_as_classifier_words sequence parse_tree]]]
       [mapc [funk [classifier_words_parse]
 		  [terminal_format standard-terminal '\n      noun group found successful classifier_words parse: ' classifier_words_parse]
 		  

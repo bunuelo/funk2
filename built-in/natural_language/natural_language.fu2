@@ -265,7 +265,7 @@
     parses]]
 
 
-[deftypefunk dictionary_frame execute parse_sequence_as_noun_group-after_adjectives [sequence parse_tree]
+[deftypefunk dictionary_frame execute parse_sequence_as_noun_group-after_adjectives [sequence parse_tree noun_group]
   [let [[parses nil]]
     [terminal_format standard-terminal '\n      noun group found successful adjective_words parse: ' adjective_words_parse]
     [let [[classifier_words_parses [have this parse_sequence_as_classifier_words adjective_words_rest_sequence adjective_words_parse_tree]]]
@@ -285,11 +285,11 @@
 		[mapc [funk [adjective_words_parse]
 			    [let [[adjective_words_parse_tree    [have adjective_words_parse lookup `parse_tree]]
 				  [adjective_words_rest_sequence [have adjective_words_parse lookup `rest_sequence]]]
-			      [let [[after_adjectives_parses [have this parse_sequence_as_noun_group-after_adjectives adjective_words_rest_sequence adjective_words_parse_tree]]]
+			      [let [[after_adjectives_parses [have this parse_sequence_as_noun_group-after_adjectives adjective_words_rest_sequence adjective_words_parse_tree noun_group]]]
 				[= parses [append after_adjectives_parses parses]]]]]
 		      adjective_words_parses]]
 	      'finally, we try interpretting without any adjectives.'
-	      [let [[after_adjectives_parses [have this parse_sequence_as_noun_group-after_adjectives sequence parse_tree]]]
+	      [let [[after_adjectives_parses [have this parse_sequence_as_noun_group-after_adjectives sequence parse_tree noun_group]]]
 		[= parses [append after_adjectives_parses parses]]]]
       [prog [terminal_format standard-terminal '\n    our noun group is not indefinite: ' noun_group]
 	    'because our noun group is not indefinite, we must look for a number and an ordinal.'
@@ -311,7 +311,7 @@
 				  [terminal_format standard-terminal '\n    found successful determiner_word parse: ' determiner_parse]
 				  [let [[new_noun_group [get noun_group new_copy]]]
 				    [have determiner_word transfer_relevant_features_to_noun_group new_noun_group]
-				    [let [[after_determiner_parses [have this parse_sequence_as_noun_group-after_determiner [cdr sequence] determiner_parse_tree]]]
+				    [let [[after_determiner_parses [have this parse_sequence_as_noun_group-after_determiner [cdr sequence] determiner_parse_tree new_noun_group]]]
 				      [= parses [append after_determiner_parses parses]]]]]]
 			  determiner_parses]]]
 	  [prog [terminal_format standard-terminal '\n    found first word to not be a determiner: ' first_word]

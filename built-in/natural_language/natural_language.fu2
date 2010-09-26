@@ -88,12 +88,12 @@
 [deframe dictionary_frame [frame] [[symbols_hash [hash]]]]
 
 [deftypefunk dictionary_frame get symbols_as_key [symbols]
-  [let [[symbols-as-conslist [cond [[is-type `symbol symbol] [cons symbol nil]]
-				   [[is-type `cons   symbol] symbol]
-				   [[is-type `list   symbol] [get symbol cons_cells]]
-				   [t                        [error bug_type  `invalid_symbol_or_symbol_list_when_adding_word_to_dictionary_frame
-								    word_type type
-								    symbol    symbol]]]]]
+  [let [[symbols-as-conslist [cond [[is-type `symbol symbols] [cons symbols nil]]
+				   [[is-type `cons   symbols] symbols]
+				   [[is-type `list   symbols] [get symbols cons_cells]]
+				   [t                         [error bug_type  `invalid_symbol_or_symbol_list_when_adding_word_to_dictionary_frame
+								     word_type type
+								     symbols   symbols]]]]]
     [let [[value [have symbols_hash lookup symbols-as-conslist]]]
       [if value
 	  value

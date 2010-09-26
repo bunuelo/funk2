@@ -255,77 +255,77 @@ f2ptr f2verb_group__primobject_type__new_aux(f2ptr cause);
 
 // adjective_word
 
-declare_frame_object_3_slot(adjective_word, symbol, superlative, comparative);
+declare_frame_object_3_slot(adjective_word, symbols, superlative, comparative);
 
 f2ptr f2adjective_word__primobject_type__new_aux(f2ptr cause);
 
 
 // adverb_word
 
-declare_frame_object_5_slot(adverb_word, symbol, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier);
+declare_frame_object_5_slot(adverb_word, symbols, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier);
 
 f2ptr f2adverb_word__primobject_type__new_aux(f2ptr cause);
 
 
 // binder_word
 
-declare_frame_object_1_slot(binder_word, symbol);
+declare_frame_object_1_slot(binder_word, symbols);
 
 f2ptr f2binder_word__primobject_type__new_aux(f2ptr cause);
 
 
 // classifier_word
 
-declare_frame_object_1_slot(classifier_word, symbol);
+declare_frame_object_1_slot(classifier_word, symbols);
 
 f2ptr f2classifier_word__primobject_type__new_aux(f2ptr cause);
 
 
 // determiner_word
 
-declare_frame_object_12_slot(determiner_word, symbol, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
+declare_frame_object_12_slot(determiner_word, symbols, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
 
 f2ptr f2determiner_word__primobject_type__new_aux(f2ptr cause);
 
 
 // noun_word
 
-declare_frame_object_7_slot(noun_word, symbol, singular, plural, mass, possessive, time_unit, time_specific);
+declare_frame_object_7_slot(noun_word, symbols, singular, plural, mass, possessive, time_unit, time_specific);
 
 f2ptr f2noun_word__primobject_type__new_aux(f2ptr cause);
 
 
 // number_word
 
-declare_frame_object_3_slot(number_word, symbol, singular, plural);
+declare_frame_object_3_slot(number_word, symbols, singular, plural);
 
 f2ptr f2number_word__primobject_type__new_aux(f2ptr cause);
 
 
 // number_determiner_word
 
-declare_frame_object_5_slot(number_determiner_word, symbol, than_modifier, as_as_modifier, at_modifier, alone);
+declare_frame_object_5_slot(number_determiner_word, symbols, than_modifier, as_as_modifier, at_modifier, alone);
 
 f2ptr f2number_determiner_word__primobject_type__new_aux(f2ptr cause);
 
 
 // ordinal_word
 
-declare_frame_object_1_slot(ordinal_word, symbol);
+declare_frame_object_1_slot(ordinal_word, symbols);
 
 f2ptr f2ordinal_word__primobject_type__new_aux(f2ptr cause);
 
 
 // preposition_word
 
-declare_frame_object_3_slot(preposition_word, symbol, combination_first, combination_second);
+declare_frame_object_3_slot(preposition_word, symbols, combination_first, combination_second);
 
 f2ptr f2preposition_word__primobject_type__new_aux(f2ptr cause);
 
 
 // pronoun_word
 
-declare_frame_object_10_slot(pronoun_word, symbol, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
+declare_frame_object_10_slot(pronoun_word, symbols, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
 
 f2ptr f2pronoun_word__primobject_type__new_aux(f2ptr cause);
 
@@ -339,28 +339,28 @@ f2ptr f2proper_noun_word__primobject_type__new_aux(f2ptr cause);
 
 // particle_word
 
-declare_frame_object_1_slot(particle_word, symbol);
+declare_frame_object_1_slot(particle_word, symbols);
 
 f2ptr f2particle_word__primobject_type__new_aux(f2ptr cause);
 
 
 // question_adjunct_word
 
-declare_frame_object_1_slot(question_adjunct_word, symbol);
+declare_frame_object_1_slot(question_adjunct_word, symbols);
 
 f2ptr f2question_adjunct_word__primobject_type__new_aux(f2ptr cause);
 
 
 // thing_pronoun_word
 
-declare_frame_object_1_slot(thing_pronoun_word, symbol);
+declare_frame_object_1_slot(thing_pronoun_word, symbols);
 
 f2ptr f2thing_pronoun_word__primobject_type__new_aux(f2ptr cause);
 
 
 // verb_word
 
-declare_frame_object_21_slot(verb_word, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present, main);
+declare_frame_object_21_slot(verb_word, symbols, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present, main);
 
 f2ptr f2verb_word__primobject_type__new_aux(f2ptr cause);
 

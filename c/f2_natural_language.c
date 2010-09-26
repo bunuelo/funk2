@@ -154,13 +154,13 @@ f2ptr f2verb_group__primobject_type__new_aux(f2ptr cause) {
 
 // adjective_word
 
-def_frame_object__global__3_slot(adjective_word, symbol, superlative, comparative);
+def_frame_object__global__3_slot(adjective_word, symbols, superlative, comparative);
 
 f2ptr f2__adjective_word__new(f2ptr cause) {
-  f2ptr symbol      = nil;
+  f2ptr symbols     = nil;
   f2ptr superlative = nil;
   f2ptr comparative = nil;
-  return f2adjective_word__new(cause, symbol, superlative, comparative);
+  return f2adjective_word__new(cause, symbols, superlative, comparative);
 }
 def_pcfunk0(adjective_word__new, return f2__adjective_word__new(this_cause));
 
@@ -174,15 +174,15 @@ f2ptr f2adjective_word__primobject_type__new_aux(f2ptr cause) {
 
 // adverb_word
 
-def_frame_object__global__5_slot(adverb_word, symbol, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier);
+def_frame_object__global__5_slot(adverb_word, symbols, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier);
 
 f2ptr f2__adverb_word__new(f2ptr cause) {
-  f2ptr symbol               = nil;
+  f2ptr symbols              = nil;
   f2ptr adverb_modifier      = nil;
   f2ptr verb_modifier        = nil;
   f2ptr preposition_modifier = nil;
   f2ptr clause_modifier      = nil;
-  return f2adverb_word__new(cause, symbol, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier);
+  return f2adverb_word__new(cause, symbols, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier);
 }
 def_pcfunk0(adverb_word__new, return f2__adverb_word__new(this_cause));
 
@@ -196,11 +196,11 @@ f2ptr f2adverb_word__primobject_type__new_aux(f2ptr cause) {
 
 // binder_word
 
-def_frame_object__global__1_slot(binder_word, symbol);
+def_frame_object__global__1_slot(binder_word, symbols);
 
 f2ptr f2__binder_word__new(f2ptr cause) {
-  f2ptr symbol = nil;
-  return f2binder_word__new(cause, symbol);
+  f2ptr symbols = nil;
+  return f2binder_word__new(cause, symbols);
 }
 def_pcfunk0(binder_word__new, return f2__binder_word__new(this_cause));
 
@@ -214,11 +214,11 @@ f2ptr f2binder_word__primobject_type__new_aux(f2ptr cause) {
 
 // classifier_word
 
-def_frame_object__global__1_slot(classifier_word, symbol);
+def_frame_object__global__1_slot(classifier_word, symbols);
 
 f2ptr f2__classifier_word__new(f2ptr cause) {
-  f2ptr symbol = nil;
-  return f2classifier_word__new(cause, symbol);
+  f2ptr symbols = nil;
+  return f2classifier_word__new(cause, symbols);
 }
 def_pcfunk0(classifier_word__new, return f2__classifier_word__new(this_cause));
 
@@ -232,10 +232,10 @@ f2ptr f2classifier_word__primobject_type__new_aux(f2ptr cause) {
 
 // determiner_word
 
-def_frame_object__global__12_slot(determiner_word, symbol, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
+def_frame_object__global__12_slot(determiner_word, symbols, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
 
 f2ptr f2__determiner_word__new(f2ptr cause) {
-  f2ptr symbol        = nil;
+  f2ptr symbols       = nil;
   f2ptr indefinite    = nil;
   f2ptr question      = nil;
   f2ptr definite      = nil;
@@ -247,7 +247,7 @@ f2ptr f2__determiner_word__new(f2ptr cause) {
   f2ptr singular      = nil;
   f2ptr plural        = nil;
   f2ptr mass          = nil;
-  return f2determiner_word__new(cause, symbol, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
+  return f2determiner_word__new(cause, symbols, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
 }
 def_pcfunk0(determiner_word__new, return f2__determiner_word__new(this_cause));
 
@@ -261,17 +261,17 @@ f2ptr f2determiner_word__primobject_type__new_aux(f2ptr cause) {
 
 // noun_word
 
-def_frame_object__global__7_slot(noun_word, symbol, singular, plural, mass, possessive, time_unit, time_specific);
+def_frame_object__global__7_slot(noun_word, symbols, singular, plural, mass, possessive, time_unit, time_specific);
 
 f2ptr f2__noun_word__new(f2ptr cause) {
-  f2ptr symbol        = nil;
+  f2ptr symbols       = nil;
   f2ptr singular      = nil;
   f2ptr plural        = nil;
   f2ptr mass          = nil;
   f2ptr possessive    = nil;
   f2ptr time_unit     = nil;
   f2ptr time_specific = nil;
-  return f2noun_word__new(cause, symbol, singular, plural, mass, possessive, time_unit, time_specific);
+  return f2noun_word__new(cause, symbols, singular, plural, mass, possessive, time_unit, time_specific);
 }
 def_pcfunk0(noun_word__new, return f2__noun_word__new(this_cause));
 
@@ -285,13 +285,13 @@ f2ptr f2noun_word__primobject_type__new_aux(f2ptr cause) {
 
 // number_word
 
-def_frame_object__global__3_slot(number_word, symbol, singular, plural);
+def_frame_object__global__3_slot(number_word, symbols, singular, plural);
 
 f2ptr f2__number_word__new(f2ptr cause) {
-  f2ptr symbol   = nil;
+  f2ptr symbols  = nil;
   f2ptr singular = nil;
   f2ptr plural   = nil;
-  return f2number_word__new(cause, symbol, singular, plural);
+  return f2number_word__new(cause, symbols, singular, plural);
 }
 def_pcfunk0(number_word__new, return f2__number_word__new(this_cause));
 
@@ -305,15 +305,15 @@ f2ptr f2number_word__primobject_type__new_aux(f2ptr cause) {
 
 // number_determiner_word
 
-def_frame_object__global__5_slot(number_determiner_word, symbol, than_modifier, as_as_modifier, at_modifier, alone);
+def_frame_object__global__5_slot(number_determiner_word, symbols, than_modifier, as_as_modifier, at_modifier, alone);
 
 f2ptr f2__number_determiner_word__new(f2ptr cause) {
-  f2ptr symbol         = nil;
+  f2ptr symbols        = nil;
   f2ptr than_modifier  = nil;
   f2ptr as_as_modifier = nil;
   f2ptr at_modifier    = nil;
   f2ptr alone          = nil;
-  return f2number_determiner_word__new(cause, symbol, than_modifier, as_as_modifier, at_modifier, alone);
+  return f2number_determiner_word__new(cause, symbols, than_modifier, as_as_modifier, at_modifier, alone);
 }
 def_pcfunk0(number_determiner_word__new, return f2__number_determiner_word__new(this_cause));
 
@@ -327,11 +327,11 @@ f2ptr f2number_determiner_word__primobject_type__new_aux(f2ptr cause) {
 
 // ordinal_word
 
-def_frame_object__global__1_slot(ordinal_word, symbol);
+def_frame_object__global__1_slot(ordinal_word, symbols);
 
 f2ptr f2__ordinal_word__new(f2ptr cause) {
-  f2ptr symbol = nil;
-  return f2ordinal_word__new(cause, symbol);
+  f2ptr symbols = nil;
+  return f2ordinal_word__new(cause, symbols);
 }
 def_pcfunk0(ordinal_word__new, return f2__ordinal_word__new(this_cause));
 
@@ -345,13 +345,13 @@ f2ptr f2ordinal_word__primobject_type__new_aux(f2ptr cause) {
 
 // preposition_word
 
-def_frame_object__global__3_slot(preposition_word, symbol, combination_first, combination_second);
+def_frame_object__global__3_slot(preposition_word, symbols, combination_first, combination_second);
 
 f2ptr f2__preposition_word__new(f2ptr cause) {
-  f2ptr symbol             = nil;
+  f2ptr symbols            = nil;
   f2ptr combination_first  = nil;
   f2ptr combination_second = nil;
-  return f2preposition_word__new(cause, symbol, combination_first, combination_second);
+  return f2preposition_word__new(cause, symbols, combination_first, combination_second);
 }
 def_pcfunk0(preposition_word__new, return f2__preposition_word__new(this_cause));
 
@@ -365,10 +365,10 @@ f2ptr f2preposition_word__primobject_type__new_aux(f2ptr cause) {
 
 // pronoun_word
 
-def_frame_object__global__10_slot(pronoun_word, symbol, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
+def_frame_object__global__10_slot(pronoun_word, symbols, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
 
 f2ptr f2__pronoun_word__new(f2ptr cause) {
-  f2ptr symbol                = nil;
+  f2ptr symbols               = nil;
   f2ptr singular              = nil;
   f2ptr plural                = nil;
   f2ptr first_person_singular = nil;
@@ -378,7 +378,7 @@ f2ptr f2__pronoun_word__new(f2ptr cause) {
   f2ptr demonstrative         = nil;
   f2ptr relative_clause       = nil;
   f2ptr question              = nil;
-  return f2pronoun_word__new(cause, symbol, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
+  return f2pronoun_word__new(cause, symbols, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
 }
 def_pcfunk0(pronoun_word__new, return f2__pronoun_word__new(this_cause));
 
@@ -412,11 +412,11 @@ f2ptr f2proper_noun_word__primobject_type__new_aux(f2ptr cause) {
 
 // particle_word
 
-def_frame_object__global__1_slot(particle_word, symbol);
+def_frame_object__global__1_slot(particle_word, symbols);
 
 f2ptr f2__particle_word__new(f2ptr cause) {
-  f2ptr symbol = nil;
-  return f2particle_word__new(cause, symbol);
+  f2ptr symbols = nil;
+  return f2particle_word__new(cause, symbols);
 }
 def_pcfunk0(particle_word__new, return f2__particle_word__new(this_cause));
 
@@ -430,11 +430,11 @@ f2ptr f2particle_word__primobject_type__new_aux(f2ptr cause) {
 
 // question_adjunct_word
 
-def_frame_object__global__1_slot(question_adjunct_word, symbol);
+def_frame_object__global__1_slot(question_adjunct_word, symbols);
 
 f2ptr f2__question_adjunct_word__new(f2ptr cause) {
-  f2ptr symbol = nil;
-  return f2question_adjunct_word__new(cause, symbol);
+  f2ptr symbols = nil;
+  return f2question_adjunct_word__new(cause, symbols);
 }
 def_pcfunk0(question_adjunct_word__new, return f2__question_adjunct_word__new(this_cause));
 
@@ -448,11 +448,11 @@ f2ptr f2question_adjunct_word__primobject_type__new_aux(f2ptr cause) {
 
 // thing_pronoun_word
 
-def_frame_object__global__1_slot(thing_pronoun_word, symbol);
+def_frame_object__global__1_slot(thing_pronoun_word, symbols);
 
 f2ptr f2__thing_pronoun_word__new(f2ptr cause) {
-  f2ptr symbol = nil;
-  return f2thing_pronoun_word__new(cause, symbol);
+  f2ptr symbols = nil;
+  return f2thing_pronoun_word__new(cause, symbols);
 }
 def_pcfunk0(thing_pronoun_word__new, return f2__thing_pronoun_word__new(this_cause));
 
@@ -466,10 +466,10 @@ f2ptr f2thing_pronoun_word__primobject_type__new_aux(f2ptr cause) {
 
 // verb_word
 
-def_frame_object__global__21_slot(verb_word, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present, main);
+def_frame_object__global__21_slot(verb_word, symbols, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present, main);
 
 f2ptr f2__verb_word__new(f2ptr cause) {
-  f2ptr symbol                = nil;
+  f2ptr symbols               = nil;
   f2ptr auxiliary             = nil;
   f2ptr be                    = nil;
   f2ptr Do                    = nil;
@@ -490,7 +490,7 @@ f2ptr f2__verb_word__new(f2ptr cause) {
   f2ptr past                  = nil;
   f2ptr present               = nil;
   f2ptr main                  = nil;
-  return f2verb_word__new(cause, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present, main);
+  return f2verb_word__new(cause, symbols, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present, main);
 }
 def_pcfunk0(verb_word__new, return f2__verb_word__new(this_cause));
 
@@ -559,7 +559,7 @@ void f2__natural_language__initialize() {
   
   // adjective_word
   
-  init_frame_object__3_slot(adjective_word, symbol, superlative, comparative);
+  init_frame_object__3_slot(adjective_word, symbols, superlative, comparative);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_adjective_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(adjective_word__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_adjective_word.new__funk = never_gc(cfunk);}
@@ -567,7 +567,7 @@ void f2__natural_language__initialize() {
   
   // adverb_word
   
-  init_frame_object__5_slot(adverb_word, symbol, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier);
+  init_frame_object__5_slot(adverb_word, symbols, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_adverb_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(adverb_word__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_adverb_word.new__funk = never_gc(cfunk);}
@@ -575,7 +575,7 @@ void f2__natural_language__initialize() {
   
   // binder_word
   
-  init_frame_object__1_slot(binder_word, symbol);
+  init_frame_object__1_slot(binder_word, symbols);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_binder_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(binder_word__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_binder_word.new__funk = never_gc(cfunk);}
@@ -583,7 +583,7 @@ void f2__natural_language__initialize() {
   
   // classifier_word
   
-  init_frame_object__1_slot(classifier_word, symbol);
+  init_frame_object__1_slot(classifier_word, symbols);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_classifier_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(classifier_word__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_classifier_word.new__funk = never_gc(cfunk);}
@@ -591,7 +591,7 @@ void f2__natural_language__initialize() {
   
   // determiner_word
   
-  init_frame_object__12_slot(determiner_word, symbol, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
+  init_frame_object__12_slot(determiner_word, symbols, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_determiner_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(determiner_word__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_determiner_word.new__funk = never_gc(cfunk);}
@@ -599,7 +599,7 @@ void f2__natural_language__initialize() {
   
   // noun_word
   
-  init_frame_object__7_slot(noun_word, symbol, singular, plural, mass, possessive, time_unit, time_specific);
+  init_frame_object__7_slot(noun_word, symbols, singular, plural, mass, possessive, time_unit, time_specific);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_noun_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(noun_word__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_noun_word.new__funk = never_gc(cfunk);}
@@ -607,7 +607,7 @@ void f2__natural_language__initialize() {
   
   // number_word
   
-  init_frame_object__3_slot(number_word, symbol, singular, plural);
+  init_frame_object__3_slot(number_word, symbols, singular, plural);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_number_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(number_word__new, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_number_word.new__funk = never_gc(cfunk);}
@@ -615,7 +615,7 @@ void f2__natural_language__initialize() {
   
   // number_determiner_word
   
-  init_frame_object__5_slot(number_determiner_word, symbol, than_modifier, as_as_modifier, at_modifier, alone);
+  init_frame_object__5_slot(number_determiner_word, symbols, than_modifier, as_as_modifier, at_modifier, alone);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_number_determiner_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(number_determiner_word__new, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_number_determiner_word.new__funk = never_gc(cfunk);}
@@ -623,7 +623,7 @@ void f2__natural_language__initialize() {
   
   // ordinal_word
   
-  init_frame_object__1_slot(ordinal_word, symbol);
+  init_frame_object__1_slot(ordinal_word, symbols);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_ordinal_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(ordinal_word__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_ordinal_word.new__funk = never_gc(cfunk);}
@@ -631,7 +631,7 @@ void f2__natural_language__initialize() {
   
   // preposition_word
   
-  init_frame_object__3_slot(preposition_word, symbol, combination_first, combination_second);
+  init_frame_object__3_slot(preposition_word, symbols, combination_first, combination_second);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_preposition_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(preposition_word__new, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_preposition_word.new__funk = never_gc(cfunk);}
@@ -639,7 +639,7 @@ void f2__natural_language__initialize() {
   
   // pronoun_word
   
-  init_frame_object__10_slot(pronoun_word, symbol, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
+  init_frame_object__10_slot(pronoun_word, symbols, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_pronoun_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(pronoun_word__new, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_pronoun_word.new__funk = never_gc(cfunk);}
@@ -655,7 +655,7 @@ void f2__natural_language__initialize() {
   
   // particle_word
   
-  init_frame_object__1_slot(particle_word, symbol);
+  init_frame_object__1_slot(particle_word, symbols);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_particle_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(particle_word__new, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_particle_word.new__funk = never_gc(cfunk);}
@@ -663,7 +663,7 @@ void f2__natural_language__initialize() {
   
   // question_adjunct_word
   
-  init_frame_object__1_slot(question_adjunct_word, symbol);
+  init_frame_object__1_slot(question_adjunct_word, symbols);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_question_adjunct_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(question_adjunct_word__new, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_question_adjunct_word.new__funk = never_gc(cfunk);}
@@ -671,7 +671,7 @@ void f2__natural_language__initialize() {
   
   // thing_pronoun_word
   
-  init_frame_object__1_slot(thing_pronoun_word, symbol);
+  init_frame_object__1_slot(thing_pronoun_word, symbols);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_thing_pronoun_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(thing_pronoun_word__new, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_thing_pronoun_word.new__funk = never_gc(cfunk);}
@@ -679,7 +679,7 @@ void f2__natural_language__initialize() {
   
   // verb_word
   
-  init_frame_object__21_slot(verb_word, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present, main);
+  init_frame_object__21_slot(verb_word, symbols, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present, main);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(verb_word__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_verb_word.new__funk = never_gc(cfunk);}

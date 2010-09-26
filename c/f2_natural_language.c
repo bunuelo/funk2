@@ -466,7 +466,7 @@ f2ptr f2thing_pronoun_word__primobject_type__new_aux(f2ptr cause) {
 
 // verb_word
 
-def_frame_object__global__20_slot(verb_word, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present);
+def_frame_object__global__21_slot(verb_word, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present, main);
 
 f2ptr f2__verb_word__new(f2ptr cause) {
   f2ptr symbol                = nil;
@@ -489,7 +489,8 @@ f2ptr f2__verb_word__new(f2ptr cause) {
   f2ptr infinitive            = nil;
   f2ptr past                  = nil;
   f2ptr present               = nil;
-  return f2verb_word__new(cause, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present);
+  f2ptr main                  = nil;
+  return f2verb_word__new(cause, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present, main);
 }
 def_pcfunk0(verb_word__new, return f2__verb_word__new(this_cause));
 
@@ -678,7 +679,7 @@ void f2__natural_language__initialize() {
   
   // verb_word
   
-  init_frame_object__20_slot(verb_word, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present);
+  init_frame_object__21_slot(verb_word, symbol, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present, main);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(verb_word__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_verb_word.new__funk = never_gc(cfunk);}

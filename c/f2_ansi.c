@@ -310,7 +310,7 @@ f2ptr raw__ansi__stream__foreground(f2ptr cause, f2ptr stream, ansi_color_t colo
   case ansi_color__light_red:    f2__ansi__stream__bold(            cause, stream); return f2__ansi__stream__red_foreground(                        cause, stream);
   case ansi_color__light_purple: f2__ansi__stream__bold(            cause, stream); return f2__ansi__stream__magenta_foreground(                    cause, stream);
   case ansi_color__yellow:       f2__ansi__stream__bold(            cause, stream); return f2__ansi__stream__brown_foreground(                      cause, stream);
-  case ansi_color__white:                                                           return f2__ansi__stream__underscore_off_with_default_foreground(cause, stream);
+  case ansi_color__white:        f2__ansi__stream__bold(            cause, stream); return f2__ansi__stream__underscore_off_with_default_foreground(cause, stream);
   }
   return nil;
 }

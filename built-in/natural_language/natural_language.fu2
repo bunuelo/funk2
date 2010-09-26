@@ -233,6 +233,70 @@
     parses]]
 
 
+[deftypefunk dictionary_frame execute parse_sequence_as_classifier_word [sequence parse_tree]
+  [let [[parses nil]]
+    [terminal_format standard-terminal '\n  parsing ' sequence ' as an classifier word.']
+    [let [[first_word [first sequence]]]
+      [let [[first_word_classifiers [get this type_var_value `classifier_word first_word nil]]]
+	[mapc [funk [first_word_classifier]
+		    [terminal_format standard-terminal '\n    found first word to be an classifier: ' first_word]
+		    [let [[new_parse_tree      [get parse_tree            new_copy]]
+			  [new_classifier_word [get first_word_classifier new_copy]]]
+		      [have new_parse_tree add_last new_classifier_word]
+		      [= parses [cons [frame parse_tree      new_parse_tree
+					     classifier_word new_classifier_word
+					     rest_sequence   [cdr sequence]]
+				      parses]]]]
+	      first_word_classifiers]]]
+    parses]]
+
+[deftypefunk dictionary_frame execute parse_sequence_as_classifier_words [sequence parse_tree]
+  [let [[parses nil]]
+    [let [[classifier_parses [have this parse_sequence_as_classifier_word sequence parse_tree]]]
+      [mapc [funk [classifier_parse]
+		  [let [[classifier_parse_tree [have classifier_parse lookup `parse_tree]]]
+		    [terminal_format standard-terminal '\n  found successful classifier_word parse: ' classifier_parse]
+		    [= parses [cons classifier_parse parses]]
+		    [let [[classifier_words_parses [have this parse_sequence_as_classifier_words [cdr sequence] classifier_parse_tree]]]
+		      [mapc [funk [classifier_words_parse]
+				  [= parses [cons classifier_words_parse parses]]]
+			    classifier_words_parses]]]]
+	    classifier_parses]]
+    parses]]
+
+
+[deftypefunk dictionary_frame execute parse_sequence_as_noun_group-after_adjectives [sequence parse_tree]
+  [let [[parses nil]]
+    [terminal_format standard-terminal '\n      noun group found successful adjective_words parse: ' adjective_words_parse]
+    [let [[classifier_words_parses [have this parse_sequence_as_classifier_words adjective_words_rest_sequence adjective_words_parse_tree]]]
+      [mapc [funk [classifier_words_parse]
+		  [terminal_format standard-terminal '\n      noun group found successful classifier_words parse: ' classifier_words_parse]
+		  
+		  ]
+	    classifier_words_parses]]
+    parses]]
+
+[deftypefunk dictionary_frame execute parse_sequence_as_noun_group-after_determiner [sequence parse_tree noun_group]
+  [let [[parses nil]]
+    [if [get noun_group indefinite]
+	[prog [terminal_format standard-terminal '\n    our noun group is indefinite: ' noun_group]
+	      'because our noun group is indefinite, we can skip looking for a number or an ordinal.'
+	      [let [[adjective_words_parses [have this parse_sequence_as_adjective_words sequence parse_tree]]]
+		[mapc [funk [adjective_words_parse]
+			    [let [[adjective_words_parse_tree    [have adjective_words_parse lookup `parse_tree]]
+				  [adjective_words_rest_sequence [have adjective_words_parse lookup `rest_sequence]]]
+			      [let [[after_adjectives_parses [have this parse_sequence_as_noun_group-after_adjectives adjective_words_rest_sequence adjective_words_parse_tree]]]
+				[= parses [append after_adjectives_parses parses]]]]]
+		      adjective_words_parses]]
+	      'finally, we try interpretting without any adjectives.'
+	      [let [[after_adjectives_parses [have this parse_sequence_as_noun_group-after_adjectives sequence parse_tree]]]
+		[= parses [append after_adjectives_parses parses]]]]
+      [prog [terminal_format standard-terminal '\n    our noun group is not indefinite: ' noun_group]
+	    'because our noun group is not indefinite, we must look for a number and an ordinal.'
+	    
+	    ]]
+    parses]]
+
 [deftypefunk dictionary_frame execute parse_sequence_as_noun_group [sequence parse_tree noun_group]
   [let [[parses nil]]
     [terminal_format standard-terminal '\n  parsing ' sequence ' as a noun_group.']
@@ -247,19 +311,8 @@
 				  [terminal_format standard-terminal '\n    found successful determiner_word parse: ' determiner_parse]
 				  [let [[new_noun_group [get noun_group new_copy]]]
 				    [have determiner_word transfer_relevant_features_to_noun_group new_noun_group]
-				    [if [get new_noun_group indefinite]
-					[prog [terminal_format standard-terminal '\n    our noun group is indefinite: ' new_noun_group]
-					      'because our noun group is indefinite, we can skip looking for a number or an ordinal.'
-					      [let [[adjective_words_parses [have this parse_sequence_as_adjective_words [cdr sequence] determiner_parse_tree]]]
-						[mapc [funk [adjective_words_parse]
-							    [terminal_format standard-terminal '\n      noun group found successful adjective_words parse: ' adjective_words_parse]
-							    
-							    ]
-						      adjective_words_parses]]]
-				      [prog [terminal_format standard-terminal '\n    our noun group is not indefinite: ' new_noun_group]
-					    'because our noun group is not indefinite, we must look for a number and an ordinal.'
-					    
-					    ]]]]]
+				    [let [[after_determiner_parses [have this parse_sequence_as_noun_group-after_determiner [cdr sequence] determiner_parse_tree]]]
+				      [= parses [append after_determiner_parses parses]]]]]]
 			  determiner_parses]]]
 	  [prog [terminal_format standard-terminal '\n    found first word to not be a determiner: ' first_word]
 		

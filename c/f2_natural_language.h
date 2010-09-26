@@ -360,7 +360,7 @@ f2ptr f2thing_pronoun_word__primobject_type__new_aux(f2ptr cause);
 
 // verb_word
 
-declare_frame_object_21_slot(verb_word, symbols, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present, main);
+declare_frame_object_21_slot(verb_word, symbols, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, takes_particle, transitive, transitive_two, ing, en, infinitive, past, present, Main);
 
 f2ptr f2verb_word__primobject_type__new_aux(f2ptr cause);
 

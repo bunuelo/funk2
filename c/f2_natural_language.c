@@ -52,7 +52,7 @@ f2ptr f2clause__primobject_type__new_aux(f2ptr cause) {
 
 // noun_group
 
-def_frame_object__global__13_slot(noun_group, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, definite, indefinite, quantifier, singular, plural);
+def_frame_object__global__16_slot(noun_group, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, definite, indefinite, quantifier, singular, plural, object, object_one, object_two);
 
 f2ptr f2__noun_group__new(f2ptr cause) {
   f2ptr symbols     = nil;
@@ -68,7 +68,10 @@ f2ptr f2__noun_group__new(f2ptr cause) {
   f2ptr quantifier  = nil;
   f2ptr singular    = nil;
   f2ptr plural      = nil;
-  return f2noun_group__new(cause, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, definite, indefinite, quantifier, singular, plural);
+  f2ptr object      = nil;
+  f2ptr object_one  = nil;
+  f2ptr object_two  = nil;
+  return f2noun_group__new(cause, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, definite, indefinite, quantifier, singular, plural, object, object_one, object_two);
 }
 def_pcfunk0(noun_group__new, return f2__noun_group__new(this_cause));
 
@@ -552,7 +555,7 @@ void f2__natural_language__initialize() {
   
   // noun_group
   
-  init_frame_object__13_slot(noun_group, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, definite, indefinite, quantifier, singular, plural);
+  init_frame_object__16_slot(noun_group, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, definite, indefinite, quantifier, singular, plural, object, object_one, object_two);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(noun_group__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__funk = never_gc(cfunk);}

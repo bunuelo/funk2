@@ -246,3 +246,6 @@
 
 [globalize english_dictionary [new english_dictionary]]
 
+[defunk english_language-test []
+  [have english_dictionary parse_sequence_as_main_clause `[pick up the knife] [new parse_tree] [new clause]]]
+

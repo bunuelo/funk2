@@ -236,7 +236,7 @@ f2ptr f2clause__primobject_type__new_aux(f2ptr cause);
 
 // noun_group
 
-declare_frame_object_8_slot(noun_group, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers);
+declare_frame_object_13_slot(noun_group, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, definite, indefinite, quantifier, singular, plural);
 
 f2ptr f2noun_group__primobject_type__new_aux(f2ptr cause);
 

@@ -193,6 +193,15 @@
 	      first_word_determiners]]]
     parses]]
 
+[deftypefunk determiner_word execute transfer_relevant_features_to_noun_group [noun_group]
+  [set noun_group definite   [get this definite]]
+  [set noun_group indefinite [get this indefinite]]
+  [set noun_group quantifier [get this quantifier]]
+  [set noun_group singular   [get this singular]]
+  [set noun_group plural     [get this plural]]
+  [set noun_group determiner t]]
+
+
 [deftypefunk dictionary_frame execute parse_sequence_as_noun_group [sequence parse_tree noun_group]
   [let [[parses nil]]
     [terminal_format standard-terminal '\n  parsing ' sequence ' as a noun_group.']
@@ -205,8 +214,11 @@
 				[let [[determiner_parse_tree [have determiner_parse lookup `parse_tree]]
 				      [determiner_word       [have determiner_parse lookup `determiner_word]]]
 				  [terminal_format standard-terminal '\n    found successful determiner_word parse: ' determiner_parse]
-				  
-				  ]]
+				  [let [[new_noun_group [get noun_group new_copy]]]
+				    [have determiner_word transfer_relevant_features_to_noun_group new_noun_group]
+				    [terminal_format standard-terminal '\n    our noun group is now: ' new_noun_group]
+				    
+				    ]]]
 			  determiner_parses]]]
 	  [prog [terminal_format standard-terminal '\n    found first word to not be a determiner: ' first_word]
 		

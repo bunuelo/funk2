@@ -244,7 +244,7 @@
 																  [prog [terminal_format standard-terminal '\n  found pronoun to be relative: ' third_word]
 																	]]]
 															pronoun_definitions]]
-														[let [[noun_group_parses [get this parse_sequence_as_noun_group [cddr sequence] [have particle_parse lookup `parse_tree] [new noun_group]]]]
+														[let [[noun_group_parses [have this parse_sequence_as_noun_group [cddr sequence] [have particle_parse lookup `parse_tree] [new noun_group]]]]
 														  
 														  ]]]
 												      [prog [terminal_format standard-terminal '\n      combination is not transitive: ' combination]

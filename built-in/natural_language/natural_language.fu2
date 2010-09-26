@@ -213,7 +213,7 @@
 			[let [[parses [have this parse_sequence_as_verb_group sequence parse_tree verb_group]]]
 			  [mapc [funk [parse]
 				      [let [[verb_word [have parse lookup `verb_word]]]
-					[set verb_word main_verb t]]
+					[set verb_word main t]]
 				      [terminal_format standard-terminal '\n    found successful verb_group parse: ' parse]
 				      ]
 				parses]]]]

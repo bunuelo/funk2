@@ -18,44 +18,6 @@
  rights to redistribute these changes.'
 
 
-'dictionary_frame'
-
-[deframe dictionary_frame [frame] []]
-
-[deftypefunk dictionary_frame execute add_word [type symbol features]
-  [let [[word [object_type-new type]]] 
-    [cond [[eq type `proper_noun_word] [let [[symbols [cond [[is-type `symbol symbol] [cons symbol nil]]
-							    [[or [is-type `cons   symbol]
-								 [is-type `list   symbol]] symbol]
-							    [t                             [error bug_type  `invalid_symbol_or_symbol_list_when_adding_word_to_dictionary_frame
-												  word_type type
-												  symbol    symbol]]]]]
-					 [have word add `symbols symbols]]]
-	  [t                           [have word add `symbol symbol]]]
-    [mapc [funk [feature]
-		[if [not [get word contains feature]]
-		    [error bug_type  `invalid_feature_when_adding_word_to_dictionary_frame
-			   word_type type
-			   feature   feature]
-		  [have word add feature t]]]
-	  features]
-    [have this add_type_var_value type symbol [cons word [get this type_var_value type symbol nil]]]]]
-
-[defmetro dictionary-add_word [this type symbol features]
-  `[have ,this add_word [quote ,type] [quote ,symbol] [conslist @[mapcar [funk [feature] `[quote ,feature]] features]]]]
-
-[deftypefunk dictionary_frame get definitions_by_type [type symbol]
-  [get this type_var_value type symbol nil]]
-
-[deftypefunk dictionary_frame get definitions [symbol]
-  [let [[definitions nil]]
-    [mapc [funk [type]
-		[= definitions [append definitions [get this definitions_by_type type symbol]]]]
-	  [get [get this type_ptypehash] keys]]
-    definitions]]
-
-
-
 'parse_tree_node'
 
 [deframe parse_tree_node [frame] [parse_object parent_node previous_node next_node first_child_node last_child_node]]
@@ -121,32 +83,42 @@
       [have root_node add_last node]]]]
 
 
+'dictionary_frame'
 
-[globalize dictionary [new dictionary_frame]]
+[deframe dictionary_frame [frame] []]
 
-[dictionary-add_word dictionary verb_word pick [takes_particle infinitive transitive]]
+[deftypefunk dictionary_frame execute add_word [type symbol features]
+  [let [[word [object_type-new type]]] 
+    [cond [[eq type `proper_noun_word] [let [[symbols [cond [[is-type `symbol symbol] [cons symbol nil]]
+							    [[or [is-type `cons   symbol]
+								 [is-type `list   symbol]] symbol]
+							    [t                             [error bug_type  `invalid_symbol_or_symbol_list_when_adding_word_to_dictionary_frame
+												  word_type type
+												  symbol    symbol]]]]]
+					 [have word add `symbols symbols]]]
+	  [t                           [have word add `symbol symbol]]]
+    [mapc [funk [feature]
+		[if [not [get word contains feature]]
+		    [error bug_type  `invalid_feature_when_adding_word_to_dictionary_frame
+			   word_type type
+			   feature   feature]
+		  [have word add feature t]]]
+	  features]
+    [have this add_type_var_value type symbol [cons word [get this type_var_value type symbol nil]]]]]
 
-[dictionary-add_word dictionary particle_word up []]
+[defmetro dictionary-add_word [this type symbol features]
+  `[have ,this add_word [quote ,type] [quote ,symbol] [conslist @[mapcar [funk [feature] `[quote ,feature]] features]]]]
 
-[dictionary-add_word dictionary determiner_word a [indefinite singular]]
+[deftypefunk dictionary_frame get definitions_by_type [type symbol]
+  [get this type_var_value type symbol nil]]
 
-[dictionary-add_word dictionary determiner_word the [plural singular definite]]
+[deftypefunk dictionary_frame get definitions [symbol]
+  [let [[definitions nil]]
+    [mapc [funk [type]
+		[= definitions [append definitions [get this definitions_by_type type symbol]]]]
+	  [get [get this type_ptypehash] keys]]
+    definitions]]
 
-[dictionary-add_word dictionary noun_word knife [singular]]
-
-[dictionary-add_word dictionary preposition_word before []]
-
-[dictionary-add_word dictionary verb_word cut [present]]
-
-[dictionary-add_word dictionary verb_word cutting [present ing]]
-
-[dictionary-add_word dictionary noun_word bread [mass]]
-
-[dictionary-add_word dictionary proper_noun_word Lauren [singular]]
-
-[dictionary-add_word dictionary proper_noun_word Ralph [singular]]
-
-[dictionary-add_word dictionary verb_word saw [past infinitive]]
 
 
 [deftypefunk dictionary_frame execute parse_sequence_as_verb_group [sequence parse_tree verb_group]
@@ -183,7 +155,7 @@
   ]
 
 
-[deftypefunk dictionary_frame execute parse_sequence_as_main_clause [sequence parse_tree]
+[deftypefunk dictionary_frame execute parse_sequence_as_main_clause [sequence parse_tree clause]
   [let [[first_word [first sequence]]]
     [let [[first_word_adverbs [get this type_var_value `adverb_word first_word nil]]]
       [if first_word_adverbs
@@ -220,6 +192,45 @@
 		first_word_verbs]]]
     ]]
 
+
+'english_dictionary'
+
+[deframe english_dictionary [dictionary_frame] []
+  [new []
+       [construct dictionary_frame]
+       
+       [dictionary-add_word this verb_word pick [takes_particle infinitive transitive]]
+       
+       [dictionary-add_word this particle_word up []]
+       
+       [dictionary-add_word this determiner_word a [indefinite singular]]
+       
+       [dictionary-add_word this determiner_word the [plural singular definite]]
+       
+       [dictionary-add_word this noun_word knife [singular]]
+       
+       [dictionary-add_word this preposition_word before []]
+       
+       [dictionary-add_word this verb_word cut [present]]
+       
+       [dictionary-add_word this verb_word cutting [present ing]]
+       
+       [dictionary-add_word this noun_word bread [mass]]
+       
+       [dictionary-add_word this proper_noun_word Lauren [singular]]
+       
+       [dictionary-add_word this proper_noun_word Ralph [singular]]
+       
+       [dictionary-add_word this verb_word saw [past infinitive]]
+       ]]
+
+
+[terminal_format standard-terminal '\nDefining global ' `english_dictionary ' variable!']
+
+[globalize english_dictionary [new english_dictionary]]
+
+[defunk english_language-test []
+  [have english_dictionary parse_sequence_as_main_clause `[pick up the knife] [new parse_tree] [new clause]]]
 
 
 [globalize example_major_clauses `[[pick up the knife]

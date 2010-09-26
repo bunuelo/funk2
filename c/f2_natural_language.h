@@ -67,6 +67,15 @@ struct funk2_object_type__verb_group__slot_s {
 };
 
 
+// combination_group
+
+typedef struct funk2_object_type__combination_group__slot_s funk2_object_type__combination_group__slot_t;
+struct funk2_object_type__combination_group__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
 // adjective_word
 
 typedef struct funk2_object_type__adjective_word__slot_s funk2_object_type__adjective_word__slot_t;

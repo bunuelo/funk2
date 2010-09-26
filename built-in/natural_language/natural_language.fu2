@@ -251,7 +251,7 @@
 					      'because our noun group is indefinite, we can skip looking for a number or an ordinal.'
 					      [let [[adjective_words_parses [have this parse_sequence_as_adjective_words [cdr sequence] determiner_parse_tree]]]
 						[mapc [funk [adjective_words_parse]
-							    [terminal_format standard-terminal '\n      found successful adjective_words parse: ' adjective_words_parse]
+							    [terminal_format standard-terminal '\n      noun group found successful adjective_words parse: ' adjective_words_parse]
 							    
 							    ]
 						      adjective_words_parses]]]

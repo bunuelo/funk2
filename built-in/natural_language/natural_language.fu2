@@ -212,7 +212,8 @@
 			  [new_adjective_word [get first_word_adjective new_copy]]]
 		      [have new_parse_tree add_last new_adjective_word]
 		      [= parses [cons [frame parse_tree     new_parse_tree
-					     adjective_word new_adjective_word]
+					     adjective_word new_adjective_word
+					     rest_sequence  [cdr sequence]]
 				      parses]]]]
 	      first_word_adjectives]]]
     parses]]

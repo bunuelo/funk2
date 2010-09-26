@@ -22,7 +22,14 @@
 
 [deftypefunk dictionary_frame execute add_word [type symbol features]
   [let [[word [object_type-new type]]] 
-    [have word add `symbol symbol]
+    [cond [[eq type `proper_noun_word] [let [[symbols [cond [[is-type `symbol symbol] [cons symbol nil]]
+							    [[or [is-type `cons   symbol]
+								 [is-type `list   symbol]] symbol]
+							    [t                             [error bug_type  invalid_symbol_or_symbol_list_when_adding_word_to_dictionary_frame
+												  word_type type
+												  symbol    symbol]]]]]
+					 [have word add `symbols symbols]]]
+	  [t                           [have word add `symbol symbol]]]
     [mapc [funk [feature]
 		[if [not [get word contains feature]]
 		    [error bug_type  `invalid_feature_when_adding_word_to_dictionary_frame
@@ -47,6 +54,20 @@
 
 [dictionary-add_word dictionary noun_word knife [singular]]
 
+[dictionary-add_word dictionary preposition_word before []]
+
+[dictionary-add_word dictionary verb_word cut [present]]
+
+[dictionary-add_word dictionary verb_word cutting [present ing]]
+
+[dictionary-add_word dictionary noun_word bread [mass]]
+
+[dictionary-add_word dictionary proper_noun_word Lauren [singular]]
+
+[dictionary-add_word dictionary proper_noun_word Ralph [singular]]
+
+[dictionary-add_word dictionary verb_word saw [past infinitive]]
+
 
 [deftypefunk dictionary_frame execute parse_sequence_as_main_clause [sequence]
   
@@ -55,7 +76,7 @@
 
 
 
-[globalize example-major-clauses `[[pick up the knife]
+[globalize example_major_clauses `[[pick up the knife]
 				   [pick up the knife before cutting the bread]
 				   [Lauren picked up the knife]
 				   [Ralph saw Lauren cut the bread]]]

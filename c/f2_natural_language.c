@@ -27,16 +27,17 @@
 
 // clause
 
-def_frame_object__global__6_slot(clause, secondary, imperative, declarative, question, yes_no, wh);
+def_frame_object__global__7_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh);
 
 f2ptr f2__clause__new(f2ptr cause) {
+  f2ptr symbols     = nil;
   f2ptr secondary   = nil;
   f2ptr imperative  = nil;
   f2ptr declarative = nil;
   f2ptr question    = nil;
   f2ptr yes_no      = nil;
   f2ptr wh          = nil;
-  return f2clause__new(cause, secondary, imperative, declarative, question, yes_no, wh);
+  return f2clause__new(cause, symbols, secondary, imperative, declarative, question, yes_no, wh);
 }
 def_pcfunk0(clause__new, return f2__clause__new(this_cause));
 
@@ -513,7 +514,7 @@ void f2__natural_language__initialize() {
   
   // clause
   
-  init_frame_object__6_slot(clause, secondary, imperative, declarative, question, yes_no, wh);
+  init_frame_object__7_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_clause.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(clause__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_clause.new__funk = never_gc(cfunk);}

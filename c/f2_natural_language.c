@@ -152,6 +152,25 @@ f2ptr f2verb_group__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// combination_group
+
+def_frame_object__global__2_slot(combination_group, symbols, transitive);
+
+f2ptr f2__verb_group__new(f2ptr cause) {
+  f2ptr symbols    = nil;
+  f2ptr transitive = nil;
+  return f2combination_group__new(cause, symbols, transitive);
+}
+def_pcfunk0(combination_group__new, return f2__combination_group__new(this_cause));
+
+
+f2ptr f2combination_group__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2combination_group__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_combination_group.new__funk);}
+  return this;
+}
+
+
 // adjective_word
 
 def_frame_object__global__3_slot(adjective_word, symbols, superlative, comparative);
@@ -555,6 +574,14 @@ void f2__natural_language__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(verb_group__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__funk = never_gc(cfunk);}
+  
+  
+  // combination_group
+  
+  init_frame_object__10_slot(combination_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_combination_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__0_arg(combination_group__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_combination_group.new__funk = never_gc(cfunk);}
   
   
   // adjective_word

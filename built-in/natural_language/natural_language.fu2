@@ -221,6 +221,8 @@
        
        [dictionary-add_word this particle_word up []]
        
+       [dictionary-add_word this combination_group [pick up] [transitive]]
+       
        [dictionary-add_word this determiner_word a [indefinite singular]]
        
        [dictionary-add_word this determiner_word the [plural singular definite]]

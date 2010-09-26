@@ -253,6 +253,13 @@ declare_frame_object_10_slot(verb_group, symbols, imperative, en, ing, to, todel
 f2ptr f2verb_group__primobject_type__new_aux(f2ptr cause);
 
 
+// combination_group
+
+declare_frame_object_2_slot(combination_group, symbols, transitive);
+
+f2ptr f2combination_group__primobject_type__new_aux(f2ptr cause);
+
+
 // adjective_word
 
 declare_frame_object_3_slot(adjective_word, symbols, superlative, comparative);

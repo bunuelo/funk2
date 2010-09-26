@@ -92,7 +92,7 @@
 [deframe parse_tree [frame] [root_node]]
 
 [deftypefunk parse_tree execute map_nodes [funk]
-  [have head_node map_nodes funk]]
+  [have root_node map_nodes funk]]
 
 [deftypefunk parse_tree get new_copy []
   [let [[node_hash [new ptypehash]]]

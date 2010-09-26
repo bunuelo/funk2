@@ -242,8 +242,6 @@
        ]]
 
 
-[terminal_format standard-terminal '\nDefining global ' `english_dictionary ' variable!']
-
 [defunk english_language-test []
   [have english_dictionary parse_sequence_as_main_clause `[pick up the knife] [new parse_tree] [new clause]]]
 
@@ -256,6 +254,8 @@
 `[print 'hi']
 
 
+
+[terminal_format standard-terminal '\nDefining global ' `english_dictionary ' variable!']
 
 [globalize english_dictionary [new english_dictionary]]
 

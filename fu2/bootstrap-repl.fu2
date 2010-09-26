@@ -19,11 +19,17 @@
  rights to redistribute these changes.
 ']
 
-[primfunk:ansi__stream__foreground stdout 7]
-[primfunk:ansi__stream__foreground stdout 15]
+[primfunk:ansi__stream__reset stdout]
+[primfunk:ansi__stream__foreground stdout 9]
 [primfunk:exp__format stdout '
 
-  /----------------------------------------\\
+  /']
+[primfunk:ansi__stream__foreground stdout 15]
+[primfunk:exp__format stdout '----------------------------------------']
+[primfunk:ansi__stream__foreground stdout 9]
+[primfunk:exp__format stdout '\\']
+[primfunk:ansi__stream__foreground stdout 15]
+[primfunk:exp__format stdout '
   |                                        |
   | ']
 [primfunk:ansi__stream__foreground stdout 9]
@@ -41,7 +47,13 @@
 [primfunk:ansi__stream__foreground stdout 15]
 [primfunk:exp__format stdout ' |
   |                                        |
-  \\----------------------------------------/
+  ']
+[primfunk:ansi__stream__foreground stdout 9]
+[primfunk:exp__format stdout '\\']
+[primfunk:ansi__stream__foreground stdout 15]
+[primfunk:exp__format stdout '----------------------------------------']
+[primfunk:ansi__stream__foreground stdout 9]
+[primfunk:exp__format stdout '/
 
 ']
 [primfunk:ansi__stream__reset stdout]

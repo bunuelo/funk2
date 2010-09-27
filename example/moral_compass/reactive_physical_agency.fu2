@@ -21,10 +21,11 @@
 
 'now when activating resource, have to set the slots in funk_user the resource. how to?'
 'gotta check if things work...'
+'so how does resource access the mind? [have this get mind] correct?'
 
 
-
-[deframe funk_user  [resource] [[user_activate_resource nil]
+[deframe funk_user  [resource] [[user_activate_mutex    [new traced_mutex]]
+				[user_activate_resource nil]
 				[user_activate_args     nil]]
 
   [new []
@@ -33,11 +34,19 @@
 			  `[print 'waiting for user to activate']
 			   [if [null [get this user_activate_resource]]
 			       [sleep 1]
-			     [prog [have-apply mind activate [print `[reactive physical ,[get this user_activate_resource] @[get this user_activate_args]]]]
+			     [prog [have user_activate_mutex lock]
+			           [have-apply [get this mind] activate [print `[reactive physical ,[get this user_activate_resource] @[get this user_activate_args]]]]
 				   [set this user_activate_resource nil]
 				   [set this user_activate_args nil]
+				   [have user_activate_mutex unlock]
 				   ]]]]]
        nil]]
+
+[deftypefunk funk_user execute user_activate [resource args]
+  [have user_activate_mutex lock]
+  [set user_activate_resource resource]
+  [set user_activate_args     args]
+  [have user_activate_mutex unlock]]
 
 [deframe turn_right [resource] []
   [new []
@@ -64,7 +73,7 @@
 			  [let [[starting_time [get body time_step]]]
 			    [while [< [- [get body time_step] starting_time] steps] 
 					       [millisleep 50]]
-			    [have world turn_left-stop [get this name]]]]
+			    [have world turn_left-stop [get this name]]]]]]
 			
        nil]]
 
@@ -108,6 +117,7 @@
 			  [have world drop_from_left_hand agent [get this name]]]]]
        
        nil]]
+
 [deframe drop_from_right_hand [resource] []
   [new []
        [construct resource [type this]
@@ -118,6 +128,7 @@
 			  [have world drop_from_right_hand agent [get this name]]]]]
        
        nil]]
+
 [deframe pick_up_with_right_hand [resource] []
   [new []
        [construct resource [type this]
@@ -143,6 +154,7 @@
 			[get body sense]]]
        
        nil]]
+
 [deframe  pick_up_with_left_hand [resource] []
   [new []
        [construct resource [type this]
@@ -192,6 +204,7 @@
 			
        
        nil]]
+
 [deframe  slice_toast[resource] []
   [new []
        [construct resource [type this]
@@ -206,7 +219,8 @@
 					 [isis-call [get [get this world] client] agent [get this name] use_left_hand object knife target loaf]]]
        
        nil]]
-[deframe center_body_on_object [resource] []
+
+[deframe center_body_on [resource] []
   [new []
        [construct resource [type this]
 		  [funk [desired_object]
@@ -240,6 +254,7 @@
        			
        
        nil]]
+
 [deframe  walk_towards [resource] []
   [new []
        [construct resource [type this]
@@ -327,6 +342,7 @@
 				      [have this-resource think_to_self 'found it!']]]]]
 			  [have this-resource think_to_self 'finished searching']]]]
        nil]]
+
 [deframe avoid_obstacle [resource] []
   [new []
        [construct resource [type this]

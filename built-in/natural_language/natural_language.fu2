@@ -348,8 +348,7 @@
 	  [prog [parse_format '\n    found first word to not be a determiner: ' first_word]
 		
 		]]]]
-    nil]]
-
+    parses]]
 
 [deftypefunk dictionary_frame execute parse_sequence_as_main_clause [sequence parse_tree clause]
   [let [[parses nil]]

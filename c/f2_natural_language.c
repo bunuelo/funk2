@@ -51,6 +51,24 @@ f2ptr f2clause__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// wh_rank_shift_clause
+
+def_frame_object__global__1_slot(wh_rank_shift_clause, symbols);
+
+f2ptr f2__wh_rank_shift_clause__new(f2ptr cause) {
+  f2ptr symbols = nil;
+  return f2wh_rank_shift_clause__new(cause, symbols);
+}
+def_pcfunk0(wh_rank_shift_clause__new, return f2__wh_rank_shift_clause__new(this_cause));
+
+
+f2ptr f2wh_rank_shift_clause__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2wh_rank_shift_clause__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_wh_rank_shift_clause.new__funk);}
+  return this;
+}
+
+
 // noun_group
 
 def_frame_object__global__17_slot(noun_group, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, definite, indefinite, quantifier, singular, plural, mass, object, object_one, object_two);
@@ -553,6 +571,14 @@ void f2__natural_language__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_clause.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(clause__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_clause.new__funk = never_gc(cfunk);}
+  
+  
+  // wh_rank_shift_clause
+  
+  init_frame_object__1_slot(wh_rank_shift_clause, symbols);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_wh_rank_shift_clause.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__0_arg(wh_rank_shift_clause__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_wh_rank_shift_clause.new__funk = never_gc(cfunk);}
   
   
   // noun_group

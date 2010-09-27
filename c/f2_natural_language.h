@@ -31,6 +31,15 @@ struct funk2_object_type__clause__slot_s {
 };
 
 
+// wh_rank_shift_clause
+
+typedef struct funk2_object_type__wh_rank_shift_clause__slot_s funk2_object_type__wh_rank_shift_clause__slot_t;
+struct funk2_object_type__wh_rank_shift_clause__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
 // noun_group
 
 typedef struct funk2_object_type__noun_group__slot_s funk2_object_type__noun_group__slot_t;
@@ -225,6 +234,13 @@ struct funk2_object_type__verb_word__slot_s {
 #ifndef F2__NATURAL_LANGUAGE__H
 #define F2__NATURAL_LANGUAGE__H
 
+
+
+// wh_rank_shift_clause
+
+declare_frame_object_1_slot(wh_rank_shift_clause, symbols);
+
+f2ptr f2wh_rank_shift_clause__primobject_type__new_aux(f2ptr cause);
 
 
 // clause

@@ -57,7 +57,60 @@
 							  [get story events]]]]
     ]]
 
+'activating dialog'
 
+[deframe mindmon_user_activating_dialog [frame] [[fiber         nil]
+						 [window        [gtk-window-new]]
+						 [vbox          [gtk-vbox-new 2]]
+						 [label         [gtk-label-new 'You have chosen to user activate this resource. Please enter arguments for this activation']]
+						 [entry         [gtk-entry-new]]
+						 [hbox          [gtk-hbox-new 2]]
+						 [cancel_button [gtk-button-new_with_label 'Cancel']]
+						 [okay_button   [gtk-button-new_with_label 'Okay']]
+						 [done          nil]
+						 
+						 mindmon
+						 layer_name
+						 agency_name
+						 resource_name  ]
+  [new [mindmon my_layer_name my_agency_name my_resource_name]
+       
+       
+       [= mindmon                    my_mindmon]
+       [= layer_name                 my_layer_name]
+       [= agency_name                my_agency_name]
+       [= resource_name              my_resource_name]
+       [set  window title 'mindmon - user activate']
+       [have window connect_hide_on_delete]
+       [have window add vbox]
+       [have vbox pack_start label nil nil 0]
+       [have vbox pack_start entry nil nil 0]
+       [have vbox pack_start hbox  nil nil 0]
+       [have hbox pack_start cancel_button nil nil 0]
+       [have hbox pack_start okay_button   nil nil 0]
+       [have cancel_button signal_connect 'clicked'
+	     [funk []
+		   [print 'clicked cancel.']
+		   [= done t]]
+	     nil]
+       [have okay_button signal_connect 'clicked'
+	     [funk []
+		   [print 'clicked okay.']
+		   [let [[argus      [mapcar [funk [item] 
+						   [string-read item]]
+					     [have [get entry text] split ' ']]]]
+				     
+		     [eval `[have ,[get [get this mindmon] mind] user_activate ,layer_name ,agency_name ,resource_name @argus]]
+		     [terminal_format standard-terminal '\nactivating resource' resource_name '.\n']
+		     [= done t]]
+	     nil]]
+       [have window show_all]
+       [fiber [funk []
+		    [while  [and [get window visible] [not done]]
+		      [sleep 1]]
+		    [have window destroy]]
+	      nil]
+       ]]
 
 'mindmon_resource'
 
@@ -94,7 +147,7 @@
        [= menu_bar                   [gtk-menu_bar-new]]
        [= command_menu_item          [gtk-menu_item-new 'Command']]
        [= command_menu               [gtk-menu-new]]
-       [= command_activate_menu_item [gtk-menu_item-new 'Activate Resource']]
+       [= command_activate_menu_item [gtk-menu_item-new 'User_activate Resource']]
        [= hbox                       [gtk-hbox-new 2]]
        [= label                      [gtk-left_label-new '']]
        [= story_notebook             [gtk-notebook-new]]
@@ -109,7 +162,9 @@
        [have command_activate_menu_item signal_connect 'activate'
 	     [funk []
 		   [terminal_format standard-terminal '\n\nmindmon activating resource.\n']
-		   'activate resource here.'
+                  'make new dialog'
+		  [new mindmon_user_activate_dialog fiber layer_name agency_name resource_name]
+		   'activate resource here.'   
 		   ]
 	     nil]
        
@@ -131,6 +186,7 @@
 
 [deftypefunk mindmon_resource get resource []
   [get [get [get this mindmon] mind] resource [get this layer_name] [get this agency_name] [get this resource_name]]]
+
 
 [deftypefunk mindmon_resource get story_count []
   2]

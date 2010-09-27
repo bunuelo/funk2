@@ -59,6 +59,10 @@
 	 ]
        this]]
 
+[deftypefunk isis_world execute user_activate [agent_name layer_name agency_name resource_name :rest args]
+  [set [get [get this agent_mind agent_name] agency layer_name agency_name] user_activate_resource resource_name]
+  [set [get [get this agent_mimd agent_name] agency layer_name agency_name] user_activate_args     args]]
+
 [deftypefunk isis_world get agent_says [agent_name]
   [get [get this agent_body agent_name] says]]
 

@@ -295,7 +295,7 @@
 		  [let [[classifier_words_parse_tree    [have classifier_words_parse lookup `parse_tree]]
 			[classifier_words_rest_sequence [have classifier_words_parse lookup `rest_sequence]]]
 		    [terminal_format standard-terminal '\n      noun group found successful classifier_words parse: ' classifier_words_parse]
-		    [let [[after_classifier_parses [have this parse_sequence_as_noun_group-after_classifiers classifier_words_rest_sequence classifier_words_parse_tree noun_group]]]
+		    [let [[after_classifiers_parses [have this parse_sequence_as_noun_group-after_classifiers classifier_words_rest_sequence classifier_words_parse_tree noun_group]]]
 		      [= parses [append after_classifiers_parses parses]]]]]
 	    classifier_words_parses]]
     parses]]

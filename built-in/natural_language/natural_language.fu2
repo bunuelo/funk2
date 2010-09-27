@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 
-[globalize debug_parse t]
+[globalize debug_parse nil]
 
 [defmetro parse_format [:rest exps]
   [if debug_parse
@@ -382,7 +382,7 @@
 			[parse_format '\n  ' first_word ' is a verb_word.']
 			[let [[verb_group [new verb_group]]]
 			  [set verb_group imperative t]
-			  [let [[parses [have this parse_sequence_as_verb_group sequence parse_tree verb_group]]]
+			  [let [[verb_group_parses [have this parse_sequence_as_verb_group sequence parse_tree verb_group]]]
 			    [mapc [funk [parse]
 					[parse_format '\n    found successful verb_group parse: ' parse]
 					[let [[new_clause [get clause new_copy]]]
@@ -430,7 +430,7 @@
 								second_word_particles]]]]
 					      [prog [parse_format '\n  verb_word does not take particle.']
 						    ]]]]]
-				  parses]]]]
+				  verb_group_parses]]]]
 		  first_word_verbs]]]]
     parses]]
 

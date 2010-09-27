@@ -306,7 +306,13 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	}
 	break;
       default:
-	if ((testing == nil) && (x__i < max_x__i)) {
+	if (testing == nil) {
+	  if (x__i >= max_x__i) {
+	    if (use_html_codes) {
+	      raw__stream__writef(cause, stream, "<br>");
+	    }
+	    raw__stream__writef(cause, stream, "\n");
+	  }
 	  if (ch >= 28 && ch <= 255) {
 	    switch(ch) {
 	    case ' ':
@@ -325,6 +331,16 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	  }
 	}
 	if ((testing != nil) || (x__i < max_x__i)) {
+	  if ((testing == nil) && (x__i >= max_x__i)) {
+	    x__i = indent_distance__i;
+	    if ((! left_extent) || x__i < left_extent__i) {
+	      left_extent__i = x__i;
+	      if (! left_extent) {
+		left_extent = f2bool__new(boolean__true);
+	      }
+	    }
+	    height__i ++;
+	  }
 	  x__i ++;
 	  if ((! right_extent) || x__i > right_extent__i) {
 	    right_extent__i = x__i;

@@ -602,7 +602,7 @@
        [construct dictionary_frame]
        
        [dictionary-add_word this determiner_word a    [indefinite singular]]
-       [dictionary-add_word this determiner_word the  [definite singular plural]]
+       [dictionary-add_word this determiner_word the  [definite singular plural mass]]
        [dictionary-add_word this determiner_word some [definite plural mass]]
        [dictionary-add_word this determiner_word all  [plural quantifier]]
        [dictionary-add_word this determiner_word any  [singular plural quantifier indefinite]]

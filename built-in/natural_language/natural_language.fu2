@@ -586,35 +586,46 @@
        
        [dictionary-add_word this combination_group [pick up] [transitive]]
        
-       [dictionary-add_word this determiner_word a [indefinite singular]]
+       [dictionary-add_word this determiner_word a    [indefinite singular]]
+       [dictionary-add_word this determiner_word the  [definite singular plural]]
+       [dictionary-add_word this determiner_word some [definite plural mass]]
+       [dictionary-add_word this determiner_word all  [plural quantifier]]
+       [dictionary-add_word this determiner_word any  [singular plural quantifier indefinite]]
+       [dictionary-add_word this determiner_word both [quantifier definite plural]] 'has special both-and form.'
        
-       [dictionary-add_word this determiner_word the [plural singular definite]]
-       
-       [dictionary-add_word this classifier_word butter []]
-       
-       [dictionary-add_word this noun_word butter [mass]]
-       
-       [dictionary-add_word this noun_word knife [singular]]
-       
+       [dictionary-add_word this classifier_word   butter         []]
        [dictionary-add_word this combination_group [butter knife] []]
        
-       [dictionary-add_word this adjective_word big []]
+       [dictionary-add_word this classifier_word   kitchen           []]
+       [dictionary-add_word this combination_group [kitchen counter] []]
        
-       [dictionary-add_word this adjective_word red []]
+       [dictionary-add_word this noun_word knife        [singular]]
+       [dictionary-add_word this noun_word bread        [mass]]
+       [dictionary-add_word this noun_word butter       [mass]]
+       [dictionary-add_word this noun_word refrigerator [singular]]
+       [dictionary-add_word this noun_word fridge       [singular]]
+       [dictionary-add_word this noun_word kitchen      [singular]]
+       [dictionary-add_word this noun_word counter      [singular]]
+       [dictionary-add_word this noun_word slice        [singular]]
+       [dictionary-add_word this noun_word toast        [singular]]
+       
+       [dictionary-add_word this adjective_word big   []]
+       [dictionary-add_word this adjective_word small []]
+       [dictionary-add_word this adjective_word sharp []]
+       [dictionary-add_word this adjective_word long  []]
+       [dictionary-add_word this adjective_word short []]
+       [dictionary-add_word this adjective_word red   []]
+       [dictionary-add_word this adjective_word blue  []]
+       [dictionary-add_word this adjective_word green []]
        
        [dictionary-add_word this preposition_word before []]
        
-       [dictionary-add_word this verb_word cut [present]]
-       
+       [dictionary-add_word this verb_word cut     [present]]
        [dictionary-add_word this verb_word cutting [present ing]]
-       
-       [dictionary-add_word this noun_word bread [mass]]
        
        [dictionary-add_word this proper_noun_word Lauren [singular]]
        
        [dictionary-add_word this proper_noun_word Ralph [singular]]
-       
-       [dictionary-add_word this verb_word saw [past infinitive]]
        
        [dictionary-add_word this verb_word saw [past infinitive]]
        

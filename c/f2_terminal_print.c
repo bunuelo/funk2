@@ -330,7 +330,7 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	    raw__stream__writef(cause, stream, "?");
 	  }
 	}
-	if ((testing != nil) || (x__i < max_x__i)) {
+	if ((testing == nil) || (x__i < max_x__i)) {
 	  if ((testing == nil) && (x__i >= max_x__i)) {
 	    x__i = indent_distance__i;
 	    if ((! left_extent) || x__i < left_extent__i) {

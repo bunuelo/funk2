@@ -502,7 +502,7 @@
   [let [[test_parses [have english_dictionary parse_sequence_as_main_clause `[pick up a big red butter knife] [new parse_tree] [new clause]]]]
     [mapc [funk [test_parse]
 		[let [[test_parse_tree [have test_parse lookup `parse_tree]]]
-		  [format standard-terminal '\nenglish_language-test serialized parse: ' [have test_parse_tree serialize]]]]
+		  [terminal_format standard-terminal '\nenglish_language-test serialized parse: ' [have test_parse_tree serialize]]]]
 	  test_parses]
     nil]]
 

@@ -628,6 +628,17 @@
        [dictionary-add_word this number_word nine  [plural]]
        [dictionary-add_word this number_word ten   [plural]]
        
+       [dictionary-add_word this ordinal_word first   []]
+       [dictionary-add_word this ordinal_word second  []]
+       [dictionary-add_word this ordinal_word third   []]
+       [dictionary-add_word this ordinal_word fourth  []]
+       [dictionary-add_word this ordinal_word fifth   []]
+       [dictionary-add_word this ordinal_word sixth   []]
+       [dictionary-add_word this ordinal_word seventh []]
+       [dictionary-add_word this ordinal_word eighth  []]
+       [dictionary-add_word this ordinal_word ninth   []]
+       [dictionary-add_word this ordinal_word tenth   []]
+       
        ]]
 
 

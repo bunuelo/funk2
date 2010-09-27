@@ -153,6 +153,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__terminal_print_frame__slot_t             primobject_type_terminal_print_frame;
   funk2_object_type__knowledge__slot_t                        primobject_type_knowledge;
   funk2_object_type__clause__slot_t                           primobject_type_clause;
+  funk2_object_type__wh_rank_shift_clause__slot_t             primobject_type_wh_rank_shift_clause;
   funk2_object_type__noun_group__slot_t                       primobject_type_noun_group;
   funk2_object_type__preposition_group__slot_t                primobject_type_preposition_group;
   funk2_object_type__adjective_group__slot_t                  primobject_type_adjective_group;

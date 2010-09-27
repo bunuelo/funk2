@@ -125,6 +125,7 @@
       [let [[eval-exp [if [eq stdin input-stream]
 			  [with-new-cause [cause-define cause-name `repl-eval]
 					  [cause-define cause-exp read-exp]
+					  [ansi-stream-reset stdout]
 					  [eval read-exp]]
 			[eval read-exp]]]]
 	[if [is-type `exception eval-exp]

@@ -229,7 +229,7 @@ struct funk2_object_type__verb_word__slot_s {
 
 // clause
 
-declare_frame_object_8_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle);
+declare_frame_object_9_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive);
 
 f2ptr f2clause__primobject_type__new_aux(f2ptr cause);
 

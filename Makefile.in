@@ -133,12 +133,14 @@ am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_agent.lo \
 	c/lib_libfunk2_la-f2_funk2_node.lo \
 	c/lib_libfunk2_la-f2_funktional.lo \
 	c/lib_libfunk2_la-f2_hash.lo c/lib_libfunk2_la-f2_html.lo \
-	c/lib_libfunk2_la-f2_load.lo c/lib_libfunk2_la-f2_malloc.lo \
+	c/lib_libfunk2_la-f2_knowledge.lo c/lib_libfunk2_la-f2_load.lo \
+	c/lib_libfunk2_la-f2_malloc.lo \
 	c/lib_libfunk2_la-f2_management_thread.lo \
 	c/lib_libfunk2_la-f2_memblock.lo \
 	c/lib_libfunk2_la-f2_memory.lo \
 	c/lib_libfunk2_la-f2_memorypool.lo \
 	c/lib_libfunk2_la-f2_module_registration.lo \
+	c/lib_libfunk2_la-f2_natural_language.lo \
 	c/lib_libfunk2_la-f2_never_delete_list.lo \
 	c/lib_libfunk2_la-f2_nil.lo c/lib_libfunk2_la-f2_number.lo \
 	c/lib_libfunk2_la-f2_object.lo \
@@ -547,6 +549,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_funktional.c \
   c/f2_hash.c \
   c/f2_html.c \
+  c/f2_knowledge.c \
   c/f2_load.c \
   c/f2_malloc.c \
   c/f2_management_thread.c \
@@ -554,6 +557,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_memory.c \
   c/f2_memorypool.c \
   c/f2_module_registration.c \
+  c/f2_natural_language.c \
   c/f2_never_delete_list.c \
   c/f2_nil.c \
   c/f2_number.c \
@@ -823,6 +827,8 @@ c/lib_libfunk2_la-f2_hash.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_html.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/lib_libfunk2_la-f2_knowledge.lo: c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_load.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_malloc.lo: c/$(am__dirstamp) \
@@ -836,6 +842,8 @@ c/lib_libfunk2_la-f2_memory.lo: c/$(am__dirstamp) \
 c/lib_libfunk2_la-f2_memorypool.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_module_registration.lo: c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
+c/lib_libfunk2_la-f2_natural_language.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_never_delete_list.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
@@ -1071,6 +1079,8 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_hash.lo
 	-rm -f c/lib_libfunk2_la-f2_html.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_html.lo
+	-rm -f c/lib_libfunk2_la-f2_knowledge.$(OBJEXT)
+	-rm -f c/lib_libfunk2_la-f2_knowledge.lo
 	-rm -f c/lib_libfunk2_la-f2_load.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_load.lo
 	-rm -f c/lib_libfunk2_la-f2_malloc.$(OBJEXT)
@@ -1085,6 +1095,8 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_memorypool.lo
 	-rm -f c/lib_libfunk2_la-f2_module_registration.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_module_registration.lo
+	-rm -f c/lib_libfunk2_la-f2_natural_language.$(OBJEXT)
+	-rm -f c/lib_libfunk2_la-f2_natural_language.lo
 	-rm -f c/lib_libfunk2_la-f2_never_delete_list.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_never_delete_list.lo
 	-rm -f c/lib_libfunk2_la-f2_nil.$(OBJEXT)
@@ -1278,6 +1290,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_gtk.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_hash.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_html.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_knowledge.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_load.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_malloc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_management_thread.Plo@am__quote@
@@ -1285,6 +1298,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_memory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_memorypool.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_module_registration.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_natural_language.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_never_delete_list.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_nil.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_number.Plo@am__quote@
@@ -1685,6 +1699,14 @@ c/lib_libfunk2_la-f2_html.lo: c/f2_html.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_html.lo `test -f 'c/f2_html.c' || echo '$(srcdir)/'`c/f2_html.c
 
+c/lib_libfunk2_la-f2_knowledge.lo: c/f2_knowledge.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_knowledge.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_knowledge.Tpo -c -o c/lib_libfunk2_la-f2_knowledge.lo `test -f 'c/f2_knowledge.c' || echo '$(srcdir)/'`c/f2_knowledge.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_knowledge.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_knowledge.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_knowledge.c' object='c/lib_libfunk2_la-f2_knowledge.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_knowledge.lo `test -f 'c/f2_knowledge.c' || echo '$(srcdir)/'`c/f2_knowledge.c
+
 c/lib_libfunk2_la-f2_load.lo: c/f2_load.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_load.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_load.Tpo -c -o c/lib_libfunk2_la-f2_load.lo `test -f 'c/f2_load.c' || echo '$(srcdir)/'`c/f2_load.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_load.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_load.Plo
@@ -1740,6 +1762,14 @@ c/lib_libfunk2_la-f2_module_registration.lo: c/f2_module_registration.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_module_registration.c' object='c/lib_libfunk2_la-f2_module_registration.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_module_registration.lo `test -f 'c/f2_module_registration.c' || echo '$(srcdir)/'`c/f2_module_registration.c
+
+c/lib_libfunk2_la-f2_natural_language.lo: c/f2_natural_language.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_natural_language.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_natural_language.Tpo -c -o c/lib_libfunk2_la-f2_natural_language.lo `test -f 'c/f2_natural_language.c' || echo '$(srcdir)/'`c/f2_natural_language.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_natural_language.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_natural_language.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_natural_language.c' object='c/lib_libfunk2_la-f2_natural_language.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_natural_language.lo `test -f 'c/f2_natural_language.c' || echo '$(srcdir)/'`c/f2_natural_language.c
 
 c/lib_libfunk2_la-f2_never_delete_list.lo: c/f2_never_delete_list.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_never_delete_list.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_never_delete_list.Tpo -c -o c/lib_libfunk2_la-f2_never_delete_list.lo `test -f 'c/f2_never_delete_list.c' || echo '$(srcdir)/'`c/f2_never_delete_list.c

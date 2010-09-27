@@ -265,13 +265,38 @@
     parses]]
 
 
+[deftypefunk dictionary_frame execute parse_sequence_as_noun_word [sequence parse_tree]
+  [let [[parses nil]]
+    [terminal_format standard-terminal '\n  parsing ' sequence ' as an noun word.']
+    [let [[first_word [first sequence]]]
+      [let [[first_word_nouns [get this type_var_value `noun_word first_word nil]]]
+	[mapc [funk [first_word_noun]
+		    [terminal_format standard-terminal '\n    found first word to be an noun: ' first_word]
+		    [let [[new_parse_tree [get parse_tree      new_copy]]
+			  [new_noun_word  [get first_word_noun new_copy]]]
+		      [have new_parse_tree add_last new_noun_word]
+		      [= parses [cons [frame parse_tree    new_parse_tree
+					     noun_word     new_noun_word
+					     rest_sequence [cdr sequence]]
+				      parses]]]]
+	      first_word_nouns]]]
+    parses]]
+
+[deftypefunk dictionary_frame execute parse_sequence_as_noun_group-after_classifiers [sequence parse_tree noun_group]
+  [let [[parses nil]]
+    [let [[noun_parses [have this parse_sequence_as_noun_word sequence parse_tree]]]
+      [= parses [append noun_parses parses]]]
+    parses]]
+
 [deftypefunk dictionary_frame execute parse_sequence_as_noun_group-after_adjectives [sequence parse_tree noun_group]
   [let [[parses nil]]
     [let [[classifier_words_parses [have this parse_sequence_as_classifier_words sequence parse_tree]]]
       [mapc [funk [classifier_words_parse]
-		  [terminal_format standard-terminal '\n      noun group found successful classifier_words parse: ' classifier_words_parse]
-		  
-		  ]
+		  [let [[classifier_words_parse_tree    [have classifier_words_parse lookup `parse_tree]]
+			[classifier_words_rest_sequence [have classifier_words_parse lookup `rest_sequence]]]
+		    [terminal_format standard-terminal '\n      noun group found successful classifier_words parse: ' classifier_words_parse]
+		    [let [[after_classifier_parses [have this parse_sequence_as_noun_group-after_classifiers classifier_words_rest_sequence classifier_words_parse_tree noun_group]]]
+		      [= parses [append after_classifiers_parses parses]]]]]
 	    classifier_words_parses]]
     parses]]
 
@@ -416,7 +441,13 @@
        
        [dictionary-add_word this determiner_word the [plural singular definite]]
        
+       [dictionary-add_word this classifier_word butter []]
+       
+       [dictionary-add_word this noun_word butter [mass]]
+       
        [dictionary-add_word this noun_word knife [singular]]
+       
+       [dictionary-add_word this combination_group [butter knife] []]
        
        [dictionary-add_word this adjective_word big []]
        
@@ -439,7 +470,7 @@
 
 
 [defunk english_language-test []
-  [have english_dictionary parse_sequence_as_main_clause `[pick up a big red knife] [new parse_tree] [new clause]]]
+  [have english_dictionary parse_sequence_as_main_clause `[pick up a big red butter knife] [new parse_tree] [new clause]]]
 
 
 `[globalize example_major_clauses `[[pick up the knife]

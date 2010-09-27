@@ -33,7 +33,7 @@
 		   '\n**                     **'
 		   '\n**  ']
   [ansi-stream-foreground stdout 9]
-  [terminal_format standard-terminal 'Welcome to  funk2 ']
+  [terminal_format standard-terminal 'Welcome to funk2']
   [ansi-stream-foreground stdout 15]
   [terminal_format standard-terminal '!  **'
 		   '\n**                     **'

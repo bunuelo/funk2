@@ -35,12 +35,22 @@
 	[get last_child_node last_node]
       this]]]
 
-[deftypefunk parse_tree_node execute map_nodes [funk]
+[deftypefunk parse_tree_node execute map_nodes_forward [funk]
   [apply funk [cons this nil]]
   [if next_node
-      [have next_node map_nodes funk]]
+      [have next_node map_nodes_forward funk]]
   [if first_child_node
-      [have first_child_node map_nodes funk]]]
+      [have first_child_node map_nodes_forward funk]]]
+
+[deftypefunk parse_tree_node execute map_nodes_backward [funk]
+  [if last_child_node
+      [have last_child_node map_nodes_backward funk]]
+  [if next_node
+      [have next_node map_nodes_backward funk]]
+  [apply funk [cons this nil]]]
+
+[deftypefunk parse_tree_node execute map_nodes [funk]
+  [have this map_nodes_forward funk]]
 
 [deftypefunk parse_tree_node execute insert_after [node]
   [let [[old-next_node next_node]]
@@ -53,6 +63,12 @@
 [deftypefunk parse_tree_node execute add_last [node]
   [let [[last_node [get this last_node]]]
     [have last_node insert_after node]]]
+
+[deftypefunk parse_tree_node execute serialize []
+  [let [[seq nil]]
+    [have this map_nodes_backward [funk [node]
+					[= seq [cons [get node parse_object] seq]]]]
+    seq]]
 
 'parse_tree'
 
@@ -87,6 +103,9 @@
 	[= root_node node]
       [have root_node add_last node]]]]
 
+[deftypefunk parse_tree execute serialize []
+  [if root_node
+      [have root_node serialize]]]
 
 'dictionary_frame'
 
@@ -480,7 +499,12 @@
 
 
 [defunk english_language-test []
-  [have english_dictionary parse_sequence_as_main_clause `[pick up a big red butter knife] [new parse_tree] [new clause]]]
+  [let [[test_parses [have english_dictionary parse_sequence_as_main_clause `[pick up a big red butter knife] [new parse_tree] [new clause]]]]
+    [mapc [funk [test_parse]
+		[let [[test_parse_tree [have test_parse lookup `parse_tree]]]
+		  [format standard-terminal '\nenglish_language-test serialized parse: ' [have test_parse_tree serialize]]]]
+	  test_parses]
+    nil]]
 
 
 `[globalize example_major_clauses `[[pick up the knife]

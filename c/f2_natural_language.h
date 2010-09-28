@@ -252,7 +252,7 @@ f2ptr f2clause__primobject_type__new_aux(f2ptr cause);
 
 // noun_group
 
-declare_frame_object_17_slot(noun_group, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, definite, indefinite, quantifier, singular, plural, mass, object, object_one, object_two);
+declare_frame_object_18_slot(noun_group, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, definite, indefinite, quantifier, singular, plural, mass, object, object_one, object_two, question);
 
 f2ptr f2noun_group__primobject_type__new_aux(f2ptr cause);
 

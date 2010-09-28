@@ -183,12 +183,13 @@ f2ptr f2verb_group__primobject_type__new_aux(f2ptr cause) {
 
 // combination_group
 
-def_frame_object__global__2_slot(combination_group, symbols, transitive);
+def_frame_object__global__3_slot(combination_group, symbols, transitive, preposition);
 
 f2ptr f2__combination_group__new(f2ptr cause) {
-  f2ptr symbols    = nil;
-  f2ptr transitive = nil;
-  return f2combination_group__new(cause, symbols, transitive);
+  f2ptr symbols     = nil;
+  f2ptr transitive  = nil;
+  f2ptr preposition = nil;
+  return f2combination_group__new(cause, symbols, transitive, preposition);
 }
 def_pcfunk0(combination_group__new, return f2__combination_group__new(this_cause));
 
@@ -615,7 +616,7 @@ void f2__natural_language__initialize() {
   
   // combination_group
   
-  init_frame_object__2_slot(combination_group, symbols, transitive);
+  init_frame_object__3_slot(combination_group, symbols, transitive, preposition);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_combination_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(combination_group__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_combination_group.new__funk = never_gc(cfunk);}

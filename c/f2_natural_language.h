@@ -280,7 +280,7 @@ f2ptr f2verb_group__primobject_type__new_aux(f2ptr cause);
 
 // combination_group
 
-declare_frame_object_2_slot(combination_group, symbols, transitive);
+declare_frame_object_3_slot(combination_group, symbols, transitive, preposition);
 
 f2ptr f2combination_group__primobject_type__new_aux(f2ptr cause);
 

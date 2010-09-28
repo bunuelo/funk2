@@ -144,7 +144,7 @@
 	[prog [terminal_format standard-terminal
 			       '\nerror terminal repl: unexpected exception ' result '\n'
 			       '\n                     restarting terminal repl.\n']
-	      [terminal_repl]]]]]
+	      [repl]]]]]
 
 [defunk load1 [filename]
   [with-new-cause [cause-define cause-name `load1]

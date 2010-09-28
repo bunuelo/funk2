@@ -198,6 +198,18 @@
 					      ]]]]]
 			first_word_verbs]]]]
       [prog [parse_format '\n  parsing ' sequence ' as not an imperative verb_group.']
+	    [let [[auxiliary_be_verb_parses [have this parse_sequence_as_auxiliary_be_verb sequence parse_tree]]]
+	      [mapc [funk [auxiliary_be_verb_parse]
+			  [let [[auxiliary_be_verb_parse_tree    [have auxiliary_be_verb_parse lookup `parse_tree]]
+				[auxiliary_be_verb_rest_sequence [have auxiliary_be_verb_parse lookup `rest_sequence]]]
+			    [let [[new_verb_group [get verb_group new_copy]]]
+			      [set new_verb_group be        t]
+			      [set new_verb_group auxiliary t]
+			      [= parses [cons [frame parse_tree    auxiliary_be_verb_parse_tree
+						     rest_sequence auxiliary_be_verb_rest_sequence
+						     verb_group    new_verb_group]
+					      parses]]]]]
+		    auxiliary_be_verb_parses]]
 	    ]]
     parses]]
 

@@ -658,8 +658,10 @@
 					      [verb_group_rest_sequence [have verb_group_parse lookup `rest_sequence]]
 					      [verb_group               [have verb_group_parse lookup `verb_group]]]
 					  [parse_format '\n      found successful question verb_group parse: ' verb_group_parse]
-					  
-					  ]]
+					  [if [null verb_group_rest_sequence]
+					      [= parses [cons verb_group_parse parses]]
+					    [prog [parse_format '\n        handling rest of question clause not implemented.']
+						  ]]]]
 				  verb_group_parses]]]]]
 		noun_group_parses]]]
       ]

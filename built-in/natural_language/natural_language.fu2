@@ -195,8 +195,6 @@
 		    verbs]]]]]]
     parses]]
 
-
-
 [deftypefunk dictionary_frame execute parse_sequence_as_auxiliary_be_verbs [sequence parse_tree]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as auxiliary be verbs.']
@@ -206,7 +204,7 @@
 			[verb_word          [have verb_parse lookup `verb_word]]
 			[verb_rest_sequence [have verb_parse lookup `rest_sequence]]]
 		    [if [get verb_word be]
-			[prog [parse_format '\n  found be verb parse: ' verb_parse]
+			[prog [parse_format '\n  found be auxiliary verb parse: ' verb_parse]
 			      [= parses [cons verb_parse parses]]
 			      
 			      ]]]]
@@ -244,13 +242,15 @@
 	      [mapc [funk [auxiliary_be_verbs_parse]
 			  [let [[auxiliary_be_verbs_parse_tree    [have auxiliary_be_verbs_parse lookup `parse_tree]]
 				[auxiliary_be_verbs_rest_sequence [have auxiliary_be_verbs_parse lookup `rest_sequence]]]
-			    [let [[new_verb_group [get verb_group new_copy]]]
-			      [set new_verb_group be        t]
-			      [set new_verb_group auxiliary t]
-			      [= parses [cons [frame parse_tree    auxiliary_be_verbs_parse_tree
-						     rest_sequence auxiliary_be_verbs_rest_sequence
-						     verb_group    new_verb_group]
-					      parses]]]]]
+			    [let [[verb_parses [have this parse_sequence_as_verb_word auxiliary_be_verbs_rest_sequence auxiliary_be_verbs_parse_tree]]]
+			      [mapc [funk [verb_parse]
+					  [let [[verb_parse_tree    [have verb_parse lookup `parse_tree]]
+						[verb_rest_sequence [have verb_parse lookup `rest_sequence]]]
+					    [= parses [cons [frame parse_tree    verb_parse_tree
+								   rest_sequence verb_rest_sequence
+								   verb_group    verb_group]
+							    parses]]]]
+				    verb_parses]]]]
 		    auxiliary_be_verbs_parses]]
 	    ]]
     parses]]

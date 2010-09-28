@@ -114,6 +114,9 @@
       [get agency body]
     nil]]
 
+[deftypefunk resource get world []
+  [get [get this body] physical_world]]
+
 [deftypefunk resource execute add_new_trace_story_event [character_name action_name prepositional_frame]
   [have trace_story add_new_event [get this local_time] character_name action_name prepositional_frame]]
 

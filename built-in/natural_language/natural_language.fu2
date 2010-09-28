@@ -257,10 +257,14 @@
 						[if [or [get verb_word en]
 							[get verb_word ing]]
 						    [prog [parse_format '\n  verb_word satisfies en or ing conjugation: ' verb_word]
-							  [= parses [cons [frame parse_tree    verb_parse_tree
-										 rest_sequence verb_rest_sequence
-										 verb_group    verb_group]
-									  parses]]]]]]
+							  [let [[new_verb_group [get verb_group new_copy]]]
+							    [if [get verb_word en]
+								[prog [parse_format '\n  verb_word is en following a be verb, so marking verb_group as passive.']
+								      [set new_verb_group passive t]]]
+							    [= parses [cons [frame parse_tree    verb_parse_tree
+										   rest_sequence verb_rest_sequence
+										   verb_group    new_verb_group]
+									    parses]]]]]]]
 					verb_parses]]]]]
 		    auxiliary_be_verbs_parses]]
 	    ]]

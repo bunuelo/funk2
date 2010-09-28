@@ -237,7 +237,7 @@
 			  [parse_format '\n    found a determiner: ' [get determiner symbols]]
 			  [let [[new_parse_tree      [get parse_tree new_copy]]
 				[new_determiner_word [get determiner new_copy]]
-				[rest_sequence       [if [== [length [get determiner symbols]] 1]
+				[rest_sequence       [if [is-type `symbol [get determiner symbols]]
 							 [cdr sequence]
 						       [cddr sequence]]]]
 			    [have new_parse_tree add_last new_determiner_word]

@@ -582,7 +582,7 @@
 			    [noun_group_rest_sequence [have noun_group_parse lookup `rest_sequence]]]
 			[parse_format '\n    found successful question noun_group parse: ' noun_group_parse]
 			[let [[verb_group [new verb_group]]]
-			  [let [[verb_group_parses [have this parse_sequence_as_verb_group sequence parse_tree verb_group]]]
+			  [let [[verb_group_parses [have this parse_sequence_as_verb_group noun_group_rest_sequence noun_group_parse_tree verb_group]]]
 			    [mapc [funk [verb_group_parse]
 					[parse_format '\n      found successful question verb_group parse: ' verb_group_parse]
 					

@@ -157,20 +157,21 @@ f2ptr f2adjective_group__primobject_type__new_aux(f2ptr cause) {
 
 // verb_group
 
-def_frame_object__global__10_slot(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative);
+def_frame_object__global__11_slot(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, not_only_auxiliary);
 
 f2ptr f2__verb_group__new(f2ptr cause) {
-  f2ptr symbols    = nil;
-  f2ptr imperative = nil;
-  f2ptr en         = nil;
-  f2ptr ing        = nil;
-  f2ptr to         = nil;
-  f2ptr todel      = nil;
-  f2ptr tense      = nil;
-  f2ptr be         = nil;
-  f2ptr passive    = nil;
-  f2ptr negative   = nil;
-  return f2verb_group__new(cause, symbols, imperative, en, ing, to, todel, tense, be, passive, negative);
+  f2ptr symbols            = nil;
+  f2ptr imperative         = nil;
+  f2ptr en                 = nil;
+  f2ptr ing                = nil;
+  f2ptr to                 = nil;
+  f2ptr todel              = nil;
+  f2ptr tense              = nil;
+  f2ptr be                 = nil;
+  f2ptr passive            = nil;
+  f2ptr negative           = nil;
+  f2ptr not_only_auxiliary = nil;
+  return f2verb_group__new(cause, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, not_only_auxiliary);
 }
 def_pcfunk0(verb_group__new, return f2__verb_group__new(this_cause));
 
@@ -609,7 +610,7 @@ void f2__natural_language__initialize() {
   
   // verb_group
   
-  init_frame_object__10_slot(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative);
+  init_frame_object__11_slot(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, not_only_auxiliary);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(verb_group__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__funk = never_gc(cfunk);}

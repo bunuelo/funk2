@@ -582,6 +582,7 @@
 			    [noun_group_rest_sequence [have noun_group_parse lookup `rest_sequence]]]
 			[parse_format '\n    found successful question noun_group parse: ' noun_group_parse]
 			[let [[verb_group [new verb_group]]]
+			  [set verb_group not_only_auxiliary t]
 			  [let [[verb_group_parses [have this parse_sequence_as_verb_group noun_group_rest_sequence noun_group_parse_tree verb_group]]]
 			    [mapc [funk [verb_group_parse]
 					[parse_format '\n      found successful question verb_group parse: ' verb_group_parse]
@@ -735,6 +736,10 @@
        [dictionary-add_word this verb_word pick    [infinitive takes_particle transitive]]
        [dictionary-add_word this verb_word saw     [infinitive past transitive]]
        [dictionary-add_word this verb_word walk    [infinitive present]]
+       [dictionary-add_word this verb_word is      [be third_person_singular present infinitive]]
+       [dictionary-add_word this verb_word are     [be plural present infinitive]]
+       [dictionary-add_word this verb_word was     [be third_person_singular first_person_singular past infinitive]]
+       [dictionary-add_word this verb_word were    [be plural past infinitive]]
        
        [dictionary-add_word this particle_word up []]
        

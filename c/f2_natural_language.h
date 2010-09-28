@@ -273,7 +273,7 @@ f2ptr f2adjective_group__primobject_type__new_aux(f2ptr cause);
 
 // verb_group
 
-declare_frame_object_10_slot(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative);
+declare_frame_object_11_slot(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, not_only_auxiliary);
 
 f2ptr f2verb_group__primobject_type__new_aux(f2ptr cause);
 

@@ -21,8 +21,8 @@
 [globalize debug_parse t]
 
 [defmetro parse_format [:rest exps]
-  [if debug_parse
-      `[terminal_format standard-terminal @exps]]]
+  `[if debug_parse
+       [terminal_format standard-terminal @exps]]]
 
 'parse_tree_node'
 
@@ -517,6 +517,14 @@
 		noun_group_parses]]]]
     parses]]
 
+[deftypefunk dictionary_frame execute parse_sequence_as_main_question_clause [sequence parse_tree clause]
+  [let [[parses nil]]
+    [let [[new_clause [get clause new_copy]]]
+      [set new_clause question t]
+      
+      ]
+    parses]]
+
 [deftypefunk dictionary_frame execute parse_sequence_as_main_clause [sequence parse_tree clause]
   [let [[parses nil]]
     [let [[first_word [first sequence]]]
@@ -637,6 +645,7 @@
        [dictionary-add_word this adjective_word blue  []]
        [dictionary-add_word this adjective_word green []]
        
+       [dictionary-add_word this preposition_word of     []]
        [dictionary-add_word this preposition_word before []]
        
        [dictionary-add_word this verb_word cut     [infinitive present transitive]]

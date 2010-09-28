@@ -87,6 +87,41 @@
   [have this step_physical_world]]
 
 
+[deftypefunk isis_world execute turn_right-start [agent_name]
+  [isis-call [get this client] turn_right-start agent agent_name]]
+
+[deftypefunk isis_world execute turn_right-stop [agent_name]
+  [isis-call [get this client] turn_right-stop agent agent_name]]
+
+[deftypefunk isis_world execute turn_left-start [agent_name]
+  [isis-call [get this client] turn_left-start agent agent_name]]
+
+[deftypefunk isis_world execute move_forward-start [agent_name]
+  [isis-call [get this client] move_forward-start agent agent_name]]
+
+[deftypefunk isis_world execute move_forward-stop [agent_name]
+  [isis-call [get this client] move_forward-stop agent agent_name]]
+
+[deftypefunk isis_world execute drop_from_right_hand [agent_name]
+  [isis-call [get this client] drop_from_right_hand agent agent_name]]
+
+[deftypefunk isis_world execute drop_from_left_hand [agent_name]
+  [isis-call [get this client] drop_from_left_hand agent agent_name]]
+
+[deftypefunk isis_world execute pick_up_with_left_hand [agent_name target]
+  [isis-call [get this client] pick_up_with_left_hand agent agent_name  target target]]
+
+[deftypefunk isis_world execute pick_up_with_right_hand [agent_name target]
+  [isis-call [get this client] pick_up_with_right_hand tagent agent_name target target]]
+
+[deftypefunk isis_world execute use_right_hand [agent_name target object]
+  [isis-call [get this client] use_right_hand tagent agent_name target target object object]]
+
+[deftypefunk isis_world execute use_left_hand [agent_name target object]
+  [isis-call [get this client] use_left_hand tagent agent_name target target object object]]
+       
+'added simulator commands to isis_world'
+
 [deframe ralph_agent [isis_agent] []
   [new []
        [construct isis_agent `Ralph]

@@ -21,7 +21,10 @@
 
 'now when activating resource, have to set the slots in funk_user the resource. how to?'
 'gotta check if things work...'
-'so how does resource access the mind? [have this get mind] correct?'
+'so how does resource access the mind?  correct?
+
+[have [get [get [get [get isis_world agent_mind `Ralph] layer `reactive] agency `physical] resource `funk_user] user_activate `move_forward `[3]]
+'
 
 
 [deframe funk_user  [resource] [[user_activate_mutex    [new traced_mutex]]
@@ -35,31 +38,39 @@
 			   [if [null [get this user_activate_resource]]
 			       [sleep 1]
 			     [prog [have user_activate_mutex lock]
+				   [print 'have lock']
 			           [have-apply [get this mind] activate [print `[reactive physical ,[get this user_activate_resource] @[get this user_activate_args]]]]
+				   [print 'activated']
 				   [set this user_activate_resource nil]
 				   [set this user_activate_args nil]
+				   [print 'finish setting']
 				   [have user_activate_mutex unlock]
 				   ]]]]]
        nil]]
 
 [deftypefunk funk_user execute user_activate [resource args]
+  [print 'have funk_user user_activate']
   [have user_activate_mutex lock]
-  [set user_activate_resource resource]
-  [set user_activate_args     args]
-  [have user_activate_mutex unlock]]
+  [print 'lock']
+  [set this user_activate_resource resource]
+  [print 'set resources']
+  [set this user_activate_args     args]
+  [print 'set args']
+  [have user_activate_mutex unlock]
+  [print 'unlock']]
 
 [deframe turn_right [resource] []
   [new []
        [construct resource [type this]
 		  [funk [steps]
 			[let [[body [get this body]]
-			      [world [get this physical_world]]]
+			      [world [get body physical_world]]]
 			  [have this-resource think_to_self 'Turning right is starting.']
-			  [have world turn_right-start [get this name]]
+			  [have world turn_right-start [get body name]]
 			  [let [[starting_time [get body time_step]]]
 			    [while [< [- [get body time_step] starting_time] steps] 
 			      [millisleep 50]]
-			    [have world turn_right-stop [get this name]]]]]]
+			    [have world turn_right-stop [get body name]]]]]]
        nil]]
 
 [deframe turn_left [resource] []
@@ -67,13 +78,13 @@
        [construct resource [type this]
 		  [funk [steps]
 			[let [[body [get this body]]
-			      [world [get this physical_world]]]
+			      [world [get body physical_world]]]
 			  [have this-resource think_to_self 'Turning left is starting.']
-			  [have world turn_left-start [get this name]]
+			  [have world turn_left-start [get body name]]
 			  [let [[starting_time [get body time_step]]]
 			    [while [< [- [get body time_step] starting_time] steps] 
 					       [millisleep 50]]
-			    [have world turn_left-stop [get this name]]]]]]
+			    [have world turn_left-stop [get body name]]]]]]
 			
        nil]]
 
@@ -81,14 +92,18 @@
   [new []
        [construct resource [type this]
 		  [funk [steps]
+			[print 'move_foward']
+			[print this]
 			[let [[body [get this body]]
-			      [world [get this physical_world]]]
+			      [world [get body physical_world]]]
+			  [print 'asked to move_forward']
 			  [have this-resource think_to_self 'Moving forward is starting.']
-			  [have world move_forward-start [get this name]]
+			  [have world move_forward-start [get body name]]
 			  [let [[starting_time [get body time_step]]]
 			    [while [< [- [get body time_step] starting_time] steps] 
 			      [millisleep 50]]
-			    [have world move_forward-stop [get this name]]]]]]
+			    [have world move_forward-stop [get body name]]]]
+			[print 'finished moving']]]
 			
        nil]]
 
@@ -97,13 +112,13 @@
        [construct resource [type this]
 		  [funk [steps]
 			[let [[body [get this body]]
-			      [world [get this physical_world]]]
+			      [world [get body physical_world]]]
 			  [have this-resource think_to_self 'moving backward is starting.']
-			  [have world move_backward-start [get this name]]
+			  [have world move_backward-start [get body name]]
 			  [let [[starting_time [get body time_step]]]
 			    [while [< [- [get body time_step] starting_time] steps] 
 			      [millisleep 50]]
-			    [have world move_backward-stop [get this name]]]]]]
+			    [have world move_backward-stop [get body name]]]]]]
        
        nil]]
 
@@ -112,9 +127,9 @@
        [construct resource [type this]
 		  [funk []
 			[let [[body [get this body]]
-			      [world [get this physical_world]]]
+			      [world [get body physical_world]]]
 			  [have this-resource think_to_self 'Droping from right hand is starting.']
-			  [have world drop_from_left_hand agent [get this name]]]]]
+			  [have world drop_from_left_hand agent [get body name]]]]]
        
        nil]]
 
@@ -123,9 +138,9 @@
        [construct resource [type this]
 		  [funk []
 			[let [[body [get this body]]
-			      [world [get this physical_world]]]
+			      [world [get body physical_world]]]
 			  [have this-resource think_to_self 'Droping from right hand is starting.']
-			  [have world drop_from_right_hand agent [get this name]]]]]
+			  [have world drop_from_right_hand agent [get body name]]]]]
        
        nil]]
 
@@ -140,17 +155,17 @@
 			    [if [have [get this objects] lookup target]
 				[if [> arm_length [have [have [get this objects] lookup target] `distance]]
 				    [if [null [have [get this reactive_sensory_sense] lookup `right_hand]]
-					[isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target target]
+					[isis-call [get [get body physical_world] client] pick_up_with_right_hand agent [get body name] target target]
 				      [mind-wait_to_activate [get this mind] reactive physical drop_from_right_hand]]
 				  [prog 
 				   [mind-wait_to_activate [get this mind] reactive physical walk_directly_towards target]
-				   [isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target target]]]
+				   [isis-call [get [get body physical_world] client] pick_up_with_right_hand agent [get body name] target target]]]
 			      [prog 
 						[mind-wait_to_activate [get this mind] reactive physical walk_directly_towards target]
-						[isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target target]]]
+						[isis-call [get [get body physical_world] client] pick_up_with_right_hand agent [get body name] target target]]]
 			  [prog 
 			   [mind-wait_to_activate [get this mind] reactive physical walk_directly_towards target]
-			   [isis-call [get [get this world] client] pick_up_with_right_hand agent [get this name] target target]]]
+			   [isis-call [get [get body physical_world] client] pick_up_with_right_hand agent [get body name] target target]]]
 			[get body sense]]]
        
        nil]]
@@ -166,17 +181,17 @@
 			    [if [have [get this objects] lookup target]
 				[if [> arm_length [have [have [get this objects] lookup target] `distance]]
 				    [if [null [have [get this reactive_sensory_sense] lookup `left_hand]]
-					[isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]
+					[isis-call [get [get body physical_world] client] pick_up_with_left_hand agent [get body name] target target]
 				      [mind-wait_to_activate [get this mind] reactive physical drop_from_left_hand]]
 				  [prog 
 				   [mind-wait_to_activate [get this mind] reactive physical walk_directly_towards target]
-				   [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]]]
+				   [isis-call [get [get body physical_world] client] pick_up_with_left_hand agent [get body name] target target]]]
 			      [prog 
 			       [mind-wait_to_activate [get this mind] reactive physical walk_directly_towards target]
-			       [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]]]
+			       [isis-call [get [get body physical_world] client] pick_up_with_left_hand agent [get body name] target target]]]
 			  [prog 
 			   [mind-wait_to_activate [get this mind] reactive physical walk_directly_towards target]
-			   [isis-call [get [get this world] client] pick_up_with_left_hand agent [get this name] target target]]]
+			   [isis-call [get [get body physical_world] client] pick_up_with_left_hand agent [get body name] target target]]]
 			[get body sense]]]
        nil]]
 
@@ -190,16 +205,16 @@
 			[if [get this objects]
 			    [if [have [get this objects] lookup fridge]
 				[if [> arm_length [have [get this objects] lookup `distance]]
-				    [isis-call [get [get this world] client] agent [get this name] open_fridge]
+				    [isis-call [get [get body physical_world] client] agent [get body name] open_fridge]
 				  [prog 
 				   [mind-wait_to_activate [get this mind] reactive physical walk_directly_towards fridge]
-				   [isis-call [get [get this world] client] agent [get this name] open_fridge]]]
+				   [isis-call [get [get body physical_world] client] agent [get body name] open_fridge]]]
 			      [prog 
 			       [mind-wait_to_activate [get this mind] reactive physical walk_directly_towards fridge]
-			       [isis-call [get [get this world] client] agent [get this name] open_fridge]]]
+			       [isis-call [get [get body physical_world] client] agent [get body name] open_fridge]]]
 			  [prog 
 			   [mind-wait_to_activate [get this mind] reactive physical walk_directly_towards fridge]
-			   [isis-call [get [get this world] client] agent [get this name] open_fridge]]]
+			   [isis-call [get [get body physical_world] client] agent [get body name] open_fridge]]]
 			[get body sense]]]
 			
        
@@ -216,7 +231,7 @@
 					 [mind-wait_to_activate [get this mind] reactive physical walk_directly_towards loaf]
 					 [while [get [get [get this mind] resource `reactive `physical `walk_directly_towards] active]
 					   [sleep 1]]
-					 [isis-call [get [get this world] client] agent [get this name] use_left_hand object knife target loaf]]]
+					 [isis-call [get [get body physical_world] client] agent [get body name] use_left_hand object knife target loaf]]]
        
        nil]]
 

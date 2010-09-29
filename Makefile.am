@@ -234,7 +234,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_globalenv.c \
   c/f2_glwindow.c \
   c/f2_gmodule.c \
-  c/f2_graph.c \
   c/f2_graph_cluster.c \
   c/f2_graph_match_error_correcting.c \
   c/f2_graphviz.c \
@@ -311,6 +310,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_serialize.c \
   c/f2_set.c \
   c/f2_signal.c \
+  c/f2_simple_graph.c \
   c/f2_socket.c \
   c/f2_socket_client.c \
   c/f2_socket_server.c \

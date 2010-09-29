@@ -177,7 +177,7 @@
 [deftypefunk parse_tree get is_contained_by_type [type]
   [let [[last_node [get this last_node]]]
     [if last_node
-	[get last_node contained_by_type type]]]]
+	[get last_node is_contained_by_type type]]]]
 
 [deftypefunk parse_tree get containing_type_property [type property]
   [if [get this is_contained_by_type type]

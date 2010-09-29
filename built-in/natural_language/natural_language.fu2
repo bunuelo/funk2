@@ -88,7 +88,7 @@
     seq]]
 
 [deftypefunk parse_tree_node set containing_type [type value]
-  [if [eq [type parse_object] type]
+  [if [is-type type parse_object]
       [= parse_object value]
     [if previous_node
 	[set previous_node containing_type type value]
@@ -98,7 +98,7 @@
 	       containing_type type]]]]]
 
 [deftypefunk parse_tree_node get containing_type [type]
-  [if [eq [type parse_object] type]
+  [if [is-type type parse_object]
       parse_object
     [if previous_node
 	[get previous_node containing_type type]
@@ -108,7 +108,7 @@
 	       containing_type type]]]]]
 
 [deftypefunk parse_tree_node get is_contained_by_type [type]
-  [if [eq [type parse_object] type]
+  [if [is-type type parse_object]
       t
     [if previous_node
 	[get previous_node containing_type type]
@@ -178,6 +178,21 @@
   [let [[last_node [get this last_node]]]
     [if last_node
 	[get last_node contained_by_type type]]]]
+
+[deftypefunk parse_tree get containing_type_property [type property]
+  [if [get this is_contained_by_type type]
+      [object-get [get this containing_type type] property]
+    [error bug_type `parse_tree_is_not_contained_by_type
+	   type     type]]]
+		    
+[deftypefunk parse_tree set containing_type_property [type property value]
+  [if [get this is_contained_by_type type]
+      [let [[original_object [get this containing_type type]]]
+	[let [[new_copy [get original_object new_copy]]]
+	  [object-set new_copy property value]
+	  [set this containing_type type new_copy]]]
+    [error bug_type `parse_tree_is_not_contained_by_type
+	   type     type]]]
 
 [deftypefunk parse_tree get as-graph []
   [let [[graph [new graph]]]

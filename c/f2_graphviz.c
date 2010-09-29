@@ -179,7 +179,7 @@ def_pcfunk3(graphviz__edge_name, label, left_node, right_node, return f2__graphv
 f2ptr f2__graphviz__raw_labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node) {
   f2ptr edge__name = f2__graphviz__edge_name(cause, label, left_node, right_node);
   f2ptr color      = nil;
-  if (raw__graph_variable__is_type(cause, label)) {
+  if (raw__simple_graph_variable__is_type(cause, label)) {
     color = new__string(cause, "#CF0000");
   }
   return f2__stringlist__rawcode(cause, f2list5__new(cause,

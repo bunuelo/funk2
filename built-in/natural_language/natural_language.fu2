@@ -122,6 +122,20 @@
   [if root_node
       [have root_node serialize]]]
 
+[deftypefunk parse_tree get as-graph []
+  [let [[graph [new graph]]]
+    [let [[graph_node_hash [new ptypehash]]]
+      [have this map_nodes [funk [node]
+				 [have graph_node_hash add node [new graph_node [get node parse_object]]]]]
+      [have this map_nodes [funk [node]
+				 [let [[next_graph_node  [have graph_node_hash lookup [get node next_node]]]
+				       [child_graph_node [have graph_node_hash lookup [get node first_child_node]]]]
+				   [if next_graph_node
+				       [have graph add_new_edge [new graph_edge `next        [have graph_node_hash lookup node] next_graph_node]]]
+				   [if child_graph_node
+				       [have graph add_new_edge [new graph_edge `first_child [have graph_node_hash lookup node] child_graph_node]]]]]]]
+    graph]]
+
 'dictionary_frame'
 
 [deframe dictionary_frame [frame] [[symbols_hash [hash]]]]
@@ -921,7 +935,8 @@
     [mapc [funk [test_parse]
 		[terminal_format standard-terminal   '\nenglish_language-test parse: ' test_parse]
 		[let [[test_parse_tree [have test_parse lookup `parse_tree]]]
-		  [terminal_format standard-terminal '\n                 serialized: ' [have test_parse_tree serialize]]]]
+		  [terminal_format standard-terminal '\n                 serialized: ' [have test_parse_tree serialize]]
+		  [have [get test_parse_tree as-graph] gview]]]
 	  test_parses]
     nil]]
 

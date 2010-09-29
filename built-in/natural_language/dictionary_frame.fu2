@@ -1,0 +1,83 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'dictionary_frame'
+
+[deframe dictionary_frame [frame] [[symbols_hash [hash]]]]
+
+[deftypefunk dictionary_frame get symbols_as_key [symbols]
+  [if [or [is-type `symbol  symbols]
+	  [is-type `integer symbols]
+	  [is-type `float   symbols]
+	  [is-type `double  symbols]]
+      symbols
+    [let [[symbols-as-conslist [cond [[is-type `cons    symbols] symbols]
+				     [[is-type `list    symbols] [get symbols cons_cells]]
+				     [t                          [error bug_type  `invalid_symbol_or_symbol_list_when_adding_word_to_dictionary_frame
+									word_type type
+									symbols   symbols]]]]]
+      [let [[value [have symbols_hash lookup symbols-as-conslist]]]
+	[if value
+	    value
+	  [prog [have symbols_hash add symbols-as-conslist symbols-as-conslist]
+		symbols-as-conslist]]]]]]
+
+[deftypefunk dictionary_frame execute add_word [type symbol features]
+  [let [[word [object_type-new type]]] 
+    [have word add `symbols [get this symbols_as_key symbol]]
+    [mapc [funk [feature]
+		[if [not [get word contains feature]]
+		    [error bug_type  `invalid_feature_when_adding_word_to_dictionary_frame
+			   word_type type
+			   feature   feature]
+		  [have word add feature t]]]
+	  features]
+    [have this add_type_var_value type symbol [cons word [get this type_var_value type symbol nil]]]]]
+
+[defmetro dictionary-add_word [this type symbol features]
+  `[have ,this add_word [quote ,type] [quote ,symbol] [conslist @[mapcar [funk [feature] `[quote ,feature]] features]]]]
+
+[deftypefunk dictionary_frame get definitions_by_type [type symbol]
+  [let [[definitions nil]]
+    [let [[key [get this symbols_as_key symbol]]]
+      [= definitions [append [get this type_var_value type key nil] definitions]]
+      [if [and [eq type `number_word]
+	       [or [is-type `integer key]
+		   [is-type `float   key]
+		   [is-type `double  key]]]
+	  [if [== key 1]
+	      [let [[number_word [new number_word]]]
+		[set number_word symbols  key]
+		[set number_word singular t]
+		[= definitions [cons number_word definitions]]]
+	    [let [[number_word [new number_word]]]
+	      [set number_word symbols key]
+	      [set number_word plural  t]
+	      [= definitions [cons number_word definitions]]]]]]
+    definitions]]
+
+[deftypefunk dictionary_frame get definitions [symbol]
+  [let [[definitions nil]]
+    [mapc [funk [type]
+		[= definitions [append definitions [get this definitions_by_type type symbol]]]]
+	  [get [get this type_ptypehash] keys]]
+    definitions]]
+
+

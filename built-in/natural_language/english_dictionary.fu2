@@ -1,0 +1,204 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'english_dictionary'
+
+[deframe english_dictionary [dictionary_frame] []
+  [new []
+       [construct dictionary_frame]
+       
+       [dictionary-add_word this determiner_word a          [indefinite singular]]
+       [dictionary-add_word this determiner_word the        [definite singular plural mass]]
+       [dictionary-add_word this determiner_word some       [definite plural mass]]
+       [dictionary-add_word this determiner_word all        [plural quantifier]]
+       [dictionary-add_word this determiner_word any        [singular plural quantifier indefinite]]
+       [dictionary-add_word this determiner_word both       [quantifier definite plural]] 'has special both-and form.'
+       [dictionary-add_word this determiner_word which      [question singular plural]]
+       [dictionary-add_word this determiner_word what       [question singular plural]]
+       [dictionary-add_word this determiner_word [how many] [question plural]]
+       
+       [dictionary-add_word this noun_word knife         [singular]]
+       [dictionary-add_word this noun_word knives        [plural]]
+       [dictionary-add_word this noun_word bread         [mass]]
+       [dictionary-add_word this noun_word butter        [mass]]
+       [dictionary-add_word this noun_word refrigerator  [singular]]
+       [dictionary-add_word this noun_word refrigerators [plural]]
+       [dictionary-add_word this noun_word fridge        [singular]]
+       [dictionary-add_word this noun_word fridges       [plural]]
+       [dictionary-add_word this noun_word kitchen       [singular]]
+       [dictionary-add_word this noun_word kitchens      [plural]]
+       [dictionary-add_word this noun_word counter       [singular]]
+       [dictionary-add_word this noun_word counters      [plural]]
+       [dictionary-add_word this noun_word slice         [singular]]
+       [dictionary-add_word this noun_word slices        [plural]]
+       [dictionary-add_word this noun_word toast         [singular]]
+       [dictionary-add_word this noun_word piece         [singular]]
+       [dictionary-add_word this noun_word pieces        [plural]]
+       [dictionary-add_word this noun_word loaf          [singular]]
+       [dictionary-add_word this noun_word loaves        [plural]]
+       [dictionary-add_word this noun_word block         [singular]]
+       [dictionary-add_word this noun_word blocks        [plural]]
+       [dictionary-add_word this noun_word funk          [mass]]
+       [dictionary-add_word this noun_word dog           [singular]]
+       [dictionary-add_word this noun_word dogs          [plural]]
+       [dictionary-add_word this noun_word cat           [singular]]
+       [dictionary-add_word this noun_word cats          [plural]]
+       
+       [dictionary-add_word this classifier_word butter  []]
+       [dictionary-add_word this classifier_word kitchen []]
+       
+       'these combinations are not currently used by the parser.'
+       [dictionary-add_word this combination_group [butter knife]    []]
+       [dictionary-add_word this combination_group [kitchen counter] []]
+       
+       [dictionary-add_word this proper_noun_word Lauren [singular]]
+       [dictionary-add_word this proper_noun_word Ralph  [singular]]
+       
+       [dictionary-add_word this adjective_word big   []]
+       [dictionary-add_word this adjective_word small []]
+       [dictionary-add_word this adjective_word sharp []]
+       [dictionary-add_word this adjective_word long  []]
+       [dictionary-add_word this adjective_word short []]
+       [dictionary-add_word this adjective_word red   []]
+       [dictionary-add_word this adjective_word blue  []]
+       [dictionary-add_word this adjective_word green []]
+       
+       [dictionary-add_word this preposition_word of     []]
+       [dictionary-add_word this preposition_word before []]
+       
+       [dictionary-add_word this verb_word cut              [infinitive transitive]]
+       [dictionary-add_word this verb_word cuts             [present transitive]]
+       [dictionary-add_word this verb_word cut              [past en transitive]]
+       [dictionary-add_word this verb_word cutting          [ing transitive]]
+       [dictionary-add_word this verb_word pick             [infinitive takes_particle transitive]]
+       [dictionary-add_word this verb_word picks            [present takes_particle transitive]]
+       [dictionary-add_word this verb_word picked           [past en takes_particle transitive]]
+       [dictionary-add_word this verb_word picking          [ing takes_particle transitive]]
+       [dictionary-add_word this verb_word shut             [infinitive takes_particle transitive]]
+       [dictionary-add_word this verb_word shuts            [present takes_particle transitive]]
+       [dictionary-add_word this verb_word shut             [past en takes_particle transitive]]
+       [dictionary-add_word this verb_word shuting          [ing takes_particle transitive]]
+       [dictionary-add_word this verb_word see              [infinitive transitive]]
+       [dictionary-add_word this verb_word sees             [present transitive]]
+       [dictionary-add_word this verb_word saw              [en past transitive]]
+       [dictionary-add_word this verb_word seeing           [ing transitive]]
+       [dictionary-add_word this verb_word walk             [infinitive]]
+       [dictionary-add_word this verb_word walks            [present]]
+       [dictionary-add_word this verb_word walked           [en]]
+       [dictionary-add_word this verb_word walking          [ing]]
+       [dictionary-add_word this verb_word is               [be third_person_singular present infinitive]]
+       [dictionary-add_word this verb_word are              [be plural present infinitive]]
+       [dictionary-add_word this verb_word am               [be first_person_singular present infinitive]]
+       [dictionary-add_word this verb_word was              [be third_person_singular first_person_singular past infinitive]]
+       [dictionary-add_word this verb_word were             [be plural past infinitive]]
+       [dictionary-add_word this verb_word [has been]       [be third_person_singular past infinitive]]
+       [dictionary-add_word this verb_word [have been]      [be first_person_singular plural past infinitive]]
+       [dictionary-add_word this verb_word [had been]       [be first_person_singular plural past infinitive]]
+       [dictionary-add_word this verb_word [will be]        [be will first_person_singular third_person_singular plural infinitive]]
+       [dictionary-add_word this verb_word [will have been] [be will first_person_singular third_person_singular plural past infinitive]]
+       [dictionary-add_word this verb_word being            [be ing infinitive]]
+       [dictionary-add_word this verb_word support          [infinitive transitive]]
+       [dictionary-add_word this verb_word supports         [present transitive]]
+       [dictionary-add_word this verb_word supported        [en past transitive]]
+       [dictionary-add_word this verb_word supporting       [ing transitive]]
+       
+       [dictionary-add_word this particle_word up []]
+       
+       'these combinations are used by the parser to recognize special particle accepting verbs.'
+       [dictionary-add_word this combination_group [pick up] [transitive]]
+       
+       'all Funk2 number objects are recognized as number words, but ones listed here are the only ones recognized with English symbolic names.'
+       [dictionary-add_word this number_word one   [singular]]
+       [dictionary-add_word this number_word two   [plural]]
+       [dictionary-add_word this number_word three [plural]]
+       [dictionary-add_word this number_word four  [plural]]
+       [dictionary-add_word this number_word five  [plural]]
+       [dictionary-add_word this number_word six   [plural]]
+       [dictionary-add_word this number_word seven [plural]]
+       [dictionary-add_word this number_word eight [plural]]
+       [dictionary-add_word this number_word nine  [plural]]
+       [dictionary-add_word this number_word ten   [plural]]
+       
+       [dictionary-add_word this ordinal_word first   []]
+       [dictionary-add_word this ordinal_word second  []]
+       [dictionary-add_word this ordinal_word third   []]
+       [dictionary-add_word this ordinal_word fourth  []]
+       [dictionary-add_word this ordinal_word fifth   []]
+       [dictionary-add_word this ordinal_word sixth   []]
+       [dictionary-add_word this ordinal_word seventh []]
+       [dictionary-add_word this ordinal_word eighth  []]
+       [dictionary-add_word this ordinal_word ninth   []]
+       [dictionary-add_word this ordinal_word tenth   []]
+       
+       [dictionary-add_word this question_adjunct_word how   []]
+       [dictionary-add_word this question_adjunct_word when  []]
+       [dictionary-add_word this question_adjunct_word where []]
+       [dictionary-add_word this question_adjunct_word why   []]
+       
+       [dictionary-add_word this preposition_word above      []]
+       [dictionary-add_word this preposition_word behind     []]
+       [dictionary-add_word this preposition_word below      []]
+       [dictionary-add_word this preposition_word beneath    []]
+       [dictionary-add_word this preposition_word beside     []]
+       [dictionary-add_word this preposition_word by         []]
+       [dictionary-add_word this preposition_word from       []]
+       [dictionary-add_word this preposition_word in         []]
+       [dictionary-add_word this preposition_word inside     []]
+       [dictionary-add_word this preposition_word into       []]
+       [dictionary-add_word this preposition_word of         []]
+       [dictionary-add_word this preposition_word on         []]
+       [dictionary-add_word this preposition_word onto       []]
+       [dictionary-add_word this preposition_word over       []]
+       [dictionary-add_word this preposition_word to         []]
+       [dictionary-add_word this preposition_word under      []]
+       [dictionary-add_word this preposition_word underneath []]
+       [dictionary-add_word this preposition_word with       []]
+       
+       [dictionary-add_word this combination_group [in back of]  [preposition]]
+       [dictionary-add_word this combination_group [in front of] [preposition]]
+       [dictionary-add_word this combination_group [inside of]   [preposition]]
+       [dictionary-add_word this combination_group [on top of]   [preposition]]
+       [dictionary-add_word this combination_group [out of]      [preposition]]
+       
+       ]]
+
+
+[defunk english_language-test_parse [sequence]
+  [let [[parse_tree [new parse_tree]]]
+    [let [[clause [new clause]]]
+      [have parse_tree add_below_last clause]
+      [let [[test_parses [have english_dictionary parse_sequence_as_main_clause sequence parse_tree]]]
+	[mapc [funk [test_parse]
+		    [terminal_format standard-terminal   '\nenglish_language-test parse: ' test_parse]
+		    [let [[test_parse_tree [have test_parse lookup `parse_tree]]]
+		      [terminal_format standard-terminal '\n                 serialized: ' [have test_parse_tree serialize]]
+		      [have [get test_parse_tree as-graph] gview]]]
+	      test_parses]]]]
+  nil]
+
+
+[defunk english_language-test []
+  [english_language-test_parse `[pick up a big red butter knife]]]
+
+
+[globalize english_dictionary [new english_dictionary]]
+
+[terminal_format standard-terminal '\nSuccessfully defined global ' `english_dictionary ' variable!']
+

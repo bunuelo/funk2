@@ -1,0 +1,208 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'parse_tree_node'
+
+[deframe parse_tree_node [frame] [parse_object parent_node previous_node next_node first_child_node last_child_node]]
+
+[deftypefunk parse_tree_node get last_node []
+  [if next_node
+      [get next_node last_node]
+    [if last_child_node
+	[get last_child_node last_node]
+      this]]]
+
+[deftypefunk parse_tree_node execute map_nodes_forward [funk]
+  [apply funk [cons this nil]]
+  [if next_node
+      [have next_node map_nodes_forward funk]]
+  [if first_child_node
+      [have first_child_node map_nodes_forward funk]]]
+
+[deftypefunk parse_tree_node execute map_nodes_backward [funk]
+  [if last_child_node
+      [have last_child_node map_nodes_backward funk]]
+  [if next_node
+      [have next_node map_nodes_backward funk]]
+  [apply funk [cons this nil]]]
+
+[deftypefunk parse_tree_node execute map_nodes [funk]
+  [have this map_nodes_forward funk]]
+
+[deftypefunk parse_tree_node execute insert_after [node]
+  [let [[old-next_node next_node]]
+    [= next_node node]
+    [set node next_node     old-next_node]
+    [set node previous_node this]
+    [if old-next_node
+	[set old-next_node previous_node node]
+      [if parent_node
+	  [set parent_node last_child_node node]]]]]
+
+[deftypefunk parse_tree_node execute insert_below_no_children [node]
+  [if [or first_child_node last_child_node]
+      [error bug_type         `insert_below_no_children_assumes_no_children
+	     first_child_node first_child_node
+	     last_child_node  last_child_node]]
+  [= first_child_node node]
+  [= last_child_node  node]
+  [set node parent_node this]
+  [set node previous_node nil]
+  [set node next_node nil]]
+
+[deftypefunk parse_tree_node execute add_last [node]
+  [let [[last_node [get this last_node]]]
+    [have last_node insert_after node]]]
+
+[deftypefunk parse_tree_node execute add_below_last [node]
+  [let [[last_node [get this last_node]]]
+    [have last_node insert_below_no_children node]]]
+
+[deftypefunk parse_tree_node execute serialize []
+  [let [[seq nil]]
+    [have this map_nodes_backward [funk [node]
+					[= seq [cons [get node parse_object] seq]]]]
+    seq]]
+
+[deftypefunk parse_tree_node set containing_type [type value]
+  [if [is-type type parse_object]
+      [= parse_object value]
+    [if previous_node
+	[set previous_node containing_type type value]
+      [if parent_node
+	  [set parent_node containing_type type value]
+	[error bug_type        `parse_tree_node_does_not_have_containing_type
+	       containing_type type]]]]]
+
+[deftypefunk parse_tree_node get containing_type [type]
+  [if [is-type type parse_object]
+      parse_object
+    [if previous_node
+	[get previous_node containing_type type]
+      [if parent_node
+	  [get parent_node containing_type type]
+	[error bug_type        `parse_tree_node_does_not_have_containing_type
+	       containing_type type]]]]]
+
+[deftypefunk parse_tree_node get is_contained_by_type [type]
+  [if [is-type type parse_object]
+      t
+    [if previous_node
+	[get previous_node containing_type type]
+      [if parent_node
+	  [get parent_node containing_type type]
+	nil]]]]
+
+
+'parse_tree'
+
+[deframe parse_tree [frame] [root_node]]
+
+[deftypefunk parse_tree execute map_nodes [funk]
+  [if root_node
+      [have root_node map_nodes funk]]]
+
+[deftypefunk parse_tree get new_copy []
+  [if [null root_node]
+      [new parse_tree]
+    [let [[node_hash [new ptypehash]]]
+      [have this map_nodes [funk [node]
+				 [have node_hash add node [new parse_tree_node]]]]
+      [have this map_nodes [funk [node]
+				 [let [[new_node [have node_hash lookup node]]]
+				   [set new_node parse_object     [get node parse_object]]
+				   [set new_node parent_node      [let [[parent_node      [get node parent_node]]]      [if parent_node      [have node_hash lookup parent_node]]]]
+				   [set new_node previous_node    [let [[previous_node    [get node previous_node]]]    [if previous_node    [have node_hash lookup previous_node]]]]
+				   [set new_node next_node        [let [[next_node        [get node next_node]]]        [if next_node        [have node_hash lookup next_node]]]]
+				   [set new_node first_child_node [let [[first_child_node [get node first_child_node]]] [if first_child_node [have node_hash lookup first_child_node]]]]
+				   [set new_node last_child_node  [let [[last_child_node  [get node last_child_node]]]  [if last_child_node  [have node_hash lookup last_child_node]]]]]]]
+      [let [[new_parse_tree [new parse_tree]]]
+	[set new_parse_tree root_node [have node_hash lookup root_node]]
+	new_parse_tree]]]]
+
+[deftypefunk parse_tree get last_node []
+  [if root_node
+      [get root_node last_node]]]
+
+[deftypefunk parse_tree execute add_last [parse_object]
+  [let [[node [new parse_tree_node]]]
+    [set node parse_object parse_object]
+    [if [null root_node]
+	[= root_node node]
+      [have root_node add_last node]]]]
+
+[deftypefunk parse_tree execute add_below_last [parse_object]
+  [let [[node [new parse_tree_node]]]
+    [set node parse_object parse_object]
+    [if [null root_node]
+	[= root_node node]
+      [have root_node add_below_last node]]]]
+
+[deftypefunk parse_tree execute serialize []
+  [if root_node
+      [have root_node serialize]]]
+
+[deftypefunk parse_tree set containing_type [type value]
+  [let [[last_node [get this last_node]]]
+    [if last_node
+	[set last_node containing_type type value]]]]
+
+[deftypefunk parse_tree get containing_type [type]
+  [let [[last_node [get this last_node]]]
+    [if last_node
+	[get last_node containing_type type]]]]
+
+[deftypefunk parse_tree get is_contained_by_type [type]
+  [let [[last_node [get this last_node]]]
+    [if last_node
+	[get last_node is_contained_by_type type]]]]
+
+[deftypefunk parse_tree get containing_type_property [type property]
+  [if [get this is_contained_by_type type]
+      [object-get [get this containing_type type] property]
+    [error bug_type `parse_tree_is_not_contained_by_type
+	   type     type]]]
+		    
+[deftypefunk parse_tree set containing_type_property [type property value]
+  [if [get this is_contained_by_type type]
+      [let [[original_object [get this containing_type type]]]
+	[let [[new_copy [get original_object new_copy]]]
+	  [object-set new_copy property value]
+	  [set this containing_type type new_copy]]]
+    [error bug_type `parse_tree_is_not_contained_by_type
+	   type     type]]]
+
+[deftypefunk parse_tree get as-graph []
+  [let [[graph [new graph]]]
+    [let [[graph_node_hash [new ptypehash]]]
+      [have this map_nodes [funk [node]
+				 [have graph_node_hash add node [new graph_node [let [[parse_object [get node parse_object]]] [format nil `[,[type parse_object] ,[get parse_object symbols]]]]]]]]
+      [have this map_nodes [funk [node]
+				 [let [[node_graph_node  [have graph_node_hash lookup node]]
+				       [next_graph_node  [have graph_node_hash lookup [get node next_node]]]
+				       [child_graph_node [have graph_node_hash lookup [get node first_child_node]]]]
+				   [if next_graph_node
+				       [have graph add_edge [new graph_edge `next        node_graph_node next_graph_node]]]
+				   [if child_graph_node
+				       [have graph add_edge [new graph_edge `first_child node_graph_node child_graph_node]]]]]]]
+    graph]]
+
+
+

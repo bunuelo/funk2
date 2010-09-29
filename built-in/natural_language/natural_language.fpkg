@@ -17,6 +17,20 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defpackage parse_tree
+  :sources ['parse_tree.fu2']]
+
+[defpackage dictionary_frame
+  :sources ['dictionary_frame.fu2']]
+
+[defpackage english_dictionary
+  :packages [dictionary_frame]
+   :sources ['english_dictionary.fu2']]
+
+[defpackage english_dictionary_parse
+  :packages [dictionary_frame parse_tree]
+   :sources ['english_dictionary_parse.fu2']]
+
 [defpackage natural_language
-  :sources ['natural_language.fu2']]
+  :packages [english_dictionary english_dictionary_parse]]
 

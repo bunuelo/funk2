@@ -85,6 +85,25 @@
 					[= seq [cons [get node parse_object] seq]]]]
     seq]]
 
+[deftypefunk parse_tree_node set containing_type [type value]
+  [if [eq [type parse_object] type]
+      [= parse_object value]
+    [if previous_node
+	[set previous_node containing_type type value]
+      [if parent_node
+	  [set parent_node containing_type type value]
+	[error bug_type        `parse_tree_node_does_not_have_containing_type
+	       containing_type type]]]]]
+
+[deftypefunk parse_tree_node get containing_type [type]
+  [if [eq [type parse_object] type]
+      parse_object
+    [if previous_node
+	[get previous_node containing_type type]
+      [if parent_node
+	  [get parent_node containing_type type]
+	nil]]]]
+
 'parse_tree'
 
 [deframe parse_tree [frame] [root_node]]
@@ -121,6 +140,16 @@
 [deftypefunk parse_tree execute serialize []
   [if root_node
       [have root_node serialize]]]
+
+[deftypefunk parse_tree set containing_type [type value]
+  [let [[last_node [get this last_node]]]
+    [if last_node
+	[set last_node containing_type type value]]]]
+
+[deftypefunk parse_tree get containing_type [type]
+  [let [[last_node [get this last_node]]]
+    [if last_node
+	[get last_node containing_type type]]]]
 
 [deftypefunk parse_tree get as-graph []
   [let [[graph [new graph]]]

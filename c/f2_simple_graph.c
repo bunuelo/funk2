@@ -1327,7 +1327,7 @@ f2ptr f2__simple_graph__as__dot_code(f2ptr cause, f2ptr this) {
       } else {
 	color = new__string(cause, "#000000");
       }
-      f2ptr node_code   = f2__simple_graphviz__node(cause, f2__simple_graphviz__exp__as__name(cause, node__label), f2__simple_graphviz__exp__as__label(cause, node__label), color);
+      f2ptr node_code   = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, node__label), f2__graphviz__exp__as__label(cause, node__label), color);
       node_codes = f2cons__new(cause, node_code, node_codes);
       iter = f2__cons__cdr(cause, iter);
     }
@@ -1343,14 +1343,14 @@ f2ptr f2__simple_graph__as__dot_code(f2ptr cause, f2ptr this) {
       f2ptr edge__right_node        = f2__simple_graph_edge__right_node(cause, edge);
       f2ptr edge__left_node__label  = f2__simple_graph_node__label(cause, edge__left_node);
       f2ptr edge__right_node__label = f2__simple_graph_node__label(cause, edge__right_node);
-      f2ptr edge_code               = f2__simple_graphviz__raw_labelled_edge(cause, edge__label, f2__simple_graphviz__exp__as__name(cause, edge__left_node__label), f2__simple_graphviz__exp__as__name(cause, edge__right_node__label));
+      f2ptr edge_code               = f2__graphviz__raw_labelled_edge(cause, edge__label, f2__graphviz__exp__as__name(cause, edge__left_node__label), f2__graphviz__exp__as__name(cause, edge__right_node__label));
       edge_codes = f2cons__new(cause, edge_code, edge_codes);
       iter = f2__cons__cdr(cause, iter);
     }
   }
-  return f2__simple_graphviz__disimple_graph(cause, f2list4__new(cause,
-						   f2__simple_graphviz__node_color(cause, new__string(cause, "#000000")),
-						   f2__simple_graphviz__edge_color(cause, new__string(cause, "#000000")),
+  return f2__graphviz__disimple_graph(cause, f2list4__new(cause,
+						   f2__graphviz__node_color(cause, new__string(cause, "#000000")),
+						   f2__graphviz__edge_color(cause, new__string(cause, "#000000")),
 						   f2__stringlist__rawcode(cause, node_codes),
 						   f2__stringlist__rawcode(cause, edge_codes)));
 }
@@ -1911,7 +1911,7 @@ void f2__simple_graph__initialize() {
   f2__primcfunk__init__4(simple_graph__make_edge_wildcard,            this, edge_label, left_node_label, right_node_label,                 "makes an edge in the simple_graph a wildcard variable for matching.");
   f2__primcfunk__init__3(simple_graph__contains_match_with_bindings,  this, that, bindings,                                                "returns variable bindings for match.");
   f2__primcfunk__init__3(simple_graph__bind_variable,                 this, variable_name, value,                                          "returns true if variable is successfully bound, false otherwise.");
-  f2__primcfunk__init__1(simple_graph__as__dot_code,                  this,                                                                "returns dot code in a string suitable for simple_graphing with simple_graphviz.");
+  f2__primcfunk__init__1(simple_graph__as__dot_code,                  this,                                                                "returns dot code in a string suitable for simple_graphing with graphviz.");
   {
     {char* str = "common_variable_subsimple_graph_possibility-compare"; __funk2.simple_graph.common_variable_subsimple_graph_possibility__compare__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
     {f2__primcfunk__init__with_c_cfunk_var__2_arg(common_variable_subsimple_graph_possibility__compare, this, that, cfunk, 0,              "Internal part of simple_graph-find_common_variable_subsimple_graph.  Should not be end-user-accessible."); __funk2.simple_graph.common_variable_subsimple_graph_possibility__compare__funk = never_gc(cfunk);}

@@ -126,14 +126,15 @@
   [let [[graph [new graph]]]
     [let [[graph_node_hash [new ptypehash]]]
       [have this map_nodes [funk [node]
-				 [have graph_node_hash add node [new graph_node [get node parse_object]]]]]
+				 [have graph_node_hash add node [new graph_node [let [[parse_object [get node parse_object]]] [format nil `[,[type parse_object] ,[get parse_object symbols]]]]]]]]
       [have this map_nodes [funk [node]
-				 [let [[next_graph_node  [have graph_node_hash lookup [get node next_node]]]
+				 [let [[node_graph_node  [have graph_node_hash lookup node]]
+				       [next_graph_node  [have graph_node_hash lookup [get node next_node]]]
 				       [child_graph_node [have graph_node_hash lookup [get node first_child_node]]]]
 				   [if next_graph_node
-				       [have graph add_new_edge [new graph_edge `next        [have graph_node_hash lookup node] next_graph_node]]]
+				       [have graph add_edge [new graph_edge `next        node_graph_node next_graph_node]]]
 				   [if child_graph_node
-				       [have graph add_new_edge [new graph_edge `first_child [have graph_node_hash lookup node] child_graph_node]]]]]]]
+				       [have graph add_edge [new graph_edge `first_child node_graph_node child_graph_node]]]]]]]
     graph]]
 
 'dictionary_frame'

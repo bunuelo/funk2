@@ -60,9 +60,24 @@
       [if parent_node
 	  [set parent_node last_child_node node]]]]]
 
+[deftypefunk parse_tree_node execute insert_below_no_children [node]
+  [if [or first_child_node last_child_node]
+      [error bug_type         `insert_below_no_children_assumes_no_children
+	     first_child_node first_child_node
+	     last_child_node  last_child_node]]
+  [= first_child_node node]
+  [= last_child_node  node]
+  [set node parent_node this]
+  [set node previous_node nil]
+  [set node next_node nil]]
+
 [deftypefunk parse_tree_node execute add_last [node]
   [let [[last_node [get this last_node]]]
     [have last_node insert_after node]]]
+
+[deftypefunk parse_tree_node execute add_below_last [node]
+  [let [[last_node [get this last_node]]]
+    [have last_node insert_below_no_children node]]]
 
 [deftypefunk parse_tree_node execute serialize []
   [let [[seq nil]]
@@ -205,8 +220,8 @@
 			[verb_rest_sequence [have verb_parse lookup `rest_sequence]]]
 		    [if [get verb_word be]
 			[prog [parse_format '\n  found be auxiliary verb parse: ' verb_parse]
+			      [set verb_word auxiliary t]
 			      [= parses [cons verb_parse parses]]
-			      
 			      ]]]]
 	    verb_parses]]
     parses]]
@@ -258,6 +273,7 @@
 							[get verb_word ing]]
 						    [prog [parse_format '\n  verb_word satisfies en or ing conjugation: ' verb_word]
 							  [let [[new_verb_group [get verb_group new_copy]]]
+							    [set verb_word Main t]
 							    [if [get verb_word en]
 								[prog [parse_format '\n  verb_word is en following a be verb, so marking verb_group as passive.']
 								      [set new_verb_group passive t]]]

@@ -423,7 +423,7 @@ f2ptr raw__graph__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, this, nil);
+    frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"), new__symbol(cause, "graph"));
     f2__frame__add_var_value(cause, frame, new__symbol(cause, "node_set"),          f2__graph__node_set(cause, this));
     f2__frame__add_var_value(cause, frame, new__symbol(cause, "edge_set"),          f2__graph__edge_set(cause, this));

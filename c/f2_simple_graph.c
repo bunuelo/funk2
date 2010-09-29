@@ -1348,7 +1348,7 @@ f2ptr f2__simple_graph__as__dot_code(f2ptr cause, f2ptr this) {
       iter = f2__cons__cdr(cause, iter);
     }
   }
-  return f2__graphviz__disimple_graph(cause, f2list4__new(cause,
+  return f2__graphviz__digraph(cause, f2list4__new(cause,
 						   f2__graphviz__node_color(cause, new__string(cause, "#000000")),
 						   f2__graphviz__edge_color(cause, new__string(cause, "#000000")),
 						   f2__stringlist__rawcode(cause, node_codes),

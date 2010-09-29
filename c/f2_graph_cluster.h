@@ -22,7 +22,7 @@
 #ifndef F2__GRAPH_CLUSTER__H
 #define F2__GRAPH_CLUSTER__H
 
-#include "f2_bruno_graph.h"
+#include "f2_graph.h"
 
 // **
 

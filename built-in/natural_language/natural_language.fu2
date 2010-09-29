@@ -798,6 +798,8 @@
        [dictionary-add_word this noun_word pieces        [plural]]
        [dictionary-add_word this noun_word loaf          [singular]]
        [dictionary-add_word this noun_word loaves        [plural]]
+       [dictionary-add_word this noun_word block         [singular]]
+       [dictionary-add_word this noun_word blocks        [plural]]
        
        [dictionary-add_word this classifier_word butter  []]
        [dictionary-add_word this classifier_word kitchen []]

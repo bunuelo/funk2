@@ -842,11 +842,11 @@
        [dictionary-add_word this verb_word am               [be first_person_singular present infinitive]]
        [dictionary-add_word this verb_word was              [be third_person_singular first_person_singular past infinitive]]
        [dictionary-add_word this verb_word were             [be plural past infinitive]]
-       [dictionary-add_word this verb_word [has been]       [be singular past infinitive]]
-       [dictionary-add_word this verb_word [have been]      [be plural past infinitive]]
-       [dictionary-add_word this verb_word [had been]       [be singular plural past infinitive]]
-       [dictionary-add_word this verb_word [will be]        [be will singular plural infinitive]]
-       [dictionary-add_word this verb_word [will have been] [be will past singular plural infinitive]]
+       [dictionary-add_word this verb_word [has been]       [be third_person_singular past infinitive]]
+       [dictionary-add_word this verb_word [have been]      [be first_person_singular plural past infinitive]]
+       [dictionary-add_word this verb_word [had been]       [be first_person_singular plural past infinitive]]
+       [dictionary-add_word this verb_word [will be]        [be will first_person_singular third_person_singular plural infinitive]]
+       [dictionary-add_word this verb_word [will have been] [be will first_person_singular third_person_singular plural past infinitive]]
        [dictionary-add_word this verb_word being            [be ing infinitive]]
        [dictionary-add_word this verb_word support          [infinitive transitive]]
        [dictionary-add_word this verb_word supports         [present transitive]]
@@ -937,7 +937,7 @@
 
 
 
-[terminal_format standard-terminal '\nDefining global ' `english_dictionary ' variable!']
-
 [globalize english_dictionary [new english_dictionary]]
+
+[terminal_format standard-terminal '\nSuccessfully defined global ' `english_dictionary ' variable!']
 

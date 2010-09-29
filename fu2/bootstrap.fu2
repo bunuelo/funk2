@@ -41,7 +41,7 @@
 [load 'fu2/bootstrap-surrogate_parent.fu2']
 [load 'fu2/bootstrap-redblacktree.fu2']
 [load 'fu2/bootstrap-list.fu2']
-[load 'fu2/bootstrap-bruno_graph.fu2']
+[load 'fu2/bootstrap-graph.fu2']
 [load 'fu2/bootstrap-bug.fu2']
 [load 'fu2/bootstrap-terminal_print.fu2']
 [load 'fu2/bootstrap-package.fu2']

@@ -38,7 +38,7 @@
 [deftypefunk simple_graph execute gview []
   [dot_code-gview [get this as-dot_code]]]
 
-[deftypefunk bruno_graph execute gview []
+[deftypefunk graph execute gview []
   [dot_code-gview [get this as-dot_code]]]
 
 [deftypefunk frame execute gview       [] [have [get this as-graph] gview]]

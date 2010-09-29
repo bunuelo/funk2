@@ -24,11 +24,17 @@
 
 // graph_node
 typedef struct funk2_object_type__graph_node__slot_s funk2_object_type__graph_node__slot_t;
-declare_object_type_1_slot(graph_node, label, );
+declare_object_type_1_slot(graph_node, label,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 // graph_edge
 typedef struct funk2_object_type__graph_edge__slot_s funk2_object_type__graph_edge__slot_t;
-declare_object_type_3_slot(graph_edge, label, left_node, right_node, );
+declare_object_type_3_slot(graph_edge, label, left_node, right_node,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 // graph
 typedef struct funk2_object_type__graph__slot_s funk2_object_type__graph__slot_t;
@@ -61,10 +67,16 @@ declare_primobject_1_slot(graph_node, label);
 
 f2ptr f2__graph_node__new(f2ptr cause, f2ptr label);
 
+f2ptr f2graph_node__primobject_type__new_aux(f2ptr cause);
+
+
 // graph_edge
 declare_primobject_3_slot(graph_edge, label, left_node, right_node);
 
 f2ptr f2__graph_edge__new(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node);
+
+f2ptr f2graph_edge__primobject_type__new_aux(f2ptr cause);
+
 
 // graph
 declare_primobject_5_slot(graph, node_set, edge_set, nodes_label_hash, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);

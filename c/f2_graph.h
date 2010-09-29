@@ -90,6 +90,8 @@ f2ptr      f2__graph__minus                          (f2ptr cause, f2ptr this, f
 f2ptr     raw__graph__node_isomorphisms              (f2ptr cause, f2ptr this, f2ptr node);
 f2ptr      f2__graph__node_isomorphisms              (f2ptr cause, f2ptr this, f2ptr node);
 
+f2ptr f2graph__primobject_type__new_aux(f2ptr cause);
+
 // graph_isomorphism
 declare_primobject_2_slot(graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);
 

@@ -18,6 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage graph_match_error_correcting
-  :sources ['primfunks-graph_match_error_correcting.fu2'
-	    'bootstrap-graph_match_error_correcting.fu2']]
+  :sources ['graph_match_error_correcting-primfunks.fu2'
+	    'graph_match_error_correcting.fu2']]
 

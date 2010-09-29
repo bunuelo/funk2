@@ -56,8 +56,8 @@ declare_object_type_2_slot(frame, new_type_mutex, type_ptypehash,
 			   f2ptr equals_hash_value__funk;
 			   f2ptr part_not_contained_by__symbol;
 			   f2ptr part_not_contained_by__funk;
-			   f2ptr as__graph__symbol;
-			   f2ptr as__graph__funk;
+			   f2ptr as__simple_graph__symbol;
+			   f2ptr as__simple_graph__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );

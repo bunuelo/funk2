@@ -123,7 +123,7 @@ void f2__initialize() {
   f2__primobject__redblacktree__initialize();
   f2__xmlrpc__initialize();
   f2__package__initialize();
-  f2__bruno_graph__initialize();
+  f2__graph__initialize();
   f2__graph_cluster__initialize();
   f2__graph_match_error_correcting__initialize();
   f2__gtk__initialize();

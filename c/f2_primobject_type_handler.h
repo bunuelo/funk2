@@ -42,7 +42,7 @@
 #include "f2_primobject__largeinteger.h"
 #include "f2_primobject__redblacktree.h"
 #include "f2_package.h"
-#include "f2_bruno_graph.h"
+#include "f2_graph.h"
 #include "f2_graph_match_error_correcting.h"
 #include "f2_gtk.h"
 #include "f2_nil.h"
@@ -139,12 +139,12 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__source_expression__slot_t                primobject_type_source_expression;
   funk2_object_type__source__slot_t                           primobject_type_source;
   funk2_object_type__package__slot_t                          primobject_type_package;
-  funk2_object_type__bruno_graph_node__slot_t                 primobject_type_bruno_graph_node;
-  funk2_object_type__bruno_graph_edge__slot_t                 primobject_type_bruno_graph_edge;
-  funk2_object_type__bruno_graph__slot_t                      primobject_type_bruno_graph;
-  funk2_object_type__bruno_graph_isomorphism__slot_t          primobject_type_bruno_graph_isomorphism;
-  funk2_object_type__bruno_decomposition_lattice_node__slot_t primobject_type_bruno_decomposition_lattice_node;
-  funk2_object_type__bruno_decomposition_lattice__slot_t      primobject_type_bruno_decomposition_lattice;
+  funk2_object_type__graph_node__slot_t                       primobject_type_graph_node;
+  funk2_object_type__graph_edge__slot_t                       primobject_type_graph_edge;
+  funk2_object_type__graph__slot_t                            primobject_type_graph;
+  funk2_object_type__graph_isomorphism__slot_t                primobject_type_graph_isomorphism;
+  funk2_object_type__graph_decomposition_lattice_node__slot_t primobject_type_graph_decomposition_lattice_node;
+  funk2_object_type__graph_decomposition_lattice__slot_t      primobject_type_graph_decomposition_lattice;
   funk2_object_type__edit_sequence__slot_t                    primobject_type_edit_sequence;
   funk2_object_type__traced_mutex__slot_t                     primobject_type_traced_mutex;
   funk2_object_type__fiber_stack_trace__slot_t                primobject_type_fiber_stack_trace;

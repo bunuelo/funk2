@@ -17,14 +17,18 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deftypefunk bruno_graph get edges_between_nodes              [left_node right_node] 
-  [bruno_graph-edges_between_nodes this left_node right_node]]
-[deftypefunk edit_sequence execute add                        [type from to cost_function] 
-  [edit_sequence-add this type from to cost_function]]
-[deftypefunk edit_sequence execute add_mapping                [left_node right_node] 
-  [edit_sequence-add_mapping this left_node right_node]]
-[deftypefunk edit_sequence get combine                        [that lattice_node graph cost_function] 
-  [edit_sequence-combine this that lattice_node graph cost_function]]
-[deftypefunk bruno_decomposition_lattice get ecs_isomorphisms [graph cost_function] 
-  [bruno_decomposition_lattice-ecs_isomorphisms this graph cost_function]]
+
+'graph'
+
+[deftypefunk graph get edges_between_nodes [left_node right_node] [graph-edges_between_nodes this left_node right_node]]
+
+'edit_sequence'
+
+[deftypefunk edit_sequence execute add         [type from to cost_function]            [edit_sequence-add         this type from to cost_function]]
+[deftypefunk edit_sequence execute add_mapping [left_node right_node]                  [edit_sequence-add_mapping this left_node right_node]]
+[deftypefunk edit_sequence get     combine     [that lattice_node graph cost_function] [edit_sequence-combine     this that lattice_node graph cost_function]]
+
+'graph_decomposition_lattice'
+
+[deftypefunk graph_decomposition_lattice get ecs_isomorphisms [graph cost_function] [graph_decomposition_lattice-ecs_isomorphisms this graph cost_function]]
 

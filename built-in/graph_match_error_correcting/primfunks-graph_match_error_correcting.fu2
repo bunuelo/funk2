@@ -17,9 +17,9 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk error_correcting-test                        &primfunk:error_correcting__test]
-[globalize-funk bruno_graph-edges_between_nodes              &primfunk:bruno_graph__edges_between_nodes]
-[globalize-funk edit_sequence-add                            &primfunk:edit_sequence__add]
-[globalize-funk edit_sequence-add_mapping                    &primfunk:edit_sequence__add_mapping]
-[globalize-funk edit_sequence-combine                        &primfunk:edit_sequence__combine]
-[globalize-funk bruno_decomposition_lattice-ecs_isomorphisms &primfunk:bruno_decomposition_lattice__ecs_isomorphisms]
+[globalize-funk error_correcting-test                  &primfunk:error_correcting__test]
+[globalize-funk graph-edges_between_nodes              &primfunk:graph__edges_between_nodes]
+[globalize-funk edit_sequence-add                      &primfunk:edit_sequence__add]
+[globalize-funk edit_sequence-add_mapping              &primfunk:edit_sequence__add_mapping]
+[globalize-funk edit_sequence-combine                  &primfunk:edit_sequence__combine]
+[globalize-funk decomposition_lattice-ecs_isomorphisms &primfunk:decomposition_lattice__ecs_isomorphisms]

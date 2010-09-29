@@ -215,7 +215,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_ansi.c \
   c/f2_apropos.c \
   c/f2_blocks_world.c \
-  c/f2_bruno_graph.c \
   c/f2_buffered_file.c \
   c/f2_buffered_socket.c \
   c/f2_bug.c \
@@ -229,20 +228,21 @@ lib_libfunk2_la_SOURCES = \
   c/f2_dlfcn.c \
   c/f2_dptr.c \
   c/f2_dynamic_memory.c \
-  c/f2_garbage_collector.c \
-  c/f2_garbage_collector_pool.c \
-  c/f2_globalenv.c \
-  c/f2_glwindow.c \
-  c/f2_gmodule.c \
-  c/f2_graph_cluster.c \
-  c/f2_graph_match_error_correcting.c \
-  c/f2_graphviz.c \
-  c/f2_gtk.c \
   c/f2_fiber.c \
   c/f2_fileio.c \
   c/f2_frame_objects.c \
   c/f2_funk2_node.c \
   c/f2_funktional.c \
+  c/f2_garbage_collector.c \
+  c/f2_garbage_collector_pool.c \
+  c/f2_globalenv.c \
+  c/f2_glwindow.c \
+  c/f2_gmodule.c \
+  c/f2_graph.c \
+  c/f2_graph_cluster.c \
+  c/f2_graph_match_error_correcting.c \
+  c/f2_graphviz.c \
+  c/f2_gtk.c \
   c/f2_hash.c \
   c/f2_html.c \
   c/f2_knowledge.c \

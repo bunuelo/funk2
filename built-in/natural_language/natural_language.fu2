@@ -827,7 +827,7 @@
 													    [prog [parse_format '\n      combination is transitive: ' combination]
 														  'check if this verb accepts PSNG clauses as an object (we do not have this feature yet).'
 														  'otherwise object must be NG or WHPS clause.'
-														  [let [[after_transitive_verb_parses [have this parse_sequence_as_main_clause-after_transitive_verb_group [cddr sequence] new_parse_tree [get new_parse_tree containing_type `clause]]]]
+														  [let [[after_transitive_verb_parses [have this parse_sequence_as_main_clause-after_transitive_verb_group [cddr sequence] new_parse_tree]]]
 														    [= parses [append after_transitive_verb_parses parses]]]]
 													  [prog [parse_format '\n      combination is not transitive: ' combination]
 														
@@ -838,7 +838,7 @@
 					      [prog [parse_format '\n  verb_word does not take particle.']
 						    [if [get verb_word transitive]
 							[prog [parse_format '\n  verb_word is transitive.']
-							      [let [[after_transitive_verb_parses [have this parse_sequence_as_main_clause-after_transitive_verb_group verb_group_rest_sequence new_parse_tree [get new_parse_tree containing_type `clause]]]]
+							      [let [[after_transitive_verb_parses [have this parse_sequence_as_main_clause-after_transitive_verb_group verb_group_rest_sequence new_parse_tree]]]
 								[= parses [append after_transitive_verb_parses parses]]]]
 						      [prog [parse_format '\n  verb_word is not transitive.']
 							    

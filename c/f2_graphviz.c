@@ -91,10 +91,10 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
     string = f2__exp__as__string(cause, exp);
   } else if (raw__list__is_type(cause, exp)) {
     string = f2__exp__as__string(cause, exp);
-  } else if (raw__graph_variable__is_type(cause, exp)) {
+  } else if (raw__simple_graph_variable__is_type(cause, exp)) {
     return f2__stringlist__concat(cause, f2list3__new(cause,
 						      new__string(cause, "<font color=\"#CF0000\">?"),
-						      f2__graphviz__exp__as__label(cause, f2__graph_variable__name(cause, exp)),
+						      f2__graphviz__exp__as__label(cause, f2__simple_graph_variable__name(cause, exp)),
 						      new__string(cause, "</font>")));
   } else if (raw__array__is_type(cause, exp) && (! raw__primobject__is_type(cause, exp))) {
     string = f2__exp__as__string(cause, exp);

@@ -104,6 +104,16 @@
 	[get previous_node containing_type type]
       [if parent_node
 	  [get parent_node containing_type type]
+	[error bug_type        `parse_tree_node_does_not_have_containing_type
+	       containing_type type]]]]]
+
+[deftypefunk parse_tree_node get is_contained_by_type [type]
+  [if [eq [type parse_object] type]
+      t
+    [if previous_node
+	[get previous_node containing_type type]
+      [if parent_node
+	  [get parent_node containing_type type]
 	nil]]]]
 
 'parse_tree'
@@ -163,6 +173,11 @@
   [let [[last_node [get this last_node]]]
     [if last_node
 	[get last_node containing_type type]]]]
+
+[deftypefunk parse_tree get is_contained_by_type [type]
+  [let [[last_node [get this last_node]]]
+    [if last_node
+	[get last_node contained_by_type type]]]]
 
 [deftypefunk parse_tree get as-graph []
   [let [[graph [new graph]]]

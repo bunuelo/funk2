@@ -87,8 +87,7 @@
 
 'parse_tree'
 
-[deframe parse_tree [frame] [[root_node     nil]
-			     [pointer_frame [frame]]]]
+[deframe parse_tree [frame] [root_node]]
 
 [deftypefunk parse_tree execute map_nodes [funk]
   [if root_node
@@ -110,10 +109,6 @@
 				   [set new_node last_child_node  [let [[last_child_node  [get node last_child_node]]]  [if last_child_node  [have node_hash lookup last_child_node]]]]]]]
       [let [[new_parse_tree [new parse_tree]]]
 	[set new_parse_tree root_node [have node_hash lookup root_node]]
-	[let [[new_pointer_frame [get new_parse_tree pointer_frame]]]
-	  [have pointer_frame map [funk [name node]
-					[let [[new_node [have node_hash lookup node]]]
-					  [have new_pointer_frame add name new_node]]]]]
 	new_parse_tree]]]]
 
 [deftypefunk parse_tree execute add_last [parse_object]

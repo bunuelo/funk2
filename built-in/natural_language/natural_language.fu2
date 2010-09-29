@@ -55,8 +55,10 @@
 [deftypefunk parse_tree_node execute insert_after [node]
   [let [[old-next_node next_node]]
     [= next_node node]
+    [set node next_node     old-next_node]
+    [set node previous_node this]
     [if old-next_node
-	[set old-next_node previous_node this]
+	[set old-next_node previous_node node]
       [if parent_node
 	  [set parent_node last_child_node node]]]]]
 

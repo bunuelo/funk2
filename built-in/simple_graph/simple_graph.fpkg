@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage graph
-  :sources ['primfunks-graph.fu2'
-	    'bootstrap-graph.fu2']]
+[defpackage simple_graph
+  :sources ['simple_graph-primfunks.fu2'
+	    'simple_graph.fu2']]
 

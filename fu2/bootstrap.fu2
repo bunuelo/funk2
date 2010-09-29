@@ -53,7 +53,7 @@
 [require object_lattice]
 [require number]
 [require math]
-[require graph]
+[require simple_graph]
 [require graphviz]
 [require xmlrpc]
 [require graph_match_error_correcting]

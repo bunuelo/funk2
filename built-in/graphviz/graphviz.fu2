@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deftypefunk graph get as-dot_code [] [graph-as-dot_code this]]
+[deftypefunk simple_graph get as-dot_code [] [simple_graph-as-dot_code this]]
 
 [defunk system-dot [dot_filename ps_filename]
   [let [[command [string-concat 'dot -Tps -o' ps_filename ' ' dot_filename]]]
@@ -35,7 +35,7 @@
   [system-dot 'graphviz-temp.dot' 'graphviz-temp.ps']
   [system-gv 'graphviz-temp.ps']]
 
-[deftypefunk graph execute gview []
+[deftypefunk simple_graph execute gview []
   [dot_code-gview [get this as-dot_code]]]
 
 [deftypefunk bruno_graph execute gview []
@@ -44,8 +44,8 @@
 [deftypefunk frame execute gview       [] [have [get this as-graph] gview]]
 [deftypefunk frame get     as-dot_code [] [get  [get this as-graph] as-dot_code]]
 
-[defunk graph-test_gview []
-  [let [[this [new graph]]]
+[defunk simple_graph-test_gview []
+  [let [[this [new simple_graph]]]
     [have this add_edge `contains `the-bucket `the-mud]
     [have this add_edge `are-made-dirty-by `my-clothes `the-mud]
     [have this gview]]]
@@ -107,24 +107,3 @@
     ]]
 
 
-`[deftypefunk bruno_graph execute gview []
-  [let [[graph         [new graph]]
-        [node_list     [get [get this node_set] elements]]
-        [edge_list     [get [get this edge_set] elements]]
-        [node_hash_b_g [new ptypehash]]
-        [i             0]]
-    [mapc [funk [b_node]
-                [let [[uguu [+ [get [get b_node label] as-string] ' (' [get i as-string] ')']]]
-                  [have node_hash_b_g add b_node uguu]
-                  [= i [+ i 1]]
-                  [have graph add_node uguu]]]
-          node_list]
-    `[print graph]
-    [mapc [funk [b_edge]
-                [have graph add_edge 
-                      [get b_edge label]
-                      [have node_hash_b_g lookup [get b_edge left_node]] 
-                      [have node_hash_b_g lookup [get b_edge right_node]]]]
-          edge_list]
-    `[print graph]
-    [have graph gview]]]

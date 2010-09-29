@@ -18,6 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage graphviz
-  :sources ['primfunks-graphviz.fu2'
-	    'bootstrap-graphviz.fu2']]
+  :sources ['graphviz-primfunks.fu2'
+	    'graphviz.fu2']]
 

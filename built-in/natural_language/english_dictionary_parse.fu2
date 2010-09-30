@@ -67,6 +67,7 @@
 	    verb_parses]]
     parses]]
 
+
 [deftypefunk english_dictionary execute parse_sequence_as_verb_group [sequence parse_tree]
   [let [[parses nil]]
     [let [[verb_group [get parse_tree containing_type `verb_group]]]

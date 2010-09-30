@@ -162,7 +162,7 @@
 				  [preposition_word_rest_sequence [have preposition_word_parse lookup `rest_sequence]]]
 			      [let [[noun_group_initial_parse_tree [get preposition_word_parse_tree new_copy]]
 				    [noun_group                    [new noun_group]]]
-				[have noun_group_initial_parse_tree add_child_to_type `preposition_group]
+				[have noun_group_initial_parse_tree add_child_to_type `preposition_group noun_group]
 				[let [[noun_group_parses [have this parse_sequence_as_noun_group preposition_word_rest_sequence noun_group_initial_parse_tree]]]
 				  [= parses [append noun_group_parses parses]]]]]]
 		      preposition_word_parses]]]]]

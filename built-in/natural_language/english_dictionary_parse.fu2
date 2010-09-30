@@ -183,7 +183,8 @@
 			  [new_particle_word [get first_word_particle new_copy]]]
 		      [have new_parse_tree add_next new_particle_word]
 		      [= parses [cons [frame parse_tree    new_parse_tree
-					     particle_word new_particle_word]
+					     particle_word new_particle_word
+					     rest_sequence [cdr sequence]]
 				      parses]]]]
 	      first_word_particles]]]
     parses]]
@@ -507,11 +508,13 @@
 	[have noun_group_initial_parse_tree add_child_to_type `clause noun_group]
 	[let [[noun_group_parses [have this parse_sequence_as_noun_group sequence noun_group_initial_parse_tree]]]
 	  [mapc [funk [noun_group_parse]
-		      [let [[noun_group_parse_tree [have noun_group_parse lookup `parse_tree]]]
+		      [let [[noun_group_parse_tree    [have noun_group_parse lookup `parse_tree]]
+			    [noun_group_rest_sequence [have noun_group_parse lookup `rest_sequence]]]
 			[let [[new_parse_tree [get noun_group_parse_tree new_copy]]]
 			  [set new_parse_tree containing_type_property `clause `transitive t]
 			  [have new_parse_tree pop_to_type `clause]
-			  [= parses [cons [frame parse_tree new_parse_tree]
+			  [= parses [cons [frame parse_tree    new_parse_tree
+						 rest_sequence noun_group_rest_sequence]
 					  parses]]]]]
 		noun_group_parses]]]]
     parses]]

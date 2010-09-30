@@ -593,7 +593,7 @@
 [deftypefunk english_dictionary execute parse_sequence_as_clause [sequence parse_tree clause]
   [let [[parses nil]]
     [let [[clause_parse_tree [get parse_tree new_copy]]]
-      [have clause_parse_tree add_child [get clause new_copy]]
+      [have clause_parse_tree add_next [get clause new_copy]]
       [let [[question_parses [have this parse_sequence_as_clause-main_question sequence clause_parse_tree]]]
 	[= parses [append question_parses parses]]]
       [let [[first_word [first sequence]]]

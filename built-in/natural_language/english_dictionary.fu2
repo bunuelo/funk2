@@ -180,24 +180,6 @@
        ]]
 
 
-[defunk english_language-test_parse [sequence]
-  [let [[parse_tree [new parse_tree]]]
-    [let [[clause [new clause]]]
-      [have parse_tree add_below_last clause]
-      [let [[test_parses [have english_dictionary parse_sequence_as_main_clause sequence parse_tree]]]
-	[mapc [funk [test_parse]
-		    [terminal_format standard-terminal   '\nenglish_language-test parse: ' test_parse]
-		    [let [[test_parse_tree [have test_parse lookup `parse_tree]]]
-		      [terminal_format standard-terminal '\n                 serialized: ' [have test_parse_tree serialize]]
-		      [have [get test_parse_tree as-graph] gview]]]
-	      test_parses]]]]
-  nil]
-
-
-[defunk english_language-test []
-  [english_language-test_parse `[pick up a big red butter knife]]]
-
-
 [globalize english_dictionary [new english_dictionary]]
 
 [terminal_format standard-terminal '\nSuccessfully defined global ' `english_dictionary ' variable!']

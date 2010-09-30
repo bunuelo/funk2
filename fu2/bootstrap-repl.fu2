@@ -97,7 +97,7 @@
 [primfunk:load 'fu2/primfunks-zlib.fu2']
 
 
-[globalize standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 128 t nil t 10000000000]]
+[globalize standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 128 t nil t 1000000000]]
 
 [define -current_env_name- `global-environment]
 

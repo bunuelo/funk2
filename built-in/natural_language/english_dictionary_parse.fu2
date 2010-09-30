@@ -539,7 +539,7 @@
 				      [mapc [funk [second_word_particle]
 						  [parse_format '\n    found second word to be particle: ' second_word]
 						  [let [[combination [list [let [[first_words [get verb_word symbols]]]
-									     [if [not [or [is-type `cons] [is-type `list]]]
+									     [if [not [or [is-type `cons first_words] [is-type `list first_words]]]
 										 [cons first_words nil]
 									       first_words]]
 									   second_word]]]

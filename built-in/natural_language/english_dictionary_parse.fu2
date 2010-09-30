@@ -28,7 +28,7 @@
 
 'dictionary frame parsing commands'
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_verb_word [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_verb_word [sequence parse_tree]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as a verb word.']
     [let [[first_word [first sequence]]]
@@ -51,7 +51,7 @@
 		    verbs]]]]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_auxiliary_be_verbs [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_auxiliary_be_verbs [sequence parse_tree]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as auxiliary be verbs.']
     [let [[verb_parses [have this parse_sequence_as_verb_word sequence parse_tree]]]
@@ -67,7 +67,7 @@
 	    verb_parses]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_verb_group [sequence parse_tree verb_group]
+[deftypefunk english_dictionary execute parse_sequence_as_verb_group [sequence parse_tree verb_group]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as a verb_group.']
     [if [get verb_group imperative]
@@ -127,15 +127,15 @@
 	    ]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_preposition_group [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_preposition_group [sequence parse_tree]
   [parse_format '\n  parsing ' sequence ' as a preposition_group.']
   ]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_bound_clause [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_bound_clause [sequence parse_tree]
   [parse_format '\n  parsing ' sequence ' as a bound clause.']
   ]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_particle_word [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_particle_word [sequence parse_tree]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as a particle word.']
     [let [[first_word [first sequence]]]
@@ -151,7 +151,7 @@
 	      first_word_particles]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_determiner_word [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_determiner_word [sequence parse_tree]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as a determiner word.']
     [let [[first_word [first sequence]]]
@@ -183,7 +183,7 @@
   [set noun_group mass       [get this mass]]
   [set noun_group determiner t]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_adjective_word [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_adjective_word [sequence parse_tree]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as an adjective word.']
     [let [[first_word [first sequence]]]
@@ -200,7 +200,7 @@
 	      first_word_adjectives]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_adjective_words [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_adjective_words [sequence parse_tree]
   [let [[parses nil]]
     [let [[adjective_parses [have this parse_sequence_as_adjective_word sequence parse_tree]]]
       [mapc [funk [adjective_parse]
@@ -215,7 +215,7 @@
     parses]]
 
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_classifier_word [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_classifier_word [sequence parse_tree]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as a classifier word.']
     [let [[first_word [first sequence]]]
@@ -232,7 +232,7 @@
 	      first_word_classifiers]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_classifier_words [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_classifier_words [sequence parse_tree]
   [let [[parses nil]]
     [let [[classifier_parses [have this parse_sequence_as_classifier_word sequence parse_tree]]]
       [mapc [funk [classifier_parse]
@@ -247,7 +247,7 @@
     parses]]
 
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_noun_word [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_noun_word [sequence parse_tree]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as an noun word.']
     [let [[first_word [first sequence]]]
@@ -264,7 +264,7 @@
 	      first_word_nouns]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_number_word [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_number_word [sequence parse_tree]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as a number word.']
     [let [[first_word [car sequence]]]
@@ -280,7 +280,7 @@
 	      number_definitions]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_ordinal_word [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_ordinal_word [sequence parse_tree]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as an ordinal word.']
     [let [[first_word [car sequence]]]
@@ -296,7 +296,7 @@
 	      ordinal_definitions]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_question_adjunct_word [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_question_adjunct_word [sequence parse_tree]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as a question_adjunct word.']
     [let [[first_word [car sequence]]]
@@ -312,7 +312,7 @@
 	      question_adjunct_definitions]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_qualifiers [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_qualifiers [sequence parse_tree]
   [let [[parses nil]]
     'prep'
     'relative word (which)'
@@ -324,7 +324,7 @@
     [parse_format '\n  qualifiers are not implemented.']
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_noun_group-after_noun [sequence parse_tree noun_group]
+[deftypefunk english_dictionary execute parse_sequence_as_noun_group-after_noun [sequence parse_tree noun_group]
   [let [[parses nil]]
     [if [not [null sequence]]
 	[let [[qualifiers_parses [have this parse_sequence_as_qualifiers sequence parse_tree]]]
@@ -333,7 +333,7 @@
 		qualifiers_parses]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_noun_group-after_classifiers [sequence parse_tree noun_group]
+[deftypefunk english_dictionary execute parse_sequence_as_noun_group-after_classifiers [sequence parse_tree noun_group]
   [let [[parses nil]]
     [let [[noun_parses [have this parse_sequence_as_noun_word sequence parse_tree]]]
       [mapc [funk [noun_parse]
@@ -355,7 +355,7 @@
 	    noun_parses]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_noun_group-after_adjectives [sequence parse_tree noun_group]
+[deftypefunk english_dictionary execute parse_sequence_as_noun_group-after_adjectives [sequence parse_tree noun_group]
   [let [[parses nil]]
     [let [[classifier_words_parses [have this parse_sequence_as_classifier_words sequence parse_tree]]]
       [mapc [funk [classifier_words_parse]
@@ -371,7 +371,7 @@
       [= parses [append after_classifiers_parses parses]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_noun_group-after_number [sequence parse_tree noun_group]
+[deftypefunk english_dictionary execute parse_sequence_as_noun_group-after_number [sequence parse_tree noun_group]
   [let [[parses nil]]
     [let [[adjective_words_parses [have this parse_sequence_as_adjective_words sequence parse_tree]]]
       [mapc [funk [adjective_words_parse]
@@ -390,7 +390,7 @@
 
 
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_noun_group-after_ordinal [sequence parse_tree noun_group]
+[deftypefunk english_dictionary execute parse_sequence_as_noun_group-after_ordinal [sequence parse_tree noun_group]
   [let [[parses nil]]
     [let [[number_parses [have this parse_sequence_as_number_word sequence parse_tree]]]
       [mapc [funk [number_parse]
@@ -406,7 +406,7 @@
       [= parses [append after_number_parses parses]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_noun_group-after_determiner [sequence parse_tree noun_group]
+[deftypefunk english_dictionary execute parse_sequence_as_noun_group-after_determiner [sequence parse_tree noun_group]
   [let [[parses nil]]
     [if [get noun_group definite]
 	[prog [parse_format '\n    our noun group is definite: ' noun_group]
@@ -426,7 +426,7 @@
 	[= parses [append after_number_parses parses]]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_noun_group [sequence parse_tree noun_group]
+[deftypefunk english_dictionary execute parse_sequence_as_noun_group [sequence parse_tree noun_group]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as a noun_group.']
     [let [[first_word [first sequence]]]
@@ -447,7 +447,7 @@
 	      determiner_parses]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_main_clause-after_transitive_verb_group [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_main_clause-after_transitive_verb_group [sequence parse_tree]
   [let [[parses nil]]
     [let [[first_word [first sequence]]]
       [let [[pronoun_definitions [get this definitions_by_type `pronoun_word first_word]]]
@@ -470,14 +470,14 @@
 		noun_group_parses]]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_preposition_group [sequence parse_tree preposition_group]
+[deftypefunk english_dictionary execute parse_sequence_as_preposition_group [sequence parse_tree preposition_group]
   [if [get preposition_group question]
       [prog [parse_format '\n    parsing ' sequence ' as question preposition group.']
 	    ]
     [prog [parse_format '\n    parsing ' sequence ' as non-question preposition group.']
 	  ]]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_main_question_clause [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_main_question_clause [sequence parse_tree]
   [let [[parses nil]]
     [let [[question_parse_tree [get parse_tree new_copy]]]
       [set question_parse_tree containing_type_property `clause `question t]
@@ -522,7 +522,7 @@
 		noun_group_parses]]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_main_clause_with_verb_first [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_main_clause_with_verb_first [sequence parse_tree]
   [let [[parses nil]]
     [let [[first_word [car sequence]]]
       [let [[first_word_verbs [get this definitions_by_type `verb_word first_word]]]
@@ -579,7 +579,7 @@
 	      first_word_verbs]]]
     parses]]
 
-[deftypefunk english_dictionary_frame execute parse_sequence_as_main_clause [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_main_clause [sequence parse_tree]
   [let [[parses nil]]
     [let [[clause_parse_tree [get parse_tree new_copy]]]
       [have clause_parse_tree add_below_last [new clause]]

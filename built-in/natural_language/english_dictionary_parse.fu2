@@ -43,7 +43,7 @@
 				[rest_sequence  [if [is-type `symbol [get verb symbols]]
 						    [cdr sequence]
 						  [cddr sequence]]]]
-			    [have new_parse_tree add_next new_verb_word]
+			    [have new_parse_tree add_child_to_type `verb_group new_verb_word]
 			    [= parses [cons [frame parse_tree    new_parse_tree
 						   verb_word     new_verb_word
 						   rest_sequence rest_sequence]

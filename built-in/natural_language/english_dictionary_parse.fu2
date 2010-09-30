@@ -164,7 +164,7 @@
 				[rest_sequence       [if [is-type `symbol [get determiner symbols]]
 							 [cdr sequence]
 						       [cddr sequence]]]]
-			    [have new_parse_tree add_next new_determiner_word]
+			    [have new_parse_tree add_child_to_type `noun_group new_determiner_word]
 			    [= parses [cons [frame parse_tree      new_parse_tree
 						   determiner_word new_determiner_word
 						   rest_sequence   rest_sequence]

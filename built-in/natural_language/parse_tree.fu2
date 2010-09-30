@@ -91,9 +91,9 @@
   [if [is-type type parse_object]
       this
     [if previous_node
-	[get previous_node containing_type type]
+	[get previous_node containing_type_node type]
       [if parent_node
-	  [get parent_node containing_type type]
+	  [get parent_node containing_type_node type]
 	nil]]]]
 
 [deftypefunk parse_tree_node get is_contained_by_type [type]

@@ -293,7 +293,7 @@
 		    [parse_format '\n    found first word to be an noun: ' first_word]
 		    [let [[new_parse_tree [get parse_tree      new_copy]]
 			  [new_noun_word  [get first_word_noun new_copy]]]
-		      [have new_parse_tree add_next new_noun_word]
+		      [have new_parse_tree add_child_to_type `noun_group new_noun_word]
 		      [= parses [cons [frame parse_tree    new_parse_tree
 					     noun_word     new_noun_word
 					     rest_sequence [cdr sequence]]

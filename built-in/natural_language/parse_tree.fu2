@@ -189,13 +189,16 @@
       [have this map_nodes [funk [node]
 				 [have graph_node_hash add node [new graph_node [let [[parse_object [get node parse_object]]] [format nil `[,[type parse_object] ,[get parse_object symbols]]]]]]]]
       [have this map_nodes [funk [node]
-				 [let [[node_graph_node  [have graph_node_hash lookup node]]
-				       [next_graph_node  [have graph_node_hash lookup [get node next_node]]]
-				       [child_graph_node [have graph_node_hash lookup [get node first_child_node]]]]
+				 [let [[node_graph_node        [have graph_node_hash lookup node]]
+				       [next_graph_node        [have graph_node_hash lookup [get node next_node]]]
+				       [first_child_graph_node [have graph_node_hash lookup [get node first_child_node]]]]
 				   [if next_graph_node
 				       [have graph add_edge [new graph_edge `next        node_graph_node next_graph_node]]]
-				   [if child_graph_node
-				       [have graph add_edge [new graph_edge `first_child node_graph_node child_graph_node]]]]]]]
+				   [if first_child_graph_node
+				       [let [[child_graph_node first_child_graph_node]]
+					 [while child_graph_node
+					   [have graph add_edge [new graph_edge `first_child node_graph_node child_graph_node]]
+					   [= child_graph_node [get child_graph_node next_node]]]]]]]]]
     graph]]
 
 

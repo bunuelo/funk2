@@ -530,7 +530,6 @@
 		    [let [[verb_group_parse_tree    [have verb_group_parse lookup `parse_tree]]
 			  [verb_group_rest_sequence [have verb_group_parse lookup `rest_sequence]]
 			  [verb_word                [have verb_group_parse lookup `verb_word]]]
-		      [have verb_group_parse_tree pop_to_type `clause]
 		      [parse_format '\n    found successful verb_group parse: ' verb_group_parse]
 		      [let [[new_parse_tree [get verb_group_parse_tree new_copy]]]
 			[set new_parse_tree containing_type_property `clause `imperative t]
@@ -554,6 +553,7 @@
 										  [parse_format '\n      found successful particle parse: ' particle_parse]
 										  [let [[new_parse_tree [get particle_parse_tree new_copy]]]
 										    [set new_parse_tree containing_type_property `clause `particle t]
+										    [have new_parse_tree pop_to_type `clause]
 										    'check all transitivity features.  (we only have transitive for combinations so far)'
 										    [if [get combination_definition transitive]
 											[prog [parse_format '\n      combination is transitive: ' combination]

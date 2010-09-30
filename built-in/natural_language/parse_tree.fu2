@@ -22,13 +22,6 @@
 
 [deframe parse_tree_node [frame] [parse_object parent_node previous_node next_node first_child_node last_child_node]]
 
-`[deftypefunk parse_tree_node get last_node []
-  [if next_node
-      [get next_node last_node]
-    [if last_child_node
-	[get last_child_node last_node]
-      this]]]
-
 [deftypefunk parse_tree_node execute map_nodes_forward [funk]
   [apply funk [cons this nil]]
   [if next_node
@@ -48,7 +41,7 @@
 
 [deftypefunk parse_tree_node execute insert_after [node]
   [let [[old-next_node next_node]]
-    [= next_node node]
+    [=        next_node     node]
     [set node next_node     old-next_node]
     [set node previous_node this]
     [if old-next_node
@@ -66,17 +59,6 @@
   [set node parent_node this]
   [set node previous_node nil]
   [set node next_node nil]]
-
-`[deftypefunk parse_tree_node execute add_last [node]
-  [let [[last_node [get this last_node]]]
-    [have last_node insert_after node]]]
-
-`[deftypefunk parse_tree_node execute add_below_last [node]
-  [let [[last_node [get this last_node]]]
-    [have last_node insert_below_no_children node]]]
-
-[deftypefunk parse_tree_node execute add_next [node]
-  [have this insert_after node]]
 
 [deftypefunk parse_tree_node execute add_child [node]
   [if [null last_child_node]
@@ -143,40 +125,6 @@
 	[set new_parse_tree current_node [have node_hash lookup current_node]]
 	new_parse_tree]]]]
 
-`[deftypefunk parse_tree get last_node []
-  [if root_node
-      [get root_node last_node]]]
-
-`[deftypefunk parse_tree execute add_last [parse_object]
-  [let [[node [new parse_tree_node]]]
-    [set node parse_object parse_object]
-    [if [null root_node]
-	[= root_node node]
-      [have root_node add_last node]]]]
-
-`[deftypefunk parse_tree execute add_below_last [parse_object]
-  [let [[node [new parse_tree_node]]]
-    [set node parse_object parse_object]
-    [if [null root_node]
-	[= root_node node]
-      [have root_node add_below_last node]]]]
-
-[deftypefunk parse_tree execute add_next [parse_object]
-  [let [[node [new parse_tree_node]]]
-    [set node parse_object parse_object]
-    [if [null current_node]
-	[= root_node node]
-      [have current_node add_next node]]
-    [= current_node node]]]
-
-[deftypefunk parse_tree execute add_child [parse_object]
-  [let [[node [new parse_tree_node]]]
-    [set node parse_object parse_object]
-    [if [null current_node]
-	[= root_node node]
-      [have current_node add_child node]]
-    [= current_node node]]]
-
 [deftypefunk parse_tree execute serialize []
   [if root_node
       [have root_node serialize]]]
@@ -219,7 +167,21 @@
       [error bug_type `parse_tree_pop_to_type_does_not_exist
 	     type     type]]]]
 
+[deftypefunk parse_tree execute add_next [parse_object]
+  [let [[node [new parse_tree_node]]]
+    [set node parse_object parse_object]
+    [if current_node
+	[have current_node insert_after node]
+      [= root_node node]]
+    [= current_node node]]]
 
+[deftypefunk parse_tree execute add_child_to_type [type parse_object]
+  [let [[node [new parse_tree_node]]]
+    [set node parse_object parse_object]
+    [if type
+	[have [get this containing_type_node type] add_child node]
+      [= root_node node]]
+    [= current_node node]]]
 
 [deftypefunk parse_tree get as-graph []
   [let [[graph [new graph]]]

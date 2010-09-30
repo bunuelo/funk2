@@ -75,45 +75,48 @@
   [let [[last_node [get this last_node]]]
     [have last_node insert_below_no_children node]]]
 
+[deftypefunk parse_tree_node execute add_next [node]
+  [have this insert_after node]]
+
+[deftypefunk parse_tree_node execute add_child [node]
+  [have this insert_below_no_children node]]
+
 [deftypefunk parse_tree_node execute serialize []
   [let [[seq nil]]
     [have this map_nodes_backward [funk [node]
 					[= seq [cons [get node parse_object] seq]]]]
     seq]]
 
-[deftypefunk parse_tree_node set containing_type [type value]
+[deftypefunk parse_tree_node get containing_type_node [type]
   [if [is-type type parse_object]
-      [= parse_object value]
-    [if previous_node
-	[set previous_node containing_type type value]
-      [if parent_node
-	  [set parent_node containing_type type value]
-	[error bug_type        `parse_tree_node_does_not_have_containing_type
-	       containing_type type]]]]]
-
-[deftypefunk parse_tree_node get containing_type [type]
-  [if [is-type type parse_object]
-      parse_object
-    [if previous_node
-	[get previous_node containing_type type]
-      [if parent_node
-	  [get parent_node containing_type type]
-	[error bug_type        `parse_tree_node_does_not_have_containing_type
-	       containing_type type]]]]]
-
-[deftypefunk parse_tree_node get is_contained_by_type [type]
-  [if [is-type type parse_object]
-      t
+      this
     [if previous_node
 	[get previous_node containing_type type]
       [if parent_node
 	  [get parent_node containing_type type]
 	nil]]]]
 
+[deftypefunk parse_tree_node get is_contained_by_type [type]
+  [not [null [get this containing_type_node type]]]]
+
+[deftypefunk parse_tree_node get containing_type [type]
+  [let [[node [get this containing_type_node type]]]
+    [if node
+	[get node parse_object]
+      [error bug_type        `parse_tree_node_does_not_have_containing_type
+	     containing_type type]]]]
+
+[deftypefunk parse_tree_node set containing_type [type value]
+  [let [[node [get this containing_type_node type]]]
+    [if node
+	[set node parse_object value]
+      [error bug_type        `parse_tree_node_does_not_have_containing_type
+	     containing_type type]]]]
+
 
 'parse_tree'
 
-[deframe parse_tree [frame] [root_node]]
+[deframe parse_tree [frame] [root_node current_node]]
 
 [deftypefunk parse_tree execute map_nodes [funk]
   [if root_node
@@ -134,7 +137,8 @@
 				   [set new_node first_child_node [let [[first_child_node [get node first_child_node]]] [if first_child_node [have node_hash lookup first_child_node]]]]
 				   [set new_node last_child_node  [let [[last_child_node  [get node last_child_node]]]  [if last_child_node  [have node_hash lookup last_child_node]]]]]]]
       [let [[new_parse_tree [new parse_tree]]]
-	[set new_parse_tree root_node [have node_hash lookup root_node]]
+	[set new_parse_tree root_node    [have node_hash lookup root_node]]
+	[set new_parse_tree current_node [have node_hash lookup current_node]]
 	new_parse_tree]]]]
 
 [deftypefunk parse_tree get last_node []
@@ -155,24 +159,41 @@
 	[= root_node node]
       [have root_node add_below_last node]]]]
 
+[deftypefunk parse_tree execute add_next [parse_object]
+  [let [[node [new parse_tree_node]]]
+    [set node parse_object parse_object]
+    [if [null current_node]
+	[= root_node node]
+      [have current_node add_next node]]
+    [= current_node node]]]
+
+[deftypefunk parse_tree execute add_child [parse_object]
+  [let [[node [new parse_tree_node]]]
+    [set node parse_object parse_object]
+    [if [null current_node]
+	[= root_node node]
+      [have current_node add_child node]]
+    [= current_node node]]]
+
 [deftypefunk parse_tree execute serialize []
   [if root_node
       [have root_node serialize]]]
 
-[deftypefunk parse_tree set containing_type [type value]
-  [let [[last_node [get this last_node]]]
-    [if last_node
-	[set last_node containing_type type value]]]]
-
-[deftypefunk parse_tree get containing_type [type]
-  [let [[last_node [get this last_node]]]
-    [if last_node
-	[get last_node containing_type type]]]]
+[deftypefunk parse_tree get containing_type_node [type]
+  [if current_node
+      [get current_node containing_type_node type]]]
 
 [deftypefunk parse_tree get is_contained_by_type [type]
-  [let [[last_node [get this last_node]]]
-    [if last_node
-	[get last_node is_contained_by_type type]]]]
+  [if current_node
+      [get current_node is_contained_by_type type]]]
+
+[deftypefunk parse_tree get containing_type [type]
+  [if current_node
+      [get current_node containing_type type]]]
+
+[deftypefunk parse_tree set containing_type [type value]
+  [if current_node
+      [set current_node containing_type type value]]]
 
 [deftypefunk parse_tree get containing_type_property [type property]
   [if [get this is_contained_by_type type]
@@ -188,6 +209,15 @@
 	  [set this containing_type type new_copy]]]
     [error bug_type `parse_tree_is_not_contained_by_type
 	   type     type]]]
+
+[deftypefunk parse_tree execute pop_to_type [type]
+  [let [[node [get this containing_type_node type]]]
+    [if node
+	[= current_node node]
+      [error bug_type `parse_tree_pop_to_type_does_not_exist
+	     type     type]]]]
+
+
 
 [deftypefunk parse_tree get as-graph []
   [let [[graph [new graph]]]

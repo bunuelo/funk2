@@ -129,6 +129,9 @@
   [if root_node
       [have root_node serialize]]]
 
+[deftypefunk parse_tree get serialized []
+  [have this serialize]]
+
 [deftypefunk parse_tree get containing_type_node [type]
   [if current_node
       [get current_node containing_type_node type]]]

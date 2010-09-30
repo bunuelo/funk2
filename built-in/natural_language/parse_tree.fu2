@@ -22,7 +22,7 @@
 
 [deframe parse_tree_node [frame] [parse_object parent_node previous_node next_node first_child_node last_child_node]]
 
-[deftypefunk parse_tree_node get last_node []
+`[deftypefunk parse_tree_node get last_node []
   [if next_node
       [get next_node last_node]
     [if last_child_node
@@ -67,11 +67,11 @@
   [set node previous_node nil]
   [set node next_node nil]]
 
-[deftypefunk parse_tree_node execute add_last [node]
+`[deftypefunk parse_tree_node execute add_last [node]
   [let [[last_node [get this last_node]]]
     [have last_node insert_after node]]]
 
-[deftypefunk parse_tree_node execute add_below_last [node]
+`[deftypefunk parse_tree_node execute add_below_last [node]
   [let [[last_node [get this last_node]]]
     [have last_node insert_below_no_children node]]]
 
@@ -141,18 +141,18 @@
 	[set new_parse_tree current_node [have node_hash lookup current_node]]
 	new_parse_tree]]]]
 
-[deftypefunk parse_tree get last_node []
+`[deftypefunk parse_tree get last_node []
   [if root_node
       [get root_node last_node]]]
 
-[deftypefunk parse_tree execute add_last [parse_object]
+`[deftypefunk parse_tree execute add_last [parse_object]
   [let [[node [new parse_tree_node]]]
     [set node parse_object parse_object]
     [if [null root_node]
 	[= root_node node]
       [have root_node add_last node]]]]
 
-[deftypefunk parse_tree execute add_below_last [parse_object]
+`[deftypefunk parse_tree execute add_below_last [parse_object]
   [let [[node [new parse_tree_node]]]
     [set node parse_object parse_object]
     [if [null root_node]

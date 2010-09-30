@@ -43,7 +43,7 @@
 				[rest_sequence  [if [is-type `symbol [get verb symbols]]
 						    [cdr sequence]
 						  [cddr sequence]]]]
-			    [have new_parse_tree add_last new_verb_word]
+			    [have new_parse_tree add_next new_verb_word]
 			    [= parses [cons [frame parse_tree    new_parse_tree
 						   verb_word     new_verb_word
 						   rest_sequence rest_sequence]
@@ -70,7 +70,7 @@
 [deftypefunk english_dictionary execute parse_sequence_as_verb_group [sequence parse_tree verb_group]
   [let [[parses nil]]
     [let [[verb_group_parse_tree [get parse_tree new_copy]]]
-      [have verb_group_parse_tree add_below_last [get verb_group new_copy]]
+      [have verb_group_parse_tree add_child [get verb_group new_copy]]
       [parse_format '\n  parsing ' sequence ' as a verb_group.']
       [if [get verb_group_parse_tree containing_type_property `verb_group `imperative]
 	  [prog [parse_format '\n  parsing ' sequence ' as an imperative verb_group.']
@@ -85,7 +85,7 @@
 						  [let [[new_parse_tree [get verb_group_parse_tree new_copy]]
 							[new_verb_word  [get first_word_verb new_copy]]]
 						    [set new_verb_word Main t]
-						    [have new_parse_tree add_last new_verb_word]
+						    [have new_parse_tree add_next new_verb_word]
 						    [= parses [cons [frame verb_word     new_verb_word
 									   parse_tree    new_parse_tree
 									   rest_sequence [cdr sequence]]
@@ -142,7 +142,7 @@
 		    [parse_format '\n    found first word to be a particle: ' first_word]
 		    [let [[new_parse_tree    [get parse_tree          new_copy]]
 			  [new_particle_word [get first_word_particle new_copy]]]
-		      [have new_parse_tree add_last new_particle_word]
+		      [have new_parse_tree add_next new_particle_word]
 		      [= parses [cons [frame parse_tree    new_parse_tree
 					     particle_word new_particle_word]
 				      parses]]]]
@@ -164,7 +164,7 @@
 				[rest_sequence       [if [is-type `symbol [get determiner symbols]]
 							 [cdr sequence]
 						       [cddr sequence]]]]
-			    [have new_parse_tree add_last new_determiner_word]
+			    [have new_parse_tree add_next new_determiner_word]
 			    [= parses [cons [frame parse_tree      new_parse_tree
 						   determiner_word new_determiner_word
 						   rest_sequence   rest_sequence]
@@ -190,7 +190,7 @@
 		    [parse_format '\n    found first word to be an adjective: ' first_word]
 		    [let [[new_parse_tree     [get parse_tree           new_copy]]
 			  [new_adjective_word [get first_word_adjective new_copy]]]
-		      [have new_parse_tree add_last new_adjective_word]
+		      [have new_parse_tree add_next new_adjective_word]
 		      [= parses [cons [frame parse_tree     new_parse_tree
 					     adjective_word new_adjective_word
 					     rest_sequence  [cdr sequence]]
@@ -222,7 +222,7 @@
 		    [parse_format '\n    found first word to be a classifier: ' first_word]
 		    [let [[new_parse_tree      [get parse_tree            new_copy]]
 			  [new_classifier_word [get first_word_classifier new_copy]]]
-		      [have new_parse_tree add_last new_classifier_word]
+		      [have new_parse_tree add_next new_classifier_word]
 		      [= parses [cons [frame parse_tree      new_parse_tree
 					     classifier_word new_classifier_word
 					     rest_sequence   [cdr sequence]]
@@ -254,7 +254,7 @@
 		    [parse_format '\n    found first word to be an noun: ' first_word]
 		    [let [[new_parse_tree [get parse_tree      new_copy]]
 			  [new_noun_word  [get first_word_noun new_copy]]]
-		      [have new_parse_tree add_last new_noun_word]
+		      [have new_parse_tree add_next new_noun_word]
 		      [= parses [cons [frame parse_tree    new_parse_tree
 					     noun_word     new_noun_word
 					     rest_sequence [cdr sequence]]
@@ -270,7 +270,7 @@
 	[mapc [funk [number_definition]
 		    [parse_format '\n    found first word to be a number: ' first_word]
 		    [let [[new_parse_tree [get parse_tree new_copy]]]
-		      [have new_parse_tree add_last number_definition]
+		      [have new_parse_tree add_next number_definition]
 		      [= parses [cons [frame parse_tree    new_parse_tree
 					     rest_sequence [cdr sequence]
 					     number_word   [get number_definition new_copy]]
@@ -286,7 +286,7 @@
 	[mapc [funk [ordinal_definition]
 		    [parse_format '\n    found first word to be an ordinal: ' first_word]
 		    [let [[new_parse_tree [get parse_tree new_copy]]]
-		      [have new_parse_tree add_last ordinal_definition]
+		      [have new_parse_tree add_next ordinal_definition]
 		      [= parses [cons [frame parse_tree    new_parse_tree
 					     rest_sequence [cdr sequence]
 					     ordinal_word  [get ordinal_definition new_copy]]
@@ -302,7 +302,7 @@
 	[mapc [funk [question_adjunct_definition]
 		    [parse_format '\n    found first word to be a question_adjunct: ' first_word]
 		    [let [[new_parse_tree [get parse_tree new_copy]]]
-		      [have new_parse_tree add_last question_adjunct_definition]
+		      [have new_parse_tree add_next question_adjunct_definition]
 		      [= parses [cons [frame parse_tree    new_parse_tree
 					     rest_sequence [cdr sequence]
 					     question_adjunct_word   [get question_adjunct_definition new_copy]]
@@ -511,6 +511,7 @@
 					[let [[verb_group_parse_tree    [have verb_group_parse lookup `parse_tree]]
 					      [verb_group_rest_sequence [have verb_group_parse lookup `rest_sequence]]
 					      [verb_group_verb_group    [have verb_group_parse lookup `verb_group]]]
+					  [have verb_group_parse_tree pop_to_type `clause]
 					  [parse_format '\n      found successful question verb_group parse: ' verb_group_parse]
 					  [if [null verb_group_rest_sequence]
 					      [= parses [cons verb_group_parse parses]]
@@ -529,6 +530,7 @@
 		    [let [[verb_group_parse_tree    [have verb_group_parse lookup `parse_tree]]
 			  [verb_group_rest_sequence [have verb_group_parse lookup `rest_sequence]]
 			  [verb_word                [have verb_group_parse lookup `verb_word]]]
+		      [have verb_group_parse_tree pop_to_type `clause]
 		      [parse_format '\n    found successful verb_group parse: ' verb_group_parse]
 		      [let [[new_parse_tree [get verb_group_parse_tree new_copy]]]
 			[set new_parse_tree containing_type_property `clause `imperative t]
@@ -579,7 +581,7 @@
 [deftypefunk english_dictionary execute parse_sequence_as_clause [sequence parse_tree clause]
   [let [[parses nil]]
     [let [[clause_parse_tree [get parse_tree new_copy]]]
-      [have clause_parse_tree add_below_last [get clause new_copy]]
+      [have clause_parse_tree add_child [get clause new_copy]]
       [let [[question_parses [have this parse_sequence_as_clause-main_question sequence clause_parse_tree]]]
 	[= parses [append question_parses parses]]]
       [let [[first_word [first sequence]]]

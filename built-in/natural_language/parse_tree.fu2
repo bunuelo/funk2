@@ -79,7 +79,9 @@
   [have this insert_after node]]
 
 [deftypefunk parse_tree_node execute add_child [node]
-  [have this insert_below_no_children node]]
+  [if [null last_child_node]
+      [have this insert_below_no_children node]
+    [have last_child_node insert_after node]]]
 
 [deftypefunk parse_tree_node execute serialize []
   [let [[seq nil]]

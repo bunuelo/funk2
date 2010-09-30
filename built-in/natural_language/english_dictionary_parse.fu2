@@ -85,7 +85,7 @@
 						    [let [[new_parse_tree [get verb_group_parse_tree new_copy]]
 							  [new_verb_word  [get first_word_verb new_copy]]]
 						      [set new_verb_word Main t]
-						      [have new_parse_tree add_next new_verb_word]
+						      [have new_parse_tree add_child_to_type `verb_group new_verb_word]
 						      [= parses [cons [frame verb_word     new_verb_word
 									     parse_tree    new_parse_tree
 									     rest_sequence [cdr sequence]]

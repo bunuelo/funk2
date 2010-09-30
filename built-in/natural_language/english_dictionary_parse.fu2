@@ -445,7 +445,7 @@
 	      determiner_parses]]]
     parses]]
 
-[deftypefunk english_dictionary execute parse_sequence_as_clause-after_transitive_verb_group [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_clause-main_after_transitive_verb_group [sequence parse_tree]
   [let [[parses nil]]
     [let [[first_word [first sequence]]]
       [let [[pronoun_definitions [get this definitions_by_type `pronoun_word first_word]]]

@@ -28,7 +28,7 @@
    :sources ['english_dictionary.fu2']]
 
 [defpackage english_dictionary_parse
-  :packages [dictionary_frame parse_tree]
+  :packages [english_dictionary dictionary_frame parse_tree]
    :sources ['english_dictionary_parse.fu2']]
 
 [defpackage natural_language

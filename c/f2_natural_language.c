@@ -172,7 +172,9 @@ f2ptr f2__verb_group__new(f2ptr cause) {
   f2ptr negative           = nil;
   f2ptr auxiliary          = nil;
   f2ptr not_only_auxiliary = nil;
-  return f2verb_group__new(cause, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, auxiliary, not_only_auxiliary);
+  f2ptr singular           = nil;
+  f2ptr plural             = nil;
+  return f2verb_group__new(cause, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, auxiliary, not_only_auxiliary, singular, plural);
 }
 def_pcfunk0(verb_group__new, return f2__verb_group__new(this_cause));
 

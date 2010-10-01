@@ -295,6 +295,14 @@
        [dictionary-add_word this combination_group [on top of]   [preposition]]
        [dictionary-add_word this combination_group [out of]      [preposition]]
        
+       [dictionary-add_word this pronoun_word that who   [relative_clause]]
+       [dictionary-add_word this pronoun_word that whom  [relative_clause]]
+       [dictionary-add_word this pronoun_word that whose [relative_clause possessive]]
+       [dictionary-add_word this pronoun_word that which [relative_clause]]
+       [dictionary-add_word this pronoun_word that where [relative_clause]]
+       [dictionary-add_word this pronoun_word that when  [relative_clause]]
+       [dictionary-add_word this pronoun_word that why   [relative_clause]]
+       
        ]]
 
 

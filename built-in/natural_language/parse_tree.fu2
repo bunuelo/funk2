@@ -68,6 +68,15 @@
       [have this insert_below_no_children node]
     [have last_child_node insert_after node]]]
 
+[deftypefunk parse_tree_node get child_of_type [type]
+  [let [[iter first_child_node]]
+    [while [and iter [not [is-type type [get iter parse_object]]]]
+      [= iter [get iter next_node]]]
+    [if iter
+	iter
+      [error bug_type `parse_tree_node-child_of_type-does_not_exist
+	     type     type]]]]
+
 [deftypefunk parse_tree_node execute serialize []
   [let [[seq nil]]
     [have this map_nodes_backward [funk [node]
@@ -188,6 +197,9 @@
 	[have [get this containing_type_node type] add_child node]
       [= root_node node]]
     [= current_node node]]]
+
+[deftypefunk parse_tree get containing_type_child_of_type [containing_type child_type]
+  [get [get this containing_type_node containing_type] child_of_type child_type]]
 
 [deftypefunk parse_tree get as-graph []
   [let [[graph [new graph]]]

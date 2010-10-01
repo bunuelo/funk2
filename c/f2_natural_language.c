@@ -157,7 +157,7 @@ f2ptr f2adjective_group__primobject_type__new_aux(f2ptr cause) {
 
 // verb_group
 
-def_frame_object__global__14_slot(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, auxiliary, not_only_auxiliary, singular, plural);
+def_frame_object__global__15_slot(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, auxiliary, not_only_auxiliary, singular, plural, takes_particle);
 
 f2ptr f2__verb_group__new(f2ptr cause) {
   f2ptr symbols            = nil;
@@ -174,7 +174,8 @@ f2ptr f2__verb_group__new(f2ptr cause) {
   f2ptr not_only_auxiliary = nil;
   f2ptr singular           = nil;
   f2ptr plural             = nil;
-  return f2verb_group__new(cause, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, auxiliary, not_only_auxiliary, singular, plural);
+  f2ptr takes_particle     = nil;
+  return f2verb_group__new(cause, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, auxiliary, not_only_auxiliary, singular, plural, takes_particle);
 }
 def_pcfunk0(verb_group__new, return f2__verb_group__new(this_cause));
 
@@ -613,7 +614,7 @@ void f2__natural_language__initialize() {
   
   // verb_group
   
-  init_frame_object__14_slot(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, auxiliary, not_only_auxiliary, singular, plural);
+  init_frame_object__15_slot(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, auxiliary, not_only_auxiliary, singular, plural, takes_particle);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(verb_group__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__funk = never_gc(cfunk);}

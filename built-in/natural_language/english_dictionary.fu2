@@ -251,9 +251,9 @@
        [dictionary-add_word this verb_word [will be]        [be will first_person_singular third_person_singular plural infinitive]]
        [dictionary-add_word this verb_word [will have been] [be will first_person_singular third_person_singular plural past infinitive]]
        [dictionary-add_word this verb_word being            [be ing infinitive]]
-       [dictionary-add_word this verb_word support          [infinitive transitive]]
-       [dictionary-add_word this verb_word supports         [present transitive]]
-       [dictionary-add_word this verb_word supported        [en past transitive]]
+       [dictionary-add_word this verb_word support          [infinitive transitive first_person_singular]]
+       [dictionary-add_word this verb_word supports         [present transitive third_person_singular]]
+       [dictionary-add_word this verb_word supported        [en past transitive plural first_person_singular third_person_singular]]
        [dictionary-add_word this verb_word supporting       [ing transitive]]
        
        [dictionary-add_word this particle_word up []]

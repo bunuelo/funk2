@@ -203,4 +203,7 @@
     graph]]
 
 
+[deftypefunk parse_tree execute gview []
+  [have [get this as-graph] gview]]
+
 

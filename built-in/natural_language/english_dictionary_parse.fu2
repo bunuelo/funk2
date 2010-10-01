@@ -125,7 +125,7 @@
 
 [deftypefunk english_dictionary execute parse_sequence_as_verb_group-after_auxiliary_verbs [sequence parse_tree]
   [let [[parses nil]]
-    [let [[verb_parses [have this parse_sequence_as_verb_word auxiliary_be_verbs_rest_sequence auxiliary_be_verbs_parse_tree]]]
+    [let [[verb_parses [have this parse_sequence_as_verb_word sequence parse_tree]]]
       [mapc [funk [verb_parse]
 		  [let [[verb_parse_tree    [have verb_parse lookup `parse_tree]]
 			[verb_rest_sequence [have verb_parse lookup `rest_sequence]]

@@ -686,7 +686,7 @@
 
 [deftypefunk english_dictionary execute parse_sequence_as_clause-with_verb_group_next [sequence parse_tree]
   [let [[parses nil]]
-    [let [[verb_group_parses [have this parse_sequence_as_verb_group sequence verb_group_initial_parse_tree]]]
+    [let [[verb_group_parses [have this parse_sequence_as_verb_group sequence parse_tree]]]
       [mapc [funk [verb_group_parse]
 		  [let [[verb_group_parse_tree    [have verb_group_parse lookup `parse_tree]]
 			[verb_group_rest_sequence [have verb_group_parse lookup `rest_sequence]]

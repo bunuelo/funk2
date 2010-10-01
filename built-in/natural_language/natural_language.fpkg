@@ -32,5 +32,5 @@
    :sources ['english_dictionary_parse.fu2']]
 
 [defpackage natural_language
-  :packages [english_dictionary english_dictionary_parse]]
+  :packages [english_dictionary_parse]]
 

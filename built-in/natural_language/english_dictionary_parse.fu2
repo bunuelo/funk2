@@ -390,7 +390,7 @@
 
 [deftypefunk english_dictionary execute parse_sequence_as_noun_group-relative_clause [sequence parse_tree]
   [let [[parses nil]]
-    [let [[clause_parse_tree [get pronoun_parse_tree new_copy]]
+    [let [[clause_parse_tree [get parse_tree new_copy]]
 	  [clause            [new clause]]]
       [set clause wh        t]
       [set clause secondary t]

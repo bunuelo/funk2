@@ -110,9 +110,10 @@
 							  [new_verb_word  [get first_word_verb new_copy]]]
 						      [set new_verb_word Main t]
 						      [have new_parse_tree add_child_to_type `verb_group new_verb_word]
-						      [= parses [cons [frame verb_word     new_verb_word
-									     parse_tree    new_parse_tree
-									     rest_sequence [cdr sequence]]
+						      [= parses [cons [frame parse_tree    new_parse_tree
+									     rest_sequence [cdr sequence]
+									     verb_word     new_verb_word
+									     verb_group    [get new_parse_tree containing_type `verb_group]]
 								      parses]]
 						      ]]
 					    [prog [parse_format '\n  parsing ' sequence ' as an imperative verb_group with first word as not an infinitive verb.']
@@ -125,7 +126,8 @@
 				    [auxiliary_be_verbs_rest_sequence [have auxiliary_be_verbs_parse lookup `rest_sequence]]]
 				[if [not [get auxiliary_be_verbs_parse_tree containing_type_property `verb_group `not_only_auxiliary]]
 				    [prog [= parses [cons [frame parse_tree    auxiliary_be_verbs_parse_tree
-								 rest_sequence auxiliary_be_verbs_rest_sequence]
+								 rest_sequence auxiliary_be_verbs_rest_sequence
+								 verb_group    [get auxiliary_be_verbs_parse_tree containing_type `verb_group]]
 							  parses]]]]
 				[if [and [     get auxiliary_be_verbs_parse_tree containing_type_property `verb_group `not_only_auxiliary]
 					 [not [get auxiliary_be_verbs_parse_tree containing_type_property `verb_group `auxiliary]]]
@@ -142,7 +144,8 @@
 								  [prog [parse_format '\n  verb_word is en following a be verb, so marking verb_group as passive.']
 									[set verb_parse_tree containing_type_property `verb_group `passive t]]]
 							      [= parses [cons [frame parse_tree    verb_parse_tree
-										     rest_sequence verb_rest_sequence]
+										     rest_sequence verb_rest_sequence
+										     verb_group    [get verb_parse_tree containing_type `verb_group]]
 									      parses]]]]]]
 					    verb_parses]]]]]
 			auxiliary_be_verbs_parses]]

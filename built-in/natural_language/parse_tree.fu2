@@ -68,7 +68,7 @@
       [have this insert_below_no_children node]
     [have last_child_node insert_after node]]]
 
-[deftypefunk parse_tree_node get child_of_type [type]
+[deftypefunk parse_tree_node get child_of_type_node [type]
   [let [[iter first_child_node]]
     [while [and iter [not [is-type type [get iter parse_object]]]]
       [= iter [get iter next_node]]]
@@ -198,8 +198,11 @@
       [= root_node node]]
     [= current_node node]]]
 
+[deftypefunk parse_tree get containing_type_child_of_type_node [containing_type child_type]
+  [get [get this containing_type_node containing_type] child_of_type_node child_type]]
+
 [deftypefunk parse_tree get containing_type_child_of_type [containing_type child_type]
-  [get [get this containing_type_node containing_type] child_of_type child_type]]
+  [get [get [get this containing_type_node containing_type] child_of_type_node child_type] parse_object]]
 
 [deftypefunk parse_tree get as-graph []
   [let [[graph [new graph]]]

@@ -664,7 +664,7 @@
 					  [have verb_group_parse_tree pop_to_type `clause]
 					  [parse_format '\n    verb_group_verb_group: ' verb_group_verb_group]
 					  [parse_format '\n    noun_group...........: ' noun_group]
-					  [if [or [and [get noun_group singular] [or [get verb_group_verb_group first_person_singular] [get verb_group_verb_group third_person_singular]]]
+					  [if [or [and [get noun_group singular] [get verb_group_verb_group singular]]
 						  [and [get noun_group plural]   [get verb_group_verb_group plural]]
 						  [and [get noun_group mass]     [get verb_group_verb_group singular]]]
 					      [prog [parse_format '\n      verb_group quantity agrees with noun_group quantity: ' verb_group_parse]

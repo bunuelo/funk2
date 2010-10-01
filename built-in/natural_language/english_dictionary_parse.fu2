@@ -259,7 +259,7 @@
   [set this containing_type_property `noun_group `mass       [get determiner_word mass]]
   [set this containing_type_property `noun_group `determiner t]]
 
-[deftypefunk parse_tree execute transfer_relevant_features_from_pronoun_word_to_noun_group [pronoun_word]
+[deftypefunk parse_tree execute transfer_relevant_features_from_pronoun_word_to_containing_noun_group [pronoun_word]
   [set this containing_type_property `noun_group `singular   [or [get pronoun_word singular] [get pronoun_word first_person_singular]]]
   [set this containing_type_property `noun_group `plural     [get pronoun_word plural]]]
 

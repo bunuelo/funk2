@@ -75,7 +75,7 @@
     parses]]
 
 [deftypefunk parse_tree execute transfer_plurality_features_of_verb_word_to_containing_verb_group [verb_word]
-  [set this containing_type_property `verb_group `singular [get verb_word singular]]
+  [set this containing_type_property `verb_group `singular [not [get verb_word plural]]]
   [set this containing_type_property `verb_group `plural   [get verb_word plural]]]
 
 

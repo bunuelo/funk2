@@ -259,6 +259,10 @@
        [dictionary-add_word this verb_word supports         [present transitive third_person_singular]]
        [dictionary-add_word this verb_word supported        [en past transitive plural first_person_singular third_person_singular]]
        [dictionary-add_word this verb_word supporting       [ing transitive]]
+       [dictionary-add_word this verb_word want             [infinitive transitive first_person_singular]]
+       [dictionary-add_word this verb_word wants            [present transitive third_person_singular]]
+       [dictionary-add_word this verb_word wanted           [en past transitive plural first_person_singular third_person_singular]]
+       [dictionary-add_word this verb_word wanting          [ing transitive]]
        
        [dictionary-add_word this particle_word up []]
        

@@ -851,7 +851,7 @@
 		      [let [[verb_group_initial_parse_tree [get noun_group_parse_tree new_copy]]
 			    [verb_group                    [new verb_group]]]
 			[have verb_group_initial_parse_tree add_child_to_type `clause verb_group]
-			[let [[verb_group_parses [have this parse_sequence_as_verb_group sequence verb_group_initial_parse_tree]]]
+			[let [[verb_group_parses [have this parse_sequence_as_verb_group noun_group_rest_sequence verb_group_initial_parse_tree]]]
 			  [mapc [funk [verb_group_parse]
 				      [let [[verb_group_parse_tree    [have verb_group_parse lookup `parse_tree]]
 					    [verb_group_rest_sequence [have verb_group_parse lookup `rest_sequence]]]

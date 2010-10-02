@@ -24,6 +24,8 @@
   [new []
        [construct dictionary_frame]
        
+       [dictionary-add_word this infinitive_helper_word to []]
+       
        [dictionary-add_word this determiner_word a          [indefinite singular]]
        [dictionary-add_word this determiner_word the        [definite singular plural mass]]
        [dictionary-add_word this determiner_word some       [definite plural mass]]

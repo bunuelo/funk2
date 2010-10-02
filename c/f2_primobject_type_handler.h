@@ -174,6 +174,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__particle_word__slot_t                    primobject_type_particle_word;
   funk2_object_type__question_adjunct_word__slot_t            primobject_type_question_adjunct_word;
   funk2_object_type__thing_pronoun_word__slot_t               primobject_type_thing_pronoun_word;
+  funk2_object_type__infinitive_helper_word__slot_t           primobject_type_infinitive_helper_word;
   funk2_object_type__verb_word__slot_t                        primobject_type_verb_word;
 };
 

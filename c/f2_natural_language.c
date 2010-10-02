@@ -520,6 +520,24 @@ f2ptr f2thing_pronoun_word__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// infinitive_helper_word
+
+def_frame_object__global__1_slot(infinitive_helper_word, symbols);
+
+f2ptr f2__infinitive_helper_word__new(f2ptr cause) {
+  f2ptr symbols = nil;
+  return f2infinitive_helper_word__new(cause, symbols);
+}
+def_pcfunk0(infinitive_helper_word__new, return f2__infinitive_helper_word__new(this_cause));
+
+
+f2ptr f2infinitive_helper_word__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2infinitive_helper_word__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_infinitive_helper_word.new__funk);}
+  return this;
+}
+
+
 // verb_word
 
 def_frame_object__global__23_slot(verb_word, symbols, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, ing, en, infinitive, past, present, Main, takes_particle, transitive, transitive_two, takes_to_object, takes_subject_to_object);
@@ -749,6 +767,14 @@ void f2__natural_language__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_thing_pronoun_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(thing_pronoun_word__new, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_thing_pronoun_word.new__funk = never_gc(cfunk);}
+  
+  
+  // infinitive_helper_word
+  
+  init_frame_object__1_slot(infinitive_helper_word, symbols);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_infinitive_helper_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__0_arg(infinitive_helper_word__new, cfunk, 0, "");  __funk2.globalenv.object_type.primobject.primobject_type_infinitive_helper_word.new__funk = never_gc(cfunk);}
   
   
   // verb_word

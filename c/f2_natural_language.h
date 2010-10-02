@@ -220,6 +220,15 @@ struct funk2_object_type__thing_pronoun_word__slot_s {
 };
 
 
+// infinitive_helper_word
+
+typedef struct funk2_object_type__infinitive_helper_word__slot_s funk2_object_type__infinitive_helper_word__slot_t;
+struct funk2_object_type__infinitive_helper_word__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
 // verb_word
 
 typedef struct funk2_object_type__verb_word__slot_s funk2_object_type__verb_word__slot_t;
@@ -388,6 +397,13 @@ f2ptr f2question_adjunct_word__primobject_type__new_aux(f2ptr cause);
 declare_frame_object_1_slot(thing_pronoun_word, symbols);
 
 f2ptr f2thing_pronoun_word__primobject_type__new_aux(f2ptr cause);
+
+
+// infinitive_helper_word
+
+declare_frame_object_1_slot(infinitive_helper_word, symbols);
+
+f2ptr f2infinitive_helper_word__primobject_type__new_aux(f2ptr cause);
 
 
 // verb_word

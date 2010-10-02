@@ -206,10 +206,24 @@
     [= current_node node]]]
 
 [deftypefunk parse_tree get containing_type_child_of_type_node [containing_type child_type]
-  [get [get this containing_type_node containing_type] child_of_type_node child_type]]
+  [let [[node [get this containing_type_node containing_type]]]
+    [if node
+	[get node child_of_type_node child_type]
+      [error bug_type        `containing_type_child_of_type_node_could_not_find_containing_type
+	     this            this
+	     funkname        `containing_type_child_of_type_node
+	     containing_type containing_type
+	     child_type      child_type]]]]
 
 [deftypefunk parse_tree get containing_type_child_of_type [containing_type child_type]
-  [get [get [get this containing_type_node containing_type] child_of_type_node child_type] parse_object]]
+  [let [[node [get this containing_type_child_of_type_node containing_type child_type]]]
+    [if node
+	[get node parse_object]
+      [error bug_type        `containing_type_child_of_type_could_not_find_child_type
+	     this            this
+	     funkname        `containing_type_child_of_type
+	     containing_type containing_type
+	     child_type      child_type]]]]
 
 [deftypefunk parse_tree get as-graph []
   [let [[graph [new graph]]]

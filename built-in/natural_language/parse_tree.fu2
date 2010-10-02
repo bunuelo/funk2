@@ -37,11 +37,11 @@
       [have first_child_node map_nodes_forward funk]]]
 
 [deftypefunk parse_tree_node execute map_nodes_backward [funk]
-  [if last_child_node
-      [have last_child_node map_nodes_backward funk]]
-  [if next_node
-      [have next_node map_nodes_backward funk]]
-  [apply funk [cons this nil]]]
+  [apply funk [cons this nil]]
+  [if previous_node
+      [have previous_node map_nodes_backward funk]
+    [if parent_node
+	[have parent_node map_nodes_backward funk]]]]
 
 [deftypefunk parse_tree_node execute map_nodes [funk]
   [have this map_nodes_forward funk]]

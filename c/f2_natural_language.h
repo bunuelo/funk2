@@ -245,7 +245,7 @@ f2ptr f2wh_rank_shift_clause__primobject_type__new_aux(f2ptr cause);
 
 // clause
 
-declare_frame_object_9_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive);
+declare_frame_object_10_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, subject_to_object);
 
 f2ptr f2clause__primobject_type__new_aux(f2ptr cause);
 

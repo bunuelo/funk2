@@ -117,6 +117,7 @@
 		      [if [get verb_word be]
 			  [prog [parse_format '\n  parse_sequence_as_verb_group-auxiliary_be_verbs: found be auxiliary verb parse: ' verb_parse]
 				[set verb_word auxiliary t]
+				[set new_parse_tree containing_type_property `verb_group `be t]
 				[= parses [cons [frame parse_tree    new_parse_tree
 						       rest_sequence verb_rest_sequence
 						       verb_group    [get new_parse_tree containing_type `verb_group]]
@@ -137,9 +138,10 @@
 			    [get verb_word ing]]
 			[prog [parse_format '\n  parse_sequence_as_verb_group-after_auxiliary_verbs: verb_word satisfies en or ing conjugation: ' verb_word]
 			      [set verb_word Main t]
-			      [if [get verb_word en]
-				  [prog [parse_format '\n  parse_sequence_as_verb_group-after_auxiliary_verbs: verb_word is en following a be verb, so marking verb_group as passive.']
-					[set verb_parse_tree containing_type_property `verb_group `passive t]]]
+			      [if [get verb_parse_tree containing_type_property `verb_group `be]
+				  [if [get verb_word en]
+				      [prog [parse_format '\n  parse_sequence_as_verb_group-after_auxiliary_verbs: verb_word is en following a be verb, so marking verb_group as passive.']
+					    [set verb_parse_tree containing_type_property `verb_group `passive t]]]]
 			      [= parses [cons [frame parse_tree    verb_parse_tree
 						     rest_sequence verb_rest_sequence
 						     verb_group    [get verb_parse_tree containing_type `verb_group]]

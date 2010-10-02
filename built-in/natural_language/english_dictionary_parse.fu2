@@ -822,8 +822,8 @@
 
 [deftypefunk english_dictionary execute parse_sequence_as_clause-subject_to_object [sequence parse_tree]
   [let [[parses nil]]
+    [parse_format '\n    parse_sequence_as_clause-subject_to_object: parsing ' sequence '.']
     [parse_format '\n    parse_sequence_as_clause-subject_to_object: not yet implemented.']
-    
     parses]]
 
 [deftypefunk english_dictionary execute parse_sequence_as_clause [sequence parse_tree]

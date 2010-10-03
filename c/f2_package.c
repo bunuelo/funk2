@@ -55,6 +55,19 @@ f2ptr f2source__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+f2ptr raw__source__eval(f2ptr cause, f2ptr this) {
+  return nil;
+}
+
+f2ptr f2__source__eval(f2ptr cause, f2ptr this) {
+  if (! raw__source_expression__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__source__eval(cause, this);
+}
+def_pcfunk1(source__eval, this, return f2__source__eval(this_cause, this));
+
+
 // package
 
 def_primobject_4_slot(package,
@@ -382,6 +395,8 @@ void f2__package__initialize() {
 			       code);
   
   f2__primcfunk__init__1(source__load, filename, "load source code from a file named by filename.");
+  
+  f2__primcfunk__init__1(source__eval, this, "");
   
   // package
   

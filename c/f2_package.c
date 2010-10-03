@@ -31,6 +31,7 @@ def_pcfunk6(source_expression__new, body, first_line, last_line, first_column, l
 
 f2ptr f2source_expression__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2source_expression__primobject_type__new(cause);
+  {char* slot_name = "terminal_print_with_frame";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_source_expression.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -388,6 +389,10 @@ void f2__package__initialize() {
   
   initialize_primobject_6_slot(source_expression,
 			       body, first_line, last_line, first_column, last_column, subexpressions);
+  
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_source_expression.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(source_expression__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "Prints a source_expression object using a terminal_print_frame.");
+    __funk2.globalenv.object_type.primobject.primobject_type_source_expression.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // source
   

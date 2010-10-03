@@ -17,5 +17,5 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk bruno_graph-cluster &primfunk:bruno_graph__cluster]
+[globalize-funk graph-cluster &primfunk:graph__cluster]
 

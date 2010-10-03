@@ -543,7 +543,7 @@
 [defmetro cause-define [name value]
   `[have [this-cause] define [quote ,name] ,value]]
 
-[defmetro cause-lookup [name value]
+[defmetro cause-lookup [name]
   `[have [this-cause] lookup [quote ,name]]]
 
 [defunk parcar [proc seq]
@@ -894,9 +894,9 @@
      result]]
 
 [defmetro error [:rest slot_value_pairs]
-  `[error-new `source_filename   [quote ,[cause-lookup [this-cause] `source-filename]]
-	      `source_expression [quote ,[cause-lookup [this-cause] `source_expression]]
-	      @[let [[iter          slot_value_pairs]
+  `[error-new `source_filename   [quote ,[cause-lookup source-filename]]
+	      `source_expression [quote ,[cause-lookup source_expression]]
+              @[let [[iter          slot_value_pairs]
 		     [reverse_codes nil]]
 		 [while iter
 		   [let [[key [car iter]]]

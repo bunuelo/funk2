@@ -172,7 +172,7 @@ f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name) {
   return new_cause;
 }
 
-f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+f2ptr raw__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
   f2ptr     cause_iter   = this;
   f2ptr     value        = nil;
   boolean_t keep_looping;
@@ -198,6 +198,13 @@ f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2pt
   return value;
 }
 
+f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+  if (! raw__cause__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cause__lookup_type_var_value(cause, this, type, var);
+}
+
 f2ptr f2__cause__define(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
   return f2__cause__define_type_var(cause, this, __funk2.primobject__frame.variable__symbol, var, value);
 }
@@ -208,12 +215,20 @@ f2ptr f2__cause__define__funk(f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr valu
 }
 def_pcfunk3(cause__define__funk, this, funkvar, value, return f2__cause__define__funk(this_cause, this, funkvar, value));
 
-f2ptr f2__cause__lookup(f2ptr cause, f2ptr this, f2ptr var) {
-  f2ptr result = f2__cause__lookup_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, var);
+
+f2ptr raw__cause__lookup(f2ptr cause, f2ptr this, f2ptr var) {
+  f2ptr result = raw__cause__lookup_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, var);
   if (raw__larva__is_type(cause, result)) {
     return nil;
   }
   return result;
+}
+
+f2ptr f2__cause__lookup(f2ptr cause, f2ptr this, f2ptr var) {
+  if (! raw__cause__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cause__lookup(cause, this, var);
 }
 def_pcfunk2(cause__lookup, this, var, return f2__cause__lookup(this_cause, this, var));
 

@@ -29,6 +29,20 @@ def_primobject_6_slot(source_expression,
 f2ptr f2__source_expression__new(f2ptr cause, f2ptr body, f2ptr first_line, f2ptr last_line, f2ptr first_column, f2ptr last_column, f2ptr subexpressions) {return f2source_expression__new(cause, body, first_line, last_line, first_column, last_column, subexpressions);}
 def_pcfunk6(source_expression__new, body, first_line, last_line, first_column, last_column, subexpressions, return f2__source_expression__new(this_cause, body, first_line, last_line, first_column, last_column, subexpressions));
 
+f2ptr raw__source_expression__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  
+}
+
+f2ptr f2__source_expression__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__source_expression__is_type(cause, this)) ||
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__source_expression__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(source_expression__terminal_print_with_frame, this, terminal_print_frame, return f2__source_expression__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
 f2ptr f2source_expression__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2source_expression__primobject_type__new(cause);
   {char* slot_name = "terminal_print_with_frame";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_source_expression.terminal_print_with_frame__funk);}

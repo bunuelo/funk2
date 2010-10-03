@@ -894,8 +894,8 @@
      result]]
 
 [defmetro error [:rest slot_value_pairs]
-  `[error-new source_filename   [cause-lookup [this-cause] `source-filename]
-	      source_expression [cause-lookup [this-cause] `source_expression]
+  `[error-new `source_filename   [cause-lookup [this-cause] `source-filename]
+	      `source_expression [cause-lookup [this-cause] `source_expression]
               @[let [[iter          slot_value_pairs]
 		     [reverse_codes nil]]
 		 [while iter

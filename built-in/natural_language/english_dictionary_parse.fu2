@@ -779,7 +779,7 @@
 						    [let [[particle_parses [have this parse_sequence_as_particle_word sequence try_particle_parse_tree]]]
 						      [= parses [append particle_parses parses]]]]
 					      combination_definitions]]]]
-			      second_word_particles]]]]]]]]
+			      first_word_particles]]]]]]]]
     parses]]
 
 [deftypefunk english_dictionary execute parse_sequence_as_clause-with_verb_group_next [sequence parse_tree]

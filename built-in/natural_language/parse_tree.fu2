@@ -226,6 +226,14 @@
 	     containing_type containing_type
 	     child_type      child_type]]]]
 
+[deftypefunk parse_tree get containing_type_child_of_type_child_of_type_node [containing_type first_child_type second_child_type]
+  [get [get this containing_type_child_of_type_node containing_type first_child_type] child_of_type_node second_child_type]]
+
+[deftypefunk parse_tree get containing_type_child_of_type_child_of_type [containing_type first_child_type second_child_type]
+  [get [get [get this containing_type_child_of_type_node containing_type first_child_type] child_of_type_node second_child_type] parse_object]]
+
+
+
 [deftypefunk parse_tree get as-graph []
   [let [[graph [new graph]]]
     [let [[graph_node_hash [new ptypehash]]]

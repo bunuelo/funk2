@@ -776,6 +776,8 @@
 				      [let [[combination_definitions [get this definitions_by_type `combination_group combination]]]
 					[mapc [funk [combination_definition]
 						    [parse_format '\n      parse_sequence_as_clause-matching_verb_particle: found combination to be in dictionary: ' combination]
+						    [if [get combination_definition transitive]
+							[set try_particle_parse_tree containing_type_child_of_type_property `clause `verb_group `transitive t]]
 						    [let [[particle_parses [have this parse_sequence_as_particle_word sequence try_particle_parse_tree]]]
 						      [= parses [append particle_parses parses]]]]
 					      combination_definitions]]]]
@@ -801,7 +803,7 @@
 						[let [[particle_parse_tree [have particle_parse lookup `parse_tree]]]
 						  [parse_format '\n      parse_sequence_as_clause-with_verb_group_next: found successful particle parse: ' particle_parse]
 						  'parse_sequence_as_clause-with_verb_group_next: check all transitivity features.  (we only have transitive for combinations so far)'
-						  [if [get combination_definition transitive]
+						  [if [get try_particle_parse_tree containing_type_child_of_type_property `clause `verb_group `transitive]
 						      [prog [parse_format '\n      parse_sequence_as_clause-with_verb_group_next: combination is transitive: ' combination]
 							    'check if this verb accepts PSNG clauses as an object (we do not have this feature yet).'
 							    'otherwise object must be NG or WHPS clause.'

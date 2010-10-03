@@ -226,11 +226,39 @@
 	     containing_type containing_type
 	     child_type      child_type]]]]
 
+[deftypefunk parse_tree get containing_type_child_of_type_property [containing_type child_type property]
+  [let [[node [get this containing_type_child_of_type_node containing_type child_type]]]
+    [object-get [get node parse_object] property]]]
+
+[deftypefunk parse_tree set containing_type_child_of_type_property [containing_type child_type property value]
+  [let [[node [get this containing_type_child_of_type_node containing_type child_type]]]
+    [let [[new_parse_object [get [get node parse_object] new_copy]]]
+      [object-set new_parse_object property value]
+      [set node parse_object new_parse_object]]]]
+
 [deftypefunk parse_tree get containing_type_child_of_type_child_of_type_node [containing_type first_child_type second_child_type]
-  [get [get this containing_type_child_of_type_node containing_type first_child_type] child_of_type_node second_child_type]]
+  [let [[node [get this containing_type_child_of_type_node containing_type first_child_type]]]
+    [if node
+	[get node child_of_type_node second_child_type]
+      [error bug_type          `containing_type_child_of_type_child_of_type_could_not_find
+	     this              this
+	     funkname          `containing_type_child_of_type_child_of_type_node
+	     containing_type   containing_type
+	     first_child_type  first_child_type
+	     second_child_type second_child_type]]]]
 
 [deftypefunk parse_tree get containing_type_child_of_type_child_of_type [containing_type first_child_type second_child_type]
-  [get [get [get this containing_type_child_of_type_node containing_type first_child_type] child_of_type_node second_child_type] parse_object]]
+  [get [get this containing_type_child_of_type_child_of_type_node containing_type first_child_type second_child_type] parse_object]]
+
+[deftypefunk parse_tree get containing_type_child_of_type_child_of_type_property [containing_type first_child_type second_child_type property]
+  [let [[node [get this containing_type_child_of_type_child_of_type_node containing_type first_child_type second_child_type]]]
+    [object-get [get node parse_object] property]]]
+
+[deftypefunk parse_tree set containing_type_child_of_type_child_of_type_property [containing_type first_child_type second_child_type property value]
+  [let [[node [get this containing_type_child_of_type_child_of_type_node containing_type first_child_type second_child_type]]]
+    [let [[new_parse_object [get [get node parse_object] new_copy]]]
+      [object-set new_parse_object property value]
+      [set node parse_object new_parse_object]]]]
 
 
 

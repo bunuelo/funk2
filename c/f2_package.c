@@ -35,12 +35,12 @@ f2ptr raw__source_expression__terminal_print_with_frame(f2ptr cause, f2ptr this,
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list14__new(cause,
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "source_expression"),
-						new__symbol(cause, "body"),           body,
-						new__symbol(cause, "first_line"),     first_line,
-						new__symbol(cause, "last_line"),      last_line,
-						new__symbol(cause, "first_column"),   first_column,
-						new__symbol(cause, "last_column"),    last_column,
-						new__symbol(cause, "subexpressions"), subexpressions));
+						new__symbol(cause, "body"),           f2__source_expression__body(          cause, this),
+						new__symbol(cause, "first_line"),     f2__source_expression__first_line(    cause, this),
+						new__symbol(cause, "last_line"),      f2__source_expression__last_line(     cause, this),
+						new__symbol(cause, "first_column"),   f2__source_expression__first_column(  cause, this),
+						new__symbol(cause, "last_column"),    f2__source_expression__last_column(   cause, this),
+						new__symbol(cause, "subexpressions"), f2__source_expression__subexpressions(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);

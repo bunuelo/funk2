@@ -30,7 +30,20 @@ f2ptr f2__source_expression__new(f2ptr cause, f2ptr body, f2ptr first_line, f2pt
 def_pcfunk6(source_expression__new, body, first_line, last_line, first_column, last_column, subexpressions, return f2__source_expression__new(this_cause, body, first_line, last_line, first_column, last_column, subexpressions));
 
 f2ptr raw__source_expression__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list16__new(cause,
+						new__symbol(cause, "print_object_type"), new__symbol(cause, "source_expression"),
+						new__symbol(cause, "body"),           body,
+						new__symbol(cause, "first_line"),     first_line,
+						new__symbol(cause, "last_line"),      last_line,
+						new__symbol(cause, "first_column"),   first_column,
+						new__symbol(cause, "last_column"),    last_column,
+						new__symbol(cause, "subexpressions"), subexpressions));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
 f2ptr f2__source_expression__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

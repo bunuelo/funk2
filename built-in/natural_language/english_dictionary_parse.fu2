@@ -280,41 +280,43 @@
 [deftypefunk english_dictionary execute parse_sequence_as_particle_word [sequence parse_tree child_of_type]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as a particle word.']
-    [let [[first_word [first sequence]]]
-      [let [[first_word_particles [get this definitions_by_type `particle_word first_word]]]
-	[mapc [funk [first_word_particle]
-		    [parse_format '\n    found first word to be a particle: ' first_word]
-		    [let [[new_parse_tree    [get parse_tree          new_copy]]
-			  [new_particle_word [get first_word_particle new_copy]]]
-		      [have new_parse_tree add_child_to_type child_of_type new_particle_word]
-		      [= parses [cons [frame parse_tree    new_parse_tree
-					     particle_word new_particle_word
-					     rest_sequence [cdr sequence]]
-				      parses]]]]
-	      first_word_particles]]]
+    [if sequence
+	[let [[first_word [first sequence]]]
+	  [let [[first_word_particles [get this definitions_by_type `particle_word first_word]]]
+	    [mapc [funk [first_word_particle]
+			[parse_format '\n    found first word to be a particle: ' first_word]
+			[let [[new_parse_tree    [get parse_tree          new_copy]]
+			      [new_particle_word [get first_word_particle new_copy]]]
+			  [have new_parse_tree add_child_to_type child_of_type new_particle_word]
+			  [= parses [cons [frame parse_tree    new_parse_tree
+						 particle_word new_particle_word
+						 rest_sequence [cdr sequence]]
+					  parses]]]]
+		  first_word_particles]]]]
     parses]]
 
 [deftypefunk english_dictionary execute parse_sequence_as_determiner_word [sequence parse_tree]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as a determiner word.']
-    [let [[first_word [first sequence]]]
-      [let [[first_word_determiners [get this definitions_by_type `determiner_word first_word]]]
-	[let [[second_word [if [cdr sequence] [second sequence]]]]
-	  [let [[first_and_second_word_determiners [if [cdr sequence] [get this definitions_by_type `determiner_word [list first_word second_word]]]]]
-	    [let [[determiners [append first_word_determiners first_and_second_word_determiners]]]
-	      [mapc [funk [determiner]
-			  [parse_format '\n    found a determiner: ' [get determiner symbols]]
-			  [let [[new_parse_tree      [get parse_tree new_copy]]
-				[new_determiner_word [get determiner new_copy]]
-				[rest_sequence       [if [is-type `symbol [get determiner symbols]]
-							 [cdr sequence]
-						       [cddr sequence]]]]
-			    [have new_parse_tree add_child_to_type `noun_group new_determiner_word]
-			    [= parses [cons [frame parse_tree      new_parse_tree
-						   determiner_word new_determiner_word
-						   rest_sequence   rest_sequence]
-					    parses]]]]
-		    determiners]]]]]]
+    [if sequence
+	[let [[first_word [first sequence]]]
+	  [let [[first_word_determiners [get this definitions_by_type `determiner_word first_word]]]
+	    [let [[second_word [if [cdr sequence] [second sequence]]]]
+	      [let [[first_and_second_word_determiners [if [cdr sequence] [get this definitions_by_type `determiner_word [list first_word second_word]]]]]
+		[let [[determiners [append first_word_determiners first_and_second_word_determiners]]]
+		  [mapc [funk [determiner]
+			      [parse_format '\n    found a determiner: ' [get determiner symbols]]
+			      [let [[new_parse_tree      [get parse_tree new_copy]]
+				    [new_determiner_word [get determiner new_copy]]
+				    [rest_sequence       [if [is-type `symbol [get determiner symbols]]
+							     [cdr sequence]
+							   [cddr sequence]]]]
+				[have new_parse_tree add_child_to_type `noun_group new_determiner_word]
+				[= parses [cons [frame parse_tree      new_parse_tree
+						       determiner_word new_determiner_word
+						       rest_sequence   rest_sequence]
+						parses]]]]
+			determiners]]]]]]]
     parses]]
 
 [deftypefunk parse_tree execute transfer_relevant_features_from_determiner_word_to_containing_noun_group [determiner_word]
@@ -333,18 +335,19 @@
 [deftypefunk english_dictionary execute parse_sequence_as_adjective_word [sequence parse_tree]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as an adjective word.']
-    [let [[first_word [first sequence]]]
-      [let [[first_word_adjectives [get this definitions_by_type `adjective_word first_word]]]
-	[mapc [funk [first_word_adjective]
-		    [parse_format '\n    found first word to be an adjective: ' first_word]
-		    [let [[new_parse_tree     [get parse_tree           new_copy]]
-			  [new_adjective_word [get first_word_adjective new_copy]]]
-		      [have new_parse_tree add_next new_adjective_word]
-		      [= parses [cons [frame parse_tree     new_parse_tree
-					     adjective_word new_adjective_word
-					     rest_sequence  [cdr sequence]]
-				      parses]]]]
-	      first_word_adjectives]]]
+    [if sequence
+	[let [[first_word [first sequence]]]
+	  [let [[first_word_adjectives [get this definitions_by_type `adjective_word first_word]]]
+	    [mapc [funk [first_word_adjective]
+			[parse_format '\n    found first word to be an adjective: ' first_word]
+			[let [[new_parse_tree     [get parse_tree           new_copy]]
+			      [new_adjective_word [get first_word_adjective new_copy]]]
+			  [have new_parse_tree add_next new_adjective_word]
+			  [= parses [cons [frame parse_tree     new_parse_tree
+						 adjective_word new_adjective_word
+						 rest_sequence  [cdr sequence]]
+					  parses]]]]
+		  first_word_adjectives]]]]
     parses]]
 
 [deftypefunk english_dictionary execute parse_sequence_as_adjective_words [sequence parse_tree]
@@ -364,18 +367,19 @@
 [deftypefunk english_dictionary execute parse_sequence_as_classifier_word [sequence parse_tree]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as a classifier word.']
-    [let [[first_word [first sequence]]]
-      [let [[first_word_classifiers [get this definitions_by_type `classifier_word first_word]]]
-	[mapc [funk [first_word_classifier]
-		    [parse_format '\n    found first word to be a classifier: ' first_word]
-		    [let [[new_parse_tree      [get parse_tree            new_copy]]
-			  [new_classifier_word [get first_word_classifier new_copy]]]
-		      [have new_parse_tree add_next new_classifier_word]
-		      [= parses [cons [frame parse_tree      new_parse_tree
-					     classifier_word new_classifier_word
-					     rest_sequence   [cdr sequence]]
-				      parses]]]]
-	      first_word_classifiers]]]
+    [if sequence
+	[let [[first_word [first sequence]]]
+	  [let [[first_word_classifiers [get this definitions_by_type `classifier_word first_word]]]
+	    [mapc [funk [first_word_classifier]
+			[parse_format '\n    found first word to be a classifier: ' first_word]
+			[let [[new_parse_tree      [get parse_tree            new_copy]]
+			      [new_classifier_word [get first_word_classifier new_copy]]]
+			  [have new_parse_tree add_next new_classifier_word]
+			  [= parses [cons [frame parse_tree      new_parse_tree
+						 classifier_word new_classifier_word
+						 rest_sequence   [cdr sequence]]
+					  parses]]]]
+		  first_word_classifiers]]]]
     parses]]
 
 [deftypefunk english_dictionary execute parse_sequence_as_classifier_words [sequence parse_tree]
@@ -396,18 +400,19 @@
 [deftypefunk english_dictionary execute parse_sequence_as_noun_word [sequence parse_tree]
   [let [[parses nil]]
     [parse_format '\n  parsing ' sequence ' as an noun word.']
-    [let [[first_word [first sequence]]]
-      [let [[first_word_nouns [get this definitions_by_type `noun_word first_word]]]
-	[mapc [funk [first_word_noun]
-		    [parse_format '\n    found first word to be an noun: ' first_word]
-		    [let [[new_parse_tree [get parse_tree      new_copy]]
-			  [new_noun_word  [get first_word_noun new_copy]]]
-		      [have new_parse_tree add_child_to_type `noun_group new_noun_word]
-		      [= parses [cons [frame parse_tree    new_parse_tree
-					     noun_word     new_noun_word
-					     rest_sequence [cdr sequence]]
-				      parses]]]]
-	      first_word_nouns]]]
+    [if sequence
+	[let [[first_word [first sequence]]]
+	  [let [[first_word_nouns [get this definitions_by_type `noun_word first_word]]]
+	    [mapc [funk [first_word_noun]
+			[parse_format '\n    found first word to be an noun: ' first_word]
+			[let [[new_parse_tree [get parse_tree      new_copy]]
+			      [new_noun_word  [get first_word_noun new_copy]]]
+			  [have new_parse_tree add_child_to_type `noun_group new_noun_word]
+			  [= parses [cons [frame parse_tree    new_parse_tree
+						 noun_word     new_noun_word
+						 rest_sequence [cdr sequence]]
+					  parses]]]]
+		  first_word_nouns]]]]
     parses]]
 
 [deftypefunk english_dictionary execute parse_sequence_as_number_word [sequence parse_tree]

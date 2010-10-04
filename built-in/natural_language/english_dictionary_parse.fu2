@@ -1082,6 +1082,7 @@
 					    [verb_group_rest_sequence [have verb_group_parse lookup `rest_sequence]]]
 					[parse_format '\n    parse_sequence_as_clause-subject_to_object: found verb_group parse: ' verb_group_parse_tree]
 					[let [[verb_objects_parses [have this parse_sequence_as_clause-verb_objects verb_group_rest_sequence verb_group_parse_tree]]]
+					  [parse_format '\n    parse_sequence_as_clause-subject_to_object: found verb_objects parses: ' verb_objects_parses]
 					  [= parses [append verb_objects_parses parses]]]]]
 				verb_group_parses]]]]]
 	      noun_group_parses]]]

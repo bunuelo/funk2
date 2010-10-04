@@ -926,7 +926,10 @@
     [if [and [get parse_tree containing_type_child_of_type_child_of_type_property `clause `verb_group `verb_word `transitive]
 	     [get parse_tree containing_type_property `clause `secondary]]
 	[prog [parse_format '\n    parse_sequence_as_clause-verb_objects: clause is secondary and has transitive verb, so we could be missing a direct object (and be done).']
-	      [= parses [append try_particle_parses parses]]]]
+	      [= parses [cons [frame parse_tree    parse_tree
+				     rest_sequence sequence
+				     clause        [get parse_tree containing_type `clause]]
+			      parses]]]]
     [parse_format '\n    parse_sequence_as_clause-verb_objects: not completely implemented (2).']
     parses]]
 

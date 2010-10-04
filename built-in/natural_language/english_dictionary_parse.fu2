@@ -100,24 +100,25 @@
 [deftypefunk english_dictionary execute parse_sequence_as_pronoun_word [sequence parse_tree containing_type]
   [let [[parses nil]]
     [parse_format '\n  parse_sequence_as_pronoun_word: parsing ' sequence ' as a pronoun word.']
-    [let [[first_word [first sequence]]]
-      [let [[first_word_pronouns [get this definitions_by_type `pronoun_word first_word]]]
-	[let [[second_word [if [cdr sequence] [second sequence]]]]
-	  [let [[first_and_second_word_pronouns [if [cdr sequence] [get this definitions_by_type `pronoun_word [list first_word second_word]]]]]
-	    [let [[pronouns [append first_word_pronouns first_and_second_word_pronouns]]]
-	      [mapc [funk [pronoun]
-			  [parse_format '\n    parse_sequence_as_pronoun_word: found a pronoun: ' [get pronoun symbols]]
-			  [let [[new_parse_tree   [get parse_tree new_copy]]
-				[new_pronoun_word [get pronoun new_copy]]
-				[rest_sequence    [if [is-type `symbol [get pronoun symbols]]
-						      [cdr sequence]
-						    [cddr sequence]]]]
-			    [have new_parse_tree add_child_to_type containing_type new_pronoun_word]
-			    [= parses [cons [frame parse_tree    new_parse_tree
-						   pronoun_word  new_pronoun_word
-						   rest_sequence rest_sequence]
-					    parses]]]]
-		    pronouns]]]]]]
+    [if sequence
+	[let [[first_word [first sequence]]]
+	  [let [[first_word_pronouns [get this definitions_by_type `pronoun_word first_word]]]
+	    [let [[second_word [if [cdr sequence] [second sequence]]]]
+	      [let [[first_and_second_word_pronouns [if [cdr sequence] [get this definitions_by_type `pronoun_word [list first_word second_word]]]]]
+		[let [[pronouns [append first_word_pronouns first_and_second_word_pronouns]]]
+		  [mapc [funk [pronoun]
+			      [parse_format '\n    parse_sequence_as_pronoun_word: found a pronoun: ' [get pronoun symbols]]
+			      [let [[new_parse_tree   [get parse_tree new_copy]]
+				    [new_pronoun_word [get pronoun new_copy]]
+				    [rest_sequence    [if [is-type `symbol [get pronoun symbols]]
+							  [cdr sequence]
+							[cddr sequence]]]]
+				[have new_parse_tree add_child_to_type containing_type new_pronoun_word]
+				[= parses [cons [frame parse_tree    new_parse_tree
+						       pronoun_word  new_pronoun_word
+						       rest_sequence rest_sequence]
+						parses]]]]
+			pronouns]]]]]]]
     parses]]
 
 [deftypefunk parse_tree execute transfer_plurality_features_of_verb_word_to_containing_verb_group [verb_word]
@@ -949,7 +950,7 @@
 				     rest_sequence sequence
 				     clause        [get parse_tree containing_type `clause]]
 			      parses]]]]
-    [let [[after_first_particle_try_parses [have this parse_sequence_as_clause-verb_objects-after_first_particle_try rest_sequence parse_tree]]]
+    [let [[after_first_particle_try_parses [have this parse_sequence_as_clause-verb_objects-after_first_particle_try sequence parse_tree]]]
       [= parses [append after_first_particle_try_parses parses]]]
     parses]]
 

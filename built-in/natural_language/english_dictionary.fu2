@@ -280,10 +280,13 @@
        [dictionary-add_word this particle_word up []]
        
        'these combinations are used by the parser to recognize special particle accepting verbs.'
-       [dictionary-add_word this combination_group [pick up]    [transitive]]
-       [dictionary-add_word this combination_group [picked up]  [transitive]]
-       [dictionary-add_word this combination_group [picks up]   [transitive]]
-       [dictionary-add_word this combination_group [picking up] [transitive]]
+       [dictionary-add_word this combination_group [pick up]     [transitive]]
+       [dictionary-add_word this combination_group [picked up]   [transitive]]
+       [dictionary-add_word this combination_group [picks up]    [transitive]]
+       [dictionary-add_word this combination_group [picking up]  [transitive]]
+       [dictionary-add_word this combination_group [shut up]     [transitive]]
+       [dictionary-add_word this combination_group [shuts up]    [transitive]]
+       [dictionary-add_word this combination_group [shutting up] [transitive]]
        
        'all Funk2 number objects are recognized as number words, but ones listed here are the only ones recognized with English symbolic names.'
        [dictionary-add_word this number_word one   [singular]]

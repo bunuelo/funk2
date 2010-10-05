@@ -619,7 +619,7 @@ f2ptr f2parse_tree__primobject_type__new_aux(f2ptr cause) {
 //	  new_parse_tree]]]]
 
 f2ptr raw__parse_tree__new_copy(f2ptr cause, f2ptr this) {
-  f2ptr root_node = f2__frame__lookup_var_value(cause, this, "root_node", nil);
+  f2ptr root_node = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "root_node"), nil);
   // do a sheite muslim dance.
   return nil;
 }

@@ -715,7 +715,7 @@ void raw__parse_tree_node__add_child(f2ptr cause, f2ptr this, f2ptr node) {
   if (last_child_node == nil) {
     raw__parse_tree_node__insert_below_no_children(cause, this, node);
   } else {
-    raw__parse_tree_node__insert_after(cause, this, node);
+    raw__parse_tree_node__insert_after(cause, last_child_node, node);
   }
 }
 
@@ -741,7 +741,8 @@ def_pcfunk2(parse_tree_node__add_child, this, node, return f2__parse_tree_node__
 
 f2ptr raw__parse_tree_node__child_of_type_node(f2ptr cause, f2ptr this, f2ptr type) {
   f2ptr iter = raw__parse_tree_node__first_child_node(cause, this);
-  while ((iter != nil) && (! raw__object__inherits_from(cause, raw__parse_tree_node__parse_object(cause, iter), type))) {
+  while ((iter != nil) &&
+	 (! raw__object__inherits_from(cause, raw__parse_tree_node__parse_object(cause, iter), type))) {
     iter = raw__parse_tree_node__next_node(cause, iter);
   }
   if (iter == nil) {
@@ -754,7 +755,8 @@ f2ptr raw__parse_tree_node__child_of_type_node(f2ptr cause, f2ptr this, f2ptr ty
 }
 
 f2ptr f2__parse_tree_node__child_of_type_node(f2ptr cause, f2ptr this, f2ptr type) {
-  if (! raw__parse_tree_node__is_type(cause, this)) {
+  if ((! raw__parse_tree_node__is_type(cause, this)) ||
+      (! raw__symbol__is_type(cause, type))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__parse_tree_node__child_of_type_node(cause, this, type);

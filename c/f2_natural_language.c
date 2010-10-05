@@ -30,17 +30,18 @@
 def_frame_object__global__11_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, subject_to_object, unmatched_relative_reference);
 
 f2ptr f2__clause__new(f2ptr cause) {
-  f2ptr symbols           = nil;
-  f2ptr secondary         = nil;
-  f2ptr imperative        = nil;
-  f2ptr declarative       = nil;
-  f2ptr question          = nil;
-  f2ptr yes_no            = nil;
-  f2ptr wh                = nil;
-  f2ptr particle          = nil;
-  f2ptr transitive        = nil;
-  f2ptr subject_to_object = nil;
-  return f2clause__new(cause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, subject_to_object);
+  f2ptr symbols                      = nil;
+  f2ptr secondary                    = nil;
+  f2ptr imperative                   = nil;
+  f2ptr declarative                  = nil;
+  f2ptr question                     = nil;
+  f2ptr yes_no                       = nil;
+  f2ptr wh                           = nil;
+  f2ptr particle                     = nil;
+  f2ptr transitive                   = nil;
+  f2ptr subject_to_object            = nil;
+  f2ptr unmatched_relative_reference = nil;
+  return f2clause__new(cause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, subject_to_object, unmatched_relative_reference);
 }
 def_pcfunk0(clause__new, return f2__clause__new(this_cause));
 

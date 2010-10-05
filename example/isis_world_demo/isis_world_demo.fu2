@@ -27,10 +27,20 @@
        this]]
 
 [deftypefunk isis_agent get objects []
-  [let [[reactive_sensory_sense [get this reactive_sensory_sense]]]
+  [let [[reactive_sensory_sense [get [get [get this mind] agency `reactive `sensory] reactive_sensory_sense]]]
     [if reactive_sensory_sense
 	[have reactive_sensory_sense lookup `objects]
       nil]]]
+
+[deftypefunk mind get objects[]
+  [let [[reactive_sensory_sense [get [get this agency `reactive `sensory] reactive_sensory_sense]]]
+    [if reactive_sensory_sense
+	[have reactive_sensory_sense lookup `objects]
+      nil]]]
+
+[deftypefunk mind get sense[]
+  [let [[reactive_sensory_sense [get [get this agency `reactive `sensory] reactive_sensory_sense]]]
+    reactive_sensory_sense]]
 
 [deftypefunk isis_agent execute user_activate [layer_name agency_name resource_name :rest args]
   [set [get [get this mind] agency layer_name agency_name] user_activate_resource resource_name]
@@ -95,6 +105,9 @@
 
 [deftypefunk isis_world execute turn_left-start [agent_name]
   [isis-call [get this client] turn_left-start agent agent_name]]
+
+[deftypefunk isis_world execute turn_left-stop [agent_name]
+  [isis-call [get this client] turn_left-stop agent agent_name]]
 
 [deftypefunk isis_world execute move_forward-start [agent_name]
   [isis-call [get this client] move_forward-start agent agent_name]]

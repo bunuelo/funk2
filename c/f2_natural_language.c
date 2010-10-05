@@ -634,9 +634,48 @@ void raw__parse_tree_node__map_all_new_nodes_using_ptypehash(f2ptr cause, f2ptr 
 }
 
 
+//[deftypefunk parse_tree_node execute insert_after [node]
+//  [let [[old-next_node next_node]]
+//    [=        next_node     node]
+//    [set node parent_node   parent_node]
+//    [set node next_node     old-next_node]
+//    [set node previous_node this]
+//    [if old-next_node
+//	  [set old-next_node previous_node node]
+//      [if parent_node
+//	    [set parent_node last_child_node node]]]]]
+
+
+f2ptr raw__parse_tree_node__insert_after(f2ptr cause, f2ptr this, f2ptr node) {
+  f2ptr old_next_node = raw__parse_tree_node__next_node(  cause, this);
+  f2ptr parent_node   = raw__parse_tree_node__parent_node(cause, this);
+  raw__parse_tree_node__next_node__set(    cause, this, node);
+  raw__parse_tree_node__parent_node__set(  cause, node, parent_node);
+  raw__parse_tree_node__next_node__set(    cause, node, old_next_node);
+  raw__parse_tree_node__previous_node__set(cause, node, this);
+  if (old_next_node != nil) {
+    raw__parse_tree_node__previous_node__set(cause, old_next_node, node);
+  } else {
+    if (parent_node != nil) {
+      raw__parse_tree_node__last_child_node__set(cause, parent_node, node);
+    }
+  }
+  return nil;
+}
+
+f2ptr f2__parse_tree_node__insert_after(f2ptr cause, f2ptr this, f2ptr node) {
+  if (! raw__parse_tree_node__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__parse_tree_node__insert_after(cause, this, node);
+}
+def_pcfunk2(parse_tree_node__insert_after, this, node, return f2__parse_tree_node__insert_after(this_cause, this, node));
+
+
 f2ptr f2parse_tree_node__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2parse_tree_node__primobject_type__new(cause);
-  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__funk);}
+  {char* slot_name = "new";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__funk);}
+  {char* slot_name = "insert_after"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__funk);}
   return this;
 }
 
@@ -651,26 +690,6 @@ f2ptr f2__parse_tree__new(f2ptr cause) {
   return f2parse_tree__new(cause, root_node, current_node);
 }
 def_pcfunk0(parse_tree__new, return f2__parse_tree__new(this_cause));
-
-
-//[deftypefunk parse_tree get new_copy []
-//  [if [null root_node]
-//      [new parse_tree]
-//    [let [[node_hash [new ptypehash]]]
-//      [have this map_nodes [funk [node]
-//				   [have node_hash add node [new parse_tree_node]]]]
-//      [have this map_nodes [funk [node]
-//				   [let [[new_node [have node_hash lookup node]]]
-//				     [set new_node parse_object     [get node parse_object]]
-//				     [set new_node parent_node      [let [[parent_node      [get node parent_node]]]      [if parent_node      [have node_hash lookup parent_node]]]]
-//				     [set new_node previous_node    [let [[previous_node    [get node previous_node]]]    [if previous_node    [have node_hash lookup previous_node]]]]
-//				     [set new_node next_node        [let [[next_node        [get node next_node]]]        [if next_node        [have node_hash lookup next_node]]]]
-//				     [set new_node first_child_node [let [[first_child_node [get node first_child_node]]] [if first_child_node [have node_hash lookup first_child_node]]]]
-//				     [set new_node last_child_node  [let [[last_child_node  [get node last_child_node]]]  [if last_child_node  [have node_hash lookup last_child_node]]]]]]]
-//      [let [[new_parse_tree [new parse_tree]]]
-//	  [set new_parse_tree root_node    [have node_hash lookup root_node]]
-//	  [set new_parse_tree current_node [have node_hash lookup current_node]]
-//	  new_parse_tree]]]]
 
 
 f2ptr raw__parse_tree__new_copy(f2ptr cause, f2ptr this) {
@@ -916,6 +935,8 @@ void f2__natural_language__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(parse_tree_node__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__funk = never_gc(cfunk);}
+  {char* symbol_str = "insert_after"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__symbol = f2symbol__insert_after(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(parse_tree_node__insert_after, this, node, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__funk = never_gc(cfunk);}
   
   
   // parse_tree

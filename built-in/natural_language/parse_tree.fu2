@@ -20,8 +20,6 @@
 
 'parse_tree_node'
 
-`[deframe parse_tree_node [frame] [parse_object parent_node previous_node next_node first_child_node last_child_node]]
-
 [deftypefunk parse_tree_node get last_node []
   [if next_node
       [get next_node last_node]
@@ -46,7 +44,7 @@
 [deftypefunk parse_tree_node execute map_nodes [funk]
   [have this map_nodes_forward funk]]
 
-[deftypefunk parse_tree_node execute insert_after [node]
+`[deftypefunk parse_tree_node execute insert_after [node]
   [let [[old-next_node next_node]]
     [=        next_node     node]
     [set node parent_node   parent_node]
@@ -147,30 +145,9 @@
 
 'parse_tree'
 
-`[deframe parse_tree [frame] [root_node current_node]]
-
 [deftypefunk parse_tree execute map_nodes [funk]
   [if root_node
       [have root_node map_nodes funk]]]
-
-`[deftypefunk parse_tree get new_copy []
-  [if [null root_node]
-      [new parse_tree]
-    [let [[node_hash [new ptypehash]]]
-      [have this map_nodes [funk [node]
-				 [have node_hash add node [new parse_tree_node]]]]
-      [have this map_nodes [funk [node]
-				 [let [[new_node [have node_hash lookup node]]]
-				   [set new_node parse_object     [get node parse_object]]
-				   [set new_node parent_node      [let [[parent_node      [get node parent_node]]]      [if parent_node      [have node_hash lookup parent_node]]]]
-				   [set new_node previous_node    [let [[previous_node    [get node previous_node]]]    [if previous_node    [have node_hash lookup previous_node]]]]
-				   [set new_node next_node        [let [[next_node        [get node next_node]]]        [if next_node        [have node_hash lookup next_node]]]]
-				   [set new_node first_child_node [let [[first_child_node [get node first_child_node]]] [if first_child_node [have node_hash lookup first_child_node]]]]
-				   [set new_node last_child_node  [let [[last_child_node  [get node last_child_node]]]  [if last_child_node  [have node_hash lookup last_child_node]]]]]]]
-      [let [[new_parse_tree [new parse_tree]]]
-	[set new_parse_tree root_node    [have node_hash lookup root_node]]
-	[set new_parse_tree current_node [have node_hash lookup current_node]]
-	new_parse_tree]]]]
 
 [deftypefunk parse_tree execute serialize []
   [if root_node

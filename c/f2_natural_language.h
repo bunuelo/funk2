@@ -244,6 +244,8 @@ typedef struct funk2_object_type__parse_tree_node__slot_s funk2_object_type__par
 struct funk2_object_type__parse_tree_node__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
+  f2ptr insert_after__symbol;
+  f2ptr insert_after__funk;
 };
 
 

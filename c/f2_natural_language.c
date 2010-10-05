@@ -600,13 +600,13 @@ void raw__parse_tree_node__add_all_nodes_as_new_to_ptypehash(f2ptr cause, f2ptr 
   {
     f2ptr first_child_node = raw__parse_tree_node__first_child_node(cause, this);
     if (first_child_node != nil) {
-      raw__parse_tree_node__add_all_nodes_to_ptypehash(cause, first_child_node, ptypehash);
+      raw__parse_tree_node__add_all_nodes_as_new_to_ptypehash(cause, first_child_node, ptypehash);
     }
   }
   {
     f2ptr next_node = raw__parse_tree_node__next_node(cause, this);
     if (next_node != nil) {
-      raw__parse_tree_node__add_all_nodes_to_ptypehash(cause, next_node, ptypehash);
+      raw__parse_tree_node__add_all_nodes_as_new_to_ptypehash(cause, next_node, ptypehash);
     }
   }
 }

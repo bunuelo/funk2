@@ -946,6 +946,7 @@
 			    [try_particle_rest_sequence [have try_particle_parse lookup `rest_sequence]]]
 			[= parses [append try_particle_parses parses]]]]
 		try_particle_parses]]]
+    [= parses [append after_first_particle_try_parses parses]]
     
     parses]]
 
@@ -997,6 +998,8 @@
 			[let [[after_first_particle_try_parses [have this parse_sequence_as_clause-verb_objects-after_first_particle_try try_particle_rest_sequence try_particle_parse_tree]]]
 			  [= parses [append after_first_particle_try_parses parses]]]]]
 		try_particle_parses]]]
+    [let [[after_first_particle_try_parses [have this parse_sequence_as_clause-verb_objects-after_first_particle_try sequence parse_tree]]]
+      [= parses [append after_first_particle_try_parses parses]]]
     [if [and [get parse_tree containing_type_child_of_type_child_of_type_property `clause `verb_group `verb_word `transitive]
 	     [get parse_tree containing_type_property `clause `secondary]
 	     [get parse_tree containing_type_property `clause `wh]]
@@ -1005,8 +1008,6 @@
 				     rest_sequence sequence
 				     clause        [get parse_tree containing_type `clause]]
 			      parses]]]]
-    [let [[after_first_particle_try_parses [have this parse_sequence_as_clause-verb_objects-after_first_particle_try sequence parse_tree]]]
-      [= parses [append after_first_particle_try_parses parses]]]
     parses]]
 
 [deftypefunk english_dictionary execute parse_sequence_as_clause-with_noun_group_first [sequence parse_tree]

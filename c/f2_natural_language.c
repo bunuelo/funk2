@@ -678,7 +678,7 @@ f2ptr raw__parse_tree__new_copy(f2ptr cause, f2ptr this) {
   f2ptr root_node  = raw__parse_tree__root_node(cause, this);
   if (root_node != nil) {
     f2ptr node_hash  = f2__ptypehash__new(cause);
-    raw__parse_tree_node__add_all_nodes_to_ptypehash(       cause, root_node, node_hash);
+    raw__parse_tree_node__add_all_nodes_as_new_to_ptypehash(       cause, root_node, node_hash);
     raw__parse_tree_node__map_all_new_nodes_using_ptypehash(cause, root_node, node_hash);
     raw__parse_tree__root_node__set(   cause, parse_tree, raw__ptypehash__lookup(cause, node_hash, root_node));
     f2ptr current_node = raw__parse_tree__current_node(cause, this);

@@ -712,7 +712,7 @@ def_pcfunk2(parse_tree_node__insert_below_no_children, this, node, return f2__pa
 
 void raw__parse_tree_node__add_child(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr last_child_node = raw__parse_tree_node__last_child_node(cause, this);
-  if (last_child_node != nil) {
+  if (last_child_node == nil) {
     raw__parse_tree_node__insert_below_no_children(cause, this, node);
   } else {
     raw__parse_tree_node__insert_after(cause, this, node);
@@ -730,12 +730,45 @@ f2ptr f2__parse_tree_node__add_child(f2ptr cause, f2ptr this, f2ptr node) {
 def_pcfunk2(parse_tree_node__add_child, this, node, return f2__parse_tree_node__add_child(this_cause, this, node));
 
 
+//[deftypefunk parse_tree_node get child_of_type_node [type]
+//  [let [[iter first_child_node]]
+//    [while [and iter [not [is-type type [get iter parse_object]]]]
+//      [= iter [get iter next_node]]]
+//    [if iter
+//	  iter
+//      [error bug_type `parse_tree_node-child_of_type-does_not_exist
+//	       type     type]]]]
+
+f2ptr raw__parse_tree_node__child_of_type_node(f2ptr cause, f2ptr this, f2ptr type) {
+  f2ptr iter = raw__parse_tree_node__first_child_node(cause, this);
+  while ((iter != nil) && (! raw__object__inherits_from(cause, raw__parse_tree_node__parse_object(cause, iter), type))) {
+    iter = raw__parse_tree_node__next_node(cause, iter);
+  }
+  if (iter == nil) {
+    return f2larva__new(cause, 4346, f2__bug__new(cause, f2integer__new(cause, 4346),
+						  f2__frame__new(cause, f2list4__new(cause,
+										     new__symbol(cause, "bug_type"),      new__symbol(cause, "parse_tree_node-child_of_type-does_not_exist"),
+										     new__symbol(cause, "child_of_type"), type))));
+  }
+  return iter;
+}
+
+f2ptr f2__parse_tree_node__child_of_type_node(f2ptr cause, f2ptr this, f2ptr type) {
+  if (! raw__parse_tree_node__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__parse_tree_node__child_of_type_node(cause, this, type);
+}
+def_pcfunk2(parse_tree_node__child_of_type_node, this, type, return f2__parse_tree_node__child_of_type_node(this_cause, this, type));
+
+
 f2ptr f2parse_tree_node__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2parse_tree_node__primobject_type__new(cause);
   {char* slot_name = "new";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__funk);}
   {char* slot_name = "insert_after";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__funk);}
   {char* slot_name = "insert_below_no_children"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_below_no_children__funk);}
   {char* slot_name = "add_child";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.add_child__funk);}
+  {char* slot_name = "child_of_type_node";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.child_of_type_node__funk);}
   return this;
 }
 
@@ -1001,6 +1034,8 @@ void f2__natural_language__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(parse_tree_node__insert_below_no_children, this, node, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_below_no_children__funk = never_gc(cfunk);}
   {char* symbol_str = "add_child"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.add_child__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(parse_tree_node__add_child, this, node, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.add_child__funk = never_gc(cfunk);}
+  {char* symbol_str = "child_of_type_node"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.child_of_type_node__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(parse_tree_node__child_of_type_node, this, type, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.child_of_type_node__funk = never_gc(cfunk);}
   
   
   // parse_tree

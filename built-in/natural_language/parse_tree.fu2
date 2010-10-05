@@ -44,7 +44,7 @@
 [deftypefunk parse_tree_node execute map_nodes [funk]
   [have this map_nodes_forward funk]]
 
-`[deftypefunk parse_tree_node execute insert_after [node]
+[deftypefunk parse_tree_node execute insert_after [node]
    [let [[old-next_node next_node]]
      [=        next_node     node]
      [set node parent_node   parent_node]
@@ -55,7 +55,7 @@
        [if parent_node
 	   [set parent_node last_child_node node]]]]]
 
-`[deftypefunk parse_tree_node execute insert_below_no_children [node]
+[deftypefunk parse_tree_node execute insert_below_no_children [node]
    [if [or first_child_node last_child_node]
        [error bug_type         `insert_below_no_children_assumes_no_children
 	      first_child_node first_child_node
@@ -68,19 +68,19 @@
    [set node previous_node    nil]
    [set node next_node        nil]]
 
-`[deftypefunk parse_tree_node execute add_child [node]
+[deftypefunk parse_tree_node execute add_child [node]
    [if [null last_child_node]
        [have this insert_below_no_children node]
      [have last_child_node insert_after node]]]
 
 [deftypefunk parse_tree_node get child_of_type_node [type]
-  [let [[iter first_child_node]]
-    [while [and iter [not [is-type type [get iter parse_object]]]]
-      [= iter [get iter next_node]]]
-    [if iter
-	iter
-      [error bug_type `parse_tree_node-child_of_type-does_not_exist
-	     type     type]]]]
+   [let [[iter first_child_node]]
+     [while [and iter [not [is-type type [get iter parse_object]]]]
+       [= iter [get iter next_node]]]
+     [if iter
+	 iter
+       [error bug_type `parse_tree_node-child_of_type-does_not_exist
+	      type     type]]]]
 
 [deftypefunk parse_tree_node execute serialize []
   [let [[seq nil]]

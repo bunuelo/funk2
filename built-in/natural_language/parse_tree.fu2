@@ -153,7 +153,7 @@
   [if root_node
       [have root_node map_nodes funk]]]
 
-[deftypefunk parse_tree get new_copy []
+`[deftypefunk parse_tree get new_copy []
   [if [null root_node]
       [new parse_tree]
     [let [[node_hash [new ptypehash]]]

@@ -17,21 +17,5 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage parse_tree
-  :sources ['natural_language-primfunks.fu2'
-	    'parse_tree.fu2']]
-
-[defpackage dictionary_frame
-  :sources ['dictionary_frame.fu2']]
-
-[defpackage english_dictionary
-  :packages [dictionary_frame]
-   :sources ['english_dictionary.fu2']]
-
-[defpackage english_dictionary_parse
-  :packages [english_dictionary dictionary_frame parse_tree]
-   :sources ['english_dictionary_parse.fu2']]
-
-[defpackage natural_language
-  :packages [english_dictionary_parse]]
+[globalize-funk parse_tree-new_copy &primfunk:parse_tree__new_copy]
 

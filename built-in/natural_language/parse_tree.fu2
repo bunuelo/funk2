@@ -147,7 +147,7 @@
 
 'parse_tree'
 
-[deframe parse_tree [frame] [root_node current_node]]
+`[deframe parse_tree [frame] [root_node current_node]]
 
 [deftypefunk parse_tree execute map_nodes [funk]
   [if root_node

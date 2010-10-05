@@ -584,9 +584,13 @@ f2ptr f2verb_word__primobject_type__new_aux(f2ptr cause) {
 def_frame_object__global__6_slot(parse_tree_node, parse_object, parent_node, previous_node, next_node, first_child_node, last_child_node);
 
 f2ptr f2__parse_tree_node__new(f2ptr cause) {
-  f2ptr root_node    = nil;
-  f2ptr current_node = nil;
-  return f2parse_tree_node__new(cause, root_node, current_node);
+  f2ptr parse_object     = nil;
+  f2ptr parent_node      = nil;
+  f2ptr previous_node    = nil;
+  f2ptr next_node        = nil;
+  f2ptr first_child_node = nil;
+  f2ptr last_child_node  = nil;
+  return f2parse_tree_node__new(cause, parse_object, parent_node, previous_node, next_node, first_child_node, last_child_node);
 }
 def_pcfunk0(parse_tree_node__new, return f2__parse_tree_node__new(this_cause));
 

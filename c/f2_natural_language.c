@@ -935,7 +935,7 @@ void f2__natural_language__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(parse_tree_node__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__funk = never_gc(cfunk);}
-  {char* symbol_str = "insert_after"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__symbol = f2symbol__insert_after(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "insert_after"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(parse_tree_node__insert_after, this, node, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__funk = never_gc(cfunk);}
   
   

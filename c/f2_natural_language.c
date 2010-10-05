@@ -614,11 +614,11 @@ void raw__parse_tree_node__add_all_nodes_as_new_to_ptypehash(f2ptr cause, f2ptr 
 void raw__parse_tree_node__map_all_new_nodes_using_ptypehash(f2ptr cause, f2ptr this, f2ptr ptypehash) {
   f2ptr new_node = raw__ptypehash__lookup(cause, ptypehash, this);
   raw__parse_tree_node__parse_object__set(cause, new_node, raw__parse_tree_node__parse_object(cause, this));
-  f2ptr parent_node      = raw__parse_tree_node__parent_node(     cause, this); if (parent_node      != nil) {raw__parse_tree_node__parent_node__set(     cause, new_node, raw__ptypehash__lookup(cause, parent_node));}
-  f2ptr previous_node    = raw__parse_tree_node__previous_node(   cause, this); if (previous_node    != nil) {raw__parse_tree_node__previous_node__set(   cause, new_node, raw__ptypehash__lookup(cause, previous_node));}
-  f2ptr next_node        = raw__parse_tree_node__next_node(       cause, this); if (next_node        != nil) {raw__parse_tree_node__next_node__set(       cause, new_node, raw__ptypehash__lookup(cause, next_node));}
-  f2ptr first_child_node = raw__parse_tree_node__first_child_node(cause, this); if (first_child_node != nil) {raw__parse_tree_node__first_child_node__set(cause, new_node, raw__ptypehash__lookup(cause, first_child_node));}
-  f2ptr last_child_node  = raw__parse_tree_node__last_child_node( cause, this); if (last_child_node  != nil) {raw__parse_tree_node__last_child_node__set( cause, new_node, raw__ptypehash__lookup(cause, last_child_node));}
+  f2ptr parent_node      = raw__parse_tree_node__parent_node(     cause, this); if (parent_node      != nil) {raw__parse_tree_node__parent_node__set(     cause, new_node, raw__ptypehash__lookup(cause, ptypehash, parent_node));}
+  f2ptr previous_node    = raw__parse_tree_node__previous_node(   cause, this); if (previous_node    != nil) {raw__parse_tree_node__previous_node__set(   cause, new_node, raw__ptypehash__lookup(cause, ptypehash, previous_node));}
+  f2ptr next_node        = raw__parse_tree_node__next_node(       cause, this); if (next_node        != nil) {raw__parse_tree_node__next_node__set(       cause, new_node, raw__ptypehash__lookup(cause, ptypehash, next_node));}
+  f2ptr first_child_node = raw__parse_tree_node__first_child_node(cause, this); if (first_child_node != nil) {raw__parse_tree_node__first_child_node__set(cause, new_node, raw__ptypehash__lookup(cause, ptypehash, first_child_node));}
+  f2ptr last_child_node  = raw__parse_tree_node__last_child_node( cause, this); if (last_child_node  != nil) {raw__parse_tree_node__last_child_node__set( cause, new_node, raw__ptypehash__lookup(cause, ptypehash, last_child_node));}
   {
     f2ptr first_child_node = raw__parse_tree_node__first_child_node(cause, this);
     if (first_child_node != nil) {

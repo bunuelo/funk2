@@ -646,7 +646,7 @@ void raw__parse_tree_node__map_all_new_nodes_using_ptypehash(f2ptr cause, f2ptr 
 //	    [set parent_node last_child_node node]]]]]
 
 
-f2ptr raw__parse_tree_node__insert_after(f2ptr cause, f2ptr this, f2ptr node) {
+void raw__parse_tree_node__insert_after(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr old_next_node = raw__parse_tree_node__next_node(  cause, this);
   f2ptr parent_node   = raw__parse_tree_node__parent_node(cause, this);
   raw__parse_tree_node__next_node__set(    cause, this, node);
@@ -660,22 +660,56 @@ f2ptr raw__parse_tree_node__insert_after(f2ptr cause, f2ptr this, f2ptr node) {
       raw__parse_tree_node__last_child_node__set(cause, parent_node, node);
     }
   }
-  return nil;
 }
 
 f2ptr f2__parse_tree_node__insert_after(f2ptr cause, f2ptr this, f2ptr node) {
   if (! raw__parse_tree_node__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__parse_tree_node__insert_after(cause, this, node);
+  raw__parse_tree_node__insert_after(cause, this, node);
+  return nil;
 }
 def_pcfunk2(parse_tree_node__insert_after, this, node, return f2__parse_tree_node__insert_after(this_cause, this, node));
 
 
+//[deftypefunk parse_tree_node execute insert_below_no_children [node]
+//  [if [or first_child_node last_child_node]
+//      [error bug_type         `insert_below_no_children_assumes_no_children
+//	       first_child_node first_child_node
+//	       last_child_node  last_child_node]]
+//  [= first_child_node node]
+//  [= last_child_node  node]
+//  [set node first_child_node nil]
+//  [set node last_child_node  nil]
+//  [set node parent_node      this]
+//  [set node previous_node    nil]
+//  [set node next_node        nil]]
+
+void raw__parse_tree_node__insert_below_no_children(f2ptr cause, f2ptr this, f2ptr node) {
+  raw__parse_tree_node__first_child_node__set(cause, this, node);
+  raw__parse_tree_node__last_child_node__set( cause, this, node);
+  raw__parse_tree_node__first_child_node__set(cause, node, nil);
+  raw__parse_tree_node__last_child_node__set( cause, node, nil);
+  raw__parse_tree_node__parent_node__set(     cause, node, this);
+  raw__parse_tree_node__previous_node__set(   cause, node, nil);
+  raw__parse_tree_node__next_node__set(       cause, node, nil);
+}
+
+f2ptr f2__parse_tree_node__insert_below_no_children(f2ptr cause, f2ptr this, f2ptr node) {
+  if (! raw__parse_tree_node__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__parse_tree_node__insert_below_no_children(cause, this, node);
+  return nil;
+}
+def_pcfunk2(parse_tree_node__insert_below_no_children, this, node, return f2__parse_tree_node__insert_no_children(this_cause, this, node));
+
+
 f2ptr f2parse_tree_node__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2parse_tree_node__primobject_type__new(cause);
-  {char* slot_name = "new";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__funk);}
-  {char* slot_name = "insert_after"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__funk);}
+  {char* slot_name = "new";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__funk);}
+  {char* slot_name = "insert_after";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__funk);}
+  {char* slot_name = "insert_below_no_children"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_below_no_children__funk);}
   return this;
 }
 
@@ -937,6 +971,8 @@ void f2__natural_language__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(parse_tree_node__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__funk = never_gc(cfunk);}
   {char* symbol_str = "insert_after"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(parse_tree_node__insert_after, this, node, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__funk = never_gc(cfunk);}
+  {char* symbol_str = "insert_below_no_children"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_below_no_children__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(parse_tree_node__insert_below_no_children, this, node, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_below_no_children__funk = never_gc(cfunk);}
   
   
   // parse_tree

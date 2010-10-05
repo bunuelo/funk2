@@ -45,28 +45,28 @@
   [have this map_nodes_forward funk]]
 
 `[deftypefunk parse_tree_node execute insert_after [node]
-  [let [[old-next_node next_node]]
-    [=        next_node     node]
-    [set node parent_node   parent_node]
-    [set node next_node     old-next_node]
-    [set node previous_node this]
-    [if old-next_node
-	[set old-next_node previous_node node]
-      [if parent_node
-	  [set parent_node last_child_node node]]]]]
+   [let [[old-next_node next_node]]
+     [=        next_node     node]
+     [set node parent_node   parent_node]
+     [set node next_node     old-next_node]
+     [set node previous_node this]
+     [if old-next_node
+	 [set old-next_node previous_node node]
+       [if parent_node
+	   [set parent_node last_child_node node]]]]]
 
-[deftypefunk parse_tree_node execute insert_below_no_children [node]
-  [if [or first_child_node last_child_node]
-      [error bug_type         `insert_below_no_children_assumes_no_children
-	     first_child_node first_child_node
-	     last_child_node  last_child_node]]
-  [= first_child_node node]
-  [= last_child_node  node]
-  [set node first_child_node nil]
-  [set node last_child_node  nil]
-  [set node parent_node      this]
-  [set node previous_node    nil]
-  [set node next_node        nil]]
+`[deftypefunk parse_tree_node execute insert_below_no_children [node]
+   [if [or first_child_node last_child_node]
+       [error bug_type         `insert_below_no_children_assumes_no_children
+	      first_child_node first_child_node
+	      last_child_node  last_child_node]]
+   [= first_child_node node]
+   [= last_child_node  node]
+   [set node first_child_node nil]
+   [set node last_child_node  nil]
+   [set node parent_node      this]
+   [set node previous_node    nil]
+   [set node next_node        nil]]
 
 [deftypefunk parse_tree_node execute add_child [node]
   [if [null last_child_node]

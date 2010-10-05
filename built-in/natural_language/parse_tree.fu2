@@ -68,10 +68,10 @@
    [set node previous_node    nil]
    [set node next_node        nil]]
 
-[deftypefunk parse_tree_node execute add_child [node]
-  [if [null last_child_node]
-      [have this insert_below_no_children node]
-    [have last_child_node insert_after node]]]
+`[deftypefunk parse_tree_node execute add_child [node]
+   [if [null last_child_node]
+       [have this insert_below_no_children node]
+     [have last_child_node insert_after node]]]
 
 [deftypefunk parse_tree_node get child_of_type_node [type]
   [let [[iter first_child_node]]

@@ -20,7 +20,7 @@
 
 'parse_tree_node'
 
-[deframe parse_tree_node [frame] [parse_object parent_node previous_node next_node first_child_node last_child_node]]
+`[deframe parse_tree_node [frame] [parse_object parent_node previous_node next_node first_child_node last_child_node]]
 
 [deftypefunk parse_tree_node get last_node []
   [if next_node

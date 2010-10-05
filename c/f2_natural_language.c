@@ -579,6 +579,25 @@ f2ptr f2verb_word__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// parse_tree_node
+
+def_frame_object__global__6_slot(parse_tree_node, parse_object, parent_node, previous_node, next_node, first_child_node, last_child_node);
+
+f2ptr f2__parse_tree_node__new(f2ptr cause) {
+  f2ptr root_node    = nil;
+  f2ptr current_node = nil;
+  return f2parse_tree_node__new(cause, root_node, current_node);
+}
+def_pcfunk0(parse_tree_node__new, return f2__parse_tree_node__new(this_cause));
+
+
+f2ptr f2parse_tree_node__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2parse_tree_node__primobject_type__new(cause);
+  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__funk);}
+  return this;
+}
+
+
 // parse_tree
 
 def_frame_object__global__2_slot(parse_tree, root_node, current_node);
@@ -618,10 +637,15 @@ f2ptr f2parse_tree__primobject_type__new_aux(f2ptr cause) {
 //	  [set new_parse_tree current_node [have node_hash lookup current_node]]
 //	  new_parse_tree]]]]
 
+
 f2ptr raw__parse_tree__new_copy(f2ptr cause, f2ptr this) {
-  f2ptr root_node = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "root_node"), nil);
-  // do a sheite muslim dance.
-  return nil;
+  f2ptr root_node  = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "root_node"), nil);
+  f2ptr parse_tree = f2__parse_tree__new(cause);
+  if (root_node != nil) {
+    f2ptr node_hash  = f2__ptypehash__new(cause);
+    
+  }
+  return parse_tree;
 }
 
 f2ptr f2__parse_tree__new_copy(f2ptr cause, f2ptr this) {
@@ -836,6 +860,14 @@ void f2__natural_language__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(verb_word__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_verb_word.new__funk = never_gc(cfunk);}
+  
+  
+  // parse_tree_node
+  
+  init_frame_object__6_slot(parse_tree_node, parse_object, parent_node, previous_node, next_node, first_child_node, last_child_node);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__0_arg(parse_tree_node__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__funk = never_gc(cfunk);}
   
   
   // parse_tree

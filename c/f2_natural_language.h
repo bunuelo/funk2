@@ -238,12 +238,23 @@ struct funk2_object_type__verb_word__slot_s {
 };
 
 
+// parse_tree_node
+
+typedef struct funk2_object_type__parse_tree_node__slot_s funk2_object_type__parse_tree_node__slot_t;
+struct funk2_object_type__parse_tree_node__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
 // parse_tree
 
 typedef struct funk2_object_type__parse_tree__slot_s funk2_object_type__parse_tree__slot_t;
 struct funk2_object_type__parse_tree__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
+  f2ptr new_copy__symbol;
+  f2ptr new_copy__funk;
 };
 
 
@@ -420,6 +431,13 @@ f2ptr f2infinitive_helper_word__primobject_type__new_aux(f2ptr cause);
 declare_frame_object_23_slot(verb_word, symbols, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, ing, en, infinitive, past, present, Main, takes_particle, transitive, transitive_two, takes_to_object, takes_subject_to_object);
 
 f2ptr f2verb_word__primobject_type__new_aux(f2ptr cause);
+
+
+// parse_tree_node
+
+declare_frame_object_6_slot(parse_tree_node, parse_object, parent_node, previous_node, next_node, first_child_node, last_child_node);
+
+f2ptr f2parse_tree_node__primobject_type__new_aux(f2ptr cause);
 
 
 // parse_tree

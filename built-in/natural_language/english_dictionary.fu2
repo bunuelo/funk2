@@ -276,6 +276,10 @@
        [dictionary-add_word this verb_word wants            [present third_person_singular transitive takes_to_object takes_subject_to_object]]
        [dictionary-add_word this verb_word wanted           [en past plural first_person_singular third_person_singular transitive takes_to_object takes_subject_to_object]]
        [dictionary-add_word this verb_word wanting          [ing transitive takes_to_object takes_subject_to_object]]
+       [dictionary-add_word this verb_word contain          [infinitive first_person_singular transitive takes_to_object]]
+       [dictionary-add_word this verb_word contains         [present third_person_singular transitive takes_to_object]]
+       [dictionary-add_word this verb_word contained        [en past plural first_person_singular third_person_singular transitive]]
+       [dictionary-add_word this verb_word containing       [ing transitive takes_to_object takes_subject_to_object]]
        
        [dictionary-add_word this particle_word up []]
        
@@ -287,6 +291,10 @@
        [dictionary-add_word this combination_group [shut up]     [transitive]]
        [dictionary-add_word this combination_group [shuts up]    [transitive]]
        [dictionary-add_word this combination_group [shutting up] [transitive]]
+       [dictionary-add_word this combination_group [funk up]     [transitive]]
+       [dictionary-add_word this combination_group [funked up]   [transitive]]
+       [dictionary-add_word this combination_group [funks up]    [transitive]]
+       [dictionary-add_word this combination_group [funking up]  [transitive]]
        
        'all Funk2 number objects are recognized as number words, but ones listed here are the only ones recognized with English symbolic names.'
        [dictionary-add_word this number_word one   [singular]]

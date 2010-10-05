@@ -37,11 +37,11 @@
       [have first_child_node map_nodes_forward funk]]]
 
 [deftypefunk parse_tree_node execute map_nodes_backward [funk]
-  [apply funk [cons this nil]]
-  [if previous_node
-      [have previous_node map_nodes_backward funk]
-    [if parent_node
-	[have parent_node map_nodes_backward funk]]]]
+  [if next_node
+      [have next_node map_nodes_backward funk]]
+  [if first_child_node
+      [have first_child_node map_nodes_backward funk]]
+  [apply funk [cons this nil]]]
 
 [deftypefunk parse_tree_node execute map_nodes [funk]
   [have this map_nodes_forward funk]]
@@ -65,10 +65,10 @@
   [= first_child_node node]
   [= last_child_node  node]
   [set node first_child_node nil]
-  [set node last_child_node nil]
-  [set node parent_node this]
-  [set node previous_node nil]
-  [set node next_node nil]]
+  [set node last_child_node  nil]
+  [set node parent_node      this]
+  [set node previous_node    nil]
+  [set node next_node        nil]]
 
 [deftypefunk parse_tree_node execute add_child [node]
   [if [null last_child_node]
@@ -86,8 +86,8 @@
 
 [deftypefunk parse_tree_node execute serialize []
   [let [[seq nil]]
-    [have [get this last_node] map_nodes_backward [funk [node]
-							[= seq [cons [get node parse_object] seq]]]]
+    [have this map_nodes_backward [funk [node]
+					[= seq [cons [get node parse_object] seq]]]]
     seq]]
 
 [deftypefunk parse_tree_node get containing_type_node [type]
@@ -121,14 +121,29 @@
 	   [object-get parse_object property]]
       this
     [if previous_node
-	[get previous_node containing_type_with_true_property_node type]
+	[get previous_node containing_type_with_true_property_node type property]
       [if parent_node
-	  [get parent_node containing_type_with_true_property_node type]
+	  [get parent_node containing_type_with_true_property_node type property]
 	nil]]]]
 
+[deftypefunk parse_tree_node set containing_type_with_true_property_node [type property value]
+  [if [and [is-type type parse_object]
+	   [object-get parse_object property]]
+      [object-set parse_object property value]
+    [if previous_node
+	[get previous_node containing_type_with_true_property_node type property]
+      [if parent_node
+	  [get parent_node containing_type_with_true_property_node type property]
+	[error bug_type        `could_not_find_containing_type_with_try_property
+	       funkname        `containing_type_with_true_property_node
+	       containing_type type
+	       property        property]]]]]
+
 [deftypefunk parse_tree_node get containing_type_with_true_property [type property]
-  [let [[node [get this containing_type_with_true_property_node type property]]]
-    [not [null node]]]]
+  [not [null [get this containing_type_with_true_property_node type property]]]]
+
+[deftypefunk parse_tree_node set containing_type_with_true_property [type property value]
+  [set this containing_type_with_true_property_node type property value]]
 
 'parse_tree'
 
@@ -279,6 +294,9 @@
 
 [deftypefunk parse_tree get containing_type_with_true_property [type property]
   [not [null [get this containing_type_with_true_property_node type property]]]]
+
+[deftypefunk parse_tree set containing_type_with_true_property [type property value]
+  [get this containing_type_with_true_property_node type property value]]
 
 
 [deftypefunk parse_tree get as-graph []

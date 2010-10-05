@@ -253,6 +253,8 @@ typedef struct funk2_object_type__parse_tree__slot_s funk2_object_type__parse_tr
 struct funk2_object_type__parse_tree__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
+  f2ptr new_copy__symbol;
+  f2ptr new_copy__funk;
 };
 
 

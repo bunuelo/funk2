@@ -595,6 +595,45 @@ f2ptr f2__parse_tree_node__new(f2ptr cause) {
 def_pcfunk0(parse_tree_node__new, return f2__parse_tree_node__new(this_cause));
 
 
+void raw__parse_tree_node__add_all_nodes_as_new_to_ptypehash(f2ptr cause, f2ptr this, f2ptr ptypehash) {
+  raw__ptypehash__add(cause, ptypehash, this, f2__parse_tree_node__new(cause));
+  {
+    f2ptr first_child_node = raw__parse_tree_node__first_child_node(cause, this);
+    if (first_child_node != nil) {
+      raw__parse_tree_node__add_all_nodes_to_ptypehash(cause, first_child_node, ptypehash);
+    }
+  }
+  {
+    f2ptr next_node = raw__parse_tree_node__next_node(cause, this);
+    if (next_node != nil) {
+      raw__parse_tree_node__add_all_nodes_to_ptypehash(cause, next_node, ptypehash);
+    }
+  }
+}
+
+void raw__parse_tree_node__map_all_new_nodes_using_ptypehash(f2ptr cause, f2ptr this, f2ptr ptypehash) {
+  f2ptr new_node = raw__ptypehash__lookup(cause, ptypehash, this);
+  raw__parse_tree_node__parse_object__set(cause, new_node, raw__parse_tree_node__parse_object(cause, this));
+  f2ptr parent_node      = raw__parse_tree_node__parent_node(     cause, this); if (parent_node      != nil) {raw__parse_tree_node__parent_node__set(     cause, new_node, raw__ptypehash__lookup(cause, parent_node));}
+  f2ptr previous_node    = raw__parse_tree_node__previous_node(   cause, this); if (previous_node    != nil) {raw__parse_tree_node__previous_node__set(   cause, new_node, raw__ptypehash__lookup(cause, previous_node));}
+  f2ptr next_node        = raw__parse_tree_node__next_node(       cause, this); if (next_node        != nil) {raw__parse_tree_node__next_node__set(       cause, new_node, raw__ptypehash__lookup(cause, next_node));}
+  f2ptr first_child_node = raw__parse_tree_node__first_child_node(cause, this); if (first_child_node != nil) {raw__parse_tree_node__first_child_node__set(cause, new_node, raw__ptypehash__lookup(cause, first_child_node));}
+  f2ptr last_child_node  = raw__parse_tree_node__last_child_node( cause, this); if (last_child_node  != nil) {raw__parse_tree_node__last_child_node__set( cause, new_node, raw__ptypehash__lookup(cause, last_child_node));}
+  {
+    f2ptr first_child_node = raw__parse_tree_node__first_child_node(cause, this);
+    if (first_child_node != nil) {
+      raw__parse_tree_node__map_all_new_nodes_using_ptypehash(cause, first_child_node, ptypehash);
+    }
+  }
+  {
+    f2ptr next_node = raw__parse_tree_node__next_node(cause, this);
+    if (next_node != nil) {
+      raw__parse_tree_node__map_all_new_nodes_using_ptypehash(cause, next_node, ptypehash);
+    }
+  }
+}
+
+
 f2ptr f2parse_tree_node__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2parse_tree_node__primobject_type__new(cause);
   {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__funk);}
@@ -612,14 +651,6 @@ f2ptr f2__parse_tree__new(f2ptr cause) {
   return f2parse_tree__new(cause, root_node, current_node);
 }
 def_pcfunk0(parse_tree__new, return f2__parse_tree__new(this_cause));
-
-
-f2ptr f2parse_tree__primobject_type__new_aux(f2ptr cause) {
-  f2ptr this = f2parse_tree__primobject_type__new(cause);
-  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new__funk);}
-  return this;
-}
-
 
 
 //[deftypefunk parse_tree get new_copy []
@@ -643,22 +674,35 @@ f2ptr f2parse_tree__primobject_type__new_aux(f2ptr cause) {
 
 
 f2ptr raw__parse_tree__new_copy(f2ptr cause, f2ptr this) {
-  f2ptr root_node  = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "root_node"), nil);
   f2ptr parse_tree = f2__parse_tree__new(cause);
+  f2ptr root_node  = raw__parse_tree__root_node(cause, this);
   if (root_node != nil) {
     f2ptr node_hash  = f2__ptypehash__new(cause);
-    
+    raw__parse_tree_node__add_all_nodes_to_ptypehash(       cause, root_node, node_hash);
+    raw__parse_tree_node__map_all_new_nodes_using_ptypehash(cause, root_node, node_hash);
+    raw__parse_tree__root_node__set(   cause, parse_tree, raw__ptypehash__lookup(cause, node_hash, root_node));
+    f2ptr current_node = raw__parse_tree__current_node(cause, this);
+    raw__parse_tree__current_node__set(cause, parse_tree, raw__ptypehash__lookup(cause, node_hash, current_node));
   }
   return parse_tree;
 }
 
 f2ptr f2__parse_tree__new_copy(f2ptr cause, f2ptr this) {
-  if (! raw__object__inherits_from(cause, this, new__symbol(cause, "parse_tree"))) {
+  if (! raw__parse_tree__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__parse_tree__new_copy(cause, this);
 }
 def_pcfunk1(parse_tree__new_copy, this, return f2__parse_tree__new_copy(this_cause, this));
+
+
+f2ptr f2parse_tree__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2parse_tree__primobject_type__new(cause);
+  {char* slot_name = "new";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new__funk);}
+  {char* slot_name = "new_copy"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new_copy__funk);}
+  return this;
+}
+
 
 
 // **
@@ -880,6 +924,8 @@ void f2__natural_language__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(parse_tree__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new__funk = never_gc(cfunk);}
+  {char* symbol_str = "new_copy"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new_copy__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(parse_tree__new_copy, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new_copy__funk = never_gc(cfunk);}
   
   
 }

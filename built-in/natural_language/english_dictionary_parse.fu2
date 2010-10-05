@@ -471,21 +471,15 @@
 
 [deftypefunk english_dictionary execute parse_sequence_as_noun_group-relative_clause [sequence parse_tree]
   [let [[parses nil]]
-    [let [[clause_parse_tree [get parse_tree new_copy]]
-	  [clause            [new clause]]]
-      [set clause wh                           t]
-      [set clause secondary                    t]
-      [set clause unmatched_relative_reference t]
-      [have clause_parse_tree add_child_to_type `noun_group clause]
-      [let [[relative_clause_parses [have this parse_sequence_as_clause sequence clause_parse_tree]]]
-	[mapc [funk [relative_clause_parse]
-		    [let [[relative_clause_parse_tree    [have relative_clause_parse lookup `parse_tree]]
-			  [relative_clause_rest_sequence [have relative_clause_parse lookup `rest_sequence]]]
-		      [= parses [cons [frame parse_tree    relative_clause_parse_tree
-					     rest_sequence relative_clause_rest_sequence
-					     noun_group    [get relative_clause_parse_tree containing_type `noun_group]]
-				      parses]]]]
-	      relative_clause_parses]]]
+    [let [[relative_clause_parses [have this parse_sequence_as_clause sequence parse_tree]]]
+      [mapc [funk [relative_clause_parse]
+		  [let [[relative_clause_parse_tree    [have relative_clause_parse lookup `parse_tree]]
+			[relative_clause_rest_sequence [have relative_clause_parse lookup `rest_sequence]]]
+		    [= parses [cons [frame parse_tree    relative_clause_parse_tree
+					   rest_sequence relative_clause_rest_sequence
+					   noun_group    [get relative_clause_parse_tree containing_type `noun_group]]
+				    parses]]]]
+	    relative_clause_parses]]
     parses]]
 
 [deftypefunk english_dictionary execute parse_sequence_as_noun_group-qualifiers [sequence parse_tree]
@@ -506,6 +500,9 @@
       'relative word (which)'
       [let [[relative_clause_parse_tree [get parse_tree new_copy]]
 	    [relative_clause            [new clause]]]
+	[set relative_clause wh                           t]
+	[set relative_clause secondary                    t]
+	[set relative_clause unmatched_relative_reference t]
 	[have relative_clause_parse_tree add_child_to_type `noun_group relative_clause]
 	[let [[relative_clause_parses [have this parse_sequence_as_noun_group-relative_clause sequence relative_clause_parse_tree]]]
 	  [= parses [append relative_clause_parses parses]]]]

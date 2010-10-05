@@ -116,7 +116,19 @@
       [error bug_type        `parse_tree_node_does_not_have_containing_type
 	     containing_type type]]]]
 
+[deftypefunk parse_tree_node get containing_type_with_true_property_node [type property]
+  [if [and [is-type type parse_object]
+	   [object-get parse_object property]]
+      this
+    [if previous_node
+	[get previous_node containing_type_with_true_property_node type]
+      [if parent_node
+	  [get parent_node containing_type_with_true_property_node type]
+	nil]]]]
 
+[deftypefunk parse_tree_node get containing_type_with_true_property [type property]
+  [let [[node [get this containing_type_with_true_property_node type property]]]
+    [not [null node]]]]
 
 'parse_tree'
 
@@ -260,6 +272,13 @@
       [object-set new_parse_object property value]
       [set node parse_object new_parse_object]]]]
 
+[deftypefunk parse_tree get containing_type_with_true_property_node [type property]
+  [if current_node
+      [get current_node containing_type_with_true_property_node type property]
+    nil]]
+
+[deftypefunk parse_tree get containing_type_with_true_property [type property]
+  [not [null [get this containing_type_with_true_property_node type property]]]]
 
 
 [deftypefunk parse_tree get as-graph []

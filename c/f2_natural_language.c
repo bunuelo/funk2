@@ -745,7 +745,7 @@ f2ptr raw__parse_tree_node__containing_type_node(f2ptr cause, f2ptr this, f2ptr 
     } else {
       f2ptr parent_node = raw__parse_tree_node__parent_node(cause, this);
       if (parent_node != nil) {
-	return raw__parse_tree_node__containing_type_node(cause, parent_node);
+	return raw__parse_tree_node__containing_type_node(cause, parent_node, type);
       } else {
 	return nil;
       }

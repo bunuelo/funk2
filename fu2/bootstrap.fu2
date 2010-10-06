@@ -60,6 +60,7 @@
 [require graph_cluster]
 [require gtk]
 [require fibermon]
+[require natural_language]
 
 [defunk load-funk2-devrc []
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]

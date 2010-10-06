@@ -821,7 +821,7 @@ f2ptr raw__parse_tree_node__containing_type_with_true_property__set(f2ptr cause,
       if (parent_node != nil) {
 	return raw__parse_tree_node__containing_type_with_true_property__set(cause, parent_node, type, property, value);
       } else {
-	return f2larva__new(cause, 73589, f2__bug__new(cause, f2integer__new(cause, 73589), f2__frame__new(cause, f2list4__new(cause,
+	return f2larva__new(cause, 73589, f2__bug__new(cause, f2integer__new(cause, 73589), f2__frame__new(cause, f2list8__new(cause,
 															       new__symbol(cause, "bug_type"),        new__symbol(cause, "could_not_find_containing_type_with_try_property"),
 															       new__symbol(cause, "funkname"),        new__symbol(cause, "parse_tree_node-containing_type_with_true_property-set"),
 															       new__symbol(cause, "containing_type"), type,

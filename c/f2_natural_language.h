@@ -252,6 +252,8 @@ struct funk2_object_type__parse_tree_node__slot_s {
   f2ptr add_child__funk;
   f2ptr child_of_type_node__symbol;
   f2ptr child_of_type_node__funk;
+  f2ptr containing_type_node__symbol;
+  f2ptr containing_type_node__funk;
 };
 
 

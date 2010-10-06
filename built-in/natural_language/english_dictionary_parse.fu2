@@ -484,6 +484,7 @@
 
 [deftypefunk english_dictionary execute parse_sequence_as_noun_group-qualifiers [sequence parse_tree]
   [let [[parses nil]]
+    [parse_format '\n    parsing ' sequence ' as noun_group-qualifiers.']
     [let [[noun_group [get parse_tree containing_type `noun_group]]]
       [let [[preposition_group_initial_parse_tree [get parse_tree new_copy]]
 	    [preposition_group                    [new preposition_group]]]
@@ -505,7 +506,13 @@
 	[set relative_clause unmatched_relative_reference t]
 	[have relative_clause_parse_tree add_child_to_type `noun_group relative_clause]
 	[let [[relative_clause_parses [have this parse_sequence_as_noun_group-relative_clause sequence relative_clause_parse_tree]]]
-	  [= parses [append relative_clause_parses parses]]]]
+	  [mapc [funk [relative_clause_parse]
+		      [let [[relative_clause_parse_tree [have relative_clause_parse lookup `parse_tree]]]
+			[parse_format '\n    parse_sequence_as_noun_group-qualifiers: found relative_clause_parse: ' relative_clause_parse]
+			[have relative_clause_parse_tree pop_to_type `clause]
+			[have relative_clause_parse_tree pop_to_type `noun_group]
+			[= parses [cons relative_clause_parse parses]]]]
+		relative_clause_parses]]]
       [parse_format '\n  qualifiers are not completely implemented.']
       'past participle (supported by)'
       'ing verb'
@@ -861,10 +868,13 @@
 	    [set subject_to_object_clause subject_to_object t]
 	    [have subject_to_object_initial_parse_tree add_child_to_type `clause subject_to_object_clause]
 	    [let [[subject_to_object_clause_parses [have this parse_sequence_as_clause sequence subject_to_object_initial_parse_tree]]]
-	      
-	      [parse_format '\n    parse_sequence_as_clause-verb_objects-after_first_particle_try: found subject_to_object parses: ' subject_to_object_clause_parses]
-	      
-	      [= parses [append subject_to_object_clause_parses parses]]]]]
+	      [mapc [funk [subject_to_object_clause_parse]
+			  [let [[subject_to_object_clause_parse_tree [have subject_to_object_clause_parse lookup `parse_tree]]]
+			    [parse_format '\n    parse_sequence_as_clause-verb_objects-after_first_particle_try: found subject_to_object parse: ' subject_to_object_clause_parse]
+			    [have subject_to_object_clause_parse_tree pop_to_type `clause]
+			    [have subject_to_object_clause_parse_tree pop_to_type `verb_group]
+			    [= parses [cons subject_to_object_clause_parse parses]]]]
+		    subject_to_object_clause_parses]]]]
       [if [get verb_word takes_to_object]
 	  [let [[to_object_initial_parse_tree [get parse_tree new_copy]]
 		[to_object_clause             [new clause]]]
@@ -873,10 +883,13 @@
 	    [set to_object_clause to_object t]
 	    [have to_object_initial_parse_tree add_child_to_type `clause to_object_clause]
 	    [let [[to_object_clause_parses [have this parse_sequence_as_clause sequence to_object_initial_parse_tree]]]
-	      
-	      [parse_format '\n    parse_sequence_as_clause-verb_objects-after_first_particle_try: found to_object parses: ' to_object_clause_parses]
-	      
-	      [= parses [append to_object_clause_parses parses]]]]]]
+	      [mapc [funk [to_object_clause_parse]
+			  [let [[to_object_clause_parse_tree [have to_object_clause_parse lookup `parse_tree]]]
+			    [parse_format '\n    parse_sequence_as_clause-verb_objects-after_first_particle_try: found to_object parse: ' to_object_clause_parse]
+			    [have to_object_clause_parse_tree pop_to_type `clause]
+			    [have to_object_clause_parse_tree pop_to_type `verb_group]
+			    [= parses [cons to_object_clause_parse parses]]]
+		    to_object_clause_parses]]]]]
     
     parses]]
 

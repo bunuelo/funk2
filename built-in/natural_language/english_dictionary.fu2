@@ -280,6 +280,10 @@
        [dictionary-add_word this verb_word contains         [present third_person_singular transitive takes_to_object]]
        [dictionary-add_word this verb_word contained        [en past plural first_person_singular third_person_singular transitive]]
        [dictionary-add_word this verb_word containing       [ing transitive takes_to_object takes_subject_to_object]]
+       [dictionary-add_word this verb_word get              [infinitive first_person_singular transitive transitive_two takes_to_object takes_subject_to_object]]
+       [dictionary-add_word this verb_word gets             [present third_person_singular transitive transitive_two takes_to_object takes_subject_to_object]]
+       [dictionary-add_word this verb_word got              [en past plural first_person_singular third_person_singular transitive transitive_two takes_to_object takes_subject_to_object]]
+       [dictionary-add_word this verb_word getting          [ing transitive transitive_two takes_to_object takes_subject_to_object]]
        
        [dictionary-add_word this particle_word up []]
        

@@ -27,7 +27,7 @@
 
 // clause
 
-def_frame_object__global__12_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, subject_to_object, to_object, unmatched_relative_reference);
+def_frame_object__global__13_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, transitive_two, subject_to_object, to_object, unmatched_relative_reference);
 
 f2ptr f2__clause__new(f2ptr cause) {
   f2ptr symbols                      = nil;
@@ -39,10 +39,11 @@ f2ptr f2__clause__new(f2ptr cause) {
   f2ptr wh                           = nil;
   f2ptr particle                     = nil;
   f2ptr transitive                   = nil;
+  f2ptr transitive_two               = nil;
   f2ptr subject_to_object            = nil;
   f2ptr to_object                    = nil;
   f2ptr unmatched_relative_reference = nil;
-  return f2clause__new(cause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, subject_to_object, to_object, unmatched_relative_reference);
+  return f2clause__new(cause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, transitive_two, subject_to_object, to_object, unmatched_relative_reference);
 }
 def_pcfunk0(clause__new, return f2__clause__new(this_cause));
 
@@ -915,7 +916,7 @@ void f2__natural_language__initialize() {
   
   // clause
   
-  init_frame_object__12_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, subject_to_object, to_object, unmatched_relative_reference);
+  init_frame_object__13_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, transitive_two, subject_to_object, to_object, unmatched_relative_reference);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_clause.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(clause__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_clause.new__funk = never_gc(cfunk);}

@@ -69,6 +69,7 @@ f2ptr f2__object__get_0(f2ptr cause, f2ptr this, f2ptr slot);
 f2ptr     object__get_0(f2ptr cause, f2ptr this, char* slot_cstr);
 f2ptr f2__object__get_1(f2ptr cause, f2ptr this, f2ptr slot,      f2ptr arg0);
 f2ptr     object__get_1(f2ptr cause, f2ptr this, char* slot_cstr, f2ptr arg0);
+f2ptr f2__object__set_1(f2ptr cause, f2ptr this, f2ptr slot,      f2ptr arg0);
 f2ptr f2__object__get_2(f2ptr cause, f2ptr this, f2ptr slot,      f2ptr arg0, f2ptr arg1);
 f2ptr     object__get_2(f2ptr cause, f2ptr this, char* slot_cstr, f2ptr arg0, f2ptr arg1);
 

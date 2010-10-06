@@ -256,6 +256,8 @@ struct funk2_object_type__parse_tree_node__slot_s {
   f2ptr containing_type_node__funk;
   f2ptr containing_type_with_true_property_node__symbol;
   f2ptr containing_type_with_true_property_node__funk;
+  f2ptr containing_type_with_true_property__set__symbol;
+  f2ptr containing_type_with_true_property__set__funk;
 };
 
 

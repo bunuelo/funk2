@@ -434,6 +434,7 @@ def_pcfunk2(object__inherits_from, this, type_name, return f2__object__inherits_
 
 
 #define object__get__no_such_slot 789
+#define object__set__no_such_slot 790
 
 f2ptr f2__object__get_0(f2ptr cause, f2ptr this, f2ptr slot) {
   f2ptr fiber = f2__this__fiber(cause);
@@ -467,6 +468,18 @@ f2ptr object__get_1(f2ptr cause, f2ptr this, char* slot_cstr, f2ptr arg0) {
   return f2__object__get_1(cause, this, new__symbol(cause, slot_cstr), arg0);
 }
 
+f2ptr f2__object__set_1(f2ptr cause, f2ptr this, f2ptr slot, f2ptr arg0) {
+  f2ptr fiber = f2__this__fiber(cause);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.set__symbol, slot);
+  if (! raw__funkable__is_type(cause, funk)) {
+    if (raw__larva__is_type(cause, funk)) {
+      return funk;
+    }
+    return f2larva__new(cause, object__set__no_such_slot, nil);
+  }
+  return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, arg0, nil)));
+}
+
 f2ptr f2__object__get_2(f2ptr cause, f2ptr this, f2ptr slot, f2ptr arg0, f2ptr arg1) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, slot);
@@ -482,6 +495,9 @@ f2ptr f2__object__get_2(f2ptr cause, f2ptr this, f2ptr slot, f2ptr arg0, f2ptr a
 f2ptr object__get_2(f2ptr cause, f2ptr this, char* slot_cstr, f2ptr arg0, f2ptr arg1) {
   return f2__object__get_2(cause, this, new__symbol(cause, slot_cstr), arg0, arg1);
 }
+
+
+
 
 f2ptr f2__object__eq(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr fiber = f2__this__fiber(cause);

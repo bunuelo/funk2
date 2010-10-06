@@ -77,18 +77,18 @@
 	   [get parent_node containing_type_with_true_property_node type property]
 	 nil]]]]
 
-[deftypefunk parse_tree_node set containing_type_with_true_property_node [type property value]
-  [if [and [is-type type parse_object]
-	   [object-get parse_object property]]
-      [object-set parse_object property value]
-    [if previous_node
-	[get previous_node containing_type_with_true_property_node type property]
-      [if parent_node
-	  [get parent_node containing_type_with_true_property_node type property]
-	[error bug_type        `could_not_find_containing_type_with_try_property
-	       funkname        `containing_type_with_true_property_node
-	       containing_type type
-	       property        property]]]]]
+`[deftypefunk parse_tree_node set containing_type_with_true_property_node [type property value]
+   [if [and [is-type type parse_object]
+	    [object-get parse_object property]]
+       [object-set parse_object property value]
+     [if previous_node
+	 [get previous_node containing_type_with_true_property_node type property]
+       [if parent_node
+	   [get parent_node containing_type_with_true_property_node type property]
+	 [error bug_type        `could_not_find_containing_type_with_try_property
+		funkname        `containing_type_with_true_property_node
+		containing_type type
+		property        property]]]]]
 
 [deftypefunk parse_tree_node get containing_type_with_true_property [type property]
   [not [null [get this containing_type_with_true_property_node type property]]]]

@@ -794,6 +794,52 @@ f2ptr f2__parse_tree_node__containing_type_with_true_property_node(f2ptr cause, 
 def_pcfunk3(parse_tree_node__containing_type_with_true_property_node, this, type, property, return f2__parse_tree_node__containing_type_with_true_property_node(this_cause, this, type, property));
 
 
+//[deftypefunk parse_tree_node set containing_type_with_true_property_node [type property value]
+//  [if [and [is-type type parse_object]
+//	     [object-get parse_object property]]
+//      [object-set parse_object property value]
+//    [if previous_node
+//	  [get previous_node containing_type_with_true_property_node type property]
+//      [if parent_node
+//	    [get parent_node containing_type_with_true_property_node type property]
+//	  [error bug_type        `could_not_find_containing_type_with_try_property
+//	         funkname        `containing_type_with_true_property_node
+//	         containing_type type
+//	         property        property]]]]]
+
+f2ptr raw__parse_tree_node__containing_type_with_true_property__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr property, f2ptr value) {
+  f2ptr parse_object = raw__parse_tree_node__parse_object(cause, this);
+  if (raw__object__inherits_from(cause, parse_object, type) &&
+      (f2__object__get_0(cause, parse_object, property) != nil)) {
+    return f2__object__set_1(cause, parse_object, property, value);
+  } else {
+    f2ptr previous_node = raw__parse_tree_node__previous_node(cause, this);
+    if (previous_node != nil) {
+      return raw__parse_tree_node__containing_type_with_true_property__set(cause, previous_node, type, property, value);
+    } else {
+      f2ptr parent_node = raw__parse_tree_node__parent_node(cause, this);
+      if (parent_node != nil) {
+	return raw__parse_tree_node__containing_type_with_true_property__set(cause, parent_node, type, property, value);
+      } else {
+	return f2larva__new(cause, 73589, f2__bug__new(cause, f2integer__new(cause, 73589), f2__frame__new(cause, f2list4__new(cause,
+															       new__symbol(cause, "bug_type"),        new__symbol(cause, "could_not_find_containing_type_with_try_property"),
+															       new__symbol(cause, "funkname"),        new__symbol(cause, "parse_tree_node-containing_type_with_true_property-set"),
+															       new__symbol(cause, "containing_type"), type,
+															       new__symbol(cause, "property"),        property))));
+      }
+    }
+  }
+}
+
+f2ptr f2__parse_tree_node__containing_type_with_true_property__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr property, f2ptr value) {
+  if ((! raw__parse_tree_node__is_type(cause, this)) ||
+      (! raw__symbol__is_type(cause, type)) ||
+      (! raw__symbol__is_type(cause, property))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__parse_tree_node__containing_type_with_true_property__set(cause, this, type, property, value);
+}
+def_pcfunk4(parse_tree_node__containing_type_with_true_property__set, this, type, property, value, return f2__parse_tree_node__containing_type_with_true_property__set(this_cause, this, type, property, value));
 
 
 f2ptr f2parse_tree_node__primobject_type__new_aux(f2ptr cause) {
@@ -805,6 +851,7 @@ f2ptr f2parse_tree_node__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "child_of_type_node";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.child_of_type_node__funk);}
   {char* slot_name = "containing_type_node";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_node__funk);}
   {char* slot_name = "containing_type_with_true_property_node"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property_node__funk);}
+  {char* slot_name = "containing_type_with_true_property";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property__set__funk);}
   return this;
 }
 
@@ -1076,6 +1123,8 @@ void f2__natural_language__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(parse_tree_node__containing_type_node, this, type, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_node__funk = never_gc(cfunk);}
   {char* symbol_str = "containing_type_with_true_property_node"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property_node__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(parse_tree_node__containing_type_with_true_property_node, this, type, property, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property_node__funk = never_gc(cfunk);}
+  {char* symbol_str = "containing_type_with_true_property-set"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__4_arg(parse_tree_node__containing_type_with_true_property__set, this, type, property, value, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property__set__funk = never_gc(cfunk);}
   
   
   // parse_tree

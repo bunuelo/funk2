@@ -50,15 +50,6 @@
 					[= seq [cons [get node parse_object] seq]]]]
     seq]]
 
-`[deftypefunk parse_tree_node get containing_type_node [type]
-   [if [is-type type parse_object]
-       this
-     [if previous_node
-	 [get previous_node containing_type_node type]
-       [if parent_node
-	   [get parent_node containing_type_node type]
-	 nil]]]]
-
 [deftypefunk parse_tree_node get is_contained_by_type [type]
   [not [null [get this containing_type_node type]]]]
 
@@ -76,15 +67,15 @@
       [error bug_type        `parse_tree_node_does_not_have_containing_type
 	     containing_type type]]]]
 
-[deftypefunk parse_tree_node get containing_type_with_true_property_node [type property]
-  [if [and [is-type type parse_object]
-	   [object-get parse_object property]]
-      this
-    [if previous_node
-	[get previous_node containing_type_with_true_property_node type property]
-      [if parent_node
-	  [get parent_node containing_type_with_true_property_node type property]
-	nil]]]]
+`[deftypefunk parse_tree_node get containing_type_with_true_property_node [type property]
+   [if [and [is-type type parse_object]
+	    [object-get parse_object property]]
+       this
+     [if previous_node
+	 [get previous_node containing_type_with_true_property_node type property]
+       [if parent_node
+	   [get parent_node containing_type_with_true_property_node type property]
+	 nil]]]]
 
 [deftypefunk parse_tree_node set containing_type_with_true_property_node [type property value]
   [if [and [is-type type parse_object]

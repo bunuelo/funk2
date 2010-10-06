@@ -784,14 +784,14 @@ f2ptr raw__parse_tree_node__containing_type_with_true_property_node(f2ptr cause,
   }
 }
 
-f2ptr f2__parse_tree_node__containing_type_with_true_property_node(f2ptr cause, f2ptr this, f2ptr type) {
+f2ptr f2__parse_tree_node__containing_type_with_true_property_node(f2ptr cause, f2ptr this, f2ptr type, f2ptr property) {
   if ((! raw__parse_tree_node__is_type(cause, this)) ||
       (! raw__symbol__is_type(cause, type))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__parse_tree_node__containing_type_with_true_property_node(cause, this, type);
+  return raw__parse_tree_node__containing_type_with_true_property_node(cause, this, type, property);
 }
-def_pcfunk2(parse_tree_node__containing_type_with_true_property_node, this, type, return f2__parse_tree_node__containing_type_with_true_property_node(this_cause, this, type));
+def_pcfunk3(parse_tree_node__containing_type_with_true_property_node, this, type, property, return f2__parse_tree_node__containing_type_with_true_property_node(this_cause, this, type, property));
 
 
 

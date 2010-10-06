@@ -772,11 +772,11 @@ f2ptr raw__parse_tree_node__containing_type_with_true_property_node(f2ptr cause,
   } else {
     f2ptr previous_node = raw__parse_tree_node__previous_node(cause, this);
     if (previous_node != nil) {
-      return raw__parse_tree_node__containing_type_with_true_property_node(cause, previous_node, type);
+      return raw__parse_tree_node__containing_type_with_true_property_node(cause, previous_node, type, property);
     } else {
       f2ptr parent_node = raw__parse_tree_node__parent_node(cause, this);
       if (parent_node != nil) {
-	return raw__parse_tree_node__containing_with_true_property_type_node(cause, parent_node, type);
+	return raw__parse_tree_node__containing_with_true_property_type_node(cause, parent_node, type, property);
       } else {
 	return nil;
       }

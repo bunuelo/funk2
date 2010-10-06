@@ -888,7 +888,7 @@
 			    [parse_format '\n    parse_sequence_as_clause-verb_objects-after_first_particle_try: found to_object parse: ' to_object_clause_parse]
 			    [have to_object_clause_parse_tree pop_to_type `clause]
 			    [have to_object_clause_parse_tree pop_to_type `verb_group]
-			    [= parses [cons to_object_clause_parse parses]]]
+			    [= parses [cons to_object_clause_parse parses]]]]
 		    to_object_clause_parses]]]]]
     
     parses]]

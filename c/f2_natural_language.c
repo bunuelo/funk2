@@ -27,7 +27,7 @@
 
 // clause
 
-def_frame_object__global__11_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, subject_to_object, unmatched_relative_reference);
+def_frame_object__global__12_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, subject_to_object, to_object, unmatched_relative_reference);
 
 f2ptr f2__clause__new(f2ptr cause) {
   f2ptr symbols                      = nil;
@@ -40,8 +40,9 @@ f2ptr f2__clause__new(f2ptr cause) {
   f2ptr particle                     = nil;
   f2ptr transitive                   = nil;
   f2ptr subject_to_object            = nil;
+  f2ptr to_object                    = nil;
   f2ptr unmatched_relative_reference = nil;
-  return f2clause__new(cause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, subject_to_object, unmatched_relative_reference);
+  return f2clause__new(cause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, subject_to_object, to_object, unmatched_relative_reference);
 }
 def_pcfunk0(clause__new, return f2__clause__new(this_cause));
 
@@ -634,18 +635,6 @@ void raw__parse_tree_node__map_all_new_nodes_using_ptypehash(f2ptr cause, f2ptr 
 }
 
 
-//[deftypefunk parse_tree_node execute insert_after [node]
-//  [let [[old-next_node next_node]]
-//    [=        next_node     node]
-//    [set node parent_node   parent_node]
-//    [set node next_node     old-next_node]
-//    [set node previous_node this]
-//    [if old-next_node
-//	  [set old-next_node previous_node node]
-//      [if parent_node
-//	    [set parent_node last_child_node node]]]]]
-
-
 void raw__parse_tree_node__insert_after(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr old_next_node = raw__parse_tree_node__next_node(  cause, this);
   f2ptr parent_node   = raw__parse_tree_node__parent_node(cause, this);
@@ -672,19 +661,6 @@ f2ptr f2__parse_tree_node__insert_after(f2ptr cause, f2ptr this, f2ptr node) {
 def_pcfunk2(parse_tree_node__insert_after, this, node, return f2__parse_tree_node__insert_after(this_cause, this, node));
 
 
-//[deftypefunk parse_tree_node execute insert_below_no_children [node]
-//  [if [or first_child_node last_child_node]
-//      [error bug_type         `insert_below_no_children_assumes_no_children
-//	       first_child_node first_child_node
-//	       last_child_node  last_child_node]]
-//  [= first_child_node node]
-//  [= last_child_node  node]
-//  [set node first_child_node nil]
-//  [set node last_child_node  nil]
-//  [set node parent_node      this]
-//  [set node previous_node    nil]
-//  [set node next_node        nil]]
-
 void raw__parse_tree_node__insert_below_no_children(f2ptr cause, f2ptr this, f2ptr node) {
   raw__parse_tree_node__first_child_node__set(cause, this, node);
   raw__parse_tree_node__last_child_node__set( cause, this, node);
@@ -705,11 +681,6 @@ f2ptr f2__parse_tree_node__insert_below_no_children(f2ptr cause, f2ptr this, f2p
 def_pcfunk2(parse_tree_node__insert_below_no_children, this, node, return f2__parse_tree_node__insert_below_no_children(this_cause, this, node));
 
 
-//[deftypefunk parse_tree_node execute add_child [node]
-//  [if [null last_child_node]
-//      [have this insert_below_no_children node]
-//    [have last_child_node insert_after node]]]
-
 void raw__parse_tree_node__add_child(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr last_child_node = raw__parse_tree_node__last_child_node(cause, this);
   if (last_child_node == nil) {
@@ -729,15 +700,6 @@ f2ptr f2__parse_tree_node__add_child(f2ptr cause, f2ptr this, f2ptr node) {
 }
 def_pcfunk2(parse_tree_node__add_child, this, node, return f2__parse_tree_node__add_child(this_cause, this, node));
 
-
-//[deftypefunk parse_tree_node get child_of_type_node [type]
-//  [let [[iter first_child_node]]
-//    [while [and iter [not [is-type type [get iter parse_object]]]]
-//      [= iter [get iter next_node]]]
-//    [if iter
-//	  iter
-//      [error bug_type `parse_tree_node-child_of_type-does_not_exist
-//	       type     type]]]]
 
 f2ptr raw__parse_tree_node__child_of_type_node(f2ptr cause, f2ptr this, f2ptr type) {
   f2ptr iter = raw__parse_tree_node__first_child_node(cause, this);
@@ -834,7 +796,7 @@ void f2__natural_language__initialize() {
   
   // clause
   
-  init_frame_object__11_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, subject_to_object, unmatched_relative_reference);
+  init_frame_object__12_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, subject_to_object, to_object, unmatched_relative_reference);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_clause.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(clause__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_clause.new__funk = never_gc(cfunk);}

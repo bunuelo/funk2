@@ -48,7 +48,7 @@ struct funk2_memorypool_s {
   rbt_tree_t                     free_memory_tree; // free memory does grow on trees!
   ptr                            global_f2ptr_offset; // one byte less than __global_memory_block_data (to preserve [NULL -> 0] for [ptr -> f2ptr])
   f2size_t                       total_allocated_memory_since_last_gc;
-  uint                           next_unique_block_id;
+  u64                            next_unique_block_id;
   //funk2_gc_touch_circle_buffer_t gc_touch_circle_buffer;
 };
 

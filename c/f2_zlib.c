@@ -140,10 +140,13 @@ def_pcfunk1(string__deflate, this, return f2__string__deflate(this_cause, this))
 
 boolean_t zlib__inflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_length) {
   s64      zlib_result;
+  s64      zlib_flush_command;
   u64      byte_num;
   z_stream zlib_stream;
   u8*      out_buffer;
-  u64      dest_index = 0;
+  u64      available_input = src_length;
+  u64      src_index       = 0;
+  u64      dest_index      = 0;
   
   // allocate inflate state
   zlib_stream.zalloc   = Z_NULL;
@@ -156,38 +159,56 @@ boolean_t zlib__inflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_l
     return boolean__true;
   }
   
-  out_buffer = (u8*)from_ptr(f2__malloc(ZLIB_CHUNK));
-  
-  //zlib_stream.avail_in = fread(in_buffer, 1, ZLIB_CHUNK, source);
-  zlib_stream.avail_in = src_length;
-  if (zlib_stream.avail_in != 0) {
-    zlib_stream.next_in = src_data;
+  if (available_input != 0) {
     
-    // run inflate() on input until output buffer not full
-    do {
-      zlib_stream.avail_out = ZLIB_CHUNK;
-      zlib_stream.next_out = out_buffer;
-      zlib_result = inflate(&zlib_stream, Z_NO_FLUSH);
-      assert(zlib_result != Z_STREAM_ERROR);  // state not clobbered
-      switch (zlib_result) {
-      case Z_NEED_DICT:
-      case Z_DATA_ERROR:
-      case Z_MEM_ERROR:
-	f2__free(to_ptr(out_buffer));
-	inflateEnd(&zlib_stream);
-	return boolean__true;
+    out_buffer = (u8*)from_ptr(f2__malloc(ZLIB_CHUNK));
+    
+    while (available_input > 0) {
+      
+      if (available_input > ZLIB_CHUNK) {
+	zlib_stream.avail_in = ZLIB_CHUNK;
+	zlib_flush_command   = Z_NO_FLUSH;
+      } else {
+	zlib_stream.avail_in = available_input;
+	zlib_flush_command   = Z_FINISH;
       }
-      byte_num = ZLIB_CHUNK - zlib_stream.avail_out;
-      if (dest_data) {
-	memcpy(dest_data + dest_index, out_buffer, byte_num);
+      
+      zlib_stream.next_in = src_data + src_index;
+      
+      do {
+	zlib_stream.avail_out = ZLIB_CHUNK;
+	zlib_stream.next_out = out_buffer;
+	zlib_result = inflate(&zlib_stream, zlib_flush_command);
+	assert(zlib_result != Z_STREAM_ERROR);
+	switch (zlib_result) {
+	case Z_NEED_DICT:
+	case Z_DATA_ERROR:
+	case Z_MEM_ERROR:
+	  f2__free(to_ptr(out_buffer));
+	  inflateEnd(&zlib_stream);
+	  return boolean__true;
+	}
+	byte_num = ZLIB_CHUNK - zlib_stream.avail_out;
+	if (dest_data) {
+	  memcpy(dest_data + dest_index, out_buffer, byte_num);
+	}
+	dest_index += byte_num;
+      } while (zlib_stream.avail_out == 0);
+      
+      assert(zlib_stream.avail_in == 0); // all input used
+      
+      if (available_input > ZLIB_CHUNK) {
+	available_input -= ZLIB_CHUNK;
+	src_index       += ZLIB_CHUNK;
+      } else {
+	available_input = 0;
       }
-      dest_index += byte_num;
-    } while (zlib_stream.avail_out == 0);
+    }
+    
+    f2__free(to_ptr(out_buffer));
+    
   }
   
-  f2__free(to_ptr(out_buffer));
-  
-  // clean up and return
   inflateEnd(&zlib_stream);
   *dest_length = dest_index;
   if (zlib_result == Z_STREAM_END) {

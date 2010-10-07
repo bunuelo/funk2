@@ -23,12 +23,63 @@
 'gotta check if things work...'
 'so how does resource access the mind?  correct?
 
-[have [get [get [get [get isis_world agent_mind `Ralph] layer `reactive] agency `physical] resource `funk_user] user_activate `center_body_on `[loaf+158503436]]
+[have [get [get [get [get isis_world agent_mind `Ralph] layer `reactive] agency `physical] resource `funk_user] user_activate 
+`open_fridge `[]]
 [get [get isis_world agent_mind `Ralph] sense]
 
-loaf+158503436
-yay mind activate works'
+ realloc: Cannot allocate memory
 
+
+loaf+158503436
+yay mind activate works
+fix error in sensing/moving --delay
+ realloc: Cannot allocate memory when run simulator too fast 80 millisecs
+looping = agent doesnt move
+search_for????
+can open fridge except can see fridge!!! relaly slowly lol
+returns random bug(type1) at beginning - does not affect performance tho
+tricky to look for stuff---currently stored in current object
+opening fridge works all the way till
+ object-slot-type_funk
+ bug_type  nil_type_does_not_have_funktion
+ slot_name lookup
+
+=((
+
+
+focus on: open fridge debug
+looping
+'
+
+[defunk loop []
+  [let [[i 10]]
+    [while [> i 0]
+      [test-step]
+      [sleep 5]
+      [= i [- i 1]]]]]
+[defunk play []
+  [globalize switch t]
+  [while switch
+    [test-mini]
+    [sleep 2]]]
+
+[defunk pause []
+  [globalize switch nil]]
+  
+
+[globalize arm_length 3]
+
+[defunk has_thing [thing lst]
+  [let [[the_thing nil]]
+    [mapc [funk [slot]
+		[if [string-contains [get slot as-string] [get thing as-string]]
+		    [= the_thing slot]
+		  nil]]
+	  lst]
+    the_thing]]
+
+
+[pause]
 
 [deframe funk_user  [resource] [[user_activate_mutex    [new traced_mutex]]
 				[user_activate_resource nil]
@@ -165,8 +216,6 @@ yay mind activate works'
 			      [name  [get body name]]
 			      ] 
 			  [have this-resource think_to_self 'Picking up with right hand is starting']
-			  [while [null [get mind senes]] 
-			    [millisleep 100]]
 			  [if [get [get mind objects]]
 			      [if [have [get mind objects] lookup target]
 				  [if [> arm_length [have [have [get mind objects] lookup target]lookup  `distance]]
@@ -196,8 +245,7 @@ yay mind activate works'
 			      [name  [get body name]]
 			      ] 
 			  [have this-resource think_to_self 'Picking up with left hand is starting']
-			  [while [null [get mind senes]] 
-			    [millisleep 100]]
+			  
 			  [if [get [get mind objects]]
 			      [if [have [get mind objects] lookup target]
 				  [if [> arm_length [have [have [get mind objects] lookup target]lookup  `distance]]
@@ -223,17 +271,21 @@ yay mind activate works'
   [new []
        [construct resource [type this]
 		  [funk []
-			[format stdout '\n  open_fridge']
+			
 			[let* [[body [get this body]]
 			       [world [get body physical_world]]
 			       [mind  [get body mind]] 
 			       [name  [get body name]]
 			       ]
-			  [while [null [get mind sense]] 
-			    [millisleep 100]]
+			  [print 'now']
+			  [mind-wait_to_activate mind reactive physical look_for `fridge]
+			  [print 'now1']
+			  [globalize fridge my_current_object]
+			  [print 'ha']
+			  
 			  [if [get mind objects]
 			      [if [have [get mind objects] lookup fridge]
-				  [if [> arm_length [have [get mind objects] lookup `distance]]
+				  [if [> arm_length [have [have [get mind objects] lookup fridge] lookup  `distance]]
 				      [have world open_fridge name]
 				    [prog 
 				     [mind-wait_to_activate mind reactive physical walk_directly_towards fridge]
@@ -244,7 +296,7 @@ yay mind activate works'
 			    [prog 
 			     [mind-wait_to_activate mind reactive physical walk_directly_towards fridge]
 			     [have world open_fridge name]]]
-			  [get mind sense]]]]
+			  ]]]
 		  
 		  
 		  nil]]
@@ -274,8 +326,8 @@ yay mind activate works'
 			       [name  [get body name]]
 			       ]
 			  [have this-resource think_to_self 'center_body_on_object activated']
-			  [labels [[turn_left_and_right []
-							
+			  [labels[[ turn_left_and_right []
+							[print 'here']
 							[if [get mind objects]
 							    [if [have [get mind objects] lookup desired_object] 
 								[let [[x_pos [have [have [get mind objects] lookup desired_object] lookup `x_pos]]]
@@ -296,8 +348,8 @@ yay mind activate works'
 								    [turn_left_and_right]]]
 							  [prog [have this-resource think_to_self   'my_object not in view']
 								[mind-wait_to_activate mind reactive physical search_for desired_object]
-								[turn_left_and_right]]]]
-				   [turn_left_and_right]]]]]]
+								[turn_left_and_right]]]]]
+			  [turn_left_and_right]]]]]
        
        
        
@@ -344,9 +396,7 @@ yay mind activate works'
 			    [have this-resource think_to_self ' walk_directly_towards activated!']
 			    [while  [null achieved]
 			      [have this-resource think_to_self ' not achieved']
-			      [while [null [get mind sense]]
-				[have this-resource think_to_self ' sense not ready yet, sleep']
-				[millisleep 100]]
+			      
 			      [if [get mind objects]
 				  [if [have [get mind objects] lookup desired_object]
 				      [if [< arm_length [have [have [get mind objects] lookup desired_object] lookup `distance]]
@@ -373,6 +423,39 @@ yay mind activate works'
 			    [have this-resource think_to_self 'finished walking towards']]]]]
        
        nil]]
+
+[deframe look_for [resource] []
+  [new []
+       [construct resource [type this]
+		  [funk [desired_object]
+			[let* [[body [get this body]]
+			       [world [get body physical_world]] 
+			       [mind  [get body mind]]
+			       [name  [get body name]]
+			       ]
+			  [let [[patience 30]]
+			    [have this-resource think_to_self 'search_for activated']
+			    [while 
+				[> patience 0]
+			      [have this-resource think_to_self 'I still have patience']
+			      [while [null [get mind sense]] 
+				[millisleep 100]]
+			      [if [null [get mind objects]]
+				  [prog 
+				   [have this-resource think_to_self  'no objects in view']
+				   [mind-wait_to_activate mind reactive physical turn_left 1]
+				   ]
+				[if [null [has_thing desired_object [get [get mind objects] slots]]]
+				    [prog [have this-resource think_to_self 'i see these objects:' [get mind objects]]
+					  [mind-wait_to_activate mind reactive physical turn_left 1]
+					  [print 'activated turn-left']
+					[= patience [- patience 1]]
+					]
+				  [prog [= patience 0]
+					[have this-resource think_to_self 'found' [has_thing desired_object [get [get mind objects] slots]]]
+					[globalize my_current_object [has_thing desired_object [get [get mind objects] slots]]] ]]]]
+			    [have this-resource think_to_self 'finished searching']]]]]
+		  nil]]
 
 [deframe search_for [resource] []
   [new []
@@ -472,6 +555,7 @@ yay mind activate works'
        [have this add_resource [new search_for]]
        [have this add_resource [new avoid_obstacle]]
        [have this add_resource [new funk_user]] 
+       [have this add_resource [new look_for]]
 	
 	this]]
 

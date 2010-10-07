@@ -315,6 +315,10 @@
        [dictionary-add_word this verb_word throws           [present third_person_singular transitive transitive_two]]
        [dictionary-add_word this verb_word threw            [en past plural first_person_singular third_person_singular transitive transitive_two]]
        [dictionary-add_word this verb_word throwing         [ing transitive transitive_two]]
+       [dictionary-add_word this verb_word arrive           [infinitive first_person_singular]]
+       [dictionary-add_word this verb_word arrives          [present third_person_singular]]
+       [dictionary-add_word this verb_word arrived          [en past plural first_person_singular third_person_singular]]
+       [dictionary-add_word this verb_word arriving         [ing]]
        
        [dictionary-add_word this particle_word up []]
        

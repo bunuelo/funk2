@@ -262,6 +262,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_opengl.c \
   c/f2_package.c \
   c/f2_packet.c \
+  c/f2_partial_order.c \
   c/f2_peer_command_server.c \
   c/f2_perception_lattice.c \
   c/f2_physical_objects.c \

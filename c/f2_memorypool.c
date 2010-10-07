@@ -106,10 +106,10 @@ void funk2_memorypool__memory_test(funk2_memorypool_t* this) {
       {
 	s64 used_memory_num = funk2_memorypool__total_used_memory(this);
 	s64 free_memory_num = funk2_memorypool__total_free_memory(this);
-	printf("\ntotal_used_memory                       = %d", (s64)used_memory_num);
-	printf("\ntotal_free_memory                       = %d", (s64)free_memory_num);
-	printf("\ntotal_used_memory + total_free_memory() = %d", (s64)free_memory_num + used_memory_num);
-	printf("\nthis->total_global_memory               = %d", (s64)this->total_global_memory);
+	printf("\ntotal_used_memory                       = " s64__fstr, (s64)used_memory_num);
+	printf("\ntotal_free_memory                       = " s64__fstr, (s64)free_memory_num);
+	printf("\ntotal_used_memory + total_free_memory() = " s64__fstr, (s64)free_memory_num + used_memory_num);
+	printf("\nthis->total_global_memory               = " s64__fstr, (s64)this->total_global_memory);
 	fflush(stdout);
       });
   funk2_memorypool__memory_test__dynamic_memory(this);

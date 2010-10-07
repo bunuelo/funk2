@@ -78,9 +78,11 @@ boolean_t zlib__deflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_l
       }
       dest_index += byte_num;
     } while (zlib_stream.avail_out == 0);
-    assert(zlib_stream.avail_in == 0); // all input used
     
     status("zlib_stream.avail_in = " u64__fstr, (u64)(zlib_stream.avail_in));
+    
+    assert(zlib_stream.avail_in == 0); // all input used
+    
     
     if (available_input > ZLIB_CHUNK) {
       available_input -= ZLIB_CHUNK;

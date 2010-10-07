@@ -799,21 +799,8 @@
 	[= parses [append verb_group_parses parses]]]]
     parses]]
 
-[deftypefunk english_dictionary execute parse_sequence_as_clause-verb_objects-after_direct_object [sequence parse_tree]
+[deftypefunk english_dictionary execute parse_sequence_as_clause-verb_objects-after_second_particle_try [sequence parse_tree]
   [let [[parses nil]]
-    [parse_format '\n    parse_sequence_as_clause-verb_objects-after_direct_object parsing ' sequence '.']
-    [= parses [cons [frame parse_tree    parse_tree
-			   rest_sequence sequence]
-		    parses]]
-    
-    [if [get parse_tree containing_type_child_of_type_child_of_type_property `clause `verb_group `verb_word `takes_particle]
-	[let [[try_particle_parses [have this parse_sequence_as_clause-matching_verb_particle sequence parse_tree]]]
-	  [mapc [funk [try_particle_parse]
-		      [let [[try_particle_parse_tree    [have try_particle_parse lookup `parse_tree]]
-			    [try_particle_rest_sequence [have try_particle_parse lookup `rest_sequence]]]
-			[= parses [append try_particle_parses parses]]]]
-		try_particle_parses]]]
-    
     [let [[verb_word [get parse_tree containing_type_child_of_type_child_of_type `clause `verb_group `verb_word]]]
       [if [get verb_word transitive_two]
 	  [let [[noun_group_initial_parse_tree [get parse_tree new_copy]]
@@ -838,6 +825,31 @@
 			      ]]]
 		    direct_object_two_parses]
 	      ]]]]
+    parses]]
+
+[deftypefunk english_dictionary execute parse_sequence_as_clause-verb_objects-after_direct_object [sequence parse_tree]
+  [let [[parses nil]]
+    [parse_format '\n    parse_sequence_as_clause-verb_objects-after_direct_object parsing ' sequence '.']
+    [= parses [cons [frame parse_tree    parse_tree
+			   rest_sequence sequence]
+		    parses]]
+    
+    [if [get parse_tree containing_type_child_of_type_child_of_type_property `clause `verb_group `verb_word `takes_particle]
+	[let [[try_particle_parses [have this parse_sequence_as_clause-matching_verb_particle sequence parse_tree]]]
+	  [mapc [funk [try_particle_parse]
+		      [let [[try_particle_parse_tree    [have try_particle_parse lookup `parse_tree]]
+			    [try_particle_rest_sequence [have try_particle_parse lookup `rest_sequence]]]
+			[= parses [append try_particle_parses parses]]
+			
+			[let [[second_particle_try_parses [have this parse_sequence_as_clause-verb_objects-after_second_particle_try sequence parse_tree]]]
+			  [= parses [append second_particle_try_parses parses]]]
+			
+			]]
+		try_particle_parses]]]
+    
+    [let [[second_particle_try_parses [have this parse_sequence_as_clause-verb_objects-after_second_particle_try sequence parse_tree]]]
+      [= parses [append second_particle_try_parses parses]]]
+    
     parses]]
 
 [deftypefunk english_dictionary execute parse_sequence_as_clause-verb_objects-after_first_particle_try [sequence parse_tree]

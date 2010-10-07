@@ -18,9 +18,9 @@
  rights to redistribute these changes.'
 
 
-[deframe reactive_speech_agency [agency] []
+[deframe reactive_language_agency [agency] []
   [new []
-       [construct agency `speech]
+       [construct agency `language]
        
        [have this add_resource [resource say [string]
 					 [have this-resource think_to_self 'I am saying, "' string '"']

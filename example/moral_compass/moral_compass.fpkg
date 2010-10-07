@@ -36,7 +36,7 @@
   :packages [mind
 	     reactive_physical_agency
 	     reactive_sensory_agency
-	     reactive_speech_agency]
+	     reactive_language_agency]
    :sources ['reactive_layer.fu2']]
 
 [defpackage reactive_physical_agency
@@ -47,9 +47,9 @@
   :packages [mind]
    :sources ['reactive_sensory_agency.fu2']]
 
-[defpackage reactive_speech_agency
+[defpackage reactive_language_agency
   :packages [mind]
-   :sources ['reactive_speech_agency.fu2']]
+   :sources ['reactive_language_agency.fu2']]
 
 
 'deliberative_layer'

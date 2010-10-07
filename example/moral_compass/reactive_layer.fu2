@@ -22,14 +22,14 @@
 
 [deframe reactive_layer [mental_layer] [sensory_agency
 					physical_agency
-					speech_agency]
+					language_agency]
   [new []
        [construct mental_layer 0 `reactive]
        [set this sensory_agency  [new reactive_sensory_agency]]
        [set this physical_agency [new reactive_physical_agency]]
-       [set this speech_agency   [new reactive_speech_agency]]
+       [set this language_agency [new reactive_language_agency]]
        [have this add_agency [get this sensory_agency]]
        [have this add_agency [get this physical_agency]]
-       [have this add_agency [get this speech_agency]]
+       [have this add_agency [get this language_agency]]
        this]]
 

@@ -45,7 +45,9 @@ f2ptr f2__partial_order_node__new(f2ptr cause, f2ptr label);
 f2ptr f2partial_order_node__primobject_type__new_aux(f2ptr cause);
 
 
+// **
 
+void f2__partial_order__initialize();
 
 #endif // F2__PARTIAL_ORDER__H
 

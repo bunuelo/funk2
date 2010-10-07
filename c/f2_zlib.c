@@ -65,9 +65,9 @@ boolean_t zlib__deflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_l
       zlib_flush_command = Z_FINISH;
     }
     
-    status("available_input = " u64__fstr, available_input);
-    status("src_index       = " u64__fstr, src_index);
-    status("dest_index      = " u64__fstr, dest_index);
+    //status("available_input = " u64__fstr, available_input);
+    //status("src_index       = " u64__fstr, src_index);
+    //status("dest_index      = " u64__fstr, dest_index);
     
     zlib_stream.next_in = src_data + src_index;
     
@@ -83,7 +83,7 @@ boolean_t zlib__deflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_l
       dest_index += byte_num;
     } while (zlib_stream.avail_out == 0);
     
-    status("zlib_stream.avail_in = " u64__fstr, (u64)(zlib_stream.avail_in));
+    //status("zlib_stream.avail_in = " u64__fstr, (u64)(zlib_stream.avail_in));
     
     assert(zlib_stream.avail_in == 0); // all input used
     

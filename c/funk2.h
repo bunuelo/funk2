@@ -74,6 +74,7 @@
 #include "f2_object_lattice.h"
 #include "f2_opengl.h"
 #include "f2_packet.h"
+#include "f2_partial_order.h"
 #include "f2_peer_command_server.h"
 #include "f2_perception_lattice.h"
 #include "f2_physical_objects.h"

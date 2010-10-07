@@ -20,7 +20,6 @@
 // 
 
 #include "funk2.h"
-#include <stdio.h>
 
 // graph_node
 

@@ -49,6 +49,7 @@
 #include "f2_terminal_print.h"
 #include "f2_knowledge.h"
 #include "f2_natural_language.h"
+#include "f2_partial_order.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;
@@ -149,6 +150,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__traced_mutex__slot_t                     primobject_type_traced_mutex;
   funk2_object_type__fiber_stack_trace__slot_t                primobject_type_fiber_stack_trace;
   funk2_object_type__fiber_stack_trace_block__slot_t          primobject_type_fiber_stack_trace_block;
+  funk2_object_type__partial_order_node__slot_t               primobject_type_partial_order_node;
   // frame objects
   funk2_object_type__terminal_print_frame__slot_t             primobject_type_terminal_print_frame;
   funk2_object_type__knowledge__slot_t                        primobject_type_knowledge;

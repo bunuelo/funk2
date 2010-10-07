@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2008 Bo Morgan.
+// Copyright (c) 2007-2010 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -100,16 +100,16 @@ void funk2_memorypool__memory_test(funk2_memorypool_t* this) {
   status("  pool.total_free_memory                    = " f2size_t__fstr, this->total_free_memory);
   status("  funk2_memorypool__total_free_memory(this) = " f2size_t__fstr, funk2_memorypool__total_free_memory(this));
   release__assert(funk2_memorypool__total_free_memory(this) == this->total_free_memory, nil, "funk2_memorypool__memory_test (funk2_memorypool__total_free_memory(this) == this->total_free_memory) failure.");
-  release__assert_and_on_failure((int)(funk2_memorypool__total_used_memory(this) + funk2_memorypool__total_free_memory(this)) == (int)this->total_global_memory,
+  release__assert_and_on_failure((s64)(funk2_memorypool__total_used_memory(this) + funk2_memorypool__total_free_memory(this)) == (s64)this->total_global_memory,
 				 nil,
 				 "funk2_memorypool__memory_test (funk2_memorypool__total_used_memory(this) + funk2_memorypool__total_free_memory(this) != this->total_global_memory) failure.",
       {
-	int used_memory_num = funk2_memorypool__total_used_memory(this);
-	int free_memory_num = funk2_memorypool__total_free_memory(this);
-	printf("\ntotal_used_memory                       = %d", (int)used_memory_num);
-	printf("\ntotal_free_memory                       = %d", (int)free_memory_num);
-	printf("\ntotal_used_memory + total_free_memory() = %d", (int)free_memory_num + used_memory_num);
-	printf("\nthis->total_global_memory               = %d", (int)this->total_global_memory);
+	s64 used_memory_num = funk2_memorypool__total_used_memory(this);
+	s64 free_memory_num = funk2_memorypool__total_free_memory(this);
+	printf("\ntotal_used_memory                       = %d", (s64)used_memory_num);
+	printf("\ntotal_free_memory                       = %d", (s64)free_memory_num);
+	printf("\ntotal_used_memory + total_free_memory() = %d", (s64)free_memory_num + used_memory_num);
+	printf("\nthis->total_global_memory               = %d", (s64)this->total_global_memory);
 	fflush(stdout);
       });
   funk2_memorypool__memory_test__dynamic_memory(this);
@@ -431,7 +431,7 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     f2size_t size_i;
     
     safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
-    int compressed_length = size_i;
+    s64 compressed_length = size_i;
     
     safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
     this->total_global_memory = size_i;

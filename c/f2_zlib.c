@@ -21,14 +21,14 @@
 
 #include "funk2.h"
 
-#define ZLIB_CHUNK             ((int)(32 * 1024))
+#define ZLIB_CHUNK             ((s64)(32 * 1024))
 #define ZLIB_COMPRESSION_LEVEL 2
 
 // *dest_length returns length of src_data after compression.
 // dest_data can be NULL.
 boolean_t zlib__deflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_length) {
-  int      zlib_result;
-  int      byte_num;
+  s64      zlib_result;
+  u64      byte_num;
   z_stream zlib_stream;
   u8       out_buffer[ZLIB_CHUNK];
   u64      dest_index = 0;
@@ -62,7 +62,7 @@ boolean_t zlib__deflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_l
   assert(zlib_result == Z_STREAM_END);        // stream will be complete
   
   // clean up and return
-  (void)deflateEnd(&zlib_stream);
+  deflateEnd(&zlib_stream);
   
   *dest_length = dest_index;
   return boolean__false;
@@ -102,11 +102,11 @@ f2ptr f2__string__deflate(f2ptr cause, f2ptr this) {
 def_pcfunk1(string__deflate, this, return f2__string__deflate(this_cause, this));
 
 boolean_t zlib__inflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_length) {
-  int           zlib_result;
-  unsigned int  byte_num;
-  z_stream      zlib_stream;
-  unsigned char out_buffer[ZLIB_CHUNK];
-  u64           dest_index = 0;
+  s64      zlib_result;
+  u64      byte_num;
+  z_stream zlib_stream;
+  u8       out_buffer[ZLIB_CHUNK];
+  u64      dest_index = 0;
   
   // allocate inflate state
   zlib_stream.zalloc   = Z_NULL;
@@ -134,7 +134,7 @@ boolean_t zlib__inflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_l
       case Z_NEED_DICT:
       case Z_DATA_ERROR:
       case Z_MEM_ERROR:
-	(void)inflateEnd(&zlib_stream);
+	inflateEnd(&zlib_stream);
 	return boolean__true;
       }
       byte_num = ZLIB_CHUNK - zlib_stream.avail_out;
@@ -146,7 +146,7 @@ boolean_t zlib__inflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_l
   }
   
   // clean up and return
-  (void)inflateEnd(&zlib_stream);
+  inflateEnd(&zlib_stream);
   *dest_length = dest_index;
   if (zlib_result == Z_STREAM_END) {
     return boolean__false; // success

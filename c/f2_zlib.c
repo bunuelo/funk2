@@ -21,7 +21,7 @@
 
 #include "funk2.h"
 
-#define ZLIB_CHUNK             ((s64)(32 * 1024))
+#define ZLIB_CHUNK             ((s64)(1024 * 1024))
 #define ZLIB_COMPRESSION_LEVEL 2
 
 // *dest_length returns length of src_data after compression.
@@ -30,7 +30,7 @@ boolean_t zlib__deflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_l
   s64      zlib_result;
   u64      byte_num;
   z_stream zlib_stream;
-  u8       out_buffer[ZLIB_CHUNK];
+  u8*      out_buffer;
   u64      dest_index = 0;
   
   // allocate deflate state
@@ -41,6 +41,8 @@ boolean_t zlib__deflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_l
   if (zlib_result != Z_OK) {
     return boolean__true;
   }
+  
+  out_buffer = (u8*)from_ptr(f2__malloc(ZLIB_CHUNK));
   
   zlib_stream.avail_in = src_length;
   zlib_stream.next_in  = src_data;
@@ -63,6 +65,8 @@ boolean_t zlib__deflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_l
   
   // clean up and return
   deflateEnd(&zlib_stream);
+  
+  f2__free(to_ptr(out_buffer));
   
   *dest_length = dest_index;
   return boolean__false;
@@ -105,7 +109,7 @@ boolean_t zlib__inflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_l
   s64      zlib_result;
   u64      byte_num;
   z_stream zlib_stream;
-  u8       out_buffer[ZLIB_CHUNK];
+  u8*      out_buffer;
   u64      dest_index = 0;
   
   // allocate inflate state
@@ -118,6 +122,8 @@ boolean_t zlib__inflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_l
   if (zlib_result != Z_OK) {
     return boolean__true;
   }
+  
+  out_buffer = (u8*)from_ptr(f2__malloc(ZLIB_CHUNK));
   
   //zlib_stream.avail_in = fread(in_buffer, 1, ZLIB_CHUNK, source);
   zlib_stream.avail_in = src_length;
@@ -134,6 +140,7 @@ boolean_t zlib__inflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_l
       case Z_NEED_DICT:
       case Z_DATA_ERROR:
       case Z_MEM_ERROR:
+	f2__free(to_ptr(out_buffer));
 	inflateEnd(&zlib_stream);
 	return boolean__true;
       }
@@ -144,6 +151,8 @@ boolean_t zlib__inflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_l
       dest_index += byte_num;
     } while (zlib_stream.avail_out == 0);
   }
+  
+  f2__free(to_ptr(out_buffer));
   
   // clean up and return
   inflateEnd(&zlib_stream);

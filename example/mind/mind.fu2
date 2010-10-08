@@ -98,7 +98,7 @@
 
 [deftypefunk mind execute activate [layer_name agency_name resource_name :rest args]
   [let [[layer_frame [get this layer_frame]]]
-    [let [[layer [have layer_frame lookup layer_name]]]
+    [let [[layer [get this layer layer_name]]]
       [have-apply layer activate `[,agency_name ,resource_name @args]]]]]
 
 [defmetro mind-activate [mind layer_name agency_name resource_name :rest args]
@@ -106,7 +106,7 @@
 
 [deftypefunk mind execute wait_to_activate [layer_name agency_name resource_name :rest args]
   [let [[layer_frame [get this layer_frame]]]
-    [let [[layer [have layer_frame lookup layer_name]]]
+    [let [[layer [get this layer layer_name]]]
       [have-apply layer wait_to_activate `[,agency_name ,resource_name @args]]]]]
 
 [defmetro mind-wait_to_activate [mind layer_name agency_name resource_name :rest args]

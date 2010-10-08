@@ -60,11 +60,11 @@
     [have-apply agency call [cons resource_name args]]]]
 
 [deftypefunk mental_layer execute activate [agency_name resource_name :rest args]
-  [let [[agency [have agency_frame lookup agency_name]]]
+  [let [[agency [get this agency agency_name]]]
     [have-apply agency activate [cons resource_name args]]]]
 
 [deftypefunk mental_layer execute wait_to_activate [agency_name resource_name :rest args]
-  [let [[agency [have agency_frame lookup agency_name]]]
+  [let [[agency [get this agency agency_name]]]
     [have-apply agency wait_to_activate [cons resource_name args]]]]
 
 [deftypefunk mental_layer get agency_resource_count [agency_name]

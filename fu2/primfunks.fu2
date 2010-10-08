@@ -284,3 +284,5 @@
 
 [globalize-funk gensym                                      &primfunk:gensym]
 
+[globalize-funk memory-test                                 &primfunk:memory__test]
+

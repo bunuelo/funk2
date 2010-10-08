@@ -1604,6 +1604,17 @@ f2ptr f2__string__read(f2ptr cause, f2ptr this) {
   return raw__string__read(cause, this);
 }
 
+void raw__memory__test(f2ptr cause) {
+  funk2_memory__memory_test(&(__funk2.memory));
+}
+
+f2ptr f2__memory__test(f2ptr cause) {
+  funk2_memory__memory_test(&(__funk2.memory));
+  return nil;
+}
+def_pcfunk0(memory__test, return f2__memory__test(this_cause));
+
+
 // **
 
 void f2__primcfunks__reinitialize_globalvars() {
@@ -1905,6 +1916,8 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init__1(eq_hash_value, exp, "");
   f2__funktional_primcfunk__init__2(equals, x, y, "");
   //f2__funktional_primcfunk__init__1(is_funktional, exp, "");
+  
+  f2__primcfunk__init__0(memory__test, "Asserts that memory tests pass, otherwise logs debugging information regarding the bug and stops Funk2 with fatal error.");
   
 }
 

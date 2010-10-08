@@ -294,7 +294,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
     ptype_block_t* ptype_block = (ptype_block_t*)block;
     {
       f2ptr             cause       = ptype_block->cause;
-      f2ptr               cause_ptr   = __f2ptr_to_ptr(cause);
+      f2ptr             cause_ptr   = __f2ptr_to_ptr(cause);
       funk2_memblock_t* cause_block = (funk2_memblock_t*)from_ptr(cause_ptr);
       funk2_memblock__decrement_reference_count(cause_block, cause, &(__funk2.garbage_collector));
     }

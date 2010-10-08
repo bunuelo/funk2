@@ -48,6 +48,7 @@
 [globalize-funk gtk-entry-get_text                    &primfunk:gtk__entry__get_text]
 [globalize-funk gtk-scrolled_window-new               &primfunk:gtk__scrolled_window__new]
 [globalize-funk gtk-scrolled_window-add_with_viewport &primfunk:gtk__scrolled_window__add_with_viewport]
+[globalize-funk gtk-scrolled_window-set_policy        &primfunk:gtk__scrolled_window__set_policy]
 [globalize-funk gtk-text_view-new                     &primfunk:gtk__text_view__new]
 [globalize-funk gtk-text_view-get_buffer              &primfunk:gtk__text_view__get_buffer]
 [globalize-funk gtk-container-add                     &primfunk:gtk__container__add]

@@ -620,6 +620,14 @@ void funk2_gtk__scrolled_window__add_with_viewport(funk2_gtk_t* this, GtkWidget*
   }
 }
 
+void funk2_gtk__scrolled_window__set_policy(funk2_gtk_t* this, GtkWidget* scrolled_window, GtkPolicyType hscrollbar_policy, GtkPolicyType vscrollbar_policy) {
+  {
+    gdk_threads_enter();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window), hscrollbar_policy, vscrollbar_policy);
+    gdk_threads_leave();
+  }
+}
+
 
 // text_view
 
@@ -1317,9 +1325,54 @@ f2ptr raw__gtk__scrolled_window__add_with_viewport(f2ptr cause, f2ptr scrolled_w
 }
 
 f2ptr f2__gtk__scrolled_window__add_with_viewport(f2ptr cause, f2ptr scrolled_window, f2ptr child) {
+  if ((! raw__gtk_widget__is_type(cause, scrolled_window)) ||
+      (! raw__gtk_widget__is_type(cause, child))) {
+    return f2larva__new(cause, 1, nil);
+  }
   return raw__gtk__scrolled_window__add_with_viewport(cause, scrolled_window, child);
 }
 def_pcfunk2(gtk__scrolled_window__add_with_viewport, scrolled_window, child, return f2__gtk__scrolled_window__add_with_viewport(this_cause, scrolled_window, child));
+
+
+boolean_t raw__gtk_policy_type__is_type(f2ptr cause, f2ptr this) {
+  return (raw__symbol__is_type(cause, this) &&
+	  (raw__eq(cause, this, new__symbol(cause, "always"))    ||
+	   raw__eq(cause, this, new__symbol(cause, "automatic")) ||
+	   raw__eq(cause, this, new__symbol(cause, "never"))));
+}
+
+GtkPolicyType raw__gtk_policy_type__as__GtkPolicyType(f2ptr cause, f2ptr this) {
+  if (raw__eq(cause, this, new__symbol(cause, "always"))) {
+    return GTK_POLICY_ALWAYS;
+  } else if (raw__eq(cause, this, new__symbol(cause, "automatic"))) {
+    return GTK_POLICY_AUTOMATIC;
+  } else if (raw__eq(cause, this, new__symbol(cause, "never"))) {
+    return GTK_POLICY_NEVER;
+  }
+  error(nil, "raw__gtk_policy_type__as__GtkPolicyType ERROR: this is not gtk_policy_type.");
+}
+
+f2ptr raw__gtk__scrolled_window__set_policy(f2ptr cause, f2ptr scrolled_window, f2ptr hscrollbar_policy, f2ptr vscrollbar_policy) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkWidget*    gtk_scrolled_window   = raw__gtk_widget__as__GtkWidget(cause, scrolled_window);
+  GtkPolicyType gtk_hscrollbar_policy = raw__gtk_policy_type__as__GtkPolicyType(cause, hscrollbar_policy);
+  GtkPolicyType gtk_vscrollbar_policy = raw__gtk_policy_type__as__GtkPolicyType(cause, vscrollbar_policy);
+  funk2_gtk__scrolled_window__set_policy(&(__funk2.gtk), gtk_scrolled_window, gtk_hscrollbar_policy, gtk_vscrollbar_policy);
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__scrolled_window__set_policy(f2ptr cause, f2ptr scrolled_window, f2ptr hscrollbar_policy, f2ptr vscrollbar_policy) {
+  if ((! raw__gtk_widget__is_type(cause, scrolled_window)) ||
+      (! raw__gtk_policy_type__is_type(cause, hscrollbar_policy)) ||
+      (! raw__gtk_policy_type__is_type(cause, vscrollbar_policy))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__scrolled_window__set_policy(cause, scrolled_window, hscrollbar_policy, vscrollbar_policy);
+}
+def_pcfunk3(gtk__scrolled_window__set_policy, scrolled_window, hscrollbar_policy, vscrollbar_policy, return f2__gtk__scrolled_window__set_policy(this_cause, scrolled_window, hscrollbar_policy, vscrollbar_policy));
 
 
 f2ptr raw__gtk__text_view__new(f2ptr cause) {
@@ -2746,50 +2799,51 @@ void f2__gtk__initialize() {
   init_frame_object__1_slot(gtk_progress_bar, pointer);
   
 
-  f2__primcfunk__init__0(gtk__is_supported,                                                                            "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
+  f2__primcfunk__init__0(gtk__is_supported,                                                                              "Returns true if GIMP ToolKit (GTK) support has been compiled into this version of Funk2.");
   
   // expose_event
   
-  f2__primcfunk__init__3(gtk__expose_event__signal_connect,       widget, funk, args,                                  "Connects an expose_event signal handler to a GtkWidget.");
+  f2__primcfunk__init__3(gtk__expose_event__signal_connect,       widget, funk, args,                                    "Connects an expose_event signal handler to a GtkWidget.");
   
   // widget
   
-  f2__primcfunk__init__1(gtk__widget__show_all,                   widget,                                              "Shows the widget and all children.");
-  f2__primcfunk__init__1(gtk__widget__hide_all,                   widget,                                              "Hides the widget and all children.");
-  f2__primcfunk__init__3(gtk__widget__set_size_request,           widget, width, height,                               "Requests that the widget be a specific size.");
-  f2__primcfunk__init__5(gtk__widget__queue_draw_area,            widget, x, y, width, height,                         "Requests that a specific rectangle of the widget be redrawn.");
-  f2__primcfunk__init__1(gtk__widget__get_visible,                widget,                                              "Returns whether or not a window is visible, which does not mean the window is viewable, which wouold require all parents to also be visible.");
-  f2__primcfunk__init__1(gtk__widget__destroy,                    widget,                                              "Destroys the widget.");
-  f2__primcfunk__init__1(gtk__widget__connect_hide_on_delete,     widget,                                              "Add a delete-event callback handler to the widget that hides the window rather than destroying the window.");
-  f2__primcfunk__init__3(gtk__widget__modify_fg,                  widget, state, color,                                "Sets the foreground color of a widget.  State must be one of the following symbolic values: normal, active, prelight, selected, or insensitive.  Color must be a GdkColor object (see gdk-color-new).");
-  f2__primcfunk__init__3(gtk__widget__modify_bg,                  widget, state, color,                                "Sets the background color of a widget.  State must be one of the following symbolic values: normal, active, prelight, selected, or insensitive.  Color must be a GdkColor object (see gdk-color-new).");
+  f2__primcfunk__init__1(gtk__widget__show_all,                   widget,                                                "Shows the widget and all children.");
+  f2__primcfunk__init__1(gtk__widget__hide_all,                   widget,                                                "Hides the widget and all children.");
+  f2__primcfunk__init__3(gtk__widget__set_size_request,           widget, width, height,                                 "Requests that the widget be a specific size.");
+  f2__primcfunk__init__5(gtk__widget__queue_draw_area,            widget, x, y, width, height,                           "Requests that a specific rectangle of the widget be redrawn.");
+  f2__primcfunk__init__1(gtk__widget__get_visible,                widget,                                                "Returns whether or not a window is visible, which does not mean the window is viewable, which wouold require all parents to also be visible.");
+  f2__primcfunk__init__1(gtk__widget__destroy,                    widget,                                                "Destroys the widget.");
+  f2__primcfunk__init__1(gtk__widget__connect_hide_on_delete,     widget,                                                "Add a delete-event callback handler to the widget that hides the window rather than destroying the window.");
+  f2__primcfunk__init__3(gtk__widget__modify_fg,                  widget, state, color,                                  "Sets the foreground color of a widget.  State must be one of the following symbolic values: normal, active, prelight, selected, or insensitive.  Color must be a GdkColor object (see gdk-color-new).");
+  f2__primcfunk__init__3(gtk__widget__modify_bg,                  widget, state, color,                                  "Sets the background color of a widget.  State must be one of the following symbolic values: normal, active, prelight, selected, or insensitive.  Color must be a GdkColor object (see gdk-color-new).");
   // widget draw funks
-  f2__primcfunk__init__8(gtk__widget__draw_arc,                   widget, filled, x, y, width, height, angle1, angle2, "Draws an arc in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
-  f2__primcfunk__init__6(gtk__widget__draw_rectangle,             widget, filled, x, y, width, height,                 "Draws a rectangle in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
-  f2__primcfunk__init__0(gtk__window__new,                                                                             "Returns a new window widget.");
-  f2__primcfunk__init__2(gtk__window__set_title,                  window, title,                                       "Sets the title of this gtk_window.");
-  f2__primcfunk__init__3(gtk__window__set_default_size,           window, width, height,                               "Sets the default width and height of this gtk_window.");
+  f2__primcfunk__init__8(gtk__widget__draw_arc,                   widget, filled, x, y, width, height, angle1, angle2,   "Draws an arc in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
+  f2__primcfunk__init__6(gtk__widget__draw_rectangle,             widget, filled, x, y, width, height,                   "Draws a rectangle in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
+  f2__primcfunk__init__0(gtk__window__new,                                                                               "Returns a new window widget.");
+  f2__primcfunk__init__2(gtk__window__set_title,                  window, title,                                         "Sets the title of this gtk_window.");
+  f2__primcfunk__init__3(gtk__window__set_default_size,           window, width, height,                                 "Sets the default width and height of this gtk_window.");
   
-  f2__primcfunk__init__1(gtk__vbox__new,                          spacing,                                             "Returns a new vbox widget with spacing.");
-  f2__primcfunk__init__1(gtk__hbox__new,                          spacing,                                             "Returns a new hbox widget with spacing.");
-  f2__primcfunk__init__1(gtk__button__new_with_label,             label,                                               "Returns a new button widget with label.");
-  f2__primcfunk__init__0(gtk__entry__new,                                                                              "Returns a new entry widget.");
-  f2__primcfunk__init__1(gtk__entry__get_text,                    widget,                                              "Returns the text of an entry widget as a string.");
-  f2__primcfunk__init__0(gtk__scrolled_window__new,                                                                    "Returns a new scrolled_window widget.");
-  f2__primcfunk__init__2(gtk__scrolled_window__add_with_viewport, scrolled_window, child,                              "Adds a non-scrollable widget to a scroll window.");
-  f2__primcfunk__init__0(gtk__text_view__new,                                                                          "Returns a new text_view widget.");
-  f2__primcfunk__init__1(gtk__text_view__get_buffer,              text_view,                                           "Returns the buffer widget of a text_view widget.");
+  f2__primcfunk__init__1(gtk__vbox__new,                          spacing,                                               "Returns a new vbox widget with spacing.");
+  f2__primcfunk__init__1(gtk__hbox__new,                          spacing,                                               "Returns a new hbox widget with spacing.");
+  f2__primcfunk__init__1(gtk__button__new_with_label,             label,                                                 "Returns a new button widget with label.");
+  f2__primcfunk__init__0(gtk__entry__new,                                                                                "Returns a new entry widget.");
+  f2__primcfunk__init__1(gtk__entry__get_text,                    widget,                                                "Returns the text of an entry widget as a string.");
+  f2__primcfunk__init__0(gtk__scrolled_window__new,                                                                      "Returns a new scrolled_window widget.");
+  f2__primcfunk__init__2(gtk__scrolled_window__add_with_viewport, scrolled_window, child,                                "Adds a non-scrollable widget to a scroll window.");
+  f2__primcfunk__init__3(gtk__scrolled_window__set_policy,        scrolled_window, hscrollbar_policy, vscrollbar_policy, "Sets the policy for the vertical and horizontal scrollbars of a scrolled window.  Valid policies are (1) `always, (2) `automatic, and (3) `never.");
+  f2__primcfunk__init__0(gtk__text_view__new,                                                                            "Returns a new text_view widget.");
+  f2__primcfunk__init__1(gtk__text_view__get_buffer,              text_view,                                             "Returns the buffer widget of a text_view widget.");
   
-  f2__primcfunk__init__2(gtk__container__add,                     widget, add_widget,                                  "Adds a widget to a container.");
-  f2__primcfunk__init__2(gtk__container__remove,                  widget, remove_widget,                               "Removes a widget from a container.");
-  f2__primcfunk__init__5(gtk__box__pack_start,                    widget, child_widget, expand, fill, padding,         "Packs a child widget in a box.");
-  f2__primcfunk__init__4(gtk__signal_connect,                     widget, signal_name, funk, args,                     "Creates a callback for a widget (see gtk-pop_callback_event).");
-  f2__primcfunk__init__0(gtk__pop_callback_event,                                                                      "Returns the next waiting callback event, if one exists, nil otherwise.");
-  f2__primcfunk__init__1(gtk__text_buffer__get_start_iter,        text_buffer,                                         "Returns the starting text_iter of a text_buffer.");
-  f2__primcfunk__init__2(gtk__text_buffer__select_range,          text_buffer, range,                                  "Sets select range in this text_buffer.");
-  f2__primcfunk__init__1(gtk__text_buffer__get_text,              text_buffer,                                         "Gets the text as a string from a gtk text_buffer widget.");
-  f2__primcfunk__init__2(gtk__text_buffer__set_text,              text_buffer, text,                                   "Sets the text for a gtk text_buffer widget.");
-  f2__primcfunk__init__2(gtk__text_iter__forward_search,          text_iter, text,                                     "Returns a range composed of two text_iters that represent the successful search forward from the text_iter for a string.  Returns nil on failure to find the text.");
+  f2__primcfunk__init__2(gtk__container__add,                     widget, add_widget,                                    "Adds a widget to a container.");
+  f2__primcfunk__init__2(gtk__container__remove,                  widget, remove_widget,                                 "Removes a widget from a container.");
+  f2__primcfunk__init__5(gtk__box__pack_start,                    widget, child_widget, expand, fill, padding,           "Packs a child widget in a box.");
+  f2__primcfunk__init__4(gtk__signal_connect,                     widget, signal_name, funk, args,                       "Creates a callback for a widget (see gtk-pop_callback_event).");
+  f2__primcfunk__init__0(gtk__pop_callback_event,                                                                        "Returns the next waiting callback event, if one exists, nil otherwise.");
+  f2__primcfunk__init__1(gtk__text_buffer__get_start_iter,        text_buffer,                                           "Returns the starting text_iter of a text_buffer.");
+  f2__primcfunk__init__2(gtk__text_buffer__select_range,          text_buffer, range,                                    "Sets select range in this text_buffer.");
+  f2__primcfunk__init__1(gtk__text_buffer__get_text,              text_buffer,                                           "Gets the text as a string from a gtk text_buffer widget.");
+  f2__primcfunk__init__2(gtk__text_buffer__set_text,              text_buffer, text,                                     "Sets the text for a gtk text_buffer widget.");
+  f2__primcfunk__init__2(gtk__text_iter__forward_search,          text_iter, text,                                       "Returns a range composed of two text_iters that represent the successful search forward from the text_iter for a string.  Returns nil on failure to find the text.");
   
   // misc
   

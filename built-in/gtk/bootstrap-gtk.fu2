@@ -48,7 +48,8 @@
 [deftypefunk gtk_widget execute remove [that] [gtk-container-remove [get this widget] [get that widget]]]
 
 'GtkScrolledWindow'
-[deftypefunk gtk_widget execute add_with_viewport [that] [gtk-scrolled_window-add_with_viewport [get this widget] [get that widget]]]
+[deftypefunk gtk_widget execute add_with_viewport [that]                                     [gtk-scrolled_window-add_with_viewport [get this widget] [get that widget]]]
+[deftypefunk gtk_widget set     policy            [that vscrollbar_policy hscrollbar_policy] [gtk-scrolled_window-set_policy        [get this widget] vscrollbar_policy hscrollbar_policy]]
 
 'GtkPaned'
 [deftypefunk gtk_widget execute pack1    [child resize shrink] [gtk-paned-pack1        [get this widget] [get child widget] resize shrink]]

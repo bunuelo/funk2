@@ -439,7 +439,8 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
     
     {
       this->pool[pool_index].total_free_memory = 0;
-      funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(this->pool[pool_index].dynamic_memory.ptr);
+      funk2_memblock_t* prev_iter     = NULL;
+      funk2_memblock_t* iter          = (funk2_memblock_t*)from_ptr(this->pool[pool_index].dynamic_memory.ptr);
       funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->pool[pool_index].dynamic_memory.ptr)) + this->pool[pool_index].total_global_memory);
       while(iter < end_of_blocks) {
 	debug__assert(funk2_memblock__byte_num(iter) > 0, nil, "memory_test__byte_num_zero failed.");
@@ -449,7 +450,13 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
 	  //funk2_memorypool__free_memory_tree__insert(&(this->pool[pool_index]), iter);
 	  this->pool[pool_index].total_free_memory += funk2_memblock__byte_num(iter);
 	}
-	iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+	prev_iter = iter;
+	if (funk2_memblock__byte_num(iter) == 0) {
+	  printf("\nfunk2_memory__rebuild_memory_info_from_image ERROR: found funk2_memblock_t with zero size.  prev_iter=" u64__fstr "\n", (u64)(prev_iter));
+	  status("funk2_memory__rebuild_memory_info_from_image ERROR: found funk2_memblock_t with zero size.  prev_iter=" u64__fstr, (u64)(prev_iter));
+	  error(nil, "funk2_memory__rebuild_memory_info_from_image ERROR: found funk2_memblock_t with zero size.");
+	}
+	iter      = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
       }
       release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
     }

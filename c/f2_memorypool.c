@@ -129,6 +129,7 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
     return f2larva__new(cause, 2, nil);
   }
   
+  pause_gc();
   f2ptr return_value = nil;
   status("raw__memorypool__assert_valid(pool_index=" s64__fstr ") beginning.", pool_index);
   {
@@ -235,6 +236,7 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
   } else {
     status("raw__memorypool__assert_valid(pool_index=" s64__fstr ") memorypool is invalid.", pool_index);
   }
+  resume_gc();
   return return_value;
 }
 

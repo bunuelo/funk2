@@ -129,6 +129,7 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
     return f2larva__new(cause, 2, nil);
   }
   
+  f2ptr return_value = nil;
   {
     __funk2.user_thread_controller.please_wait = boolean__true;
     funk2_user_thread_controller__signal_user_waiting_politely(&(__funk2.user_thread_controller));
@@ -141,11 +142,12 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
       status("  funk2_memorypool__total_free_memory(memorypool) == memorypool->total_free_memory");
       status("  funk2_memorypool__total_free_memory(memorypool): " s64__fstr, (s64)(funk2_memorypool__total_free_memory(memorypool)));
       status("  memorypool->total_free_memory..................: " s64__fstr, (s64)(memorypool->total_free_memory));
-      return f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2__frame__new(cause, f2list8__new(cause,
-														     new__symbol(cause, "bug_type"),                                        new__symbol(cause, "memorypool_assertion_failed"),
-														     new__symbol(cause, "assertion_description"),                           new__string(cause, "funk2_memorypool__total_free_memory(memorypool) == memorypool->total_free_memory"),
-														     new__symbol(cause, "funk2_memorypool__total_free_memory(memorypool)"), f2integer__new(cause, funk2_memorypool__total_free_memory(memorypool)),
-														     new__symbol(cause, "memorypool->total_free_memory"),                   f2integer__new(cause, memorypool->total_free_memory)))));
+      return_value = f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2__frame__new(cause, f2list8__new(cause,
+															     new__symbol(cause, "bug_type"),                                        new__symbol(cause, "memorypool_assertion_failed"),
+															     new__symbol(cause, "assertion_description"),                           new__string(cause, "funk2_memorypool__total_free_memory(memorypool) == memorypool->total_free_memory"),
+															     new__symbol(cause, "funk2_memorypool__total_free_memory(memorypool)"), f2integer__new(cause, funk2_memorypool__total_free_memory(memorypool)),
+															     new__symbol(cause, "memorypool->total_free_memory"),                   f2integer__new(cause, memorypool->total_free_memory)))));
+      goto raw__memorypool__assert_valid__return_label;
     }
     if ((s64)(funk2_memorypool__total_used_memory(memorypool) + funk2_memorypool__total_free_memory(memorypool)) != (s64)memorypool->total_global_memory) {
       status("memorypool_assertion_failed");
@@ -154,24 +156,26 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
       status("  total_used_memory(memorypool)................................: " s64__fstr, (s64)funk2_memorypool__total_used_memory(memorypool));
       status("  total_free_memory(memorypool)................................: " s64__fstr, (s64)funk2_memorypool__total_free_memory(memorypool));
       status("  total_used_memory(memorypool) + total_free_memory(memorypool): " s64__fstr, (s64)(funk2_memorypool__total_used_memory(memorypool) + funk2_memorypool__total_free_memory(memorypool)));
-      return f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2__frame__new(cause, f2list12__new(cause,
-														      new__symbol(cause, "bug_type"),                                                      new__symbol(cause, "memorypool_assertion_failed"),
-														      new__symbol(cause, "assertion_description"),                                         new__string(cause, "total_used_memory(memorypool) + total_free_memory(memorypool) == memorypool->total_global_memory"),
-														      new__symbol(cause, "memorypool->total_global_memory"),                               f2integer__new(cause, (s64)memorypool->total_global_memory),
-														      new__symbol(cause, "total_used_memory(memorypool)"),                                 f2integer__new(cause, funk2_memorypool__total_used_memory(memorypool)),
-														      new__symbol(cause, "total_free_memory(memorypool)"),                                 f2integer__new(cause, funk2_memorypool__total_free_memory(memorypool)),
-														      new__symbol(cause, "total_used_memory(memorypool) + total_free_memory(memorypool)"), f2integer__new(cause, funk2_memorypool__total_used_memory(memorypool) + funk2_memorypool__total_free_memory(memorypool))))));
+      return_value = f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2__frame__new(cause, f2list12__new(cause,
+															      new__symbol(cause, "bug_type"),                                                      new__symbol(cause, "memorypool_assertion_failed"),
+															      new__symbol(cause, "assertion_description"),                                         new__string(cause, "total_used_memory(memorypool) + total_free_memory(memorypool) == memorypool->total_global_memory"),
+															      new__symbol(cause, "memorypool->total_global_memory"),                               f2integer__new(cause, (s64)memorypool->total_global_memory),
+															      new__symbol(cause, "total_used_memory(memorypool)"),                                 f2integer__new(cause, funk2_memorypool__total_used_memory(memorypool)),
+															      new__symbol(cause, "total_free_memory(memorypool)"),                                 f2integer__new(cause, funk2_memorypool__total_free_memory(memorypool)),
+															      new__symbol(cause, "total_used_memory(memorypool) + total_free_memory(memorypool)"), f2integer__new(cause, funk2_memorypool__total_used_memory(memorypool) + funk2_memorypool__total_free_memory(memorypool))))));
+      goto raw__memorypool__assert_valid__return_label;
     }
     if (memorypool->dynamic_memory.byte_num != memorypool->total_global_memory) {
       status("memorypool_assertion_failed");
       status("  memorypool->dynamic_memory.byte_num == memorypool->total_global_memory");
       status("  memorypool->dynamic_memory.byte_num: " s64__fstr, (s64)(memorypool->dynamic_memory.byte_num));
       status("  memorypool->total_global_memory....: " s64__fstr, (s64)(memorypool->total_global_memory));
-      return f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2__frame__new(cause, f2list8__new(cause,
-														     new__symbol(cause, "bug_type"),                            new__symbol(cause, "memorypool_assertion_failed"),
-														     new__symbol(cause, "assertion_description"),               new__string(cause, "memorypool->dynamic_memory.byte_num == memorypool->total_global_memory"),
-														     new__symbol(cause, "memorypool->dynamic_memory.byte_num"), f2integer__new(cause, memorypool->dynamic_memory.byte_num),
-														     new__symbol(cause, "memorypool->total_global_memory"),     f2integer__new(cause, memorypool->total_global_memory)))));
+      return_value = f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2__frame__new(cause, f2list8__new(cause,
+															     new__symbol(cause, "bug_type"),                            new__symbol(cause, "memorypool_assertion_failed"),
+															     new__symbol(cause, "assertion_description"),               new__string(cause, "memorypool->dynamic_memory.byte_num == memorypool->total_global_memory"),
+															     new__symbol(cause, "memorypool->dynamic_memory.byte_num"), f2integer__new(cause, memorypool->dynamic_memory.byte_num),
+															     new__symbol(cause, "memorypool->total_global_memory"),     f2integer__new(cause, memorypool->total_global_memory)))));
+      goto raw__memorypool__assert_valid__return_label;
     }
     {
       funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(memorypool->dynamic_memory.ptr));
@@ -181,10 +185,11 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
 	  status("memorypool_assertion_failed");
 	  status("  funk2_memblock__byte_num(iter) != 0");
 	  status("  iter: " s64__fstr, (s64)iter);
-	  return f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2__frame__new(cause, f2list6__new(cause,
-															 new__symbol(cause, "bug_type"),              new__symbol(cause, "memorypool_assertion_failed"),
-															 new__symbol(cause, "assertion_description"), new__string(cause, "funk2_memblock__byte_num(iter) != 0"),
-															 new__symbol(cause, "iter"),                  f2integer__new(cause, (s64)iter)))));
+	  return_value = f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2__frame__new(cause, f2list6__new(cause,
+																 new__symbol(cause, "bug_type"),              new__symbol(cause, "memorypool_assertion_failed"),
+																 new__symbol(cause, "assertion_description"), new__string(cause, "funk2_memblock__byte_num(iter) != 0"),
+																 new__symbol(cause, "iter"),                  f2integer__new(cause, (s64)iter)))));
+	  goto raw__memorypool__assert_valid__return_label;
 	}
 	iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
       }
@@ -193,11 +198,12 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
 	status("  iter == end_of_blocks");
 	status("  iter.........: " s64__fstr, (s64)iter);
 	status("  end_of_blocks: " s64__fstr, (s64)end_of_blocks);
-	return f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2__frame__new(cause, f2list8__new(cause,
-														       new__symbol(cause, "bug_type"),              new__symbol(cause, "memorypool_assertion_failed"),
-														       new__symbol(cause, "assertion_description"), new__string(cause, "iter == end_of_blocks"),
-														       new__symbol(cause, "iter"),                  f2integer__new(cause, (s64)iter),
-														       new__symbol(cause, "end_of_blocks"),         f2integer__new(cause, (s64)end_of_blocks)))));
+	return_value = f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2__frame__new(cause, f2list8__new(cause,
+															       new__symbol(cause, "bug_type"),              new__symbol(cause, "memorypool_assertion_failed"),
+															       new__symbol(cause, "assertion_description"), new__string(cause, "iter == end_of_blocks"),
+															       new__symbol(cause, "iter"),                  f2integer__new(cause, (s64)iter),
+															       new__symbol(cause, "end_of_blocks"),         f2integer__new(cause, (s64)end_of_blocks)))));
+	goto raw__memorypool__assert_valid__return_label;
       }
     }
     {
@@ -208,20 +214,22 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
 	  status("memorypool_assertion_failed");
 	  status("  funk2_memblock__is_self_consistently_valid(iter)");
 	  status("  iter: " s64__fstr, (s64)iter);
-	  return f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2__frame__new(cause, f2list6__new(cause,
-															 new__symbol(cause, "bug_type"),              new__symbol(cause, "memorypool_assertion_failed"),
-															 new__symbol(cause, "assertion_description"), new__string(cause, "funk2_memblock__is_self_consistently_valid(iter)"),
-															 new__symbol(cause, "iter"),                  f2integer__new(cause, (s64)iter)))));
+	  return_value = f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2__frame__new(cause, f2list6__new(cause,
+																 new__symbol(cause, "bug_type"),              new__symbol(cause, "memorypool_assertion_failed"),
+																 new__symbol(cause, "assertion_description"), new__string(cause, "funk2_memblock__is_self_consistently_valid(iter)"),
+																 new__symbol(cause, "iter"),                  f2integer__new(cause, (s64)iter)))));
+	  goto raw__memorypool__assert_valid__return_label;
 	}
 	iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
       }
     }
   }
+ raw__memorypool__assert_valid__return_label:
   {
     __funk2.user_thread_controller.please_wait = boolean__false;
     funk2_user_thread_controller__signal_user_done_waiting_politely(&(__funk2.user_thread_controller));
   }
-  return nil;
+  return return_value;
 }
 
 

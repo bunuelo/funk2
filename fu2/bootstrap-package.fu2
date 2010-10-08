@@ -61,7 +61,7 @@
 			    [source-eval [source-load this]]]
 		    [prog [print `[filename-load loading ,this quickly]]
 			  [primfunk:load this]]]
-		  [terminal_format standard-terminal '\n\nAsserting memory valid... '] [memory-assert_valid] [terminal_format standard-terminal 'Memory is valid.\n']
+		  [terminal_format standard-terminal '\nfilename-load: Asserting memory valid...'] [memory-assert_valid] [terminal_format standard-terminal '  Memory is valid.']
 		  [let [[stat [pathname-stat this]]]
 		    [let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
 		      [have file_loaded_modification_time_hash add this time_of_last_modification]]]]

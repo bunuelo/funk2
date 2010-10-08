@@ -17,6 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[memory-test]
+
 [load 'fu2/bootstrap-primobject.fu2']
 [load 'fu2/bootstrap-reader.fu2']
 [load 'fu2/bootstrap-cons.fu2']

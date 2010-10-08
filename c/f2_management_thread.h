@@ -78,7 +78,7 @@ funk2_management_thread_command__exit_t* funk2_management_thread_command__exit__
 // management_thread__command_node
 
 typedef struct funk2_management_thread_command_node_s {
-  funk2_management_thread_command_t*              command;
+  funk2_management_thread_command_t*             command;
   struct funk2_management_thread_command_node_s* next;
 } funk2_management_thread_command_node_t;
 
@@ -94,20 +94,20 @@ typedef struct funk2_management_thread_s {
   funk2_management_thread_command_node_t* finished_command_list;
 } funk2_management_thread_t;
 
-void                               funk2_management_thread__init(funk2_management_thread_t* this);
-void                               funk2_management_thread__destroy(funk2_management_thread_t* this);
-u64                                funk2_management_thread__new_uid(funk2_management_thread_t* this);
-void                               funk2_management_thread__add_command_node_to_command_list(funk2_management_thread_t* this, funk2_management_thread_command_node_t* node);
-u64                                funk2_management_thread__add_command(funk2_management_thread_t* this, funk2_management_thread_command_t* command);
-boolean_t                          funk2_management_thread__command_list__is_empty(funk2_management_thread_t* this);
-funk2_management_thread_command_t* funk2_management_thread__pop_command(funk2_management_thread_t* this);
-u64                                funk2_management_thread__add_save_command(funk2_management_thread_t* this, u8* filename);
-u64                                funk2_management_thread__add_load_command(funk2_management_thread_t* this, u8* filename);
-u64                                funk2_management_thread__add_exit_command(funk2_management_thread_t* this, s64 value);
+void                               funk2_management_thread__init(                                     funk2_management_thread_t* this);
+void                               funk2_management_thread__destroy(                                  funk2_management_thread_t* this);
+u64                                funk2_management_thread__new_uid(                                  funk2_management_thread_t* this);
+void                               funk2_management_thread__add_command_node_to_command_list(         funk2_management_thread_t* this, funk2_management_thread_command_node_t* node);
+u64                                funk2_management_thread__add_command(                              funk2_management_thread_t* this, funk2_management_thread_command_t* command);
+boolean_t                          funk2_management_thread__command_list__is_empty(                   funk2_management_thread_t* this);
+funk2_management_thread_command_t* funk2_management_thread__pop_command(                              funk2_management_thread_t* this);
+u64                                funk2_management_thread__add_save_command(                         funk2_management_thread_t* this, u8* filename);
+u64                                funk2_management_thread__add_load_command(                         funk2_management_thread_t* this, u8* filename);
+u64                                funk2_management_thread__add_exit_command(                         funk2_management_thread_t* this, s64 value);
 void                               funk2_management_thread__add_command_node_to_finished_command_list(funk2_management_thread_t* this, funk2_management_thread_command_node_t* node);
-void                               funk2_management_thread__command_finished(funk2_management_thread_t* this, funk2_management_thread_command_t* command);
-void                               funk2_management_thread__handle_user_threads(funk2_management_thread_t* this);
-boolean_t                          funk2_management_thread__check_command_uid_finished(funk2_management_thread_t* this, u64 uid, void* user_result);
+void                               funk2_management_thread__command_finished(                         funk2_management_thread_t* this, funk2_management_thread_command_t* command);
+void                               funk2_management_thread__handle_user_threads(                      funk2_management_thread_t* this);
+boolean_t                          funk2_management_thread__check_command_uid_finished(               funk2_management_thread_t* this, u64 uid, void* user_result);
 
 // --
 

@@ -35,6 +35,7 @@ typedef struct funk2_garbage_collector_s funk2_garbage_collector_t;
 // garbage_collector
 
 struct funk2_garbage_collector_s {
+  funk2_processor_mutex_t        do_collection_mutex;
   funk2_garbage_collector_pool_t gc_pool[memory_pool_num];
   funk2_never_delete_list_t      never_delete_list;
   u64                            last_garbage_collect_nanoseconds_since_1970;

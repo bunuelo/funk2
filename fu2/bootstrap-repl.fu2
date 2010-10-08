@@ -48,7 +48,7 @@
 ']
 [primfunk:ansi__stream__reset stdout]
 
-[primfunk:memory__test]
+[primfunk:memory__assert_valid]
 
 [primfunk:load 'fu2/primfunks.fu2']
 [primfunk:load 'fu2/primfunks-array.fu2']
@@ -98,7 +98,7 @@
 [primfunk:load 'fu2/primfunks-cause.fu2']
 [primfunk:load 'fu2/primfunks-zlib.fu2']
 
-[memory-test]
+[memory-assert_valid]
 
 [globalize standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 128 t nil t 1000000000]]
 
@@ -944,7 +944,7 @@
 
 [primfunk:load 'fu2/repl.fu2']
 
-[memory-test]
+[memory-assert_valid]
 
 [terminal_format standard-terminal '\n'
 		 'funk2: done compiling fu2/bootstrap-repl.fu2.' '\n'

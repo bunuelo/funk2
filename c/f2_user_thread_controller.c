@@ -219,10 +219,20 @@ void funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_
   }
 }
 
-void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controller_t* this) {
+void funk2_user_thread_controller__signal_user_waiting_politely(funk2_user_thread_controller_t* this) {
   funk2_processor_mutex__lock(&(this->waiting_count_mutex));
   this->waiting_count ++;
   funk2_processor_mutex__unlock(&(this->waiting_count_mutex));
+}
+
+void funk2_user_thread_controller__signal_user_done_waiting_politely(funk2_user_thread_controller_t* this) {
+  funk2_processor_mutex__lock(&(this->waiting_count_mutex));
+  this->waiting_count --;
+  funk2_processor_mutex__unlock(&(this->waiting_count_mutex));
+}
+
+void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controller_t* this) {
+  funk2_user_thread_controller__signal_user_waiting_politely(this);
   while (this->please_wait || funk2_processor_mutex__trylock(&(this->waiting_count_mutex))) {
     if                   (this->touch_all_protected_alloc_arrays.start) {funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_process(&(this->touch_all_protected_alloc_arrays));}
     else if                            (this->blacken_grey_nodes.start) {funk2_user_thread_controller__blacken_grey_nodes__user_process(              &(this->blacken_grey_nodes));}

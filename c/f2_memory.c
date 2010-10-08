@@ -603,6 +603,7 @@ void funk2_memory__memory_test(funk2_memory_t* this) {
 }
 
 f2ptr f2__memory__assert_valid(f2ptr cause) {
+  pause_gc();
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     f2ptr result = raw__memorypool__assert_valid(cause, pool_index);
@@ -610,6 +611,7 @@ f2ptr f2__memory__assert_valid(f2ptr cause) {
       return result;
     }
   }
+  resume_gc();
   return nil;
 }
 

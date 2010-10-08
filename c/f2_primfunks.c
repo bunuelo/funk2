@@ -1615,7 +1615,7 @@ f2ptr f2__memory__test(f2ptr cause) {
 def_pcfunk0(memory__test, return f2__memory__test(this_cause));
 
 
-def_pcfunk0(memory__assert_valid, return f2__memory__assert_failed(this_cause));
+def_pcfunk0(memory__assert_valid, return f2__memory__assert_valid(this_cause));
 
 
 // **

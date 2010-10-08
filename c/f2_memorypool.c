@@ -153,8 +153,8 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
 											     new__symbol(cause, "memorypool->total_global_memory"),     f2integer__new(cause, memorypool->total_global_memory))));
   }
   {
-    funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(this->dynamic_memory.ptr));
-    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
+    funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(memorypool->dynamic_memory.ptr));
+    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(memorypool->dynamic_memory.ptr)) + memorypool->total_global_memory);
     while(iter < end_of_blocks) {
       if (funk2_memblock__byte_num(iter) == 0) {
 	return f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2list6__new(cause,
@@ -173,8 +173,8 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
     }
   }
   {
-    funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(this->dynamic_memory.ptr));
-    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
+    funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(memorypool->dynamic_memory.ptr));
+    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(memorypool->dynamic_memory.ptr)) + memorypool->total_global_memory);
     while(iter < end_of_blocks) {
       if (! funk2_memblock__is_self_consistently_valid(iter)) {
 	return f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5, f2list8__new(cause,

@@ -1615,6 +1615,9 @@ f2ptr f2__memory__test(f2ptr cause) {
 def_pcfunk0(memory__test, return f2__memory__test(this_cause));
 
 
+def_pcfunk0(memory__assert_valid, return f2__memory__assert_failed(this_cause));
+
+
 // **
 
 void f2__primcfunks__reinitialize_globalvars() {
@@ -1917,7 +1920,8 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init__2(equals, x, y, "");
   //f2__funktional_primcfunk__init__1(is_funktional, exp, "");
   
-  f2__primcfunk__init__0(memory__test, "Asserts that memory tests pass, otherwise logs debugging information regarding the bug and stops Funk2 with fatal error.");
+  f2__primcfunk__init__0(memory__test,         "Asserts that memory tests pass, otherwise logs debugging information regarding the bug and stops Funk2 with fatal error.");
+  f2__primcfunk__init__0(memory__assert_valid, "Asserts that memory tests pass, otherwise returns a larva with low-level memory system debugging information.");
   
 }
 

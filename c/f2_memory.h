@@ -136,6 +136,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
 //void      funk2_memory__touch_all_referenced_from_f2ptr(funk2_memory_t* this, f2ptr exp);
 boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this);
 void      funk2_memory__memory_test(funk2_memory_t* this);
+f2ptr       f2__memory__assert_valid(f2ptr cause);
 
 #ifdef DEBUG_MEMORY
 #  if (DEBUG_MEMORY > 0)

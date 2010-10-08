@@ -285,4 +285,5 @@
 [globalize-funk gensym                                      &primfunk:gensym]
 
 [globalize-funk memory-test                                 &primfunk:memory__test]
+[globalize-funk memory-assert_failed                        &primfunk:memory__assert_failed]
 

@@ -76,6 +76,7 @@ void              funk2_memorypool__memory_test__dynamic_memory(funk2_memorypool
 void              funk2_memorypool__memory_test__byte_num_zero(funk2_memorypool_t* this);
 void              funk2_memorypool__memory_test__all_known_types(funk2_memorypool_t* this);
 void              funk2_memorypool__memory_test(funk2_memorypool_t* this);
+f2ptr              raw__memorypool__assert_valid(f2ptr cause, s64 pool_index);
 void              funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f2size_t byte_num);
 void              funk2_memorypool__used_memory_tree__insert(funk2_memorypool_t* this, funk2_memblock_t* block);
 void              funk2_memorypool__free_memory_tree__insert(funk2_memorypool_t* this, funk2_memblock_t* block);

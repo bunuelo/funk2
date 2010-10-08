@@ -128,7 +128,7 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
   if (pool_index < 0 || pool_index >= memory_pool_num) {
     return f2larva__new(cause, 2, nil);
   }
-  funk2_memorypool_t* memorypool = __funk2.memory.pool[pool_index];
+  funk2_memorypool_t* memorypool = &(__funk2.memory.pool[pool_index]);
   if (funk2_memorypool__total_free_memory(memorypool) != memorypool->total_free_memory) {
     return f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2list8__new(cause,
 											     new__symbol(cause, "bug_type"),                                        new__symbol(cause, "memorypool_assertion_failed"),

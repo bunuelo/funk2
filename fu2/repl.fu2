@@ -155,6 +155,7 @@
 		      [let [[result [with-new-cause [cause-define source-filename filename]
 						    [terminal_repl-io file-stream nil nil nil]]]]
 			[stream-close file-stream]
+			`[memory-assert_valid]
 			result]]]]]
 
 [defunk load [:rest filenames]

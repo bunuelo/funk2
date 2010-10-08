@@ -131,8 +131,8 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
   
   {
     __funk2.user_thread_controller.please_wait = boolean__true;
-    funk2_user_thread_controller__signal_user_waiting_politely(&(__funk2.user_thread_controller_t));
-    funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller_t));
+    funk2_user_thread_controller__signal_user_waiting_politely(&(__funk2.user_thread_controller));
+    funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
   }
   {
     funk2_memorypool_t* memorypool = &(__funk2.memory.pool[pool_index]);
@@ -219,7 +219,7 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
   }
   {
     __funk2.user_thread_controller.please_wait = boolean__false;
-    funk2_user_thread_controller__signal_user_done_waiting_politely(&(__funk2.user_thread_controller_t));
+    funk2_user_thread_controller__signal_user_done_waiting_politely(&(__funk2.user_thread_controller));
   }
   return nil;
 }

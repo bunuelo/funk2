@@ -18,18 +18,40 @@
  rights to redistribute these changes.'
 
 
+
+
+[deframe speak_language_to_agent [resource] []
+  [new []
+       [construct resource [type this]
+		  [funk [agent_description speech]
+			[have this-resource think_to_self 'I am saying to ' agent_description ', ' speech '.']
+			[let [[body [get this body]]]
+			  [set body says speech]
+			  [let [[start_time_step [get body time_step]]]
+			    [while [< [- [get body time_step] 2] start_time_step]
+			      [millisleep 1000]]]
+			  [set body says nil]]]]
+       nil]]
+
+[deframe hear_language_from_agent [resource] []
+  [new []
+       [construct resource [type this]
+		  [funk [agent_description agent_speech]
+			[have this-resource think_to_self 'I hear from ' agent_description ' ' agent_speech '.']
+			[let [[parse_trees [get english_dictionary parse_trees agent_speech]]]
+			  [if parse_trees
+			      [mapc [funk [parse_tree]
+					  [have this-resource think_to_self 'I parse ' [get parse_tree serialized]]]
+				    parse_trees]
+			    [have this-resource think_to_self 'I cannot parse.']]
+			  ]
+			]]
+       nil]]
+
 [deframe reactive_language_agency [agency] []
   [new []
        [construct agency `language]
-       
-       [have this add_resource [resource say [string]
-					 [have this-resource think_to_self 'I am saying, "' string '"']
-					 [let [[body [get this body]]]
-					   [set body says [list string]]
-					   [let [[start_time_step [get body time_step]]]
-					     [while [< [- [get body time_step] 2] start_time_step]
-					       [millisleep 1000]]]
-					   [set body says nil]]]]
-       
+       [have this add_resource [new speak_language_to_agent]]
+       [have this add_resource [new hear_language_from_agent]]
        this]]
 

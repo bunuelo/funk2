@@ -41,6 +41,7 @@
 			  file_menu_item
 			  file_menu
 			  file_exit_menu_item
+			  agent_hbox
 			  
 			  [agent_frame [frame]]]
   [new [isis_world_object isis_world_object_description]
@@ -51,19 +52,22 @@
 			     [set window title      [format nil 'isismon - ' isis_world_object_description]]
 			     [= vbox                [gtk-vbox-new 2]]
 			     [= menu_bar            [gtk-menu_bar-new]]
+			     [have vbox pack_start menu_bar nil nil 0]
 			     [= file_menu_item      [gtk-menu_item-new 'File']]
 			     [= file_menu           [gtk-menu-new]]
 			     [= file_exit_menu_item [gtk-menu_item-new 'Exit']]
 			     [have menu_bar append  file_menu_item]
 			     [have file_menu append file_exit_menu_item]
 			     [set file_menu_item submenu file_menu]
-			     [have vbox pack_start menu_bar nil nil 0]
 			     [have window add vbox]
 			     
 			     [have file_exit_menu_item signal_connect 'activate'
 				   [funk []
 					 [= done t]]
 				   nil]
+			     
+			     [= agent_hbox [gtk-hbox-new 2]]
+			     [have vbox pack_start agent_hbox nil nil 0]
 			     
 			     [have window connect_hide_on_delete]
 			     [have window show_all]
@@ -84,7 +88,8 @@
 
 [deftypefunk isismon execute add_agent [agent]
   [let [[isismon_agent [new isismon_agent agent]]]
-    [have agent_frame add [get isismon_agent name] isismon_agent]]]
+    [have agent_frame add [get isismon_agent name] isismon_agent]
+    [have agent_hbox pack_start isismon_agent nil nil 0]]]
 
 
 [defmetro isismon [:rest args]

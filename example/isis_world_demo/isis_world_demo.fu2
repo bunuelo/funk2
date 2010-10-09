@@ -159,8 +159,6 @@
       [print 'creating new lauren agent.']
       [have isis_world add_agent_body [new lauren_agent]]
       
-      [globalize isis_world isis_world]
-      
       [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
       [cause-define cause-time_step [get isis_world time_step]]
       
@@ -171,6 +169,7 @@
       [mind-activate [get isis_world agent_mind `Ralph] reactive sensory  continuous_sensing]
       [mind-activate [get isis_world agent_mind `Ralph] reactive physical funk_user]
       
+      [globalize isis_world isis_world]
       [terminal_format standard-terminal '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
 
       `[have [get isis_world agent `Ralph] find_knife]

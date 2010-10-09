@@ -21,9 +21,9 @@
   :packages [moral_compass isis_world]
    :sources ['isis_world_demo.fu2']]
 
-[defpackage isis_world_demo+
-  :packages [isis_world_demo fibermon mindmon]
-   :sources ['bo.fu2']]
+[defpackage isismon
+  :packages [isis_world_demo]
+   :sources ['isismon.fu2']]
 
 [defpackage jj
   :packages [isis_world_demo]

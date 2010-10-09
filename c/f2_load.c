@@ -40,7 +40,10 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
   if (! stream) {
     //f2__fiber__print(cause, fiber, filename);
     status("load error: couldn't open file for reading.");
-    return nil;
+    return f2larva__new(cause, 49, f2__bug__new(cause, f2integer__new(cause, 49), f2__frame__new(cause, f2list6__new(cause,
+														     new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_open_file_for_reading"),
+														     new__symbol(cause, "funkname"), new__symbol(cause, "primfunk:load"),
+														     new__symbol(cause, "filename"), filename))));
   }
 #ifdef DEBUG_LOAD
   f2__fiber__print(cause, fiber, filename); status("load note: opening file for reading.");
@@ -84,7 +87,11 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
 	if (raw__exception__is_type(cause, eval_exp)) {
 	  printf("\nload eval exception: "); f2__write(cause, fiber, eval_exp); fflush(stdout);
 	  f2__stream__close(cause, stream);
-	  return f2integer__new(f2fiber__cause_reg(load_fiber, cause), 1);
+	  return f2larva__new(cause, 49, f2__bug__new(cause, f2integer__new(cause, 49), f2__frame__new(cause, f2list8__new(cause,
+															   new__symbol(cause, "bug_type"),  new__symbol(cause, "found_exception_while_loading"),
+															   new__symbol(cause, "funkname"),  new__symbol(cause, "primfunk:load"),
+															   new__symbol(cause, "filename"),  filename,
+															   new__symbol(cause, "exception"), eval_exp))));
 	}
 #ifdef DEBUG_LOAD
 	printf ("\nLoad-F-Out> "); f2__write(cause, fiber, eval_exp); fflush(stdout);

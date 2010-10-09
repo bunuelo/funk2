@@ -253,8 +253,6 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
     return;
   }
   
-  funk2_processor_mutex__lock(&(__funk2.garbage_collector.do_collection_mutex));
-  
   f2size_t          old_total_global_memory = this->total_global_memory;
   f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(this->dynamic_memory), sizeof(f2dynamicmemory_t));
   status("funk2_memorypool__change_total_memory_available: old->ptr=0x" X64__fstr " " u64__fstr, old_dynamic_memory.ptr, old_dynamic_memory.ptr);
@@ -308,8 +306,6 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
   }
   this->total_free_memory += (byte_num - old_total_global_memory);
   funk2_memorypool__debug_memory_test(this, 2);
-  
-  funk2_processor_mutex__unlock(&(__funk2.garbage_collector.do_collection_mutex));
 }
 
 void funk2_memorypool__used_memory_tree__insert(funk2_memorypool_t* this, funk2_memblock_t* block) {
@@ -337,7 +333,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
   u8 did_something = 0;
   status("skipping defragmentation of funk2_memorypool.");
   return did_something;
-  {// this block is skipped because there is a bug that occurs with a zero byte_num block of memory.
+  {// this block is (not --^) skipped because there is a bug that occurs with a zero byte_num block of memory.
     funk2_memorypool__debug_memory_test(this, 2);
     status("defragmenting funk2_memorypool");
     u64               largest_free_block_size       = 0;

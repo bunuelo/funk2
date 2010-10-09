@@ -43,6 +43,7 @@ void funk2_memory__handle(funk2_memory_t* this) {
     }
   }
   if (should_enlarge_memory_now) {
+    __funk2.user_thread_controller.please_wait = boolean__true;
     funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
     for (index = 0; index < memory_pool_num; index ++) {
       if (this->pool[index].should_enlarge_memory_now) {

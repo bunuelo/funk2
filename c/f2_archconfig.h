@@ -72,7 +72,8 @@ typedef u64 f2size_t;
 #    define u64__fstr                   "%" u64__fstr_without_percent
 #    define x64__fstr_without_percent   "llx"
 #    define x64__fstr                   "%" x64__fstr_without_percent
-#    define X64__fstr                   "%llX"
+#    define X64__fstr_without_percent   "llX"
+#    define X64__fstr                   "%" X64__fstr_without_percent
 #    define nano_decimal_fraction__fstr "%09lld"
 #  elif long__bit_num == 64
 #    define s64__fstr                   "%ld"
@@ -80,14 +81,16 @@ typedef u64 f2size_t;
 #    define u64__fstr                   "%" u64__fstr_without_percent
 #    define x64__fstr_without_percent   "lx"
 #    define x64__fstr                   "%" x64__fstr_without_percent
-#    define X64__fstr                   "%lX"
+#    define X64__fstr_without_percent   "lX"
+#    define X64__fstr                   "%" X64__fstr_without_percent
 #    define nano_decimal_fraction__fstr "%09ld"
 #  elif int__bit_num == 64
 #    define s64__fstr                   "%d"
 #    define u64__fstr_without_percent    "u"
 #    define u64__fstr                   "%" u64__fstr_without_percent
 #    define x64__fstr                   "%X"
-#    define X64__fstr                   "%x"
+#    define X64__fstr_without_percent   "x"
+#    define X64__fstr                   "%" X64__fstr_without_percent
 #    define nano_decimal_fraction__fstr "%09d"
 #  else
 #    error configuration not defined.  try: make clean; make configure; make
@@ -99,7 +102,8 @@ typedef u64 f2size_t;
 #    define u64__fstr                   "%" u64__fstr_without_percent
 #    define x64__fstr_without_percent   "X"
 #    define x64__fstr                   "%" x64__fstr_without_percent
-#    define X64__fstr                   "%x"
+#    define X64__fstr_without_percent   "x"
+#    define X64__fstr                   "%" X64__fstr_without_percent
 #    define nano_decimal_fraction__fstr "%09d"
 #  elif long__bit_num == 64
 #    define s64__fstr                   "%ld"
@@ -107,7 +111,8 @@ typedef u64 f2size_t;
 #    define u64__fstr                   "%" u64__fstr_without_percent
 #    define x64__fstr_without_percent   "lx"
 #    define x64__fstr                   "%" x64__fstr_without_percent
-#    define X64__fstr                   "%lX"
+#    define X64__fstr_without_percent   "lX"
+#    define X64__fstr                   "%" X64__fstr_without_percent
 #    define nano_decimal_fraction__fstr "%09ld"
 #  elif long_long__bit_num == 64
 #    define s64__fstr                   "%lld"
@@ -115,7 +120,8 @@ typedef u64 f2size_t;
 #    define u64__fstr                   "%" u64__fstr_without_percent
 #    define x64__fstr_without_percent   "llx"
 #    define x64__fstr                   "%" x64__fstr_without_percent
-#    define X64__fstr                   "%llX"
+#    define X64__fstr_without_percent   "llX"
+#    define X64__fstr                   "%" X64__fstr_without_percent
 #    define nano_decimal_fraction__fstr "%09lld"
 #  else
 #    error configuration not defined.  try: make clean; make configure; make

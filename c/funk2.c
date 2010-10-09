@@ -148,9 +148,9 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_surrogate_parent__init(&(this->surrogate_parent));
   
   status("");
-  status("*******************************************************************");
-  status("**** booting up funk2 p2p node (node_id=#x" X64__fstr ") ****", this->node_id);
-  status("*******************************************************************");
+  status("****************************************************************");
+  status("**** booting up funk2 p2p node (node_id=#x%016" X64__fstr_without_percent ") ****", this->node_id);
+  status("****************************************************************");
   status("");
   
   funk2_command_line__init(&(this->command_line), argc, argv);
@@ -353,10 +353,17 @@ void f2__destroy() {
 
 void funk2__destroy(funk2_t* this) {
   status("");
-  status("*******************************************************************");
-  status("**** shutting down funk2 p2p node (node_id=#x" X64__fstr ") ****", this->node_id);
-  status("*******************************************************************");
+  status("******************************************************************");
+  status("**** shutting down funk2 p2p node (node_id=#x%016" X64__fstr_without_percent ") ****", this->node_id);
+  status("******************************************************************");
   status("");
+  
+  {
+    status("funk2__main: telling all user threads to exit.");
+    this->user_thread_controller.please_wait = boolean__true;
+    funk2_user_thread_controller__exit(&(this->user_thread_controller));
+    this->user_thread_controller.please_wait = boolean__false;
+  }
   
 #if defined(F2__USE_VIRTUAL_PROCESSORS)
   funk2_virtual_processor_handler__destroy(&(this->virtual_processor_handler));
@@ -444,13 +451,6 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
     }
   }
   status("funk2__main: exited main loop.");
-  
-  {
-    status("funk2__main: telling all user threads to exit.");
-    __funk2.user_thread_controller.please_wait = boolean__true;
-    funk2_user_thread_controller__exit(&(__funk2.user_thread_controller));
-    __funk2.user_thread_controller.please_wait = boolean__false;
-  }
   
   f2__destroy();
   

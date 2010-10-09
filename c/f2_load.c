@@ -39,8 +39,8 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
   f2ptr stream = f2__stream__new_open_file__rdonly(cause, filename);
   if (! stream) {
     {
-      u64   filename__length = raw__string__length(cause, filename);
-      char* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
+      u64 filename__length = raw__string__length(cause, filename);
+      u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
       raw__string__str_copy(cause, filename, filename__str);
       filename__str[filename__length] = 0;
       status("load error: couldn't open file for reading \'%s\'.", (char*)filename__str);

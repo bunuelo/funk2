@@ -43,7 +43,7 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
       char* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
       raw__string__str_copy(cause, filename, filename__str);
       filename__str[filename__length] = 0;
-      status("load error: couldn't open file for reading \'%s\'.", filename__str);
+      status("load error: couldn't open file for reading \'%s\'.", (char*)filename__str);
       f2__free(to_ptr(filename__str));
     }
     return f2larva__new(cause, 49, f2__bug__new(cause, f2integer__new(cause, 49), f2__frame__new(cause, f2list6__new(cause,

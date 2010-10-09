@@ -145,6 +145,7 @@ def_pcfunk1(fiber__is_complete, this, return f2__fiber__is_complete(this_cause, 
 
 void raw__fiber__quit(f2ptr cause, f2ptr this) {
   f2__fiber__should_quit__set(cause, this, f2bool__new(boolean__true));
+  f2__fiber__paused__set(     cause, this, f2bool__new(boolean__false));
 }
 
 f2ptr f2__fiber__quit(f2ptr cause, f2ptr this) {

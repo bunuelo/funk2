@@ -62,7 +62,6 @@
 [primfunk:load 'fu2/primfunks-fcntl.fu2']
 [primfunk:load 'fu2/primfunks-fiber.fu2']
 [primfunk:load 'fu2/primfunks-frame.fu2']
-[primfunk:load 'fu2/primfunks-gtk.fu2']
 [primfunk:load 'fu2/primfunks-hash.fu2']
 [primfunk:load 'fu2/primfunks-ioctl.fu2']
 [primfunk:load 'fu2/primfunks-largeinteger.fu2']

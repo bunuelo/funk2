@@ -17,15 +17,17 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-
-'reactive_layer'
-
-[deframe reactive_layer [mental_layer] []
+[deframe activate_resource [resource] []
   [new []
-       [construct mental_layer 0 `reactive]
-       [have this add_agency [new reactive_sensory_agency]]
-       [have this add_agency [new reactive_physical_agency]]
-       [have this add_agency [new reactive_language_agency]]
-       [have this add_agency [new reactive_neural_plug_agency]]
+       [construct resource [type this]
+		  [funk [layer_name agency_name resource_name :rest args]
+			[have this-resource think_to_self 'Neural plug is activating the ' resource_name ' resource in the ' agency_name ' agency in the' layer_name ' layer with args=' args]
+			[have-apply [get this mind] wait_to_activate `[,layer_name ,agency_name ,resource_name @args]]]]
+       nil]]
+
+[deframe reactive_neural_plug_agency [agency] []
+  [new []
+       [construct agency `neural_plug]
+       [have this add_resource [new activate_resource]]
        this]]
 

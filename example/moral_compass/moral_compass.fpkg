@@ -37,6 +37,7 @@
 	     reactive_physical_agency
 	     reactive_sensory_agency
 	     reactive_language_agency
+	     reactive_neural_plug_agency
 	     english_language]
    :sources ['reactive_layer.fu2']]
 
@@ -51,6 +52,10 @@
 [defpackage reactive_language_agency
   :packages [mind]
    :sources ['reactive_language_agency.fu2']]
+
+[defpackage reactive_neural_plug_agency
+  :packages [mind]
+   :sources ['reactive_neural_plug_agency.fu2']]
 
 
 'deliberative_layer'

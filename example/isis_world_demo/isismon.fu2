@@ -22,6 +22,7 @@
 			  [done             nil]
 			  fiber
 			  window
+			  vbox
 			  menu_bar
 			  file_menu_item
 			  file_menu
@@ -32,6 +33,7 @@
        [= fiber [fiber [funk []
 			     [= window              [gtk-window-new]]
 			     [set window title      [format nil 'isismon - ' isis_world_object_description]]
+			     [= vbox                [gtk-vbox-new 2]]
 			     [= menu_bar            [gtk-menu_bar-new]]
 			     [= file_menu_item      [gtk-menu_item-new 'File']]
 			     [= file_menu           [gtk-menu-new]]
@@ -39,6 +41,8 @@
 			     [have menu_bar append  file_menu_item]
 			     [have file_menu append file_exit_menu_item]
 			     [set file_exit_menu_item submenu file_menu]
+			     [have vbox pack_start menu_bar nil nil 0]
+			     [have window add vbox]
 			     
 			     [have file_exit_menu_item signal_connect 'activate'
 				   [funk []

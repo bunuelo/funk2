@@ -40,7 +40,7 @@
 			     [= file_exit_menu_item [gtk-menu_item-new 'Exit']]
 			     [have menu_bar append  file_menu_item]
 			     [have file_menu append file_exit_menu_item]
-			     [set file_exit_menu_item submenu file_menu]
+			     [set file_menu_item submenu file_menu]
 			     [have vbox pack_start menu_bar nil nil 0]
 			     [have window add vbox]
 			     

@@ -83,7 +83,7 @@
        nil]]
 
 [deftypefunk isismon execute add_agent [agent]
-  [let [[isismon_agent [new agent]]]
+  [let [[isismon_agent [new isismon_agent agent]]]
     [have agent_frame add [get isismon_agent name] isismon_agent]]]
 
 

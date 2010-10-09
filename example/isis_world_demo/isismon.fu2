@@ -46,14 +46,18 @@
 			     
 			     [have file_exit_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\n\nisismon exiting.\n']
 					 [= done t]]
 				   nil]
 			     
+			     [have window connect_hide_on_delete]
 			     [have window show_all]
 			     [have initialize_mutex unlock]
 			     [while [not done]
-			       [yield]]]
+			       [if [not [get window visible]]
+				   [= done t]]
+			       [sleep 1]]
+			     [terminal_format standard-terminal '\n\nisismon exiting.\n']
+			     [have window destroy]]
 		       nil]]
        [have initialize_mutex lock]
        nil]]

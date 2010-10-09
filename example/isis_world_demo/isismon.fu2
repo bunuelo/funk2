@@ -17,16 +17,32 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[deframe isismon_agent [frame] [isis_agent
+				label]
+  [new [initial_isis_agent]
+       [= isis_agent initial_isis_agent]
+       [= label [gtk-label-new [format nil 'isis_agent' [get isis_agent name]]]]
+       nil]]
+
+[deftypefunk isismon_agent get name []
+  [get isis_agent name]]
+
+[deftypefunk isismon_agent get widget []
+  label]
+
 [deframe isismon [frame] [isis_world
 			  [initialize_mutex [new mutex]]
 			  [done             nil]
 			  fiber
+			  
 			  window
 			  vbox
 			  menu_bar
 			  file_menu_item
 			  file_menu
-			  file_exit_menu_item]
+			  file_exit_menu_item
+			  
+			  [agent_frame [frame]]]
   [new [isis_world_object isis_world_object_description]
        [= isis_world isis_world_object]
        [have initialize_mutex lock]
@@ -52,6 +68,10 @@
 			     [have window connect_hide_on_delete]
 			     [have window show_all]
 			     [have initialize_mutex unlock]
+			     
+			     [have this add_agent [get isis_world agent_body `Ralph]]
+			     [have this add_agent [get isis_world agent_body `Lauren]]
+			     
 			     [while [not done]
 			       [if [not [get window visible]]
 				   [= done t]]
@@ -61,6 +81,11 @@
 		       nil]]
        [have initialize_mutex lock]
        nil]]
+
+[deftypefunk isismon execute add_agent [agent]
+  [let [[isismon_agent [new agent]]]
+    [have agent_frame add [get isismon_agent name] isismon_agent]]]
+
 
 [defmetro isismon [:rest args]
   [let [[isis_worlds                  nil]

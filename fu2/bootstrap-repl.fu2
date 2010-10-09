@@ -914,6 +914,15 @@
 		   [= iter [cdr iter]]]
 		 [reverse reverse_codes]]]]
 
+[globalize memory:debug nil]
+
+[defunk memory-debug_assert_valid []
+  [if memory:debug
+    [prog [terminal_format standard-terminal '\nfilename-load: Asserting memory valid...']
+	  [memory-debug_assert_valid]
+	  [terminal_format standard-terminal '  Memory is valid.']
+	  nil]]]
+
 [defunk exit [value]
   [management_thread-add_exit_command value]
   [let [[signal_exit_fiber [this-fiber]]]
@@ -944,7 +953,7 @@
 
 [primfunk:load 'fu2/repl.fu2']
 
-[memory-assert_valid]
+[memory-debug_assert_valid]
 
 [terminal_format standard-terminal '\n'
 		 'funk2: done compiling fu2/bootstrap-repl.fu2.' '\n'

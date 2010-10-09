@@ -36,7 +36,8 @@
   :packages [mind
 	     reactive_physical_agency
 	     reactive_sensory_agency
-	     reactive_language_agency]
+	     reactive_language_agency
+	     english_language]
    :sources ['reactive_layer.fu2']]
 
 [defpackage reactive_physical_agency
@@ -58,7 +59,8 @@
   :packages [mind
 	     deliberative_reality_agency
 	     deliberative_imagination_agency
-	     deliberative_execution_agency]
+	     deliberative_execution_agency
+	     english_language]
    :sources ['deliberative_layer.fu2']]
 
 [defpackage deliberative_reality_agency
@@ -78,7 +80,8 @@
 
 [defpackage reflective_layer
   :packages [mind
-	     reflective_credit_assignment_agency]
+	     reflective_credit_assignment_agency
+	     english_language]
    :sources ['reflective_layer.fu2']]
 
 [defpackage reflective_credit_assignment_agency
@@ -90,7 +93,8 @@
 
 [defpackage self_reflective_layer
   :packages [mind
-	     self_reflective_personality_agency]
+	     self_reflective_personality_agency
+	     english_language]
    :sources ['self_reflective_layer.fu2']]
 
 [defpackage self_reflective_personality_agency
@@ -102,7 +106,8 @@
 
 [defpackage self_conscious_layer
   :packages [mind
-	     self_conscious_imprimer_agency]
+	     self_conscious_imprimer_agency
+	     english_language]
    :sources ['self_conscious_layer.fu2']]
 
 [defpackage self_conscious_imprimer_agency

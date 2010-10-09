@@ -21,7 +21,7 @@
 				label]
   [new [initial_isis_agent]
        [= isis_agent initial_isis_agent]
-       [= label [gtk-label-new [format nil 'isis_agent' [get isis_agent name]]]]
+       [= label [gtk-label-new [format nil 'isis_agent - ' [get isis_agent name]]]]
        nil]]
 
 [deftypefunk isismon_agent get name []

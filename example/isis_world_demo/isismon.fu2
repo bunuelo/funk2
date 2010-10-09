@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 [deframe isismon [frame] [isis_world
-			  [initialize_mutex [mutex]]
+			  [initialize_mutex [new mutex]]
 			  [done             nil]
 			  fiber
 			  window

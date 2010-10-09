@@ -17,13 +17,14 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage parse_tree
-  :sources ['natural_language-primfunks.fu2'
-	    'parse_tree.fu2']]
+[defpackage english_dictionary
+  :packages [natural_language]
+   :sources ['english_dictionary.fu2']]
 
-[defpackage dictionary_frame
-  :sources ['dictionary_frame.fu2']]
+[defpackage english_dictionary_parse
+  :packages [english_dictionary natural_language]
+   :sources ['english_dictionary_parse.fu2']]
 
-[defpackage natural_language
-  :packages [dictionary_frame parse_tree]]
+[defpackage english_language
+  :packages [english_dictionary english_dictionary_parse]]
 

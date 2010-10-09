@@ -89,7 +89,6 @@
 [deftypefunk isismon execute add_agent [agent]
   [let [[isismon_agent [new isismon_agent agent]]]
     [have agent_frame add [get isismon_agent name] isismon_agent]
-    [print [list 'adding agent ' [get isismon_agent name]]]
     [have agent_hbox pack_start isismon_agent nil nil 0]]]
 
 

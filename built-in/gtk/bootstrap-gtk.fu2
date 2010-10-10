@@ -122,7 +122,7 @@
 [deftypefunk gtk_menu get     widget []      this]
 [deftypefunk gtk_menu execute append [child] [gtk-menu-append [get this widget] [get child widget]]]
 
-
+[globalize gtk-gdk_keysyms_frame [gtk-gdk_keysyms_frame-new]]
 
 [globalize gtk-event_handling_fiber nil]
 

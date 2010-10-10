@@ -100,4 +100,6 @@
 [globalize-funk gtk-menu-append                       &primfunk:gtk__menu__append]
 
 
+'gdk-keysyms-frame'
 
+[globalize-funk gtk-gdk_keysyms_frame-new             &primfunk:gtk__gdk_keysyms_frame__new]

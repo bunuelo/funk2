@@ -814,6 +814,17 @@ GtkWidget* funk2_gtk__hpaned__new(funk2_gtk_t* this) {
 }
 
 
+u64 funk2_gtk__gdk_keyval_to_unicode(funk2_gtk_t* this, u64 keyval) {
+  u64 unicode;
+  {
+    gdk_threads_enter();
+    unicode = gdk_keyval_to_unicode(keyval);
+    gdk_threads_leave();
+  }
+  return unicode;
+}
+
+
 // color
 
 f2ptr f2__gdk__color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr blue) {
@@ -2846,6 +2857,21 @@ f2ptr f2__gtk__menu__append(f2ptr cause, f2ptr menu, f2ptr append_widget) {
 def_pcfunk2(gtk__menu__append, menu, append_widget, return f2__gtk__menu__append(this_cause, menu, append_widget));
 
 
+f2ptr raw__gtk__gdk_keyval_to_unicode(f2ptr cause, f2ptr keyval) {
+  u64   keyval__i  = f2integer__i(keyval, cause);
+  f2ptr unicode__i = funk2_gtk__gdk_keyval_to_unicode(&(__funk2.gtk), keyval__i);
+  return f2integer__new(cause, unicode__i);
+}
+
+f2tr f2__gtk__gdk_keyval_to_unicode(f2ptr cause, f2ptr keyval) {
+  if (! raw__integer__is_type(cause, keyval)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__gdk_keyval_to_unicode(cause, keyval);
+}
+def_pcfunk1(gtk__gdk_keyval_to_unicode, keyval, return f2__gtk__gdk_keyval_to_unicode(this_cause, keyval));
+
+
 f2ptr f2__gtk__gdk_keysyms_frame__new(f2ptr cause) {
   f2ptr gdk_keysyms_frame = f2__frame__new(cause, nil);
   f2__frame__add_var_value(cause, gdk_keysyms_frame, new__symbol(cause, "GDK_BackSpace"), f2integer__new(cause, GDK_BackSpace));
@@ -3271,6 +3297,10 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__0(gtk__menu__new,                      "Returns a new GtkMenu.");
   f2__primcfunk__init__2(gtk__menu__append, menu, add_widget, "Appends a widget to a menu.");
   
+  
+  // keyval
+  
+  f2__primcfunk__init__1(gtk__gdk_keyval_to_unicode, keyval, "converts a keyval integer to a unicode integer");
   
   // keysyms_frame
   

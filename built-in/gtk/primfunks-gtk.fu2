@@ -100,6 +100,11 @@
 [globalize-funk gtk-menu-append                       &primfunk:gtk__menu__append]
 
 
+'keyval'
+
+[globalize-funk gtk-gdk_keyval_to_unicode             &primfunk:gtk__gdk_keyval_to_unicode]
+
 'gdk-keysyms-frame'
 
 [globalize-funk gtk-gdk_keysyms_frame-new             &primfunk:gtk__gdk_keysyms_frame__new]
+

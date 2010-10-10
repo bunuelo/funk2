@@ -308,10 +308,13 @@ void funk2_gtk__add_callback(funk2_gtk_t* this, funk2_gtk_callback_t* callback) 
   }
 }
 
-void funk2_gtk__add_callback_event(funk2_gtk_t* this, funk2_gtk_callback_t* callback) {
-  funk2_gtk_callback_cons_t* cons = (funk2_gtk_callback_cons_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_cons_t)));
-  cons->callback = callback;
-  cons->next     = NULL;
+void funk2_gtk__add_callback_event(funk2_gtk_t* this, funk2_gtk_callback_t* callback, void* args) {
+  funk2_gtk_callback_event_cons_t* cons  = (funk2_gtk_callback_event_cons_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_event_cons_t)));
+  funk2_gtk_callback_event_t*      event = (funk2_gtk_callback_event_t*)     from_ptr(f2__malloc(sizeof(funk2_gtk_callback_event_t)));
+  event->callbacks = callback;
+  event->args      = args;
+  cons->callback_event = event;
+  cons->next           = NULL;
   
   funk2_processor_mutex__user_lock(&(this->callback_events__mutex));
   if (this->callback_events__last_cons) {
@@ -324,20 +327,20 @@ void funk2_gtk__add_callback_event(funk2_gtk_t* this, funk2_gtk_callback_t* call
   funk2_processor_mutex__unlock(&(this->callback_events__mutex));
 }
 
-funk2_gtk_callback_t* funk2_gtk__pop_callback_event(funk2_gtk_t* this) {
-  funk2_gtk_callback_t* callback = NULL;
+funk2_gtk_callback_event_t* funk2_gtk__pop_callback_event(funk2_gtk_t* this) {
+  funk2_gtk_callback_event_t* callback_event = NULL;
   funk2_processor_mutex__user_lock(&(this->callback_events__mutex));
   if (this->callback_events) {
-    funk2_gtk_callback_cons_t* cons = this->callback_events;
+    funk2_gtk_callback_event_cons_t* cons = this->callback_events;
     this->callback_events = this->callback_events->next;
-    callback = cons->callback;
+    callback_event = cons->callback_event;
     f2__free(to_ptr(cons));
     if (this->callback_events == NULL) {
       this->callback_events__last_cons = NULL;
     }
   }
   funk2_processor_mutex__unlock(&(this->callback_events__mutex));
-  return callback;
+  return callback_event;
 }
 
 void funk2_gtk__callback_handler(GtkWidget *widget, funk2_gtk_callback_t* callback) {
@@ -346,7 +349,8 @@ void funk2_gtk__callback_handler(GtkWidget *widget, funk2_gtk_callback_t* callba
 
 void funk2_gtk__signal_connect(funk2_gtk_t* this, GtkWidget* widget, u8* signal_name, f2ptr funk) {
   funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_t)));
-  callback->funk = funk;
+  callback->funk      = funk;
+  callback->args_type = funk2_gtk_callback_args_type__nil;
   funk2_gtk__add_callback(this, callback);
   {
     gdk_threads_enter();
@@ -360,13 +364,14 @@ void funk2_gtk__signal_connect(funk2_gtk_t* this, GtkWidget* widget, u8* signal_
 
 gboolean funk2_gtk__expose_event__signal_connect__callback_handler(GtkWidget* widget, GdkEventExpose* event, gpointer data) {
   funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)data;
-  funk2_gtk__add_callback_event(&(__funk2.gtk), callback);
+  funk2_gtk__add_callback_event(&(__funk2.gtk), callback, event);
   return TRUE;
 }
 
 void funk2_gtk__expose_event__signal_connect(funk2_gtk_t* this, GtkWidget* widget, f2ptr funk) {
   funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_t)));
-  callback->funk = funk;
+  callback->funk      = funk;
+  callback->args_type = funk2_gtk_callback_args_type__expose;
   funk2_gtk__add_callback(this, callback);
   {
     gdk_threads_enter();
@@ -379,15 +384,15 @@ void funk2_gtk__expose_event__signal_connect(funk2_gtk_t* this, GtkWidget* widge
 // key_press_event
 
 gboolean funk2_gtk__key_press_event__signal_connect__callback_handler(GtkWidget* widget, GdkEventKey* key, gpointer data) {
-  // should use key value...  :-)
   funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)data;
-  funk2_gtk__add_callback_event(&(__funk2.gtk), callback);
+  funk2_gtk__add_callback_event(&(__funk2.gtk), callback, key);
   return FALSE;
 }
 
 void funk2_gtk__key_press_event__signal_connect(funk2_gtk_t* this, GtkWidget* widget, f2ptr funk) {
   funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_t)));
-  callback->funk = funk;
+  callback->funk      = funk;
+  callback->args_type = funk2_gtk_callback_args_type__key_press;
   funk2_gtk__add_callback(this, callback);
   {
     gdk_threads_enter();
@@ -1938,12 +1943,51 @@ def_pcfunk5(gtk__box__pack_start, box, child_widget, expand, fill, padding, retu
 
 f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  funk2_gtk_callback_t* callback = funk2_gtk__pop_callback_event(&(__funk2.gtk));
-  if (! callback) {
+  funk2_gtk_callback_event_t* callback_event = funk2_gtk__pop_callback_event(&(__funk2.gtk));
+  if (! callback_event) {
     return nil;
   }
-  f2ptr funk = callback->funk;
-  f2ptr args = nil;
+  f2ptr funk = callback_event->callback->funk;
+  f2ptr args;
+  {
+    switch (callback_event->callback->args_type) {
+    case funk2_gtk_callback_args_type__nil:
+      args = nil;
+      break;
+    case funk2_gtk_callback_args_type__expose: {
+      GdkEventExpose* event = (GdkEventExpose*)(callback_event->args);
+      // should use expose event here... :-)
+      args = nil;
+    } break;
+    case funk2_gtk_callback_args_type__key_press: {
+      GdkEventKey* key = (GdkEventKey*)(callback_event->args);
+      f2ptr key_event_frame__type;
+      if (key->type == GDK_KEY_PRESS) {
+	key_event_frame__type = new__symbol(cause, "press");
+      } else if (key->type == GTK_KEY_RELEASE) {
+	key_event_frame__type = new__symbol(cause, "release");
+      } else {
+	key_event_frame__type = new__symbol(cause, "unknown");
+      }
+      f2ptr key_event_frame = f2__frame__new(cause, f2list22__new(cause,
+								  new__symbol(cause, "type"),             key_event_frame__type,
+								  new__symbol(cause, "window"),           f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(key->window))),
+								  new__symbol(cause, "send_event"),       f2integer__new(cause, key->send_event),
+								  new__symbol(cause, "time"),             f2integer__new(cause, key->time),
+								  new__symbol(cause, "state"),            f2integer__new(cause, key->state),
+								  new__symbol(cause, "keyval"),           f2integer__new(cause, key->keyval),
+								  new__symbol(cause, "length"),           f2integer__new(cause, key->length),
+								  new__symbol(cause, "string"),           new__string(cause, key->string),
+								  new__symbol(cause, "hardware_keycode"), f2integer__new(cause, key->hardware_keycode),
+								  new__symbol(cause, "group"),            f2integer__new(cause, key->group),
+								  new__symbol(cause, "is_modifier"),      f2bool__new(key->is_modifier)));
+      args = f2cons__new(cause, key_event_frame, nil);
+    } break;
+    default:
+      error(nil, "invalid gtk callback event args_type.");
+    }
+  }
+  f2__free(to_ptr(callback_event));
   return f2__gtk_callback__new(cause, funk, args);
 #else
   return f2__gtk_not_supported_larva__new(cause);

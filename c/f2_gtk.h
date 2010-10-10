@@ -25,12 +25,21 @@
 #include "f2_processor_thread.h"
 
 
-typedef struct funk2_gtk_callback_s      funk2_gtk_callback_t;
-typedef struct funk2_gtk_callback_cons_s funk2_gtk_callback_cons_t;
-typedef struct funk2_gtk_s               funk2_gtk_t;
+typedef enum   funk2_gtk_callback_args_type_e funk2_gtk_callback_args_type_t;
+typedef struct funk2_gtk_callback_s           funk2_gtk_callback_t;
+typedef struct funk2_gtk_callback_event_s     funk2_gtk_callback_event_t;
+typedef struct funk2_gtk_callback_cons_s      funk2_gtk_callback_cons_t;
+typedef struct funk2_gtk_s                    funk2_gtk_t;
+
+enum funk2_gtk_callback_args_type_e {
+  funk2_gtk_callback_args_type__nil = 0,
+  funk2_gtk_callback_args_type__expose,
+  funk2_gtk_callback_args_type__key_press
+};
 
 struct funk2_gtk_callback_s {
-  f2ptr funk;
+  f2ptr                          funk;
+  funk2_gtk_callback_args_type_t args_type;
 };
 
 struct funk2_gtk_callback_cons_s {
@@ -38,17 +47,27 @@ struct funk2_gtk_callback_cons_s {
   funk2_gtk_callback_cons_t* next;
 };
 
+struct funk2_gtk_callback_event_s {
+  funk2_gtk_callback_t* callback;
+  void*                 args;
+};
+
+struct funk2_gtk_callback_event_cons_s {
+  funk2_gtk_callback_event_t*      callback_event;
+  funk2_gtk_callback_event_cons_t* next;
+};
+
 struct funk2_gtk_s {
-  funk2_processor_mutex_t    main_thread__mutex;
-  boolean_t                  main_thread__active;
-  funk2_processor_thread_t*  main_thread;
+  funk2_processor_mutex_t          main_thread__mutex;
+  boolean_t                        main_thread__active;
+  funk2_processor_thread_t*        main_thread;
   
-  funk2_processor_mutex_t    callbacks__mutex;
-  funk2_gtk_callback_cons_t* callbacks;
+  funk2_processor_mutex_t          callbacks__mutex;
+  funk2_gtk_callback_cons_t*       callbacks;
   
-  funk2_processor_mutex_t    callback_events__mutex;
-  funk2_gtk_callback_cons_t* callback_events;
-  funk2_gtk_callback_cons_t* callback_events__last_cons;
+  funk2_processor_mutex_t          callback_events__mutex;
+  funk2_gtk_callback_event_cons_t* callback_events;
+  funk2_gtk_callback_event_cons_t* callback_events__last_cons;
 };
 
 #endif // F2__GTK__TYPES__H
@@ -114,7 +133,7 @@ f2ptr f2gtk_menu__primobject_type__new_aux(f2ptr cause);
 void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc);
 void funk2_gtk__destroy(funk2_gtk_t* this);
 void funk2_gtk__add_callback(funk2_gtk_t* this, funk2_gtk_callback_t* callback);
-void funk2_gtk__add_callback_event(funk2_gtk_t* this, funk2_gtk_callback_t* callback);
+void funk2_gtk__add_callback_event(funk2_gtk_t* this, funk2_gtk_callback_t* callback, void* args);
 
 
 // user-space funktions

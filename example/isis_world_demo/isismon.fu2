@@ -19,11 +19,17 @@
 
 [deframe isismon_agent [frame] [isis_agent
 				frame
+				vbox
+				label
 				entry]
   [new [initial_isis_agent]
        [= isis_agent initial_isis_agent]
        [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
+       [= vbox  [gtk-vbox-new 2]]
+       [= label [gtk-label-new '']]
        [= entry [gtk-entry-new]]
+       [have vbox pack_start label t t 0]
+       [have vbox pack_start entry nil nil 0]
        [have frame add entry]
        nil]]
 

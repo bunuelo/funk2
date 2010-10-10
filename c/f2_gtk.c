@@ -1955,7 +1955,7 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
       args = nil;
       break;
     case funk2_gtk_callback_args_type__expose: {
-      GdkEventExpose* event = (GdkEventExpose*)(callback_event->args);
+      //GdkEventExpose* event = (GdkEventExpose*)(callback_event->args);
       // should use expose event here... :-)
       args = nil;
     } break;

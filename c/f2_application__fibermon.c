@@ -283,31 +283,6 @@ def_pcfunk1(fibermon_fiber__recompute_statistics_fast, this, return f2__fibermon
 
 
 f2ptr f2__fibermon_processor__construct_fast(f2ptr cause, f2ptr this) {
-  //       [= vbox                [gtk-vbox-new 2]]
-  //       [= progress_bar        [gtk-progress_bar-new]]
-  //       [= scrolled_window     [gtk-scrolled_window-new]]
-  //       [= fiber_vbox          [gtk-vbox-new 2]]
-  //       [= fibermon_fiber_hash [new ptypehash]]
-  //       [= table               [gtk-table-new 4 2 nil]]
-  //       [= table_labels        [new array 4 2]]
-  //       
-  //       [set this frame [gtk-frame-new [format nil 'processor #' index]]]
-  //       [have scrolled_window add_with_viewport fiber_vbox]
-  //       [dotimes [row 4]
-  //	     [let [[row_labels [get table_labels elt row]]]
-  //	       [dotimes [column 2]
-  //	         [let [[table_label [gtk-label-new '']]]
-  //	           [set table_label alignment 0.0 0.0]
-  //	           [set row_labels elt column table_label]
-  //	           [have table attach table_label column [+ column 1] row [+ row 1] 0 0]]]]]
-  //       [set [get [get table_labels elt 0] elt 0] text 'bytecodes_per_second']
-  //       [set [get [get table_labels elt 1] elt 0] text 'execution_efficiency']
-  //       [set [get [get table_labels elt 2] elt 0] text 'total_used_memory']
-  //       [set [get [get table_labels elt 3] elt 0] text 'total_free_memory']
-  //       [have vbox pack_start table           nil nil 0]
-  //       [have vbox pack_start progress_bar    nil nil 0]
-  //       [have vbox pack_start scrolled_window t t 0]
-  //       [have frame add vbox]
   f2ptr this__vbox                = raw__gtk__vbox__new(           cause, f2integer__new(cause, 2));                                                           f2__frame__add_var_value(cause, this, new__symbol(cause, "vbox"),                this__vbox);
   f2ptr this__progress_bar        = raw__gtk__progress_bar__new(   cause);                                                                                     f2__frame__add_var_value(cause, this, new__symbol(cause, "progress_bar"),        this__progress_bar);
   f2ptr this__scrolled_window     = raw__gtk__scrolled_window__new(cause);                                                                                     f2__frame__add_var_value(cause, this, new__symbol(cause, "scrolled_window"),     this__scrolled_window);
@@ -318,6 +293,7 @@ f2ptr f2__fibermon_processor__construct_fast(f2ptr cause, f2ptr this) {
   f2ptr this__index               = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "index"), nil); if (! raw__integer__is_type(cause, this__index)) {return f2larva__new(cause, 81, nil);}
   f2ptr this__frame               = raw__gtk__frame__new(          cause, f2__stringlist__concat(cause, f2list2__new(cause, new__string(cause, "processor #"), f2__exp__as__string(cause, this__index)))); f2__frame__add_var_value(cause, this, new__symbol(cause, "frame"), this__frame);
   f2__gtk__scrolled_window__add_with_viewport(cause, this__scrolled_window, this__fiber_vbox);
+  f2__gtk__scrolled_window__set_policy(       cause, this__scrolled_window, new__symbol(cause, "automatic"), new__symbol(cause, "never"));
   {
     u64 row;
     for (row = 0; row < 4; row ++) {

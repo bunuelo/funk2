@@ -54,8 +54,7 @@
     
     [have search_entry key_press_event-signal_connect
 	  [funk []
-		[print 'key pressed!']]
-	  nil]
+		[print 'key pressed!']]]
     
     [have search_button signal_connect 'clicked'
 	  [funk []
@@ -63,21 +62,18 @@
 		  [if found_range
 		      [prog [format stdout '\n  found "' [get search_entry text] '"!']
 			    [have [get text_view buffer] select_range found_range]]
-		    [prog [format stdout '\n  could not find "' [get search_entry text] '".']]]]]
-	  nil]
+		    [prog [format stdout '\n  could not find "' [get search_entry text] '".']]]]]]
     
     [have next_button signal_connect 'clicked'
-	  [funk [button]
-		[print 'Next button clicked!']]
-	  [cons next_button nil]]
+	  [funk []
+		[print 'Next button clicked!']]]
     
     [have drawing_area expose_event-signal_connect
 	  [funk []
 		[have drawing_area draw_arc       nil  0  0 100 100 [* 64   0] [* 64  90]]
 		[have drawing_area draw_arc       nil  0  0 100 100 [* 64 270] [* 64 -90]]
 		[have drawing_area draw_rectangle nil  0  0 100 100]
-		[have drawing_area draw_rectangle nil 45 45  10  10]]
-	  nil]
+		[have drawing_area draw_rectangle nil 45 45  10  10]]]
     
     [have win show_all]]]
 

@@ -532,7 +532,7 @@ f2ptr f2__string__substring(f2ptr cause, f2ptr this, f2ptr start_index, f2ptr en
   s64 end_index__i   = f2integer__i(end_index,   cause);
   return raw__string__substring(cause, this, start_index__i, end_index__i);
 }
-def_pcfunk3(string__substring, this, start_index, end_index, return f2__string__substring(this_cause, start_index, end_index));
+def_pcfunk3(string__substring, this, start_index, end_index, return f2__string__substring(this_cause, this, start_index, end_index));
 
 
 boolean_t raw__string__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {

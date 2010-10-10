@@ -1491,7 +1491,7 @@ f2ptr f2__gtk__expose_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr fun
   }
   return raw__gtk__expose_event__signal_connect(cause, widget, funk);
 }
-def_pcfunk3(gtk__expose_event__signal_connect, widget, funk, return f2__gtk__expose_event__signal_connect(this_cause, widget, funk));
+def_pcfunk2(gtk__expose_event__signal_connect, widget, funk, return f2__gtk__expose_event__signal_connect(this_cause, widget, funk));
 
 
 // key_press_event
@@ -1513,7 +1513,7 @@ f2ptr f2__gtk__key_press_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr 
   }
   return raw__gtk__key_press_event__signal_connect(cause, widget, funk);
 }
-def_pcfunk3(gtk__key_press_event__signal_connect, widget, funk, return f2__gtk__key_press_event__signal_connect(this_cause, widget, funk));
+def_pcfunk2(gtk__key_press_event__signal_connect, widget, funk, return f2__gtk__key_press_event__signal_connect(this_cause, widget, funk));
 
 
 // works for 'clicked' event but not 'expose_event'
@@ -1542,7 +1542,7 @@ f2ptr f2__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2pt
   }
   return raw__gtk__signal_connect(cause, widget, signal_name, funk);
 }
-def_pcfunk4(gtk__signal_connect, widget, signal_name, funk, return f2__gtk__signal_connect(this_cause, widget, signal_name, funk));
+def_pcfunk3(gtk__signal_connect, widget, signal_name, funk, return f2__gtk__signal_connect(this_cause, widget, signal_name, funk));
 
 
 

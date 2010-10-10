@@ -1964,7 +1964,7 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
       f2ptr key_event_frame__type;
       if (key->type == GDK_KEY_PRESS) {
 	key_event_frame__type = new__symbol(cause, "press");
-      } else if (key->type == GTK_KEY_RELEASE) {
+      } else if (key->type == GDK_KEY_RELEASE) {
 	key_event_frame__type = new__symbol(cause, "release");
       } else {
 	key_event_frame__type = new__symbol(cause, "unknown");

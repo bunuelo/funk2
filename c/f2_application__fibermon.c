@@ -170,8 +170,8 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  7), 0), new__string(cause, "sleep_until_time"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  8), 0), new__string(cause, "execution_time"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  9), 0), new__string(cause, "bytecode_count"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 10), 0), new__string(cause, "bytecodes_per_second"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 11), 0), new__string(cause, "execution_efficiency"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 10), 0), new__string(cause, "Bc/s"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 11), 0), new__string(cause, "efficiency"));
   
   raw__gtk__box__pack_start(cause, this__hbox, this__progress_bar, nil, nil, f2integer__new(cause, 0));
   raw__gtk__box__pack_start(cause, this__hbox, this__table,        nil, nil, f2integer__new(cause, 0));
@@ -201,7 +201,14 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
     {
       f2ptr cause_reg          = f2fiber__cause_reg(this__fiber, cause);
       f2ptr cause__name__value = raw__cause__is_type(cause, cause_reg) ? f2__cause__lookup(cause, cause_reg, new__symbol(cause, "cause-name")) : nil;
-      f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  0), 1), f2__exp__as__string(cause, cause__name__value));
+      f2ptr name_string        = f2__exp__as__string(cause, cause__name__value);
+      f2ptr short_name_string;
+      if (raw__string__length(cause, name_string) < 16) {
+	short_name_string = name_string;
+      } else {
+	short_name_string = f2__stringlist__concat(cause, f2list2__new(cause, f2__string__substring(cause, name_string, f2integer__new(cause, 0), f2integer__new(cause, 13)), new__string(cause, "...")));
+      }
+      f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 0), 1), short_name_string);
     }
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  1), 1), (f2fiber__keep_undead(this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  2), 1), (f2fiber__is_zombie(  this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
@@ -285,15 +292,12 @@ def_pcfunk1(fibermon_fiber__recompute_statistics_fast, this, return f2__fibermon
 f2ptr f2__fibermon_processor__construct_fast(f2ptr cause, f2ptr this) {
   f2ptr this__vbox                = raw__gtk__vbox__new(           cause, f2integer__new(cause, 2));                                                           f2__frame__add_var_value(cause, this, new__symbol(cause, "vbox"),                this__vbox);
   f2ptr this__progress_bar        = raw__gtk__progress_bar__new(   cause);                                                                                     f2__frame__add_var_value(cause, this, new__symbol(cause, "progress_bar"),        this__progress_bar);
-  f2ptr this__scrolled_window     = raw__gtk__scrolled_window__new(cause);                                                                                     f2__frame__add_var_value(cause, this, new__symbol(cause, "scrolled_window"),     this__scrolled_window);
   f2ptr this__fiber_vbox          = raw__gtk__vbox__new(           cause, f2integer__new(cause, 2));                                                           f2__frame__add_var_value(cause, this, new__symbol(cause, "fiber_vbox"),          this__fiber_vbox);
   f2ptr this__fibermon_fiber_hash = f2__ptypehash__new(            cause);                                                                                     f2__frame__add_var_value(cause, this, new__symbol(cause, "fibermon_fiber_hash"), this__fibermon_fiber_hash);
   f2ptr this__table               = raw__gtk__table__new(          cause, f2integer__new(cause, 4), f2integer__new(cause, 2), nil);                            f2__frame__add_var_value(cause, this, new__symbol(cause, "table"),               this__table);
   f2ptr this__table_labels        = f2__array__new(cause, f2list2__new(cause, f2integer__new(cause, 4), f2integer__new(cause, 2)));                            f2__frame__add_var_value(cause, this, new__symbol(cause, "table_labels"),        this__table_labels);
   f2ptr this__index               = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "index"), nil); if (! raw__integer__is_type(cause, this__index)) {return f2larva__new(cause, 81, nil);}
   f2ptr this__frame               = raw__gtk__frame__new(          cause, f2__stringlist__concat(cause, f2list2__new(cause, new__string(cause, "processor #"), f2__exp__as__string(cause, this__index)))); f2__frame__add_var_value(cause, this, new__symbol(cause, "frame"), this__frame);
-  f2__gtk__scrolled_window__add_with_viewport(cause, this__scrolled_window, this__fiber_vbox);
-  f2__gtk__scrolled_window__set_policy(       cause, this__scrolled_window, new__symbol(cause, "automatic"), new__symbol(cause, "never"));
   {
     u64 row;
     for (row = 0; row < 4; row ++) {
@@ -315,7 +319,7 @@ f2ptr f2__fibermon_processor__construct_fast(f2ptr cause, f2ptr this) {
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  3), 0), new__string(cause, "total_free_memory"));
   f2__gtk__box__pack_start(cause, this__vbox, this__table,           nil, nil, f2integer__new(cause, 0));
   f2__gtk__box__pack_start(cause, this__vbox, this__progress_bar,    nil, nil, f2integer__new(cause, 0));
-  f2__gtk__box__pack_start(cause, this__vbox, this__scrolled_window, f2bool__new(boolean__true), f2bool__new(boolean__true), f2integer__new(cause, 0));
+  f2__gtk__box__pack_start(cause, this__vbox, this__fiber_vbox, f2bool__new(boolean__true), f2bool__new(boolean__true), f2integer__new(cause, 0));
   f2__gtk__container__add(cause, this__frame, this__vbox);
   return nil;
 }

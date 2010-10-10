@@ -1990,7 +1990,7 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
       } else {
 	key_event_frame__event_type = new__symbol(cause, "unknown");
       }
-      f2ptr key_event_frame = f2__frame__new(cause, f2list22__new(cause,
+      f2ptr key_event_frame = f2__frame__new(cause, f2list20__new(cause,
 								  new__symbol(cause, "event_type"),       key_event_frame__event_type,
 								  new__symbol(cause, "window"),           f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(key->window))),
 								  new__symbol(cause, "send_event"),       f2integer__new(cause, key->send_event),
@@ -1998,7 +1998,6 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 								  new__symbol(cause, "state"),            f2integer__new(cause, key->state),
 								  new__symbol(cause, "keyval"),           f2integer__new(cause, key->keyval),
 								  new__symbol(cause, "length"),           f2integer__new(cause, key->length),
-								  new__symbol(cause, "string"),           (key->string == NULL) ? nil : new__string(cause, key->string),
 								  new__symbol(cause, "hardware_keycode"), f2integer__new(cause, key->hardware_keycode),
 								  new__symbol(cause, "group"),            f2integer__new(cause, key->group),
 								  new__symbol(cause, "is_modifier"),      f2bool__new(key->is_modifier)));

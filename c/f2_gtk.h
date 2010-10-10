@@ -187,14 +187,14 @@ f2ptr  f2__gtk__container__remove(f2ptr cause, f2ptr widget, f2ptr remove_widget
 
 // expose_event
 
-f2ptr raw__gtk__expose_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args);
-f2ptr  f2__gtk__expose_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args);
+f2ptr raw__gtk__expose_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk);
+f2ptr  f2__gtk__expose_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk);
 
 
 // works for 'clicked' event but not 'expose_event'
 
-f2ptr raw__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk, f2ptr args);
-f2ptr  f2__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk, f2ptr args);
+f2ptr raw__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk);
+f2ptr  f2__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk);
 
 
 // widget

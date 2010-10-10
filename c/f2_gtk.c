@@ -2863,7 +2863,7 @@ f2ptr raw__gtk__gdk_keyval_to_unicode(f2ptr cause, f2ptr keyval) {
   return f2integer__new(cause, unicode__i);
 }
 
-f2tr f2__gtk__gdk_keyval_to_unicode(f2ptr cause, f2ptr keyval) {
+f2ptr f2__gtk__gdk_keyval_to_unicode(f2ptr cause, f2ptr keyval) {
   if (! raw__integer__is_type(cause, keyval)) {
     return f2larva__new(cause, 1, nil);
   }

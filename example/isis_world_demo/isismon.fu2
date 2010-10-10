@@ -18,17 +18,17 @@
  rights to redistribute these changes.'
 
 [deframe isismon_agent [frame] [isis_agent
-				label]
+				frame]
   [new [initial_isis_agent]
        [= isis_agent initial_isis_agent]
-       [= label [gtk-label-new [format nil 'isis_agent - ' [get isis_agent name]]]]
+       [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
        nil]]
 
 [deftypefunk isismon_agent get name []
   [get isis_agent name]]
 
 [deftypefunk isismon_agent get widget []
-  label]
+  frame]
 
 [deframe isismon [frame] [isis_world
 			  [initialize_mutex [new mutex]]

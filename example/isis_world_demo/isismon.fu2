@@ -18,10 +18,13 @@
  rights to redistribute these changes.'
 
 [deframe isismon_agent [frame] [isis_agent
-				frame]
+				frame
+				entry]
   [new [initial_isis_agent]
        [= isis_agent initial_isis_agent]
        [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
+       [= entry [gtk-entry-new]]
+       [have frame add entry]
        nil]]
 
 [deftypefunk isismon_agent get name []

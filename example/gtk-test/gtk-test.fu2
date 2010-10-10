@@ -53,8 +53,8 @@
     [set  win          default_size 128 64]
     
     [have search_entry key_press_event-signal_connect
-	  [funk []
-		[print 'key pressed!']]]
+	  [funk [key_event]
+		[terminal_format stardard-terminal '\nkey event: ' key_event]]]
     
     [have search_button signal_connect 'clicked'
 	  [funk []
@@ -69,7 +69,8 @@
 		[print 'Next button clicked!']]]
     
     [have drawing_area expose_event-signal_connect
-	  [funk []
+	  [funk [expose_event]
+		[terminal_format standard-terminal '\nexpose event: ' expose_event]
 		[have drawing_area draw_arc       nil  0  0 100 100 [* 64   0] [* 64  90]]
 		[have drawing_area draw_arc       nil  0  0 100 100 [* 64 270] [* 64 -90]]
 		[have drawing_area draw_rectangle nil  0  0 100 100]

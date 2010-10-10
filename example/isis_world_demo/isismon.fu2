@@ -28,6 +28,16 @@
        [= vbox  [gtk-vbox-new 2]]
        [= label [gtk-label-new '']]
        [= entry [gtk-entry-new]]
+       
+       [have entry key_press_event-signal_connect
+	     [funk [key_event]
+		   [let [[keyval [have key_event lookup `keyval]]]
+		     `[terminal_format standard-terminal '\nkey event: ' key_event]
+		     [if [eq keyval [have gtk-gdk_keysyms_frame lookup `GDK_Return]]
+			 [prog [print 'Return!']
+			       [set entry text '']
+			       ]]]]]
+       
        [have vbox pack_start label t t 0]
        [have vbox pack_start entry nil nil 0]
        [have frame add vbox]

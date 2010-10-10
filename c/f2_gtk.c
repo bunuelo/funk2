@@ -1957,17 +1957,17 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
     case funk2_gtk_callback_args_type__expose: {
       GdkEventExpose* expose = (GdkEventExpose*)(callback_event->args);
       // should use expose event here... :-)
-
-      f2ptr expose_event_frame__type;
+      
+      f2ptr expose_event_frame__event_type;
       if (expose->type == GDK_EXPOSE) {
-	expose_event_frame__type = new__symbol(cause, "expose");
+	expose_event_frame__event_type = new__symbol(cause, "expose");
       } else if (expose->type == GDK_DAMAGE) {
-	expose_event_frame__type = new__symbol(cause, "damage");
+	expose_event_frame__event_type = new__symbol(cause, "damage");
       } else {
-	expose_event_frame__type = new__symbol(cause, "unknown");
+	expose_event_frame__event_type = new__symbol(cause, "unknown");
       }
       f2ptr expose_event_frame = f2__frame__new(cause, f2list12__new(cause,
-								     new__symbol(cause, "type"),       expose_event_frame__type,
+								     new__symbol(cause, "event_type"), expose_event_frame__event_type,
 								     new__symbol(cause, "window"),     f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(expose->window))),
 								     new__symbol(cause, "send_event"), f2integer__new(cause, expose->send_event),
 								     new__symbol(cause, "area"),       f2__frame__new(cause, f2list8__new(cause,
@@ -1982,16 +1982,16 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
     } break;
     case funk2_gtk_callback_args_type__key_press: {
       GdkEventKey* key = (GdkEventKey*)(callback_event->args);
-      f2ptr key_event_frame__type;
+      f2ptr key_event_frame__event_type;
       if (key->type == GDK_KEY_PRESS) {
-	key_event_frame__type = new__symbol(cause, "press");
+	key_event_frame__event_type = new__symbol(cause, "press");
       } else if (key->type == GDK_KEY_RELEASE) {
-	key_event_frame__type = new__symbol(cause, "release");
+	key_event_frame__event_type = new__symbol(cause, "release");
       } else {
-	key_event_frame__type = new__symbol(cause, "unknown");
+	key_event_frame__event_type = new__symbol(cause, "unknown");
       }
       f2ptr key_event_frame = f2__frame__new(cause, f2list22__new(cause,
-								  new__symbol(cause, "type"),             key_event_frame__type,
+								  new__symbol(cause, "event_type"),       key_event_frame__event_type,
 								  new__symbol(cause, "window"),           f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(key->window))),
 								  new__symbol(cause, "send_event"),       f2integer__new(cause, key->send_event),
 								  new__symbol(cause, "time"),             f2integer__new(cause, key->time),

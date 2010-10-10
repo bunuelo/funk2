@@ -362,9 +362,11 @@ void funk2_gtk__signal_connect(funk2_gtk_t* this, GtkWidget* widget, u8* signal_
 
 // expose_event
 
-gboolean funk2_gtk__expose_event__signal_connect__callback_handler(GtkWidget* widget, GdkEventExpose* event, gpointer data) {
-  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)data;
-  funk2_gtk__add_callback_event(&(__funk2.gtk), callback, event);
+gboolean funk2_gtk__expose_event__signal_connect__callback_handler(GtkWidget* widget, GdkEventExpose* expose, gpointer data) {
+  funk2_gtk_callback_t* callback    = (funk2_gtk_callback_t*)data;
+  GdkEventExpose*       expose_copy = (GdkEventExpose*)from_ptr(f2__malloc(sizeof(GdkEventExpose)));
+  memcpy(expose_copy, expose, sizeof(GdkEventExpose));
+  funk2_gtk__add_callback_event(&(__funk2.gtk), callback, expose_copy);
   return TRUE;
 }
 
@@ -385,7 +387,9 @@ void funk2_gtk__expose_event__signal_connect(funk2_gtk_t* this, GtkWidget* widge
 
 gboolean funk2_gtk__key_press_event__signal_connect__callback_handler(GtkWidget* widget, GdkEventKey* key, gpointer data) {
   funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)data;
-  funk2_gtk__add_callback_event(&(__funk2.gtk), callback, key);
+  GdkEventKey*          key_copy = (GdkEventKey*)from_ptr(f2__malloc(sizeof(GdkEventKey)));
+  memcpy(key_copy, key, sizeof(GdkEventKey));
+  funk2_gtk__add_callback_event(&(__funk2.gtk), callback, key_copy);
   return FALSE;
 }
 
@@ -1977,7 +1981,7 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 																	  new__symbol(cause, "height"), f2integer__new(cause, expose->area.height))),
 								     new__symbol(cause, "region"),     f2pointer__new(cause, to_ptr(expose->region)),
 								     new__symbol(cause, "count"),      f2integer__new(cause, expose->count)));
-      
+      f2__free(to_ptr(expose));
       args = f2cons__new(cause, expose_event_frame, nil);
     } break;
     case funk2_gtk_callback_args_type__key_press: {
@@ -2001,6 +2005,7 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 								  new__symbol(cause, "hardware_keycode"), f2integer__new(cause, key->hardware_keycode),
 								  new__symbol(cause, "group"),            f2integer__new(cause, key->group),
 								  new__symbol(cause, "is_modifier"),      f2bool__new(key->is_modifier)));
+      f2__free(to_ptr(key));
       args = f2cons__new(cause, key_event_frame, nil);
     } break;
     default:

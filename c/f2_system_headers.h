@@ -152,6 +152,7 @@
 
 #ifdef F2__GTK__SUPPORTED
 #  include <gtk/gtk.h>
+#  include <gdk/gdkkeysyms.h>
 #endif
 
 #endif // F2__SYSTEM_HEADERS__H

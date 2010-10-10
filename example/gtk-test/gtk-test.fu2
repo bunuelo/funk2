@@ -54,7 +54,7 @@
     
     [have search_entry key_press_event-signal_connect
 	  [funk [key_event]
-		[terminal_format stardard-terminal '\nkey event: ' key_event]]]
+		[terminal_format standard-terminal '\nkey event: ' key_event]]]
     
     [have search_button signal_connect 'clicked'
 	  [funk []

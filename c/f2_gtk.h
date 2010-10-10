@@ -25,11 +25,12 @@
 #include "f2_processor_thread.h"
 
 
-typedef enum   funk2_gtk_callback_args_type_e funk2_gtk_callback_args_type_t;
-typedef struct funk2_gtk_callback_s           funk2_gtk_callback_t;
-typedef struct funk2_gtk_callback_event_s     funk2_gtk_callback_event_t;
-typedef struct funk2_gtk_callback_cons_s      funk2_gtk_callback_cons_t;
-typedef struct funk2_gtk_s                    funk2_gtk_t;
+typedef enum   funk2_gtk_callback_args_type_e  funk2_gtk_callback_args_type_t;
+typedef struct funk2_gtk_callback_s            funk2_gtk_callback_t;
+typedef struct funk2_gtk_callback_event_s      funk2_gtk_callback_event_t;
+typedef struct funk2_gtk_callback_cons_s       funk2_gtk_callback_cons_t;
+typedef struct funk2_gtk_callback_event_cons_s funk2_gtk_callback_event_cons_t;
+typedef struct funk2_gtk_s                     funk2_gtk_t;
 
 enum funk2_gtk_callback_args_type_e {
   funk2_gtk_callback_args_type__nil = 0,

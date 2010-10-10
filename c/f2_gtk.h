@@ -134,25 +134,25 @@ f2ptr raw__gtk__window__set_default_size(f2ptr cause, f2ptr window, f2ptr width,
 f2ptr  f2__gtk__window__set_default_size(f2ptr cause, f2ptr window, f2ptr width, f2ptr height);
 
 
-  // vbox
+// vbox
 
 f2ptr raw__gtk__vbox__new(f2ptr cause, f2ptr spacing);
 f2ptr  f2__gtk__vbox__new(f2ptr cause, f2ptr spacing);
 
 
-  // hbox
+// hbox
 
 f2ptr raw__gtk__hbox__new(f2ptr cause, f2ptr spacing);
 f2ptr  f2__gtk__hbox__new(f2ptr cause, f2ptr spacing);
 
 
-  // button
+// button
 
 f2ptr raw__gtk__button__new_with_label(f2ptr cause, f2ptr label);
 f2ptr  f2__gtk__button__new_with_label(f2ptr cause, f2ptr label);
 
 
-  // entry
+// entry
 
 f2ptr raw__gtk__entry__new(f2ptr cause);
 f2ptr  f2__gtk__entry__new(f2ptr cause);
@@ -160,15 +160,17 @@ f2ptr raw__gtk__entry__get_text(f2ptr cause, f2ptr widget);
 f2ptr  f2__gtk__entry__get_text(f2ptr cause, f2ptr widget);
 
 
-  // scrolled_window
+// scrolled_window
 
-f2ptr raw__gtk__scrolled_window__new(f2ptr cause);
-f2ptr  f2__gtk__scrolled_window__new(f2ptr cause);
+f2ptr raw__gtk__scrolled_window__new(              f2ptr cause);
+f2ptr  f2__gtk__scrolled_window__new(              f2ptr cause);
 f2ptr raw__gtk__scrolled_window__add_with_viewport(f2ptr cause, f2ptr scrolled_window, f2ptr child);
 f2ptr  f2__gtk__scrolled_window__add_with_viewport(f2ptr cause, f2ptr scrolled_window, f2ptr child);
+f2ptr raw__gtk__scrolled_window__set_policy(       f2ptr cause, f2ptr scrolled_window, f2ptr hscrollbar_policy, f2ptr vscrollbar_policy);
+f2ptr  f2__gtk__scrolled_window__set_policy(       f2ptr cause, f2ptr scrolled_window, f2ptr hscrollbar_policy, f2ptr vscrollbar_policy);
 
 
-  // text_view
+// text_view
 
 f2ptr raw__gtk__text_view__new(f2ptr cause);
 f2ptr  f2__gtk__text_view__new(f2ptr cause);

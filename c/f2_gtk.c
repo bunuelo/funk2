@@ -1955,9 +1955,30 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
       args = nil;
       break;
     case funk2_gtk_callback_args_type__expose: {
-      //GdkEventExpose* event = (GdkEventExpose*)(callback_event->args);
+      GdkEventExpose* expose = (GdkEventExpose*)(callback_event->args);
       // should use expose event here... :-)
-      args = nil;
+
+      f2ptr expose_event_frame__type;
+      if (expose->type == GDK_EXPOSE) {
+	expose_event_frame__type = new__symbol(cause, "expose");
+      } else if (expose->type == GDK_DAMAGE) {
+	expose_event_frame__type = new__symbol(cause, "damage");
+      } else {
+	expose_event_frame__type = new__symbol(cause, "unknown");
+      }
+      f2ptr expose_event_frame = f2__frame__new(cause, f2list12__new(cause,
+								     new__symbol(cause, "type"),       expose_event_frame__type,
+								     new__symbol(cause, "window"),     f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(expose->window))),
+								     new__symbol(cause, "send_event"), f2integer__new(cause, expose->send_event),
+								     new__symbol(cause, "area"),       f2__frame__new(cause, f2list8__new(cause,
+																	  new__symbol(cause, "x"),      f2integer__new(cause, expose->area.x),
+																	  new__symbol(cause, "y"),      f2integer__new(cause, expose->area.y),
+																	  new__symbol(cause, "width"),  f2integer__new(cause, expose->area.width),
+																	  new__symbol(cause, "height"), f2integer__new(cause, expose->area.height))),
+								     new__symbol(cause, "region"),     f2pointer__new(cause, to_ptr(expose->region)),
+								     new__symbol(cause, "count"),      f2integer__new(cause, expose->count)));
+      
+      args = f2cons__new(cause, expose_event_frame, nil);
     } break;
     case funk2_gtk_callback_args_type__key_press: {
       GdkEventKey* key = (GdkEventKey*)(callback_event->args);
@@ -1977,7 +1998,7 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 								  new__symbol(cause, "state"),            f2integer__new(cause, key->state),
 								  new__symbol(cause, "keyval"),           f2integer__new(cause, key->keyval),
 								  new__symbol(cause, "length"),           f2integer__new(cause, key->length),
-								  new__symbol(cause, "string"),           new__string(cause, key->string),
+								  new__symbol(cause, "string"),           (key->string == NULL) ? nil : new__string(cause, key->string),
 								  new__symbol(cause, "hardware_keycode"), f2integer__new(cause, key->hardware_keycode),
 								  new__symbol(cause, "group"),            f2integer__new(cause, key->group),
 								  new__symbol(cause, "is_modifier"),      f2bool__new(key->is_modifier)));

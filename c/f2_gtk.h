@@ -29,6 +29,10 @@ typedef struct funk2_gtk_callback_s      funk2_gtk_callback_t;
 typedef struct funk2_gtk_callback_cons_s funk2_gtk_callback_cons_t;
 typedef struct funk2_gtk_s               funk2_gtk_t;
 
+struct funk2_gtk_callback_s {
+  f2ptr funk;
+};
+
 struct funk2_gtk_callback_cons_s {
   funk2_gtk_callback_t*      callback;
   funk2_gtk_callback_cons_t* next;
@@ -45,11 +49,6 @@ struct funk2_gtk_s {
   funk2_processor_mutex_t    callback_events__mutex;
   funk2_gtk_callback_cons_t* callback_events;
   funk2_gtk_callback_cons_t* callback_events__last_cons;
-};
-
-struct funk2_gtk_callback_s {
-  f2ptr funk;
-  f2ptr args;
 };
 
 #endif // F2__GTK__TYPES__H

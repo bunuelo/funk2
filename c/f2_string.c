@@ -667,7 +667,5 @@ void f2__string__initialize() {
   {char* str = "is_greater_than"; __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__is_greater_than, this, that, cfunk, 1, "returns true when this string is_greater_than that string."); __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__funk = never_gc(cfunk);}
   
-  def_pcfunk3(string__substring, this, start_index, end_index, return f2__string__substring(this_cause, start_index, end_index));
-
 }
 

@@ -89,7 +89,7 @@
 			       [if [not [get window visible]]
 				   [= done t]]
 			       [sleep 1]]
-			     [terminal_format standard-terminal '\n\nisismon exiting.\n']
+			     `[terminal_format standard-terminal '\n\nisismon exiting.\n']
 			     [have window destroy]]
 		       nil]]
        [have initialize_mutex lock]

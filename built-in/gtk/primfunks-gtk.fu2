@@ -23,6 +23,10 @@
 
 [globalize-funk gtk-expose_event-signal_connect       &primfunk:gtk__expose_event__signal_connect]
 
+'key_press_event'
+
+[globalize-funk gtk-key_press_event-signal_connect    &primfunk:gtk__key_press_event__signal_connect]
+
 
 'widget'
 

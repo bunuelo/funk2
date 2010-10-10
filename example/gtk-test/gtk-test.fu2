@@ -52,6 +52,11 @@
     [set  win          title        'gtk-test']
     [set  win          default_size 128 64]
     
+    [have search_entry key_press_event-signal_connect
+	  [funk []
+		[print 'key pressed!']]
+	  nil]
+    
     [have search_button signal_connect 'clicked'
 	  [funk []
 		[let [[found_range [have [get [get text_view buffer] start_iter] forward_search [get search_entry text]]]]

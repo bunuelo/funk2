@@ -344,7 +344,7 @@ funk2_gtk_callback_event_t* funk2_gtk__pop_callback_event(funk2_gtk_t* this) {
 }
 
 void funk2_gtk__callback_handler(GtkWidget *widget, funk2_gtk_callback_t* callback) {
-  funk2_gtk__add_callback_event(&(__funk2.gtk), callback);
+  funk2_gtk__add_callback_event(&(__funk2.gtk), callback, NULL);
 }
 
 void funk2_gtk__signal_connect(funk2_gtk_t* this, GtkWidget* widget, u8* signal_name, f2ptr funk) {

@@ -69,6 +69,9 @@
 			  file_menu
 			  file_exit_menu_item
 			  agent_hbox
+			  controller_hbox
+			  play_button
+			  stop_button
 			  
 			  [agent_frame [frame]]]
   [new [isis_world_object isis_world_object_description]
@@ -98,6 +101,21 @@
 			     
 			     [have this add_agent [get isis_world agent_body `Ralph]]
 			     [have this add_agent [get isis_world agent_body `Lauren]]
+			     
+			     [= controller_hbox [gtk-hbox-new 2]]
+			     [have vbox pack_start controller_hbox nil nil 0]
+			     
+			     [= play_button [gtk-button-new_with_label 'Play']]
+			     [= stop_button [gtk-button-new_with_label 'Stop']]
+			     [have controller_hbox pack_start play_button nil nil 0]
+			     [have controller_hbox pack_start stop_button nil nil 0]
+			     
+			     [have play_button signal_connect 'clicked'
+				   [funk []
+					 [print 'Play']]]
+			     [have stop_button signal_connect 'clicked'
+				   [funk []
+					 [print 'Stop']]]
 			     
 			     [have window connect_hide_on_delete]
 			     [have window show_all]

@@ -1086,7 +1086,7 @@ char* funk2_gtk__entry__get_text(funk2_gtk_t* this, GtkEntry* widget) {
 void funk2_gtk__entry__set_text(funk2_gtk_t* this, GtkEntry* widget, u8* text) {
   {
     gdk_threads_enter();
-    gtk_entry_set_text(GTK_ENTRY(widget), text);
+    gtk_entry_set_text(GTK_ENTRY(widget), (char*)text);
     gdk_threads_leave();
   }
 }
@@ -2669,7 +2669,7 @@ def_pcfunk0(gtk__entry__new, return f2__gtk__entry__new(this_cause));
 
 f2ptr raw__gtk__entry__get_text(f2ptr cause, f2ptr entry) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkEntry* gtk_entry = raw__gtk_entry__as__GtkWidget(cause, entry);
+  GtkEntry* gtk_entry = raw__gtk_entry__as__GtkEntry(cause, entry);
   char* text = funk2_gtk__entry__get_text(&(__funk2.gtk), gtk_entry);
   if (! text) {
     return nil;

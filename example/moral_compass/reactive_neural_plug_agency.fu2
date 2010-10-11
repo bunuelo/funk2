@@ -17,14 +17,39 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe activate_resource [resource] [command_mutex
-				       command_]
+[deframe activate_resource [resource] [[command_mutex         [new traced_mutex]]
+				       [command_ready         nil]
+				       [command_done          t]
+				       [command_layer_name    nil]
+				       [command_agency_name   nil]
+				       [command_resource_name nil]
+				       [command_args          nil]]
   [new []
        [construct resource [type this]
-		  [funk [layer_name agency_name resource_name :rest args]
-			[have this-resource think_to_self 'Neural plug is activating the ' resource_name ' resource in the ' agency_name ' agency in the' layer_name ' layer with args=' args]
-			[have-apply [get this mind] wait_to_activate `[,layer_name ,agency_name ,resource_name @args]]]]
+		  [funk []
+			[while t
+			  [have command_mutex lock]
+			  [if command_ready
+			      [prog [have this-resource think_to_self 'Neural plug is activating the ' command_resource_name ' resource in the ' command_agency_name ' agency in the ' command_layer_name ' layer with args=' command_args]
+				    [have-apply [get this mind] wait_to_activate `[,command_layer_name ,command_agency_name ,command_resource_name @command_args]]
+				    [= command_ready nil]
+				    [= command_done  t]]]
+			  [have command_mutex unlock]]]]
        nil]]
+
+[deftypefunk activate_resource execute command [layer_name agency_name resource_name :rest args]
+  [let [[success nil]]
+    [while [not success]
+      [have command_mutex lock]
+      [if command_done
+	  [prog [= command_layer_name    layer_name]
+		[= command_agency_name   agency_name]
+		[= command_resource_name resource_name]
+		[= command_args          args]
+		[= command_ready         t]
+		[= command_done          nil]
+		[= success               t]]]
+      [have command_mutex unlock]]]]
 
 [deframe reactive_neural_plug_agency [agency] []
   [new []

@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 
-'moral_compass: a self-reflective and self-conscious cognitive architecture'
+'moral_compass: a reflective, self-reflective, and self-conscious cognitive architecture'
 
 [defpackage moral_compass
   :packages [mind

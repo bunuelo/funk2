@@ -17,7 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe activate_resource [resource] []
+[deframe activate_resource [resource] [command_mutex
+				       command_]
   [new []
        [construct resource [type this]
 		  [funk [layer_name agency_name resource_name :rest args]

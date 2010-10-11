@@ -165,9 +165,11 @@
       [mind-activate [get isis_world agent_mind `Lauren] reactive language speak_language_to_agent `Ralph `[close the refrigerator door]]
       [mind-activate [get isis_world agent_mind `Lauren] reactive sensory  continuous_sensing]
       [mind-activate [get isis_world agent_mind `Lauren] reactive physical funk_user]
+      [mind-activate [get isis_world agent_mind `Lauren] reactive neural_plug activate_resource]
       
       [mind-activate [get isis_world agent_mind `Ralph] reactive sensory  continuous_sensing]
       [mind-activate [get isis_world agent_mind `Ralph] reactive physical funk_user]
+      [mind-activate [get isis_world agent_mind `Ralph] reactive neural_plug activate_resource]
       
       [globalize isis_world isis_world]
       [terminal_format standard-terminal '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']

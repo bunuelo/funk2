@@ -43,7 +43,7 @@
 					       [= reverse_symbols [cons [get string as-symbol] reverse_symbols]]]]
 				     strings]
 			       [let [[symbols [reverse reverse_symbols]]]
-				 [terminal_format standard-terminal [get isis_agent name] ' hears ' symbols ' through neural plug.']]
+				 [terminal_format standard-terminal '\n' [get isis_agent name] ' hears ' symbols ' through neural plug.']]
 			       ]]]]]]]
        
        [have vbox pack_start label t t 0]

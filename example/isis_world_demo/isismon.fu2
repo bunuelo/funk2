@@ -36,7 +36,7 @@
 		     [if [eq keyval GDK_Return]
 			 [let [[text [get entry text]]]
 			   [set entry text '']
-			   [let [[strings [get text split ' ']]]
+			   [let [[strings [have text split ' ']]]
 			     [let [[reverse_symbols nil]]
 			       [mapc [funk [string]
 					   [if [not [equals string '']]

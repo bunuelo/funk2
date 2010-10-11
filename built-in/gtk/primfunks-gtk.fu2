@@ -50,6 +50,7 @@
 [globalize-funk gtk-button-new_with_label             &primfunk:gtk__button__new_with_label]
 [globalize-funk gtk-entry-new                         &primfunk:gtk__entry__new]
 [globalize-funk gtk-entry-get_text                    &primfunk:gtk__entry__get_text]
+[globalize-funk gtk-entry-set_text                    &primfunk:gtk__entry__set_text]
 [globalize-funk gtk-scrolled_window-new               &primfunk:gtk__scrolled_window__new]
 [globalize-funk gtk-scrolled_window-add_with_viewport &primfunk:gtk__scrolled_window__add_with_viewport]
 [globalize-funk gtk-scrolled_window-set_policy        &primfunk:gtk__scrolled_window__set_policy]

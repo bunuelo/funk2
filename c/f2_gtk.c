@@ -87,6 +87,56 @@ f2ptr f2gtk_text_buffer__primobject_type__new_aux(f2ptr cause) {
 
 
 
+// gtk_label
+
+def_frame_object__global__1_slot(gtk_label, pointer);
+
+f2ptr f2__gtk_label__new(f2ptr cause, f2ptr pointer) {
+  return f2gtk_label__new(cause, pointer);
+}
+
+#if defined(F2__GTK__SUPPORTED)
+
+GtkLabel* raw__gtk_label__as__GtkLabel(f2ptr cause, f2ptr this) {
+  return (GtkLabel*)from_ptr(f2pointer__p(f2__gtk_label__pointer(cause, this), cause));
+}
+
+#endif // F2__GTK__SUPPORTED
+
+
+f2ptr f2gtk_label__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2gtk_label__primobject_type__new(cause);
+  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  return this;
+}
+
+
+
+// gtk_entry
+
+def_frame_object__global__1_slot(gtk_entry, pointer);
+
+f2ptr f2__gtk_entry__new(f2ptr cause, f2ptr pointer) {
+  return f2gtk_entry__new(cause, pointer);
+}
+
+#if defined(F2__GTK__SUPPORTED)
+
+GtkEntry* raw__gtk_entry__as__GtkEntry(f2ptr cause, f2ptr this) {
+  return (GtkEntry*)from_ptr(f2pointer__p(f2__gtk_entry__pointer(cause, this), cause));
+}
+
+#endif // F2__GTK__SUPPORTED
+
+
+f2ptr f2gtk_entry__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2gtk_entry__primobject_type__new(cause);
+  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  return this;
+}
+
+
+
 // gtk_text_iter
 
 def_frame_object__global__1_slot(gtk_text_iter, chunk);
@@ -599,29 +649,6 @@ GtkWidget* funk2_gtk__button__new_with_label(funk2_gtk_t* this, u8* label) {
 }
 
 
-// entry
-
-GtkWidget* funk2_gtk__entry__new(funk2_gtk_t* this) {
-  GtkWidget* entry = NULL;
-  {
-    gdk_threads_enter();
-    entry = gtk_entry_new();
-    gdk_threads_leave();
-  }
-  return entry;
-}
-
-char* funk2_gtk__entry__get_text(funk2_gtk_t* this, GtkWidget* widget) {
-  char* text = NULL;
-  {
-    gdk_threads_enter();
-    text = (char*)gtk_entry_get_text(GTK_ENTRY(widget));
-    gdk_threads_leave();
-  }
-  return text;
-}
-
-
 // scrolled_window
 
 GtkWidget* funk2_gtk__scrolled_window__new(funk2_gtk_t* this) {
@@ -1007,8 +1034,8 @@ void funk2_gtk__notebook__set_scrollable(funk2_gtk_t* this, GtkWidget* notebook,
 
 // label
 
-GtkWidget* funk2_gtk__label__new(funk2_gtk_t* this, u8* text) {
-  GtkWidget* label;
+GtkLabel* funk2_gtk__label__new(funk2_gtk_t* this, u8* text) {
+  GtkLabel* label;
   {
     gdk_threads_enter();
     label = gtk_label_new((char*)text);
@@ -1017,7 +1044,7 @@ GtkWidget* funk2_gtk__label__new(funk2_gtk_t* this, u8* text) {
   return label;
 }
 
-void funk2_gtk__label__set_text(funk2_gtk_t* this, GtkWidget* label, u8* text) {
+void funk2_gtk__label__set_text(funk2_gtk_t* this, GtkLabel* label, u8* text) {
   {
     gdk_threads_enter();
     gtk_label_set_text(GTK_LABEL(label), (char*)text);
@@ -1025,10 +1052,41 @@ void funk2_gtk__label__set_text(funk2_gtk_t* this, GtkWidget* label, u8* text) {
   }
 }
 
-void funk2_gtk__label__set_selectable(funk2_gtk_t* this, GtkWidget* label, boolean_t selectable) {
+void funk2_gtk__label__set_selectable(funk2_gtk_t* this, GtkLabel* label, boolean_t selectable) {
   {
     gdk_threads_enter();
     gtk_label_set_selectable(GTK_LABEL(label), selectable ? TRUE : FALSE);
+    gdk_threads_leave();
+  }
+}
+
+
+// entry
+
+GtkEntry* funk2_gtk__entry__new(funk2_gtk_t* this) {
+  GtkEntry* entry = NULL;
+  {
+    gdk_threads_enter();
+    entry = gtk_entry_new();
+    gdk_threads_leave();
+  }
+  return entry;
+}
+
+char* funk2_gtk__entry__get_text(funk2_gtk_t* this, GtkEntry* widget) {
+  char* text = NULL;
+  {
+    gdk_threads_enter();
+    text = (char*)gtk_entry_get_text(GTK_ENTRY(widget));
+    gdk_threads_leave();
+  }
+  return text;
+}
+
+void funk2_gtk__entry__set_text(funk2_gtk_t* this, GtkEntry* widget, u8* text) {
+  {
+    gdk_threads_enter();
+    gtk_entry_set_text(GTK_ENTRY(widget), text);
     gdk_threads_leave();
   }
 }
@@ -1295,43 +1353,6 @@ f2ptr f2__gtk__button__new_with_label(f2ptr cause, f2ptr label) {
   return raw__gtk__button__new_with_label(cause, label);
 }
 def_pcfunk1(gtk__button__new_with_label, label, return f2__gtk__button__new_with_label(this_cause, label));
-
-
-f2ptr raw__gtk__entry__new(f2ptr cause) {
-#if defined(F2__GTK__SUPPORTED)
-  GtkWidget* entry = funk2_gtk__entry__new(&(__funk2.gtk));
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(entry)));
-#else
-  return f2__gtk_not_supported_larva__new(cause);
-#endif
-}
-
-f2ptr f2__gtk__entry__new(f2ptr cause) {
-  return raw__gtk__entry__new(cause);
-}
-def_pcfunk0(gtk__entry__new, return f2__gtk__entry__new(this_cause));
-
-
-f2ptr raw__gtk__entry__get_text(f2ptr cause, f2ptr widget) {
-#if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  char* text = funk2_gtk__entry__get_text(&(__funk2.gtk), gtk_widget);
-  if (! text) {
-    return nil;
-  }
-  return new__string(cause, text);
-#else
-  return f2__gtk_not_supported_larva__new(cause);
-#endif
-}
-
-f2ptr f2__gtk__entry__get_text(f2ptr cause, f2ptr widget) {
-  if (! raw__gtk_widget__is_type(cause, widget)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__gtk__entry__get_text(cause, widget);
-}
-def_pcfunk1(gtk__entry__get_text, widget, return f2__gtk__entry__get_text(this_cause, widget));
 
 
 f2ptr raw__gtk__scrolled_window__new(f2ptr cause) {
@@ -2567,8 +2588,8 @@ f2ptr raw__gtk__label__new(f2ptr cause, f2ptr text) {
   raw__string__str_copy(cause, text, text__str);
   text__str[text__length] = 0;
   
-  GtkWidget* label = funk2_gtk__label__new(&(__funk2.gtk), text__str);
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(label)));
+  GtkLabel* label = funk2_gtk__label__new(&(__funk2.gtk), text__str);
+  return f2__gtk_label__new(cause, f2pointer__new(cause, to_ptr(label)));
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2585,7 +2606,7 @@ def_pcfunk1(gtk__label__new, text, return f2__gtk__label__new(this_cause, text))
 
 f2ptr raw__gtk__label__set_text(f2ptr cause, f2ptr label, f2ptr text) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_label = raw__gtk_widget__as__GtkWidget(cause, label);
+  GtkLabel* gtk_label = raw__gtk_label__as__GtkLabel(cause, label);
   
   u64 text__length = raw__string__length(cause, text);
   u8* text__str    = (u8*)alloca(text__length + 1);
@@ -2600,7 +2621,7 @@ f2ptr raw__gtk__label__set_text(f2ptr cause, f2ptr label, f2ptr text) {
 }
 
 f2ptr f2__gtk__label__set_text(f2ptr cause, f2ptr label, f2ptr text) {
-  if ((! raw__gtk_widget__is_type(cause, label)) ||
+  if ((! raw__gtk_label__is_type(cause, label)) ||
       (! raw__string__is_type(cause, text))) {
     return f2larva__new(cause, 1, nil);
   }
@@ -2611,7 +2632,7 @@ def_pcfunk2(gtk__label__set_text, label, text, return f2__gtk__label__set_text(t
 
 f2ptr raw__gtk__label__set_selectable(f2ptr cause, f2ptr label, f2ptr selectable) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_label = raw__gtk_widget__as__GtkWidget(cause, label);
+  GtkLabel* gtk_label = raw__gtk_label__as__GtkLabel(cause, label);
   funk2_gtk__label__set_selectable(&(__funk2.gtk), gtk_label, (selectable != nil));
   return nil;
 #else
@@ -2620,12 +2641,77 @@ f2ptr raw__gtk__label__set_selectable(f2ptr cause, f2ptr label, f2ptr selectable
 }
 
 f2ptr f2__gtk__label__set_selectable(f2ptr cause, f2ptr label, f2ptr selectable) {
-  if (! raw__gtk_widget__is_type(cause, label)) {
+  if (! raw__gtk_label__is_type(cause, label)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__gtk__label__set_selectable(cause, label, selectable);
 }
 def_pcfunk2(gtk__label__set_selectable, label, selectable, return f2__gtk__label__set_selectable(this_cause, label, selectable));
+
+
+// entry
+
+
+f2ptr raw__gtk__entry__new(f2ptr cause) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkEntry* entry = funk2_gtk__entry__new(&(__funk2.gtk));
+  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(entry)));
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__entry__new(f2ptr cause) {
+  return raw__gtk__entry__new(cause);
+}
+def_pcfunk0(gtk__entry__new, return f2__gtk__entry__new(this_cause));
+
+
+f2ptr raw__gtk__entry__get_text(f2ptr cause, f2ptr entry) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkEntry* gtk_entry = raw__gtk_entry__as__GtkWidget(cause, entry);
+  char* text = funk2_gtk__entry__get_text(&(__funk2.gtk), gtk_entry);
+  if (! text) {
+    return nil;
+  }
+  return new__string(cause, text);
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__entry__get_text(f2ptr cause, f2ptr entry) {
+  if (! raw__gtk_entry__is_type(cause, entry)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__entry__get_text(cause, entry);
+}
+def_pcfunk1(gtk__entry__get_text, entry, return f2__gtk__entry__get_text(this_cause, entry));
+
+
+f2ptr raw__gtk__entry__set_text(f2ptr cause, f2ptr entry, f2ptr text) {
+#if defined(F2__GTK__SUPPORTED)
+  GtkEntry* gtk_entry = raw__gtk_entry__as__GtkEntry(cause, entry);
+  u64 text__length = raw__string__length(cause, text);
+  u8* text__str    = (u8*)from_ptr(f2__malloc(text__length + 1));
+  raw__string__str_copy(cause, text, text__str);
+  text__str[text__length] = 0;
+  funk2_gtk__entry__set_text(&(__funk2.gtk), gtk_entry, text__str);
+  f2__free(to_ptr(text__str));
+  return nil;
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__entry__set_text(f2ptr cause, f2ptr entry, f2ptr text) {
+  if ((! raw__gtk_entry__is_type(cause, entry)) ||
+      (! raw__string__is_type(cause, text))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__entry__set_text(cause, entry, text);
+}
+def_pcfunk2(gtk__entry__set_text, entry, text, return f2__gtk__entry__set_text(this_cause, entry, text));
 
 
 // drawing_area
@@ -3137,6 +3223,16 @@ void f2__gtk__initialize() {
   init_frame_object__1_slot(gtk_box, pointer);
   
   
+  // gtk_label
+  
+  init_frame_object__1_slot(gtk_label, pointer);
+  
+  
+  // gtk_entry
+  
+  init_frame_object__1_slot(gtk_entry, pointer);
+  
+  
   // gtk_text_buffer
   
   init_frame_object__1_slot(gtk_text_buffer, pointer);
@@ -3202,8 +3298,6 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__1(gtk__vbox__new,                          spacing,                                               "Returns a new vbox widget with spacing.");
   f2__primcfunk__init__1(gtk__hbox__new,                          spacing,                                               "Returns a new hbox widget with spacing.");
   f2__primcfunk__init__1(gtk__button__new_with_label,             label,                                                 "Returns a new button widget with label.");
-  f2__primcfunk__init__0(gtk__entry__new,                                                                                "Returns a new entry widget.");
-  f2__primcfunk__init__1(gtk__entry__get_text,                    widget,                                                "Returns the text of an entry widget as a string.");
   f2__primcfunk__init__0(gtk__scrolled_window__new,                                                                      "Returns a new scrolled_window widget.");
   f2__primcfunk__init__2(gtk__scrolled_window__add_with_viewport, scrolled_window, child,                                "Adds a non-scrollable widget to a scroll window.");
   f2__primcfunk__init__3(gtk__scrolled_window__set_policy,        scrolled_window, hscrollbar_policy, vscrollbar_policy, "Sets the policy for the vertical and horizontal scrollbars of a scrolled window.  Valid policies are (1) `always, (2) `automatic, and (3) `never.");
@@ -3268,6 +3362,12 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__1(gtk__label__new,            text,              "Returns a new GtkLabel.");
   f2__primcfunk__init__2(gtk__label__set_text,       label, text,       "Sets the text displayed by a GtkLabel.");
   f2__primcfunk__init__2(gtk__label__set_selectable, label, selectable, "Sets whether the text displayed by a GtkLabel is selectable for copy and paste.");
+  
+  // entry
+  
+  f2__primcfunk__init__0(gtk__entry__new,                   "Returns a new entry widget.");
+  f2__primcfunk__init__1(gtk__entry__get_text, entry,       "Returns the text of an entry widget as a string.");
+  f2__primcfunk__init__2(gtk__entry__set_text, entry, text, "Sets the text of an entry widget to the given string.");
   
   // drawing_area
   

@@ -55,9 +55,6 @@
 [deftypefunk gtk_widget execute pack2    [child resize shrink] [gtk-paned-pack2        [get this widget] [get child widget] resize shrink]]
 [deftypefunk gtk_widget set     position [position]            [gtk-paned-set_position [get this widget] position]]
 
-'GtkEntry'
-[deftypefunk gtk_widget get text [] [gtk-entry-get_text [get this widget]]]
-
 'GtkTextView'
 [deftypefunk gtk_widget get buffer [] [gtk-text_view-get_buffer [get this widget]]]
 
@@ -101,8 +98,15 @@
 
 'GtkLabel'
 
-[deftypefunk gtk_widget set text       [text]       [gtk-label-set_text       [get this widget] text]]
-[deftypefunk gtk_widget set selectable [selectable] [gtk-label-set_selectable [get this widget] selectable]]
+[deftypefunk gtk_label get widget     []           this]
+[deftypefunk gtk_label set text       [text]       [gtk-label-set_text       [get this widget] text]]
+[deftypefunk gtk_label set selectable [selectable] [gtk-label-set_selectable [get this widget] selectable]]
+
+'GtkEntry'
+
+[deftypefunk gtk_entry get widget [] this]
+[deftypefunk gtk_entry get text   [] [gtk-entry-get_text [get this widget]]]
+[deftypefunk gtk_entry set text   [] [gtk-entry-set_text [get this widget]]]
 
 'GtkTable'
 

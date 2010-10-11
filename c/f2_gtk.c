@@ -2655,7 +2655,7 @@ def_pcfunk2(gtk__label__set_selectable, label, selectable, return f2__gtk__label
 f2ptr raw__gtk__entry__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
   GtkEntry* entry = funk2_gtk__entry__new(&(__funk2.gtk));
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(entry)));
+  return f2__gtk_entry__new(cause, f2pointer__new(cause, to_ptr(entry)));
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif

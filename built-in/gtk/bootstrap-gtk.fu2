@@ -104,9 +104,9 @@
 
 'GtkEntry'
 
-[deftypefunk gtk_entry get widget [] this]
-[deftypefunk gtk_entry get text   [] [gtk-entry-get_text [get this widget]]]
-[deftypefunk gtk_entry set text   [] [gtk-entry-set_text [get this widget]]]
+[deftypefunk gtk_entry get widget []     this]
+[deftypefunk gtk_entry get text   []     [gtk-entry-get_text [get this widget]]]
+[deftypefunk gtk_entry set text   [text] [gtk-entry-set_text [get this widget] text]]
 
 'GtkTable'
 

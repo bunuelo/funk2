@@ -126,7 +126,12 @@
 [deftypefunk gtk_menu get     widget []      this]
 [deftypefunk gtk_menu execute append [child] [gtk-menu-append [get this widget] [get child widget]]]
 
-[globalize gtk-gdk_keysyms_frame [gtk-gdk_keysyms_frame-new]]
+[defunk gtk-globalize_keysyms []
+  [print `[gtk-globalize_keysyms]]
+  [let [[keysyms_frame [gtk-gdk_keysyms_frame-new]]]
+    [mapc [funk [keysym_name]
+		[eval `[globalize ,keysym_name ,[have keysyms_frame lookup keysym_name]]]]
+	  [get keysyms_frame keys]]]]
 
 [globalize gtk-event_handling_fiber nil]
 
@@ -149,6 +154,9 @@
 				     nil]]]
     [= gtk-event_handling_fiber event_handling_fiber]]
   nil]
+
+[if [gtk-is_supported]
+    [gtk-globalize_keysyms]]
 
 [if [gtk-is_supported]
     [gtk-event_handling_fiber-start]

@@ -45,8 +45,10 @@
 					       [= reverse_symbols [cons [get string as-symbol] reverse_symbols]]]]
 				     strings]
 			       [let [[symbols [reverse reverse_symbols]]]
-				 [terminal_format standard-terminal '\n' [get isis_agent name] ' hears ' symbols ' through neural plug.']]
-			       ]]]]]]]
+				 [terminal_format standard-terminal '\nSending symbols, ' symbols ', through ' [get isis_agent name] '\'s neural plug.']
+				 [let [[activate_resource [get [get isis_agent mind] resource `reactive `neural_plug `activate_resource]]]
+				   [have activate_resource command `reactive `language `hear_language_from_agent symbols]
+				   ]]]]]]]]]
        
        [have vbox pack_start label t t 0]
        [have vbox pack_start entry nil nil 0]

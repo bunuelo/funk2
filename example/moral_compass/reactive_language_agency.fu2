@@ -17,9 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-
-
-
 [deframe speak_language_to_agent [resource] []
   [new []
        [construct resource [type this]

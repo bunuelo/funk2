@@ -57,7 +57,9 @@
 		[terminal_format standard-terminal '\nkey event: ' key_event]
 		[let [[return_keyval [have gtk-gdk_keysyms_frame lookup `GDK_Return]]]
 		  [if [eq [have key_event lookup `keyval] return_keyval]
-		      [print 'Return!']]]]]
+		      [prog [print 'Return!']
+			    [set search_entry text '']
+			    ]]]]]
     
     [have search_button signal_connect 'clicked'
 	  [funk []

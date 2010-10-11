@@ -73,7 +73,12 @@
 			  play_button
 			  stop_button
 			  
-			  [agent_frame [frame]]]
+			  [agent_frame [frame]]
+			  
+			  [simulation_playing           nil]
+			  [tick                         0]
+			  [last_stepped_simulation_tick -1000]
+			  ]
   [new [isis_world_object isis_world_object_description]
        [= isis_world isis_world_object]
        [have initialize_mutex lock]
@@ -112,10 +117,12 @@
 			     
 			     [have play_button signal_connect 'clicked'
 				   [funk []
-					 [print 'Play']]]
+					 [print 'Playing']
+					 [= simulation_playing t]]]
 			     [have stop_button signal_connect 'clicked'
 				   [funk []
-					 [print 'Stop']]]
+					 [print 'Stopped']
+					 [= simulation_playing nil]]]
 			     
 			     [have window connect_hide_on_delete]
 			     [have window show_all]
@@ -124,7 +131,12 @@
 			     [while [not done]
 			       [if [not [get window visible]]
 				   [= done t]]
-			       [sleep 1]]
+			       [if [and simulation_playing [> [- tick last_stepped_simulation_tick] 5]]
+				   [prog [test-step]
+					 [= last_stepped_simulation_tick tick]]]
+			       [sleep 1]
+			       [= tick [+ tick 1]]
+			       ]
 			     `[terminal_format standard-terminal '\n\nisismon exiting.\n']
 			     [have window destroy]]
 		       nil]]

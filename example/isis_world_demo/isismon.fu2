@@ -21,7 +21,9 @@
 				frame
 				vbox
 				label
-				entry]
+				entry
+				button_hbox
+				mindmon_button]
   [new [initial_isis_agent]
        [= isis_agent initial_isis_agent]
        [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
@@ -48,6 +50,18 @@
        
        [have vbox pack_start label t t 0]
        [have vbox pack_start entry nil nil 0]
+       
+       [= button_hbox    [gtk-hbox-new 2]]
+       [= mindmon_button [gtk-button-new_with_label 'MindMon']]
+       [have mindmon_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\nLaunching MindMon to monitor ' [get this name] '\'s mind.']
+		   [mindmon [get isis_agent mind]]]]
+       
+       [have button_hbox pack_start mindmon_button nil nil 0]
+       
+       [have vbox pack_start button_hbox nil nil 0]
+       
        [have frame add vbox]
        nil]]
 

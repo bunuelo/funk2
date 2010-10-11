@@ -1038,7 +1038,7 @@ GtkLabel* funk2_gtk__label__new(funk2_gtk_t* this, u8* text) {
   GtkLabel* label;
   {
     gdk_threads_enter();
-    label = gtk_label_new((char*)text);
+    label = GTK_LABEL(gtk_label_new((char*)text));
     gdk_threads_leave();
   }
   return label;
@@ -1067,7 +1067,7 @@ GtkEntry* funk2_gtk__entry__new(funk2_gtk_t* this) {
   GtkEntry* entry = NULL;
   {
     gdk_threads_enter();
-    entry = gtk_entry_new();
+    entry = GTK_ENTRY(gtk_entry_new());
     gdk_threads_leave();
   }
   return entry;

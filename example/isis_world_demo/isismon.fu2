@@ -33,7 +33,7 @@
 	     [funk [key_event]
 		   [let [[keyval [have key_event lookup `keyval]]]
 		     `[terminal_format standard-terminal '\nkey event: ' key_event]
-		     [if [eq keyval [have gtk-gdk_keysyms_frame lookup `GDK_Return]]
+		     [if [eq keyval GDK_Return]
 			 [prog [print 'Return!']
 			       [set entry text '']
 			       ]]]]]

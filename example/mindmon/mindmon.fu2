@@ -444,30 +444,30 @@
 	    [let [[arg [first iter]]]
 	      [cond [[or [eq arg `-h]
 			 [eq arg `help]] [prog [= print_usage_message_and_exit t]]]
-		    [t                   [prog [format stdout 'mindmon: compiling mind command line argument, ' arg '.\n']
+		    [t                   [prog [terminal_format standard-terminal '\nmindmon: compiling mind command line argument, ' arg '.']
 					       [= minds [cons arg minds]]]]]]
 	    [= iter [next iter]]]]]
     [if [not print_usage_message_and_exit]
 	[cond [[> [simple_length minds] 1]
-	       [prog [format stdout 'mindmon fatal: mindmon can only monitor exactly one mind at a time, user supplied ' [simple_length minds] ': ' minds '.\n']
+	       [prog [terminal_format standard-terminal '\nmindmon fatal: mindmon can only monitor exactly one mind at a time, user supplied ' [simple_length minds] ': ' minds '.']
 		     [= print_usage_message_and_exit t]]]
 	      [[== [simple_length minds] 0]
-	       [prog [format stdout 'mindmon fatal: mindmon can only monitor exactly one mind at a time, user supplied none.\n']
+	       [prog [terminal_format standard-terminal '\nmindmon fatal: mindmon can only monitor exactly one mind at a time, user supplied none.']
 		     [= print_usage_message_and_exit t]]]]]
     [if print_usage_message_and_exit
-	[format stdout 'MINDMON(1)'
-		'\n'   'NAME'
-		'\n'   '       mindmon - display mind resources'
-		'\n'   ''
-		'\n'   'SYNOPSIS'
-		'\n'   '       mindmon -h <mind>'
-		'\n'   ''
-		'\n'   'DESCRIPTION'
-		'\n'   '       The mindmon program provides a dynamic real-time view of a running mind.  It can '
-		'\n'   '       display system summary information as well as a list of resources currently being managed '
-		'\n'   '       by the mind.'
-		'\n'   ''
-		'\n'   '       This description is inspired by the TOP Linux man page.']
+	[terminal_format standard-terminal 'MINDMON(1)'
+			 '\n'   'NAME'
+			 '\n'   '       mindmon - display mind resources'
+			 '\n'   ''
+			 '\n'   'SYNOPSIS'
+			 '\n'   '       mindmon -h <mind>'
+			 '\n'   ''
+			 '\n'   'DESCRIPTION'
+			 '\n'   '       The mindmon program provides a dynamic real-time view of a running mind.  It can '
+			 '\n'   '       display system summary information as well as a list of resources currently being managed '
+			 '\n'   '       by the mind.'
+			 '\n'   ''
+			 '\n'   '       This description is inspired by the TOP Linux man page.']
       [let [[mind [first minds]]]
 	`[prog [new mindmon ,mind [quote ,mind]]
 	       nil]]]]]

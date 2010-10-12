@@ -75,7 +75,7 @@
 			    [let [[parse_tree [first parse_trees]]]
 			      [have english_command_frame execute_parse_tree parse_tree]
 			      ]]]]]
-       [have natural_language_command_frame add_command `[pick up] `[direct_object] []
+       [have english_command_frame add_command `[pick up] `[direct_object] []
 	     [funk [direct_object]
 		   [terminal_format standard-terminal '\nPicking up ' [get direct_object leaf_symbols] '.']]]
        ]]

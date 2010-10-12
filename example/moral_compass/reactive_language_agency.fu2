@@ -40,7 +40,7 @@
 			      [prog [mapc [funk [parse_tree]
 						[have this-resource think_to_self 'I parse ' [get parse_tree serialized]]]
 					  parse_trees]
-				    [have [get this mind] wait_to_activate `deliberative `reality `listen_to_language_from_agent parse_trees]]
+				    [have [get this mind] wait_to_activate `deliberative `reality `listen_to_language_from_agent agent_description parse_trees]]
 			    [have this-resource think_to_self 'I cannot parse.']]
 			  ]
 			]]

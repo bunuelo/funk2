@@ -1078,8 +1078,7 @@
 		      [if [null parse_rest_sequence]
 			  [= parse_trees [cons parse_tree parse_trees]]]]]
 	      parses]]]
-    parse_trees]
-  nil]
+    parse_trees]]
 
 
 

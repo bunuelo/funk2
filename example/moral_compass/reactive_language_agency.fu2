@@ -34,7 +34,7 @@
   [new []
        [construct resource [type this]
 		  [funk [agent_description agent_speech]
-			[have this-resource think_to_self 'I hear from ' agent_description ' ' agent_speech '.']
+			[have this-resource think_to_self 'I hear from ' agent_description ', ' agent_speech '.']
 			[let [[parse_trees [get english_dictionary parse_trees agent_speech]]]
 			  [if parse_trees
 			      [mapc [funk [parse_tree]

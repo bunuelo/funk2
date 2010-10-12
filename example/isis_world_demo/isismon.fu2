@@ -175,27 +175,27 @@
 	    [let [[arg [first iter]]]
 	      [cond [[or [eq arg `-h]
 			 [eq arg `help]] [prog [= print_usage_message_and_exit t]]]
-		    [t                   [prog [format stdout 'isismon: compiling isis_world command line argument, ' arg '.\n']
+		    [t                   [prog [terminal_format standard-terminal '\nisismon: compiling isis_world command line argument, ' arg '.']
 					       [= isis_worlds [cons arg isis_worlds]]]]]]
 	    [= iter [next iter]]]]]
     [if [not print_usage_message_and_exit]
 	[cond [[> [simple_length isis_worlds] 1]
-	       [prog [format stdout 'isismon fatal: isismon can only monitor exactly one isis_world at a time, user supplied ' [simple_length isis_worlds] ': ' isis_worlds '.\n']
+	       [prog [terminal_format standard-terminal 'isismon fatal: isismon can only monitor exactly one isis_world at a time, user supplied ' [simple_length isis_worlds] ': ' isis_worlds '.\n']
 		     [= print_usage_message_and_exit t]]]
 	      [[== [simple_length isis_worlds] 0]
-	       [prog [format stdout 'isismon fatal: isismon can only monitor exactly one isis_world at a time, user supplied none.\n']
+	       [prog [terminal_format standard-terminal 'isismon fatal: isismon can only monitor exactly one isis_world at a time, user supplied none.\n']
 		     [= print_usage_message_and_exit t]]]]]
     [if print_usage_message_and_exit
-	[format stdout 'ISISMON(1)'
-		'\n'   'NAME'
-		'\n'   '       isismon - monitor and control an isis_world experiment.'
-		'\n'   ''
-		'\n'   'SYNOPSIS'
-		'\n'   '       isismon -h <isis_world>'
-		'\n'   ''
-		'\n'   'DESCRIPTION'
-		'\n'   '       The isismon program provides dynamic real-time monitoring of a running isis_world experiment.'
-		'\n'   '']
+	[terminal_format standard-terminal 'ISISMON(1)'
+			 '\n'   'NAME'
+			 '\n'   '       isismon - monitor and control an isis_world experiment.'
+			 '\n'   ''
+			 '\n'   'SYNOPSIS'
+			 '\n'   '       isismon -h <isis_world>'
+			 '\n'   ''
+			 '\n'   'DESCRIPTION'
+			 '\n'   '       The isismon program provides dynamic real-time monitoring of a running isis_world experiment.'
+			 '\n'   '']
       [let [[isis_world [first isis_worlds]]]
 	`[prog [new isismon ,isis_world [quote ,isis_world]]
 	       nil]]]]]

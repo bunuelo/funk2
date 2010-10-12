@@ -26,7 +26,7 @@
 
 [deframe natural_language_command_frame [frame] [[key_symbols_hash [hash]]]]
 
-[deftypefunk natural_language_command_frame symbols_key [symbols]
+[deftypefunk natural_language_command_frame get symbols_key [symbols]
   [let [[key [have key_symbols_hash lookup symbols]]]
     [if [null key]
 	[prog [have key_symbols_hash add symbols symbols]

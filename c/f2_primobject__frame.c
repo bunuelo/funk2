@@ -87,7 +87,7 @@ f2ptr f2__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr v
     f2mutex__lock(f2frame__new_type_mutex(this, cause), cause);
     type__ptypehash = f2__ptypehash__lookup(cause, frame__type_ptypehash, type);
     if (! type__ptypehash) {
-      type__ptypehash = raw__ptypehash__new(cause, 4);
+      type__ptypehash = f2__ptypehash__new(cause);
       f2__ptypehash__add(cause, frame__type_ptypehash, type, type__ptypehash);
     }
     f2mutex__unlock(f2frame__new_type_mutex(this, cause), cause);

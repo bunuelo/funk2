@@ -1,0 +1,64 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[deframe natural_language_command [frame] [verb_symbols arguments prepositions funk]
+  [new [initial_verb_symbols initial_arguments initial_prepositions initial_funk]
+       [= verb_symbols initial_verb_symbols]
+       [= arguments    initial_arguments]
+       [= prepositions initial_prepositions]
+       [= funk         initial_funk]]]
+
+[deframe natural_language_command_frame [frame] [[key_symbols_hash [hash]]]]
+
+[deftypefunk natural_language_command_frame symbols_key [symbols]
+  [let [[key [have key_symbols_hash lookup symbols]]]
+    [if [null key]
+	[prog [have key_symbols_hash add symbols symbols]
+	      [= key symbols]]]
+    key]]
+
+[deftypefunk natural_language_command_frame execute add_command [verb_symbols arguments prepositions funk]
+  [let [[key [get this symbols_key verb_symbols]]]
+    [have this add_type_var_value `natural_language_command key [new natural_language_command verb_symbols arguments prepositions funk]]
+    nil]]
+
+[deftypefunk natural_language_command_frame execute execute_parse_tree [parse_tree]
+  [let [[root_node [get parse_tree root_node]]]
+    [let [[main_clause [get root_node parse_object]]]
+      [if [not [is-type `clause main_clause]]
+	  [error bug_type `parse_tree_is_not_clause
+		 parse_tree parse_tree]
+	[if [get main_clause secondary]
+	    [error bug_type `parse_tree_must_not_be_secondary_clause
+		   parse_tree parse_tree]
+	  [let [[main_verb_group_node [get main_clause child_of_type_node `verb_group]]]
+	    [let [[main_verb_group [get main-verb_group_node parse_object]]]
+	      [if [not [is-type `verb_group main_verb_group]]
+		  [error bug_type        `main_verb_group_wrong_type
+			 main_verb_group main_verb_group]
+		[if [not [get verb_group imperative]]
+		    [error bug_type        `main_verb_group_must_be_imperative
+			   main_verb_group main_verb_group]
+		  [let [[main_verb_group_symbols [get main_verb_group symbols]]]
+		    [let [[natural_language_command [get this type_var_value `natural_language_command [get this symbols_key main_verb_group_symbols] nil]]]
+		      [if [null natural_language_command]
+			  [error bug_type                `do_not_know_natural_language_command
+				 main_verb_group_symbols main_verb_group_symbols]
+			[print natural_language_command]]]]]]]]]]]]]
+

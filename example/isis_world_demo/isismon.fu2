@@ -134,11 +134,11 @@
 			     
 			     [have play_button signal_connect 'clicked'
 				   [funk []
-					 [print 'Playing']
+					 [terminal_format standard-terminal '\nIsisMon: Playing.']
 					 [= simulation_playing t]]]
 			     [have stop_button signal_connect 'clicked'
 				   [funk []
-					 [print 'Stopped']
+					 [terminal_format standard-terminal '\nIsisMon: Stopped.']
 					 [= simulation_playing nil]]]
 			     
 			     [have window connect_hide_on_delete]

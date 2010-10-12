@@ -24,6 +24,10 @@
 [defpackage dictionary_frame
   :sources ['dictionary_frame.fu2']]
 
+[defpackage natural_language_command
+  :packages [parse_tree dictionary_frame]
+   :sources ['natural_language_command.fu2']]
+
 [defpackage natural_language
-  :packages [dictionary_frame parse_tree]]
+  :packages [natural_language_command]]
 

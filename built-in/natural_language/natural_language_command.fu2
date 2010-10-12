@@ -24,6 +24,32 @@
        [= prepositions initial_prepositions]
        [= funk         initial_funk]]]
 
+[deftypefunk parse_tree get direct_object_noun_group []
+  [let [[child_iter               [get root_node first_child_node]]
+	[direct_object_noun_group nil]]
+    [while child_iter
+      [let [[parse_object [get child_iter parse_object]]]
+	[if [and [is-type `noun_group parse_object]
+		 [get parse_object object]
+		 [get parse_object object_one]]
+	    [= direct_object_noun_group parse_object]]]
+      [= child_iter [get child_iter next_node]]]
+    direct_object_noun_group]]
+
+[deftypefunk natural_language_command execute execute_parse_tree [parse_tree]
+  [let [[argument_frame [frame]]]
+    [mapc [funk [argument]
+		[cond [[eq argument `direct_object] [have argument_frame add `direct_object [get parse_tree direct_object_noun_group]]]
+		      [t                            [error bug_type `unknown_argument_name
+							   argument argument]]]]
+	  arguments]
+    [let [[funk_args  [get funk args]]
+	  [apply_args nil]]
+      [mapc [funk [arg]
+		  [= apply_args [cons [have argument_frame lookup arg] apply_args]]]
+	    funk_args]
+      [apply funk [reverse apply_args]]]]]
+
 [deframe natural_language_command_frame [frame] [[key_symbols_hash [hash]]]]
 
 [deftypefunk natural_language_command_frame get symbols_key [symbols]
@@ -60,5 +86,6 @@
 		      [if [null natural_language_command]
 			  [error bug_type                `do_not_know_natural_language_command
 				 main_verb_group_symbols main_verb_group_symbols]
-			[print natural_language_command]]]]]]]]]]]]]
+			[have natural_language_command execute_parse_tree parse_tree]]]]]]]]]]]]]
+
 

@@ -68,7 +68,7 @@
   [new []
        [construct resource [type this]
 		  [funk [agent_description parse_trees]
-			[have this think_to_self 'Listening to language parses heard from ' agent_description ': ' parses '.']
+			[have this think_to_self 'Listening to language parses heard from ' agent_description ': ' parse_trees '.']
 			[let [[reality_agency [get [get this mind] agency `deliberative `reality]]]
 			  [let [[reality_semantic_knowledge_base [get reality_agency reality_semantic_knowledge_base]]]
 			    'we arbitrary choose the first parse here...'

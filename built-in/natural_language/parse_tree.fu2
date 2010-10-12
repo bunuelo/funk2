@@ -72,14 +72,14 @@
 
 [deftypefunk parse_tree_node get leaf_symbols []
   [let [[leaf_symbols nil]]
-    [have map_nodes_backward [funk [node]
-				   [if [null [get node first_child_node]]
-				       [= leaf_symbols [append [let [[symbols [get [get node parse_object] symbols]]]
-								 [if [or [is-type `cons symbols]
-									 [is-type `list symbols]]
-								     symbols
-								   [cons symbols nil]]]
-							       leaf_symbols]]]]]
+    [have this map_nodes_backward [funk [node]
+					[if [null [get node first_child_node]]
+					    [= leaf_symbols [append [let [[symbols [get [get node parse_object] symbols]]]
+								      [if [or [is-type `cons symbols]
+									      [is-type `list symbols]]
+									  symbols
+									[cons symbols nil]]]
+								    leaf_symbols]]]]]
     leaf_symbols]]
 
 'parse_tree'

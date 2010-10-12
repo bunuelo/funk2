@@ -39,20 +39,20 @@
     nil]]
 
 [deftypefunk natural_language_command_frame execute execute_parse_tree [parse_tree]
-  [let [[root_node [get parse_tree root_node]]]
-    [let [[main_clause [get root_node parse_object]]]
+  [let [[main_clause_node [get parse_tree root_node]]]
+    [let [[main_clause [get main_clause_node parse_object]]]
       [if [not [is-type `clause main_clause]]
 	  [error bug_type `parse_tree_is_not_clause
 		 parse_tree parse_tree]
 	[if [get main_clause secondary]
 	    [error bug_type `parse_tree_must_not_be_secondary_clause
 		   parse_tree parse_tree]
-	  [let [[main_verb_group_node [get main_clause child_of_type_node `verb_group]]]
-	    [let [[main_verb_group [get main-verb_group_node parse_object]]]
+	  [let [[main_verb_group_node [get main_clause_node child_of_type_node `verb_group]]]
+	    [let [[main_verb_group [get main_verb_group_node parse_object]]]
 	      [if [not [is-type `verb_group main_verb_group]]
 		  [error bug_type        `main_verb_group_wrong_type
 			 main_verb_group main_verb_group]
-		[if [not [get verb_group imperative]]
+		[if [not [get main_verb_group imperative]]
 		    [error bug_type        `main_verb_group_must_be_imperative
 			   main_verb_group main_verb_group]
 		  [let [[main_verb_group_symbols [get main_verb_group symbols]]]

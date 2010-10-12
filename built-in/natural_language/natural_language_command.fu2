@@ -17,6 +17,115 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[globalize semantic_key_hash [hash]]
+
+[deframe semantic_frame [frame] []]
+
+[deftypefunk semantic_frame execute add [type name value]
+  [let [[type_key [have semantic_key_hash lookup type]]]
+    [if [null type_key]
+	[prog [have semantic_key_hash add type type]
+	      [= type_key type]]]
+    [let [[name_key [have semantic_key_hash lookup name]]]
+      [if [null name_key]
+	  [prog [have semantic_key_hash add name name]
+		[= name_key name]]]
+      [have this add_type_var_value type_key name_key value]]]]
+
+[deftypefunk semantic_frame execute lookup [type name]
+  [let [[type_key [have semantic_key_hash lookup type]]]
+    [if [null type_key]
+	[prog [have semantic_key_hash add type type]
+	      [= type_key type]]]
+    [let [[name_key [have semantic_key_hash lookup name]]]
+      [if [null name_key]
+	  [prog [have semantic_key_hash add name name]
+		[= name_key name]]]
+      [get this type_var_value type_key name_key nil]]]]
+
+[deftypefunk semantic_frame execute check_match [semantic_frame]
+  [let [[is_match t]]
+    [let [[type_key_iter [get [get this type_ptypehash] keys]]]
+      [while type_key_iter
+	[let [[type_key [car type_key_iter]]]
+	  [let [[key_iter [get this type_var-keys type_key]]]
+	    [while key_iter
+	      [let [[key [car key_iter]]]
+		[if [not [equals [get this           type_var_value type_key key]
+				 [get semantic_frame type_var_value type_key key]]]
+		    [prog [= is_match      nil]
+			  [= key_iter      nil]
+			  [= type_key_iter nil]]]]
+	      [= key_iter [cdr key_iter]]]]]
+	[= type_key_iter [cdr type_key_iter]]]]
+    is_match]]
+
+
+[deframe noun_semantic_frame [semantic_frame] []]
+
+[deftypefunk noun_semantic_frame execute add_noun [symbols]
+  [have this add `noun symbols t]]
+
+[deftypefunk noun_semantic_frame execute add_classifier [symbols]
+  [have this add `classifier symbols t]]
+
+[deftypefunk noun_semantic_frame execute add_adjective [symbols]
+  [have this add `adjective symbols t]]
+
+[deftypefunk noun_semantic_frame execute add_preposition [preposition_symbols :rest semantic_objects]
+  [have this add `preposition preposition_symbols [cons semantic_objects [have this lookup `preposition preposition_symbols]]]]
+
+
+[deframe semantic_knowledge_base [frame] [semantic_frames]]
+
+[deftypefunk semantic_knowledge_base execute add_semantic_frame [semantic_frame]
+  [if [not [is-type `semantic_frame semantic_frame]]
+      [error bug_type       `must_be_semantic_frame_to_be_added_to_semantic_knowledge_base
+	     semantic_frame semantic_frame]
+    [= semantic_frames [cons semantic_frame semantic_frames]]]]
+
+
+
+[deftypefunk semantic_knowledge_base execute lookup_matching_semantic_frames [index_semantic_frame]
+  [let [[matching_frames nil]]
+    [mapc [funk [semantic_frame]
+		[if [have index_semantic_frame check_match semantic_frame]
+		    [= matching_frames [cons semantic_frame matching_frames]]]]
+	  semantic_frames]
+    matching_frames]]
+
+[defunk skb-test []
+  [let [[semantic_knowledge_base [new semantic_knowledge_base]]]
+    [let [[knife_semantic_frame        [new semantic_frame]]
+	  [toaster_semantic_frame      [new semantic_frame]]
+	  [counter_semantic_frame      [new semantic_frame]]
+	  [kitchen_semantic_frame      [new semantic_frame]]
+	  [refrigerator_semantic_frame [new semantic_frame]]
+	  [butter_semantic_frame       [new semantic_frame]]
+	  [Ralph_semantic_frame        [new semantic_frame]]
+	  [Lauren_semantic_frame       [new semantic_frame]]]
+      [have knife_semantic_frame         add_preposition `on counter_semantic_frame]
+      [have knife_semantic_frame         add_preposition `in kitchen_semantic_frame]
+      [have toaster_semantic_frame       add_preposition `on counter_semantic_frame]
+      [have toaster_semantic_frame       add_preposition `in kitchen_semantic_frame]
+      [have counter_semantic_frame       add_preposition `in kitchen_semantic_frame]
+      [have refrigerator_semantic_frame  add_preposition `in kitchen_semantic_frame]
+      [have butter_semantic_frame        add_preposition `in kitchen_semantic_frame]
+      [have butter_semantic_frame        add_preposition `in refridgerator_semantic_frame]
+      [have Ralph_semantic_frame         add_preposition `in kitchen_semantic_frame]
+      [have Lauren_semantic_frame        add_preposition `in kitchen_semantic_frame]
+      [have semantic_knowledge_base add_semantic_frame knife_semantic_frame]
+      [have semantic_knowledge_base add_semantic_frame toaster_semantic_frame]
+      [have semantic_knowledge_base add_semantic_frame counter_semantic_frame]
+      [have semantic_knowledge_base add_semantic_frame kitchen_semantic_frame]
+      [have semantic_knowledge_base add_semantic_frame refrigerator_semantic_frame]
+      [have semantic_knowledge_base add_semantic_frame butter_semantic_frame]
+      [have semantic_knowledge_base add_semantic_frame Ralph_semantic_frame]
+      [have semantic_knowledge_base add_semantic_frame Lauren_semantic_frame]
+      semantic_knowledge_base]]]
+
+
+
 [deframe natural_language_command [frame] [verb_symbols arguments prepositions funk]
   [new [initial_verb_symbols initial_arguments initial_prepositions initial_funk]
        [= verb_symbols initial_verb_symbols]

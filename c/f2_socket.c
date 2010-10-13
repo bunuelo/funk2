@@ -125,6 +125,11 @@ f2ptr raw__accept(f2ptr cause, f2ptr sockfd, f2ptr addr_array) {
   s64 result = accept(f2integer__i(sockfd, cause), (struct sockaddr*)&addr_in, &addr_len);
   if (result == -1) {
     s64 error_number = errno;
+    if ((error_number == EAGAIN) ||
+	(error_number == EWOULDBLOCK)) {
+      // this is a typical non-blocking, not available "error".
+      return nil;
+    }
     return f2larva__new(cause, 667, f2__bug__new(cause, f2integer__new(cause, 667), f2__frame__new(cause, f2list10__new(cause,
 															new__symbol(cause, "bug_type"),   new__symbol(cause, "socket_accept_failure"),
 															new__symbol(cause, "sockfd"),     sockfd,

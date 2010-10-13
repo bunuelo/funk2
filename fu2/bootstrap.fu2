@@ -63,6 +63,7 @@
 [require gtk]
 [require fibermon]
 [require natural_language]
+[require socket-server]
 
 [defunk load-funk2-devrc []
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]

@@ -41,7 +41,7 @@
 					      1024] 3]] '32 Kb packet size <=> packet/s = # of internet radio streams'
 
 [defunk socket-new_test_server [port_num]
-  [let [[io_buffer             [chunk socket-server:-buffer_size-]]
+  [let [[io_buffer             [new chunk socket-server:-buffer_size-]]
 	[io_buffer-byte_start  0]
 	[io_buffer-byte_length socket-server:-buffer_size-]]
     [socket-new_server port_num

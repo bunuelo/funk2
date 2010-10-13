@@ -46,7 +46,7 @@
 
 
 [defunk socket:socket [domain type protocol]
-  [if [not [and [integer? domain] [integer? type] [integer? protocol]]]
+  [if [not [and [is-type `integer domain] [is-type `integer type] [is-type `integer protocol]]]
       [error `socket-error `[socket:socket argument-type]]
     [let [[rv [socket:f2-socket domain type protocol]]]
       [if [= rv -1]
@@ -54,7 +54,7 @@
 	rv]]]]
 
 [defunk socket:accept [sockfd addr_array]
-  [if [not [and [integer? sockfd]
+  [if [not [and [is-type `integer sockfd]
 		[or [null addr_array] [array? addr_array]]]]
       [error `socket-error `[socket:accept argument-type]]
     [let [[rv [socket:f2-accept sockfd addr_array]]]
@@ -65,7 +65,7 @@
 	rv]]]]
 
 [defunk socket:connect [sockfd sin_family sin_port sin_addr]
-  [if [not [and [integer? sockfd] [integer? sin_family] [integer? sin_port] [array? sin_addr]]]
+  [if [not [and [is-type `integer sockfd] [is-type `integer sin_family] [is-type `integer sin_port] [array? sin_addr]]]
       [error `socket-error `[socket:connect argument-type]]
     [let [[rv [socket:f2-connect sockfd sin_family sin_port sin_addr]]]
       [if [= rv -1]
@@ -73,7 +73,7 @@
 	rv]]]]
 
 [defunk socket:bind [sockfd sin_family sin_port sin_addr]
-  [if [not [and [integer? sockfd] [integer? sin_family] [integer? sin_port] [array? sin_addr]]]
+  [if [not [and [is-type `integer sockfd] [is-type `integer sin_family] [is-type `integer sin_port] [array? sin_addr]]]
       [error `socket-error `[socket:bind argument-type]]
     [let [[rv [socket:f2-bind sockfd sin_family sin_port sin_addr]]]
       [if [= rv -1]
@@ -81,12 +81,12 @@
 	rv]]]]
 
 [defunk socket:getsockname [s name namelen]
-  [if [not [and [integer? s] [pointer? name] [pointer? namelen]]]
+  [if [not [and [is-type `integer s] [is-type `pointer name] [is-type `pointer namelen]]]
       [error `socket-error `[socket:getsockname argument-type]]
     [socket:f2-getsockname s name namelen]]]
 
 [defunk socket:listen [sockfd backlog]
-  [if [not [and [integer? sockfd] [integer? backlog]]]
+  [if [not [and [is-type `integer sockfd] [is-type `integer backlog]]]
       [error `socket-error `[socket:listen argument-type]]
     [let [[rv [socket:f2-listen  sockfd backlog]]]
       [if [= rv -1]
@@ -101,11 +101,11 @@
 	  [error `socket-new_client `[return-value ,[socket:h_errno]]]
 	hostent]]]]
 
-[defunk socket:hostent-h_name      [hostent]                             [if [not      [pointer? hostent]]                                                             [error `socket-error `argument-type] [socket:f2-hostent-h_name      hostent]]]
-[defunk socket:hostent-h_aliases   [hostent]                             [if [not      [pointer? hostent]]                                                             [error `socket-error `argument-type] [socket:f2-hostent-h_aliases   hostent]]]
-[defunk socket:hostent-h_addrtype  [hostent]                             [if [not      [pointer? hostent]]                                                             [error `socket-error `argument-type] [socket:f2-hostent-h_addrtype  hostent]]]
-[defunk socket:hostent-h_length    [hostent]                             [if [not      [pointer? hostent]]                                                             [error `socket-error `argument-type] [socket:f2-hostent-h_length    hostent]]]
-[defunk socket:hostent-h_addr_list [hostent]                             [if [not      [pointer? hostent]]                                                             [error `socket-error `argument-type] [socket:f2-hostent-h_addr_list hostent]]]
+[defunk socket:hostent-h_name      [hostent]                             [if [not      [is-type `pointer hostent]]                                                             [error `socket-error `argument-type] [socket:f2-hostent-h_name      hostent]]]
+[defunk socket:hostent-h_aliases   [hostent]                             [if [not      [is-type `pointer hostent]]                                                             [error `socket-error `argument-type] [socket:f2-hostent-h_aliases   hostent]]]
+[defunk socket:hostent-h_addrtype  [hostent]                             [if [not      [is-type `pointer hostent]]                                                             [error `socket-error `argument-type] [socket:f2-hostent-h_addrtype  hostent]]]
+[defunk socket:hostent-h_length    [hostent]                             [if [not      [is-type `pointer hostent]]                                                             [error `socket-error `argument-type] [socket:f2-hostent-h_length    hostent]]]
+[defunk socket:hostent-h_addr_list [hostent]                             [if [not      [is-type `pointer hostent]]                                                             [error `socket-error `argument-type] [socket:f2-hostent-h_addr_list hostent]]]
 
 [defunk socket:hostent-format [stream hostent]
   [format stream
@@ -124,12 +124,12 @@
 
 `[format stdout '\nlocalhost-name = ' [socket:localhost-name]]
 
-[defunk socket:sockaddr_in-sin_family [sockaddr_in] [if [not [pointer? sockaddr_in]] [error `socket-error `argument-type] [socket:f2-sockaddr_in-sin_family sockaddr_in]]]
-[defunk socket:sockaddr_in-sin_port   [sockaddr_in] [if [not [pointer? sockaddr_in]] [error `socket-error `argument-type] [socket:f2-sockaddr_in-sin_port   sockaddr_in]]]
-[defunk socket:sockaddr_in-sin_addr   [sockaddr_in] [if [not [pointer? sockaddr_in]] [error `socket-error `argument-type] [socket:f2-sockaddr_in-sin_addr   sockaddr_in]]]
+[defunk socket:sockaddr_in-sin_family [sockaddr_in] [if [not [is-type `pointer sockaddr_in]] [error `socket-error `argument-type] [socket:f2-sockaddr_in-sin_family sockaddr_in]]]
+[defunk socket:sockaddr_in-sin_port   [sockaddr_in] [if [not [is-type `pointer sockaddr_in]] [error `socket-error `argument-type] [socket:f2-sockaddr_in-sin_port   sockaddr_in]]]
+[defunk socket:sockaddr_in-sin_addr   [sockaddr_in] [if [not [is-type `pointer sockaddr_in]] [error `socket-error `argument-type] [socket:f2-sockaddr_in-sin_addr   sockaddr_in]]]
 
 [defunk socket:chunk-send [chunk start length fd flags]
-  [if [not [and [chunk? chunk] [integer? start] [integer? length] [integer? fd] [integer? flags]]]
+  [if [not [and [is-type `chunk chunk] [is-type `integer start] [is-type `integer length] [is-type `integer fd] [is-type `integer flags]]]
       [error `socket-error `argument-type]
     [let [[rv [socket:f2-chunk-send chunk start length fd flags]]]
       [if [= rv -1]
@@ -139,7 +139,7 @@
 	rv]]]]
 
 [defunk socket:chunk-recv [chunk start length fd flags]
-  [if [not [and [chunk? chunk] [integer? start] [integer? length] [integer? fd] [integer? flags]]]
+  [if [not [and [is-type `chunk chunk] [is-type `integer start] [is-type `integer length] [is-type `integer fd] [is-type `integer flags]]]
       [error `socket-error `argument-type]
     [let [[rv [socket:f2-chunk-recv chunk start length fd flags]]]
       [if [= rv -1]
@@ -148,8 +148,8 @@
 	    [error `socket-error `[return-value ,[errno:errno-string]]]]
 	rv]]]]
 
-[defunk socket:send [fd pointer byte_num flags] [if [not [and [integer? fd] [pointer? pointer] [integer? byte_num] [integer? flags]]] [error `socket-error `argument-type] [socket:f2-send fd pointer byte_num flags]]]
-[defunk socket:recv [fd pointer byte_num flags] [if [not [and [integer? fd] [pointer? pointer] [integer? byte_num] [integer? flags]]] [error `socket-error `argument-type] [socket:f2-recv fd pointer byte_num flags]]]
+[defunk socket:send [fd pointer byte_num flags] [if [not [and [is-type `integer fd] [is-type `pointer pointer] [is-type `integer byte_num] [is-type `integer flags]]] [error `socket-error `argument-type] [socket:f2-send fd pointer byte_num flags]]]
+[defunk socket:recv [fd pointer byte_num flags] [if [not [and [is-type `integer fd] [is-type `pointer pointer] [is-type `integer byte_num] [is-type `integer flags]]] [error `socket-error `argument-type] [socket:f2-recv fd pointer byte_num flags]]]
 
 [defunk socket:describe-host [name]
   [let [[hostent [socket:gethostbyname name]]]

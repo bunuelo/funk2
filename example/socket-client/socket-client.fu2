@@ -20,7 +20,7 @@
 '
 
 [globalize socket-client:-buffer_size- [>> [* 64
-					      1024] 3]] '32 Kb packet size <=> packet/s = # of internet radio streams'
+					      1024] 3]]
 
 [defunk socket-open_client [server_name port_num]
   [let [[server_hostent [socket:gethostbyname server_name]]]

@@ -50,6 +50,9 @@ declare_primobject_11_slot(stream, mutex, stream_type, ungetc_stack, rewind_stac
 boolean_t raw__file_stream__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__file_stream__is_type(f2ptr cause, f2ptr this);
 
+boolean_t raw__socket_stream__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__socket_stream__is_type(f2ptr cause, f2ptr this);
+
 boolean_t raw__string_stream__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__string_stream__is_type(f2ptr cause, f2ptr this);
 

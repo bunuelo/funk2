@@ -258,7 +258,7 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	    raw__stream__writef(cause, stream, "<br>");
 	  }
 	  
-	  raw__stream__writef(cause, stream, "\n");
+	  raw__stream__writef(cause, stream, "\r\n");
 	  {
 	    u64 index;
 	    for (index = 0; index < indent_distance__i; index ++) {
@@ -311,7 +311,7 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	    if (use_html_codes) {
 	      raw__stream__writef(cause, stream, "<br>");
 	    }
-	    raw__stream__writef(cause, stream, "\n");
+	    raw__stream__writef(cause, stream, "\r\n");
 	  }
 	  if (ch >= 28 && ch <= 255) {
 	    switch(ch) {

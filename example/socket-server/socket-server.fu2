@@ -60,6 +60,7 @@
 					    [with-new-cause [cause-define standard-terminal client_terminal]
 							    [cause-define standard-input    [socket_stream-new client_fd]]
 							    [fiber [funk []
+									 [cause-enable_reactive_repl_critics [this-cause]]
 									 [repl]]
 								   nil]]]]]]]
 	 nil]

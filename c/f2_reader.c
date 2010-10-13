@@ -1443,7 +1443,7 @@ void funk2_reader__reinit(funk2_reader_t* this) {
   {char* str = "char:newline";                 this->char__newline                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:return";                  this->char__return                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:backspace";               this->char__backspace               = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-
+  
   {char* str = "char:0"; this->char__0 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:1"; this->char__1 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:2"; this->char__2 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}

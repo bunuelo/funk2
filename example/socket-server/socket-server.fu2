@@ -46,7 +46,7 @@
 		       [funk [client_fd]
 			     [define-funk handle-client-loop
 			       [funk []
-				     [format stdout '\nsending to client (socket_fd = ' client_fd ', siocoutq = ' [ioctl:ioctl-siocoutq client_fd] ', siocinq = ' [ioctl:ioctl-siocinq client_fd]  ')']
+				     `[format stdout '\nsending to client (socket_fd = ' client_fd ', siocoutq = ' [ioctl:ioctl-siocoutq client_fd] ', siocinq = ' [ioctl:ioctl-siocinq client_fd]  ')']
 				     [socket:chunk-send io_buffer io_buffer-byte_start io_buffer-byte_length client_fd 0]
 				     [handle-client-loop]]]
 			     [handle-client-loop]]]]]

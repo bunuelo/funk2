@@ -89,7 +89,6 @@ boolean_t raw__char__is_whitespace(f2ptr cause, f2ptr this) {
   return (raw__eq(cause, this, __funk2.reader.char__space)          ||
 	  raw__eq(cause, this, __funk2.reader.char__tab)            ||
 	  raw__eq(cause, this, __funk2.reader.char__newline)        ||
-	  raw__eq(cause, this, __funk2.reader.char__telnet_newline) ||
 	  raw__eq(cause, this, __funk2.reader.char__return));
 }
 
@@ -691,7 +690,6 @@ f2ptr f2__stream__try_read_string(f2ptr cause, f2ptr stream) {
 	}
 	if      (raw__eq(cause, read_ch, __funk2.reader.char__string_escape_newline))        {read_ch = __funk2.reader.char__newline;}
 	else if (raw__eq(cause, read_ch, __funk2.reader.char__string_escape_return))         {read_ch = __funk2.reader.char__return;}
-	else if (raw__eq(cause, read_ch, __funk2.reader.char__string_escape_telnet_newline)) {read_ch = __funk2.reader.char__telnet_newline;}
 	else if (raw__eq(cause, read_ch, __funk2.reader.char__string_escape_tab))            {read_ch = __funk2.reader.char__tab;}
 	else if (raw__eq(cause, read_ch, __funk2.reader.char__string_escape_backspace))      {read_ch = __funk2.reader.char__backspace;}
 	ch = f2char__ch(read_ch, cause);
@@ -1313,7 +1311,6 @@ void funk2_reader__init(funk2_reader_t* this) {
   {this->char__tab                     = f2char__new(cause, '\t'); char* str = "char:tab";                     environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__tab);}
   {this->char__newline                 = f2char__new(cause, '\n'); char* str = "char:newline";                 environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__newline);}
   {this->char__return                  = f2char__new(cause, '\r'); char* str = "char:return";                  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__return);}
-  {this->char__telnet_newline          = f2char__new(cause, '\m'); char* str = "char:telnet_newline";          environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__telnet_newline);}
   {this->char__backspace               = f2char__new(cause, '\b'); char* str = "char:backspace";               environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__backspace);}
   
   {this->char__0                       = f2char__new(cause, '0'); char* str = "char:0"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__0);}
@@ -1400,7 +1397,6 @@ void funk2_reader__init(funk2_reader_t* this) {
   {this->char__escape_gfunkptr         = f2char__new(cause, 'g');  char* str = "char:escape_gfunkptr";         environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_gfunkptr);}
   {this->char__string_quote            = f2char__new(cause, '\''); char* str = "char:string_quote";            environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_quote);}
   {this->char__string_escape_newline   = f2char__new(cause, 'n');  char* str = "char:string_escape_newline";   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_newline);}
-  {this->char__string_escape_telnet_newline = f2char__new(cause, 'm');  char* str = "char:string_escape_telnet_newline";   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_telnet_newline);}
   {this->char__string_escape_return    = f2char__new(cause, 'r');  char* str = "char:string_escape_return";    environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_return);}
   {this->char__string_escape_tab       = f2char__new(cause, 't');  char* str = "char:string_escape_tab";       environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_tab);}
   {this->char__string_escape_backspace = f2char__new(cause, 'b');  char* str = "char:string_escape_backspace"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_backspace);}
@@ -1445,7 +1441,6 @@ void funk2_reader__reinit(funk2_reader_t* this) {
   {char* str = "char:space";                   this->char__space                   = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:tab";                     this->char__tab                     = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:newline";                 this->char__newline                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:telnet_newline";          this->char__telnet_newline          = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:return";                  this->char__return                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:backspace";               this->char__backspace               = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   
@@ -1533,7 +1528,6 @@ void funk2_reader__reinit(funk2_reader_t* this) {
   {char* str = "char:escape_gfunkptr";         this->char__escape_gfunkptr         = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:string_quote";            this->char__string_quote            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:string_escape_newline";   this->char__string_escape_newline   = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:string_escape_telnet_newline";   this->char__string_escape_telnet_newline   = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:string_escape_return";    this->char__string_escape_return    = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:string_escape_tab";       this->char__string_escape_tab       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:string_escape_backspace"; this->char__string_escape_backspace = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}

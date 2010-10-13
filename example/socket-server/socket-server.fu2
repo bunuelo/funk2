@@ -35,7 +35,7 @@
 	    [sleep 1]]]]]]]
 
 [globalize socket-server:-buffer_size- [>> [* 64
-					      1024] 3]] '32 Kb packet size <=> packet/s = # of internet radio streams'
+					      1024] 3]]
 
 [defunk socket-new_test_server [port_num]
   [let [[io_buffer             [new chunk socket-server:-buffer_size-]]
@@ -45,8 +45,8 @@
 		       [funk [client_fd]
 			     [terminal_format standard-terminal '\naccepting client on client_fd=' client_fd '.']
 			     [while t
-			       `[format stdout '\nsending to client (socket_fd = ' client_fd ', siocoutq = ' [ioctl:ioctl-siocoutq client_fd] ', siocinq = ' [ioctl:ioctl-siocinq client_fd]  ')']
 			       [socket:chunk-send io_buffer io_buffer-byte_start io_buffer-byte_length client_fd 0]
+			       [sleep 1]
 			       ]]]]]
 
 `['#include <arpa/inet.h>'

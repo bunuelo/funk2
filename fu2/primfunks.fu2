@@ -271,6 +271,7 @@
 
 'defined in f2_primobject__stream.c'
 [globalize-funk file_stream-new                             &primfunk:file_stream__new]
+[globalize-funk socket_stream-new                           &primfunk:socket_stream__new]
 [globalize-funk string_stream-new                           &primfunk:string_stream__new]
 [globalize-funk string_stream                               &primfunk:string_stream]
 [globalize-funk stream-new_open_file                        &primfunk:stream__new_open_file]

@@ -26,6 +26,7 @@
 def_primobject_11_slot(stream, mutex, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number);
 
 f2ptr __file_stream__symbol        = -1;
+f2ptr __socket_stream__symbol      = -1;
 f2ptr __string_stream__symbol      = -1;
 f2ptr __text_window_stream__symbol = -1;
 
@@ -48,6 +49,22 @@ boolean_t raw__file_stream__is_type(f2ptr cause, f2ptr this) {
   return (raw__stream__is_type(cause, this) && f2__symbol__eq(cause, f2stream__stream_type(this, cause), __file_stream__symbol));
 }
 f2ptr f2__file_stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__file_stream__is_type(cause, this));}
+
+
+f2ptr f2__socket_stream__new(f2ptr cause, f2ptr file_descriptor) {
+  if (__socket_stream__symbol == -1) {__socket_stream__symbol = f2symbol__new(cause, strlen("socket_stream"), (u8*)"socket_stream");}
+  boolean_t rewindable = boolean__true;
+  f2ptr rewind_length = f2integer__new(cause, 0);
+  return f2__stream__new(cause, __socket_stream__symbol, nil, nil, f2bool__new(rewindable), rewind_length, file_descriptor, nil, nil);
+}
+def_pcfunk1(socket_stream__new, file_descriptor, return f2__socket_stream__new(this_cause, file_descriptor));
+
+boolean_t raw__socket_stream__is_type(f2ptr cause, f2ptr this) {
+  if (__socket_stream__symbol == -1) {__socket_stream__symbol = f2symbol__new(cause, strlen("socket_stream"), (u8*)"socket_stream");}
+  return (raw__stream__is_type(cause, this) && f2__symbol__eq(cause, f2stream__stream_type(this, cause), __socket_stream__symbol));
+}
+f2ptr f2__socket_stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__socket_stream__is_type(cause, this));}
+
 
 f2ptr f2__string_stream__new(f2ptr cause, f2ptr string, f2ptr index) {
   if (__string_stream__symbol == -1) {__string_stream__symbol = f2symbol__new(cause, strlen("string_stream"), (u8*)"string_stream");}
@@ -106,9 +123,27 @@ f2ptr f2__file_stream__close(f2ptr cause, f2ptr this) {
   return f2integer__new(cause, result);
 }
 
+f2ptr f2__socket_stream__close(f2ptr cause, f2ptr this) {
+  if ((! raw__socket_stream__is_type(cause, this))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
+  if (! raw__integer__is_type(cause, file_descriptor)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  int fd = f2integer__i(file_descriptor, cause);
+  int result = close(fd);
+  if (result == -1) {
+    return nil;
+  }
+  return f2integer__new(cause, result);
+}
+
 f2ptr f2__stream__close(f2ptr cause, f2ptr this) {
   if (raw__file_stream__is_type(cause, this)) {
     return f2__file_stream__close(cause, this);
+  } else if (raw__socket_stream__is_type(cause, this)) {
+    return f2__socket_stream__close(cause, this);
   } else if (raw__string_stream__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
@@ -148,9 +183,24 @@ f2ptr f2__file_stream__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {
   return raw__file_stream__nonblocking__set(cause, this, (value != nil));
 }
 
+int raw__socket_stream__nonblocking__set(f2ptr cause, f2ptr this, boolean_t value) {
+  f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
+  u64 fd                = f2integer__i(file_descriptor, cause);
+  return file_descriptor__set_nonblocking(fd, value);
+}
+
+f2ptr f2__socket_stream__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__socket_stream__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__socket_stream__nonblocking__set(cause, this, (value != nil));
+}
+
 f2ptr f2__stream__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {
   if (raw__file_stream__is_type(cause, this)) {
     return f2__file_stream__nonblocking__set(cause, this, value);
+  } else if (raw__socket_stream__is_type(cause, this)) {
+    return f2__socket_stream__nonblocking__set(cause, this, value);
   }
   return f2larva__new(cause, 1, nil);
 }
@@ -201,6 +251,32 @@ f2ptr f2__file_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) {
   return nil;
 }
 
+f2ptr f2__socket_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) {
+  if (! raw__socket_stream__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
+  if (! raw__integer__is_type(cause, file_descriptor)) {return f2larva__new(cause, 17, nil);}
+  u64 fd = f2integer__i(file_descriptor, cause);
+  u8  data[2] = {0, 0};
+  u32 bytes_read = 0;
+  recv_nonblocking_result_t result = recv_nonblocking(fd, data, 1, &bytes_read);
+  switch (result) {
+  case recv_nonblocking_result__success:
+    if (bytes_read == 1) {
+      return f2char__new(cause, data[0]);
+    }
+    break;
+  case recv_nonblocking_result__end_of_file:
+    return __funk2.reader.end_of_file_exception;
+  case recv_nonblocking_result__read_failure:
+  case recv_nonblocking_result__select_failure:
+  case recv_nonblocking_result__unknown_failure:
+    break;
+  }
+  return nil;
+}
+
 f2ptr f2__string_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) {
   if (! raw__string_stream__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
@@ -231,6 +307,8 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
   if (! character) {
     if (raw__file_stream__is_type(cause, this)) {
       character = f2__file_stream__try_ungetcless_read_character(cause, this);
+    } else if (raw__socket_stream__is_type(cause, this)) {
+      character = f2__socket_stream__try_ungetcless_read_character(cause, this);
     } else if (raw__string_stream__is_type(cause, this)) {
       character = f2__string_stream__try_ungetcless_read_character(cause, this);
     }
@@ -404,6 +482,7 @@ void f2__primobject__stream__reinitialize_globalvars() {
   
   __stream__symbol             = f2symbol__new(cause, strlen("stream"),             (u8*)"stream");
   __file_stream__symbol        = f2symbol__new(cause, strlen("file_stream"),        (u8*)"file_stream");
+  __socket_stream__symbol      = f2symbol__new(cause, strlen("socket_stream"),      (u8*)"socket_stream");
   __string_stream__symbol      = f2symbol__new(cause, strlen("string_stream"),      (u8*)"string_stream");
   __text_window_stream__symbol = f2symbol__new(cause, strlen("text_window_stream"), (u8*)"text_window_stream");
 }
@@ -429,6 +508,7 @@ void f2__primobject__stream__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(stream__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   f2__primcfunk__init(file_stream__new, "");
+  f2__primcfunk__init(socket_stream__new, "");
   f2__primcfunk__init(string_stream__new, "");
   f2__primcfunk__init(string_stream, "");
   f2__primcfunk__init(stream__new_open_file, "");

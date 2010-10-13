@@ -571,7 +571,12 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 			 f2ptr subexp_size     = f2integer__new(cause, subexp_size__i);
 			 f2ptr indent_distance = raw__terminal_print_frame__indent_distance(cause, terminal_print_frame);
 			 {
-			   u64   subexp_max_size__i = (max_size__i - size__i + (frame__length_left - 1)) / frame__length_left;
+			   u64   subexp_max_size__i;
+			   if (frame__length_left > 0) {
+			     subexp_max_size__i = (max_size__i - size__i + (frame__length_left - 1)) / frame__length_left;
+			   } else {
+			     subexp_max_size__i = 0;
+			   }
 			   f2ptr subexp_max_size    = f2integer__new(cause, subexp_max_size__i);
 			   {		       
 			     raw__terminal_print_frame__size__set(    cause, terminal_print_frame, subexp_size);

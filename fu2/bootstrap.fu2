@@ -17,10 +17,13 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[format stdout '\ndebug 0']
+
 [prog [globalize standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 128 t nil t 1000000000]]
-      
+      [format stdout '\ndebug 1']
       [memory-debug_assert_valid]
       
+      [format stdout '\ndebug 2']
       [load 'fu2/bootstrap-primobject.fu2']
       [load 'fu2/bootstrap-reader.fu2']
       [load 'fu2/bootstrap-cons.fu2']

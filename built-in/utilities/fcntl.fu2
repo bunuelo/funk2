@@ -19,10 +19,10 @@
  rights to redistribute these changes.
 '
 
-[defunk fcntl:fcntl-getfd [fd value] [if [not [and [integer? fd] [integer? value]]] [error `fcntl:argument-type-bug nil] [fcntl:f2-fcntl-getfd fd value]]]
-[defunk fcntl:fcntl-setfd [fd value] [if [not [and [integer? fd] [integer? value]]] [error `fcntl:argument-type-bug nil] [fcntl:f2-fcntl-setfd fd value]]]
-[defunk fcntl:fcntl-getfl [fd value] [if [not [and [integer? fd] [integer? value]]] [error `fcntl:argument-type-bug nil] [fcntl:f2-fcntl-getfl fd value]]]
-[defunk fcntl:fcntl-setfl [fd value] [if [not [and [integer? fd] [integer? value]]] [error `fcntl:argument-type-bug nil] [fcntl:f2-fcntl-setfl fd value]]]
+[defunk fcntl:fcntl-getfd [fd value] [if [not [and [is-type `integer fd] [is-type `integer value]]] [error `fcntl:argument-type-bug nil] [fcntl:f2-fcntl-getfd fd value]]]
+[defunk fcntl:fcntl-setfd [fd value] [if [not [and [is-type `integer fd] [is-type `integer value]]] [error `fcntl:argument-type-bug nil] [fcntl:f2-fcntl-setfd fd value]]]
+[defunk fcntl:fcntl-getfl [fd value] [if [not [and [is-type `integer fd] [is-type `integer value]]] [error `fcntl:argument-type-bug nil] [fcntl:f2-fcntl-getfl fd value]]]
+[defunk fcntl:fcntl-setfl [fd value] [if [not [and [is-type `integer fd] [is-type `integer value]]] [error `fcntl:argument-type-bug nil] [fcntl:f2-fcntl-setfl fd value]]]
 
 [defunk fcntl-nonblock     [fd]       [not [= [bit_and [fcntl:fcntl-getfl fd 0] fcntl:fcntl-o_nonblock] 0]]]
 [defunk fcntl-nonblock-set [fd value] [let [[flags [fcntl:fcntl-getfl fd 0]]] [fcntl:fcntl-setfl fd [if value [bit_or flags fcntl:fcntl-o_nonblock] [bit_and flags [bit_not fcntl:fcntl-o_nonblock]]]]]]

@@ -52,6 +52,7 @@ struct funk2_reader_s {
   f2ptr char__tab;
   f2ptr char__newline;
   f2ptr char__return;
+  f2ptr char__telnet_newline;
   f2ptr char__backspace;
   
   f2ptr char__0;

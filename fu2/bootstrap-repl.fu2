@@ -824,7 +824,7 @@
 [defmetro = [var value] `[mutate ,var ,value]]
 
 [defunk no-color []
-  [set standard-terminal use_ansi_color nil]]
+  [set standard-terminal use_ansi_codes nil]]
 
 [defmetro labels [label_definitions :rest body]
   [append [cons `prog [mapcar [funk-new_with_name compile-labels [label_definition]

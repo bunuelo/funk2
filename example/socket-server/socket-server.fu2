@@ -27,7 +27,7 @@
 	  [sin_addr   socket:inaddr_any]]
       [socket:bind   socket_fd sin_family sin_port sin_addr]
       [socket:listen socket_fd 5]
-      [let [[client_addr [array-new 6]]]
+      [let [[client_addr [new array 6]]]
 	[define-funk accept-loop
 	  [funk []
 		[let [[accept_fd [socket:accept socket_fd client_addr]]]

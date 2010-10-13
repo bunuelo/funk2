@@ -18,6 +18,7 @@
  rights to redistribute these changes.'
 
 [defunk socket-new_server [port_num handle_client_proc]
+  [cause-define cause-name `[socket-server ,port_num]]
   [let [[socket_fd [socket:socket socket:pf_inet socket:sock_stream 0]]]
     [fcntl-nonblock-set socket_fd t]
     [let [[sin_family socket:pf_inet]

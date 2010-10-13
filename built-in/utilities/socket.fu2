@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2010 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,8 +15,7 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
 [globalize-funk socket:h_errno &socket:f2-h_errno]
 
@@ -55,7 +53,7 @@
 
 [defunk socket:accept [sockfd addr_array]
   [if [not [and [is-type `integer sockfd]
-		[or [null addr_array] [array? addr_array]]]]
+		[or [null addr_array] [is-type `array addr_array]]]]
       [error `socket-error `[socket:accept argument-type]]
     [let [[rv [socket:f2-accept sockfd addr_array]]]
       [if [= rv -1]
@@ -65,7 +63,7 @@
 	rv]]]]
 
 [defunk socket:connect [sockfd sin_family sin_port sin_addr]
-  [if [not [and [is-type `integer sockfd] [is-type `integer sin_family] [is-type `integer sin_port] [array? sin_addr]]]
+  [if [not [and [is-type `integer sockfd] [is-type `integer sin_family] [is-type `integer sin_port] [is-type `array sin_addr]]]
       [error `socket-error `[socket:connect argument-type]]
     [let [[rv [socket:f2-connect sockfd sin_family sin_port sin_addr]]]
       [if [= rv -1]
@@ -73,7 +71,7 @@
 	rv]]]]
 
 [defunk socket:bind [sockfd sin_family sin_port sin_addr]
-  [if [not [and [is-type `integer sockfd] [is-type `integer sin_family] [is-type `integer sin_port] [array? sin_addr]]]
+  [if [not [and [is-type `integer sockfd] [is-type `integer sin_family] [is-type `integer sin_port] [is-type `array sin_addr]]]
       [error `socket-error `[socket:bind argument-type]]
     [let [[rv [socket:f2-bind sockfd sin_family sin_port sin_addr]]]
       [if [= rv -1]
@@ -94,7 +92,7 @@
 	rv]]]]
 
 [defunk socket:gethostbyname [name]
-  [if [not [string? name]]
+  [if [not [is-type `string name]]
       [error `socket-error `[socket:gethostbyname argument-type]]
     [let [[hostent [socket:f2-gethostbyname name]]]
       [if [or [null hostent] [= #x0 hostent]]

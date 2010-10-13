@@ -18,5 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage socket-server
-  :sources ['socket-server.fu2']]
+  :packages [utilities]
+   :sources ['socket-server.fu2']]
 

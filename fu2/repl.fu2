@@ -160,8 +160,9 @@
 
 [defunk load [:rest filenames]
   [if [null [cause-lookup `standard-terminal]]
-      [prog [cause-define standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 128 t nil t 1000000000]]
-	    [cause-define standard-input    stdin]]]
+      [cause-define standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 128 t nil t 1000000000]]]
+  [if [null [cause-lookup `standard-input]]
+      [cause-define standard-input stdin]]
   [print [cons `load filenames]]
   [mapc [funk [filename]
 	      [load1 filename]]

@@ -17,9 +17,9 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[memory-debug_assert_valid]
-
 [cause-define standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 128 t nil t 1000000000]]
+
+[memory-debug_assert_valid]
 
 [load 'fu2/bootstrap-primobject.fu2']
 [load 'fu2/bootstrap-reader.fu2']

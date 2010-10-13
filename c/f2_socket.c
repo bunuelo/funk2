@@ -117,11 +117,22 @@ f2ptr f2__socket(f2ptr cause, f2ptr domain, f2ptr type, f2ptr protocol) {
 }
 def_pcfunk3(f2__socket, domain, type, protocol, return f2__socket(this_cause, domain, type, protocol));
 
+
 // int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
-f2ptr f2__accept(f2ptr cause, f2ptr sockfd, f2ptr addr_array) {
+f2ptr raw__accept(f2ptr cause, f2ptr sockfd, f2ptr addr_array) {
   struct sockaddr_in addr_in;
   socklen_t          addr_len = sizeof(addr_in.sin_addr.s_addr);
-  f2ptr rv = f2integer__new(cause, accept(f2integer__i(sockfd, cause), (struct sockaddr*)&addr_in, &addr_len));
+  s64 result = accept(f2integer__i(sockfd, cause), (struct sockaddr*)&addr_in, &addr_len);
+  if (result == -1) {
+    s64 error_number = errno;
+    return f2larva__new(cause, 667, f2__bug__new(cause, f2integer__new(cause, 667), f2__frame__new(cause, f2list12__new(cause,
+															new__symbol(cause, "bug_type"),   new__symbol(cause, "socket_accept_failure"),
+															new__symbol(cause, "sockfd"),     sockfd,
+															new__symbol(cause, "addr_array"), addr_array,
+															new__symbol(cause, "errno"),      f2integer__new(cause, error_number),
+															new__symbol(cause, "strerror"),   new__string(cause, strerror(error_number))))));
+  }
+  f2ptr rv = f2integer__new(cause, result);
   // there is a bug here in getting the correct client address from accept.
   if (addr_array) {
     if (raw__array__is_type(cause, addr_array)) {
@@ -134,15 +145,24 @@ f2ptr f2__accept(f2ptr cause, f2ptr sockfd, f2ptr addr_array) {
 	raw__array__elt__set(cause, addr_array, i, nil);
       }
     } else {
-      // could return argument type error here.
+      return f2larva__new(cause, 1, nil);
     }
   }
   return rv;
 }
+
+f2ptr f2__accept(f2ptr cause, f2ptr sockfd, f2ptr addr_array) {
+  if ((! raw__integer__is_type(cause, sockfd)) ||
+      (! raw__array__is_type(cause, addr_array))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__accept(cause, sockfd, addr_array);
+}
 def_pcfunk2(f2__accept, sockfd, addr_array, return f2__accept(this_cause, sockfd, addr_array));
 
+
 // int connect(int sockfd, const struct sockaddr *serv_addr, socklen_t addrlen);
-f2ptr f2__connect(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f2ptr sin_addr) {
+f2ptr raw__connect(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f2ptr sin_addr) {
   struct sockaddr_in addr_in;
   addr_in.sin_family = f2integer__i(sin_family, cause);
   addr_in.sin_port   = htons(f2integer__i(sin_port, cause));
@@ -155,12 +175,34 @@ f2ptr f2__connect(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f
     addr[i] = f2integer__i(raw__array__elt(cause, sin_addr, i), cause);
   }
   memcpy(&(addr_in.sin_addr.s_addr), addr, addr_len);
-  return f2integer__new(cause, connect(f2integer__i(sockfd, cause), (struct sockaddr*)&addr_in, sizeof(struct sockaddr)));
+  s64 result = connect(f2integer__i(sockfd, cause), (struct sockaddr*)&addr_in, sizeof(struct sockaddr));
+  if (result == -1) {
+    s64 error_number = errno;
+    return f2larva__new(cause, 667, f2__bug__new(cause, f2integer__new(cause, 667), f2__frame__new(cause, f2list12__new(cause,
+															new__symbol(cause, "bug_type"),   new__symbol(cause, "socket_connect_failure"),
+															new__symbol(cause, "sockfd"),     sockfd,
+															new__symbol(cause, "sin_family"), sin_family,
+															new__symbol(cause, "sin_port"),   sin_port,
+															new__symbol(cause, "sin_addr"),   sin_addr,
+															new__symbol(cause, "errno"),      f2integer__new(cause, error_number),
+															new__symbol(cause, "strerror"),   new__string(cause, strerror(error_number))))));
+  }
+  return f2integer__new(cause, result);
+}
+
+f2ptr f2__connect(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f2ptr sin_addr) {
+  if ((! raw__integer__is_type(cause, sockfd)) ||
+      (! raw__integer__is_type(cause, sin_family)) ||
+      (! raw__integer__is_type(cause, sin_port)) ||
+      (! raw__array__is_type(cause, sin_addr))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__connect(cause, sockfd, sin_family, sin_port, sin_addr);
 }
 def_pcfunk4(f2__connect, sockfd, sin_family, sin_port, sin_addr, return f2__connect(this_cause, sockfd, sin_family, sin_port, sin_addr));
 
 // int bind(int sockfd, const struct sockaddr *my_addr, socklen_t addrlen);
-f2ptr f2__bind(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f2ptr sin_addr) {
+f2ptr raw__bind(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f2ptr sin_addr) {
   struct sockaddr_in addr_in;
   addr_in.sin_family = f2integer__i(sin_family, cause);
   addr_in.sin_port   = htons(f2integer__i(sin_port, cause));
@@ -172,24 +214,73 @@ f2ptr f2__bind(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f2pt
     addr[i] = f2integer__i(raw__array__elt(cause, sin_addr, i), cause);
   }
   memcpy(&(addr_in.sin_addr.s_addr), addr, addr_len);
-  return f2integer__new(cause, bind(f2integer__i(sockfd, cause), (struct sockaddr*)&addr_in, sizeof(struct sockaddr)));
+  s64 result = bind(f2integer__i(sockfd, cause), (struct sockaddr*)&addr_in, sizeof(struct sockaddr));
+  if (result == -1) {
+    s64 error_number = errno;
+    return f2larva__new(cause, 667, f2__bug__new(cause, f2integer__new(cause, 667), f2__frame__new(cause, f2list12__new(cause,
+															new__symbol(cause, "bug_type"),   new__symbol(cause, "socket_bind_failure"),
+															new__symbol(cause, "sockfd"),     sockfd,
+															new__symbol(cause, "sin_family"), sin_family,
+															new__symbol(cause, "sin_port"),   sin_port,
+															new__symbol(cause, "sin_addr"),   sin_addr,
+															new__symbol(cause, "errno"),      f2integer__new(cause, error_number),
+															new__symbol(cause, "strerror"),   new__string(cause, strerror(error_number))))));
+  }
+  return f2integer__new(cause, result);
+}
+
+f2ptr f2__bind(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f2ptr sin_addr) {
+  if ((! raw__integer__is_type(cause, sockfd)) ||
+      (! raw__integer__is_type(cause, sin_family)) ||
+      (! raw__integer__is_type(cause, sin_port)) ||
+      (! raw__array__is_type(cause, sin_addr))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__bind(cause, sockfd, sin_family, sin_port, sin_addr);
 }
 def_pcfunk4(f2__bind, sockfd, sin_family, sin_port, sin_addr, return f2__bind(this_cause, sockfd, sin_family, sin_port, sin_addr));
 
 // int getsockname(int s, struct sockaddr *name, socklen_t *namelen);
-f2ptr f2__getsockname(f2ptr cause, f2ptr s, f2ptr name, f2ptr namelen) {
+f2ptr raw__getsockname(f2ptr cause, f2ptr s, f2ptr name, f2ptr namelen) {
   return f2integer__new(cause, getsockname(f2integer__i(s, cause), (struct sockaddr*)from_ptr(f2pointer__p(name, cause)), (socklen_t*)from_ptr(f2pointer__p(namelen, cause))));
+}
+
+f2ptr f2__getsockname(f2ptr cause, f2ptr s, f2ptr name, f2ptr namelen) {
+  if ((! raw__integer__is_type(cause, s)) ||
+      (! raw__pointer__is_type(cause, name)) ||
+      (! raw__pointer__is_type(cause, namelen))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__getsockname(cause, s, name, namelen);
 }
 def_pcfunk3(f2__getsockname, s, name, namelen, return f2__getsockname(this_cause, s, name, namelen));
 
 // int listen(int sockfd, int backlog);
+f2ptr raw__listen(f2ptr cause, f2ptr sockfd, f2ptr backlog) {
+  s64 result = listen(f2integer__i(sockfd, cause), f2integer__i(backlog, cause));
+  if (result == -1) {
+    s64 error_number = errno;
+    return f2larva__new(cause, 667, f2__bug__new(cause, f2integer__new(cause, 667), f2__frame__new(cause, f2list12__new(cause,
+															new__symbol(cause, "bug_type"), new__symbol(cause, "socket_listen_failure"),
+															new__symbol(cause, "sockfd"),   sockfd,
+															new__symbol(cause, "backlog"),  backlog,
+															new__symbol(cause, "errno"),    f2integer__new(cause, error_number),
+															new__symbol(cause, "strerror"), new__string(cause, strerror(error_number))))));
+  }
+  return f2integer__new(cause, result);
+}
+
 f2ptr f2__listen(f2ptr cause, f2ptr sockfd, f2ptr backlog) {
-  return f2integer__new(cause, listen(f2integer__i(sockfd, cause), f2integer__i(backlog, cause)));
+  if ((! raw__integer__is_type(cause, sockfd)) ||
+      (! raw__integer__is_type(cause, backlog))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__listen(cause, sockfd, backlog);
 }
 def_pcfunk2(f2__listen, sockfd, backlog, return f2__listen(this_cause, sockfd, backlog));
 
 // struct hostent *gethostbyname(const char *name);
-f2ptr f2__gethostbyname(f2ptr cause, f2ptr name) {
+f2ptr raw__gethostbyname(f2ptr cause, f2ptr name) {
   int name__length = f2string__length(name, cause);
   char* temp_str = (char*)from_ptr(f2__malloc(sizeof(char) * (name__length + 1)));
   if (!temp_str) {return nil;}
@@ -199,6 +290,13 @@ f2ptr f2__gethostbyname(f2ptr cause, f2ptr name) {
   f2ptr rv = f2pointer__new(cause, to_ptr(gethostbyname(temp_str)));
   f2__free(to_ptr(temp_str));
   return rv;
+}
+
+f2ptr f2__gethostbyname(f2ptr cause, f2ptr name) {
+  if (! raw__string__is_type(cause, name)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gethostbyname(cause, name);
 }
 def_pcfunk1(f2__gethostbyname, name, return f2__gethostbyname(this_cause, name));
 
@@ -217,13 +315,20 @@ def_pcfunk0(f2__h_errno__no_recovery, return f2__h_errno__no_recovery(this_cause
 f2ptr f2__h_errno__try_again(f2ptr cause) {return f2integer__new(cause, TRY_AGAIN);}
 def_pcfunk0(f2__h_errno__try_again, return f2__h_errno__try_again(this_cause));
 
-f2ptr f2__hostenv__h_name(f2ptr cause, f2ptr this) {
+f2ptr raw__hostenv__h_name(f2ptr cause, f2ptr this) {
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));
   return f2string__new(cause, strlen(this_hostent->h_name), (u8*)(this_hostent->h_name));
 }
+
+f2ptr f2__hostenv__h_name(f2ptr cause, f2ptr this) {
+  if (! raw__pointer__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__hostenv__h_name(cause, this);
+}
 def_pcfunk1(f2__hostent__h_name, this, return f2__hostenv__h_name(this_cause, this));
 
-f2ptr f2__hostent__h_aliases(f2ptr cause, f2ptr this) {
+f2ptr raw__hostent__h_aliases(f2ptr cause, f2ptr this) {
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));
   f2ptr seq  = nil;
   f2ptr iter = nil;
@@ -243,21 +348,44 @@ f2ptr f2__hostent__h_aliases(f2ptr cause, f2ptr this) {
   }
   return seq;
 }
+
+f2ptr f2__hostent__h_aliases(f2ptr cause, f2ptr this) {
+  if (! raw__pointer__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__hostent__h_aliases(cause, this);
+}
 def_pcfunk1(f2__hostent__h_aliases, this, return f2__hostent__h_aliases(this_cause, this));
 
-f2ptr f2__hostent__h_addrtype(f2ptr cause, f2ptr this) {
+
+f2ptr raw__hostent__h_addrtype(f2ptr cause, f2ptr this) {
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));
   return f2integer__new(cause, this_hostent->h_addrtype);
 }
+
+f2ptr f2__hostent__h_addrtype(f2ptr cause, f2ptr this) {
+  if (! raw__pointer__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__hostent__h_addrtype(cause, this);
+}
 def_pcfunk1(f2__hostent__h_addrtype, this, return f2__hostent__h_addrtype(this_cause, this));
 
-f2ptr f2__hostent__h_length(f2ptr cause, f2ptr this) {
+
+f2ptr raw__hostent__h_length(f2ptr cause, f2ptr this) {
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));
   return f2integer__new(cause, this_hostent->h_length);
 }
+
+f2ptr f2__hostent__h_length(f2ptr cause, f2ptr this) {
+  if (! raw__pointer__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__hostent__h_length(cause, this);
+}
 def_pcfunk1(f2__hostent__h_length, this, return f2__hostent__h_length(this_cause, this));
 
-f2ptr f2__hostent__h_addr_list(f2ptr cause, f2ptr this) {
+f2ptr raw__hostent__h_addr_list(f2ptr cause, f2ptr this) {
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));
   int h_length = this_hostent->h_length;
   f2ptr seq  = nil;
@@ -282,40 +410,117 @@ f2ptr f2__hostent__h_addr_list(f2ptr cause, f2ptr this) {
   }
   return seq;
 }
+
+f2ptr f2__hostent__h_addr_list(f2ptr cause, f2ptr this) {
+  if (! raw__pointer__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__hostent__h_addr_list(cause, this);
+}
 def_pcfunk1(f2__hostent__h_addr_list, this, return f2__hostent__h_addr_list(this_cause, this));
 
-f2ptr f2__sockaddr_in__sin_family(f2ptr cause, f2ptr this) {struct sockaddr_in* this__sockaddr_in = (struct sockaddr_in*)from_ptr(f2pointer__p(this, cause)); return f2integer__new(cause, this__sockaddr_in->sin_family);}
+f2ptr raw__sockaddr_in__sin_family(f2ptr cause, f2ptr this) {
+  struct sockaddr_in* this__sockaddr_in = (struct sockaddr_in*)from_ptr(f2pointer__p(this, cause));
+  return f2integer__new(cause, this__sockaddr_in->sin_family);
+}
+
+f2ptr f2__sockaddr_in__sin_family(f2ptr cause, f2ptr this) {
+  if (! raw__pointer(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__sockaddr_in__sin_family(cause, this);
+}
 def_pcfunk1(f2__sockaddr_in__sin_family, this, return f2__sockaddr_in__sin_family(this_cause, this));
 
-f2ptr f2__sockaddr_in__sin_port(f2ptr cause, f2ptr this) {struct sockaddr_in* this__sockaddr_in = (struct sockaddr_in*)from_ptr(f2pointer__p(this, cause)); return f2integer__new(cause, this__sockaddr_in->sin_port);}
+f2ptr raw__sockaddr_in__sin_port(f2ptr cause, f2ptr this) {
+  struct sockaddr_in* this__sockaddr_in = (struct sockaddr_in*)from_ptr(f2pointer__p(this, cause));
+  return f2integer__new(cause, this__sockaddr_in->sin_port);
+}
+
+f2ptr f2__sockaddr_in__sin_port(f2ptr cause, f2ptr this) {
+  if (! raw__pointer__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__sockaddr_in__sin_port(cause, this);
+}
 def_pcfunk1(f2__sockaddr_in__sin_port, this, return f2__sockaddr_in__sin_port(this_cause, this));
 
-f2ptr f2__sockaddr_in__sin_addr(f2ptr cause, f2ptr this) {
+f2ptr raw__sockaddr_in__sin_addr(f2ptr cause, f2ptr this) {
   struct sockaddr_in* this__sockaddr_in = (struct sockaddr_in*)from_ptr(f2pointer__p(this, cause));
   struct in_addr*     this__sin_addr    = &(this__sockaddr_in->sin_addr);
   return f2integer__new(cause, *((unsigned long*)this__sin_addr));
 }
+
+f2ptr f2__sockaddr_in__sin_addr(f2ptr cause, f2ptr this) {
+  if (! raw__pointer__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__sockaddr_in__sin_addr(cause, this);
+}
 def_pcfunk1(f2__sockaddr_in__sin_addr, this, return f2__sockaddr_in__sin_addr(this_cause, this));
 
-f2ptr f2__chunk__send(f2ptr cause, f2ptr chunk, f2ptr start, f2ptr length, f2ptr fd, f2ptr flags) {
+f2ptr raw__chunk__send(f2ptr cause, f2ptr chunk, f2ptr start, f2ptr length, f2ptr fd, f2ptr flags) {
   return f2chunk__send(chunk, cause, f2integer__i(start, cause), f2integer__i(length, cause), f2integer__i(fd, cause), f2integer__i(flags, cause));
+}
+
+f2ptr f2__chunk__send(f2ptr cause, f2ptr chunk, f2ptr start, f2ptr length, f2ptr fd, f2ptr flags) {
+  if ((! raw__chunk__is_type(cause, chunk)) ||
+      (! raw__integer__is_type(cause, start)) ||
+      (! raw__integer__is_type(cause, length)) ||
+      (! raw__integer__is_type(cause, fd)) ||
+      (! raw__integer__is_type(cause, flags))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__chunk__send(cause, chunk, start, length, fd, flags);
 }
 def_pcfunk5(f2__chunk__send, chunk, start, length, fd, flags, return f2__chunk__send(this_cause, chunk, start, length, fd, flags));
 
-f2ptr f2__chunk__recv(f2ptr cause, f2ptr chunk, f2ptr start, f2ptr length, f2ptr fd, f2ptr flags) {
+f2ptr raw__chunk__recv(f2ptr cause, f2ptr chunk, f2ptr start, f2ptr length, f2ptr fd, f2ptr flags) {
   return f2chunk__recv(chunk, cause, f2integer__i(start, cause), f2integer__i(length, cause), f2integer__i(fd, cause), f2integer__i(flags, cause));
+}
+
+f2ptr f2__chunk__recv(f2ptr cause, f2ptr chunk, f2ptr start, f2ptr length, f2ptr fd, f2ptr flags) {
+  if ((! raw__chunk__is_type(cause, chunk)) ||
+      (! raw__integer__is_type(cause, start)) ||
+      (! raw__integer__is_type(cause, length)) ||
+      (! raw__integer__is_type(cause, fd)) ||
+      (! raw__integer__is_type(cause, flags))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__chunk__recv(cause, chunk, start, length, fd, flags);
 }
 def_pcfunk5(f2__chunk__recv, chunk, start, length, fd, flags, return f2__chunk__recv(this_cause, chunk, start, length, fd, flags));
 
-f2ptr f2__send(f2ptr cause, f2ptr fd, f2ptr pointer, f2ptr byte_num, f2ptr flags) {
+f2ptr raw__send(f2ptr cause, f2ptr fd, f2ptr pointer, f2ptr byte_num, f2ptr flags) {
   return f2integer__new(cause, send(f2integer__i(fd, cause), (void*)from_ptr(f2pointer__p(pointer, cause)), f2integer__i(byte_num, cause), f2integer__i(flags, cause)));
+}
+
+f2ptr f2__send(f2ptr cause, f2ptr fd, f2ptr pointer, f2ptr byte_num, f2ptr flags) {
+  if ((! raw__integer__is_type(cause, fd)) ||
+      (! raw__pointer__is_type(cause, pointer)) ||
+      (! raw__integer__is_type(cause, byte_num)) ||
+      (! raw__integer__is_type(cause, flags))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__send(cause, fd, pointer, byte_num, flags);
 }
 def_pcfunk4(f2__send, fd, pointer, byte_num, flags, return f2__send(this_cause, fd, pointer, byte_num, flags));
 
-f2ptr f2__recv(f2ptr cause, f2ptr fd, f2ptr pointer, f2ptr byte_num, f2ptr flags) {
+f2ptr raw__recv(f2ptr cause, f2ptr fd, f2ptr pointer, f2ptr byte_num, f2ptr flags) {
   return f2integer__new(cause, recv(f2integer__i(fd, cause), (void*)from_ptr(f2pointer__p(pointer, cause)), f2integer__i(byte_num, cause), f2integer__i(flags, cause)));
 }
+
+f2ptr f2__recv(f2ptr cause, f2ptr fd, f2ptr pointer, f2ptr byte_num, f2ptr flags) {
+  if ((! raw__integer__is_type(cause, fd)) ||
+      (! raw__pointer__is_type(cause, pointer)) ||
+      (! raw__integer__is_type(cause, byte_num)) ||
+      (! raw__integer__is_type(cause, flags))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__recv(cause, fd, pointer, byte_num, flags);
+}
 def_pcfunk4(f2__recv, fd, pointer, byte_num, flags, return f2__recv(this_cause, fd, pointer, byte_num, flags));
+
 
 void f2__socket__reinitialize_globalvars() {
   //f2ptr cause = f2_socket_c__cause__new(initial_cause(), nil, nil);

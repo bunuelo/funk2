@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 [defunk critic-reactive-integer_type_bug [fiber bug]
-  [ansi-stream-reset stdout]
+  [ansi-stream-reset [get standard-terminal stream]]
   [terminal_format standard-terminal
 		   '\n\n'
 		   [append `[A bug has occurred.]
@@ -32,17 +32,17 @@
 	[bug_handled nil]]
     [if [is-type `bug value]
 	[let [[bug value]]
-	  [ansi-stream-foreground stdout 10] [terminal_format standard-terminal '\nbug-> '] [ansi-stream-foreground stdout 15]
+	  [ansi-stream-foreground [get standard-terminal stream] 10] [terminal_format standard-terminal '\nbug-> '] [ansi-stream-foreground [get standard-terminal stream] 15]
 	  [terminal_format standard-terminal bug]]
       [terminal_format standard-terminal '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
-    [ansi-stream-reset stdout]]]
+    [ansi-stream-reset [get standard-terminal stream]]]]
 
 [defunk critic-reactive-unknown_repl_bug [fiber]
   [let [[value       [get fiber value]]
 	[bug_handled nil]]
     [if [is-type `bug value]
 	[let [[bug value]]
-	  [ansi-stream-foreground stdout 10] [terminal_format standard-terminal '\nbug-> '] [ansi-stream-foreground stdout 15]
+	  [ansi-stream-foreground [get standard-terminal stream] 10] [terminal_format standard-terminal '\nbug-> '] [ansi-stream-foreground [get standard-terminal stream] 15]
 	  [terminal_format standard-terminal bug]]
       [terminal_format standard-terminal '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
     [repl]]]

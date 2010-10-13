@@ -162,13 +162,13 @@
 
 [globalize-funk defmetro
 		[metro-new_with_name `defmetro [name args :rest body]
-				      [exp-format stdout '\n'] [exp-format stdout `[defmetro ,name ,args]]
+				      [exp-format stdout '\nstdout: '] [exp-format stdout `[defmetro ,name ,args]]
 				      `[globalize-funk ,name [metro-new_with_name ,name ,args
 										   @body]]]]
 
 [globalize-funk defmetro-local
 		[metro-new_with_name `defmetro-local [name args :rest body]
-				      [exp-format stdout '\n'] [exp-format stdout `[defmetro-local ,name ,args]]
+				      [exp-format stdout '\nstdout: '] [exp-format stdout `[defmetro-local ,name ,args]]
 				      `[define-funk ,name [metro-new_with_name ,name ,args
 										@body]]]]
 
@@ -197,13 +197,13 @@
 `[exp-format stdout '\ndefining defunk\n']
 
 [defmetro defunk [name args :rest body]
-  [exp-format stdout '\n'] [exp-format stdout `[defunk ,name ,args]]
+  [exp-format stdout '\nstdout: '] [exp-format stdout `[defunk ,name ,args]]
   `[globalize-funk ,name
 		    [funk-new_with_name ,name ,args
 					 @body]]]
 
 [defmetro defunk-local [name args :rest body]
-  [exp-format stdout '\n'] [exp-format stdout `[defunk-local ,name ,args]]
+  [exp-format stdout '\nstdout: '] [exp-format stdout `[defunk-local ,name ,args]]
   `[define-funk ,name
      [funk-new_with_name ,name ,args
 			  @body]]]
@@ -670,7 +670,7 @@
 [defunk fwrite_html [stream :rest exps]
   [mapc [funk-new_with_name fwrite_html-mapc [exp] [exp-fwrite_html stream exp]] exps]]
 
-[defunk print-html [exp] [format-html stdout '\n'] [fwrite_html stdout exp]]
+[defunk print-html [exp] [format-html stdout '\nstdout: '] [fwrite_html stdout exp]]
 
 `[defmetro while [cond :rest body]
    `[prog [define-funk while-loop
@@ -913,6 +913,18 @@
 		       [= reverse_codes [cons  value        reverse_codes]]]]
 		   [= iter [cdr iter]]]
 		 [reverse reverse_codes]]]]
+
+[defmetro defmetro [name args :rest body]
+  [terminal_format standard-terminal '\n' `[defmetro ,name ,args]]
+  `[globalize-funk ,name [metro-new_with_name ,name ,args
+					       @body]]]
+
+
+[defmetro defunk [name args :rest body]
+  [terminal_format standard-terminal '\n' `[defunk ,name ,args]]
+  `[globalize-funk ,name
+		    [funk-new_with_name ,name ,args
+					 @body]]]
 
 [globalize memory:debug nil]
 

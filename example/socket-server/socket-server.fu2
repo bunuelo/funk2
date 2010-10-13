@@ -45,9 +45,19 @@
 		       [funk [client_fd]
 			     [terminal_format standard-terminal '\naccepting client on client_fd=' client_fd '.']
 			     [while t
-			       [socket:chunk-send io_buffer io_buffer-byte_start io_buffer-byte_length client_fd 0]
+			       `[socket:chunk-send io_buffer io_buffer-byte_start io_buffer-byte_length client_fd 0]
 			       [sleep 1]
 			       ]]]]]
+
+[defunk socket-repl_server [port_num]
+  [fiber [funk []
+	       [socket-new_server port_num
+				  [funk [client_fd]
+					[terminal_format standard-terminal '\naccepting client on client_fd=' client_fd '.']
+					[terminal_repl-io [socket_stream-new client_fd] standard-terminal]
+					]]]
+	 nil]
+  nil]
 
 `['#include <arpa/inet.h>'
 ''

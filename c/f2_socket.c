@@ -125,7 +125,7 @@ f2ptr raw__accept(f2ptr cause, f2ptr sockfd, f2ptr addr_array) {
   s64 result = accept(f2integer__i(sockfd, cause), (struct sockaddr*)&addr_in, &addr_len);
   if (result == -1) {
     s64 error_number = errno;
-    return f2larva__new(cause, 667, f2__bug__new(cause, f2integer__new(cause, 667), f2__frame__new(cause, f2list12__new(cause,
+    return f2larva__new(cause, 667, f2__bug__new(cause, f2integer__new(cause, 667), f2__frame__new(cause, f2list10__new(cause,
 															new__symbol(cause, "bug_type"),   new__symbol(cause, "socket_accept_failure"),
 															new__symbol(cause, "sockfd"),     sockfd,
 															new__symbol(cause, "addr_array"), addr_array,
@@ -178,7 +178,7 @@ f2ptr raw__connect(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, 
   s64 result = connect(f2integer__i(sockfd, cause), (struct sockaddr*)&addr_in, sizeof(struct sockaddr));
   if (result == -1) {
     s64 error_number = errno;
-    return f2larva__new(cause, 667, f2__bug__new(cause, f2integer__new(cause, 667), f2__frame__new(cause, f2list12__new(cause,
+    return f2larva__new(cause, 667, f2__bug__new(cause, f2integer__new(cause, 667), f2__frame__new(cause, f2list14__new(cause,
 															new__symbol(cause, "bug_type"),   new__symbol(cause, "socket_connect_failure"),
 															new__symbol(cause, "sockfd"),     sockfd,
 															new__symbol(cause, "sin_family"), sin_family,
@@ -217,7 +217,7 @@ f2ptr raw__bind(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f2p
   s64 result = bind(f2integer__i(sockfd, cause), (struct sockaddr*)&addr_in, sizeof(struct sockaddr));
   if (result == -1) {
     s64 error_number = errno;
-    return f2larva__new(cause, 667, f2__bug__new(cause, f2integer__new(cause, 667), f2__frame__new(cause, f2list12__new(cause,
+    return f2larva__new(cause, 667, f2__bug__new(cause, f2integer__new(cause, 667), f2__frame__new(cause, f2list14__new(cause,
 															new__symbol(cause, "bug_type"),   new__symbol(cause, "socket_bind_failure"),
 															new__symbol(cause, "sockfd"),     sockfd,
 															new__symbol(cause, "sin_family"), sin_family,
@@ -260,7 +260,7 @@ f2ptr raw__listen(f2ptr cause, f2ptr sockfd, f2ptr backlog) {
   s64 result = listen(f2integer__i(sockfd, cause), f2integer__i(backlog, cause));
   if (result == -1) {
     s64 error_number = errno;
-    return f2larva__new(cause, 667, f2__bug__new(cause, f2integer__new(cause, 667), f2__frame__new(cause, f2list12__new(cause,
+    return f2larva__new(cause, 667, f2__bug__new(cause, f2integer__new(cause, 667), f2__frame__new(cause, f2list10__new(cause,
 															new__symbol(cause, "bug_type"), new__symbol(cause, "socket_listen_failure"),
 															new__symbol(cause, "sockfd"),   sockfd,
 															new__symbol(cause, "backlog"),  backlog,

@@ -436,7 +436,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	}	
 	//printf("\n  processor="); f2__print(cause, processor); fflush(stdout);
       } else {
-	//f2__fiber__print(cause, nil, fiber);
+	f2__fiber__print(cause, nil, fiber);
 	char status_msg[1024];
 	snprintf(status_msg, 1023, "larva found in fiber and fiber has no critics, so doing nothing.");
 	status(status_msg);

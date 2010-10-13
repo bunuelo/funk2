@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2010 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,8 +15,7 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
 [defunk socket-new_server [port_num handle_client_proc]
   [let [[socket_fd [socket:socket socket:pf_inet socket:sock_stream 0]]]
@@ -32,7 +30,7 @@
 	  [funk []
 		[let [[accept_fd [socket:accept socket_fd client_addr]]]
 		  [if accept_fd
-		      [thread handle_client_proc [list accept_fd]]
+		      [fiber handle_client_proc [conslist accept_fd]]
 		    [yield]]
 		  [accept-loop]]]]
 	[accept-loop]]]]]

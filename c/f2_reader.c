@@ -86,6 +86,10 @@ f2ptr f2__exp__comma_filter_backquoted(f2ptr cause, f2ptr this) {
 def_pcfunk1(exp__comma_filter_backquoted, this, return f2__exp__comma_filter_backquoted(this_cause, this));
 
 boolean_t raw__char__is_whitespace(f2ptr cause, f2ptr this) {
+  u8 ch = f2char__ch(cause, this);
+  if (ch < 28 || ch > 128) {
+    return boolean__true;
+  }
   return (raw__eq(cause, this, __funk2.reader.char__space)          ||
 	  raw__eq(cause, this, __funk2.reader.char__tab)            ||
 	  raw__eq(cause, this, __funk2.reader.char__newline)        ||

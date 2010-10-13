@@ -29,7 +29,7 @@
       [let [[client_addr [new array 6]]]
 	[while t
 	  [let [[accept_fd [socket:accept socket_fd client_addr]]]
-	    [if accept_fd
+	    [if [not [eq accept_fd -1]]
 		[fiber handle_client_proc [conslist accept_fd]]]
 	    [sleep 1]]]]]]]
 
@@ -42,8 +42,8 @@
 	[io_buffer-byte_length socket-server:-buffer_size-]]
     [socket-new_server port_num
 		       [funk [client_fd]
+			     [terminal_format standard-terminal '\naccepting client on client_fd=' client_fd '.']
 			     [while t
-			       [terminal_format standard-terminal '\naccepting client on client_fd=' client_fd '.']
 			       `[format stdout '\nsending to client (socket_fd = ' client_fd ', siocoutq = ' [ioctl:ioctl-siocoutq client_fd] ', siocinq = ' [ioctl:ioctl-siocinq client_fd]  ')']
 			       [socket:chunk-send io_buffer io_buffer-byte_start io_buffer-byte_length client_fd 0]
 			       ]]]]]

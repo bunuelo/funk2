@@ -99,7 +99,7 @@
 
 [memory-assert_valid]
 
-[globalize standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 128 t nil t 1000000000]]
+[frame-add_var_value [primfunk:cause__frame [this-cause]] `standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 128 t nil t 1000000000]]
 
 [define -current_env_name- `global-environment]
 

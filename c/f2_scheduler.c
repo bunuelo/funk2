@@ -440,11 +440,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	char status_msg[1024];
 	snprintf(status_msg, 1023, "larva found in fiber and fiber has no critics, so doing nothing.");
 	status(status_msg);
-	if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
-	  f2ptr larva      = f2fiber__value(fiber, cause);
-	  u64   larva_type = raw__larva__larva_type(cause, larva);
-	  status("larva type (" u64__fstr ") found in fiber and fiber has a critic, so launching critic fiber in serial.", larva_type);
-	}
+	f2__print(cause, f2fiber__value(fiber, cause));
       }
     }
     

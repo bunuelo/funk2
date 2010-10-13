@@ -92,8 +92,28 @@ f2ptr f2__inaddr_any(f2ptr cause) {
 def_pcfunk0(f2__inaddr_any, return f2__inaddr_any(this_cause));
 
 // int socket(int domain, int type, int protocol);
+f2ptr raw__socket(f2ptr cause, f2ptr domain, f2ptr type, f2ptr protocol) {
+  s64 socket_fd = socket(f2integer__i(domain, cause), f2integer__i(type, cause), f2integer__i(protocol, cause));
+  if (socket_fd == -1) {
+    s64 error_number = errno;
+    return f2larva__new(cause, 667, f2__bug__new(cause, f2integer__new(cause, 667), f2__frame__new(cause, f2list12__new(cause,
+															new__symbol(cause, "bug_type"), new__symbol(cause, "socket_creation_failure"),
+															new__symbol(cause, "domain"),   domain,
+															new__symbol(cause, "type"),     type,
+															new__symbol(cause, "protocol"), protocol,
+															new__symbol(cause, "errno"),    f2integer__new(cause, error_number),
+															new__symbol(cause, "strerror"), new__string(cause, strerror(error_number))))));
+  }
+  return f2integer__new(cause, socket_fd);
+}
+
 f2ptr f2__socket(f2ptr cause, f2ptr domain, f2ptr type, f2ptr protocol) {
-  return f2integer__new(cause, socket(f2integer__i(domain, cause), f2integer__i(type, cause), f2integer__i(protocol, cause)));
+  if ((! raw__integer__is_type(cause, domain)) ||
+      (! raw__integer__is_type(cause, type)) ||
+      (! raw__integer__is_type(cause, protocol))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__socket(cause, domain, type, protocol);
 }
 def_pcfunk3(f2__socket, domain, type, protocol, return f2__socket(this_cause, domain, type, protocol));
 

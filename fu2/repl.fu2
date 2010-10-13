@@ -57,7 +57,7 @@
   [define-funk afwrite-maybe_html      [if html &afwrite_html &afwrite]]
   [define-funk aformat-maybe_html      [if html &aformat_html &aformat]]
   [define-funk stream-print-maybe_html [funk [stream exp] [aformat-maybe_html stream '\n'] [afwrite-maybe_html exp]]]
-  [define-funk print-maybe_html        [funk [exp]        [stream-print-maybe_html stdout exp]]]
+  [define-funk print-maybe_html        [funk [exp]        [if output-stream [stream-print-maybe_html output-stream exp]]]]
   [if output-stream [aformat-maybe_html output-stream '\nin--> ']]
   [let [[read_successful   nil]
 	[read-exp          nil]]
@@ -90,24 +90,24 @@
 
 [defunk stream_repl []
   [with-new-cause [cause-define cause-name `repl]
-		  [let [[result [stream_repl-io standard-input stdout nil nil]]]
+		  [let [[result [stream_repl-io standard-input [get standard-terminal stream] nil nil]]]
 		    [if [is-type `exception result]
-			[prog [format stdout
+			[prog [format [get standard-terminal stream]
 				      '\nerror repl: unexpected exception ' result '\n'
 				      '\n            restarting repl.\n']
 			      [stream_repl]]]]]]
 
 [defunk stream_repl-html []
-  [let [[result [stream_repl-io standard-input stdout t t]]]
+  [let [[result [stream_repl-io standard-input [get standard-terminal stream] t t]]]
     [if [is-type `exception result]
-	[prog [format-html stdout
+	[prog [format-html [get standard-terminal stream]
 			   '\nerror repl: unexpected exception ' result '\n'
 			   '\n            restarting repl.\n']
 	      [stream_repl-html]]]]]
 
 [defunk terminal_repl-io [input-stream output-terminal]
   [if output-terminal
-      [prog [ansi-stream-foreground stdout 10] [terminal_format output-terminal '\nin--> '] [ansi-stream-foreground stdout 15]]]
+      [prog [ansi-stream-foreground [get output-terminal stream] 10] [terminal_format output-terminal '\nin--> '] [ansi-stream-foreground [get output-terminal stream] 15]]]
   [let [[read_successful   nil]
 	[read-exp          nil]]
     [while [not read_successful]
@@ -125,7 +125,7 @@
       [let [[eval-exp [if [eq standard-input input-stream]
 			  [with-new-cause [cause-define cause-name `repl-eval]
 					  [cause-define cause-exp read-exp]
-					  [ansi-stream-reset stdout]
+					  [ansi-stream-reset [get output-terminal stream]]
 					  [eval read-exp]]
 			[eval read-exp]]]]
 	[if [is-type `exception eval-exp]
@@ -134,7 +134,7 @@
 								  t]]
 		    [t                                      [prog [if output-terminal [terminal_format output-terminal [list 'error stream_repl-io: unexpected exception ' eval-exp]]]
 								  eval-exp]]]]
-	  [prog [if output-terminal [prog [ansi-stream-foreground stdout 10] [terminal_format output-terminal '\nout-> '] [ansi-stream-foreground stdout 15]
+	  [prog [if output-terminal [prog [ansi-stream-foreground [get output-terminal stream] 10] [terminal_format output-terminal '\nout-> '] [ansi-stream-foreground [get output-terminal stream] 15]
 					  [terminal_write output-terminal eval-exp]]]
 		[terminal_repl-io input-stream output-terminal]]]]]]]
 

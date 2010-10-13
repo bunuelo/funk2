@@ -58,7 +58,10 @@
 					      [height 25]]
 					  [let [[client_terminal [terminal_print_frame-new [socket_stream-new client_fd] 0 width height 128 t nil t 1000000000]]]
 					    [with-new-cause [cause-define standard-terminal client_terminal]
-							    [terminal_repl-io [socket_stream-new client_fd] client_terminal]]]]]]]
+							    [cause-define standard-input    [socket_stream-new client_fd]]
+							    [fiber [funk []
+									 [repl]]
+								   nil]]]]]]]
 	 nil]
   nil]
 

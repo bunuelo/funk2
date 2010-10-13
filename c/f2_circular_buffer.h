@@ -82,8 +82,26 @@ typedef enum write_nonblocking_result_e {
   write_nonblocking_result__unknown_failure,
 } write_nonblocking_result_t;
 
+typedef enum recv_nonblocking_result_e {
+  recv_nonblocking_result__success = 0,
+  recv_nonblocking_result__disconnected,
+  recv_nonblocking_result__recv_failure,
+  recv_nonblocking_result__select_failure,
+  recv_nonblocking_result__unknown_failure,
+} recv_nonblocking_result_t;
+
+typedef enum send_nonblocking_result_e {
+  send_nonblocking_result__success = 0,
+  send_nonblocking_result__disconnected,
+  send_nonblocking_result__send_failure,
+  send_nonblocking_result__select_failure,
+  send_nonblocking_result__unknown_failure,
+} send_nonblocking_result_t;
+
 read_nonblocking_result_t  read_nonblocking(int fd, void* data, u32 byte_num, u32* bytes_read);
 write_nonblocking_result_t write_nonblocking(int fd, void* data, u32 byte_num, u32* bytes_sent);
+recv_nonblocking_result_t recv_nonblocking(int socket_fd, void* data, u32 byte_num, u32* bytes_read);
+send_nonblocking_result_t send_nonblocking(int socket_fd, void* data, u32 byte_num, u32* bytes_sent);
 
 void                                  circular_buffer__init(circular_buffer_t* this, u32 byte_num);
 void                                  circular_buffer__destroy(circular_buffer_t* this);

@@ -186,14 +186,6 @@ select_read_result_t select_write(int fd) {
   return select_write_result__no_space;
 }
 
-typedef enum recv_nonblocking_result_e {
-  recv_nonblocking_result__success = 0,
-  recv_nonblocking_result__disconnected,
-  recv_nonblocking_result__recv_failure,
-  recv_nonblocking_result__select_failure,
-  recv_nonblocking_result__unknown_failure,
-} recv_nonblocking_result_t;
-
 recv_nonblocking_result_t recv_nonblocking(int socket_fd, void* data, u32 byte_num, u32* bytes_read) {
   select_read_result_t select_read_result = select_read(socket_fd);
   switch(select_read_result) {
@@ -232,14 +224,6 @@ recv_nonblocking_result_t recv_nonblocking(int socket_fd, void* data, u32 byte_n
   //status("recv reports success.");
   return recv_nonblocking_result__success;
 }
-
-typedef enum send_nonblocking_result_e {
-  send_nonblocking_result__success = 0,
-  send_nonblocking_result__disconnected,
-  send_nonblocking_result__send_failure,
-  send_nonblocking_result__select_failure,
-  send_nonblocking_result__unknown_failure,
-} send_nonblocking_result_t;
 
 void whoa_time() {
   printf("\nwhoa time.\n"); fflush(stdout);

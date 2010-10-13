@@ -425,7 +425,7 @@ f2ptr raw__sockaddr_in__sin_family(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__sockaddr_in__sin_family(f2ptr cause, f2ptr this) {
-  if (! raw__pointer(cause, this)) {
+  if (! raw__pointer__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__sockaddr_in__sin_family(cause, this);

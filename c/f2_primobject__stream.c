@@ -267,7 +267,7 @@ f2ptr f2__socket_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) 
       return f2char__new(cause, data[0]);
     }
     break;
-  case recv_nonblocking_result__end_of_file:
+  case recv_nonblocking_result__disconnected:
     return __funk2.reader.end_of_file_exception;
   case recv_nonblocking_result__read_failure:
   case recv_nonblocking_result__select_failure:

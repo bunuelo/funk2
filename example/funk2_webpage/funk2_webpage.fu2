@@ -601,7 +601,9 @@
 			  [set this title  'Natural language processing']
 			  [set this date   'October 7th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
-			  [set this entry  [string-prog '<p>Testing.</p>']]
+			  [set this entry  [string-prog '<p>A basic natural language toolkit has been added to the Funk2 programming language.'
+							'A basic English dictionary and parser have been included for defining verbs and argument structures that can be used for adding knowledge and natural language control to cognitive architectures.'
+							'</p>']]
 			  this]
 			[let [[this [new funk2_post]]]
 			  [set this title  'Layered cognitive architecture']

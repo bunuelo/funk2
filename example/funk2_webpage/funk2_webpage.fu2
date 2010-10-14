@@ -346,38 +346,38 @@
 			   [let [[type [lookup_type type_name]]]
 			     [string-prog '<h2><tt>get</tt> interface</h2>'
 					  '<ul>'
-					  [stringlist-prog [mapcar [funk [slot_name]
-									 [print [string-concat '  slot: ' [get slot_name as-string]]]
-									 [let [[funk [get type type_var_value `get slot_name nil]]]
-									   [string-prog [string-concat '<li><tt>' [get slot_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
+					  [stringlist-prog [mapcar [funk [key_name]
+									 [print [string-concat '  key: ' [get key_name as-string]]]
+									 [let [[funk [get type type_var_value `get key_name nil]]]
+									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
 											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [exp-as-string [get funk documentation]] '<br>']
 											'&nbsp;'
 											'</li>']]]
-								   [get type type_var-slot_names `get]]]
+								   [get type type_var-key_names `get]]]
 					  '</ul>'
 					  ''
 					  '<h2><tt>set</tt> interface</h2>'
 					  '<ul>'
-					  [stringlist-prog [mapcar [funk [slot_name]
-									 [print [string-concat '  slot: ' [get slot_name as-string]]]
-									 [let [[funk [get type type_var_value `set slot_name nil]]]
-									   [string-prog [string-concat '<li><tt>' [get slot_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
+					  [stringlist-prog [mapcar [funk [key_name]
+									 [print [string-concat '  key: ' [get key_name as-string]]]
+									 [let [[funk [get type type_var_value `set key_name nil]]]
+									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
 											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [exp-as-string [get funk documentation]] '<br>']
 											'&nbsp;'
 											'</li>']]]
-								   [get type type_var-slot_names `set]]]
+								   [get type type_var-key_names `set]]]
 					  '</ul>'
 					  ''
 					  '<h2><tt>execute</tt> interface</h2>'
 					  '<ul>'
-					  [stringlist-prog [mapcar [funk [slot_name]
-									 [print [string-concat '  slot: ' [get slot_name as-string]]]
-									 [let [[funk [get type type_var_value `execute slot_name nil]]]
-									   [string-prog [string-concat '<li><tt>' [get slot_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
+					  [stringlist-prog [mapcar [funk [key_name]
+									 [print [string-concat '  key: ' [get key_name as-string]]]
+									 [let [[funk [get type type_var_value `execute key_name nil]]]
+									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
 											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [exp-as-string [get funk documentation]] '<br>']
 											'&nbsp;'
 											'</li>']]]
-								   [get type type_var-slot_names `execute]]]
+								   [get type type_var-key_names `execute]]]
 					  '</ul>'
 					  ]]
 			   ''

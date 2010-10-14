@@ -49,6 +49,9 @@
 [deftypefunk isis_agent execute sense_world []
   [have [get this physical_world] sense_world [get this name]]]
 
+[deftypefunk isis_agent execute say [message]
+  [have [get this physical_world] say [get this name] message]]
+
 
 [deframe isis_world [physical_world] [client]
   [new [client]
@@ -133,6 +136,9 @@
 [deftypefunk isis_world execute use_left_hand [agent_name target object]
   [isis-call [get this client] use_left_hand tagent agent_name target target object object]]
        
+[deftypefunk isis_world execute say [agent_name message]
+  [isis-call [get this client] say agent agent_name message message]]
+
 'added simulator commands to isis_world'
 
 [deframe ralph_agent [isis_agent] []

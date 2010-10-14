@@ -23,11 +23,7 @@
 		  [funk [speech]
 			[have this-resource think_to_self 'I am saying ' speech '.']
 			[let [[body [get this body]]]
-			  [set body says speech]
-			  [let [[start_time_step [get body time_step]]]
-			    [while [< [- [get body time_step] 2] start_time_step]
-			      [millisleep 1000]]]
-			  [set body says nil]]]]
+			  [have body say [get speech as-string]]]]]
        nil]]
 
 [deframe hear_language_from_agent [resource] []

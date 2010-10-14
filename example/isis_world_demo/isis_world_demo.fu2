@@ -162,7 +162,7 @@
       [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
       [cause-define cause-time_step [get isis_world time_step]]
       
-      [mind-activate [get isis_world agent_mind `Lauren] reactive language    speak_language_to_agent `Ralph `[close the refrigerator door]]
+      [mind-activate [get isis_world agent_mind `Lauren] reactive language    speak_language `[close the refrigerator door]]
       [mind-activate [get isis_world agent_mind `Lauren] reactive sensory     continuous_sensing]
       [mind-activate [get isis_world agent_mind `Lauren] reactive physical    funk_user]
       [mind-activate [get isis_world agent_mind `Lauren] reactive neural_plug activate_resource]

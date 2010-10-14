@@ -53,7 +53,7 @@
 							     `Ralph]]]
 				     [let [[other_mind [get isis_world agent_mind other_agent_name]]]
 				       [let [[other_activate_resource [get other_mind resource `reactive `neural_plug `activate_resource]]]
-					 [have other_activate_resource command `reactive `language `hear_language_from_agent `Ralph symbols]]]]
+					 [have other_activate_resource command `reactive `language `hear_language_from_agent [get isis_agent name] symbols]]]]
 				   ]]]]]]]]]
        
        [have vbox pack_start label t t 0]

@@ -610,7 +610,7 @@
 			  [set this title  'Layered cognitive architecture']
 			  [set this date   'September 4th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
-			  [set this entry  [string-prog '<p>A basic cognitive architecture has been included as an example package.  This includes definitions for <emph>mind</emph>, <emph>mental_layer</emph>, <emph>agency</emph>, and <emph>ressource</emph> objects.'
+			  [set this entry  [string-prog '<p>A basic cognitive architecture has been included as an example package.  This includes definitions for <emph>mind</emph>, <emph>mental_layer</emph>, <emph>agency</emph>, and <emph>resource</emph> objects.'
 							'These basic mental primitives can be included by requiring the <emph>mind</emph> package (i.e. <tt>[require mind]</tt>).'
 							'Also, when building a mind, using these architectural primitives, it is useful to see an overview of your mental model by using the new <emph>mindmon</emph> utility, which provides a graphical user interface to the mind.'
 							'</p>']]

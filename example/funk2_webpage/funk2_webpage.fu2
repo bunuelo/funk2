@@ -603,13 +603,34 @@
 			  [set this author '<a href="#">Bo Morgan</a>']
 			  [set this entry  [string-prog '<p>A basic natural language toolkit has been added to the Funk2 programming language.'
 							'A basic English dictionary and parser have been included for defining verbs and argument structures that can be used for adding knowledge and natural language control to cognitive architectures.'
+							'A new built-in package has been '
 							'</p>']]
 			  this]
 			[let [[this [new funk2_post]]]
 			  [set this title  'Layered cognitive architecture']
 			  [set this date   'September 4th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
-			  [set this entry  [string-prog '<p>Testing.</p>']]
+			  [set this entry  [string-prog '<p>A basic cognitive architecture has been included as an example package.  This includes definitions for <emph>mind</emph>, <emph>mental_layer</emph>, <emph>agency</emph>, and <emph>ressource</emph> objects.'
+							'These basic mental primitives can be included by requiring the <emph>mind</emph> package (i.e. <tt>[require mind]</tt>).'
+							'Also, when building a mind, using these architectural primitives, it is useful to see an overview of your mental model by using the new <emph>mindmon</emph> utility, which provides a graphical user interface to the mind.'
+							'</p>']]
+			  this]
+			[let [[this [new funk2_post]]]
+			  [set this title  'GTK support added for creating graphical user intefaces (GUIs)']
+			  [set this date   'June 23rd, 2010']
+			  [set this author '<a href="#">Bo Morgan</a>']
+			  [set this entry  [string-prog '<p>You can now create graphical applications within the Funk2 programming language by includinig the GTK package (i.e. <tt>[require gtk]</tt>).'
+							'An example GTK application can be seen in the <tt>gtk-test</tt> directory included in the <tt>example</tt> directory in the source code.'
+							'</p>']]
+			  this]
+			[let [[this [new funk2_post]]]
+			  [set this title  'Package manager']
+			  [set this date   'June 23rd, 2010']
+			  [set this author '<a href="#">Bo Morgan</a>']
+			  [set this entry  [string-prog '<p>A new package manager has been added to the Funk2 programming language.'
+							'A number of built-in packages are included in the default bootstrap image, and there is now a growing number of example packages that can be found in the example directory, included with Funk2 source code.'
+							'You can now use the [require package-name] command in order to load a package and all of its dependencies.'
+							'</p>']]
 			  this]
 			[let [[this [new funk2_post]]]
 			  [set this title  'Call for Collaboration to Build Artificial Intelligence']

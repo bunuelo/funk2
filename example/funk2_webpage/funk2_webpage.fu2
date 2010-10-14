@@ -20,77 +20,6 @@
 [deframe funk2_post    [frame] [title date author entry]]
 [deframe funk2_example [frame] [name title date author entry]]
 
-[defunk funk2_calendar_2010_may []
-  [string-prog '<div id="calendar_wrap">'
-	       '  <table summary="Calendar">'
-	       '  <caption>'
-	       '  May 2010'
-	       '  </caption>'
-	       '  <thead>'
-	       '    <tr>'
-	       '      <th abbr="Sunday" scope="col" title="Sunday">S</th>'
-	       '      <th abbr="Monday" scope="col" title="Monday">M</th>'
-	       '      <th abbr="Tuesday" scope="col" title="Tuesday">T</th>'
-	       '      <th abbr="Wednesday" scope="col" title="Wednesday">W</th>'
-	       '      <th abbr="Thursday" scope="col" title="Thursday">T</th>'
-	       '      <th abbr="Friday" scope="col" title="Friday">F</th>'
-	       '      <th abbr="Saturday" scope="col" title="Saturday">S</th>'
-	       '    </tr>'
-	       '  </thead>'
-	       '  <tfoot>'
-	       '    <tr>'
-	       '      <td abbr="April" colspan="3" id="prev"><a href="#" title="View posts for April 2010">&laquo; Apr</a></td>'
-	       '      <td class="pad">&nbsp;</td>'
-	       '      <td colspan="3" id="next">&nbsp;</td>'
-	       '    </tr>'
-	       '  </tfoot>'
-	       '  <tbody>'
-	       '    <tr>'
-	       '      <td class="pad" colspan="4">&nbsp;</td>'
-	       '      <td>1</td>'
-	       '      <td>2</td>'
-	       '      <td>3</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>4</td>'
-	       '      <td>5</td>'
-	       '      <td>6</td>'
-	       '      <td>7</td>'
-	       '      <td>8</td>'
-	       '      <td>9</td>'
-	       '      <td>10</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>11</td>'
-	       '      <td>12</td>'
-	       '      <td>13</td>'
-	       '      <td id="today">14</td>'
-	       '      <td>15</td>'
-	       '      <td>16</td>'
-	       '      <td>17</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>18</td>'
-	       '      <td>19</td>'
-	       '      <td>20</td>'
-	       '      <td>21</td>'
-	       '      <td>22</td>'
-	       '      <td>23</td>'
-	       '      <td>24</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>25</td>'
-	       '      <td>26</td>'
-	       '      <td>27</td>'
-	       '      <td>28</td>'
-	       '      <td>29</td>'
-	       '      <td>30</td>'
-	       '      <td>31</td>'
-	       '    </tr>'
-	       '  </tbody>'
-	       '</table>'
-	       '</div>']]
-
 [defunk funk2_calendar_2010_october []
   [string-prog '<div id="calendar_wrap">'
 	       '  <table summary="Calendar">'
@@ -662,11 +591,23 @@
   [let [[root_dir '/home/neptune/Desktop/www/funk2/']
 	[posts    [list [let [[this [new funk2_post]]]
 			  [set this title  'Welcome to the official Funk2 Website!']
-			  [set this date   'May 12th, 2010']
+			  [set this date   'October 14th, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
 			  [set this entry  [string-prog '<p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  '
 							'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
 							'The Funk2 project is currently supported as a core research effort of the <a href=http://mmp.mit.edu>Mind Machine Project</a>.</p>']]
+			  this]
+			[let [[this [new funk2_post]]]
+			  [set this title  'Natural language processing']
+			  [set this date   'October 7th, 2010']
+			  [set this author '<a href="#">Bo Morgan</a>']
+			  [set this entry  [string-prog '<p>Testing.</p>']]
+			  this]
+			[let [[this [new funk2_post]]]
+			  [set this title  'Layered cognitive architecture']
+			  [set this date   'September 4th, 2010']
+			  [set this author '<a href="#">Bo Morgan</a>']
+			  [set this entry  [string-prog '<p>Testing.</p>']]
 			  this]
 			[let [[this [new funk2_post]]]
 			  [set this title  'Call for Collaboration to Build Artificial Intelligence']

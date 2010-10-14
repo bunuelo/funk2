@@ -27,29 +27,10 @@
 `open_fridge `[]]
 [get [get isis_world agent_mind `Ralph] sense]
 
- realloc: Cannot allocate memory
 
 
-loaf+158503436
-yay mind activate works
-fix error in sensing/moving --delay
- realloc: Cannot allocate memory when run simulator too fast 80 millisecs
-looping = agent doesnt move
-search_for????
-can open fridge except can see fridge!!! relaly slowly lol
-returns random bug(type1) at beginning - does not affect performance tho
-tricky to look for stuff---currently stored in current object
-opening fridge works all the way till
- object-slot-type_funk
- bug_type  nil_type_does_not_have_funktion
- slot_name lookup
-
-=((
-
-
-focus on: open fridge debug
-looping
 '
+
 
 [defunk loop []
   [let [[i 10]]
@@ -280,26 +261,26 @@ looping
 			  [print 'now']
 			  [mind-wait_to_activate mind reactive physical look_for `fridge]
 			  [print 'now1']
-			  [globalize fridge my_current_object]
-			  [print 'ha']
-			  
-			  [if [get mind objects]
-			      [if [have [get mind objects] lookup fridge]
-				  [if [> arm_length [have [have [get mind objects] lookup fridge] lookup  `distance]]
-				      [have world open_fridge name]
-				    [prog 
-				     [mind-wait_to_activate mind reactive physical walk_directly_towards fridge]
-				     [have world  open_fridge name]]]
-				[prog 
-				 [mind-wait_to_activate mind reactive physical walk_directly_towards fridge]
-				 [have world open_fridge name]]]
-			    [prog 
-			     [mind-wait_to_activate mind reactive physical walk_directly_towards fridge]
-			     [have world open_fridge name]]]
-			  ]]]
-		  
-		  
-		  nil]]
+			  [let[[ fridge [have look_for lookup `my_current_object]]]
+			    [print 'ha']
+			    
+			    [if [get mind objects]
+				[if [have [get mind objects] lookup fridge]
+				    [if [> arm_length [have [have [get mind objects] lookup fridge] lookup  `distance]]
+					[have world open_fridge name]
+				      [prog 
+				       [mind-wait_to_activate mind reactive physical walk_directly_towards fridge]
+				       [have world  open_fridge name]]]
+				  [prog 
+				   [mind-wait_to_activate mind reactive physical walk_directly_towards fridge]
+				   [have world open_fridge name]]]
+			      [prog 
+			       [mind-wait_to_activate mind reactive physical walk_directly_towards fridge]
+			       [have world open_fridge name]]]
+			    ]]]]
+       
+       
+       nil]]
 
 [deframe  slice_toast[resource] []
   [new []
@@ -424,7 +405,7 @@ looping
        
        nil]]
 
-[deframe look_for [resource] []
+[deframe look_for [resource] [[my_current_object nil]]
   [new []
        [construct resource [type this]
 		  [funk [desired_object]
@@ -432,6 +413,7 @@ looping
 			       [world [get body physical_world]] 
 			       [mind  [get body mind]]
 			       [name  [get body name]]
+			       
 			       ]
 			  [let [[patience 30]]
 			    [have this-resource think_to_self 'search_for activated']
@@ -453,7 +435,7 @@ looping
 					]
 				  [prog [= patience 0]
 					[have this-resource think_to_self 'found' [has_thing desired_object [get [get mind objects] slots]]]
-					[globalize my_current_object [has_thing desired_object [get [get mind objects] slots]]] ]]]]
+					[= my_current_object [has_thing desired_object [get [get mind objects] slots]]] ]]]]
 			    [have this-resource think_to_self 'finished searching']]]]]
 		  nil]]
 

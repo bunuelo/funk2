@@ -73,6 +73,7 @@
 			  [let [[reality_semantic_knowledge_base [get reality_agency reality_semantic_knowledge_base]]]
 			    'we arbitrary choose the first parse here...'
 			    [let [[parse_tree [first parse_trees]]]
+			      [have parse_tree gview]
 			      [have english_command_frame execute_parse_tree parse_tree]
 			      ]]]]]
        [have english_command_frame add_command `[pick up] `[direct_object] []

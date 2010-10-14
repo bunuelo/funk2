@@ -535,12 +535,18 @@ def_pcfunk1(chunk__new_compiled_from_funk, x, return f2__chunk__new_compiled_fro
 f2ptr f2__force_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args) {
   if (raw__cfunk__is_type(cause, funkable)) {
     return f2__cfunk__apply(cause, funkable, fiber, args);
-  } else {
+  } else if (raw__funkable__is_type(cause, funkable)) {
     f2ptr new_fiber = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), funkable, args);
     f2__scheduler__complete_fiber(cause, new_fiber);
     f2ptr value = f2fiber__value(new_fiber, cause);
     f2fiber__keep_undead__set(new_fiber, cause, nil);
     return value;
+  } else {
+    return f2larva__new(cause, 752, f2__bug__new(cause, f2integer__new(cause, 752), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"), new__symbol(cause, "tried_to_funk_unfunkable_funktion"),
+														       new__symbol(cause, "funkname"), new__symbol(cause, "f2__force_funk_apply"),
+														       new__symbol(cause, "funkable"), funkable,
+														       new__symbol(cause, "args"),     args))));
   }
 }
 

@@ -49,7 +49,7 @@
 [deframe reactive_language_agency [agency] []
   [new []
        [construct agency `language]
-       [have this add_resource [new speak_language_to_agent]]
+       [have this add_resource [new speak_language]]
        [have this add_resource [new hear_language_from_agent]]
        this]]
 

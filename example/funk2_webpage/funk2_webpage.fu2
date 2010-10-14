@@ -770,7 +770,7 @@
     nil]]
 
 [defunk recompile_webpage []
-  [load 'fu2/webpage.fu2']
+  [load 'example/funk2_webpage/funk2_webpage.fu2']
   [compile_webpage]]
 
 

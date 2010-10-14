@@ -73,8 +73,10 @@ f2ptr f2__system__type_names(f2ptr cause) {
     while (iter) {
       f2ptr type = f2__cons__car(cause, iter);
       f2ptr get_type_funk = f2__primobject_type__lookup_slot_type_funk(cause, type, new__symbol(cause, "get"), new__symbol(cause, "type"));
-      f2ptr type_name = f2__force_funk_apply(cause, fiber, get_type_funk, f2cons__new(cause, nil, nil));
-      type_names = f2cons__new(cause, type_name, type_names);
+      if (raw__funkable__is_type(cause, get_type_funk)) {
+	f2ptr type_name = f2__force_funk_apply(cause, fiber, get_type_funk, f2cons__new(cause, nil, nil));
+	type_names = f2cons__new(cause, type_name, type_names);
+      }
       iter = f2__cons__cdr(cause, iter);
     }
   }

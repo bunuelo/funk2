@@ -23,6 +23,6 @@
 [deframe builtin_reactive_layer [mental_layer] []
   [new []
        [construct mental_layer 0 `builtin_reactive]
-       [have this add_agency [new reactive_neural_plug_agency]]
+       [have this add_agency [new builtin_reactive_neural_plug_agency]]
        this]]
 

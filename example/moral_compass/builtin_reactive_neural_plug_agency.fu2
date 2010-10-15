@@ -52,7 +52,7 @@
 		[= success               t]]]
       [have command_mutex unlock]]]]
 
-[deframe reactive_neural_plug_agency [agency] []
+[deframe builtin_reactive_neural_plug_agency [agency] []
   [new []
        [construct agency `neural_plug]
        [have this add_resource [new activate_resource]]

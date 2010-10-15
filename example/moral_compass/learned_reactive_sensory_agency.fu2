@@ -18,8 +18,8 @@
  rights to redistribute these changes.'
 
 
-[deframe reactive_sensory_agency [agency] [reactive_sensory_sense
-					   reactive_sensory_story]
+[deframe learned_reactive_sensory_agency [agency] [learned_reactive_sensory_sense
+						   learned_reactive_sensory_story]
   [new []
        [construct agency `sensory]
        
@@ -34,16 +34,16 @@
 						      [millisleep 1000]
 						    [let [[sense [have body sense_world]]]
 						      [have this-resource think_to_self 'My body senses the world.']
-						      [= reactive_sensory_sense sense]
+						      [= learned_reactive_sensory_sense sense]
 						      [= last_time_step time_step]
-						      [mind-wait_to_activate [get this mind] reactive sensory propogate_sense_to_story]
+						      [mind-wait_to_activate [get this mind] learned_reactive sensory propogate_sense_to_story]
 						      ]]]
 						]]]]]]
        
        [have this add_resource [new resource `propogate_sense_to_story
 				    [funk []
 					  [let [[body [get this body]]]
-					    [let [[sense [get this reactive_sensory_sense]]]
+					    [let [[sense [get this learned_reactive_sensory_sense]]]
 					      [have this-resource think_to_self 'Propogating sense->story.']
 					      [let [[sense_agent_frame [have sense lookup `agents]]
 						    [story             [new story]]]
@@ -63,8 +63,8 @@
 										  ]
 									    says]]]]]
 							agent_names]]
-						[set this reactive_sensory_story story]
-						[mind-wait_to_activate [get this mind] deliberative reality include_reactive_stories_into_deliberative_story]
+						[set this learned_reactive_sensory_story story]
+						[mind-wait_to_activate [get this mind] deliberative reality include_learned_reactive_stories_into_deliberative_story]
 						[have this-resource think_to_self 'While propogating sense->story, I created this story: ' [get story as-list] '.']
 						]]]]]]
        
@@ -74,8 +74,8 @@
 					    [if [get [get imprimer speech] is-scold]
 						[prog [have this-resource think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', said something that sounds like a scold!']
 						      [cause-define cause-time_step [get body time_step]]
-						      [cause-define cause-name      `[reactive sensory sense_imprimer_scold]]
-						      [let [[imprimer_focus [mind-call reactive sensory discover_person_focus imprimer]]]
+						      [cause-define cause-name      `[learned_reactive sensory sense_imprimer_scold]]
+						      [let [[imprimer_focus [mind-call learned_reactive sensory discover_person_focus imprimer]]]
 							[mind-wait_to_activate mind self_conscious imprimer react_to_imprimer_scold
 									       imprimer imprimer_focus]]]
 					      [have this-resource think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
@@ -97,7 +97,7 @@
 
 
 `[have [get isis_world agent `Ralph] user_activate `pick_up_with_left_hand knife]
-`[mind-activate [get isis_world agent_mind `Ralph]  reactive  physical walk_directly_towards  `loaf+177603644]
-`[have [get isis_world agent_mind `Ralph] activate [cons `reactive [cons `physical `[move_forward 3]]]]
-`[have-apply [get isis_world agent_mind `Lauren]  activate [cons `reactive [cons `physical `[`move_forward 3]]]]
+`[mind-activate [get isis_world agent_mind `Ralph]  learned_reactive  physical walk_directly_towards  `loaf+177603644]
+`[have [get isis_world agent_mind `Ralph] activate [cons `learned_reactive [cons `physical `[move_forward 3]]]]
+`[have-apply [get isis_world agent_mind `Lauren]  activate [cons `learned_reactive [cons `physical `[`move_forward 3]]]]
 

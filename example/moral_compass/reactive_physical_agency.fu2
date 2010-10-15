@@ -41,7 +41,6 @@
   
 [pause]
 
-
 '
 
 
@@ -54,38 +53,6 @@
 	  sequence]
     match]]
 
-
-[deframe funk_user  [resource] [[user_activate_mutex    [new traced_mutex]]
-				[user_activate_resource nil]
-				[user_activate_args     nil]]
-
-  [new []
-       [construct resource [type this]
-		  [funk [][while t
-			  `[print 'waiting for user to activate']
-			   [if [null [get this user_activate_resource]]
-			       [sleep 1]
-			     [prog [have user_activate_mutex lock]
-				   [print 'have lock']
-			           [have-apply [get this mind] activate [print `[reactive physical ,[get this user_activate_resource] @[get this user_activate_args]]]]
-				   [print 'activated']
-				   [set this user_activate_resource nil]
-				   [set this user_activate_args nil]
-				   [print 'finish setting']
-				   [have user_activate_mutex unlock]
-				   ]]]]]
-       nil]]
-
-[deftypefunk funk_user execute user_activate [resource args]
-  [print 'have funk_user user_activate']
-  [have user_activate_mutex lock]
-  [print 'lock']
-  [set this user_activate_resource resource]
-  [print 'set resources']
-  [set this user_activate_args     args]
-  [print 'set args']
-  [have user_activate_mutex unlock]
-  [print 'unlock']]
 
 [deframe turn_right_start_resource [resource] []
   [new []
@@ -544,7 +511,6 @@
        [have this add_resource [new walk_directly_towards_resource]]
        [have this add_resource [new search_for_resource]]
        [have this add_resource [new avoid_obstacle_resource]]
-       [have this add_resource [new funk_user_resource]] 
        [have this add_resource [new look_for_resource]]
 	
 	this]]

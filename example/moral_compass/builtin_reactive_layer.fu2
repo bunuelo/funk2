@@ -18,14 +18,11 @@
  rights to redistribute these changes.'
 
 
-'reactive_layer'
+'builtin_reactive_layer'
 
-[deframe reactive_layer [mental_layer] []
+[deframe builtin_reactive_layer [mental_layer] []
   [new []
-       [construct mental_layer 0 `reactive]
-       [have this add_agency [new reactive_sensory_agency]]
-       [have this add_agency [new reactive_physical_agency]]
-       [have this add_agency [new reactive_language_agency]]
+       [construct mental_layer 0 `builtin_reactive]
        [have this add_agency [new reactive_neural_plug_agency]]
        this]]
 

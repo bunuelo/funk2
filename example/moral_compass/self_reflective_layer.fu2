@@ -22,7 +22,7 @@
 
 [deframe self_reflective_layer [mental_layer] [personality_agency]
   [new []
-       [construct mental_layer 3 `self_reflective]
+       [construct mental_layer 4 `self_reflective]
        [set this personality_agency [new self_reflective_personality_agency]]
        [have this add_agency [get this personality_agency]]
        this]]

@@ -18,13 +18,13 @@
  rights to redistribute these changes.'
 
 
-'deliberative_layer'
+'learned_reactive_layer'
 
-[deframe deliberative_layer [mental_layer] []
+[deframe learned_reactive_layer [mental_layer] []
   [new []
-       [construct mental_layer 2 `deliberative]
-       [have this add_agency [new deliberative_reality_agency]]
-       [have this add_agency [new deliberative_imagination_agency]]
-       [have this add_agency [new deliberative_execution_agency]]
+       [construct mental_layer 1 `learned_reactive]
+       [have this add_agency [new learned_reactive_sensory_agency]]
+       [have this add_agency [new learned_reactive_physical_agency]]
+       [have this add_agency [new learned_reactive_language_agency]]
        this]]
 

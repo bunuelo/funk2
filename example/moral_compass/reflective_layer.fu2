@@ -22,7 +22,7 @@
 
 [deframe reflective_layer [mental_layer] [credit_assignment_agency]
   [new []
-       [construct mental_layer 2 `reflective]
+       [construct mental_layer 3 `reflective]
        [set this credit_assignment_agency [new reflective_credit_assignment_agency]]
        [have this add_agency [get this credit_assignment_agency]]
        this]]

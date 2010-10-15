@@ -165,10 +165,6 @@
       
       [globalize isis_world isis_world]
       [terminal_format standard-terminal '\nA new ' `isis_world ' object has been created in the global ' `isis_world ' variable!']
-
-      `[have [get isis_world agent `Ralph] find_knife]
-      `[have [get isis_world agent `Ralph] find_loaf]
-      `[have [get isis_world agent `Ralph] find_fridge]
       
       'success']]]
 

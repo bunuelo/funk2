@@ -23,7 +23,7 @@
   [new [name]
        [construct agent_body name [new moral_compass]]
        [set this says       nil]
-       [set this arm_length 2]
+       [set this arm_length 3]
        this]]
 
 [deftypefunk isis_agent get objects []

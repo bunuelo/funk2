@@ -28,10 +28,6 @@
 [get [get isis_world agent_mind `Ralph] sense]
 
 
-
-'
-
-
 [defunk loop []
   [let [[i 10]]
     [while [> i 0]
@@ -47,20 +43,21 @@
 [defunk pause []
   [globalize switch nil]]
   
-
-[globalize arm_length 3]
-
-[defunk has_thing [thing lst]
-  [let [[the_thing nil]]
-    [mapc [funk [slot]
-		[if [string-contains [get slot as-string] [get thing as-string]]
-		    [= the_thing slot]
-		  nil]]
-	  lst]
-    the_thing]]
-
-
 [pause]
+
+
+'
+
+
+
+[defunk list-contains_substring [sequence subexp]
+  [let [[match nil]]
+    [mapc [funk [exp]
+		[if [string-contains [get exp as-string] [get subexp as-string]]
+		    [= match exp]]]
+	  sequence]
+    match]]
+
 
 [deframe funk_user  [resource] [[user_activate_mutex    [new traced_mutex]]
 				[user_activate_resource nil]
@@ -94,9 +91,9 @@
   [have user_activate_mutex unlock]
   [print 'unlock']]
 
-[deframe turn_right [resource] []
+[deframe turn_right_resource [resource] []
   [new []
-       [construct resource [type this]
+       [construct resource `turn_right
 		  [funk [steps]
 			[let* [[body [get this body]]
 			      [world [get body physical_world]]
@@ -109,9 +106,9 @@
 			    [have world turn_right-stop name]]]]]
        nil]]
 
-[deframe turn_left [resource] []
+[deframe turn_left_resource [resource] []
   [new []
-       [construct resource [type this]
+       [construct resource `turn_left
 		  [funk [steps]
 			[let* [[body [get this body]]
 			      [world [get body physical_world]]
@@ -125,9 +122,9 @@
 			
        nil]]
 
-[deframe move_forward [resource] []
+[deframe move_forward_resource [resource] []
   [new []
-       [construct resource [type this]
+       [construct resource `move_forward
 		  [funk [steps]
 			
 			[print this]
@@ -144,9 +141,9 @@
 			
        nil]]
 
-[deframe move_backward [resource] []
+[deframe move_backward_resource [resource] []
   [new []
-       [construct resource [type this]
+       [construct resource `move_backward
 		  [funk [steps]
 			[print 'reached move_backward']
 			[let* [[body [get this body]]
@@ -161,9 +158,9 @@
        
        nil]]
 
-[deframe drop_from_left_hand [resource] []
+[deframe drop_from_left_hand_resource [resource] []
   [new []
-       [construct resource [type this]
+       [construct resource `drop_from_left_hand
 		  [funk []
 			[let* [[body [get this body]]
 			      [world [get body physical_world]]
@@ -173,9 +170,9 @@
        
        nil]]
 
-[deframe drop_from_right_hand [resource] []
+[deframe drop_from_right_hand_resource [resource] []
   [new []
-       [construct resource [type this]
+       [construct resource `drop_from_right_hand
 		  [funk []
 			[let* [[body [get this body]]
 			      [world [get body physical_world]]
@@ -187,9 +184,9 @@
        nil]]
 
 
-[deframe pick_up_with_right_hand [resource] []
+[deframe pick_up_with_right_hand_resource [resource] []
   [new []
-       [construct resource [type this]
+       [construct resource `pick_up_with_right_hand
 		  [funk [target]
 			[let* [[body [get this body]]
 			      [world [get body physical_world]] 
@@ -199,7 +196,7 @@
 			  [have this-resource think_to_self 'Picking up with right hand is starting']
 			  [if [get [get mind objects]]
 			      [if [have [get mind objects] lookup target]
-				  [if [> arm_length [have [have [get mind objects] lookup target]lookup  `distance]]
+				  [if [> [get [get this body] arm_length] [have [have [get mind objects] lookup target]lookup  `distance]]
 				      [if [null [have [get sensory reactive_sensory_sense] lookup `right_hand]]
 					  [have world pick_up_with_right_hand name target]
 					[mind-wait_to_activate mind reactive physical drop_from_right_hand]]
@@ -216,9 +213,9 @@
 		  
        nil]]
 
-[deframe pick_up_with_left_hand [resource] []
+[deframe pick_up_with_left_hand_resource [resource] []
   [new []
-       [construct resource [type this]
+       [construct resource `pick_up_with_left_hand
 		  [funk [target]
 			[let* [[body [get this body]]
 			      [world [get body physical_world]] 
@@ -229,7 +226,7 @@
 			  
 			  [if [get [get mind objects]]
 			      [if [have [get mind objects] lookup target]
-				  [if [> arm_length [have [have [get mind objects] lookup target]lookup  `distance]]
+				  [if [> [get [get this body] arm_length] [have [have [get mind objects] lookup target]lookup  `distance]]
 				      [if [null [have [get sensory reactive_sensory_sense] lookup `left_hand]]
 					  [have world pick_up_with_left_hand name target]
 					[mind-wait_to_activate mind reactive physical drop_from_left_hand]]
@@ -248,9 +245,9 @@
 
 
 
-[deframe open_fridge [resource] []
+[deframe open_fridge_resource [resource] []
   [new []
-       [construct resource [type this]
+       [construct resource `open_fridge
 		  [funk []
 			
 			[let* [[body [get this body]]
@@ -266,7 +263,7 @@
 			    
 			    [if [get mind objects]
 				[if [have [get mind objects] lookup fridge]
-				    [if [> arm_length [have [have [get mind objects] lookup fridge] lookup  `distance]]
+				    [if [> [get [get this body] arm_length] [have [have [get mind objects] lookup fridge] lookup  `distance]]
 					[have world open_fridge name]
 				      [prog 
 				       [mind-wait_to_activate mind reactive physical walk_directly_towards fridge]
@@ -282,9 +279,9 @@
        
        nil]]
 
-[deframe  slice_toast[resource] []
+[deframe slice_toast_resource [resource] []
   [new []
-       [construct resource [type this]
+       [construct resource `slice_toast
 		  [funk []
 			[let* [[body [get this body]]
 			       [world [get body physical_world]] 
@@ -297,9 +294,9 @@
 		  
        nil]]
 
-[deframe center_body_on [resource] []
+[deframe center_body_on_resource [resource] []
   [new []
-       [construct resource [type this]
+       [construct resource `center_body_on
 		  [funk [desired_object]
 			[let* [[body [get this body]]
 			       [world [get body physical_world]]
@@ -336,9 +333,9 @@
        
        nil]]
 
-[deframe  walk_towards [resource] []
+[deframe walk_towards_resource [resource] []
   [new []
-       [construct resource [type this]
+       [construct resource `walk_towards
 		  [funk [desired_object]
 			[let* [[body [get this body]]
 			       [world [get body physical_world]]
@@ -348,13 +345,13 @@
 			  [mind-wait_to_activate mind reactive physical center_body_on desired_object]
 			  [labels [[cautiously_walk []
 						    [cond [[and [null [have this check_obstacle]] 
-								[< arm_length [have [have [get mind objects] lookup desired_object] lookup `distance]]]
+								[< [get [get this body] arm_length] [have [have [get mind objects] lookup desired_object] lookup `distance]]]
 							   [prog [mind-wait_to_activate mind reactive physical move_forward 1]
 								 [cautiously_walk]]]
-							  [[> arm_length [have [have [get mind objects] lookup desired_object] lookup `distance]]
+							  [[> [get [get this body] arm_length] [have [have [get mind objects] lookup desired_object] lookup `distance]]
 							 nil]
 							  [[and [have this check_obstacle] 
-								[< arm_length [have [have [get mind objects] lookup desired_object] lookup `distance]]]
+								[< [get [get this body] arm_length] [have [have [get mind objects] lookup desired_object] lookup `distance]]]
 							   [mind-wait_to_activate mind reactive physical avoid_obstacle desired_object [have this check_obstacle]]]
 							  [t
 							   [print 'weird, no conditions applied']]]]
@@ -364,9 +361,9 @@
        nil]]
 
 
-[deframe walk_directly_towards [resource] []
+[deframe walk_directly_towards_resource [resource] []
   [new []
-       [construct resource [type this]
+       [construct resource `walk_directly_towards_resource
 		  [funk [desired_object]
 			[let* [[body [get this body]]
 			       [world [get body physical_world]]
@@ -380,10 +377,10 @@
 			      
 			      [if [get mind objects]
 				  [if [have [get mind objects] lookup desired_object]
-				      [if [< arm_length [have [have [get mind objects] lookup desired_object] lookup `distance]]
+				      [if [< [get [get this body] arm_length] [have [have [get mind objects] lookup desired_object] lookup `distance]]
 					  [prog 
 					   [have this-resource think_to_self 'current distance:' [have [have [get mind objects] lookup desired_object] lookup `distance]]
-					   [while [< arm_length [have [have [get mind objects] lookup desired_object] lookup `distance]]
+					   [while [< [get [get this body] arm_length] [have [have [get mind objects] lookup desired_object] lookup `distance]]
 					     [have this-resource think_to_self 'yes object, activating center on']
 					     [mind-wait_to_activate mind reactive physical center_body_on desired_object]
 					     
@@ -405,9 +402,9 @@
        
        nil]]
 
-[deframe look_for [resource] [[my_current_object nil]]
+[deframe look_for_resource [resource] [[my_current_object nil]]
   [new []
-       [construct resource [type this]
+       [construct resource `look_for
 		  [funk [desired_object]
 			[let* [[body [get this body]]
 			       [world [get body physical_world]] 
@@ -427,21 +424,21 @@
 				   [have this-resource think_to_self  'no objects in view']
 				   [mind-wait_to_activate mind reactive physical turn_left 1]
 				   ]
-				[if [null [has_thing desired_object [get [get mind objects] slots]]]
+				[if [null [list-contains_substring [get [get mind objects] slots] desired_object]]
 				    [prog [have this-resource think_to_self 'i see these objects:' [get mind objects]]
 					  [mind-wait_to_activate mind reactive physical turn_left 1]
 					  [print 'activated turn-left']
 					[= patience [- patience 1]]
 					]
 				  [prog [= patience 0]
-					[have this-resource think_to_self 'found' [has_thing desired_object [get [get mind objects] slots]]]
-					[= my_current_object [has_thing desired_object [get [get mind objects] slots]]] ]]]]
+					[have this-resource think_to_self 'found' [list-contains_substring [get [get mind objects] slots] desired_object]]
+					[= my_current_object [list-contains_substring [get [get mind objects] slots] desired_object]]]]]]
 			    [have this-resource think_to_self 'finished searching']]]]]
-		  nil]]
+       nil]]
 
-[deframe search_for [resource] []
+[deframe search_for_resource [resource] []
   [new []
-       [construct resource [type this]
+       [construct resource `search_for
 		  [funk [desired_object]
 			[let* [[body [get this body]]
 			       [world [get body physical_world]] 
@@ -469,11 +466,11 @@
 				  [prog [= patience 0]
 					[have this-resource think_to_self 'found it!']]]]]
 			    [have this-resource think_to_self 'finished searching']]]]]
-		  nil]]
+       nil]]
 
-[deframe avoid_obstacle [resource] []
+[deframe avoid_obstacle_resource [resource] []
   [new []
-       [construct resource [type this]
+       [construct resource `avoid_obstacle
 		  [funk [desired_object obstacle]
 			[let* [[body [get this body]]
 			       [world [get body physical_world]] 
@@ -521,23 +518,23 @@
   [new []
        [construct agency `physical]
        
-       [have this add_resource [new turn_right]]
-       [have this add_resource [new turn_left]]
-       [have this add_resource [new move_forward]]			
-       [have this add_resource [new move_backward]]
-       [have this add_resource [new drop_from_left_hand]]
-       [have this add_resource [new drop_from_right_hand]]
-       [have this add_resource [new pick_up_with_right_hand]]
-       [have this add_resource [new pick_up_with_left_hand]]
-       [have this add_resource [new open_fridge]]
-       [have this add_resource [new slice_toast]]
-       [have this add_resource [new center_body_on]]
-       [have this add_resource [new walk_towards]]
-       [have this add_resource [new walk_directly_towards]]
-       [have this add_resource [new search_for]]
-       [have this add_resource [new avoid_obstacle]]
-       [have this add_resource [new funk_user]] 
-       [have this add_resource [new look_for]]
+       [have this add_resource [new turn_right_resource]]
+       [have this add_resource [new turn_left_resource]]
+       [have this add_resource [new move_forward_resource]]			
+       [have this add_resource [new move_backward_resource]]
+       [have this add_resource [new drop_from_left_hand_resource]]
+       [have this add_resource [new drop_from_right_hand_resource]]
+       [have this add_resource [new pick_up_with_right_hand_resource]]
+       [have this add_resource [new pick_up_with_left_hand_resource]]
+       [have this add_resource [new open_fridge_resource]]
+       [have this add_resource [new slice_toast_resource]]
+       [have this add_resource [new center_body_on_resource]]
+       [have this add_resource [new walk_towards_resource]]
+       [have this add_resource [new walk_directly_towards_resource]]
+       [have this add_resource [new search_for_resource]]
+       [have this add_resource [new avoid_obstacle_resource]]
+       [have this add_resource [new funk_user_resource]] 
+       [have this add_resource [new look_for_resource]]
 	
 	this]]
 

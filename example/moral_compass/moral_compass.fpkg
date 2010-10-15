@@ -22,7 +22,8 @@
 
 [defpackage moral_compass
   :packages [mind
-	     reactive_layer
+	     builtin_reactive_layer
+	     learned_reactive_layer
 	     deliberative_layer
 	     reflective_layer
 	     self_reflective_layer
@@ -30,32 +31,39 @@
    :sources ['moral_compass.fu2']]
 
 
-'reactive_layer'
+'builtin_reactive_layer'
 
-[defpackage reactive_layer
+[defpackage builtin_reactive_layer
   :packages [mind
-	     reactive_physical_agency
-	     reactive_sensory_agency
-	     reactive_language_agency
-	     reactive_neural_plug_agency
+	     builtin_reactive_neural_plug_agency]
+   :sources ['builtin_reactive_layer.fu2']]
+
+[defpackage builtin_reactive_neural_plug_agency
+  :packages [mind]
+   :sources ['builtin_reactive_neural_plug_agency.fu2']]
+
+
+'learned_reactive_layer'
+
+[defpackage learned_reactive_layer
+  :packages [mind
+	     learned_reactive_physical_agency
+	     learned_reactive_sensory_agency
+	     learned_reactive_language_agency
 	     english_language]
-   :sources ['reactive_layer.fu2']]
+   :sources ['learned_reactive_layer.fu2']]
 
-[defpackage reactive_physical_agency
+[defpackage learned_reactive_physical_agency
   :packages [mind]
-   :sources ['reactive_physical_agency.fu2']]
+   :sources ['learned_reactive_physical_agency.fu2']]
 
-[defpackage reactive_sensory_agency
+[defpackage learned_reactive_sensory_agency
   :packages [mind]
-   :sources ['reactive_sensory_agency.fu2']]
+   :sources ['learned_reactive_sensory_agency.fu2']]
 
-[defpackage reactive_language_agency
+[defpackage learned_reactive_language_agency
   :packages [mind]
-   :sources ['reactive_language_agency.fu2']]
-
-[defpackage reactive_neural_plug_agency
-  :packages [mind]
-   :sources ['reactive_neural_plug_agency.fu2']]
+   :sources ['learned_reactive_language_agency.fu2']]
 
 
 'deliberative_layer'

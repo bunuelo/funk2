@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 
-[deframe include_reactive_stories_into_deliberative_story [resource] [[last_time_step -1]]
+[deframe include_learned_reactive_stories_into_deliberative_story [resource] [[last_time_step -1]]
   [new []
        [construct resource [type this]
 		  [funk []
@@ -27,11 +27,11 @@
 			  [cause-define cause-name      `[deliberative reality interpret_senses_into_current_story]]
 			  [let [[time_step [get body time_step]]]
 			    [if [!= [get this last_time_step] time_step]
-				[let [[reactive_sensory_story [get [mind-agency [get this mind] reactive sensory] reactive_sensory_story]]]
-				  [if [null reactive_sensory_story]
-				      [have this-resource think_to_self 'Reactive sensory story does not exist.']
-				    [prog [have this-resource think_to_self 'Including reactive sensory story into deliberative story: ' [get reactive_sensory_story as-list]]
-					  [let [[reality_story [get [get [get this agency] deliberative_reality_story] union reactive_sensory_story]]]
+				[let [[learned_reactive_sensory_story [get [mind-agency [get this mind] learned_reactive sensory] learned_reactive_sensory_story]]]
+				  [if [null learned_reactive_sensory_story]
+				      [have this-resource think_to_self 'Learned reactive sensory story does not exist.']
+				    [prog [have this-resource think_to_self 'Including learned reactive sensory story into deliberative story: ' [get learned_reactive_sensory_story as-list]]
+					  [let [[reality_story [get [get [get this agency] deliberative_reality_story] union learned_reactive_sensory_story]]]
 					    [set [get this agency] deliberative_reality_story reality_story]]
 					  [set this last_time_step time_step]]]]]
 			    ]]]]
@@ -128,7 +128,7 @@
 					      [have semantic_knowledge_base add_semantic_frame Lauren_semantic_frame]
 					      semantic_knowledge_base]]]
        
-       [have this add_resource [new include_reactive_stories_into_deliberative_story]]
+       [have this add_resource [new include_learned_reactive_stories_into_deliberative_story]]
        [have this add_resource [new infer_intended_use_for_agent_picking_up_tool]]
        [have this add_resource [new infer_reason_for_agent_physical_action]]
        [have this add_resource [new infer_mental_state_causing_agent_facial_expression]]

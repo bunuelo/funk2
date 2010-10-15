@@ -46,14 +46,14 @@
 				     strings]
 			       [let [[symbols [reverse reverse_symbols]]]
 				 [terminal_format standard-terminal '\nSending symbols, ' symbols ', through ' [get isis_agent name] '\'s neural plug.']
-				 [let [[activate_resource [get [get isis_agent mind] resource `reactive `neural_plug `activate_resource]]]
-				   [have activate_resource command `reactive `language `speak_language symbols]
+				 [let [[activate_resource [get [get isis_agent mind] resource `builtin_reactive `neural_plug `activate_resource]]]
+				   [have activate_resource command `builtin_reactive `language `speak_language symbols]
 				   [let [[other_agent_name [if [eq [get isis_agent name] `Ralph]
 							       `Lauren
 							     `Ralph]]]
 				     [let [[other_mind [get isis_world agent_mind other_agent_name]]]
-				       [let [[other_activate_resource [get other_mind resource `reactive `neural_plug `activate_resource]]]
-					 [have other_activate_resource command `reactive `language `hear_language_from_agent [get isis_agent name] symbols]]]]
+				       [let [[other_activate_resource [get other_mind resource `builtin_reactive `neural_plug `activate_resource]]]
+					 [have other_activate_resource command `builtin_reactive `language `hear_language_from_agent [get isis_agent name] symbols]]]]
 				   ]]]]]]]]]
        
        [have vbox pack_start label t t 0]

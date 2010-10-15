@@ -38,7 +38,7 @@
 	[have reactive_sensory_sense lookup `objects]
       nil]]]
 
-[deftypefunk mind get sense[]
+[deftypefunk mind get sense []
   [let [[reactive_sensory_sense [get [get this agency `reactive `sensory] reactive_sensory_sense]]]
     reactive_sensory_sense]]
 
@@ -46,11 +46,22 @@
   [set [get [get this mind] agency layer_name agency_name] user_activate_resource resource_name]
   [set [get [get this mind] agency layer_name agency_name] user_activate_args     args]]
 
-[deftypefunk isis_agent execute sense_world []
-  [have [get this physical_world] sense_world [get this name]]]
+'isis_world agent specific control functions'
 
-[deftypefunk isis_agent execute say [message]
-  [have [get this physical_world] say [get this name] message]]
+[deftypefunk isis_agent execute sense_world             []              [have [get this physical_world] sense_world             [get this name]]]
+[deftypefunk isis_agent execute turn_right-start        []              [have [get this physical_world] turn_right-start        [get this name]]]
+[deftypefunk isis_agent execute turn_right-stop         []              [have [get this physical_world] turn_right-stop         [get this name]]]
+[deftypefunk isis_agent execute turn_left-start         []              [have [get this physical_world] turn_left-start         [get this name]]]
+[deftypefunk isis_agent execute turn_left-stop          []              [have [get this physical_world] turn_left-stop          [get this name]]]
+[deftypefunk isis_agent execute move_forward-start      []              [have [get this physical_world] move_forward-start      [get this name]]]
+[deftypefunk isis_agent execute move_forward-stop       []              [have [get this physical_world] move_forward-stop       [get this name]]]
+[deftypefunk isis_agent execute drop_from_right_hand    []              [have [get this physical_world] drop_from_right_hand    [get this name]]]
+[deftypefunk isis_agent execute drop_from_left_hand     []              [have [get this physical_world] drop_from_left_hand     [get this name]]]
+[deftypefunk isis_agent execute pick_up_with_left_hand  [target]        [have [get this physical_world] pick_up_with_left_hand  [get this name] target]]
+[deftypefunk isis_agent execute pick_up_with_right_hand [target]        [have [get this physical_world] pick_up_with_right_hand [get this name] target]]
+[deftypefunk isis_agent execute use_right_hand          [target object] [have [get this physical_world] use_right_hand          [get this name] target object]]
+[deftypefunk isis_agent execute use_left_hand           [target object] [have [get this physical_world] use_left_hand           [get this name] target object]]
+[deftypefunk isis_agent execute say                     [message]       [have [get this physical_world] say                     [get this name] message]]
 
 
 [deframe isis_world [physical_world] [client]
@@ -100,44 +111,21 @@
   [have this step_physical_world]]
 
 
-[deftypefunk isis_world execute turn_right-start [agent_name]
-  [isis-call [get this client] turn_right-start agent agent_name]]
+'isis_world agent specific control functions'
 
-[deftypefunk isis_world execute turn_right-stop [agent_name]
-  [isis-call [get this client] turn_right-stop agent agent_name]]
-
-[deftypefunk isis_world execute turn_left-start [agent_name]
-  [isis-call [get this client] turn_left-start agent agent_name]]
-
-[deftypefunk isis_world execute turn_left-stop [agent_name]
-  [isis-call [get this client] turn_left-stop agent agent_name]]
-
-[deftypefunk isis_world execute move_forward-start [agent_name]
-  [isis-call [get this client] move_forward-start agent agent_name]]
-
-[deftypefunk isis_world execute move_forward-stop [agent_name]
-  [isis-call [get this client] move_forward-stop agent agent_name]]
-
-[deftypefunk isis_world execute drop_from_right_hand [agent_name]
-  [isis-call [get this client] drop_from_right_hand agent agent_name]]
-
-[deftypefunk isis_world execute drop_from_left_hand [agent_name]
-  [isis-call [get this client] drop_from_left_hand agent agent_name]]
-
-[deftypefunk isis_world execute pick_up_with_left_hand [agent_name target]
-  [isis-call [get this client] pick_up_with_left_hand agent agent_name  target target]]
-
-[deftypefunk isis_world execute pick_up_with_right_hand [agent_name target]
-  [isis-call [get this client] pick_up_with_right_hand tagent agent_name target target]]
-
-[deftypefunk isis_world execute use_right_hand [agent_name target object]
-  [isis-call [get this client] use_right_hand tagent agent_name target target object object]]
-
-[deftypefunk isis_world execute use_left_hand [agent_name target object]
-  [isis-call [get this client] use_left_hand tagent agent_name target target object object]]
-       
-[deftypefunk isis_world execute say [agent_name message]
-  [isis-call [get this client] say agent agent_name message message]]
+[deftypefunk isis_world execute turn_right-start        [agent]               [isis-call [get this client] turn_right-start        agent agent]]
+[deftypefunk isis_world execute turn_right-stop         [agent]               [isis-call [get this client] turn_right-stop         agent agent]]
+[deftypefunk isis_world execute turn_left-start         [agent]               [isis-call [get this client] turn_left-start         agent agent]]
+[deftypefunk isis_world execute turn_left-stop          [agent]               [isis-call [get this client] turn_left-stop          agent agent]]
+[deftypefunk isis_world execute move_forward-start      [agent]               [isis-call [get this client] move_forward-start      agent agent]]
+[deftypefunk isis_world execute move_forward-stop       [agent]               [isis-call [get this client] move_forward-stop       agent agent]]
+[deftypefunk isis_world execute drop_from_right_hand    [agent]               [isis-call [get this client] drop_from_right_hand    agent agent]]
+[deftypefunk isis_world execute drop_from_left_hand     [agent]               [isis-call [get this client] drop_from_left_hand     agent agent]]
+[deftypefunk isis_world execute pick_up_with_left_hand  [agent target]        [isis-call [get this client] pick_up_with_left_hand  agent agent target target]]
+[deftypefunk isis_world execute pick_up_with_right_hand [agent target]        [isis-call [get this client] pick_up_with_right_hand agent agent target target]]
+[deftypefunk isis_world execute use_right_hand          [agent target object] [isis-call [get this client] use_right_hand          agent agent target target object object]]
+[deftypefunk isis_world execute use_left_hand           [agent target object] [isis-call [get this client] use_left_hand           agent agent target target object object]]
+[deftypefunk isis_world execute say                     [agent message]       [isis-call [get this client] say                     agent agent message message]]
 
 'added simulator commands to isis_world'
 

@@ -58,31 +58,30 @@
   [new []
        [construct resource `turn_right
 		  [funk [steps]
-			[let* [[body [get this body]]
-			      [world [get body physical_world]]
-			      [name  [get body name]]]
+			[let* [[body  [get this body]]
+			       [world [get body physical_world]]
+			       [name  [get body name]]]
 			  [have this-resource think_to_self 'Turning right is starting.']
-			  [have world turn_right-start name]
+			  [mind-wait_to_activate mind builtin_reactive physical turn_right_start]
 			  [let [[starting_time [get body time_step]]]
 			    [while [< [- [get body time_step] starting_time] steps] 
-			      [millisleep 50]]
-			    [have world turn_right-stop name]]]]]
+			      [millisleep 100]]
+			    [mind-wait_to_activate mind builtin_reactive physical turn_right_stop]]]]]
        nil]]
 
 [deframe turn_left_resource [resource] []
   [new []
        [construct resource `turn_left
 		  [funk [steps]
-			[let* [[body [get this body]]
-			      [world [get body physical_world]]
-			      [name  [get body name]]]
+			[let* [[body  [get this body]]
+			       [world [get body physical_world]]
+			       [name  [get body name]]]
 			  [have this-resource think_to_self 'Turning left is starting.']
-			  [have world turn_left-start name]
+			  [mind-wait_to_activate mind builtin_reactive physical turn_left_start]
 			  [let [[starting_time [get body time_step]]]
 			    [while [< [- [get body time_step] starting_time] steps] 
-					       [millisleep 50]]
-			    [have world turn_left-stop name]]]]]
-			
+			      [millisleep 50]]
+			    [mind-wait_to_activate mind builtin_reactive physical turn_left_stop]]]]]
        nil]]
 
 [deframe move_forward_resource [resource] []
@@ -91,15 +90,15 @@
 		  [funk [steps]
 			
 			[print this]
-			[let* [[body [get this body]]
-			      [world [get body physical_world]]
-			      [name  [get body name]]]
+			[let* [[body  [get this body]]
+			       [world [get body physical_world]]
+			       [name  [get body name]]]
 			  [have this-resource think_to_self 'Moving forward is starting.']
-			  [have world move_forward-start name]
+			  [mind-wait_to_activate mind builtin_reactive physical move_forward_start]
 			  [let [[starting_time [get body time_step]]]
 			    [while [< [- [get body time_step] starting_time] steps] 
 			      [millisleep 50]]
-			    [have world move_forward-stop name]]]
+			    [mind-wait_to_activate mind builtin_reactive physical move_forward_stop]]]
 			]]
 			
        nil]]
@@ -113,12 +112,11 @@
 			      [world [get body physical_world]]
 			      [name  [get body name]]]
 			  [have this-resource think_to_self 'moving backward is starting.']
-			  [have world move_backward-start  name]
+			  [mind-wait_to_activate mind builtin_reactive physical move_backward_start]
 			  [let [[starting_time [get body time_step]]]
 			    [while [< [- [get body time_step] starting_time] steps] 
 			      [millisleep 50]]
-			    [have world move_backward-stop  name]]]]]
-       
+			    [mind-wait_to_activate mind builtin_reactive physical move_backward_stop]]]]]
        nil]]
 
 [deframe drop_from_left_hand_resource [resource] []
@@ -129,7 +127,7 @@
 			      [world [get body physical_world]]
 			      [name  [get body name]]]
 			  [have this-resource think_to_self 'Droping from right hand is starting.']
-			  [have world drop_from_left_hand name]]]]
+			  [mind-wait_to_activate mind builtin_reactive physical drop_from_left_hand]]]]
        
        nil]]
 
@@ -142,8 +140,7 @@
 			      [name  [get body name]]
 			      ]
 			  [have this-resource think_to_self 'Droping from right hand is starting.']
-			  [have world drop_from_right_hand name]]]]
-       
+			  [mind-wait_to_activate mind builtin_reactive physical drop_from_right_hand]]]]
        nil]]
 
 
@@ -161,19 +158,19 @@
 			      [if [have [get mind objects] lookup target]
 				  [if [> [get [get this body] arm_length] [have [have [get mind objects] lookup target] lookup `distance]]
 				      [if [null [have [get sensory learned_reactive_sensory_sense] lookup `right_hand]]
-					  [have world pick_up_with_right_hand name target]
+					  [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]
 					[mind-wait_to_activate mind learned_reactive physical drop_from_right_hand]]
 				    [prog 
 				     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
-				     [have world  pick_up_with_right_hand name target]]]
+				     [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]]]
 				[prog 
 				 [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
-				 [have world  pick_up_with_right_hand name target]]]
+				 [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]]]
 			    [prog 
 			     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
-			     [have world  pick_up_with_right_hand name target]]]
+			     [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]]]
 			  [get mind sense]]]]
-		  
+       
        nil]]
 
 [deframe pick_up_with_left_hand_resource [resource] []
@@ -191,17 +188,17 @@
 			      [if [have [get mind objects] lookup target]
 				  [if [> [get [get this body] arm_length] [have [have [get mind objects] lookup target]lookup  `distance]]
 				      [if [null [have [get sensory learned_reactive_sensory_sense] lookup `left_hand]]
-					  [have world pick_up_with_left_hand name target]
+					  [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]
 					[mind-wait_to_activate mind learned_reactive physical drop_from_left_hand]]
 				    [prog 
 				     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
-				     [have world  pick_up_with_left_hand name target]]]
+				     [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]]]
 				[prog 
 				 [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
-				 [have world  pick_up_with_left_hand name target]]]
+				 [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]]]
 			    [prog 
 			     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
-			     [have world  pick_up_with_left_hand name target]]]
+			     [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]]]
 			  [get mind sense]]]]
 		  
        nil]]
@@ -227,16 +224,16 @@
 			    [if [get mind objects]
 				[if [have [get mind objects] lookup fridge]
 				    [if [> [get [get this body] arm_length] [have [have [get mind objects] lookup fridge] lookup  `distance]]
-					[have world open_fridge name]
+					[mind-wait_to_activate mind builtin_reactive physical open_fridge]
 				      [prog 
 				       [mind-wait_to_activate mind learned_reactive physical walk_directly_towards fridge]
-				       [have world  open_fridge name]]]
+				       [mind-wait_to_activate mind builtin_reactive physical open_fridge]]]
 				  [prog 
 				   [mind-wait_to_activate mind learned_reactive physical walk_directly_towards fridge]
-				   [have world open_fridge name]]]
+				   [mind-wait_to_activate mind builtin_reactive physical open_fridge]]]
 			      [prog 
 			       [mind-wait_to_activate mind learned_reactive physical walk_directly_towards fridge]
-			       [have world open_fridge name]]]
+			       [mind-wait_to_activate mind builtin_reactive physical open_fridge]]]
 			    ]]]]
        
        
@@ -253,7 +250,7 @@
 			  [format stdout '/n slice_toast']
 			  [mind-wait_to_activate mind learned_reactive physical pick_up_with_left_hand knife]
 			  [mind-wait_to_activate mind learned_reactive physical walk_directly_towards loaf]
-			  [have world use_left_hand name knife loaf]]]]
+			  [mind-wait_to_activate mind builtin_reactive physical use_left_hand knife loaf]]]]
 		  
        nil]]
 

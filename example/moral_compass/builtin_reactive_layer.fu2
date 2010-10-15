@@ -24,5 +24,6 @@
   [new []
        [construct mental_layer 0 `builtin_reactive]
        [have this add_agency [new builtin_reactive_neural_plug_agency]]
+       [have this add_agency [new builtin_reactive_physical_agency]]
        this]]
 

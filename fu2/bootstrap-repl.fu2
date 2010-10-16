@@ -875,7 +875,7 @@
 		 [terminal_format standard-terminal '\n  fiber: ' fiber]
 		 [terminal_format standard-terminal '\n  value: ' [get fiber value]]
 		 [terminal_format standard-terminal '\n  stack: ']
-		 [have fiber print_stack_trace]
+		 [execute fiber print_stack_trace]
 		 result]]
        result]]]
 
@@ -946,7 +946,7 @@
   [management_thread-add_exit_command value]
   [let [[signal_exit_fiber [this-fiber]]]
     [fiber [funk-new_with_name exit []
-			       [have signal_exit_fiber quit]]
+			       [execute signal_exit_fiber quit]]
 	   nil]]
   [while t
     [yield]]]

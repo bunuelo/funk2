@@ -861,7 +861,7 @@
 	   [if [is-type `bug bug]
 	       [let [[bug_frame [get bug frame]]]
 		 [if [is-type `frame bug_frame]
-		     [if [or [not  [frame-contains_var bug_frame     `stack_trace]]
+		     [if [or [not  [frame-contains_var     bug_frame `stack_trace]]
 			     [null [frame-lookup_var_value bug_frame `stack_trace nil]]]
 			 [frame-add_var_value bug_frame `stack_trace [get fiber stack_trace]]]]
 		 [bug bug]]

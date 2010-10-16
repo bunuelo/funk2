@@ -56,7 +56,7 @@
 [defunk filename-load [this]
   [with-new-cause [cause-define source-filename this]
 		  [cause-define cause-name      `filename-load]
-		  [if [or [execute [this-cause] lookup `load_carefully]
+		  [if [or [     execute [this-cause] lookup `load_carefully]
 			  [not [execute [this-cause] lookup `load_quickly]]]
 		      [prog [print `[filename-load loading ,this carefully]] 
 			    [source-eval [source-load this]]]

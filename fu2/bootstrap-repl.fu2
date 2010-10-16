@@ -543,19 +543,19 @@
     [apply &join parc-fibers]]]
 
 [defmetro cause-define-funk [name value]
-  `[have [this-cause] define-funk [quote ,name] ,value]]
+  `[execute [this-cause] define-funk [quote ,name] ,value]]
 
 [defmetro cause-lookup-funk [name]
-  `[have [this-cause] lookup-funk [quote ,name]]]
+  `[execute [this-cause] lookup-funk [quote ,name]]]
 
 [defmetro cause-defunk [name args :rest body]
   `[cause-define-funk ,name [funk ,args @body]]]
 
 [defmetro cause-define [name value]
-  `[have [this-cause] define [quote ,name] ,value]]
+  `[execute [this-cause] define [quote ,name] ,value]]
 
 [defmetro cause-lookup [name]
-  `[have [this-cause] lookup [quote ,name]]]
+  `[execute [this-cause] lookup [quote ,name]]]
 
 [defunk parcar [proc seq]
   'run mapcar commands in parallel'

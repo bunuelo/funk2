@@ -20,13 +20,13 @@
 '
 
 [deftypefunk frame execute add [slot_name value]
-  [have this add_type_var_value `variable slot_name value]]
+  [execute this add_type_var_value `variable slot_name value]]
 
 [deftypefunk frame execute lookup [slot_name]
   [get this type_var_value `variable slot_name nil]]
 
 [deftypefunk frame execute check_has [slot_name]
-  [have this check_has_type_slot `variable slot_name]]
+  [execute this check_has_type_slot `variable slot_name]]
 
 [deftypefunk frame get keys []
   [get this type_var-keys `variable]]
@@ -44,8 +44,8 @@
   [mapc value_funk [get this values]]]
 
 [deftypefunk frame execute map [key_value_funk]
-  [have this map_keys [funk [key]
-			    [apply key_value_funk [conslist key [have this lookup key]]]]]]
+  [execute this map_keys [funk [key]
+			       [apply key_value_funk [conslist key [execute this lookup key]]]]]]
 
 [defmetro frame [:rest slot_value_pairs]
   `[new frame @[let [[iter          slot_value_pairs]

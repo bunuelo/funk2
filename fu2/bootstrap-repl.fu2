@@ -720,9 +720,9 @@
   x]
 
 [defunk terminal_write [terminal_print_frame x]
-  [have [get terminal_print_frame mutex] lock]
+  [execute [get terminal_print_frame mutex] lock]
   [let [[result [terminal_write-thread_unsafe terminal_print_frame x]]]
-    [have [get terminal_print_frame mutex] unlock]
+    [execute [get terminal_print_frame mutex] unlock]
     result]]
 
 [defunk terminal_print-thread_unsafe [terminal_print_frame x]
@@ -732,9 +732,9 @@
   x]
 
 [defunk terminal_print [terminal_print_frame x]
-  [have [get terminal_print_frame mutex] lock]
+  [execute [get terminal_print_frame mutex] lock]
   [let [[result [terminal_print-thread_unsafe terminal_print_frame x]]]
-    [have [get terminal_print_frame mutex] unlock]
+    [execute [get terminal_print_frame mutex] unlock]
     result]]
 
 [defunk print [x]

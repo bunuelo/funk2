@@ -143,12 +143,12 @@
 		[t                   [error bug_type `unknown_package_dependency_key_type funkname `defpackage]]]]
 	[= iter [cddr iter]]]]
     `[execute packages_frame add [quote ,name] [new package
-						 [pathname-directory_pathname source-filename]
-						 [quote ,name]
-						 [conslist @[mapcar [funk [package_dependency]
-									  `[quote ,package_dependency]]
-								    package_dependencies]]
-						 [conslist @source_dependencies]]]]]
+						    [pathname-directory_pathname source-filename]
+						    [quote ,name]
+						    [conslist @[mapcar [funk [package_dependency]
+									     `[quote ,package_dependency]]
+								       package_dependencies]]
+						    [conslist @source_dependencies]]]]]
 
 [defunk lookup-package [name]
   [execute packages_frame lookup name]]

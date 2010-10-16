@@ -433,12 +433,10 @@ f2ptr f2__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name) {
 def_pcfunk2(object__inherits_from, this, type_name, return f2__object__inherits_from(this_cause, this, type_name));
 
 
-#define object__get__no_such_slot     789
-#define object__set__no_such_slot     790
-#define object__execute__no_such_slot 791
+#define object__get__no_such_slot 789
+#define object__set__no_such_slot 790
 
 f2ptr f2__object__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  //f2__print(cause, f2list4__new(cause, new__symbol(cause, "get"), this, slot, args));
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, slot);
   if (! raw__funkable__is_type(cause, funk)) {
@@ -457,9 +455,8 @@ f2ptr f2__object__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
 def_pcfunk2_and_rest(object__get, this, slot, args, return f2__object__get(this_cause, this, slot, args));
 
 f2ptr f2__object__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  //f2__print(cause, f2list4__new(cause, new__symbol(cause, "set"), this, slot, args));
   f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.set__symbol, slot);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, slot);
   if (! raw__funkable__is_type(cause, funk)) {
     if (raw__larva__is_type(cause, funk)) {
       return funk;
@@ -476,7 +473,6 @@ f2ptr f2__object__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
 def_pcfunk2_and_rest(object__set, this, slot, args, return f2__object__set(this_cause, this, slot, args));
 
 f2ptr f2__object__execute(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  //f2__print(cause, f2list4__new(cause, new__symbol(cause, "execute"), this, slot, args));
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.execute__symbol, slot);
   if (! raw__funkable__is_type(cause, funk)) {

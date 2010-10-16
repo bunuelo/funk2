@@ -70,13 +70,13 @@
 
 [load-funk2-devrc]
 
-[terminal_format standard-terminal '\nforcing garbage collection.']
+[format stdout '\nforcing garbage collection.']
 [garbage_collect]
 
-[terminal_format standard-terminal '\nsaving img/bootstrap.img.']
+[format stdout '\nsaving img/bootstrap.img.']
 [save_memory_image 'img/bootstrap.img']
 
-[terminal_format standard-terminal '\ndone.\n']
+[format stdout '\ndone.\n']
 [quit]
 
 

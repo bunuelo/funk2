@@ -327,19 +327,13 @@
   `[object-execute-apply ,this [quote ,slot_name] ,args]]
 
 [defmetro have [this slot_name :rest args]
-  `[object-execute ,this [quote ,slot_name] @args]]
-
-[defmetro have-apply [this slot_name args]
-  `[object-execute-apply ,this [quote ,slot_name] ,args]]
-
-`[defmetro have [this slot_name :rest args]
   [define -have-this- [string-as-symbol [stringlist-concat [conslist '-have-this-' [symbol-as-string [gensym]]]]]]
   `[let [[,-have-this-     ,this]
 	 [-have-slot_name- [quote ,slot_name]]
 	 [-have-args-      [quote ,args]]]
      [execute ,-have-this- ,slot_name ,-have-this- @args]]]
 
-`[defmetro have-apply [this slot_name args]
+[defmetro have-apply [this slot_name args]
   [define -have-this- [string-as-symbol [stringlist-concat [conslist '-have-this-' [symbol-as-string [gensym]]]]]]
   `[let [[,-have-this-      ,this]
 	 [-have-slot_name- [quote ,slot_name]]
@@ -473,9 +467,9 @@
 	  exps]]]
 
 [defunk terminal_format [terminal_print_frame :rest exps]
-  [execute [get terminal_print_frame mutex] lock]
+  [have [get terminal_print_frame mutex] lock]
   [let [[result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]
-    [execute [get terminal_print_frame mutex] unlock]
+    [have [get terminal_print_frame mutex] unlock]
     result]]
 
 [defmetro parlet [varpairs :rest body]
@@ -549,19 +543,19 @@
     [apply &join parc-fibers]]]
 
 [defmetro cause-define-funk [name value]
-  `[execute [this-cause] define-funk [quote ,name] ,value]]
+  `[have [this-cause] define-funk [quote ,name] ,value]]
 
 [defmetro cause-lookup-funk [name]
-  `[execute [this-cause] lookup-funk [quote ,name]]]
+  `[have [this-cause] lookup-funk [quote ,name]]]
 
 [defmetro cause-defunk [name args :rest body]
   `[cause-define-funk ,name [funk ,args @body]]]
 
 [defmetro cause-define [name value]
-  `[execute [this-cause] define [quote ,name] ,value]]
+  `[have [this-cause] define [quote ,name] ,value]]
 
 [defmetro cause-lookup [name]
-  `[execute [this-cause] lookup [quote ,name]]]
+  `[have [this-cause] lookup [quote ,name]]]
 
 [defunk parcar [proc seq]
   'run mapcar commands in parallel'
@@ -726,9 +720,9 @@
   x]
 
 [defunk terminal_write [terminal_print_frame x]
-  [execute [get terminal_print_frame mutex] lock]
+  [have [get terminal_print_frame mutex] lock]
   [let [[result [terminal_write-thread_unsafe terminal_print_frame x]]]
-    [execute [get terminal_print_frame mutex] unlock]
+    [have [get terminal_print_frame mutex] unlock]
     result]]
 
 [defunk terminal_print-thread_unsafe [terminal_print_frame x]
@@ -738,9 +732,9 @@
   x]
 
 [defunk terminal_print [terminal_print_frame x]
-  [execute [get terminal_print_frame mutex] lock]
+  [have [get terminal_print_frame mutex] lock]
   [let [[result [terminal_print-thread_unsafe terminal_print_frame x]]]
-    [execute [get terminal_print_frame mutex] unlock]
+    [have [get terminal_print_frame mutex] unlock]
     result]]
 
 [defunk print [x]
@@ -867,7 +861,7 @@
 	   [if [is-type `bug bug]
 	       [let [[bug_frame [get bug frame]]]
 		 [if [is-type `frame bug_frame]
-		     [if [or [not  [frame-contains_var     bug_frame `stack_trace]]
+		     [if [or [not  [frame-contains_var bug_frame     `stack_trace]]
 			     [null [frame-lookup_var_value bug_frame `stack_trace nil]]]
 			 [frame-add_var_value bug_frame `stack_trace [get fiber stack_trace]]]]
 		 [bug bug]]
@@ -881,7 +875,7 @@
 		 [terminal_format standard-terminal '\n  fiber: ' fiber]
 		 [terminal_format standard-terminal '\n  value: ' [get fiber value]]
 		 [terminal_format standard-terminal '\n  stack: ']
-		 [execute fiber print_stack_trace]
+		 [have fiber print_stack_trace]
 		 result]]
        result]]]
 
@@ -952,7 +946,7 @@
   [management_thread-add_exit_command value]
   [let [[signal_exit_fiber [this-fiber]]]
     [fiber [funk-new_with_name exit []
-			       [execute signal_exit_fiber quit]]
+			       [have signal_exit_fiber quit]]
 	   nil]]
   [while t
     [yield]]]

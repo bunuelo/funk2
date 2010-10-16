@@ -33,26 +33,26 @@
 				     [t                          [error bug_type  `invalid_symbol_or_symbol_list_when_adding_word_to_dictionary_frame
 									word_type type
 									symbols   symbols]]]]]
-      [let [[value [execute symbols_hash lookup symbols-as-conslist]]]
+      [let [[value [have symbols_hash lookup symbols-as-conslist]]]
 	[if value
 	    value
-	  [prog [execute symbols_hash add symbols-as-conslist symbols-as-conslist]
+	  [prog [have symbols_hash add symbols-as-conslist symbols-as-conslist]
 		symbols-as-conslist]]]]]]
 
 [deftypefunk dictionary_frame execute add_word [type symbol features]
   [let [[word [object_type-new type]]] 
-    [execute word add `symbols [get this symbols_as_key symbol]]
+    [have word add `symbols [get this symbols_as_key symbol]]
     [mapc [funk [feature]
 		[if [not [get word contains feature]]
 		    [error bug_type  `invalid_feature_when_adding_word_to_dictionary_frame
 			   word_type type
 			   feature   feature]
-		  [execute word add feature t]]]
+		  [have word add feature t]]]
 	  features]
-    [execute this add_type_var_value type symbol [cons word [get this type_var_value type symbol nil]]]]]
+    [have this add_type_var_value type symbol [cons word [get this type_var_value type symbol nil]]]]]
 
 [defmetro dictionary-add_word [this type symbol features]
-  `[execute ,this add_word [quote ,type] [quote ,symbol] [conslist @[mapcar [funk [feature] `[quote ,feature]] features]]]]
+  `[have ,this add_word [quote ,type] [quote ,symbol] [conslist @[mapcar [funk [feature] `[quote ,feature]] features]]]]
 
 [deftypefunk dictionary_frame get definitions_by_type [type symbol]
   [let [[definitions nil]]

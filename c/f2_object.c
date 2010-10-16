@@ -438,60 +438,57 @@ def_pcfunk2(object__inherits_from, this, type_name, return f2__object__inherits_
 #define object__execute__no_such_slot 791
 
 f2ptr f2__object__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  f2__print(cause, f2list4__new(cause, new__symbol(cause, "get"), this, slot, args));
+  //f2__print(cause, f2list4__new(cause, new__symbol(cause, "get"), this, slot, args));
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, slot);
   if (! raw__funkable__is_type(cause, funk)) {
     if (raw__larva__is_type(cause, funk)) {
-      return f2__print(cause, funk);
+      return funk;
     }
-    return f2__print(cause,
-		     f2larva__new(cause, object__get__no_such_slot, f2__bug__new(cause, f2integer__new(cause, object__get__no_such_slot), f2__frame__new(cause, f2list10__new(cause,
+    return f2larva__new(cause, object__get__no_such_slot, f2__bug__new(cause, f2integer__new(cause, object__get__no_such_slot), f2__frame__new(cause, f2list10__new(cause,
 																				    new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_get_funk"),
 																				    new__symbol(cause, "funkname"), new__symbol(cause, "object-get"),
 																				    new__symbol(cause, "this"),     this,
 																				    new__symbol(cause, "slot"),     slot,
-																					      new__symbol(cause, "args"),     args)))));
+																				    new__symbol(cause, "args"),     args))));
   }
   return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
 }
 def_pcfunk2_and_rest(object__get, this, slot, args, return f2__object__get(this_cause, this, slot, args));
 
 f2ptr f2__object__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  f2__print(cause, f2list4__new(cause, new__symbol(cause, "set"), this, slot, args));
+  //f2__print(cause, f2list4__new(cause, new__symbol(cause, "set"), this, slot, args));
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.set__symbol, slot);
   if (! raw__funkable__is_type(cause, funk)) {
     if (raw__larva__is_type(cause, funk)) {
-      return f2__print(cause, funk);
+      return funk;
     }
-    return f2__print(cause,
-		     f2larva__new(cause, object__set__no_such_slot, f2__bug__new(cause, f2integer__new(cause, object__set__no_such_slot), f2__frame__new(cause, f2list10__new(cause,
+    return f2larva__new(cause, object__set__no_such_slot, f2__bug__new(cause, f2integer__new(cause, object__set__no_such_slot), f2__frame__new(cause, f2list10__new(cause,
 																				    new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_set_funk"),
 																				    new__symbol(cause, "funkname"), new__symbol(cause, "object-set"),
 																				    new__symbol(cause, "this"),     this,
 																				    new__symbol(cause, "slot"),     slot,
-																					      new__symbol(cause, "args"),     args)))));
+																				    new__symbol(cause, "args"),     args))));
   }
   return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
 }
 def_pcfunk2_and_rest(object__set, this, slot, args, return f2__object__set(this_cause, this, slot, args));
 
 f2ptr f2__object__execute(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  f2__print(cause, f2list4__new(cause, new__symbol(cause, "execute"), this, slot, args));
+  //f2__print(cause, f2list4__new(cause, new__symbol(cause, "execute"), this, slot, args));
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.execute__symbol, slot);
   if (! raw__funkable__is_type(cause, funk)) {
     if (raw__larva__is_type(cause, funk)) {
-      return f2__print(cause, funk);
+      return funk;
     }
-    return f2__print(cause,
-		     f2larva__new(cause, object__execute__no_such_slot, f2__bug__new(cause, f2integer__new(cause, object__execute__no_such_slot), f2__frame__new(cause, f2list10__new(cause,
+    return f2larva__new(cause, object__execute__no_such_slot, f2__bug__new(cause, f2integer__new(cause, object__execute__no_such_slot), f2__frame__new(cause, f2list10__new(cause,
 																					    new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_execute_funk"),
 																					    new__symbol(cause, "funkname"), new__symbol(cause, "object-execute"),
 																					    new__symbol(cause, "this"),     this,
 																					    new__symbol(cause, "slot"),     slot,
-																						      new__symbol(cause, "args"),     args)))));
+																					    new__symbol(cause, "args"),     args))));
   }
   return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
 }

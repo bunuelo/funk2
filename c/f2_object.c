@@ -457,7 +457,7 @@ def_pcfunk2_and_rest(object__get, this, slot, args, return f2__object__get(this_
 
 f2ptr f2__object__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.set__symbol, slot);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, slot);
   if (! raw__funkable__is_type(cause, funk)) {
     if (raw__larva__is_type(cause, funk)) {
       return funk;

@@ -433,8 +433,9 @@ f2ptr f2__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name) {
 def_pcfunk2(object__inherits_from, this, type_name, return f2__object__inherits_from(this_cause, this, type_name));
 
 
-#define object__get__no_such_slot 789
-#define object__set__no_such_slot 790
+#define object__get__no_such_slot     789
+#define object__set__no_such_slot     790
+#define object__execute__no_such_slot 791
 
 f2ptr f2__object__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   f2ptr fiber = f2__this__fiber(cause);
@@ -456,7 +457,7 @@ def_pcfunk2_and_rest(object__get, this, slot, args, return f2__object__get(this_
 
 f2ptr f2__object__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, slot);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.set__symbol, slot);
   if (! raw__funkable__is_type(cause, funk)) {
     if (raw__larva__is_type(cause, funk)) {
       return funk;

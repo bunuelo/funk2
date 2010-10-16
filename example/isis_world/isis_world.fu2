@@ -26,13 +26,13 @@
 
 [deftypefunk isis_world_client execute call [command args_frame]
   [let [[call_mutex [get this call_mutex]]]
-    [have call_mutex lock]
-    [let [[result [have-apply [get this xmlrpc_client] call [print `[do ,command ,args_frame]]]]]
-      [have call_mutex unlock]
+    [execute call_mutex lock]
+    [let [[result [execute-apply [get this xmlrpc_client] call [print `[do ,command ,args_frame]]]]]
+      [execute call_mutex unlock]
       result]]]
 
 'isis_world specific funks below.'
 
 [defmetro isis-call [isis_client command :rest args]
-  `[have ,isis_client call [quote ,command] [frame @args]]]
+  `[execute ,isis_client call [quote ,command] [frame @args]]]
 

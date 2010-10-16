@@ -66,13 +66,9 @@
 [require socket-server]
 
 [defunk load-funk2-devrc []
-  [print [shelter [print [filename-load [print [pathname-concat [print [getenv 'HOME']] '.funk2-devrc']]]]]]]
-
-[print 'before load-funk2-devrc']
+  [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]
 
 [load-funk2-devrc]
-
-[print 'after load-funk2-devrc']
 
 [terminal_format standard-terminal '\nforcing garbage collection.']
 [garbage_collect]

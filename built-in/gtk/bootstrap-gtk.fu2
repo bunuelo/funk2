@@ -130,7 +130,7 @@
   [print `[gtk-globalize_keysyms]]
   [let [[keysyms_frame [gtk-gdk_keysyms_frame-new]]]
     [mapc [funk [keysym_name]
-		[eval `[globalize ,keysym_name ,[have keysyms_frame lookup keysym_name]]]]
+		[eval `[globalize ,keysym_name ,[execute keysyms_frame lookup keysym_name]]]]
 	  [get keysyms_frame keys]]]]
 
 [globalize gtk-event_handling_fiber nil]
@@ -138,7 +138,7 @@
 [defunk gtk-event_handling_fiber-start []
   [format stdout '\n' `gtk-event_handling_fiber ' starting!']
   [if gtk-event_handling_fiber
-      [have gtk-event_handling_fiber quit]]
+      [execute gtk-event_handling_fiber quit]]
   [let [[event_handling_fiber [fiber [funk []
 					   [cause-define cause-name `gtk-event_handling_fiber]
 					   [while t

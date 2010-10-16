@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2010 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,9 +15,11 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
+[globalize-funk object-get                         &primfunk:object__get]
+[globalize-funk object-set                         &primfunk:object__set]
+[globalize-funk object-execute                     &primfunk:object__execute]
 [globalize-funk object-type                        &primfunk:object__type]
 [globalize-funk object-slot-type_funk              &primfunk:object__slot__type_funk]
 [globalize-funk object-inherits_from               &primfunk:object__inherits_from]

@@ -433,8 +433,9 @@ f2ptr f2__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name) {
 def_pcfunk2(object__inherits_from, this, type_name, return f2__object__inherits_from(this_cause, this, type_name));
 
 
-#define object__get__no_such_slot 789
-#define object__set__no_such_slot 790
+#define object__get__no_such_slot     789
+#define object__set__no_such_slot     790
+#define object__execute__no_such_slot 791
 
 f2ptr f2__object__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   f2ptr fiber = f2__this__fiber(cause);

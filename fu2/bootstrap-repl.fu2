@@ -483,7 +483,9 @@
   [have [get terminal_print_frame mutex] lock]
   [format stdout '\nafter lock.']
   [let [[result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]
+    [format stdout '\nbefore unlock.']
     [have [get terminal_print_frame mutex] unlock]
+    [format stdout '\nafter unlock.']
     result]]
 
 [defmetro parlet [varpairs :rest body]

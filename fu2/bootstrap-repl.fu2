@@ -480,9 +480,13 @@
 	  exps]]]
 
 [exp-format stdout '\ntest']
+[exp-format stdout '\ntest']
 
 [apply &exp-format [conslist stdout '\ntest']]
+[apply &exp-format [conslist stdout '\ntest']]
 
+[let [[result [apply &exp-format [conslist stdout '\ntest']]]]
+  result]
 [let [[result [apply &exp-format [conslist stdout '\ntest']]]]
   result]
 

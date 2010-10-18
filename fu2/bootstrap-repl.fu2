@@ -391,7 +391,9 @@
 
 [defunk fiber [funk args]
   [silent-fiber [funk-new_with_name fiber []
+				    [print 'fiber-debug 0']
 				    [cause-enable_reactive_critics [this-cause]]
+				    [print 'fiber-debug 1']
 				    [apply funk args]]
 		nil]]
 

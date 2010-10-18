@@ -178,7 +178,7 @@
 				   @body]
 	       nil]]
 
-[defmetro apply [proc args]
+`[defmetro apply [proc args]
   [define debug-apply nil]
   [if debug-apply
       `[let [[proc ,proc]
@@ -188,7 +188,7 @@
 	   [error-new `message 'apply error: proc is nil.']]]
     `[funk-apply ,proc ,args]]]
 
-`[defmetro apply [proc args]
+[defmetro apply [proc args]
    `[funk-apply ,proc ,args]]
 
 [defmetro funk [args :rest body]

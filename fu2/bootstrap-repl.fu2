@@ -754,7 +754,7 @@
     [terminal_print [get standard-terminal new_copy] x]]]
 
 [format stdout '\nhi.: ' [funk [x] [print x]]]
-[format stdout '\nhi2: ' [mapcar [funk [x] [format stdout '\n' x]] [conslist 1 2 3]]]
+[format stdout '\nhi2: ' [mapc [funk [x] [format stdout '\n' x]] [conslist 1 2 3]]]
 
 
 [defunk demetropolize [x]

@@ -478,17 +478,6 @@
 		  [exp-terminal_print_with_frame-thread_unsafe exp terminal_print_frame]]]
 	  exps]]]
 
-[exp-format stdout '\ntest']
-[exp-format stdout '\ntest']
-
-[apply &exp-format [conslist stdout '\ntest']]
-[apply &exp-format [conslist stdout '\ntest']]
-
-[let [[result [apply &exp-format [conslist stdout '\ntest']]]]
-  result]
-[let [[result [apply &exp-format [conslist stdout '\ntest']]]]
-  result]
-
 [defunk terminal_format [terminal_print_frame :rest exps]
   [have [get terminal_print_frame mutex] lock]
   [let [[result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]

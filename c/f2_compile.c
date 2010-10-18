@@ -819,63 +819,6 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolea
   return bcs_valid(full_bcs);
 }
 
-// this is a backup of f2__compile__apply_exp before using block bytecodes.
-f2ptr __f2__compile__apply_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t *popped_env_and_return) {
-  release__assert(__funk2.compile.f2__compile__apply_exp__symbol != -1, nil, "__funk2.compile.f2__compile__apply_exp__symbol not yet defined.");
-  f2ptr cause = f2cause__compiled_from__new(simple_cause, __funk2.compile.f2__compile__apply_exp__symbol, exps);
-  
-  exps = f2cons__cdr(exps, cause); if (! raw__cons__is_type(cause, exps)) {return __funk2.compile.compile__exception;} f2ptr funk_exp = f2cons__car(exps, cause);
-  exps = f2cons__cdr(exps, cause); if (! raw__cons__is_type(cause, exps)) {return __funk2.compile.compile__exception;} f2ptr args_exp = f2cons__car(exps, cause);
-  
-  f2ptr full_bcs = raw__compile(cause, fiber, funk_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
-  if (raw__larva__is_type(cause, full_bcs)) {
-    return full_bcs;
-  }
-  if (full_bcs && (! raw__cons__is_type(cause, full_bcs))) {
-    return full_bcs;
-  }
-  f2ptr iter = full_bcs;
-  
-  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_value(cause));
-  f2ptr exp_bcs  = raw__compile(cause, fiber, args_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
-  if (raw__larva__is_type(cause, exp_bcs)) {
-    return exp_bcs;
-  }
-  if (exp_bcs && (! raw__cons__is_type(cause, exp_bcs))) {
-    return exp_bcs;
-  }
-  iter           = f2__list_cdr__set(cause, iter, exp_bcs);
-  iter           = f2__list_cdr__set(cause, iter, f2__compile__copy_value_to_args(cause));
-  iter           = f2__list_cdr__set(cause, iter, f2__compile__pop_value(cause));
-  if (optimize_tail_recursion) {
-    if (popped_env_and_return != NULL) {
-      //printf("\npopped env and return!"); fflush(stdout);
-      *popped_env_and_return = boolean__true;
-    }
-    //iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, bytecode_tracing_on));
-    iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
-    iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
-    iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
-  }
-  if (protect_environment) {
-    iter         = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause));
-    iter         = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause));
-    iter         = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause));
-    iter         = f2__list_cdr__set(cause, iter, f2__compile__funk_bc(cause));
-    iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
-    iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
-    iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
-  } else {
-    //printf("\ntail recursion optimized!"); fflush(stdout);
-    //iter         = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause, bytecode_tracing_on));
-    //iter         = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause, bytecode_tracing_on));
-    iter         = f2__list_cdr__set(cause, iter, f2__compile__jump_funk(cause));
-    //iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause, bytecode_tracing_on));
-    //iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, bytecode_tracing_on));
-  }
-  return bcs_valid(full_bcs);
-}
-
 f2ptr raw__apply_funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk, f2ptr args);
 
 f2ptr f2__compile__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t* popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
@@ -903,6 +846,9 @@ f2ptr f2__compile__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boo
       }
     }
     f2ptr full_bcs = f2__compile__eval_args(cause, fiber, f2cons__cdr(exps, cause), is_funktional, local_variables, is_locally_funktional); f2ptr iter = full_bcs;
+    if (raw__larva__is_type(cause, full_bcs)) {
+      return full_bcs;
+    }
     boolean_t all_args_are_immutable = boolean__true;
     if (is_funktional && (*is_funktional)) {
       f2ptr arg_iter = f2cons__cdr(exps, cause);
@@ -944,85 +890,6 @@ f2ptr f2__compile__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boo
 	////iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, bytecode_tracing_on));
 	//iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
 	//iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
-      } else {
-	//printf("\ntail recursion optimized!"); fflush(stdout);
-	//iter         = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause, bytecode_tracing_on));
-	//iter         = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause, bytecode_tracing_on));
-	iter   = f2__list_cdr__set(cause, iter, f2__compile__jump_funk(cause));
-	//iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause, bytecode_tracing_on));
-	//iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, bytecode_tracing_on));
-      }
-    }
-    return bcs_valid(full_bcs);
-  }
-  status("shouldn't get here.");
-  return f2larva__new(cause, 16, nil);
-}
-
-// this is a backup of f2__compile__funkvar_call before using block bytecodes
-f2ptr __f2__compile__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t* popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
-  release__assert(__funk2.compile.f2__compile__funkvar_call__symbol != -1, nil, "__funk2.compile.f2__compile__funkvar_call__symbol not yet defined.");
-  f2ptr cause = f2cause__compiled_from__new(simple_cause, __funk2.compile.f2__compile__funkvar_call__symbol, exps);
-  
-  f2ptr funkvar = f2cons__car(exps, cause);
-  //f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2fiber__env(fiber, cause), funkvar);
-  f2ptr funkvar_value = f2__fiber__lookup_type_variable_value(cause, fiber, __funk2.primobject__frame.funk_variable__symbol, funkvar);
-  if (raw__metrocfunk__is_type(cause, funkvar_value)) {
-    f2ptr exp_bcs = raw__compile(cause, fiber, f2__metrocfunk__apply(cause, funkvar_value, fiber, f2cons__cdr(exps, cause)), boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
-    if (raw__larva__is_type(cause, exp_bcs)) {
-      return exp_bcs;
-    }
-    return bcs_valid(exp_bcs);
-  } else {
-    if ((! (raw__cfunk__is_type(cause, funkvar_value) ||
-	    raw__funk__is_type(cause, funkvar_value))) ||
-	(! raw__funkable__is_funktional(cause, funkvar_value))) {
-      if (is_funktional) {
-	*is_funktional = boolean__false;
-      }
-      if (is_locally_funktional) {
-	*is_locally_funktional = boolean__false;
-      }
-    }
-    f2ptr full_bcs = f2__compile__eval_args(cause, fiber, f2cons__cdr(exps, cause), is_funktional, local_variables, is_locally_funktional); f2ptr iter = full_bcs;
-    boolean_t all_args_are_immutable = boolean__true;
-    if (is_funktional && (*is_funktional)) {
-      f2ptr arg_iter = f2cons__cdr(exps, cause);
-      while (arg_iter) {
-	f2ptr arg = f2cons__car(arg_iter, cause);
-	if (! raw__exp__is_immutable(cause, arg)) {
-	  all_args_are_immutable = boolean__false;
-	  break;
-	}
-	arg_iter = f2cons__cdr(arg_iter, cause);
-      }
-    }
-    if (is_funktional && (*is_funktional) && all_args_are_immutable) {
-      status("found funktional optimization opportunity!");
-      f2ptr funk_apply__result = raw__apply_funk(cause, fiber, funkvar_value, f2cons__cdr(exps, cause));
-      if (raw__larva__is_type(cause, funk_apply__result)) {
-	return funk_apply__result;
-      }
-      full_bcs = f2__compile__value__set(cause, funk_apply__result); iter = full_bcs;
-    } else {
-      iter     = f2__list_cdr__set(cause, iter, f2__compile__lookup_funkvar(cause, funkvar));
-      if (optimize_tail_recursion) {
-	if (popped_env_and_return) {
-	  //printf("\npopped env and return!"); fflush(stdout);
-	  *popped_env_and_return = boolean__true;
-	}
-	iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
-	iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
-	iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
-      }
-      if (protect_environment) {
-	iter   = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause));
-	iter   = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause));
-	//iter   = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause, bytecode_tracing_on));
-	iter   = f2__list_cdr__set(cause, iter, f2__compile__funk_bc(cause));
-	//iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, bytecode_tracing_on));
-	iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
-	iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
       } else {
 	//printf("\ntail recursion optimized!"); fflush(stdout);
 	//iter         = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause, bytecode_tracing_on));
@@ -1588,7 +1455,7 @@ f2ptr raw__compile(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_t protect
   __compile__recursion_count ++;
 #endif // DEBUG_COMPILE
   f2ptr result_bcs = nil;
-  if      (!exp)                        {result_bcs = f2__compile__value__set(cause, nil);}
+  if      (!exp)                                {result_bcs = f2__compile__value__set(cause, nil);}
   else if (raw__integer__is_type(cause, exp))   {result_bcs = f2__compile__value__set(cause, exp);}
   else if (raw__pointer__is_type(cause, exp))   {result_bcs = f2__compile__value__set(cause, exp);}
   else if (raw__float__is_type(cause, exp))     {result_bcs = f2__compile__value__set(cause, exp);}

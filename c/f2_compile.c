@@ -293,7 +293,11 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   
   boolean_t popped_env_and_return     = boolean__false;
   boolean_t optimize_unused_beginning = boolean__true;
-  f2ptr body_bcs = f2__compile__rawcode(cause, fiber, f2funk__demetropolized_body(funk, cause), boolean__false, boolean__true, &popped_env_and_return, &funk__is_funktional, local_variables, &funk__is_locally_funktional, optimize_unused_beginning);
+  f2ptr demetropolized_body = f2funk__demetropolized_body(funk, cause);
+  if (raw__larva__is_type(cause, demetropolized_body)) {
+    return demetropolized_body;
+  }
+  f2ptr body_bcs = f2__compile__rawcode(cause, fiber, demetropolized_body, boolean__false, boolean__true, &popped_env_and_return, &funk__is_funktional, local_variables, &funk__is_locally_funktional, optimize_unused_beginning);
   if (raw__larva__is_type(cause, body_bcs)) {
     return body_bcs;
   }
@@ -1158,7 +1162,13 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_
     }
     return raw__compile(cause, fiber, metro_apply_result, boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
   }
-  if (f2__is_compile_special_symbol(cause, car)) {return bcs_valid(f2__compile__special_symbol_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
+  if (f2__is_compile_special_symbol(cause, car)) {
+    f2ptr special_symbol_result = f2__compile__special_symbol_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional);
+    if (raw__larva__is_type(cause, special_symbol_result)) {
+      return special_symbol_result;
+    }
+    return bcs_valid(special_symbol_result);
+  }
   if (raw__symbol__is_type(cause, car))          {return bcs_valid(f2__compile__funkvar_call(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   status("tried to compile: "); f2__write(cause, fiber, exp); fflush(stdout);
   status("don't know how to compile."); // should throw exception... (or return larva)
@@ -1476,16 +1486,16 @@ f2ptr raw__compile(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_t protect
     status("unrecognized type in compile.");
     return f2larva__new(cause, 128, nil);
   }
-  if (! raw__larva__is_type(cause, result_bcs)) {
-    result_bcs = bcs_valid(result_bcs);
-  }
   __compile__recursion_count --;
 #ifdef DEBUG_COMPILE
   if (__compile__recursion_count == 0) {
     //printf("\ncompile ending.");
   }
 #endif // DEBUG_COMPILE
-  return result_bcs;
+  if (raw__larva__is_type(cause, result_bcs)) {
+    return result_bcs;
+  }
+  return bcs_valid(result_bcs);
 }
 
 void f2__compile__reinitialize_globalvars() {

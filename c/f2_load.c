@@ -72,8 +72,15 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
 	printf("\ncurrent filename: "); f2__write(cause, fiber, filename); fflush(stdout);
       } else {
 	load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil);
-	load_funk_bcs = f2__compile__funk(cause,
-					  fiber, load_funk);
+	load_funk_bcs = f2__compile__funk(cause, fiber, load_funk);
+	if (raw__larva__is_type(cause, load_funk_bcs)) {
+	  f2__stream__close(cause, stream);
+	  return f2larva__new(cause, 49, f2__bug__new(cause, f2integer__new(cause, 49), f2__frame__new(cause, f2list8__new(cause,
+															   new__symbol(cause, "bug_type"),  new__symbol(cause, "found_bug_while_compiling_load_expression"),
+															   new__symbol(cause, "funkname"),  new__symbol(cause, "primfunk:load"),
+															   new__symbol(cause, "filename"),  filename,
+															   new__symbol(cause, "bug"),       eval_exp))));
+	}
 	if(raw__exception__is_type(cause, load_funk_bcs)) {
 	  f2fiber__value__set(fiber, cause, load_funk_bcs);
 	} else {

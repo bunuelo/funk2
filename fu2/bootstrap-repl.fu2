@@ -333,20 +333,6 @@
 [defmetro have-apply [this slot_name args]
   `[object-execute-apply ,this [quote ,slot_name] ,args]]
 
-`[defmetro have [this slot_name :rest args]
-  [define -have-this- [string-as-symbol [stringlist-concat [conslist '-have-this-' [symbol-as-string [gensym]]]]]]
-  `[let [[,-have-this-     ,this]
-	 [-have-slot_name- [quote ,slot_name]]
-	 [-have-args-      [quote ,args]]]
-     [execute ,-have-this- ,slot_name ,-have-this- @args]]]
-
-`[defmetro have-apply [this slot_name args]
-  [define -have-this- [string-as-symbol [stringlist-concat [conslist '-have-this-' [symbol-as-string [gensym]]]]]]
-  `[let [[,-have-this-      ,this]
-	 [-have-slot_name- [quote ,slot_name]]
-	 [-have-args-      [quote ,args]]]
-     [execute-apply ,-have-this- ,slot_name [cons ,-have-this- ,args]]]]
-
 
 [globalize-funk type &object-type]
 

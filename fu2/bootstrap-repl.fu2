@@ -469,6 +469,7 @@
 		 [conslist @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]]
 
 [defunk terminal_format-thread_unsafe [terminal_print_frame :rest exps]
+  [format stdout '\ntftu-debug 0.']
   [if [null terminal_print_frame]
       [prog [format stdout '\ntftu-debug 1.']
 	    [apply &string-format exps]]

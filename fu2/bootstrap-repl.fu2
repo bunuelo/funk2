@@ -480,9 +480,9 @@
 	  exps]]]
 
 [defunk terminal_format [terminal_print_frame :rest exps]
-  [have [get terminal_print_frame mutex] lock]
+  `[have [get terminal_print_frame mutex] lock]
   [let [[result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]
-    [have [get terminal_print_frame mutex] unlock]
+    `[have [get terminal_print_frame mutex] unlock]
     result]]
 
 [defmetro parlet [varpairs :rest body]

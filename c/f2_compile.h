@@ -70,11 +70,11 @@ struct funk2_compile_s {
 #ifndef F2__COMPILE__H
 #define F2__COMPILE__H
 
-//#ifdef DEBUG_COMPILE
-#define bcs_valid(value) check_bcs_valid(value)
-//#else
-//#  define bcs_valid(value) value
-//#endif
+#ifdef DEBUG_COMPILE
+#  define bcs_valid(value) check_bcs_valid(value)
+#else
+#  define bcs_valid(value) value
+#endif
 
 #include "f2_ptypes.h"
 #include "f2_primobject__environment.h"

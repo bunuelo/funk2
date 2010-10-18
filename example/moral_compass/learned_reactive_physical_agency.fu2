@@ -20,7 +20,9 @@
 'now when activating resource, have to set the slots in funk_user the resource. how to?'
 'so how does resource access the mind?  correct?
 
-[have [get [get [get [get isis_world agent_mind `Ralph] layer `reactive] agency `physical] resource `funk_user] user_activate `open_fridge `[]]
+[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] command`builtin_reactive `physical `open_fridge]
+
+
 [get [get isis_world agent_mind `Ralph] sense]
 
 
@@ -59,7 +61,6 @@
        [construct resource `turn_right
 		  [funk [steps]
 			[let* [[body  [get this body]]
-			       [world [get body physical_world]]
 			       [name  [get body name]]]
 			  [have this-resource think_to_self 'Turning right is starting.']
 			  [mind-wait_to_activate mind builtin_reactive physical turn_right_start]
@@ -74,7 +75,6 @@
        [construct resource `turn_left
 		  [funk [steps]
 			[let* [[body  [get this body]]
-			       [world [get body physical_world]]
 			       [name  [get body name]]]
 			  [have this-resource think_to_self 'Turning left is starting.']
 			  [mind-wait_to_activate mind builtin_reactive physical turn_left_start]
@@ -91,7 +91,6 @@
 			
 			[print this]
 			[let* [[body  [get this body]]
-			       [world [get body physical_world]]
 			       [name  [get body name]]]
 			  [have this-resource think_to_self 'Moving forward is starting.']
 			  [mind-wait_to_activate mind builtin_reactive physical move_forward_start]
@@ -109,7 +108,6 @@
 		  [funk [steps]
 			[print 'reached move_backward']
 			[let* [[body [get this body]]
-			      [world [get body physical_world]]
 			      [name  [get body name]]]
 			  [have this-resource think_to_self 'moving backward is starting.']
 			  [mind-wait_to_activate mind builtin_reactive physical move_backward_start]
@@ -124,7 +122,6 @@
        [construct resource `drop_from_left_hand
 		  [funk []
 			[let* [[body [get this body]]
-			      [world [get body physical_world]]
 			      [name  [get body name]]]
 			  [have this-resource think_to_self 'Droping from right hand is starting.']
 			  [mind-wait_to_activate mind builtin_reactive physical drop_from_left_hand]]]]
@@ -136,7 +133,6 @@
        [construct resource `drop_from_right_hand
 		  [funk []
 			[let* [[body [get this body]]
-			      [world [get body physical_world]]
 			      [name  [get body name]]
 			      ]
 			  [have this-resource think_to_self 'Droping from right hand is starting.']
@@ -149,7 +145,6 @@
        [construct resource `pick_up_with_right_hand
 		  [funk [target]
 			[let* [[body  [get this body]]
-			       [world [get body physical_world]] 
 			       [mind  [get body mind]]
 			       [name  [get body name]]
 			       ] 
@@ -178,9 +173,8 @@
        [construct resource `pick_up_with_left_hand
 		  [funk [target]
 			[let* [[body [get this body]]
-			      [world [get body physical_world]] 
-			      [mind  [get body mind]]
-			      [name  [get body name]]
+			       [mind  [get body mind]]
+			       [name  [get body name]]
 			      ] 
 			  [have this-resource think_to_self 'Picking up with left hand is starting']
 			  
@@ -211,7 +205,6 @@
 		  [funk []
 			
 			[let* [[body [get this body]]
-			       [world [get body physical_world]]
 			       [mind  [get body mind]] 
 			       [name  [get body name]]
 			       ]
@@ -244,7 +237,6 @@
        [construct resource `slice_toast
 		  [funk []
 			[let* [[body [get this body]]
-			       [world [get body physical_world]] 
 			       [mind  [get body mind]]
 			       [name  [get body name]]]
 			  [format stdout '/n slice_toast']
@@ -259,7 +251,6 @@
        [construct resource `center_body_on
 		  [funk [desired_object]
 			[let* [[body [get this body]]
-			       [world [get body physical_world]]
 			       [mind  [get body mind]] 
 			       [name  [get body name]]
 			       ]
@@ -298,7 +289,6 @@
        [construct resource `walk_towards
 		  [funk [desired_object]
 			[let* [[body [get this body]]
-			       [world [get body physical_world]]
 			       [mind  [get body mind]]
 			       [name  [get body name]]
 			       ]
@@ -326,7 +316,6 @@
        [construct resource `walk_directly_towards_resource
 		  [funk [desired_object]
 			[let* [[body [get this body]]
-			       [world [get body physical_world]]
 			       [mind  [get body mind]]
 			       [name  [get body name]]
 			       ]
@@ -367,7 +356,6 @@
        [construct resource `look_for
 		  [funk [desired_object]
 			[let* [[body [get this body]]
-			       [world [get body physical_world]] 
 			       [mind  [get body mind]]
 			       [name  [get body name]]
 			       
@@ -401,7 +389,6 @@
        [construct resource `search_for
 		  [funk [desired_object]
 			[let* [[body [get this body]]
-			       [world [get body physical_world]] 
 			       [mind  [get body mind]]
 			       [name  [get body name]]
 			       ]
@@ -433,7 +420,6 @@
        [construct resource `avoid_obstacle
 		  [funk [desired_object obstacle]
 			[let* [[body [get this body]]
-			       [world [get body physical_world]] 
 			       [mind  [get body mind]]
 			       [name  [get body name]]
 			       [sense [get [get mind agency learned_reactive sensory] learned_reactive_sensory_sense]]]

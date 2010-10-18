@@ -484,7 +484,9 @@
 
 [defunk terminal_format [terminal_print_frame :rest exps]
   [format stdout '\nbefore lock.']
-  [have [get terminal_print_frame mutex] lock]
+  [let [[mutex [get terminal_print_frame mutex]]]
+    [format stdout '\n  mutex: ' mutex]
+    [format stdout '\n  ' [have mutex lock]]]
   [format stdout '\nafter lock.']
   [let [[result [prog [format stdout '\ntf-debug 0']
 		      [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]]

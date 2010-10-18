@@ -1254,7 +1254,12 @@ f2ptr f2__demetropolize__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr env
     f2ptr arg                 = f2cons__car(iter, cause);
     
     f2ptr demetro_arg__values = f2__demetropolize_once(cause, fiber, env, arg);
-    if(f2cons__car(demetro_arg__values, cause)) {did_something = __funk2.globalenv.true__symbol;}
+    if (raw__larva__is_type(cause, demetro_arg__values)) {
+      return demetro_arg__values;
+    }
+    if(f2cons__car(demetro_arg__values, cause)) {
+      did_something = __funk2.globalenv.true__symbol;
+    }
     f2ptr demetro_arg         = f2cons__cdr(demetro_arg__values, cause);
     
     f2ptr demetro_iter_next   = f2cons__new(cause, demetro_arg, nil);

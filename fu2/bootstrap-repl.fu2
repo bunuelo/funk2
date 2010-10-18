@@ -479,6 +479,8 @@
 		  [exp-terminal_print_with_frame-thread_unsafe exp terminal_print_frame]]]
 	  exps]]]
 
+[format stdout '\ntest']
+
 [apply &format [conslist stdout '\ntest']]
 
 [let [[result [apply &format [conslist stdout '\ntest']]]]

@@ -79,7 +79,7 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
 															   new__symbol(cause, "bug_type"),  new__symbol(cause, "found_bug_while_compiling_load_expression"),
 															   new__symbol(cause, "funkname"),  new__symbol(cause, "primfunk:load"),
 															   new__symbol(cause, "filename"),  filename,
-															   new__symbol(cause, "bug"),       eval_exp))));
+															   new__symbol(cause, "bug"),       load_funk_bcs))));
 	}
 	if(raw__exception__is_type(cause, load_funk_bcs)) {
 	  f2fiber__value__set(fiber, cause, load_funk_bcs);

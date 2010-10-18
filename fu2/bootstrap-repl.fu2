@@ -483,6 +483,7 @@
 		exps]]]]
 
 [defunk terminal_format [terminal_print_frame :rest exps]
+  [format stdout '\nterminal_print_frame: ' terminal_print_frame]
   [format stdout '\nbefore lock.']
   [let [[mutex [get terminal_print_frame mutex]]]
     [format stdout '\n  mutex: ' mutex]

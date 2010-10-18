@@ -1545,7 +1545,11 @@ f2ptr f2__demetropolize_full__with_status(f2ptr simple_cause, f2ptr fiber, f2ptr
     if(f2cons__car(values, cause)) {did_something = __funk2.globalenv.true__symbol;}
     f2ptr retval = f2cons__cdr(values, cause);
     if (did_something) {
-      return f2cons__new(cause, __funk2.globalenv.true__symbol, f2cons__cdr(f2__demetropolize_full__with_status(cause, fiber, env, retval), cause));
+      f2ptr demetropolize_result = f2__demetropolize_full__with_status(cause, fiber, env, retval);
+      if (raw__larva__is_type(cause, demetropolize_result)) {
+	return demetropolize_result;
+      }
+      return f2cons__new(cause, __funk2.globalenv.true__symbol, f2cons__cdr(demetropolize_result, cause));
     } else {
       return f2cons__new(cause, nil, exp);
     }

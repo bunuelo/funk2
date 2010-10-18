@@ -70,8 +70,8 @@
 
 [load-funk2-devrc]
 
-[terminal_format standard-terminal '\nforcing garbage collection.']
-[garbage__collect]
+`[terminal_format standard-terminal '\nforcing garbage collection.']
+`[garbage__collect]
 
 [terminal_format standard-terminal '\nsaving img/bootstrap.img.']
 [save_memory_image 'img/bootstrap.img']

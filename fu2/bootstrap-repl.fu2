@@ -991,9 +991,7 @@
 `[primfunk:memory_image__save 'img/bootstrap-repl.img']
 
 
-'
-  These management commands don\'t actually execute until this file reaches EOF.
-'
+'These management commands don\'t actually execute until this file reaches EOF.'
 [management_thread-add_save_memory_image_command 'img/bootstrap-repl.img']
 [management_thread-add_exit_command 0]
 

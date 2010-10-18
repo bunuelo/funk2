@@ -918,6 +918,9 @@ f2ptr f2__compile__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boo
     if (is_funktional && (*is_funktional) && all_args_are_immutable) {
       status("found funktional optimization opportunity!");
       f2ptr funk_apply__result = raw__apply_funk(cause, fiber, funkvar_value, f2cons__cdr(exps, cause));
+      if (raw__larva__is_type(cause, funk_apply__result)) {
+	return funk_apply_result;
+      }
       full_bcs = f2__compile__value__set(cause, funk_apply__result); iter = full_bcs;
     } else {
       iter     = f2__list_cdr__set(cause, iter, f2__compile__lookup_funkvar(cause, funkvar));
@@ -997,6 +1000,9 @@ f2ptr __f2__compile__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr exps, b
     if (is_funktional && (*is_funktional) && all_args_are_immutable) {
       status("found funktional optimization opportunity!");
       f2ptr funk_apply__result = raw__apply_funk(cause, fiber, funkvar_value, f2cons__cdr(exps, cause));
+      if (raw__larva__is_type(cause, funk_apply__result)) {
+	return funk_apply__result;
+      }
       full_bcs = f2__compile__value__set(cause, funk_apply__result); iter = full_bcs;
     } else {
       iter     = f2__list_cdr__set(cause, iter, f2__compile__lookup_funkvar(cause, funkvar));
@@ -1273,7 +1279,13 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_
   //f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2fiber__env(fiber, cause), car);
   f2ptr funkvar_value = f2__fiber__lookup_type_variable_value(cause, fiber, __funk2.primobject__frame.funk_variable__symbol, car);
   
-  if (raw__metro__is_type(cause, funkvar_value)) {return raw__compile(cause, fiber, raw__apply_metro(cause, fiber, funkvar_value, f2cons__cdr(exp, cause)), boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);}
+  if (raw__metro__is_type(cause, funkvar_value)) {
+    f2ptr metro_apply_result = raw__apply_metro(cause, fiber, funkvar_value, f2cons__cdr(exp, cause));
+    if (raw__larva__is_type(cause, metro_apply_result)) {
+      return metro_apply_result;
+    }
+    return raw__compile(cause, fiber, metro_apply_result, boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
+  }
   if (f2__is_compile_special_symbol(cause, car)) {return bcs_valid(f2__compile__special_symbol_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   if (raw__symbol__is_type(cause, car))          {return bcs_valid(f2__compile__funkvar_call(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   status("tried to compile: "); f2__write(cause, fiber, exp); fflush(stdout);
@@ -1485,7 +1497,13 @@ f2ptr f2__demetropolize_once(f2ptr simple_cause, f2ptr fiber, f2ptr env, f2ptr e
     {
       f2ptr car = f2cons__car(exp, cause);
       f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2fiber__env(fiber, cause), car);
-      if      (raw__metro__is_type(cause, funkvar_value)) {values = f2cons__new(simple_cause, __funk2.globalenv.true__symbol, raw__apply_metro(simple_cause, fiber, funkvar_value, f2cons__cdr(exp, cause)));}
+      if      (raw__metro__is_type(cause, funkvar_value)) {
+	f2ptr metro_apply_result = raw__apply_metro(simple_cause, fiber, funkvar_value, f2cons__cdr(exp, cause));
+	if (raw__larva__is_type(cause, metro_apply_result)) {
+	  return metro_apply_result;
+	}
+	values = f2cons__new(simple_cause, __funk2.globalenv.true__symbol, metro_apply_result);
+      }
       else if (f2__is_compile_special_symbol(cause, car)) {values = f2__demetropolize__special_symbol_exp(simple_cause, fiber, env, exp);}
       else if (raw__symbol__is_type(cause, car))          {values = f2__demetropolize__funkvar_call(simple_cause, fiber, env, exp);}
       else                                                {values = f2cons__new(simple_cause, nil, exp);}
@@ -1511,7 +1529,13 @@ f2ptr f2__demetropolize_full__with_status(f2ptr simple_cause, f2ptr fiber, f2ptr
     {
       f2ptr car = f2cons__car(exp, cause);
       f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2fiber__env(fiber, cause), car);
-      if      (raw__metro__is_type(cause, funkvar_value)) {values = f2cons__new(simple_cause, __funk2.globalenv.true__symbol, raw__apply_metro(simple_cause, fiber, funkvar_value, f2cons__cdr(exp, cause)));}
+      if      (raw__metro__is_type(cause, funkvar_value)) {
+	f2ptr metro_apply_result = raw__apply_metro(simple_cause, fiber, funkvar_value, f2cons__cdr(exp, cause));
+	if (raw__larva__is_type(cause, metro_apply_result)) {
+	  return metro_apply_result;
+	}
+	values = f2cons__new(simple_cause, __funk2.globalenv.true__symbol, metro_apply_result);
+      }
       else if (f2__is_compile_special_symbol(cause, car)) {values = f2__demetropolize__special_symbol_exp(simple_cause, fiber, env, exp);}
       else if (raw__symbol__is_type(cause, car))          {values = f2__demetropolize__funkvar_call(simple_cause, fiber, env, exp);}
       else                                                {values = f2cons__new(simple_cause, nil, exp);}

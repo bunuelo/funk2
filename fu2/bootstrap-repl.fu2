@@ -418,6 +418,10 @@
 		[cdr seq]]
 	  cons_result]]]
 
+[print [mapcar [funk [x] [print x]] [conslist 1 2 3]]]
+
+
+
 [defunk filter [cond_proc seq]
   [if [null seq]
       nil

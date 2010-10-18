@@ -753,10 +753,6 @@
   [let [[terminal_print_frame [get standard-terminal new_copy]]]
     [terminal_print [get standard-terminal new_copy] x]]]
 
-[format stdout '\nhi.: ' [funk [x] [print x]]]
-[format stdout '\nhi2: ' [mapc [funk [x] [format stdout '\n' x]] [conslist 1 2 3]]]
-
-
 [defunk demetropolize [x]
   [let [[demetro_pair [demetropolize_once x]]]
     [let [[did_something [car demetro_pair]]
@@ -944,6 +940,7 @@
 		 [reverse reverse_codes]]]]
 
 [defmetro defmetro [name args :rest body]
+  [format stdout '\ndebug: ' `[defmetro ,name ,args]]
   [terminal_format standard-terminal '\n' `[defmetro ,name ,args]]
   `[globalize-funk ,name [metro-new_with_name ,name ,args
 					       @body]]]

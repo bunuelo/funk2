@@ -464,7 +464,6 @@
 
 [defmetro let [varpairs :rest body]
   [define let-vars [mapcar [funk [varpair] [car varpair]] varpairs]]
-  this-is-a-bug
   `[apply [funk-new_with_name let ,let-vars
 			      @body]
 	  [conslist @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]

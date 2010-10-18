@@ -148,7 +148,10 @@
 
 [defunk load1 [filename]
   [print `[load1 ,filename]]
-  [with-new-cause [cause-define cause-name      `load1]
+  [with-new-cause
+		  [print 'debug 0.1']
+		  [cause-define cause-name      `load1]
+		  [print 'debug 0.2']
 		  [cause-define source-filename filename]
 		  [print 'debug 0']
 		  [let [[file-stream [stream-new_open_file filename [stream-file_mode-rdonly]]]]

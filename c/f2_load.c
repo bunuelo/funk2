@@ -90,6 +90,15 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
 	  f2__stream__close(cause, stream);
 	  return eval_exp;
 	}
+	if ((f2__fiber__paused(cause, load_fiber) != nil) &&
+	    raw__bug__is_type(cause, eval_exp)) {
+	  f2__stream__close(cause, stream);
+	  return f2larva__new(cause, 49, f2__bug__new(cause, f2integer__new(cause, 49), f2__frame__new(cause, f2list8__new(cause,
+															   new__symbol(cause, "bug_type"),  new__symbol(cause, "found_bug_while_loading"),
+															   new__symbol(cause, "funkname"),  new__symbol(cause, "primfunk:load"),
+															   new__symbol(cause, "filename"),  filename,
+															   new__symbol(cause, "bug"),       eval_exp))));
+	}
 	if (raw__exception__is_type(cause, eval_exp)) {
 	  printf("\nload eval exception: "); f2__write(cause, fiber, eval_exp); fflush(stdout);
 	  f2__stream__close(cause, stream);

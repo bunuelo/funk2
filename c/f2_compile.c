@@ -1055,6 +1055,13 @@ f2ptr raw__apply_metro(f2ptr simple_cause, f2ptr fiber, f2ptr metro, f2ptr args)
   
   f2ptr value = f2fiber__value(new_fiber, cause);
   f2fiber__keep_undead__set(new_fiber, cause, nil);
+  if (raw__larva__is_type(cause, value)) {
+    return value;
+  }
+  if ((f2__fiber__paused(cause, new_fiber) != nil) &&
+      raw__bug__is_type(cause, value)) {
+    return f2larva__new(cause, 32, value);
+  }
   
   //printf ("\ncompleted apply metro: "); f2__write(fiber, value); fflush(stdout);
   

@@ -1136,7 +1136,13 @@ def_pcfunk2(chunk__read_bit32_signed, chunk, offset, return f2__chunk__read_bit3
 
 def_pcfunk1(demetropolize_once, exp, return f2__demetropolize_once(this_cause, simple_fiber, simple_env, exp));
 
-f2ptr f2__demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp) {return f2cons__cdr(f2__demetropolize_full__with_status(cause, fiber, env, exp), cause);}
+f2ptr f2__demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp) {
+  f2ptr demetropolize_result = f2__demetropolize_full__with_status(cause, fiber, env, exp);
+  if (raw__larva__is_type(cause, demetropolize_result)) {
+    return demetropolize_result;
+  }
+  return f2cons__cdr(demetropolize_result, cause);
+}
 def_pcfunk1(demetropolize_full, exp, return f2__demetropolize_full(this_cause, simple_fiber, simple_env, exp));
 
 def_pcfunk0(this__cause,  return this_cause);
@@ -1151,9 +1157,17 @@ f2ptr f2__exps_demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp
     return f2larva__new(cause, 1, nil);
     //return f2__argument_type_check_failure__exception__new(cause, exp);
   }
+  f2ptr demetropolize_result = f2__demetropolize_full__with_status(cause, fiber, env, f2cons__car(exp, cause));
+  if (raw__larva__is_type(cause, demetropolize_result)) {
+    return demetropolize_result;
+  }
+  f2ptr demetropolize_exps_result = f2__exps_demetropolize_full(cause, fiber, env, f2cons__cdr(exp, cause));
+  if (raw__larva__is_type(cause, demetropolize_exps_result)) {
+    return demetropolize_exps_result;
+  }
   return f2cons__new(cause,
-		     f2cons__cdr(f2__demetropolize_full__with_status(cause, fiber, env, f2cons__car(exp, cause)), cause),
-		     f2__exps_demetropolize_full(cause, fiber, env, f2cons__cdr(exp, cause)));
+		     f2cons__cdr(demetropolize_result, cause),
+		     demetropolize_exps_result);
 }
 
 def_pcfunk1(exps_demetropolize_full, exp,

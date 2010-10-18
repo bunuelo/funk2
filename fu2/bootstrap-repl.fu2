@@ -464,9 +464,10 @@
 
 [defmetro let [varpairs :rest body]
   [define let-vars [mapcar [funk [varpair] [car varpair]] varpairs]]
-  [print `[apply [funk-new_with_name let ,let-vars
-				     @body]
-		 [conslist @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]]
+  this-is-a-bug
+  `[apply [funk-new_with_name let ,let-vars
+			      @body]
+	  [conslist @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]
 
 [defunk terminal_format-thread_unsafe [terminal_print_frame :rest exps]
   [format stdout '\ntftu-debug 0.']

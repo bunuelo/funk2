@@ -848,7 +848,7 @@
 	  body]]
 
 [defmetro with-new-cause [:rest codes]
-  `[let* [[result [prog [print 'wnc-debug 0.0']
+  `[let* [[result [prog [format stdout 'wnc-debug 0.0']
 			`bug]]
 	  [fiber  [fiber [funk-new_with_name with-new-cause []
 					     [print 'wnc-debug 0']

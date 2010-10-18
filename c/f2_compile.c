@@ -919,7 +919,7 @@ f2ptr f2__compile__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boo
       status("found funktional optimization opportunity!");
       f2ptr funk_apply__result = raw__apply_funk(cause, fiber, funkvar_value, f2cons__cdr(exps, cause));
       if (raw__larva__is_type(cause, funk_apply__result)) {
-	return funk_apply_result;
+	return funk_apply__result;
       }
       full_bcs = f2__compile__value__set(cause, funk_apply__result); iter = full_bcs;
     } else {

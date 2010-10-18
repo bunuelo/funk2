@@ -753,7 +753,7 @@
   [let [[terminal_print_frame [get standard-terminal new_copy]]]
     [terminal_print [get standard-terminal new_copy] x]]]
 
-[print [funk [x] [print x]]]
+[format stdout '\nhi: ' [funk [x] [print x]]]
 `[print [mapcar [funk [x] [print x]] [conslist 1 2 3]]]
 
 

@@ -469,7 +469,6 @@
 		 [conslist @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]]
 
 [defunk terminal_format-thread_unsafe [terminal_print_frame :rest exps]
-  [format stdout '\ntftu-debug 0.']
   [if [null terminal_print_frame]
       [prog [format stdout '\ntftu-debug 1.']
 	    [apply &string-format exps]]
@@ -486,7 +485,8 @@
   [format stdout '\nbefore lock.']
   [have [get terminal_print_frame mutex] lock]
   [format stdout '\nafter lock.']
-  [let [[result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]
+  [let [[result [prog [format stdout '\ntf-debug 0']
+		      [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]]
     [format stdout '\nbefore unlock.']
     [have [get terminal_print_frame mutex] unlock]
     [format stdout '\nafter unlock.']

@@ -1529,7 +1529,7 @@ void enter_compile_debug() {
   //printf("\ncompile starting.");
 }
 
-f2ptr   raw__compile(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t *popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
+f2ptr raw__compile(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t *popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
   release__assert(__funk2.compile.raw__compile__symbol != -1, nil, "__funk2.compile.raw__compile__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __funk2.compile.raw__compile__symbol, f2cons__new(simple_cause, exp, nil));
 #ifdef DEBUG_COMPILE

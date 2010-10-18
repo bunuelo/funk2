@@ -1592,7 +1592,10 @@ def_pcfunk2(equals, x, y, return f2__equals(this_cause, x, y));
 
 f2ptr f2__is_funktional(f2ptr cause, f2ptr fiber, f2ptr exp) {
   boolean_t exp__is_funktional = boolean__true;
-  raw__compile(cause, fiber, exp, boolean__false, boolean__false, NULL, &exp__is_funktional, nil, NULL);
+  f2ptr result = raw__compile(cause, fiber, exp, boolean__false, boolean__false, NULL, &exp__is_funktional, nil, NULL);
+  if (raw__larva__is_type(cause, result)) {
+    return result;
+  }
   return f2bool__new(exp__is_funktional);
 }
 def_pcfunk1(is_funktional, exp, return f2__is_funktional(this_cause, simple_fiber, exp));

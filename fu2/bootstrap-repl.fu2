@@ -175,7 +175,8 @@
 
 [defmetro prog [:rest body]
   `[funk-apply [funk-new_with_name prog []
-				   @body] []]]
+				   @body]
+	       nil]]
 
 [defmetro apply [proc args]
   [define debug-apply nil]
@@ -407,9 +408,9 @@
 [defunk mapcar [proc seq]
   [if [null seq]
       nil
-    [prog [define result [apply proc [cons [car seq] nil]]]
+    [prog [define result      [apply proc [cons [car seq] nil]]]
 	  [define cons_result [cons result nil]]
-	  [define iter   cons_result]
+	  [define iter        cons_result]
 	  [mapc [funk [elt]
 		      [define new_cons [cons [apply proc [cons elt nil]] nil]]
 		      [cdr-set iter new_cons]
@@ -461,9 +462,9 @@
 
 [defmetro let [varpairs :rest body]
   [define let-vars [mapcar [funk [varpair] [car varpair]] varpairs]]
-  `[apply [funk-new_with_name let ,let-vars
-			      @body]
-	  [conslist @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]
+  [print `[apply [funk-new_with_name let ,let-vars
+				     @body]
+		 [conslist @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]]
 
 [defunk terminal_format-thread_unsafe [terminal_print_frame :rest exps]
   [if [null terminal_print_frame]
@@ -483,7 +484,7 @@
 
 [defmetro parlet [varpairs :rest body]
   `[let ,[mapcar [funk [varpair]
-		       [let [[var       [first varpair]]
+		       [let [[var       [first  varpair]]
 			     [value_exp [second varpair]]]
 			 `[,var [fiber [funk [] ,value_exp] []]]]]
 		 varpairs]

@@ -38,6 +38,7 @@ struct funk2_object_type__dlfcn_dynamic_library__slot_s {
 
 boolean_t raw__dlfcn__supported();
 f2ptr      f2__dlfcn__supported(f2ptr cause);
+ptr       raw__dlfcn__dlopen_ex(u8* filename, int flag);
 f2ptr     raw__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag);
 f2ptr      f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag);
 u8*       raw__dlfcn__dlerror();

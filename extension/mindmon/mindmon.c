@@ -19,7 +19,7 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#include "../../c/funk2.h"
 
 f2ptr core_extension_initialize(f2ptr cause) {
   printf("\nmindmon: core_extension_initialize here.");

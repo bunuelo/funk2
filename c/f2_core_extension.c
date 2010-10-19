@@ -39,7 +39,7 @@ f2ptr f2__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name, f2pt
   }
   return raw__core_extension_funk__new(cause, filename, name, args, env, is_funktional, documentation);
 }
-def_pcfunk6(core_extension_funk__new, filename, name, args, env, is_funktional, documentation, return f2__core_extension_funk__new(cause, filename, name, args, env, is_funktional, documentation));
+def_pcfunk6(core_extension_funk__new, filename, name, args, env, is_funktional, documentation, return f2__core_extension_funk__new(this_cause, filename, name, args, env, is_funktional, documentation));
 
 
 f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause) {

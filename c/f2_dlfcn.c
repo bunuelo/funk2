@@ -219,10 +219,11 @@ def_pcfunk0(dlfcn__rtld_noload, return f2__dlfcn__rtld_noload(this_cause));
 
 // dlfcn_dynamic_library
 
-def_frame_object__global__1_slot(dlfcn_dynamic_library, pointer);
+def_frame_object__global__2_slot(dlfcn_dynamic_library, pointer, pointer_symbol_hash);
 
 f2ptr f2__dlfcn_dynamic_library__new(f2ptr cause, f2ptr pointer) {
-  return f2dlfcn_dynamic_library__new(cause, pointer);
+  f2ptr pointer_symbol_hash = f2__ptypehash__new(cause);
+  return f2dlfcn_dynamic_library__new(cause, pointer, pointer_symbol_hash);
 }
 
 
@@ -245,8 +246,14 @@ def_pcfunk2(dlfcn_dynamic_library__new_open, filename, flag, return f2__dlfcn_dy
 
 
 f2ptr raw__dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr this, f2ptr symbol) {
-  f2ptr dlfcn_pointer = f2__dlfcn_dynamic_library__pointer(cause, this);
-  return f2__dlfcn__dlsym(cause, dlfcn_pointer, symbol);
+  f2ptr pointer_symbol_hash = f2__dlfcn_dynamic_library__pointer_symbol_hash(cause, this);
+  f2ptr symbol_pointer      = raw__ptypehash__lookup(cause, pointer_symbol_hash, symbol);
+  if (symbol_pointer == nil) {
+    f2ptr dlfcn_pointer = f2__dlfcn_dynamic_library__pointer(cause, this);
+    symbol_pointer      = f2__dlfcn__dlsym(cause, dlfcn_pointer, symbol);
+    raw__ptypehash__add(cause, pointer_symbol_hash, symbol, symbol_pointer);
+  }
+  return symbol_pointer;
 }
 
 f2ptr f2__dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr this, f2ptr symbol) {
@@ -281,10 +288,16 @@ f2ptr f2dlfcn_dynamic_library__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// global dlfcn_dynamic_library pointer ptypehash
+
+
+
 // **
 
 void f2__dlfcn__reinitialize_globalvars() {
-  //f2ptr cause = initial_cause(); //f2_dlfcn_c__cause__new(initial_cause(), nil, nil);
+  f2ptr cause = initial_cause();
+  
+  environment__add_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_pointer_hash-"), f2__ptypehash__new(cause));
   
 }
 
@@ -310,7 +323,7 @@ void f2__dlfcn__initialize() {
   
   // dlfcn_dynamic_library
   
-  init_frame_object__1_slot(dlfcn_dynamic_library, pointer);
+  init_frame_object__2_slot(dlfcn_dynamic_library, pointer, pointer_symbol_hash);
   
   f2__primcfunk__init__2(dlfcn_dynamic_library__new_open, filename, flag, "");
   
@@ -320,6 +333,8 @@ void f2__dlfcn__initialize() {
   {char* symbol_str = "close"; __funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library.close__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(dlfcn_dynamic_library__close, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library.close__funk = never_gc(cfunk);}
   
+  
+  environment__add_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_pointer_hash-"), f2__ptypehash__new(cause));
   
 }
 

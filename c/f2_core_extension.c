@@ -64,7 +64,7 @@ void f2__core_extension__initialize() {
   
   // core_extension_funk
   
-  init_frame_object__6_slot(core_extension_funk, name, args, core_extension, env, is_funktional, documentation);
+  init_frame_object__6_slot(core_extension_funk, filename, name, args, env, is_funktional, documentation);
   
   f2__primcfunk__init__6(core_extension_funk__new, filename, name, args, env, is_funktional, documentation, "");
   

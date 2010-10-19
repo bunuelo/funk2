@@ -239,7 +239,7 @@ f2ptr f2__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr fla
       (flag && (! raw__integer__is_type(cause, flag)))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__dlfcn_dynamic_library__new_copy(cause, filename, flag);
+  return raw__dlfcn_dynamic_library__new_open(cause, filename, flag);
 }
 def_pcfunk2(dlfcn_dynamic_library__new_open, filename, flag, return f2__dlfcn_dynamic_library__new_open(this_cause, filename, flag));
 

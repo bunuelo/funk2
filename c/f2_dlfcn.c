@@ -103,13 +103,13 @@ ptr raw__dlfcn__dlsym(ptr handle, u8* symbol) {
 
 f2ptr f2__dlfcn__dlsym(f2ptr cause, f2ptr handle, f2ptr symbol) {
   if ((! raw__pointer__is_type(cause, handle)) ||
-      (! raw__string__is_type(cause, symbol))) {
+      (! raw__symbol__is_type(cause, symbol))) {
     return f2larva__new(cause, 1, nil);
   }
   ptr raw_handle = f2pointer__p(handle, cause);
-  int symbol__length = f2string__length(symbol, cause);
+  int symbol__length = f2symbol__length(symbol, cause);
   u8* raw_symbol = (u8*)alloca(symbol__length + 1);
-  f2string__str_copy(symbol, cause, raw_symbol);
+  f2symbol__str_copy(symbol, cause, raw_symbol);
   raw_symbol[symbol__length] = 0;
   ptr result = raw__dlfcn__dlsym(raw_handle, raw_symbol);
   if (result == to_ptr(NULL)) {

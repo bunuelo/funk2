@@ -312,11 +312,11 @@ f2ptr raw__dlfcn_dynamic_library_handler__dynamic_library(f2ptr cause, f2ptr thi
     f2ptr dlfcn_dynamic_library_pointer_hash = f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_pointer_hash(cause, this);
     f2ptr already_loaded_dynamic_library     = f2__ptypehash__lookup(cause, dlfcn_dynamic_library_pointer_hash, pointer);
     if (already_loaded_dynamic_library == nil) {
-      f2__ptypehash__add(cause, dlfcn_dynamic_library_pointer_hash,  pointer,  dynamic_library);
-      f2__ptypehash__add(cause, dlfcn_dynamic_library_filename_hash, filename, dynamic_library);
+      f2__ptypehash__add(cause, dlfcn_dynamic_library_pointer_hash, pointer, dynamic_library);
     } else {
       dynamic_library = already_loaded_dynamic_library;
     }
+    f2__ptypehash__add(cause, dlfcn_dynamic_library_filename_hash, filename, dynamic_library);
   }
   return dynamic_library;
 }

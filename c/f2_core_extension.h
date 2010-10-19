@@ -26,8 +26,8 @@
 
 typedef struct funk2_object_type__core_extension_funk__slot_s funk2_object_type__core_extension_funk__slot_t;
 struct funk2_object_type__core_extension_funk__slot_s {
-  f2ptr lookup_symbol__symbol;
-  f2ptr lookup_symbol__funk;
+  f2ptr terminal_print_with_frame__symbol;
+  f2ptr terminal_print_with_frame__funk;
 };
 
 #endif // F2__CORE_EXTENSION__TYPES__H

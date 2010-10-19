@@ -25,6 +25,8 @@
 #include "f2_primfunks.h"
 
 
+f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause);
+
 
 // **
 

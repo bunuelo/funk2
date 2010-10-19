@@ -21,21 +21,30 @@
 
 #include "funk2.h"
 
-// core_extension
-
-def_frame_object__global__3_slot(core_extension, name, dynamic_library, extension_initialize_pointer);
-
-f2ptr f2__core_extension__new(f2ptr cause, f2ptr name, f2ptr dynamic_library, f2ptr extension_initialize_pointer) {
-  return f2core_extension__new(cause, name, dynamic_library, extension_initialize_pointer);
-}
-
-
 // core_extension_funk
 
-def_frame_object__global__6_slot(core_extension_funk, name, args, core_extension, env, is_funktional, documentation);
+def_frame_object__global__6_slot(core_extension_funk, filename, name, args, env, is_funktional, documentation);
 
-f2ptr f2__core_extension_funk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr core_extension, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
-  return f2core_extension_funk__new(cause, name, args, core_extension, env, is_funktional, documentation);
+f2ptr raw__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name, f2ptr args, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
+  return f2core_extension_funk__new(cause, filename, name, args, env, is_funktional, documentation);
+}
+
+f2ptr f2__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name, f2ptr args, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
+  if ((! raw__string__is_type(cause, filename)) ||
+      (! raw__symbol__is_type(cause, name)) ||
+      (args && (! raw__cons__is_type(cause, args))) ||
+      (env && (! raw__environment__is_type(cause, env))) ||
+      (documentation && (! raw__string__is_type(cause, documentation)))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__core_extension_funk__new(cause, filename, name, args, env, is_funktional, documentation);
+}
+def_pcfunk6(core_extension_funk__new, filename, name, args, env, is_funktional, documentation, return f2__core_extension_funk__new(cause, filename, name, args, env, is_funktional, documentation));
+
+
+f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2core_extension_funk__primobject_type__new(cause);
+  return this;
 }
 
 
@@ -53,14 +62,11 @@ void f2__core_extension__initialize() {
   f2__core_extension__reinitialize_globalvars();
   
   
-  // core_extension
-  
-  init_frame_object__3_slot(core_extension, name, dynamic_library, extension_initialize_pointer);
-  
-  
   // core_extension_funk
   
   init_frame_object__6_slot(core_extension_funk, name, args, core_extension, env, is_funktional, documentation);
+  
+  f2__primcfunk__init__6(core_extension_funk__new, filename, name, args, env, is_funktional, documentation, "");
   
 }
 

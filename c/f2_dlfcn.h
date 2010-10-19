@@ -22,12 +22,23 @@
 #ifndef F2__DLFCN__TYPES__H
 #define F2__DLFCN__TYPES__H
 
+// dlfcn_dynamic_library
+
 typedef struct funk2_object_type__dlfcn_dynamic_library__slot_s funk2_object_type__dlfcn_dynamic_library__slot_t;
 struct funk2_object_type__dlfcn_dynamic_library__slot_s {
   f2ptr lookup_symbol__symbol;
   f2ptr lookup_symbol__funk;
   f2ptr close__symbol;
   f2ptr close__funk;
+};
+
+
+// dlfcn_dynamic_library_handler
+
+typedef struct funk2_object_type__dlfcn_dynamic_library_handler__slot_s funk2_object_type__dlfcn_dynamic_library_handler__slot_t;
+struct funk2_object_type__dlfcn_dynamic_library_handler__slot_s {
+  f2ptr dynamic_library__symbol;
+  f2ptr dynamic_library__funk;
 };
 
 

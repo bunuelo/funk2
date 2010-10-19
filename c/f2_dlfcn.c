@@ -318,7 +318,7 @@ f2ptr raw__dlfcn_dynamic_library_handler__dynamic_library(f2ptr cause, f2ptr thi
 
 f2ptr f2__dlfcn_dynamic_library_handler__dynamic_library(f2ptr cause, f2ptr this, f2ptr filename) {
   if ((! raw__dlfcn_dynamic_library_handler__is_type(cause, this)) ||
-      (! raw__string__filename(cause, filename))) {
+      (! raw__string__is_type(cause, filename))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__dlfcn_dynamic_library_handler__dynamic_library(cause, this, filename);

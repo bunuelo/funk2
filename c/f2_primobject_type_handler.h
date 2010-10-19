@@ -51,6 +51,7 @@
 #include "f2_natural_language.h"
 #include "f2_partial_order.h"
 #include "f2_dlfcn.h"
+#include "f2_core_extension.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;

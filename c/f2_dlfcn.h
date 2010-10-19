@@ -84,6 +84,15 @@ f2ptr  f2__dlfcn_dynamic_library__close(        f2ptr cause, f2ptr this);
 
 f2ptr f2dlfcn_dynamic_library__primobject_type__new_aux(f2ptr cause);
 
+
+// dlfcn_dynamic_library_handler
+
+f2ptr  f2__dlfcn_dynamic_library_handler__new(            f2ptr cause);
+f2ptr raw__dlfcn_dynamic_library_handler__dynamic_library(f2ptr cause, f2ptr this, f2ptr filename);
+f2ptr  f2__dlfcn_dynamic_library_handler__dynamic_library(f2ptr cause, f2ptr this, f2ptr filename);
+
+f2ptr f2dlfcn_dynamic_library_handler__primobject_type__new_aux(f2ptr cause);
+
 // **
 
 void f2__dlfcn__reinitialize_globalvars();

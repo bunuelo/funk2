@@ -227,7 +227,7 @@ f2ptr f2__dlfcn_dynamic_library__new(f2ptr cause, f2ptr pointer) {
 
 
 f2ptr raw__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr flag) {
-  f2ptr dlfcn_pointer = f2__dlfcn__open(cause, filename, flag);
+  f2ptr dlfcn_pointer = f2__dlfcn__dlopen(cause, filename, flag);
   if (raw__larva__is_type(cause, dlfcn_pointer)) {
     return dlfcn_pointer;
   }

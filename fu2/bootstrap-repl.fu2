@@ -270,28 +270,19 @@
 [defmetro object-get-funk [this slot_name]
   `[object-slot-type_funk ,this `get slot_name]]
 
-`[defunk object-get [this slot_name :rest args]
-   [apply [object-get-funk this slot_name] [cons this args]]]
-
-[defunk object-get-apply [this slot_name args]
+`[defunk object-get-apply [this slot_name args]
   [apply [object-get-funk this slot_name] [cons this args]]]
 
 [defmetro object-set-funk [this slot_name]
   `[object-slot-type_funk ,this `set slot_name]]
 
-`[defunk object-set [this slot_name :rest args]
-   [apply [object-set-funk this slot_name] [cons this args]]]
-
-[defunk object-set-apply [this slot_name args]
+`[defunk object-set-apply [this slot_name args]
   [apply [object-set-funk this slot_name] [cons this args]]]
 
 [defmetro object-execute-funk [this slot_name]
   `[object-slot-type_funk ,this `execute ,slot_name]]
 
-`[defunk object-execute [this slot_name :rest args]
-   [apply [object-execute-funk this slot_name] args]]
-
-[defunk object-execute-apply [this slot_name args]
+`[defunk object-execute-apply [this slot_name args]
   [apply [object-execute-funk this slot_name] [cons this args]]]
 
 [defmetro object_type-new-funk [name]

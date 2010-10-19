@@ -459,7 +459,8 @@ f2ptr f2__object__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   }
   return result;
 }
-def_pcfunk2_and_rest(object__get, this, slot, args, return f2__object__get(this_cause, this, slot, args));
+def_pcfunk2_and_rest(object__get,        this, slot, args, return f2__object__get(this_cause, this, slot, args));
+def_pcfunk3(         object__get__apply, this, slot, args, return f2__object__get(this_cause, this, slot, args));
 
 f2ptr f2__object__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   f2ptr fiber = f2__this__fiber(cause);
@@ -483,7 +484,8 @@ f2ptr f2__object__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   }
   return result;
 }
-def_pcfunk2_and_rest(object__set, this, slot, args, return f2__object__set(this_cause, this, slot, args));
+def_pcfunk2_and_rest(object__set,        this, slot, args, return f2__object__set(this_cause, this, slot, args));
+def_pcfunk3(         object__set__apply, this, slot, args, return f2__object__set(this_cause, this, slot, args));
 
 f2ptr f2__object__execute(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   f2ptr fiber = f2__this__fiber(cause);
@@ -507,7 +509,8 @@ f2ptr f2__object__execute(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   }
   return result;
 }
-def_pcfunk2_and_rest(object__execute, this, slot, args, return f2__object__execute(this_cause, this, slot, args));
+def_pcfunk2_and_rest(object__execute,        this, slot, args, return f2__object__execute(this_cause, this, slot, args));
+def_pcfunk3(         object__execute__apply, this, slot, args, return f2__object__execute(this_cause, this, slot, args));
 
 f2ptr f2__object__get_0(f2ptr cause, f2ptr this, f2ptr slot) {
   f2ptr fiber = f2__this__fiber(cause);
@@ -707,9 +710,12 @@ void f2__object__initialize() {
   
   f2__string__reinitialize_globalvars();
   
-  f2__primcfunk__init__2_and_rest(object__get,     this, slot, args, "");
-  f2__primcfunk__init__2_and_rest(object__set,     this, slot, args, "");
-  f2__primcfunk__init__2_and_rest(object__execute, this, slot, args, "");
+  f2__primcfunk__init__2_and_rest(object__get,            this, slot, args, "");
+  f2__primcfunk__init__3(         object__get__apply,     this, slot, args, "");
+  f2__primcfunk__init__2_and_rest(object__set,            this, slot, args, "");
+  f2__primcfunk__init__3(         object__set__apply,     this, slot, args, "");
+  f2__primcfunk__init__2_and_rest(object__execute,        this, slot, args, "");
+  f2__primcfunk__init__3(         object__execute__apply, this, slot, args, "");
   
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__eq,                           this, that,      cfunk, 0, "returns whether two objects are eq according to the source object eq function.");        __funk2.object.object__eq__funk                           = never_gc(cfunk);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(object__eq_hash_value,                this,            cfunk, 0, "returns the eq_hash_value of the object.");                                              __funk2.object.object__eq_hash_value__funk                = never_gc(cfunk);}

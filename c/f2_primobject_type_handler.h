@@ -182,6 +182,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__parse_tree_node__slot_t                  primobject_type_parse_tree_node;
   funk2_object_type__parse_tree__slot_t                       primobject_type_parse_tree;
   funk2_object_type__dlfcn_dynamic_library__slot_t            primobject_type_dlfcn_dynamic_library;
+  funk2_object_type__dlfcn_dynamic_library_handler__slot_t    primobject_type_dlfcn_dynamic_library_handler;
 };
 
 // **

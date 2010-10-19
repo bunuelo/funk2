@@ -304,7 +304,7 @@ f2ptr raw__dlfcn_dynamic_library_handler__dynamic_library(f2ptr cause, f2ptr thi
   f2ptr key_filename_hash              = f2__dlfcn_dynamic_library_handler__key_filename_hash(cause, this);
   f2ptr dlfcn_dynamic_library_key_hash = f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_key_hash(cause, this);
   f2ptr dynamic_library                = nil;
-  f2ptr key                            = f2__hash__lookup(cause, pointer_key_hash, filename);
+  f2ptr key                            = f2__hash__lookup(cause, key_filename_hash, filename);
   if (key != nil) {
     dynamic_library = f2__ptypehash__lookup(cause, dlfcn_dynamic_library_key_hash, key);
   }

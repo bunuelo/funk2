@@ -32,7 +32,7 @@ f2ptr f2__core_extension__new(f2ptr cause, f2ptr name, f2ptr dynamic_library, f2
 
 // core_extension_funk
 
-def_frame_object__global__6_slot(core_extension, name, args, core_extension, env, is_funktional, documentation);
+def_frame_object__global__6_slot(core_extension_funk, name, args, core_extension, env, is_funktional, documentation);
 
 f2ptr f2__core_extension_funk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr core_extension, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
   return f2core_extension_funk__new(cause, name, args, core_extension, env, is_funktional, documentation);

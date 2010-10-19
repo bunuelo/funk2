@@ -21,6 +21,14 @@
 
 #include "funk2.h"
 
+// core_extension
+
+def_frame_object__global__3_slot(core_extension, name, dynamic_library, extension_initialize_pointer);
+
+f2ptr f2__core_extension__new(f2ptr cause, f2ptr name, f2ptr dynamic_library, f2ptr extension_initialize_pointer) {
+  return f2core_extension__new(cause, name, dynamic_library, extension_initialize_pointer);
+}
+
 
 // **
 
@@ -33,6 +41,11 @@ void f2__core_extension__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "core_extension", "", &f2__core_extension__reinitialize_globalvars);
   
   f2__core_extension__reinitialize_globalvars();
+  
+  
+  // core_extension
+  
+  init_frame_object__3_slot(core_extension, name, dynamic_library, extension_initialize_pointer);
   
 }
 

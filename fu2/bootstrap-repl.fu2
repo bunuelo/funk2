@@ -178,16 +178,6 @@
 				   @body]
 	       nil]]
 
-`[defmetro apply [proc args]
-  [define debug-apply nil]
-  [if debug-apply
-      `[let [[proc ,proc]
-	     [args [conslist @args]]]
-	 [if proc
-	     [funk-apply proc args]
-	   [error-new `message 'apply error: proc is nil.']]]
-    `[funk-apply ,proc ,args]]]
-
 [defmetro apply [proc args]
    `[funk-apply ,proc ,args]]
 
@@ -198,8 +188,6 @@
 [defmetro metro [args :rest body]
   `[metro-new_with_name metro ,args
 			@body]]
-
-`[exp-format stdout '\ndefining defunk\n']
 
 [defmetro defunk [name args :rest body]
   [exp-format stdout '\nstdout: '] [exp-format stdout `[defunk ,name ,args]]
@@ -213,10 +201,6 @@
      [funk-new_with_name ,name ,args
 			  @body]]]
 
-`[exp-format stdout '\ndone defining defunk\n']
-`[exp-format stdout '\ndefining eval\n']
-
-
 [defunk eval [exp]
   [funk-apply [funk-new [this-env] `eval []
 			[cons exp nil]
@@ -226,17 +210,12 @@
 			nil]
 	      nil]]
 
-`[exp-format stdout '\ndone defining eval\n']
-`[exp-format stdout '\ndefining or\n']
-
 [defmetro or [:rest conds]
   [if [null conds]
       nil
     `[if ,[first conds]
 	 `t
        ,[funk-apply &or [next conds]]]]]
-
-`[exp-format stdout '\ndone defining or\n']
 
 [defmetro and [:rest conds]
   [if [null conds]
@@ -245,22 +224,9 @@
 	 nil
        ,[funk-apply &and [next conds]]]]]
 
-'Now we have defunk, basic logic (and, or), and errors (almost! :-) [exceptions are defined below])!  We can define "safe" type-checked primitive accessors and mutators:'
-
-`[primfunk:load 'fu2/primobjects.fu2']
-
-'primitive accessors and mututators completely defined at this point.'
-
 [defmetro chunk-write_8bit  [x y z] `[chunk-write_8bit_integer  ,x ,y [coerce-to-int ,z]]]
 [defmetro chunk-write_16bit [x y z] `[chunk-write_16bit_integer ,x ,y [coerce-to-int ,z]]]
 [defmetro chunk-write_32bit [x y z] `[chunk-write_32bit_integer ,x ,y [coerce-to-int ,z]]]
-
-`[defmetro car     [x]   `[first     ,x]]
-`[defmetro car-set [x y] `[first-set ,x ,y]]
-`[defmetro cdr     [x]   `[next      ,x]]
-`[defmetro cdr-set [x y] `[next-set  ,x ,y]]
-`[defmetro cir     [x]   `[prev      ,x]]
-`[defmetro cir-set [x y] `[prev-set  ,x ,y]]
 
 [defmetro object_type-type-funk    [name slot_type_name slot_name] `[primobject_type-lookup_slot_type_funk [lookup_type ,name] ,slot_type_name ,slot_name]]
 [defmetro object_type-get-funk     [name slot_name]                `[object_type-type-funk                              ,name  `get            ,slot_name]]
@@ -270,20 +236,11 @@
 [defmetro object-get-funk [this slot_name]
   `[object-slot-type_funk ,this `get slot_name]]
 
-`[defunk object-get-apply [this slot_name args]
-  [apply [object-get-funk this slot_name] [cons this args]]]
-
 [defmetro object-set-funk [this slot_name]
   `[object-slot-type_funk ,this `set slot_name]]
 
-`[defunk object-set-apply [this slot_name args]
-  [apply [object-set-funk this slot_name] [cons this args]]]
-
 [defmetro object-execute-funk [this slot_name]
   `[object-slot-type_funk ,this `execute ,slot_name]]
-
-`[defunk object-execute-apply [this slot_name args]
-  [apply [object-execute-funk this slot_name] [cons this args]]]
 
 [defmetro object_type-new-funk [name]
   `[primobject_type-lookup_slot_type_funk [lookup_type ,name] `execute `new]]
@@ -335,13 +292,6 @@
 
 [defunk wrong_argument_number [] [error-new `bug_type `wrong_number_of_arguments] nil]
 [wrong_argument_number-bcs-set [get &wrong_argument_number body_bytecodes]]
-
-`[defunk conslist [:rest seq]
-   [if [null seq]
-       nil
-     [cons [car seq]
-	   [apply &conslist
-		  [cdr seq]]]]]
 
 [defmetro label [name args :rest body]
   `[define-funk ,name

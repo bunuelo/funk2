@@ -147,7 +147,6 @@
 	      [repl]]]]]
 
 [defunk load1 [filename]
-  [print `[load1 ,filename]]
   [with-new-cause [cause-define cause-name      `load1]
 		  [cause-define source-filename filename]
 		  [let [[file-stream [stream-new_open_file filename [stream-file_mode-rdonly]]]]

@@ -36,7 +36,7 @@ f2ptr f2__dlfcn__supported(f2ptr cause) {
 }
 def_pcfunk0(dlfcn__supported, return f2__dlfcn__supported(this_cause));
 
-ptr raw__dlfcn__dlopen(u8* filename, int flag) {
+ptr raw__dlfcn__dlopen_ex(u8* filename, int flag) {
 #ifdef F2__DLFCN__SUPPORTED
   return to_ptr(dlopen((char*)filename, flag));
 #else
@@ -51,7 +51,7 @@ f2ptr raw__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
   f2string__str_copy(filename, cause, raw_filename);
   raw_filename[filename__length] = 0;
   int raw_flag = flag ? f2integer__i(flag, cause) : (RTLD_LAZY | RTLD_GLOBAL);
-  ptr result = to_ptr(raw__dlfcn__dlopen(raw_filename, raw_flag));
+  ptr result = to_ptr(raw__dlfcn__dlopen_ex(raw_filename, raw_flag));
   if (! result) {
     status("f2__dlfcn__dlopen: failed to load library, \"%s\".", raw_filename);
     char* dlerror_string = raw__dlfcn__dlerror();

@@ -290,7 +290,7 @@ f2ptr f2dlfcn_dynamic_library__primobject_type__new_aux(f2ptr cause) {
 
 // dlfcn_dynamic_library_handler
 
-def_frame_object__global__2_slot(dlfcn_dynamic_library, pointer_filename_hash, dlfcn_dynamic_library_pointer_hash);
+def_frame_object__global__2_slot(dlfcn_dynamic_library_handler, pointer_filename_hash, dlfcn_dynamic_library_pointer_hash);
 
 f2ptr f2__dlfcn_dynamic_library_handler__new(f2ptr cause) {
   f2ptr pointer_filename_hash              = f2__hash(cause);

@@ -19,6 +19,20 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__DLFCN__TYPES__H
+#define F2__DLFCN__TYPES__H
+
+typedef struct funk2_object_type__dlfcn_dynamic_library__slot_s funk2_object_type__dlfcn_dynamic_library__slot_t;
+struct funk2_object_type__dlfcn_dynamic_library__slot_s {
+  f2ptr lookup_symbol__symbol;
+  f2ptr lookup_symbol__funk;
+  f2ptr close__symbol;
+  f2ptr close__funk;
+};
+
+
+#endif // F2__DLFCN__TYPES__H
+
 #ifndef F2__DLFCN__H
 #define F2__DLFCN__H
 
@@ -44,6 +58,19 @@ u64       raw__dlfcn__rtld_nodelete();
 f2ptr      f2__dlfcn__rtld_nodelete(f2ptr cause);
 u64       raw__dlfcn__rtld_noload();
 f2ptr      f2__dlfcn__rtld_noload(f2ptr cause);
+
+
+// dlfcn_dynamic_library
+
+f2ptr  f2__dlfcn_dynamic_library__new(          f2ptr cause, f2ptr pointer);
+f2ptr raw__dlfcn_dynamic_library__new_open(     f2ptr cause, f2ptr filename, f2ptr flag);
+f2ptr  f2__dlfcn_dynamic_library__new_open(     f2ptr cause, f2ptr filename, f2ptr flag);
+f2ptr raw__dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr this, f2ptr symbol);
+f2ptr  f2__dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr this, f2ptr symbol);
+f2ptr raw__dlfcn_dynamic_library__close(        f2ptr cause, f2ptr this);
+f2ptr  f2__dlfcn_dynamic_library__close(        f2ptr cause, f2ptr this);
+
+f2ptr f2dlfcn_dynamic_library__primobject_type__new_aux(f2ptr cause);
 
 // **
 

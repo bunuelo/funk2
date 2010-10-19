@@ -238,6 +238,7 @@ void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_t
   {char* type_name = "verb_word";              funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),              f2verb_word__primobject_type__new_aux(cause));}
   {char* type_name = "parse_tree_node";        funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),        f2parse_tree_node__primobject_type__new_aux(cause));}
   {char* type_name = "parse_tree";             funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),             f2parse_tree__primobject_type__new_aux(cause));}
+  {char* type_name = "dlfcn_dynamic_library";  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),  f2dlfcn_dynamic_library__primobject_type__new_aux(cause));}
 }
 
 // **

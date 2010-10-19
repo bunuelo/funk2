@@ -1,4 +1,4 @@
-'Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2010 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -30,3 +30,9 @@
 [globalize-funk dlfcn-rtld_nodelete &primfunk:dlfcn__rtld_nodelete]
 [globalize-funk dlfcn-rtld_noload   &primfunk:dlfcn__rtld_noload]
 
+
+'dlfcn_dynamic_library'
+
+[globalize-funk dlfcn_dynamic_library-new_open      &primfunk:dlfcn_dynamic_library__new_open]
+[globalize-funk dlfcn_dynamic_library-lookup_symbol &primfunk:dlfcn_dynamic_library__lookup_symbol]
+[globalize-funk dlfcn_dynamic_library-close         &primfunk:dlfcn_dynamic_library__close]

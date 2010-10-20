@@ -186,7 +186,7 @@ export_cefunk1(fibermon_fiber__construct_fast);
 
 
 f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
-  printf("\nfibermon_fiber-redraw_fast here."); fflush(stdout);
+  printf("\nfibermon_fiber-redraw_fast here..."); fflush(stdout);
   f2ptr this__fiber                 = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "fiber"),                 nil); if (! raw__fiber__is_type(cause, this__fiber))        {return f2larva__new(cause, 61, nil);}
   f2ptr this__progress_bar          = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "progress_bar"),          nil); if (! this__progress_bar)                             {return f2larva__new(cause, 62, nil);}
   f2ptr this__menu_bar              = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "menu_bar"),              nil); if (! this__menu_bar)                                 {return f2larva__new(cause, 62, nil);}

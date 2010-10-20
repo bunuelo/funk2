@@ -336,7 +336,7 @@ f2ptr f2__global_dlfcn_dynamic_library(f2ptr cause, f2ptr filename) {
   if (raw__larva__is_type(cause, dlfcn_dynamic_library_handler)) {
     return dlfcn_dynamic_library_handler;
   }
-  if (! raw__dlfcn_dynamic_library__is_type(cause, dlfcn_dynamic_library_handler)) {
+  if (! raw__dlfcn_dynamic_library_handler__is_type(cause, dlfcn_dynamic_library_handler)) {
     return f2larva__new(cause, 1, nil);
   }
   return f2__dlfcn_dynamic_library_handler__dynamic_library(cause, dlfcn_dynamic_library_handler, filename);

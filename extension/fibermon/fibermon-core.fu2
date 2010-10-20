@@ -17,10 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defmetro defcorefunk [global_name filename name args]
-  [print `[defcorefunk ,global_name ,filename ,args]]
-  `[globalize-funk ,global_name [core_extension_funk-new ,filename [quote ,name] [conslist @[mapcar [funk [arg] `[quote ,arg]] args]] nil nil nil]]]
-
 [defcorefunk fibermon-bytes-to_memory_string              'extension/fibermon/.libs/libfibermon.so' fibermon__bytes__to_memory_string             [bytes]]]
 [defcorefunk fibermon-nanoseconds-to_time_string          'extension/fibermon/.libs/libfibermon.so' fibermon__nanoseconds__to_time_string         [nanoseconds]]]
 [defcorefunk fibermon_fiber-construct_fast                'extension/fibermon/.libs/libfibermon.so' fibermon_fiber__construct_fast                [this]]]
@@ -29,13 +25,4 @@
 [defcorefunk fibermon_processor-construct_fast            'extension/fibermon/.libs/libfibermon.so' fibermon_processor__construct_fast            [this]]]
 [defcorefunk fibermon_processor-redraw_fast               'extension/fibermon/.libs/libfibermon.so' fibermon_processor__redraw_fast               [this]]]
 [defcorefunk fibermon_processor-recompute_statistics_fast 'extension/fibermon/.libs/libfibermon.so' fibermon_processor__recompute_statistics_fast [this]]]
-
-`[globalize-funk fibermon-bytes-to_memory_string              &primfunk:fibermon__bytes__to_memory_string]
-`[globalize-funk fibermon-nanoseconds-to_time_string          &primfunk:fibermon__nanoseconds__to_time_string]
-`[globalize-funk fibermon_fiber-construct_fast                &primfunk:fibermon_fiber__construct_fast]
-`[globalize-funk fibermon_fiber-redraw_fast                   &primfunk:fibermon_fiber__redraw_fast]
-`[globalize-funk fibermon_fiber-recompute_statistics_fast     &primfunk:fibermon_fiber__recompute_statistics_fast]
-`[globalize-funk fibermon_processor-construct_fast            &primfunk:fibermon_processor__construct_fast]
-`[globalize-funk fibermon_processor-redraw_fast               &primfunk:fibermon_processor__redraw_fast]
-`[globalize-funk fibermon_processor-recompute_statistics_fast &primfunk:fibermon_processor__recompute_statistics_fast]
 

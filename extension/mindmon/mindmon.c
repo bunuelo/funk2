@@ -21,16 +21,10 @@
 
 #include "../../c/funk2.h"
 
-f2ptr f2__core_extension_initialize(f2ptr cause) {
-  printf("\nmindmon: core_extension_initialize here."); fflush(stdout);
-  return nil;
-}
-
-f2ptr f2__core_extension_destroy(f2ptr cause) {
+f2ptr f2__test_funktion(f2ptr cause) {
   printf("\nmindmon: core_extension_destroy here."); fflush(stdout);
   return nil;
 }
 
-export_cefunk0(core_extension_initialize);
-export_cefunk0(core_extension_destroy);
+export_cefunk0(test_funktion);
 

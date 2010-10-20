@@ -39,6 +39,8 @@ typedef struct funk2_object_type__dlfcn_dynamic_library_handler__slot_s funk2_ob
 struct funk2_object_type__dlfcn_dynamic_library_handler__slot_s {
   f2ptr dynamic_library__symbol;
   f2ptr dynamic_library__funk;
+  f2ptr unload_dynamic_library__symbol;
+  f2ptr unload_dynamic_library__funk;
 };
 
 

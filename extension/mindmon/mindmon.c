@@ -22,7 +22,7 @@
 #include "../../c/funk2.h"
 
 f2ptr f2__core_extension_initialize(f2ptr cause) {
-  printf("\nmindmon: core_extension_initialize here... and how."); fflush(stdout);
+  printf("\nmindmon: core_extension_initialize here."); fflush(stdout);
   return nil;
 }
 

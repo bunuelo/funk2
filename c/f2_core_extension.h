@@ -26,6 +26,12 @@
 
 typedef struct funk2_object_type__core_extension_funk__slot_s funk2_object_type__core_extension_funk__slot_t;
 struct funk2_object_type__core_extension_funk__slot_s {
+  f2ptr pointer__symbol;
+  f2ptr pointer__funk;
+  f2ptr cfunk__symbol;
+  f2ptr cfunk__funk;
+  f2ptr apply__symbol;
+  f2ptr apply__funk;
   f2ptr terminal_print_with_frame__symbol;
   f2ptr terminal_print_with_frame__funk;
 };
@@ -90,6 +96,22 @@ struct funk2_object_type__core_extension_funk__slot_s {
 
 #define def_cefunk4(name, arg1, arg2, arg3, arg4, body)			\
   def_cefunk_define_args(name, 4, def_cefunk_define_arg4_iter(name, arg1, arg2, arg3, arg4), body);
+
+
+#define export_cefunk0(name) def_cefunk0(name, \
+					 return f2__##name(cause));
+
+#define export_cefunk1(name) def_cefunk1(name, arg1, \
+					 return f2__##name(cause, arg1));
+
+#define export_cefunk2(name) def_cefunk2(name, arg1, arg2, \
+					 return f2__##name(cause, arg1, arg2));
+
+#define export_cefunk3(name) def_cefunk3(name, arg1, arg2, arg3, \
+					 return f2__##name(cause, arg1, arg2, arg3));
+
+#define export_cefunk4(name) def_cefunk4(name, arg1, arg2, arg3, arg4,	\
+					 return f2__##name(cause, arg1, arg2, arg3, arg4));
 
 
 f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause);

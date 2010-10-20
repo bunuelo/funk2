@@ -493,7 +493,7 @@ f2ptr f2__global_dlfcn_dynamic_library__unload_changed(f2ptr cause) {
   }
   return f2__dlfcn_dynamic_library_handler__unload_changed(cause, dlfcn_dynamic_library_handler);
 }
-def_pcfunk2(global_dlfcn_dynamic_library__unload_changed, return f2__global_dlfcn_dynamic_library__unload_changed(this_cause));
+def_pcfunk0(global_dlfcn_dynamic_library__unload_changed, return f2__global_dlfcn_dynamic_library__unload_changed(this_cause));
 
 
 f2ptr f2dlfcn_dynamic_library_handler__primobject_type__new_aux(f2ptr cause) {

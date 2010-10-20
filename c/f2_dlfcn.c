@@ -453,7 +453,7 @@ void f2__dlfcn__initialize() {
   
   // dlfcn_dynamic_library
   
-  init_frame_object__2_slot(dlfcn_dynamic_library, pointer, pointer_symbol_hash);
+  init_frame_object__3_slot(dlfcn_dynamic_library, pointer, filename, pointer_symbol_hash);
   
   f2__primcfunk__init__2(dlfcn_dynamic_library__new_open, filename, flag, "");
   

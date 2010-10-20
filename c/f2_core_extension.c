@@ -62,6 +62,9 @@ f2ptr raw__core_extension_funk__cfunk(f2ptr cause, f2ptr this) {
   if (raw__larva__is_type(cause, pointer)) {
     return pointer;
   }
+  if (! raw__pointer__is_type(cause, pointer)) {
+    return f2larva__new(cause, 1, nil);
+  }
   f2ptr name          = f2__core_extension_funk__name(cause, this);
   f2ptr args          = f2__core_extension_funk__args(cause, this);
   f2ptr cfunkptr      = f2pointer__new(cause, raw_executable__to__relative_ptr(f2pointer__p(pointer, cause)));
@@ -84,6 +87,9 @@ f2ptr raw__core_extension_funk__apply(f2ptr cause, f2ptr this, f2ptr args) {
   f2ptr cfunk = raw__core_extension_funk__cfunk(cause, this);
   if (raw__larva__is_type(cause, cfunk)) {
     return cfunk;
+  }
+  if (! raw__cfunk__is_type(cause, cfunk)) {
+    return f2larva__new(cause, 1, nil);
   }
   return f2__cfunk__apply(cause, cfunk, f2__this__fiber(cause), args);
 }

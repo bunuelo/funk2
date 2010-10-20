@@ -68,7 +68,7 @@ f2ptr raw__core_extension_funk__cfunk(f2ptr cause, f2ptr this) {
   f2ptr env           = global_environment();
   f2ptr is_funktional = f2__core_extension_funk__is_funktional(cause, this);
   f2ptr documentation = f2__core_extension_funk__documentation(cause, this);
-  return f2__cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);
+  return f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);
 }
 
 f2ptr f2__core_extension_funk__cfunk(f2ptr cause, f2ptr this) {

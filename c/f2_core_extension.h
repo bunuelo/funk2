@@ -46,21 +46,22 @@ struct funk2_object_type__core_extension_funk__slot_s {
 
 #define def_cefunk_define_args(name, define_correct_arg_num, define_args, body) \
   def_pcfunk__prototype__declare(core_extension_funk__##name) {		\
+    f2ptr cause            = simple_cause;				\
     u64   correct_arg_num  = define_correct_arg_num;			\
     f2ptr simple_args_iter = simple_args;				\
     									\
     define_args;							\
     									\
-    if (simple_args_iter != nil) {return f2__argument_number_check_failure__larva__new(this_cause, new__symbol(this_cause, #name), correct_arg_num, simple_args);} \
+    if (simple_args_iter != nil) {return f2__argument_number_check_failure__larva__new(cause, new__symbol(cause, #name), correct_arg_num, simple_args);} \
     {body;}								\
   }
 
 
 #define def_cefunk_define_arg_iter(name, arg_name)			\
-  if (simple_args_iter == nil) {return f2__argument_number_check_failure__larva__new(this_cause, new__symbol(this_cause, #name), correct_arg_num, simple_args);} \
-  if (! raw__cons__is_type(this_cause, simple_args_iter)) {return f2larva__new(this_cause, 1, nil);} \
-  f2ptr arg_name = f2cons__car(simple_args_iter, this_cause);		\
-  simple_args_iter = f2cons__cdr(simple_args_iter, this_cause)
+  if (simple_args_iter == nil) {return f2__argument_number_check_failure__larva__new(cause, new__symbol(cause, #name), correct_arg_num, simple_args);} \
+  if (! raw__cons__is_type(cause, simple_args_iter)) {return f2larva__new(cause, 1, nil);} \
+  f2ptr arg_name = f2cons__car(simple_args_iter, cause);		\
+  simple_args_iter = f2cons__cdr(simple_args_iter, cause)
 
 
 #define def_cefunk_define_arg0_iter(name)
@@ -99,19 +100,19 @@ struct funk2_object_type__core_extension_funk__slot_s {
 
 
 #define export_cefunk0(name) def_cefunk0(name, \
-					 return f2__##name(this_cause));
+					 return f2__##name(cause));
 
 #define export_cefunk1(name) def_cefunk1(name, arg1, \
-					 return f2__##name(this_cause, arg1));
+					 return f2__##name(cause, arg1));
 
 #define export_cefunk2(name) def_cefunk2(name, arg1, arg2, \
-					 return f2__##name(this_cause, arg1, arg2));
+					 return f2__##name(cause, arg1, arg2));
 
 #define export_cefunk3(name) def_cefunk3(name, arg1, arg2, arg3, \
-					 return f2__##name(this_cause, arg1, arg2, arg3));
+					 return f2__##name(cause, arg1, arg2, arg3));
 
 #define export_cefunk4(name) def_cefunk4(name, arg1, arg2, arg3, arg4,	\
-					 return f2__##name(this_cause, arg1, arg2, arg3, arg4));
+					 return f2__##name(cause, arg1, arg2, arg3, arg4));
 
 
 f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause);

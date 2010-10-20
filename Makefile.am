@@ -206,6 +206,7 @@ img/bootstrap.img: img/bootstrap-repl.img
 ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES = lib/libfunk2.la \
+                  extension/fibermon/libfibermon.la \
                   extension/mindmon/libmindmon.la
 #bin_PROGRAMS    = bin/funk2-static
 
@@ -336,7 +337,8 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
-extension_mindmon_libmindmon_la_SOURCES = extension/mindmon/mindmon.c
+extension_mindmon_libmindmon_la_SOURCES   = extension/mindmon/mindmon.c
+extension_fibermon_libfibermon_la_SOURCES = extension/fibermon/fibermon.c
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 
@@ -362,6 +364,9 @@ lib_libfunk2_la_CFLAGS  = $(cc_flags)
 
 extension_mindmon_libmindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_mindmon_libmindmon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_fibermon_libfibermon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_fibermon_libfibermon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

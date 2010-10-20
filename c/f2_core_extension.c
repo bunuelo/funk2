@@ -23,13 +23,14 @@
 
 // core_extension_funk
 
-def_frame_object__global__6_slot(core_extension_funk, filename, name, args, env, is_funktional, documentation);
+def_frame_object__global__7_slot(core_extension_funk, filename, name, cname, args, env, is_funktional, documentation);
 
 f2ptr raw__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name, f2ptr args, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
-  return f2core_extension_funk__new(cause, filename, name, args, env, is_funktional, documentation);
+  f2ptr cname = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause, new__string(cause, "pcfunk__core_extension__"), f2__symbol__as__string(cause, name))));
+  return f2core_extension_funk__new(cause, filename, name, cname, args, env, is_funktional, documentation);
 }
 
-f2ptr f2__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name, f2ptr args, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
+f2ptr f2__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name, f2ptr cname, f2ptr args, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
   if ((! raw__string__is_type(cause, filename)) ||
       (! raw__symbol__is_type(cause, name)) ||
       (args && (! raw__cons__is_type(cause, args))) ||
@@ -44,8 +45,8 @@ def_pcfunk6(core_extension_funk__new, filename, name, args, env, is_funktional, 
 
 f2ptr raw__core_extension_funk__pointer(f2ptr cause, f2ptr this) {
   f2ptr filename = f2__core_extension_funk__filename(cause, this);
-  f2ptr name     = f2__core_extension_funk__name(    cause, this);
-  return f2__global_dlfcn_dynamic_library__lookup_symbol(cause, filename, name);
+  f2ptr cname    = f2__core_extension_funk__cname(   cause, this);
+  return f2__global_dlfcn_dynamic_library__lookup_symbol(cause, filename, cname);
 }
 
 f2ptr f2__core_extension_funk__pointer(f2ptr cause, f2ptr this) {
@@ -137,6 +138,8 @@ f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.terminal_print_with_frame__funk);}
   return this;
 }
+
+
 
 
 

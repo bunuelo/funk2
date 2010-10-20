@@ -403,7 +403,7 @@ make-install-sh:
 	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                >> install-sh
 	chmod a+x install-sh
 
-bin/funk2$(EXEEXT): $(lib_LTLIBRARIES)
+bin/funk2$(EXEEXT): $(lib_libfunk2_la_LTLIBRARIES)
 	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) -Llib/.libs -lfunk2
 
 install: install-am make-install-sh

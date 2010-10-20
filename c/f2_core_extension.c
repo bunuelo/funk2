@@ -45,7 +45,7 @@ def_pcfunk6(core_extension_funk__new, filename, name, args, env, is_funktional, 
 f2ptr raw__core_extension_funk__pointer(f2ptr cause, f2ptr this) {
   f2ptr filename = f2__core_extension_funk__filename(cause, this);
   f2ptr name     = f2__core_extension_funk__name(    cause, this);
-  return f2__dlfcn_dynamic_library__lookup_symbol(cause, filename, name);
+  return f2__global_dlfcn_dynamic_library__lookup_symbol(cause, filename, name);
 }
 
 f2ptr f2__core_extension_funk__pointer(f2ptr cause, f2ptr this) {

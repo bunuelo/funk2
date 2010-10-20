@@ -331,7 +331,7 @@ f2ptr f2__dlfcn_dynamic_library_handler__dynamic_library(f2ptr cause, f2ptr this
 def_pcfunk2(dlfcn_dynamic_library_handler__dynamic_library, this, filename, return f2__dlfcn_dynamic_library_handler__dynamic_library(this_cause, this, filename));
 
 
-f2ptr f2__dlfcn_dynamic_library(f2ptr cause, f2ptr filename) {
+f2ptr f2__global_dlfcn_dynamic_library(f2ptr cause, f2ptr filename) {
   f2ptr dlfcn_dynamic_library_handler = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"));
   if (raw__larva__is_type(cause, dlfcn_dynamic_library_handler)) {
     return dlfcn_dynamic_library_handler;
@@ -343,8 +343,8 @@ f2ptr f2__dlfcn_dynamic_library(f2ptr cause, f2ptr filename) {
 }
 
 
-f2ptr f2__dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr filename, f2ptr symbol) {
-  f2ptr dlfcn_dynamic_library = f2__dlfcn_dynamic_library(cause, filename);
+f2ptr f2__global_dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr filename, f2ptr symbol) {
+  f2ptr dlfcn_dynamic_library = f2__global_dlfcn_dynamic_library(cause, filename);
   if (raw__larva__is_type(cause, dlfcn_dynamic_library)) {
     return dlfcn_dynamic_library;
   }

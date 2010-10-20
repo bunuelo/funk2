@@ -96,8 +96,8 @@ f2ptr f2dlfcn_dynamic_library_handler__primobject_type__new_aux(f2ptr cause);
 
 // global funktions
 
-f2ptr f2__dlfcn_dynamic_library(f2ptr cause, f2ptr filename);
-f2ptr f2__dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr filename, f2ptr symbol);
+f2ptr f2__global_dlfcn_dynamic_library(f2ptr cause, f2ptr filename);
+f2ptr f2__global_dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr filename, f2ptr symbol);
 
 
 // **

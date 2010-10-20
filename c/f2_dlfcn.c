@@ -332,7 +332,7 @@ def_pcfunk2(dlfcn_dynamic_library_handler__dynamic_library, this, filename, retu
 
 
 f2ptr f2__dlfcn_dynamic_library(f2ptr cause, f2ptr filename) {
-  f2ptr dlfcn_dynamic_library_handler = environment__lookup_type_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"));
+  f2ptr dlfcn_dynamic_library_handler = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"));
   if (raw__larva__is_type(cause, dlfcn_dynamic_library_handler)) {
     return dlfcn_dynamic_library_handler;
   }

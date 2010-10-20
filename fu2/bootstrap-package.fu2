@@ -110,7 +110,7 @@
 				  'built-in/gtk/'
 				  'built-in/natural_language/'
 				  'built-in/simple_graph/'
-				  'built-in/applications/fibermon/'
+				  'extension/fibermon/'
 				  'example/conceptnet/'
 				  'example/divisi2/'
 				  'example/english_language/'

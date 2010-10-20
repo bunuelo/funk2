@@ -19,7 +19,7 @@
 
 [defpackage fibermon
   :packages [math number gtk]
-   :sources ['fibermon-primfunks.fu2'
+   :sources ['fibermon-core.fu2'
 	     'fibermon.fu2']]
 
 [defpackage fibermon1

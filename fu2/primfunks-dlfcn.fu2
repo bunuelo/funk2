@@ -36,3 +36,10 @@
 [globalize-funk dlfcn_dynamic_library-new_open      &primfunk:dlfcn_dynamic_library__new_open]
 [globalize-funk dlfcn_dynamic_library-lookup_symbol &primfunk:dlfcn_dynamic_library__lookup_symbol]
 [globalize-funk dlfcn_dynamic_library-close         &primfunk:dlfcn_dynamic_library__close]
+
+
+'global funktions'
+
+[globalize-funk global_dlfcn_dynamic_library               &primfunk:global_dlfcn_dynamic_library]
+[globalize-funk global_dlfcn_dynamic_library-lookup_symbol &primfunk:global_dlfcn_dynamic_library__lookup_symbol]
+

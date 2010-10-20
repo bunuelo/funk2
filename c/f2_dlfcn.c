@@ -341,6 +341,7 @@ f2ptr f2__global_dlfcn_dynamic_library(f2ptr cause, f2ptr filename) {
   }
   return f2__dlfcn_dynamic_library_handler__dynamic_library(cause, dlfcn_dynamic_library_handler, filename);
 }
+def_pcfunk1(global_dlfcn_dynamic_library, filename, return f2__global_dlfcn_dynamic_library(this_cause, filename));
 
 
 f2ptr f2__global_dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr filename, f2ptr symbol) {
@@ -350,6 +351,7 @@ f2ptr f2__global_dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr filenam
   }
   return raw__dlfcn_dynamic_library__lookup_symbol(cause, dlfcn_dynamic_library, symbol);
 }
+def_pcfunk2(global_dlfcn_dynamic_library__lookup_symbol, filename, symbol, return f2__global_dlfcn_dynamic_library__lookup_symbol(this_cause, filename, symbol));
 
 
 f2ptr f2dlfcn_dynamic_library_handler__primobject_type__new_aux(f2ptr cause) {
@@ -409,6 +411,8 @@ void f2__dlfcn__initialize() {
   {char* symbol_str = "dynamic_library"; __funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library_handler.dynamic_library__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(dlfcn_dynamic_library_handler__dynamic_library, this, filename, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library_handler.dynamic_library__funk = never_gc(cfunk);}
   
+  f2__primcfunk__init__1(global_dlfcn_dynamic_library,                filename,         "");
+  f2__primcfunk__init__2(global_dlfcn_dynamic_library__lookup_symbol, filename, symbol, "");
   
   environment__add_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"), f2__dlfcn_dynamic_library_handler__new(cause));
   

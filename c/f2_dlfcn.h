@@ -30,6 +30,8 @@ struct funk2_object_type__dlfcn_dynamic_library__slot_s {
   f2ptr lookup_symbol__funk;
   f2ptr close__symbol;
   f2ptr close__funk;
+  f2ptr changed_on_disk__symbol;
+  f2ptr changed_on_disk__funk;
 };
 
 
@@ -41,6 +43,8 @@ struct funk2_object_type__dlfcn_dynamic_library_handler__slot_s {
   f2ptr dynamic_library__funk;
   f2ptr unload_dynamic_library__symbol;
   f2ptr unload_dynamic_library__funk;
+  f2ptr unload_changed__symbol;
+  f2ptr unload_changed__funk;
 };
 
 

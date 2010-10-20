@@ -223,7 +223,7 @@ def_frame_object__global__4_slot(dlfcn_dynamic_library, pointer, filename, stat,
 
 f2ptr f2__dlfcn_dynamic_library__new(f2ptr cause, f2ptr pointer, f2ptr filename, f2ptr stat) {
   f2ptr pointer_symbol_hash = f2__ptypehash__new(cause);
-  return f2dlfcn_dynamic_library__new(cause, pointer, filename, pointer_symbol_hash);
+  return f2dlfcn_dynamic_library__new(cause, pointer, filename, stat, pointer_symbol_hash);
 }
 
 

@@ -22,7 +22,7 @@
 #include "../../c/funk2.h"
 
 f2ptr f2__test_funktion(f2ptr cause) {
-  printf("\nmindmon: core_extension_destroy here."); fflush(stdout);
+  printf("\nmindmon: test_funktion here."); fflush(stdout);
   return nil;
 }
 

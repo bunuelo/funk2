@@ -40,6 +40,7 @@ export_cefunk1(fibermon__bytes__to_memory_string);
 
 
 f2ptr f2__fibermon__nanoseconds__to_time_string(f2ptr cause, f2ptr this) {
+  printf("\nhello!\n"); fflush(stdout);
   f2ptr i = object__get_0(cause, this, "as-integer");
   if (! raw__integer__is_type(cause, i)) {
     if (raw__larva__is_type(cause, i)) {
@@ -220,7 +221,7 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  9), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__bytecode_count != nil) ? this__bytecode_count : f2integer__new(cause, 0))),
 																			  new__string(cause, "Bc"))));
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 10), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__bytecodes_per_second != nil) ? this__bytecodes_per_second : f2integer__new(cause, 0))),
-																			  new__string(cause, "Bc/s yaaay!"))));
+																			  new__string(cause, "Bc/s"))));
     
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 11), 1),
 			     f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, ((this__execution_efficiency != nil) ? this__execution_efficiency : f2integer__new(cause, 0)), f2double__new(cause, 100.0))),

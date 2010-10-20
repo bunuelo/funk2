@@ -18,17 +18,17 @@
  rights to redistribute these changes.'
 
 
-[defmetro corefunk [filename name args]
-  `[core_extension_funk-new ,filename [quote ,name] [conslist @[mapcar [funk [arg] `[quote ,arg]] args]] nil nil nil]]
+[defmetro defcorefunk [global_name filename name args]
+  `[globalize-funk ,global_name [core_extension_funk-new ,filename [quote ,name] [conslist @[mapcar [funk [arg] `[quote ,arg]] args]] nil nil nil]]]
 
-[globalize-funk fibermon-bytes-to_memory_string              [corefunk 'extension/fibermon/.libs/libfibermon.so' fibermon__bytes__to_memory_string             [bytes]]]
-[globalize-funk fibermon-nanoseconds-to_time_string          [corefunk 'extension/fibermon/.libs/libfibermon.so' fibermon__nanoseconds__to_time_string         [nanoseconds]]]
-[globalize-funk fibermon_fiber-construct_fast                [corefunk 'extension/fibermon/.libs/libfibermon.so' fibermon_fiber__construct_fast                [this]]]
-[globalize-funk fibermon_fiber-redraw_fast                   [corefunk 'extension/fibermon/.libs/libfibermon.so' fibermon_fiber__redraw_fast                   [this]]]
-[globalize-funk fibermon_fiber-recompute_statistics_fast     [corefunk 'extension/fibermon/.libs/libfibermon.so' fibermon_fiber__recompute_statistics_fast     [this]]]
-[globalize-funk fibermon_processor-construct_fast            [corefunk 'extension/fibermon/.libs/libfibermon.so' fibermon_processor__construct_fast            [this]]]
-[globalize-funk fibermon_processor-redraw_fast               [corefunk 'extension/fibermon/.libs/libfibermon.so' fibermon_processor__redraw_fast               [this]]]
-[globalize-funk fibermon_processor-recompute_statistics_fast [corefunk 'extension/fibermon/.libs/libfibermon.so' fibermon_processor__recompute_statistics_fast [this]]]
+[defcorefunk fibermon-bytes-to_memory_string              'extension/fibermon/.libs/libfibermon.so' fibermon__bytes__to_memory_string             [bytes]]]
+[defcorefunk fibermon-nanoseconds-to_time_string          'extension/fibermon/.libs/libfibermon.so' fibermon__nanoseconds__to_time_string         [nanoseconds]]]
+[defcorefunk fibermon_fiber-construct_fast                'extension/fibermon/.libs/libfibermon.so' fibermon_fiber__construct_fast                [this]]]
+[defcorefunk fibermon_fiber-redraw_fast                   'extension/fibermon/.libs/libfibermon.so' fibermon_fiber__redraw_fast                   [this]]]
+[defcorefunk fibermon_fiber-recompute_statistics_fast     'extension/fibermon/.libs/libfibermon.so' fibermon_fiber__recompute_statistics_fast     [this]]]
+[defcorefunk fibermon_processor-construct_fast            'extension/fibermon/.libs/libfibermon.so' fibermon_processor__construct_fast            [this]]]
+[defcorefunk fibermon_processor-redraw_fast               'extension/fibermon/.libs/libfibermon.so' fibermon_processor__redraw_fast               [this]]]
+[defcorefunk fibermon_processor-recompute_statistics_fast 'extension/fibermon/.libs/libfibermon.so' fibermon_processor__recompute_statistics_fast [this]]]
 
 `[globalize-funk fibermon-bytes-to_memory_string              &primfunk:fibermon__bytes__to_memory_string]
 `[globalize-funk fibermon-nanoseconds-to_time_string          &primfunk:fibermon__nanoseconds__to_time_string]

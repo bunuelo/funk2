@@ -221,7 +221,7 @@
        this]]
 
 [deftypefunk fibermon_fiber get widget []
-  frame]
+ frame]
 
 [deftypefunk fibermon_fiber execute redraw []
   [fibermon_fiber-redraw_fast this]

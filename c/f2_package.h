@@ -85,8 +85,7 @@ declare_primobject_4_slot(package,
 			  source_dependencies
 			  );
 
-f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies) {return f2package__new(cause, pathname, name, package_dependencies, source_dependencies);}
-def_pcfunk4(package__new, pathname, name, package_dependencies, source_dependencies, return f2__package__new(this_cause, pathname, name, package_dependencies, source_dependencies));
+f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies);
 
 f2ptr f2package__primobject_type__new_aux(f2ptr cause);
 

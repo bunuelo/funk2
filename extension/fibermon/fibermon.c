@@ -39,7 +39,6 @@ f2ptr f2__fibermon__bytes__to_memory_string(f2ptr cause, f2ptr this) {
 export_cefunk1(fibermon__bytes__to_memory_string);
 
 
-/*
 f2ptr f2__fibermon__nanoseconds__to_time_string(f2ptr cause, f2ptr this) {
   printf("\nhello!\n"); fflush(stdout);
   f2ptr i = object__get_0(cause, this, "as-integer");
@@ -59,7 +58,7 @@ f2ptr f2__fibermon__nanoseconds__to_time_string(f2ptr cause, f2ptr this) {
   else                                                                   {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i / (24.0 * 60.0 * 60.0 * 1000.0 * 1000.0 * 1000.0))), new__string(cause, "d")));}
 }
 export_cefunk1(fibermon__nanoseconds__to_time_string);
-*/
+
 
 f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   f2ptr this__frame = raw__gtk__frame__new(cause, new__string(cause, "fiber"));

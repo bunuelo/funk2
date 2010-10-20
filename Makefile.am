@@ -212,7 +212,6 @@ lib_LTLIBRARIES = lib/libfunk2.la \
 
 lib_libfunk2_la_SOURCES = \
   c/f2_agent.c \
-  c/f2_application__fibermon.c \
   c/f2_array.c \
   c/f2_ansi.c \
   c/f2_apropos.c \

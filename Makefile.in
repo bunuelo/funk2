@@ -116,6 +116,7 @@ am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_agent.lo \
 	c/lib_libfunk2_la-f2_command_line.lo \
 	c/lib_libfunk2_la-f2_compile.lo \
 	c/lib_libfunk2_la-f2_compile_x86.lo \
+	c/lib_libfunk2_la-f2_core_extension.lo \
 	c/lib_libfunk2_la-f2_cpu.lo c/lib_libfunk2_la-f2_dlfcn.lo \
 	c/lib_libfunk2_la-f2_dptr.lo \
 	c/lib_libfunk2_la-f2_dynamic_memory.lo \
@@ -529,6 +530,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_command_line.c \
   c/f2_compile.c \
   c/f2_compile_x86.c \
+  c/f2_core_extension.c \
   c/f2_cpu.c \
   c/f2_dlfcn.c \
   c/f2_dptr.c \
@@ -786,6 +788,8 @@ c/lib_libfunk2_la-f2_compile.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_compile_x86.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/lib_libfunk2_la-f2_core_extension.lo: c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_cpu.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_dlfcn.lo: c/$(am__dirstamp) \
@@ -1040,6 +1044,8 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_compile.lo
 	-rm -f c/lib_libfunk2_la-f2_compile_x86.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_compile_x86.lo
+	-rm -f c/lib_libfunk2_la-f2_core_extension.$(OBJEXT)
+	-rm -f c/lib_libfunk2_la-f2_core_extension.lo
 	-rm -f c/lib_libfunk2_la-f2_cpu.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_cpu.lo
 	-rm -f c/lib_libfunk2_la-f2_dlfcn.$(OBJEXT)
@@ -1275,6 +1281,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_command_line.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_compile.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_compile_x86.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_core_extension.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_cpu.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_dlfcn.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_dptr.Plo@am__quote@
@@ -1530,6 +1537,14 @@ c/lib_libfunk2_la-f2_compile_x86.lo: c/f2_compile_x86.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_compile_x86.c' object='c/lib_libfunk2_la-f2_compile_x86.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_compile_x86.lo `test -f 'c/f2_compile_x86.c' || echo '$(srcdir)/'`c/f2_compile_x86.c
+
+c/lib_libfunk2_la-f2_core_extension.lo: c/f2_core_extension.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_core_extension.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_core_extension.Tpo -c -o c/lib_libfunk2_la-f2_core_extension.lo `test -f 'c/f2_core_extension.c' || echo '$(srcdir)/'`c/f2_core_extension.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_core_extension.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_core_extension.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_core_extension.c' object='c/lib_libfunk2_la-f2_core_extension.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_core_extension.lo `test -f 'c/f2_core_extension.c' || echo '$(srcdir)/'`c/f2_core_extension.c
 
 c/lib_libfunk2_la-f2_cpu.lo: c/f2_cpu.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_cpu.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_cpu.Tpo -c -o c/lib_libfunk2_la-f2_cpu.lo `test -f 'c/f2_cpu.c' || echo '$(srcdir)/'`c/f2_cpu.c

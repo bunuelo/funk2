@@ -20,13 +20,19 @@
 'now when activating resource, have to set the slots in funk_user the resource. how to?'
 'so how does resource access the mind?  correct?
 
-[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] command`builtin_reactive `physical `open_fridge]
+[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] command `builtin_reactive `physical `move_forward_start]
+
+[have [get [get [get [get isis_world agent_mind `Lauren] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] command `learned_reactive `physical `pick_up 2]
+
+[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `physical] resources ] command `learned_reactive `physical `turn_left_resource 1]
+
+
 
 
 [get [get isis_world agent_mind `Ralph] sense]
 
 
-[defunk loop []
+[defunk loop []de
   [let [[i 10]]
     [while [> i 0]
       [test-step]
@@ -45,6 +51,17 @@
 
 '
 
+[defunk demo_pickup [object_name]
+  [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
+	command `learned_reactive `physical `look_for object_name]
+  [while [null [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `physical] 
+			  resource `look_for] lookup `my_current_object]]
+    [sleep 3]]
+  [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
+	command `learned_reactive `physical `pick_up_with_left_hand 
+	[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `physical] 
+		   resource `look_for] lookup `my_current_object]]]
+
 
 
 [defunk list-contains_substring [sequence subexp]
@@ -61,6 +78,7 @@
        [construct resource `turn_right
 		  [funk [steps]
 			[let* [[body  [get this body]]
+			       [mind  [get body mind]]
 			       [name  [get body name]]]
 			  [have this-resource think_to_self 'Turning right is starting.']
 			  [mind-wait_to_activate mind builtin_reactive physical turn_right_start]
@@ -75,7 +93,9 @@
        [construct resource `turn_left
 		  [funk [steps]
 			[let* [[body  [get this body]]
+			       [mind  [get body mind]]
 			       [name  [get body name]]]
+			  [print [type mind]]
 			  [have this-resource think_to_self 'Turning left is starting.']
 			  [mind-wait_to_activate mind builtin_reactive physical turn_left_start]
 			  [let [[starting_time [get body time_step]]]
@@ -91,6 +111,7 @@
 			
 			[print this]
 			[let* [[body  [get this body]]
+			       [mind  [get body mind]]
 			       [name  [get body name]]]
 			  [have this-resource think_to_self 'Moving forward is starting.']
 			  [mind-wait_to_activate mind builtin_reactive physical move_forward_start]
@@ -108,6 +129,7 @@
 		  [funk [steps]
 			[print 'reached move_backward']
 			[let* [[body [get this body]]
+			       [mind  [get body mind]]
 			      [name  [get body name]]]
 			  [have this-resource think_to_self 'moving backward is starting.']
 			  [mind-wait_to_activate mind builtin_reactive physical move_backward_start]
@@ -122,6 +144,7 @@
        [construct resource `drop_from_left_hand
 		  [funk []
 			[let* [[body [get this body]]
+			       [mind  [get body mind]]
 			      [name  [get body name]]]
 			  [have this-resource think_to_self 'Droping from right hand is starting.']
 			  [mind-wait_to_activate mind builtin_reactive physical drop_from_left_hand]]]]
@@ -133,6 +156,7 @@
        [construct resource `drop_from_right_hand
 		  [funk []
 			[let* [[body [get this body]]
+			       [mind  [get body mind]]
 			      [name  [get body name]]
 			      ]
 			  [have this-resource think_to_self 'Droping from right hand is starting.']
@@ -167,6 +191,7 @@
 			  [get mind sense]]]]
        
        nil]]
+
 
 [deframe pick_up_with_left_hand_resource [resource] []
   [new []
@@ -211,7 +236,7 @@
 			  [print 'now']
 			  [mind-wait_to_activate mind learned_reactive physical look_for `fridge]
 			  [print 'now1']
-			  [let[[ fridge [have look_for lookup `my_current_object]]]
+			  [let[[ fridge [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `physical] resources `look_for_resource] lookup `my_current_object]]]
 			    [print 'ha']
 			    
 			    [if [get mind objects]

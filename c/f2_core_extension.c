@@ -30,7 +30,7 @@ f2ptr raw__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name, f2p
   return f2core_extension_funk__new(cause, filename, name, cname, args, env, is_funktional, documentation);
 }
 
-f2ptr f2__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name, f2ptr cname, f2ptr args, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
+f2ptr f2__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name, f2ptr args, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
   if ((! raw__string__is_type(cause, filename)) ||
       (! raw__symbol__is_type(cause, name)) ||
       (args && (! raw__cons__is_type(cause, args))) ||

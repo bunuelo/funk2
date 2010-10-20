@@ -80,7 +80,7 @@ f2ptr      f2__dlfcn__rtld_noload(f2ptr cause);
 
 // dlfcn_dynamic_library
 
-f2ptr  f2__dlfcn_dynamic_library__new(          f2ptr cause, f2ptr pointer, f2ptr filename);
+f2ptr  f2__dlfcn_dynamic_library__new(          f2ptr cause, f2ptr pointer, f2ptr filename, f2ptr stat);
 f2ptr raw__dlfcn_dynamic_library__new_open(     f2ptr cause, f2ptr filename, f2ptr flag);
 f2ptr  f2__dlfcn_dynamic_library__new_open(     f2ptr cause, f2ptr filename, f2ptr flag);
 f2ptr raw__dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr this, f2ptr symbol);

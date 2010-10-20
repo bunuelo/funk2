@@ -51,16 +51,16 @@ struct funk2_object_type__core_extension_funk__slot_s {
     									\
     define_args;							\
     									\
-    if (simple_args_iter != nil) {return f2__argument_number_check_failure__larva__new(cause, new__symbol(cause, #name), correct_arg_num, simple_args);} \
+    if (simple_args_iter != nil) {return f2__argument_number_check_failure__larva__new(this_cause, new__symbol(this_cause, #name), correct_arg_num, simple_args);} \
     {body;}								\
   }
 
 
 #define def_cefunk_define_arg_iter(name, arg_name)			\
-  if (simple_args_iter == nil) {return f2__argument_number_check_failure__larva__new(cause, new__symbol(cause, #name), correct_arg_num, simple_args);} \
-  if (! raw__cons__is_type(cause, simple_args_iter)) {return f2larva__new(cause, 1, nil);} \
-  f2ptr arg_name = f2cons__car(simple_args_iter, cause);		\
-  simple_args_iter = f2cons__cdr(simple_args_iter, cause)
+  if (simple_args_iter == nil) {return f2__argument_number_check_failure__larva__new(this_cause, new__symbol(this_cause, #name), correct_arg_num, simple_args);} \
+  if (! raw__cons__is_type(this_cause, simple_args_iter)) {return f2larva__new(this_cause, 1, nil);} \
+  f2ptr arg_name = f2cons__car(simple_args_iter, this_cause);		\
+  simple_args_iter = f2cons__cdr(simple_args_iter, this_cause)
 
 
 #define def_cefunk_define_arg0_iter(name)

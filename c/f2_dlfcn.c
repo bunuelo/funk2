@@ -416,7 +416,8 @@ def_pcfunk2(global_dlfcn_dynamic_library__lookup_symbol, filename, symbol, retur
 
 f2ptr f2dlfcn_dynamic_library_handler__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2dlfcn_dynamic_library__primobject_type__new(cause);
-  {char* slot_name = "dynamic_library"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library_handler.dynamic_library__funk);}
+  {char* slot_name = "dynamic_library";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library_handler.dynamic_library__funk);}
+  {char* slot_name = "unload_dynamic_library"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library_handler.unload_dynamic_library__funk);}
   return this;
 }
 

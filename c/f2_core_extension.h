@@ -115,6 +115,8 @@ struct funk2_object_type__core_extension_funk__slot_s {
 					 return f2__##name(cause, arg1, arg2, arg3, arg4));
 
 
+declare_frame_object_6_slot(core_extension_funk, filename, name, args, env, is_funktional, documentation);
+
 f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause);
 
 

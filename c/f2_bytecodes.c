@@ -328,6 +328,29 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     f2ptr value = f2__cfunk__apply(cause, funktion, fiber, args);
     f2fiber__value__set(fiber, cause, value);
     return raw__cause__call_all_endfunks(nil, cause, fiber, bytecode, funktion);
+  } else if (raw__core_extension_funk__is_type(cause, funktion)) {
+#ifdef DEBUG_BYTECODES
+    {
+      f2ptr name = f2__core_extension_funk__name(funktion, cause);
+      u8*   str;
+      if (raw__symbol__is_type(cause, name)) {
+	u64 str_len = f2symbol__length(name, cause);
+	str = (u8*)alloca(str_len + 1);
+	raw__symbol__str_copy(cause, name, str);
+	str[str_len] = 0;
+      } else {
+	str = (u8*)alloca(strlen("<none>") + 1);
+	strcpy((char*)str, "<none>");
+      }
+      bytecode_status("executing core_extension_funk name=|%s|", str);
+    }
+#endif // DEBUG_BYTECODES
+    f2ptr args = f2fiber__args(fiber, cause);
+    //trace2(bytecode__jump_funk, funktion, args);
+    release__assert(!args || raw__cons__is_type(cause, args), fiber, "args failed args type assertion.");
+    f2ptr value = f2__core_extension_funk__apply(cause, funktion, args);
+    f2fiber__value__set(fiber, cause, value);
+    return raw__cause__call_all_endfunks(nil, cause, fiber, bytecode, funktion);
   } else if (raw__metro__is_type(cause, funktion)) {
 #ifdef DEBUG_BYTECODES
     {

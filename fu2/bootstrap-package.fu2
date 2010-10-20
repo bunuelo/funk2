@@ -110,7 +110,7 @@
 				  'built-in/gtk/'
 				  'built-in/natural_language/'
 				  'built-in/simple_graph/'
-				  'built-in/applications/fibermon/'
+				  'extension/fibermon/'
 				  'example/conceptnet/'
 				  'example/divisi2/'
 				  'example/english_language/'
@@ -214,7 +214,8 @@
 	package_was_loaded]]]
 
 [defmetro require [:rest names]
-  `[prog @[mapcar [funk [name]
+  `[prog [global_dlfcn_dynamic_library-unload_changed]
+	 @[mapcar [funk [name]
 			`[package-load_if_modified [quote ,name]]]
 		  names]]]
 

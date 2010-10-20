@@ -90,7 +90,6 @@ void f2__initialize() {
   f2__ptypes__initialize__object_slots();
   f2__blocks_world__initialize();
   f2__primobject__dynamic_library__initialize();
-  f2__dlfcn__initialize();
   f2__gmodule__initialize();
   f2__string__initialize();
   f2__print__initialize();
@@ -109,6 +108,7 @@ void f2__initialize() {
   f2__agent__initialize();
   f2__object_lattice__initialize();
   f2__primobject_hash__initialize();
+  f2__dlfcn__initialize();
   f2__cause__initialize();
   f2__zlib__initialize();
   f2__cpu__initialize();
@@ -127,7 +127,6 @@ void f2__initialize() {
   f2__graph_cluster__initialize();
   f2__graph_match_error_correcting__initialize();
   f2__gtk__initialize();
-  f2__application__fibermon__initialize();
   f2__terminal_print__initialize();
   f2__nil__initialize();
   f2__knowledge__initialize();

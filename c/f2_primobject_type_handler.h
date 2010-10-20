@@ -50,6 +50,8 @@
 #include "f2_knowledge.h"
 #include "f2_natural_language.h"
 #include "f2_partial_order.h"
+#include "f2_dlfcn.h"
+#include "f2_core_extension.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;
@@ -180,6 +182,9 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__verb_word__slot_t                        primobject_type_verb_word;
   funk2_object_type__parse_tree_node__slot_t                  primobject_type_parse_tree_node;
   funk2_object_type__parse_tree__slot_t                       primobject_type_parse_tree;
+  funk2_object_type__dlfcn_dynamic_library__slot_t            primobject_type_dlfcn_dynamic_library;
+  funk2_object_type__dlfcn_dynamic_library_handler__slot_t    primobject_type_dlfcn_dynamic_library_handler;
+  funk2_object_type__core_extension_funk__slot_t              primobject_type_core_extension_funk;
 };
 
 // **

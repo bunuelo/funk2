@@ -17,12 +17,5 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage fibermon
-  :packages [math number gtk]
-   :sources ['fibermon-primfunks.fu2'
-	     'fibermon.fu2']]
-
-[defpackage fibermon1
-  :packages [math number gtk]
-   :sources ['fibermon1.fu2']]
+[globalize-funk core_extension_funk-new &primfunk:core_extension_funk__new]
 

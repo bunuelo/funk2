@@ -19,12 +19,44 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__DLFCN__TYPES__H
+#define F2__DLFCN__TYPES__H
+
+// dlfcn_dynamic_library
+
+typedef struct funk2_object_type__dlfcn_dynamic_library__slot_s funk2_object_type__dlfcn_dynamic_library__slot_t;
+struct funk2_object_type__dlfcn_dynamic_library__slot_s {
+  f2ptr lookup_symbol__symbol;
+  f2ptr lookup_symbol__funk;
+  f2ptr close__symbol;
+  f2ptr close__funk;
+  f2ptr changed_on_disk__symbol;
+  f2ptr changed_on_disk__funk;
+};
+
+
+// dlfcn_dynamic_library_handler
+
+typedef struct funk2_object_type__dlfcn_dynamic_library_handler__slot_s funk2_object_type__dlfcn_dynamic_library_handler__slot_t;
+struct funk2_object_type__dlfcn_dynamic_library_handler__slot_s {
+  f2ptr dynamic_library__symbol;
+  f2ptr dynamic_library__funk;
+  f2ptr unload_dynamic_library__symbol;
+  f2ptr unload_dynamic_library__funk;
+  f2ptr unload_changed__symbol;
+  f2ptr unload_changed__funk;
+};
+
+
+#endif // F2__DLFCN__TYPES__H
+
 #ifndef F2__DLFCN__H
 #define F2__DLFCN__H
 
 boolean_t raw__dlfcn__supported();
 f2ptr      f2__dlfcn__supported(f2ptr cause);
-ptr       raw__dlfcn__dlopen(u8* filename, int flag);
+ptr       raw__dlfcn__dlopen_ex(u8* filename, int flag);
+f2ptr     raw__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag);
 f2ptr      f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag);
 u8*       raw__dlfcn__dlerror();
 f2ptr      f2__dlfcn__dlerror(f2ptr cause);
@@ -44,6 +76,35 @@ u64       raw__dlfcn__rtld_nodelete();
 f2ptr      f2__dlfcn__rtld_nodelete(f2ptr cause);
 u64       raw__dlfcn__rtld_noload();
 f2ptr      f2__dlfcn__rtld_noload(f2ptr cause);
+
+
+// dlfcn_dynamic_library
+
+f2ptr  f2__dlfcn_dynamic_library__new(          f2ptr cause, f2ptr pointer, f2ptr filename, f2ptr stat);
+f2ptr raw__dlfcn_dynamic_library__new_open(     f2ptr cause, f2ptr filename, f2ptr flag);
+f2ptr  f2__dlfcn_dynamic_library__new_open(     f2ptr cause, f2ptr filename, f2ptr flag);
+f2ptr raw__dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr this, f2ptr symbol);
+f2ptr  f2__dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr this, f2ptr symbol);
+f2ptr raw__dlfcn_dynamic_library__close(        f2ptr cause, f2ptr this);
+f2ptr  f2__dlfcn_dynamic_library__close(        f2ptr cause, f2ptr this);
+
+f2ptr f2dlfcn_dynamic_library__primobject_type__new_aux(f2ptr cause);
+
+
+// dlfcn_dynamic_library_handler
+
+f2ptr  f2__dlfcn_dynamic_library_handler__new(            f2ptr cause);
+f2ptr raw__dlfcn_dynamic_library_handler__dynamic_library(f2ptr cause, f2ptr this, f2ptr filename);
+f2ptr  f2__dlfcn_dynamic_library_handler__dynamic_library(f2ptr cause, f2ptr this, f2ptr filename);
+
+f2ptr f2dlfcn_dynamic_library_handler__primobject_type__new_aux(f2ptr cause);
+
+
+// global funktions
+
+f2ptr f2__global_dlfcn_dynamic_library(f2ptr cause, f2ptr filename);
+f2ptr f2__global_dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr filename, f2ptr symbol);
+
 
 // **
 

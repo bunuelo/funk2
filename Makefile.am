@@ -205,12 +205,13 @@ img/bootstrap.img: img/bootstrap-repl.img
 
 ACLOCAL_AMFLAGS = -I m4
 
-lib_LTLIBRARIES = lib/libfunk2.la
+lib_LTLIBRARIES = lib/libfunk2.la \
+                  extension/fibermon/libfibermon.la \
+                  extension/mindmon/libmindmon.la
 #bin_PROGRAMS    = bin/funk2-static
 
 lib_libfunk2_la_SOURCES = \
   c/f2_agent.c \
-  c/f2_application__fibermon.c \
   c/f2_array.c \
   c/f2_ansi.c \
   c/f2_apropos.c \
@@ -335,6 +336,9 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
+extension_mindmon_libmindmon_la_SOURCES   = extension/mindmon/mindmon.c
+extension_fibermon_libfibermon_la_SOURCES = extension/fibermon/fibermon.c
+
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 
 FUNK2_VERSION=`cat version`
@@ -356,6 +360,12 @@ FUNK2_LIBRARY_VERSION=0:0:0
 
 lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS)
 lib_libfunk2_la_CFLAGS  = $(cc_flags)
+
+extension_mindmon_libmindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_mindmon_libmindmon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_fibermon_libfibermon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_fibermon_libfibermon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -397,7 +407,7 @@ make-install-sh:
 	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                >> install-sh
 	chmod a+x install-sh
 
-bin/funk2$(EXEEXT): $(lib_LTLIBRARIES)
+bin/funk2$(EXEEXT): lib/libfunk2.la
 	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) -Llib/.libs -lfunk2
 
 install: install-am make-install-sh

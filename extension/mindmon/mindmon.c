@@ -19,14 +19,12 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__APPLICATION__FIBERMON__H
-#define F2__APPLICATION__FIBERMON__H
+#include "../../c/funk2.h"
 
-#include "f2_primfunks.h"
+f2ptr f2__test_funktion(f2ptr cause) {
+  printf("\nmindmon: test_funktion here."); fflush(stdout);
+  return nil;
+}
 
-// **
-
-void f2__application__fibermon__initialize();
-
-#endif // F2__APPLICATION__FIBERMON__H
+export_cefunk0(test_funktion);
 

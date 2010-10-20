@@ -38,6 +38,60 @@ struct funk2_object_type__core_extension_funk__slot_s {
 #include "f2_primfunks.h"
 
 
+#define def_cefunk_define_args(name, define_correct_arg_num, define_args, body) \
+  f2ptr core_extension_funk__##name(f2ptr cause, f2ptr simple_args) {	\
+    u64   correct_arg_num  = define_correct_arg_num;			\
+    f2ptr simple_args_iter = simple_args;				\
+    									\
+    define_args;							\
+    									\
+    if (simple_args_iter != nil) {return f2__argument_number_check_failure__larva__new(cause, new__symbol(cause, #name), correct_arg_num, simple_args);} \
+    {body;}								\
+  }
+
+
+#define def_cefunk_define_arg_iter(name, arg_name)			\
+  if (simple_args_iter == nil) {return f2__argument_number_check_failure__larva__new(cause, new__symbol(cause, #name), correct_arg_num, simple_args);} \
+  if (! raw__cons__is_type(cause, simple_args_iter)) {return f2larva__new(cause, 1, nil);} \
+  f2ptr arg_name = f2cons__car(simple_args_iter, cause);			\
+  simple_args_iter = f2cons__cdr(simple_args_iter, cause)
+
+
+#define def_cefunk_define_arg0_iter(name)
+
+#define def_cefunk_define_arg1_iter(name, arg1) \
+  def_cefunk_define_arg0_iter(name);		\
+  def_cefunk_define_arg_iter(name, arg1)
+
+#define def_cefunk_define_arg2_iter(name, arg1, arg2)	\
+  def_cefunk_define_arg1_iter(name, arg1);		\
+  def_cefunk_define_arg_iter(name, arg2)
+
+#define def_cefunk_define_arg3_iter(name, arg1, arg2, arg3)	\
+  def_cefunk_define_arg2_iter(name, arg1, arg2);		\
+  def_cefunk_define_arg_iter(name, arg3)
+
+#define def_cefunk_define_arg4_iter(name, arg1, arg2, arg3, arg4)	\
+  def_cefunk_define_arg3_iter(name, arg1, arg2, arg3);			\
+  def_cefunk_define_arg_iter(name, arg4)
+
+
+#define def_cefunk0(name, body)						\
+  def_cefunk_define_args(name, 0, def_cefunk_define_arg0_iter(name), body);
+
+#define def_cefunk1(name, arg1, body)					\
+  def_cefunk_define_args(name, 1, def_cefunk_define_arg1_iter(name, arg1), body);
+
+#define def_cefunk2(name, arg1, arg2, body)				\
+  def_cefunk_define_args(name, 2, def_cefunk_define_arg2_iter(name, arg1, arg2), body);
+
+#define def_cefunk3(name, arg1, arg2, arg3, body)			\
+  def_cefunk_define_args(name, 3, def_cefunk_define_arg3_iter(name, arg1, arg2, arg3), body);
+
+#define def_cefunk4(name, arg1, arg2, arg3, arg4, body)			\
+  def_cefunk_define_args(name, 4, def_cefunk_define_arg4_iter(name, arg1, arg2, arg3, arg4), body);
+
+
 f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause);
 
 

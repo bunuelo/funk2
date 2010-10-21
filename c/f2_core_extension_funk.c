@@ -61,6 +61,7 @@ f2ptr f2__core_extension_funk__filename(f2ptr cause, f2ptr this) {
   }
   return raw__core_extension_funk__filename(cause, this);
 }
+def_pcfunk1(core_extension_funk__filename, this, return f2__core_extension_funk__filename(this_cause, this));
 
 
 f2ptr raw__core_extension_funk__pointer(f2ptr cause, f2ptr this) {

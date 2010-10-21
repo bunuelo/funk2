@@ -383,7 +383,7 @@ void f2__core_extension_funk__initialize() {
   
   // core_extension_funk
   
-  init_frame_object__6_slot(core_extension_funk, filename, name, cname, args_cname, is_funktional_cname, documentation_cname);
+  init_frame_object__6_slot(core_extension_funk, core_extension_name, name, cname, args_cname, is_funktional_cname, documentation_cname);
   
   f2__primcfunk__init__2(core_extension_funk__new, filename, name, "");
   

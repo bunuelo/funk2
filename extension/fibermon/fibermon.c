@@ -36,7 +36,7 @@ f2ptr f2__fibermon__bytes__to_memory_string(f2ptr cause, f2ptr this) {
   else if (i__i < (1024ull * 1024ull * 1024ull * 1024ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i /          (1024.0 * 1024.0 * 1024.0))), new__string(cause, "G")));}
   else                                                     {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i / (1024.0 * 1024.0 * 1024.0 * 1024.0))), new__string(cause, "T")));}
 }
-export_cefunk1(fibermon__bytes__to_memory_string, this, 0, "Hello dude.");
+export_cefunk1(fibermon__bytes__to_memory_string, this, 0, "");
 
 
 f2ptr f2__fibermon__nanoseconds__to_time_string(f2ptr cause, f2ptr this) {

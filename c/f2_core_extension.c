@@ -55,7 +55,7 @@ f2ptr raw__core_extension_handler__new(f2ptr cause) {
 }
 
 f2ptr f2__core_extension_handler__new(f2ptr cause) {
-  return raw__core_extension__new(cause);
+  return raw__core_extension_handler__new(cause);
 }
 def_pcfunk0(core_extension_handler__new, return f2__core_extension_handler__new(this_cause));
 

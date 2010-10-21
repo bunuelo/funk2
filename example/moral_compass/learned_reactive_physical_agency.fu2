@@ -20,46 +20,34 @@
 'now when activating resource, have to set the slots in funk_user the resource. how to?'
 'so how does resource access the mind?  correct?
 
-[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] command `builtin_reactive `physical `move_forward_start]
+[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
+command `builtin_reactive `physical `move_forward_start]
 
-[have [get [get [get [get isis_world agent_mind `Lauren] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] command `learned_reactive `physical `pick_up 2]
+[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] command 
+`learned_reactive `physical `walk_directly_towards_resource `table+168137028]
 
 [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `physical] resources ] command `learned_reactive `physical `turn_left_resource 1]
 
 
 
+[have [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] resources] lookup `walk_directly_towards_resource]
 
-[get [get isis_world agent_mind `Ralph] sense]
+ODD: =.= walk_directly_towards resource has "resource" in its name =.=
 
-
-[defunk loop []de
-  [let [[i 10]]
-    [while [> i 0]
-      [test-step]
-      [sleep 5]
-      [= i [- i 1]]]]]
-[defunk play []
-  [globalize switch t]
-  [while switch
-    [test-mini]
-    [sleep 2]]]
-
-[defunk pause []
-  [globalize switch nil]]
-  
-[pause]
+nextstep: test pick up : now left hand call the walk_directly_towards_resource however it is named wrongly. 
+right hand calls name walk_directly_towards.
 
 '
 
 [defunk demo_pickup [object_name]
   [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
 	command `learned_reactive `physical `look_for object_name]
-  [while [null [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `physical] 
+  [while [null [have [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] 
 			  resource `look_for] lookup `my_current_object]]
     [sleep 3]]
   [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
 	command `learned_reactive `physical `pick_up_with_left_hand 
-	[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `physical] 
+	[have [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] 
 		   resource `look_for] lookup `my_current_object]]]
 
 
@@ -176,7 +164,7 @@
 			  [if [get this mind objects]
 			      [if [have [get mind objects] lookup target]
 				  [if [> [get [get this body] arm_length] [have [have [get mind objects] lookup target] lookup `distance]]
-				      [if [null [have [get sensory learned_reactive_sensory_sense] lookup `right_hand]]
+				      [if [null [have [get mind sense] lookup `right_hand]]
 					  [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]
 					[mind-wait_to_activate mind learned_reactive physical drop_from_right_hand]]
 				    [prog 
@@ -206,17 +194,17 @@
 			  [if [get mind objects]
 			      [if [have [get mind objects] lookup target]
 				  [if [> [get [get this body] arm_length] [have [have [get mind objects] lookup target]lookup  `distance]]
-				      [if [null [have [get sensory learned_reactive_sensory_sense] lookup `left_hand]]
+				      [if [null [have [get mind sense] lookup `left_hand]]
 					  [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]
 					[mind-wait_to_activate mind learned_reactive physical drop_from_left_hand]]
 				    [prog 
-				     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
+				     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards_resource target]
 				     [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]]]
 				[prog 
-				 [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
-				 [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]]]
+				 [mind-wait_to_activate mind learned_reactive physical walk_directly_towards_resource target]
+[				 [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]]]
 			    [prog 
-			     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
+			     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards_resource target]
 			     [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]]]
 			  [get mind sense]]]]
 		  
@@ -236,7 +224,7 @@
 			  [print 'now']
 			  [mind-wait_to_activate mind learned_reactive physical look_for `fridge]
 			  [print 'now1']
-			  [let[[ fridge [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `physical] resources `look_for_resource] lookup `my_current_object]]]
+			  [let[[ fridge [have [get [get [get mind layer `builtin_reactive] agency `physical] resource `look_for_resource] lookup `my_current_object]]]
 			    [print 'ha']
 			    
 			    [if [get mind objects]
@@ -338,7 +326,7 @@
 
 [deframe walk_directly_towards_resource [resource] []
   [new []
-       [construct resource `walk_directly_towards_resource
+       [construct resource `walk_directly_towards
 		  [funk [desired_object]
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]

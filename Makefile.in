@@ -101,10 +101,29 @@ am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-lib_libfunk2_la_LIBADD =
+extension_fibermon_libfibermon_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
+am_extension_fibermon_libfibermon_la_OBJECTS = extension/fibermon/extension_fibermon_libfibermon_la-fibermon.lo
+extension_fibermon_libfibermon_la_OBJECTS =  \
+	$(am_extension_fibermon_libfibermon_la_OBJECTS)
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+extension_fibermon_libfibermon_la_LINK = $(LIBTOOL) $(AM_V_lt) \
+	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
+	$(CCLD) $(extension_fibermon_libfibermon_la_CFLAGS) $(CFLAGS) \
+	$(extension_fibermon_libfibermon_la_LDFLAGS) $(LDFLAGS) -o $@
+extension_mindmon_libmindmon_la_LIBADD =
+am_extension_mindmon_libmindmon_la_OBJECTS =  \
+	extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo
+extension_mindmon_libmindmon_la_OBJECTS =  \
+	$(am_extension_mindmon_libmindmon_la_OBJECTS)
+extension_mindmon_libmindmon_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(extension_mindmon_libmindmon_la_CFLAGS) $(CFLAGS) \
+	$(extension_mindmon_libmindmon_la_LDFLAGS) $(LDFLAGS) -o $@
+lib_libfunk2_la_LIBADD =
 am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_agent.lo \
-	c/lib_libfunk2_la-f2_application__fibermon.lo \
 	c/lib_libfunk2_la-f2_array.lo c/lib_libfunk2_la-f2_ansi.lo \
 	c/lib_libfunk2_la-f2_apropos.lo \
 	c/lib_libfunk2_la-f2_blocks_world.lo \
@@ -213,9 +232,6 @@ am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_agent.lo \
 	c/lib_libfunk2_la-f2_xmlrpc.lo c/lib_libfunk2_la-f2_zlib.lo \
 	c/lib_libfunk2_la-funk2.lo
 lib_libfunk2_la_OBJECTS = $(am_lib_libfunk2_la_OBJECTS)
-AM_V_lt = $(am__v_lt_$(V))
-am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
-am__v_lt_0 = --silent
 lib_libfunk2_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(lib_libfunk2_la_CFLAGS) $(CFLAGS) $(lib_libfunk2_la_LDFLAGS) \
@@ -246,8 +262,12 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(lib_libfunk2_la_SOURCES)
-DIST_SOURCES = $(lib_libfunk2_la_SOURCES)
+SOURCES = $(extension_fibermon_libfibermon_la_SOURCES) \
+	$(extension_mindmon_libmindmon_la_SOURCES) \
+	$(lib_libfunk2_la_SOURCES)
+DIST_SOURCES = $(extension_fibermon_libfibermon_la_SOURCES) \
+	$(extension_mindmon_libmindmon_la_SOURCES) \
+	$(lib_libfunk2_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -512,11 +532,13 @@ cc_flags = $(release__cc_flags)
 
 ###### Makefile.am specifics below here ######
 ACLOCAL_AMFLAGS = -I m4
-lib_LTLIBRARIES = lib/libfunk2.la
+lib_LTLIBRARIES = lib/libfunk2.la \
+                  extension/fibermon/libfibermon.la \
+                  extension/mindmon/libmindmon.la
+
 #bin_PROGRAMS    = bin/funk2-static
 lib_libfunk2_la_SOURCES = \
   c/f2_agent.c \
-  c/f2_application__fibermon.c \
   c/f2_array.c \
   c/f2_ansi.c \
   c/f2_apropos.c \
@@ -641,6 +663,8 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
+extension_mindmon_libmindmon_la_SOURCES = extension/mindmon/mindmon.c
+extension_fibermon_libfibermon_la_SOURCES = extension/fibermon/fibermon.c
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 FUNK2_VERSION = `cat version`
@@ -660,6 +684,10 @@ FUNK2_LIBRARY_VERSION = 0:0:0
 #              +- increment if interfaces have been added, removed or changed
 lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS)
 lib_libfunk2_la_CFLAGS = $(cc_flags)
+extension_mindmon_libmindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_mindmon_libmindmon_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_fibermon_libfibermon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_fibermon_libfibermon_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 bin_funk2_static_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
@@ -752,6 +780,28 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
+extension/fibermon/$(am__dirstamp):
+	@$(MKDIR_P) extension/fibermon
+	@: > extension/fibermon/$(am__dirstamp)
+extension/fibermon/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/fibermon/$(DEPDIR)
+	@: > extension/fibermon/$(DEPDIR)/$(am__dirstamp)
+extension/fibermon/extension_fibermon_libfibermon_la-fibermon.lo:  \
+	extension/fibermon/$(am__dirstamp) \
+	extension/fibermon/$(DEPDIR)/$(am__dirstamp)
+extension/fibermon/libfibermon.la: $(extension_fibermon_libfibermon_la_OBJECTS) $(extension_fibermon_libfibermon_la_DEPENDENCIES) extension/fibermon/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_fibermon_libfibermon_la_LINK) -rpath $(libdir) $(extension_fibermon_libfibermon_la_OBJECTS) $(extension_fibermon_libfibermon_la_LIBADD) $(LIBS)
+extension/mindmon/$(am__dirstamp):
+	@$(MKDIR_P) extension/mindmon
+	@: > extension/mindmon/$(am__dirstamp)
+extension/mindmon/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/mindmon/$(DEPDIR)
+	@: > extension/mindmon/$(DEPDIR)/$(am__dirstamp)
+extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo:  \
+	extension/mindmon/$(am__dirstamp) \
+	extension/mindmon/$(DEPDIR)/$(am__dirstamp)
+extension/mindmon/libmindmon.la: $(extension_mindmon_libmindmon_la_OBJECTS) $(extension_mindmon_libmindmon_la_DEPENDENCIES) extension/mindmon/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_mindmon_libmindmon_la_LINK) -rpath $(libdir) $(extension_mindmon_libmindmon_la_OBJECTS) $(extension_mindmon_libmindmon_la_LIBADD) $(LIBS)
 c/$(am__dirstamp):
 	@$(MKDIR_P) c
 	@: > c/$(am__dirstamp)
@@ -759,8 +809,6 @@ c/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) c/$(DEPDIR)
 	@: > c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_agent.lo: c/$(am__dirstamp) \
-	c/$(DEPDIR)/$(am__dirstamp)
-c/lib_libfunk2_la-f2_application__fibermon.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_array.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
@@ -1018,8 +1066,6 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_agent.lo
 	-rm -f c/lib_libfunk2_la-f2_ansi.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_ansi.lo
-	-rm -f c/lib_libfunk2_la-f2_application__fibermon.$(OBJEXT)
-	-rm -f c/lib_libfunk2_la-f2_application__fibermon.lo
 	-rm -f c/lib_libfunk2_la-f2_apropos.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_apropos.lo
 	-rm -f c/lib_libfunk2_la-f2_array.$(OBJEXT)
@@ -1262,13 +1308,16 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_zlib.lo
 	-rm -f c/lib_libfunk2_la-funk2.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-funk2.lo
+	-rm -f extension/fibermon/extension_fibermon_libfibermon_la-fibermon.$(OBJEXT)
+	-rm -f extension/fibermon/extension_fibermon_libfibermon_la-fibermon.lo
+	-rm -f extension/mindmon/extension_mindmon_libmindmon_la-mindmon.$(OBJEXT)
+	-rm -f extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo
 
 distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_agent.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_ansi.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_application__fibermon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_apropos.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_array.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_blocks_world.Plo@am__quote@
@@ -1390,6 +1439,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_xmlrpc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_zlib.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-funk2.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/fibermon/$(DEPDIR)/extension_fibermon_libfibermon_la-fibermon.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/mindmon/$(DEPDIR)/extension_mindmon_libmindmon_la-mindmon.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -1418,6 +1469,22 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
+extension/fibermon/extension_fibermon_libfibermon_la-fibermon.lo: extension/fibermon/fibermon.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_fibermon_libfibermon_la_CFLAGS) $(CFLAGS) -MT extension/fibermon/extension_fibermon_libfibermon_la-fibermon.lo -MD -MP -MF extension/fibermon/$(DEPDIR)/extension_fibermon_libfibermon_la-fibermon.Tpo -c -o extension/fibermon/extension_fibermon_libfibermon_la-fibermon.lo `test -f 'extension/fibermon/fibermon.c' || echo '$(srcdir)/'`extension/fibermon/fibermon.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/fibermon/$(DEPDIR)/extension_fibermon_libfibermon_la-fibermon.Tpo extension/fibermon/$(DEPDIR)/extension_fibermon_libfibermon_la-fibermon.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/fibermon/fibermon.c' object='extension/fibermon/extension_fibermon_libfibermon_la-fibermon.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_fibermon_libfibermon_la_CFLAGS) $(CFLAGS) -c -o extension/fibermon/extension_fibermon_libfibermon_la-fibermon.lo `test -f 'extension/fibermon/fibermon.c' || echo '$(srcdir)/'`extension/fibermon/fibermon.c
+
+extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo: extension/mindmon/mindmon.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_mindmon_libmindmon_la_CFLAGS) $(CFLAGS) -MT extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo -MD -MP -MF extension/mindmon/$(DEPDIR)/extension_mindmon_libmindmon_la-mindmon.Tpo -c -o extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo `test -f 'extension/mindmon/mindmon.c' || echo '$(srcdir)/'`extension/mindmon/mindmon.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/mindmon/$(DEPDIR)/extension_mindmon_libmindmon_la-mindmon.Tpo extension/mindmon/$(DEPDIR)/extension_mindmon_libmindmon_la-mindmon.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/mindmon/mindmon.c' object='extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_mindmon_libmindmon_la_CFLAGS) $(CFLAGS) -c -o extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo `test -f 'extension/mindmon/mindmon.c' || echo '$(srcdir)/'`extension/mindmon/mindmon.c
+
 c/lib_libfunk2_la-f2_agent.lo: c/f2_agent.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_agent.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_agent.Tpo -c -o c/lib_libfunk2_la-f2_agent.lo `test -f 'c/f2_agent.c' || echo '$(srcdir)/'`c/f2_agent.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_agent.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_agent.Plo
@@ -1425,14 +1492,6 @@ c/lib_libfunk2_la-f2_agent.lo: c/f2_agent.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_agent.c' object='c/lib_libfunk2_la-f2_agent.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_agent.lo `test -f 'c/f2_agent.c' || echo '$(srcdir)/'`c/f2_agent.c
-
-c/lib_libfunk2_la-f2_application__fibermon.lo: c/f2_application__fibermon.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_application__fibermon.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_application__fibermon.Tpo -c -o c/lib_libfunk2_la-f2_application__fibermon.lo `test -f 'c/f2_application__fibermon.c' || echo '$(srcdir)/'`c/f2_application__fibermon.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_application__fibermon.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_application__fibermon.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_application__fibermon.c' object='c/lib_libfunk2_la-f2_application__fibermon.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_application__fibermon.lo `test -f 'c/f2_application__fibermon.c' || echo '$(srcdir)/'`c/f2_application__fibermon.c
 
 c/lib_libfunk2_la-f2_array.lo: c/f2_array.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_array.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_array.Tpo -c -o c/lib_libfunk2_la-f2_array.lo `test -f 'c/f2_array.c' || echo '$(srcdir)/'`c/f2_array.c
@@ -2416,6 +2475,8 @@ mostlyclean-libtool:
 clean-libtool:
 	-rm -rf .libs _libs
 	-rm -rf c/.libs c/_libs
+	-rm -rf extension/fibermon/.libs extension/fibermon/_libs
+	-rm -rf extension/mindmon/.libs extension/mindmon/_libs
 	-rm -rf lib/.libs lib/_libs
 
 distclean-libtool:
@@ -2648,6 +2709,10 @@ distclean-generic:
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 	-rm -f c/$(DEPDIR)/$(am__dirstamp)
 	-rm -f c/$(am__dirstamp)
+	-rm -f extension/fibermon/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/fibermon/$(am__dirstamp)
+	-rm -f extension/mindmon/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/mindmon/$(am__dirstamp)
 	-rm -f lib/$(am__dirstamp)
 
 maintainer-clean-generic:
@@ -2658,7 +2723,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf c/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/mindmon/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -2706,7 +2771,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf c/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/mindmon/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -2826,7 +2891,7 @@ make-install-sh:
 	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                >> install-sh
 	chmod a+x install-sh
 
-bin/funk2$(EXEEXT): $(lib_LTLIBRARIES)
+bin/funk2$(EXEEXT): lib/libfunk2.la
 	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) -Llib/.libs -lfunk2
 
 install: install-am make-install-sh

@@ -138,16 +138,16 @@ struct funk2_object_type__core_extension_funk__slot_s {
   def_pcfunk__prototype__declare(core_extension_funk__##name##__args) {return nil;}
 
 #define def_cefunk1__args(name, arg1)					\
-  def_pcfunk__prototype__declare(core_extension_funk__##name##__args) {return f2list1__new(simple_cause, new__symbol(cause, #arg1));}
+  def_pcfunk__prototype__declare(core_extension_funk__##name##__args) {return f2list1__new(simple_cause, new__symbol(simple_cause, #arg1));}
 
 #define def_cefunk2__args(name, arg1, arg2)				\
-  def_pcfunk__prototype__declare(core_extension_funk__##name##__args) {return f2list2__new(simple_cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2));}
+  def_pcfunk__prototype__declare(core_extension_funk__##name##__args) {return f2list2__new(simple_cause, new__symbol(simple_cause, #arg1), new__symbol(simple_cause, #arg2));}
 
 #define def_cefunk3__args(name, arg1, arg2, arg3)				\
-  def_pcfunk__prototype__declare(core_extension_funk__##name##__args) {return f2list3__new(simple_cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2), new__symbol(cause, #arg3));}
+  def_pcfunk__prototype__declare(core_extension_funk__##name##__args) {return f2list3__new(simple_cause, new__symbol(simple_cause, #arg1), new__symbol(simple_cause, #arg2), new__symbol(simple_cause, #arg3));}
 
 #define def_cefunk4__args(name, arg1, arg2, arg3, arg4)			\
-  def_pcfunk__prototype__declare(core_extension_funk__##name##__args) {return f2list4__new(simple_cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2), new__symbol(cause, #arg3), new__symbol(cause, #arg4));}
+  def_pcfunk__prototype__declare(core_extension_funk__##name##__args) {return f2list4__new(simple_cause, new__symbol(simple_cause, #arg1), new__symbol(simple_cause, #arg2), new__symbol(simple_cause, #arg3), new__symbol(simple_cause, #arg4));}
 
 
 #define def_cefunk__is_funktional(name, is_funktional)			\

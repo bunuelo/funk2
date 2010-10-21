@@ -222,6 +222,8 @@ f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause);
 
 #define new__core_extension_funk(cause, filename, name) f2__core_extension_funk__new(cause, new__string(cause, filename), new__symbol(cause, #name))
 
+#define core_extension_apply(cause, filename, name, args) f2__core_extension_funk__apply(cause, new__core_extension_funk(cause, filename, name), args)
+
 // **
 
 void f2__core_extension_funk__initialize();

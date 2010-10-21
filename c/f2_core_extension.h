@@ -19,6 +19,23 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__CORE_EXTENSION__TYPES__H
+#define F2__CORE_EXTENSION__TYPES__H
+
+// core_extension
+
+typedef struct funk2_object_type__core_extension__slot_s funk2_object_type__core_extension__slot_t;
+struct funk2_object_type__core_extension__slot_s {
+  f2ptr initialize__symbol;
+  f2ptr initialize__funk;
+  f2ptr destroy__symbol;
+  f2ptr destroy__funk;
+  f2ptr assure_initialized__symbol;
+  f2ptr assure_initialized__funk;
+};
+
+#endif // F2__CORE_EXTENSION__TYPES__H
+
 #ifndef F2__CORE_EXTENSION__H
 #define F2__CORE_EXTENSION__H
 

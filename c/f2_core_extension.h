@@ -138,16 +138,16 @@ struct funk2_object_type__core_extension_funk__slot_s {
   f2__##name##__args(f2ptr cause) {return nil;}
 
 #define def_cefunk1__args(name, arg1)					\
-  f2__##name##__args(f2ptr cause) {return f2list1__new(simple_cause, new__symbol(simple_cause, #arg1));}
+  f2__##name##__args(f2ptr cause) {return f2list1__new(cause, new__symbol(cause, #arg1));}
 
 #define def_cefunk2__args(name, arg1, arg2)				\
-  f2__##name##__args(f2ptr cause) {return f2list2__new(simple_cause, new__symbol(simple_cause, #arg1), new__symbol(simple_cause, #arg2));}
+  f2__##name##__args(f2ptr cause) {return f2list2__new(cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2));}
 
 #define def_cefunk3__args(name, arg1, arg2, arg3)				\
-  f2__##name##__args(f2ptr cause) {return f2list3__new(simple_cause, new__symbol(simple_cause, #arg1), new__symbol(simple_cause, #arg2), new__symbol(simple_cause, #arg3));}
+  f2__##name##__args(f2ptr cause) {return f2list3__new(cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2), new__symbol(cause, #arg3));}
 
 #define def_cefunk4__args(name, arg1, arg2, arg3, arg4)			\
-  f2__##name##__args(f2ptr cause) {return f2list4__new(simple_cause, new__symbol(simple_cause, #arg1), new__symbol(simple_cause, #arg2), new__symbol(simple_cause, #arg3), new__symbol(simple_cause, #arg4));}
+  f2__##name##__args(f2ptr cause) {return f2list4__new(cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2), new__symbol(cause, #arg3), new__symbol(cause, #arg4));}
 
 
 #define def_cefunk__is_funktional(name, is_funktional)			\

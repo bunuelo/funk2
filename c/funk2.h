@@ -40,7 +40,7 @@
 #include "f2_command_line.h"
 #include "f2_compile.h"
 #include "f2_compile_x86.h"
-#include "f2_core_extension.h"
+#include "f2_core_extension_funk.h"
 #include "f2_cpu.h"
 #include "f2_dlfcn.h"
 #include "f2_dptr.h"

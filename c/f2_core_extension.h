@@ -26,6 +26,12 @@
 
 typedef struct funk2_object_type__core_extension_funk__slot_s funk2_object_type__core_extension_funk__slot_t;
 struct funk2_object_type__core_extension_funk__slot_s {
+  f2ptr args__symbol;
+  f2ptr args__funk;
+  f2ptr is_funktional__symbol;
+  f2ptr is_funktional__funk;
+  f2ptr documentation__symbol;
+  f2ptr documentation__funk;
   f2ptr pointer__symbol;
   f2ptr pointer__funk;
   f2ptr cfunk__symbol;
@@ -115,8 +121,10 @@ struct funk2_object_type__core_extension_funk__slot_s {
 					 return f2__##name(cause, arg1, arg2, arg3, arg4));
 
 
-declare_frame_object_7_slot(core_extension_funk, filename, name, cname, args, env, is_funktional, documentation);
+declare_frame_object_3_slot(core_extension_funk, filename, name, cname);
 
+f2ptr raw__core_extension_funk__new(                      f2ptr cause, f2ptr filename, f2ptr name);
+f2ptr  f2__core_extension_funk__new(                      f2ptr cause, f2ptr filename, f2ptr name);
 f2ptr raw__core_extension_funk__pointer(                  f2ptr cause, f2ptr this);
 f2ptr  f2__core_extension_funk__pointer(                  f2ptr cause, f2ptr this);
 f2ptr raw__core_extension_funk__cfunk(                    f2ptr cause, f2ptr this);

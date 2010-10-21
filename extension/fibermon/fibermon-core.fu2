@@ -17,12 +17,12 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcorefunk fibermon-bytes-to_memory_string              'extension/fibermon/.libs/libfibermon.so' fibermon__bytes__to_memory_string             [bytes]]]
-[defcorefunk fibermon-nanoseconds-to_time_string          'extension/fibermon/.libs/libfibermon.so' fibermon__nanoseconds__to_time_string         [nanoseconds]]]
-[defcorefunk fibermon_fiber-construct_fast                'extension/fibermon/.libs/libfibermon.so' fibermon_fiber__construct_fast                [this]]]
-[defcorefunk fibermon_fiber-redraw_fast                   'extension/fibermon/.libs/libfibermon.so' fibermon_fiber__redraw_fast                   [this]]]
-[defcorefunk fibermon_fiber-recompute_statistics_fast     'extension/fibermon/.libs/libfibermon.so' fibermon_fiber__recompute_statistics_fast     [this]]]
-[defcorefunk fibermon_processor-construct_fast            'extension/fibermon/.libs/libfibermon.so' fibermon_processor__construct_fast            [this]]]
-[defcorefunk fibermon_processor-redraw_fast               'extension/fibermon/.libs/libfibermon.so' fibermon_processor__redraw_fast               [this]]]
-[defcorefunk fibermon_processor-recompute_statistics_fast 'extension/fibermon/.libs/libfibermon.so' fibermon_processor__recompute_statistics_fast [this]]]
+[defcorefunk fibermon-bytes-to_memory_string              'extension/fibermon/.libs/libfibermon.so' fibermon__bytes__to_memory_string]
+[defcorefunk fibermon-nanoseconds-to_time_string          'extension/fibermon/.libs/libfibermon.so' fibermon__nanoseconds__to_time_string]
+[defcorefunk fibermon_fiber-construct_fast                'extension/fibermon/.libs/libfibermon.so' fibermon_fiber__construct_fast]
+[defcorefunk fibermon_fiber-redraw_fast                   'extension/fibermon/.libs/libfibermon.so' fibermon_fiber__redraw_fast]
+[defcorefunk fibermon_fiber-recompute_statistics_fast     'extension/fibermon/.libs/libfibermon.so' fibermon_fiber__recompute_statistics_fast]
+[defcorefunk fibermon_processor-construct_fast            'extension/fibermon/.libs/libfibermon.so' fibermon_processor__construct_fast]
+[defcorefunk fibermon_processor-redraw_fast               'extension/fibermon/.libs/libfibermon.so' fibermon_processor__redraw_fast]
+[defcorefunk fibermon_processor-recompute_statistics_fast 'extension/fibermon/.libs/libfibermon.so' fibermon_processor__recompute_statistics_fast]
 

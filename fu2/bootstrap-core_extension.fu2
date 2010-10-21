@@ -19,5 +19,5 @@
 
 [defmetro defcorefunk [global_name filename name args]
   [print `[defcorefunk ,global_name ,filename ,args]]
-  `[globalize-funk ,global_name [core_extension_funk-new ,filename [quote ,name] [conslist @[mapcar [funk [arg] `[quote ,arg]] args]] nil nil nil]]]
+  `[globalize-funk ,global_name [core_extension_funk-new ,filename [quote ,name]]]]
 

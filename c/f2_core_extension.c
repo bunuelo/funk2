@@ -23,24 +23,21 @@
 
 // core_extension_funk
 
-def_frame_object__global__7_slot(core_extension_funk, filename, name, cname, args, env, is_funktional, documentation);
+def_frame_object__global__3_slot(core_extension_funk, filename, name, cname);
 
-f2ptr raw__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name, f2ptr args, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
+f2ptr raw__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name) {
   f2ptr cname = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause, new__string(cause, "pcfunk__core_extension_funk__"), f2__exp__as__string(cause, name))));
-  return f2core_extension_funk__new(cause, filename, name, cname, args, env, is_funktional, documentation);
+  return f2core_extension_funk__new(cause, filename, name, cname);
 }
 
-f2ptr f2__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name, f2ptr args, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
+f2ptr f2__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name) {
   if ((! raw__string__is_type(cause, filename)) ||
-      (! raw__symbol__is_type(cause, name)) ||
-      (args && (! raw__cons__is_type(cause, args))) ||
-      (env && (! raw__environment__is_type(cause, env))) ||
-      (documentation && (! raw__string__is_type(cause, documentation)))) {
+      (! raw__symbol__is_type(cause, name))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__core_extension_funk__new(cause, filename, name, args, env, is_funktional, documentation);
+  return raw__core_extension_funk__new(cause, filename, name);
 }
-def_pcfunk6(core_extension_funk__new, filename, name, args, env, is_funktional, documentation, return f2__core_extension_funk__new(this_cause, filename, name, args, env, is_funktional, documentation));
+def_pcfunk2(core_extension_funk__new, filename, name, return f2__core_extension_funk__new(this_cause, filename, name));
 
 
 f2ptr raw__core_extension_funk__pointer(f2ptr cause, f2ptr this) {
@@ -56,6 +53,46 @@ f2ptr f2__core_extension_funk__pointer(f2ptr cause, f2ptr this) {
   return raw__core_extension_funk__pointer(cause, this);
 }
 def_pcfunk1(core_extension_funk__pointer, this, return f2__core_extension_funk__pointer(this_cause, this));
+
+
+f2ptr raw__core_extension_funk__args(f2ptr cause, f2ptr this) {
+  return f2list1__new(cause, new__symbol(cause, "<unknown-args!>"));
+}
+
+f2ptr f2__core_extension_funk__args(f2ptr cause, f2ptr this) {
+  if (! raw__core_extension_funk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__core_extension_funk__args(cause, this);
+}
+def_pcfunk1(core_extension_funk__args, this, return f2__core_extension_funk__args(this_cause, this));
+
+
+f2ptr raw__core_extension_funk__is_funktional(f2ptr cause, f2ptr this) {
+  return nil;
+}
+
+f2ptr f2__core_extension_funk__is_funktional(f2ptr cause, f2ptr this) {
+  if (! raw__core_extension_funk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__core_extension_funk__is_funktional(cause, this);
+}
+def_pcfunk1(core_extension_funk__is_funktional, this, return f2__core_extension_funk__is_funktional(this_cause, this));
+
+
+f2ptr raw__core_extension_funk__documentation(f2ptr cause, f2ptr this) {
+  return new__string(cause, "This core_extension_funk was not documented by its developers.");
+}
+
+f2ptr f2__core_extension_funk__documentation(f2ptr cause, f2ptr this) {
+  if (! raw__core_extension_funk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__core_extension_funk__documentation(cause, this);
+}
+def_pcfunk1(core_extension_funk__documentation, this, return f2__core_extension_funk__documentation(this_cause, this));
+
 
 
 f2ptr raw__core_extension_funk__cfunk(f2ptr cause, f2ptr this) {
@@ -132,6 +169,9 @@ def_pcfunk2(core_extension_funk__terminal_print_with_frame, this, terminal_print
 
 f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2core_extension_funk__primobject_type__new(cause);
+  {char* slot_name = "args";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.args__funk);}
+  {char* slot_name = "is_funktional";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.is_funktional__funk);}
+  {char* slot_name = "documentation";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation__funk);}
   {char* slot_name = "pointer";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.pointer__funk);}
   {char* slot_name = "cfunk";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.cfunk__funk);}
   {char* slot_name = "apply";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.apply__funk);}
@@ -158,9 +198,18 @@ void f2__core_extension__initialize() {
   
   // core_extension_funk
   
-  init_frame_object__7_slot(core_extension_funk, filename, name, cname, args, env, is_funktional, documentation);
+  init_frame_object__3_slot(core_extension_funk, filename, name, cname);
   
-  f2__primcfunk__init__6(core_extension_funk__new, filename, name, args, env, is_funktional, documentation, "");
+  f2__primcfunk__init__2(core_extension_funk__new, filename, name, "");
+  
+  {char* symbol_str = "args"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.args__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__args, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.args__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "is_funktional"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.is_funktional__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__is_funktional, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.is_funktional__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "documentation"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__documentation, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation__funk = never_gc(cfunk);}
   
   {char* symbol_str = "pointer"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.pointer__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__pointer, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.pointer__funk = never_gc(cfunk);}

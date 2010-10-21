@@ -21,11 +21,6 @@
 
 #include "../../c/funk2.h"
 
-f2ptr f2__fibermon__bytes__to_memory_string__documentation(f2ptr cause) {
-  return new__string(cause, "yay!");
-}
-export_cefunk0(fibermon__bytes__to_memory_string__documentation);
-
 f2ptr f2__fibermon__bytes__to_memory_string(f2ptr cause, f2ptr this) {
   f2ptr i = object__get_0(cause, this, "as-integer");
   if (! raw__integer__is_type(cause, i)) {
@@ -41,7 +36,7 @@ f2ptr f2__fibermon__bytes__to_memory_string(f2ptr cause, f2ptr this) {
   else if (i__i < (1024ull * 1024ull * 1024ull * 1024ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i /          (1024.0 * 1024.0 * 1024.0))), new__string(cause, "G")));}
   else                                                     {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i / (1024.0 * 1024.0 * 1024.0 * 1024.0))), new__string(cause, "T")));}
 }
-export_cefunk1(fibermon__bytes__to_memory_string);
+export_cefunk1(fibermon__bytes__to_memory_string, this, 0, "");
 
 
 f2ptr f2__fibermon__nanoseconds__to_time_string(f2ptr cause, f2ptr this) {
@@ -61,7 +56,7 @@ f2ptr f2__fibermon__nanoseconds__to_time_string(f2ptr cause, f2ptr this) {
   else if (i__i < (24ull * 60ull * 60ull * 1000ull * 1000ull * 1000ull)) {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i /        (60.0 * 60.0 * 1000.0 * 1000.0 * 1000.0))), new__string(cause, "h")));}
   else                                                                   {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2double__new(cause, (double)i__i / (24.0 * 60.0 * 60.0 * 1000.0 * 1000.0 * 1000.0))), new__string(cause, "d")));}
 }
-export_cefunk1(fibermon__nanoseconds__to_time_string);
+export_cefunk1(fibermon__nanoseconds__to_time_string, this, 0, "");
 
 
 f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
@@ -187,7 +182,7 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   
   return this;
 }
-export_cefunk1(fibermon_fiber__construct_fast);
+export_cefunk1(fibermon_fiber__construct_fast, this, 0, "");
 
 
 f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
@@ -259,7 +254,7 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
   }
   return nil;
 }
-export_cefunk1(fibermon_fiber__redraw_fast);
+export_cefunk1(fibermon_fiber__redraw_fast, this, 0, "");
 
 
 f2ptr f2__fibermon_fiber__recompute_statistics_fast(f2ptr cause, f2ptr this) {
@@ -290,7 +285,7 @@ f2ptr f2__fibermon_fiber__recompute_statistics_fast(f2ptr cause, f2ptr this) {
   }
   return nil;
 }
-export_cefunk1(fibermon_fiber__recompute_statistics_fast);
+export_cefunk1(fibermon_fiber__recompute_statistics_fast, this, 0, "");
 
 
 f2ptr f2__fibermon_processor__construct_fast(f2ptr cause, f2ptr this) {
@@ -327,7 +322,7 @@ f2ptr f2__fibermon_processor__construct_fast(f2ptr cause, f2ptr this) {
   f2__gtk__container__add(cause, this__frame, this__vbox);
   return nil;
 }
-export_cefunk1(fibermon_processor__construct_fast);
+export_cefunk1(fibermon_processor__construct_fast, this, 0, "");
 
 
 f2ptr f2__fibermon_processor__redraw_fast(f2ptr cause, f2ptr this) {
@@ -354,7 +349,7 @@ f2ptr f2__fibermon_processor__redraw_fast(f2ptr cause, f2ptr this) {
   }
   return nil;
 }
-export_cefunk1(fibermon_processor__redraw_fast);
+export_cefunk1(fibermon_processor__redraw_fast, this, 0, "");
 
 
 f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this) {
@@ -388,6 +383,6 @@ f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this)
   f2__frame__add_var_value(cause, this, new__symbol(cause, "total_used_memory"), this__total_used_memory);
   return nil;
 }
-export_cefunk1(fibermon_processor__recompute_statistics_fast);
+export_cefunk1(fibermon_processor__recompute_statistics_fast, this, 0, "");
 
 

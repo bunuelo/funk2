@@ -64,10 +64,12 @@ export_cefunk2(causality__terminal_print_with_frame, this, terminal_print_frame,
 
 f2ptr f2__causality__core_extension_initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "causality"), f2__causality_type__new(cause));
+  return nil;
 }
 export_cefunk0(causality__core_extension_initialize, 0, "");
 
 f2ptr f2__causality__core_extension_destroy(f2ptr cause) {
+  return nil;
 }
 export_cefunk0(causality__core_extension_destroy, 0, "");
 

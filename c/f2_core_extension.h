@@ -173,22 +173,22 @@ struct funk2_object_type__core_extension_funk__slot_s {
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
 #define export_cefunk1(name, arg1, is_funktional, documentation_string)	\
-  export_basic_cefunk1(name, arg1);					\
+  export_basic_cefunk1(name);						\
   def_cefunk1_args(name, arg1)						\
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
 #define export_cefunk2(name, arg1, arg2, is_funktional, documentation_string) \
-  export_basic_cefunk2(name, arg1, arg2);				\
+  export_basic_cefunk2(name);						\
   def_cefunk2_args(name, arg1, arg2)					\
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
 #define export_cefunk3(name, arg1, arg2, arg3, is_funktional, documentation_string) \
-  export_basic_cefunk3(name, arg1, arg2, arg3);				\
+  export_basic_cefunk3(name);						\
   def_cefunk3_args(name, arg1, arg2, arg3)				\
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
 #define export_cefunk4(name, arg1, arg2, arg3, arg4, is_funktional, documentation_string) \
-  export_basic_cefunk4(name, arg1, arg2, arg3, arg4);			\
+  export_basic_cefunk4(name);						\
   def_cefunk4_args(name, arg1, arg2, arg3, arg4)			\
   export_cefunk_without_args(name, is_funktional, documentation_string)
 

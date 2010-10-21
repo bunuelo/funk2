@@ -40,7 +40,31 @@ def_pcfunk1(core_extension__new, filename, return f2__core_extension__new(this_c
 
 
 f2ptr f2core_extension__primobject_type__new_aux(f2ptr cause) {
-  f2ptr this = f2core_extension_funk__primobject_type__new(cause);
+  f2ptr this = f2core_extension__primobject_type__new(cause);
+  return this;
+}
+
+
+// core_extension_handler
+
+def_frame_object__global__1_slot(core_extension_handler, core_extension_filename_hash);
+
+f2ptr raw__core_extension_handler__new(f2ptr cause) {
+  f2ptr core_extension_filename_hash = f2__ptypehash__new(cause);
+  return f2core_extension_handler__new(cause, core_extension_filename_hash);
+}
+
+f2ptr f2__core_extension_handler__new(f2ptr cause) {
+  if (! raw__string__is_type(cause)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__core_extension__new(cause);
+}
+def_pcfunk0(core_extension_handler__new, return f2__core_extension_handler__new(this_cause));
+
+
+f2ptr f2core_extension_handler__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2core_extension_handler__primobject_type__new(cause);
   return this;
 }
 
@@ -66,6 +90,13 @@ void f2__core_extension__initialize() {
   init_frame_object__1_slot(core_extension, filename);
   
   f2__primcfunk__init__1(core_extension__new, filename, "");
+  
+  
+  // core_extension_handler
+  
+  init_frame_object__1_slot(core_extension_handler, core_extension_filename_hash);
+  
+  f2__primcfunk__init__0(core_extension_handler__new, "");
   
   
 }

@@ -28,6 +28,9 @@
 
 f2ptr f2core_extension__primobject_type__new_aux(f2ptr cause);
 
+
+f2ptr f2core_extension_handler__primobject_type__new_aux(f2ptr cause);
+
 // **
 
 void f2__core_extension__initialize();

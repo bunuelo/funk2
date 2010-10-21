@@ -43,6 +43,7 @@ f2ptr f2__causality__new(f2ptr cause) {
 					    new__symbol(cause, "type"),      new__symbol(cause, "causality"),
 					    new__symbol(cause, "cause_set"), f2__set__new(cause)));
 }
+export_cefunk0(causality__new, 0, "");
 
 f2ptr f2__causality__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);

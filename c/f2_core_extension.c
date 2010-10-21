@@ -112,9 +112,9 @@ def_pcfunk1(core_extension__assure_initialized, this, return f2__core_extension_
 
 f2ptr f2core_extension__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2core_extension__primobject_type__new(cause);
-  {char* slot_name = "initialize";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.initialize__funk);}
-  {char* slot_name = "destroy";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.destroy__funk);}
-  {char* slot_name = "assure_initialized"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.assure_initialized__funk);}
+  {char* slot_name = "initialize";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension.initialize__funk);}
+  {char* slot_name = "destroy";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension.destroy__funk);}
+  {char* slot_name = "assure_initialized"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_initialized__funk);}
   return this;
 }
 

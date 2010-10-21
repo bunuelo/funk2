@@ -137,7 +137,7 @@ def_pcfunk1(core_extension_funk__args_pointer, this, return f2__core_extension_f
 f2ptr raw__core_extension_funk__args_cfunk(f2ptr cause, f2ptr this) {
   f2ptr args_pointer = f2__core_extension_funk__args_pointer(cause, this);
   if (raw__larva__is_type(cause, args_pointer)) {
-    return pointer;
+    return args_pointer;
   }
   if (! raw__pointer__is_type(cause, args_pointer)) {
     return f2larva__new(cause, 1, nil);

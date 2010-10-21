@@ -31,13 +31,13 @@ f2ptr raw__core_extension__new(f2ptr cause, f2ptr name, f2ptr filename) {
   return f2core_extension__new(cause, name, filename, initialized);
 }
 
-f2ptr f2__core_extension__new(f2ptr cause, f2ptr filename) {
+f2ptr f2__core_extension__new(f2ptr cause, f2ptr name, f2ptr filename) {
   if (! raw__string__is_type(cause, filename)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__core_extension__new(cause, filename);
+  return raw__core_extension__new(cause, name, filename);
 }
-def_pcfunk1(core_extension__new, filename, return f2__core_extension__new(this_cause, filename));
+def_pcfunk1(core_extension__new, name, filename, return f2__core_extension__new(this_cause, name, filename));
 
 
 f2ptr raw__core_extension__initialize(f2ptr cause, f2ptr this) {
@@ -162,9 +162,9 @@ void f2__core_extension__initialize() {
   
   // core_extension
   
-  init_frame_object__1_slot(core_extension, filename);
+  init_frame_object__3_slot(core_extension, name, filename, initialized);
   
-  f2__primcfunk__init__1(core_extension__new, filename, "");
+  f2__primcfunk__init__2(core_extension__new, name, filename, "");
   
   {char* symbol_str = "initialize"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension.initialize__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension__initialize, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension.initialize__funk = never_gc(cfunk);}

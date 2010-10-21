@@ -38,8 +38,16 @@ struct funk2_object_type__core_extension_funk__slot_s {
   f2ptr args_cfunk__funk;
   f2ptr args__symbol;
   f2ptr args__funk;
+  f2ptr is_funktional_pointer__symbol;
+  f2ptr is_funktional_pointer__funk;
+  f2ptr is_funktional_cfunk__symbol;
+  f2ptr is_funktional_cfunk__funk;
   f2ptr is_funktional__symbol;
   f2ptr is_funktional__funk;
+  f2ptr documentation_pointer__symbol;
+  f2ptr documentation_pointer__funk;
+  f2ptr documentation_cfunk__symbol;
+  f2ptr documentation_cfunk__funk;
   f2ptr documentation__symbol;
   f2ptr documentation__funk;
   f2ptr terminal_print_with_frame__symbol;

@@ -26,5 +26,5 @@ f2ptr f2__test_funktion(f2ptr cause) {
   return nil;
 }
 
-export_cefunk0(test_funktion);
+export_cefunk0(test_funktion, 0, "This is documentation for a test funktion.");
 

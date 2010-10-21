@@ -23,11 +23,14 @@
 
 // core_extension_funk
 
-def_frame_object__global__3_slot(core_extension_funk, filename, name, cname);
+def_frame_object__global__6_slot(core_extension_funk, filename, name, cname, args_cname, is_funktional_cname, documentation_cname);
 
 f2ptr raw__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name) {
-  f2ptr cname = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause, new__string(cause, "pcfunk__core_extension_funk__"), f2__exp__as__string(cause, name))));
-  return f2core_extension_funk__new(cause, filename, name, cname);
+  f2ptr cname               = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause, new__string(cause, "pcfunk__core_extension_funk__"), f2__exp__as__string(cause, name))));
+  f2ptr args_cname          = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list3__new(cause, new__string(cause, "pcfunk__core_extension_funk__"), f2__exp__as__string(cause, name), new__string(cause, "__args"))));
+  f2ptr is_funktional_cname = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list3__new(cause, new__string(cause, "pcfunk__core_extension_funk__"), f2__exp__as__string(cause, name), new__string(cause, "__is_funktional"))));
+  f2ptr documentation_cname = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list3__new(cause, new__string(cause, "pcfunk__core_extension_funk__"), f2__exp__as__string(cause, name), new__string(cause, "__documentation"))));
+  return f2core_extension_funk__new(cause, filename, name, cname, args_cname, is_funktional_cname, documentation_cname);
 }
 
 f2ptr f2__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name) {
@@ -38,6 +41,8 @@ f2ptr f2__core_extension_funk__new(f2ptr cause, f2ptr filename, f2ptr name) {
   return raw__core_extension_funk__new(cause, filename, name);
 }
 def_pcfunk2(core_extension_funk__new, filename, name, return f2__core_extension_funk__new(this_cause, filename, name));
+
+
 
 
 f2ptr raw__core_extension_funk__pointer(f2ptr cause, f2ptr this) {
@@ -53,46 +58,6 @@ f2ptr f2__core_extension_funk__pointer(f2ptr cause, f2ptr this) {
   return raw__core_extension_funk__pointer(cause, this);
 }
 def_pcfunk1(core_extension_funk__pointer, this, return f2__core_extension_funk__pointer(this_cause, this));
-
-
-f2ptr raw__core_extension_funk__args(f2ptr cause, f2ptr this) {
-  return f2list1__new(cause, new__symbol(cause, "<unknown-args!>"));
-}
-
-f2ptr f2__core_extension_funk__args(f2ptr cause, f2ptr this) {
-  if (! raw__core_extension_funk__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__core_extension_funk__args(cause, this);
-}
-def_pcfunk1(core_extension_funk__args, this, return f2__core_extension_funk__args(this_cause, this));
-
-
-f2ptr raw__core_extension_funk__is_funktional(f2ptr cause, f2ptr this) {
-  return nil;
-}
-
-f2ptr f2__core_extension_funk__is_funktional(f2ptr cause, f2ptr this) {
-  if (! raw__core_extension_funk__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__core_extension_funk__is_funktional(cause, this);
-}
-def_pcfunk1(core_extension_funk__is_funktional, this, return f2__core_extension_funk__is_funktional(this_cause, this));
-
-
-f2ptr raw__core_extension_funk__documentation(f2ptr cause, f2ptr this) {
-  return new__string(cause, "This core_extension_funk was not documented by its developers.");
-}
-
-f2ptr f2__core_extension_funk__documentation(f2ptr cause, f2ptr this) {
-  if (! raw__core_extension_funk__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__core_extension_funk__documentation(cause, this);
-}
-def_pcfunk1(core_extension_funk__documentation, this, return f2__core_extension_funk__documentation(this_cause, this));
-
 
 
 f2ptr raw__core_extension_funk__cfunk(f2ptr cause, f2ptr this) {
@@ -139,6 +104,107 @@ f2ptr f2__core_extension_funk__apply(f2ptr cause, f2ptr this, f2ptr args) {
   return raw__core_extension_funk__apply(cause, this, args);
 }
 def_pcfunk2(core_extension_funk__apply, this, args, return f2__core_extension_funk__apply(this_cause, this, args));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+f2ptr raw__core_extension_funk__args_pointer(f2ptr cause, f2ptr this) {
+  f2ptr filename   = f2__core_extension_funk__filename(cause, this);
+  f2ptr args_cname = f2__core_extension_funk__args_cname(   cause, this);
+  return f2__global_dlfcn_dynamic_library__lookup_symbol(cause, filename, args_cname);
+}
+
+f2ptr f2__core_extension_funk__args_pointer(f2ptr cause, f2ptr this) {
+  if (! raw__core_extension_funk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__core_extension_funk__args_pointer(cause, this);
+}
+def_pcfunk1(core_extension_funk__args_pointer, this, return f2__core_extension_funk__args_pointer(this_cause, this));
+
+
+f2ptr raw__core_extension_funk__args_cfunk(f2ptr cause, f2ptr this) {
+  f2ptr args_pointer = f2__core_extension_funk__args_pointer(cause, this);
+  if (raw__larva__is_type(cause, args_pointer)) {
+    return pointer;
+  }
+  if (! raw__pointer__is_type(cause, args_pointer)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  f2ptr name          = f2__core_extension_funk__args_cname(cause, this);
+  f2ptr args          = nil;
+  f2ptr cfunkptr      = f2pointer__new(cause, raw_executable__to__relative_ptr(f2pointer__p(args_pointer, cause)));
+  f2ptr env           = global_environment();
+  f2ptr is_funktional = f2bool__new(boolean__true);
+  f2ptr documentation = new__string(cause, "This cfunk returns the arguments for its core_extension_funk.");
+  return f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);
+}
+
+f2ptr f2__core_extension_funk__args_cfunk(f2ptr cause, f2ptr this) {
+  if (! raw__core_extension_funk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__core_extension_funk__args_cfunk(cause, this);
+}
+def_pcfunk1(core_extension_funk__args_cfunk, this, return f2__core_extension_funk__args_cfunk(this_cause, this));
+
+
+f2ptr raw__core_extension_funk__args(f2ptr cause, f2ptr this) {
+  f2ptr args_cfunk = raw__core_extension_funk__args_cfunk(cause, this);
+  if (raw__larva__is_type(cause, args_cfunk)) {
+    return args_cfunk;
+  }
+  if (! raw__cfunk__is_type(cause, args_cfunk)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2__cfunk__apply(cause, args_cfunk, f2__this__fiber(cause), nil);
+}
+
+f2ptr f2__core_extension_funk__args(f2ptr cause, f2ptr this) {
+  if (! raw__core_extension_funk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__core_extension_funk__args(cause, this);
+}
+def_pcfunk1(core_extension_funk__args, this, return f2__core_extension_funk__args(this_cause, this));
+
+
+f2ptr raw__core_extension_funk__is_funktional(f2ptr cause, f2ptr this) {
+  return nil;
+}
+
+f2ptr f2__core_extension_funk__is_funktional(f2ptr cause, f2ptr this) {
+  if (! raw__core_extension_funk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__core_extension_funk__is_funktional(cause, this);
+}
+def_pcfunk1(core_extension_funk__is_funktional, this, return f2__core_extension_funk__is_funktional(this_cause, this));
+
+
+f2ptr raw__core_extension_funk__documentation(f2ptr cause, f2ptr this) {
+  return new__string(cause, "This core_extension_funk was not documented by its developers.");
+}
+
+f2ptr f2__core_extension_funk__documentation(f2ptr cause, f2ptr this) {
+  if (! raw__core_extension_funk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__core_extension_funk__documentation(cause, this);
+}
+def_pcfunk1(core_extension_funk__documentation, this, return f2__core_extension_funk__documentation(this_cause, this));
+
 
 
 f2ptr raw__core_extension_funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -198,7 +264,7 @@ void f2__core_extension__initialize() {
   
   // core_extension_funk
   
-  init_frame_object__3_slot(core_extension_funk, filename, name, cname);
+  init_frame_object__6_slot(core_extension_funk, filename, name, cname, args_cname, is_funktional_cname, documentation_cname);
   
   f2__primcfunk__init__2(core_extension_funk__new, filename, name, "");
   

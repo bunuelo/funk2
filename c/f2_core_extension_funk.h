@@ -19,8 +19,8 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__CORE_EXTENSION__TYPES__H
-#define F2__CORE_EXTENSION__TYPES__H
+#ifndef F2__CORE_EXTENSION_FUNK__TYPES__H
+#define F2__CORE_EXTENSION_FUNK__TYPES__H
 
 // core_extension_funk
 
@@ -54,10 +54,10 @@ struct funk2_object_type__core_extension_funk__slot_s {
   f2ptr terminal_print_with_frame__funk;
 };
 
-#endif // F2__CORE_EXTENSION__TYPES__H
+#endif // F2__CORE_EXTENSION_FUNK__TYPES__H
 
-#ifndef F2__CORE_EXTENSION__H
-#define F2__CORE_EXTENSION__H
+#ifndef F2__CORE_EXTENSION_FUNK__H
+#define F2__CORE_EXTENSION_FUNK__H
 
 #include "f2_primfunks.h"
 
@@ -226,5 +226,5 @@ f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause);
 
 void f2__core_extension__initialize();
 
-#endif // F2__CORE_EXTENSION__H
+#endif // F2__CORE_EXTENSION_FUNK__H
 

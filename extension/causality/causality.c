@@ -31,16 +31,7 @@ f2ptr f2__causality_type__new(f2ptr cause) {
   return type;
 }
 
-f2ptr f2__causality_type__assert_exists(f2ptr cause) {
-  f2ptr type = f2__lookup_type(cause, new__symbol(cause, "causality"));
-  if (raw__larva__is_type(cause, type)) {
-    f2__add_type(cause, new__symbol(cause, "causality"), f2__causality_type__new(cause));
-  }
-  return nil;
-}
-
 f2ptr f2__causality__new(f2ptr cause) {
-  f2__causality_type__assert_exists(cause);
   return f2__frame__new(cause, f2list4__new(cause,
 					    new__symbol(cause, "type"),      new__symbol(cause, "causality"),
 					    new__symbol(cause, "cause_set"), f2__set__new(cause)));
@@ -69,4 +60,14 @@ f2ptr f2__causality__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr te
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 export_cefunk2(causality__terminal_print_with_frame, this, terminal_print_frame, 0, "");
+
+
+f2ptr f2__causality__core_extension_initialize(f2ptr cause) {
+  f2__add_type(cause, new__symbol(cause, "causality"), f2__causality_type__new(cause));
+}
+export_cefunk0(causality__core_extension_initialize, 0, "");
+
+f2ptr f2__causality__core_extension_destroy(f2ptr cause) {
+}
+export_cefunk0(causality__core_extension_destroy, 0, "");
 

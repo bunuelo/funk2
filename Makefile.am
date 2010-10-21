@@ -226,7 +226,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_command_line.c \
   c/f2_compile.c \
   c/f2_compile_x86.c \
-  c/f2_core_extension.c \
+  c/f2_core_extension_funk.c \
   c/f2_cpu.c \
   c/f2_dlfcn.c \
   c/f2_dptr.c \

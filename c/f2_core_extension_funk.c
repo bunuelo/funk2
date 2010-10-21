@@ -25,15 +25,15 @@
 
 def_frame_object__global__6_slot(core_extension_funk, core_extension_name, name, cname, args_cname, is_funktional_cname, documentation_cname);
 
-f2ptr raw__core_extension_funk__new(f2ptr cause, f2ptr core_extension_name, f2ptr name, f2ptr core_extension) {
+f2ptr raw__core_extension_funk__new(f2ptr cause, f2ptr core_extension_name, f2ptr name) {
   f2ptr cname               = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause, new__string(cause, "pcfunk__core_extension_funk__"), f2__exp__as__string(cause, name))));
   f2ptr args_cname          = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list3__new(cause, new__string(cause, "pcfunk__core_extension_funk__"), f2__exp__as__string(cause, name), new__string(cause, "__args"))));
   f2ptr is_funktional_cname = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list3__new(cause, new__string(cause, "pcfunk__core_extension_funk__"), f2__exp__as__string(cause, name), new__string(cause, "__is_funktional"))));
   f2ptr documentation_cname = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list3__new(cause, new__string(cause, "pcfunk__core_extension_funk__"), f2__exp__as__string(cause, name), new__string(cause, "__documentation"))));
-  return f2core_extension_funk__new(cause, core_extension_name, name, cname, args_cname, is_funktional_cname, documentation_cname, core_extension);
+  return f2core_extension_funk__new(cause, core_extension_name, name, cname, args_cname, is_funktional_cname, documentation_cname);
 }
 
-f2ptr f2__core_extension_funk__new(f2ptr cause, f2ptr core_extension_name, f2ptr name, f2ptr core_extension) {
+f2ptr f2__core_extension_funk__new(f2ptr cause, f2ptr core_extension_name, f2ptr name) {
   if ((! raw__symbol__is_type(cause, core_extension_name)) ||
       (! raw__symbol__is_type(cause, name))) {
     return f2larva__new(cause, 1, nil);

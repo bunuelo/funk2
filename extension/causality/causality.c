@@ -31,7 +31,7 @@ f2ptr f2__causality_type__new(f2ptr cause) {
 
 f2ptr f2__causality_type__assert_exists(f2ptr cause) {
   f2ptr type = f2__lookup_type(cause, new__symbol(cause, "causality"));
-  if (type == nil) {
+  if (raw__larva__is_type(cause, type)) {
     f2__add_type(cause, new__symbol(cause, "causality"), f2__causality_type__new(cause));
   }
   return nil;

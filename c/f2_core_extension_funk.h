@@ -193,7 +193,7 @@ struct funk2_object_type__core_extension_funk__slot_s {
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
 
-declare_frame_object_6_slot(core_extension_funk, filename, name, cname, args_cname, is_funktional_cname, documentation_cname);
+declare_frame_object_6_slot(core_extension_funk, core_extension_name, name, cname, args_cname, is_funktional_cname, documentation_cname);
 
 f2ptr raw__core_extension_funk__new(                      f2ptr cause, f2ptr filename, f2ptr name);
 f2ptr  f2__core_extension_funk__new(                      f2ptr cause, f2ptr filename, f2ptr name);
@@ -203,7 +203,6 @@ f2ptr raw__core_extension_funk__cfunk(                    f2ptr cause, f2ptr thi
 f2ptr  f2__core_extension_funk__cfunk(                    f2ptr cause, f2ptr this);
 f2ptr raw__core_extension_funk__apply(                    f2ptr cause, f2ptr this, f2ptr args);
 f2ptr  f2__core_extension_funk__apply(                    f2ptr cause, f2ptr this, f2ptr args);
-
 f2ptr raw__core_extension_funk__args_pointer(             f2ptr cause, f2ptr this);
 f2ptr  f2__core_extension_funk__args_pointer(             f2ptr cause, f2ptr this);
 f2ptr raw__core_extension_funk__args_cfunk(               f2ptr cause, f2ptr this);
@@ -214,15 +213,14 @@ f2ptr raw__core_extension_funk__is_funktional(            f2ptr cause, f2ptr thi
 f2ptr  f2__core_extension_funk__is_funktional(            f2ptr cause, f2ptr this);
 f2ptr raw__core_extension_funk__documentation(            f2ptr cause, f2ptr this);
 f2ptr  f2__core_extension_funk__documentation(            f2ptr cause, f2ptr this);
-
 f2ptr raw__core_extension_funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 f2ptr  f2__core_extension_funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 
 f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause);
 
-#define new__core_extension_funk(cause, filename, name) f2__core_extension_funk__new(cause, new__string(cause, filename), new__symbol(cause, #name))
+#define new__core_extension_funk(cause, core_extension_name, name) f2__core_extension_funk__new(cause, new__symbol(cause, #core_extension_name), new__symbol(cause, #name))
 
-#define core_extension_apply(cause, filename, name, args) f2__core_extension_funk__apply(cause, new__core_extension_funk(cause, filename, name), args)
+#define core_extension_apply(cause, core_extension_name, name, args) f2__core_extension_funk__apply(cause, new__core_extension_funk(cause, core_extension_name, name), args)
 
 // **
 

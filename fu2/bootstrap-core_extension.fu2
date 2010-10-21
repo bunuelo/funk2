@@ -17,3 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defmetro defcore [name filename]
+  `[global_core_extension_handler-add_new_core_extension [quote ,name] ,filename]]
+

@@ -34,6 +34,16 @@ struct funk2_object_type__core_extension__slot_s {
   f2ptr assure_initialized__funk;
 };
 
+// core_extension_handler
+
+typedef struct funk2_object_type__core_extension_handler__slot_s funk2_object_type__core_extension_handler__slot_t;
+struct funk2_object_type__core_extension_handler__slot_s {
+  f2ptr add_new_core_extension__symbol;
+  f2ptr add_new_core_extension__funk;
+  f2ptr lookup_core_extension__symbol;
+  f2ptr lookup_core_extension__funk;
+};
+
 #endif // F2__CORE_EXTENSION__TYPES__H
 
 #ifndef F2__CORE_EXTENSION__H
@@ -42,11 +52,27 @@ struct funk2_object_type__core_extension__slot_s {
 #include "f2_primfunks.h"
 
 
+// core_extension
 
 f2ptr f2core_extension__primobject_type__new_aux(f2ptr cause);
 
 
+// core_extension_handler
+
+f2ptr raw__core_extension_handler__new(                   f2ptr cause);
+f2ptr  f2__core_extension_handler__new(                   f2ptr cause);
+f2ptr raw__core_extension_handler__add_new_core_extension(f2ptr cause, f2ptr this, f2ptr name, f2ptr filename);
+f2ptr  f2__core_extension_handler__add_new_core_extension(f2ptr cause, f2ptr this, f2ptr name, f2ptr filename);
+f2ptr raw__core_extension_handler__lookup_core_extension( f2ptr cause, f2ptr this, f2ptr name);
+f2ptr  f2__core_extension_handler__lookup_core_extension( f2ptr cause, f2ptr this, f2ptr name);
+
 f2ptr f2core_extension_handler__primobject_type__new_aux(f2ptr cause);
+
+
+// global_core_extension_handler
+
+f2ptr f2__global_core_extension_handler__add_new_core_extension(f2ptr cause, f2ptr name, f2ptr filename);
+f2ptr f2__global_core_extension_handler__lookup_core_extension( f2ptr cause, f2ptr name);
 
 // **
 

@@ -37,7 +37,7 @@ f2ptr f2__core_extension__new(f2ptr cause, f2ptr name, f2ptr filename) {
   }
   return raw__core_extension__new(cause, name, filename);
 }
-def_pcfunk1(core_extension__new, name, filename, return f2__core_extension__new(this_cause, name, filename));
+def_pcfunk2(core_extension__new, name, filename, return f2__core_extension__new(this_cause, name, filename));
 
 
 f2ptr raw__core_extension__initialize(f2ptr cause, f2ptr this) {

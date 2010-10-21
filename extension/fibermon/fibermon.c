@@ -21,6 +21,11 @@
 
 #include "../../c/funk2.h"
 
+f2ptr f2__fibermon__bytes__to_memory_string__documentation(f2ptr cause) {
+  return new__string(cause, "yay!");
+}
+export_cefunk0(fibermon__bytes__to_memory_string__documentation);
+
 f2ptr f2__fibermon__bytes__to_memory_string(f2ptr cause, f2ptr this) {
   f2ptr i = object__get_0(cause, this, "as-integer");
   if (! raw__integer__is_type(cause, i)) {

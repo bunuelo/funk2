@@ -151,7 +151,7 @@ struct funk2_object_type__core_extension_funk__slot_s {
 
 
 #define def_cefunk__is_funktional(name, is_funktional)			\
-  f2ptr f2__##name##__is_funktional(f2ptr cause) {return f2bool__new(cause, is_funktional);}
+  f2ptr f2__##name##__is_funktional(f2ptr cause) {return f2bool__new(is_funktional);}
 
 
 #define def_cefunk__documentation(name, documentation_string)		\

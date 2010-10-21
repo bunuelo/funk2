@@ -178,7 +178,7 @@ void f2__core_extension__initialize_module() {
   
   // core_extension_handler
   
-  init_frame_object__1_slot(core_extension_handler, core_extension_filename_hash);
+  init_frame_object__1_slot(core_extension_handler, core_extension_dynamic_library_hash);
   
   f2__primcfunk__init__0(core_extension_handler__new, "");
   

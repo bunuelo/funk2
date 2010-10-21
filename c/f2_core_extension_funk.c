@@ -55,6 +55,13 @@ f2ptr raw__core_extension_funk__filename(f2ptr cause, f2ptr this) {
   return f2__core_extension__filename(cause, core_extension);
 }
 
+f2ptr f2__core_extension_funk__filename(f2ptr cause, f2ptr this) {
+  if (! raw__core_extension_funk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__core_extension_funk__filename(cause, this);
+}
+
 
 f2ptr raw__core_extension_funk__pointer(f2ptr cause, f2ptr this) {
   f2ptr filename = f2__core_extension_funk__filename(cause, this);

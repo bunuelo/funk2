@@ -133,7 +133,7 @@ void f2__initialize() {
   f2__natural_language__initialize();
   f2__partial_order__initialize();
   f2__core_extension_funk__initialize();
-  f2__core_extension__initialize();
+  f2__core_extension__initialize_module();
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)

@@ -50,7 +50,7 @@ f2ptr f2core_extension_handler__primobject_type__new_aux(f2ptr cause);
 
 // **
 
-void f2__core_extension__initialize();
+void f2__core_extension__initialize_module();
 
 
 #endif // F2__CORE_EXTENSION__H

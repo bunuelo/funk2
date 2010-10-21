@@ -220,7 +220,7 @@ f2ptr  f2__core_extension_funk__terminal_print_with_frame(f2ptr cause, f2ptr thi
 
 f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause);
 
-#define new__core_exteension_funk(cause, filename, name) f2__core_extension_funk__new(cause, new__string(cause, filename), new__symbol(cause, #name))
+#define new__core_extension_funk(cause, filename, name) f2__core_extension_funk__new(cause, new__string(cause, filename), new__symbol(cause, #name))
 
 // **
 

@@ -207,7 +207,8 @@ ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/fibermon/libfibermon.la \
-                  extension/mindmon/libmindmon.la
+                  extension/mindmon/libmindmon.la \
+                  extension/causality/libcausality.la
 #bin_PROGRAMS    = bin/funk2-static
 
 lib_libfunk2_la_SOURCES = \
@@ -336,8 +337,9 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
-extension_mindmon_libmindmon_la_SOURCES   = extension/mindmon/mindmon.c
-extension_fibermon_libfibermon_la_SOURCES = extension/fibermon/fibermon.c
+extension_mindmon_libmindmon_la_SOURCES     = extension/mindmon/mindmon.c
+extension_fibermon_libfibermon_la_SOURCES   = extension/fibermon/fibermon.c
+extension_causality_libcausality_la_SOURCES = extension/causality/causality.c
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 
@@ -361,14 +363,17 @@ FUNK2_LIBRARY_VERSION=0:0:0
 lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS)
 lib_libfunk2_la_CFLAGS  = $(cc_flags)
 
+bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
 extension_mindmon_libmindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_mindmon_libmindmon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_fibermon_libfibermon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_fibermon_libfibermon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_causality_libcausality_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_causality_libcausality_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h

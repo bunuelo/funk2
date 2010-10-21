@@ -55,6 +55,7 @@
 [primfunk:load 'fu2/primfunks-apropos.fu2']
 [primfunk:load 'fu2/primfunks-blocks_world.fu2']
 [primfunk:load 'fu2/primfunks-core_extension.fu2']
+[primfunk:load 'fu2/primfunks-core_extension_funk.fu2']
 [primfunk:load 'fu2/primfunks-graph.fu2']
 [primfunk:load 'fu2/primfunks-bug.fu2']
 [primfunk:load 'fu2/primfunks-compile.fu2']

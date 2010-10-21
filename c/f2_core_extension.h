@@ -54,10 +54,14 @@ struct funk2_object_type__core_extension_handler__slot_s {
 
 // core_extension
 
+declare_frame_object_3_slot(core_extension, name, filename, initialized);
+
 f2ptr f2core_extension__primobject_type__new_aux(f2ptr cause);
 
 
 // core_extension_handler
+
+declare_frame_object_1_slot(core_extension_handler, core_extension_name_hash);
 
 f2ptr raw__core_extension_handler__new(                   f2ptr cause);
 f2ptr  f2__core_extension_handler__new(                   f2ptr cause);

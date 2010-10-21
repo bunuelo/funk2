@@ -224,7 +224,7 @@ f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause);
 
 // **
 
-void f2__core_extension__initialize();
+void f2__core_extension_funk__initialize();
 
 #endif // F2__CORE_EXTENSION_FUNK__H
 

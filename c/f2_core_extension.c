@@ -24,7 +24,7 @@
 
 // core_extension
 
-def_frame_object__global__1_slot(core_extension_funk, filename);
+def_frame_object__global__1_slot(core_extension, filename);
 
 f2ptr raw__core_extension__new(f2ptr cause, f2ptr filename) {
   return f2core_extension__new(cause, filename);

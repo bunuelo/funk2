@@ -55,9 +55,6 @@ f2ptr raw__core_extension_handler__new(f2ptr cause) {
 }
 
 f2ptr f2__core_extension_handler__new(f2ptr cause) {
-  if (! raw__string__is_type(cause)) {
-    return f2larva__new(cause, 1, nil);
-  }
   return raw__core_extension__new(cause);
 }
 def_pcfunk0(core_extension_handler__new, return f2__core_extension_handler__new(this_cause));

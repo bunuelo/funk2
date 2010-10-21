@@ -131,6 +131,18 @@ f2ptr raw__core_extension_funk__cfunk(                    f2ptr cause, f2ptr thi
 f2ptr  f2__core_extension_funk__cfunk(                    f2ptr cause, f2ptr this);
 f2ptr raw__core_extension_funk__apply(                    f2ptr cause, f2ptr this, f2ptr args);
 f2ptr  f2__core_extension_funk__apply(                    f2ptr cause, f2ptr this, f2ptr args);
+
+f2ptr raw__core_extension_funk__args_pointer(             f2ptr cause, f2ptr this);
+f2ptr  f2__core_extension_funk__args_pointer(             f2ptr cause, f2ptr this);
+f2ptr raw__core_extension_funk__args_cfunk(               f2ptr cause, f2ptr this);
+f2ptr  f2__core_extension_funk__args_cfunk(               f2ptr cause, f2ptr this);
+f2ptr raw__core_extension_funk__args(                     f2ptr cause, f2ptr this);
+f2ptr  f2__core_extension_funk__args(                     f2ptr cause, f2ptr this);
+f2ptr raw__core_extension_funk__is_funktional(            f2ptr cause, f2ptr this);
+f2ptr  f2__core_extension_funk__is_funktional(            f2ptr cause, f2ptr this);
+f2ptr raw__core_extension_funk__documentation(            f2ptr cause, f2ptr this);
+f2ptr  f2__core_extension_funk__documentation(            f2ptr cause, f2ptr this);
+
 f2ptr raw__core_extension_funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 f2ptr  f2__core_extension_funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 

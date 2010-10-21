@@ -17,3 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defmetro defcorefunk [global_name filename name]
+  [print `[defcorefunk ,global_name ,filename]]
+  `[globalize-funk ,global_name [core_extension_funk-new ,filename [quote ,name]]]]
+

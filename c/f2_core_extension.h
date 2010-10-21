@@ -26,18 +26,22 @@
 
 typedef struct funk2_object_type__core_extension_funk__slot_s funk2_object_type__core_extension_funk__slot_t;
 struct funk2_object_type__core_extension_funk__slot_s {
-  f2ptr args__symbol;
-  f2ptr args__funk;
-  f2ptr is_funktional__symbol;
-  f2ptr is_funktional__funk;
-  f2ptr documentation__symbol;
-  f2ptr documentation__funk;
   f2ptr pointer__symbol;
   f2ptr pointer__funk;
   f2ptr cfunk__symbol;
   f2ptr cfunk__funk;
   f2ptr apply__symbol;
   f2ptr apply__funk;
+  f2ptr args_pointer__symbol;
+  f2ptr args_pointer__funk;
+  f2ptr args_cfunk__symbol;
+  f2ptr args_cfunk__funk;
+  f2ptr args__symbol;
+  f2ptr args__funk;
+  f2ptr is_funktional__symbol;
+  f2ptr is_funktional__funk;
+  f2ptr documentation__symbol;
+  f2ptr documentation__funk;
   f2ptr terminal_print_with_frame__symbol;
   f2ptr terminal_print_with_frame__funk;
 };

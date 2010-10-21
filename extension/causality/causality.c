@@ -73,3 +73,16 @@ f2ptr f2__causality__core_extension_destroy(f2ptr cause) {
 }
 export_cefunk0(causality__core_extension_destroy, 0, "");
 
+f2ptr f2__causality__initialize(f2ptr cause) {
+  f2__add_type(cause, new__symbol(cause, "causality"), f2__causality_type__new(cause));
+  printf("\ncausality initialized."); fflush(stdout);
+  return nil;
+}
+export_cefunk0(causality__initialize, 0, "");
+
+f2ptr f2__causality__destroy(f2ptr cause) {
+  printf("\ncausality destroyed."); fflush(stdout);
+  return nil;
+}
+export_cefunk0(causality__destroy, 0, "");
+

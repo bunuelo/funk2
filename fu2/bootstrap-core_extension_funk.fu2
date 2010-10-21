@@ -18,6 +18,6 @@
  rights to redistribute these changes.'
 
 [defmetro defcorefunk [global_name filename name]
-  [print `[defcorefunk ,global_name ,filename]]
+  [print `[defcorefunk ,global_name]]
   `[globalize-funk ,global_name [core_extension_funk-new ,filename [quote ,name]]]]
 

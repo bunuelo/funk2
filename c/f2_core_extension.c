@@ -200,7 +200,7 @@ def_pcfunk1(global_core_extension_handler__lookup_core_extension, name, return f
 // **
 
 void f2__core_extension__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
+  //f2ptr cause = initial_cause();
   
   //environment__add_var_value(cause, global_environment(), new__symbol(cause, "-core_extension_handler-"), f2__core_extension_handler__new(cause));
 }

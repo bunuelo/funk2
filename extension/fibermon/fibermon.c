@@ -388,7 +388,7 @@ export_cefunk1(fibermon_processor__recompute_statistics_fast, this, 0, "");
 
 
 f2ptr f2__fibermon__core_extension_initialize(f2ptr cause) {
-  printf("\nfibermon initialized."); fflush(stdout);
+  printf("\nfibermon initialized.  yay."); fflush(stdout);
   return nil;
 }
 export_cefunk0(fibermon__core_extension_initialize, 0, "");

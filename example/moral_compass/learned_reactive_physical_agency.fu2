@@ -24,7 +24,7 @@
 command `builtin_reactive `physical `move_forward_start]
 
 [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] command 
-`learned_reactive `physical `walk_directly_towards_resource `table+168137028]
+`builtin_reactive `physical `pick_up_with_left_hand `table+174518476]
 
 [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `physical] resources ] command `learned_reactive `physical `turn_left_resource 1]
 
@@ -32,12 +32,21 @@ command `builtin_reactive `physical `move_forward_start]
 
 [have [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] resources] lookup `walk_directly_towards_resource]
 
+
+[fiber [funk []
+	     [cause-define cause-name `demo_pickup]
+	     [demo_pickup `knife]][]]
+
 ODD: =.= walk_directly_towards resource has "resource" in its name =.=
 
 nextstep: test pick up : now left hand call the walk_directly_towards_resource however it is named wrongly. 
 right hand calls name walk_directly_towards.
 
+builtin pick up resource acting funny
+learned pick up activated builtin pickup (needs to be verified)
+
 '
+
 
 [defunk demo_pickup [object_name]
   [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
@@ -46,9 +55,11 @@ right hand calls name walk_directly_towards.
 			  resource `look_for] lookup `my_current_object]]
     [sleep 3]]
   [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
-	command `learned_reactive `physical `pick_up_with_left_hand 
+	command `learned_reactive `physical `pick_up_with_right_hand 
 	[have [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] 
 		   resource `look_for] lookup `my_current_object]]]
+
+
 
 
 
@@ -97,7 +108,7 @@ right hand calls name walk_directly_towards.
        [construct resource `move_forward
 		  [funk [steps]
 			
-			[print this]
+			[print 'move_forward resource']
 			[let* [[body  [get this body]]
 			       [mind  [get body mind]]
 			       [name  [get body name]]]
@@ -161,11 +172,14 @@ right hand calls name walk_directly_towards.
 			       [name  [get body name]]
 			       ] 
 			  [have this-resource think_to_self 'Picking up with right hand is starting']
-			  [if [get this mind objects]
+			  [print target]
+			  [if [get mind objects]
 			      [if [have [get mind objects] lookup target]
 				  [if [> [get [get this body] arm_length] [have [have [get mind objects] lookup target] lookup `distance]]
-				      [if [null [have [get mind sense] lookup `right_hand]]
-					  [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]
+				      [if [eq '' [have [have [get mind sense] lookup `position] lookup `in_right_hand]]
+					  [prog [print 'nothing in right hand'] 
+						[mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]
+						[print 'activated built-in pick_up']]
 					[mind-wait_to_activate mind learned_reactive physical drop_from_right_hand]]
 				    [prog 
 				     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
@@ -190,21 +204,21 @@ right hand calls name walk_directly_towards.
 			       [name  [get body name]]
 			      ] 
 			  [have this-resource think_to_self 'Picking up with left hand is starting']
-			  
+			  [print target]
 			  [if [get mind objects]
 			      [if [have [get mind objects] lookup target]
 				  [if [> [get [get this body] arm_length] [have [have [get mind objects] lookup target]lookup  `distance]]
-				      [if [null [have [get mind sense] lookup `left_hand]]
+				      [if [eq '' [have [have [get mind sense] lookup `position] lookup `in_left_hand]]
 					  [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]
 					[mind-wait_to_activate mind learned_reactive physical drop_from_left_hand]]
 				    [prog 
-				     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards_resource target]
+				     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
 				     [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]]]
 				[prog 
-				 [mind-wait_to_activate mind learned_reactive physical walk_directly_towards_resource target]
-[				 [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]]]
+				 [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
+				 [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]]]
 			    [prog 
-			     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards_resource target]
+			     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
 			     [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]]]
 			  [get mind sense]]]]
 		  
@@ -350,7 +364,8 @@ right hand calls name walk_directly_towards.
 					     [mind-wait_to_activate mind learned_reactive physical move_forward 1]
 					     
 					     [print 'end of while loop']
-					     [have this-resource think_to_self 'current distance:' [have [have [get mind objects] lookup desired_object] lookup `distance]]]
+					     [have this-resource think_to_self 'current distance:' [have [have [get mind objects] lookup desired_object] lookup `distance]]
+					     [print 'printed current distance']]
 					   [have this-resource think_to_self 'object within arm_length now']]
 					[prog [have this-resource think_to_self 'finally got it']
 					    [= achieved t]]]

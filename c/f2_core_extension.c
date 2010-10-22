@@ -238,7 +238,7 @@ f2ptr raw__core_extension_handler__unload_changed(f2ptr cause, f2ptr this) {
 	}
 	f2ptr filename = f2__core_extension__filename(cause, core_extension);
 	{
-	  f2ptr result = f2__dlfcn_dynamic_library_handler__unload_dynamic_library(cause, this, filename);
+	  f2ptr result = f2__global_dlfcn_dynamic_library__unload_dynamic_library(cause, filename);
 	  if (raw__larva__is_type(cause, result)) {
 	    return result;
 	  }

@@ -40,7 +40,8 @@
 
 'global funktions'
 
-[globalize-funk global_dlfcn_dynamic_library                &primfunk:global_dlfcn_dynamic_library]
-[globalize-funk global_dlfcn_dynamic_library-lookup_symbol  &primfunk:global_dlfcn_dynamic_library__lookup_symbol]
-[globalize-funk global_dlfcn_dynamic_library-unload_changed &primfunk:global_dlfcn_dynamic_library__unload_changed]
+[globalize-funk global_dlfcn_dynamic_library                        &primfunk:global_dlfcn_dynamic_library]
+[globalize-funk global_dlfcn_dynamic_library-lookup_symbol          &primfunk:global_dlfcn_dynamic_library__lookup_symbol]
+[globalize-funk global_dlfcn_dynamic_library-unload_dynamic_library &primfunk:global_dlfcn_dynamic_library__unload_dynamic_library]
+[globalize-funk global_dlfcn_dynamic_library-unload_changed         &primfunk:global_dlfcn_dynamic_library__unload_changed]
 

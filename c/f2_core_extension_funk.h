@@ -197,26 +197,28 @@ struct funk2_object_type__core_extension_funk__slot_s {
 
 declare_frame_object_6_slot(core_extension_funk, core_extension_name, name, cname, args_cname, is_funktional_cname, documentation_cname);
 
-f2ptr raw__core_extension_funk__new(                      f2ptr cause, f2ptr filename, f2ptr name);
-f2ptr  f2__core_extension_funk__new(                      f2ptr cause, f2ptr filename, f2ptr name);
-f2ptr raw__core_extension_funk__pointer(                  f2ptr cause, f2ptr this);
-f2ptr  f2__core_extension_funk__pointer(                  f2ptr cause, f2ptr this);
-f2ptr raw__core_extension_funk__cfunk(                    f2ptr cause, f2ptr this);
-f2ptr  f2__core_extension_funk__cfunk(                    f2ptr cause, f2ptr this);
-f2ptr raw__core_extension_funk__apply(                    f2ptr cause, f2ptr this, f2ptr args);
-f2ptr  f2__core_extension_funk__apply(                    f2ptr cause, f2ptr this, f2ptr args);
-f2ptr raw__core_extension_funk__args_pointer(             f2ptr cause, f2ptr this);
-f2ptr  f2__core_extension_funk__args_pointer(             f2ptr cause, f2ptr this);
-f2ptr raw__core_extension_funk__args_cfunk(               f2ptr cause, f2ptr this);
-f2ptr  f2__core_extension_funk__args_cfunk(               f2ptr cause, f2ptr this);
-f2ptr raw__core_extension_funk__args(                     f2ptr cause, f2ptr this);
-f2ptr  f2__core_extension_funk__args(                     f2ptr cause, f2ptr this);
-f2ptr raw__core_extension_funk__is_funktional(            f2ptr cause, f2ptr this);
-f2ptr  f2__core_extension_funk__is_funktional(            f2ptr cause, f2ptr this);
-f2ptr raw__core_extension_funk__documentation(            f2ptr cause, f2ptr this);
-f2ptr  f2__core_extension_funk__documentation(            f2ptr cause, f2ptr this);
-f2ptr raw__core_extension_funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
-f2ptr  f2__core_extension_funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr raw__core_extension_funk__new(                       f2ptr cause, f2ptr filename, f2ptr name);
+f2ptr  f2__core_extension_funk__new(                       f2ptr cause, f2ptr filename, f2ptr name);
+f2ptr raw__core_extension_funk__pointer(                   f2ptr cause, f2ptr this);
+f2ptr  f2__core_extension_funk__pointer(                   f2ptr cause, f2ptr this);
+f2ptr raw__core_extension_funk__cfunk(                     f2ptr cause, f2ptr this);
+f2ptr  f2__core_extension_funk__cfunk(                     f2ptr cause, f2ptr this);
+f2ptr raw__core_extension_funk__apply_without_initializing(f2ptr cause, f2ptr this, f2ptr args);
+f2ptr  f2__core_extension_funk__apply_without_initializing(f2ptr cause, f2ptr this, f2ptr args);
+f2ptr raw__core_extension_funk__apply(                     f2ptr cause, f2ptr this, f2ptr args);
+f2ptr  f2__core_extension_funk__apply(                     f2ptr cause, f2ptr this, f2ptr args);
+f2ptr raw__core_extension_funk__args_pointer(              f2ptr cause, f2ptr this);
+f2ptr  f2__core_extension_funk__args_pointer(              f2ptr cause, f2ptr this);
+f2ptr raw__core_extension_funk__args_cfunk(                f2ptr cause, f2ptr this);
+f2ptr  f2__core_extension_funk__args_cfunk(                f2ptr cause, f2ptr this);
+f2ptr raw__core_extension_funk__args(                      f2ptr cause, f2ptr this);
+f2ptr  f2__core_extension_funk__args(                      f2ptr cause, f2ptr this);
+f2ptr raw__core_extension_funk__is_funktional(             f2ptr cause, f2ptr this);
+f2ptr  f2__core_extension_funk__is_funktional(             f2ptr cause, f2ptr this);
+f2ptr raw__core_extension_funk__documentation(             f2ptr cause, f2ptr this);
+f2ptr  f2__core_extension_funk__documentation(             f2ptr cause, f2ptr this);
+f2ptr raw__core_extension_funk__terminal_print_with_frame( f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr  f2__core_extension_funk__terminal_print_with_frame( f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 
 f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause);
 

@@ -101,14 +101,23 @@ am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-extension_fibermon_libfibermon_la_LIBADD =
+extension_causality_libcausality_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
-am_extension_fibermon_libfibermon_la_OBJECTS = extension/fibermon/extension_fibermon_libfibermon_la-fibermon.lo
-extension_fibermon_libfibermon_la_OBJECTS =  \
-	$(am_extension_fibermon_libfibermon_la_OBJECTS)
+am_extension_causality_libcausality_la_OBJECTS = extension/causality/extension_causality_libcausality_la-causality.lo
+extension_causality_libcausality_la_OBJECTS =  \
+	$(am_extension_causality_libcausality_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
+extension_causality_libcausality_la_LINK = $(LIBTOOL) $(AM_V_lt) \
+	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
+	$(CCLD) $(extension_causality_libcausality_la_CFLAGS) \
+	$(CFLAGS) $(extension_causality_libcausality_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
+extension_fibermon_libfibermon_la_LIBADD =
+am_extension_fibermon_libfibermon_la_OBJECTS = extension/fibermon/extension_fibermon_libfibermon_la-fibermon.lo
+extension_fibermon_libfibermon_la_OBJECTS =  \
+	$(am_extension_fibermon_libfibermon_la_OBJECTS)
 extension_fibermon_libfibermon_la_LINK = $(LIBTOOL) $(AM_V_lt) \
 	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
 	$(CCLD) $(extension_fibermon_libfibermon_la_CFLAGS) $(CFLAGS) \
@@ -136,6 +145,7 @@ am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_agent.lo \
 	c/lib_libfunk2_la-f2_compile.lo \
 	c/lib_libfunk2_la-f2_compile_x86.lo \
 	c/lib_libfunk2_la-f2_core_extension.lo \
+	c/lib_libfunk2_la-f2_core_extension_funk.lo \
 	c/lib_libfunk2_la-f2_cpu.lo c/lib_libfunk2_la-f2_dlfcn.lo \
 	c/lib_libfunk2_la-f2_dptr.lo \
 	c/lib_libfunk2_la-f2_dynamic_memory.lo \
@@ -262,10 +272,12 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(extension_fibermon_libfibermon_la_SOURCES) \
+SOURCES = $(extension_causality_libcausality_la_SOURCES) \
+	$(extension_fibermon_libfibermon_la_SOURCES) \
 	$(extension_mindmon_libmindmon_la_SOURCES) \
 	$(lib_libfunk2_la_SOURCES)
-DIST_SOURCES = $(extension_fibermon_libfibermon_la_SOURCES) \
+DIST_SOURCES = $(extension_causality_libcausality_la_SOURCES) \
+	$(extension_fibermon_libfibermon_la_SOURCES) \
 	$(extension_mindmon_libmindmon_la_SOURCES) \
 	$(lib_libfunk2_la_SOURCES)
 ETAGS = etags
@@ -534,7 +546,8 @@ cc_flags = $(release__cc_flags)
 ACLOCAL_AMFLAGS = -I m4
 lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/fibermon/libfibermon.la \
-                  extension/mindmon/libmindmon.la
+                  extension/mindmon/libmindmon.la \
+                  extension/causality/libcausality.la
 
 #bin_PROGRAMS    = bin/funk2-static
 lib_libfunk2_la_SOURCES = \
@@ -553,6 +566,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_compile.c \
   c/f2_compile_x86.c \
   c/f2_core_extension.c \
+  c/f2_core_extension_funk.c \
   c/f2_cpu.c \
   c/f2_dlfcn.c \
   c/f2_dptr.c \
@@ -665,6 +679,7 @@ lib_libfunk2_la_SOURCES = \
 
 extension_mindmon_libmindmon_la_SOURCES = extension/mindmon/mindmon.c
 extension_fibermon_libfibermon_la_SOURCES = extension/fibermon/fibermon.c
+extension_causality_libcausality_la_SOURCES = extension/causality/causality.c
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 FUNK2_VERSION = `cat version`
@@ -684,12 +699,14 @@ FUNK2_LIBRARY_VERSION = 0:0:0
 #              +- increment if interfaces have been added, removed or changed
 lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS)
 lib_libfunk2_la_CFLAGS = $(cc_flags)
+bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+bin_funk2_static_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_mindmon_libmindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_mindmon_libmindmon_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_fibermon_libfibermon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_fibermon_libfibermon_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
-bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-bin_funk2_static_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_causality_libcausality_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_causality_libcausality_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES = config_bit_num.h config_compile_time_id.h
 AM_MAKEFLAGS = img/bootstrap.img
@@ -780,6 +797,17 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
+extension/causality/$(am__dirstamp):
+	@$(MKDIR_P) extension/causality
+	@: > extension/causality/$(am__dirstamp)
+extension/causality/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/causality/$(DEPDIR)
+	@: > extension/causality/$(DEPDIR)/$(am__dirstamp)
+extension/causality/extension_causality_libcausality_la-causality.lo:  \
+	extension/causality/$(am__dirstamp) \
+	extension/causality/$(DEPDIR)/$(am__dirstamp)
+extension/causality/libcausality.la: $(extension_causality_libcausality_la_OBJECTS) $(extension_causality_libcausality_la_DEPENDENCIES) extension/causality/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_causality_libcausality_la_LINK) -rpath $(libdir) $(extension_causality_libcausality_la_OBJECTS) $(extension_causality_libcausality_la_LIBADD) $(LIBS)
 extension/fibermon/$(am__dirstamp):
 	@$(MKDIR_P) extension/fibermon
 	@: > extension/fibermon/$(am__dirstamp)
@@ -837,6 +865,8 @@ c/lib_libfunk2_la-f2_compile.lo: c/$(am__dirstamp) \
 c/lib_libfunk2_la-f2_compile_x86.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_core_extension.lo: c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
+c/lib_libfunk2_la-f2_core_extension_funk.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_cpu.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
@@ -1092,6 +1122,8 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_compile_x86.lo
 	-rm -f c/lib_libfunk2_la-f2_core_extension.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_core_extension.lo
+	-rm -f c/lib_libfunk2_la-f2_core_extension_funk.$(OBJEXT)
+	-rm -f c/lib_libfunk2_la-f2_core_extension_funk.lo
 	-rm -f c/lib_libfunk2_la-f2_cpu.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_cpu.lo
 	-rm -f c/lib_libfunk2_la-f2_dlfcn.$(OBJEXT)
@@ -1308,6 +1340,8 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_zlib.lo
 	-rm -f c/lib_libfunk2_la-funk2.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-funk2.lo
+	-rm -f extension/causality/extension_causality_libcausality_la-causality.$(OBJEXT)
+	-rm -f extension/causality/extension_causality_libcausality_la-causality.lo
 	-rm -f extension/fibermon/extension_fibermon_libfibermon_la-fibermon.$(OBJEXT)
 	-rm -f extension/fibermon/extension_fibermon_libfibermon_la-fibermon.lo
 	-rm -f extension/mindmon/extension_mindmon_libmindmon_la-mindmon.$(OBJEXT)
@@ -1331,6 +1365,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_compile.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_compile_x86.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_core_extension.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_core_extension_funk.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_cpu.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_dlfcn.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_dptr.Plo@am__quote@
@@ -1439,6 +1474,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_xmlrpc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_zlib.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-funk2.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/causality/$(DEPDIR)/extension_causality_libcausality_la-causality.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/fibermon/$(DEPDIR)/extension_fibermon_libfibermon_la-fibermon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/mindmon/$(DEPDIR)/extension_mindmon_libmindmon_la-mindmon.Plo@am__quote@
 
@@ -1468,6 +1504,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
+
+extension/causality/extension_causality_libcausality_la-causality.lo: extension/causality/causality.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_causality_libcausality_la_CFLAGS) $(CFLAGS) -MT extension/causality/extension_causality_libcausality_la-causality.lo -MD -MP -MF extension/causality/$(DEPDIR)/extension_causality_libcausality_la-causality.Tpo -c -o extension/causality/extension_causality_libcausality_la-causality.lo `test -f 'extension/causality/causality.c' || echo '$(srcdir)/'`extension/causality/causality.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/causality/$(DEPDIR)/extension_causality_libcausality_la-causality.Tpo extension/causality/$(DEPDIR)/extension_causality_libcausality_la-causality.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/causality/causality.c' object='extension/causality/extension_causality_libcausality_la-causality.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_causality_libcausality_la_CFLAGS) $(CFLAGS) -c -o extension/causality/extension_causality_libcausality_la-causality.lo `test -f 'extension/causality/causality.c' || echo '$(srcdir)/'`extension/causality/causality.c
 
 extension/fibermon/extension_fibermon_libfibermon_la-fibermon.lo: extension/fibermon/fibermon.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_fibermon_libfibermon_la_CFLAGS) $(CFLAGS) -MT extension/fibermon/extension_fibermon_libfibermon_la-fibermon.lo -MD -MP -MF extension/fibermon/$(DEPDIR)/extension_fibermon_libfibermon_la-fibermon.Tpo -c -o extension/fibermon/extension_fibermon_libfibermon_la-fibermon.lo `test -f 'extension/fibermon/fibermon.c' || echo '$(srcdir)/'`extension/fibermon/fibermon.c
@@ -1604,6 +1648,14 @@ c/lib_libfunk2_la-f2_core_extension.lo: c/f2_core_extension.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_core_extension.c' object='c/lib_libfunk2_la-f2_core_extension.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_core_extension.lo `test -f 'c/f2_core_extension.c' || echo '$(srcdir)/'`c/f2_core_extension.c
+
+c/lib_libfunk2_la-f2_core_extension_funk.lo: c/f2_core_extension_funk.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_core_extension_funk.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_core_extension_funk.Tpo -c -o c/lib_libfunk2_la-f2_core_extension_funk.lo `test -f 'c/f2_core_extension_funk.c' || echo '$(srcdir)/'`c/f2_core_extension_funk.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_core_extension_funk.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_core_extension_funk.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_core_extension_funk.c' object='c/lib_libfunk2_la-f2_core_extension_funk.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_core_extension_funk.lo `test -f 'c/f2_core_extension_funk.c' || echo '$(srcdir)/'`c/f2_core_extension_funk.c
 
 c/lib_libfunk2_la-f2_cpu.lo: c/f2_cpu.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_cpu.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_cpu.Tpo -c -o c/lib_libfunk2_la-f2_cpu.lo `test -f 'c/f2_cpu.c' || echo '$(srcdir)/'`c/f2_cpu.c
@@ -2475,6 +2527,7 @@ mostlyclean-libtool:
 clean-libtool:
 	-rm -rf .libs _libs
 	-rm -rf c/.libs c/_libs
+	-rm -rf extension/causality/.libs extension/causality/_libs
 	-rm -rf extension/fibermon/.libs extension/fibermon/_libs
 	-rm -rf extension/mindmon/.libs extension/mindmon/_libs
 	-rm -rf lib/.libs lib/_libs
@@ -2709,6 +2762,8 @@ distclean-generic:
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 	-rm -f c/$(DEPDIR)/$(am__dirstamp)
 	-rm -f c/$(am__dirstamp)
+	-rm -f extension/causality/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/causality/$(am__dirstamp)
 	-rm -f extension/fibermon/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/fibermon/$(am__dirstamp)
 	-rm -f extension/mindmon/$(DEPDIR)/$(am__dirstamp)
@@ -2723,7 +2778,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf c/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/mindmon/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/mindmon/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -2771,7 +2826,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf c/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/mindmon/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/mindmon/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

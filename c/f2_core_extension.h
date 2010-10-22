@@ -32,6 +32,10 @@ struct funk2_object_type__core_extension__slot_s {
   f2ptr destroy__funk;
   f2ptr assure_initialized__symbol;
   f2ptr assure_initialized__funk;
+  f2ptr assure_destroyed__symbol;
+  f2ptr assure_destroyed__funk;
+  f2ptr changed_on_disk__symbol;
+  f2ptr changed_on_disk__funk;
 };
 
 // core_extension_handler
@@ -42,6 +46,8 @@ struct funk2_object_type__core_extension_handler__slot_s {
   f2ptr add_new_core_extension__funk;
   f2ptr lookup_core_extension__symbol;
   f2ptr lookup_core_extension__funk;
+  f2ptr unload_changed__symbol;
+  f2ptr unload_changed__funk;
 };
 
 #endif // F2__CORE_EXTENSION__TYPES__H

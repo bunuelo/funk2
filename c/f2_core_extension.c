@@ -230,14 +230,18 @@ f2ptr raw__core_extension_handler__unload_changed(f2ptr cause, f2ptr this) {
     while (iter) {
       f2ptr core_extension = f2cons__car(iter, cause);
       {
-	f2ptr result   = f2__core_extension__assure_destroyed(cause, core_extension);
-	if (raw__larva__is_type(cause, result)) {
-	  return result;
+	{
+	  f2ptr result = f2__core_extension__assure_destroyed(cause, core_extension);
+	  if (raw__larva__is_type(cause, result)) {
+	    return result;
+	  }
 	}
 	f2ptr filename = f2__core_extension__filename(cause, core_extension);
-	f2ptr result   = f2__dlfcn_dynamic_library_handler__unload_dynamic_library(cause, this, filename);
-	if (raw__larva__is_type(cause, result)) {
-	  return result;
+	{
+	  f2ptr result = f2__dlfcn_dynamic_library_handler__unload_dynamic_library(cause, this, filename);
+	  if (raw__larva__is_type(cause, result)) {
+	    return result;
+	  }
 	}
       }
       iter = f2cons__cdr(iter, cause);

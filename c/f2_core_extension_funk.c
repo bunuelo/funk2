@@ -47,10 +47,20 @@ f2ptr raw__core_extension_funk__filename(f2ptr cause, f2ptr this) {
   f2ptr core_extension_name = f2__core_extension_funk__core_extension_name(cause, this);
   f2ptr core_extension      = f2__global_core_extension_handler__lookup_core_extension(cause, core_extension_name);
   if (raw__larva__is_type(cause, core_extension)) {
-    return core_extension;
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list10__new(cause,
+															new__symbol(cause, "bug_type"),            new__symbol(cause, "could_not_lookup_core_extension"),
+															new__symbol(cause, "funkname"),            new__symbol(cause, "core_extension_funk-filename"),
+															new__symbol(cause, "core_extension"),      core_extension,
+															new__symbol(cause, "core_extension_name"), core_extension_name,
+															new__symbol(cause, "this"),                this))));
   }
   if (! raw__core_extension__is_type(cause, core_extension)) {
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list10__new(cause,
+															new__symbol(cause, "bug_type"),            new__symbol(cause, "core_extension_is_wrong_type"),
+															new__symbol(cause, "funkname"),            new__symbol(cause, "core_extension_funk-filename"),
+															new__symbol(cause, "core_extension"),      core_extension,
+															new__symbol(cause, "core_extension_name"), core_extension_name,
+															new__symbol(cause, "this"),                this))));
   }
   return f2__core_extension__filename(cause, core_extension);
 }
@@ -67,7 +77,11 @@ def_pcfunk1(core_extension_funk__filename, this, return f2__core_extension_funk_
 f2ptr raw__core_extension_funk__pointer(f2ptr cause, f2ptr this) {
   f2ptr filename = f2__core_extension_funk__filename(cause, this);
   if (raw__larva__is_type(cause, filename)) {
-    return filename;
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
+														       new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-pointer"),
+														       new__symbol(cause, "filename"), filename,
+														       new__symbol(cause, "this"),     this))));
   }
   f2ptr cname    = f2__core_extension_funk__cname(   cause, this);
   return f2__global_dlfcn_dynamic_library__lookup_symbol(cause, filename, cname);
@@ -85,10 +99,18 @@ def_pcfunk1(core_extension_funk__pointer, this, return f2__core_extension_funk__
 f2ptr raw__core_extension_funk__cfunk(f2ptr cause, f2ptr this) {
   f2ptr pointer = f2__core_extension_funk__pointer(cause, this);
   if (raw__larva__is_type(cause, pointer)) {
-    return pointer;
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_pointer"),
+														       new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-cfunk"),
+														       new__symbol(cause, "pointer"),  pointer,
+														       new__symbol(cause, "this"),     this))));
   }
   if (! raw__pointer__is_type(cause, pointer)) {
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"), new__symbol(cause, "core_extension_funk_pointer_is_wrong_type"),
+														       new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-cfunk"),
+														       new__symbol(cause, "pointer"),  pointer,
+														       new__symbol(cause, "this"),     this))));
   }
   f2ptr name          = f2__core_extension_funk__name(cause, this);
   f2ptr args          = f2__core_extension_funk__args(cause, this);
@@ -111,10 +133,18 @@ def_pcfunk1(core_extension_funk__cfunk, this, return f2__core_extension_funk__cf
 f2ptr raw__core_extension_funk__apply_without_initializing(f2ptr cause, f2ptr this, f2ptr args) {
   f2ptr cfunk = raw__core_extension_funk__cfunk(cause, this);
   if (raw__larva__is_type(cause, cfunk)) {
-    return cfunk;
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_cfunk"),
+														       new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-apply_without_initializing"),
+														       new__symbol(cause, "cfunk"),    cfunk,
+														       new__symbol(cause, "this"),     this))));
   }
   if (! raw__cfunk__is_type(cause, cfunk)) {
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"), new__symbol(cause, "core_extension_funk_cfunk_is_wrong_type"),
+														       new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-apply_without_initializing"),
+														       new__symbol(cause, "cfunk"),    cfunk,
+														       new__symbol(cause, "this"),     this))));
   }
   return f2__cfunk__apply(cause, cfunk, f2__this__fiber(cause), args);
 }
@@ -132,11 +162,22 @@ f2ptr raw__core_extension_funk__apply(f2ptr cause, f2ptr this, f2ptr args) {
   f2ptr core_extension_name = f2__core_extension_funk__core_extension_name(cause, this);
   f2ptr core_extension      = f2__global_core_extension_handler__lookup_core_extension(cause, core_extension_name);
   if (raw__larva__is_type(cause, core_extension)) {
-    return core_extension;
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list10__new(cause,
+															new__symbol(cause, "bug_type"),            new__symbol(cause, "could_not_lookup_core_extension"),
+															new__symbol(cause, "funkname"),            new__symbol(cause, "core_extension_funk-apply"),
+															new__symbol(cause, "core_extension_name"), core_extension_name,
+															new__symbol(cause, "core_extension"),      core_extension,
+															new__symbol(cause, "this"),                this))));
   }
   f2ptr result = f2__core_extension__assure_initialized(cause, core_extension);
   if (raw__larva__is_type(cause, result)) {
-    return result;
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list12__new(cause,
+															new__symbol(cause, "bug_type"),            new__symbol(cause, "could_not_assure_core_extension_is_initialize"),
+															new__symbol(cause, "funkname"),            new__symbol(cause, "core_extension_funk-apply"),
+															new__symbol(cause, "core_extension_name"), core_extension_name,
+															new__symbol(cause, "core_extension"),      core_extension,
+															new__symbol(cause, "result"),              result,
+															new__symbol(cause, "this"),                this))));
   }
   return raw__core_extension_funk__apply_without_initializing(cause, this, args);
 }
@@ -151,11 +192,15 @@ def_pcfunk2(core_extension_funk__apply, this, args, return f2__core_extension_fu
 
 
 f2ptr raw__core_extension_funk__args_pointer(f2ptr cause, f2ptr this) {
-  f2ptr filename   = f2__core_extension_funk__filename(cause, this);
+  f2ptr filename = f2__core_extension_funk__filename(cause, this);
   if (raw__larva__is_type(cause, filename)) {
-    return filename;
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list10__new(cause,
+															new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
+															new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-args_pointer"),
+															new__symbol(cause, "filename"), filename,
+															new__symbol(cause, "this"),     this))));
   }
-  f2ptr args_cname = f2__core_extension_funk__args_cname(   cause, this);
+  f2ptr args_cname = f2__core_extension_funk__args_cname(cause, this);
   return f2__global_dlfcn_dynamic_library__lookup_symbol(cause, filename, args_cname);
 }
 
@@ -171,10 +216,18 @@ def_pcfunk1(core_extension_funk__args_pointer, this, return f2__core_extension_f
 f2ptr raw__core_extension_funk__args_cfunk(f2ptr cause, f2ptr this) {
   f2ptr args_pointer = f2__core_extension_funk__args_pointer(cause, this);
   if (raw__larva__is_type(cause, args_pointer)) {
-    return args_pointer;
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"),     new__symbol(cause, "could_not_get_core_extension_funk_pointer"),
+														       new__symbol(cause, "funkname"),     new__symbol(cause, "core_extension_funk-args_cfunk"),
+														       new__symbol(cause, "args_pointer"), args_pointer,
+														       new__symbol(cause, "this"),         this))));
   }
   if (! raw__pointer__is_type(cause, args_pointer)) {
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"),     new__symbol(cause, "core_extension_funk_pointer_is_wrong_type"),
+														       new__symbol(cause, "funkname"),     new__symbol(cause, "core_extension_funk-args_cfunk"),
+														       new__symbol(cause, "args_pointer"), args_pointer,
+														       new__symbol(cause, "this"),         this))));
   }
   f2ptr name          = f2__core_extension_funk__args_cname(cause, this);
   f2ptr args          = nil;
@@ -197,10 +250,18 @@ def_pcfunk1(core_extension_funk__args_cfunk, this, return f2__core_extension_fun
 f2ptr raw__core_extension_funk__args(f2ptr cause, f2ptr this) {
   f2ptr args_cfunk = raw__core_extension_funk__args_cfunk(cause, this);
   if (raw__larva__is_type(cause, args_cfunk)) {
-    return args_cfunk;
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"),   new__symbol(cause, "could_not_get_core_extension_funk_cfunk"),
+														       new__symbol(cause, "funkname"),   new__symbol(cause, "core_extension_funk-args"),
+														       new__symbol(cause, "args_cfunk"), args_cfunk,
+														       new__symbol(cause, "this"),       this))));
   }
   if (! raw__cfunk__is_type(cause, args_cfunk)) {
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"),   new__symbol(cause, "core_extension_funk_cfunk_is_wrong_type"),
+														       new__symbol(cause, "funkname"),   new__symbol(cause, "core_extension_funk-args"),
+														       new__symbol(cause, "args_cfunk"), args_cfunk,
+														       new__symbol(cause, "this"),       this))));
   }
   return f2__cfunk__apply(cause, args_cfunk, f2__this__fiber(cause), nil);
 }
@@ -217,7 +278,11 @@ def_pcfunk1(core_extension_funk__args, this, return f2__core_extension_funk__arg
 f2ptr raw__core_extension_funk__is_funktional_pointer(f2ptr cause, f2ptr this) {
   f2ptr filename   = f2__core_extension_funk__filename(cause, this);
   if (raw__larva__is_type(cause, filename)) {
-    return filename;
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list10__new(cause,
+															new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
+															new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-is_funktional_pointer"),
+															new__symbol(cause, "filename"), filename,
+															new__symbol(cause, "this"),     this))));
   }
   f2ptr is_funktional_cname = f2__core_extension_funk__is_funktional_cname(   cause, this);
   return f2__global_dlfcn_dynamic_library__lookup_symbol(cause, filename, is_funktional_cname);
@@ -235,10 +300,18 @@ def_pcfunk1(core_extension_funk__is_funktional_pointer, this, return f2__core_ex
 f2ptr raw__core_extension_funk__is_funktional_cfunk(f2ptr cause, f2ptr this) {
   f2ptr is_funktional_pointer = f2__core_extension_funk__is_funktional_pointer(cause, this);
   if (raw__larva__is_type(cause, is_funktional_pointer)) {
-    return is_funktional_pointer;
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list10__new(cause,
+															new__symbol(cause, "bug_type"),              new__symbol(cause, "could_not_get_core_extension_funk_pointer"),
+															new__symbol(cause, "funkname"),              new__symbol(cause, "core_extension_funk-is_funktional_pointer"),
+															new__symbol(cause, "is_funktional_pointer"), is_funktional_pointer,
+															new__symbol(cause, "this"),                  this))));
   }
   if (! raw__pointer__is_type(cause, is_funktional_pointer)) {
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list10__new(cause,
+															new__symbol(cause, "bug_type"),              new__symbol(cause, "core_extension_funk_pointer_is_wrong_type"),
+															new__symbol(cause, "funkname"),              new__symbol(cause, "core_extension_funk-is_funktional_pointer"),
+															new__symbol(cause, "is_funktional_pointer"), is_funktional_pointer,
+															new__symbol(cause, "this"),                  this))));
   }
   f2ptr name          = f2__core_extension_funk__is_funktional_cname(cause, this);
   f2ptr args          = nil;
@@ -261,10 +334,18 @@ def_pcfunk1(core_extension_funk__is_funktional_cfunk, this, return f2__core_exte
 f2ptr raw__core_extension_funk__is_funktional(f2ptr cause, f2ptr this) {
   f2ptr is_funktional_cfunk = raw__core_extension_funk__is_funktional_cfunk(cause, this);
   if (raw__larva__is_type(cause, is_funktional_cfunk)) {
-    return is_funktional_cfunk;
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"),            new__symbol(cause, "could_not_get_core_extension_funk_is_funktional_cfunk"),
+														       new__symbol(cause, "funkname"),            new__symbol(cause, "core_extension_funk-is_funktional"),
+														       new__symbol(cause, "is_funktional_cfunk"), is_funktional_cfunk,
+														       new__symbol(cause, "this"),                this))));
   }
   if (! raw__cfunk__is_type(cause, is_funktional_cfunk)) {
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"),            new__symbol(cause, "core_extension_funk_is_funktional_cfunk_is_wrong_type"),
+														       new__symbol(cause, "funkname"),            new__symbol(cause, "core_extension_funk-is_funktional"),
+														       new__symbol(cause, "is_funktional_cfunk"), is_funktional_cfunk,
+														       new__symbol(cause, "this"),                this))));
   }
   return f2__cfunk__apply(cause, is_funktional_cfunk, f2__this__fiber(cause), nil);
 }
@@ -281,7 +362,11 @@ def_pcfunk1(core_extension_funk__is_funktional, this, return f2__core_extension_
 f2ptr raw__core_extension_funk__documentation_pointer(f2ptr cause, f2ptr this) {
   f2ptr filename   = f2__core_extension_funk__filename(cause, this);
   if (raw__larva__is_type(cause, filename)) {
-    return filename;
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list10__new(cause,
+															new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
+															new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-documentation_pointer"),
+															new__symbol(cause, "filename"), filename,
+															new__symbol(cause, "this"),     this))));
   }
   f2ptr documentation_cname = f2__core_extension_funk__documentation_cname(   cause, this);
   return f2__global_dlfcn_dynamic_library__lookup_symbol(cause, filename, documentation_cname);
@@ -299,10 +384,18 @@ def_pcfunk1(core_extension_funk__documentation_pointer, this, return f2__core_ex
 f2ptr raw__core_extension_funk__documentation_cfunk(f2ptr cause, f2ptr this) {
   f2ptr documentation_pointer = f2__core_extension_funk__documentation_pointer(cause, this);
   if (raw__larva__is_type(cause, documentation_pointer)) {
-    return documentation_pointer;
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"),              new__symbol(cause, "could_not_get_core_extension_funk_documentation_pointer"),
+														       new__symbol(cause, "funkname"),              new__symbol(cause, "core_extension_funk-documentation_cfunk"),
+														       new__symbol(cause, "documentation_pointer"), documentation_pointer,
+														       new__symbol(cause, "this"),                  this))));
   }
   if (! raw__pointer__is_type(cause, documentation_pointer)) {
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"),              new__symbol(cause, "core_extension_funk_documentation_pointer_is_wrong_type"),
+														       new__symbol(cause, "funkname"),              new__symbol(cause, "core_extension_funk-documentation_cfunk"),
+														       new__symbol(cause, "documentation_pointer"), documentation_pointer,
+														       new__symbol(cause, "this"),                  this))));
   }
   f2ptr name          = f2__core_extension_funk__documentation_cname(cause, this);
   f2ptr args          = nil;
@@ -325,10 +418,18 @@ def_pcfunk1(core_extension_funk__documentation_cfunk, this, return f2__core_exte
 f2ptr raw__core_extension_funk__documentation(f2ptr cause, f2ptr this) {
   f2ptr documentation_cfunk = raw__core_extension_funk__documentation_cfunk(cause, this);
   if (raw__larva__is_type(cause, documentation_cfunk)) {
-    return documentation_cfunk;
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"),            new__symbol(cause, "could_not_get_core_extension_funk_documentation_cfunk"),
+														       new__symbol(cause, "funkname"),            new__symbol(cause, "core_extension_funk-documentation"),
+														       new__symbol(cause, "documentation_cfunk"), documentation_cfunk,
+														       new__symbol(cause, "this"),                this))));
   }
   if (! raw__cfunk__is_type(cause, documentation_cfunk)) {
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"),            new__symbol(cause, "core_extension_funk_documentation_cfunk_is_wrong_type"),
+														       new__symbol(cause, "funkname"),            new__symbol(cause, "core_extension_funk-documentation"),
+														       new__symbol(cause, "documentation_cfunk"), documentation_cfunk,
+														       new__symbol(cause, "this"),                this))));
   }
   return f2__cfunk__apply(cause, documentation_cfunk, f2__this__fiber(cause), nil);
 }

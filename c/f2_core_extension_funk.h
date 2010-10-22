@@ -30,6 +30,8 @@ struct funk2_object_type__core_extension_funk__slot_s {
   f2ptr pointer__funk;
   f2ptr cfunk__symbol;
   f2ptr cfunk__funk;
+  f2ptr apply_without_initializing__symbol;
+  f2ptr apply_without_initializing__funk;
   f2ptr apply__symbol;
   f2ptr apply__funk;
   f2ptr args_pointer__symbol;

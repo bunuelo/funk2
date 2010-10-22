@@ -386,3 +386,16 @@ f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this)
 export_cefunk1(fibermon_processor__recompute_statistics_fast, this, 0, "");
 
 
+
+f2ptr f2__fibermon__core_extension_initialize(f2ptr cause) {
+  printf("\nfibermon initialized."); fflush(stdout);
+  return nil;
+}
+export_cefunk0(causality__core_extension_initialize, 0, "");
+
+f2ptr f2__fibermon__core_extension_destroy(f2ptr cause) {
+  printf("\nfibermon destroyed."); fflush(stdout);
+  return nil;
+}
+export_cefunk0(causality__core_extension_destroy, 0, "");
+

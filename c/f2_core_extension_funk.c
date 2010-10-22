@@ -278,11 +278,11 @@ def_pcfunk1(core_extension_funk__args, this, return f2__core_extension_funk__arg
 f2ptr raw__core_extension_funk__is_funktional_pointer(f2ptr cause, f2ptr this) {
   f2ptr filename   = f2__core_extension_funk__filename(cause, this);
   if (raw__larva__is_type(cause, filename)) {
-    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list10__new(cause,
-															new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
-															new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-is_funktional_pointer"),
-															new__symbol(cause, "filename"), filename,
-															new__symbol(cause, "this"),     this))));
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
+														       new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-is_funktional_pointer"),
+														       new__symbol(cause, "filename"), filename,
+														       new__symbol(cause, "this"),     this))));
   }
   f2ptr is_funktional_cname = f2__core_extension_funk__is_funktional_cname(   cause, this);
   return f2__global_dlfcn_dynamic_library__lookup_symbol(cause, filename, is_funktional_cname);
@@ -300,18 +300,18 @@ def_pcfunk1(core_extension_funk__is_funktional_pointer, this, return f2__core_ex
 f2ptr raw__core_extension_funk__is_funktional_cfunk(f2ptr cause, f2ptr this) {
   f2ptr is_funktional_pointer = f2__core_extension_funk__is_funktional_pointer(cause, this);
   if (raw__larva__is_type(cause, is_funktional_pointer)) {
-    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list10__new(cause,
-															new__symbol(cause, "bug_type"),              new__symbol(cause, "could_not_get_core_extension_funk_pointer"),
-															new__symbol(cause, "funkname"),              new__symbol(cause, "core_extension_funk-is_funktional_pointer"),
-															new__symbol(cause, "is_funktional_pointer"), is_funktional_pointer,
-															new__symbol(cause, "this"),                  this))));
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"),              new__symbol(cause, "could_not_get_core_extension_funk_pointer"),
+														       new__symbol(cause, "funkname"),              new__symbol(cause, "core_extension_funk-is_funktional_pointer"),
+														       new__symbol(cause, "is_funktional_pointer"), is_funktional_pointer,
+														       new__symbol(cause, "this"),                  this))));
   }
   if (! raw__pointer__is_type(cause, is_funktional_pointer)) {
-    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list10__new(cause,
-															new__symbol(cause, "bug_type"),              new__symbol(cause, "core_extension_funk_pointer_is_wrong_type"),
-															new__symbol(cause, "funkname"),              new__symbol(cause, "core_extension_funk-is_funktional_pointer"),
-															new__symbol(cause, "is_funktional_pointer"), is_funktional_pointer,
-															new__symbol(cause, "this"),                  this))));
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"),              new__symbol(cause, "core_extension_funk_pointer_is_wrong_type"),
+														       new__symbol(cause, "funkname"),              new__symbol(cause, "core_extension_funk-is_funktional_pointer"),
+														       new__symbol(cause, "is_funktional_pointer"), is_funktional_pointer,
+														       new__symbol(cause, "this"),                  this))));
   }
   f2ptr name          = f2__core_extension_funk__is_funktional_cname(cause, this);
   f2ptr args          = nil;

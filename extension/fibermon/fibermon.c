@@ -391,11 +391,11 @@ f2ptr f2__fibermon__core_extension_initialize(f2ptr cause) {
   printf("\nfibermon initialized."); fflush(stdout);
   return nil;
 }
-export_cefunk0(causality__core_extension_initialize, 0, "");
+export_cefunk0(fibermon__core_extension_initialize, 0, "");
 
 f2ptr f2__fibermon__core_extension_destroy(f2ptr cause) {
   printf("\nfibermon destroyed."); fflush(stdout);
   return nil;
 }
-export_cefunk0(causality__core_extension_destroy, 0, "");
+export_cefunk0(fibermon__core_extension_destroy, 0, "");
 

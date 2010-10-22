@@ -49,7 +49,11 @@ f2ptr raw__core_extension__initialize(f2ptr cause, f2ptr this) {
   f2ptr initialize_funk      = f2__core_extension_funk__new(cause, name, initialize_funk_name);
   f2ptr result = f2__core_extension_funk__apply_without_initializing(cause, initialize_funk, nil);
   if (raw__larva__is_type(cause, result)) {
-    return result;
+    return f2larva__new(cause, 3435, f2__bug__new(cause, f2integer__new(cause, 3435), f2__frame__new(cause, f2list8__new(cause,
+															 new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_initialize_core_extension"),
+															 new__symbol(cause, "funkname"), new__symbol(cause, "core_extension-initialize"),
+															 new__symbol(cause, "this"),     this,
+															 new__symbol(cause, "result"),   result))));
   }
   f2__core_extension__initialized__set(cause, this, f2bool__new(boolean__true));
   return nil;
@@ -68,13 +72,16 @@ f2ptr raw__core_extension__destroy(f2ptr cause, f2ptr this) {
   if (f2__core_extension__initialized(cause, this) == nil) {
     return f2larva__new(cause, 124351, nil);
   }
-  f2ptr filename          = f2__core_extension__filename(cause, this);
   f2ptr name              = f2__core_extension__name(    cause, this);
   f2ptr destroy_funk_name = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, name), new__string(cause, "__core_extension_destroy"))));
-  f2ptr destroy_funk      = f2__core_extension_funk__new(cause, filename, destroy_funk_name);
+  f2ptr destroy_funk      = f2__core_extension_funk__new(cause, name, destroy_funk_name);
   f2ptr result = f2__core_extension_funk__apply(cause, destroy_funk, nil);
   if (raw__larva__is_type(cause, result)) {
-    return result;
+    return f2larva__new(cause, 3435, f2__bug__new(cause, f2integer__new(cause, 3435), f2__frame__new(cause, f2list8__new(cause,
+															 new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_destroy_core_extension"),
+															 new__symbol(cause, "funkname"), new__symbol(cause, "core_extension-destroy"),
+															 new__symbol(cause, "this"),     this,
+															 new__symbol(cause, "result"),   result))));
   }
   f2__core_extension__initialized__set(cause, this, f2bool__new(boolean__false));
   return nil;

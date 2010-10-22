@@ -44,7 +44,6 @@ f2ptr raw__core_extension__initialize(f2ptr cause, f2ptr this) {
   if (f2__core_extension__initialized(cause, this) != nil) {
     return f2larva__new(cause, 124352, nil);
   }
-  f2ptr filename             = f2__core_extension__filename(cause, this);
   f2ptr name                 = f2__core_extension__name(    cause, this);
   f2ptr initialize_funk_name = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, name), new__string(cause, "__core_extension_initialize"))));
   f2ptr initialize_funk      = f2__core_extension_funk__new(cause, name, initialize_funk_name);

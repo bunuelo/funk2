@@ -194,11 +194,11 @@ def_pcfunk2(core_extension_funk__apply, this, args, return f2__core_extension_fu
 f2ptr raw__core_extension_funk__args_pointer(f2ptr cause, f2ptr this) {
   f2ptr filename = f2__core_extension_funk__filename(cause, this);
   if (raw__larva__is_type(cause, filename)) {
-    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list10__new(cause,
-															new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
-															new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-args_pointer"),
-															new__symbol(cause, "filename"), filename,
-															new__symbol(cause, "this"),     this))));
+    return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
+														       new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-args_pointer"),
+														       new__symbol(cause, "filename"), filename,
+														       new__symbol(cause, "this"),     this))));
   }
   f2ptr args_cname = f2__core_extension_funk__args_cname(cause, this);
   return f2__global_dlfcn_dynamic_library__lookup_symbol(cause, filename, args_cname);

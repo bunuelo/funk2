@@ -19,6 +19,6 @@
 
 [defmetro defcorefunk [global_name core_extension_name name]
   `[let [[core_extension_funk [core_extension_funk-new [quote ,core_extension_name] [quote ,name]]]]
-     [print `[defcorefunk ,[quote ,global_name] ,[get core_extension_funk args]]]
+     [print `[defcorefunk ,[quote ,global_name]]]
      [globalize-funk ,global_name core_extension_funk]]]
 

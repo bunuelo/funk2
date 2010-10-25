@@ -322,19 +322,27 @@ void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc) {
   g_thread_init(NULL);
   gdk_threads_init();
   gdk_rgb_init();
-  gtk_init(argv, argc);
   
-  funk2_processor_mutex__init(&(this->main_thread__mutex));
-  this->main_thread__active        = boolean__false;
-  
-  funk2_processor_mutex__init(&(this->callbacks__mutex));
-  this->callbacks                  = NULL;
-  
-  funk2_processor_mutex__init(&(this->callback_events__mutex));
-  this->callback_events            = NULL;
-  this->callback_events__last_cons = NULL;
-  
-  this->main_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), &funk2_gtk__thread__start_function__helper, (void*)this);
+  if (! gtk_init_check(argv, argc)) {
+    
+    this->initialized_successfully = boolean__false;
+    
+  } else {
+    
+    this->initialized_successfully = boolean__true;
+    
+    funk2_processor_mutex__init(&(this->main_thread__mutex));
+    this->main_thread__active        = boolean__false;
+    
+    funk2_processor_mutex__init(&(this->callbacks__mutex));
+    this->callbacks                  = NULL;
+    
+    funk2_processor_mutex__init(&(this->callback_events__mutex));
+    this->callback_events            = NULL;
+    this->callback_events__last_cons = NULL;
+    
+    this->main_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), &funk2_gtk__thread__start_function__helper, (void*)this);
+  }
 }
 
 
@@ -1218,7 +1226,11 @@ f2ptr f2__gtk_not_supported_larva__new(f2ptr cause) {
 
 boolean_t raw__gtk__is_supported(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  return boolean__true;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    return boolean__true;
+  } else {
+    return boolean__false;
+  }
 #else
   return boolean__false;
 #endif //F2__GTK__SUPPORTED
@@ -1232,8 +1244,12 @@ def_pcfunk0(gtk__is_supported, return f2__gtk__is_supported(this_cause));
 
 f2ptr raw__gtk__window__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* window = funk2_gtk__window__new(&(__funk2.gtk));
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(window)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* window = funk2_gtk__window__new(&(__funk2.gtk));
+    return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(window)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1247,15 +1263,19 @@ def_pcfunk0(gtk__window__new, return f2__gtk__window__new(this_cause));
 
 f2ptr raw__gtk__window__set_title(f2ptr cause, f2ptr window, f2ptr title) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_window = raw__gtk_widget__as__GtkWidget(cause, window);
-  
-  u64 title__length = raw__string__length(cause, title);
-  u8* title__str    = (u8*)alloca(title__length + 1);
-  raw__string__str_copy(cause, title, title__str);
-  title__str[title__length] = 0;
-  
-  funk2_gtk__window__set_title(&(__funk2.gtk), gtk_window, title__str);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_window = raw__gtk_widget__as__GtkWidget(cause, window);
+    
+    u64 title__length = raw__string__length(cause, title);
+    u8* title__str    = (u8*)alloca(title__length + 1);
+    raw__string__str_copy(cause, title, title__str);
+    title__str[title__length] = 0;
+    
+    funk2_gtk__window__set_title(&(__funk2.gtk), gtk_window, title__str);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1273,11 +1293,15 @@ def_pcfunk2(gtk__window__set_title, window, title, return f2__gtk__window__set_t
 
 f2ptr raw__gtk__window__set_default_size(f2ptr cause, f2ptr window, f2ptr width, f2ptr height) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_window = raw__gtk_widget__as__GtkWidget(cause, window);
-  s64        width__i   = f2integer__i(width,  cause);
-  s64        height__i  = f2integer__i(height, cause);
-  funk2_gtk__window__set_default_size(&(__funk2.gtk), gtk_window, width__i, height__i);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_window = raw__gtk_widget__as__GtkWidget(cause, window);
+    s64        width__i   = f2integer__i(width,  cause);
+    s64        height__i  = f2integer__i(height, cause);
+    funk2_gtk__window__set_default_size(&(__funk2.gtk), gtk_window, width__i, height__i);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1296,9 +1320,13 @@ def_pcfunk3(gtk__window__set_default_size, window, width, height, return f2__gtk
 
 f2ptr raw__gtk__vbox__new(f2ptr cause, f2ptr spacing) {
 #if defined(F2__GTK__SUPPORTED)
-  u64        spacing__i = f2integer__i(spacing, cause);
-  GtkWidget* vbox       = funk2_gtk__vbox__new(&(__funk2.gtk), spacing__i);
-  return f2__gtk_box__new(cause, f2pointer__new(cause, to_ptr(vbox)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    u64        spacing__i = f2integer__i(spacing, cause);
+    GtkWidget* vbox       = funk2_gtk__vbox__new(&(__funk2.gtk), spacing__i);
+    return f2__gtk_box__new(cause, f2pointer__new(cause, to_ptr(vbox)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1315,9 +1343,13 @@ def_pcfunk1(gtk__vbox__new, spacing, return f2__gtk__vbox__new(this_cause, spaci
 
 f2ptr raw__gtk__hbox__new(f2ptr cause, f2ptr spacing) {
 #if defined(F2__GTK__SUPPORTED)
-  u64        spacing__i = f2integer__i(spacing, cause);
-  GtkWidget* hbox       = funk2_gtk__hbox__new(&(__funk2.gtk), spacing__i);
-  return f2__gtk_box__new(cause, f2pointer__new(cause, to_ptr(hbox)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    u64        spacing__i = f2integer__i(spacing, cause);
+    GtkWidget* hbox       = funk2_gtk__hbox__new(&(__funk2.gtk), spacing__i);
+    return f2__gtk_box__new(cause, f2pointer__new(cause, to_ptr(hbox)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1334,13 +1366,17 @@ def_pcfunk1(gtk__hbox__new, spacing, return f2__gtk__hbox__new(this_cause, spaci
 
 f2ptr raw__gtk__button__new_with_label(f2ptr cause, f2ptr label) {
 #if defined(F2__GTK__SUPPORTED)
-  u64 label__length = raw__string__length(cause, label);
-  u8* label__str    = (u8*)alloca(label__length + 1);
-  raw__string__str_copy(cause, label, label__str);
-  label__str[label__length] = 0;
-  
-  GtkWidget* button = funk2_gtk__button__new_with_label(&(__funk2.gtk), label__str);
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(button)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    u64 label__length = raw__string__length(cause, label);
+    u8* label__str    = (u8*)alloca(label__length + 1);
+    raw__string__str_copy(cause, label, label__str);
+    label__str[label__length] = 0;
+    
+    GtkWidget* button = funk2_gtk__button__new_with_label(&(__funk2.gtk), label__str);
+    return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(button)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1357,8 +1393,12 @@ def_pcfunk1(gtk__button__new_with_label, label, return f2__gtk__button__new_with
 
 f2ptr raw__gtk__scrolled_window__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* scrolled_window = funk2_gtk__scrolled_window__new(&(__funk2.gtk));
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(scrolled_window)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* scrolled_window = funk2_gtk__scrolled_window__new(&(__funk2.gtk));
+    return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(scrolled_window)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1372,10 +1412,14 @@ def_pcfunk0(gtk__scrolled_window__new, return f2__gtk__scrolled_window__new(this
 
 f2ptr raw__gtk__scrolled_window__add_with_viewport(f2ptr cause, f2ptr scrolled_window, f2ptr child) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_scrolled_window = raw__gtk_widget__as__GtkWidget(cause, scrolled_window);
-  GtkWidget* gtk_child           = raw__gtk_widget__as__GtkWidget(cause, child);
-  funk2_gtk__scrolled_window__add_with_viewport(&(__funk2.gtk), gtk_scrolled_window, gtk_child);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_scrolled_window = raw__gtk_widget__as__GtkWidget(cause, scrolled_window);
+    GtkWidget* gtk_child           = raw__gtk_widget__as__GtkWidget(cause, child);
+    funk2_gtk__scrolled_window__add_with_viewport(&(__funk2.gtk), gtk_scrolled_window, gtk_child);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1411,11 +1455,15 @@ GtkPolicyType raw__gtk_policy_type__as__GtkPolicyType(f2ptr cause, f2ptr this) {
 
 f2ptr raw__gtk__scrolled_window__set_policy(f2ptr cause, f2ptr scrolled_window, f2ptr hscrollbar_policy, f2ptr vscrollbar_policy) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget*    gtk_scrolled_window   = raw__gtk_widget__as__GtkWidget(cause, scrolled_window);
-  GtkPolicyType gtk_hscrollbar_policy = raw__gtk_policy_type__as__GtkPolicyType(cause, hscrollbar_policy);
-  GtkPolicyType gtk_vscrollbar_policy = raw__gtk_policy_type__as__GtkPolicyType(cause, vscrollbar_policy);
-  funk2_gtk__scrolled_window__set_policy(&(__funk2.gtk), gtk_scrolled_window, gtk_hscrollbar_policy, gtk_vscrollbar_policy);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget*    gtk_scrolled_window   = raw__gtk_widget__as__GtkWidget(cause, scrolled_window);
+    GtkPolicyType gtk_hscrollbar_policy = raw__gtk_policy_type__as__GtkPolicyType(cause, hscrollbar_policy);
+    GtkPolicyType gtk_vscrollbar_policy = raw__gtk_policy_type__as__GtkPolicyType(cause, vscrollbar_policy);
+    funk2_gtk__scrolled_window__set_policy(&(__funk2.gtk), gtk_scrolled_window, gtk_hscrollbar_policy, gtk_vscrollbar_policy);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1434,8 +1482,12 @@ def_pcfunk3(gtk__scrolled_window__set_policy, scrolled_window, hscrollbar_policy
 
 f2ptr raw__gtk__text_view__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* text_view = funk2_gtk__text_view__new(&(__funk2.gtk));
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(text_view)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* text_view = funk2_gtk__text_view__new(&(__funk2.gtk));
+    return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(text_view)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1449,12 +1501,16 @@ def_pcfunk0(gtk__text_view__new, return f2__gtk__text_view__new(this_cause));
 
 f2ptr raw__gtk__text_view__get_buffer(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  GtkTextBuffer* buffer = funk2_gtk__text_view__get_buffer(&(__funk2.gtk), gtk_widget);
-  if (! buffer) {
-    return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    GtkTextBuffer* buffer = funk2_gtk__text_view__get_buffer(&(__funk2.gtk), gtk_widget);
+    if (! buffer) {
+      return nil;
+    }
+    return f2__gtk_text_buffer__new(cause, f2pointer__new(cause, to_ptr(buffer)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
   }
-  return f2__gtk_text_buffer__new(cause, f2pointer__new(cause, to_ptr(buffer)));
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1473,10 +1529,14 @@ def_pcfunk1(gtk__text_view__get_buffer, widget, return f2__gtk__text_view__get_b
 
 f2ptr raw__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget     = raw__gtk_widget__as__GtkWidget(cause, widget);
-  GtkWidget* add_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, add_widget);
-  funk2_gtk__container__add(&(__funk2.gtk), gtk_widget, add_gtk_widget);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget     = raw__gtk_widget__as__GtkWidget(cause, widget);
+    GtkWidget* add_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, add_widget);
+    funk2_gtk__container__add(&(__funk2.gtk), gtk_widget, add_gtk_widget);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1494,10 +1554,14 @@ def_pcfunk2(gtk__container__add, widget, add_widget, return f2__gtk__container__
 
 f2ptr raw__gtk__container__remove(f2ptr cause, f2ptr widget, f2ptr remove_widget) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget        = raw__gtk_widget__as__GtkWidget(cause, widget);
-  GtkWidget* remove_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, remove_widget);
-  funk2_gtk__container__remove(&(__funk2.gtk), gtk_widget, remove_gtk_widget);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget        = raw__gtk_widget__as__GtkWidget(cause, widget);
+    GtkWidget* remove_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, remove_widget);
+    funk2_gtk__container__remove(&(__funk2.gtk), gtk_widget, remove_gtk_widget);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1517,9 +1581,13 @@ def_pcfunk2(gtk__container__remove, widget, remove_widget, return f2__gtk__conta
 
 f2ptr raw__gtk__expose_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  funk2_gtk__expose_event__signal_connect(&(__funk2.gtk), gtk_widget, funk);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    funk2_gtk__expose_event__signal_connect(&(__funk2.gtk), gtk_widget, funk);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1539,9 +1607,13 @@ def_pcfunk2(gtk__expose_event__signal_connect, widget, funk, return f2__gtk__exp
 
 f2ptr raw__gtk__key_press_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  funk2_gtk__key_press_event__signal_connect(&(__funk2.gtk), gtk_widget, funk);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    funk2_gtk__key_press_event__signal_connect(&(__funk2.gtk), gtk_widget, funk);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1561,15 +1633,19 @@ def_pcfunk2(gtk__key_press_event__signal_connect, widget, funk, return f2__gtk__
 
 f2ptr raw__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  
-  u64 signal_name__length = raw__string__length(cause, signal_name);
-  u8* signal_name__str    = (u8*)alloca(signal_name__length + 1);
-  raw__string__str_copy(cause, signal_name, signal_name__str);
-  signal_name__str[signal_name__length] = 0;
-  
-  funk2_gtk__signal_connect(&(__funk2.gtk), gtk_widget, signal_name__str, funk);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    
+    u64 signal_name__length = raw__string__length(cause, signal_name);
+    u8* signal_name__str    = (u8*)alloca(signal_name__length + 1);
+    raw__string__str_copy(cause, signal_name, signal_name__str);
+    signal_name__str[signal_name__length] = 0;
+    
+    funk2_gtk__signal_connect(&(__funk2.gtk), gtk_widget, signal_name__str, funk);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1591,9 +1667,13 @@ def_pcfunk3(gtk__signal_connect, widget, signal_name, funk, return f2__gtk__sign
 
 f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  funk2_gtk__widget__show_all(&(__funk2.gtk), gtk_widget);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    funk2_gtk__widget__show_all(&(__funk2.gtk), gtk_widget);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1610,9 +1690,13 @@ def_pcfunk1(gtk__widget__show_all, widget, return f2__gtk__widget__show_all(this
 
 f2ptr raw__gtk__widget__hide_all(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  funk2_gtk__widget__hide_all(&(__funk2.gtk), gtk_widget);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    funk2_gtk__widget__hide_all(&(__funk2.gtk), gtk_widget);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1629,11 +1713,15 @@ def_pcfunk1(gtk__widget__hide_all, widget, return f2__gtk__widget__hide_all(this
 
 f2ptr raw__gtk__widget__set_size_request(f2ptr cause, f2ptr widget, f2ptr width, f2ptr height) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  s64        width__i   = f2integer__i(width,  cause);
-  s64        height__i  = f2integer__i(height, cause);
-  funk2_gtk__widget__set_size_request(&(__funk2.gtk), gtk_widget, width__i, height__i);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    s64        width__i   = f2integer__i(width,  cause);
+    s64        height__i  = f2integer__i(height, cause);
+    funk2_gtk__widget__set_size_request(&(__funk2.gtk), gtk_widget, width__i, height__i);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1652,8 +1740,12 @@ def_pcfunk3(gtk__widget__set_size_request, widget, width, height, return f2__gtk
 
 f2ptr raw__gtk__widget__get_visible(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  return f2bool__new(funk2_gtk__widget__get_visible(&(__funk2.gtk), gtk_widget));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    return f2bool__new(funk2_gtk__widget__get_visible(&(__funk2.gtk), gtk_widget));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1670,9 +1762,13 @@ def_pcfunk1(gtk__widget__get_visible, widget, return f2__gtk__widget__get_visibl
 
 f2ptr raw__gtk__widget__destroy(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  funk2_gtk__widget__destroy(&(__funk2.gtk), gtk_widget);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    funk2_gtk__widget__destroy(&(__funk2.gtk), gtk_widget);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1689,9 +1785,13 @@ def_pcfunk1(gtk__widget__destroy, widget, return f2__gtk__widget__destroy(this_c
 
 f2ptr raw__gtk__widget__connect_hide_on_delete(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  funk2_gtk__widget__connect_hide_on_delete(&(__funk2.gtk), gtk_widget);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    funk2_gtk__widget__connect_hide_on_delete(&(__funk2.gtk), gtk_widget);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1727,15 +1827,19 @@ GtkStateType raw__gtk_state_type__as__GtkStateType(f2ptr cause, f2ptr this) {
 
 f2ptr raw__gtk__widget__modify_fg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr color) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget*   gtk_widget = raw__gtk_widget__as__GtkWidget(       cause, widget);
-  GtkStateType gtk_state  = raw__gtk_state_type__as__GtkStateType(cause, state);
-  if (color != nil) {
-    GdkColor     gdk_color;   raw__gdk_color__as__GdkColor(         cause, color, &gdk_color);
-    funk2_gtk__widget__modify_fg(&(__funk2.gtk), gtk_widget, gtk_state, &gdk_color);
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget*   gtk_widget = raw__gtk_widget__as__GtkWidget(       cause, widget);
+    GtkStateType gtk_state  = raw__gtk_state_type__as__GtkStateType(cause, state);
+    if (color != nil) {
+      GdkColor     gdk_color;   raw__gdk_color__as__GdkColor(         cause, color, &gdk_color);
+      funk2_gtk__widget__modify_fg(&(__funk2.gtk), gtk_widget, gtk_state, &gdk_color);
+    } else {
+      funk2_gtk__widget__modify_fg(&(__funk2.gtk), gtk_widget, gtk_state, NULL);
+    }
+    return nil;
   } else {
-    funk2_gtk__widget__modify_fg(&(__funk2.gtk), gtk_widget, gtk_state, NULL);
+    return f2__gtk_not_supported_larva__new(cause);
   }
-  return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1754,15 +1858,19 @@ def_pcfunk3(gtk__widget__modify_fg, widget, state, color, return f2__gtk__widget
 
 f2ptr raw__gtk__widget__modify_bg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr color) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget*   gtk_widget = raw__gtk_widget__as__GtkWidget(       cause, widget);
-  GtkStateType gtk_state  = raw__gtk_state_type__as__GtkStateType(cause, state);
-  if (color != nil) {
-    GdkColor     gdk_color;   raw__gdk_color__as__GdkColor(         cause, color, &gdk_color);
-    funk2_gtk__widget__modify_bg(&(__funk2.gtk), gtk_widget, gtk_state, &gdk_color);
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget*   gtk_widget = raw__gtk_widget__as__GtkWidget(       cause, widget);
+    GtkStateType gtk_state  = raw__gtk_state_type__as__GtkStateType(cause, state);
+    if (color != nil) {
+      GdkColor     gdk_color;   raw__gdk_color__as__GdkColor(         cause, color, &gdk_color);
+      funk2_gtk__widget__modify_bg(&(__funk2.gtk), gtk_widget, gtk_state, &gdk_color);
+    } else {
+      funk2_gtk__widget__modify_bg(&(__funk2.gtk), gtk_widget, gtk_state, NULL);
+    }
+    return nil;
   } else {
-    funk2_gtk__widget__modify_bg(&(__funk2.gtk), gtk_widget, gtk_state, NULL);
+    return f2__gtk_not_supported_larva__new(cause);
   }
-  return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1783,13 +1891,17 @@ def_pcfunk3(gtk__widget__modify_bg, widget, state, color, return f2__gtk__widget
 
 f2ptr raw__gtk__widget__queue_draw_area(f2ptr cause, f2ptr widget, f2ptr x, f2ptr y, f2ptr width, f2ptr height) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  s64        x__i       = f2integer__i(x,  cause);
-  s64        y__i       = f2integer__i(y, cause);
-  s64        width__i   = f2integer__i(width,  cause);
-  s64        height__i  = f2integer__i(height, cause);
-  funk2_gtk__widget__queue_draw_area(&(__funk2.gtk), gtk_widget, x__i, y__i, width__i, height__i);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    s64        x__i       = f2integer__i(x,  cause);
+    s64        y__i       = f2integer__i(y, cause);
+    s64        width__i   = f2integer__i(width,  cause);
+    s64        height__i  = f2integer__i(height, cause);
+    funk2_gtk__widget__queue_draw_area(&(__funk2.gtk), gtk_widget, x__i, y__i, width__i, height__i);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1810,15 +1922,19 @@ def_pcfunk5(gtk__widget__queue_draw_area, widget, x, y, width, height, return f2
 
 f2ptr raw__gtk__widget__draw_arc(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr x, f2ptr y, f2ptr width, f2ptr height, f2ptr angle1, f2ptr angle2) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  s64        x__i       = f2integer__i(x,      cause);
-  s64        y__i       = f2integer__i(y,      cause);
-  s64        width__i   = f2integer__i(width,  cause);
-  s64        height__i  = f2integer__i(height, cause);
-  s64        angle1__i  = f2integer__i(angle1, cause);
-  s64        angle2__i  = f2integer__i(angle2, cause);
-  funk2_gtk__widget__draw_arc(&(__funk2.gtk), gtk_widget, (filled != nil) ? TRUE : FALSE, x__i, y__i, width__i, height__i, angle1__i, angle2__i);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    s64        x__i       = f2integer__i(x,      cause);
+    s64        y__i       = f2integer__i(y,      cause);
+    s64        width__i   = f2integer__i(width,  cause);
+    s64        height__i  = f2integer__i(height, cause);
+    s64        angle1__i  = f2integer__i(angle1, cause);
+    s64        angle2__i  = f2integer__i(angle2, cause);
+    funk2_gtk__widget__draw_arc(&(__funk2.gtk), gtk_widget, (filled != nil) ? TRUE : FALSE, x__i, y__i, width__i, height__i, angle1__i, angle2__i);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1902,13 +2018,17 @@ def_pcfunk8(gtk__widget__draw_arc, widget, filled, x, y, width, height, angle1, 
 
 f2ptr raw__gtk__widget__draw_rectangle(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr x, f2ptr y, f2ptr width, f2ptr height) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
-  s64        x__i       = f2integer__i(x,      cause);
-  s64        y__i       = f2integer__i(y,      cause);
-  s64        width__i   = f2integer__i(width,  cause);
-  s64        height__i  = f2integer__i(height, cause);
-  funk2_gtk__widget__draw_rectangle(&(__funk2.gtk), gtk_widget, (filled != nil) ? TRUE : FALSE, x__i, y__i, width__i, height__i);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    s64        x__i       = f2integer__i(x,      cause);
+    s64        y__i       = f2integer__i(y,      cause);
+    s64        width__i   = f2integer__i(width,  cause);
+    s64        height__i  = f2integer__i(height, cause);
+    funk2_gtk__widget__draw_rectangle(&(__funk2.gtk), gtk_widget, (filled != nil) ? TRUE : FALSE, x__i, y__i, width__i, height__i);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1931,11 +2051,15 @@ def_pcfunk6(gtk__widget__draw_rectangle, widget, filled, x, y, width, height, re
 
 f2ptr raw__gtk__misc__set_alignment(f2ptr cause, f2ptr misc, f2ptr xalign, f2ptr yalign) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_misc  = raw__gtk_widget__as__GtkWidget(cause, misc);
-  double     xalign__d = f2double__d(xalign, cause);
-  double     yalign__d = f2double__d(yalign, cause);
-  funk2_gtk__misc__set_alignment(&(__funk2.gtk), gtk_misc, xalign__d, yalign__d);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_misc  = raw__gtk_widget__as__GtkWidget(cause, misc);
+    double     xalign__d = f2double__d(xalign, cause);
+    double     yalign__d = f2double__d(yalign, cause);
+    funk2_gtk__misc__set_alignment(&(__funk2.gtk), gtk_misc, xalign__d, yalign__d);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1956,11 +2080,15 @@ def_pcfunk3(gtk__misc__set_alignment, misc, xalign, yalign, return f2__gtk__misc
 
 f2ptr raw__gtk__box__pack_start(f2ptr cause, f2ptr widget, f2ptr child_widget, f2ptr expand, f2ptr fill, f2ptr padding) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget       = raw__gtk_widget__as__GtkWidget(cause, widget);
-  GtkWidget* child_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, child_widget);
-  u64        padding__i       = f2integer__i(padding, cause);
-  funk2_gtk__box__pack_start(&(__funk2.gtk), gtk_widget, child_gtk_widget, expand != nil, fill != nil, padding__i);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget       = raw__gtk_widget__as__GtkWidget(cause, widget);
+    GtkWidget* child_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, child_widget);
+    u64        padding__i       = f2integer__i(padding, cause);
+    funk2_gtk__box__pack_start(&(__funk2.gtk), gtk_widget, child_gtk_widget, expand != nil, fill != nil, padding__i);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -1979,73 +2107,77 @@ def_pcfunk5(gtk__box__pack_start, box, child_widget, expand, fill, padding, retu
 
 f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  funk2_gtk_callback_event_t* callback_event = funk2_gtk__pop_callback_event(&(__funk2.gtk));
-  if (! callback_event) {
-    return nil;
-  }
-  f2ptr funk = callback_event->callback->funk;
-  f2ptr args;
-  {
-    switch (callback_event->callback->args_type) {
-    case funk2_gtk_callback_args_type__nil:
+  if (&(__funk2.gtk.initialized_successfully)) {
+    funk2_gtk_callback_event_t* callback_event = funk2_gtk__pop_callback_event(&(__funk2.gtk));
+    if (! callback_event) {
+      return nil;
+    }
+    f2ptr funk = callback_event->callback->funk;
+    f2ptr args;
+    {
+      switch (callback_event->callback->args_type) {
+      case funk2_gtk_callback_args_type__nil:
       args = nil;
       break;
-    case funk2_gtk_callback_args_type__expose: {
-      GdkEventExpose* expose = (GdkEventExpose*)(callback_event->args);
-      // should use expose event here... :-)
-      
-      f2ptr expose_event_frame__event_type;
-      if (expose->type == GDK_EXPOSE) {
-	expose_event_frame__event_type = new__symbol(cause, "expose");
-      } else if (expose->type == GDK_DAMAGE) {
-	expose_event_frame__event_type = new__symbol(cause, "damage");
-      } else {
-	expose_event_frame__event_type = new__symbol(cause, "unknown");
+      case funk2_gtk_callback_args_type__expose: {
+	GdkEventExpose* expose = (GdkEventExpose*)(callback_event->args);
+	// should use expose event here... :-)
+	
+	f2ptr expose_event_frame__event_type;
+	if (expose->type == GDK_EXPOSE) {
+	  expose_event_frame__event_type = new__symbol(cause, "expose");
+	} else if (expose->type == GDK_DAMAGE) {
+	  expose_event_frame__event_type = new__symbol(cause, "damage");
+	} else {
+	  expose_event_frame__event_type = new__symbol(cause, "unknown");
+	}
+	f2ptr expose_event_frame = f2__frame__new(cause, f2list12__new(cause,
+								       new__symbol(cause, "event_type"), expose_event_frame__event_type,
+								       new__symbol(cause, "window"),     f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(expose->window))),
+								       new__symbol(cause, "send_event"), f2integer__new(cause, expose->send_event),
+								       new__symbol(cause, "area"),       f2__frame__new(cause, f2list8__new(cause,
+																	    new__symbol(cause, "x"),      f2integer__new(cause, expose->area.x),
+																	    new__symbol(cause, "y"),      f2integer__new(cause, expose->area.y),
+																	    new__symbol(cause, "width"),  f2integer__new(cause, expose->area.width),
+																	    new__symbol(cause, "height"), f2integer__new(cause, expose->area.height))),
+								       new__symbol(cause, "region"),     f2pointer__new(cause, to_ptr(expose->region)),
+								       new__symbol(cause, "count"),      f2integer__new(cause, expose->count)));
+	f2__free(to_ptr(expose));
+	args = f2cons__new(cause, expose_event_frame, nil);
+      } break;
+      case funk2_gtk_callback_args_type__key_press: {
+	GdkEventKey* key = (GdkEventKey*)(callback_event->args);
+	f2ptr key_event_frame__event_type;
+	if (key->type == GDK_KEY_PRESS) {
+	  key_event_frame__event_type = new__symbol(cause, "press");
+	} else if (key->type == GDK_KEY_RELEASE) {
+	  key_event_frame__event_type = new__symbol(cause, "release");
+	} else {
+	  key_event_frame__event_type = new__symbol(cause, "unknown");
+	}
+	f2ptr key_event_frame = f2__frame__new(cause, f2list20__new(cause,
+								    new__symbol(cause, "event_type"),       key_event_frame__event_type,
+								    new__symbol(cause, "window"),           f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(key->window))),
+								    new__symbol(cause, "send_event"),       f2integer__new(cause, key->send_event),
+								    new__symbol(cause, "time"),             f2integer__new(cause, key->time),
+								    new__symbol(cause, "state"),            f2integer__new(cause, key->state),
+								    new__symbol(cause, "keyval"),           f2integer__new(cause, key->keyval),
+								    new__symbol(cause, "length"),           f2integer__new(cause, key->length),
+								    new__symbol(cause, "hardware_keycode"), f2integer__new(cause, key->hardware_keycode),
+								    new__symbol(cause, "group"),            f2integer__new(cause, key->group),
+								    new__symbol(cause, "is_modifier"),      f2bool__new(key->is_modifier)));
+	f2__free(to_ptr(key));
+	args = f2cons__new(cause, key_event_frame, nil);
+      } break;
+      default:
+	error(nil, "invalid gtk callback event args_type.");
       }
-      f2ptr expose_event_frame = f2__frame__new(cause, f2list12__new(cause,
-								     new__symbol(cause, "event_type"), expose_event_frame__event_type,
-								     new__symbol(cause, "window"),     f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(expose->window))),
-								     new__symbol(cause, "send_event"), f2integer__new(cause, expose->send_event),
-								     new__symbol(cause, "area"),       f2__frame__new(cause, f2list8__new(cause,
-																	  new__symbol(cause, "x"),      f2integer__new(cause, expose->area.x),
-																	  new__symbol(cause, "y"),      f2integer__new(cause, expose->area.y),
-																	  new__symbol(cause, "width"),  f2integer__new(cause, expose->area.width),
-																	  new__symbol(cause, "height"), f2integer__new(cause, expose->area.height))),
-								     new__symbol(cause, "region"),     f2pointer__new(cause, to_ptr(expose->region)),
-								     new__symbol(cause, "count"),      f2integer__new(cause, expose->count)));
-      f2__free(to_ptr(expose));
-      args = f2cons__new(cause, expose_event_frame, nil);
-    } break;
-    case funk2_gtk_callback_args_type__key_press: {
-      GdkEventKey* key = (GdkEventKey*)(callback_event->args);
-      f2ptr key_event_frame__event_type;
-      if (key->type == GDK_KEY_PRESS) {
-	key_event_frame__event_type = new__symbol(cause, "press");
-      } else if (key->type == GDK_KEY_RELEASE) {
-	key_event_frame__event_type = new__symbol(cause, "release");
-      } else {
-	key_event_frame__event_type = new__symbol(cause, "unknown");
-      }
-      f2ptr key_event_frame = f2__frame__new(cause, f2list20__new(cause,
-								  new__symbol(cause, "event_type"),       key_event_frame__event_type,
-								  new__symbol(cause, "window"),           f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(key->window))),
-								  new__symbol(cause, "send_event"),       f2integer__new(cause, key->send_event),
-								  new__symbol(cause, "time"),             f2integer__new(cause, key->time),
-								  new__symbol(cause, "state"),            f2integer__new(cause, key->state),
-								  new__symbol(cause, "keyval"),           f2integer__new(cause, key->keyval),
-								  new__symbol(cause, "length"),           f2integer__new(cause, key->length),
-								  new__symbol(cause, "hardware_keycode"), f2integer__new(cause, key->hardware_keycode),
-								  new__symbol(cause, "group"),            f2integer__new(cause, key->group),
-								  new__symbol(cause, "is_modifier"),      f2bool__new(key->is_modifier)));
-      f2__free(to_ptr(key));
-      args = f2cons__new(cause, key_event_frame, nil);
-    } break;
-    default:
-      error(nil, "invalid gtk callback event args_type.");
     }
+    f2__free(to_ptr(callback_event));
+    return f2__gtk_callback__new(cause, funk, args);
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
   }
-  f2__free(to_ptr(callback_event));
-  return f2__gtk_callback__new(cause, funk, args);
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2055,10 +2187,14 @@ def_pcfunk0(gtk__pop_callback_event, return f2__gtk__pop_callback_event(this_cau
 
 f2ptr raw__gtk__text_buffer__get_start_iter(f2ptr cause, f2ptr text_buffer) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, text_buffer);
-  GtkTextIter    text_iter;
-  funk2_gtk__text_buffer__get_start_iter(&(__funk2.gtk), gtk_text_buffer, &text_iter);
-  return f2__gtk_text_iter__new(cause, f2chunk__new(cause, sizeof(GtkTextIter), (u8*)&text_iter));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, text_buffer);
+    GtkTextIter    text_iter;
+    funk2_gtk__text_buffer__get_start_iter(&(__funk2.gtk), gtk_text_buffer, &text_iter);
+    return f2__gtk_text_iter__new(cause, f2chunk__new(cause, sizeof(GtkTextIter), (u8*)&text_iter));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2075,15 +2211,19 @@ def_pcfunk1(gtk__text_buffer__get_start_iter, text_buffer, return f2__gtk__text_
 
 f2ptr raw__gtk__text_buffer__select_range(f2ptr cause, f2ptr text_buffer, f2ptr range) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, text_buffer);
-  f2ptr          start_iter = f2__gtk_text_range__start(cause, range);
-  f2ptr          end_iter   = f2__gtk_text_range__end(cause, range);
-  GtkTextIter    gtk_start_iter;
-  GtkTextIter    gtk_end_iter;
-  raw__gtk_text_iter__as__GtkTextIter(cause, start_iter, &gtk_start_iter);
-  raw__gtk_text_iter__as__GtkTextIter(cause, end_iter,   &gtk_end_iter);
-  funk2_gtk__text_buffer__select_range(&(__funk2.gtk), gtk_text_buffer, &gtk_start_iter, &gtk_end_iter);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, text_buffer);
+    f2ptr          start_iter = f2__gtk_text_range__start(cause, range);
+    f2ptr          end_iter   = f2__gtk_text_range__end(cause, range);
+    GtkTextIter    gtk_start_iter;
+    GtkTextIter    gtk_end_iter;
+    raw__gtk_text_iter__as__GtkTextIter(cause, start_iter, &gtk_start_iter);
+    raw__gtk_text_iter__as__GtkTextIter(cause, end_iter,   &gtk_end_iter);
+    funk2_gtk__text_buffer__select_range(&(__funk2.gtk), gtk_text_buffer, &gtk_start_iter, &gtk_end_iter);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2101,9 +2241,13 @@ def_pcfunk2(gtk__text_buffer__select_range, text_buffer, range, return f2__gtk__
 
 f2ptr raw__gtk__text_buffer__get_text(f2ptr cause, f2ptr text_buffer) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, text_buffer);
-  char* text = funk2_gtk__text_buffer__get_text(&(__funk2.gtk), gtk_text_buffer);
-  return new__string(cause, text);
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, text_buffer);
+    char* text = funk2_gtk__text_buffer__get_text(&(__funk2.gtk), gtk_text_buffer);
+    return new__string(cause, text);
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2120,15 +2264,19 @@ def_pcfunk1(gtk__text_buffer__get_text, text_buffer, return f2__gtk__text_buffer
 
 f2ptr raw__gtk__text_buffer__set_text(f2ptr cause, f2ptr text_buffer, f2ptr text) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, text_buffer);
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, text_buffer);
+    
+    u64 text__length = raw__string__length(cause, text);
+    u8* text__str    = (u8*)alloca(text__length + 1);
+    raw__string__str_copy(cause, text, text__str);
+    text__str[text__length] = 0;
   
-  u64 text__length = raw__string__length(cause, text);
-  u8* text__str    = (u8*)alloca(text__length + 1);
-  raw__string__str_copy(cause, text, text__str);
-  text__str[text__length] = 0;
-  
-  funk2_gtk__text_buffer__set_text(&(__funk2.gtk), gtk_text_buffer, text__str);
-  return nil;
+    funk2_gtk__text_buffer__set_text(&(__funk2.gtk), gtk_text_buffer, text__str);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2146,21 +2294,25 @@ def_pcfunk2(gtk__text_buffer__set_text, text_buffer, text, return f2__gtk__text_
 
 f2ptr raw__gtk__text_iter__forward_search(f2ptr cause, f2ptr text_iter, f2ptr text) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkTextIter gtk_text_iter;
-  raw__gtk_text_iter__as__GtkTextIter(cause, text_iter, &gtk_text_iter);
-  
-  u64 text__length = raw__string__length(cause, text);
-  u8* text__str    = (u8*)alloca(text__length + 1);
-  raw__string__str_copy(cause, text, text__str);
-  text__str[text__length] = 0;
-  
-  GtkTextIter mstart;
-  GtkTextIter mend;
-  boolean_t   found = funk2_gtk__text_iter__forward_search(&(__funk2.gtk), &gtk_text_iter, text__str, &mstart, &mend);
-  if (! found) {
-    return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkTextIter gtk_text_iter;
+    raw__gtk_text_iter__as__GtkTextIter(cause, text_iter, &gtk_text_iter);
+    
+    u64 text__length = raw__string__length(cause, text);
+    u8* text__str    = (u8*)alloca(text__length + 1);
+    raw__string__str_copy(cause, text, text__str);
+    text__str[text__length] = 0;
+    
+    GtkTextIter mstart;
+    GtkTextIter mend;
+    boolean_t   found = funk2_gtk__text_iter__forward_search(&(__funk2.gtk), &gtk_text_iter, text__str, &mstart, &mend);
+    if (! found) {
+      return nil;
+    }
+    return f2__gtk_text_range__new(cause, f2__gtk_text_iter__new(cause, f2chunk__new(cause, sizeof(GtkTextIter), (u8*)&mstart)), f2__gtk_text_iter__new(cause, f2chunk__new(cause, sizeof(GtkTextIter), (u8*)&mend)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
   }
-  return f2__gtk_text_range__new(cause, f2__gtk_text_iter__new(cause, f2chunk__new(cause, sizeof(GtkTextIter), (u8*)&mstart)), f2__gtk_text_iter__new(cause, f2chunk__new(cause, sizeof(GtkTextIter), (u8*)&mend)));
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2180,10 +2332,14 @@ def_pcfunk2(gtk__text_iter__forward_search, text_iter, text, return f2__gtk__tex
 
 f2ptr raw__gtk__paned__pack1(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize, f2ptr shrink) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_paned = raw__gtk_widget__as__GtkWidget(cause, paned);
-  GtkWidget* gtk_child = raw__gtk_widget__as__GtkWidget(cause, child);
-  funk2_gtk__paned__pack1(&(__funk2.gtk), gtk_paned, gtk_child, (resize != nil) ? TRUE : FALSE, (shrink != nil) ? TRUE : FALSE);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_paned = raw__gtk_widget__as__GtkWidget(cause, paned);
+    GtkWidget* gtk_child = raw__gtk_widget__as__GtkWidget(cause, child);
+    funk2_gtk__paned__pack1(&(__funk2.gtk), gtk_paned, gtk_child, (resize != nil) ? TRUE : FALSE, (shrink != nil) ? TRUE : FALSE);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2201,10 +2357,14 @@ def_pcfunk4(gtk__paned__pack1, paned, child, resize, shrink, return f2__gtk__pan
 
 f2ptr raw__gtk__paned__pack2(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize, f2ptr shrink) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_paned = raw__gtk_widget__as__GtkWidget(cause, paned);
-  GtkWidget* gtk_child = raw__gtk_widget__as__GtkWidget(cause, child);
-  funk2_gtk__paned__pack2(&(__funk2.gtk), gtk_paned, gtk_child, (resize != nil) ? TRUE : FALSE, (shrink != nil) ? TRUE : FALSE);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_paned = raw__gtk_widget__as__GtkWidget(cause, paned);
+    GtkWidget* gtk_child = raw__gtk_widget__as__GtkWidget(cause, child);
+    funk2_gtk__paned__pack2(&(__funk2.gtk), gtk_paned, gtk_child, (resize != nil) ? TRUE : FALSE, (shrink != nil) ? TRUE : FALSE);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2224,10 +2384,14 @@ def_pcfunk4(gtk__paned__pack2, paned, child, resize, shrink, return f2__gtk__pan
 
 f2ptr raw__gtk__paned__set_position(f2ptr cause, f2ptr paned, f2ptr position) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_paned   = raw__gtk_widget__as__GtkWidget(cause, paned);
-  s64        position__i = f2integer__i(position, cause);
-  funk2_gtk__paned__set_position(&(__funk2.gtk), gtk_paned, position__i);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_paned   = raw__gtk_widget__as__GtkWidget(cause, paned);
+    s64        position__i = f2integer__i(position, cause);
+    funk2_gtk__paned__set_position(&(__funk2.gtk), gtk_paned, position__i);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2247,8 +2411,12 @@ def_pcfunk2(gtk__paned__set_position, paned, position, return f2__gtk__paned__se
 
 f2ptr raw__gtk__vpaned__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = funk2_gtk__vpaned__new(&(__funk2.gtk));
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(gtk_widget)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = funk2_gtk__vpaned__new(&(__funk2.gtk));
+    return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(gtk_widget)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2264,8 +2432,12 @@ def_pcfunk0(gtk__vpaned__new, return f2__gtk__vpaned__new(this_cause));
 
 f2ptr raw__gtk__hpaned__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = funk2_gtk__hpaned__new(&(__funk2.gtk));
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(gtk_widget)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = funk2_gtk__hpaned__new(&(__funk2.gtk));
+    return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(gtk_widget)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2281,8 +2453,12 @@ def_pcfunk0(gtk__hpaned__new, return f2__gtk__hpaned__new(this_cause));
 
 f2ptr raw__gtk__progress_bar__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkProgressBar* gtk_progress_bar = funk2_gtk__progress_bar__new(&(__funk2.gtk));
-  return f2__gtk_progress_bar__new(cause, f2pointer__new(cause, to_ptr(gtk_progress_bar)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkProgressBar* gtk_progress_bar = funk2_gtk__progress_bar__new(&(__funk2.gtk));
+    return f2__gtk_progress_bar__new(cause, f2pointer__new(cause, to_ptr(gtk_progress_bar)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2296,14 +2472,18 @@ def_pcfunk0(gtk__progress_bar__new, return f2__gtk__progress_bar__new(this_cause
 
 f2ptr raw__gtk__progress_bar__set_fraction(f2ptr cause, f2ptr this, f2ptr fraction) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkProgressBar* gtk_this        = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
-  f2ptr           fraction_double = f2__number__as__double(cause, fraction);
-  if (! raw__double__is_type(cause, fraction_double)) {
-    return f2larva__new(cause, 1, nil);
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkProgressBar* gtk_this        = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
+    f2ptr           fraction_double = f2__number__as__double(cause, fraction);
+    if (! raw__double__is_type(cause, fraction_double)) {
+      return f2larva__new(cause, 1, nil);
+    }
+    double fraction_double__d = f2double__d(fraction_double, cause);
+    funk2_gtk__progress_bar__set_fraction(gtk_this, fraction_double__d);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
   }
-  double fraction_double__d = f2double__d(fraction_double, cause);
-  funk2_gtk__progress_bar__set_fraction(gtk_this, fraction_double__d);
-  return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2320,15 +2500,19 @@ def_pcfunk2(gtk__progress_bar__set_fraction, this, fraction, return f2__gtk__pro
 
 f2ptr raw__gtk__progress_bar__set_text(f2ptr cause, f2ptr this, f2ptr text) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
-  
-  u64 text__length = raw__string__length(cause, text);
-  u8* text__str    = (u8*)alloca(text__length + 1);
-  raw__string__str_copy(cause, text, text__str);
-  text__str[text__length] = 0;
-  
-  funk2_gtk__progress_bar__set_text(gtk_this, text__str);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
+    
+    u64 text__length = raw__string__length(cause, text);
+    u8* text__str    = (u8*)alloca(text__length + 1);
+    raw__string__str_copy(cause, text, text__str);
+    text__str[text__length] = 0;
+    
+    funk2_gtk__progress_bar__set_text(gtk_this, text__str);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2346,22 +2530,26 @@ def_pcfunk2(gtk__progress_bar__set_text, this, text, return f2__gtk__progress_ba
 
 f2ptr raw__gtk__progress_bar__set_orientation(f2ptr cause, f2ptr this, f2ptr orientation) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
-  
-  GtkProgressBarOrientation gtk_orientation;
-  if      (raw__eq(cause, orientation, new__symbol(cause, "left_to_right"))) {gtk_orientation = GTK_PROGRESS_LEFT_TO_RIGHT;}
-  else if (raw__eq(cause, orientation, new__symbol(cause, "right_to_left"))) {gtk_orientation = GTK_PROGRESS_RIGHT_TO_LEFT;}
-  else if (raw__eq(cause, orientation, new__symbol(cause, "bottom_to_top"))) {gtk_orientation = GTK_PROGRESS_BOTTOM_TO_TOP;}
-  else if (raw__eq(cause, orientation, new__symbol(cause, "top_to_bottom"))) {gtk_orientation = GTK_PROGRESS_TOP_TO_BOTTOM;}
-  else {
-    f2ptr bug_frame = f2__frame__new(cause, nil);
-    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "invalid_progress_bar_orientation_symbol"));
-    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "valid_orientation_symbols"), f2list4__new(cause, new__symbol(cause, "left_to_right"), new__symbol(cause, "right_to_left"), new__symbol(cause, "bottom_to_top"), new__symbol(cause, "top_to_bottom")));
-    return f2larva__new(cause, 636, f2__bug__new(cause, f2integer__new(cause, 636), bug_frame));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
+    
+    GtkProgressBarOrientation gtk_orientation;
+    if      (raw__eq(cause, orientation, new__symbol(cause, "left_to_right"))) {gtk_orientation = GTK_PROGRESS_LEFT_TO_RIGHT;}
+    else if (raw__eq(cause, orientation, new__symbol(cause, "right_to_left"))) {gtk_orientation = GTK_PROGRESS_RIGHT_TO_LEFT;}
+    else if (raw__eq(cause, orientation, new__symbol(cause, "bottom_to_top"))) {gtk_orientation = GTK_PROGRESS_BOTTOM_TO_TOP;}
+    else if (raw__eq(cause, orientation, new__symbol(cause, "top_to_bottom"))) {gtk_orientation = GTK_PROGRESS_TOP_TO_BOTTOM;}
+    else {
+      f2ptr bug_frame = f2__frame__new(cause, nil);
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "invalid_progress_bar_orientation_symbol"));
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "valid_orientation_symbols"), f2list4__new(cause, new__symbol(cause, "left_to_right"), new__symbol(cause, "right_to_left"), new__symbol(cause, "bottom_to_top"), new__symbol(cause, "top_to_bottom")));
+      return f2larva__new(cause, 636, f2__bug__new(cause, f2integer__new(cause, 636), bug_frame));
+    }
+    
+    funk2_gtk__progress_bar__set_orientation(gtk_this, gtk_orientation);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
   }
-  
-  funk2_gtk__progress_bar__set_orientation(gtk_this, gtk_orientation);
-  return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2379,9 +2567,13 @@ def_pcfunk2(gtk__progress_bar__set_orientation, this, orientation, return f2__gt
 
 f2ptr raw__gtk__progress_bar__pulse(f2ptr cause, f2ptr this) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
-  funk2_gtk__progress_bar__pulse(gtk_this);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
+    funk2_gtk__progress_bar__pulse(gtk_this);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2398,14 +2590,18 @@ def_pcfunk1(gtk__progress_bar__pulse, this, return f2__gtk__progress_bar__pulse(
 
 f2ptr raw__gtk__progress_bar__set_pulse_step(f2ptr cause, f2ptr this, f2ptr fraction) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkProgressBar* gtk_this        = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
-  f2ptr           fraction_double = f2__number__as__double(cause, fraction);
-  if (! raw__double__is_type(cause, fraction_double)) {
-    return f2larva__new(cause, 1, nil);
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkProgressBar* gtk_this        = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
+    f2ptr           fraction_double = f2__number__as__double(cause, fraction);
+    if (! raw__double__is_type(cause, fraction_double)) {
+      return f2larva__new(cause, 1, nil);
+    }
+    double fraction_double__d = f2double__d(fraction_double, cause);
+    funk2_gtk__progress_bar__set_pulse_step(gtk_this, fraction_double__d);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
   }
-  double fraction_double__d = f2double__d(fraction_double, cause);
-  funk2_gtk__progress_bar__set_pulse_step(gtk_this, fraction_double__d);
-  return nil;
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2424,8 +2620,12 @@ def_pcfunk2(gtk__progress_bar__set_pulse_step, this, fraction, return f2__gtk__p
 
 f2ptr raw__gtk__notebook__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget = funk2_gtk__notebook__new(&(__funk2.gtk));
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(gtk_widget)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = funk2_gtk__notebook__new(&(__funk2.gtk));
+    return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(gtk_widget)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2439,14 +2639,18 @@ def_pcfunk0(gtk__notebook__new, return f2__gtk__notebook__new(this_cause));
 
 f2ptr raw__gtk__notebook__append_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_notebook  = raw__gtk_widget__as__GtkWidget(cause, notebook);
-  GtkWidget* gtk_child     = raw__gtk_widget__as__GtkWidget(cause, child);
-  GtkWidget* gtk_tab_label = raw__gtk_widget__as__GtkWidget(cause, tab_label);
-  s64 index = funk2_gtk__notebook__append_page(&(__funk2.gtk), gtk_notebook, gtk_child, gtk_tab_label);
-  if (index == -1) {
-    return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_notebook  = raw__gtk_widget__as__GtkWidget(cause, notebook);
+    GtkWidget* gtk_child     = raw__gtk_widget__as__GtkWidget(cause, child);
+    GtkWidget* gtk_tab_label = raw__gtk_widget__as__GtkWidget(cause, tab_label);
+    s64 index = funk2_gtk__notebook__append_page(&(__funk2.gtk), gtk_notebook, gtk_child, gtk_tab_label);
+    if (index == -1) {
+      return nil;
+    }
+    return f2integer__new(cause, index);
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
   }
-  return f2integer__new(cause, index);
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2465,14 +2669,18 @@ def_pcfunk3(gtk__notebook__append_page, notebook, child, tab_label, return f2__g
 
 f2ptr raw__gtk__notebook__prepend_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_notebook  = raw__gtk_widget__as__GtkWidget(cause, notebook);
-  GtkWidget* gtk_child     = raw__gtk_widget__as__GtkWidget(cause, child);
-  GtkWidget* gtk_tab_label = raw__gtk_widget__as__GtkWidget(cause, tab_label);
-  s64 index = funk2_gtk__notebook__prepend_page(&(__funk2.gtk), gtk_notebook, gtk_child, gtk_tab_label);
-  if (index == -1) {
-    return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_notebook  = raw__gtk_widget__as__GtkWidget(cause, notebook);
+    GtkWidget* gtk_child     = raw__gtk_widget__as__GtkWidget(cause, child);
+    GtkWidget* gtk_tab_label = raw__gtk_widget__as__GtkWidget(cause, tab_label);
+    s64 index = funk2_gtk__notebook__prepend_page(&(__funk2.gtk), gtk_notebook, gtk_child, gtk_tab_label);
+    if (index == -1) {
+      return nil;
+    }
+    return f2integer__new(cause, index);
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
   }
-  return f2integer__new(cause, index);
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2491,15 +2699,19 @@ def_pcfunk3(gtk__notebook__prepend_page, notebook, child, tab_label, return f2__
 
 f2ptr raw__gtk__notebook__insert_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label, f2ptr position) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_notebook  = raw__gtk_widget__as__GtkWidget(cause, notebook);
-  GtkWidget* gtk_child     = raw__gtk_widget__as__GtkWidget(cause, child);
-  GtkWidget* gtk_tab_label = raw__gtk_widget__as__GtkWidget(cause, tab_label);
-  s64        position__i   = f2integer__i(position, cause);
-  s64 index = funk2_gtk__notebook__insert_page(&(__funk2.gtk), gtk_notebook, gtk_child, gtk_tab_label, position__i);
-  if (index == -1) {
-    return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_notebook  = raw__gtk_widget__as__GtkWidget(cause, notebook);
+    GtkWidget* gtk_child     = raw__gtk_widget__as__GtkWidget(cause, child);
+    GtkWidget* gtk_tab_label = raw__gtk_widget__as__GtkWidget(cause, tab_label);
+    s64        position__i   = f2integer__i(position, cause);
+    s64 index = funk2_gtk__notebook__insert_page(&(__funk2.gtk), gtk_notebook, gtk_child, gtk_tab_label, position__i);
+    if (index == -1) {
+      return nil;
+    }
+    return f2integer__new(cause, index);
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
   }
-  return f2integer__new(cause, index);
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2519,10 +2731,14 @@ def_pcfunk4(gtk__notebook__insert_page, notebook, child, tab_label, position, re
 
 f2ptr raw__gtk__notebook__remove_page(f2ptr cause, f2ptr notebook, f2ptr position) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_notebook = raw__gtk_widget__as__GtkWidget(cause, notebook);
-  s64        position__i  = f2integer__i(position, cause);
-  funk2_gtk__notebook__remove_page(&(__funk2.gtk), gtk_notebook, position__i);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_notebook = raw__gtk_widget__as__GtkWidget(cause, notebook);
+    s64        position__i  = f2integer__i(position, cause);
+    funk2_gtk__notebook__remove_page(&(__funk2.gtk), gtk_notebook, position__i);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2540,12 +2756,16 @@ def_pcfunk2(gtk__notebook__remove_page, notebook, position, return f2__gtk__note
 
 f2ptr raw__gtk__notebook__get_current_page(f2ptr cause, f2ptr notebook) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_notebook = raw__gtk_widget__as__GtkWidget(cause, notebook);
-  s64 index = funk2_gtk__notebook__get_current_page(&(__funk2.gtk), gtk_notebook);
-  if (index == -1) {
-    return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_notebook = raw__gtk_widget__as__GtkWidget(cause, notebook);
+    s64 index = funk2_gtk__notebook__get_current_page(&(__funk2.gtk), gtk_notebook);
+    if (index == -1) {
+      return nil;
+    }
+    return f2integer__new(cause, index);
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
   }
-  return f2integer__new(cause, index);
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2562,9 +2782,13 @@ def_pcfunk1(gtk__notebook__get_current_page, notebook, return f2__gtk__notebook_
 
 f2ptr raw__gtk__notebook__set_scrollable(f2ptr cause, f2ptr notebook, f2ptr scrollable) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_notebook = raw__gtk_widget__as__GtkWidget(cause, notebook);
-  funk2_gtk__notebook__set_scrollable(&(__funk2.gtk), gtk_notebook, (scrollable != nil) ? TRUE : FALSE);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_notebook = raw__gtk_widget__as__GtkWidget(cause, notebook);
+    funk2_gtk__notebook__set_scrollable(&(__funk2.gtk), gtk_notebook, (scrollable != nil) ? TRUE : FALSE);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2583,13 +2807,17 @@ def_pcfunk2(gtk__notebook__set_scrollable, notebook, scrollable, return f2__gtk_
 
 f2ptr raw__gtk__label__new(f2ptr cause, f2ptr text) {
 #if defined(F2__GTK__SUPPORTED)
-  u64 text__length = raw__string__length(cause, text);
-  u8* text__str    = (u8*)alloca(text__length + 1);
-  raw__string__str_copy(cause, text, text__str);
-  text__str[text__length] = 0;
-  
-  GtkLabel* label = funk2_gtk__label__new(&(__funk2.gtk), text__str);
-  return f2__gtk_label__new(cause, f2pointer__new(cause, to_ptr(label)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    u64 text__length = raw__string__length(cause, text);
+    u8* text__str    = (u8*)alloca(text__length + 1);
+    raw__string__str_copy(cause, text, text__str);
+    text__str[text__length] = 0;
+    
+    GtkLabel* label = funk2_gtk__label__new(&(__funk2.gtk), text__str);
+    return f2__gtk_label__new(cause, f2pointer__new(cause, to_ptr(label)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2606,15 +2834,19 @@ def_pcfunk1(gtk__label__new, text, return f2__gtk__label__new(this_cause, text))
 
 f2ptr raw__gtk__label__set_text(f2ptr cause, f2ptr label, f2ptr text) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkLabel* gtk_label = raw__gtk_label__as__GtkLabel(cause, label);
-  
-  u64 text__length = raw__string__length(cause, text);
-  u8* text__str    = (u8*)alloca(text__length + 1);
-  raw__string__str_copy(cause, text, text__str);
-  text__str[text__length] = 0;
-  
-  funk2_gtk__label__set_text(&(__funk2.gtk), gtk_label, text__str);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkLabel* gtk_label = raw__gtk_label__as__GtkLabel(cause, label);
+    
+    u64 text__length = raw__string__length(cause, text);
+    u8* text__str    = (u8*)alloca(text__length + 1);
+    raw__string__str_copy(cause, text, text__str);
+    text__str[text__length] = 0;
+    
+    funk2_gtk__label__set_text(&(__funk2.gtk), gtk_label, text__str);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2632,9 +2864,13 @@ def_pcfunk2(gtk__label__set_text, label, text, return f2__gtk__label__set_text(t
 
 f2ptr raw__gtk__label__set_selectable(f2ptr cause, f2ptr label, f2ptr selectable) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkLabel* gtk_label = raw__gtk_label__as__GtkLabel(cause, label);
-  funk2_gtk__label__set_selectable(&(__funk2.gtk), gtk_label, (selectable != nil));
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkLabel* gtk_label = raw__gtk_label__as__GtkLabel(cause, label);
+    funk2_gtk__label__set_selectable(&(__funk2.gtk), gtk_label, (selectable != nil));
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2654,8 +2890,12 @@ def_pcfunk2(gtk__label__set_selectable, label, selectable, return f2__gtk__label
 
 f2ptr raw__gtk__entry__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkEntry* entry = funk2_gtk__entry__new(&(__funk2.gtk));
-  return f2__gtk_entry__new(cause, f2pointer__new(cause, to_ptr(entry)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkEntry* entry = funk2_gtk__entry__new(&(__funk2.gtk));
+    return f2__gtk_entry__new(cause, f2pointer__new(cause, to_ptr(entry)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2669,12 +2909,16 @@ def_pcfunk0(gtk__entry__new, return f2__gtk__entry__new(this_cause));
 
 f2ptr raw__gtk__entry__get_text(f2ptr cause, f2ptr entry) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkEntry* gtk_entry = raw__gtk_entry__as__GtkEntry(cause, entry);
-  char* text = funk2_gtk__entry__get_text(&(__funk2.gtk), gtk_entry);
-  if (! text) {
-    return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkEntry* gtk_entry = raw__gtk_entry__as__GtkEntry(cause, entry);
+    char* text = funk2_gtk__entry__get_text(&(__funk2.gtk), gtk_entry);
+    if (! text) {
+      return nil;
+    }
+    return new__string(cause, text);
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
   }
-  return new__string(cause, text);
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2691,14 +2935,18 @@ def_pcfunk1(gtk__entry__get_text, entry, return f2__gtk__entry__get_text(this_ca
 
 f2ptr raw__gtk__entry__set_text(f2ptr cause, f2ptr entry, f2ptr text) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkEntry* gtk_entry = raw__gtk_entry__as__GtkEntry(cause, entry);
-  u64 text__length = raw__string__length(cause, text);
-  u8* text__str    = (u8*)from_ptr(f2__malloc(text__length + 1));
-  raw__string__str_copy(cause, text, text__str);
-  text__str[text__length] = 0;
-  funk2_gtk__entry__set_text(&(__funk2.gtk), gtk_entry, text__str);
-  f2__free(to_ptr(text__str));
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkEntry* gtk_entry = raw__gtk_entry__as__GtkEntry(cause, entry);
+    u64 text__length = raw__string__length(cause, text);
+    u8* text__str    = (u8*)from_ptr(f2__malloc(text__length + 1));
+    raw__string__str_copy(cause, text, text__str);
+    text__str[text__length] = 0;
+    funk2_gtk__entry__set_text(&(__funk2.gtk), gtk_entry, text__str);
+    f2__free(to_ptr(text__str));
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2718,8 +2966,12 @@ def_pcfunk2(gtk__entry__set_text, entry, text, return f2__gtk__entry__set_text(t
 
 f2ptr raw__gtk__drawing_area__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* drawing_area = funk2_gtk__drawing_area__new(&(__funk2.gtk));
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(drawing_area)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* drawing_area = funk2_gtk__drawing_area__new(&(__funk2.gtk));
+    return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(drawing_area)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2735,10 +2987,14 @@ def_pcfunk0(gtk__drawing_area__new, return f2__gtk__drawing_area__new(this_cause
 
 f2ptr raw__gtk__table__new(f2ptr cause, f2ptr rows, f2ptr columns, f2ptr homogenous) {
 #if defined(F2__GTK__SUPPORTED)
-  s64        rows__i    = f2integer__i(rows,    cause);
-  s64        columns__i = f2integer__i(columns, cause);
-  GtkWidget* table      = funk2_gtk__table__new(&(__funk2.gtk), rows__i, columns__i, (homogenous != nil) ? TRUE : FALSE);
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(table)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    s64        rows__i    = f2integer__i(rows,    cause);
+    s64        columns__i = f2integer__i(columns, cause);
+    GtkWidget* table      = funk2_gtk__table__new(&(__funk2.gtk), rows__i, columns__i, (homogenous != nil) ? TRUE : FALSE);
+    return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(table)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2756,16 +3012,20 @@ def_pcfunk3(gtk__table__new, rows, columns, homogenous, return f2__gtk__table__n
 
 f2ptr raw__gtk__table__attach(f2ptr cause, f2ptr table, f2ptr child, f2ptr left_attach, f2ptr right_attach, f2ptr top_attach, f2ptr bottom_attach, f2ptr xpadding, f2ptr ypadding) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_table        = raw__gtk_widget__as__GtkWidget(cause, table);
-  GtkWidget* gtk_child        = raw__gtk_widget__as__GtkWidget(cause, child);
-  s64        left_attach__i   = f2integer__i(left_attach, cause);
-  s64        right_attach__i  = f2integer__i(right_attach, cause);
-  s64        top_attach__i    = f2integer__i(top_attach, cause);
-  s64        bottom_attach__i = f2integer__i(bottom_attach, cause);
-  s64        xpadding__i      = f2integer__i(xpadding, cause);
-  s64        ypadding__i      = f2integer__i(ypadding, cause);
-  funk2_gtk__table__attach(&(__funk2.gtk), gtk_table, gtk_child, left_attach__i, right_attach__i, top_attach__i, bottom_attach__i, xpadding__i, ypadding__i);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_table        = raw__gtk_widget__as__GtkWidget(cause, table);
+    GtkWidget* gtk_child        = raw__gtk_widget__as__GtkWidget(cause, child);
+    s64        left_attach__i   = f2integer__i(left_attach, cause);
+    s64        right_attach__i  = f2integer__i(right_attach, cause);
+    s64        top_attach__i    = f2integer__i(top_attach, cause);
+    s64        bottom_attach__i = f2integer__i(bottom_attach, cause);
+    s64        xpadding__i      = f2integer__i(xpadding, cause);
+    s64        ypadding__i      = f2integer__i(ypadding, cause);
+    funk2_gtk__table__attach(&(__funk2.gtk), gtk_table, gtk_child, left_attach__i, right_attach__i, top_attach__i, bottom_attach__i, xpadding__i, ypadding__i);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2791,20 +3051,24 @@ def_pcfunk8(gtk__table__attach, table, child, left_attach, right_attach, top_att
 
 f2ptr raw__gtk__frame__new(f2ptr cause, f2ptr label) {
 #if defined(F2__GTK__SUPPORTED)
-  u64 label__length;
-  u8* label__str;
-  if (label) {
-    label__length = raw__string__length(cause, label);
-    label__str    = (u8*)alloca(label__length + 1);
-    raw__string__str_copy(cause, label, label__str);
-    label__str[label__length] = 0;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    u64 label__length;
+    u8* label__str;
+    if (label) {
+      label__length = raw__string__length(cause, label);
+      label__str    = (u8*)alloca(label__length + 1);
+      raw__string__str_copy(cause, label, label__str);
+      label__str[label__length] = 0;
+    } else {
+      label__length = 0;
+      label__str    = NULL;
+    }
+    
+    GtkWidget* frame = funk2_gtk__frame__new(&(__funk2.gtk), label__str);
+    return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(frame)));
   } else {
-    label__length = 0;
-    label__str    = NULL;
+    return f2__gtk_not_supported_larva__new(cause);
   }
-  
-  GtkWidget* frame = funk2_gtk__frame__new(&(__funk2.gtk), label__str);
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(frame)));
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2823,8 +3087,12 @@ def_pcfunk1(gtk__frame__new, label, return f2__gtk__frame__new(this_cause, label
 
 f2ptr raw__gtk__menu_bar__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkMenuBar* menu_bar = funk2_gtk__menu_bar__new(&(__funk2.gtk));
-  return f2__gtk_menu_bar__new(cause, f2pointer__new(cause, to_ptr(menu_bar)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkMenuBar* menu_bar = funk2_gtk__menu_bar__new(&(__funk2.gtk));
+    return f2__gtk_menu_bar__new(cause, f2pointer__new(cause, to_ptr(menu_bar)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2838,10 +3106,14 @@ def_pcfunk0(gtk__menu_bar__new, return f2__gtk__menu_bar__new(this_cause));
 
 f2ptr raw__gtk__menu_bar__append(f2ptr cause, f2ptr menu_bar, f2ptr append_widget) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkMenuBar* gtk_menu_bar      = raw__gtk_menu_bar__as__GtkMenuBar(cause, menu_bar);
-  GtkWidget*  append_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, append_widget);
-  funk2_gtk__menu_bar__append(&(__funk2.gtk), gtk_menu_bar, append_gtk_widget);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkMenuBar* gtk_menu_bar      = raw__gtk_menu_bar__as__GtkMenuBar(cause, menu_bar);
+    GtkWidget*  append_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, append_widget);
+    funk2_gtk__menu_bar__append(&(__funk2.gtk), gtk_menu_bar, append_gtk_widget);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2861,15 +3133,19 @@ def_pcfunk2(gtk__menu_bar__append, menu_bar, append_widget, return f2__gtk__menu
 
 f2ptr raw__gtk__menu_item__new(f2ptr cause, f2ptr label) {
 #if defined(F2__GTK__SUPPORTED)
-  u64 label__length;
-  u8* label__str;
-  label__length = raw__string__length(cause, label);
-  label__str    = (u8*)alloca(label__length + 1);
-  raw__string__str_copy(cause, label, label__str);
-  label__str[label__length] = 0;
-  
-  GtkWidget* menu_item = funk2_gtk__menu_item__new(&(__funk2.gtk), label__str);
-  return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(menu_item)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    u64 label__length;
+    u8* label__str;
+    label__length = raw__string__length(cause, label);
+    label__str    = (u8*)alloca(label__length + 1);
+    raw__string__str_copy(cause, label, label__str);
+    label__str[label__length] = 0;
+    
+    GtkWidget* menu_item = funk2_gtk__menu_item__new(&(__funk2.gtk), label__str);
+    return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(menu_item)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2886,10 +3162,14 @@ def_pcfunk1(gtk__menu_item__new, label, return f2__gtk__menu_item__new(this_caus
 
 f2ptr raw__gtk__menu_item__set_submenu(f2ptr cause, f2ptr widget, f2ptr submenu) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkWidget* gtk_widget         = raw__gtk_widget__as__GtkWidget(cause, widget);
-  GtkWidget* submenu_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, submenu);
-  funk2_gtk__menu_item__set_submenu(&(__funk2.gtk), gtk_widget, submenu_gtk_widget);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget         = raw__gtk_widget__as__GtkWidget(cause, widget);
+    GtkWidget* submenu_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, submenu);
+    funk2_gtk__menu_item__set_submenu(&(__funk2.gtk), gtk_widget, submenu_gtk_widget);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2909,8 +3189,12 @@ def_pcfunk2(gtk__menu_item__set_submenu, widget, submenu, return f2__gtk__menu_i
 
 f2ptr raw__gtk__menu__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkMenu* menu = funk2_gtk__menu__new(&(__funk2.gtk));
-  return f2__gtk_menu__new(cause, f2pointer__new(cause, to_ptr(menu)));
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkMenu* menu = funk2_gtk__menu__new(&(__funk2.gtk));
+    return f2__gtk_menu__new(cause, f2pointer__new(cause, to_ptr(menu)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif
@@ -2924,10 +3208,14 @@ def_pcfunk0(gtk__menu__new, return f2__gtk__menu__new(this_cause));
 
 f2ptr raw__gtk__menu__append(f2ptr cause, f2ptr menu, f2ptr append_widget) {
 #if defined(F2__GTK__SUPPORTED)
-  GtkMenu*   gtk_menu          = raw__gtk_menu__as__GtkMenu(cause, menu);
-  GtkWidget* append_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, append_widget);
-  funk2_gtk__menu__append(&(__funk2.gtk), gtk_menu, append_gtk_widget);
-  return nil;
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkMenu*   gtk_menu          = raw__gtk_menu__as__GtkMenu(cause, menu);
+    GtkWidget* append_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, append_widget);
+    funk2_gtk__menu__append(&(__funk2.gtk), gtk_menu, append_gtk_widget);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
 #else
   return f2__gtk_not_supported_larva__new(cause);
 #endif

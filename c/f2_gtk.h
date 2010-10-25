@@ -59,6 +59,8 @@ struct funk2_gtk_callback_event_cons_s {
 };
 
 struct funk2_gtk_s {
+  boolean_t                        initialized_successfully;
+  
   funk2_processor_mutex_t          main_thread__mutex;
   boolean_t                        main_thread__active;
   funk2_processor_thread_t*        main_thread;

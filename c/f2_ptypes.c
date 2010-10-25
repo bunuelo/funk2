@@ -1,5 +1,6 @@
 // 
-// Copyright (c) 2007-2010 Bo Morgan.// All rights reserved.
+// Copyright (c) 2007-2010 Bo Morgan.
+// All rights reserved.
 // 
 // Author: Bo Morgan
 // 
@@ -4242,52 +4243,16 @@ def_pcfunk1(larva__equals_hash_value, this, return f2__larva__equals_hash_value(
 
 
 f2ptr raw__larva__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  {
-    f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
-    u64   size__i = f2integer__i(size, cause);
-    size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list10__new(cause,
+						new__symbol(cause, "print_object_type"), new__symbol(cause, "larva"),
+						new__symbol(cause, "larva_type"),        f2__larva__larva_type(cause, this),
+						new__symbol(cause, "bug"),               f2__larva__bug(       cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
-  u8  larva_string[128];
-  u64 larva_string__length;
-  {
-    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__larva__foreground);
-    larva_string__length = snprintf((char*)larva_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, larva_string__length, larva_string);
-  }
-  {
-    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__foreground);
-    larva_string__length = snprintf((char*)larva_string, 128, "larva ");
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, larva_string__length, larva_string);
-  }
-  {
-    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__key__foreground);
-    larva_string__length = snprintf((char*)larva_string, 128, "larva_type ");
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, larva_string__length, larva_string);
-  }
-  {
-    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__integer__foreground);
-    larva_string__length = snprintf((char*)larva_string, 128, u64__fstr " ", (u64)(f2larva__larva_type(this, cause)));
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, larva_string__length, larva_string);
-  }
-  {
-    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__key__foreground);
-    larva_string__length = snprintf((char*)larva_string, 128, "bug ");
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, larva_string__length, larva_string);
-  }
-  f2ptr result = raw__exp__terminal_print_with_frame__thread_unsafe(cause, f2larva__bug(this, cause), terminal_print_frame);
-  if (raw__larva__is_type(cause, result)) {
-    return result;
-  }
-  if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
-    return nil;
-  }
-  {
-    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__larva__foreground);
-    larva_string__length = snprintf((char*)larva_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__right_paren, cause));
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, larva_string__length, larva_string);
-  }
-  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
-  return nil;
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
 f2ptr f2__larva__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

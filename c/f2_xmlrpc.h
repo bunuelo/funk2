@@ -41,10 +41,12 @@ typedef struct funk2_xmlrpc_server_list_s {
 } funk2_xmlrpc_server_list_t;
 
 
-// funk2_xmlrpcc
+// funk2_xmlrpc
 
 typedef struct funk2_xmlrpc_s {
+#if defined(F2__XMLRPC_SUPPORTED)
   xmlrpc_env                  xmlrpc_environment;
+#endif // F2__XMLRPC_SUPPORTED
   funk2_xmlrpc_server_list_t* servers;
 } funk2_xmlrpc_t;
 

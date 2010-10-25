@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Bo Morgan <bo@mit.edu>
 Build-Depends: debhelper (>= 7), zlib1g-dev
 Standards-Version: 3.8.0
-Homepage: http://neuromin.de/rct/funk2.html
+Homepage: http://funk2.org/
 
 Package: funk2
 Architecture: any

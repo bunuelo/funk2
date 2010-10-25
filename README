@@ -1,6 +1,6 @@
 funk2: causally reflective programming language
 
-  funk2 [-x <command>] [-p <portnum>] [--swap-directory <swap-directory>] [<source.fu2>]
+  funk2 [-x <command>] [-p <portnum>] [<source.fu2>]
 
     <source.fu2>
 
@@ -27,7 +27,7 @@ TO PERFORM LOCAL BUILD:
 
 TO RUN LOCAL BUILD:
 
-  bin/funk2     (from original compile directory)
+  ./funk2.sh    (from original compile directory)
 
 
 TO PERFORM SYSTEM-WIDE INSTALLATION:
@@ -45,7 +45,7 @@ TO RUN SYSTEM-WIDE INSTALLATION:
 
 Homepage:
 
-  http://neuromin.de/rct/funk2.html
+  http://funk2.org/
 
 
 
@@ -54,8 +54,4 @@ Git Access:
   http://git.neuromin.de/
 
 
-
-Package Downloads:
-
-  http://funk2.neuromin.de/
-
+Last Modified: 2010.10.25

@@ -143,11 +143,11 @@ void funk2_virtual_processor_handler__start_virtual_processors(funk2_virtual_pro
 funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virtual_processor_thread(funk2_virtual_processor_handler_t* this) {
   funk2_virtual_processor_thread_t* virtual_processor_thread = NULL;
   if (! (this->free_virtual_processor_threads)) {
-    virtual_processor_thread = (funk2_virtual_processor_thread_t*)f2__malloc(sizeof(funk2_virtual_processor_thread_t));
+    virtual_processor_thread = (funk2_virtual_processor_thread_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_t)));
     funk2_virtual_processor_thread__init(virtual_processor_thread);
     {
       funk2_processor_mutex__lock(&(this->virtual_processor_thread_processor_thread_hash_mutex));
-      funk2_hash__add(&(this->virtual_processor_thread_processor_thread_hash), (u64)(virtual_processor_thread->processor_thread), (u64)virtual_processor_thread);
+      funk2_hash__add(&(this->virtual_processor_thread_processor_thread_hash), (u64)to_ptr(virtual_processor_thread->processor_thread), (u64)to_ptr(virtual_processor_thread));
       funk2_processor_mutex__unlock(&(this->virtual_processor_thread_processor_thread_hash_mutex));
     }
     {
@@ -175,7 +175,7 @@ void funk2_virtual_processor_handler__know_of_virtual_processor_thread_assignmen
   status("funk2_virtual_processor_handler__know_of_virtual_processor_thread_assignment_to_virtual_processor: virtual_processor_index=" u64__fstr, virtual_processor_index);
   {
     funk2_processor_mutex__lock(&(this->virtual_processor_index_processor_thread_hash_mutex));
-    funk2_hash__add(&(this->virtual_processor_index_processor_thread_hash), (u64)virtual_processor_thread, virtual_processor_index);
+    funk2_hash__add(&(this->virtual_processor_index_processor_thread_hash), (u64)to_ptr(virtual_processor_thread), virtual_processor_index);
     funk2_processor_mutex__unlock(&(this->virtual_processor_index_processor_thread_hash_mutex));
   }
   {
@@ -191,7 +191,7 @@ void funk2_virtual_processor_handler__know_of_virtual_processor_thread_unassignm
   status("funk2_virtual_processor_handler__know_of_virtual_processor_thread_unassignment_from_virtual_processor: virtual_processor_thread->virtual_processor_assignment_index=" u64__fstr, virtual_processor_index);
   {
     funk2_processor_mutex__lock(&(this->virtual_processor_index_processor_thread_hash_mutex));
-    funk2_hash__remove(&(this->virtual_processor_index_processor_thread_hash), (u64)virtual_processor_thread);
+    funk2_hash__remove(&(this->virtual_processor_index_processor_thread_hash), (u64)to_ptr(virtual_processor_thread));
     funk2_processor_mutex__unlock(&(this->virtual_processor_index_processor_thread_hash_mutex));
   }
   {
@@ -204,7 +204,7 @@ void funk2_virtual_processor_handler__know_of_virtual_processor_thread_unassignm
 
 funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__my_virtual_processor_thread(funk2_virtual_processor_handler_t* this) {
   funk2_processor_thread_t*         processor_thread         = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
-  funk2_virtual_processor_thread_t* virtual_processor_thread = (funk2_virtual_processor_thread_t*)funk2_hash__lookup(&(this->virtual_processor_thread_processor_thread_hash), (u64)processor_thread);
+  funk2_virtual_processor_thread_t* virtual_processor_thread = (funk2_virtual_processor_thread_t*)from_ptr(funk2_hash__lookup(&(this->virtual_processor_thread_processor_thread_hash), (u64)to_ptr(processor_thread)));
   return virtual_processor_thread;
 }
 

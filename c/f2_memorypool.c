@@ -186,11 +186,11 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
 	if (funk2_memblock__byte_num(iter) == 0) {
 	  status("memorypool_assertion_failed");
 	  status("  funk2_memblock__byte_num(iter) != 0");
-	  status("  iter: " s64__fstr, (s64)iter);
+	  status("  iter: " s64__fstr, (s64)to_ptr(iter));
 	  return_value = f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2__frame__new(cause, f2list6__new(cause,
 																 new__symbol(cause, "bug_type"),              new__symbol(cause, "memorypool_assertion_failed"),
 																 new__symbol(cause, "assertion_description"), new__string(cause, "funk2_memblock__byte_num(iter) != 0"),
-																 new__symbol(cause, "iter"),                  f2integer__new(cause, (s64)iter)))));
+																 new__symbol(cause, "iter"),                  f2integer__new(cause, (s64)to_ptr(iter))))));
 	  goto raw__memorypool__assert_valid__return_label;
 	}
 	iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
@@ -198,13 +198,13 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
       if (iter != end_of_blocks) {
 	status("memorypool_assertion_failed");
 	status("  iter == end_of_blocks");
-	status("  iter.........: " s64__fstr, (s64)iter);
-	status("  end_of_blocks: " s64__fstr, (s64)end_of_blocks);
+	status("  iter.........: " s64__fstr, (s64)to_ptr(iter));
+	status("  end_of_blocks: " s64__fstr, (s64)to_ptr(end_of_blocks));
 	return_value = f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2__frame__new(cause, f2list8__new(cause,
 															       new__symbol(cause, "bug_type"),              new__symbol(cause, "memorypool_assertion_failed"),
 															       new__symbol(cause, "assertion_description"), new__string(cause, "iter == end_of_blocks"),
-															       new__symbol(cause, "iter"),                  f2integer__new(cause, (s64)iter),
-															       new__symbol(cause, "end_of_blocks"),         f2integer__new(cause, (s64)end_of_blocks)))));
+															       new__symbol(cause, "iter"),                  f2integer__new(cause, (s64)to_ptr(iter)),
+															       new__symbol(cause, "end_of_blocks"),         f2integer__new(cause, (s64)to_ptr(end_of_blocks))))));
 	goto raw__memorypool__assert_valid__return_label;
       }
     }
@@ -215,11 +215,11 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
 	if (! funk2_memblock__is_self_consistently_valid(iter)) {
 	  status("memorypool_assertion_failed");
 	  status("  funk2_memblock__is_self_consistently_valid(iter)");
-	  status("  iter: " s64__fstr, (s64)iter);
+	  status("  iter: " s64__fstr, (s64)to_ptr(iter));
 	  return_value = f2larva__new(cause, 5, f2__bug__new(cause, f2integer__new(cause, 5), f2__frame__new(cause, f2list6__new(cause,
 																 new__symbol(cause, "bug_type"),              new__symbol(cause, "memorypool_assertion_failed"),
 																 new__symbol(cause, "assertion_description"), new__string(cause, "funk2_memblock__is_self_consistently_valid(iter)"),
-																 new__symbol(cause, "iter"),                  f2integer__new(cause, (s64)iter)))));
+																 new__symbol(cause, "iter"),                  f2integer__new(cause, (s64)to_ptr(iter))))));
 	  goto raw__memorypool__assert_valid__return_label;
 	}
 	iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
@@ -352,7 +352,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
 	}
 	funk2_memblock_t* next_block = (funk2_memblock_t*)(((u8*)node) + byte_num);
 	if ((next_block < end_of_blocks) && (! (next_block->used))) {
-	  funk2_hash__add(&blocks_to_defragment, (u64)node, (u64)0);
+	  funk2_hash__add(&blocks_to_defragment, (u64)to_ptr(node), (u64)0);
 	}
 	node = rbt_node__next(node);
       }
@@ -365,7 +365,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
       for (index = 0; index < bin_count; index ++) {
 	funk2_hash_bin_node_t* bin_node = blocks_to_defragment.bin_array[index];
 	while (bin_node) {
-	  funk2_memblock_t* segment_first_free_block = (funk2_memblock_t*)(bin_node->keyvalue_pair.key);
+	  funk2_memblock_t* segment_first_free_block = (funk2_memblock_t*)(from_ptr(bin_node->keyvalue_pair.key));
 	  funk2_memblock_t* iter                     = (funk2_memblock_t*)(((u8*)segment_first_free_block) + funk2_memblock__byte_num(((funk2_memblock_t*)segment_first_free_block)));
 	  while ((iter < end_of_blocks) && (! (iter->used))) {
 	    if (funk2_memblock__byte_num(iter) == 0) {
@@ -374,8 +374,8 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
 	      break;
 	    }
 	    funk2_memblock_t* next = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-	    if (funk2_hash__contains(&blocks_to_defragment, (u64)iter)) {
-	      funk2_hash__remove(&blocks_to_defragment, (u64)iter);
+	    if (funk2_hash__contains(&blocks_to_defragment, (u64)to_ptr(iter))) {
+	      funk2_hash__remove(&blocks_to_defragment, (u64)to_ptr(iter));
 	    }
 	    rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)iter);
 	    rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)segment_first_free_block);
@@ -388,7 +388,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
 	    iter = next;
 	    did_something = 1;
 	  }
-	  funk2_hash__remove(&blocks_to_defragment, (u64)segment_first_free_block);
+	  funk2_hash__remove(&blocks_to_defragment, (u64)to_ptr(segment_first_free_block));
 	  bin_node = blocks_to_defragment.bin_array[index];
 	}
       }

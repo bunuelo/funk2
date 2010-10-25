@@ -546,7 +546,8 @@
 			      [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get example date] ' by ' ,[get example author] '</small></p>']]
 			      '    <div class="entry">'
 			      '      <p><tt>'
-			      [have [have [have [get example entry] replace_all '\n' '<br>\n']
+			      [have [have [have [have [get example entry] replace_all '\n' '<br>\n']
+						replace_all '-' '&#x2011;']
 					  replace_all '\t' '        ']
 				    replace_all ' ' '&nbsp;']
 			      '      </tt></p>'

@@ -546,7 +546,8 @@
 			      [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get example date] ' by ' ,[get example author] '</small></p>']]
 			      '    <div class="entry">'
 			      '      <p><tt>'
-			      [have [get example entry] replace_all '\n' '<br>\n']
+			      [have [have [get example entry] replace_all '\n' '<br>\n']
+				    replace_all ' ' '&nbsp;']
 			      '      </tt></p>'
 			      [string-concat '<p class="links"><a href="/example/' [get example name] '.fu2" class="more">Download</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>']
 			      '    </div>'
@@ -603,7 +604,7 @@
 			  [set this author '<a href="#">Bo Morgan</a>']
 			  [set this entry  [string-prog '<p>A basic natural language toolkit has been added to the Funk2 programming language.'
 							'A basic English dictionary and parser have been included for defining verbs and argument structures that can be used for adding knowledge and natural language control to cognitive architectures.'
-							'A new built-in package has been '
+							'A new built-in package can be required with the <tt>[require natural_language]</tt> command.'
 							'</p>']]
 			  this]
 			[let [[this [new funk2_post]]]

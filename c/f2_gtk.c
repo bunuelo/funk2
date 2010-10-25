@@ -87,6 +87,61 @@ f2ptr f2gtk_text_buffer__primobject_type__new_aux(f2ptr cause) {
 
 
 
+// color
+
+f2ptr f2__gdk__color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr blue) {
+  if ((! raw__integer__is_type(cause, pixel)) ||
+      (! raw__integer__is_type(cause, red)) ||
+      (! raw__integer__is_type(cause, green)) ||
+      (! raw__integer__is_type(cause, blue))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  s64 pixel__i = f2integer__i(pixel, cause);
+  s64 red__i   = f2integer__i(red,   cause);
+  s64 green__i = f2integer__i(green, cause);
+  s64 blue__i  = f2integer__i(blue,  cause);
+  if (pixel__i < 0 || pixel__i >= (1ull << 32)) {
+    return f2larva__new(cause, 2, nil);
+  }
+  if (red__i < 0 || red__i >= (1ull << 16)) {
+    return f2larva__new(cause, 2, nil);
+  }
+  if (green__i < 0 || green__i >= (1ull << 16)) {
+    return f2larva__new(cause, 2, nil);
+  }
+  if (blue__i < 0 || blue__i >= (1ull << 16)) {
+    return f2larva__new(cause, 2, nil);
+  }
+  return f2gdk_color__new(cause, pixel, red, green, blue);
+}
+def_pcfunk4(gdk__color__new, pixel, red, green, blue, return f2__gdk__color__new(this_cause, pixel, red, green, blue));
+
+
+f2ptr f2__gdk__rgb_color__new(f2ptr cause, f2ptr red, f2ptr green, f2ptr blue) {
+  f2ptr red__double   = f2__number__as__double(cause, red);
+  f2ptr green__double = f2__number__as__double(cause, green);
+  f2ptr blue__double  = f2__number__as__double(cause, blue);
+  if ((! raw__double__is_type(cause, red__double)) ||
+      (! raw__double__is_type(cause, green__double)) ||
+      (! raw__double__is_type(cause, blue__double))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  double red__d   = f2double__d(red__double,   cause);
+  double green__d = f2double__d(green__double, cause);
+  double blue__d  = f2double__d(blue__double,  cause);
+  if ((red__d   < 0.0 || red__d   > 1.0) ||
+      (green__d < 0.0 || green__d > 1.0) ||
+      (blue__d  < 0.0 || blue__d  > 1.0)) {
+    return f2larva__new(cause, 2, nil);
+  }
+  s64 red__i   = 65535.0 * red__d;
+  s64 green__i = 65535.0 * green__d;
+  s64 blue__i  = 65535.0 * blue__d;
+  return f2__gdk__color__new(cause, f2integer__new(cause, 0), f2integer__new(cause, red__i), f2integer__new(cause, green__i), f2integer__new(cause, blue__i));
+}
+def_pcfunk3(gdk__rgb_color__new, red, green, blue, return f2__gdk__rgb_color__new(this_cause, red, green, blue));
+
+
 // gtk_label
 
 def_frame_object__global__1_slot(gtk_label, pointer);
@@ -860,61 +915,6 @@ u64 funk2_gtk__gdk_keyval_to_unicode(funk2_gtk_t* this, u64 keyval) {
 }
 
 
-// color
-
-f2ptr f2__gdk__color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr blue) {
-  if ((! raw__integer__is_type(cause, pixel)) ||
-      (! raw__integer__is_type(cause, red)) ||
-      (! raw__integer__is_type(cause, green)) ||
-      (! raw__integer__is_type(cause, blue))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  s64 pixel__i = f2integer__i(pixel, cause);
-  s64 red__i   = f2integer__i(red,   cause);
-  s64 green__i = f2integer__i(green, cause);
-  s64 blue__i  = f2integer__i(blue,  cause);
-  if (pixel__i < 0 || pixel__i >= (1ull << 32)) {
-    return f2larva__new(cause, 2, nil);
-  }
-  if (red__i < 0 || red__i >= (1ull << 16)) {
-    return f2larva__new(cause, 2, nil);
-  }
-  if (green__i < 0 || green__i >= (1ull << 16)) {
-    return f2larva__new(cause, 2, nil);
-  }
-  if (blue__i < 0 || blue__i >= (1ull << 16)) {
-    return f2larva__new(cause, 2, nil);
-  }
-  return f2gdk_color__new(cause, pixel, red, green, blue);
-}
-def_pcfunk4(gdk__color__new, pixel, red, green, blue, return f2__gdk__color__new(this_cause, pixel, red, green, blue));
-
-
-f2ptr f2__gdk__rgb_color__new(f2ptr cause, f2ptr red, f2ptr green, f2ptr blue) {
-  f2ptr red__double   = f2__number__as__double(cause, red);
-  f2ptr green__double = f2__number__as__double(cause, green);
-  f2ptr blue__double  = f2__number__as__double(cause, blue);
-  if ((! raw__double__is_type(cause, red__double)) ||
-      (! raw__double__is_type(cause, green__double)) ||
-      (! raw__double__is_type(cause, blue__double))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  double red__d   = f2double__d(red__double,   cause);
-  double green__d = f2double__d(green__double, cause);
-  double blue__d  = f2double__d(blue__double,  cause);
-  if ((red__d   < 0.0 || red__d   > 1.0) ||
-      (green__d < 0.0 || green__d > 1.0) ||
-      (blue__d  < 0.0 || blue__d  > 1.0)) {
-    return f2larva__new(cause, 2, nil);
-  }
-  s64 red__i   = 65535.0 * red__d;
-  s64 green__i = 65535.0 * green__d;
-  s64 blue__i  = 65535.0 * blue__d;
-  return f2__gdk__color__new(cause, f2integer__new(cause, 0), f2integer__new(cause, red__i), f2integer__new(cause, green__i), f2integer__new(cause, blue__i));
-}
-def_pcfunk3(gdk__rgb_color__new, red, green, blue, return f2__gdk__rgb_color__new(this_cause, red, green, blue));
-
-
 // progress_bar
 
 GtkProgressBar* funk2_gtk__progress_bar__new(funk2_gtk_t* this) {
@@ -1442,6 +1442,7 @@ boolean_t raw__gtk_policy_type__is_type(f2ptr cause, f2ptr this) {
 	   raw__eq(cause, this, new__symbol(cause, "never"))));
 }
 
+#if defined(F2__GTK__SUPPORTED)
 GtkPolicyType raw__gtk_policy_type__as__GtkPolicyType(f2ptr cause, f2ptr this) {
   if (raw__eq(cause, this, new__symbol(cause, "always"))) {
     return GTK_POLICY_ALWAYS;
@@ -1452,6 +1453,7 @@ GtkPolicyType raw__gtk_policy_type__as__GtkPolicyType(f2ptr cause, f2ptr this) {
   }
   error(nil, "raw__gtk_policy_type__as__GtkPolicyType ERROR: this is not gtk_policy_type.");
 }
+#endif
 
 f2ptr raw__gtk__scrolled_window__set_policy(f2ptr cause, f2ptr scrolled_window, f2ptr hscrollbar_policy, f2ptr vscrollbar_policy) {
 #if defined(F2__GTK__SUPPORTED)
@@ -1815,6 +1817,7 @@ boolean_t raw__gtk_state_type__is_type(f2ptr cause, f2ptr this) {
 	   raw__eq(cause, this, new__symbol(cause, "insensitive"))));
 }
 
+#if defined(F2__GTK__SUPPORTED)
 GtkStateType raw__gtk_state_type__as__GtkStateType(f2ptr cause, f2ptr this) {
   if      (raw__eq(cause, this, new__symbol(cause, "normal")))      {return GTK_STATE_NORMAL;}
   else if (raw__eq(cause, this, new__symbol(cause, "active")))      {return GTK_STATE_ACTIVE;}
@@ -1824,6 +1827,7 @@ GtkStateType raw__gtk_state_type__as__GtkStateType(f2ptr cause, f2ptr this) {
   error(nil, "raw__gtk_state_type__as__GtkStateType error: received wrong type of value.");
   return 0; // won't ever get here.
 }
+#endif
 
 f2ptr raw__gtk__widget__modify_fg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr color) {
 #if defined(F2__GTK__SUPPORTED)
@@ -3232,9 +3236,13 @@ def_pcfunk2(gtk__menu__append, menu, append_widget, return f2__gtk__menu__append
 
 
 f2ptr raw__gtk__gdk_keyval_to_unicode(f2ptr cause, f2ptr keyval) {
+#if defined(F2__GTK__SUPPORTED)
   u64   keyval__i  = f2integer__i(keyval, cause);
   f2ptr unicode__i = funk2_gtk__gdk_keyval_to_unicode(&(__funk2.gtk), keyval__i);
   return f2integer__new(cause, unicode__i);
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
 }
 
 f2ptr f2__gtk__gdk_keyval_to_unicode(f2ptr cause, f2ptr keyval) {
@@ -3248,6 +3256,7 @@ def_pcfunk1(gtk__gdk_keyval_to_unicode, keyval, return f2__gtk__gdk_keyval_to_un
 
 f2ptr f2__gtk__gdk_keysyms_frame__new(f2ptr cause) {
   f2ptr gdk_keysyms_frame = f2__frame__new(cause, nil);
+#if defined(F2__GTK__SUPPORTED)
   f2__frame__add_var_value(cause, gdk_keysyms_frame, new__symbol(cause, "GDK_BackSpace"), f2integer__new(cause, GDK_BackSpace));
   f2__frame__add_var_value(cause, gdk_keysyms_frame, new__symbol(cause, "GDK_Tab"), f2integer__new(cause, GDK_Tab));
   f2__frame__add_var_value(cause, gdk_keysyms_frame, new__symbol(cause, "GDK_Linefeed"), f2integer__new(cause, GDK_Linefeed));
@@ -3483,6 +3492,7 @@ f2ptr f2__gtk__gdk_keysyms_frame__new(f2ptr cause) {
   f2__frame__add_var_value(cause, gdk_keysyms_frame, new__symbol(cause, "GDK_guillemotleft"), f2integer__new(cause, GDK_guillemotleft));
   f2__frame__add_var_value(cause, gdk_keysyms_frame, new__symbol(cause, "GDK_notsign"), f2integer__new(cause, GDK_notsign));
   f2__frame__add_var_value(cause, gdk_keysyms_frame, new__symbol(cause, "GDK_hyphen"), f2integer__new(cause, GDK_hyphen));
+#endif
   return gdk_keysyms_frame;
 }
 def_pcfunk0(gtk__gdk_keysyms_frame__new, return f2__gtk__gdk_keysyms_frame__new(this_cause));

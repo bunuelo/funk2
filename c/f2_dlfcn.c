@@ -54,7 +54,7 @@ f2ptr raw__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
   ptr result = to_ptr(raw__dlfcn__dlopen_ex(raw_filename, raw_flag));
   if (! result) {
     status("f2__dlfcn__dlopen: failed to load library, \"%s\".", raw_filename);
-    char* dlerror_string = (char*)from_ptr(raw__dlfcn__dlerror());
+    char* dlerror_string = (char*)raw__dlfcn__dlerror();
     return f2larva__new(cause, 923, f2__bug__new(cause, f2integer__new(cause, 923), f2__frame__new(cause, f2list10__new(cause,
 															new__symbol(cause, "bug_type"),      new__symbol(cause, "could_not_open_dlfcn_dynamic_library"),
 															new__symbol(cause, "funkname"),      new__symbol(cause, "dlfcn-dlopen"),

@@ -87,61 +87,6 @@ f2ptr f2gtk_text_buffer__primobject_type__new_aux(f2ptr cause) {
 
 
 
-// color
-
-f2ptr f2__gdk__color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr blue) {
-  if ((! raw__integer__is_type(cause, pixel)) ||
-      (! raw__integer__is_type(cause, red)) ||
-      (! raw__integer__is_type(cause, green)) ||
-      (! raw__integer__is_type(cause, blue))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  s64 pixel__i = f2integer__i(pixel, cause);
-  s64 red__i   = f2integer__i(red,   cause);
-  s64 green__i = f2integer__i(green, cause);
-  s64 blue__i  = f2integer__i(blue,  cause);
-  if (pixel__i < 0 || pixel__i >= (1ull << 32)) {
-    return f2larva__new(cause, 2, nil);
-  }
-  if (red__i < 0 || red__i >= (1ull << 16)) {
-    return f2larva__new(cause, 2, nil);
-  }
-  if (green__i < 0 || green__i >= (1ull << 16)) {
-    return f2larva__new(cause, 2, nil);
-  }
-  if (blue__i < 0 || blue__i >= (1ull << 16)) {
-    return f2larva__new(cause, 2, nil);
-  }
-  return f2gdk_color__new(cause, pixel, red, green, blue);
-}
-def_pcfunk4(gdk__color__new, pixel, red, green, blue, return f2__gdk__color__new(this_cause, pixel, red, green, blue));
-
-
-f2ptr f2__gdk__rgb_color__new(f2ptr cause, f2ptr red, f2ptr green, f2ptr blue) {
-  f2ptr red__double   = f2__number__as__double(cause, red);
-  f2ptr green__double = f2__number__as__double(cause, green);
-  f2ptr blue__double  = f2__number__as__double(cause, blue);
-  if ((! raw__double__is_type(cause, red__double)) ||
-      (! raw__double__is_type(cause, green__double)) ||
-      (! raw__double__is_type(cause, blue__double))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  double red__d   = f2double__d(red__double,   cause);
-  double green__d = f2double__d(green__double, cause);
-  double blue__d  = f2double__d(blue__double,  cause);
-  if ((red__d   < 0.0 || red__d   > 1.0) ||
-      (green__d < 0.0 || green__d > 1.0) ||
-      (blue__d  < 0.0 || blue__d  > 1.0)) {
-    return f2larva__new(cause, 2, nil);
-  }
-  s64 red__i   = 65535.0 * red__d;
-  s64 green__i = 65535.0 * green__d;
-  s64 blue__i  = 65535.0 * blue__d;
-  return f2__gdk__color__new(cause, f2integer__new(cause, 0), f2integer__new(cause, red__i), f2integer__new(cause, green__i), f2integer__new(cause, blue__i));
-}
-def_pcfunk3(gdk__rgb_color__new, red, green, blue, return f2__gdk__rgb_color__new(this_cause, red, green, blue));
-
-
 // gtk_label
 
 def_frame_object__global__1_slot(gtk_label, pointer);
@@ -232,6 +177,61 @@ void raw__gdk_color__as__GdkColor(f2ptr cause, f2ptr this, GdkColor* color) {
 }
 
 #endif // F2__GTK__SUPPORTED
+
+
+// color
+
+f2ptr f2__gdk__color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr blue) {
+  if ((! raw__integer__is_type(cause, pixel)) ||
+      (! raw__integer__is_type(cause, red)) ||
+      (! raw__integer__is_type(cause, green)) ||
+      (! raw__integer__is_type(cause, blue))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  s64 pixel__i = f2integer__i(pixel, cause);
+  s64 red__i   = f2integer__i(red,   cause);
+  s64 green__i = f2integer__i(green, cause);
+  s64 blue__i  = f2integer__i(blue,  cause);
+  if (pixel__i < 0 || pixel__i >= (1ull << 32)) {
+    return f2larva__new(cause, 2, nil);
+  }
+  if (red__i < 0 || red__i >= (1ull << 16)) {
+    return f2larva__new(cause, 2, nil);
+  }
+  if (green__i < 0 || green__i >= (1ull << 16)) {
+    return f2larva__new(cause, 2, nil);
+  }
+  if (blue__i < 0 || blue__i >= (1ull << 16)) {
+    return f2larva__new(cause, 2, nil);
+  }
+  return f2gdk_color__new(cause, pixel, red, green, blue);
+}
+def_pcfunk4(gdk__color__new, pixel, red, green, blue, return f2__gdk__color__new(this_cause, pixel, red, green, blue));
+
+
+f2ptr f2__gdk__rgb_color__new(f2ptr cause, f2ptr red, f2ptr green, f2ptr blue) {
+  f2ptr red__double   = f2__number__as__double(cause, red);
+  f2ptr green__double = f2__number__as__double(cause, green);
+  f2ptr blue__double  = f2__number__as__double(cause, blue);
+  if ((! raw__double__is_type(cause, red__double)) ||
+      (! raw__double__is_type(cause, green__double)) ||
+      (! raw__double__is_type(cause, blue__double))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  double red__d   = f2double__d(red__double,   cause);
+  double green__d = f2double__d(green__double, cause);
+  double blue__d  = f2double__d(blue__double,  cause);
+  if ((red__d   < 0.0 || red__d   > 1.0) ||
+      (green__d < 0.0 || green__d > 1.0) ||
+      (blue__d  < 0.0 || blue__d  > 1.0)) {
+    return f2larva__new(cause, 2, nil);
+  }
+  s64 red__i   = 65535.0 * red__d;
+  s64 green__i = 65535.0 * green__d;
+  s64 blue__i  = 65535.0 * blue__d;
+  return f2__gdk__color__new(cause, f2integer__new(cause, 0), f2integer__new(cause, red__i), f2integer__new(cause, green__i), f2integer__new(cause, blue__i));
+}
+def_pcfunk3(gdk__rgb_color__new, red, green, blue, return f2__gdk__rgb_color__new(this_cause, red, green, blue));
 
 
 // gtk_text_mark

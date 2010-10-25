@@ -48,14 +48,14 @@ learned pick up activated builtin pickup (needs to be verified)
 '
 
 
-[defunk demo_pickup [object_name]
+[defunk demo_hold [object_name]
   [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
 	command `learned_reactive `physical `look_for object_name]
   [while [null [have [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] 
 			  resource `look_for] lookup `my_current_object]]
     [sleep 3]]
   [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
-	command `learned_reactive `physical `pick_up_with_right_hand 
+	command `learned_reactive `physical `hold_with_right_hand 
 	[have [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] 
 		   resource `look_for] lookup `my_current_object]]]
 
@@ -138,19 +138,19 @@ learned pick up activated builtin pickup (needs to be verified)
 			    [mind-wait_to_activate mind builtin_reactive physical move_backward_stop]]]]]
        nil]]
 
-[deframe drop_from_left_hand_resource [resource] []
+[deframe empty_left_hand_resource [resource] []
   [new []
-       [construct resource `drop_from_left_hand
+       [construct resource `empty_left_hand
 		  [funk []
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]
 			      [name  [get body name]]]
-			  [have this-resource think_to_self 'Droping from right hand is starting.']
+			  [have this-resource think_to_self 'Emptying left  hand is starting.']
 			  [mind-wait_to_activate mind builtin_reactive physical drop_from_left_hand]]]]
        
        nil]]
 
-[deframe drop_from_right_hand_resource [resource] []
+[deframe empty_right_hand_resource [resource] []
   [new []
        [construct resource `drop_from_right_hand
 		  [funk []
@@ -158,20 +158,20 @@ learned pick up activated builtin pickup (needs to be verified)
 			       [mind  [get body mind]]
 			      [name  [get body name]]
 			      ]
-			  [have this-resource think_to_self 'Droping from right hand is starting.']
+			  [have this-resource think_to_self 'Emptying right hand is starting.']
 			  [mind-wait_to_activate mind builtin_reactive physical drop_from_right_hand]]]]
        nil]]
 
 
-[deframe pick_up_with_right_hand_resource [resource] []
+[deframe hold_with_right_hand_resource [resource] []
   [new []
-       [construct resource `pick_up_with_right_hand
+       [construct resource `hold_with_right_hand
 		  [funk [target]
 			[let* [[body  [get this body]]
 			       [mind  [get body mind]]
 			       [name  [get body name]]
 			       ] 
-			  [have this-resource think_to_self 'Picking up with right hand is starting']
+			  [have this-resource think_to_self 'hold with right hand is starting']
 			  [print target]
 			  [if [get mind objects]
 			      [if [have [get mind objects] lookup target]
@@ -180,7 +180,7 @@ learned pick up activated builtin pickup (needs to be verified)
 					  [prog [print 'nothing in right hand'] 
 						[mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]
 						[print 'activated built-in pick_up']]
-					[mind-wait_to_activate mind learned_reactive physical drop_from_right_hand]]
+					[mind-wait_to_activate mind learned_reactive physical empty_right_hand]]
 				    [prog 
 				     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
 				     [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]]]
@@ -195,7 +195,7 @@ learned pick up activated builtin pickup (needs to be verified)
        nil]]
 
 
-[deframe pick_up_with_left_hand_resource [resource] []
+[deframe hold_with_left_hand_resource [resource] []
   [new []
        [construct resource `pick_up_with_left_hand
 		  [funk [target]
@@ -203,14 +203,14 @@ learned pick up activated builtin pickup (needs to be verified)
 			       [mind  [get body mind]]
 			       [name  [get body name]]
 			      ] 
-			  [have this-resource think_to_self 'Picking up with left hand is starting']
+			  [have this-resource think_to_self 'hold with left hand is starting']
 			  [print target]
 			  [if [get mind objects]
 			      [if [have [get mind objects] lookup target]
 				  [if [> [get [get this body] arm_length] [have [have [get mind objects] lookup target]lookup  `distance]]
 				      [if [eq '' [have [have [get mind sense] lookup `position] lookup `in_left_hand]]
 					  [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]
-					[mind-wait_to_activate mind learned_reactive physical drop_from_left_hand]]
+					[mind-wait_to_activate mind learned_reactive physical empty_left_hand]]
 				    [prog 
 				     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
 				     [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]]]
@@ -267,7 +267,7 @@ learned pick up activated builtin pickup (needs to be verified)
 			       [mind  [get body mind]]
 			       [name  [get body name]]]
 			  [format stdout '/n slice_toast']
-			  [mind-wait_to_activate mind learned_reactive physical pick_up_with_left_hand knife]
+			  [mind-wait_to_activate mind learned_reactive physical hold_with_left_hand knife]
 			  [mind-wait_to_activate mind learned_reactive physical walk_directly_towards loaf]
 			  [mind-wait_to_activate mind builtin_reactive physical use_left_hand knife loaf]]]]
 		  
@@ -496,10 +496,10 @@ learned pick up activated builtin pickup (needs to be verified)
        [have this add_resource [new turn_left_resource]]
        [have this add_resource [new move_forward_resource]]			
        [have this add_resource [new move_backward_resource]]
-       [have this add_resource [new drop_from_left_hand_resource]]
-       [have this add_resource [new drop_from_right_hand_resource]]
-       [have this add_resource [new pick_up_with_right_hand_resource]]
-       [have this add_resource [new pick_up_with_left_hand_resource]]
+       [have this add_resource [new empty_left_hand_resource]]
+       [have this add_resource [new empty_right_hand_resource]]
+       [have this add_resource [new hold_with_right_hand_resource]]
+       [have this add_resource [new hold_with_left_hand_resource]]
        [have this add_resource [new open_fridge_resource]]
        [have this add_resource [new slice_toast_resource]]
        [have this add_resource [new center_body_on_resource]]

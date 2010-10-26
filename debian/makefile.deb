@@ -24,7 +24,7 @@ tar.gz: export
 changelog-write_new:
 	echo "funk2 ($(version_tag))   unstable; urgency=low" >  $(export_dir)debian/changelog
 	echo ""                                               >> $(export_dir)debian/changelog
-	echo "  * Initial release (Closes: #27892)"           >> $(export_dir)debian/changelog
+	echo "  * Initial release (Closes: #50342)"           >> $(export_dir)debian/changelog
 	echo ""                                               >> $(export_dir)debian/changelog
 	echo ""                                               >> $(export_dir)debian/changelog
 	echo " -- Bo Morgan <bo@mit.edu>  $(date)"            >> $(export_dir)debian/changelog

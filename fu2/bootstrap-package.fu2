@@ -129,6 +129,7 @@
 				  'example/roboverse/'
 				  'example/socket-client/'
 				  'example/socket-server/'
+				  'example/xmlrpc-test/'
 				  ]]
 
 [defmetro defpackage [name :rest dependencies]

@@ -1,5 +1,5 @@
-funk2 (2.06.2010.04.17-1) unstable; urgency=low
+funk2 (2.12.0.2010.10.26-1) unstable; urgency=low
 
-  * Initial release (Closes: #27892)
+  * Initial release (Closes: #50342)
 
- -- Bo Morgan <bo@mit.edu>  Sat, 17 Apr 2010 18:39:00 -0400
+ -- Bo Morgan <bo@mit.edu>  Tue, 26 Oct 2010 10:33:00 -0400

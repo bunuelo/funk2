@@ -756,14 +756,9 @@
 			[let [[this [new funk2_example]]]
 			  [set this name   'xmlrpc_client']
 			  [set this title  'XML-RPC client']
-			  [set this date   'May 13th, 2010']
+			  [set this date   'October 26th, 2010']
 			  [set this author 'Bo Morgan']
-			  [set this entry  [string-prog '\'First, we create a new global xmlrpc_client object.\''
-							'[globalize my-client [new xmlrpc_client \'http://localhost:8001/RPC2\']]'
-							''
-							'\'We can now use our new client object to call remote procedures available in any other programming language.\''
-							'[have my-client call `sample.add 1 2]'
-							]]
+			  [set this entry  [string-load 'example/xmlrpc-test/xmlrpc-test.fu2']]
 			  this]
 			[let [[this [new funk2_example]]]
 			  [set this name   'graph_matching']

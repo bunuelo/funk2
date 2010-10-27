@@ -43,12 +43,15 @@
   [repl]]
 
 [defunk load-funk2rc []
-  [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2rc']]]]
+  [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2rc']]]
+  [print 'debug 34']]
 
 [defunk boot []
   [with-new-cause [cause-define standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 128 t nil t 1000000000]]
 		  [cause-define standard-input    stdin]
+		  [print 'debug 0']
 		  [load-funk2rc]
+		  [print 'debug 1']
 		  [post_userfile_init_boot]]]
 
 [defunk boot-add_user_command [user_command]

@@ -26,20 +26,28 @@
       [mapc [funk [user-boot-command]
 		  [eval user-boot-command]]
 	    user-boot-commands]]
+  [print 'debug 3.1']
   [ansi-stream-foreground stdout 15]
+  [print 'debug 3.2']
   [terminal_format standard-terminal
 		   '\n'
 		   '\n*************************'
 		   '\n**                     **'
 		   '\n**  ']
+  [print 'debug 3.3']
   [ansi-stream-foreground stdout 9]
+  [print 'debug 3.4']
   [terminal_format standard-terminal 'Welcome to funk2']
+  [print 'debug 3.5']
   [ansi-stream-foreground stdout 15]
+  [print 'debug 3.6']
   [terminal_format standard-terminal '!  **'
 		   '\n**                     **'
 		   '\n*************************'
 		   '\n']
+  [print 'debug 3.7']
   [ansi-stream-reset stdout]
+  [print 'debug 3.8']
   [repl]]
 
 [defunk load-funk2rc []

@@ -21,7 +21,10 @@
 
 #include "funk2.h"
 
-#define REQUIRED_STACK_SIZE (8*1024*1024)
+// 8 megabytes used to be necessary with reentrant bytecodes, but now
+// this should only need to be 500k or so, but increase this number
+// when stack overflows occur.  (hard to tell, I know...)
+#define REQUIRED_STACK_SIZE (1*1024*1024)
 
 int create_thread_with_large_stack(pthread_t *out_thread, void *thread_func, void *arg) {
   int            err = 0;

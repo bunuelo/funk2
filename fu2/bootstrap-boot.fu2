@@ -29,6 +29,9 @@
   [print 'debug 3.1']
   [ansi-stream-foreground [get standard-terminal stream] 15]
   [print 'debug 3.2']
+  [print 'debug 3.3']
+  [print standard-terminal]
+  [print 'debug 3.4']
   [terminal_format standard-terminal
 		   '\n'
 		   '\n*************************'

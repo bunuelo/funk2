@@ -26,43 +26,29 @@
       [mapc [funk [user-boot-command]
 		  [eval user-boot-command]]
 	    user-boot-commands]]
-  [print 'debug 3.1']
-  [print 'debug 3.2']
-  [print standard-terminal]
-  [print 'debug 3.3']
   [ansi-stream-foreground [get standard-terminal stream] 15]
-  [print 'debug 3.4']
   [terminal_format standard-terminal
 		   '\n'
 		   '\n*************************'
 		   '\n**                     **'
 		   '\n**  ']
-  [print 'debug 3.3']
   [ansi-stream-foreground [get standard-terminal stream] 9]
-  [print 'debug 3.4']
   [terminal_format standard-terminal 'Welcome to funk2']
-  [print 'debug 3.5']
   [ansi-stream-foreground [get standard-terminal stream] 15]
-  [print 'debug 3.6']
   [terminal_format standard-terminal '!  **'
 		   '\n**                     **'
 		   '\n*************************'
 		   '\n']
-  [print 'debug 3.7']
   [ansi-stream-reset [get standard-terminal stream]]
-  [print 'debug 3.8']
   [repl]]
 
 [defunk load-funk2rc []
-  [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2rc']]]
-  [print 'debug 34']]
+  [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2rc']]]]
 
 [defunk boot []
   [with-new-cause [cause-define standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 128 t nil t 1000000000]]
 		  [cause-define standard-input    stdin]
-		  [print 'debug 0']
 		  [load-funk2rc]
-		  [print 'debug 1']
 		  [post_userfile_init_boot]]]
 
 [defunk boot-add_user_command [user_command]

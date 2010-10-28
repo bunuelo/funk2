@@ -51,8 +51,8 @@
 [load 'fu2/bootstrap-package.fu2']
 [reload_all_package_definitions]
 
+[require ansi]
 `[require utilities]
-`[require ansi]
 `[require perception_lattice]
 `[require object_lattice]
 `[require number]

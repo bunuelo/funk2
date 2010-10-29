@@ -50,14 +50,11 @@
 [load 'fu2/bootstrap-core_extension.fu2']
 [load 'fu2/bootstrap-package.fu2']
 [reload_all_package_definitions]
-
 [require ansi]
+
 `[require utilities]
-`[require perception_lattice]
-`[require object_lattice]
 `[require number]
 `[require math]
-`[require simple_graph]
 `[require graphviz]
 `[require xmlrpc]
 `[require graph_match_error_correcting]
@@ -66,6 +63,11 @@
 `[require fibermon]
 `[require natural_language]
 `[require socket-server]
+
+'deprecated packages'
+`[prog [require simple_graph]
+       [require perception_lattice]
+       [require object_lattice]]
 
 [defunk load-funk2-devrc []
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]

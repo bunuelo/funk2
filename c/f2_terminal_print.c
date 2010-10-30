@@ -836,7 +836,7 @@ f2ptr f2__terminal_print(f2ptr cause, f2ptr exp) {
   if (! raw__cause__is_type(cause, cause)) {
     f2ptr invalid_cause = cause;
     f2ptr cause         = nil;
-    return f2larva__new(cause, 492, f2__bug__new(cause, f2integer__new(cause, 492), f2__frame__new(cause, f2list10__new(cause,
+    return f2larva__new(cause, 492, f2__bug__new(cause, f2integer__new(cause, 492), f2__frame__new(cause, f2list12__new(cause,
 															new__symbol(cause, "bug_type"),           new__symbol(cause, "invalid_cause"),
 															new__symbol(cause, "funkname"),           new__symbol(cause, "terminal_print"),
 															new__symbol(cause, "source_filename"),    new__string(cause, __FILE__),
@@ -847,12 +847,12 @@ f2ptr f2__terminal_print(f2ptr cause, f2ptr exp) {
   }
   f2ptr standard_terminal_print_frame = raw__cause__lookup(cause, cause, new__symbol(cause, "standard-terminal"));
   if (! raw__terminal_print_frame__is_type(cause, standard_terminal_print_frame)) {
-    return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), f2__frame__new(cause, f2list6__new(cause,
-														   new__symbol(cause, "bug_type"),           new__symbol(cause, "wrong_type"),
-														   new__symbol(cause, "funkname"),           new__symbol(cause, "terminal_print"),
-														   new__symbol(cause, "source_filename"),    new__string(cause, __FILE__),
-														   new__symbol(cause, "source_line_number"), f2integer__new(cause, __LINE__),
-														   new__symbol(cause, "standard-terminal"),  standard_terminal_print_frame))));
+    return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), f2__frame__new(cause, f2list10__new(cause,
+														    new__symbol(cause, "bug_type"),           new__symbol(cause, "wrong_type"),
+														    new__symbol(cause, "funkname"),           new__symbol(cause, "terminal_print"),
+														    new__symbol(cause, "source_filename"),    new__string(cause, __FILE__),
+														    new__symbol(cause, "source_line_number"), f2integer__new(cause, __LINE__),
+														    new__symbol(cause, "standard-terminal"),  standard_terminal_print_frame))));
   }
   // how to make this thread safe?
   // we need to mutex somehow.

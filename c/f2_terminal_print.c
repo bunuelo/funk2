@@ -828,6 +828,38 @@ f2ptr f2__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this,
 def_pcfunk2(exp__terminal_print_with_frame__thread_unsafe, this, terminal_print_frame, return f2__exp__terminal_print_with_frame__thread_unsafe(this_cause, this, terminal_print_frame));
 
 
+f2ptr f2__terminal_print(f2ptr cause, f2ptr exp) {
+  if (cause == nil) {
+    printf("\nterminal_print warning: tried to print to the terminal of a nil cause.");
+    return nil;
+  }
+  if (! raw__cause__is_type(cause, cause)) {
+    f2ptr invalid_cause = cause;
+    f2ptr cause         = nil;
+    return f2larva__new(cause, 492, f2__bug__new(cause, f2integer__new(cause, 492), f2__frame__new(cause, f2list10__new(cause,
+															new__symbol(cause, "bug_type"),           new__symbol(cause, "invalid_cause"),
+															new__symbol(cause, "funkname"),           new__symbol(cause, "terminal_print"),
+															new__symbol(cause, "source_filename"),    new__string(cause, __FILE__),
+															new__symbol(cause, "source_line_number"), f2integer__new(cause, __LINE__),
+															new__symbol(cause, "bug_description"),    new__string(cause, "This bug should never occur.  "
+																					      "This is a very dangerous bug for large complicated systems because there is no way to tell why this process is executing."),
+															new__symbol(cause, "invalid_cause"),      invalid_cause))));
+  }
+  f2ptr standard_terminal_print_frame = raw__cause__lookup(cause, cause, new__symbol(cause, "standard-terminal"));
+  if (! raw__terminal_print_frame__is_type(cause, standard_terminal_print_frame)) {
+    return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), f2__frame__new(cause, f2list6__new(cause,
+														   new__symbol(cause, "bug_type"),           new__symbol(cause, "wrong_type"),
+														   new__symbol(cause, "funkname"),           new__symbol(cause, "terminal_print"),
+														   new__symbol(cause, "source_filename"),    new__string(cause, __FILE__),
+														   new__symbol(cause, "source_line_number"), f2integer__new(cause, __LINE__),
+														   new__symbol(cause, "standard-terminal"),  standard_terminal_print_frame))));
+  }
+  // how to make this thread safe?
+  // we need to mutex somehow.
+  return f2__exp__terminal_print_with_frame__thread_unsafe(cause, exp, standard_terminal_print_frame);
+}
+
+
 f2ptr f2__exp__terminal_stream_print__thread_unsafe(f2ptr cause, f2ptr this, f2ptr stream) {
   f2ptr indent_distance      = f2integer__new(cause, 0);
   s64   max_x__i             = raw__termios__width();

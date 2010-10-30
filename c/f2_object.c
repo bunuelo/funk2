@@ -453,9 +453,7 @@ f2ptr f2__object__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   }
   f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
   if (raw__larva__is_type(cause, result)) {
-    f2ptr bug = f2__larva__bug(cause, result);
-    f2__print(cause, result);
-    f2__print(cause, bug);
+    f2__terminal_print(cause, result);
   }
   return result;
 }

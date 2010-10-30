@@ -81,6 +81,8 @@ f2ptr      f2__terminal_print_frame__expression_x_offset__thread_unsafe(        
 
 f2ptr raw__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 
+f2ptr f2__terminal_print(f2ptr cause, f2ptr exp);
+
 // **
 
 void f2__terminal_print__initialize();

@@ -173,8 +173,11 @@
 
 [defunk test-fast_tracers []
   [shelter [start-fast_tracers]
-	   ]
-  nil]
+	   [print [this-cause]]
+	   [print [get [this-cause] bytecode_funk_callbacks]]
+	   [have [get [this-cause] event_graph] gview]
+	   nil
+	   ]]
 
 [defunk tracer_graph-abstract [this]
   [define a [get this node_map [funk [x] [shelter [get [have x lookup `funk] name]]]]]

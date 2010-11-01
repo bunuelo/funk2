@@ -73,7 +73,7 @@
        [have sense_button signal_connect 'clicked'
 	     [funk []
 		   [terminal_format standard-terminal '\n' [get this name] '\'s sensory information:'
-				    '\n' [have isis_agent sense_world]]]]
+				    '\n  ' [have isis_agent sense_world]]]]
        [have button_hbox pack_start sense_button nil nil 0]
        
        [have vbox pack_start button_hbox nil nil 0]
@@ -102,6 +102,7 @@
 			  controller_hbox
 			  play_button
 			  stop_button
+			  step_button
 			  
 			  [agent_frame [frame]]
 			  
@@ -142,8 +143,10 @@
 			     
 			     [= play_button [gtk-button-new_with_label 'Play']]
 			     [= stop_button [gtk-button-new_with_label 'Stop']]
+			     [= step_button [gtk-button-new_with_label 'Step']]
 			     [have controller_hbox pack_start play_button nil nil 0]
 			     [have controller_hbox pack_start stop_button nil nil 0]
+			     [have controller_hbox pack_start step_button nil nil 0]
 			     
 			     [have play_button signal_connect 'clicked'
 				   [funk []
@@ -153,6 +156,11 @@
 				   [funk []
 					 [terminal_format standard-terminal '\nIsisMon: Stopped.']
 					 [= simulation_playing nil]]]
+			     [have step_button signal_connect 'clicked'
+				   [funk []
+					 [let [[seconds 1.0]]
+					   [terminal_format standard-terminal '\nIsisMon: Stepped ' seconds ' seconds.']
+					   [have isis_world step_simulation seconds]]]]
 			     
 			     [have window connect_hide_on_delete]
 			     [have window show_all]
@@ -162,7 +170,7 @@
 			       [if [not [get window visible]]
 				   [= done t]]
 			       [if [and simulation_playing [> [- tick last_stepped_simulation_tick] 5]]
-				   [prog [test-step]
+				   [prog [have isis_world normal_step]
 					 [= last_stepped_simulation_tick tick]]]
 			       [sleep 1]
 			       [= tick [+ tick 1]]

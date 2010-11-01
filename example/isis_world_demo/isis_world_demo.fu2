@@ -102,13 +102,15 @@
        [have sense add `agents agent_frame]]
      sense]]
 
-[deftypefunk isis_world execute step_simulation []
-  [isis-call [get this client] meta_step seconds 0.15]
+[deftypefunk isis_world execute step_simulation [seconds]
+  [isis-call [get this client] meta_step seconds seconds]
   [have this step_physical_world]]
 
+[deftypefunk isis_world execute normal_step []
+  [have this step_simulation 0.15]]
+
 [deftypefunk isis_world execute mini_step []
-  [isis-call [get this client] meta_step seconds 0.02]
-  [have this step_physical_world]]
+  [have this step_simulation 0.02]]
 
 
 'isis_world agent specific control functions'
@@ -169,7 +171,7 @@
       'success']]]
 
 [defunk test-step []
-  [globalize step_fiber [fiber [funk [] [print [have isis_world step_simulation]]]
+  [globalize step_fiber [fiber [funk [] [print [have isis_world normal_step]]]
 			       nil]]]
 [defunk test-mini []
   [globalize step_fiber [fiber [funk [] [print [have isis_world mini_step]]]

@@ -19,6 +19,7 @@
 
 [defpackage isismon
   :packages [isis_world_demo
+	     gtk
 	     mindmon]
    :sources ['isismon.fu2']]
 

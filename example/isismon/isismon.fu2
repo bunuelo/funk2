@@ -73,7 +73,7 @@
        [have sense_button signal_connect 'clicked'
 	     [funk []
 		   [terminal_format standard-terminal '\n' [get this name] '\'s sensory information:'
-				    '\n' [get isis_agent sense_world]]]]
+				    '\n' [have isis_agent sense_world]]]]
        [have button_hbox pack_start sense_button nil nil 0]
        
        [have vbox pack_start button_hbox nil nil 0]

@@ -175,7 +175,7 @@
   [shelter [start-fast_tracers]
 	   [print [this-cause]]
 	   [print [get [this-cause] bytecode_funk_callbacks]]
-	   [have [get [this-cause] event_graph] gview]
+	   [print [get [this-cause] event_graph]]
 	   nil
 	   ]]
 

@@ -44,11 +44,13 @@
 [deftypefunk mind get objects []
   [get this isis_object_frame]]
 
-[deframe visual_object [frame] [object_type isis_name isis_frame]
-  [new [initial-isis_name initial-isis_frame]
-       [= isis_name   initial-isis_name]
-       [= isis_frame  initial-isis_frame]
-       [= object_type [get this calculate_object_type]]
+[deframe visual_object [frame] [object_type isis_name retina_position_horizontal retina_position_vertical raw_isis_frame]
+  [new [initial-isis_name initial-raw_isis_frame]
+       [= isis_name                  initial-isis_name]
+       [= raw_isis_frame             initial-raw_isis_frame]
+       [= retina_position_horizontal [have raw_isis_frame lookup `x_pos]]
+       [= retina_position_vertical   [have raw_isis_frame lookup `y_pos]]
+       [= object_type                [get this calculate_object_type]]
        ]]
 
 [deftypefunk visual_object get calculate_object_type []
@@ -66,6 +68,11 @@
 			[= visual_objects [cons visual_object visual_objects]]]]
 		[get isis_object_frame keys]]]]
     visual_objects]]
+
+[deftypefunk mind get visual_semantic_knowledge []
+  [let [[semantic_knowledge_base [new semantic_knowledge_base]]]
+    
+    semantic_knowledge_base]]
 
 [deftypefunk isis_agent_body execute user_activate [layer_name agency_name resource_name :rest args]
   [set [get [get this mind] agency layer_name agency_name] user_activate_resource resource_name]

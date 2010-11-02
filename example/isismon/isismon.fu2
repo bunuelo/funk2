@@ -26,7 +26,7 @@
 				mindmon_button
 				sense_button
 				visual_objects_button
-				visual_knowledge]
+				visual_knowledge_button]
   [new [initial_isis_agent]
        [= isis_agent initial_isis_agent]
        [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]

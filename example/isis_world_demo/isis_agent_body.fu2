@@ -44,12 +44,14 @@
 [deftypefunk mind get objects []
   [get this isis_object_frame]]
 
-[deframe visual_object [frame] [isis_name isis_frame noun_symbols]
+[deframe visual_object [frame] [object_type isis_name isis_frame]
   [new [initial-isis_name initial-isis_frame]
-       [= isis_name  initial-isis_name]
-       [= isis_frame initial-isis_frame]]]
+       [= isis_name   initial-isis_name]
+       [= isis_frame  initial-isis_frame]
+       [= object_type [get this calculate_object_type]]
+       ]]
 
-[deftypefunk visual_object get object_type []
+[deftypefunk visual_object get calculate_object_type []
   [let [[isis_name_as_string [get isis_name as-string]]]
     [let [[isis_name_split_by_plus [have isis_name_as_string split '+']]]
       [let [[isis_name_type [first isis_name_split_by_plus]]]
@@ -60,7 +62,7 @@
     [let [[isis_object_frame [get this isis_object_frame]]]
       [if isis_object_frame
 	  [mapc [funk [isis_name]
-		      [let [[visual_object [new visual_object isis_name [get isis_object_frame isis_name]]]]
+		      [let [[visual_object [new visual_object isis_name [have isis_object_frame lookup isis_name]]]]
 			[= visual_objects [cons visual_object visual_objects]]]]
 		[get isis_object_frame keys]]]]
     visual_objects]]

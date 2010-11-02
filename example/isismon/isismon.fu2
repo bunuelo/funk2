@@ -81,7 +81,7 @@
        [have visual_objects_button signal_connect 'clicked'
 	     [funk []
 		   [terminal_format standard-terminal '\n' [get this name] '\'s visual objects:'
-				    '\n  ' [have [get isis_agent mind] visual_objects]]]]
+				    '\n  ' [get [get isis_agent mind] visual_objects]]]]
        [have button_hbox pack_start visual_objects_button nil nil 0]
        
        [have vbox pack_start button_hbox nil nil 0]

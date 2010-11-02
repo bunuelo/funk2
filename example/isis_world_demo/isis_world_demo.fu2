@@ -19,14 +19,14 @@
  rights to redistribute these changes.'
 
 
-[deframe isis_agent [agent_body] [says arm_length]
+[deframe isis_agent_body [agent_body] [says arm_length]
   [new [name]
        [construct agent_body name [new moral_compass]]
        [set this says       nil]
        [set this arm_length 3]
        this]]
 
-[deftypefunk isis_agent get objects []
+[deftypefunk isis_agent_body get objects []
   [let [[reactive_sensory_sense [get [get [get this mind] agency `learned_reactive `sensory]learned_reactive_sensory_sense]]]
     [if reactive_sensory_sense
 	[have reactive_sensory_sense lookup `objects]
@@ -42,26 +42,26 @@
   [let [[reactive_sensory_sense [get [get this agency `learned_reactive `sensory] learned_reactive_sensory_sense]]]
     reactive_sensory_sense]]
 
-[deftypefunk isis_agent execute user_activate [layer_name agency_name resource_name :rest args]
+[deftypefunk isis_agent_body execute user_activate [layer_name agency_name resource_name :rest args]
   [set [get [get this mind] agency layer_name agency_name] user_activate_resource resource_name]
   [set [get [get this mind] agency layer_name agency_name] user_activate_args     args]]
 
 'isis_world agent specific control functions'
 
-[deftypefunk isis_agent execute sense_world             []              [have [get this physical_world] sense_world             [get this name]]]
-[deftypefunk isis_agent execute turn_right-start        []              [have [get this physical_world] turn_right-start        [get this name]]]
-[deftypefunk isis_agent execute turn_right-stop         []              [have [get this physical_world] turn_right-stop         [get this name]]]
-[deftypefunk isis_agent execute turn_left-start         []              [have [get this physical_world] turn_left-start         [get this name]]]
-[deftypefunk isis_agent execute turn_left-stop          []              [have [get this physical_world] turn_left-stop          [get this name]]]
-[deftypefunk isis_agent execute move_forward-start      []              [have [get this physical_world] move_forward-start      [get this name]]]
-[deftypefunk isis_agent execute move_forward-stop       []              [have [get this physical_world] move_forward-stop       [get this name]]]
-[deftypefunk isis_agent execute drop_from_right_hand    []              [have [get this physical_world] drop_from_right_hand    [get this name]]]
-[deftypefunk isis_agent execute drop_from_left_hand     []              [have [get this physical_world] drop_from_left_hand     [get this name]]]
-[deftypefunk isis_agent execute pick_up_with_left_hand  [target]        [have [get this physical_world] pick_up_with_left_hand  [get this name] target]]
-[deftypefunk isis_agent execute pick_up_with_right_hand [target]        [have [get this physical_world] pick_up_with_right_hand [get this name] target]]
-[deftypefunk isis_agent execute use_right_hand          [target object] [have [get this physical_world] use_right_hand          [get this name] target object]]
-[deftypefunk isis_agent execute use_left_hand           [target object] [have [get this physical_world] use_left_hand           [get this name] target object]]
-[deftypefunk isis_agent execute say                     [message]       [have [get this physical_world] say                     [get this name] message]]
+[deftypefunk isis_agent_body execute sense_world             []              [have [get this physical_world] sense_world             [get this name]]]
+[deftypefunk isis_agent_body execute turn_right-start        []              [have [get this physical_world] turn_right-start        [get this name]]]
+[deftypefunk isis_agent_body execute turn_right-stop         []              [have [get this physical_world] turn_right-stop         [get this name]]]
+[deftypefunk isis_agent_body execute turn_left-start         []              [have [get this physical_world] turn_left-start         [get this name]]]
+[deftypefunk isis_agent_body execute turn_left-stop          []              [have [get this physical_world] turn_left-stop          [get this name]]]
+[deftypefunk isis_agent_body execute move_forward-start      []              [have [get this physical_world] move_forward-start      [get this name]]]
+[deftypefunk isis_agent_body execute move_forward-stop       []              [have [get this physical_world] move_forward-stop       [get this name]]]
+[deftypefunk isis_agent_body execute drop_from_right_hand    []              [have [get this physical_world] drop_from_right_hand    [get this name]]]
+[deftypefunk isis_agent_body execute drop_from_left_hand     []              [have [get this physical_world] drop_from_left_hand     [get this name]]]
+[deftypefunk isis_agent_body execute pick_up_with_left_hand  [target]        [have [get this physical_world] pick_up_with_left_hand  [get this name] target]]
+[deftypefunk isis_agent_body execute pick_up_with_right_hand [target]        [have [get this physical_world] pick_up_with_right_hand [get this name] target]]
+[deftypefunk isis_agent_body execute use_right_hand          [target object] [have [get this physical_world] use_right_hand          [get this name] target object]]
+[deftypefunk isis_agent_body execute use_left_hand           [target object] [have [get this physical_world] use_left_hand           [get this name] target object]]
+[deftypefunk isis_agent_body execute say                     [message]       [have [get this physical_world] say                     [get this name] message]]
 
 
 [deframe isis_world [physical_world] [client]
@@ -131,14 +131,14 @@
 
 'added simulator commands to isis_world'
 
-[deframe ralph_agent [isis_agent] []
+[deframe ralph_body [isis_agent_body] []
   [new []
-       [construct isis_agent `Ralph]
+       [construct isis_agent_body `Ralph]
        this]]
 
-[deframe lauren_agent [isis_agent] []
+[deframe lauren_body [isis_agent_body] []
   [new []
-       [construct isis_agent `Lauren]
+       [construct isis_agent_body `Lauren]
        this]]
 
 
@@ -151,9 +151,9 @@
     [print 'creating new isis_world.']
     [let [[isis_world [new isis_world client]]]
       [print 'creating new ralph agent.']
-      [have isis_world add_agent_body [new ralph_agent]]
+      [have isis_world add_agent_body [new ralph_body]]
       [print 'creating new lauren agent.']
-      [have isis_world add_agent_body [new lauren_agent]]
+      [have isis_world add_agent_body [new lauren_body]]
       
       [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
       [cause-define cause-time_step [get isis_world time_step]]

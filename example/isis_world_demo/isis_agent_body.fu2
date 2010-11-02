@@ -1,0 +1,64 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+[deframe isis_agent_body [agent_body] [says arm_length]
+  [new [name]
+       [construct agent_body name [new moral_compass]]
+       [set this says       nil]
+       [set this arm_length 3]
+       this]]
+
+[deftypefunk isis_agent_body get objects []
+  [let [[reactive_sensory_sense [get [get [get this mind] agency `learned_reactive `sensory]learned_reactive_sensory_sense]]]
+    [if reactive_sensory_sense
+	[have reactive_sensory_sense lookup `objects]
+      nil]]]
+
+[deftypefunk mind get objects[]
+  [let [[reactive_sensory_sense [get [get this agency `learned_reactive `sensory] learned_reactive_sensory_sense]]]
+    [if reactive_sensory_sense
+	[have reactive_sensory_sense lookup `objects]
+      nil]]]
+
+[deftypefunk mind get sense []
+  [let [[reactive_sensory_sense [get [get this agency `learned_reactive `sensory] learned_reactive_sensory_sense]]]
+    reactive_sensory_sense]]
+
+[deftypefunk isis_agent_body execute user_activate [layer_name agency_name resource_name :rest args]
+  [set [get [get this mind] agency layer_name agency_name] user_activate_resource resource_name]
+  [set [get [get this mind] agency layer_name agency_name] user_activate_args     args]]
+
+'isis_world agent specific control functions'
+
+[deftypefunk isis_agent_body execute sense_world             []              [have [get this physical_world] sense_world             [get this name]]]
+[deftypefunk isis_agent_body execute turn_right-start        []              [have [get this physical_world] turn_right-start        [get this name]]]
+[deftypefunk isis_agent_body execute turn_right-stop         []              [have [get this physical_world] turn_right-stop         [get this name]]]
+[deftypefunk isis_agent_body execute turn_left-start         []              [have [get this physical_world] turn_left-start         [get this name]]]
+[deftypefunk isis_agent_body execute turn_left-stop          []              [have [get this physical_world] turn_left-stop          [get this name]]]
+[deftypefunk isis_agent_body execute move_forward-start      []              [have [get this physical_world] move_forward-start      [get this name]]]
+[deftypefunk isis_agent_body execute move_forward-stop       []              [have [get this physical_world] move_forward-stop       [get this name]]]
+[deftypefunk isis_agent_body execute drop_from_right_hand    []              [have [get this physical_world] drop_from_right_hand    [get this name]]]
+[deftypefunk isis_agent_body execute drop_from_left_hand     []              [have [get this physical_world] drop_from_left_hand     [get this name]]]
+[deftypefunk isis_agent_body execute pick_up_with_left_hand  [target]        [have [get this physical_world] pick_up_with_left_hand  [get this name] target]]
+[deftypefunk isis_agent_body execute pick_up_with_right_hand [target]        [have [get this physical_world] pick_up_with_right_hand [get this name] target]]
+[deftypefunk isis_agent_body execute use_right_hand          [target object] [have [get this physical_world] use_right_hand          [get this name] target object]]
+[deftypefunk isis_agent_body execute use_left_hand           [target object] [have [get this physical_world] use_left_hand           [get this name] target object]]
+[deftypefunk isis_agent_body execute say                     [message]       [have [get this physical_world] say                     [get this name] message]]
+

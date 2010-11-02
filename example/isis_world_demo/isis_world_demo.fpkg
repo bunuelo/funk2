@@ -19,7 +19,9 @@
 
 [defpackage isis_world_demo
   :packages [moral_compass isis_world]
-   :sources ['isis_world_demo.fu2']]
+   :sources ['isis_agent_body.fu2'
+	     'isis_world.fu2'
+	     'isis_world_demo.fu2']]
 
 [defpackage jj
   :packages [isis_world_demo]

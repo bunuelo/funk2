@@ -24,7 +24,8 @@
 				entry
 				button_hbox
 				mindmon_button
-				sense_button]
+				sense_button
+				visual_objects_button]
   [new [initial_isis_agent]
        [= isis_agent initial_isis_agent]
        [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
@@ -75,6 +76,13 @@
 		   [terminal_format standard-terminal '\n' [get this name] '\'s sensory information:'
 				    '\n  ' [have isis_agent sense_world]]]]
        [have button_hbox pack_start sense_button nil nil 0]
+       
+       [= visual_objects_button [gtk-button-new_with_label 'Visual Objects']]
+       [have visual_objects_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\n' [get this name] '\'s visual objects:'
+				    '\n  ' [have isis_agent visual_objects]]]]
+       [have button_hbox pack_start visual_objects_button nil nil 0]
        
        [have vbox pack_start button_hbox nil nil 0]
        

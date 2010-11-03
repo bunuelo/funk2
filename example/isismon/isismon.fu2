@@ -82,7 +82,7 @@
        [have visual_objects_button signal_connect 'clicked'
 	     [funk []
 		   [terminal_format standard-terminal '\n' [get this name] '\'s visual objects:'
-				    '\n  ' [get isis_agent visual_objects]]]]
+				    '\n  ' [have isis_agent sense_visual_objects]]]]
        [have button_hbox pack_start visual_objects_button nil nil 0]
        
        [= visual_knowledge_button [gtk-button-new_with_label 'Visual Knowledge']]

@@ -21,14 +21,20 @@
 
 [deframe isis_visual_object [moral_compass_visual_object] []
   [new [isis_name isis_object_frame]
-       [let [[object_type                [get [have isis_object_frame lookup `class] as-symbol]]
-	     [phenomenal_name            isis_name]
-	     [retina_position_horizontal [have isis_object_frame lookup `x_pos]]
-	     [retina_position_vertical   [have isis_object_frame lookup `y_pos]]]
+       [terminal_format standard-terminal
+			'\nisis_name..........: ' isis_name
+			'\n  isis_object_frame: ' isis_object_frame
+			'\n  isis_name........: ' isis_name
+			'\n  isis_object_frame: ' isis_object_frame
+			]
+       [let [[initial-object_type                [get [have isis_object_frame lookup `class] as-symbol]]
+	     [initial-phenomenal_name            isis_name]
+	     [initial-retina_position_horizontal [have isis_object_frame lookup `x_pos]]
+	     [initial-retina_position_vertical   [have isis_object_frame lookup `y_pos]]]
 	 [construct moral_compass_visual_object
-		    object_type
-		    phenomenal_name
-		    retina_position_horizontal
-		    retina_position_vertical]
+		    initial-object_type
+		    initial-phenomenal_name
+		    initial-retina_position_horizontal
+		    initial-retina_position_vertical]
 	 ]]]
 

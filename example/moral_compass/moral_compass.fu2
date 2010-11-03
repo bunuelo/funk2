@@ -61,7 +61,7 @@
     [let [[isis_object_frame [get this isis_object_frame]]]
       [if isis_object_frame
 	  [mapc [funk [isis_name]
-		      [let [[visual_object [new moral_compass_visual_object isis_name [have isis_object_frame lookup isis_name]]]]
+		      [let [[visual_object [new isis_visual_object isis_name [have isis_object_frame lookup isis_name]]]]
 			[= visual_objects [cons visual_object visual_objects]]]]
 		[get isis_object_frame keys]]]]
     visual_objects]]

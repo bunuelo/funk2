@@ -36,12 +36,17 @@
 [defpackage builtin_reactive_layer
   :packages [mind
 	     builtin_reactive_neural_plug_agency
+	     builtin_reactive_sensory_agency
 	     builtin_reactive_physical_agency]
    :sources ['builtin_reactive_layer.fu2']]
 
 [defpackage builtin_reactive_neural_plug_agency
   :packages [mind]
    :sources ['builtin_reactive_neural_plug_agency.fu2']]
+
+[defpackage builtin_reactive_sensory_agency
+  :packages [mind]
+   :sources ['builtin_reactive_sensory_agency.fu2']]
 
 [defpackage builtin_reactive_physical_agency
   :packages [mind]

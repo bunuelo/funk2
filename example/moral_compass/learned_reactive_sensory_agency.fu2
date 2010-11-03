@@ -96,8 +96,3 @@
 
 
 
-`[have [get isis_world agent `Ralph] user_activate `pick_up_with_left_hand knife]
-`[mind-activate [get isis_world agent_mind `Ralph]  learned_reactive  physical walk_directly_towards  `loaf+177603644]
-`[have [get isis_world agent_mind `Ralph] activate [cons `learned_reactive [cons `physical `[move_forward 3]]]]
-`[have-apply [get isis_world agent_mind `Lauren]  activate [cons `learned_reactive [cons `physical `[`move_forward 3]]]]
-

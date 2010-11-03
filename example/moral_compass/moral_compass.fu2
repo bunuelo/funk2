@@ -30,14 +30,14 @@
 
 [deftypefunk moral_compass get objects []
   [print 'This function is deprecated.']
-  [let [[reactive_sensory_sense [get [get this agency `learned_reactive `sensory] builtin_reactive_sensory_sense]]]
+  [let [[reactive_sensory_sense [get [get this agency `builtin_reactive `sensory] builtin_reactive_sensory_sense]]]
     [if reactive_sensory_sense
 	[have reactive_sensory_sense lookup `objects]
       nil]]]
 
 [deftypefunk moral_compass get isis_sense_frame []
   [print 'This function should not be in moral compass because it uses Isis specific ideas.']
-  [let [[reactive_sensory_sense [get [get this agency `learned_reactive `sensory] builtin_reactive_sensory_sense]]]
+  [let [[reactive_sensory_sense [get [get this agency `builtin_reactive `sensory] builtin_reactive_sensory_sense]]]
     reactive_sensory_sense]]
 
 [deftypefunk moral_compass get sense []

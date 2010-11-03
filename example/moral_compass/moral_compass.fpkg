@@ -20,6 +20,10 @@
 
 'moral_compass: a reflective, self-reflective, and self-conscious cognitive architecture'
 
+[defpackage moral_agent_body
+  :packages [mind moral_compass]
+   :sources ['moral_agent_body.fu2']]
+
 [defpackage moral_compass
   :packages [mind
 	     builtin_reactive_layer
@@ -29,6 +33,7 @@
 	     self_reflective_layer
 	     self_conscious_layer]
    :sources ['moral_compass.fu2']]
+
 
 
 'builtin_reactive_layer'

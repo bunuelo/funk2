@@ -18,9 +18,9 @@
  rights to redistribute these changes.'
 
 
-[deframe isis_agent_body [agent_body] [says arm_length]
+[deframe isis_agent_body [moral_agent_body] [says arm_length]
   [new [name]
-       [construct agent_body name [new moral_compass]]
+       [construct moral_agent_body name]
        [set this says       nil]
        [set this arm_length 3]
        this]]
@@ -52,7 +52,7 @@
   [print 'This funktion is deprecated.']
   [get [get this mind] objects]]
 
-[deftypefunk isis_agent_body get visual_objects []
+[deftypefunk isis_agent_body execute sense_visual_objects []
   [let [[visual_objects nil]]
     [let [[isis_sense_frame [have this sense_world]]]
       [let [[isis_object_frame [have isis_sense_frame lookup `objects]]]

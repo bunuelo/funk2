@@ -18,8 +18,7 @@
  rights to redistribute these changes.'
 
 
-[deframe learned_reactive_sensory_agency [agency] [learned_reactive_sensory_sense
-						   learned_reactive_sensory_story]
+[deframe learned_reactive_sensory_agency [agency] [learned_reactive_sensory_story]
   [new []
        [construct agency `sensory]
        

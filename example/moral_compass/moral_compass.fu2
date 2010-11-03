@@ -30,13 +30,14 @@
 
 [deftypefunk moral_compass get objects []
   [print 'This function is deprecated.']
-  [let [[reactive_sensory_sense [get [get this agency `learned_reactive `sensory] learned_reactive_sensory_sense]]]
+  [let [[reactive_sensory_sense [get [get this agency `learned_reactive `sensory] builtin_reactive_sensory_sense]]]
     [if reactive_sensory_sense
 	[have reactive_sensory_sense lookup `objects]
       nil]]]
 
 [deftypefunk moral_compass get isis_sense_frame []
-  [let [[reactive_sensory_sense [get [get this agency `learned_reactive `sensory] learned_reactive_sensory_sense]]]
+  [print 'This function should not be in moral compass because it uses Isis specific ideas.']
+  [let [[reactive_sensory_sense [get [get this agency `learned_reactive `sensory] builtin_reactive_sensory_sense]]]
     reactive_sensory_sense]]
 
 [deftypefunk moral_compass get sense []
@@ -44,6 +45,7 @@
   [get this isis_sense_frame]]
 
 [deftypefunk moral_compass get isis_object_frame []
+  [print 'This function should not be in moral compass because it uses Isis specific ideas.']
   [let [[reactive_sensory_sense [get this sense]]]
     [if reactive_sensory_sense
 	[have reactive_sensory_sense lookup `objects]
@@ -54,6 +56,7 @@
   [get this isis_object_frame]]
 
 [deftypefunk moral_compass get visual_objects []
+  [print 'This function should not be in moral compass because it uses Isis specific ideas.']
   [let [[visual_objects nil]]
     [let [[isis_object_frame [get this isis_object_frame]]]
       [if isis_object_frame
@@ -64,6 +67,7 @@
     visual_objects]]
 
 [deftypefunk moral_compass get visual_semantic_knowledge []
+  [print 'This function should not be in moral compass because it uses Isis specific ideas.']
   [let [[semantic_knowledge_base [new semantic_knowledge_base]]]
     [let [[visual_objects [get this visual_objects]]]
       [let [[visual_object_frame [frame]]]

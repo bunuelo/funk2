@@ -29,23 +29,23 @@
        this]]
 
 [deftypefunk moral_compass get objects []
-  [print 'This function is deprecated.']
+  [print 'get-moral_compass-objects is deprecated.']
   [let [[reactive_sensory_sense [get [get this agency `builtin_reactive `sensory] builtin_reactive_sensory_sense]]]
     [if reactive_sensory_sense
 	[have reactive_sensory_sense lookup `objects]
       nil]]]
 
 [deftypefunk moral_compass get isis_sense_frame []
-  [print 'This function should not be in moral compass because it uses Isis specific ideas.']
+  [print 'get-moral_compass-isis_sense_frame is deprecated.']
   [let [[reactive_sensory_sense [get [get this agency `builtin_reactive `sensory] builtin_reactive_sensory_sense]]]
     reactive_sensory_sense]]
 
 [deftypefunk moral_compass get sense []
-  [print 'This function is deprecated.']
+  [print 'get-moral_compass-sense is deprecated.']
   [get this isis_sense_frame]]
 
 [deftypefunk moral_compass get isis_object_frame []
-  [print 'This function should not be in moral compass because it uses Isis specific ideas.']
+  [print 'get-moral_compass-isis_object_frame is deprecated.']
   [let [[reactive_sensory_sense [get this sense]]]
     [if reactive_sensory_sense
 	[have reactive_sensory_sense lookup `objects]
@@ -56,7 +56,7 @@
   [get this isis_object_frame]]
 
 [deftypefunk moral_compass get visual_objects []
-  [print 'This function should not be in moral compass because it uses Isis specific ideas.']
+  [print 'get-moral_compass-visual_objects is deprecated.']
   [let [[visual_objects nil]]
     [let [[isis_object_frame [get this isis_object_frame]]]
       [if isis_object_frame
@@ -73,10 +73,10 @@
       [let [[visual_object_frame [frame]]]
 	[mapc [funk [object]
 		    [let [[visual_object_semantic_frame [new visual_object_semantic_frame]]
-			  [isis_name                    [get object isis_name]]]
-		      [have visual_object_semantic_frame add_visual_object_name isis_name]
+			  [phenomenal_name              [get object phenomenal_name]]]
+		      [have visual_object_semantic_frame add_visual_object_name phenomenal_name]
 		      [have semantic_knowledge_base add_semantic_frame visual_object_semantic_frame]
-		      [have visual_object_frame add isis_name visual_object_semantic_frame]]]
+		      [have visual_object_frame add phenomenal_name visual_object_semantic_frame]]]
 	      visual_objects]
 	[let [[object_iter_one visual_objects]]
 	  [while object_iter_one

@@ -25,11 +25,6 @@
        [set this arm_length 3]
        this]]
 
-[deftypefunk isis_agent_body get objects []
-  [get [get this mind] objects]]
-
-
-
 [deftypefunk isis_agent_body execute user_activate [layer_name agency_name resource_name :rest args]
   [set [get [get this mind] agency layer_name agency_name] user_activate_resource resource_name]
   [set [get [get this mind] agency layer_name agency_name] user_activate_args     args]]
@@ -50,4 +45,22 @@
 [deftypefunk isis_agent_body execute use_right_hand          [target object] [have [get this physical_world] use_right_hand          [get this name] target object]]
 [deftypefunk isis_agent_body execute use_left_hand           [target object] [have [get this physical_world] use_left_hand           [get this name] target object]]
 [deftypefunk isis_agent_body execute say                     [message]       [have [get this physical_world] say                     [get this name] message]]
+
+
+
+[deftypefunk isis_agent_body get objects []
+  [print 'This funktion is deprecated.']
+  [get [get this mind] objects]]
+
+[deftypefunk isis_agent_body get visual_objects []
+  [let [[visual_objects nil]]
+    [let [[isis_object_frame [get this sense_world]]]
+      [if isis_object_frame
+	  [mapc [funk [isis_name]
+		      [let [[visual_object [new isis_visual_object isis_name [have isis_object_frame lookup isis_name]]]]
+			[= visual_objects [cons visual_object visual_objects]]]]
+		[get isis_object_frame keys]]]]
+    visual_objects]]
+
+
 

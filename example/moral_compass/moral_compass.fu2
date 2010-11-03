@@ -29,14 +29,19 @@
        this]]
 
 [deftypefunk moral_compass get objects []
+  [print 'This function is deprecated.']
   [let [[reactive_sensory_sense [get [get this agency `learned_reactive `sensory] learned_reactive_sensory_sense]]]
     [if reactive_sensory_sense
 	[have reactive_sensory_sense lookup `objects]
       nil]]]
 
-[deftypefunk moral_compass get sense []
+[deftypefunk moral_compass get isis_sense_frame []
   [let [[reactive_sensory_sense [get [get this agency `learned_reactive `sensory] learned_reactive_sensory_sense]]]
     reactive_sensory_sense]]
+
+[deftypefunk moral_compass get sense []
+  [print 'This function is deprecated.']
+  [get this isis_sense_frame]]
 
 [deftypefunk moral_compass get isis_object_frame []
   [let [[reactive_sensory_sense [get this sense]]]
@@ -45,6 +50,7 @@
       [frame]]]]
 
 [deftypefunk moral_compass get objects []
+  [print 'This function is deprecated.']
   [get this isis_object_frame]]
 
 [deftypefunk moral_compass get visual_objects []

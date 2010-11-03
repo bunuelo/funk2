@@ -17,8 +17,12 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defpackage isis_visual_object
+  :packages [moral_compass_visual_object]
+   :sources ['isis_visual_object.fu2']]
+
 [defpackage isis_world_demo
-  :packages [moral_compass isis_world]
+  :packages [moral_compass isis_world isis_visual_object]
    :sources ['isis_agent_body.fu2'
 	     'isis_world.fu2'
 	     'isis_world_demo.fu2']]

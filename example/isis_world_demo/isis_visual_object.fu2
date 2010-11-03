@@ -18,17 +18,17 @@
  rights to redistribute these changes.'
 
 
-[deframe moral_compass_visual_object [frame] [object_type
-					      phenomenal_name
-					      retina_position_horizontal
-					      retina_position_vertical]
-  [new [initial-object_type
-	initial-phenomenal_name
-	initial-retina_position_horizontal
-	initial-retina_position_vertical]
-       [= object_type                initial-object_type
-       [= phenomenal_name            initial-phenomenal_name]
-       [= retina_position_horizontal initial-retina_position_horizontal]
-       [= retina_position_vertical   initial-retina_position_vertical]
-       ]]]
+
+[deframe isis_visual_object [moral_compass_visual_object] []
+  [new [isis_name isis_object_frame]
+       [let [[object_type                [get [have isis_object_frame lookup `class] as-symbol]]
+	     [phenomenal_name            isis_name]
+	     [retina_position_horizontal [have isis_object_frame lookup `x_pos]]
+	     [retina_position_vertical   [have isis_object_frame lookup `y_pos]]]
+	 [construct moral_compass_visual_object
+		    object_type
+		    phenomenal_name
+		    retina_position_horizontal
+		    retina_position_vertical]
+	 ]]]
 

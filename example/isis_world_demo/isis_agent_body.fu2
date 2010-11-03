@@ -54,13 +54,14 @@
 
 [deftypefunk isis_agent_body get visual_objects []
   [let [[visual_objects nil]]
-    [let [[isis_object_frame [get this sense_world]]]
-      [if isis_object_frame
-	  [mapc [funk [isis_name]
-		      [let [[visual_object [new isis_visual_object isis_name [have isis_object_frame lookup isis_name]]]]
-			[= visual_objects [cons visual_object visual_objects]]]]
-		[get isis_object_frame keys]]]]
-    visual_objects]]
+    [let [[isis_sense_frame [have this sense_world]]]
+      [let [[isis_object_frame [have isis_sense_frame lookup `objects]]]
+	[if isis_object_frame
+	    [mapc [funk [isis_name]
+			[let [[visual_object [new isis_visual_object isis_name [have isis_object_frame lookup isis_name]]]]
+			  [= visual_objects [cons visual_object visual_objects]]]]
+		  [get isis_object_frame keys]]]]
+      visual_objects]]]
 
 
 

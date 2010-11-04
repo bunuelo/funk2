@@ -17,28 +17,31 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[deframe continuous_sensing_resource [resource] []
+  [new []
+       [construct resource `continuous_sensing
+		  [funk []
+			[let [[body [get this body]]]
+			  [have this-resource think_to_self 'Continuous sensing is starting.']
+			  [let [[last_time_step nil]]
+			    [while t
+			      [let [[time_step [get body time_step]]]
+				[if [eq last_time_step time_step]
+				    [millisleep 1000]
+				  [let [[sense [have body sense_world]]]
+				    [have this-resource think_to_self 'My body senses the world.']
+				    [= builtin_reactive_sensory_sense sense]
+				    [= last_time_step time_step]
+				    [mind-wait_to_activate [get this mind] learned_reactive sensory propogate_sense_to_story]
+				    ]]]
+			      ]]]]]
+       nil]]
 
 [deframe builtin_reactive_sensory_agency [agency] [builtin_reactive_sensory_sense]
   [new []
        [construct agency `sensory]
        
-       [have this add_resource [new resource `continuous_sensing
-				    [funk []
-					  [let [[body [get this body]]]
-					    [have this-resource think_to_self 'Continuous sensing is starting.']
-					    [let [[last_time_step nil]]
-					      [while t
-						[let [[time_step [get body time_step]]]
-						  [if [eq last_time_step time_step]
-						      [millisleep 1000]
-						    [let [[sense [have body sense_world]]]
-						      [have this-resource think_to_self 'My body senses the world.']
-						      [= builtin_reactive_sensory_sense sense]
-						      [= last_time_step time_step]
-						      [mind-wait_to_activate [get this mind] learned_reactive sensory propogate_sense_to_story]
-						      ]]]
-						]]]]]]
-       
+       [have this add_resource [new continuous_sensing_resource]]
        
        this]]
 

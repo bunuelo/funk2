@@ -17,61 +17,43 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[deframe propogate_sense_to_story_resource [resource] []
+  [new []
+       [construct resource `propogate_sense_to_story
+		  [funk []
+			[let [[body [get this body]]]
+			  [let [[sense [get [get [get this mind] agency `builtin_reactive `sensory] builtin_reactive_sensory_sense]]]
+			    [have this-resource think_to_self 'Propogating sense->story.']
+			    [let [[sense_agent_frame [have sense lookup `agents]]
+				  [story             [new story]]]
+			      [let [[agent_names [get sense_agent_frame slots]]]
+				[if agent_names
+				    [have this-resource think_to_self 'While propogating sense->story, I can see agents, ' agent_names '.']
+				  [have this-resource think_to_self 'While propogating sense->story, I cannot see any other agents.']]
+				[mapc [funk [agent_name]
+					    [let [[agent [have sense_agent_frame lookup agent_name]]]
+					      [have story add_new_character agent_name]
+					      [story-create_event story [get body time_step] `I `sees agent_name]
+					      [let [[says [have agent lookup `says]]]
+						[if says
+						    [mapc [funk [say]
+								[have this-resource think_to_self 'While propogating sense->story, I can hear ' agent_name ' saying, "' say '"']
+								[story-create_event story [get body time_step] agent_name `says say]
+								]
+							  says]]]]]
+				      agent_names]]
+			      [set this learned_reactive_sensory_story story]
+			      [mind-wait_to_activate [get this mind] deliberative reality include_learned_reactive_stories_into_deliberative_story]
+			      [have this-resource think_to_self 'While propogating sense->story, I created this story: ' [get story as-list] '.']
+			      ]]]]]
+       nil]]
+
 
 [deframe learned_reactive_sensory_agency [agency] [learned_reactive_sensory_story]
   [new []
        [construct agency `sensory]
        
-       [have this add_resource [new resource `propogate_sense_to_story
-				    [funk []
-					  [let [[body [get this body]]]
-					    [let [[sense [get [get [get this mind] agency `builtin_reactive `sensory] builtin_reactive_sensory_sense]]]
-					      [have this-resource think_to_self 'Propogating sense->story.']
-					      [let [[sense_agent_frame [have sense lookup `agents]]
-						    [story             [new story]]]
-						[let [[agent_names [get sense_agent_frame slots]]]
-						  [if agent_names
-						      [have this-resource think_to_self 'While propogating sense->story, I can see agents, ' agent_names '.']
-						    [have this-resource think_to_self 'While propogating sense->story, I cannot see any other agents.']]
-						  [mapc [funk [agent_name]
-							      [let [[agent [have sense_agent_frame lookup agent_name]]]
-								[have story add_new_character agent_name]
-								[story-create_event story [get body time_step] `I `sees agent_name]
-								[let [[says [have agent lookup `says]]]
-								  [if says
-								      [mapc [funk [say]
-										  [have this-resource think_to_self 'While propogating sense->story, I can hear ' agent_name ' saying, "' say '"']
-										  [story-create_event story [get body time_step] agent_name `says say]
-										  ]
-									    says]]]]]
-							agent_names]]
-						[set this learned_reactive_sensory_story story]
-						[mind-wait_to_activate [get this mind] deliberative reality include_learned_reactive_stories_into_deliberative_story]
-						[have this-resource think_to_self 'While propogating sense->story, I created this story: ' [get story as-list] '.']
-						]]]]]]
-       
-       [have this add_resource [new resource `sense_imprimer_scold
-				    [funk [imprimer]
-					  [let [[body [get this body]]]
-					    [if [get [get imprimer speech] is-scold]
-						[prog [have this-resource think_to_self 'Uh oh, my imprimer, ' [get imprimer name] ', said something that sounds like a scold!']
-						      [cause-define cause-time_step [get body time_step]]
-						      [cause-define cause-name      `[learned_reactive sensory sense_imprimer_scold]]
-						      [let [[imprimer_focus [mind-call learned_reactive sensory discover_person_focus imprimer]]]
-							[mind-wait_to_activate mind self_conscious imprimer react_to_imprimer_scold
-									       imprimer imprimer_focus]]]
-					      [have this-resource think_to_self 'My imprimer, ' [get imprimer name] ', is not scolding me.']]
-					    ]]]]
-       
-       `[have this add_resource [new resource `object_in_view
-				    [new [object_name]
-					 [labels [[is_object [a_list]
-							     [if a_list
-								 [if [have [get [car a_list] as-string] contains [get object_name as-string]]
-								     [car a_list]
-								   [is_knife [cdr a_list]]]
-							       nil]]]
-						 [is_object [get [get this objects] slots]]]]]]
+       [have this add_resource [new propogate_sense_to_story_resource]]
        
        this]]
 

@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe continuous_sensing_resource [resource] []
+[deframe continuous_sensing_resource [resource] [builtin_reactive_sensory_sense]
   [new []
        [construct resource `continuous_sensing
 		  [funk []
@@ -37,7 +37,7 @@
 			      ]]]]]
        nil]]
 
-[deframe builtin_reactive_sensory_agency [agency] [builtin_reactive_sensory_sense]
+[deframe builtin_reactive_sensory_agency [agency] []
   [new []
        [construct agency `sensory]
        

@@ -22,7 +22,7 @@
        [construct resource `propogate_sense_to_story
 		  [funk []
 			[let [[body [get this body]]]
-			  [let [[sense [get [get [get this mind] agency `builtin_reactive `sensory] builtin_reactive_sensory_sense]]]
+			  [let [[sense [get [get [get this mind] resource `builtin_reactive `sensory `continuous_sensing] builtin_reactive_sensory_sense]]]
 			    [have this-resource think_to_self 'Propogating sense->story.']
 			    [let [[sense_agent_frame [have sense lookup `agents]]
 				  [story             [new story]]]

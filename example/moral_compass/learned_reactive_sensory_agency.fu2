@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe propogate_sense_to_story_resource [resource] []
+[deframe propogate_sense_to_story_resource [resource] [learned_reactive_sensory_story]
   [new []
        [construct resource `propogate_sense_to_story
 		  [funk []
@@ -49,7 +49,7 @@
        nil]]
 
 
-[deframe learned_reactive_sensory_agency [agency] [learned_reactive_sensory_story]
+[deframe learned_reactive_sensory_agency [agency] []
   [new []
        [construct agency `sensory]
        

@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-
-
 [deframe isis_visual_object [moral_compass_visual_object] []
   [new [isis_name isis_object_frame]
        [let [[isis_object_class [have isis_object_frame lookup `class]]]

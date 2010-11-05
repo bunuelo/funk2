@@ -76,8 +76,12 @@
   :packages [mind]
    :sources ['moral_compass_visual_object.fu2']]
 
-[defpackage learned_reactive_sensory_agency
+[defpackage moral_compass_visual_agent
   :packages [mind moral_compass_visual_object]
+   :sources ['moral_compass_visual_agent.fu2']]
+
+[defpackage learned_reactive_sensory_agency
+  :packages [mind moral_compass_visual_object moral_compass_visual_agent]
    :sources ['learned_reactive_sensory_agency.fu2']]
 
 [defpackage learned_reactive_language_agency

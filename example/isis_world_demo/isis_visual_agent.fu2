@@ -17,21 +17,19 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage isis_visual_object
-  :packages [moral_compass_visual_object]
-   :sources ['isis_visual_object.fu2']]
-
-[defpackage isis_visual_agent
-  :packages [moral_compass_visual_agent]
-   :sources ['isis_visual_agent.fu2']]
-
-[defpackage isis_world_demo
-  :packages [moral_compass moral_agent_body isis_world isis_visual_object isis_visual_agent]
-   :sources ['isis_agent_body.fu2'
-	     'isis_world.fu2'
-	     'isis_world_demo.fu2']]
-
-[defpackage jj
-  :packages [isis_world_demo]
-   :sources ['jj.fu2']]
+[deframe isis_visual_agent [moral_compass_visual_agent] []
+  [new [isis_name isis_agent_frame]
+       [let [[isis_agent_class [have isis_agent_frame lookup `class]]]
+	 [let [[initial-agent_type                [if [null isis_agent_class]
+						      nil
+						    [get isis_agent_class as-symbol]]]
+	       [initial-phenomenal_name            isis_name]
+	       [initial-retina_position_horizontal [have isis_agent_frame lookup `x_pos]]
+	       [initial-retina_position_vertical   [have isis_agent_frame lookup `y_pos]]]
+	   [construct moral_compass_visual_agent
+		      initial-object_type
+		      initial-phenomenal_name
+		      initial-retina_position_horizontal
+		      initial-retina_position_vertical]
+	   ]]]]
 

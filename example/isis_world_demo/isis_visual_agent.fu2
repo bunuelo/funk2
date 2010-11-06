@@ -17,19 +17,38 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[deframe isis_visual_agent_action [moral_compass_visual_agent_action] []
+  [new [isis_agent_action_frame]
+       [let [[initial-start_time     [have isis_agent_action_frame lookup `time]]
+	     [initial-action_name    [have isis_agent_action_frame lookup `action]]
+	     [initial-argument_frame [have isis_agent_action_frame lookup `args]]
+	     [initial-result         [have isis_agent_action_frame lookup `result]]]
+	 [construct moral_compass_visual_agent_action
+		    initial-start_time
+		    initial-action_name
+		    initial-argument_frame
+		    initial-result]]]]
+
 [deframe isis_visual_agent [moral_compass_visual_agent] []
   [new [isis_name isis_agent_frame]
-       [let [[isis_agent_class [have isis_agent_frame lookup `class]]]
-	 [let [[initial-agent_type                [if [null isis_agent_class]
-						      nil
-						    [get isis_agent_class as-symbol]]]
+       [let [[isis_agent_class         [have isis_agent_frame lookup `class]]
+	     [isis_agent_action_frames [have isis_agent_frame lookup `actions]]]
+	 [let [[initial-agent_type                 [if [null isis_agent_class]
+						       nil
+						     [get isis_agent_class as-symbol]]]
 	       [initial-phenomenal_name            isis_name]
 	       [initial-retina_position_horizontal [have isis_agent_frame lookup `x_pos]]
-	       [initial-retina_position_vertical   [have isis_agent_frame lookup `y_pos]]]
+	       [initial-retina_position_vertical   [have isis_agent_frame lookup `y_pos]]
+	       [initial-actions                    [if isis_agent_action_frames
+						       [mapcar [funk [isis_agent_action_frame]
+								     [new isis_visual_agent_action isis_agent_action_frame]]
+							       [get isis_agent_action_frames as-conslist]]
+						     nil]]]
 	   [construct moral_compass_visual_agent
-		      initial-object_type
+		      initial-agent_type
 		      initial-phenomenal_name
 		      initial-retina_position_horizontal
-		      initial-retina_position_vertical]
+		      initial-retina_position_vertical
+		      initial-actions]
 	   ]]]]
 

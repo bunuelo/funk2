@@ -18,16 +18,26 @@
  rights to redistribute these changes.'
 
 
-[deframe moral_compass_visual_agent [moral_compass_visual_object] []
+[deframe moral_compass_visual_agent_action [frame] [start_time action_name argument_frame result]
+  [new [initial-start_time initial-action_name initial-argument_frame initial-result]
+       [= start_time     initial-start_time]
+       [= action_name    initial-action_name]
+       [= argument_frame initial-argument_frame]
+       [= result         initial-result]]]
+
+
+[deframe moral_compass_visual_agent [moral_compass_visual_object] [actions]
   [new [initial-object_type
 	initial-phenomenal_name
 	initial-retina_position_horizontal
-	initial-retina_position_vertical]
+	initial-retina_position_vertical
+	initial-actions]
        [construct moral_compass_visual_object
 		  initial-object_type
 		  initial-phenomenal_name
 		  initial-retina_position_horizontal
 		  initial-retina_position_vertical]
+       [= actions initial-actions]
        ]]
 
 

@@ -61,6 +61,12 @@
 			[let [[visual_object [new isis_visual_object isis_name [have isis_object_frame lookup isis_name]]]]
 			  [= visual_objects [cons visual_object visual_objects]]]]
 		  [get isis_object_frame keys]]]]
+      [let [[isis_agent_frame [have isis_sense_frame lookup `agents]]]
+	[if isis_agent_frame
+	    [mapc [funk [isis_name]
+			[let [[visual_agent [new isis_visual_agent isis_name [have isis_agent_frame lookup isis_name]]]]
+			  [= visual_objects [cons visual_agent visual_objects]]]]
+		  [get isis_agent_frame keys]]]]
       visual_objects]]]
 
 

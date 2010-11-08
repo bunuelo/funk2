@@ -39,6 +39,7 @@
 	       [initial-phenomenal_name            isis_name]
 	       [initial-retina_position_horizontal [have isis_agent_frame lookup `x_pos]]
 	       [initial-retina_position_vertical   [have isis_agent_frame lookup `y_pos]]
+	       [initial-distance                   [have isis_agent_frame lookup `distance]]
 	       [initial-actions                    [if isis_agent_action_frames
 						       [mapcar [funk [isis_agent_action_frame]
 								     [new isis_visual_agent_action isis_agent_action_frame]]
@@ -49,6 +50,7 @@
 		      initial-phenomenal_name
 		      initial-retina_position_horizontal
 		      initial-retina_position_vertical
+		      initial-distance
 		      initial-actions]
 	   ]]]]
 

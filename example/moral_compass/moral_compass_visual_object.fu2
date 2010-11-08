@@ -21,15 +21,18 @@
 [deframe moral_compass_visual_object [frame] [object_type
 					      phenomenal_name
 					      retina_position_horizontal
-					      retina_position_vertical]
+					      retina_position_vertical
+					      distance]
   [new [initial-object_type
 	initial-phenomenal_name
 	initial-retina_position_horizontal
-	initial-retina_position_vertical]
+	initial-retina_position_vertical
+	initial-distance]
        [= object_type                initial-object_type]
        [= phenomenal_name            initial-phenomenal_name]
        [= retina_position_horizontal initial-retina_position_horizontal]
        [= retina_position_vertical   initial-retina_position_vertical]
+       [= distance                   initial-distance]
        ]]
 
 

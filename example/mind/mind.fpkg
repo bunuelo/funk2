@@ -44,7 +44,7 @@
    :sources ['mental_layer.fu2']]
 
 [defpackage physical_world
-  :packages []
+  :packages [math]
    :sources ['physical_world.fu2']]
 
 [defpackage agent_body

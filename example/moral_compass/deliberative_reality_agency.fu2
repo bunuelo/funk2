@@ -118,7 +118,7 @@
 					      [have semantic_knowledge_base add_semantic_frame Lauren_semantic_frame]
 					      semantic_knowledge_base]]]
        
-       [have this add_resource [new include_learned_reactive_stories_into_deliberative_story]]
+       [have this add_resource [new include_learned_reactive_visual_knowledge_into_deliberative_knowledge]]
        [have this add_resource [new infer_intended_use_for_agent_picking_up_tool]]
        [have this add_resource [new infer_reason_for_agent_physical_action]]
        [have this add_resource [new infer_mental_state_causing_agent_facial_expression]]

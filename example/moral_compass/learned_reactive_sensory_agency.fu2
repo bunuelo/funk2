@@ -36,7 +36,7 @@
   [new []
        [construct agency `sensory]
        
-       [have this add_resource [new propogate_sense_to_story_resource]]
+       [have this add_resource [new propogate_visual_objects_to_visual_knowledge_resource]]
        
        this]]
 

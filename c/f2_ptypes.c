@@ -2693,6 +2693,60 @@ f2ptr raw__key_symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
 }
 
 
+f2ptr raw__type_symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  {
+    f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
+    u64   size__i = f2integer__i(size, cause);
+    size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
+  }
+  u64       symbol__length     = raw__symbol__length(cause, this);
+  u8*       symbol__str        = (u8*)from_ptr(f2__malloc(symbol__length + 1)); raw__symbol__str_copy(cause, this, symbol__str); symbol__str[symbol__length] = 0;
+  boolean_t symbol_needs_quote = boolean__false;
+  {
+    u64 index;
+    for (index = 0; index < symbol__length; index ++) {
+      char ch = symbol__str[index];
+      if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == f2char__ch(__funk2.reader.char__left_paren, cause) || ch == f2char__ch(__funk2.reader.char__right_paren, cause) || ch == f2char__ch(__funk2.reader.char__symbol_quote, cause) || ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
+	symbol_needs_quote = boolean__true;
+	break;
+      }
+    }
+  }
+  if (symbol_needs_quote) {
+    u8* symbol_string         = (u8*)from_ptr(f2__malloc((symbol__length << 1) + 128));
+    symbol_string[0]          = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
+    u64 symbol_string__length = 1;
+    {
+      u64 index;
+      for (index = 0; index < symbol__length; index ++) {
+	u8 ch = symbol__str[index];
+	if (ch == (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause)) {
+	  symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_escape, cause);
+	  symbol_string__length ++;
+	  symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
+	  symbol_string__length ++;
+	} else {
+	  symbol_string[symbol_string__length] = ch;
+	  symbol_string__length ++;
+	}
+      }
+    }
+    symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
+    symbol_string__length ++;
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__type__foreground);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, symbol_string__length, symbol_string);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
+    f2__free(to_ptr(symbol_string));
+  } else {
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__type__foreground);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, symbol__length, symbol__str);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
+  }
+  f2__free(to_ptr(symbol__str));
+  return nil;
+}
+
+
 f2ptr raw__symbol__as__string(f2ptr cause, f2ptr this) {
   u64 symbol__length = raw__symbol__length(cause, this);
   u8* symbol__str    = (u8*)from_ptr(f2__malloc(symbol__length + 1)); raw__symbol__str_copy(cause, this, symbol__str); symbol__str[symbol__length] = 0;

@@ -470,7 +470,12 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     }
   }
   {
-    f2ptr result = raw__exp__terminal_print_with_frame__thread_unsafe(cause, object_type, terminal_print_frame);
+    f2ptr result;
+    if (raw__symbol__is_type(cause, object_type)) {
+      result = raw__type_symbol__terminal_print_with_frame(cause, object_type, terminal_print_frame);
+    } else {
+      result = raw__exp__terminal_print_with_frame__thread_unsafe(cause, object_type, terminal_print_frame);
+    }
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

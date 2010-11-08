@@ -44,6 +44,7 @@ extern ansi_color_t print__ansi__char__foreground;
 extern ansi_color_t print__ansi__string__foreground;
 extern ansi_color_t print__ansi__symbol__foreground;
 extern ansi_color_t print__ansi__symbol__key__foreground;
+extern ansi_color_t print__ansi__symbol__type__foreground;
 extern ansi_color_t print__ansi__chunk__foreground;
 extern ansi_color_t print__ansi__simple_array__foreground;
 extern ansi_color_t print__ansi__traced_array__foreground;

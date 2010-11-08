@@ -27,7 +27,7 @@
 			    [let [[new_visual_knowledge [new semantic_knowledge_base]]]
 			      [= visual_knowledge new_visual_knowledge]
 			      [mind-wait_to_activate [get this mind] deliberative reality include_learned_reactive_visual_knowledge_into_deliberative_knowledge]
-			      [have this-resource think_to_self 'While propogating sense->story, I created this knowledge: ' visual_knowledge '.']
+			      [have this-resource think_to_self 'I created this knowledge: ' visual_knowledge '.']
 			      ]]]]]
        nil]]
 

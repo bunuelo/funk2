@@ -21,7 +21,8 @@
 
 #include "funk2.h"
 
-f2ptr f2__ansi__stream__begin_command(f2ptr cause, f2ptr strea  raw__stream__writef(cause, stream, "%c[", 27);
+f2ptr f2__ansi__stream__begin_command(f2ptr cause, f2ptr stream) {
+  raw__stream__writef(cause, stream, "%c[", 27);
   return nil;
 }
 def_pcfunk1(ansi__stream__begin_command, stream, return f2__ansi__stream__begin_command(this_cause, stream));

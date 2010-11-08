@@ -58,7 +58,7 @@
   [print 'This function is deprecated.']
   [get this isis_object_frame]]
 
-[deftypefunk moral_compass get visual_objects []
+`[deftypefunk moral_compass get visual_objects []
   [print 'get-moral_compass-visual_objects is deprecated.']
   [let [[visual_objects nil]]
     [let [[isis_object_frame [get this isis_object_frame]]]

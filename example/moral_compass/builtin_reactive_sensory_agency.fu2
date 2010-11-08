@@ -37,6 +37,7 @@
 			      ]]]]]
        nil]]
 
+
 [deframe builtin_reactive_sensory_agency [agency] []
   [new []
        [construct agency `sensory]
@@ -45,4 +46,6 @@
        
        this]]
 
+[deftypefunk builtin_reactive_sensory_agency get visual_objects []
+  [get [get this resource `continuous_sensing] visual_objects]]
 

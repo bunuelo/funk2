@@ -28,6 +28,9 @@
        [have this add_layer [new self_conscious_layer]]
        this]]
 
+[deftypefunk moral_compass get visual_objects []
+  [get [get this layer `builtin_reactive] visual_objects]]
+
 [deftypefunk moral_compass get objects []
   [print 'get-moral_compass-objects is deprecated.']
   [let [[reactive_sensory_sense [get [get this agency `builtin_reactive `sensory] builtin_reactive_sensory_sense]]]

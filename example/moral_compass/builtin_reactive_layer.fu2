@@ -28,3 +28,6 @@
        [have this add_agency [new builtin_reactive_physical_agency]]
        this]]
 
+[deftypefunk builtin_reactive_layer get visual_objects []
+  [get [get this agency `sensory] visual_objects]]
+

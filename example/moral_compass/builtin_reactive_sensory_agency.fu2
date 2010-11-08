@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe continuous_sensing_resource [resource] [builtin_reactive_sensory_sense]
+[deframe continuous_sensing_resource [resource] [visual_objects]
   [new []
        [construct resource `continuous_sensing
 		  [funk []
@@ -28,11 +28,11 @@
 			      [let [[time_step [get body time_step]]]
 				[if [eq last_time_step time_step]
 				    [millisleep 1000]
-				  [let [[sense [have body sense_world]]]
-				    [have this-resource think_to_self 'My body senses the world.']
-				    [= builtin_reactive_sensory_sense sense]
+				  [let [[body_visual_objects [have body sense_visual_objects]]]
+				    [have this-resource think_to_self 'My body senses visual objects from the world.']
+				    [= visual_objects body_visual_objects]
 				    [= last_time_step time_step]
-				    [mind-wait_to_activate [get this mind] learned_reactive sensory propogate_sense_to_story]
+				    [mind-wait_to_activate [get this mind] learned_reactive sensory propogate_visual_objects_to_visual_knowledge]
 				    ]]]
 			      ]]]]]
        nil]]

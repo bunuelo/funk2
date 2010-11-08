@@ -18,31 +18,23 @@
  rights to redistribute these changes.'
 
 
-[deframe include_learned_reactive_stories_into_deliberative_story [resource] [[last_time_step -1]]
+[deframe include_learned_reactive_visual_knowledge_into_deliberative_knowledge [resource] [[last_time_step    -1]
+											   [reality_knowledge [new semantic_knowledge_base]]]
   [new []
        [construct resource [type this]
 		  [funk []
 			[let [[body [get this body]]]
-			  [cause-define cause-time_step [get body time_step]]
-			  [cause-define cause-name      `[deliberative reality interpret_senses_into_current_story]]
 			  [let [[time_step [get body time_step]]]
 			    [if [!= [get this last_time_step] time_step]
-				[let [[learned_reactive_sensory_story [get [get [get this mind] resource `learned_reactive `sensory `propogate_sense_to_story] learned_reactive_sensory_story]]]
-				  [if [null learned_reactive_sensory_story]
-				      [have this-resource think_to_self 'Learned reactive sensory story does not exist.']
-				    [prog [have this-resource think_to_self 'Including learned reactive sensory story into deliberative story: ' [get learned_reactive_sensory_story as-list]]
-					  [let [[reality_story [get [get [get this agency] deliberative_reality_story] union learned_reactive_sensory_story]]]
-					    [set [get this agency] deliberative_reality_story reality_story]]
+				[let [[visual_knowledge [get [get [get this mind] resource `learned_reactive `sensory `propogate_visual_objects_to_visual_knowledge] visual_knowledge]]]
+				  [if [null visual_knowledge]
+				      [have this-resource think_to_self 'Learned reactive visual knowledge does not exist.']
+				    [prog [have this-resource think_to_self 'Including learned reactive visual knowledge into deliberative reality knowledge: ' visual_knowledge '.']
+					  [let [[new_reality_knowledge [new semantic_knowledge_base]]]
+					    'should incorporate visual knowledge into current reality knowledge.'
+					    [= reality_knowledge new_reality_knowledge]]
 					  [set this last_time_step time_step]]]]]
 			    ]]]]
-       nil]]
-
-[deframe infer_intended_use_for_agent_picking_up_tool [resource] []
-  [new []
-       [construct resource [type this]
-		  [funk [agent tool]
-			[have this think_to_self 'Inferring intended use for ' agent ' picking up tool, ' tool '.']
-			]]
        nil]]
 
 [deframe infer_reason_for_agent_physical_action [resource] []
@@ -83,11 +75,9 @@
 
 
 
-[deframe deliberative_reality_agency [agency] [deliberative_reality_story
-					       reality_semantic_knowledge_base]
+[deframe deliberative_reality_agency [agency] [reality_semantic_knowledge_base]
   [new []
        [construct agency `reality]
-       [set this deliberative_reality_story [new story]]
        
        [= reality_semantic_knowledge_base [let [[semantic_knowledge_base [new semantic_knowledge_base]]]
 					    [let [[knife_semantic_frame        [new visual_object_semantic_frame]]

@@ -29,7 +29,7 @@
    :sources ['story-graph.fu2']]
 
 [defpackage resource
-  :packages [story]
+  :packages [story math]
    :sources ['resource.fu2']]
 
 [defpackage self_model

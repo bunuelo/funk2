@@ -486,6 +486,9 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
 	case ptype_mutex: {
 	  ptype_mutex_block_t* mutex_block = (ptype_mutex_block_t*)block;
 	  funk2_processor_mutex__init(mutex_block->m);
+	  if (mutex_block->locked_state) {
+	    funk2_processor_mutex__lock(mutex_block->m);
+	  }
 	} break;
 	default:
 	  break;

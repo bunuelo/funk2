@@ -132,15 +132,18 @@ ptype_gfunkptr_block_t* ptype_gfunkptr_block__new(int pool_index, f2ptr cause, c
 
 struct ptype_mutex_block_s {
   ptype_block_t           ptype;
-  funk2_processor_mutex_t m[1];
+  boolean_t               locked_state; // this state is persistent between boots.
+  funk2_processor_mutex_t m[1];         // this state is reinitialized at each boot.
 } __attribute__((__packed__));
 typedef struct ptype_mutex_block_s ptype_mutex_block_t;
 
 ptype_mutex_block_t*     ptype_mutex_block__new(int pool_index, f2ptr cause);
 funk2_processor_mutex_t* ptype_mutex__m(f2ptr this, f2ptr cause);
 
-#define __pure__f2mutex__new(pool_index, cause) ptype_mutex__new(pool_index, cause)
-#define __pure__f2mutex__m(this)    (((ptype_mutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)
+#define __pure__f2mutex__new(pool_index, cause)         ptype_mutex__new(pool_index, cause)
+#define __pure__f2mutex__locked_state(this)             (((ptype_mutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state)
+#define __pure__f2mutex__locked_state__set(this, value) (((ptype_mutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state = (value))
+#define __pure__f2mutex__m(this)                        (((ptype_mutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)
 
 
 // character
@@ -154,7 +157,7 @@ typedef struct ptype_char_block_s ptype_char_block_t;
 ptype_char_block_t* ptype_char_block__new(int pool_index, f2ptr cause, u64 ch);
 
 #define __pure__f2char__new(pool_index, cause, ch) ptype_char__new(pool_index, cause, ch)
-#define __pure__f2char__ch(this)       (((ptype_char_block_t*)(from_ptr(f2ptr_to_ptr(this))))->ch)
+#define __pure__f2char__ch(this)                   (((ptype_char_block_t*)(from_ptr(f2ptr_to_ptr(this))))->ch)
 
 
 // string
@@ -169,8 +172,8 @@ typedef struct ptype_string_block_s ptype_string_block_t;
 ptype_string_block_t* ptype_string_block__new(int pool_index, f2ptr cause, uint len, u8* data);
 
 #define __pure__f2string__new(pool_index, cause, len, init) ptype_string__new(pool_index, cause, len, init)
-#define __pure__f2string__length(this)          (((ptype_string_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
-#define __pure__f2string__str(this)             (((ptype_string_block_t*)(from_ptr(f2ptr_to_ptr(this))))->str)
+#define __pure__f2string__length(this)                      (((ptype_string_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
+#define __pure__f2string__str(this)                         (((ptype_string_block_t*)(from_ptr(f2ptr_to_ptr(this))))->str)
 
 
 // symbol
@@ -186,9 +189,9 @@ typedef struct ptype_symbol_block_s ptype_symbol_block_t;
 ptype_symbol_block_t* ptype_symbol_block__new(int pool_index, f2ptr cause, uint len, u8* data);
 
 #define __pure__f2symbol__new(pool_index, cause, len, init) ptype_symbol__new(pool_index, cause, len, init)
-#define __pure__f2symbol__length(this)          (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
-#define __pure__f2symbol__eq_hash_value(this)   (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->eq_hash_value)
-#define __pure__f2symbol__str(this)             (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->str)
+#define __pure__f2symbol__length(this)                      (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
+#define __pure__f2symbol__eq_hash_value(this)               (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->eq_hash_value)
+#define __pure__f2symbol__str(this)                         (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->str)
 
 
 // chunk
@@ -203,13 +206,13 @@ typedef struct ptype_chunk_block_s ptype_chunk_block_t;
 ptype_chunk_block_t* ptype_chunk_block__new(int pool_index, f2ptr cause, uint len, byte* bytes);
 u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
 
-#define __pure__f2chunk__new(pool_index, cause, len, bytes)              ptype_chunk__new(pool_index, cause, len, bytes)
-#define __pure__f2chunk__new_copy(pool_index, cause, init_chunk)         ptype_chunk__new_copy(pool_index, cause, init_chunk)
-#define __pure__f2chunk__length(this)                        (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
-#define __pure__f2chunk__bytes(this)                         (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes)
+#define __pure__f2chunk__new(pool_index, cause, len, bytes)      ptype_chunk__new(pool_index, cause, len, bytes)
+#define __pure__f2chunk__new_copy(pool_index, cause, init_chunk) ptype_chunk__new_copy(pool_index, cause, init_chunk)
+#define __pure__f2chunk__length(this)                            (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
+#define __pure__f2chunk__bytes(this)                             (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes)
 
-#define __pure__f2chunk__bit8__elt(this, index)              (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])
-#define __pure__f2chunk__bit8__elt__set(this, index, value)  (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index] = (u8)(value))
+#define __pure__f2chunk__bit8__elt(this, index)                          (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])
+#define __pure__f2chunk__bit8__elt__set(this, index, value)              (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index] = (u8)(value))
 #define __pure__f2chunk__bit16__elt(this, index)              (*((u16*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index]))))
 #define __pure__f2chunk__bit16__elt__set(this, index, value) ((*((u16*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])))) = (u16)(value))
 #define __pure__f2chunk__bit32__elt(this, index)              (*((u32*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index]))))

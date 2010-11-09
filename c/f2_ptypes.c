@@ -1709,8 +1709,9 @@ f2ptr ptype_mutex__new(int pool_index, f2ptr cause) {
   ptype_mutex_block_t* mutex_block = (ptype_mutex_block_t*)from_ptr(raw__f2ptr_to_ptr(mutex_f2ptr));
   debug__assert(mutex_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  mutex_block->ptype.ptype = ptype_mutex;
-  mutex_block->ptype.cause = cause;
+  mutex_block->ptype.ptype  = ptype_mutex;
+  mutex_block->ptype.cause  = cause;
+  mutex_block->locked_state = boolean__false;
   funk2_processor_mutex__init(mutex_block->m);
   return mutex_f2ptr;
 }
@@ -1757,6 +1758,7 @@ void pfunk2__f2mutex__lock(f2ptr this, f2ptr cause) {
       break;
     }
   }
+  __pure__f2mutex__locked_state__set(this, boolean__true);
 }
 
 void pfunk2__f2mutex__unlock(f2ptr this, f2ptr cause) {
@@ -1767,6 +1769,8 @@ void pfunk2__f2mutex__unlock(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_mutex__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
+  // note that this assumes the mutex is locked.
+  __pure__f2mutex__locked_state__set(this, boolean__false);
   funk2_processor_mutex__unlock(ptype_mutex__m(this, cause));
 }
 
@@ -1779,6 +1783,9 @@ int pfunk2__f2mutex__trylock(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   int return_value = funk2_processor_mutex__trylock(ptype_mutex__m(this, cause));
+  if (return_value == 0) {
+    __pure__f2mutex__locked_state__set(this, boolean__true);
+  }
   return return_value;
 }
 

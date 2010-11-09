@@ -3128,11 +3128,55 @@ f2ptr  f2__chunk__equals_hash_value(f2ptr cause, f2ptr this) {return f2integer__
 def_pcfunk1(chunk__equals_hash_value, x, return f2__chunk__equals_hash_value(this_cause, x));
 
 def_pcfunk1(chunk__is_type, x, return f2__chunk__is_type(this_cause, x));
+
 def_pcfunk1(chunk__type, x, return f2__chunk__type(this_cause, x));
+
 def_pcfunk1(chunk__new, length, return f2__chunk__new(this_cause, length));
+
 def_pcfunk1(chunk__length, x, return f2__chunk__length(this_cause, x));
-def_pcfunk2(chunk__bit8__elt, this, index, return f2pointer__new(this_cause, f2chunk__bit8__elt(this, this_cause, f2integer__i(index, this_cause))));
-def_pcfunk3(chunk__bit8__elt__set, this, index, value, f2chunk__bit8__elt__set(this, this_cause, f2integer__i(index, this_cause), f2pointer__p(value, this_cause)); return nil);
+
+f2ptr raw__chunk__bit8__elt(f2ptr cause, f2ptr this, f2ptr index) {
+  s64 index__i = f2integer__i(index, this_cause);
+  if ((index__i < 0) || (index__i >= f2chunk__length(this, cause))) {
+    return f2larva__new(cause, 2, nil);
+  }
+  return f2pointer__new(this_cause, f2chunk__bit8__elt(this, this_cause, index__i));
+}
+
+f2ptr f2__chunk__bit8__elt(f2ptr cause, f2ptr this, f2ptr index) {
+  if ((! raw__chunk__is_type(  cause, this)) ||
+      (! raw__integer__is_type(cause, index))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__chunk__bit8__elt(cause, this, index);
+}
+def_pcfunk2(chunk__bit8__elt, this, index, return f2__chunk__bit8__elt(cause, this, index));
+
+
+f2ptr raw__chunk__bit8__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
+  s64 index__i = f2integer__i(index, this_cause);
+  if ((index__i < 0) || (index__i >= f2chunk__length(this, cause))) {
+    return f2larva__new(cause, 2, nil);
+  }
+  s64 value__p = f2pointer__p(value, cause);
+  if (value__p < 0 || value__p > (((u64)1) << 8)) {
+    return f2larva__new(cause, 3, nil);
+  }
+  f2chunk__bit8__elt__set(this, this_cause, index__i, value__p);
+  return nil
+}
+
+f2ptr f2__chunk__bit8__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
+  if ((! raw__chunk__is_type(  cause, this)) ||
+      (! raw__integer__is_type(cause, index)) ||
+      (! raw__pointer__is_type(cause, value))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__chunk__bit8__elt__set(cause, this, index, value);
+}
+def_pcfunk3(chunk__bit8__elt__set, this, index, value, return f2__chunk__bit8__elt__set(this_cause, this, index, value));
+
+
 def_pcfunk2(chunk__bit16__elt, this, index, return f2pointer__new(this_cause, f2chunk__bit16__elt(this, this_cause, f2integer__i(index, this_cause))));
 def_pcfunk3(chunk__bit16__elt__set, this, index, value, f2chunk__bit16__elt__set(this, this_cause, f2integer__i(index, this_cause), f2pointer__p(value, this_cause)); return nil);
 def_pcfunk2(chunk__bit32__elt, this, index, return f2pointer__new(this_cause, f2chunk__bit32__elt(this, this_cause, f2integer__i(index, this_cause))));

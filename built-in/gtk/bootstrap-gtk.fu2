@@ -108,6 +108,10 @@
 [deftypefunk gtk_entry get text   []     [gtk-entry-get_text [get this widget]]]
 [deftypefunk gtk_entry set text   [text] [gtk-entry-set_text [get this widget] text]]
 
+'GtkImage'
+
+[deftypefunk gtk_image get widget [] this]
+
 'GtkTable'
 
 [deftypefunk gtk_widget execute attach [child left_attach right_attach top_attach bottom_attach xpadding ypadding] [gtk-table-attach [get this widget] [get child widget] left_attach right_attach top_attach bottom_attach xpadding ypadding]]

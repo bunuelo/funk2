@@ -551,8 +551,8 @@ typedef struct funk2_object_type__integer__slot_s {
   f2ptr equals_hash_value__funk;
   f2ptr as__double__symbol;
   f2ptr as__double__funk;
-  f2ptr as__integer__symbol;
-  f2ptr as__integer__funk;
+  f2ptr as__pointer__symbol;
+  f2ptr as__pointer__funk;
   f2ptr multiplied_by__symbol;
   f2ptr multiplied_by__funk;
   f2ptr divided_by__symbol;

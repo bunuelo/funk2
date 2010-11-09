@@ -3831,7 +3831,7 @@ void f2__gtk__initialize() {
   
   // image
   
-  def_pcfunk1(gtk__image__new_from_pixbuf, pixbuf, "Returns a new image widget for displaying the given pixbuf.");
+  f2__primcfunk__init__1(gtk__image__new_from_pixbuf, pixbuf, "Returns a new image widget for displaying the given pixbuf.");
   
   // drawing_area
   

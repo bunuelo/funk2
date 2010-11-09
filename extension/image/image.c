@@ -99,7 +99,7 @@ f2ptr f2__image_type__new(f2ptr cause) {
 
 f2ptr f2__image__core_extension_initialize(f2ptr cause) {
   printf("\nimage initializing."); fflush(stdout);
-  f2__add_type(cause, new__symbol__new(cause, "image"), f2__image_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "image"), f2__image_type__new(cause));
   printf("\nimage initialized."); fflush(stdout);
   return nil;
 }

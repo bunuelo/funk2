@@ -1588,7 +1588,7 @@ f2ptr raw__gtk__pixbuf__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_da
     u8* pixbuf_rgb_data = (u8*)from_ptr(f2__malloc(chunk__length));
     raw__chunk__str_copy(cause, rgb_data, pixbuf_rgb_data);
     GdkPixbuf* pixbuf = funk2_gtk__pixbuf__new(&(__funk2.gtk), width__i, height__i, pixbuf_rgb_data);
-    return f2__gtk_pixbuf__new(cause, f2pointer__new(cause, to_ptr(pixbuf)));
+    return f2__gdk_pixbuf__new(cause, f2pointer__new(cause, to_ptr(pixbuf)));
   } else {
     return f2__gtk_not_supported_larva__new(cause);
   }

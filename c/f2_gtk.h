@@ -106,6 +106,11 @@ f2ptr f2gtk_entry__primobject_type__new_aux(f2ptr cause);
 f2ptr f2gtk_text_buffer__primobject_type__new_aux(f2ptr cause);
 
 
+// gdk_pixbuf
+
+f2ptr f2gdk_pixbuf__primobject_type__new(f2ptr cause);
+
+
 // gtk_text_iter
 
 f2ptr f2gtk_text_iter__primobject_type__new(f2ptr cause);
@@ -139,6 +144,11 @@ f2ptr f2gtk_menu_bar__primobject_type__new_aux(f2ptr cause);
 // gtk_menu
 
 f2ptr f2gtk_menu__primobject_type__new_aux(f2ptr cause);
+
+
+// gtk_image
+
+f2ptr f2gtk_image__primobject_type__new_aux(f2ptr cause);
 
 
 // funk2_gtk

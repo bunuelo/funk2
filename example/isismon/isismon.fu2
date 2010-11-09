@@ -89,7 +89,7 @@
        [have visual_knowledge_button signal_connect 'clicked'
 	     [funk []
 		   [terminal_format standard-terminal '\n' [get this name] '\'s visual semantic knowledge:'
-				    '\n  ' [get [get isis_agent mind] visual_semantic_knowledge]]]]
+				    '\n  ' [get [get isis_agent mind] visual_knowledge]]]]
        [have button_hbox pack_start visual_knowledge_button nil nil 0]
        
        [have vbox pack_start button_hbox nil nil 0]

@@ -78,6 +78,9 @@
        
        this]]
 
+[deftypefunk learned_reactive_sensory_agency get visual_knowledge []
+  [get [get this resource `propogate_visual_objects_to_visual_knowledge] visual_knowledge]]
+
 
 
 

@@ -137,6 +137,23 @@ f2ptr f2gtk_entry__primobject_type__new_aux(f2ptr cause) {
 
 
 
+// gtk_image
+
+def_frame_object__global__1_slot(gtk_image, pointer);
+
+f2ptr f2__gtk_image__new(f2ptr cause, f2ptr pointer) {
+  return f2gtk_image__new(cause, pointer);
+}
+
+#if defined(F2__GTK__SUPPORTED)
+
+GtkImage* raw__gtk_image__as__GtkImage(f2ptr cause, f2ptr this) {
+  return (GtkImage*)from_ptr(f2pointer__p(f2__gtk_image__pointer(cause, this), cause));
+}
+
+#endif // F2__GTK__SUPPORTED
+
+
 // gtk_text_iter
 
 def_frame_object__global__1_slot(gtk_text_iter, chunk);
@@ -1141,6 +1158,19 @@ void funk2_gtk__entry__set_text(funk2_gtk_t* this, GtkEntry* widget, u8* text) {
     gtk_entry_set_text(GTK_ENTRY(widget), (char*)text);
     gdk_threads_leave();
   }
+}
+
+
+// image
+
+GtkImage* funk2_gtk__image__new(funk2_gtk_t* this, GdkPixbuf* pixbuf) {
+  GtkImage* image;
+  {
+    gdk_threads_enter();
+    image = GTK_IMAGE(gtk_image_new_from_pixbuf(pixbuf));
+    gdk_threads_leave();
+  }
+  return image;
 }
 
 
@@ -2974,7 +3004,6 @@ def_pcfunk2(gtk__label__set_selectable, label, selectable, return f2__gtk__label
 
 // entry
 
-
 f2ptr raw__gtk__entry__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
@@ -3047,6 +3076,31 @@ f2ptr f2__gtk__entry__set_text(f2ptr cause, f2ptr entry, f2ptr text) {
   return raw__gtk__entry__set_text(cause, entry, text);
 }
 def_pcfunk2(gtk__entry__set_text, entry, text, return f2__gtk__entry__set_text(this_cause, entry, text));
+
+
+// image
+
+f2ptr raw__gtk__image__new_from_pixbuf(f2ptr cause, f2ptr pixbuf) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, pixbuf);
+    GtkImage*  image      = funk2_gtk__image__new_from_pixbuf(&(__funk2.gtk), gdk_pixbuf);
+    return f2__gtk_image__new(cause, f2pointer__new(cause, to_ptr(image)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__image__new_from_pixbuf(f2ptr cause, f2ptr pixbuf) {
+  if (! raw__gdk_pixbuf__is_type(cause, pixbuf)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__image__new_from_pixbuf(cause, pixbuf);
+}
+def_pcfunk1(gtk__image__new_from_pixbuf, pixbuf, return f2__gtk__image__new_from_pixbuf(this_cause, pixbuf));
 
 
 // drawing_area
@@ -3614,6 +3668,11 @@ void f2__gtk__initialize() {
   init_frame_object__1_slot(gtk_entry, pointer);
   
   
+  // gtk_image
+  
+  init_frame_object__1_slot(gtk_image, pointer);
+  
+  
   // gtk_text_buffer
   
   init_frame_object__1_slot(gtk_text_buffer, pointer);
@@ -3763,6 +3822,10 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__0(gtk__entry__new,                   "Returns a new entry widget.");
   f2__primcfunk__init__1(gtk__entry__get_text, entry,       "Returns the text of an entry widget as a string.");
   f2__primcfunk__init__2(gtk__entry__set_text, entry, text, "Sets the text of an entry widget to the given string.");
+  
+  // image
+  
+  def_pcfunk1(gtk__image__new_from_pixbuf, pixbuf, "Returns a new image widget for displaying the given pixbuf.");
   
   // drawing_area
   

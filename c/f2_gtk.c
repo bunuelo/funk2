@@ -1169,7 +1169,7 @@ void funk2_gtk__entry__set_text(funk2_gtk_t* this, GtkEntry* widget, u8* text) {
 
 // image
 
-GtkImage* funk2_gtk__image__new(funk2_gtk_t* this, GdkPixbuf* pixbuf) {
+GtkImage* funk2_gtk__image__new_from_pixbuf(funk2_gtk_t* this, GdkPixbuf* pixbuf) {
   GtkImage* image;
   {
     gdk_threads_enter();

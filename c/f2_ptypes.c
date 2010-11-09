@@ -332,6 +332,19 @@ f2ptr f2__integer__as__double(f2ptr cause, f2ptr this) {
 def_pcfunk1(integer__as__double, this, return f2__integer__as__double(this_cause, this));
 
 
+ptr raw__integer__as__pointer(f2ptr cause, f2ptr this) {
+  return (ptr)f2integer__i(this, cause);
+}
+
+f2ptr f2__integer__as__pointer(f2ptr cause, f2ptr this) {
+  if (! raw__integer__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2pointer__new(cause, raw__integer__as__pointer(cause, this));
+}
+def_pcfunk1(integer__as__pointer, this, return f2__integer__as__pointer(this_cause, this));
+
+
 f2ptr f2__integer__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__integer__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
@@ -572,6 +585,7 @@ f2ptr f2integer__primobject_type__new(f2ptr cause) {
   {char* slot_name = "equals";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.equals__funk);}
   {char* slot_name = "equals_hash_value";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__funk);}
   {char* slot_name = "as-double";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.as__double__funk);}
+  {char* slot_name = "as-pointer";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.as__pointer__funk);}
   {char* slot_name = "multiplied_by";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__funk);}
   {char* slot_name = "divided_by";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.divided_by__funk);}
   {char* slot_name = "plus";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.plus__funk);}
@@ -4736,6 +4750,8 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__funk = never_gc(cfunk);}
   {char* str = "as-double"; __funk2.globalenv.object_type.ptype.ptype_integer.as__double__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__as__double, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.as__double__funk = never_gc(cfunk);}
+  {char* str = "as-pointer"; __funk2.globalenv.object_type.ptype.ptype_integer.as__pointer__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__as__pointer, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.as__pointer__funk = never_gc(cfunk);}
   {char* str = "multiplied_by"; __funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(integer__multiplied_by, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__funk = never_gc(cfunk);}
   {char* str = "divided_by"; __funk2.globalenv.object_type.ptype.ptype_integer.divided_by__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}

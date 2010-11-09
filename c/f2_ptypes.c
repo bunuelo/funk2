@@ -3136,11 +3136,11 @@ def_pcfunk1(chunk__new, length, return f2__chunk__new(this_cause, length));
 def_pcfunk1(chunk__length, x, return f2__chunk__length(this_cause, x));
 
 f2ptr raw__chunk__bit8__elt(f2ptr cause, f2ptr this, f2ptr index) {
-  s64 index__i = f2integer__i(index, this_cause);
+  s64 index__i = f2integer__i(index, cause);
   if ((index__i < 0) || (index__i >= f2chunk__length(this, cause))) {
     return f2larva__new(cause, 2, nil);
   }
-  return f2pointer__new(this_cause, f2chunk__bit8__elt(this, this_cause, index__i));
+  return f2pointer__new(cause, f2chunk__bit8__elt(this, cause, index__i));
 }
 
 f2ptr f2__chunk__bit8__elt(f2ptr cause, f2ptr this, f2ptr index) {
@@ -3150,11 +3150,11 @@ f2ptr f2__chunk__bit8__elt(f2ptr cause, f2ptr this, f2ptr index) {
   }
   return raw__chunk__bit8__elt(cause, this, index);
 }
-def_pcfunk2(chunk__bit8__elt, this, index, return f2__chunk__bit8__elt(cause, this, index));
+def_pcfunk2(chunk__bit8__elt, this, index, return f2__chunk__bit8__elt(this_cause, this, index));
 
 
 f2ptr raw__chunk__bit8__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  s64 index__i = f2integer__i(index, this_cause);
+  s64 index__i = f2integer__i(index, cause);
   if ((index__i < 0) || (index__i >= f2chunk__length(this, cause))) {
     return f2larva__new(cause, 2, nil);
   }
@@ -3162,7 +3162,7 @@ f2ptr raw__chunk__bit8__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr val
   if (value__p < 0 || value__p > (((u64)1) << 8)) {
     return f2larva__new(cause, 3, nil);
   }
-  f2chunk__bit8__elt__set(this, this_cause, index__i, value__p);
+  f2chunk__bit8__elt__set(this, cause, index__i, value__p);
   return nil
 }
 

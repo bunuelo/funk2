@@ -1603,7 +1603,7 @@ f2ptr f2__gtk__pixbuf__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_dat
       (! raw__chunk__is_type(cause, rgb_data))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__pixbuf__new(cause);
+  return raw__gtk__pixbuf__new(cause, width, height, rgb_data);
 }
 def_pcfunk3(gtk__pixbuf__new, width, height, rgb_data, return f2__gtk__pixbuf__new(this_cause, width, height, rgb_data));
 

@@ -548,6 +548,8 @@ f2ptr f2__integer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2p
       return __funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.as__double__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_integer.as__double__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.as__integer__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_integer.as__integer__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.divided_by__symbol)) {

@@ -20,30 +20,33 @@
 
 [defunk visual_semantic_knowledge-new_from_visual_objects [visual_objects]
   [let [[semantic_knowledge_base [new semantic_knowledge_base]]]
-    [let [[semantic_objects nil]]
+    [let [[semantic_object_frame [frame]]]
       [mapc [funk [object]
 		  [let [[visual_object_semantic_frame [new visual_object_semantic_frame]]
 			[phenomenal_name              [get object phenomenal_name]]]
 		    [have visual_object_semantic_frame add_visual_object_name phenomenal_name]
 		    [have semantic_knowledge_base add_semantic_frame visual_object_semantic_frame]
-		    [= semantic_objects [cons visual_object_semantic_frame semantic_objects]]]]
+		    [have semantic_object_frame add phenomenal_name visual_object_semantic_frame]]]
 	    visual_objects]
-      [let [[object_iter_one semantic_objects]]
+      [let [[object_iter_one visual_objects]]
 	[while object_iter_one
 	  [let [[object_one      [car object_iter_one]]
 		[object_iter_two [cdr object_iter_one]]]
-	    [while object_iter_two
-	      [let [[object_two [car object_iter_two]]]
-		'pairwise pattern recognitions between objects'
-		
-		[if [> [get object_one retina_position_vertical]
-		       [get object_two retina_position_vertical]]
-		    [have object_one add_preposition `on object_two]]
-		
-		'...'
-		
-		]
-	      [= object_iter_two [cdr object_iter_two]]]]
+	    [let [[semantic_object_one [have semantic_object_frame lookup [get object_one phenomenal_name]]]]
+	      [while object_iter_two
+		[let [[object_two [car object_iter_two]]]
+		  [let [[semantic_object_two [have semantic_object_frame lookup [get object_two phenomenal_name]]]]
+		    'pairwise pattern recognitions between objects'
+		    
+		    [if [> [get object_one retina_position_vertical]
+			   [get object_two retina_position_vertical]]
+			
+			[have semantic_object_one add_preposition `on semantic_object_two]]
+		    
+		    '...'
+		    
+		    ]]
+		[= object_iter_two [cdr object_iter_two]]]]]
 	  [= object_iter_one [cdr object_iter_one]]]]]
     semantic_knowledge_base]]
 

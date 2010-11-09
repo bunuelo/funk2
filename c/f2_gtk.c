@@ -3687,8 +3687,17 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__0(gtk__scrolled_window__new,                                                                      "Returns a new scrolled_window widget.");
   f2__primcfunk__init__2(gtk__scrolled_window__add_with_viewport, scrolled_window, child,                                "Adds a non-scrollable widget to a scroll window.");
   f2__primcfunk__init__3(gtk__scrolled_window__set_policy,        scrolled_window, hscrollbar_policy, vscrollbar_policy, "Sets the policy for the vertical and horizontal scrollbars of a scrolled window.  Valid policies are (1) `always, (2) `automatic, and (3) `never.");
+
+  // text_view
+  
   f2__primcfunk__init__0(gtk__text_view__new,                                                                            "Returns a new text_view widget.");
   f2__primcfunk__init__1(gtk__text_view__get_buffer,              text_view,                                             "Returns the buffer widget of a text_view widget.");
+  
+  // gdk_pixbuf
+  
+  f2__primcfunk__init__3(gtk__pixbuf__new,                        width, height, rgb_data,                               "Returns a new gdk_pixbuf object.");
+  
+  // container
   
   f2__primcfunk__init__2(gtk__container__add,                     widget, add_widget,                                    "Adds a widget to a container.");
   f2__primcfunk__init__2(gtk__container__remove,                  widget, remove_widget,                                 "Removes a widget from a container.");

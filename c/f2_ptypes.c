@@ -3146,6 +3146,8 @@ def_pcfunk2(chunk__bytecode_jump, this, fiber, return f2integer__new(this_cause,
 f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr size                     = f2__terminal_print_frame__size(                    cause, terminal_print_frame);
   u64   size__i                  = f2integer__i(size, cause);
+  f2ptr x                        = f2__terminal_print_frame__x(                       cause, terminal_print_frame);
+  u64   x__i                     = f2integer__i(x, cause);
   f2ptr max_size                 = f2__terminal_print_frame__max_size(                cause, terminal_print_frame);
   u64   max_size__i              = f2integer__i(max_size, cause);
   f2ptr testing                  = f2__terminal_print_frame__testing(                 cause, terminal_print_frame);
@@ -3154,8 +3156,8 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   f2ptr indent_distance          = f2__terminal_print_frame__indent_distance(         cause, terminal_print_frame);
   u64   indent_distance__i       = f2integer__i(indent_distance, cause);
   {
-    indent_distance__i += 7;
-    indent_distance     = f2integer__new(cause, indent_distance__i);
+    indent_distance__i = x__i + 7;
+    indent_distance    = f2integer__new(cause, indent_distance__i);
     f2__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
   }
   f2ptr max_x                = f2__terminal_print_frame__max_x(cause, terminal_print_frame);
@@ -3171,13 +3173,11 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   }
   {
     chunk_string__length = sprintf((char*)chunk_string, "chunk ");
-    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__type__foreground);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, chunk_string__length, chunk_string);
   }
   size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
   {
-    f2ptr x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
-    u64   x__i = f2integer__i(x, cause);
     chunk_string__length = 0;
     {
       u64 index;

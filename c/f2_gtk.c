@@ -234,6 +234,23 @@ f2ptr f2__gdk__rgb_color__new(f2ptr cause, f2ptr red, f2ptr green, f2ptr blue) {
 def_pcfunk3(gdk__rgb_color__new, red, green, blue, return f2__gdk__rgb_color__new(this_cause, red, green, blue));
 
 
+// gdk_pixbuf
+
+def_frame_object__global__1_slot(gdk_pixbuf, pointer);
+
+f2ptr f2__gdk_pixbuf__new(f2ptr cause, f2ptr pointer) {
+  return f2gdk_pixbuf__new(cause, pointer);
+}
+
+#if defined(F2__GTK__SUPPORTED)
+
+GdkPixbuf* raw__gdk_pixbuf__as__GdkPixbuf(f2ptr cause, f2ptr this) {
+  return (GdkPixbuf*)from_ptr(f2pointer__p(f2__gdk_pixbuf__pointer(cause, this), cause));
+}
+
+#endif // F2__GTK__SUPPORTED
+
+
 // gtk_text_mark
 
 def_frame_object__global__1_slot(gtk_text_mark, pointer);
@@ -764,6 +781,33 @@ GtkTextBuffer* funk2_gtk__text_view__get_buffer(funk2_gtk_t* this, GtkWidget* te
     gdk_threads_leave();
   }
   return buffer;
+}
+
+
+// gdk_pixbuf
+
+//GdkPixbuf*  gdk_pixbuf_new_from_data(const guchar *data,
+//                                     GdkColorspace colorspace,
+//                                     gboolean has_alpha,
+//                                     int bits_per_sample,
+//                                     int width,
+//                                     int height,
+//                                     int rowstride,
+//                                     GdkPixbufDestroyNotify destroy_fn,
+//                                     gpointer destroy_fn_data);
+
+void funk2_gtk__pixbuf__destroy_notify_function(guchar *pixels, gpointer data) {
+  f2__free(to_ptr(pixels));
+}
+
+GdkPixbuf* funk2_gtk__pixbuf__new(funk2_gtk_t* this, u64 width, u64 height, u8* rgb_data) {
+  GdkPixbuf* pixbuf;
+  {
+    gdk_threads_enter();
+    pixbuf = gdk_pixbuf_new_from_data((guchar*)rgb_data, GDK_COLORSPACE_RGB, (gboolean)0, 8, width, height, width, &funk2_gtk__pixbuf__destroy_notify_function, NULL);
+    gdk_threads_leave();
+  }
+  return pixbuf;
 }
 
 
@@ -1525,6 +1569,45 @@ f2ptr f2__gtk__text_view__get_buffer(f2ptr cause, f2ptr widget) {
   return raw__gtk__text_view__get_buffer(cause, widget);
 }
 def_pcfunk1(gtk__text_view__get_buffer, widget, return f2__gtk__text_view__get_buffer(this_cause, widget));
+
+
+// gdk_pixbuf
+
+f2ptr raw__gtk__pixbuf__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    s64 width__i  = f2integer__i(width,  cause);
+    s64 height__i = f2integer__i(height, cause);
+    if (width__i <= 0 || height__i <= 0) {
+      return f2larva__new(cause, 2, nil);
+    }
+    s64 chunk__length = f2chunk__length(rgb_data, cause);
+    if (chunk__length != (width__i * height__i * 3)) {
+      return f2larva__new(cause, 3, nil);
+    }
+    u8* pixbuf_rgb_data = (u8*)from_ptr(f2__malloc(chunk__length));
+    raw__chunk__str_copy(cause, rgb_data, pixbuf_rgb_data);
+    GdkPixbuf* pixbuf = funk2_gtk__pixbuf__new(&(__funk2.gtk), width__i, height__i, pixbuf_rgb_data);
+    return f2__gtk_pixbuf__new(cause, f2pointer__new(cause, to_ptr(pixbuf)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__pixbuf__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data) {
+  if ((! raw__integer__is_type(cause, width)) ||
+      (! raw__integer__is_type(cause, height)) ||
+      (! raw__chunk__is_type(cause, rgb_data))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__pixbuf__new(cause);
+}
+def_pcfunk3(gtk__pixbuf__new, width, height, rgb_data, return f2__gtk__pixbuf__new(this_cause, width, height, rgb_data));
+
+
 
 
 // container
@@ -3544,6 +3627,11 @@ void f2__gtk__initialize() {
   // gdk_color
   
   init_frame_object__4_slot(gdk_color, pixel, red, green, blue);
+  
+  
+  // gdkpixbuf
+  
+  init_frame_object__1_slot(gdk_pixbuf, pointer);
   
   
   // gtk_text_mark

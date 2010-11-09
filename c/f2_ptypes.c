@@ -3163,7 +3163,7 @@ f2ptr raw__chunk__bit8__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr val
     return f2larva__new(cause, 3, nil);
   }
   f2chunk__bit8__elt__set(this, cause, index__i, value__p);
-  return nil
+  return nil;
 }
 
 f2ptr f2__chunk__bit8__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {

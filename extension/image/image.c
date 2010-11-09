@@ -35,7 +35,7 @@ f2ptr raw__image__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data) {
       return f2larva__new(cause, 3, nil);
     }
   }
-  return f2__frame__new(cause, f2list6__new(cause,
+  return f2__frame__new(cause, f2list8__new(cause,
 					    new__symbol(cause, "type"),     new__symbol(cause, "image"),
 					    new__symbol(cause, "width"),    width,
 					    new__symbol(cause, "height"),   height,

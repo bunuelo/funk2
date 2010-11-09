@@ -365,6 +365,9 @@ f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int 
 
 f2ptr f2chunk__primobject_type__new(f2ptr cause);
 
+f2ptr raw__chunk__new(f2ptr cause, u64 length);
+f2ptr  f2__chunk__new(f2ptr cause, f2ptr length);
+
 boolean_t raw__chunk__is_type(f2ptr cause, f2ptr exp);
 f2ptr f2__chunk__is_type(f2ptr cause, f2ptr exp);
 

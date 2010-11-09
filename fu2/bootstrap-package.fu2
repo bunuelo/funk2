@@ -111,6 +111,7 @@
 				  'built-in/natural_language/'
 				  'built-in/simple_graph/'
 				  'extension/fibermon/'
+				  'extension/image/'
 				  'example/conceptnet/'
 				  'example/divisi2/'
 				  'example/english_language/'

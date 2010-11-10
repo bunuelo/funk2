@@ -17,7 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe continuous_sensing_resource [resource] [visual_objects]
+[deframe continuous_sensing_resource [resource] [visual_objects
+						 retina_image]
   [new []
        [construct resource `continuous_sensing
 		  [funk []

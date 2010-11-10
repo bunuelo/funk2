@@ -83,7 +83,7 @@
        [have retina_image_button signal_connect 'clicked'
 	     [funk []
 		   [terminal_format standard-terminal '\n' [get this name] '\'s retina image:'
-				    '\n  ' [have isis_agent sense_retina_image]]]]
+				    '\n  ' [get isis_agent retina_image]]]]
        [have button_hbox pack_start retina_image_button nil nil 0]
        
        [= visual_objects_button [gtk-button-new_with_label 'Visual Objects']]

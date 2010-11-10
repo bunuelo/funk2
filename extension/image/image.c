@@ -168,7 +168,7 @@ export_cefunk2(image__rgb_data__set, thing, value, 0, "Sets the rgb_data of the 
 
 
 f2ptr f2__image_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("frame"), (u8*)"frame"), nil)); \
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),      f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__new")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),  f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),     f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__type")));}
@@ -182,13 +182,15 @@ f2ptr f2__image_type__new(f2ptr cause) {
 }
 
 
+
+// **
+
 f2ptr f2__image__core_extension_ping(f2ptr cause) {
   return nil;
 }
 export_cefunk0(image__core_extension_ping, 0, "");
 
 f2ptr f2__image__core_extension_initialize(f2ptr cause) {
-  printf("\nimage initializing."); fflush(stdout);
   f2__add_type(cause, new__symbol(cause, "image"), f2__image_type__new(cause));
   printf("\nimage initialized."); fflush(stdout);
   return nil;

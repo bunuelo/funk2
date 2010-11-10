@@ -823,11 +823,11 @@ void funk2_gtk__pixbuf__destroy_notify_function(guchar *pixels, gpointer data) {
   f2__free(to_ptr(pixels));
 }
 
-GdkPixbuf* funk2_gtk__pixbuf__new(funk2_gtk_t* this, u64 width, u64 height, u8* rgb_data) {
+GdkPixbuf* funk2_gtk__pixbuf__new(funk2_gtk_t* this, u64 width, u64 height, u8* rgba_data) {
   GdkPixbuf* pixbuf;
   {
     gdk_threads_enter();
-    pixbuf = gdk_pixbuf_new_from_data((guchar*)rgb_data, GDK_COLORSPACE_RGB, (gboolean)0, 8, width, height, width, &funk2_gtk__pixbuf__destroy_notify_function, NULL);
+    pixbuf = gdk_pixbuf_new_from_data((guchar*)rgba_data, GDK_COLORSPACE_RGB, FALSE, 8, width, height, width, &funk2_gtk__pixbuf__destroy_notify_function, NULL);
     gdk_threads_leave();
   }
   return pixbuf;
@@ -1617,7 +1617,7 @@ def_pcfunk1(gtk__text_view__get_buffer, widget, return f2__gtk__text_view__get_b
 
 // gdk_pixbuf
 
-f2ptr raw__gtk__pixbuf__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data) {
+f2ptr raw__gtk__pixbuf__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
     s64 width__i  = f2integer__i(width,  cause);
@@ -1625,13 +1625,13 @@ f2ptr raw__gtk__pixbuf__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_da
     if (width__i <= 0 || height__i <= 0) {
       return f2larva__new(cause, 2, nil);
     }
-    s64 chunk__length = f2chunk__length(rgb_data, cause);
-    if (chunk__length != (width__i * height__i * 3)) {
+    s64 chunk__length = f2chunk__length(rgba_data, cause);
+    if (chunk__length != (width__i * height__i * 4)) {
       return f2larva__new(cause, 3, nil);
     }
-    u8* pixbuf_rgb_data = (u8*)from_ptr(f2__malloc(chunk__length));
-    raw__chunk__str_copy(cause, rgb_data, pixbuf_rgb_data);
-    GdkPixbuf* pixbuf = funk2_gtk__pixbuf__new(&(__funk2.gtk), width__i, height__i, pixbuf_rgb_data);
+    u8* pixbuf_rgba_data = (u8*)from_ptr(f2__malloc(chunk__length));
+    raw__chunk__str_copy(cause, rgba_data, pixbuf_rgba_data);
+    GdkPixbuf* pixbuf = funk2_gtk__pixbuf__new(&(__funk2.gtk), width__i, height__i, pixbuf_rgba_data);
     return f2__gdk_pixbuf__new(cause, f2pointer__new(cause, to_ptr(pixbuf)));
   } else {
     return f2__gtk_not_supported_larva__new(cause);
@@ -1641,15 +1641,15 @@ f2ptr raw__gtk__pixbuf__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_da
 #endif
 }
 
-f2ptr f2__gtk__pixbuf__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data) {
+f2ptr f2__gtk__pixbuf__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data) {
   if ((! raw__integer__is_type(cause, width)) ||
       (! raw__integer__is_type(cause, height)) ||
-      (! raw__chunk__is_type(cause, rgb_data))) {
+      (! raw__chunk__is_type(cause, rgba_data))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__pixbuf__new(cause, width, height, rgb_data);
+  return raw__gtk__pixbuf__new(cause, width, height, rgba_data);
 }
-def_pcfunk3(gtk__pixbuf__new, width, height, rgb_data, return f2__gtk__pixbuf__new(this_cause, width, height, rgb_data));
+def_pcfunk3(gtk__pixbuf__new, width, height, rgba_data, return f2__gtk__pixbuf__new(this_cause, width, height, rgba_data));
 
 
 
@@ -3793,7 +3793,7 @@ void f2__gtk__initialize() {
   
   // gdk_pixbuf
   
-  f2__primcfunk__init__3(gtk__pixbuf__new,                        width, height, rgb_data,                               "Returns a new gdk_pixbuf object.");
+  f2__primcfunk__init__3(gtk__pixbuf__new,                        width, height, rgba_data,                              "Returns a new gdk_pixbuf object.");
   
   // container
   

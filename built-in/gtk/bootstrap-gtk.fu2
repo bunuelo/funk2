@@ -134,7 +134,7 @@
 'GtkPixbuf'
 
 [defunk gtk-pixbuf-new_from_image [image]
-  [gtk-pixbuf-new [get image width] [get image height] [get image rgb_data]]]
+  [gtk-pixbuf-new [get image width] [get image height] [get image rgba_data]]]
 
 [defunk gtk-globalize_keysyms []
   [print `[gtk-globalize_keysyms]]

@@ -91,7 +91,7 @@ f2ptr f2__image__new_from_rgb_data(f2ptr cause, f2ptr width, f2ptr height, f2ptr
       (! raw__chunk__is_type(  cause, rgb_data))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__image__new(cause, width, height, rgba_data);
+  return raw__image__new(cause, width, height, rgb_data);
 }
 export_cefunk3(image__new_from_rgb_data, width, height, rgb_data, 0, "Returns a new image object from rgb_data.");
 

@@ -56,6 +56,13 @@
        [have sense add `agents agent_frame]]
      sense]]
 
+[deftypefunk isis_world get screenshot []
+  [let [[screenshot_frame [isis-call [get this client] meta_screenshot]]]
+    [let [[width    [have screenshot_frame lookup `width]]
+	  [height   [have screenshot_frame lookup `height]]
+	  [rgb_data [have screenshot_frame lookup `rgb_data]]]
+      [new image width height rgb_data]]]]
+
 [deftypefunk isis_world execute step_simulation [seconds]
   [isis-call [get this client] meta_step seconds seconds]
   [have this step_physical_world]]

@@ -20,6 +20,7 @@
 [deframe isismon_agent [frame] [isis_agent
 				frame
 				vbox
+				image
 				label
 				entry
 				button_hbox
@@ -32,6 +33,7 @@
        [= isis_agent initial_isis_agent]
        [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
        [= vbox  [gtk-vbox-new 2]]
+       [= image [gtk-image-new_from_pixbuf [gtk-pixbuf-new_from_image [new image 256 256 nil]]]]
        [= label [gtk-label-new '']]
        [= entry [gtk-entry-new]]
        
@@ -60,6 +62,7 @@
 					 [have other_activate_resource command `learned_reactive `language `hear_language_from_agent [get isis_agent name] symbols]]]]
 				   ]]]]]]]]]
        
+       [have vbox pack_start image nil nil 0]
        [have vbox pack_start label t t 0]
        [have vbox pack_start entry nil nil 0]
        

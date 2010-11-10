@@ -82,9 +82,9 @@
 		[set search_image pixbuf [gtk-pixbuf-new 24 24 [let [[data [new chunk [* 3 24 24]]]]
 								 [dotimes [x 24]
 								   [dotimes [y 24]
-								     [set data bit8-elt [+ [* 3 [+ [* 24 y] x]] 0] [if [== x 0]  0 255]]
-								     [set data bit8-elt [+ [* 3 [+ [* 24 y] x]] 1] [if [== x 10] 0 255]]
-								     [set data bit8-elt [+ [* 3 [+ [* 24 y] x]] 2] [if [== y 10] 0 255]]]]
+								     [set data bit8-elt [+ [* 3 [+ [* 24 y] x]] 0] [get [if [== x 0]  0 255] as-pointer]]
+								     [set data bit8-elt [+ [* 3 [+ [* 24 y] x]] 1] [get [if [== x 10] 0 255] as-pointer]]
+								     [set data bit8-elt [+ [* 3 [+ [* 24 y] x]] 2] [get [if [== y 10] 0 255] as-pointer]]]]
 								 data]]]
 		[print 'Next button clicked!']]]
     

@@ -1179,6 +1179,14 @@ GtkImage* funk2_gtk__image__new_from_pixbuf(funk2_gtk_t* this, GdkPixbuf* pixbuf
   return image;
 }
 
+void funk2_gtk__image__set_from_pixbuf(funk2_gtk_t* this, GtkImage* image, GdkPixbuf* pixbuf) {
+  {
+    gdk_threads_enter();
+    gtk_image_sew_from_pixbuf(image, pixbuf);
+    gdk_threads_leave();
+  }
+}
+
 
 // drawing_area
 
@@ -3109,6 +3117,31 @@ f2ptr f2__gtk__image__new_from_pixbuf(f2ptr cause, f2ptr pixbuf) {
 def_pcfunk1(gtk__image__new_from_pixbuf, pixbuf, return f2__gtk__image__new_from_pixbuf(this_cause, pixbuf));
 
 
+f2ptr raw__gtk__image__set_from_pixbuf(f2ptr cause, f2ptr image, f2ptr pixbuf) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkImage*  gdk_image  = raw__gtk_image__as__GtkImage(  cause, image);
+    GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, pixbuf);
+    funk2_gtk__image__set_from_pixbuf(&(__funk2.gtk), gdk_image, gdk_pixbuf);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__image__set_from_pixbuf(f2ptr cause, f2ptr image, f2ptr pixbuf) {
+  if ((! raw__gtk_image__is_type( cause, image)) ||
+      (! raw__gdk_pixbuf__is_type(cause, pixbuf))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__image__set_from_pixbuf(cause, image, pixbuf);
+}
+def_pcfunk2(gtk__image__set_from_pixbuf, image, pixbuf, return f2__gtk__image__set_from_pixbuf(this_cause, image, pixbuf));
+
+
 // drawing_area
 
 f2ptr raw__gtk__drawing_area__new(f2ptr cause) {
@@ -3831,7 +3864,8 @@ void f2__gtk__initialize() {
   
   // image
   
-  f2__primcfunk__init__1(gtk__image__new_from_pixbuf, pixbuf, "Returns a new image widget for displaying the given pixbuf.");
+  f2__primcfunk__init__1(gtk__image__new_from_pixbuf, pixbuf,        "Returns a new image widget for displaying the given pixbuf.");
+  f2__primcfunk__init__2(gtk__image__set_from_pixbuf, image, pixbuf, "Sets the pixbuf of the image.");
   
   // drawing_area
   

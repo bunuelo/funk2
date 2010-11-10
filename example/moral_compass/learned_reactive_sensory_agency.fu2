@@ -18,8 +18,7 @@
  rights to redistribute these changes.'
 
 
-[defunk visual_semantic_knowledge-new_from_visual_objects [visual_objects
-							   retina_image]
+[defunk visual_semantic_knowledge-new_from_visual_objects [visual_objects]
   [let [[semantic_knowledge_base [new semantic_knowledge_base]]]
     [let [[semantic_object_frame [frame]]]
       [mapc [funk [object]

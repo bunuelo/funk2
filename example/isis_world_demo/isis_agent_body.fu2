@@ -70,7 +70,7 @@
       visual_objects]]]
 
 [deftypefunk isis_agent_body get retina_image []
-  [let [[retina_image_frame [get this sense_retina_image]]]
+  [let [[retina_image_frame [have this sense_retina_image]]]
     [let [[width    [have retina_image_frame lookup `width]]
 	  [height   [have retina_image_frame lookup `height]]
 	  [rgb_data [have retina_image_frame lookup `rgb_data]]]

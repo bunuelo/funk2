@@ -19,5 +19,6 @@
 
 [defcore image 'extension/image/.libs/libimage.so']
 
-[defcorefunk image-new image image__new]
+[defcorefunk image-core_extension_ping image image__core_extension_ping]
 
+[image-core_extension_ping]

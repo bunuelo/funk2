@@ -182,6 +182,10 @@ f2ptr f2__image_type__new(f2ptr cause) {
 }
 
 
+f2ptr f2__image__core_extension_ping(f2ptr cause) {
+  return nil;
+}
+export_cefunk0(image__core_extension_ping, 0, "");
 
 f2ptr f2__image__core_extension_initialize(f2ptr cause) {
   printf("\nimage initializing."); fflush(stdout);

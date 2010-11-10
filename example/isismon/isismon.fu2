@@ -86,6 +86,8 @@
        [have retina_image_button signal_connect 'clicked'
 	     [funk []
 		   [let [[retina_image [get isis_agent retina_image]]]
+		     'this is a memory leak.'
+		     [set image pixbuf [gtk-pixbuf-new_from_image retina_image]]
 		     [terminal_format standard-terminal '\n' [get this name] '\'s retina image:'
 				      '\n  ' retina_image]]]]
        [have button_hbox pack_start retina_image_button nil nil 0]

@@ -52,6 +52,7 @@
 [globalize-funk gtk-entry-get_text                    &primfunk:gtk__entry__get_text]
 [globalize-funk gtk-entry-set_text                    &primfunk:gtk__entry__set_text]
 [globalize-funk gtk-image-new_from_pixbuf             &primfunk:gtk__image__new_from_pixbuf]
+[globalize-funk gtk-image-set_from_pixbuf             &primfunk:gtk__image__set_from_pixbuf]
 [globalize-funk gtk-scrolled_window-new               &primfunk:gtk__scrolled_window__new]
 [globalize-funk gtk-scrolled_window-add_with_viewport &primfunk:gtk__scrolled_window__add_with_viewport]
 [globalize-funk gtk-scrolled_window-set_policy        &primfunk:gtk__scrolled_window__set_policy]

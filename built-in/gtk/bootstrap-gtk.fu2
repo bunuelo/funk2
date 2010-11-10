@@ -110,7 +110,8 @@
 
 'GtkImage'
 
-[deftypefunk gtk_image get widget [] this]
+[deftypefunk gtk_image get widget []       this]
+[deftypefunk gtk_image set pixbuf [pixbuf] [gtk-image-set_from_pixbuf [get this widget] pixbuf]]
 
 'GtkTable'
 

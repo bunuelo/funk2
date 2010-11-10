@@ -45,7 +45,7 @@
 [deftypefunk isis_agent_body execute use_right_hand          [target object] [have [get this physical_world] use_right_hand          [get this name] target object]]
 [deftypefunk isis_agent_body execute use_left_hand           [target object] [have [get this physical_world] use_left_hand           [get this name] target object]]
 [deftypefunk isis_agent_body execute say                     [message]       [have [get this physical_world] say                     [get this name] message]]
-
+[deftypefunk isis_agent_body execute sense_retina_image      []              [have [get this physical_world] sense_retina_image      [get this name]]]
 
 
 [deftypefunk isis_agent_body get objects []

@@ -1182,7 +1182,7 @@ GtkImage* funk2_gtk__image__new_from_pixbuf(funk2_gtk_t* this, GdkPixbuf* pixbuf
 void funk2_gtk__image__set_from_pixbuf(funk2_gtk_t* this, GtkImage* image, GdkPixbuf* pixbuf) {
   {
     gdk_threads_enter();
-    gtk_image_sew_from_pixbuf(image, pixbuf);
+    gtk_image_set_from_pixbuf(image, pixbuf);
     gdk_threads_leave();
   }
 }

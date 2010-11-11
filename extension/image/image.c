@@ -257,7 +257,7 @@ f2ptr f2__image__write_reduction_image_part(f2ptr cause, f2ptr this, f2ptr reduc
   }
   return raw__image__write_reduction_image_part(cause, this, reduced_image, reduction_factor, x_offset, y_offset);
 }
-export_cefunk5(image__write_reduction_image_part, this, reduced_image, reduction_factor, x_offset, y_offset);
+export_cefunk5(image__write_reduction_image_part, this, reduced_image, reduction_factor, x_offset, y_offset, 0, "");
 
 
 f2ptr f2__image_type__new(f2ptr cause) {

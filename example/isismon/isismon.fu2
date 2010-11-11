@@ -33,7 +33,7 @@
        [= isis_agent initial_isis_agent]
        [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
        [= vbox  [gtk-vbox-new 2]]
-       [= image [gtk-image-new_from_pixbuf [gtk-pixbuf-new_from_image [new image 256 256 nil]]]]
+       [= image [gtk-image-new_from_pixbuf [gtk-pixbuf-new_from_image [new image 320 240 nil]]]]
        [= label [gtk-label-new '']]
        [= entry [gtk-entry-new]]
        
@@ -128,6 +128,7 @@
 			  file_menu_item
 			  file_menu
 			  file_exit_menu_item
+			  overview_image
 			  agent_hbox
 			  controller_hbox
 			  play_button
@@ -161,6 +162,9 @@
 				   [funk []
 					 [= done t]]
 				   nil]
+			     
+			     [= overview_image [gtk-image-new_from_pixbuf [gtk-pixbuf-new_from_image [new image 320 240 nil]]]]
+			     [have vbox pack_start overview_image nil nil 0]
 			     
 			     [= agent_hbox [gtk-hbox-new 2]]
 			     [have vbox pack_start agent_hbox nil nil 0]
@@ -201,6 +205,7 @@
 				   [= done t]]
 			       [if [and simulation_playing [> [- tick last_stepped_simulation_tick] 5]]
 				   [prog [have isis_world normal_step]
+					 [set overview_image pixbuf [gtk-pixbuf-new_from_image [get isis_world screenshot]]]
 					 [= last_stepped_simulation_tick tick]]]
 			       [sleep 1]
 			       [= tick [+ tick 1]]

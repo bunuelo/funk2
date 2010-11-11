@@ -61,7 +61,7 @@
     [let [[width    [have screenshot_frame lookup `width]]
 	  [height   [have screenshot_frame lookup `height]]
 	  [rgb_data [have screenshot_frame lookup `rgb_data]]]
-      [new image width height rgb_data]]]]
+      [image-new_from_rgb_data width height rgb_data]]]]
 
 [deftypefunk isis_world execute step_simulation [seconds]
   [isis-call [get this client] meta_step seconds seconds]

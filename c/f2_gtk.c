@@ -1686,8 +1686,6 @@ f2ptr raw__gtk__pixbuf__new_from_rgba_data(f2ptr cause, f2ptr width, f2ptr heigh
   return f2__gdk_pixbuf__new(cause, f2pointer__new(cause, to_ptr(pixbuf)));
 }
 
-
-
 f2ptr f2__gtk__pixbuf__new_from_rgba_data(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data) {
   if ((! raw__integer__is_type(cause, width)) ||
       (! raw__integer__is_type(cause, height)) ||
@@ -1696,6 +1694,7 @@ f2ptr f2__gtk__pixbuf__new_from_rgba_data(f2ptr cause, f2ptr width, f2ptr height
   }
   return raw__gtk__pixbuf__new_from_rgba_data(cause, width, height, rgba_data);
 }
+def_pcfunk3(gtk__pixbuf__new_from_rgba_data, width, height, rgba_data, return f2__gtk__pixbuf__new_from_rgba_data(this_cause, width, height, rgba_data));
 
 
 

@@ -213,17 +213,17 @@ export_cefunk2(image__rgba_data__set, thing, value, 0, "Sets the rgba_data of th
 f2ptr raw__image__write_reduction_image_part(f2ptr cause, f2ptr this, f2ptr reduced_image, f2ptr reduction_factor, f2ptr x_offset, f2ptr y_offset) {
   f2ptr this__rgba_data          = raw__image__rgba_data(cause, this);
   f2ptr this__width              = raw__image__width(    cause, this);
-  s64   this__width__i           = f2integer__i(this__width, cause);
-  f2ptr this__height             = raw__image__width(    cause, this);
-  s64   this__height__i          = f2integer__i(this__height, cause);
-  f2ptr reduced_image__rgba_data = raw__image__rgba_data(cause, reduced_image);
+  f2ptr this__height             = raw__image__height(   cause, this);
   f2ptr reduced_image__width     = raw__image__width(    cause, reduced_image);
-  s64   reduced_image__width__i  = f2integer__i(reduced_image__width, cause);
-  f2ptr reduced_image__height    = raw__image__width(    cause, reduced_image);
+  f2ptr reduced_image__height    = raw__image__height(   cause, reduced_image);
+  f2ptr reduced_image__rgba_data = raw__image__rgba_data(cause, reduced_image);
+  s64   this__width__i           = f2integer__i(this__width,           cause);
+  s64   this__height__i          = f2integer__i(this__height,          cause);
+  s64   reduced_image__width__i  = f2integer__i(reduced_image__width,  cause);
   s64   reduced_image__height__i = f2integer__i(reduced_image__height, cause);
-  s64   reduction_factor__i      = f2integer__i(reduction_factor, cause);
-  s64   x_offset__i              = f2integer__i(x_offset, cause);
-  s64   y_offset__i              = f2integer__i(y_offset, cause);
+  s64   reduction_factor__i      = f2integer__i(reduction_factor,      cause);
+  s64   x_offset__i              = f2integer__i(x_offset,              cause);
+  s64   y_offset__i              = f2integer__i(y_offset,              cause);
   {
     s64 reduced_image__y;
     for (reduced_image__y = 0; reduced_image__y < reduced_image__height__i; reduced_image__y ++) {
@@ -236,8 +236,8 @@ f2ptr raw__image__write_reduction_image_part(f2ptr cause, f2ptr this, f2ptr redu
 	    if ((this__x >= 0) && (this__x < this__width__i)) {
 	      s64 reduced_image__pixel_index = (reduced_image__y * reduced_image__width__i) + reduced_image__x;
 	      s64 this__pixel_index          = (this__y          * this__width__i)          + this__x;
-	      u64 rgba_pixel                 = raw__chunk__bit64__elt(cause, reduced_image__rgba_data, reduced_image__pixel_index << 2);
-	      raw__chunk__bit64__elt__set(cause, this__rgba_data, this__pixel_index << 2, rgba_pixel);
+	      u64 rgba_pixel                 = raw__chunk__bit64__elt(cause, reduced_image__rgba_data, reduced_image__pixel_index);
+	      raw__chunk__bit64__elt__set(cause, this__rgba_data, this__pixel_index, rgba_pixel);
 	    }
 	  }
 	}

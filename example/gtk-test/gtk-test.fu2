@@ -84,7 +84,7 @@
 		[set search_image pixbuf [gtk-pixbuf-new 24 24 [let [[data [new chunk [* 4 24 24]]]]
 								 [dotimes [x 24]
 								   [dotimes [y 24]
-								     [let [[pixel [* 4 [+ [* 24 y] x]]]]
+								     [let [[pixel [* 3 [+ [* 24 y] x]]]]
 								       [set data bit8-elt [+ pixel 0] [get 0   as-pointer]]
 								       [set data bit8-elt [+ pixel 1] [get 0   as-pointer]]
 								       [set data bit8-elt [+ pixel 2] [get 0   as-pointer]]

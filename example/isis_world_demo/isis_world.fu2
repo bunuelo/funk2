@@ -57,7 +57,7 @@
      sense]]
 
 [deftypefunk isis_world get screenshot []
-  [let [[screenshot_frame [isis-call [get this client] meta_screenshot]]]
+  [let [[screenshot_frame [isis-call [get this client] meta_screenshot max_x 320 max_y 240 x_offset 0 y_offset 0]]]
     [let [[width    [have screenshot_frame lookup `width]]
 	  [height   [have screenshot_frame lookup `height]]
 	  [rgb_data [have screenshot_frame lookup `rgb_data]]]
@@ -89,5 +89,5 @@
 [deftypefunk isis_world execute use_right_hand          [agent target object] [isis-call [get this client] use_right_hand          agent agent target target object object]]
 [deftypefunk isis_world execute use_left_hand           [agent target object] [isis-call [get this client] use_left_hand           agent agent target target object object]]
 [deftypefunk isis_world execute say                     [agent message]       [isis-call [get this client] say                     agent agent message message]]
-[deftypefunk isis_world execute sense_retina_image      [agent]               [isis-call [get this client] sense_retina_image      agent agent]]
+[deftypefunk isis_world execute sense_retina_image      [agent]               [isis-call [get this client] sense_retina_image      agent agent max_x 320 max_y 240 x_offset 0 y_offset 0]]
 

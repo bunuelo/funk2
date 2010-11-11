@@ -65,7 +65,12 @@
       [let [[actual_width  [* reduction_factor width]]
 	    [actual_height [* reduction_factor height]]]
 	[print [frame actual_width actual_width actual_height actual_height]]
-	[image-new_from_rgb_data width height rgb_data]]]]]
+	[let [[initial_image [image-new_from_rgb_data width height rgb_data]]]
+	  [if [== reduction_factor 1]
+	      initial_image
+	    [let [[actual_image [new image actual_width actual_height nil]]]
+	      [have image write_reduction_image_part initial_image reduction_factor 0 0]
+	      actual_image]]]]]]]
 
 [deftypefunk isis_world execute step_simulation [seconds]
   [isis-call [get this client] meta_step seconds seconds]

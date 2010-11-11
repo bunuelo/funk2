@@ -210,18 +210,68 @@ f2ptr f2__image__rgba_data__set(f2ptr cause, f2ptr this, f2ptr value) {
 export_cefunk2(image__rgba_data__set, thing, value, 0, "Sets the rgba_data of the image.");
 
 
+f2ptr raw__image__write_reduction_image_part(f2ptr cause, f2ptr this, f2ptr reduced_image, f2ptr reduction_factor, f2ptr x_offset, f2ptr y_offset) {
+  f2ptr this__rgba_data          = raw__image__rgba_data(cause, this);
+  f2ptr this__width              = raw__image__width(    cause, this);
+  s64   this__width__i           = f2integer__i(this__width, cause);
+  f2ptr this__height             = raw__image__width(    cause, this);
+  s64   this__height__i          = f2integer__i(this__height, cause);
+  f2ptr reduced_image__rgba_data = raw__image__rgba_data(cause, reduced_image);
+  f2ptr reduced_image__width     = raw__image__width(    cause, reduced_image);
+  s64   reduced_image__width__i  = f2integer__i(reduced_image__width, cause);
+  f2ptr reduced_image__height    = raw__image__width(    cause, reduced_image);
+  s64   reduced_image__height__i = f2integer__i(reduced_image__height, cause);
+  s64   reduction_factor__i      = f2integer__i(reduction_factor, cause);
+  s64   x_offset__i              = f2integer__i(x_offset, cause);
+  s64   y_offset__i              = f2integer__i(y_offset, cause);
+  {
+    s64 reduced_image__y;
+    for (reduced_image__y = 0; reduced_image__y < reduced_image__height__i; reduced_image__y ++) {
+      s64 this__y = (reduced_image__y * reduction_factor__i) + y_offset__i;
+      {
+	if ((this__y >= 0) && (this__y < this__height__i)) {
+	  s64 reduced_image__x;
+	  for (reduced_image__x = 0; reduced_image__x < reduced_image__width__i; reduced_image__x ++) {
+	    s64 this__x = (reduced_image__x * reduction_factor__i) + x_offset__i;
+	    if ((this__x >= 0) && (this__x < this__width__i)) {
+	      s64 reduced_image__pixel_index = (reduced_image__y * reduced_image__width__i) + reduced_image__x;
+	      s64 this__pixel_index          = (this__y          * this__width__i)          + this__x;
+	      u64 rgba_pixel                 = raw__chunk__bit8__elt(cause, reduced_image__rgba_data, reduced_image__pixel_index);
+	      raw__chunk__bit64__elt__set(cause, this__rgba_data, this__pixel_index, rgba_pixel);
+	    }
+	  }
+	}
+      }
+    }
+  }
+  return nil;
+}
+
+f2ptr f2__image__write_reduction_image_part(f2ptr cause, f2ptr this, f2ptr reduced_image, f2ptr reduction_factor, f2ptr x_offset, f2ptr y_offset) {
+  if ((! raw__image__is_type(cause, this)) ||
+      (! raw__image__is_type(cause, reduced_image)) ||
+      (! raw__integer__is_type(cause, reduction_factor)) ||
+      (! raw__integer__is_type(cause, x_offset)) ||
+      (! raw__integer__is_type(cause, y_offset))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__image__write_reduction_image_part(cause, this, reduced_image, reduction_factor, x_offset, y_offset);
+}
+export_cefunk5(image__write_reduction_image_part, this, reduced_image, reduction_factor, x_offset, y_offset, 0, "");
+
 
 f2ptr f2__image_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),       f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),   f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),      f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "width"),     f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__width")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "width"),     f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__width__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "height"),    f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__height")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "height"),    f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__height__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "rgba_data"), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__rgba_data")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "rgba_data"), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__rgba_data__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                        f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "width"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__width")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "width"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__width__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "height"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__height")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "height"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__height__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "rgba_data"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__rgba_data")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "rgba_data"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__rgba_data__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "write_reduction_image_part"), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__write_reduction_image_part")));}
   return this;
 }
 

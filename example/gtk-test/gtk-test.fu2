@@ -85,7 +85,7 @@
 								 [dotimes [x 24]
 								   [dotimes [y 24]
 								     [let [[pixel [* 4 [+ [* 24 y] x]]]]
-								       [set data bit8-elt [+ pixel 0] [get [if [== x 0]  0 255] as-pointer]]
+								       [set data bit8-elt [+ pixel 0] [get 0   as-pointer]]
 								       [set data bit8-elt [+ pixel 1] [get 0   as-pointer]]
 								       [set data bit8-elt [+ pixel 2] [get 0   as-pointer]]
 								       [set data bit8-elt [+ pixel 3] [get 255 as-pointer]]]]]

@@ -385,21 +385,21 @@ f2ptr  f2__chunk__equals_hash_value(f2ptr cause, f2ptr this);
 boolean_t raw__chunk__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__chunk__equals(f2ptr cause, f2ptr this, f2ptr that);
 
-f2ptr raw__chunk__bit8__elt(f2ptr cause, f2ptr this, s64 index);
-f2ptr  f2__chunk__bit8__elt(f2ptr cause, f2ptr this, f2ptr index);
-f2ptr raw__chunk__bit8__elt__set(f2ptr cause, f2ptr this, s64 index, u64 value);
-f2ptr  f2__chunk__bit8__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value);
-f2ptr raw__chunk__bit16__elt(f2ptr cause, f2ptr this, s64 index);
-f2ptr  f2__chunk__bit16__elt(f2ptr cause, f2ptr this, f2ptr index);
-f2ptr raw__chunk__bit16__elt__set(f2ptr cause, f2ptr this, s64 index, u64 value);
+u8    raw__chunk__bit8__elt(      f2ptr cause, f2ptr this, s64   index);
+f2ptr  f2__chunk__bit8__elt(      f2ptr cause, f2ptr this, f2ptr index);
+void  raw__chunk__bit8__elt__set( f2ptr cause, f2ptr this, s64   index, u64   value);
+f2ptr  f2__chunk__bit8__elt__set( f2ptr cause, f2ptr this, f2ptr index, f2ptr value);
+u16   raw__chunk__bit16__elt(     f2ptr cause, f2ptr this, s64   index);
+f2ptr  f2__chunk__bit16__elt(     f2ptr cause, f2ptr this, f2ptr index);
+void  raw__chunk__bit16__elt__set(f2ptr cause, f2ptr this, s64   index, u64   value);
 f2ptr  f2__chunk__bit16__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value);
-f2ptr raw__chunk__bit32__elt(f2ptr cause, f2ptr this, s64 index);
-f2ptr  f2__chunk__bit32__elt(f2ptr cause, f2ptr this, f2ptr index);
-f2ptr raw__chunk__bit32__elt__set(f2ptr cause, f2ptr this, s64 index, u64 value);
+u32   raw__chunk__bit32__elt(     f2ptr cause, f2ptr this, s64   index);
+f2ptr  f2__chunk__bit32__elt(     f2ptr cause, f2ptr this, f2ptr index);
+void  raw__chunk__bit32__elt__set(f2ptr cause, f2ptr this, s64   index, u64   value);
 f2ptr  f2__chunk__bit32__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value);
-f2ptr raw__chunk__bit64__elt(f2ptr cause, f2ptr this, s64 index);
-f2ptr  f2__chunk__bit64__elt(f2ptr cause, f2ptr this, f2ptr index);
-f2ptr raw__chunk__bit64__elt__set(f2ptr cause, f2ptr this, s64 index, u64 value);
+u64   raw__chunk__bit64__elt(     f2ptr cause, f2ptr this, s64   index);
+f2ptr  f2__chunk__bit64__elt(     f2ptr cause, f2ptr this, f2ptr index);
+void  raw__chunk__bit64__elt__set(f2ptr cause, f2ptr this, s64   index, u64   value);
 f2ptr  f2__chunk__bit64__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value);
 
 // simple_array

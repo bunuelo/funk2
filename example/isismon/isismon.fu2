@@ -117,6 +117,10 @@
 [deftypefunk isismon_agent get widget []
   frame]
 
+[deftypefunk isismon_agent execute update []
+  [let [[retina_image [get isis_agent retina_image]]]
+    [set image pixbuf [gtk-pixbuf-new_from_image retina_image]]]]
+
 [deframe isismon [frame] [isis_world
 			  [initialize_mutex [new mutex]]
 			  [done             nil]
@@ -204,8 +208,7 @@
 			       [if [not [get window visible]]
 				   [= done t]]
 			       [if [and simulation_playing [> [- tick last_stepped_simulation_tick] 5]]
-				   [prog [have isis_world normal_step]
-					 [set overview_image pixbuf [gtk-pixbuf-new_from_image [get isis_world screenshot]]]
+				   [prog [have this step]
 					 [= last_stepped_simulation_tick tick]]]
 			       [sleep 1]
 			       [= tick [+ tick 1]]
@@ -221,6 +224,21 @@
     [have agent_frame add [get isismon_agent name] isismon_agent]
     [have agent_hbox pack_start isismon_agent nil nil 0]]]
 
+[deftypefunk isismon execute update_overview_image []
+  [set overview_image pixbuf [gtk-pixbuf-new_from_image [get isis_world screenshot]]]]
+
+[deftypefunk isismon execute update_agents []
+  [mapc [funk [agent]
+	      [have agent update]]
+	[get agent_frame values]]]
+
+[deftypefunk isismon execute update []
+  [have this update_overview_image]
+  [have this update_agents]]
+
+[deftypefunk isismon execute step []
+  [have isis_world normal_step]
+  [have this update]]
 
 [defmetro isismon [:rest args]
   [let [[isis_worlds                  nil]

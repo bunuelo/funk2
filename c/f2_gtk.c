@@ -1659,7 +1659,7 @@ f2ptr raw__gtk__pixbuf__new_from_rgba_data(f2ptr cause, f2ptr width, f2ptr heigh
   if (width__i <= 0 || height__i <= 0) {
     return f2larva__new(cause, 2, nil);
   }
-  s64 chunk__length = f2chunk__length(rgb_data, cause);
+  s64 chunk__length = f2chunk__length(rgba_data, cause);
   if (chunk__length != (width__i * height__i * 4)) {
     return f2larva__new(cause, 3, nil);
   }

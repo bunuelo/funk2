@@ -827,7 +827,7 @@ GdkPixbuf* funk2_gtk__pixbuf__new(funk2_gtk_t* this, u64 width, u64 height, u8* 
   GdkPixbuf* pixbuf;
   {
     gdk_threads_enter();
-    pixbuf = gdk_pixbuf_new_from_data((guchar*)rgba_data, GDK_COLORSPACE_RGB, FALSE, 8, width, height, width, &funk2_gtk__pixbuf__destroy_notify_function, NULL);
+    pixbuf = gdk_pixbuf_new_from_data((guchar*)rgba_data, GDK_COLORSPACE_RGB, FALSE, 8, width, height, 4 * width, &funk2_gtk__pixbuf__destroy_notify_function, NULL);
     gdk_threads_leave();
   }
   return pixbuf;

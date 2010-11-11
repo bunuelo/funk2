@@ -61,3 +61,8 @@
   [print 'This function is deprecated.']
   [get this isis_object_frame]]
 
+`[deftypefunk mind get left_hand_object_name []
+ [get [get [get mind layer `builtin_reactive] agency `sensory] left_hand_object_name]]
+
+`[deftypefunk mind get right_hand_object_name []
+ [get [get [get mind layer `builtin_reactive] agency `sensory] right_hand_object_name]]

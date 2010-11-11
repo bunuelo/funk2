@@ -58,10 +58,14 @@
 
 [deftypefunk isis_world get screenshot []
   [let [[screenshot_frame [isis-call [get this client] meta_screenshot max_x 320 max_y 240 x_offset 0 y_offset 0]]]
-    [let [[width    [have screenshot_frame lookup `width]]
-	  [height   [have screenshot_frame lookup `height]]
-	  [rgb_data [have screenshot_frame lookup `rgb_data]]]
-      [image-new_from_rgb_data width height rgb_data]]]]
+    [let [[width            [have screenshot_frame lookup `width]]
+	  [height           [have screenshot_frame lookup `height]]
+	  [rgb_data         [have screenshot_frame lookup `rgb_data]]
+	  [reduction_factor [have screenshot_frame lookup `reduction_factor]]]
+      [let [[actual_width  [* reduction_factor width]]
+	    [actual_height [* reduction_factor height]]]
+	[print [frame actual_width actual_width actual_height actual_height]]
+	[image-new_from_rgb_data width height rgb_data]]]]]
 
 [deftypefunk isis_world execute step_simulation [seconds]
   [isis-call [get this client] meta_step seconds seconds]

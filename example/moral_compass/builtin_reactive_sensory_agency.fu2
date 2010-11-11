@@ -33,6 +33,7 @@
 				    [millisleep 1000]
 				  [prog [have this-resource think_to_self 'My body senses visual objects from the world.']
 					[= visual_objects         [have body sense_visual_objects]]
+					[= retina_image           [get  body retina_image]]
 					[= left_hand_object_name  [have body sense_left_hand_object_name]]
 					[= right_hand_object_name [have body sense_right_hand_object_name]]    
 					[= last_time_step         time_step]

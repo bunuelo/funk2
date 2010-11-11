@@ -87,6 +87,6 @@
     [let [[width    [have retina_image_frame lookup `width]]
 	  [height   [have retina_image_frame lookup `height]]
 	  [rgb_data [have retina_image_frame lookup `rgb_data]]]
-      [new image width height rgb_data]]]]
+      [image-new_from_rgb_data width height rgb_data]]]]
 
 

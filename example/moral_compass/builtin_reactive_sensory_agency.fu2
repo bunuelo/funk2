@@ -18,7 +18,9 @@
  rights to redistribute these changes.'
 
 [deframe continuous_sensing_resource [resource] [visual_objects
-						 retina_image]
+						 retina_image
+						 left_hand_object_name
+						 right_hand_object_name]
   [new []
        [construct resource `continuous_sensing
 		  [funk []
@@ -29,12 +31,13 @@
 			      [let [[time_step [get body time_step]]]
 				[if [eq last_time_step time_step]
 				    [millisleep 1000]
-				  [let [[body_visual_objects [have body sense_visual_objects]]]
-				    [have this-resource think_to_self 'My body senses visual objects from the world.']
-				    [= visual_objects body_visual_objects]
-				    [= last_time_step time_step]
-				    [mind-wait_to_activate [get this mind] learned_reactive sensory propogate_visual_objects_to_visual_knowledge]
-				    ]]]
+				  [prog [have this-resource think_to_self 'My body senses visual objects from the world.']
+					[= visual_objects         [have body sense_visual_objects]]
+					[= left_hand_object_name  [have body sense_left_hand_object_name]]
+					[= right_hand_object_name [have body sense_right_hand_object_name]]    
+					[= last_time_step         time_step]
+					[mind-wait_to_activate [get this mind] learned_reactive sensory propogate_visual_objects_to_visual_knowledge]
+					]]]
 			      ]]]]]
        nil]]
 

@@ -69,7 +69,7 @@
 	  [if [== reduction_factor 1]
 	      initial_image
 	    [let [[actual_image [new image actual_width actual_height nil]]]
-	      [have image write_reduction_image_part initial_image reduction_factor 0 0]
+	      [have actual_image write_reduction_image_part initial_image reduction_factor 0 0]
 	      actual_image]]]]]]]
 
 [deftypefunk isis_world execute step_simulation [seconds]

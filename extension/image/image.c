@@ -236,7 +236,7 @@ f2ptr raw__image__write_reduction_image_part(f2ptr cause, f2ptr this, f2ptr redu
 	    if ((this__x >= 0) && (this__x < this__width__i)) {
 	      s64 reduced_image__pixel_index = (reduced_image__y * reduced_image__width__i) + reduced_image__x;
 	      s64 this__pixel_index          = (this__y          * this__width__i)          + this__x;
-	      u64 rgba_pixel                 = raw__chunk__bit8__elt(cause, reduced_image__rgba_data, reduced_image__pixel_index);
+	      u64 rgba_pixel                 = raw__chunk__bit64__elt(cause, reduced_image__rgba_data, reduced_image__pixel_index);
 	      raw__chunk__bit64__elt__set(cause, this__rgba_data, this__pixel_index, rgba_pixel);
 	    }
 	  }

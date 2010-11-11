@@ -224,6 +224,7 @@ f2ptr raw__image__write_reduction_image_part(f2ptr cause, f2ptr this, f2ptr redu
   s64   reduction_factor__i      = f2integer__i(reduction_factor,      cause);
   s64   x_offset__i              = f2integer__i(x_offset,              cause);
   s64   y_offset__i              = f2integer__i(y_offset,              cause);
+  
   {
     s64 reduced_image__y;
     for (reduced_image__y = 0; reduced_image__y < reduced_image__height__i; reduced_image__y ++) {

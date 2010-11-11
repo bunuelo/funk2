@@ -235,10 +235,16 @@ f2ptr raw__image__write_reduction_image_part(f2ptr cause, f2ptr this, f2ptr redu
 	  for (reduced_image__x = 0; reduced_image__x < reduced_image__width__i; reduced_image__x ++) {
 	    s64 this__x = (reduced_image__x * reduction_factor__i) + x_offset__i;
 	    if ((this__x >= 0) && (this__x < this__width__i)) {
-	      s64 reduced_image__pixel_index = (reduced_image__y * reduced_image__width__i) + reduced_image__x;
-	      s64 this__pixel_index          = (this__y          * this__width__i)          + this__x;
-	      u64 rgba_pixel                 = raw__chunk__bit64__elt(cause, reduced_image__rgba_data, reduced_image__pixel_index);
-	      raw__chunk__bit64__elt__set(cause, this__rgba_data, this__pixel_index, rgba_pixel);
+	      s64 reduced_image__pixel_index = ((reduced_image__y * reduced_image__width__i) + reduced_image__x) << 2;
+	      s64 this__pixel_index          = ((this__y          * this__width__i)          + this__x)          << 2;
+	      u64 red   = raw__chunk__bit8__elt(cause, reduced_image__rgba_data, reduced_image__pixel_index + 0);
+	      u64 green = raw__chunk__bit8__elt(cause, reduced_image__rgba_data, reduced_image__pixel_index + 1);
+	      u64 blue  = raw__chunk__bit8__elt(cause, reduced_image__rgba_data, reduced_image__pixel_index + 2);
+	      u64 alpha = raw__chunk__bit8__elt(cause, reduced_image__rgba_data, reduced_image__pixel_index + 3);
+	      raw__chunk__bit8__elt__set(cause, this__rgba_data, this__pixel_index + 0, red);
+	      raw__chunk__bit8__elt__set(cause, this__rgba_data, this__pixel_index + 1, green);
+	      raw__chunk__bit8__elt__set(cause, this__rgba_data, this__pixel_index + 2, blue);
+	      raw__chunk__bit8__elt__set(cause, this__rgba_data, this__pixel_index + 3, alpha);
 	    }
 	  }
 	}

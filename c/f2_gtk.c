@@ -1210,7 +1210,7 @@ void funk2_gtk__range__set_value(funk2_gtk_t* this, GtkRange* range, double valu
 void funk2_gtk__range__set_range(funk2_gtk_t* this, GtkRange* range, double min, double max) {
   {
     gdk_threads_enter();
-    gtk_range_set_value(GTK_RANGE(range), value);
+    gtk_range_set_range(GTK_RANGE(range), min, max);
     gdk_threads_leave();
   }
 }

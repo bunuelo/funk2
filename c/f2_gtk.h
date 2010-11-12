@@ -96,6 +96,11 @@ f2ptr f2gtk_box__primobject_type__new_aux(f2ptr cause);
 f2ptr f2gtk_label__primobject_type__new_aux(f2ptr cause);
 
 
+// gtk_scale
+
+f2ptr f2gtk_scale__primobject_type__new_aux(f2ptr cause);
+
+
 // gtk_entry
 
 f2ptr f2gtk_entry__primobject_type__new_aux(f2ptr cause);

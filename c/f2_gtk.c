@@ -3205,7 +3205,7 @@ def_pcfunk4(gtk__scale__new_with_range, orientation, min, max, step, return f2__
 // range
 
 boolean_t raw__gtk_range__is_type(f2ptr cause, f2ptr thing) {
-  return raw__scale__is_type(cause, thing);
+  return raw__gtk_scale__is_type(cause, thing);
 }
 
 GtkRange* raw__gtk_range__as__GtkRange(f2ptr cause, f2ptr this) {

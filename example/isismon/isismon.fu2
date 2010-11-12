@@ -122,6 +122,7 @@
 			  file_menu
 			  file_exit_menu_item
 			  overview_image
+			  scale
 			  agent_hbox
 			  controller_hbox
 			  play_button
@@ -158,6 +159,9 @@
 			     
 			     [= overview_image [gtk-image-new_from_pixbuf [gtk-pixbuf-new_from_image [new image 640 480 nil]]]]
 			     [have vbox pack_start overview_image nil nil 0]
+			     
+			     [= scale [gtk-scale-new_with_range 0.0 10.0 0.15]]
+			     [have vbox pack_start scale t t 0]
 			     
 			     [= agent_hbox [gtk-hbox-new 2]]
 			     [have vbox pack_start agent_hbox nil nil 0]

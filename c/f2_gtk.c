@@ -112,6 +112,31 @@ f2ptr f2gtk_label__primobject_type__new_aux(f2ptr cause) {
 
 
 
+// gtk_scale
+
+def_frame_object__global__1_slot(gtk_scale, pointer);
+
+f2ptr f2__gtk_scale__new(f2ptr cause, f2ptr pointer) {
+  return f2gtk_scale__new(cause, pointer);
+}
+
+#if defined(F2__GTK__SUPPORTED)
+
+GtkScale* raw__gtk_scale__as__GtkScale(f2ptr cause, f2ptr this) {
+  return (GtkScale*)from_ptr(f2pointer__p(f2__gtk_scale__pointer(cause, this), cause));
+}
+
+#endif // F2__GTK__SUPPORTED
+
+
+f2ptr f2gtk_scale__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2gtk_scale__primobject_type__new(cause);
+  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  return this;
+}
+
+
+
 // gtk_entry
 
 def_frame_object__global__1_slot(gtk_entry, pointer);
@@ -1133,6 +1158,19 @@ void funk2_gtk__label__set_selectable(funk2_gtk_t* this, GtkLabel* label, boolea
     gtk_label_set_selectable(GTK_LABEL(label), selectable ? TRUE : FALSE);
     gdk_threads_leave();
   }
+}
+
+
+// scale
+
+GtkScale* funk2_gtk__scale__new_with_range(funk2_gtk_t* this, GtkOrientation orientation, double min, double max, double step) {
+  GtkScale* scale;
+  {
+    gdk_threads_enter();
+    scale = GTK_SCALE(gtk_scale_new_with_range(orientation, min, max, step));
+    gdk_threads_leave();
+  }
+  return scale;
 }
 
 
@@ -3060,6 +3098,55 @@ f2ptr f2__gtk__label__set_selectable(f2ptr cause, f2ptr label, f2ptr selectable)
 def_pcfunk2(gtk__label__set_selectable, label, selectable, return f2__gtk__label__set_selectable(this_cause, label, selectable));
 
 
+boolean_t raw__gtk_orientation__is_type(f2ptr cause, f2ptr thing) {
+  return (raw__symbol__is_type(cause, thing) &&
+	  (raw__eq(cause, thing, new__symbol(cause, "horizontal")) ||
+	   raw__eq(cause, thing, new__symbol(cause, "vertical"))));
+}
+
+#if defined(F2__GTK__SUPPORTED)
+
+GtkOrientation raw__gtk_orientation__as__GtkOrientation(f2ptr cause, f2ptr this) {
+  if (raw__eq(cause, thing, new__symbol(cause, "horizontal"))) {
+    return GTK_ORIENTATION_HORIZONTAL;
+  }
+  return GTK_ORIENTATION_VERTICAL;
+}
+
+#endif
+
+
+// scale
+
+f2ptr raw__gtk__scale__new_with_range(f2ptr cause, f2ptr orientation, f2ptr min, f2ptr max, f2ptr step) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkOrientation gtk_orientation = raw__gtk_orientation__as__GtkOrientation(cause, orientation);
+    double         min__d          = f2double__d(min,  cause);
+    double         max__d          = f2double__d(max,  cause);
+    double         step__d         = f2double__d(step, cause);
+    GtkScale*      scale           = funk2_gtk__scale__new_with_range(&(__funk2.gtk), gtk_orientation, min__d, max__d, step__d);
+    return f2__gtk_scale__new(cause, f2pointer__new(cause, to_ptr(scale)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__scale__new_with_range(f2ptr cause, f2ptr orientation, f2ptr min, f2ptr max, f2ptr step) {
+  if ((! raw__gtk_orientation__is_type(cause, orientation)) ||
+      (! raw__double__is_type(         cause, min)) ||
+      (! raw__double__is_type(         cause, max)) ||
+      (! raw__double__is_type(         cause, step))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__scale__new_with_range(cause, orientation, min, max, step);
+}
+def_pcfunk4(gtk__scale__new_with_range, orientation, min, max, step, return f2__gtk__scale__new_with_range(this_cause, orientation, min, max, step));
+
+
 // entry
 
 f2ptr raw__gtk__entry__new(f2ptr cause) {
@@ -3900,6 +3987,10 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__1(gtk__label__new,            text,              "Returns a new GtkLabel.");
   f2__primcfunk__init__2(gtk__label__set_text,       label, text,       "Sets the text displayed by a GtkLabel.");
   f2__primcfunk__init__2(gtk__label__set_selectable, label, selectable, "Sets whether the text displayed by a GtkLabel is selectable for copy and paste.");
+  
+  // scale
+  
+  f2__primcfunk__init__4(gtk__scale__new_with_range, orientation, min, max, step, "Returns a new GtkScale.  orientation can be either `vertical or `horizontal.");
   
   // entry
   

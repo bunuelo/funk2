@@ -3229,7 +3229,7 @@ f2ptr raw__gtk__range__get_value(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__gtk__range__get_value(f2ptr cause, f2ptr this) {
-  if (! raw__gtk_range__is_type(cause, range)) {
+  if (! raw__gtk_range__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__gtk__range__get_value(cause, this);

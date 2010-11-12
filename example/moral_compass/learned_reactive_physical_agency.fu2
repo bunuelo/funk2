@@ -98,9 +98,9 @@ right now, changed [get mind objects] to [get mind isis_object_frame], which sti
 [defunk lookup_visual_object [visual_objects object_name]
   [let [[ match nil]]
     [mapc [funk [object]
-		[if [= [have object lookup `phenomenal_name] object_name]
-		    [= match object]]
-		visual_objects]]
+		[if [eq [have object lookup `phenomenal_name] object_name]
+		    [= match object]]]
+		visual_objects]
   match]]
 
 
@@ -206,19 +206,21 @@ right now, changed [get mind objects] to [get mind isis_object_frame], which sti
 			  [have this-resource think_to_self 'hold with right hand is starting']
 			  [print target]
 			  [if [get mind visual_objects]
-			      [if [lookup_visual_object [get mind visual_objects] target]
-				  [if [> [get [get this body] arm_length] [have [lookup_visual_object [get mind visual_objects] target] lookup `distance]]
-				      [if [eq '' [get mind right_hand_object_name]]
-					  [prog [print 'nothing in right hand'] 
-						[mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]
-						[print 'activated built-in pick_up']]
-					[mind-wait_to_activate mind learned_reactive physical empty_right_hand]]
-				    [prog 
-				     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
-				     [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]]]
-				[prog 
-				 [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
-				 [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]]]
+			      [prog [print 11]
+				    [if [lookup_visual_object [get mind visual_objects] target]
+					[if [> [get [get this body] arm_length] [have [lookup_visual_object [get mind visual_objects] target] lookup `distance]]
+					    [prog [print 22]
+						  [if [eq '' [get mind right_hand_object_name]]
+						      [prog [print 'nothing in right hand'] 
+							    [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]
+							    [print 'activated built-in pick_up']]
+						    [mind-wait_to_activate mind learned_reactive physical empty_right_hand]]]
+					  [prog 
+					   [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
+					   [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]]]
+				      [prog 
+				       [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
+				       [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]]]]
 			    [prog 
 			     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
 			     [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]]]

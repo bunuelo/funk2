@@ -262,7 +262,7 @@ def_pcfunk1(core_extension_handler__unload_changed, this, return f2__core_extens
 f2ptr raw__core_extension_handler__reset_to_boot_state(f2ptr cause, f2ptr this) {
   f2ptr core_extension_name_hash = f2__core_extension_handler__core_extension_name_hash(cause, this);
   ptypehash__value__iteration(cause, core_extension_name_hash, core_extension,
-			      f2__core_extension__initialize__set(cause, core_extension, f2bool__new(boolean__false));
+			      f2__core_extension__initialized__set(cause, core_extension, f2bool__new(boolean__false));
 			      );
   return nil;
 }

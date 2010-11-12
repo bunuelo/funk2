@@ -161,6 +161,7 @@
 			     [have vbox pack_start overview_image nil nil 0]
 			     
 			     [= scale [gtk-scale-new_with_range `horizontal 0.0 10.0 0.15]]
+			     [set scale digits 3]
 			     [have vbox pack_start scale t t 0]
 			     
 			     [= agent_hbox [gtk-hbox-new 2]]

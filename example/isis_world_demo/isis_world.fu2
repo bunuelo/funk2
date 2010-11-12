@@ -23,7 +23,7 @@
        [construct physical_world]
        [set this client client]
        [let [[scenario_list        [isis-call client meta_list_scenarios]]
-	     [load_scenario_result [isis-call client meta_load_scenario scenario 'make_toast']]
+	     [load_scenario_result [isis-call client meta_load_scenario scenario 'make_toast.py']]
 	     [task_list            [isis-call client meta_list_tasks]]
 	     [load_task_result     [isis-call client meta_load_task task 'toaster is in view']]
 	     [train_result         [isis-call client meta_train]]

@@ -1187,6 +1187,18 @@ GtkScale* funk2_gtk__vscale__new_with_range(funk2_gtk_t* this, double min, doubl
 }
 
 
+// scale
+
+void funk2_gtk__scale__set_digits(funk2_gtk_t* this, GtkScale* scale, s64 digits) {
+  {
+    gdk_threads_enter();
+    gtk_scale_set_digits(scale, digits);
+    gdk_threads_leave();
+  }
+}
+
+
+
 // range
 
 double funk2_gtk__range__get_value(funk2_gtk_t* this, GtkRange* range) {
@@ -3202,6 +3214,34 @@ f2ptr f2__gtk__scale__new_with_range(f2ptr cause, f2ptr orientation, f2ptr min, 
 def_pcfunk4(gtk__scale__new_with_range, orientation, min, max, step, return f2__gtk__scale__new_with_range(this_cause, orientation, min, max, step));
 
 
+f2ptr raw__gtk__scale__set_digits(f2ptr cause, f2ptr this, f2ptr digits) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkScale* gtk_scale = raw__gtk_scale__as__GtkScale(cause, this);
+    s64       digits__i  = f2integer__i(digits, cause);
+    if (digits__i < 0) {
+      return f2larva__new(cause, 3, nil);
+    }
+    funk2_gtk__scale__set_digits(&(__funk2.gtk), gtk_scale, digits__i);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__scale__set_digits(f2ptr cause, f2ptr this, f2ptr digits) {
+  if ((! raw__gtk_scale__is_type(cause, this)) ||
+      (! raw__integer__is_type(cause, digits))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__scale__set_digits(cause, this, digits);
+}
+def_pcfunk2(gtk__scale__set_digits, this, digits, return f2__gtk__scale__set_digits(this_cause, this, digits));
+
+
 // range
 
 boolean_t raw__gtk_range__is_type(f2ptr cause, f2ptr thing) {
@@ -4160,13 +4200,14 @@ void f2__gtk__initialize() {
   // scale
   
   f2__primcfunk__init__4(gtk__scale__new_with_range, orientation, min, max, step, "Returns a new GtkScale.  orientation can be either `vertical or `horizontal.");
+  f2__primcfunk__init__2(gtk__scale__set_digits,     this, digits,                "Sets the number of digits after the decimal point to show.");
   
   // range
   
-  f2__primcfunk__init__1(gtk__range__get_value,      this,             "");
-  f2__primcfunk__init__2(gtk__range__set_value,      this, value,      "");
-  f2__primcfunk__init__3(gtk__range__set_range,      this, min, max,   "");
-  f2__primcfunk__init__3(gtk__range__set_increments, this, step, page, "");
+  f2__primcfunk__init__1(gtk__range__get_value,      this,             "Returns the current value of the GtkRange object.");
+  f2__primcfunk__init__2(gtk__range__set_value,      this, value,      "Sets the current value of the GtkRange object.");
+  f2__primcfunk__init__3(gtk__range__set_range,      this, min, max,   "Sets the range of the GtkRange object.");
+  f2__primcfunk__init__3(gtk__range__set_increments, this, step, page, "Sets the step and page increments for the GtkRange object.");
   
   // entry
   

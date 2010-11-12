@@ -94,6 +94,7 @@
 [globalize-funk gtk-label-set_text                    &primfunk:gtk__label__set_text]
 [globalize-funk gtk-label-set_selectable              &primfunk:gtk__label__set_selectable]
 [globalize-funk gtk-scale-new_with_range              &primfunk:gtk__scale__new_with_range]
+[globalize-funk gtk-scale-set_digits                  &primfunk:gtk__scale__set_digits]
 [globalize-funk gtk-range-get_value                   &primfunk:gtk__range__get_value]
 [globalize-funk gtk-range-set_value                   &primfunk:gtk__range__set_value]
 [globalize-funk gtk-range-set_range                   &primfunk:gtk__range__set_range]

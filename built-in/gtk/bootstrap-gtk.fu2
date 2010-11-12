@@ -133,6 +133,10 @@
 
 'GtkScale'
 
+[deftypefunk gtk_scale set digits [digits] [gtk-scale-set_digits [get this widget] digits]]
+
+'GtkRange'
+
 [deftypefunk gtk_scale get value      []          [gtk-range-get_value      [get this widget]]]
 [deftypefunk gtk_scale set value      [value]     [gtk-range-set_value      [get this widget] value]]
 [deftypefunk gtk_scale set range      [min max]   [gtk-range-set_range      [get this widget] min max]]

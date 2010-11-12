@@ -46,6 +46,7 @@
 [defunk boot []
   [with-new-cause [cause-define standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 128 t nil t 1000000000]]
 		  [cause-define standard-input    stdin]
+		  [global_core_extension_handler-reset_to_boot_state]
 		  [load-funk2rc]
 		  [post_userfile_init_boot]]]
 

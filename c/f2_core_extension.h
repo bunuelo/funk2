@@ -48,6 +48,8 @@ struct funk2_object_type__core_extension_handler__slot_s {
   f2ptr lookup_core_extension__funk;
   f2ptr unload_changed__symbol;
   f2ptr unload_changed__funk;
+  f2ptr reset_to_boot_state__symbol;
+  f2ptr reset_to_boot_state__funk;
 };
 
 #endif // F2__CORE_EXTENSION__TYPES__H

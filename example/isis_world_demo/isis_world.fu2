@@ -70,6 +70,16 @@
 	      initial_image
 	    [let [[actual_image [new image actual_width actual_height nil]]]
 	      [have actual_image write_reduction_image_part initial_image reduction_factor 0 0]
+	      [dotimes [x_offset reduction_factor]
+		[dotimes [y_offset reduction_factor]
+		  [if [or [not [== x_offset 0]] [not [== y_offset 0]]]
+		      [let [[reduced_screenshot_frame [isis-call [get this client] meta_screenshot max_x 320 max_y 240 x_offset x_offset y_offset y_offset]]]
+			[let [[reduced_width            [have reduced_screenshot_frame lookup `width]]
+			      [reduced_height           [have reduced_screenshot_frame lookup `height]]
+			      [reduced_rgb_data         [have reduced_screenshot_frame lookup `rgb_data]]
+			      [reduced_reduction_factor [have reduced_screenshot_frame lookup `reduction_factor]]]
+			  [let [[reduced_image [image-new_from_rgb_data reduced_width reduced_height reduced_rgb_data]]]
+			    [have actual_image write_reduction_image_part reduced_image reduction_factor x_offset y_offset]]]]]]]
 	      actual_image]]]]]]]
 
 [deftypefunk isis_world execute step_simulation [seconds]

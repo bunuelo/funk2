@@ -259,11 +259,30 @@ f2ptr f2__core_extension_handler__unload_changed(f2ptr cause, f2ptr this) {
 def_pcfunk1(core_extension_handler__unload_changed, this, return f2__core_extension_handler__unload_changed(this_cause, this));
 
 
+f2ptr raw__core_extension_handler__reset_to_boot_state(f2ptr cause, f2ptr this) {
+  f2ptr core_extension_name_hash = f2__core_extension_handler__core_extension_name_hash(cause, this);
+  ptypehash__value__iteration(cause, core_extension_name_hash, core_extension,
+			      f2__core_extension__initialize__set(cause, core_extension, f2bool__new(boolean__false));
+			      );
+  return nil;
+}
+
+f2ptr f2__core_extension_handler__reset_to_boot_state(f2ptr cause, f2ptr this) {
+  if (! raw__core_extension_handler__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__core_extension_handler__reset_to_boot_state(cause, this);
+}
+def_pcfunk1(core_extension_handler__reset_to_boot_state, this, return f2__core_extension_handler__reset_to_boot_state(this_cause, this));
+
+
+
 f2ptr f2core_extension_handler__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2core_extension_handler__primobject_type__new(cause);
   {char* slot_name = "add_new_core_extension"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.add_new_core_extension__funk);}
   {char* slot_name = "lookup_core_extension";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.lookup_core_extension__funk);}
   {char* slot_name = "unload_changed";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.unload_changed__funk);}
+  {char* slot_name = "reset_to_boot_state";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.reset_to_boot_state__funk);}
   return this;
 }
 
@@ -305,6 +324,19 @@ f2ptr f2__global_core_extension_handler__unload_changed(f2ptr cause) {
   return f2__core_extension_handler__unload_changed(cause, core_extension_handler);
 }
 def_pcfunk0(global_core_extension_handler__unload_changed, return f2__global_core_extension_handler__unload_changed(this_cause));
+
+
+f2ptr f2__global_core_extension_handler__reset_to_boot_state(f2ptr cause) {
+  f2ptr core_extension_handler = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-core_extension_handler-"));
+  if (raw__larva__is_type(cause, core_extension_handler)) {
+    return core_extension_handler;
+  }
+  if (! raw__core_extension_handler__is_type(cause, core_extension_handler)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2__core_extension_handler__reset_to_boot_state(cause, core_extension_handler);
+}
+def_pcfunk0(global_core_extension_handler__reset_to_boot_state, return f2__global_core_extension_handler__reset_to_boot_state(this_cause));
 
 
 // **
@@ -360,12 +392,16 @@ void f2__core_extension__initialize_module() {
   {char* symbol_str = "unload_changed"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.unload_changed__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(core_extension_handler__unload_changed, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.unload_changed__funk = never_gc(cfunk);}
   
+  {char* symbol_str = "reset_to_boot_state"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.reset_to_boot_state__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__0_arg(core_extension_handler__reset_to_boot_state, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.reset_to_boot_state__funk = never_gc(cfunk);}
+  
   
   // global_core_extension_handler
   
   f2__primcfunk__init__2(global_core_extension_handler__add_new_core_extension, name, filename, "");
   f2__primcfunk__init__1(global_core_extension_handler__lookup_core_extension,  name,           "");
   f2__primcfunk__init__0(global_core_extension_handler__unload_changed,                         "");
+  f2__primcfunk__init__0(global_core_extension_handler__reset_to_boot_state,                    "");
   
   
   environment__add_var_value(cause, global_environment(), new__symbol(cause, "-core_extension_handler-"), f2__core_extension_handler__new(cause));

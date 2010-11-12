@@ -23,4 +23,5 @@
 [globalize-funk global_core_extension_handler-add_new_core_extension &primfunk:global_core_extension_handler__add_new_core_extension]
 [globalize-funk global_core_extension_handler-lookup_core_extension  &primfunk:global_core_extension_handler__lookup_core_extension]
 [globalize-funk global_core_extension_handler-unload_changed         &primfunk:global_core_extension_handler__unload_changed]
+[globalize-funk global_core_extension_handler-reset_to_boot_state    &primfunk:global_core_extension_handler__reset_to_boot_state]
 

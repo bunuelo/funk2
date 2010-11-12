@@ -19,7 +19,8 @@
 
 [defcore image 'extension/image/.libs/libimage.so']
 
-[defcorefunk image-new_from_rgb_data   image image__new_from_rgb_data]
-[defcorefunk image-core_extension_ping image image__core_extension_ping]
+[defcorefunk image-new_from_rgb_data         image image__new_from_rgb_data]
+[defcorefunk image-core_extension_ping       image image__core_extension_ping]
+[defcorefunk image-core_extension_initialize image image__core_extension_initialize]
 
 [image-core_extension_ping]

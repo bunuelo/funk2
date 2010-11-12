@@ -3209,8 +3209,8 @@ boolean_t raw__gtk_range__is_type(f2ptr cause, f2ptr thing) {
 }
 
 GtkRange* raw__gtk_range__as__GtkRange(f2ptr cause, f2ptr this) {
-  if (raw__gtk_scale__is_type(cause, range)) {
-    gtk_range = (GtkRange*)raw__gtk_scale__as__GtkScale(cause, range);
+  if (raw__gtk_scale__is_type(cause, this)) {
+    return (GtkRange*)raw__gtk_scale__as__GtkScale(cause, this);
   }
   error(nil, "raw__gtk_range__as__GtkRange: type is not range.");
 }

@@ -26,7 +26,6 @@
 				button_hbox
 				mindmon_button
 				sense_button
-				retina_image_button
 				visual_objects_button
 				visual_knowledge_button]
   [new [initial_isis_agent]
@@ -81,16 +80,6 @@
 		   [terminal_format standard-terminal '\n' [get this name] '\'s sensory information:'
 				    '\n  ' [have isis_agent sense_world]]]]
        [have button_hbox pack_start sense_button nil nil 0]
-       
-       [= retina_image_button [gtk-button-new_with_label 'Retina Image']]
-       [have retina_image_button signal_connect 'clicked'
-	     [funk []
-		   [let [[retina_image [get isis_agent retina_image]]]
-		     'this is a memory leak.'
-		     [set image pixbuf [gtk-pixbuf-new_from_image retina_image]]
-		     [terminal_format standard-terminal '\n' [get this name] '\'s retina image:'
-				      '\n  ' retina_image]]]]
-       [have button_hbox pack_start retina_image_button nil nil 0]
        
        [= visual_objects_button [gtk-button-new_with_label 'Visual Objects']]
        [have visual_objects_button signal_connect 'clicked'
@@ -167,7 +156,7 @@
 					 [= done t]]
 				   nil]
 			     
-			     [= overview_image [gtk-image-new_from_pixbuf [gtk-pixbuf-new_from_image [new image 320 240 nil]]]]
+			     [= overview_image [gtk-image-new_from_pixbuf [gtk-pixbuf-new_from_image [new image 640 480 nil]]]]
 			     [have vbox pack_start overview_image nil nil 0]
 			     
 			     [= agent_hbox [gtk-hbox-new 2]]
@@ -222,7 +211,7 @@
 [deftypefunk isismon execute add_agent [agent]
   [let [[isismon_agent [new isismon_agent agent]]]
     [have agent_frame add [get isismon_agent name] isismon_agent]
-    [have agent_hbox pack_start isismon_agent nil nil 0]]]
+    [have agent_hbox pack_start isismon_agent t t 0]]]
 
 [deftypefunk isismon execute update_overview_image []
   [set overview_image pixbuf [gtk-pixbuf-new_from_image [get isis_world screenshot]]]]

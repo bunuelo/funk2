@@ -1161,13 +1161,26 @@ void funk2_gtk__label__set_selectable(funk2_gtk_t* this, GtkLabel* label, boolea
 }
 
 
-// scale
+// hscale
 
-GtkScale* funk2_gtk__scale__new_with_range(funk2_gtk_t* this, GtkOrientation orientation, double min, double max, double step) {
+GtkScale* funk2_gtk__hscale__new_with_range(funk2_gtk_t* this, double min, double max, double step) {
   GtkScale* scale;
   {
     gdk_threads_enter();
-    scale = GTK_SCALE(gtk_scale_new_with_range(orientation, min, max, step));
+    scale = GTK_SCALE(gtk_hscale_new_with_range(min, max, step));
+    gdk_threads_leave();
+  }
+  return scale;
+}
+
+
+// vscale
+
+GtkScale* funk2_gtk__vscale__new_with_range(funk2_gtk_t* this, double min, double max, double step) {
+  GtkScale* scale;
+  {
+    gdk_threads_enter();
+    scale = GTK_SCALE(gtk_vscale_new_with_range(min, max, step));
     gdk_threads_leave();
   }
   return scale;
@@ -3107,7 +3120,7 @@ boolean_t raw__gtk_orientation__is_type(f2ptr cause, f2ptr thing) {
 #if defined(F2__GTK__SUPPORTED)
 
 GtkOrientation raw__gtk_orientation__as__GtkOrientation(f2ptr cause, f2ptr this) {
-  if (raw__eq(cause, thing, new__symbol(cause, "horizontal"))) {
+  if (raw__eq(cause, this, new__symbol(cause, "horizontal"))) {
     return GTK_ORIENTATION_HORIZONTAL;
   }
   return GTK_ORIENTATION_VERTICAL;
@@ -3125,7 +3138,12 @@ f2ptr raw__gtk__scale__new_with_range(f2ptr cause, f2ptr orientation, f2ptr min,
     double         min__d          = f2double__d(min,  cause);
     double         max__d          = f2double__d(max,  cause);
     double         step__d         = f2double__d(step, cause);
-    GtkScale*      scale           = funk2_gtk__scale__new_with_range(&(__funk2.gtk), gtk_orientation, min__d, max__d, step__d);
+    GtkScale*      scale;
+    if (gtk_orientation == GTK_ORIENTATION_HORIZONTAL) {
+      scale = funk2_gtk__hscale__new_with_range(&(__funk2.gtk), min__d, max__d, step__d);
+    } else {
+      scale = funk2_gtk__vscale__new_with_range(&(__funk2.gtk), min__d, max__d, step__d);
+    }
     return f2__gtk_scale__new(cause, f2pointer__new(cause, to_ptr(scale)));
   } else {
     return f2__gtk_not_supported_larva__new(cause);

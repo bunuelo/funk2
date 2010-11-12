@@ -131,6 +131,13 @@
 [deftypefunk gtk_menu get     widget []      this]
 [deftypefunk gtk_menu execute append [child] [gtk-menu-append [get this widget] [get child widget]]]
 
+'GtkScale'
+
+[deftypefunk gtk_scale get value      []          [gtk-range-get_value      [get this widget]]]
+[deftypefunk gtk_scale set value      [value]     [gtk-range-set_value      [get this widget] value]]
+[deftypefunk gtk_scale set range      [min max]   [gtk-range-set_range      [get this widget] min max]]
+[deftypefunk gtk_scale set increments [step page] [gtk-range-set_increments [get this widget] step page]]
+
 'GtkPixbuf'
 
 [defunk gtk-pixbuf-new_from_image [image]

@@ -80,12 +80,16 @@
 	  [funk []
 		[let [[found_range [have [get [get text_view buffer] start_iter] forward_search [get search_entry text]]]]
 		  [if found_range
-		      [prog [format stdout '\n  found "' [get search_entry text] '"!']
+		      [prog [terminal_format standard-terminal '\n  found "' [get search_entry text] '"!']
 			    [have [get text_view buffer] select_range found_range]]
-		    [prog [format stdout '\n  could not find "' [get search_entry text] '".']]]]]]
+		    [prog [terminal_format standard-terminal '\n  could not find "' [get search_entry text] '".']]]]]]
     
     [have next_button signal_connect 'clicked'
 	  [funk []
+		[terminal_format standard-terminal '\n  table_scale-value: ' [get table_scale value]]
+		[set table_scale value 50.0]
+		[set table_scale range -100.0 100.0]
+		[set table_scale increments 5.0 25.0]
 		[set search_image pixbuf [gtk-pixbuf-new_from_image [print [image-new_from_rgb_data 24 24 [let [[data [new chunk [* 3 24 24]]]]
 													    [dotimes [x 24]
 													      [dotimes [y 24]

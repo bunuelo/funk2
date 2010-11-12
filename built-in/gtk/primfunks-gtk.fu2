@@ -93,7 +93,7 @@
 [globalize-funk gtk-label-new                         &primfunk:gtk__label__new]
 [globalize-funk gtk-label-set_text                    &primfunk:gtk__label__set_text]
 [globalize-funk gtk-label-set_selectable              &primfunk:gtk__label__set_selectable]
-[globalize-funk gtk-scale-new_with_range              &primfunk:gtk__label__new_with_range]
+[globalize-funk gtk-scale-new_with_range              &primfunk:gtk__scale__new_with_range]
 [globalize-funk gtk-drawing_area-new                  &primfunk:gtk__drawing_area__new]
 [globalize-funk gtk-table-new                         &primfunk:gtk__table__new]
 [globalize-funk gtk-table-attach                      &primfunk:gtk__table__attach]

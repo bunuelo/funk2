@@ -1187,6 +1187,43 @@ GtkScale* funk2_gtk__vscale__new_with_range(funk2_gtk_t* this, double min, doubl
 }
 
 
+// range
+
+double funk2_gtk__range__get_value(funk2_gtk_t* this, GtkRange* range) {
+  double value;
+  {
+    gdk_threads_enter();
+    value = gtk_range_get_value(GTK_RANGE(range));
+    gdk_threads_leave();
+  }
+  return value;
+}
+
+void funk2_gtk__range__set_value(funk2_gtk_t* this, GtkRange* range, double value) {
+  {
+    gdk_threads_enter();
+    gtk_range_set_value(GTK_RANGE(range), value);
+    gdk_threads_leave();
+  }
+}
+
+void funk2_gtk__range__set_range(funk2_gtk_t* this, GtkRange* range, double min, double max) {
+  {
+    gdk_threads_enter();
+    gtk_range_set_value(GTK_RANGE(range), value);
+    gdk_threads_leave();
+  }
+}
+
+void funk2_gtk__range__set_increments(funk2_gtk_t* this, GtkRange* range, double step, double page) {
+  {
+    gdk_threads_enter();
+    gtk_range_set_increments(GTK_RANGE(range), step, page);
+    gdk_threads_leave();
+  }
+}
+
+
 // entry
 
 GtkEntry* funk2_gtk__entry__new(funk2_gtk_t* this) {
@@ -3165,6 +3202,120 @@ f2ptr f2__gtk__scale__new_with_range(f2ptr cause, f2ptr orientation, f2ptr min, 
 def_pcfunk4(gtk__scale__new_with_range, orientation, min, max, step, return f2__gtk__scale__new_with_range(this_cause, orientation, min, max, step));
 
 
+// range
+
+boolean_t raw__gtk_range__is_type(f2ptr cause, f2ptr thing) {
+  return raw__scale__is_type(cause, thing);
+}
+
+GtkRange* raw__gtk_range__as__GtkRange(f2ptr cause, f2ptr this) {
+  if (raw__gtk_scale__is_type(cause, range)) {
+    gtk_range = (GtkRange*)raw__gtk_scale__as__GtkScale(cause, range);
+  }
+  error(nil, "raw__gtk_range__as__GtkRange: type is not range.");
+}
+
+f2ptr raw__gtk__range__get_value(f2ptr cause, f2ptr this) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkRange* gtk_range = raw__gtk_range__as__GtkRange(cause, this);
+    return f2double__new(cause, funk2_gtk__range__get_value(&(__funk2.gtk), gtk_range));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__range__get_value(f2ptr cause, f2ptr this) {
+  if (! raw__gtk_range__is_type(cause, range)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__range__get_value(cause, this);
+}
+def_pcfunk1(gtk__range__get_value, this, return f2__gtk__range__get_value(this_cause, this));
+
+
+f2ptr raw__gtk__range__set_value(f2ptr cause, f2ptr this, f2ptr value) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkRange* gtk_range = raw__gtk_range__as__GtkRange(cause, this);
+    double    value__d  = f2double__d(value, cause);
+    funk2_gtk__range__set_value(&(__funk2.gtk), gtk_range, value__d);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__range__set_value(f2ptr cause, f2ptr this, f2ptr value) {
+  if ((! raw__gtk_range__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, value))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__range__set_value(cause, this, value);
+}
+def_pcfunk2(gtk__range__set_value, this, value, return f2__gtk__range__set_value(this_cause, this, value));
+
+
+f2ptr raw__gtk__range__set_range(f2ptr cause, f2ptr this, f2ptr min, f2ptr max) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkRange* gtk_range = raw__gtk_range__as__GtkRange(cause, this);
+    double    min__d    = f2double__d(min, cause);
+    double    max__d    = f2double__d(max, cause);
+    funk2_gtk__range__set_range(&(__funk2.gtk), gtk_range, min__d, max__d);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__range__set_range(f2ptr cause, f2ptr this, f2ptr min, f2ptr max) {
+  if ((! raw__gtk_range__is_type(cause, this)) ||
+      (! raw__double__is_type(   cause, min)) ||
+      (! raw__double__is_type(   cause, max))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__range__set_range(cause, this, min, max);
+}
+def_pcfunk3(gtk__range__set_range, this, min, max, return f2__gtk__range__set_range(this_cause, this, min, max));
+
+
+f2ptr raw__gtk__range__set_increments(f2ptr cause, f2ptr this, f2ptr step, f2ptr page) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkRange* gtk_range = raw__gtk_range__as__GtkRange(cause, this);
+    double    step__d   = f2double__d(step, cause);
+    double    page__d   = f2double__d(page, cause);
+    funk2_gtk__range__set_increments(&(__funk2.gtk), gtk_range, step__d, page__d);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__range__set_increments(f2ptr cause, f2ptr this, f2ptr step, f2ptr page) {
+  if ((! raw__gtk_range__is_type(cause, this)) ||
+      (! raw__double__is_type(   cause, step)) ||
+      (! raw__double__is_type(   cause, page))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__range__set_increments(cause, this, step, page);
+}
+def_pcfunk3(gtk__range__set_increments, this, step, page, return f2__gtk__range__set_increments(this_cause, this, step, page));
+
+
 // entry
 
 f2ptr raw__gtk__entry__new(f2ptr cause) {
@@ -4009,6 +4160,13 @@ void f2__gtk__initialize() {
   // scale
   
   f2__primcfunk__init__4(gtk__scale__new_with_range, orientation, min, max, step, "Returns a new GtkScale.  orientation can be either `vertical or `horizontal.");
+  
+  // range
+  
+  f2__primcfunk__init__1(gtk__range__get_value,      this,             "");
+  f2__primcfunk__init__2(gtk__range__set_value,      this, value,      "");
+  f2__primcfunk__init__3(gtk__range__set_range,      this, min, max,   "");
+  f2__primcfunk__init__3(gtk__range__set_increments, this, step, page, "");
   
   // entry
   

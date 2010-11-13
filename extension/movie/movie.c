@@ -209,10 +209,11 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	}
 	
 	// Cb and Cr
+	int ix, iy;
 	for(iy = 0; iy < c->height/2; iy ++) {
 	  for(ix = 0; ix < c->width/2; ix ++) {
-	    int x = x * 2;
-	    int y = y * 2;
+	    x = ix * 2;
+	    y = iy * 2;
 	    double red_0_0   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 0) / 255.0;
 	    double green_0_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 0) / 255.0;
 	    double blue_0_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 0) / 255.0;

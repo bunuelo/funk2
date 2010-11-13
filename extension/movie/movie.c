@@ -145,7 +145,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
   {
     AVCodec *codec;
     AVCodecContext *c= NULL;
-    int i, out_size, size, x, y, outbuf_size;
+    int out_size, size, x, y, outbuf_size;
     AVFrame *picture;
     uint8_t *outbuf, *picture_buf;
     

@@ -39,46 +39,44 @@ void libavcodec__video_encode_example(const char *filename) {
   AVFrame *picture;
   uint8_t *outbuf, *picture_buf;
   
-  printf("Video encoding\n");
-  
-  /* find the mpeg1 video encoder */
+  // find the mpeg1 video encoder
   codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
   if (!codec) {
-    fprintf(stderr, "codec not found\n");
-    exit(1);
+    printf("codec not found\n");
+    return;
   }
   
   c= avcodec_alloc_context();
   picture= avcodec_alloc_frame();
   
-  /* put sample parameters */
+  // put sample parameters
   c->bit_rate = 400000;
-  /* resolution must be a multiple of two */
+  // resolution must be a multiple of two
   c->width = 352;
   c->height = 288;
-  /* frames per second */
+  // frames per second
   c->time_base= (AVRational){1,25};
-  c->gop_size = 10; /* emit one intra frame every ten frames */
+  c->gop_size = 10; // emit one intra frame every ten frames
   c->max_b_frames=1;
   c->pix_fmt = PIX_FMT_YUV420P;
   
-  /* open it */
+  // open it
   if (avcodec_open(c, codec) < 0) {
-    fprintf(stderr, "could not open codec\n");
-    exit(1);
+    printf("could not open codec\n");
+    return;
   }
   
   f = fopen(filename, "wb");
   if (!f) {
-    fprintf(stderr, "could not open %s\n", filename);
-    exit(1);
+    printf("could not open %s\n", filename);
+    return;
   }
   
-  /* alloc image and output buffer */
+  // alloc image and output buffer
   outbuf_size = 100000;
   outbuf = malloc(outbuf_size);
   size = c->width * c->height;
-  picture_buf = malloc((size * 3) / 2); /* size for YUV 420 */
+  picture_buf = malloc((size * 3) / 2); // size for YUV 420
   
   picture->data[0] = picture_buf;
   picture->data[1] = picture->data[0] + size;
@@ -87,18 +85,17 @@ void libavcodec__video_encode_example(const char *filename) {
   picture->linesize[1] = c->width / 2;
   picture->linesize[2] = c->width / 2;
   
-  /* encode 1 second of video */
+  // encode 1 second of video
   for(i=0;i<25;i++) {
-    fflush(stdout);
-    /* prepare a dummy image */
-    /* Y */
+    // prepare a dummy image
+    // Y
     for(y=0;y<c->height;y++) {
       for(x=0;x<c->width;x++) {
 	picture->data[0][y * picture->linesize[0] + x] = x + y + i * 3;
       }
     }
     
-    /* Cb and Cr */
+    // Cb and Cr
     for(y=0;y<c->height/2;y++) {
       for(x=0;x<c->width/2;x++) {
 	picture->data[1][y * picture->linesize[1] + x] = 128 + y + i * 2;
@@ -106,18 +103,16 @@ void libavcodec__video_encode_example(const char *filename) {
       }
     }
     
-    /* encode the image */
+    // encode the image
     out_size = avcodec_encode_video(c, outbuf, outbuf_size, picture);
-    printf("encoding frame %3d (size=%5d)\n", i, out_size);
+    //printf("encoding frame %3d (size=%5d)\n", i, out_size);
     fwrite(outbuf, 1, out_size, f);
   }
   
-  /* get the delayed frames */
+  // get the delayed frames
   for(; out_size; i++) {
-    fflush(stdout);
-    
     out_size = avcodec_encode_video(c, outbuf, outbuf_size, NULL);
-    printf("write frame %3d (size=%5d)\n", i, out_size);
+    //printf("write frame %3d (size=%5d)\n", i, out_size);
     fwrite(outbuf, 1, out_size, f);
   }
   
@@ -134,7 +129,6 @@ void libavcodec__video_encode_example(const char *filename) {
   avcodec_close(c);
   av_free(c);
   av_free(picture);
-  printf("\n");
 }
 
 #endif // F2__LIBAVCODEC_SUPPORTED

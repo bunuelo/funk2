@@ -21,6 +21,7 @@
   :packages [isis_world_demo
 	     gtk
 	     image
+	     image_sequence
 	     mindmon]
    :sources ['isismon.fu2']]
 

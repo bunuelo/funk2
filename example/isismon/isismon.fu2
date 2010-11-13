@@ -132,6 +132,8 @@
 			  
 			  [agent_frame [frame]]
 			  
+			  [image_sequence [new image_sequence nil]]
+			  
 			  [simulation_playing           nil]
 			  [tick                         0]
 			  [last_stepped_simulation_tick -1000]
@@ -205,6 +207,8 @@
 			       [if [and simulation_playing [> [- tick last_stepped_simulation_tick] 5]]
 				   [prog [have this step]
 					 [= last_stepped_simulation_tick tick]]]
+			       [let [[pixbuf [gtk-pixbuf-new_from_image [get image_sequence elt [get [get scale value] as-integer]]]]]
+				 [set overview_image pixbuf pixbuf]]
 			       [sleep 1]
 			       [= tick [+ tick 1]]
 			       ]
@@ -220,7 +224,12 @@
     [have agent_hbox pack_start isismon_agent t t 0]]]
 
 [deftypefunk isismon execute update_overview_image []
-  [set overview_image pixbuf [gtk-pixbuf-new_from_image [get isis_world screenshot]]]]
+  [let [[image [get isis_world screenshot]]]
+    [have image_sequence add_image_to_end image]
+    [set scale range 0.0 [get [get image_sequence length] as-double]]
+    [let [[scale_value [get scale value]]]
+      [if [== scale_value [- [get image_sequence length] 1]]
+	  [set scale value [get image_sequence length]]]]]]
 
 [deftypefunk isismon execute update_agents []
   [mapc [funk [agent]

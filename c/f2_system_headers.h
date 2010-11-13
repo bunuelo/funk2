@@ -162,6 +162,7 @@
 #  endif
 #  include "libavcodec/avcodec.h"
 #  include "libavutil/mathematics.h"
+#  include "ffmpeg/swscale.h"
 #endif // F2__LIBAVCODEC_SUPPORTED
 
 

@@ -90,8 +90,8 @@
 [deftypefunk isis_world execute update_after_step_simulation []
   [have this update_overview_image_sequence]
   [mapc [funk [agent_name]
-	      [let [[agent [get agent_frame agent_name]]]
-		[have agent update_after_step_simulation]]]
+	      [let [[agent_body [get this agent_body agent_name]]]
+		[have agent_body update_after_step_simulation]]]
 	[get this agent_names]]]
 
 

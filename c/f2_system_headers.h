@@ -155,5 +155,15 @@
 #  include <gdk/gdkkeysyms.h>
 #endif
 
+
+#ifdef F2__LIBAVCODEC_SUPPORTED
+#  ifdef HAVE_AV_CONFIG_H
+#    undef HAVE_AV_CONFIG_H
+#  endif
+#  include "libavcodec/avcodec.h"
+#  include "libavutil/mathematics.h"
+#endif // F2__LIBAVCODEC_SUPPORTED
+
+
 #endif // F2__SYSTEM_HEADERS__H
 

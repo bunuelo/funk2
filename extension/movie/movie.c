@@ -19,18 +19,11 @@
 // rights to redistribute these changes.
 // 
 
-#ifdef HAVE_AV_CONFIG_H
-#undef HAVE_AV_CONFIG_H
-#endif
-
-#include "libavcodec/avcodec.h"
-#include "libavutil/mathematics.h"
-
 #include "../../c/funk2.h"
 #include "../image/image.h"
 
 
-
+#ifdef F2__LIBAVCODEC_SUPPORTED
 
 void video_encode_example(const char *filename) {
   AVCodec *codec;
@@ -138,6 +131,7 @@ void video_encode_example(const char *filename) {
   printf("\n");
 }
 
+#endif // F2__LIBAVCODEC_SUPPORTED
 
 
 
@@ -467,6 +461,9 @@ export_cefunk0(movie__core_extension_ping, 0, "");
 f2ptr f2__movie__core_extension_initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "movie"), f2__movie_type__new(cause));
   f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image_sequence__core_extension_ping")), nil);
+#ifdef F2__LIBAVCODEC_SUPPORTED
+  video_encode_example("example.mpeg");
+#endif // F2__LIBAVCODEC_SUPPORTED
   printf("\nmovie initialized."); fflush(stdout);
   return nil;
 }

@@ -50,7 +50,7 @@ f2ptr raw__image_sequence__new(f2ptr cause, f2ptr images) {
     while (iter != nil) {
       f2ptr image = f2__doublelink__value(cause, iter);
       if (! raw__image__is_type(cause, image)) {
-	return f2larva__new(cause, 1, nil);
+	return f2larva__new(cause, 11, nil);
       }
       s64 image__width  = raw__image__width( cause, image);
       s64 image__height = raw__image__height(cause, image);
@@ -59,7 +59,7 @@ f2ptr raw__image_sequence__new(f2ptr cause, f2ptr images) {
 	height = image__height;
       } else if ((width  != image__width) ||
 		 (height != image__height)) {
-	return f2larva__new(cause, 3, nil);
+	return f2larva__new(cause, 13, nil);
       }
       iter = f2__doublelink__next(cause, iter);
     }

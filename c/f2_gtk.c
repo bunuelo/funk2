@@ -1813,6 +1813,7 @@ f2ptr raw__gtk__pixbuf__unref(f2ptr cause, f2ptr this) {
   if (&(__funk2.gtk.initialized_successfully)) {
     GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, this);
     funk2_gtk__object__unref(&(__funk2.gtk), (GObject*)gdk_pixbuf);
+    return nil;
   } else {
     return f2__gtk_not_supported_larva__new(cause);
   }

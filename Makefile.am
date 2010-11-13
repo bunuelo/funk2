@@ -342,7 +342,7 @@ lib_libfunk2_la_SOURCES = \
 
 extension_fibermon_libfibermon_la_SOURCES    = extension/fibermon/fibermon.c
 extension_image_libimage_la_SOURCES          = extension/image/image.c
-extension_image_sequence_libimage_la_SOURCES = extension/image_sequence/image_sequence.c
+extension_image_sequence_libimage_sequence_la_SOURCES = extension/image_sequence/image_sequence.c
 extension_mindmon_libmindmon_la_SOURCES      = extension/mindmon/mindmon.c
 extension_causality_libcausality_la_SOURCES  = extension/causality/causality.c
 

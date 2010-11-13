@@ -110,6 +110,7 @@
   [let [[retina_image [get isis_agent retina_image]]]
     [set image pixbuf [gtk-pixbuf-new_from_image retina_image]]]]
 
+
 [deframe isismon [frame] [isis_world
 			  [initialize_mutex [new mutex]]
 			  [done             nil]
@@ -160,7 +161,7 @@
 			     [= overview_image [gtk-image-new_from_pixbuf [gtk-pixbuf-new_from_image [new image 640 480 nil]]]]
 			     [have vbox pack_start overview_image nil nil 0]
 			     
-			     [= scale [gtk-scale-new_with_range `horizontal 0.0 10.0 0.15]]
+			     [= scale [gtk-scale-new_with_range `horizontal 0.0 0.0 1.0]]
 			     [set scale digits 3]
 			     [have vbox pack_start scale t t 0]
 			     

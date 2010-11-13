@@ -208,6 +208,7 @@ ACLOCAL_AMFLAGS = -I m4
 lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/fibermon/libfibermon.la \
                   extension/image/libimage.la \
+                  extension/image/libimage_sequence.la \
                   extension/mindmon/libmindmon.la \
                   extension/causality/libcausality.la
 #bin_PROGRAMS    = bin/funk2-static
@@ -339,10 +340,11 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
-extension_fibermon_libfibermon_la_SOURCES   = extension/fibermon/fibermon.c
-extension_image_libimage_la_SOURCES         = extension/image/image.c
-extension_mindmon_libmindmon_la_SOURCES     = extension/mindmon/mindmon.c
-extension_causality_libcausality_la_SOURCES = extension/causality/causality.c
+extension_fibermon_libfibermon_la_SOURCES    = extension/fibermon/fibermon.c
+extension_image_libimage_la_SOURCES          = extension/image/image.c
+extension_image_sequence_libimage_la_SOURCES = extension/image_sequence/image_sequence.c
+extension_mindmon_libmindmon_la_SOURCES      = extension/mindmon/mindmon.c
+extension_causality_libcausality_la_SOURCES  = extension/causality/causality.c
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 
@@ -374,6 +376,9 @@ extension_fibermon_libfibermon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_image_libimage_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_image_libimage_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_image_sequence_libimage_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_image_sequence_libimage_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_mindmon_libmindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_mindmon_libmindmon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

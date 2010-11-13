@@ -112,6 +112,7 @@
 				  'built-in/simple_graph/'
 				  'extension/fibermon/'
 				  'extension/image/'
+				  'extension/image_sequence/'
 				  'example/conceptnet/'
 				  'example/divisi2/'
 				  'example/english_language/'

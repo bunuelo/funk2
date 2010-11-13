@@ -36,6 +36,7 @@
 #include "f2_bug.h"
 #include "f2_bytecodes.h"
 #include "f2_cause.h"
+#include "f2_chunk.h"
 #include "f2_circular_buffer.h"
 #include "f2_command_line.h"
 #include "f2_compile.h"

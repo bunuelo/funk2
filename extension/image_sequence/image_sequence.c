@@ -21,7 +21,7 @@
 
 #include "../../c/funk2.h"
 #include "../image/image.h"
-#include "../image/image_sequence.h"
+#include "../image_sequence/image_sequence.h"
 
 f2ptr raw__image_sequence__new(f2ptr cause, f2ptr images) {
   f2ptr first_image_link;

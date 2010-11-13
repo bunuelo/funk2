@@ -69,7 +69,7 @@ f2ptr f2__chunk__save(f2ptr cause, f2ptr this, f2ptr filename) {
       (! raw__string__is_type(cause, filename))) {
     return f2larva__new(cause, 1, nil);
   }
-  raw__chunk__save(cause, this, filename);
+  return raw__chunk__save(cause, this, filename);
 }
 def_pcfunk2(chunk__save, this, filename, return f2__chunk__save(this_cause, this, filename));
 

@@ -208,7 +208,7 @@ ACLOCAL_AMFLAGS = -I m4
 lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/fibermon/libfibermon.la \
                   extension/image/libimage.la \
-                  extension/image/libimage_sequence.la \
+                  extension/image_sequence/libimage_sequence.la \
                   extension/mindmon/libmindmon.la \
                   extension/causality/libcausality.la
 #bin_PROGRAMS    = bin/funk2-static

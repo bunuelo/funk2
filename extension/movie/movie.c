@@ -146,7 +146,6 @@ f2ptr raw__libavcodec__video_chunk_list__new_from_image_sequence(f2ptr cause, f2
     AVCodec *codec;
     AVCodecContext *c= NULL;
     int i, out_size, size, x, y, outbuf_size;
-    FILE *f;
     AVFrame *picture;
     uint8_t *outbuf, *picture_buf;
     
@@ -223,12 +222,15 @@ f2ptr raw__libavcodec__video_chunk_list__new_from_image_sequence(f2ptr cause, f2
     }
     
     /* add sequence end code to have a real mpeg file */
-    outbuf[0] = 0x00;
-    outbuf[1] = 0x00;
-    outbuf[2] = 0x01;
-    outbuf[3] = 0xb7;
-    fwrite(outbuf, 1, 4, f);
-    fclose(f);
+    {
+      outbuf[0] = 0x00;
+      outbuf[1] = 0x00;
+      outbuf[2] = 0x01;
+      outbuf[3] = 0xb7;
+      out_size = 4;
+      f2ptr chunk      = f2chunk__new(cause, out_size, outbuf);
+      video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
+    }
     free(picture_buf);
     free(outbuf);
     

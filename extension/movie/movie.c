@@ -283,62 +283,19 @@ export_cefunk3(libavcodec__video_chunk__new_from_image_sequence, image_sequence,
 
 
 
-f2ptr raw__movie__new(f2ptr cause, f2ptr images) {
-  f2ptr first_image_link;
-  {
-    f2ptr next = nil;
-    f2ptr iter = images;
-    while (iter != nil) {
-      next = iter;
-      iter = f2__doublelink__prev(cause, iter);
-    }
-    first_image_link = next;
-  }
-  f2ptr last_image_link;
-  {
-    f2ptr prev = nil;
-    f2ptr iter = images;
-    while (iter != nil) {
-      prev = iter;
-      iter = f2__doublelink__next(cause, iter);
-    }
-    last_image_link = prev;
-  }
-  s64 width  = -1;
-  s64 height = -1;
-  {
-    f2ptr iter = first_image_link;
-    while (iter != nil) {
-      f2ptr image = f2__doublelink__value(cause, iter);
-      if (! raw__image__is_type(cause, image)) {
-	return f2larva__new(cause, 1, nil);
-      }
-      s64 image__width  = raw__image__width( cause, image);
-      s64 image__height = raw__image__height(cause, image);
-      if (width == -1) {
-	width  = image__width;
-	height = image__height;
-      } else if ((width  != image__width) ||
-		 (height != image__height)) {
-	return f2larva__new(cause, 13, nil);
-      }
-      iter = f2__doublelink__next(cause, iter);
-    }
-  }
+f2ptr raw__movie__new(f2ptr cause, f2ptr video_chunk) {
   return f2__frame__new(cause, f2list8__new(cause,
-					    new__symbol(cause, "type"),             new__symbol(cause, "movie"),
-					    new__symbol(cause, "first_image_link"), first_image_link,
-					    new__symbol(cause, "last_image_link"),  last_image_link,
-					    new__symbol(cause, "images"),           images));
+					    new__symbol(cause, "type"),        new__symbol(cause, "movie"),
+					    new__symbol(cause, "video_chunk"), video_chunk));
 }
 
-f2ptr f2__movie__new(f2ptr cause, f2ptr images) {
-  if ((images != nil) && (! raw__doublelink__is_type(cause, images))) {
+f2ptr f2__movie__new(f2ptr cause, f2ptr video_chunk) {
+  if (! raw__chunk__is_type(cause, video_chunk)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__movie__new(cause, images);
+  return raw__movie__new(cause, video_chunk);
 }
-export_cefunk1(movie__new, images, 0, "Returns a new movie object.  images can be nil or a doublelink list.");
+export_cefunk1(movie__new, images, 0, "Returns a new movie object.");
 
 
 boolean_t raw__movie__is_type(f2ptr cause, f2ptr thing) {
@@ -376,224 +333,58 @@ f2ptr f2__movie__type(f2ptr cause, f2ptr this) {
 export_cefunk1(movie__type, thing, 0, "Returns the specific type of object that this movie is.");
 
 
-f2ptr raw__movie__first_image_link(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "first_image_link"), nil);
+f2ptr raw__movie__video_chunk(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "video_chunk"), nil);
 }
 
-f2ptr f2__movie__first_image_link(f2ptr cause, f2ptr this) {
+f2ptr f2__movie__video_chunk(f2ptr cause, f2ptr this) {
   if (! raw__movie__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__movie__first_image_link(cause, this);
+  return raw__movie__video_chunk(cause, this);
 }
-export_cefunk1(movie__first_image_link, thing, 0, "Returns the first_image_link of the movie.");
+export_cefunk1(movie__video_chunk, thing, 0, "Returns the video_chunk of the movie.");
 
 
-f2ptr raw__movie__first_image_link__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "first_image_link"), value);
+f2ptr raw__movie__video_chunk__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "video_chunk"), value);
 }
 
-f2ptr f2__movie__first_image_link__set(f2ptr cause, f2ptr this, f2ptr value) {
+f2ptr f2__movie__video_chunk__set(f2ptr cause, f2ptr this, f2ptr value) {
   if (! raw__movie__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__movie__first_image_link__set(cause, this, value);
+  return raw__movie__video_chunk__set(cause, this, value);
 }
-export_cefunk2(movie__first_image_link__set, thing, value, 0, "Sets the first_image_link of the movie.");
+export_cefunk2(movie__video_chunk__set, thing, value, 0, "Sets the video_chunk of the movie.");
 
 
-f2ptr raw__movie__last_image_link(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "last_image_link"), nil);
+f2ptr raw__movie__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second) {
+  f2ptr video_chunk = raw__libavcodec__video_chunk__new_from_image_sequence(cause, image_sequence, bit_rate, frames_per_second);
+  if (raw__larva__is_type(cause, video_chunk)) {
+    return video_chunk;
+  }
+  return f2__movie__new(cause, video_chunk);
 }
 
-f2ptr f2__movie__last_image_link(f2ptr cause, f2ptr this) {
-  if (! raw__movie__is_type(cause, this)) {
+f2ptr f2__movie__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second) {
+  if ((! raw__image_sequence__is_type(cause, image_sequence)) ||
+      (! raw__integer__is_type(cause, bit_rate)) ||
+      (! raw__integer__is_type(cause, frames_per_second))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__movie__last_image_link(cause, this);
+  return raw__movie__new_from_image_sequence(cause, image_sequence, bit_rate, frames_per_second);
 }
-export_cefunk1(movie__last_image_link, thing, 0, "Returns the last_image_link of the movie.");
-
-
-f2ptr raw__movie__last_image_link__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "last_image_link"), value);
-}
-
-f2ptr f2__movie__last_image_link__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__movie__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__movie__last_image_link__set(cause, this, value);
-}
-export_cefunk2(movie__last_image_link__set, thing, value, 0, "Sets the last_image_link of the movie.");
-
-
-f2ptr raw__movie__images(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "images"), nil);
-}
-
-f2ptr f2__movie__images(f2ptr cause, f2ptr this) {
-  if (! raw__movie__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__movie__images(cause, this);
-}
-export_cefunk1(movie__images, thing, 0, "Returns the images of the movie.");
-
-
-f2ptr raw__movie__images__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "images"), value);
-}
-
-f2ptr f2__movie__images__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__movie__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__movie__images__set(cause, this, value);
-}
-export_cefunk2(movie__images__set, thing, value, 0, "Sets the images of the movie.");
-
-
-s64 raw__movie__length(f2ptr cause, f2ptr this) {
-  s64 length = 0;
-  f2ptr iter = raw__movie__first_image_link(cause, this);
-  while (iter != nil) {
-    length ++;
-    iter = f2__doublelink__next(cause, iter);
-  }
-  return length;
-}
-
-f2ptr f2__movie__length(f2ptr cause, f2ptr this) {
-  if (! raw__movie__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return f2integer__new(cause, raw__movie__length(cause, this));
-}
-export_cefunk1(movie__length, this, 0, "Returns the number of images in the image sequence.");
-
-
-f2ptr raw__movie__width(f2ptr cause, f2ptr this) {
-  f2ptr width = nil;
-  f2ptr iter = raw__movie__first_image_link(cause, this);
-  if (iter != nil) {
-    f2ptr image = f2__doublelink__value(cause, iter);
-    width = raw__image__width(cause, image);
-  }
-  return width;
-}
-
-f2ptr f2__movie__width(f2ptr cause, f2ptr this) {
-  if (! raw__movie__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__movie__width(cause, this);
-}
-export_cefunk1(movie__width, this, 0, "Returns the width of all of the images in the sequence, or nil if sequence is empty.");
-
-
-f2ptr raw__movie__height(f2ptr cause, f2ptr this) {
-  f2ptr height = nil;
-  f2ptr iter = raw__movie__first_image_link(cause, this);
-  if (iter != nil) {
-    f2ptr image = f2__doublelink__value(cause, iter);
-    height = raw__image__height(cause, image);
-  }
-  return height;
-}
-
-f2ptr f2__movie__height(f2ptr cause, f2ptr this) {
-  if (! raw__movie__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__movie__height(cause, this);
-}
-export_cefunk1(movie__height, this, 0, "Returns the height of all of the images in the sequence, or nil if sequence is empty.");
-
-
-f2ptr raw__movie__add_image_to_end(f2ptr cause, f2ptr this, f2ptr image) {
-  f2ptr width  = raw__movie__width(cause, this);
-  f2ptr height = raw__movie__height(cause, this);
-  s64   width__i;
-  s64   height__i;
-  if (width != nil) {
-    width__i  = f2integer__i(width,  cause);
-    height__i = f2integer__i(height, cause);
-    f2ptr image__width     = raw__image__width( cause, image);
-    f2ptr image__height    = raw__image__height(cause, image);
-    s64   image__width__i  = f2integer__i(image__width,  cause);
-    s64   image__height__i = f2integer__i(image__height, cause);
-    if ((width__i  != image__width__i) ||
-	(height__i != image__height__i)) {
-      return f2larva__new(cause, 3, nil);
-    }
-  }
-  f2ptr last_image_link = raw__movie__last_image_link(cause, this);
-  f2ptr link = f2__doublelink__new(cause, last_image_link, nil, image);
-  if (last_image_link == nil) {
-    f2__movie__images__set(          cause, this, link);
-    f2__movie__first_image_link__set(cause, this, link);
-  } else {
-    f2__doublelink__next__set(cause, last_image_link, link);
-  }
-  f2__movie__last_image_link__set(cause, this, link);
-  return nil;
-}
-
-f2ptr f2__movie__add_image_to_end(f2ptr cause, f2ptr this, f2ptr image) {
-  if ((! raw__movie__is_type(cause, this)) ||
-      (! raw__image__is_type(cause, image))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__movie__add_image_to_end(cause, this, image);
-}
-export_cefunk2(movie__add_image_to_end, this, image, 0, "Adds an image to the end of the image sequence.  The image must be the same dimensions as the other images in the sequence.");
-
-
-f2ptr raw__movie__elt(f2ptr cause, f2ptr this, s64 index) {
-  if (index < 0) {
-    return f2larva__new(cause, 2, nil);
-  }
-  s64   count = 0;
-  f2ptr iter  = f2__movie__first_image_link(cause, this);
-  while (iter != nil) {
-    f2ptr image = f2__doublelink__value(cause, iter);
-    if (count == index) {
-      return image;
-    }
-    count ++;
-    iter = f2__doublelink__next(cause, iter);
-  }
-  return f2larva__new(cause, 2, nil);
-}
-
-f2ptr f2__movie__elt(f2ptr cause, f2ptr this, f2ptr index) {
-  if ((! raw__movie__is_type(cause, this)) ||
-      (! raw__integer__is_type(cause, index))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  s64 index__i = f2integer__i(index, cause);
-  return raw__movie__elt(cause, this, index__i);
-}
-export_cefunk2(movie__elt, this, index, 0, "Returns an image from the sequence.  Indices start at zero.");
+export_cefunk2(movie__new_from_image_sequence, image_sequence, bit_rate, frames_per_second, 0, "Creates a new movie from an image sequence.");
 
 
 f2ptr f2__movie_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),              f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),          f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),             f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "first_image_link"), f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__first_image_link")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "first_image_link"), f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__first_image_link__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "last_image_link"),  f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__last_image_link")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "last_image_link"),  f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__last_image_link__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "images"),           f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__images")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "images"),           f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__images__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "length"),           f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__length")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "width"),            f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__width")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "height"),           f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__height")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_image_to_end"), f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__add_image_to_end")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "elt"),              f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__elt")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),         f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),     f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),        f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "video_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__video_chunk")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "video_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__video_chunk__set")));}
   return this;
 }
 

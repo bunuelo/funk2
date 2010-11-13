@@ -23,5 +23,6 @@
 [defcorefunk movie-core_extension_initialize movie movie__core_extension_initialize]
 
 [defcorefunk libavcodec-video_chunk-new_from_image_sequence movie libavcodec__video_chunk__new_from_image_sequence]
+[defcorefunk movie-new_from_image_sequence                  movie movie__new_from_image_sequence]
 
 [movie-core_extension_ping]

@@ -135,6 +135,125 @@ void libavcodec__video_encode_example(const char *filename) {
 
 
 
+f2ptr raw__libavcodec__video_chunk_list__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second) {
+#ifdef F2__LIBAVCODEC_SUPPORTED
+  s64 bit_rate__i          = f2integer__i(bit_rate,                                           cause);
+  s64 frames_per_second__i = f2integer__i(frames_per_second,                                  cause);
+  s64 width__i             = f2integer__i(raw__image_sequence__width( cause, image_sequence), cause);
+  s64 height__i            = f2integer__i(raw__image_sequence__height(cause, image_sequence), cause);
+  f2ptr video_chunk_list = nil;
+  {
+    AVCodec *codec;
+    AVCodecContext *c= NULL;
+    int i, out_size, size, x, y, outbuf_size;
+    FILE *f;
+    AVFrame *picture;
+    uint8_t *outbuf, *picture_buf;
+    
+    // find the mpeg1 video encoder
+    codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
+    if (!codec) {
+      printf("codec not found\n");
+      return f2larva__new(cause, 43111, nil);
+    }
+    
+    c= avcodec_alloc_context();
+    picture= avcodec_alloc_frame();
+    
+    // put sample parameters
+    c->bit_rate = f2integer__i(bit_rate, cause);
+    // resolution must be a multiple of two
+    c->width  = width__i;
+    c->height = height__i;
+    // frames per second
+    c->time_base.num = 1;
+    c->time_base.den = frames_per_second__i;
+    c->gop_size = 10; // emit one intra frame every ten frames
+    c->max_b_frames=1;
+    c->pix_fmt = PIX_FMT_YUV420P;
+    
+    // open it
+    if (avcodec_open(c, codec) < 0) {
+      printf("could not open codec\n");
+      return f2larva__new(cause, 43111, nil);
+    }
+    
+    // alloc image and output buffer
+    outbuf_size = 100000;
+    outbuf = malloc(outbuf_size);
+    size = c->width * c->height;
+    picture_buf = malloc((size * 3) / 2); // size for YUV 420
+    
+    picture->data[0] = picture_buf;
+    picture->data[1] = picture->data[0] + size;
+    picture->data[2] = picture->data[1] + size / 4;
+    picture->linesize[0] = c->width;
+    picture->linesize[1] = c->width / 2;
+    picture->linesize[2] = c->width / 2;
+    
+    // encode 1 second of video
+    for(i=0;i<25;i++) {
+      // prepare a dummy image
+      // Y
+      for(y=0;y<c->height;y++) {
+	for(x=0;x<c->width;x++) {
+	  picture->data[0][y * picture->linesize[0] + x] = x + y + i * 3;
+	}
+      }
+      
+      // Cb and Cr
+      for(y=0;y<c->height/2;y++) {
+	for(x=0;x<c->width/2;x++) {
+	  picture->data[1][y * picture->linesize[1] + x] = 128 + y + i * 2;
+	  picture->data[2][y * picture->linesize[2] + x] = 64 + x + i * 5;
+	}
+      }
+      
+      // encode the image
+      out_size = avcodec_encode_video(c, outbuf, outbuf_size, picture);
+      f2ptr chunk      = f2chunk__new(cause, out_size, outbuf);
+      video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
+    }
+    
+    // get the delayed frames
+    for(; out_size; i++) {
+      out_size = avcodec_encode_video(c, outbuf, outbuf_size, NULL);
+      f2ptr chunk      = f2chunk__new(cause, out_size, outbuf);
+      video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
+    }
+    
+    /* add sequence end code to have a real mpeg file */
+    outbuf[0] = 0x00;
+    outbuf[1] = 0x00;
+    outbuf[2] = 0x01;
+    outbuf[3] = 0xb7;
+    fwrite(outbuf, 1, 4, f);
+    fclose(f);
+    free(picture_buf);
+    free(outbuf);
+    
+    avcodec_close(c);
+    av_free(c);
+    av_free(picture);
+  }
+  return video_chunk_list;
+#else
+  return f2larva__new(cause, 3290, nil);
+#endif // F2__LIBAVCODEC_SUPPORTED
+}
+
+f2ptr f2__libavcodec__video_chunk_list__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second) {
+  if ((! raw__image_sequence__is_type(cause, image_sequence)) ||
+      (! raw__integer__is_type(cause, bit_rate)) ||
+      (! raw__integer__is_type(cause, frames_per_second))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__libavcodec__video_chunk_list__new_from_image_sequence(cause, image_sequence, bit_rate, frames_per_second);
+}
+export_cefunk3(libavcodec__video_chunk_list__new_from_image_sequence, this, image_sequence, bit_rate, frames_per_second, 0, "");
+
+
+
 f2ptr raw__movie__new(f2ptr cause, f2ptr images) {
   f2ptr first_image_link;
   {

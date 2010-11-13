@@ -202,9 +202,10 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	for(y = 0; y < c->height; y ++) {
 	  for(x = 0; x < c->width; x ++) {
 	    double red   = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 0) / 255.0;
-	    double green = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 0) / 255.0;
-	    double blue  = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 0) / 255.0;
-	    picture->data[0][y * picture->linesize[0] + x] = x + y;
+	    double green = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 1) / 255.0;
+	    double blue  = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 2) / 255.0;
+	    double Y = 0.299 * red + 0.587 * green + 0.114 * blue;
+	    picture->data[0][y * picture->linesize[0] + x] = (u8)(Y * 255.0);
 	  }
 	}
 	
@@ -215,22 +216,25 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	    x = ix * 2;
 	    y = iy * 2;
 	    double red_0_0   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 0) / 255.0;
-	    double green_0_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 0) / 255.0;
-	    double blue_0_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 0) / 255.0;
+	    double green_0_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 1) / 255.0;
+	    double blue_0_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 2) / 255.0;
 	    double red_1_0   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 0) / 255.0;
-	    double green_1_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 0) / 255.0;
-	    double blue_1_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 0) / 255.0;
+	    double green_1_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 1) / 255.0;
+	    double blue_1_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 2) / 255.0;
 	    double red_0_1   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 0) / 255.0;
-	    double green_0_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 0) / 255.0;
-	    double blue_0_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 0) / 255.0;
+	    double green_0_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 1) / 255.0;
+	    double blue_0_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 2) / 255.0;
 	    double red_1_1   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 0) / 255.0;
-	    double green_1_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 0) / 255.0;
-	    double blue_1_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 0) / 255.0;
+	    double green_1_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 1) / 255.0;
+	    double blue_1_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 2) / 255.0;
 	    double red   = (red_0_0   + red_0_1   + red_1_0   + red_1_1)   / 4;
 	    double green = (green_0_0 + green_0_1 + green_1_0 + green_1_1) / 4;
 	    double blue  = (blue_0_0  + blue_0_1  + blue_1_0  + blue_1_1)  / 4;
-	    picture->data[1][iy * picture->linesize[1] + ix] = 128 + iy;
-	    picture->data[2][iy * picture->linesize[2] + ix] = 64 + ix;
+	    double Y = 0.299 * red + 0.587 * green + 0.114 * blue;
+	    double U = (blue - Y) * 0.565;
+	    double V = (red  - Y) * 0.713;
+	    picture->data[1][iy * picture->linesize[1] + ix] = (u8)(127.5 + U * 255.0);
+	    picture->data[2][iy * picture->linesize[2] + ix] = (u8)(127.5 + V * 255.0);
 	  }
 	}
 	

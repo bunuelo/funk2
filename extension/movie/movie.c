@@ -190,6 +190,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     picture->linesize[1] = c->width / 2;
     picture->linesize[2] = c->width / 2;
     
+    out_size = 0;
     {
       f2ptr iter = f2__image_sequence__first_image_link(cause, image_sequence);
       while (iter != nil) {

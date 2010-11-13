@@ -244,7 +244,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     f2ptr iter = video_chunk_list;
     while (iter) {
       f2ptr chunk = f2cons__car(iter, cause);
-      total_length += raw__chunk__length(cause, chunk);
+      total_length += f2chunk__length(chunk, cause);
       iter = f2cons__cdr(iter, cause);
     }
   }
@@ -254,7 +254,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     f2ptr iter = video_chunk_list;
     while (iter) {
       f2ptr chunk = f2cons__car(iter, cause);
-      s64 chunk_length = raw__chunk__length(cause, chunk);
+      s64 chunk_length = f2chunk__length(chunk, cause);
       {
 	s64 chunk_index;
 	for (chunk_index = 0; chunk_index < chunk_length; chunk_index ++) {

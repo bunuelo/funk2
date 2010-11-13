@@ -375,7 +375,7 @@ f2ptr f2__movie__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2pt
   }
   return raw__movie__new_from_image_sequence(cause, image_sequence, bit_rate, frames_per_second);
 }
-export_cefunk2(movie__new_from_image_sequence, image_sequence, bit_rate, frames_per_second, 0, "Creates a new movie from an image sequence.");
+export_cefunk3(movie__new_from_image_sequence, image_sequence, bit_rate, frames_per_second, 0, "Creates a new movie from an image sequence.");
 
 
 f2ptr raw__movie__save(f2ptr cause, f2ptr this, f2ptr filename) {

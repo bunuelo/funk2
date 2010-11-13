@@ -24,6 +24,8 @@
 
 #include "f2_primfunks.h"
 
+f2ptr raw__chunk__save(f2ptr cause, f2ptr this, f2ptr filename);
+f2ptr  f2__chunk__save(f2ptr cause, f2ptr this, f2ptr filename);
 
 f2ptr f2chunk__primobject_type__new_aux(f2ptr cause);
 

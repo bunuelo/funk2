@@ -171,6 +171,25 @@ f2ptr f2__image_sequence__images__set(f2ptr cause, f2ptr this, f2ptr value) {
 export_cefunk2(image_sequence__images__set, thing, value, 0, "Sets the images of the image_sequence.");
 
 
+s64 raw__image_sequence__length(f2ptr cause, f2ptr this) {
+  s64 length = 0;
+  f2ptr iter = raw__image__sequence__first_image_link(cause, this);
+  while (iter != nil) {
+    length ++;
+    iter = f2__doublelink__next(cause, this);
+  }
+  return length;
+}
+
+f2ptr f2__image_sequence__length(f2ptr cause, f2ptr this) {
+  if (! raw__image_sequence__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2integer__new(cause, raw__image_sequence__length(cause, this));
+}
+export_cefunk1(image_sequence__length, this, 0, "Returns the number of images in the image sequence.");
+
+
 f2ptr f2__image_sequence_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),              f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__new")));}
@@ -182,6 +201,7 @@ f2ptr f2__image_sequence_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "last_image_link"),  f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__last_image_link__set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "images"),           f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__images")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "images"),           f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__images__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "length"),           f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__length")));}
   return this;
 }
 

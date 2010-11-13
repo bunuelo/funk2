@@ -179,7 +179,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     
     
     // rgb to yuv conversion initialize
-    uint8_t* convert_rgb_yuv__inbuffer   = (uint_t*)from_ptr(f2__malloc(width__i * height__i * 4));
+    uint8_t* convert_rgb_yuv__inbuffer   = (uint8_t*)from_ptr(f2__malloc(width__i * height__i * 4));
     int      convert_rgb_yuv__in_width   = width__i;
     int      convert_rgb_yuv__in_height  = height__i;
     int      convert_rgb_yuv__out_width  = width__i;

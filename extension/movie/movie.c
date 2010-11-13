@@ -25,9 +25,12 @@
 
 #ifdef F2__LIBAVCODEC_SUPPORTED
 
-void video_encode_example(const char *filename) {
+void libavcodec__initialize() {
   avcodec_init();
   avcodec_register_all();
+}
+
+void libavcodec__video_encode_example(const char *filename) {
   
   AVCodec *codec;
   AVCodecContext *c= NULL;
@@ -465,9 +468,12 @@ f2ptr f2__movie__core_extension_initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "movie"), f2__movie_type__new(cause));
   f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image_sequence__core_extension_ping")), nil);
 #ifdef F2__LIBAVCODEC_SUPPORTED
-  video_encode_example("example.mpeg");
-#endif // F2__LIBAVCODEC_SUPPORTED
+  libavcodec__initialize();
+  libavcodec__video_encode_example("example.mpeg");
   printf("\nmovie initialized."); fflush(stdout);
+#else
+  printf("\nmovie initialized, but libavcodec was not compiled into this version of Funk2."); fflush(stdout);
+#endif // F2__LIBAVCODEC_SUPPORTED
   return nil;
 }
 export_cefunk0(movie__core_extension_initialize, 0, "");

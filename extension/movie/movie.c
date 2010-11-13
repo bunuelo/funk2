@@ -21,7 +21,7 @@
 
 #include "../../c/funk2.h"
 #include "../image/image.h"
-
+#include "../image_sequence/image_sequence.h"
 
 #ifdef F2__LIBAVCODEC_SUPPORTED
 

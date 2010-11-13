@@ -87,9 +87,17 @@
   [let [[image [get this screenshot]]]
     [have overview_image_sequence add_image_to_end image]]]
 
+[deftypefunk isis_world execute update_after_step_simulation []
+  [have this update_overview_image_sequence]
+  [mapc [funk [agent_name]
+	      [let [[agent [get agent_frame agent_name]]]
+		[have agent update_after_step_simulation]]]
+	[get this agent_names]]]
+
+
 [deftypefunk isis_world execute step_simulation [seconds]
   [isis-call [get this client] meta_step seconds seconds]
-  [have this update_overview_image_sequence]
+  [have this update_after_step_simulation]
   [have this step_physical_world]]
 
 [deftypefunk isis_world execute normal_step []

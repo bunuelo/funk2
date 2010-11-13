@@ -167,8 +167,8 @@
 			     [let [[overview_image_sequence [get isis_world overview_image_sequence]]]
 			       [let [[overview_image_sequence-length [get overview_image_sequence length]]]
 				 [if [> overview_image_sequence-length 0]
-				     [prog [set scale range 0.0 [get [- overview_image_sequence-length 1] as-double]]
-					   [set scale value [get [- overview_image_sequence-length 1] as-double]]]]]]
+				     [prog [set scale range 0.0 [- overview_image_sequence-length 1]]
+					   [set scale value [- overview_image_sequence-length 1]]]]]]
 			     
 			     [= agent_hbox [gtk-hbox-new 2]]
 			     [have vbox pack_start agent_hbox nil nil 0]
@@ -235,10 +235,10 @@
 
 [deftypefunk isismon execute update []
   [let [[overview_image_sequence [get isis_world overview_image_sequence]]]
-    [set scale range 0.0 [get [- [get overview_image_sequence length] 1] as-double]]
+    [set scale range 0.0 [- [get overview_image_sequence length] 1]]
     [let [[scale_value [get scale value]]]
       [if [== scale_value [- [get overview_image_sequence length] 2]]
-	  [set scale value [get [- [get overview_image_sequence length] 1] as-double]]]]]
+	  [set scale value [- [get overview_image_sequence length] 1]]]]]
   [have this update_agents]]
 
 [deftypefunk isismon execute step []

@@ -26,6 +26,9 @@
 #ifdef F2__LIBAVCODEC_SUPPORTED
 
 void video_encode_example(const char *filename) {
+  avcodec_init();
+  avcodec_register_all();
+  
   AVCodec *codec;
   AVCodecContext *c= NULL;
   int i, out_size, size, x, y, outbuf_size;

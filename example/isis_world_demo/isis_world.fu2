@@ -85,7 +85,7 @@
 
 [deftypefunk isis_world execute update_overview_image_sequence []
   [let [[image [get this screenshot]]]
-    [have image_sequence add_image_to_end image]]]
+    [have overview_image_sequence add_image_to_end image]]]
 
 [deftypefunk isis_world execute step_simulation [seconds]
   [isis-call [get this client] meta_step seconds seconds]

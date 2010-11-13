@@ -18,6 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage image_sequence
-  :packages []
+  :packages [image]
    :sources ['image_sequence-core.fu2']]
 

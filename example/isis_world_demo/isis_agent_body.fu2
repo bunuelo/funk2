@@ -20,7 +20,7 @@
 
 [deframe isis_agent_body [moral_agent_body] [says
 					     [arm_length 3]
-					     [retina_image_sequence [new image_sequence]]]
+					     [retina_image_sequence [new image_sequence nil]]]
   [new [name]
        [construct moral_agent_body name]
        this]]

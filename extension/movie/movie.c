@@ -378,6 +378,21 @@ f2ptr f2__movie__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2pt
 export_cefunk2(movie__new_from_image_sequence, image_sequence, bit_rate, frames_per_second, 0, "Creates a new movie from an image sequence.");
 
 
+f2ptr raw__movie__save(f2ptr cause, f2ptr this, f2ptr filename) {
+  f2ptr video_chunk = raw__movie__video_chunk(cause, this);
+  return f2__chunk__save(cause, video_chunk, filename);
+}
+
+f2ptr f2__movie__save(f2ptr cause, f2ptr this) {
+  if ((! raw__movie__is_type(cause, this)) ||
+      (! raw__string__is_type(cause, filename))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__movie__save(cause, this, filename);
+}
+export_cefunk2(movie__save, this, filename, 0, "Saves a movie to an mpeg file.");
+
+
 f2ptr f2__movie_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),         f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__new")));}
@@ -385,6 +400,7 @@ f2ptr f2__movie_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),        f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "video_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__video_chunk")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "video_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__video_chunk__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "save"),        f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie__save")));}
   return this;
 }
 

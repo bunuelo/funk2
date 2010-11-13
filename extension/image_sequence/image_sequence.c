@@ -269,7 +269,13 @@ f2ptr raw__image_sequence__add_image_to_end(f2ptr cause, f2ptr this, f2ptr image
   }
   f2ptr last_image_link = raw__image_sequence__last_image_link(cause, this);
   f2ptr link = f2__doublelink__new(cause, last_image_link, nil, image);
-  f2__doublelink__next__set(cause, last_image_link, link);
+  if (last_image_link == nil) {
+    f2__image_sequence__images__set(          cause, this, link);
+    f2__image_sequence__first_image_link__set(cause, this, link);
+  } else {
+    f2__doublelink__next__set(cause, last_image_link, link);
+  }
+  f2__image_sequence__last_image_link__set(cause, this, link);
   return nil;
 }
 

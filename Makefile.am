@@ -225,6 +225,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_bug.c \
   c/f2_bytecodes.c \
   c/f2_cause.c \
+  c/f2_chunk.c \
   c/f2_circular_buffer.c \
   c/f2_command_line.c \
   c/f2_compile.c \

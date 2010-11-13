@@ -284,7 +284,7 @@ export_cefunk3(libavcodec__video_chunk__new_from_image_sequence, image_sequence,
 
 
 f2ptr raw__movie__new(f2ptr cause, f2ptr video_chunk) {
-  return f2__frame__new(cause, f2list8__new(cause,
+  return f2__frame__new(cause, f2list4__new(cause,
 					    new__symbol(cause, "type"),        new__symbol(cause, "movie"),
 					    new__symbol(cause, "video_chunk"), video_chunk));
 }

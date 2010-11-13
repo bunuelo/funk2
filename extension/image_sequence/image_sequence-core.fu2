@@ -19,7 +19,7 @@
 
 [defcore image_sequence 'extension/image_sequence/.libs/libimage_sequence.so']
 
-[defcorefunk image_sequence-core_extension_ping       image image_sequence__core_extension_ping]
-[defcorefunk image_sequence-core_extension_initialize image image_sequence__core_extension_initialize]
+[defcorefunk image_sequence-core_extension_ping       image_sequence image_sequence__core_extension_ping]
+[defcorefunk image_sequence-core_extension_initialize image_sequence image_sequence__core_extension_initialize]
 
 [image_sequence-core_extension_ping]

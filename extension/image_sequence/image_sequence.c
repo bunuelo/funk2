@@ -49,6 +49,7 @@ f2ptr raw__image_sequence__new(f2ptr cause, f2ptr images) {
     f2ptr iter = first_image_link;
     while (iter != nil) {
       f2ptr image = f2__doublelink__value(cause, iter);
+      f2__terminal_print(cause, image);
       if (! raw__image__is_type(cause, image)) {
 	return f2larva__new(cause, 11, nil);
       }

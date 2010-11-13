@@ -177,41 +177,57 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
       return f2larva__new(cause, 43111, nil);
     }
     
+    
+    // rgb to yuv conversion initialize
+    uint8_t* convert_rgb_yuv__inbuffer   = (uint_t*)from_ptr(f2__malloc(width__i * height__i * 4));
+    int      convert_rgb_yuv__in_width   = width__i;
+    int      convert_rgb_yuv__in_height  = height__i;
+    int      convert_rgb_yuv__out_width  = width__i;
+    int      convert_rgb_yuv__out_height = height__i;
+    
+    //calculate the bytes needed for the output image
+    int convert_rgb_yuv__nbytes = avpicture_get_size(PIX_FMT_YUV420P, convert_rgb_yuv__out_width, convert_rgb_yuv__out_height);
+    
+    //create buffer for the output image
+    uint8_t* convert_rgb_yuv__outbuffer = (uint8_t*)av_malloc(convert_rgb_yuv__nbytes);
+    
+    //create ffmpeg frame structures.  These do not allocate space for image data, 
+    //just the pointers and other information about the image.
+    AVFrame* convert_rgb_yuv__inpic = avcodec_alloc_frame();
+    AVFrame* convert_rgb_yuv__outpic = avcodec_alloc_frame();
+    
+    //this will set the pointers in the frame structures to the right points in 
+    //the input and output buffers.
+    avpicture_fill((AVPicture*)convert_rgb_yuv__inpic, convert_rgb_yuv__inbuffer, PIX_FMT_BGR32, convert_rgb_yuv__in_width, convert_rgb_yuv__in_height);
+    avpicture_fill((AVPicture*)convert_rgb_yuv__outpic, convert_rgb_yuv__outbuffer, PIX_FMT_YUV420P, convert_rgb_yuv__out_width, convert_rgb_yuv__out_height);
+    
+    //create the conversion context
+    SwsContext* convert_rgb_yuv__context = sws_getContext(convert_rgb_yuv__in_width, convert_rgb_yuv__in_height, PIX_FMT_BGR32, convert_rgb_yuv__out_width, convert_rgb_yuv__out_height, PIX_FMT_YUV420P, SWS_FAST_BILINEAR, NULL, NULL, NULL);
+    
+    
+    
     // alloc image and output buffer
     outbuf_size = 100000;
     outbuf = malloc(outbuf_size);
-    size = c->width * c->height;
-    picture_buf = malloc((size * 3) / 2); // size for YUV 420
-    
-    picture->data[0] = picture_buf;
-    picture->data[1] = picture->data[0] + size;
-    picture->data[2] = picture->data[1] + size / 4;
-    picture->linesize[0] = c->width;
-    picture->linesize[1] = c->width / 2;
-    picture->linesize[2] = c->width / 2;
     
     // encode 1 second of video
-    for(i=0;i<25;i++) {
-      // prepare a dummy image
-      // Y
-      for(y=0;y<c->height;y++) {
-	for(x=0;x<c->width;x++) {
-	  picture->data[0][y * picture->linesize[0] + x] = x + y + i * 3;
-	}
+    {
+      f2ptr iter = f2__image_sequence__first_image_link(cause, image_sequence);
+      while (iter != nil) {
+	f2ptr image     = f2__doublelink__value(cause, iter);
+	f2ptr rgba_data = f2__image__rgba_data(cause, image);
+	raw__chunk__str_copy(cause, rgba_data, convert_rgb_yuv__inbuffer);
+	
+	//perform rgb to yuv conversion
+	sws_scale(convert_rgb_yuv__context, convert_rgb_yuv__inpic->data, convert_rgb_yuv__inpic->linesize, 0, convert_rgb_yuv__in_height, convert_rgb_yuv__outpic->data, convert_rgb_yuv__outpic->linesize);
+	
+	// encode the image
+	out_size = avcodec_encode_video(c, outbuf, outbuf_size, picture);
+	f2ptr chunk      = f2chunk__new(cause, out_size, outbuf);
+	video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
+	
+	iter = f2__doublelink__next(cause, iter);
       }
-      
-      // Cb and Cr
-      for(y=0;y<c->height/2;y++) {
-	for(x=0;x<c->width/2;x++) {
-	  picture->data[1][y * picture->linesize[1] + x] = 128 + y + i * 2;
-	  picture->data[2][y * picture->linesize[2] + x] = 64 + x + i * 5;
-	}
-      }
-      
-      // encode the image
-      out_size = avcodec_encode_video(c, outbuf, outbuf_size, picture);
-      f2ptr chunk      = f2chunk__new(cause, out_size, outbuf);
-      video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
     }
     
     // get the delayed frames
@@ -231,12 +247,18 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
       f2ptr chunk      = f2chunk__new(cause, out_size, outbuf);
       video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
     }
-    free(picture_buf);
     free(outbuf);
     
     avcodec_close(c);
     av_free(c);
     av_free(picture);
+    
+    { // rgb to yuv cleanup
+      av_free(convert_rgb_yuv__outbuffer);
+      av_free(convert_rgb_yuv__inpic);
+      av_free(convert_rgb_yuv__outpic);
+      f2__free(to_ptr(convert_rgb_yuv__inbuffer));
+    }
   }
   video_chunk_list = f2__reverse(cause, video_chunk_list);
   s64 total_length = 0;

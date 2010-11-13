@@ -172,7 +172,7 @@
 			     [have vbox pack_start scale t t 0]
 			     [let [[overview_image_sequence [get isis_world overview_image_sequence]]]
 			       [let [[overview_image_sequence-length [get overview_image_sequence length]]]
-				 [if [> overview_image_sequence-length 0]
+				 [if [> overview_image_sequence-length 1]
 				     [prog [set scale range 0.0 [- overview_image_sequence-length 1]]
 					   [set scale value [- overview_image_sequence-length 1]]]]]]
 			     

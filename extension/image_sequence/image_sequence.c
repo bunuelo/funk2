@@ -176,7 +176,7 @@ s64 raw__image_sequence__length(f2ptr cause, f2ptr this) {
   f2ptr iter = raw__image_sequence__first_image_link(cause, this);
   while (iter != nil) {
     length ++;
-    iter = f2__doublelink__next(cause, this);
+    iter = f2__doublelink__next(cause, iter);
   }
   return length;
 }

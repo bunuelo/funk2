@@ -377,8 +377,8 @@ extension_fibermon_libfibermon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 extension_image_libimage_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_image_libimage_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_image_sequence_libimage_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_image_sequence_libimage_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_image_sequence_libimage_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_image_sequence_libimage_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_mindmon_libmindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_mindmon_libmindmon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

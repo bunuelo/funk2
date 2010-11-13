@@ -584,6 +584,17 @@ void funk2_gtk__key_press_event__signal_connect(funk2_gtk_t* this, GtkWidget* wi
 }
 
 
+// object
+
+void funk2_gtk__object__unref(funk2_gtk_t* this, GObject* object) {
+  {
+    gdk_threads_enter();
+    g_object_unref(G_OBJECT(object));
+    gdk_threads_leave();
+  }
+}
+
+
 // widget
 
 void funk2_gtk__widget__show_all(funk2_gtk_t* this, GtkWidget* widget) {
@@ -845,6 +856,7 @@ GtkTextBuffer* funk2_gtk__text_view__get_buffer(funk2_gtk_t* this, GtkWidget* te
 //                                     gpointer destroy_fn_data);
 
 void funk2_gtk__pixbuf__destroy_notify_function(guchar *pixels, gpointer data) {
+  printf("\ndestroying pixbuf.");
   f2__free(to_ptr(pixels));
 }
 
@@ -1752,7 +1764,6 @@ f2ptr f2__gtk__pixbuf__new_from_rgb_data(f2ptr cause, f2ptr width, f2ptr height,
 def_pcfunk3(gtk__pixbuf__new_from_rgb_data, width, height, rgb_data, return f2__gtk__pixbuf__new_from_rgb_data(this_cause, width, height, rgb_data));
 
 
-
 f2ptr raw__gtk__pixbuf__new_from_rgba_data(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data) {
   s64 width__i  = f2integer__i(width,  cause);
   s64 height__i = f2integer__i(height, cause);
@@ -1796,6 +1807,27 @@ f2ptr f2__gtk__pixbuf__new_from_rgba_data(f2ptr cause, f2ptr width, f2ptr height
 }
 def_pcfunk3(gtk__pixbuf__new_from_rgba_data, width, height, rgba_data, return f2__gtk__pixbuf__new_from_rgba_data(this_cause, width, height, rgba_data));
 
+
+f2ptr raw__gtk__pixbuf__unref(f2ptr cause, f2ptr this) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, this);
+    funk2_gtk__object__unref(&(__funk2.gtk), gdk_pixbuf);
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__pixbuf__unref(f2ptr cause, f2ptr this) {
+  if (! raw__gdk_pixbuf__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__pixbuf__unref(cause, this);
+}
+def_pcfunk1(gtk__pixbuf__unref, this, return f2__gtk__pixbuf__unref(this_cause, this));
 
 
 // container
@@ -4135,6 +4167,7 @@ void f2__gtk__initialize() {
   
   f2__primcfunk__init__3(gtk__pixbuf__new_from_rgb_data,          width, height, rgb_data,                               "Returns a new gdk_pixbuf object.");
   f2__primcfunk__init__3(gtk__pixbuf__new_from_rgba_data,         width, height, rgba_data,                              "Returns a new gdk_pixbuf object.");
+  f2__primcfunk__init__1(gtk__pixbuf__unref,                      this,                                                  "Removes one reference to a pixbuf.  Use this if you don't need a funk2 reference to a GdkPixbuf anymore.");
   
   // container
   

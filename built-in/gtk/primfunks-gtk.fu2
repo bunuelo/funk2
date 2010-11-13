@@ -60,6 +60,7 @@
 [globalize-funk gtk-text_view-get_buffer              &primfunk:gtk__text_view__get_buffer]
 [globalize-funk gtk-pixbuf-new_from_rgb_data          &primfunk:gtk__pixbuf__new_from_rgb_data]
 [globalize-funk gtk-pixbuf-new_from_rgba_data         &primfunk:gtk__pixbuf__new_from_rgba_data]
+[globalize-funk gtk-pixbuf-unref                      &primfunk:gtk__pixbuf__unref]
 [globalize-funk gtk-container-add                     &primfunk:gtk__container__add]
 [globalize-funk gtk-container-remove                  &primfunk:gtk__container__remove]
 [globalize-funk gtk-box-pack_start                    &primfunk:gtk__box__pack_start]

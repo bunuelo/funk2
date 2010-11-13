@@ -112,6 +112,16 @@
 
 [deftypefunk gtk_image get widget []       this]
 [deftypefunk gtk_image set pixbuf [pixbuf] [gtk-image-set_from_pixbuf [get this widget] pixbuf]]
+[deftypefunk gtk_image set image  [image]
+  [let [[pixbuf [gtk-pixbuf-new_from_image image]]]
+    [gtk-image-set_from_pixbuf [get this widget] pixbuf]
+    [gtk-pixbuf-unref pixbuf]]]
+
+[defunk gtk-image-new_from_image [image]
+  [let [[pixbuf [gtk-pixbuf-new_from_image image]]]
+    [let [[gtk_image [gtk-image-new_from_pixbuf pixbuf]]]
+      [gtk-pixbuf-unref pixbuf]
+      gtk_image]]]
 
 'GtkTable'
 
@@ -143,6 +153,8 @@
 [deftypefunk gtk_scale set increments [step page] [gtk-range-set_increments [get this widget] [get step  as-double] [get page as-double]]]
 
 'GtkPixbuf'
+
+[deftypefunk gdk_pixbuf execute unref [] [gtk-pixbuf-unref this]]
 
 [defunk gtk-pixbuf-new_from_image [image]
   [gtk-pixbuf-new_from_rgba_data [get image width] [get image height] [get image rgba_data]]]

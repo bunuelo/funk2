@@ -250,7 +250,7 @@ f2ptr f2__libavcodec__video_chunk_list__new_from_image_sequence(f2ptr cause, f2p
   }
   return raw__libavcodec__video_chunk_list__new_from_image_sequence(cause, image_sequence, bit_rate, frames_per_second);
 }
-export_cefunk3(libavcodec__video_chunk_list__new_from_image_sequence, this, image_sequence, bit_rate, frames_per_second, 0, "");
+export_cefunk3(libavcodec__video_chunk_list__new_from_image_sequence, image_sequence, bit_rate, frames_per_second, 0, "");
 
 
 

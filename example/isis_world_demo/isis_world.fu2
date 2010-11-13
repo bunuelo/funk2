@@ -18,7 +18,8 @@
  rights to redistribute these changes.'
 
 
-[deframe isis_world [physical_world] [client]
+[deframe isis_world [physical_world] [client
+				      [overview_image_sequence [new image_sequence nil]]]
   [new [client]
        [construct physical_world]
        [set this client client]
@@ -82,8 +83,13 @@
 			    [have actual_image write_reduction_image_part reduced_image reduction_factor x_offset y_offset]]]]]]]
 	      actual_image]]]]]]]
 
+[deftypefunk isis_world execute update_overview_image_sequence []
+  [let [[image [get this screenshot]]]
+    [have image_sequence add_image_to_end image]]]
+
 [deftypefunk isis_world execute step_simulation [seconds]
   [isis-call [get this client] meta_step seconds seconds]
+  [have this update_overview_image_sequence]
   [have this step_physical_world]]
 
 [deftypefunk isis_world execute normal_step []

@@ -132,8 +132,6 @@
 			  
 			  [agent_frame [frame]]
 			  
-			  [image_sequence [new image_sequence nil]]
-			  
 			  [simulation_playing           nil]
 			  [tick                         0]
 			  [last_stepped_simulation_tick -1000]
@@ -164,7 +162,7 @@
 			     [have vbox pack_start overview_image nil nil 0]
 			     
 			     [= scale [gtk-scale-new_with_range `horizontal 0.0 1.0 1.0]]
-			     [set scale digits 3]
+			     [set scale digits 0]
 			     [have vbox pack_start scale t t 0]
 			     
 			     [= agent_hbox [gtk-hbox-new 2]]
@@ -208,8 +206,8 @@
 				   [prog [have this step]
 					 [= last_stepped_simulation_tick tick]]]
 			       [let [[image_index [get [get scale value] as-integer]]]
-				 [if [< image_index [get image_sequence length]]
-				     [let [[pixbuf [gtk-pixbuf-new_from_image [get image_sequence elt image_index]]]]
+				 [if [< image_index [get [get isis_world overview_image_sequence] length]]
+				     [let [[pixbuf [gtk-pixbuf-new_from_image [get [get isis_world overview_image_sequence] elt image_index]]]]
 				       [set overview_image pixbuf pixbuf]]]]
 			       [sleep 1]
 			       [= tick [+ tick 1]]
@@ -225,21 +223,17 @@
     [have agent_frame add [get isismon_agent name] isismon_agent]
     [have agent_hbox pack_start isismon_agent t t 0]]]
 
-[deftypefunk isismon execute update_overview_image []
-  [let [[image [get isis_world screenshot]]]
-    [have image_sequence add_image_to_end image]
-    [set scale range 0.0 [get [get image_sequence length] as-double]]
-    [let [[scale_value [get scale value]]]
-      [if [== scale_value [- [get image_sequence length] 1]]
-	  [set scale value [get image_sequence length]]]]]]
-
 [deftypefunk isismon execute update_agents []
   [mapc [funk [agent]
 	      [have agent update]]
 	[get agent_frame values]]]
 
 [deftypefunk isismon execute update []
-  [have this update_overview_image]
+  [let [[overview_image_sequence [get isis_world overview_image_sequence]]]
+    [set scale range 0.0 [get [- [get overview_image_sequence length] 1] as-double]]
+    [let [[scale_value [get scale value]]]
+      [if [== scale_value [- [get overview_image_sequence length] 2]]
+	  [set scale value [get [- [get overview_image_sequence length] 1] as-double]]]]]
   [have this update_agents]]
 
 [deftypefunk isismon execute step []

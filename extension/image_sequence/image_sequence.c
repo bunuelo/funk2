@@ -173,7 +173,7 @@ export_cefunk2(image_sequence__images__set, thing, value, 0, "Sets the images of
 
 s64 raw__image_sequence__length(f2ptr cause, f2ptr this) {
   s64 length = 0;
-  f2ptr iter = raw__image__sequence__first_image_link(cause, this);
+  f2ptr iter = raw__image_sequence__first_image_link(cause, this);
   while (iter != nil) {
     length ++;
     iter = f2__doublelink__next(cause, this);

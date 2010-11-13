@@ -49,9 +49,8 @@ f2ptr raw__image_sequence__new(f2ptr cause, f2ptr images) {
     f2ptr iter = first_image_link;
     while (iter != nil) {
       f2ptr image = f2__doublelink__value(cause, iter);
-      f2__terminal_print(cause, image);
       if (! raw__image__is_type(cause, image)) {
-	return f2larva__new(cause, 11, nil);
+	return f2larva__new(cause, 1, nil);
       }
       s64 image__width  = raw__image__width( cause, image);
       s64 image__height = raw__image__height(cause, image);
@@ -213,6 +212,44 @@ f2ptr f2__image_sequence__length(f2ptr cause, f2ptr this) {
 export_cefunk1(image_sequence__length, this, 0, "Returns the number of images in the image sequence.");
 
 
+f2ptr raw__image_sequence__width(f2ptr cause, f2ptr this) {
+  f2ptr width = nil;
+  f2ptr iter = raw__image_sequence__first_image_link(cause, this);
+  if (iter != nil) {
+    f2ptr image = f2__doublelink__value(cause, iter);
+    width = raw__image__width(cause, image);
+  }
+  return width;
+}
+
+f2ptr f2__image_sequence__width(f2ptr cause, f2ptr this) {
+  if (! raw__image_sequence__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__image_sequence__width(cause, this);
+}
+export_cefunk1(image_sequence__width, this, 0, "Returns the width of all of the images in the sequence, or nil if sequence is empty.");
+
+
+f2ptr raw__image_sequence__height(f2ptr cause, f2ptr this) {
+  f2ptr height = nil;
+  f2ptr iter = raw__image_sequence__first_image_link(cause, this);
+  if (iter != nil) {
+    f2ptr image = f2__doublelink__value(cause, iter);
+    height = raw__image__height(cause, image);
+  }
+  return height;
+}
+
+f2ptr f2__image_sequence__height(f2ptr cause, f2ptr this) {
+  if (! raw__image_sequence__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__image_sequence__height(cause, this);
+}
+export_cefunk1(image_sequence__height, this, 0, "Returns the height of all of the images in the sequence, or nil if sequence is empty.");
+
+
 f2ptr f2__image_sequence_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),              f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__new")));}
@@ -225,6 +262,8 @@ f2ptr f2__image_sequence_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "images"),           f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__images")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "images"),           f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__images__set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "length"),           f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__length")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "width"),            f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__width")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "height"),           f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__height")));}
   return this;
 }
 

@@ -383,7 +383,7 @@ f2ptr raw__movie__save(f2ptr cause, f2ptr this, f2ptr filename) {
   return f2__chunk__save(cause, video_chunk, filename);
 }
 
-f2ptr f2__movie__save(f2ptr cause, f2ptr this) {
+f2ptr f2__movie__save(f2ptr cause, f2ptr this, f2ptr filename) {
   if ((! raw__movie__is_type(cause, this)) ||
       (! raw__string__is_type(cause, filename))) {
     return f2larva__new(cause, 1, nil);

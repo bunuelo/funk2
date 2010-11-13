@@ -201,15 +201,35 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	// Y
 	for(y = 0; y < c->height; y ++) {
 	  for(x = 0; x < c->width; x ++) {
+	    double red   = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 0) / 255.0;
+	    double green = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 0) / 255.0;
+	    double blue  = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 0) / 255.0;
 	    picture->data[0][y * picture->linesize[0] + x] = x + y;
 	  }
 	}
 	
 	// Cb and Cr
-	for(y = 0; y < c->height/2; y ++) {
-	  for(x = 0; x < c->width/2; x ++) {
-	    picture->data[1][y * picture->linesize[1] + x] = 128 + y;
-	    picture->data[2][y * picture->linesize[2] + x] = 64 + x;
+	for(iy = 0; iy < c->height/2; iy ++) {
+	  for(ix = 0; ix < c->width/2; ix ++) {
+	    int x = x * 2;
+	    int y = y * 2;
+	    double red_0_0   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 0) / 255.0;
+	    double green_0_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 0) / 255.0;
+	    double blue_0_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 0) / 255.0;
+	    double red_1_0   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 0) / 255.0;
+	    double green_1_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 0) / 255.0;
+	    double blue_1_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 0) / 255.0;
+	    double red_0_1   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 0) / 255.0;
+	    double green_0_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 0) / 255.0;
+	    double blue_0_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 0) / 255.0;
+	    double red_1_1   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 0) / 255.0;
+	    double green_1_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 0) / 255.0;
+	    double blue_1_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 0) / 255.0;
+	    double red   = (red_0_0   + red_0_1   + red_1_0   + red_1_1)   / 4;
+	    double green = (green_0_0 + green_0_1 + green_1_0 + green_1_1) / 4;
+	    double blue  = (blue_0_0  + blue_0_1  + blue_1_0  + blue_1_1)  / 4;
+	    picture->data[1][iy * picture->linesize[1] + ix] = 128 + iy;
+	    picture->data[2][iy * picture->linesize[2] + ix] = 64 + ix;
 	  }
 	}
 	

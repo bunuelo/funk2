@@ -161,7 +161,7 @@ f2ptr raw__libavcodec__video_chunk_list__new_from_image_sequence(f2ptr cause, f2
     picture= avcodec_alloc_frame();
     
     // put sample parameters
-    c->bit_rate = f2integer__i(bit_rate, cause);
+    c->bit_rate = bit_rate__i;
     // resolution must be a multiple of two
     c->width  = width__i;
     c->height = height__i;

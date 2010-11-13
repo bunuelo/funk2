@@ -20,6 +20,7 @@
 // 
 
 #include "../../c/funk2.h"
+#include "image.h"
 
 f2ptr raw__image__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data) {
   s64 width__i  = f2integer__i(width,  cause);

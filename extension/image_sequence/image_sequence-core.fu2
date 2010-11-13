@@ -22,4 +22,5 @@
 [defcorefunk image_sequence-core_extension_ping       image_sequence image_sequence__core_extension_ping]
 [defcorefunk image_sequence-core_extension_initialize image_sequence image_sequence__core_extension_initialize]
 
+[image-core_extension_ping]
 [image_sequence-core_extension_ping]

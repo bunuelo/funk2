@@ -20,6 +20,7 @@
 // 
 
 #include "../../c/funk2.h"
+#include "../image/image.h"
 
 f2ptr raw__image_sequence__new(f2ptr cause, f2ptr images) {
   f2ptr first_image_link;
@@ -41,6 +42,27 @@ f2ptr raw__image_sequence__new(f2ptr cause, f2ptr images) {
       iter = f2__doublelink__next(cause, iter);
     }
     last_image_link = prev;
+  }
+  s64 width  = -1;
+  s64 height = -1;
+  {
+    f2ptr iter = first_image_link;
+    while (iter != nil) {
+      f2ptr image = f2__doublelink__value(cause, iter);
+      if (! raw__image__is_type(cause, image)) {
+	return f2larva__new(cause, 1, nil);
+      }
+      s64 image__width  = raw__image__width( cause, image);
+      s64 image__height = raw__image__height(cause, image);
+      if (width == -1) {
+	width  = image__width;
+	height = image__height;
+      } else if ((width  != image__width) ||
+		 (height != image__height)) {
+	return f2larva__new(cause, 3, nil);
+      }
+      iter = f2__doublelink__next(cause, iter);
+    }
   }
   return f2__frame__new(cause, f2list8__new(cause,
 					    new__symbol(cause, "type"),             new__symbol(cause, "image_sequence"),
@@ -216,6 +238,7 @@ export_cefunk0(image_sequence__core_extension_ping, 0, "");
 
 f2ptr f2__image_sequence__core_extension_initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "image_sequence"), f2__image_sequence_type__new(cause));
+  f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__core_extension_initialize")), nil);
   printf("\nimage_sequence initialized."); fflush(stdout);
   return nil;
 }

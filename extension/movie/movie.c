@@ -135,7 +135,7 @@ void libavcodec__video_encode_example(const char *filename) {
 
 
 
-f2ptr raw__libavcodec__video_chunk_list__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second) {
+f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second) {
 #ifdef F2__LIBAVCODEC_SUPPORTED
   s64 bit_rate__i          = f2integer__i(bit_rate,                                           cause);
   s64 frames_per_second__i = f2integer__i(frames_per_second,                                  cause);
@@ -238,21 +238,48 @@ f2ptr raw__libavcodec__video_chunk_list__new_from_image_sequence(f2ptr cause, f2
     av_free(c);
     av_free(picture);
   }
-  return video_chunk_list;
+  video_chunk_list = f2__reverse(cause, video_chunk_list);
+  s64 total_length = 0;
+  {
+    f2ptr iter = video_chunk_list;
+    while (iter) {
+      f2ptr chunk = f2cons__car(iter, cause);
+      total_length += raw__chunk__length(cause, chunk);
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+  f2ptr video_chunk = f2chunk__new(cause, total_length, NULL);
+  {
+    s64 index = 0;
+    f2ptr iter = video_chunk_list;
+    while (iter) {
+      f2ptr chunk = f2cons__car(iter, cause);
+      s64 chunk_length = raw__chunk__length(cause, chunk);
+      {
+	s64 chunk_index;
+	for (chunk_index = 0; chunk_index < chunk_length; chunk_index ++) {
+	  raw__chunk__bit8__elt__set(cause, video_chunk, index + chunk_index, raw__chunk__bit8__elt(cause, chunk, chunk_index));
+	}
+      }
+      index += chunk_length;
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+  return video_chunk;
 #else
   return f2larva__new(cause, 3290, nil);
 #endif // F2__LIBAVCODEC_SUPPORTED
 }
 
-f2ptr f2__libavcodec__video_chunk_list__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second) {
+f2ptr f2__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second) {
   if ((! raw__image_sequence__is_type(cause, image_sequence)) ||
       (! raw__integer__is_type(cause, bit_rate)) ||
       (! raw__integer__is_type(cause, frames_per_second))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__libavcodec__video_chunk_list__new_from_image_sequence(cause, image_sequence, bit_rate, frames_per_second);
+  return raw__libavcodec__video_chunk__new_from_image_sequence(cause, image_sequence, bit_rate, frames_per_second);
 }
-export_cefunk3(libavcodec__video_chunk_list__new_from_image_sequence, image_sequence, bit_rate, frames_per_second, 0, "");
+export_cefunk3(libavcodec__video_chunk__new_from_image_sequence, image_sequence, bit_rate, frames_per_second, 0, "");
 
 
 

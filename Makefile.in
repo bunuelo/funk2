@@ -131,6 +131,17 @@ extension_image_libimage_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(extension_image_libimage_la_CFLAGS) $(CFLAGS) \
 	$(extension_image_libimage_la_LDFLAGS) $(LDFLAGS) -o $@
+extension_image_sequence_libimage_sequence_la_LIBADD =
+am_extension_image_sequence_libimage_sequence_la_OBJECTS = extension/image_sequence/extension_image_sequence_libimage_sequence_la-image_sequence.lo
+extension_image_sequence_libimage_sequence_la_OBJECTS =  \
+	$(am_extension_image_sequence_libimage_sequence_la_OBJECTS)
+extension_image_sequence_libimage_sequence_la_LINK = $(LIBTOOL) \
+	$(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CCLD) \
+	$(extension_image_sequence_libimage_sequence_la_CFLAGS) \
+	$(CFLAGS) \
+	$(extension_image_sequence_libimage_sequence_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 extension_mindmon_libmindmon_la_LIBADD =
 am_extension_mindmon_libmindmon_la_OBJECTS =  \
 	extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo
@@ -140,6 +151,15 @@ extension_mindmon_libmindmon_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(extension_mindmon_libmindmon_la_CFLAGS) $(CFLAGS) \
 	$(extension_mindmon_libmindmon_la_LDFLAGS) $(LDFLAGS) -o $@
+extension_movie_libmovie_la_LIBADD =
+am_extension_movie_libmovie_la_OBJECTS =  \
+	extension/movie/extension_movie_libmovie_la-movie.lo
+extension_movie_libmovie_la_OBJECTS =  \
+	$(am_extension_movie_libmovie_la_OBJECTS)
+extension_movie_libmovie_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(extension_movie_libmovie_la_CFLAGS) $(CFLAGS) \
+	$(extension_movie_libmovie_la_LDFLAGS) $(LDFLAGS) -o $@
 lib_libfunk2_la_LIBADD =
 am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_agent.lo \
 	c/lib_libfunk2_la-f2_array.lo c/lib_libfunk2_la-f2_ansi.lo \
@@ -284,12 +304,16 @@ am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(extension_causality_libcausality_la_SOURCES) \
 	$(extension_fibermon_libfibermon_la_SOURCES) \
 	$(extension_image_libimage_la_SOURCES) \
+	$(extension_image_sequence_libimage_sequence_la_SOURCES) \
 	$(extension_mindmon_libmindmon_la_SOURCES) \
+	$(extension_movie_libmovie_la_SOURCES) \
 	$(lib_libfunk2_la_SOURCES)
 DIST_SOURCES = $(extension_causality_libcausality_la_SOURCES) \
 	$(extension_fibermon_libfibermon_la_SOURCES) \
 	$(extension_image_libimage_la_SOURCES) \
+	$(extension_image_sequence_libimage_sequence_la_SOURCES) \
 	$(extension_mindmon_libmindmon_la_SOURCES) \
+	$(extension_movie_libmovie_la_SOURCES) \
 	$(lib_libfunk2_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
@@ -349,6 +373,8 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
+LIBAVCODEC_CFLAGS = @LIBAVCODEC_CFLAGS@
+LIBAVCODEC_LIBS = @LIBAVCODEC_LIBS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -546,8 +572,8 @@ compiled_image__flags = -DF2__INSTALL__BOOTSTRAP_IMG__FILENAME=\"$(plain__instal
 #system_cflags = -Dbuild_os=\"$(build_os)\" -Dbuild_vendor=\"$(build_vendor)\"
 debug_flags = -g -pg -fstack-check -DDEBUG -DDEBUG_MEMORY=1 -DF2__PROCESSOR_MUTEX__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY_POINTERS -DDEBUG_LOAD -DDEBUG_COMPILE -DDEBUG_BYTECODES #-DDEBUG_REDBLACKTREE -DDEBUG_MEMORY_VALID_PTRS 
 optimize_flags = 
-debug__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(debug_flags)
-release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(optimize_flags)
+debug__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(debug_flags)
+release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(optimize_flags)
 athena__cc_flags = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
 #cc_flags = $(debug__cc_flags)
@@ -558,6 +584,8 @@ ACLOCAL_AMFLAGS = -I m4
 lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/fibermon/libfibermon.la \
                   extension/image/libimage.la \
+                  extension/image_sequence/libimage_sequence.la \
+                  extension/movie/libmovie.la \
                   extension/mindmon/libmindmon.la \
                   extension/causality/libcausality.la
 
@@ -691,6 +719,8 @@ lib_libfunk2_la_SOURCES = \
 
 extension_fibermon_libfibermon_la_SOURCES = extension/fibermon/fibermon.c
 extension_image_libimage_la_SOURCES = extension/image/image.c
+extension_image_sequence_libimage_sequence_la_SOURCES = extension/image_sequence/image_sequence.c
+extension_movie_libmovie_la_SOURCES = extension/movie/movie.c
 extension_mindmon_libmindmon_la_SOURCES = extension/mindmon/mindmon.c
 extension_causality_libcausality_la_SOURCES = extension/causality/causality.c
 
@@ -710,7 +740,7 @@ FUNK2_LIBRARY_VERSION = 0:0:0
 #              |        +- increment if source code has changed
 #              |           set to zero if current is incremented
 #              +- increment if interfaces have been added, removed or changed
-lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS)
+lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS) $(LIBAVCODEC_LIBS) 
 lib_libfunk2_la_CFLAGS = $(cc_flags)
 bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 bin_funk2_static_CFLAGS = $(lib_libfunk2_la_CFLAGS)
@@ -718,6 +748,10 @@ extension_fibermon_libfibermon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_fibermon_libfibermon_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_image_libimage_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_image_libimage_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_image_sequence_libimage_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_image_sequence_libimage_sequence_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_movie_libmovie_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_movie_libmovie_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_mindmon_libmindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_mindmon_libmindmon_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_causality_libcausality_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
@@ -845,6 +879,17 @@ extension/image/extension_image_libimage_la-image.lo:  \
 	extension/image/$(DEPDIR)/$(am__dirstamp)
 extension/image/libimage.la: $(extension_image_libimage_la_OBJECTS) $(extension_image_libimage_la_DEPENDENCIES) extension/image/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_image_libimage_la_LINK) -rpath $(libdir) $(extension_image_libimage_la_OBJECTS) $(extension_image_libimage_la_LIBADD) $(LIBS)
+extension/image_sequence/$(am__dirstamp):
+	@$(MKDIR_P) extension/image_sequence
+	@: > extension/image_sequence/$(am__dirstamp)
+extension/image_sequence/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/image_sequence/$(DEPDIR)
+	@: > extension/image_sequence/$(DEPDIR)/$(am__dirstamp)
+extension/image_sequence/extension_image_sequence_libimage_sequence_la-image_sequence.lo:  \
+	extension/image_sequence/$(am__dirstamp) \
+	extension/image_sequence/$(DEPDIR)/$(am__dirstamp)
+extension/image_sequence/libimage_sequence.la: $(extension_image_sequence_libimage_sequence_la_OBJECTS) $(extension_image_sequence_libimage_sequence_la_DEPENDENCIES) extension/image_sequence/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_image_sequence_libimage_sequence_la_LINK) -rpath $(libdir) $(extension_image_sequence_libimage_sequence_la_OBJECTS) $(extension_image_sequence_libimage_sequence_la_LIBADD) $(LIBS)
 extension/mindmon/$(am__dirstamp):
 	@$(MKDIR_P) extension/mindmon
 	@: > extension/mindmon/$(am__dirstamp)
@@ -856,6 +901,17 @@ extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo:  \
 	extension/mindmon/$(DEPDIR)/$(am__dirstamp)
 extension/mindmon/libmindmon.la: $(extension_mindmon_libmindmon_la_OBJECTS) $(extension_mindmon_libmindmon_la_DEPENDENCIES) extension/mindmon/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_mindmon_libmindmon_la_LINK) -rpath $(libdir) $(extension_mindmon_libmindmon_la_OBJECTS) $(extension_mindmon_libmindmon_la_LIBADD) $(LIBS)
+extension/movie/$(am__dirstamp):
+	@$(MKDIR_P) extension/movie
+	@: > extension/movie/$(am__dirstamp)
+extension/movie/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/movie/$(DEPDIR)
+	@: > extension/movie/$(DEPDIR)/$(am__dirstamp)
+extension/movie/extension_movie_libmovie_la-movie.lo:  \
+	extension/movie/$(am__dirstamp) \
+	extension/movie/$(DEPDIR)/$(am__dirstamp)
+extension/movie/libmovie.la: $(extension_movie_libmovie_la_OBJECTS) $(extension_movie_libmovie_la_DEPENDENCIES) extension/movie/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_movie_libmovie_la_LINK) -rpath $(libdir) $(extension_movie_libmovie_la_OBJECTS) $(extension_movie_libmovie_la_LIBADD) $(LIBS)
 c/$(am__dirstamp):
 	@$(MKDIR_P) c
 	@: > c/$(am__dirstamp)
@@ -1372,8 +1428,12 @@ mostlyclean-compile:
 	-rm -f extension/fibermon/extension_fibermon_libfibermon_la-fibermon.lo
 	-rm -f extension/image/extension_image_libimage_la-image.$(OBJEXT)
 	-rm -f extension/image/extension_image_libimage_la-image.lo
+	-rm -f extension/image_sequence/extension_image_sequence_libimage_sequence_la-image_sequence.$(OBJEXT)
+	-rm -f extension/image_sequence/extension_image_sequence_libimage_sequence_la-image_sequence.lo
 	-rm -f extension/mindmon/extension_mindmon_libmindmon_la-mindmon.$(OBJEXT)
 	-rm -f extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo
+	-rm -f extension/movie/extension_movie_libmovie_la-movie.$(OBJEXT)
+	-rm -f extension/movie/extension_movie_libmovie_la-movie.lo
 
 distclean-compile:
 	-rm -f *.tab.c
@@ -1505,7 +1565,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@extension/causality/$(DEPDIR)/extension_causality_libcausality_la-causality.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/fibermon/$(DEPDIR)/extension_fibermon_libfibermon_la-fibermon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/image/$(DEPDIR)/extension_image_libimage_la-image.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/image_sequence/$(DEPDIR)/extension_image_sequence_libimage_sequence_la-image_sequence.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/mindmon/$(DEPDIR)/extension_mindmon_libmindmon_la-mindmon.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/movie/$(DEPDIR)/extension_movie_libmovie_la-movie.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -1558,6 +1620,14 @@ extension/image/extension_image_libimage_la-image.lo: extension/image/image.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_image_libimage_la_CFLAGS) $(CFLAGS) -c -o extension/image/extension_image_libimage_la-image.lo `test -f 'extension/image/image.c' || echo '$(srcdir)/'`extension/image/image.c
 
+extension/image_sequence/extension_image_sequence_libimage_sequence_la-image_sequence.lo: extension/image_sequence/image_sequence.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_image_sequence_libimage_sequence_la_CFLAGS) $(CFLAGS) -MT extension/image_sequence/extension_image_sequence_libimage_sequence_la-image_sequence.lo -MD -MP -MF extension/image_sequence/$(DEPDIR)/extension_image_sequence_libimage_sequence_la-image_sequence.Tpo -c -o extension/image_sequence/extension_image_sequence_libimage_sequence_la-image_sequence.lo `test -f 'extension/image_sequence/image_sequence.c' || echo '$(srcdir)/'`extension/image_sequence/image_sequence.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/image_sequence/$(DEPDIR)/extension_image_sequence_libimage_sequence_la-image_sequence.Tpo extension/image_sequence/$(DEPDIR)/extension_image_sequence_libimage_sequence_la-image_sequence.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/image_sequence/image_sequence.c' object='extension/image_sequence/extension_image_sequence_libimage_sequence_la-image_sequence.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_image_sequence_libimage_sequence_la_CFLAGS) $(CFLAGS) -c -o extension/image_sequence/extension_image_sequence_libimage_sequence_la-image_sequence.lo `test -f 'extension/image_sequence/image_sequence.c' || echo '$(srcdir)/'`extension/image_sequence/image_sequence.c
+
 extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo: extension/mindmon/mindmon.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_mindmon_libmindmon_la_CFLAGS) $(CFLAGS) -MT extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo -MD -MP -MF extension/mindmon/$(DEPDIR)/extension_mindmon_libmindmon_la-mindmon.Tpo -c -o extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo `test -f 'extension/mindmon/mindmon.c' || echo '$(srcdir)/'`extension/mindmon/mindmon.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/mindmon/$(DEPDIR)/extension_mindmon_libmindmon_la-mindmon.Tpo extension/mindmon/$(DEPDIR)/extension_mindmon_libmindmon_la-mindmon.Plo
@@ -1565,6 +1635,14 @@ extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo: extension/mindmon/
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/mindmon/mindmon.c' object='extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_mindmon_libmindmon_la_CFLAGS) $(CFLAGS) -c -o extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo `test -f 'extension/mindmon/mindmon.c' || echo '$(srcdir)/'`extension/mindmon/mindmon.c
+
+extension/movie/extension_movie_libmovie_la-movie.lo: extension/movie/movie.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_movie_libmovie_la_CFLAGS) $(CFLAGS) -MT extension/movie/extension_movie_libmovie_la-movie.lo -MD -MP -MF extension/movie/$(DEPDIR)/extension_movie_libmovie_la-movie.Tpo -c -o extension/movie/extension_movie_libmovie_la-movie.lo `test -f 'extension/movie/movie.c' || echo '$(srcdir)/'`extension/movie/movie.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/movie/$(DEPDIR)/extension_movie_libmovie_la-movie.Tpo extension/movie/$(DEPDIR)/extension_movie_libmovie_la-movie.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/movie/movie.c' object='extension/movie/extension_movie_libmovie_la-movie.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_movie_libmovie_la_CFLAGS) $(CFLAGS) -c -o extension/movie/extension_movie_libmovie_la-movie.lo `test -f 'extension/movie/movie.c' || echo '$(srcdir)/'`extension/movie/movie.c
 
 c/lib_libfunk2_la-f2_agent.lo: c/f2_agent.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_agent.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_agent.Tpo -c -o c/lib_libfunk2_la-f2_agent.lo `test -f 'c/f2_agent.c' || echo '$(srcdir)/'`c/f2_agent.c
@@ -2567,7 +2645,9 @@ clean-libtool:
 	-rm -rf extension/causality/.libs extension/causality/_libs
 	-rm -rf extension/fibermon/.libs extension/fibermon/_libs
 	-rm -rf extension/image/.libs extension/image/_libs
+	-rm -rf extension/image_sequence/.libs extension/image_sequence/_libs
 	-rm -rf extension/mindmon/.libs extension/mindmon/_libs
+	-rm -rf extension/movie/.libs extension/movie/_libs
 	-rm -rf lib/.libs lib/_libs
 
 distclean-libtool:
@@ -2806,8 +2886,12 @@ distclean-generic:
 	-rm -f extension/fibermon/$(am__dirstamp)
 	-rm -f extension/image/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/image/$(am__dirstamp)
+	-rm -f extension/image_sequence/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/image_sequence/$(am__dirstamp)
 	-rm -f extension/mindmon/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/mindmon/$(am__dirstamp)
+	-rm -f extension/movie/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/movie/$(am__dirstamp)
 	-rm -f lib/$(am__dirstamp)
 
 maintainer-clean-generic:
@@ -2818,7 +2902,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/image/$(DEPDIR) extension/mindmon/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -2866,7 +2950,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/image/$(DEPDIR) extension/mindmon/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -2987,7 +3071,7 @@ make-install-sh:
 	chmod a+x install-sh
 
 bin/funk2$(EXEEXT): lib/libfunk2.la
-	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) -Llib/.libs -lfunk2
+	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) -Llib/.libs -lfunk2
 
 install: install-am make-install-sh
 	./install-sh

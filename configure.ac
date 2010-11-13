@@ -70,7 +70,7 @@ PKG_CHECK_MODULES(GTHREAD, gthread-2.0, AC_DEFINE(F2__GTHREAD_SUPPORTED, 1, [Def
 AC_SUBST(GTHREAD_CFLAGS)
 AC_SUBST(GTHREAD_LIBS)
 
-PKG_CHECK_MODULES(GTHREAD, libavcodec, AC_DEFINE(F2__LIBAVCODEC_SUPPORTED, 1, [Define if we've support for LIBAVCODEC]), [AC_MSG_NOTICE([
+PKG_CHECK_MODULES(LIBAVCODEC, libavcodec, AC_DEFINE(F2__LIBAVCODEC_SUPPORTED, 1, [Define if we've support for LIBAVCODEC]), [AC_MSG_NOTICE([
 *** LIBAVCODEC is not required to build Funk2, but the libavcodec development headers
 *** are not installed, so LIBAVCODEC support will not be compiled into Funk2.  The
 *** latest version of libavcodec is always available at http://www.ffmpeg.org])])

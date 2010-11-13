@@ -760,6 +760,8 @@ acx_pthread_config
 XMKMF
 LIBOBJS
 ALLOCA
+LIBAVCODEC_LIBS
+LIBAVCODEC_CFLAGS
 GTHREAD_LIBS
 GTHREAD_CFLAGS
 GTK_LIBS
@@ -4303,13 +4305,13 @@ if test "${lt_cv_nm_interface+set}" = set; then :
 else
   lt_cv_nm_interface="BSD nm"
   echo "int some_variable = 0;" > conftest.$ac_ext
-  (eval echo "\"\$as_me:4306: $ac_compile\"" >&5)
+  (eval echo "\"\$as_me:4308: $ac_compile\"" >&5)
   (eval "$ac_compile" 2>conftest.err)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:4309: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
+  (eval echo "\"\$as_me:4311: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
   (eval "$NM \"conftest.$ac_objext\"" 2>conftest.err > conftest.out)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:4312: output\"" >&5)
+  (eval echo "\"\$as_me:4314: output\"" >&5)
   cat conftest.out >&5
   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
     lt_cv_nm_interface="MS dumpbin"
@@ -5515,7 +5517,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 5518 "configure"' > conftest.$ac_ext
+  echo '#line 5520 "configure"' > conftest.$ac_ext
   if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_compile\""; } >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -7045,11 +7047,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7048: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7050: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7052: \$? = $ac_status" >&5
+   echo "$as_me:7054: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7384,11 +7386,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7387: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7389: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7391: \$? = $ac_status" >&5
+   echo "$as_me:7393: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7489,11 +7491,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7492: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7494: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:7496: \$? = $ac_status" >&5
+   echo "$as_me:7498: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -7544,11 +7546,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7547: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7549: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:7551: \$? = $ac_status" >&5
+   echo "$as_me:7553: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -9911,7 +9913,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 9914 "configure"
+#line 9916 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -10007,7 +10009,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 10010 "configure"
+#line 10012 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -11482,6 +11484,96 @@ else
 $as_echo "yes" >&6; }
 
 $as_echo "#define F2__GTHREAD_SUPPORTED 1" >>confdefs.h
+
+fi
+
+
+
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GTHREAD" >&5
+$as_echo_n "checking for GTHREAD... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTHREAD_CFLAGS"; then
+        pkg_cv_GTHREAD_CFLAGS="$GTHREAD_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libavcodec\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libavcodec") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTHREAD_CFLAGS=`$PKG_CONFIG --cflags "libavcodec" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$GTHREAD_LIBS"; then
+        pkg_cv_GTHREAD_LIBS="$GTHREAD_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libavcodec\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libavcodec") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_GTHREAD_LIBS=`$PKG_CONFIG --libs "libavcodec" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        GTHREAD_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "libavcodec"`
+        else
+	        GTHREAD_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "libavcodec"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$GTHREAD_PKG_ERRORS" >&5
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+                { $as_echo "$as_me:${as_lineno-$LINENO}:
+*** LIBAVCODEC is not required to build Funk2, but the libavcodec development headers
+*** are not installed, so LIBAVCODEC support will not be compiled into Funk2.  The
+*** latest version of libavcodec is always available at http://www.ffmpeg.org" >&5
+$as_echo "$as_me:
+*** LIBAVCODEC is not required to build Funk2, but the libavcodec development headers
+*** are not installed, so LIBAVCODEC support will not be compiled into Funk2.  The
+*** latest version of libavcodec is always available at http://www.ffmpeg.org" >&6;}
+elif test $pkg_failed = untried; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}:
+*** LIBAVCODEC is not required to build Funk2, but the libavcodec development headers
+*** are not installed, so LIBAVCODEC support will not be compiled into Funk2.  The
+*** latest version of libavcodec is always available at http://www.ffmpeg.org" >&5
+$as_echo "$as_me:
+*** LIBAVCODEC is not required to build Funk2, but the libavcodec development headers
+*** are not installed, so LIBAVCODEC support will not be compiled into Funk2.  The
+*** latest version of libavcodec is always available at http://www.ffmpeg.org" >&6;}
+else
+	GTHREAD_CFLAGS=$pkg_cv_GTHREAD_CFLAGS
+	GTHREAD_LIBS=$pkg_cv_GTHREAD_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+$as_echo "#define F2__LIBAVCODEC_SUPPORTED 1" >>confdefs.h
 
 fi
 
@@ -16559,11 +16651,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16562: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16654: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:16566: \$? = $ac_status" >&5
+   echo "$as_me:16658: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -16658,11 +16750,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16661: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16753: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:16665: \$? = $ac_status" >&5
+   echo "$as_me:16757: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -16710,11 +16802,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16713: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16805: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:16717: \$? = $ac_status" >&5
+   echo "$as_me:16809: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized

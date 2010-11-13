@@ -113,6 +113,7 @@
 				  'extension/fibermon/'
 				  'extension/image/'
 				  'extension/image_sequence/'
+				  'extension/movie/'
 				  'example/conceptnet/'
 				  'example/divisi2/'
 				  'example/english_language/'

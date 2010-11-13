@@ -856,7 +856,6 @@ GtkTextBuffer* funk2_gtk__text_view__get_buffer(funk2_gtk_t* this, GtkWidget* te
 //                                     gpointer destroy_fn_data);
 
 void funk2_gtk__pixbuf__destroy_notify_function(guchar *pixels, gpointer data) {
-  printf("\ndestroying pixbuf.");
   f2__free(to_ptr(pixels));
 }
 

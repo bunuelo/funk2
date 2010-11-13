@@ -18,6 +18,8 @@
  rights to redistribute these changes.'
 
 [deframe isismon_agent [frame] [isis_agent
+				isismon
+				
 				frame
 				vbox
 				image
@@ -28,7 +30,8 @@
 				sense_button
 				visual_objects_button
 				visual_knowledge_button]
-  [new [initial_isis_agent]
+  [new [initial_isismon initial_isis_agent]
+       [= isismon    initial_isismon]
        [= isis_agent initial_isis_agent]
        [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
        [= vbox  [gtk-vbox-new 2]]
@@ -107,8 +110,11 @@
   frame]
 
 [deftypefunk isismon_agent execute update []
-  [let [[retina_image [get isis_agent retina_image]]]
-    [set image pixbuf [gtk-pixbuf-new_from_image retina_image]]]]
+  [let [[retina_image_sequence [get isis_agent retina_image_sequence]]]
+    [let [[image_index [get [get [get isismon scale] value] as-integer]]]
+      [if [< image_index [get retina_image_sequence length]]
+	  [let [[pixbuf [gtk-pixbuf-new_from_image [get retina_image_sequence elt image_index]]]]
+	    [set image pixbuf pixbuf]]]]]]
 
 
 [deframe isismon [frame] [isis_world
@@ -210,10 +216,7 @@
 			       [if [and simulation_playing [> [- tick last_stepped_simulation_tick] 5]]
 				   [prog [have this step]
 					 [= last_stepped_simulation_tick tick]]]
-			       [let [[image_index [get [get scale value] as-integer]]]
-				 [if [< image_index [get [get isis_world overview_image_sequence] length]]
-				     [let [[pixbuf [gtk-pixbuf-new_from_image [get [get isis_world overview_image_sequence] elt image_index]]]]
-				       [set overview_image pixbuf pixbuf]]]]
+			       [have this update]
 			       [sleep 1]
 			       [= tick [+ tick 1]]
 			       ]
@@ -224,7 +227,7 @@
        nil]]
 
 [deftypefunk isismon execute add_agent [agent]
-  [let [[isismon_agent [new isismon_agent agent]]]
+  [let [[isismon_agent [new isismon_agent this agent]]]
     [have agent_frame add [get isismon_agent name] isismon_agent]
     [have agent_hbox pack_start isismon_agent t t 0]]]
 
@@ -239,6 +242,10 @@
     [let [[scale_value [get scale value]]]
       [if [== scale_value [- [get overview_image_sequence length] 2]]
 	  [set scale value [- [get overview_image_sequence length] 1]]]]]
+  [let [[image_index [get [get scale value] as-integer]]]
+    [if [< image_index [get [get isis_world overview_image_sequence] length]]
+	[let [[pixbuf [gtk-pixbuf-new_from_image [get [get isis_world overview_image_sequence] elt image_index]]]]
+	  [set overview_image pixbuf pixbuf]]]]
   [have this update_agents]]
 
 [deftypefunk isismon execute step []

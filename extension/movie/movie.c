@@ -205,11 +205,6 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	    double green = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 1) / 255.0;
 	    double blue  = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 2) / 255.0;
 	    double Y = 0.299 * red + 0.587 * green + 0.114 * blue;
-	    if (Y < 1.0 / 16.0) {
-	      Y = 1.0 / 16.0;
-	    } else if (Y > 15.0 / 16.0) {
-	      Y = 15.0 / 16.0;
-	    }
 	    if (x == c->width/2) {
 	      printf("\nY=%f", Y);
 	    }
@@ -239,13 +234,8 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	    double green = (green_0_0 + green_0_1 + green_1_0 + green_1_1) / 4;
 	    double blue  = (blue_0_0  + blue_0_1  + blue_1_0  + blue_1_1)  / 4;
 	    double Y  = 0.299 * red + 0.587 * green + 0.114 * blue;
-	    if (Y < 1.0 / 16.0) {
-	      Y = 1.0 / 16.0;
-	    } else if (Y > 15.0 / 16.0) {
-	      Y = 15.0 / 16.0;
-	    }
-	    double Cb = (blue - Y) * 0.565 * 4;
-	    double Cr = (red  - Y) * 0.713 * 4;
+	    double Cb = (blue - Y) * 0.565 * 255;
+	    double Cr = (red  - Y) * 0.713 * 255;
 	    if (ix == c->width/4) {
 	      printf("\nY=%f, blue=%f, red=%f, Cb=%f, Cr=%f", Y, blue, red, Cb, Cr);
 	    }

@@ -205,9 +205,9 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	    double green = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 1) / 255.0;
 	    double blue  = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 2) / 255.0;
 	    double Y = 0.299 * red + 0.587 * green + 0.114 * blue;
-	    if (x == c->width/2) {
-	      printf("\nY=%f", Y);
-	    }
+	    //if (x == c->width/2) {
+	    //  printf("\nY=%f", Y);
+	    //}
 	    picture->data[0][y * picture->linesize[0] + x] = (u8)(Y * 255.0);
 	  }
 	}
@@ -236,9 +236,9 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	    double Y  = 0.299 * red + 0.587 * green + 0.114 * blue;
 	    double Cb = (blue - Y) * 0.565;
 	    double Cr = (red  - Y) * 0.713;
-	    if (ix == c->width/4) {
-	      printf("\nY=%f, blue=%f, red=%f, Cb=%f, Cr=%f", Y, blue, red, Cb, Cr);
-	    }
+	    //if (ix == c->width/4) {
+	    //  printf("\nY=%f, blue=%f, red=%f, Cb=%f, Cr=%f", Y, blue, red, Cb, Cr);
+	    //}
 	    picture->data[1][iy * picture->linesize[1] + ix] = (u8)(127.5 + Cb * 255.0);
 	    picture->data[2][iy * picture->linesize[2] + ix] = (u8)(127.5 + Cr * 255.0);
 	  }

@@ -220,8 +220,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     }
     
     
-    struct SwsContext* img_convert_ctx = sws_getContext(width__i, height__i, PIX_FMT_BGR32_1, width__i, height__i, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
-    //struct SwsContext* img_convert_ctx = sws_getContext(width__i, height__i, PIX_FMT_RGB32, width__i, height__i, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
+    struct SwsContext* img_convert_ctx = sws_getContext(width__i, height__i, PIX_FMT_RGB32, width__i, height__i, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
     
     s64 out_size = 0;
     {
@@ -236,6 +235,19 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	  return f2larva__new(cause, 453, nil);
 	}
 	raw__chunk__str_copy(cause, rgba_data, rgb_picture_frame__buffer);
+	
+	{ // swap red and blue
+	  s64 y;
+	  for (y = 0; y < height__i; y ++) {
+	    s64 x;
+	    for (x = 0; x < width__i; x ++) {
+	      s64 pixel_index = ((y * width__i) + x) << 2;
+	      u8 red = rgb_picture_frame__buffer[pixel_index + 0];
+	      rgb_picture_frame__buffer[pixel_index + 0] = rgb_picture_frame__buffer[pixel_index + 2];
+	      rgb_picture_frame__buffer[pixel_index + 2] = red;
+	    }
+	  }
+	}
 	
 	sws_scale(img_convert_ctx,
 		  (const uint8_t* const*)(((AVPicture*)rgb_picture_frame)->data),

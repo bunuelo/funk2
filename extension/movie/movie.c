@@ -218,7 +218,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
       avpicture_fill((AVPicture*)yuv_picture_frame, yuv_picture_frame__buffer, PIX_FMT_YUV420P, width__i, height__i);
     }
     
-    SwsContext* img_convert_ctx = sws_getContext(width__i, height__i, PIX_FMT_RGB32, width__i, height__i, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
+    struct SwsContext* img_convert_ctx = sws_getContext(width__i, height__i, PIX_FMT_RGB32, width__i, height__i, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
     
     s64 out_size = 0;
     {

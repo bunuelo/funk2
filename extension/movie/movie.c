@@ -218,6 +218,8 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
       avpicture_fill((AVPicture*)yuv_picture_frame, yuv_picture_frame__buffer, PIX_FMT_YUV420P, width__i, height__i);
     }
     
+    SwsContext* img_convert_ctx = sws_getContext(width__i, height__i, PIX_FMT_RGB32, width__i, height__i, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
+    
     s64 out_size = 0;
     {
       f2ptr iter = f2__image_sequence__first_image_link(cause, image_sequence);
@@ -228,12 +230,11 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	{
 	  //img_convert((AVPicture*)yuv_picture_frame, PIX_FMT_YUV420P, (AVPicture*)rgb_picture_frame, PIX_FMT_RGB32, width__i, height__i);
 	  
-	  img_convert_ctx = sws_getContext(width__i, height__i, PIX_FMT_RGB32, width__i, height__i, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
 	  sws_scale(img_convert_ctx,
 		    ((AVPicture*)rgb_picture_frame)->data,
 		    ((AVPicture*)rgb_picture_frame)->linesize,
 		    0,
-		    pCodecCtx->height,
+		    height__i,
 		    ((AVPicture*)yuv_picture_frame)->data,
 		    ((AVPicture*)yuv_picture_frame)->linesize);	
 	}
@@ -317,6 +318,8 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
       f2ptr chunk      = f2chunk__new(cause, out_size, out_buffer);
       video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
     }
+    sws_freeContext(img_convert_ctx);
+    
     f2__free(to_ptr(rgb_picture_frame__buffer));
     av_free(rgb_picture_frame);
     f2__free(to_ptr(yuv_picture_frame__buffer));

@@ -164,6 +164,9 @@
 #  include "libavutil/mathematics.h"
 #endif // F2__LIBAVCODEC_SUPPORTED
 
+#ifdef F2__LIBSWSCALE_SUPPORTED
+#  include "libswscale/swscale.h"
+#endif // F2__LIBSWSCALE_SUPPORTED
 
 #endif // F2__SYSTEM_HEADERS__H
 

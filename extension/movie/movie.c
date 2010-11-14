@@ -177,6 +177,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     av_codec_context->gop_size      = 10; // emit one intra frame every ten frames
     av_codec_context->max_b_frames  = 1;
     av_codec_context->pix_fmt       = PIX_FMT_YUV420P;
+    av_codec_context->qmin          = 3;
     
     if (avcodec_open(av_codec_context, av_codec) < 0) {
       printf("could not open codec\n");

@@ -166,8 +166,8 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     uint8_t*        picture_buf;
     
     // find the mpeg1 video encoder
-    codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
-    if (!codec) {
+    av_codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
+    if (!av_codec) {
       printf("codec not found\n");
       return f2larva__new(cause, 43111, nil);
     }
@@ -188,7 +188,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     av_codec_context->pix_fmt = PIX_FMT_YUV420P;
     
     // open it
-    if (avcodec_open(c, codec) < 0) {
+    if (avcodec_open(av_codec_context, av_codec) < 0) {
       printf("could not open codec\n");
       return f2larva__new(cause, 43111, nil);
     }
@@ -290,7 +290,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	}
 	
 	// encode the image
-	out_size = avcodec_encode_video(c, outbuf, outbuf_size, picture);
+	out_size = avcodec_encode_video(av_codec_context, outbuf, outbuf_size, picture);
 	f2ptr chunk      = f2chunk__new(cause, out_size, outbuf);
 	video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
 	
@@ -300,7 +300,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     
     // get the delayed frames
     while (out_size != 0) {
-      out_size = avcodec_encode_video(c, outbuf, outbuf_size, NULL);
+      out_size = avcodec_encode_video(av_codec_context, outbuf, outbuf_size, NULL);
       f2ptr chunk      = f2chunk__new(cause, out_size, outbuf);
       video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
     }
@@ -319,8 +319,8 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     free(outbuf);
     av_free(rgb_frame);
     
-    avcodec_close(c);
-    av_free(c);
+    avcodec_close(av_codec_context);
+    av_free(av_codec_context);
     av_free(picture);
   }
   video_chunk_list = f2__reverse(cause, video_chunk_list);

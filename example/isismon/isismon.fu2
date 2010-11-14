@@ -130,16 +130,17 @@
        [set window title 'isismon - save movie dialog']
        [= vbox [gtk-vbox-new 2]]
        [= label [gtk-label-new 'Please enter a filename with an MPEG extension, to which you would like to save your movie.']]
+       [= entry [gtk-entry-new]]
        [= button_hbox [gtk-hbox-new 2]]
-       [= okay_button [gtk-button-new_with_label 'Save']]
+       [= save_button [gtk-button-new_with_label 'Save']]
        [= cancel_button [gtk-button-new_with_label 'Cancel']]
        [have vbox pack_start label nil nil 0]
        [have vbox pack_start entry nil nil 0]
-       [have button_hbox pack_start okay_button nil nil 0]
+       [have button_hbox pack_start save_button nil nil 0]
        [have button_hbox pack_start cancel_button nil nil 0]
-       [have vbox pack_start button_hbox]
+       [have vbox pack_start button_hbox nil nil 0]
        
-       [have okay_button signal_connect 'clicked'
+       [have save_button signal_connect 'clicked'
 	     [funk []
 		   [let [[filename [get entry text]]]
 		     [terminal_format standard-terminal '\nIsisMon Save Movie Dialog: Saving MPEG to file: ' filename]
@@ -151,7 +152,10 @@
        
        [have cancel_button signal_connect 'clicked'
 	     [funk []
-		   [have window destroy]]]]]
+		   [have window destroy]]]
+
+       [have window add vbox]
+       [have window show_all]]]
 
 
 [deframe isismon [frame] [isis_world

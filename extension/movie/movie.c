@@ -158,11 +158,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
   f2ptr video_chunk_list = nil;
   {
     AVCodec*        av_codec;
-    AVCodecContext* av_codec_context= NULL;
-    s64             out_buffer_size;
-    AVFrame*        yuv_picture;
-    u8*             yuv_picture_buf;
-    u8*             out_buffer;
+    AVCodecContext* av_codec_context = NULL;
     
     // find the mpeg1 video encoder
     av_codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
@@ -171,10 +167,8 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
       return f2larva__new(cause, 43111, nil);
     }
     
-    av_codec_context = avcodec_alloc_context();
-    yuv_picture      = avcodec_alloc_frame();
-    
     // put sample parameters
+    av_codec_context                = avcodec_alloc_context();
     av_codec_context->bit_rate      = bit_rate__i;
     av_codec_context->width         = width__i;
     av_codec_context->height        = height__i;
@@ -189,14 +183,14 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
       return f2larva__new(cause, 43111, nil);
     }
     
-    // alloc image and output buffer
-    out_buffer_size = bit_rate__i;
-    out_buffer      = (u8*)from_ptr(f2__malloc(out_buffer_size));
-    yuv_picture_buf = (u8*)from_ptr(f2__malloc((width__i * height__i * 3) / 2)); // size for YUV 420
+    s64 out_buffer_size = bit_rate__i;
+    u8* out_buffer      = (u8*)from_ptr(f2__malloc(out_buffer_size));
     
-    yuv_picture->data[0] = yuv_picture_buf;
-    yuv_picture->data[1] = yuv_picture->data[0] + (width__i * height__i);
-    yuv_picture->data[2] = yuv_picture->data[1] + (width__i * height__i) / 4;
+    AVFrame* yuv_picture     = avcodec_alloc_frame();
+    u8*      yuv_picture_buf = (u8*)from_ptr(f2__malloc((width__i * height__i * 3) / 2)); // size for YUV 420
+    yuv_picture->data[0]     = yuv_picture_buf;
+    yuv_picture->data[1]     = yuv_picture->data[0] + (width__i * height__i);
+    yuv_picture->data[2]     = yuv_picture->data[1] + (width__i * height__i) / 4;
     yuv_picture->linesize[0] = width__i;
     yuv_picture->linesize[1] = width__i / 2;
     yuv_picture->linesize[2] = width__i / 2;

@@ -186,6 +186,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     s64 out_buffer_size = bit_rate__i;
     u8* out_buffer      = (u8*)from_ptr(f2__malloc(out_buffer_size));
     
+    
     AVFrame* rgb_picture_frame;
     s64      rgb_picture_frame__size;
     u8*      rgb_picture_frame__buffer;
@@ -218,7 +219,9 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
       avpicture_fill((AVPicture*)yuv_picture_frame, yuv_picture_frame__buffer, PIX_FMT_YUV420P, width__i, height__i);
     }
     
-    struct SwsContext* img_convert_ctx = sws_getContext(width__i, height__i, PIX_FMT_RGB32, width__i, height__i, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
+    
+    struct SwsContext* img_convert_ctx = sws_getContext(width__i, height__i, PIX_FMT_BGR32_1, width__i, height__i, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
+    //struct SwsContext* img_convert_ctx = sws_getContext(width__i, height__i, PIX_FMT_RGB32, width__i, height__i, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
     
     s64 out_size = 0;
     {
@@ -234,72 +237,13 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	}
 	raw__chunk__str_copy(cause, rgba_data, rgb_picture_frame__buffer);
 	
-	{
-	  //img_convert((AVPicture*)yuv_picture_frame, PIX_FMT_YUV420P, (AVPicture*)rgb_picture_frame, PIX_FMT_RGB32, width__i, height__i);
-	  
-	  sws_scale(img_convert_ctx,
-		    (const uint8_t* const*)(((AVPicture*)rgb_picture_frame)->data),
-		    ((AVPicture*)rgb_picture_frame)->linesize,
-		    0,
-		    height__i,
-		    ((AVPicture*)yuv_picture_frame)->data,
-		    ((AVPicture*)yuv_picture_frame)->linesize);	
-	}
-	
-	/*
-	// prepare image
-	// Y
-	{
-	  s64 y;
-	  for(y = 0; y < height__i; y ++) {
-	    s64 x;
-	    for(x = 0; x < width__i; x ++) {
-	      double red   = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * width__i) + x) << 2) + 0) / 255.0;
-	      double green = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * width__i) + x) << 2) + 1) / 255.0;
-	      double blue  = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * width__i) + x) << 2) + 2) / 255.0;
-	      double Y = 0.299 * red + 0.587 * green + 0.114 * blue;
-	      //if (x == width__i/2) {
-	      //  printf("\nY=%f", Y);
-	      //}
-	      yuv_picture_frame->data[0][y * yuv_picture_frame->linesize[0] + x] = (u8)(Y * 255.0);
-	  }
-	  }
-	}
-	// Cb and Cr
-	{
-	  int iy;
-	  for(iy = 0; iy < height__i/2; iy ++) {
-	    int ix;
-	    for(ix = 0; ix < width__i/2; ix ++) {
-	      s64 x = ix * 2;
-	      s64 y = iy * 2;
-	      double red_0_0   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * width__i) + (x + 0)) << 2) + 0) / 255.0;
-	      double green_0_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * width__i) + (x + 0)) << 2) + 1) / 255.0;
-	      double blue_0_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * width__i) + (x + 0)) << 2) + 2) / 255.0;
-	      double red_1_0   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * width__i) + (x + 0)) << 2) + 0) / 255.0;
-	      double green_1_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * width__i) + (x + 0)) << 2) + 1) / 255.0;
-	      double blue_1_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * width__i) + (x + 0)) << 2) + 2) / 255.0;
-	      double red_0_1   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * width__i) + (x + 1)) << 2) + 0) / 255.0;
-	      double green_0_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * width__i) + (x + 1)) << 2) + 1) / 255.0;
-	      double blue_0_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * width__i) + (x + 1)) << 2) + 2) / 255.0;
-	      double red_1_1   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * width__i) + (x + 1)) << 2) + 0) / 255.0;
-	      double green_1_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * width__i) + (x + 1)) << 2) + 1) / 255.0;
-	      double blue_1_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * width__i) + (x + 1)) << 2) + 2) / 255.0;
-	      double red   = (red_0_0   + red_0_1   + red_1_0   + red_1_1)   / 4;
-	      double green = (green_0_0 + green_0_1 + green_1_0 + green_1_1) / 4;
-	      double blue  = (blue_0_0  + blue_0_1  + blue_1_0  + blue_1_1)  / 4;
-	      double Y  = 0.299 * red + 0.587 * green + 0.114 * blue;
-	      double Cb = (blue - Y) * 0.565;
-	      double Cr = (red  - Y) * 0.713;
-	      //if (ix == width__i/4) {
-	      //  printf("\nY=%f, blue=%f, red=%f, Cb=%f, Cr=%f", Y, blue, red, Cb, Cr);
-	      //}
-	      yuv_picture_frame->data[1][iy * yuv_picture_frame->linesize[1] + ix] = (u8)(127.5 + Cb * 255.0);
-	      yuv_picture_frame->data[2][iy * yuv_picture_frame->linesize[2] + ix] = (u8)(127.5 + Cr * 255.0);
-	    }
-	  }
-	}
-	*/
+	sws_scale(img_convert_ctx,
+		  (const uint8_t* const*)(((AVPicture*)rgb_picture_frame)->data),
+		  ((AVPicture*)rgb_picture_frame)->linesize,
+		  0,
+		  height__i,
+		  ((AVPicture*)yuv_picture_frame)->data,
+		  ((AVPicture*)yuv_picture_frame)->linesize);	
 	
 	// encode the image
 	out_size = avcodec_encode_video(av_codec_context, out_buffer, out_buffer_size, yuv_picture_frame);

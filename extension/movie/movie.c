@@ -141,12 +141,25 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
   s64 frames_per_second__i = f2integer__i(frames_per_second,                                  cause);
   s64 width__i             = f2integer__i(raw__image_sequence__width( cause, image_sequence), cause);
   s64 height__i            = f2integer__i(raw__image_sequence__height(cause, image_sequence), cause);
+  if (((width__i  & 1) != 0) ||
+      ((height__i & 1) != 0)) {
+    printf("\nwidth and height must both be a power of two.");
+    return f2larva__new(cause, 3, nil);
+  }
+  // valid frames per second for MPEG-1: 23.976, 24, 25, 29.97, 30, 50, 59.94, and 60
+  if ((frames_per_second__i != 24) &&
+      (frames_per_second__i != 25) &&
+      (frames_per_second__i != 30) &&
+      (frames_per_second__i != 50) &&
+      (frames_per_second__i != 60)) {
+    printf("\nframes_per_second for MPEG-1 must be one of 24, 25, 30, 50, or 60.");
+    return  f2larva__new(cause, 3, nil);
+  }
   f2ptr video_chunk_list = nil;
   {
-    AVCodec*        codec;
-    AVCodecContext* c= NULL;
-    int             out_size;
-    int             size;
+    AVCodec*        av_codec;
+    AVCodecContext* av_codec_context= NULL;
+    int             pixel_count;
     int             outbuf_size;
     AVFrame*        picture;
     uint8_t*        outbuf;
@@ -159,20 +172,20 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
       return f2larva__new(cause, 43111, nil);
     }
     
-    c= avcodec_alloc_context();
-    picture= avcodec_alloc_frame();
+    av_codec_context = avcodec_alloc_context();
+    picture = avcodec_alloc_frame();
     
     // put sample parameters
-    c->bit_rate = bit_rate__i;
+    av_codec_context->bit_rate = bit_rate__i;
     // resolution must be a multiple of two
-    c->width  = width__i;
-    c->height = height__i;
+    av_codec_context->width  = width__i;
+    av_codec_context->height = height__i;
     // frames per second
-    c->time_base.num = 1;
-    c->time_base.den = frames_per_second__i;
-    c->gop_size = 10; // emit one intra frame every ten frames
-    c->max_b_frames=1;
-    c->pix_fmt = PIX_FMT_YUV420P;
+    av_codec_context->time_base.num = 1;
+    av_codec_context->time_base.den = frames_per_second__i;
+    av_codec_context->gop_size = 10; // emit one intra frame every ten frames
+    av_codec_context->max_b_frames=1;
+    av_codec_context->pix_fmt = PIX_FMT_YUV420P;
     
     // open it
     if (avcodec_open(c, codec) < 0) {
@@ -183,15 +196,15 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     // alloc image and output buffer
     outbuf_size = 5000000;
     outbuf = malloc(outbuf_size);
-    size = c->width * c->height;
-    picture_buf = malloc((size * 3) / 2); // size for YUV 420
+    pixel_count = width__i * height__i;
+    picture_buf = malloc((pixel_count * 3) / 2); // size for YUV 420
     
     picture->data[0] = picture_buf;
-    picture->data[1] = picture->data[0] + size;
-    picture->data[2] = picture->data[1] + size / 4;
-    picture->linesize[0] = c->width;
-    picture->linesize[1] = c->width / 2;
-    picture->linesize[2] = c->width / 2;
+    picture->data[1] = picture->data[0] + pixel_count;
+    picture->data[2] = picture->data[1] + pixel_count / 4;
+    picture->linesize[0] = width__i;
+    picture->linesize[1] = width__i / 2;
+    picture->linesize[2] = width__i / 2;
     
     
     AVFrame* rgb_frame;
@@ -213,7 +226,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     avpicture_fill((AVPicture *)rgb_frame, rgb_frame__buffer, PIX_FMT_RGB24, width__i, height__i);
     
     
-    out_size = 0;
+    s64 out_size = 0;
     {
       f2ptr iter = f2__image_sequence__first_image_link(cause, image_sequence);
       while (iter != nil) {
@@ -221,20 +234,20 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	f2ptr rgba_data = f2__image__rgba_data(cause, image);
 	
 	
-	//img_convert((AVPicture *)picture, PIX_FMT_YUV420P, (AVPicture*)rgba_picture, PIX_FMT_RGB32, c->width, c->height);
+	//img_convert((AVPicture *)picture, PIX_FMT_YUV420P, (AVPicture*)rgba_picture, PIX_FMT_RGB32, width__i, height__i);
 	
 	// prepare image
 	// Y
 	{
 	  s64 y;
-	  for(y = 0; y < c->height; y ++) {
+	  for(y = 0; y < height__i; y ++) {
 	    s64 x;
-	    for(x = 0; x < c->width; x ++) {
-	      double red   = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 0) / 255.0;
-	      double green = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 1) / 255.0;
-	      double blue  = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 2) / 255.0;
+	    for(x = 0; x < width__i; x ++) {
+	      double red   = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * width__i) + x) << 2) + 0) / 255.0;
+	      double green = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * width__i) + x) << 2) + 1) / 255.0;
+	      double blue  = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * width__i) + x) << 2) + 2) / 255.0;
 	      double Y = 0.299 * red + 0.587 * green + 0.114 * blue;
-	      //if (x == c->width/2) {
+	      //if (x == width__i/2) {
 	      //  printf("\nY=%f", Y);
 	      //}
 	      picture->data[0][y * picture->linesize[0] + x] = (u8)(Y * 255.0);
@@ -244,30 +257,30 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	// Cb and Cr
 	{
 	  int iy;
-	  for(iy = 0; iy < c->height/2; iy ++) {
+	  for(iy = 0; iy < height__i/2; iy ++) {
 	    int ix;
-	    for(ix = 0; ix < c->width/2; ix ++) {
+	    for(ix = 0; ix < width__i/2; ix ++) {
 	      s64 x = ix * 2;
 	      s64 y = iy * 2;
-	      double red_0_0   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 0) / 255.0;
-	      double green_0_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 1) / 255.0;
-	      double blue_0_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 2) / 255.0;
-	      double red_1_0   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 0) / 255.0;
-	      double green_1_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 1) / 255.0;
-	      double blue_1_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 2) / 255.0;
-	      double red_0_1   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 0) / 255.0;
-	      double green_0_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 1) / 255.0;
-	      double blue_0_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 2) / 255.0;
-	      double red_1_1   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 0) / 255.0;
-	      double green_1_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 1) / 255.0;
-	      double blue_1_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 2) / 255.0;
+	      double red_0_0   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * width__i) + (x + 0)) << 2) + 0) / 255.0;
+	      double green_0_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * width__i) + (x + 0)) << 2) + 1) / 255.0;
+	      double blue_0_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * width__i) + (x + 0)) << 2) + 2) / 255.0;
+	      double red_1_0   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * width__i) + (x + 0)) << 2) + 0) / 255.0;
+	      double green_1_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * width__i) + (x + 0)) << 2) + 1) / 255.0;
+	      double blue_1_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * width__i) + (x + 0)) << 2) + 2) / 255.0;
+	      double red_0_1   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * width__i) + (x + 1)) << 2) + 0) / 255.0;
+	      double green_0_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * width__i) + (x + 1)) << 2) + 1) / 255.0;
+	      double blue_0_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * width__i) + (x + 1)) << 2) + 2) / 255.0;
+	      double red_1_1   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * width__i) + (x + 1)) << 2) + 0) / 255.0;
+	      double green_1_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * width__i) + (x + 1)) << 2) + 1) / 255.0;
+	      double blue_1_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * width__i) + (x + 1)) << 2) + 2) / 255.0;
 	      double red   = (red_0_0   + red_0_1   + red_1_0   + red_1_1)   / 4;
 	      double green = (green_0_0 + green_0_1 + green_1_0 + green_1_1) / 4;
 	      double blue  = (blue_0_0  + blue_0_1  + blue_1_0  + blue_1_1)  / 4;
 	      double Y  = 0.299 * red + 0.587 * green + 0.114 * blue;
 	      double Cb = (blue - Y) * 0.565;
 	      double Cr = (red  - Y) * 0.713;
-	      //if (ix == c->width/4) {
+	      //if (ix == width__i/4) {
 	      //  printf("\nY=%f, blue=%f, red=%f, Cb=%f, Cr=%f", Y, blue, red, Cb, Cr);
 	      //}
 	      picture->data[1][iy * picture->linesize[1] + ix] = (u8)(127.5 + Cb * 255.0);

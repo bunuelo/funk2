@@ -238,7 +238,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	  //img_convert((AVPicture*)yuv_picture_frame, PIX_FMT_YUV420P, (AVPicture*)rgb_picture_frame, PIX_FMT_RGB32, width__i, height__i);
 	  
 	  sws_scale(img_convert_ctx,
-		    ((AVPicture*)rgb_picture_frame)->data,
+		    (const uint8_t* const*)(((AVPicture*)rgb_picture_frame)->data),
 		    ((AVPicture*)rgb_picture_frame)->linesize,
 		    0,
 		    height__i,

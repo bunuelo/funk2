@@ -234,8 +234,8 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	    double green = (green_0_0 + green_0_1 + green_1_0 + green_1_1) / 4;
 	    double blue  = (blue_0_0  + blue_0_1  + blue_1_0  + blue_1_1)  / 4;
 	    double Y  = 0.299 * red + 0.587 * green + 0.114 * blue;
-	    double Cb = (blue - Y) * 0.565 * 255;
-	    double Cr = (red  - Y) * 0.713 * 255;
+	    double Cb = (blue - Y) * 0.565 * 127.5;
+	    double Cr = (red  - Y) * 0.713 * 127.5;
 	    if (ix == c->width/4) {
 	      printf("\nY=%f, blue=%f, red=%f, Cb=%f, Cr=%f", Y, blue, red, Cb, Cr);
 	    }

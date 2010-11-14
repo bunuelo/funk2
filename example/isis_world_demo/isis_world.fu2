@@ -103,8 +103,9 @@
 	[while [!= [isis-call [get this client] meta_physics_active] 0]
 	  [millisleep 100]]
 	[have this update_after_step_simulation]
-	[= subseconds [+ subseconds tick]]]  [have this step_physical_world]]
-
+	[= subseconds [+ subseconds tick]]]]]
+  [have this step_physical_world]]
+    
 [deftypefunk isis_world execute normal_step []
   [have this step_simulation 0.15]]
 

@@ -116,6 +116,44 @@
 	  [set image image [get retina_image_sequence elt image_index]]]]]]
 
 
+[deframe isismon_save_movie_dialog [frame] [isismon
+					    window
+					    vbox
+					    label
+					    entry
+					    button_hbox
+					    save_button
+					    cancel_button]
+  [new [initial-isismon]
+       [= isismon initial-isismon]
+       [= window [gtk-window-new]]
+       [set window title 'isismon - save movie dialog']
+       [= vbox [gtk-vbox-new 2]]
+       [= label [gtk-label-new 'Please enter a filename with an MPEG extension, to which you would like to save your movie.']]
+       [= button_hbox [gtk-hbox-new 2]]
+       [= okay_button [gtk-button-new_with_label 'Save']]
+       [= cancel_button [gtk-button-new_with_label 'Cancel']]
+       [have vbox pack_start label nil nil 0]
+       [have vbox pack_start entry nil nil 0]
+       [have button_hbox pack_start okay_button nil nil 0]
+       [have button_hbox pack_start cancel_button nil nil 0]
+       [have vbox pack_start button_hbox]
+       
+       [have okay_button signal_connect 'clicked'
+	     [funk []
+		   [let [[filename [get entry text]]]
+		     [terminal_format standard-terminal '\nIsisMon Save Movie Dialog: Saving MPEG to file: ' filename]
+		     [let [[overview_image_sequence [get isismon overview_image_sequence]]]
+		       [let [[bit_rate   5000000]
+			     [frame_rate 25]]
+			 [let [[overview_movie [movie-new_from_image_sequence overview_image_sequence bit_rate frame_rate]]]
+			   [have overview_movie save filename]]]]]]]
+       
+       [have cancel_button signal_connect 'clicked'
+	     [funk []
+		   [have window destroy]]]]]
+
+
 [deframe isismon [frame] [isis_world
 			  [initialize_mutex [new mutex]]
 			  [done             nil]
@@ -127,6 +165,7 @@
 			  file_menu_item
 			  file_menu
 			  file_exit_menu_item
+			  file_save_movie_menu_item
 			  overview_image
 			  scale
 			  agent_hbox
@@ -145,22 +184,29 @@
        [= isis_world isis_world_object]
        [have initialize_mutex lock]
        [= fiber [fiber [funk []
-			     [= window              [gtk-window-new]]
-			     [set window title      [format nil 'isismon - ' isis_world_object_description]]
-			     [= vbox                [gtk-vbox-new 2]]
-			     [= menu_bar            [gtk-menu_bar-new]]
+			     [= window                    [gtk-window-new]]
+			     [set window title            [format nil 'isismon - ' isis_world_object_description]]
+			     [= vbox                      [gtk-vbox-new 2]]
+			     [= menu_bar                  [gtk-menu_bar-new]]
 			     [have vbox pack_start menu_bar nil nil 0]
-			     [= file_menu_item      [gtk-menu_item-new 'File']]
-			     [= file_menu           [gtk-menu-new]]
-			     [= file_exit_menu_item [gtk-menu_item-new 'Exit']]
+			     [= file_menu_item            [gtk-menu_item-new 'File']]
+			     [= file_menu                 [gtk-menu-new]]
+			     [= file_exit_menu_item       [gtk-menu_item-new 'Exit']]
+			     [= file_save_movie_menu_item [gtk-menu_item-new 'Save Movie...']]
 			     [have menu_bar append  file_menu_item]
 			     [have file_menu append file_exit_menu_item]
+			     [have file_menu append file_save_movie_menu_item]
 			     [set file_menu_item submenu file_menu]
 			     [have window add vbox]
 			     
 			     [have file_exit_menu_item signal_connect 'activate'
 				   [funk []
 					 [= done t]]
+				   nil]
+			     
+			     [have file_save_movie_menu_item signal_connect 'activate'
+				   [funk []
+					 [new isismon_save_movie_dialog this]]
 				   nil]
 			     
 			     [= overview_image [gtk-image-new_from_image [new image 640 480 nil]]]

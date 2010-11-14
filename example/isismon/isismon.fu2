@@ -129,7 +129,7 @@
        [= window [gtk-window-new]]
        [set window title 'isismon - save movie dialog']
        [= vbox [gtk-vbox-new 2]]
-       [= label [gtk-label-new 'Please enter a filename with an MPEG extension, to which you would like to save your movie.']]
+       [= label [gtk-label-new 'Please enter a filename\nwith an MPEG extension,\nto which you would like\nto save your movie.']]
        [= entry [gtk-entry-new]]
        [= button_hbox [gtk-hbox-new 2]]
        [= save_button [gtk-button-new_with_label 'Save']]

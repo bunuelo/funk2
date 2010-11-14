@@ -73,7 +73,7 @@ void libavcodec__video_encode_example(const char *filename) {
   }
   
   // alloc image and output buffer
-  outbuf_size = 5000000;
+  outbuf_size = 100000;
   outbuf = malloc(outbuf_size);
   size = c->width * c->height;
   picture_buf = malloc((size * 3) / 2); // size for YUV 420
@@ -178,7 +178,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     }
     
     // alloc image and output buffer
-    outbuf_size = 100000;
+    outbuf_size = 5000000;
     outbuf = malloc(outbuf_size);
     size = c->width * c->height;
     picture_buf = malloc((size * 3) / 2); // size for YUV 420

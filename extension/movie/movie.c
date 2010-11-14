@@ -206,13 +206,11 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     }
     
     // Determine required buffer size and allocate buffer
-    rgb_frame__size=avpicture_get_size(PIX_FMT_RGB24, pCodecCtx->width,
-				       pCodecCtx->height);
+    rgb_frame__size=avpicture_get_size(PIX_FMT_RGB24, width__i, height__i);
     rgb_frame__buffer = (uint8_t*)from_ptr(f2__malloc(rgb_frame__size));
     
     // Assign appropriate parts of buffer to image planes in pFrameRGB
-    avpicture_fill((AVPicture *)rgb_frame, rgb_frame__buffer, PIX_FMT_RGB24,
-		   pCodecCtx->width, pCodecCtx->height);
+    avpicture_fill((AVPicture *)rgb_frame, rgb_frame__buffer, PIX_FMT_RGB24, width__i, height__i);
     
     
     out_size = 0;

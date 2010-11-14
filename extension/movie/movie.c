@@ -227,6 +227,13 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	f2ptr image     = f2__doublelink__value(cause, iter);
 	f2ptr rgba_data = f2__image__rgba_data(cause, image);
 	
+	s64 chunk__length = f2chunk__length(rgba_data, cause);
+	if (chunk__length != rgb_picture_frame__size) {
+	  printf("\nmovie.c error: chunk__length != rgb_picture_frame__size");
+	  return f2larva__new(cause, 453);
+	}
+	raw__chunk__str_copy(cause, rgba_data, rgb_picture_frame__buffer, rgb_picture_frame__buffer);
+	
 	{
 	  //img_convert((AVPicture*)yuv_picture_frame, PIX_FMT_YUV420P, (AVPicture*)rgb_picture_frame, PIX_FMT_RGB32, width__i, height__i);
 	  
@@ -239,6 +246,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 		    ((AVPicture*)yuv_picture_frame)->linesize);	
 	}
 	
+	/*
 	// prepare image
 	// Y
 	{
@@ -291,6 +299,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	    }
 	  }
 	}
+	*/
 	
 	// encode the image
 	out_size = avcodec_encode_video(av_codec_context, out_buffer, out_buffer_size, yuv_picture_frame);
@@ -509,7 +518,7 @@ f2ptr f2__movie__core_extension_initialize(f2ptr cause) {
   f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image_sequence__core_extension_ping")), nil);
 #ifdef F2__LIBAVCODEC_SUPPORTED
   libavcodec__initialize();
-  libavcodec__video_encode_example("example.mpeg");
+  //libavcodec__video_encode_example("example.mpeg");
   printf("\nmovie initialized."); fflush(stdout);
 #else
   printf("\nmovie initialized, but libavcodec was not compiled into this version of Funk2."); fflush(stdout);

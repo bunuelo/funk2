@@ -225,8 +225,18 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	f2ptr image     = f2__doublelink__value(cause, iter);
 	f2ptr rgba_data = f2__image__rgba_data(cause, image);
 	
-	
-	img_convert((AVPicture *)yuv_picture_frame, PIX_FMT_YUV420P, (AVPicture*)rgb_picture_frame, PIX_FMT_RGB32, width__i, height__i);
+	{
+	  //img_convert((AVPicture*)yuv_picture_frame, PIX_FMT_YUV420P, (AVPicture*)rgb_picture_frame, PIX_FMT_RGB32, width__i, height__i);
+	  
+	  img_convert_ctx = sws_getContext(width__i, height__i, PIX_FMT_RGB32, width__i, height__i, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
+	  sws_scale(img_convert_ctx,
+		    ((AVPicture*)rgb_picture_frame)->data,
+		    ((AVPicture*)rgb_picture_frame)->linesize,
+		    0,
+		    pCodecCtx->height,
+		    ((AVPicture*)yuv_picture_frame)->data,
+		    ((AVPicture*)yuv_picture_frame)->linesize);	
+	}
 	
 	// prepare image
 	// Y

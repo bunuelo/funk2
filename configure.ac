@@ -56,26 +56,34 @@ else
 *** latest version of xmlrpc-c is always available at http://xmlrpc-c.sourceforge.net])
 fi
 
-PKG_CHECK_MODULES(GTK, gtk+-2.0, AC_DEFINE(F2__GTK_SUPPORTED, 1, [Define if we've support for GTK+]), [AC_MSG_NOTICE([
+PKG_CHECK_MODULES(GTK, gtk+-2.0, AC_DEFINE(F2__GTK_SUPPORTED, 1, [Define if we have support for GTK+]), [AC_MSG_NOTICE([
 *** GTK+ 2.0 is not required to build Funk2, but the GLib development headers
 *** are not installed, so GTK support will not be compiled into Funk2.  The
 *** latest version of GLib is always available at http://www.gtk.org])])
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 
-PKG_CHECK_MODULES(GTHREAD, gthread-2.0, AC_DEFINE(F2__GTHREAD_SUPPORTED, 1, [Define if we've support for GTHREAD]), [AC_MSG_NOTICE([
+PKG_CHECK_MODULES(GTHREAD, gthread-2.0, AC_DEFINE(F2__GTHREAD_SUPPORTED, 1, [Define if we have support for GTHREAD]), [AC_MSG_NOTICE([
 *** GTHREAD 2.0 is not required to build Funk2, but the Gthread development headers
 *** are not installed, so GTHREAD support will not be compiled into Funk2.  The
 *** latest version of Gthread is always available at http://www.gtk.org])])
 AC_SUBST(GTHREAD_CFLAGS)
 AC_SUBST(GTHREAD_LIBS)
 
-PKG_CHECK_MODULES(LIBAVCODEC, libavcodec, AC_DEFINE(F2__LIBAVCODEC_SUPPORTED, 1, [Define if we've support for LIBAVCODEC]), [AC_MSG_NOTICE([
+PKG_CHECK_MODULES(LIBAVCODEC, libavcodec, AC_DEFINE(F2__LIBAVCODEC_SUPPORTED, 1, [Define if we have support for LIBAVCODEC]), [AC_MSG_NOTICE([
 *** LIBAVCODEC is not required to build Funk2, but the libavcodec development headers
 *** are not installed, so LIBAVCODEC support will not be compiled into Funk2.  The
 *** latest version of libavcodec is always available at http://www.ffmpeg.org])])
 AC_SUBST(LIBAVCODEC_CFLAGS)
 AC_SUBST(LIBAVCODEC_LIBS)
+
+PKG_CHECK_MODULES(LIBSWSCALE, libswscale, AC_DEFINE(F2__LIBSWSCALE_SUPPORTED, 1, [Define if we have support for LIBSWSCALE]), [AC_MSG_NOTICE([
+*** LIBSWSCALE is not required to build Funk2, but the libswscale development headers
+*** are not installed, so LIBSWSCALE support will not be compiled into Funk2.  The
+*** latest version of libswscale is always available at http://www.ffmpeg.org])])
+AC_SUBST(LIBSWSCALE_CFLAGS)
+AC_SUBST(LIBSWSCALE_LIBS)
+
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

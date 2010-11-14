@@ -186,15 +186,6 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     s64 out_buffer_size = bit_rate__i;
     u8* out_buffer      = (u8*)from_ptr(f2__malloc(out_buffer_size));
     
-    //AVFrame* yuv_picture_frame     = avcodec_alloc_frame();
-    //u8*      yuv_picture_frame_buf = (u8*)from_ptr(f2__malloc((width__i * height__i * 3) / 2)); // size for YUV 420
-    //yuv_picture_frame->data[0]     = yuv_picture_frame_buf;
-    //yuv_picture_frame->data[1]     = yuv_picture_frame->data[0] + (width__i * height__i);
-    //yuv_picture_frame->data[2]     = yuv_picture_frame->data[1] + (width__i * height__i) / 4;
-    //yuv_picture_frame->linesize[0] = width__i;
-    //yuv_picture_frame->linesize[1] = width__i / 2;
-    //yuv_picture_frame->linesize[2] = width__i / 2;
-    
     AVFrame* rgb_picture_frame;
     s64      rgb_picture_frame__size;
     u8*      rgb_picture_frame__buffer;
@@ -235,7 +226,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	f2ptr rgba_data = f2__image__rgba_data(cause, image);
 	
 	
-	//img_convert((AVPicture *)picture, PIX_FMT_YUV420P, (AVPicture*)rgba_picture, PIX_FMT_RGB32, width__i, height__i);
+	img_convert((AVPicture *)yuv_picture_frame, PIX_FMT_YUV420P, (AVPicture*)rgb_picture_frame, PIX_FMT_RGB32, width__i, height__i);
 	
 	// prepare image
 	// Y

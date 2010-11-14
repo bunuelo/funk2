@@ -159,68 +159,63 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
   {
     AVCodec*        av_codec;
     AVCodecContext* av_codec_context= NULL;
-    int             pixel_count;
-    int             outbuf_size;
-    AVFrame*        picture;
-    uint8_t*        outbuf;
-    uint8_t*        picture_buf;
+    s64             out_buffer_size;
+    AVFrame*        yuv_picture;
+    u8*             yuv_picture_buf;
+    u8*             out_buffer;
     
     // find the mpeg1 video encoder
     av_codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
-    if (!av_codec) {
+    if (av_codec == NULL) {
       printf("codec not found\n");
       return f2larva__new(cause, 43111, nil);
     }
     
     av_codec_context = avcodec_alloc_context();
-    picture = avcodec_alloc_frame();
+    yuv_picture      = avcodec_alloc_frame();
     
     // put sample parameters
-    av_codec_context->bit_rate = bit_rate__i;
-    // resolution must be a multiple of two
-    av_codec_context->width  = width__i;
-    av_codec_context->height = height__i;
-    // frames per second
+    av_codec_context->bit_rate      = bit_rate__i;
+    av_codec_context->width         = width__i;
+    av_codec_context->height        = height__i;
     av_codec_context->time_base.num = 1;
     av_codec_context->time_base.den = frames_per_second__i;
-    av_codec_context->gop_size = 10; // emit one intra frame every ten frames
-    av_codec_context->max_b_frames=1;
-    av_codec_context->pix_fmt = PIX_FMT_YUV420P;
+    av_codec_context->gop_size      = 10; // emit one intra frame every ten frames
+    av_codec_context->max_b_frames  = 1;
+    av_codec_context->pix_fmt       = PIX_FMT_YUV420P;
     
-    // open it
     if (avcodec_open(av_codec_context, av_codec) < 0) {
       printf("could not open codec\n");
       return f2larva__new(cause, 43111, nil);
     }
     
     // alloc image and output buffer
-    outbuf_size = 5000000;
-    outbuf = malloc(outbuf_size);
-    pixel_count = width__i * height__i;
-    picture_buf = malloc((pixel_count * 3) / 2); // size for YUV 420
+    out_buffer_size = bit_rate__i;
+    out_buffer      = (u8*)from_ptr(f2__malloc(out_buffer_size));
+    yuv_picture_buf = (u8*)from_ptr(f2__malloc((width__i * height__i * 3) / 2)); // size for YUV 420
     
-    picture->data[0] = picture_buf;
-    picture->data[1] = picture->data[0] + pixel_count;
-    picture->data[2] = picture->data[1] + pixel_count / 4;
-    picture->linesize[0] = width__i;
-    picture->linesize[1] = width__i / 2;
-    picture->linesize[2] = width__i / 2;
+    yuv_picture->data[0] = yuv_picture_buf;
+    yuv_picture->data[1] = yuv_picture->data[0] + (width__i * height__i);
+    yuv_picture->data[2] = yuv_picture->data[1] + (width__i * height__i) / 4;
+    yuv_picture->linesize[0] = width__i;
+    yuv_picture->linesize[1] = width__i / 2;
+    yuv_picture->linesize[2] = width__i / 2;
     
     
     AVFrame* rgb_frame;
-    int      rgb_frame__size;
-    uint8_t* rgb_frame__buffer;
+    s64      rgb_frame__size;
+    u8*      rgb_frame__buffer;
     
     // Allocate an AVFrame structure
     rgb_frame=avcodec_alloc_frame();
-    if(rgb_frame==NULL) {
+    if (rgb_frame == NULL) {
       printf("\ncouldn't allocate rgb_frame.");
       return f2larva__new(cause, 231, nil);
     }
     
     // Determine required buffer size and allocate buffer
     rgb_frame__size=avpicture_get_size(PIX_FMT_RGB24, width__i, height__i);
-    rgb_frame__buffer = (uint8_t*)from_ptr(f2__malloc(rgb_frame__size));
+    rgb_frame__buffer = (u8*)from_ptr(f2__malloc(rgb_frame__size));
     
     // Assign appropriate parts of buffer to image planes in pFrameRGB
     avpicture_fill((AVPicture *)rgb_frame, rgb_frame__buffer, PIX_FMT_RGB24, width__i, height__i);
@@ -250,7 +245,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	      //if (x == width__i/2) {
 	      //  printf("\nY=%f", Y);
 	      //}
-	      picture->data[0][y * picture->linesize[0] + x] = (u8)(Y * 255.0);
+	      yuv_picture->data[0][y * yuv_picture->linesize[0] + x] = (u8)(Y * 255.0);
 	  }
 	  }
 	}
@@ -283,15 +278,15 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	      //if (ix == width__i/4) {
 	      //  printf("\nY=%f, blue=%f, red=%f, Cb=%f, Cr=%f", Y, blue, red, Cb, Cr);
 	      //}
-	      picture->data[1][iy * picture->linesize[1] + ix] = (u8)(127.5 + Cb * 255.0);
-	      picture->data[2][iy * picture->linesize[2] + ix] = (u8)(127.5 + Cr * 255.0);
+	      yuv_picture->data[1][iy * yuv_picture->linesize[1] + ix] = (u8)(127.5 + Cb * 255.0);
+	      yuv_picture->data[2][iy * yuv_picture->linesize[2] + ix] = (u8)(127.5 + Cr * 255.0);
 	    }
 	  }
 	}
 	
 	// encode the image
-	out_size = avcodec_encode_video(av_codec_context, outbuf, outbuf_size, picture);
-	f2ptr chunk      = f2chunk__new(cause, out_size, outbuf);
+	out_size = avcodec_encode_video(av_codec_context, out_buffer, out_buffer_size, yuv_picture);
+	f2ptr chunk      = f2chunk__new(cause, out_size, out_buffer);
 	video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
 	
 	iter = f2__doublelink__next(cause, iter);
@@ -300,28 +295,28 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     
     // get the delayed frames
     while (out_size != 0) {
-      out_size = avcodec_encode_video(av_codec_context, outbuf, outbuf_size, NULL);
-      f2ptr chunk      = f2chunk__new(cause, out_size, outbuf);
+      out_size = avcodec_encode_video(av_codec_context, out_buffer, out_buffer_size, NULL);
+      f2ptr chunk      = f2chunk__new(cause, out_size, out_buffer);
       video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
     }
     
     /* add sequence end code to have a real mpeg file */
     {
-      outbuf[0] = 0x00;
-      outbuf[1] = 0x00;
-      outbuf[2] = 0x01;
-      outbuf[3] = 0xb7;
+      out_buffer[0] = 0x00;
+      out_buffer[1] = 0x00;
+      out_buffer[2] = 0x01;
+      out_buffer[3] = 0xb7;
       out_size = 4;
-      f2ptr chunk      = f2chunk__new(cause, out_size, outbuf);
+      f2ptr chunk      = f2chunk__new(cause, out_size, out_buffer);
       video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
     }
-    free(picture_buf);
-    free(outbuf);
+    f2__free(to_ptr(yuv_picture_buf));
+    f2__free(to_ptr(out_buffer));
     av_free(rgb_frame);
     
     avcodec_close(av_codec_context);
     av_free(av_codec_context);
-    av_free(picture);
+    av_free(yuv_picture);
   }
   video_chunk_list = f2__reverse(cause, video_chunk_list);
   s64 total_length = 0;

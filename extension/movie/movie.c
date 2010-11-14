@@ -232,7 +232,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	  printf("\nmovie.c error: chunk__length != rgb_picture_frame__size");
 	  return f2larva__new(cause, 453, nil);
 	}
-	raw__chunk__str_copy(cause, rgba_data, rgb_picture_frame__buffer, rgb_picture_frame__buffer);
+	raw__chunk__str_copy(cause, rgba_data, rgb_picture_frame__buffer);
 	
 	{
 	  //img_convert((AVPicture*)yuv_picture_frame, PIX_FMT_YUV420P, (AVPicture*)rgb_picture_frame, PIX_FMT_RGB32, width__i, height__i);

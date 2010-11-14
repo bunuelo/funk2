@@ -230,7 +230,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	s64 chunk__length = f2chunk__length(rgba_data, cause);
 	if (chunk__length != rgb_picture_frame__size) {
 	  printf("\nmovie.c error: chunk__length != rgb_picture_frame__size");
-	  return f2larva__new(cause, 453);
+	  return f2larva__new(cause, 453, nil);
 	}
 	raw__chunk__str_copy(cause, rgba_data, rgb_picture_frame__buffer, rgb_picture_frame__buffer);
 	

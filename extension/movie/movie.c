@@ -143,11 +143,14 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
   s64 height__i            = f2integer__i(raw__image_sequence__height(cause, image_sequence), cause);
   f2ptr video_chunk_list = nil;
   {
-    AVCodec *codec;
-    AVCodecContext *c= NULL;
-    int out_size, size, x, y, outbuf_size;
-    AVFrame *picture;
-    uint8_t *outbuf, *picture_buf;
+    AVCodec*        codec;
+    AVCodecContext* c= NULL;
+    int             out_size;
+    int             size;
+    int             outbuf_size;
+    AVFrame*        picture;
+    uint8_t*        outbuf;
+    uint8_t*        picture_buf;
     
     // find the mpeg1 video encoder
     codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
@@ -190,6 +193,28 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     picture->linesize[1] = c->width / 2;
     picture->linesize[2] = c->width / 2;
     
+    
+    AVFrame* rgb_frame;
+    int      rgb_frame__size;
+    uint8_t* rgb_frame__buffer;
+    
+    // Allocate an AVFrame structure
+    rgb_frame=avcodec_alloc_frame();
+    if(rgb_frame==NULL) {
+      printf("\ncouldn't allocate rgb_frame.");
+      return f2larva__new(cause, 231, nil);
+    }
+    
+    // Determine required buffer size and allocate buffer
+    rgb_frame__size=avpicture_get_size(PIX_FMT_RGB24, pCodecCtx->width,
+				       pCodecCtx->height);
+    rgb_frame__buffer = (uint8_t*)from_ptr(f2__malloc(rgb_frame__size));
+    
+    // Assign appropriate parts of buffer to image planes in pFrameRGB
+    avpicture_fill((AVPicture *)rgb_frame, rgb_frame__buffer, PIX_FMT_RGB24,
+		   pCodecCtx->width, pCodecCtx->height);
+    
+    
     out_size = 0;
     {
       f2ptr iter = f2__image_sequence__first_image_link(cause, image_sequence);
@@ -197,50 +222,59 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	f2ptr image     = f2__doublelink__value(cause, iter);
 	f2ptr rgba_data = f2__image__rgba_data(cause, image);
 	
-	// prepare a dummy image
+	
+	//img_convert((AVPicture *)picture, PIX_FMT_YUV420P, (AVPicture*)rgba_picture, PIX_FMT_RGB32, c->width, c->height);
+	
+	// prepare image
 	// Y
-	for(y = 0; y < c->height; y ++) {
-	  for(x = 0; x < c->width; x ++) {
-	    double red   = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 0) / 255.0;
-	    double green = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 1) / 255.0;
-	    double blue  = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 2) / 255.0;
-	    double Y = 0.299 * red + 0.587 * green + 0.114 * blue;
-	    //if (x == c->width/2) {
-	    //  printf("\nY=%f", Y);
-	    //}
-	    picture->data[0][y * picture->linesize[0] + x] = (u8)(Y * 255.0);
+	{
+	  s64 y;
+	  for(y = 0; y < c->height; y ++) {
+	    s64 x;
+	    for(x = 0; x < c->width; x ++) {
+	      double red   = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 0) / 255.0;
+	      double green = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 1) / 255.0;
+	      double blue  = ((double)raw__chunk__bit8__elt(cause, rgba_data, ((y * c->width) + x) << 2) + 2) / 255.0;
+	      double Y = 0.299 * red + 0.587 * green + 0.114 * blue;
+	      //if (x == c->width/2) {
+	      //  printf("\nY=%f", Y);
+	      //}
+	      picture->data[0][y * picture->linesize[0] + x] = (u8)(Y * 255.0);
+	  }
 	  }
 	}
-	
 	// Cb and Cr
-	int ix, iy;
-	for(iy = 0; iy < c->height/2; iy ++) {
-	  for(ix = 0; ix < c->width/2; ix ++) {
-	    x = ix * 2;
-	    y = iy * 2;
-	    double red_0_0   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 0) / 255.0;
-	    double green_0_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 1) / 255.0;
-	    double blue_0_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 2) / 255.0;
-	    double red_1_0   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 0) / 255.0;
-	    double green_1_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 1) / 255.0;
-	    double blue_1_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 2) / 255.0;
-	    double red_0_1   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 0) / 255.0;
-	    double green_0_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 1) / 255.0;
-	    double blue_0_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 2) / 255.0;
-	    double red_1_1   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 0) / 255.0;
-	    double green_1_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 1) / 255.0;
-	    double blue_1_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 2) / 255.0;
-	    double red   = (red_0_0   + red_0_1   + red_1_0   + red_1_1)   / 4;
-	    double green = (green_0_0 + green_0_1 + green_1_0 + green_1_1) / 4;
-	    double blue  = (blue_0_0  + blue_0_1  + blue_1_0  + blue_1_1)  / 4;
-	    double Y  = 0.299 * red + 0.587 * green + 0.114 * blue;
-	    double Cb = (blue - Y) * 0.565;
-	    double Cr = (red  - Y) * 0.713;
-	    //if (ix == c->width/4) {
-	    //  printf("\nY=%f, blue=%f, red=%f, Cb=%f, Cr=%f", Y, blue, red, Cb, Cr);
-	    //}
-	    picture->data[1][iy * picture->linesize[1] + ix] = (u8)(127.5 + Cb * 255.0);
-	    picture->data[2][iy * picture->linesize[2] + ix] = (u8)(127.5 + Cr * 255.0);
+	{
+	  int iy;
+	  for(iy = 0; iy < c->height/2; iy ++) {
+	    int ix;
+	    for(ix = 0; ix < c->width/2; ix ++) {
+	      s64 x = ix * 2;
+	      s64 y = iy * 2;
+	      double red_0_0   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 0) / 255.0;
+	      double green_0_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 1) / 255.0;
+	      double blue_0_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 0)) << 2) + 2) / 255.0;
+	      double red_1_0   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 0) / 255.0;
+	      double green_1_0 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 1) / 255.0;
+	      double blue_1_0  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 0)) << 2) + 2) / 255.0;
+	      double red_0_1   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 0) / 255.0;
+	      double green_0_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 1) / 255.0;
+	      double blue_0_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 0) * c->width) + (x + 1)) << 2) + 2) / 255.0;
+	      double red_1_1   = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 0) / 255.0;
+	      double green_1_1 = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 1) / 255.0;
+	      double blue_1_1  = ((double)raw__chunk__bit8__elt(cause, rgba_data, (((y + 1) * c->width) + (x + 1)) << 2) + 2) / 255.0;
+	      double red   = (red_0_0   + red_0_1   + red_1_0   + red_1_1)   / 4;
+	      double green = (green_0_0 + green_0_1 + green_1_0 + green_1_1) / 4;
+	      double blue  = (blue_0_0  + blue_0_1  + blue_1_0  + blue_1_1)  / 4;
+	      double Y  = 0.299 * red + 0.587 * green + 0.114 * blue;
+	      double Cb = (blue - Y) * 0.565;
+	      double Cr = (red  - Y) * 0.713;
+	      //if (ix == c->width/4) {
+	      //  printf("\nY=%f, blue=%f, red=%f, Cb=%f, Cr=%f", Y, blue, red, Cb, Cr);
+	      //}
+	      picture->data[1][iy * picture->linesize[1] + ix] = (u8)(127.5 + Cb * 255.0);
+	      picture->data[2][iy * picture->linesize[2] + ix] = (u8)(127.5 + Cr * 255.0);
+	    }
 	  }
 	}
 	
@@ -272,6 +306,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     }
     free(picture_buf);
     free(outbuf);
+    av_free(rgb_frame);
     
     avcodec_close(c);
     av_free(c);

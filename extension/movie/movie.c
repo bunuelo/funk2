@@ -186,33 +186,33 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     s64 out_buffer_size = bit_rate__i;
     u8* out_buffer      = (u8*)from_ptr(f2__malloc(out_buffer_size));
     
-    AVFrame* yuv_picture     = avcodec_alloc_frame();
-    u8*      yuv_picture_buf = (u8*)from_ptr(f2__malloc((width__i * height__i * 3) / 2)); // size for YUV 420
-    yuv_picture->data[0]     = yuv_picture_buf;
-    yuv_picture->data[1]     = yuv_picture->data[0] + (width__i * height__i);
-    yuv_picture->data[2]     = yuv_picture->data[1] + (width__i * height__i) / 4;
-    yuv_picture->linesize[0] = width__i;
-    yuv_picture->linesize[1] = width__i / 2;
-    yuv_picture->linesize[2] = width__i / 2;
+    AVFrame* yuv_picture_frame     = avcodec_alloc_frame();
+    u8*      yuv_picture_frame_buf = (u8*)from_ptr(f2__malloc((width__i * height__i * 3) / 2)); // size for YUV 420
+    yuv_picture_frame->data[0]     = yuv_picture_frame_buf;
+    yuv_picture_frame->data[1]     = yuv_picture_frame->data[0] + (width__i * height__i);
+    yuv_picture_frame->data[2]     = yuv_picture_frame->data[1] + (width__i * height__i) / 4;
+    yuv_picture_frame->linesize[0] = width__i;
+    yuv_picture_frame->linesize[1] = width__i / 2;
+    yuv_picture_frame->linesize[2] = width__i / 2;
     
     
-    AVFrame* rgb_frame;
-    s64      rgb_frame__size;
-    u8*      rgb_frame__buffer;
+    AVFrame* rgb_picture_frame;
+    s64      rgb_picture_frame__size;
+    u8*      rgb_picture_frame__buffer;
     
     // Allocate an AVFrame structure
-    rgb_frame=avcodec_alloc_frame();
-    if (rgb_frame == NULL) {
-      printf("\ncouldn't allocate rgb_frame.");
+    rgb_picture_frame = avcodec_alloc_frame();
+    if (rgb_picture_frame == NULL) {
+      printf("\ncouldn't allocate rgb_picture_frame.");
       return f2larva__new(cause, 231, nil);
     }
     
     // Determine required buffer size and allocate buffer
-    rgb_frame__size=avpicture_get_size(PIX_FMT_RGB24, width__i, height__i);
-    rgb_frame__buffer = (u8*)from_ptr(f2__malloc(rgb_frame__size));
+    rgb_picture_frame__size   = avpicture_get_size(PIX_FMT_RGB32, width__i, height__i);
+    rgb_picture_frame__buffer = (u8*)from_ptr(f2__malloc(rgb_picture_frame__size));
     
     // Assign appropriate parts of buffer to image planes in pFrameRGB
-    avpicture_fill((AVPicture *)rgb_frame, rgb_frame__buffer, PIX_FMT_RGB24, width__i, height__i);
+    avpicture_fill((AVPicture *)rgb_picture_frame, rgb_picture_frame__buffer, PIX_FMT_RGB32, width__i, height__i);
     
     
     s64 out_size = 0;
@@ -239,7 +239,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	      //if (x == width__i/2) {
 	      //  printf("\nY=%f", Y);
 	      //}
-	      yuv_picture->data[0][y * yuv_picture->linesize[0] + x] = (u8)(Y * 255.0);
+	      yuv_picture_frame->data[0][y * yuv_picture_frame->linesize[0] + x] = (u8)(Y * 255.0);
 	  }
 	  }
 	}
@@ -272,14 +272,14 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	      //if (ix == width__i/4) {
 	      //  printf("\nY=%f, blue=%f, red=%f, Cb=%f, Cr=%f", Y, blue, red, Cb, Cr);
 	      //}
-	      yuv_picture->data[1][iy * yuv_picture->linesize[1] + ix] = (u8)(127.5 + Cb * 255.0);
-	      yuv_picture->data[2][iy * yuv_picture->linesize[2] + ix] = (u8)(127.5 + Cr * 255.0);
+	      yuv_picture_frame->data[1][iy * yuv_picture_frame->linesize[1] + ix] = (u8)(127.5 + Cb * 255.0);
+	      yuv_picture_frame->data[2][iy * yuv_picture_frame->linesize[2] + ix] = (u8)(127.5 + Cr * 255.0);
 	    }
 	  }
 	}
 	
 	// encode the image
-	out_size = avcodec_encode_video(av_codec_context, out_buffer, out_buffer_size, yuv_picture);
+	out_size = avcodec_encode_video(av_codec_context, out_buffer, out_buffer_size, yuv_picture_frame);
 	f2ptr chunk      = f2chunk__new(cause, out_size, out_buffer);
 	video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
 	
@@ -304,13 +304,13 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
       f2ptr chunk      = f2chunk__new(cause, out_size, out_buffer);
       video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
     }
-    f2__free(to_ptr(yuv_picture_buf));
+    f2__free(to_ptr(yuv_picture_frame_buf));
     f2__free(to_ptr(out_buffer));
-    av_free(rgb_frame);
+    av_free(rgb_picture_frame);
     
     avcodec_close(av_codec_context);
     av_free(av_codec_context);
-    av_free(yuv_picture);
+    av_free(yuv_picture_frame);
   }
   video_chunk_list = f2__reverse(cause, video_chunk_list);
   s64 total_length = 0;

@@ -318,6 +318,34 @@ f2ptr f2__image_sequence__elt(f2ptr cause, f2ptr this, f2ptr index) {
 export_cefunk2(image_sequence__elt, this, index, 0, "Returns an image from the sequence.  Indices start at zero.");
 
 
+f2ptr raw__image_sequence__new_by_time_stretch(f2ptr cause, f2ptr this, double stretch_factor) {
+  f2ptr image_sequence = f2__image_sequence__new(cause, nil);
+  s64 length     = raw__image_sequence__length(cause, this);
+  s64 new_length = ((double)length) * stretch_factor;
+  s64 index;
+  for (index = 0; index < new_length; index ++) {
+    double old_index         = ((double)index) / stretch_factor;
+    s64    rounded_old_index = ((s64)(old_index + 0.5));
+    if (rounded_old_index >= length) {
+      rounded_old_index = length - 1;
+    }
+    f2ptr image = raw__image_sequence__elt(cause, this, rounded_old_index);
+    raw__image_sequence__add_image_to_end(cause, image_sequence, image);
+  }
+  return image_sequence;
+}
+
+f2ptr f2__image_sequence__new_by_time_stretch(f2ptr cause, f2ptr this, f2ptr stretch_factor) {
+  if ((! raw__image_sequence__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, stretch_factor))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  double stretch_factor__d = f2double__d(stretch_factor, cause);
+  return raw__image_sequence__new_by_time_stretch(cause, this, stretch_factor__d);
+}
+export_cefunk2(image_sequence__new_by_time_stretch, this, stretch_factor, 0, "Returns a new image sequence, which is longer by the given stretch factor..");
+
+
 f2ptr f2__image_sequence_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),              f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__new")));}

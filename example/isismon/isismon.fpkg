@@ -22,6 +22,7 @@
 	     gtk
 	     image
 	     image_sequence
+	     movie
 	     mindmon]
    :sources ['isismon.fu2']]
 

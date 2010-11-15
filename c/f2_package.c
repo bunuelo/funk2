@@ -377,7 +377,7 @@ def_pcfunk1(pathname__stat, this, return f2__pathname__stat(this_cause, this));
 
 
 f2ptr raw__pathname__exists(f2ptr cause, u8* filename) {
-  int result = access(filename, F_OK);
+  int result = access((char*)filename, F_OK);
   if (result == 0) {
     return f2bool__new(boolean__true);
   }

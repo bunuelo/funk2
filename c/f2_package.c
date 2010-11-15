@@ -440,7 +440,6 @@ f2ptr raw__pathname__rename(f2ptr cause, u8* old_filename, u8* new_filename) {
   case ENOENT:       error_string = "The link named by old does not name an existing file, or either old or new points to an empty string."; break;
   case ENOSPC:       error_string = "The directory that would contain new cannot be extended."; break;
   case ENOTDIR:      error_string = "A component of either path prefix is not a directory; or the old argument names a directory and new argument names a non-directory file."; break;
-  case EPERM:
   case EACCES:       error_string = "The S_ISVTX flag is set on the directory containing the file referred to by old and the caller is not the file owner, "
       "nor is the caller the directory owner, nor does the caller have appropriate privileges; or new refers to an existing file, the S_ISVTX flag is set on the directory containing "
       "this file, and the caller is not the file owner, nor is the caller the directory owner, nor does the caller have appropriate privileges."; break;

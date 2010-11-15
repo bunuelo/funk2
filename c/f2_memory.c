@@ -47,7 +47,7 @@ void funk2_memory__handle(funk2_memory_t* this) {
     funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
     for (index = 0; index < memory_pool_num; index ++) {
       if (this->pool[index].should_enlarge_memory_now) {
-	funk2_memorypool__change_total_memory_available(&(this->pool[index]), this->pool[index].total_global_memory + (this->pool[index].total_global_memory << 1) + this->pool[index].should_enlarge_memory_now__need_at_least_byte_num);
+	funk2_memorypool__change_total_memory_available(&(this->pool[index]), this->pool[index].total_global_memory + (this->pool[index].total_global_memory >> 1) + this->pool[index].should_enlarge_memory_now__need_at_least_byte_num);
 	this->pool[index].should_enlarge_memory_now__need_at_least_byte_num = 0;
 	this->pool[index].should_enlarge_memory_now                         = boolean__false;
       }
@@ -214,7 +214,7 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
       if (! this->bootstrapping_mode) {
 	funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
       }
-      funk2_memorypool__change_total_memory_available(&(this->pool[pool_index]), this->pool[pool_index].total_global_memory + (this->pool[pool_index].total_global_memory << 1) + this->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num);
+      funk2_memorypool__change_total_memory_available(&(this->pool[pool_index]), this->pool[pool_index].total_global_memory + (this->pool[pool_index].total_global_memory >> 1) + this->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num);
       this->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = 0;
       this->pool[pool_index].should_enlarge_memory_now                         = boolean__false;
       __funk2.user_thread_controller.please_wait                               = boolean__false;

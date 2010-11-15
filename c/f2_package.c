@@ -397,11 +397,11 @@ f2ptr raw__pathname__exists(f2ptr cause, u8* filename) {
   case ETXTBSY:      error_string = "Write access was requested to an executable which is being executed."; break;
   default:           error_string = "undocumented access failure.";
   }
-  return f2larva__new(cause, 1233, f2__bug__new(cause, f2__frame__new(cause, f2list8__new(cause,
-											  new__symbol(cause, "bug_type"),     new__symbol(cause, "access_failure_while_checking_if_file_exists"),
-											  new__symbol(cause, "funkname"),     new__symbol(cause, "pathname-exists"),
-											  new__symbol(cause, "error_string"), new__string(cause, error_string),
-											  new__symbol(cause, "filename"),     new__string(cause, (char*)filename)))));
+  return f2larva__new(cause, 1233, f2__bug__new(cause, f2integer__new(cause, 1233), f2__frame__new(cause, f2list8__new(cause,
+														       new__symbol(cause, "bug_type"),     new__symbol(cause, "access_failure_while_checking_if_file_exists"),
+														       new__symbol(cause, "funkname"),     new__symbol(cause, "pathname-exists"),
+														       new__symbol(cause, "error_string"), new__string(cause, error_string),
+														       new__symbol(cause, "filename"),     new__string(cause, (char*)filename)))));
 }
 
 f2ptr f2__pathname__exists(f2ptr cause, f2ptr filename) {
@@ -452,12 +452,12 @@ f2ptr raw__pathname__rename(f2ptr cause, u8* old_filename, u8* new_filename) {
   case ETXTBSY:      error_string = "The file to be renamed is a pure procedure (shared text) file that is being executed." break;
   default:           error_string = "undocumented rename failure.";
   }
-  return f2larva__new(cause, 1233, f2__bug__new(cause, f2__frame__new(cause, f2list10__new(cause,
-											   new__symbol(cause, "bug_type"),     new__symbol(cause, "rename_failure"),
-											   new__symbol(cause, "funkname"),     new__symbol(cause, "pathname-rename"),
-											   new__symbol(cause, "error_string"), new__string(cause, error_string),
-											   new__symbol(cause, "old_filename"), new__string(cause, (char*)old_filename),
-											   new__symbol(cause, "new_filename"), new__string(cause, (char*)new_filename)))));
+  return f2larva__new(cause, 1235, f2__bug__new(cause, f2integer__new(cause, 1235), f2__frame__new(cause, f2list10__new(cause,
+															new__symbol(cause, "bug_type"),     new__symbol(cause, "rename_failure"),
+															new__symbol(cause, "funkname"),     new__symbol(cause, "pathname-rename"),
+															new__symbol(cause, "error_string"), new__string(cause, error_string),
+															new__symbol(cause, "old_filename"), new__string(cause, (char*)old_filename),
+															new__symbol(cause, "new_filename"), new__string(cause, (char*)new_filename)))));
 }
 
 f2ptr f2__pathname__rename(f2ptr cause, f2ptr old_filename, f2ptr new_filename) {

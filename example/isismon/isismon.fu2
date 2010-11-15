@@ -375,7 +375,7 @@
 
 [deftypefunk isismon execute save_movie_as [filename]
   [terminal_format standard-terminal '\nIsisMon Save Movie Dialog: Saving MPEG to file: ' filename]
-  [let [[overview_image_sequence [get isismon overview_image_sequence]]]
+  [let [[overview_image_sequence [get this overview_image_sequence]]]
     [let [[bit_rate   5000000]
 	  [frame_rate 25]]
       [let [[overview_movie [movie-new_from_image_sequence overview_image_sequence bit_rate frame_rate]]]

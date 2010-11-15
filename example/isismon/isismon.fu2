@@ -29,7 +29,14 @@
 				mindmon_button
 				sense_button
 				visual_objects_button
-				visual_knowledge_button]
+				visual_knowledge_button
+				
+				look_for_hbox
+				look_for_button
+				look_for_entry
+				hold_with_right_hand_hbox
+				hold_with_right_hand_button
+				hold_with_right_hand_entry]
   [new [initial_isismon initial_isis_agent]
        [= isismon    initial_isismon]
        [= isis_agent initial_isis_agent]
@@ -38,6 +45,21 @@
        [= image [gtk-image-new_from_image [new image 320 240 nil]]]
        [= label [gtk-label-new '']]
        [= entry [gtk-entry-new]]
+       
+       [= look_for_hbox               [gtk-hbox-new 2]]
+       [= look_for_button             [gtk-button-new_with_label 'Look for Object Type: ']]
+       [= look_for_entry              [gtk-entry-new]]
+       [set look_for_entry            text 'knife']
+       [have look_for_hbox pack_start look_for_button nil nil 0]
+       [have look_for_hbox pack_start look_for_entry  t t 0]
+       [have vbox pack_start look_for_hbox nil nil 0]
+       
+       [= hold_with_right_hand_hbox   [gtk-hbox-new 2]]
+       [= hold_with_right_hand_button [gtk-button-new_with_label 'Hold with Right Hand: ']]
+       [= hold_with_right_hand_entry  [gtk-entry-new]]
+       [have hold_with_right_hand_hbox pack_start hold_with_right_hand_button nil nil 0]
+       [have hold_with_right_hand_hbox pack_start hold_with_right_hand_entry  t t 0]
+       [have vbox pack_start hold_with_right_hand_hbox nil nil 0]
        
        [have entry key_press_event-signal_connect
 	     [funk [key_event]
@@ -109,6 +131,11 @@
 [deftypefunk isismon_agent get widget []
   frame]
 
+[deftypefunk isismon_agent execute update_entry []
+  [let [[look_for_resource [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] resource `look_for]]]
+    [set entry text [format nil 'look_for-current_object: \t' [have look_for_resource lookup `my_current_object]]]
+    ]]
+
 [deftypefunk isismon_agent execute update []
   [let [[retina_image_sequence [get isis_agent retina_image_sequence]]]
     [let [[image_index [get [get [get isismon scale] value] as-integer]]]
@@ -146,8 +173,8 @@
 		     [terminal_format standard-terminal '\nIsisMon Save Movie Dialog: Saving MPEG to file: ' filename]
 		     [let [[overview_image_sequence [get isismon overview_image_sequence]]]
 		       [let [[bit_rate   5000000]
-			     [frame_rate 60]]
-			 [let [[overview_movie [movie-new_from_image_sequence [image_sequence-new_by_time_stretch overview_image_sequence 4.0] bit_rate frame_rate]]]
+			     [frame_rate 25]]
+			 [let [[overview_movie [movie-new_from_image_sequence overview_image_sequence bit_rate frame_rate]]]
 			   [have overview_movie save filename]
 			   [have window destroy]]]]]]]
        
@@ -182,8 +209,7 @@
 			  [agent_frame [frame]]
 			  
 			  [simulation_playing           nil]
-			  [tick                         0]
-			  [last_stepped_simulation_tick -1000]
+			  [last_stepped_simulation_time nil]
 			  ]
   [new [isis_world_object isis_world_object_description]
        [= isis_world isis_world_object]
@@ -263,11 +289,12 @@
 			     [while [not done]
 			       [if [not [get window visible]]
 				   [= done t]]
-			       [if [and simulation_playing [> [- tick last_stepped_simulation_tick] 5]]
+			       [if [and simulation_playing [or [null last_stepped_simulation_time]
+							       [> [- [get [time] last_stepped_simulation_tick] 5]]
 				   [prog [have this step]
 					 [= last_stepped_simulation_tick tick]]]
 			       [have this update]
-			       [sleep 1]
+			       [millisleep 100]
 			       [= tick [+ tick 1]]
 			       ]
 			     `[terminal_format standard-terminal '\n\nisismon exiting.\n']

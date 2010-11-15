@@ -18,7 +18,8 @@
  rights to redistribute these changes.'
 
 
-[deframe isis_world [physical_world] [client
+[deframe isis_world [physical_world] [[step_mutex [new traced_mutex]]
+				      client
 				      [overview_image_sequence [new image_sequence nil]]]
   [new [client]
        [construct physical_world]
@@ -96,7 +97,8 @@
 
 
 [deftypefunk isis_world execute step_simulation [seconds]
-  [let [[tick [/ 1.0 60.0]]]
+  [have step_mutex lock]
+  [let [[tick [/ 1.0 100.0]]]
     [let [[subseconds 0.0]]
       [while [< subseconds seconds]
 	[isis-call [get this client] meta_step seconds tick]
@@ -104,8 +106,12 @@
 	  [millisleep 100]]
 	[have this update_after_step_simulation]
 	[= subseconds [+ subseconds tick]]]]]
-  [have this step_physical_world]]
-    
+  [have this step_physical_world]
+  [have step_mutex unlock]]
+
+[deftypefunk isis_world get simulator_is_stepping []
+  [get step_mutex is_locked]]
+
 [deftypefunk isis_world execute normal_step []
   [have this step_simulation 0.15]]
 

@@ -382,7 +382,7 @@ f2ptr raw__pathname__exists(f2ptr cause, u8* filename) {
     return f2bool__new(boolean__true);
   }
   char* error_string = NULL;
-  switch (result) {
+  switch (errno) {
   case ENOENT:
     return f2bool__new(boolean__false);
   case EROFS:        error_string = "Write permission was requested for a file on a read-only file system."; break;
@@ -427,7 +427,7 @@ f2ptr raw__pathname__rename(f2ptr cause, u8* old_filename, u8* new_filename) {
     return nil;
   }
   char* error_string = NULL;
-  switch (result) {
+  switch (errno) {
   case EACCES:       error_string = "A component of either path prefix denies search permission; or one of the directories containing old or new denies write permissions; or, write permission is required and is denied for a directory pointed to by the old or new arguments."; break;
   case EBUSY:        error_string = "The directory named by old or new is currently in use by the system or another process, and the implementation considers this an error."; break;
   case EEXIST:

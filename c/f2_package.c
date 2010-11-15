@@ -431,25 +431,25 @@ f2ptr raw__pathname__rename(f2ptr cause, u8* old_filename, u8* new_filename) {
   case EBUSY:        error_string = "The directory named by old or new is currently in use by the system or another process, and the implementation considers this an error."; break;
   case EEXIST:
   case ENOTEMPTY:    error_string = "The link named by new is a directory that is not an empty directory."; break;
-  case EINVAL:       error_string = "The new directory pathname contains a path prefix that names the old directory." break;
-  case EIO:          error_string = "A physical I/O error has occurred." break;
-  case EISDIR:       error_string = "The new argument points to a directory and the old argument points to a file that is not a directory." break;
-  case ELOOP:        error_string = "A loop exists in symbolic links encountered during resolution of the path argument." break;
-  case EMLINK:       error_string = "The file named by old is a directory, and the link count of the parent directory of new would exceed {LINK_MAX}." break;
-  case ENAMETOOLONG: error_string = "The length of the old or new argument exceeds {PATH_MAX} or a pathname component is longer than {NAME_MAX}." break;
-  case ENOENT:       error_string = "The link named by old does not name an existing file, or either old or new points to an empty string." break;
-  case ENOSPC:       error_string = "The directory that would contain new cannot be extended." break;
-  case ENOTDIR:      error_string = "A component of either path prefix is not a directory; or the old argument names a directory and new argument names a non-directory file." break;
+  case EINVAL:       error_string = "The new directory pathname contains a path prefix that names the old directory."; break;
+  case EIO:          error_string = "A physical I/O error has occurred."; break;
+  case EISDIR:       error_string = "The new argument points to a directory and the old argument points to a file that is not a directory."; break;
+  case ELOOP:        error_string = "A loop exists in symbolic links encountered during resolution of the path argument."; break;
+  case EMLINK:       error_string = "The file named by old is a directory, and the link count of the parent directory of new would exceed {LINK_MAX}."; break;
+  case ENAMETOOLONG: error_string = "The length of the old or new argument exceeds {PATH_MAX} or a pathname component is longer than {NAME_MAX}."; break;
+  case ENOENT:       error_string = "The link named by old does not name an existing file, or either old or new points to an empty string."; break;
+  case ENOSPC:       error_string = "The directory that would contain new cannot be extended."; break;
+  case ENOTDIR:      error_string = "A component of either path prefix is not a directory; or the old argument names a directory and new argument names a non-directory file."; break;
   case EPERM:
   case EACCES:       error_string = "The S_ISVTX flag is set on the directory containing the file referred to by old and the caller is not the file owner, "
       "nor is the caller the directory owner, nor does the caller have appropriate privileges; or new refers to an existing file, the S_ISVTX flag is set on the directory containing "
       "this file, and the caller is not the file owner, nor is the caller the directory owner, nor does the caller have appropriate privileges."; break;
   case EROFS:        error_string = "The requested operation requires writing in a directory on a read-only file system."; break;
-  case EXDEV:        error_string = "The links named by new and old are on different file systems and the implementation does not support links between file systems." break;
-  case EBUSY:        error_string = "The file named by the old or new arguments is a named STREAM." break;
-  case ELOOP:        error_string = "More than {SYMLOOP_MAX} symbolic links were encountered during resolution of the path argument." break;
-  case ENAMETOOLONG: error_string = "As a result of encountering a symbolic link in resolution of the path argument, the length of the substituted pathname string exceeded {PATH_MAX}." break;
-  case ETXTBSY:      error_string = "The file to be renamed is a pure procedure (shared text) file that is being executed." break;
+  case EXDEV:        error_string = "The links named by new and old are on different file systems and the implementation does not support links between file systems."; break;
+  case EBUSY:        error_string = "The file named by the old or new arguments is a named STREAM."; break;
+  case ELOOP:        error_string = "More than {SYMLOOP_MAX} symbolic links were encountered during resolution of the path argument."; break;
+  case ENAMETOOLONG: error_string = "As a result of encountering a symbolic link in resolution of the path argument, the length of the substituted pathname string exceeded {PATH_MAX}."; break;
+  case ETXTBSY:      error_string = "The file to be renamed is a pure procedure (shared text) file that is being executed."; break;
   default:           error_string = "undocumented rename failure.";
   }
   return f2larva__new(cause, 1235, f2__bug__new(cause, f2integer__new(cause, 1235), f2__frame__new(cause, f2list10__new(cause,

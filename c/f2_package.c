@@ -409,8 +409,9 @@ f2ptr f2__pathname__exists(f2ptr cause, f2ptr filename) {
     return f2larva__new(cause, 1, nil);
   }
   s64 filename__length = raw__string__length(cause, filename);
-  u8* filename__string = (u8*)from_ptr(f2__malloc(filename__length));
+  u8* filename__string = (u8*)from_ptr(f2__malloc(filename__length + 1));
   raw__string__str_copy(cause, filename, filename__string);
+  filename__string[filename__length] = 0;
   
   f2ptr result = raw__pathname__exists(cause, filename__string);
   
@@ -459,12 +460,14 @@ f2ptr f2__pathname__rename(f2ptr cause, f2ptr old_filename, f2ptr new_filename) 
     return f2larva__new(cause, 1, nil);
   }
   s64 old_filename__length = raw__string__length(cause, old_filename);
-  u8* old_filename__string = (u8*)from_ptr(f2__malloc(old_filename__length));
+  u8* old_filename__string = (u8*)from_ptr(f2__malloc(old_filename__length + 1));
   raw__string__str_copy(cause, old_filename, old_filename__string);
+  old_filename__string[old_filename__length] = 0;
   
   s64 new_filename__length = raw__string__length(cause, new_filename);
-  u8* new_filename__string = (u8*)from_ptr(f2__malloc(new_filename__length));
+  u8* new_filename__string = (u8*)from_ptr(f2__malloc(new_filename__length + 1));
   raw__string__str_copy(cause, new_filename, new_filename__string);
+  new_filename__string[new_filename__length] = 0;
   
   f2ptr result = raw__pathname__rename(cause, old_filename__string, new_filename__string);
   

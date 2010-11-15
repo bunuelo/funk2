@@ -395,7 +395,7 @@ f2ptr raw__pathname__exists(f2ptr cause, u8* filename) {
   case EIO:          error_string = "An I/O error occurred."; break;
   case ENOMEM:       error_string = "Insufficient kernel memory was available."; break;
   case ETXTBSY:      error_string = "Write access was requested to an executable which is being executed."; break;
-  default:           error_string = "undocumented access failure.";
+  default:           error_string = "undocumented access failure."; break;
   }
   return f2larva__new(cause, 1233, f2__bug__new(cause, f2integer__new(cause, 1233), f2__frame__new(cause, f2list8__new(cause,
 														       new__symbol(cause, "bug_type"),     new__symbol(cause, "access_failure_while_checking_if_file_exists"),
@@ -450,7 +450,7 @@ f2ptr raw__pathname__rename(f2ptr cause, u8* old_filename, u8* new_filename) {
   case ELOOP:        error_string = "More than {SYMLOOP_MAX} symbolic links were encountered during resolution of the path argument."; break;
   case ENAMETOOLONG: error_string = "As a result of encountering a symbolic link in resolution of the path argument, the length of the substituted pathname string exceeded {PATH_MAX}."; break;
   case ETXTBSY:      error_string = "The file to be renamed is a pure procedure (shared text) file that is being executed."; break;
-  default:           error_string = "undocumented rename failure.";
+  default:           error_string = "undocumented rename failure."; break;
   }
   return f2larva__new(cause, 1235, f2__bug__new(cause, f2integer__new(cause, 1235), f2__frame__new(cause, f2list10__new(cause,
 															new__symbol(cause, "bug_type"),     new__symbol(cause, "rename_failure"),

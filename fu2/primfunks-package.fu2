@@ -1,4 +1,4 @@
-'Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2010 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -17,8 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk source-load &primfunk:source__load]
-
+[globalize-funk source-load                              &primfunk:source__load]
 [globalize-funk pathname-concat                          &primfunk:pathname__concat]
 [globalize-funk pathnamelist-concat                      &primfunk:pathnamelist__concat]
 [globalize-funk pathname-directory_pathname              &primfunk:pathname__directory_pathname]
@@ -27,5 +26,7 @@
 [globalize-funk current_working_directory                &primfunk:current_working_directory]
 [globalize-funk pathname-as-absolute_pathname            &primfunk:pathname__as__absolute_pathname]
 [globalize-funk pathname-stat                            &primfunk:pathname__stat]
+[globalize-funk pathname-exists                          &primfunk:pathname__exists]
+[globalize-funk pathname-rename                          &primfunk:pathname__rename]
 [globalize-funk getenv                                   &primfunk:getenv]
 

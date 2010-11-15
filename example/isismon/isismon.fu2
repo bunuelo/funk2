@@ -154,7 +154,7 @@
   frame]
 
 [deftypefunk isismon_agent execute update_entry []
-  [let [[look_for_resource [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] resource `look_for]]]
+  [let [[look_for_resource [get [get isis_agent mind] resource `learned_reactive `physical `look_for]]]
     [set entry text [format nil 'look_for-current_object: \t' [have look_for_resource lookup `my_current_object]]]
     ]]
 
@@ -165,15 +165,17 @@
 	  [set image image [get retina_image_sequence elt image_index]]]]]]
 
 [deftypefunk isismon_agent execute command-look_for [object_type]
-  [terminal_format standard-terminal '\nMindMon: Agent ' [get this name] ', look for ' object_type '.']
+  [terminal_format standard-terminal '\nMindMon: Commanding ' [get this name] ' to look for ' object_type '.']
+  [have [get [get isis_agent mind] resource `builtin_reactive `neural_plug `activate_resource]
+	command `learned_reactive `physical `look_for [get object_type as-string]]
   ]
 
 [deftypefunk isismon_agent execute command-hold_with_right_hand [object]
-  [terminal_format standard-terminal '\nMindMon: Agent ' [get this name] ', hold with right hand ' object '.']
+  [terminal_format standard-terminal '\nMindMon: Commanding ' [get this name] ' to hold with right hand ' object '.']
   ]
 
 [deftypefunk isismon_agent execute command-hold_with_left_hand [object]
-  [terminal_format standard-terminal '\nMindMon: Agent ' [get this name] ', hold with left hand ' object '.']
+  [terminal_format standard-terminal '\nMindMon: Commanding ' [get this name] ' to hold with left hand ' object '.']
   ]
 
 
@@ -204,13 +206,7 @@
        [have save_button signal_connect 'clicked'
 	     [funk []
 		   [let [[filename [get entry text]]]
-		     [terminal_format standard-terminal '\nIsisMon Save Movie Dialog: Saving MPEG to file: ' filename]
-		     [let [[overview_image_sequence [get isismon overview_image_sequence]]]
-		       [let [[bit_rate   5000000]
-			     [frame_rate 25]]
-			 [let [[overview_movie [movie-new_from_image_sequence overview_image_sequence bit_rate frame_rate]]]
-			   [have overview_movie save filename]
-			   [have window destroy]]]]]]]
+		     [have isismon save_movie_as filename]]]]
        
        [have cancel_button signal_connect 'clicked'
 	     [funk []
@@ -326,6 +322,14 @@
 			       [if [and simulation_playing [or [null last_stepped_simulation_time]
 							       [> [/ [- [get [time] nanoseconds_since_1970] [get last_stepped_simulation_time nanoseconds_since_1970]] 1000000000.0] 5]]]
 				   [prog [have this step]
+					 [let [[file_index 0]]
+					   [labels [[find_nonexistent_filename []
+		                                       [let [[filename [format nil 'isismon_movie-' file_index '.mpeg']]]
+							 [if [pathname-exists filename]
+							     [prog [= file_index [+ file_index 1]]
+								   [find_nonexistent_filename]]
+							   filename]]]]
+				             [have this save_movie_as [find_nonexistent_filename]]]]]
 					 [= last_stepped_simulation_time [time]]]]
 			       [have this update]
 			       [millisleep 100]
@@ -368,6 +372,16 @@
       [if [== scale_value [- overview_image_sequence-length 2]]
 	  [set scale value [- overview_image_sequence-length 1]]]]]
   [have this update]]
+
+[deftypefunk isismon execute save_movie_as [filename]
+  [terminal_format standard-terminal '\nIsisMon Save Movie Dialog: Saving MPEG to file: ' filename]
+  [let [[overview_image_sequence [get isismon overview_image_sequence]]]
+    [let [[bit_rate   5000000]
+	  [frame_rate 25]]
+      [let [[overview_movie [movie-new_from_image_sequence overview_image_sequence bit_rate frame_rate]]]
+	[have overview_movie save filename]
+	[have window destroy]]]]]
+
 
 [defmetro isismon [:rest args]
   [let [[isis_worlds                  nil]

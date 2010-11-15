@@ -375,6 +375,113 @@ f2ptr f2__pathname__stat(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(pathname__stat, this, return f2__pathname__stat(this_cause, this));
 
+
+f2ptr raw__pathname__exists(f2ptr cause, u8* filename) {
+  int result = access(filename, F_OK);
+  if (result == 0) {
+    return f2bool__new(boolean__true);
+  }
+  char* error_string = NULL;
+  switch (result) {
+  case ENOENT:
+    return f2bool__new(boolean__false);
+  case EROFS:        error_string = "Write permission was requested for a file on a read-only file system."; break;
+  case ENOTDIR:      error_string = "A component used as a directory in pathname is not, in fact, a directory."; break;
+  case ELOOP:        error_string = "Too many symbolic links were encountered in resolving pathname."; break;
+  case EACCES:       error_string = "The requested access would be denied to the file, or search permission is denied for one of the directories in the path prefix of pathname.  (See also path_resolution(7).)"; break;
+  case ENAMETOOLONG: error_string = "pathname is too long."; break;
+  case EFAULT:       error_string = "pathname points outside your accessible address space."; break;
+  case EINVAL:       error_string = "mode was incorrectly specified."; break;
+  case EIO:          error_string = "An I/O error occurred."; break;
+  case ENOMEM:       error_string = "Insufficient kernel memory was available."; break;
+  case ETXTBSY:      error_string = "Write access was requested to an executable which is being executed."; break;
+  default:           error_string = "undocumented access failure.";
+  }
+  return f2larva__new(cause, 1233, f2__bug__new(cause, f2__frame__new(cause, f2list8__new(cause,
+											  new__symbol(cause, "bug_type"),     new__symbol(cause, "access_failure_while_checking_if_file_exists"),
+											  new__symbol(cause, "funkname"),     new__symbol(cause, "pathname-exists"),
+											  new__symbol(cause, "error_string"), new__string(cause, error_string),
+											  new__symbol(cause, "filename"),     new__string(cause, filename)))));
+}
+
+f2ptr f2__pathname__exists(f2ptr cause, f2ptr filename) {
+  if (! raw__string__is_type(cause, filename)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  s64 filename__length = raw__string__length(cause, filename);
+  u8* filename__string = (u8*)from_ptr(f2__malloc(filename__length));
+  raw__string__str_copy(cause, filename, filename__string);
+  
+  f2ptr result = raw__pathname__exists(cause, filename__string);
+  
+  f2__free(to_ptr(filename__string));
+  return result;
+}
+def_pcfunk1(pathname__exists, filename, return f2__pathname__exists(this_cause, filename));
+
+
+f2ptr raw__pathname__rename(f2ptr cause, u8* old_filename, u8* new_filename) {
+  int result = rename(old_filename, new_filename);
+  if (result == 0) {
+    return nil;
+  }
+  char* error_string = NULL;
+  switch (result) {
+  case EACCES:       error_string = "A component of either path prefix denies search permission; or one of the directories containing old or new denies write permissions; or, write permission is required and is denied for a directory pointed to by the old or new arguments."; break;
+  case EBUSY:        error_string = "The directory named by old or new is currently in use by the system or another process, and the implementation considers this an error."; break;
+  case EEXIST:
+  case ENOTEMPTY:    error_string = "The link named by new is a directory that is not an empty directory."; break;
+  case EINVAL:       error_string = "The new directory pathname contains a path prefix that names the old directory." break;
+  case EIO:          error_string = "A physical I/O error has occurred." break;
+  case EISDIR:       error_string = "The new argument points to a directory and the old argument points to a file that is not a directory." break;
+  case ELOOP:        error_string = "A loop exists in symbolic links encountered during resolution of the path argument." break;
+  case EMLINK:       error_string = "The file named by old is a directory, and the link count of the parent directory of new would exceed {LINK_MAX}." break;
+  case ENAMETOOLONG: error_string = "The length of the old or new argument exceeds {PATH_MAX} or a pathname component is longer than {NAME_MAX}." break;
+  case ENOENT:       error_string = "The link named by old does not name an existing file, or either old or new points to an empty string." break;
+  case ENOSPC:       error_string = "The directory that would contain new cannot be extended." break;
+  case ENOTDIR:      error_string = "A component of either path prefix is not a directory; or the old argument names a directory and new argument names a non-directory file." break;
+  case EPERM:
+  case EACCES:       error_string = "The S_ISVTX flag is set on the directory containing the file referred to by old and the caller is not the file owner, "
+      "nor is the caller the directory owner, nor does the caller have appropriate privileges; or new refers to an existing file, the S_ISVTX flag is set on the directory containing "
+      "this file, and the caller is not the file owner, nor is the caller the directory owner, nor does the caller have appropriate privileges."; break;
+  case EROFS:        error_string = "The requested operation requires writing in a directory on a read-only file system."; break;
+  case EXDEV:        error_string = "The links named by new and old are on different file systems and the implementation does not support links between file systems." break;
+  case EBUSY:        error_string = "The file named by the old or new arguments is a named STREAM." break;
+  case ELOOP:        error_string = "More than {SYMLOOP_MAX} symbolic links were encountered during resolution of the path argument." break;
+  case ENAMETOOLONG: error_string = "As a result of encountering a symbolic link in resolution of the path argument, the length of the substituted pathname string exceeded {PATH_MAX}." break;
+  case ETXTBSY:      error_string = "The file to be renamed is a pure procedure (shared text) file that is being executed." break;
+  default:           error_string = "undocumented rename failure.";
+  }
+  return f2larva__new(cause, 1233, f2__bug__new(cause, f2__frame__new(cause, f2list10__new(cause,
+											   new__symbol(cause, "bug_type"),     new__symbol(cause, "rename_failure"),
+											   new__symbol(cause, "funkname"),     new__symbol(cause, "pathname-rename"),
+											   new__symbol(cause, "error_string"), new__string(cause, error_string),
+											   new__symbol(cause, "old_filename"), new__string(cause, old_filename),
+											   new__symbol(cause, "new_filename"), new__string(cause, new_filename)))));
+}
+
+f2ptr f2__pathname__rename(f2ptr cause, f2ptr old_filename, f2ptr new_filename) {
+  if ((! raw__string__is_type(cause, old_filename)) ||
+      (! raw__string__is_type(cause, new_filename))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  s64 old_filename__length = raw__string__length(cause, old_filename);
+  u8* old_filename__string = (u8*)from_ptr(f2__malloc(old_filename__length));
+  raw__string__str_copy(cause, old_filename, old_filename__string);
+  
+  s64 new_filename__length = raw__string__length(cause, new_filename);
+  u8* new_filename__string = (u8*)from_ptr(f2__malloc(new_filename__length));
+  raw__string__str_copy(cause, new_filename, new_filename__string);
+  
+  f2ptr result = raw__pathname__rename(cause, old_filename__string, new_filename__string);
+  
+  f2__free(to_ptr(old_filename__string));
+  f2__free(to_ptr(new_filename__string));
+  return result;
+}
+def_pcfunk2(pathname__rename, old_filename, new_filename, return f2__pathname__rename(this_cause, old_filename, new_filename));
+
+
 f2ptr raw__getenv(f2ptr cause, f2ptr environment_variable) {
   u64 environment_variable__length = raw__string__length(cause, environment_variable);
   u8* environment_variable__str    = (u8*)alloca(environment_variable__length);
@@ -395,6 +502,8 @@ f2ptr f2__getenv(f2ptr cause, f2ptr environment_variable) {
   return raw__getenv(cause, environment_variable);
 }
 def_pcfunk1(getenv, environment_variable, return f2__getenv(this_cause, environment_variable));
+
+
 
 // **
 
@@ -440,16 +549,18 @@ void f2__package__initialize() {
   
   // pathname
   
-  f2__primcfunk__init__2(pathname__concat,                          this, that,           "Concatenates two paths and returns the result in a new path string.");
-  f2__primcfunk__init__1(pathnamelist__concat,                      this,                 "Concatenates a list of paths and returns the result in a new path string.");
-  f2__primcfunk__init__1(pathname__is_absolute,                     this,                 "Returns true if pathname represents an absolute path.");
-  f2__primcfunk__init__1(pathname__directory_pathname,              this,                 "Returns the directory part of a path.");
-  f2__primcfunk__init__1(pathname__scan_for_filenames,              pathname,             "Scans a directory name and returns all filenames.");
-  f2__primcfunk__init__2(pathname__scan_for_filenames_by_extension, pathname, extension,  "Scans a directory name and returns all filenames that match the given extension.");
-  f2__primcfunk__init__0(current_working_directory,                                       "Returns a string representing the current working directory name.");
-  f2__primcfunk__init__1(pathname__as__absolute_pathname,           this,                 "Returns an absolute pathname for this pathname.");
-  f2__primcfunk__init__1(pathname__stat,                            this,                 "Returns a frame with stat info about this pathname.");
-  f2__primcfunk__init__1(getenv,                                    environment_variable, "Returns the environment definition of the given string variable or returns nil if the variable is not defined.");
+  f2__primcfunk__init__2(pathname__concat,                          this, that,                 "Concatenates two paths and returns the result in a new path string.");
+  f2__primcfunk__init__1(pathnamelist__concat,                      this,                       "Concatenates a list of paths and returns the result in a new path string.");
+  f2__primcfunk__init__1(pathname__is_absolute,                     this,                       "Returns true if pathname represents an absolute path.");
+  f2__primcfunk__init__1(pathname__directory_pathname,              this,                       "Returns the directory part of a path.");
+  f2__primcfunk__init__1(pathname__scan_for_filenames,              pathname,                   "Scans a directory name and returns all filenames.");
+  f2__primcfunk__init__2(pathname__scan_for_filenames_by_extension, pathname, extension,        "Scans a directory name and returns all filenames that match the given extension.");
+  f2__primcfunk__init__0(current_working_directory,                                             "Returns a string representing the current working directory name.");
+  f2__primcfunk__init__1(pathname__as__absolute_pathname,           this,                       "Returns an absolute pathname for this pathname.");
+  f2__primcfunk__init__1(pathname__stat,                            this,                       "Returns a frame with stat info about this pathname.");
+  f2__primcfunk__init__1(pathname__exists,                          filename,                   "Returns a boolean value specifying whether or not the given pathname exists.");
+  f2__primcfunk__init__2(pathname__rename,                          old_filename, new_filename, "Renames a pathname.");
+  f2__primcfunk__init__1(getenv,                                    environment_variable,       "Returns the environment definition of the given string variable or returns nil if the variable is not defined.");
   
 }
 

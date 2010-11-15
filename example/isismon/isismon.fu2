@@ -37,6 +37,9 @@
 				hold_with_right_hand_hbox
 				hold_with_right_hand_button
 				hold_with_right_hand_entry]
+				hold_with_left_hand_hbox
+				hold_with_left_hand_button
+				hold_with_left_hand_entry]
   [new [initial_isismon initial_isis_agent]
        [= isismon    initial_isismon]
        [= isis_agent initial_isis_agent]
@@ -60,6 +63,13 @@
        [have hold_with_right_hand_hbox pack_start hold_with_right_hand_button nil nil 0]
        [have hold_with_right_hand_hbox pack_start hold_with_right_hand_entry  t t 0]
        [have vbox pack_start hold_with_right_hand_hbox nil nil 0]
+       
+       [= hold_with_left_hand_hbox   [gtk-hbox-new 2]]
+       [= hold_with_left_hand_button [gtk-button-new_with_label 'Hold with Left Hand: ']]
+       [= hold_with_left_hand_entry  [gtk-entry-new]]
+       [have hold_with_left_hand_hbox pack_start hold_with_left_hand_button nil nil 0]
+       [have hold_with_left_hand_hbox pack_start hold_with_left_hand_entry  t t 0]
+       [have vbox pack_start hold_with_left_hand_hbox nil nil 0]
        
        [have entry key_press_event-signal_connect
 	     [funk [key_event]

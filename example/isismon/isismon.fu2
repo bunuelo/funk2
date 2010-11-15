@@ -329,7 +329,7 @@
 							     [prog [= file_index [+ file_index 1]]
 								   [find_nonexistent_filename]]
 							   filename]]]]
-				             [have this save_movie_as [find_nonexistent_filename]]]]]
+						   [have this save_movie_as [find_nonexistent_filename]]]]
 					 [= last_stepped_simulation_time [time]]]]
 			       [have this update]
 			       [millisleep 100]

@@ -98,7 +98,7 @@
 
 [deftypefunk isis_world execute step_simulation [seconds]
   [have step_mutex lock]
-  [let [[tick [/ 1.0 100.0]]]
+  [let [[tick 0.15]]
     [let [[subseconds 0.0]]
       [while [< subseconds seconds]
 	[isis-call [get this client] meta_step seconds tick]

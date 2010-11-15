@@ -191,7 +191,7 @@
        [have cancel_button signal_connect 'clicked'
 	     [funk []
 		   [have window destroy]]]
-
+       
        [have window add vbox]
        [have window show_all]]]
 
@@ -300,12 +300,11 @@
 			       [if [not [get window visible]]
 				   [= done t]]
 			       [if [and simulation_playing [or [null last_stepped_simulation_time]
-							       [> [- [get [time] last_stepped_simulation_tick] 5]]
+							       [> [/ [- [get [time] nanoseconds_since_1970] [get last_stepped_simulation_time nanoseconds_since_1970]] 1000000000.0] 5]]]
 				   [prog [have this step]
-					 [= last_stepped_simulation_tick tick]]]
+					 [= last_stepped_simulation_time [time]]]]
 			       [have this update]
 			       [millisleep 100]
-			       [= tick [+ tick 1]]
 			       ]
 			     `[terminal_format standard-terminal '\n\nisismon exiting.\n']
 			     [have window destroy]]

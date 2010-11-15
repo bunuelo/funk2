@@ -442,7 +442,6 @@ f2ptr raw__pathname__rename(f2ptr cause, u8* old_filename, u8* new_filename) {
   case ENOTDIR:      error_string = "A component of either path prefix is not a directory; or the old argument names a directory and new argument names a non-directory file."; break;
   case EROFS:        error_string = "The requested operation requires writing in a directory on a read-only file system."; break;
   case EXDEV:        error_string = "The links named by new and old are on different file systems and the implementation does not support links between file systems."; break;
-  case ELOOP:        error_string = "More than {SYMLOOP_MAX} symbolic links were encountered during resolution of the path argument."; break;
   case ENAMETOOLONG: error_string = "As a result of encountering a symbolic link in resolution of the path argument, the length of the substituted pathname string exceeded {PATH_MAX}."; break;
   case ETXTBSY:      error_string = "The file to be renamed is a pure procedure (shared text) file that is being executed."; break;
   default:           error_string = "undocumented rename failure."; break;

@@ -164,15 +164,15 @@
       [if [< image_index [get retina_image_sequence length]]
 	  [set image image [get retina_image_sequence elt image_index]]]]]]
 
-[deftypefunk isismon_agent have command-look_for [object_type]
+[deftypefunk isismon_agent execute command-look_for [object_type]
   [terminal_format standard-terminal '\nMindMon: Agent ' [get this name] ', look for ' object_type '.']
   ]
 
-[deftypefunk isismon_agent have command-hold_with_right_hand [object]
+[deftypefunk isismon_agent execute command-hold_with_right_hand [object]
   [terminal_format standard-terminal '\nMindMon: Agent ' [get this name] ', hold with right hand ' object '.']
   ]
 
-[deftypefunk isismon_agent have command-hold_with_left_hand [object]
+[deftypefunk isismon_agent execute command-hold_with_left_hand [object]
   [terminal_format standard-terminal '\nMindMon: Agent ' [get this name] ', hold with left hand ' object '.']
   ]
 

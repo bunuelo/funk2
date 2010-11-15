@@ -25,7 +25,7 @@
 				image
 				label
 				entry
-				button_hbox
+				status_button_hbox
 				mindmon_button
 				sense_button
 				visual_objects_button
@@ -48,28 +48,6 @@
        [= image [gtk-image-new_from_image [new image 320 240 nil]]]
        [= label [gtk-label-new '']]
        [= entry [gtk-entry-new]]
-       
-       [= look_for_hbox               [gtk-hbox-new 2]]
-       [= look_for_button             [gtk-button-new_with_label 'Look for Object Type: ']]
-       [= look_for_entry              [gtk-entry-new]]
-       [set look_for_entry            text 'knife']
-       [have look_for_hbox pack_start look_for_button nil nil 0]
-       [have look_for_hbox pack_start look_for_entry  t t 0]
-       [have vbox pack_start look_for_hbox nil nil 0]
-       
-       [= hold_with_right_hand_hbox   [gtk-hbox-new 2]]
-       [= hold_with_right_hand_button [gtk-button-new_with_label 'Hold with Right Hand: ']]
-       [= hold_with_right_hand_entry  [gtk-entry-new]]
-       [have hold_with_right_hand_hbox pack_start hold_with_right_hand_button nil nil 0]
-       [have hold_with_right_hand_hbox pack_start hold_with_right_hand_entry  t t 0]
-       [have vbox pack_start hold_with_right_hand_hbox nil nil 0]
-       
-       [= hold_with_left_hand_hbox   [gtk-hbox-new 2]]
-       [= hold_with_left_hand_button [gtk-button-new_with_label 'Hold with Left Hand: ']]
-       [= hold_with_left_hand_entry  [gtk-entry-new]]
-       [have hold_with_left_hand_hbox pack_start hold_with_left_hand_button nil nil 0]
-       [have hold_with_left_hand_hbox pack_start hold_with_left_hand_entry  t t 0]
-       [have vbox pack_start hold_with_left_hand_hbox nil nil 0]
        
        [have entry key_press_event-signal_connect
 	     [funk [key_event]
@@ -100,37 +78,59 @@
        [have vbox pack_start label t t 0]
        [have vbox pack_start entry nil nil 0]
        
-       [= button_hbox    [gtk-hbox-new 2]]
+       [= status_button_hbox    [gtk-hbox-new 2]]
        
        [= mindmon_button [gtk-button-new_with_label 'MindMon']]
        [have mindmon_button signal_connect 'clicked'
 	     [funk []
 		   [terminal_format standard-terminal '\nLaunching MindMon to monitor ' [get this name] '\'s mind.']
 		   [mindmon [get isis_agent mind]]]]
-       [have button_hbox pack_start mindmon_button nil nil 0]
+       [have status_button_hbox pack_start mindmon_button nil nil 0]
        
        [= sense_button [gtk-button-new_with_label 'Sense']]
        [have sense_button signal_connect 'clicked'
 	     [funk []
 		   [terminal_format standard-terminal '\n' [get this name] '\'s sensory information:'
 				    '\n  ' [have isis_agent sense_world]]]]
-       [have button_hbox pack_start sense_button nil nil 0]
+       [have status_button_hbox pack_start sense_button nil nil 0]
        
        [= visual_objects_button [gtk-button-new_with_label 'Visual Objects']]
        [have visual_objects_button signal_connect 'clicked'
 	     [funk []
 		   [terminal_format standard-terminal '\n' [get this name] '\'s visual objects:'
 				    '\n  ' [get [get isis_agent mind] visual_objects]]]]
-       [have button_hbox pack_start visual_objects_button nil nil 0]
+       [have status_button_hbox pack_start visual_objects_button nil nil 0]
        
        [= visual_knowledge_button [gtk-button-new_with_label 'Visual Knowledge']]
        [have visual_knowledge_button signal_connect 'clicked'
 	     [funk []
 		   [terminal_format standard-terminal '\n' [get this name] '\'s visual semantic knowledge:'
 				    '\n  ' [get [get isis_agent mind] visual_knowledge]]]]
-       [have button_hbox pack_start visual_knowledge_button nil nil 0]
+       [have status_button_hbox pack_start visual_knowledge_button nil nil 0]
        
-       [have vbox pack_start button_hbox nil nil 0]
+       [have vbox pack_start status_button_hbox nil nil 0]
+       
+       [= look_for_hbox               [gtk-hbox-new 2]]
+       [= look_for_button             [gtk-button-new_with_label 'Look for Object Type: ']]
+       [= look_for_entry              [gtk-entry-new]]
+       [set look_for_entry            text 'knife']
+       [have look_for_hbox pack_start look_for_button nil nil 0]
+       [have look_for_hbox pack_start look_for_entry  t t 0]
+       [have vbox pack_start look_for_hbox nil nil 0]
+       
+       [= hold_with_right_hand_hbox   [gtk-hbox-new 2]]
+       [= hold_with_right_hand_button [gtk-button-new_with_label 'Hold with Right Hand: ']]
+       [= hold_with_right_hand_entry  [gtk-entry-new]]
+       [have hold_with_right_hand_hbox pack_start hold_with_right_hand_button nil nil 0]
+       [have hold_with_right_hand_hbox pack_start hold_with_right_hand_entry  t t 0]
+       [have vbox pack_start hold_with_right_hand_hbox nil nil 0]
+       
+       [= hold_with_left_hand_hbox   [gtk-hbox-new 2]]
+       [= hold_with_left_hand_button [gtk-button-new_with_label 'Hold with Left Hand: ']]
+       [= hold_with_left_hand_entry  [gtk-entry-new]]
+       [have hold_with_left_hand_hbox pack_start hold_with_left_hand_button nil nil 0]
+       [have hold_with_left_hand_hbox pack_start hold_with_left_hand_entry  t t 0]
+       [have vbox pack_start hold_with_left_hand_hbox nil nil 0]
        
        [have frame add vbox]
        nil]]

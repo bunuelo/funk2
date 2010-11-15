@@ -421,7 +421,7 @@ def_pcfunk1(pathname__exists, filename, return f2__pathname__exists(this_cause, 
 
 
 f2ptr raw__pathname__rename(f2ptr cause, u8* old_filename, u8* new_filename) {
-  int result = rename(old_filename, new_filename);
+  int result = rename((char*)old_filename, (char*)new_filename);
   if (result == 0) {
     return nil;
   }

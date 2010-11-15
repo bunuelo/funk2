@@ -118,6 +118,10 @@
        [have look_for_hbox pack_start look_for_entry  t t 0]
        [have vbox pack_start look_for_hbox nil nil 0]
        
+       [have look_for_button signal_connect 'clicked'
+	     [funk []
+		   [have this command-look_for [get [get look_for_entry text] as-symbol]]]]
+       
        [= hold_with_right_hand_hbox   [gtk-hbox-new 2]]
        [= hold_with_right_hand_button [gtk-button-new_with_label 'Hold with Right Hand: ']]
        [= hold_with_right_hand_entry  [gtk-entry-new]]
@@ -125,12 +129,20 @@
        [have hold_with_right_hand_hbox pack_start hold_with_right_hand_entry  t t 0]
        [have vbox pack_start hold_with_right_hand_hbox nil nil 0]
        
+       [have hold_with_right_hand_button signal_connect 'clicked'
+	     [funk []
+		   [have this command-hold_with_right_hand [get [get hold_with_right_hand_entry text] as-symbol]]]]
+       
        [= hold_with_left_hand_hbox   [gtk-hbox-new 2]]
        [= hold_with_left_hand_button [gtk-button-new_with_label 'Hold with Left Hand: ']]
        [= hold_with_left_hand_entry  [gtk-entry-new]]
        [have hold_with_left_hand_hbox pack_start hold_with_left_hand_button nil nil 0]
        [have hold_with_left_hand_hbox pack_start hold_with_left_hand_entry  t t 0]
        [have vbox pack_start hold_with_left_hand_hbox nil nil 0]
+       
+       [have hold_with_left_hand_button signal_connect 'clicked'
+	     [funk []
+		   [have this command-hold_with_left_hand [get [get hold_with_left_hand_entry text] as-symbol]]]]
        
        [have frame add vbox]
        nil]]
@@ -151,6 +163,18 @@
     [let [[image_index [get [get [get isismon scale] value] as-integer]]]
       [if [< image_index [get retina_image_sequence length]]
 	  [set image image [get retina_image_sequence elt image_index]]]]]]
+
+[deftypefunk isismon_agent have command-look_for [object_type]
+  [terminal_format standard-terminal '\nMindMon: Agent ' [get this name] ', look for ' object_type '.']
+  ]
+
+[deftypefunk isismon_agent have command-hold_with_right_hand [object]
+  [terminal_format standard-terminal '\nMindMon: Agent ' [get this name] ', hold with right hand ' object '.']
+  ]
+
+[deftypefunk isismon_agent have command-hold_with_left_hand [object]
+  [terminal_format standard-terminal '\nMindMon: Agent ' [get this name] ', hold with left hand ' object '.']
+  ]
 
 
 [deframe isismon_save_movie_dialog [frame] [isismon
@@ -289,7 +313,7 @@
 			     [have step_button signal_connect 'clicked'
 				   [funk []
 					 [let [[seconds 1.0]]
-					   [terminal_format standard-terminal '\nIsisMon: Stepped ' seconds ' seconds.']
+					   [terminal_format standard-terminal '\nIsisMon: Stepping ' seconds ' seconds.']
 					   [have isis_world step_simulation seconds]]]]
 			     
 			     [have window connect_hide_on_delete]

@@ -331,7 +331,7 @@
 			     
 			     [have controller_frame add controller_vbox nil nil 0]
 			     
-			     [have vbox pack_start controller_vbox nil nil 0]
+			     [have vbox pack_start controller_frame nil nil 0]
 			     
 			     [have window connect_hide_on_delete]
 			     [have window show_all]

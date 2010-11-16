@@ -172,7 +172,7 @@ f2ptr raw__core_extension_funk__apply(f2ptr cause, f2ptr this, f2ptr args) {
   f2ptr result = f2__core_extension__assure_initialized(cause, core_extension);
   if (raw__larva__is_type(cause, result)) {
     return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list12__new(cause,
-															new__symbol(cause, "bug_type"),            new__symbol(cause, "could_not_assure_core_extension_is_initialize"),
+															new__symbol(cause, "bug_type"),            new__symbol(cause, "could_not_assure_core_extension_is_initialized"),
 															new__symbol(cause, "funkname"),            new__symbol(cause, "core_extension_funk-apply"),
 															new__symbol(cause, "core_extension_name"), core_extension_name,
 															new__symbol(cause, "core_extension"),      core_extension,

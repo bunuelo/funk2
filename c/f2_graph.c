@@ -479,7 +479,7 @@ f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
   {
     f2ptr edge_set = f2__graph__edge_set(cause, this);
     set__iteration(cause, edge_set, edge,
-		   f2ptr raw__graph_edge__as__dot_code(cause, edge);
+		   f2ptr edge_code = raw__graph_edge__as__dot_code(cause, edge);
 		   edge_codes = f2cons__new(cause, edge_code, edge_codes);
 		   );
   }

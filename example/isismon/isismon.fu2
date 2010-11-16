@@ -206,7 +206,8 @@
        [have save_button signal_connect 'clicked'
 	     [funk []
 		   [let [[filename [get entry text]]]
-		     [have isismon save_movie_as filename]]]]
+		     [have isismon save_movie_as filename]
+		     [have window destroy]]]]
        
        [have cancel_button signal_connect 'clicked'
 	     [funk []

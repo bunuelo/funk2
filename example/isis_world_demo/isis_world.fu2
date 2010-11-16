@@ -68,7 +68,6 @@
 	  [reduction_factor [have screenshot_frame lookup `reduction_factor]]]
       [let [[actual_width  [* reduction_factor width]]
 	    [actual_height [* reduction_factor height]]]
-	[print [frame actual_width actual_width actual_height actual_height]]
 	[let [[initial_image [image-new_from_rgb_data width height rgb_data]]]
 	  [if [== reduction_factor 1]
 	      initial_image

@@ -29,7 +29,7 @@
 				[let [[visual_knowledge [get [get [get this mind] resource `learned_reactive `sensory `propogate_visual_objects_to_visual_knowledge] visual_knowledge]]]
 				  [if [null visual_knowledge]
 				      [have this-resource think_to_self 'Learned reactive visual knowledge does not exist.']
-				    [prog [have this-resource think_to_self 'Including learned reactive visual knowledge into deliberative reality knowledge: ' visual_knowledge '.']
+				    [prog `[have this-resource think_to_self 'Including learned reactive visual knowledge into deliberative reality knowledge: ' visual_knowledge '.']
 					  [let [[new_reality_knowledge [new semantic_knowledge_base]]]
 					    'should incorporate visual knowledge into current reality knowledge.'
 					    [= reality_knowledge new_reality_knowledge]]

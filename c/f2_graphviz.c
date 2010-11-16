@@ -125,9 +125,18 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
 def_pcfunk1(graphviz__exp__as__label, exp, return f2__graphviz__exp__as__label(this_cause, exp));
 
 f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
+  f2ptr eq_hash_value = f2__object__eq_hash_value(cause, exp);
+  if (! raw__integer__is_type(cause, eq_hash_value)) {
+    return f2larva__new(cause, 3, nil);
+  } else {
+    s64 eq_hash_value__i = f2integer__i(eq_hash_value, cause);
+    if (eq_hash_value__i < 0) {
+      eq_hash_value = f2integer__new(cause, -eq_hash_value);
+    }
+  }
   return f2__stringlist__concat(cause, f2list2__new(cause,
 						    new__string(cause, "ptr_"),
-						    f2__exp__as__string(cause, f2__object__eq_hash_value(cause, exp))));
+						    f2__exp__as__string(cause, eq_hash_value)));
   /*
     if (exp == nil) {
     return new__string(cause, "nil");

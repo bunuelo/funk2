@@ -41,7 +41,7 @@ declare_object_type_2_slot(bug, bug_type, frame,
 
 declare_primobject_2_slot(bug, bug_type, frame);
 
-f2ptr f2__bug__new(f2ptr cause, f2ptr type, f2ptr frame);
+f2ptr f2__bug__new(f2ptr cause, f2ptr bug_type, f2ptr frame);
 f2ptr f2__bug__new_from_larva(f2ptr cause, f2ptr bug);
 
 f2ptr f2bug__primobject_type__new_aux(f2ptr cause);

@@ -542,12 +542,20 @@ f2ptr f2__force_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args)
     f2fiber__keep_undead__set(new_fiber, cause, nil);
     if ((f2__fiber__paused(cause, new_fiber) != nil) &&
 	raw__bug__is_type(cause, value)) {
-      return f2larva__new(cause, 753, f2__bug__new(cause, f2integer__new(cause, 753), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"),  new__symbol(cause, "found_bug_in_fiber"),
-															  new__symbol(cause, "funkname"),  new__symbol(cause, "f2__force_funk_apply"),
-															  new__symbol(cause, "funkable"),  funkable,
-															  new__symbol(cause, "args"),      args,
-															  new__symbol(cause, "bug_found"), value))));
+      f2ptr bug_type    = f2__bug__bug_type(cause, value);
+      s64   bug_type__i;
+      if (raw__integer__is_type(cause, bug_type)) {
+	bug_type__i = f2integer__i(bug_type, cause);
+      } else {
+	bug_type__i = 753;
+      }
+      return f2larva__new(cause, bug_type__i, value);
+      //return f2larva__new(cause, 753, f2__bug__new(cause, f2integer__new(cause, 753), f2__frame__new(cause, f2list10__new(cause,
+      //															  new__symbol(cause, "bug_type"),  new__symbol(cause, "found_bug_in_fiber"),
+      //															  new__symbol(cause, "funkname"),  new__symbol(cause, "f2__force_funk_apply"),
+      //															  new__symbol(cause, "funkable"),  funkable,
+      //															  new__symbol(cause, "args"),      args,
+      //															  new__symbol(cause, "bug_found"), value))));
     }
     return value;
   } else {

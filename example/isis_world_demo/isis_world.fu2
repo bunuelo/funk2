@@ -101,8 +101,8 @@
 [deftypefunk isis_world execute step_simulation [seconds]
   [have step_mutex lock]
   [let [[maximum_tick_size 0.15]]
-    [let [[tick [if [> seconds maximum_step_size]
-		    maximum_step_size
+    [let [[tick [if [> seconds maximum_tick_size]
+		    maximum_tick_size
 		  seconds]]]
       [let [[subseconds 0.0]]
 	[while [< subseconds seconds]

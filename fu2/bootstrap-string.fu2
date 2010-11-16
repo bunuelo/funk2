@@ -37,7 +37,7 @@
   [string-to_symbol [exp-as-string exp]]]
 
 [defunk string-read [this]
-  [read [string_stream-new [string-concat this ' '] 0]]]
+  [stream-try_read [string_stream-new [string-concat this ' '] 0]]]
 
 [defunk string-format [:rest exps]
   [stringlist-concat [mapcar [funk [exp]

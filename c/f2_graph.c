@@ -53,6 +53,14 @@ f2ptr f2__graph_node__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr t
 def_pcfunk2(graph_node__terminal_print_with_frame, this, terminal_print_frame, return f2__graph_node__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
+f2ptr raw__graph_node__as__dot_code(f2ptr cause, f2ptr this) {
+  f2ptr color         = new__string(cause, "#000000");
+  f2ptr eq_hash_value = f2__object__eq_hash_value(cause, this);
+  f2ptr node_code     = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, eq_hash_value), f2__graphviz__exp__as__label(cause, eq_hash_value), color);
+  return node_code;
+}
+
+
 f2ptr f2graph_node__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2graph_node__primobject_type__new(cause);
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph_node.terminal_print_with_frame__funk);}
@@ -92,6 +100,18 @@ f2ptr f2__graph_edge__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr t
   return raw__graph_edge__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(graph_edge__terminal_print_with_frame, this, terminal_print_frame, return f2__graph_edge__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr raw__graph_edge__as__dot_code(f2ptr cause, f2ptr this) {
+  f2ptr this__eq_hash_value             = f2__object__eq_hash_value(cause, this);
+  f2ptr this__left_node                 = f2__graph_edge__left_node(cause, this);
+  f2ptr this__right_node                = f2__graph_edge__right_node(cause, this);
+  f2ptr this__left_node__eq_hash_value  = f2__graph_node__label(cause, this__left_node);
+  f2ptr this__right_node__eq_hash_value = f2__graph_node__label(cause, this__right_node);
+  f2ptr edge_code                       = f2__graphviz__raw_labelled_edge(cause, this__eq_hash_value, f2__graphviz__exp__as__name(cause, this__left_node__eq_hash_value), f2__graphviz__exp__as__name(cause, this__right_node__eq_hash_value));
+  return edge_code;
+}
+
 
 
 f2ptr f2graph_edge__primobject_type__new_aux(f2ptr cause) {
@@ -444,17 +464,14 @@ f2ptr f2__graph__edges_with_label_between_nodes(f2ptr cause, f2ptr this, f2ptr l
 }
 def_pcfunk4(graph__edges_with_label_between_nodes, this, label, left_node, right_node, return f2__graph__edges_with_label_between_nodes(this_cause, this, label, left_node, right_node));
 
+
+
 f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
-  if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
   f2ptr node_codes = nil;
   {
     f2ptr node_set = f2__graph__node_set(cause, this);
     set__iteration(cause, node_set, node,
-		   f2ptr node__label = f2__graph_node__label(cause, node);
-		   f2ptr color       = new__string(cause, "#000000");
-		   f2ptr node_code   = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, node__label), f2__graphviz__exp__as__label(cause, node__label), color);
+		   f2ptr node_code   = raw__graph_node__as__dot_code(cause, node);
 		   node_codes = f2cons__new(cause, node_code, node_codes);
 		   );
   }    
@@ -462,12 +479,7 @@ f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
   {
     f2ptr edge_set = f2__graph__edge_set(cause, this);
     set__iteration(cause, edge_set, edge,
-		   f2ptr edge__label             = f2__graph_edge__label(cause, edge);
-		   f2ptr edge__left_node         = f2__graph_edge__left_node(cause, edge);
-		   f2ptr edge__right_node        = f2__graph_edge__right_node(cause, edge);
-		   f2ptr edge__left_node__label  = f2__graph_node__label(cause, edge__left_node);
-		   f2ptr edge__right_node__label = f2__graph_node__label(cause, edge__right_node);
-		   f2ptr edge_code               = f2__graphviz__raw_labelled_edge(cause, edge__label, f2__graphviz__exp__as__name(cause, edge__left_node__label), f2__graphviz__exp__as__name(cause, edge__right_node__label));
+		   f2ptr raw__graph_edge__as__dot_code(cause, edge);
 		   edge_codes = f2cons__new(cause, edge_code, edge_codes);
 		   );
   }
@@ -476,6 +488,13 @@ f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
 						   f2__graphviz__edge_color(cause, new__string(cause, "#000000")),
 						   f2__stringlist__rawcode(cause, node_codes),
 						   f2__stringlist__rawcode(cause, edge_codes)));
+}
+
+f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__as__dot_code(cause, this);
 }
 def_pcfunk1(graph__as__dot_code, this, return f2__graph__as__dot_code(this_cause, this));
 

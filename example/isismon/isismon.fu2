@@ -167,7 +167,7 @@
 [deftypefunk isismon_agent execute command-look_for [object_type]
   [terminal_format standard-terminal '\nMindMon: Commanding ' [get this name] ' to look for ' object_type '.']
   [have [get [get isis_agent mind] resource `builtin_reactive `neural_plug `activate_resource]
-	command `learned_reactive `physical `look_for [get object_type as-string]]
+	command `learned_reactive `physical `look_for object_type]
   ]
 
 [deftypefunk isismon_agent execute command-hold_with_right_hand [object]

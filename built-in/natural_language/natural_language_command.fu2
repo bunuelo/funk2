@@ -102,6 +102,8 @@
 	  semantic_frames]
     matching_frames]]
 
+
+
 [defunk skb-test []
   [let [[semantic_knowledge_base [new semantic_knowledge_base]]]
     [let [[knife_semantic_frame        [new visual_object_semantic_frame]]
@@ -143,6 +145,8 @@
       [let [[index_semantic_frame [new visual_object_semantic_frame]]]
 	[have index_semantic_frame add_noun `toaster]
 	[have semantic_knowledge_base lookup_matching_semantic_frames index_semantic_frame]]]]]
+
+
 
 
 

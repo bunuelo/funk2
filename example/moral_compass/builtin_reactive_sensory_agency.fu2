@@ -31,7 +31,7 @@
 			      [let [[time_step [get body time_step]]]
 				[if [eq last_time_step time_step]
 				    [millisleep 1000]
-				  [prog [have this-resource think_to_self 'My body senses visual objects from the world.']
+				  [prog `[have this-resource think_to_self 'My body senses visual objects from the world.']
 					[= visual_objects         [have body sense_visual_objects]]
 					[= retina_image           [get  body retina_image]]
 					[= left_hand_object_name  [have body sense_left_hand_object_name]]

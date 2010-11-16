@@ -104,7 +104,6 @@ def_pcfunk2(graph_edge__terminal_print_with_frame, this, terminal_print_frame, r
 
 
 f2ptr raw__graph_edge__as__dot_code(f2ptr cause, f2ptr this) {
-  f2ptr this__eq_hash_value             = f2__object__eq_hash_value(cause, this);
   f2ptr this__label                     = f2__graph_edge__label(cause, this);
   f2ptr this__left_node                 = f2__graph_edge__left_node(cause, this);
   f2ptr this__right_node                = f2__graph_edge__right_node(cause, this);

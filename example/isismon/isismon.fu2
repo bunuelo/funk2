@@ -234,7 +234,7 @@
 			  controller_hbox
 			  step_size_hbox
 			  step_size_label
-			  step_size_button
+			  step_size_entry
 			  play_button
 			  stop_button
 			  step_button

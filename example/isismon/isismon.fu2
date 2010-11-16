@@ -233,7 +233,8 @@
 			  scale
 			  agent_hbox
 			  controller_frame
-			  controller_hbox
+			  controller_vbox
+			  controller_button_hbox
 			  step_size_hbox
 			  step_size_label
 			  step_size_entry
@@ -297,14 +298,14 @@
 			     [= controller_frame [gtk-frame-new [format nil 'isis_world controller']]]
 			     [= controller_vbox  [gtk-vbox-new 2]]
 			     
-			     [= controller_hbox [gtk-hbox-new 2]]
+			     [= controller_button_hbox [gtk-hbox-new 2]]
 			     [= play_button [gtk-button-new_with_label 'Play']]
 			     [= stop_button [gtk-button-new_with_label 'Stop']]
 			     [= step_button [gtk-button-new_with_label 'Step']]
-			     [have controller_hbox pack_start play_button nil nil 0]
-			     [have controller_hbox pack_start stop_button nil nil 0]
-			     [have controller_hbox pack_start step_button nil nil 0]
-			     [have controller_vbox pack_start controller_hbox nil nil 0]
+			     [have controller_button_hbox pack_start play_button nil nil 0]
+			     [have controller_button_hbox pack_start stop_button nil nil 0]
+			     [have controller_button_hbox pack_start step_button nil nil 0]
+			     [have controller_vbox pack_start controller_button_hbox nil nil 0]
 			     
 			     [have play_button signal_connect 'clicked'
 				   [funk []

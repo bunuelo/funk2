@@ -232,10 +232,12 @@
 			  overview_image
 			  scale
 			  agent_hbox
+			  controller_frame
 			  controller_hbox
 			  step_size_hbox
 			  step_size_label
 			  step_size_entry
+			  
 			  play_button
 			  stop_button
 			  step_button
@@ -292,6 +294,9 @@
 			     [have this add_agent [get isis_world agent_body `Ralph]]
 			     [have this add_agent [get isis_world agent_body `Lauren]]
 			     
+			     [= controller_frame [gtk-frame-new [format nil 'isis_world controller']]]
+			     [= controller_vbox  [gtk-vbox-new 2]]
+			     
 			     [= controller_hbox [gtk-hbox-new 2]]
 			     [= play_button [gtk-button-new_with_label 'Play']]
 			     [= stop_button [gtk-button-new_with_label 'Stop']]
@@ -299,7 +304,7 @@
 			     [have controller_hbox pack_start play_button nil nil 0]
 			     [have controller_hbox pack_start stop_button nil nil 0]
 			     [have controller_hbox pack_start step_button nil nil 0]
-			     [have vbox pack_start controller_hbox nil nil 0]
+			     [have controller_vbox pack_start controller_hbox nil nil 0]
 			     
 			     [have play_button signal_connect 'clicked'
 				   [funk []
@@ -321,7 +326,11 @@
 			     [have step_size_hbox pack_start step_size_label nil nil 0]
 			     [have step_size_hbox pack_start step_size_entry t t 0]
 			     [set step_size_entry text '0.03']
-			     [have vbox pack_start step_size_hbox nil nil 0]
+			     [have controller_vbox pack_start step_size_hbox nil nil 0]
+			     
+			     [have controller_frame add controller_vbox nil nil 0]
+			     
+			     [have vbox pack_start controller_vbox nil nil 0]
 			     
 			     [have window connect_hide_on_delete]
 			     [have window show_all]

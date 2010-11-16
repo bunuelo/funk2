@@ -466,12 +466,12 @@ def_pcfunk4(graph__edges_with_label_between_nodes, this, label, left_node, right
 
 
 
-f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
+f2ptr raw__graph__as__dot_code(f2ptr cause, f2ptr this) {
   f2ptr node_codes = nil;
   {
     f2ptr node_set = f2__graph__node_set(cause, this);
     set__iteration(cause, node_set, node,
-		   f2ptr node_code   = raw__graph_node__as__dot_code(cause, node);
+		   f2ptr node_code = raw__graph_node__as__dot_code(cause, node);
 		   node_codes = f2cons__new(cause, node_code, node_codes);
 		   );
   }    

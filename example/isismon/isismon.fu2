@@ -389,8 +389,7 @@
     [let [[bit_rate   5000000]
 	  [frame_rate 25]]
       [let [[overview_movie [movie-new_from_image_sequence overview_image_sequence bit_rate frame_rate]]]
-	[have overview_movie save filename]
-	[have window destroy]]]]]
+	[have overview_movie save filename]]]]]
 
 
 [defmetro isismon [:rest args]

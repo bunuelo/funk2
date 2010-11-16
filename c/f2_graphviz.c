@@ -127,7 +127,7 @@ def_pcfunk1(graphviz__exp__as__label, exp, return f2__graphviz__exp__as__label(t
 f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
   return f2__stringlist__concat(cause, f2list2__new(cause,
 						    new__string(cause, "ptr_"),
-						    f2__exp__as__string(cause, f2integer__new(cause, exp))));
+						    f2__exp__as__string(cause, f2__object__eq_hash_value(cause, exp))));
   /*
     if (exp == nil) {
     return new__string(cause, "nil");

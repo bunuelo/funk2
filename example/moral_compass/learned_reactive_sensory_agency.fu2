@@ -63,11 +63,11 @@
 		  [funk []
 			[let [[body [get this body]]]
 			  [let [[visual_objects [get [get this mind] visual_objects]]]
-			    [have this-resource think_to_self 'Propogating visual objects to visual knowledge.']
+			    `[have this-resource think_to_self 'Propogating visual objects to visual knowledge.']
 			    [let [[new_visual_knowledge [visual_semantic_knowledge-new_from_visual_objects visual_objects]]]
 			      [= visual_knowledge new_visual_knowledge]
 			      [mind-wait_to_activate [get this mind] deliberative reality include_learned_reactive_visual_knowledge_into_deliberative_knowledge]
-			      [have this-resource think_to_self 'I created this knowledge: ' visual_knowledge '.']
+			      `[have this-resource think_to_self 'I created this knowledge: ' visual_knowledge '.']
 			      ]]]]]
        nil]]
 

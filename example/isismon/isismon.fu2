@@ -365,7 +365,7 @@
 			    [have this save_movie_as [find_nonexistent_filename]]]]
 		  [= last_stepped_simulation_time [time]]]]]]]
   [have this update]
-  [millisleep 100]]  
+  [millisleep 100]]
 
 [deftypefunk isismon execute add_agent [agent]
   [let [[isismon_agent [new isismon_agent this agent]]]

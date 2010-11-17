@@ -24,7 +24,10 @@
 
 // graph_edit_sequence
 typedef struct funk2_object_type__graph_edit_sequence__slot_s funk2_object_type__graph_edit_sequence__slot_t;
-declare_object_type_3_slot(graph_edit_sequence, operations, cost, isomorphism, );
+declare_object_type_3_slot(graph_edit_sequence, operations, cost, isomorphism,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 #endif // F2__GRAPH_MATCH_ERROR_CORRECTING__TYPES__H
 

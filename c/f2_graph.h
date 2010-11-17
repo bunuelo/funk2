@@ -45,15 +45,24 @@ declare_object_type_5_slot(graph, node_set, edge_set, nodes_label_hash, edges_la
 
 // graph_isomorphism
 typedef struct funk2_object_type__graph_isomorphism__slot_s funk2_object_type__graph_isomorphism__slot_t;
-declare_object_type_2_slot(graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash, );
+declare_object_type_2_slot(graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 // graph_decomposition_lattice_node
 typedef struct funk2_object_type__graph_decomposition_lattice_node__slot_s funk2_object_type__graph_decomposition_lattice_node__slot_t;
-declare_object_type_5_slot(graph_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, between_graph, root_graph_set, );
+declare_object_type_5_slot(graph_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, between_graph, root_graph_set,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 // graph_decomposition_lattice
 typedef struct funk2_object_type__graph_decomposition_lattice__slot_s funk2_object_type__graph_decomposition_lattice__slot_t;
-declare_object_type_7_slot(graph_decomposition_lattice, graph_set, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_graph_set, root_graph_set, );
+declare_object_type_7_slot(graph_decomposition_lattice, graph_set, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_graph_set, root_graph_set,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 #endif // F2__GRAPH__TYPE__H
 

@@ -26,12 +26,12 @@ boolean_t raw__frame__ball_size_is_less_than_with_ptypehash(f2ptr cause, f2ptr t
   if (maximum_size <= 0) {
     return boolean__false;
   }
-  f2ptr already_counted_this_frame = raw__ptypehash__lookup(cause, ptypehash, f2bool__new(boolean__true));
+  f2ptr already_counted_this_frame = raw__ptypehash__lookup(cause, ptypehash, this);
   if (already_counted_this_frame != nil) {
     *exact_size = 0;
     return boolean__true;
   }
-  raw__ptypehash__add(cause, ptypehash, this, this);
+  raw__ptypehash__add(cause, ptypehash, this, f2bool__new(boolean__true));
   // frame nodes count as one.
   s64 this_size = 1;
   frame__iteration(cause, this, type_slot_name, slot_name, slot_value,

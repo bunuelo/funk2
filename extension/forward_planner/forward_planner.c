@@ -238,7 +238,8 @@ f2ptr f2__forward_planner__core_extension_ping(f2ptr cause) {
 export_cefunk0(forward_planner__core_extension_ping, 0, "");
 
 f2ptr f2__forward_planner__core_extension_initialize(f2ptr cause) {
-  f2__add_type(cause, new__symbol(cause, "forward_planner"), f2__forward_planner_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "forward_planner_action"), f2__forward_planner_action_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "forward_planner"),        f2__forward_planner_type__new(cause));
   printf("\nforward_planner initialized."); fflush(stdout);
   return nil;
 }

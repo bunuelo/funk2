@@ -446,6 +446,38 @@ f2ptr f2__frame__as__simple_graph(f2ptr cause, f2ptr this) {
 def_pcfunk1(frame__as__simple_graph, this, return f2__frame__as__simple_graph(this_cause, this));
 
 
+f2ptr raw__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash) {
+  f2ptr this_node = f2__ptypehash__lookup(cause, this);
+  if (this_node == nil) {
+    this_node = f2__graph_node__new(cause, this);
+    f2__ptypehash__add(cause, node_ptypehash, this, this_node);
+  }
+  f2__graph__add_node(cause, this_node);
+  frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
+		   f2ptr type_slot_name__string = f2__exp__as__string(cause, type_slot_name);
+		   f2ptr slot_name__string      = f2__exp__as__string(cause, slot_name);
+		   f2ptr combined_slot_name     = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list3__new(cause, type_slot_name, new__string(cause, "-"), slot_name)));
+		   f2ptr node                   = f2__ptypehash__lookup(cause, slot_value);
+		   if (node == nil) {
+		     node = f2__graph_node__new(cause, slot_value);
+		     f2__ptypehash__add(cause, node_ptypehash, slot_value, node);
+		   }
+		   f2__graph__add_new_edge(cause, combined_slot_name, this_node, node);
+		   );
+  return nil;
+}
+
+f2ptr f2__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash) {
+  if ((! raw__frame__is_type(cause, this)) ||
+      (! raw__graph__is_type(cause, graph)) ||
+      (! raw__ptypehash__is_type(cause, node_ptypehash))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__frame__add_to_graph_with_ptypehash(cause, this, graph, node_ptypehash);
+}
+def_pcfunk3(frame__add_to_graph_with_ptypehash, this, graph, node_ptypehash, return f2__frame__add_to_graph_with_ptypehash(this_cause, this, graph, ptypehash));
+
+
 f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr use_one_line = raw__terminal_print_frame__use_one_line(cause, terminal_print_frame);
   f2ptr max_size     = raw__terminal_print_frame__max_size(cause, terminal_print_frame);
@@ -773,6 +805,7 @@ f2ptr f2frame__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.equals_hash_value__funk);}
   {char* slot_name = "part_not_contained_by";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.part_not_contained_by__funk);}
   {char* slot_name = "as-simple_graph";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.as__simple_graph__funk);}
+  {char* slot_name = "add_to_graph_with_ptypehash"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.add_to_graph_with_ptypehash__funk);}
   {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.terminal_print_with_frame__funk);}
   return this;
 }
@@ -842,6 +875,8 @@ void f2__primobject_frame__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__part_not_contained_by, this, that, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.part_not_contained_by__funk = never_gc(cfunk);}
   {char* symbol_str = "as-simple_graph"; __funk2.globalenv.object_type.primobject.primobject_type_frame.as__simple_graph__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(frame__as__simple_graph, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.as__simple_graph__funk = never_gc(cfunk);}
+  {char* symbol_str = "add_to_graph_with_ptypehash"; __funk2.globalenv.object_type.primobject.primobject_type_frame.add_to_graph_with_ptypehash__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__add_to_graph_with_ptypehash, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.add_to_graph_with_ptypehash__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_frame.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.terminal_print_with_frame__funk = never_gc(cfunk);}
   

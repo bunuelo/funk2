@@ -142,10 +142,13 @@
       [have semantic_knowledge_base add_semantic_frame butter_semantic_frame]
       [have semantic_knowledge_base add_semantic_frame Ralph_semantic_frame]
       [have semantic_knowledge_base add_semantic_frame Lauren_semantic_frame]
-      [let [[index_semantic_frame [new visual_object_semantic_frame]]]
-	[have index_semantic_frame add_noun `toaster]
-	[have semantic_knowledge_base lookup_matching_semantic_frames index_semantic_frame]]]]]
+      semantic_knowledge_base]]]
 
+[defunk skb_match-test []
+  [let [[semantic_knowledge_base [skb-test]]]
+    [let [[index_semantic_frame [new visual_object_semantic_frame]]]
+      [have index_semantic_frame add_noun `toaster]
+      [have semantic_knowledge_base lookup_matching_semantic_frames index_semantic_frame]]]]
 
 
 

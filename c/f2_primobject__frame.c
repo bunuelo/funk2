@@ -470,7 +470,9 @@ f2ptr raw__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr gra
 		     f2ptr slot_value_node = f2__ptypehash__lookup(cause, node_ptypehash, slot_value);
 		     if (slot_value_node == nil) {
 		       slot_value_node = f2__graph_node__new(cause, slot_value);
-		       f2__ptypehash__add(cause, node_ptypehash, slot_value, slot_value_node);
+		       if (raw__frame__is_type(cause, slot_value)) {
+			 f2__ptypehash__add(cause, node_ptypehash, slot_value, slot_value_node);
+		       }
 		     }
 		     f2__graph__add_new_edge(cause, graph, slot_name, this_node, slot_value_node);
 		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key_type"), slot_value_node, f2__graph_node__new(cause, type_slot_name));

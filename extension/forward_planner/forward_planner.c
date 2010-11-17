@@ -29,7 +29,7 @@ f2ptr raw__forward_planner__new(f2ptr cause, f2ptr action_set) {
 }
 
 f2ptr f2__forward_planner__new(f2ptr cause, f2ptr action_set) {
-  if (! raw__chunk__is_type(cause, action_set)) {
+  if (! raw__set__is_type(cause, action_set)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__forward_planner__new(cause, action_set);

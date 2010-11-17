@@ -211,6 +211,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/image_sequence/libimage_sequence.la \
                   extension/movie/libmovie.la \
                   extension/forward_planner/libforward_planner.la \
+                  extension/frame_ball/libframe_ball.la \
                   extension/mindmon/libmindmon.la \
                   extension/causality/libcausality.la
 #bin_PROGRAMS    = bin/funk2-static
@@ -348,6 +349,7 @@ extension_image_libimage_la_SOURCES                     = extension/image/image.
 extension_image_sequence_libimage_sequence_la_SOURCES   = extension/image_sequence/image_sequence.c
 extension_movie_libmovie_la_SOURCES                     = extension/movie/movie.c
 extension_forward_planner_libforward_planner_la_SOURCES = extension/forward_planner/forward_planner.c
+extension_frame_ball_libframe_ball_la_SOURCES           = extension/frame_ball/frame_ball.c
 extension_mindmon_libmindmon_la_SOURCES                 = extension/mindmon/mindmon.c
 extension_causality_libcausality_la_SOURCES             = extension/causality/causality.c
 
@@ -390,6 +392,9 @@ extension_movie_libmovie_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_forward_planner_libforward_planner_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_forward_planner_libforward_planner_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_frame_ball_libframe_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_frame_ball_libframe_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_mindmon_libmindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_mindmon_libmindmon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

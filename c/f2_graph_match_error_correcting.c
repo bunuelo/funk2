@@ -205,24 +205,6 @@ f2ptr f2__graph_edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2pt
 }
 def_pcfunk5(graph_edit_sequence__combine, this, that, lattice_node, graph, cost_function, return f2__graph_edit_sequence__combine(this_cause, this, that, lattice_node, graph, cost_function));
 
-// graph_decomposition_lattice
-#define INF 100000
-void dfs_visit(f2ptr cause, f2ptr this, f2ptr node_parent_hash, f2ptr used_hash, f2ptr *root_to_leaf_list) {  // For topological sort
-  //printf("\n-->"); f2__print(cause, this);
-  f2__ptypehash__add(cause, used_hash, this, 1);
-  f2ptr lattice_node = f2__ptypehash__lookup(cause, node_parent_hash, this);
-  if (lattice_node != nil) {
-    f2ptr left_child_graph   = f2__graph_decomposition_lattice_node__left_child_graph( cause, lattice_node);
-    f2ptr right_child_graph  = f2__graph_decomposition_lattice_node__right_child_graph(cause, lattice_node);
-    if(f2__ptypehash__lookup(cause, used_hash, left_child_graph)  == nil)
-      dfs_visit(cause, left_child_graph, node_parent_hash, used_hash, root_to_leaf_list);
-    if(f2__ptypehash__lookup(cause, used_hash, right_child_graph) == nil)
-      dfs_visit(cause, right_child_graph, node_parent_hash, used_hash, root_to_leaf_list);
-  }
-  *root_to_leaf_list = f2__cons__new(cause, this, *root_to_leaf_list);
-}
-
-
 f2ptr raw__graph_edit_sequence__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -256,8 +238,26 @@ f2ptr f2graph_edit_sequence__primobject_type__new_aux(f2ptr cause) {
 
 
 
+// graph_decomposition_lattice
 
-f2ptr cost_compare(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
+#define graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__maximum_possible_cost (((u64)1) << 62)
+
+void depth_first_search_visit(f2ptr cause, f2ptr this, f2ptr node_parent_hash, f2ptr used_hash, f2ptr *root_to_leaf_list) {  // For topological sort
+  //printf("\n-->"); f2__print(cause, this);
+  f2__ptypehash__add(cause, used_hash, this, 1);
+  f2ptr lattice_node = f2__ptypehash__lookup(cause, node_parent_hash, this);
+  if (lattice_node != nil) {
+    f2ptr left_child_graph   = f2__graph_decomposition_lattice_node__left_child_graph( cause, lattice_node);
+    f2ptr right_child_graph  = f2__graph_decomposition_lattice_node__right_child_graph(cause, lattice_node);
+    if(f2__ptypehash__lookup(cause, used_hash, left_child_graph)  == nil)
+      depth_first_search_visit(cause, left_child_graph, node_parent_hash, used_hash, root_to_leaf_list);
+    if(f2__ptypehash__lookup(cause, used_hash, right_child_graph) == nil)
+      depth_first_search_visit(cause, right_child_graph, node_parent_hash, used_hash, root_to_leaf_list);
+  }
+  *root_to_leaf_list = f2__cons__new(cause, this, *root_to_leaf_list);
+}
+
+f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__cost_compare(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
   f2ptr operations_1 = f2__cons__car(cause, args);
   f2ptr operations_2 = f2__cons__car(cause, f2__cons__cdr(cause, args));
   if (f2__integer__eq(cause, f2__graph_edit_sequence__cost(cause, operations_1), f2__graph_edit_sequence__cost(cause, operations_2))) {
@@ -270,7 +270,7 @@ f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f
   
   f2ptr compare_cfunk = f2cfunk__new(cause, nil, 
                                      f2list2__new(cause, new__symbol(cause, "x"), new__symbol(cause, "y")),
-				     f2pointer__new(cause, raw_executable__to__relative_ptr(cost_compare)), global_environment(), nil, nil);
+				     f2pointer__new(cause, raw_executable__to__relative_ptr(raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__cost_compare)), global_environment(), nil, nil);
   
   f2ptr graph_set             = f2__graph_decomposition_lattice__graph_set            (cause, this);
   //f2ptr node_set              = f2__graph_decomposition_lattice__node_set             (cause, this);
@@ -323,7 +323,7 @@ f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f
   f2ptr root_to_leaf_list = nil;
   set__iteration(cause, root_graph_set, root_graph, 
 		 if (f2__ptypehash__lookup(cause, used_hash, root_graph) == nil) 
-		   dfs_visit(cause, root_graph, node_parent_hash, used_hash, &root_to_leaf_list);
+		   depth_first_search_visit(cause, root_graph, node_parent_hash, used_hash, &root_to_leaf_list);
 		 );
   f2ptr leaf_to_root_revs = root_to_leaf_list;
   f2ptr leaf_to_root_list = nil;
@@ -333,7 +333,7 @@ f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f
   }
   //printf("TopSort Done!\n"); //f2__print(cause, leaf_to_root_list); f2__print(cause, root_to_leaf_list);
 
-  u64 threshold = INF;
+  u64 threshold = graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__maximum_possible_cost;
   while (1) {
     // Compute the heuristic function
     // Leaves up. For each graph S in the decomposition lattice,
@@ -348,11 +348,11 @@ f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f
       leaf_to_root_iter = f2__cons__cdr(cause, leaf_to_root_iter);
       
       f2ptr lattice_node = f2__ptypehash__lookup(cause, node_parent_hash, current_S);
-      u64 c_open = INF;
+      u64 c_open = graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__maximum_possible_cost;
       f2ptr S_open_operations_rbt = f2__ptypehash__lookup(cause, open_operations_rbt_hash, current_S);
       f2ptr S_minimal_open_operations = f2__redblacktree__minimum(cause, S_open_operations_rbt);
       if (S_minimal_open_operations != nil) c_open = f2integer__i(f2__graph_edit_sequence__cost(cause, S_minimal_open_operations), cause);
-      u64 c_closed = INF;
+      u64 c_closed = graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__maximum_possible_cost;
       f2ptr S_closed_operations_rbt = f2__ptypehash__lookup(cause, closed_operations_rbt_hash, current_S);
       f2ptr S_minimal_closed_operations = f2__redblacktree__minimum(cause, S_closed_operations_rbt);
       if (S_minimal_closed_operations != nil) c_closed = f2integer__i(f2__graph_edit_sequence__cost(cause, S_minimal_closed_operations), cause);
@@ -390,7 +390,7 @@ f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f
       if (f2__ptypehash__lookup(cause, root_graph_set, current_S) != nil) {
 	f2__ptypehash__add(cause, h_hash, current_S, f2integer__new(cause, 0));
       } else {
-	u64 min_h = INF;
+	u64 min_h = graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__maximum_possible_cost;
 	node_s = f2__ptypehash__lookup(cause, node_left_child_hash, current_S);
 	//f2__print(cause, node_s);
 	if (node_s != nil) {
@@ -415,7 +415,7 @@ f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f
     }
     //printf("H\n"); set__iteration(cause, graph_set, graph_s, f2__print(cause, graph_s); f2__print(cause, f2__ptypehash__lookup(cause, h_hash, graph_s)););
     
-    u64 minimal_estimated_cost = INF;
+    u64 minimal_estimated_cost = graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__maximum_possible_cost;
     f2ptr minimal_cost_graph = nil;
     f2ptr minimal_open_operations = nil;
     //Find S in D with minimal C[open(S)] + h(S)

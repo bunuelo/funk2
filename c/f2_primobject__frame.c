@@ -185,6 +185,20 @@ f2ptr raw__frame__type_var__mapc_keys(f2ptr cause, f2ptr this, f2ptr type, void(
   return retval;
 }
 
+f2ptr raw__frame__key_types(f2ptr cause, f2ptr this) {
+  f2ptr type_ptypehash = f2frame__type_ptypehash(this, cause);
+  return f2__ptypehash__keys(cause, type_ptypehash);
+}
+
+f2ptr f2__frame__key_types(f2ptr cause, f2ptr this) {
+  if (! raw__frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__frame__key_types(cause, this);
+}
+def_pcfunk2(frame__key_types, this, return f2__frame__type_keys(this_cause, this));
+
+
 f2ptr f2__frame__type_var__keys(f2ptr cause, f2ptr this, f2ptr type) {
   f2ptr retval = nil;
   f2ptr type__keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, f2frame__type_ptypehash(this, cause), type);
@@ -451,20 +465,20 @@ f2ptr raw__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr gra
   if (this_node == nil) {
     this_node = f2__graph_node__new(cause, this);
     f2__ptypehash__add(cause, node_ptypehash, this, this_node);
+    f2__graph__add_node(cause, graph, this_node);
+    frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
+		     f2ptr type_slot_name__string = f2__exp__as__string(cause, type_slot_name);
+		     f2ptr slot_name__string      = f2__exp__as__string(cause, slot_name);
+		     f2ptr combined_slot_name     = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list3__new(cause, type_slot_name__string, new__string(cause, "-"), slot_name__string)));
+		     f2__terminal_print(cause, combined_slot_name);
+		     f2ptr node                   = f2__ptypehash__lookup(cause, node_ptypehash, slot_value);
+		     if (node == nil) {
+		       node = f2__graph_node__new(cause, slot_value);
+		       f2__ptypehash__add(cause, node_ptypehash, slot_value, node);
+		     }
+		     f2__graph__add_new_edge(cause, graph, combined_slot_name, this_node, node);
+		     );
   }
-  f2__graph__add_node(cause, graph, this_node);
-  frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
-		   f2ptr type_slot_name__string = f2__exp__as__string(cause, type_slot_name);
-		   f2ptr slot_name__string      = f2__exp__as__string(cause, slot_name);
-		   f2ptr combined_slot_name     = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list3__new(cause, type_slot_name__string, new__string(cause, "-"), slot_name__string)));
-		   f2__terminal_print(cause, combined_slot_name);
-		   f2ptr node                   = f2__ptypehash__lookup(cause, node_ptypehash, slot_value);
-		   if (node == nil) {
-		     node = f2__graph_node__new(cause, slot_value);
-		     f2__ptypehash__add(cause, node_ptypehash, slot_value, node);
-		   }
-		   f2__graph__add_new_edge(cause, graph, combined_slot_name, this_node, node);
-		   );
   return nil;
 }
 
@@ -858,6 +872,8 @@ void f2__primobject_frame__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__5_arg(frame__type_var_value__set, this, type, var, value, not_defined_value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var_value__set__funk = never_gc(cfunk);}
   {char* symbol_str = "type_var-keys"; __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var__keys__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__type_var__keys, this, type, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var__keys__funk = never_gc(cfunk);}
+  {char* symbol_str = "type_keys"; __funk2.globalenv.object_type.primobject.primobject_type_frame.type_keys__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__type_keys, this, var, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.type_keys__funk = never_gc(cfunk);}
   {char* symbol_str = "type_var-values"; __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var__values__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__type_var__values, this, type, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var__values__funk = never_gc(cfunk);}
   {char* symbol_str = "copy"; __funk2.globalenv.object_type.primobject.primobject_type_frame.copy__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

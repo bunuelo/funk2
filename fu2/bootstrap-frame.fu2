@@ -59,5 +59,3 @@
 		   [= iter [cdr iter]]]
 		 [reverse reverse_codes]]]]
 
-
-

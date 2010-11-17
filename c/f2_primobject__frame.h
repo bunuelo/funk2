@@ -40,6 +40,8 @@ declare_object_type_2_slot(frame, new_type_mutex, type_ptypehash,
 			   f2ptr type_var_value__set__funk;
 			   f2ptr type_var__keys__symbol;
 			   f2ptr type_var__keys__funk;
+			   f2ptr type_keys__symbol;
+			   f2ptr type_keys__funk;
 			   f2ptr type_var__values__symbol;
 			   f2ptr type_var__values__funk;
 			   f2ptr copy__symbol;

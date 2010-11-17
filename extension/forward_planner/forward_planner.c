@@ -130,13 +130,13 @@ export_cefunk2(forward_planner_action__transition_funk__set, thing, value, 0, "S
 
 f2ptr f2__forward_planner_action_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),               f2__core_extension_funk__new(cause, new__symbol(cause, "forward_planner_action"), new__symbol(cause, "forward_planner_action__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),           f2__core_extension_funk__new(cause, new__symbol(cause, "forward_planner_action"), new__symbol(cause, "forward_planner_action__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),              f2__core_extension_funk__new(cause, new__symbol(cause, "forward_planner_action"), new__symbol(cause, "forward_planner_action__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "precondition_funk"), f2__core_extension_funk__new(cause, new__symbol(cause, "forward_planner_action"), new__symbol(cause, "forward_planner_action__precondition_funk")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "precondition_funk"), f2__core_extension_funk__new(cause, new__symbol(cause, "forward_planner_action"), new__symbol(cause, "forward_planner_action__precondition_funk__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "transition_funk"),   f2__core_extension_funk__new(cause, new__symbol(cause, "forward_planner_action"), new__symbol(cause, "forward_planner_action__transition_funk")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "transition_funk"),   f2__core_extension_funk__new(cause, new__symbol(cause, "forward_planner_action"), new__symbol(cause, "forward_planner_action__transition_funk__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),               f2__core_extension_funk__new(cause, new__symbol(cause, "forward_planner"), new__symbol(cause, "forward_planner_action__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),           f2__core_extension_funk__new(cause, new__symbol(cause, "forward_planner"), new__symbol(cause, "forward_planner_action__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),              f2__core_extension_funk__new(cause, new__symbol(cause, "forward_planner"), new__symbol(cause, "forward_planner_action__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "precondition_funk"), f2__core_extension_funk__new(cause, new__symbol(cause, "forward_planner"), new__symbol(cause, "forward_planner_action__precondition_funk")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "precondition_funk"), f2__core_extension_funk__new(cause, new__symbol(cause, "forward_planner"), new__symbol(cause, "forward_planner_action__precondition_funk__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "transition_funk"),   f2__core_extension_funk__new(cause, new__symbol(cause, "forward_planner"), new__symbol(cause, "forward_planner_action__transition_funk")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "transition_funk"),   f2__core_extension_funk__new(cause, new__symbol(cause, "forward_planner"), new__symbol(cause, "forward_planner_action__transition_funk__set")));}
   return this;
 }
 

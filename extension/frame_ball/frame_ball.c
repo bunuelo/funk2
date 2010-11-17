@@ -104,9 +104,11 @@ f2ptr raw__frame__copy_recursively(f2ptr cause, f2ptr this) {
 f2ptr raw__frame_ball__new(f2ptr cause, f2ptr user_root_frame) {
   // we first test the size of the recursive structure is smaller (shorter) than baller_frame_height. (see Skee Lo's "I wish I was a Baller")
   if (! raw__frame__wishes_to_be_a_baller(cause, user_root_frame)) {
-    return f2larva__new(cause, 444, f2__bug__new(cause, f2integer__new(cause, 444), f2__frame__new(cause, f2list4__new(cause,
-														       new__symbol(cause, "bug_type"), new__symbol(cause, "frame_is_too_large_to_make_a_frame_ball_copy"),
-														       new__symbol(cause, "funkname"), new__symbol(cause, "frame_ball-new")))));
+    return f2larva__new(cause, 444, nil);
+    // there is a problem printing bugs involving global environment, which is usually where this is a problem.
+    //return f2larva__new(cause, 444, f2__bug__new(cause, f2integer__new(cause, 444), f2__frame__new(cause, f2list4__new(cause,
+    //														       new__symbol(cause, "bug_type"), new__symbol(cause, "frame_is_too_large_to_make_a_frame_ball_copy"),
+    //														       new__symbol(cause, "funkname"), new__symbol(cause, "frame_ball-new")))));
   }
   f2ptr root_frame = raw__frame__copy_recursively(cause, user_root_frame);
   return f2__frame__new(cause, f2list4__new(cause,

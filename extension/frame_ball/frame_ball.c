@@ -68,7 +68,7 @@ boolean_t raw__frame__ball_size_is_less_than(f2ptr cause, f2ptr this, s64 maximu
 }
 
 
-#define baller_frame_height 1000
+#define baller_frame_height 100000
 
 boolean_t raw__frame__wishes_to_be_a_baller(f2ptr cause, f2ptr this) {
   return raw__frame__ball_size_is_less_than(cause, this, baller_frame_height, NULL);

@@ -37,7 +37,7 @@ boolean_t raw__frame__ball_size_is_less_than_with_ptypehash(f2ptr cause, f2ptr t
   frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
 		   if (raw__frame__is_type(cause, slot_value)) {
 		     s64 slot_value__exact_size;
-		     if (raw__frame__ball_size_is_less_than(cause, slot_value, ptypehash, maximum_size - this_size, &slot_value__exact_size)) {
+		     if (raw__frame__ball_size_is_less_than_with_ptypehash(cause, slot_value, ptypehash, maximum_size - this_size, &slot_value__exact_size)) {
 		       this_size += slot_value__exact_size;
 		     } else {
 		       return boolean__false;

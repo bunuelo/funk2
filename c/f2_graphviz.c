@@ -131,7 +131,7 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
   } else {
     s64 eq_hash_value__i = f2integer__i(eq_hash_value, cause);
     if (eq_hash_value__i < 0) {
-      eq_hash_value = f2integer__new(cause, -eq_hash_value);
+      eq_hash_value = f2integer__new(cause, -eq_hash_value__i);
     }
   }
   return f2__stringlist__concat(cause, f2list2__new(cause,

@@ -79,7 +79,7 @@ f2ptr f2__frame__new(f2ptr cause, f2ptr slot_value_pairs) {
 }
 def_pcfunk0_and_rest(frame__new, slot_value_pairs, return f2__frame__new(this_cause, slot_value_pairs));
 
-f2ptr f2__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+f2ptr raw__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   f2ptr frame__type_ptypehash = f2frame__type_ptypehash(this, cause);
   release__assert(raw__ptypehash__is_type(cause, frame__type_ptypehash), nil, "frame__type_ptypehash is not ptypehash.");
   f2ptr type__ptypehash = f2__ptypehash__lookup(cause, frame__type_ptypehash, type);
@@ -95,6 +95,13 @@ f2ptr f2__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr v
   release__assert(raw__ptypehash__is_type(cause, type__ptypehash), nil, "type__ptypehash is not ptypehash.");
   f2__ptypehash__add(cause, type__ptypehash, var, value);
   return nil;
+}
+
+f2ptr f2__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+  if (! raw__frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__frame__add_type_var_value(cause, this, type, var, value);
 }
 def_pcfunk4(frame__add_type_var_value, this, type, var, value, return f2__frame__add_type_var_value(this_cause, this, type, var, value));
 

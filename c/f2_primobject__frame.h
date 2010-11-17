@@ -87,6 +87,7 @@ f2ptr      f2__typedframe__type(f2ptr cause, f2ptr this);
 declare_primobject_2_slot(frame, new_type_mutex, type_ptypehash);
 
 f2ptr      f2__frame__new                            (f2ptr cause, f2ptr slot_value_pairs);
+f2ptr     raw__frame__add_type_var_value             (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 f2ptr      f2__frame__add_type_var_value             (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 f2ptr      f2__frame__var_ptypehash                  (f2ptr cause, f2ptr this);
 f2ptr      f2__frame__funkvar_ptypehash              (f2ptr cause, f2ptr this);

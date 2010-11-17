@@ -37,6 +37,14 @@
 [deftypefunk frame get values []
   [get this type_var-values `variable]]
 
+[deftypefunk frame execute map_type_key_values [type_key_value_funk]
+  [mapc [funk [key_type]
+	      [mapc [funk [key]
+			  [let [[value [get this type_var_value key_type key]]]
+			    [funkall type_key_value_funk key_type key value]]]
+		    [get this type_var-keys key_type]]]
+	[get this key_types]]]
+
 [deftypefunk frame execute map_keys [key_funk]
   [mapc key_funk [get this keys]]]
 
@@ -58,4 +66,11 @@
 		       [= reverse_codes [cons  value        reverse_codes]]]]
 		   [= iter [cdr iter]]]
 		 [reverse reverse_codes]]]]
+
+[defunk frame-add_to_graph_with_ptypehash_recursive [this graph ptypehash]
+  [if [have this add_to_graph_with_ptypehash graph ptypehash]
+      [mapc [funk [value]
+		  [if [is-type `frame value]
+		      [frame-add_to_graph_with_ptypehash_recursive value graph ptypehash]]]
+	    [get this values]]]]
 

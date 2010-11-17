@@ -49,3 +49,9 @@
 [deftypefunk graph_decomposition_lattice get     subgraph_isomorphisms           [graph]            [graph_decomposition_lattice-subgraph_isomorphisms     this graph]]
 [deftypefunk graph_decomposition_lattice get     subgraph_max_isomorphisms       [graph]            [graph_decomposition_lattice-subgraph_max_isomorphisms this graph]]
 
+
+[defunk graph-new_from_recursive_frame [frame]
+  [let [[graph [new graph]]]
+    [frame-add_to_graph_with_ptypehash_recursive frame graph [new ptypehash]]
+    graph]]
+

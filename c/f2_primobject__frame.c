@@ -473,7 +473,7 @@ f2ptr raw__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr gra
 		       f2__ptypehash__add(cause, node_ptypehash, slot_value, slot_value_node);
 		     }
 		     f2__graph__add_new_edge(cause, graph, slot_name, this_node, slot_value_node);
-		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "slot_type"), slot_value_node, f2__graph_node__new(cause, type_slot_name));
+		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key_type"), slot_value_node, f2__graph_node__new(cause, type_slot_name));
 		     );
     return f2bool__new(boolean__true);
   }

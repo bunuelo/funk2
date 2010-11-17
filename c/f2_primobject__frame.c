@@ -475,7 +475,7 @@ f2ptr f2__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr grap
   }
   return raw__frame__add_to_graph_with_ptypehash(cause, this, graph, node_ptypehash);
 }
-def_pcfunk3(frame__add_to_graph_with_ptypehash, this, graph, node_ptypehash, return f2__frame__add_to_graph_with_ptypehash(this_cause, this, graph, ptypehash));
+def_pcfunk3(frame__add_to_graph_with_ptypehash, this, graph, node_ptypehash, return f2__frame__add_to_graph_with_ptypehash(this_cause, this, graph, node_ptypehash));
 
 
 f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -876,7 +876,7 @@ void f2__primobject_frame__initialize() {
   {char* symbol_str = "as-simple_graph"; __funk2.globalenv.object_type.primobject.primobject_type_frame.as__simple_graph__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(frame__as__simple_graph, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.as__simple_graph__funk = never_gc(cfunk);}
   {char* symbol_str = "add_to_graph_with_ptypehash"; __funk2.globalenv.object_type.primobject.primobject_type_frame.add_to_graph_with_ptypehash__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__add_to_graph_with_ptypehash, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.add_to_graph_with_ptypehash__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(frame__add_to_graph_with_ptypehash, this, graph, node_ptypehash, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.add_to_graph_with_ptypehash__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_frame.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.terminal_print_with_frame__funk = never_gc(cfunk);}
   

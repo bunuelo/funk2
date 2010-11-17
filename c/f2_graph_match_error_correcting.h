@@ -19,14 +19,15 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__GRAPH_MATCH_ERROR_CORRECTING__TYPE__H
-#define F2__GRAPH_MATCH_ERROR_CORRECTING__TYPE__H
+#ifndef F2__GRAPH_MATCH_ERROR_CORRECTING__TYPES__H
+#define F2__GRAPH_MATCH_ERROR_CORRECTING__TYPES__H
 
-// edit_sequence
-typedef struct funk2_object_type__edit_sequence__slot_s funk2_object_type__edit_sequence__slot_t;
-declare_object_type_3_slot(edit_sequence, operations, cost, isomorphism, );
+// graph_edit_sequence
+typedef struct funk2_object_type__graph_edit_sequence__slot_s funk2_object_type__graph_edit_sequence__slot_t;
+declare_object_type_3_slot(graph_edit_sequence, operations, cost, isomorphism, );
 
-#endif
+#endif // F2__GRAPH_MATCH_ERROR_CORRECTING__TYPES__H
+
 
 #ifndef F2__GRAPH_MATCH_ERROR_CORRECTING__H
 #define F2__GRAPH_MATCH_ERROR_CORRECTING__H
@@ -34,26 +35,21 @@ declare_object_type_3_slot(edit_sequence, operations, cost, isomorphism, );
 #include "f2_primfunks.h"
 #include "f2_primobjects.h"
 
-// bruno_graph
-f2ptr raw__bruno_graph__edges_between_nodes (f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
-f2ptr  f2__bruno_graph__edges_between_nodes (f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
+// graph_edit_sequence
+declare_primobject_3_slot(graph_edit_sequence, operations, cost, isomorphism);
+f2ptr  f2__graph_edit_sequence__new        (f2ptr cause);
+f2ptr raw__graph_edit_sequence__add        (f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f2ptr to, f2ptr cost_function);
+f2ptr  f2__graph_edit_sequence__add        (f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f2ptr to, f2ptr cost_function);
+f2ptr  f2__graph_edit_sequence__add_mapping(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
+f2ptr raw__graph_edit_sequence__combine    (f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function);
+f2ptr  f2__graph_edit_sequence__combine    (f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function);
 
-// edit_sequence
-declare_primobject_3_slot(edit_sequence, operations, cost, isomorphism);
-f2ptr f2__edit_sequence__new(f2ptr cause);
-f2ptr raw__edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f2ptr to, f2ptr cost_function);
-f2ptr f2__edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f2ptr to, f2ptr cost_function);
-f2ptr f2__edit_sequence__add_mapping(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
-f2ptr raw__edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function);
-f2ptr f2__edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function);
-
-// bruno_decomposition_lattice
-f2ptr raw__bruno_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph, f2ptr cost_function);
-f2ptr f2__bruno_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph, f2ptr cost_function);
+// graph_decomposition_lattice
+f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph, f2ptr cost_function);
+f2ptr  f2__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph, f2ptr cost_function);
 
 // **
 
-//void f2__graph_match_error_correcting__reinitialize_globalvars();
 void f2__graph_match_error_correcting__initialize();
 
 #endif // F2__GRAPH_MATCH_ERROR_CORRECTING__H

@@ -31,6 +31,7 @@
 [globalize-funk graph-node_isomorphisms               &primfunk:graph__node_isomorphisms]
 [globalize-funk graph-edges_with_label_between_nodes  &primfunk:graph__edges_with_label_between_nodes]
 [globalize-funk graph-as-dot_code                     &primfunk:graph__as__dot_code]
+[globalize-funk graph-edges_between_nodes             &primfunk:graph__edges_between_nodes]
 
 [globalize-funk graph_list-union &primfunk:graph_list__union]
 

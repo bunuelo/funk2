@@ -33,60 +33,31 @@
 /*
   TODO:
   - debug on more graphs
-  - What should the ecs_isomorphisms return?
+  - What should the error_correcting_subgraph_isomorphisms return?
   - analogies!
  */
 
-//Help function
 
-f2ptr raw__graph__edges_between_nodes(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node) {
-  f2ptr edges_label_hash_right_node_hash_left_node_hash = f2__graph__edges_label_hash_right_node_hash_left_node_hash(cause, this);
-  f2ptr edges_label_hash_right_node_hash                = f2__ptypehash__lookup(cause, edges_label_hash_right_node_hash_left_node_hash, left_node);
-  f2ptr result = nil; //f2__ptypehash__new(cause);
-  if (! edges_label_hash_right_node_hash) {
-    return result;
-  }
-  f2ptr edges_label_hash = f2__ptypehash__lookup(cause, edges_label_hash_right_node_hash, right_node);
-  if (! edges_label_hash) {
-    return result;
-  }
-  ptypehash__keyvalue_pair__iteration
-    (cause, edges_label_hash, pair__edge_label__edges,
-     f2ptr edge_label = f2__cons__car(cause, pair__edge_label__edges);
-     f2ptr edges      = f2__cons__cdr(cause, pair__edge_label__edges);
-     while (edges) {
-       result = f2__cons__new(cause, f2__cons__new(cause, edge_label, f2__cons__car(cause, edges)), result);
-       edges  = f2__cons__cdr(cause, edges);
-     }
-     );
-  return result;
-}
+// graph_edit_sequence
 
-f2ptr f2__graph__edges_between_nodes(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node) {
-  return raw__graph__edges_between_nodes(cause, this, left_node, right_node);
-}
-def_pcfunk3(graph__edges_between_nodes, this, left_node, right_node, return f2__graph__edges_between_nodes(this_cause, this, left_node, right_node));
+def_primobject_3_slot(graph_edit_sequence, operations, cost, isomorphism);
 
-//Edit Sequence
-
-def_primobject_3_slot(edit_sequence, operations, cost, isomorphism);
-
-f2ptr f2__edit_sequence__new(f2ptr cause) {
+f2ptr f2__graph_edit_sequence__new(f2ptr cause) {
   f2ptr operations    = nil;
   f2ptr cost          = f2integer__new(cause, 0);
   f2ptr isomorphism   = f2__graph_isomorphism__new(cause);
-  return f2edit_sequence__new(cause, operations, cost, isomorphism);
+  return f2graph_edit_sequence__new(cause, operations, cost, isomorphism);
 }
-def_pcfunk0(edit_sequence__new, return f2__edit_sequence__new(this_cause));
+def_pcfunk0(graph_edit_sequence__new, return f2__graph_edit_sequence__new(this_cause));
 
-f2ptr raw__edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f2ptr to, f2ptr cost_function) {
-  f2ptr operations     = f2__edit_sequence__operations(cause, this);
+f2ptr raw__graph_edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f2ptr to, f2ptr cost_function) {
+  f2ptr operations     = f2__graph_edit_sequence__operations(cause, this);
   f2ptr new_operations = f2__cons__new(cause, f2__cons__new(cause, type, f2__cons__new(cause, from, to)), operations);
   //f2__print(cause, type); f2__print(cause, from); f2__print(cause, to);
   //f2__print(cause, f2__cons__new(cause, type, f2__cons__new(cause, from, to)));
-  f2__edit_sequence__operations__set(cause, this, new_operations);
+  f2__graph_edit_sequence__operations__set(cause, this, new_operations);
   // Fix later
-  u64 cost__i = f2integer__i(f2__edit_sequence__cost(cause, this), cause);
+  u64 cost__i = f2integer__i(f2__graph_edit_sequence__cost(cause, this), cause);
   u64 add_cost = 0;
   if (cost_function == nil) {
     add_cost = 1;
@@ -96,44 +67,44 @@ f2ptr raw__edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f
     if (!raw__integer__is_type(cause, add_cost_from_f)) {
       //Invalid stuff
       printf("INVALID VALUE\n"); f2__print(cause, add_cost_from_f);
-      f2__edit_sequence__cost__set(cause, this, f2integer__new(cause, cost__i + 1));
+      f2__graph_edit_sequence__cost__set(cause, this, f2integer__new(cause, cost__i + 1));
       return nil;
     }
     add_cost = f2integer__i(add_cost_from_f, cause);
     //printf("Add cost = %d\n", add_cost);
   }
-  f2__edit_sequence__cost__set(cause, this, f2integer__new(cause, cost__i + add_cost));
+  f2__graph_edit_sequence__cost__set(cause, this, f2integer__new(cause, cost__i + add_cost));
   return nil;
 }
-f2ptr f2__edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f2ptr to, f2ptr cost_function) {
-  return raw__edit_sequence__add(cause, this, type, from, to, cost_function);
+f2ptr f2__graph_edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f2ptr to, f2ptr cost_function) {
+  return raw__graph_edit_sequence__add(cause, this, type, from, to, cost_function);
 }
-def_pcfunk5(edit_sequence__add, this, type, from, to, cost_function, return f2__edit_sequence__add(this_cause, this, type, from, to, cost_function));
+def_pcfunk5(graph_edit_sequence__add, this, type, from, to, cost_function, return f2__graph_edit_sequence__add(this_cause, this, type, from, to, cost_function));
 
-f2ptr f2__edit_sequence__add_mapping(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node) {
-  return f2__graph_isomorphism__add_mapping(cause, f2__edit_sequence__isomorphism(cause, this), left_node, right_node);
+f2ptr f2__graph_edit_sequence__add_mapping(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node) {
+  return f2__graph_isomorphism__add_mapping(cause, f2__graph_edit_sequence__isomorphism(cause, this), left_node, right_node);
 }
-def_pcfunk3(edit_sequence__add_mapping, this, left_node, right_node, return f2__edit_sequence__add_mapping(this_cause, this, left_node, right_node));
+def_pcfunk3(graph_edit_sequence__add_mapping, this, left_node, right_node, return f2__graph_edit_sequence__add_mapping(this_cause, this, left_node, right_node));
 
-f2ptr raw__edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function) {
+f2ptr raw__graph_edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function) {
   //printf("Let's combine..."); f2__print(cause, this); printf(" and "); f2__print(cause, that); printf("!!\n");
   //f2__print(cause, lattice_node); printf("\n^^^\n");
   
-  f2ptr this_isomorphism = f2__edit_sequence__isomorphism(cause, this);
-  f2ptr that_isomorphism = f2__edit_sequence__isomorphism(cause, that);
+  f2ptr this_isomorphism = f2__graph_edit_sequence__isomorphism(cause, this);
+  f2ptr that_isomorphism = f2__graph_edit_sequence__isomorphism(cause, that);
   if (! f2__graph_isomorphism__is_disjoint_with(cause, this_isomorphism, that_isomorphism)) {
     return nil;
   }
-  f2ptr new_edit_sequence = f2__edit_sequence__new(cause);
+  f2ptr new_graph_edit_sequence = f2__graph_edit_sequence__new(cause);
   //Make new edit sequence
   f2ptr new_operations   = nil;
   f2ptr temp_list        = nil;
-  f2ptr operations__iter = f2__edit_sequence__operations(cause, this);
+  f2ptr operations__iter = f2__graph_edit_sequence__operations(cause, this);
   while (operations__iter) {
     temp_list = f2cons__new(cause, f2__cons__car(cause, operations__iter), temp_list);
     operations__iter = f2__cons__cdr(cause, operations__iter);
   }
-  operations__iter = f2__edit_sequence__operations(cause, that);
+  operations__iter = f2__graph_edit_sequence__operations(cause, that);
   while (operations__iter) {
     temp_list = f2cons__new(cause, f2__cons__car(cause, operations__iter), temp_list);
     operations__iter = f2__cons__cdr(cause, operations__iter);
@@ -143,13 +114,13 @@ f2ptr raw__edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2ptr lat
     new_operations = f2cons__new(cause, f2__cons__car(cause, operations__iter), new_operations);
     operations__iter = f2__cons__cdr(cause, operations__iter);
   }
-  f2__edit_sequence__operations__set(cause, new_edit_sequence, new_operations);
+  f2__graph_edit_sequence__operations__set(cause, new_graph_edit_sequence, new_operations);
   //Make new cost
-  u64 new_cost = f2integer__i(f2__edit_sequence__cost(cause, this), cause) + f2integer__i(f2__edit_sequence__cost(cause, that), cause);
-  f2__edit_sequence__cost__set(cause, new_edit_sequence, f2integer__new(cause, new_cost));
+  u64 new_cost = f2integer__i(f2__graph_edit_sequence__cost(cause, this), cause) + f2integer__i(f2__graph_edit_sequence__cost(cause, that), cause);
+  f2__graph_edit_sequence__cost__set(cause, new_graph_edit_sequence, f2integer__new(cause, new_cost));
   //Make new isomorphism
   f2ptr new_isomorphism = f2__graph_isomorphism__union(cause, this_isomorphism, that_isomorphism);
-  f2__edit_sequence__isomorphism__set(cause, new_edit_sequence, new_isomorphism);
+  f2__graph_edit_sequence__isomorphism__set(cause, new_graph_edit_sequence, new_isomorphism);
   //Add the between edges
   f2ptr between_graph = f2__graph_decomposition_lattice_node__between_graph(cause, lattice_node);
   f2ptr this_mapped_node_hash = f2__graph_isomorphism__left_node_right_node_hash(cause, this_isomorphism);
@@ -205,20 +176,20 @@ f2ptr raw__edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2ptr lat
 	   //f2__print(cause, edge_in_between_refined); printf(" !! \n"); f2__print(cause, edge_in_graph_refined); printf(" !! \n");
 
 	   while (edge_in_between_refined && edge_in_graph_refined) {
-	     f2__edit_sequence__add(cause, new_edit_sequence, f2string__new(cause, 11, (u8*)"Change Edge"),
+	     f2__graph_edit_sequence__add(cause, new_graph_edit_sequence, f2string__new(cause, 11, (u8*)"Change Edge"),
 					f2__cons__cdr(cause, f2__cons__car(cause, edge_in_between_refined)),
 					f2__cons__cdr(cause, f2__cons__car(cause, edge_in_graph_refined)), cost_function);
 	     edge_in_between_refined = f2__cons__cdr(cause, edge_in_between_refined);
 	     edge_in_graph_refined   = f2__cons__cdr(cause, edge_in_graph_refined);
 	   }
 	   while (edge_in_between_refined) {
-	     f2__edit_sequence__add(cause, new_edit_sequence, 
+	     f2__graph_edit_sequence__add(cause, new_graph_edit_sequence, 
 					f2string__new(cause, 11, (u8*)"Delete Edge"),
                                         f2__cons__cdr(cause, f2__cons__car(cause, edge_in_between_refined)), nil, cost_function);
 	     edge_in_between_refined = f2__cons__cdr(cause, edge_in_between_refined);
 	   }
 	   while (edge_in_graph_refined) {
-	     f2__edit_sequence__add(cause, new_edit_sequence, f2string__new(cause, 11, (u8*)"Insert Edge"),
+	     f2__graph_edit_sequence__add(cause, new_graph_edit_sequence, f2string__new(cause, 11, (u8*)"Insert Edge"),
                                         nil, f2__cons__cdr(cause, f2__cons__car(cause, edge_in_graph_refined)), cost_function);
 	     edge_in_graph_refined = f2__cons__cdr(cause, edge_in_graph_refined);
 	   }
@@ -227,12 +198,12 @@ f2ptr raw__edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2ptr lat
 	 );
     }
       );
-  return new_edit_sequence;
+  return new_graph_edit_sequence;
 }
-f2ptr f2__edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function) {
-  return raw__edit_sequence__combine(cause, this, that, lattice_node, graph, cost_function);
+f2ptr f2__graph_edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function) {
+  return raw__graph_edit_sequence__combine(cause, this, that, lattice_node, graph, cost_function);
 }
-def_pcfunk5(edit_sequence__combine, this, that, lattice_node, graph, cost_function, return f2__edit_sequence__combine(this_cause, this, that, lattice_node, graph, cost_function));
+def_pcfunk5(graph_edit_sequence__combine, this, that, lattice_node, graph, cost_function, return f2__graph_edit_sequence__combine(this_cause, this, that, lattice_node, graph, cost_function));
 
 // graph_decomposition_lattice
 #define INF 100000
@@ -251,22 +222,21 @@ void dfs_visit(f2ptr cause, f2ptr this, f2ptr node_parent_hash, f2ptr used_hash,
   *root_to_leaf_list = f2__cons__new(cause, this, *root_to_leaf_list);
 }
 
-f2ptr cost_compare(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args)
-{
+f2ptr cost_compare(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
   f2ptr operations_1 = f2__cons__car(cause, args);
   f2ptr operations_2 = f2__cons__car(cause, f2__cons__cdr(cause, args));
-  if (f2__integer__eq(cause, f2__edit_sequence__cost(cause, operations_1), f2__edit_sequence__cost(cause, operations_2))) {
+  if (f2__integer__eq(cause, f2__graph_edit_sequence__cost(cause, operations_1), f2__graph_edit_sequence__cost(cause, operations_2))) {
     return f2bool__new(operations_1 < operations_2);
   }
-  return f2__integer__less_than(cause, f2__edit_sequence__cost(cause, operations_1), f2__edit_sequence__cost(cause, operations_2));
+  return f2__integer__less_than(cause, f2__graph_edit_sequence__cost(cause, operations_1), f2__graph_edit_sequence__cost(cause, operations_2));
 }
 
-f2ptr raw__graph_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph, f2ptr cost_function) {
+f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph, f2ptr cost_function) {
   
   f2ptr compare_cfunk = f2cfunk__new(cause, nil, 
-                                     f2list2__new(cause, f2symbol__new(cause, strlen("x"), (u8*)"x"), f2symbol__new(cause, strlen("y"), (u8*)"y")),
-                                     f2pointer__new(cause, raw_executable__to__relative_ptr(cost_compare)), global_environment(), nil, nil);
-
+                                     f2list2__new(cause, new__symbol(cause, "x"), new__symbol(cause, "y")),
+				     f2pointer__new(cause, raw_executable__to__relative_ptr(cost_compare)), global_environment(), nil, nil);
+  
   f2ptr graph_set             = f2__graph_decomposition_lattice__graph_set            (cause, this);
   //f2ptr node_set              = f2__graph_decomposition_lattice__node_set             (cause, this);
   f2ptr root_graph_set        = f2__graph_decomposition_lattice__root_graph_set       (cause, this);
@@ -298,17 +268,17 @@ f2ptr raw__graph_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this
 		 f2ptr graph__node_set = f2__graph__node_set(cause, graph);
 		 //Add the change node edit
 		 set__iteration(cause, graph__node_set, graph__node,
-				f2ptr operations = f2__edit_sequence__new(cause);
+				f2ptr operations = f2__graph_edit_sequence__new(cause);
 				if (f2__graph_node__label(cause, leaf_graph__node) != f2__graph_node__label(cause, graph__node)) {
-				  f2__edit_sequence__add(cause, operations, 
+				  f2__graph_edit_sequence__add(cause, operations, 
 							     f2string__new(cause, 11, (u8*)"Change Node"), leaf_graph__node, graph__node, cost_function);
 				}
-				f2__edit_sequence__add_mapping(cause, operations, leaf_graph__node, graph__node);
+				f2__graph_edit_sequence__add_mapping(cause, operations, leaf_graph__node, graph__node);
 				f2__redblacktree__insert(cause, leaf_graph__open_operations_rbt, operations);
 				);
 		 //Add the delete node edit
-		 f2ptr operations = f2__edit_sequence__new(cause);
-		 f2__edit_sequence__add(cause, operations, f2string__new(cause, 11, (u8*)"Delete Node"), leaf_graph__node, nil, cost_function);
+		 f2ptr operations = f2__graph_edit_sequence__new(cause);
+		 f2__graph_edit_sequence__add(cause, operations, f2string__new(cause, 11, (u8*)"Delete Node"), leaf_graph__node, nil, cost_function);
 		 f2__redblacktree__insert(cause, leaf_graph__open_operations_rbt, operations);
 		 );
 
@@ -346,11 +316,11 @@ f2ptr raw__graph_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this
       u64 c_open = INF;
       f2ptr S_open_operations_rbt = f2__ptypehash__lookup(cause, open_operations_rbt_hash, current_S);
       f2ptr S_minimal_open_operations = f2__redblacktree__minimum(cause, S_open_operations_rbt);
-      if (S_minimal_open_operations != nil) c_open = f2integer__i(f2__edit_sequence__cost(cause, S_minimal_open_operations), cause);
+      if (S_minimal_open_operations != nil) c_open = f2integer__i(f2__graph_edit_sequence__cost(cause, S_minimal_open_operations), cause);
       u64 c_closed = INF;
       f2ptr S_closed_operations_rbt = f2__ptypehash__lookup(cause, closed_operations_rbt_hash, current_S);
       f2ptr S_minimal_closed_operations = f2__redblacktree__minimum(cause, S_closed_operations_rbt);
-      if (S_minimal_closed_operations != nil) c_closed = f2integer__i(f2__edit_sequence__cost(cause, S_minimal_closed_operations), cause);
+      if (S_minimal_closed_operations != nil) c_closed = f2integer__i(f2__graph_edit_sequence__cost(cause, S_minimal_closed_operations), cause);
 
       if (lattice_node == nil) {  // leaf
 	f2__ptypehash__add(cause, n_hash, current_S, f2integer__new(cause, c_open));
@@ -419,7 +389,7 @@ f2ptr raw__graph_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this
                    f2ptr alive_graph__open_operations_rbt = f2__ptypehash__lookup(cause, open_operations_rbt_hash, alive_graph);
                    f2ptr estimated_open_operations = f2__redblacktree__minimum(cause, alive_graph__open_operations_rbt);
                    if (estimated_open_operations) {
-                     u64 estimated_cost = f2integer__i(f2__edit_sequence__cost(cause, estimated_open_operations), cause)
+                     u64 estimated_cost = f2integer__i(f2__graph_edit_sequence__cost(cause, estimated_open_operations), cause)
                                         + f2integer__i(f2__ptypehash__lookup(cause, h_hash, alive_graph), cause);
                      if (estimated_cost < minimal_estimated_cost && estimated_cost <= threshold) {
                        minimal_estimated_cost = estimated_cost;
@@ -438,7 +408,7 @@ f2ptr raw__graph_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this
     f2__redblacktree__insert(cause, minimal_cost_graph__closed_operations_rbt, minimal_open_operations);
     //Lessen the threshold
     if (f2__set__lookup(cause, root_graph_set, minimal_cost_graph) != nil) {
-      threshold = minimal_estimated_cost; //f2integer__i(f2__edit_sequence__cost(cause, minimal_open_operations), cause);
+      threshold = minimal_estimated_cost; //f2integer__i(f2__graph_edit_sequence__cost(cause, minimal_open_operations), cause);
     }
     //Solve the larger graph
     set__iteration(cause, unsolved_graph_set, unsolved_graph,
@@ -453,7 +423,7 @@ f2ptr raw__graph_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this
 		       f2ptr unsolved_graph__open_operations_rbt = f2__ptypehash__lookup(cause, open_operations_rbt_hash, unsolved_graph);
 		       f2ptr right_child_graph__closed_operations_rbt = f2__ptypehash__lookup(cause, closed_operations_rbt_hash, right_child_graph);
 		       redblacktree__iteration(cause, right_child_graph__closed_operations_rbt, right_child_graph__closed_operations,
-                                               f2ptr combined_operations = f2__edit_sequence__combine(cause, minimal_open_operations, 
+                                               f2ptr combined_operations = f2__graph_edit_sequence__combine(cause, minimal_open_operations, 
                                                                                                              right_child_graph__closed_operations,
                                                                                                              lattice_node, graph, cost_function);
                                                if (combined_operations != nil) {
@@ -465,7 +435,7 @@ f2ptr raw__graph_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this
 		       f2ptr unsolved_graph__open_operations_rbt = f2__ptypehash__lookup(cause, open_operations_rbt_hash, unsolved_graph);
 		       f2ptr left_child_graph__closed_operations_rbt = f2__ptypehash__lookup(cause, closed_operations_rbt_hash, left_child_graph);
 		       redblacktree__iteration(cause, left_child_graph__closed_operations_rbt, left_child_graph__closed_operations,
-                                               f2ptr combined_operations = f2__edit_sequence__combine(cause, minimal_open_operations, 
+                                               f2ptr combined_operations = f2__graph_edit_sequence__combine(cause, minimal_open_operations, 
                                                                                                              left_child_graph__closed_operations,
                                                                                                              lattice_node, graph, cost_function);
                                                if (combined_operations != nil) {
@@ -485,27 +455,20 @@ f2ptr raw__graph_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this
   return answer;
 }
 
-f2ptr f2__graph_decomposition_lattice__ecs_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph, f2ptr cost_function) {
+f2ptr f2__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph, f2ptr cost_function) {
   if ((! raw__graph_decomposition_lattice__is_type(cause, this)) ||
       (! raw__graph__is_type(cause, graph))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__graph_decomposition_lattice__ecs_isomorphisms(cause, this, graph, cost_function);
+  return raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(cause, this, graph, cost_function);
 }
-def_pcfunk3(graph_decomposition_lattice__ecs_isomorphisms, this, graph, cost_function, return f2__graph_decomposition_lattice__ecs_isomorphisms(this_cause, this, graph, cost_function));
-
-//Test modules
-
-f2ptr f2__error_correcting__test(f2ptr cause) {
-  return nil;
-}
-def_pcfunk0(error_correcting__test, return f2__error_correcting__test(this_cause));
+def_pcfunk3(graph_decomposition_lattice__error_correcting_subgraph_isomorphisms, this, graph, cost_function, return f2__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(this_cause, this, graph, cost_function));
 
 // **
 
 void f2__graph_match_error_correcting__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  __edit_sequence__symbol = new__symbol(cause, "edit_sequence");
+  __graph_edit_sequence__symbol = new__symbol(cause, "graph_edit_sequence");
 }
 
 void f2__graph_match_error_correcting__initialize() {
@@ -514,24 +477,16 @@ void f2__graph_match_error_correcting__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "graph_match_error_correcting", "", &f2__graph_match_error_correcting__reinitialize_globalvars);
   
   f2__graph_match_error_correcting__reinitialize_globalvars();
-
-  f2__primcfunk__init__0(error_correcting__test, "Test error correcting graph matching.");
   
-  // graph
-  f2__primcfunk__init__3(graph__edges_between_nodes, this, left_node, right_node, "");
-
-  // edit_sequence
-  initialize_primobject_3_slot(edit_sequence, operations, cost, isomorphism);
-  f2__primcfunk__init__0(edit_sequence__new, "");
-  f2__primcfunk__init__5(edit_sequence__add, this, type, from, to, cost_function, "");
-  f2__primcfunk__init__3(edit_sequence__add_mapping, this, left_node, right_node, "");
-  f2__primcfunk__init__5(edit_sequence__combine, this, that, lattice_node, graph, cost_function, "");
-
+  // graph_edit_sequence
+  initialize_primobject_3_slot(graph_edit_sequence, operations, cost, isomorphism);
+  f2__primcfunk__init__0(graph_edit_sequence__new, "");
+  f2__primcfunk__init__5(graph_edit_sequence__add, this, type, from, to, cost_function, "");
+  f2__primcfunk__init__3(graph_edit_sequence__add_mapping, this, left_node, right_node, "");
+  f2__primcfunk__init__5(graph_edit_sequence__combine, this, that, lattice_node, graph, cost_function, "");
+  
   // graph_decomposition_lattice
-  f2__primcfunk__init__3(graph_decomposition_lattice__ecs_isomorphisms, this, graph, cost_function, "");
+  f2__primcfunk__init__3(graph_decomposition_lattice__error_correcting_subgraph_isomorphisms, this, graph, cost_function, "");
   
 }
 
-//f2ptr comp_funk = f2__environment__lookup_funkval_value(cause, global_environment(cause), new__symbol(
-//f2ptr rrr = f2__redblacktree__new(
-//memory.c

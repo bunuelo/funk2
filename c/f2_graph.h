@@ -104,6 +104,14 @@ f2ptr     raw__graph__minus                          (f2ptr cause, f2ptr this, f
 f2ptr      f2__graph__minus                          (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr     raw__graph__node_isomorphisms              (f2ptr cause, f2ptr this, f2ptr node);
 f2ptr      f2__graph__node_isomorphisms              (f2ptr cause, f2ptr this, f2ptr node);
+f2ptr     raw__graph__edges_with_label_between_nodes (f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node);
+f2ptr      f2__graph__edges_with_label_between_nodes (f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node);
+f2ptr     raw__graph__edges_between_nodes            (f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
+f2ptr      f2__graph__edges_between_nodes            (f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
+f2ptr     raw__graph__as__dot_code                   (f2ptr cause, f2ptr this);
+f2ptr      f2__graph__as__dot_code                   (f2ptr cause, f2ptr this);
+f2ptr     raw__graph__terminal_print_with_frame      (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__graph__terminal_print_with_frame      (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause);
 

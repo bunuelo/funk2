@@ -18,10 +18,6 @@
  rights to redistribute these changes.'
 
 
-'graph'
-
-[deftypefunk graph get edges_between_nodes [left_node right_node] [graph-edges_between_nodes this left_node right_node]]
-
 'edit_sequence'
 
 [deftypefunk edit_sequence execute add         [type from to cost_function]            [edit_sequence-add         this type from to cost_function]]
@@ -30,5 +26,5 @@
 
 'graph_decomposition_lattice'
 
-[deftypefunk graph_decomposition_lattice get ecs_isomorphisms [graph cost_function] [graph_decomposition_lattice-ecs_isomorphisms this graph cost_function]]
+[deftypefunk graph_decomposition_lattice get error_correcting_subgraph_isomorphisms [graph cost_function] [graph_decomposition_lattice-error_correcting_subgraph_isomorphisms this graph cost_function]]
 

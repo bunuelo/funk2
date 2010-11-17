@@ -21,6 +21,18 @@
 
 #include "funk2.h"
 
+//#########################################################################
+//
+// This algorithm for Subgraph Isomorphism Detection
+//  comes from the thesis by Bruno T. Messmer:
+//   http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.33.4206
+// 
+// See also f2_graph_match_error_correcting.c for an approximate
+// version of this lattice-based graph matching algorithm also
+// developed by Messmer.
+//
+//#########################################################################
+
 // graph_node
 
 def_primobject_1_slot(graph_node, label);
@@ -461,6 +473,41 @@ f2ptr f2__graph__edges_with_label_between_nodes(f2ptr cause, f2ptr this, f2ptr l
   return raw__graph__edges_with_label_between_nodes(cause, this, label, left_node, right_node);
 }
 def_pcfunk4(graph__edges_with_label_between_nodes, this, label, left_node, right_node, return f2__graph__edges_with_label_between_nodes(this_cause, this, label, left_node, right_node));
+
+
+
+f2ptr raw__graph__edges_between_nodes(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node) {
+  f2ptr edges_label_hash_right_node_hash_left_node_hash = f2__graph__edges_label_hash_right_node_hash_left_node_hash(cause, this);
+  f2ptr edges_label_hash_right_node_hash                = f2__ptypehash__lookup(cause, edges_label_hash_right_node_hash_left_node_hash, left_node);
+  f2ptr result = nil; //f2__ptypehash__new(cause);
+  if (! edges_label_hash_right_node_hash) {
+    return result;
+  }
+  f2ptr edges_label_hash = f2__ptypehash__lookup(cause, edges_label_hash_right_node_hash, right_node);
+  if (! edges_label_hash) {
+    return result;
+  }
+  ptypehash__keyvalue_pair__iteration(cause, edges_label_hash, pair__edge_label__edges,
+				      f2ptr edge_label = f2__cons__car(cause, pair__edge_label__edges);
+				      f2ptr edges      = f2__cons__cdr(cause, pair__edge_label__edges);
+				      while (edges) {
+					result = f2__cons__new(cause, f2__cons__new(cause, edge_label, f2__cons__car(cause, edges)), result);
+					edges  = f2__cons__cdr(cause, edges);
+				      }
+				      );
+  return result;
+}
+
+f2ptr f2__graph__edges_between_nodes(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node) {
+  if ((! raw__graph__is_type(cause, this)) ||
+      (! raw__graph_node__is_type(cause, left_node)) ||
+      (! raw__graph_node__is_type(cause, right_node))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__edges_between_nodes(cause, this, left_node, right_node);
+}
+def_pcfunk3(graph__edges_between_nodes, this, left_node, right_node, return f2__graph__edges_between_nodes(this_cause, this, left_node, right_node));
+
 
 
 
@@ -1144,6 +1191,7 @@ void f2__graph__initialize() {
   f2__primcfunk__init__2(graph__minus,                           this, that,                         "Returns a subgraph of this graph without the nodes in that graph.");
   f2__primcfunk__init__2(graph__node_isomorphisms,               this, node,                         "Returns all single node isomorphisms between this graph and a graph_node.");
   f2__primcfunk__init__4(graph__edges_with_label_between_nodes,  this, label, left_node, right_node, "Returns edges directed from the left_node to the right_node that have the label in this graph.");
+  f2__primcfunk__init__3(graph__edges_between_nodes,             this, left_node, right_node,        "Returns edges directed from the left_node to the right_node.");
   f2__primcfunk__init__1(graph__as__dot_code,                    this,                               "Returns graph as dot_code for rendering with the graphviz dot application.");
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

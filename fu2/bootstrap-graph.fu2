@@ -32,6 +32,8 @@
 [deftypefunk graph get     edges_with_label_between_nodes  [label left_node right_node] [graph-edges_with_label_between_nodes  this label left_node right_node]]
 [deftypefunk graph get     as-dot_code                     []                           [graph-as-dot_code                     this]]
 [deftypefunk graph get     union                           [:rest graphs]               [graph_list-union                      [cons this graphs]]]
+[deftypefunk graph get     edges_between_nodes             [left_node right_node]       [graph-edges_between_nodes             this left_node right_node]]
+
 
 [deftypefunk graph_isomorphism execute add_mapping       [left_node right_node] [graph_isomorphism-add_mapping       this left_node right_node]]
 [deftypefunk graph_isomorphism get     mapping_count     []                     [graph_isomorphism-mapping_count     this]]

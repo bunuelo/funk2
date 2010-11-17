@@ -115,6 +115,7 @@
 				  'extension/image_sequence/'
 				  'extension/movie/'
 				  'extension/forward_planner/'
+				  'extension/frame_ball/'
 				  'example/conceptnet/'
 				  'example/divisi2/'
 				  'example/english_language/'

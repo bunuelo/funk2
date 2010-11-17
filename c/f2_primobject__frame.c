@@ -456,7 +456,7 @@ f2ptr raw__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr gra
   frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
 		   f2ptr type_slot_name__string = f2__exp__as__string(cause, type_slot_name);
 		   f2ptr slot_name__string      = f2__exp__as__string(cause, slot_name);
-		   f2ptr combined_slot_name     = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list3__new(cause, type_slot_name, new__string(cause, "-"), slot_name)));
+		   f2ptr combined_slot_name     = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list3__new(cause, type_slot_name, new__string(cause, "-"), slot_name__string)));
 		   f2ptr node                   = f2__ptypehash__lookup(cause, node_ptypehash, slot_value);
 		   if (node == nil) {
 		     node = f2__graph_node__new(cause, slot_value);

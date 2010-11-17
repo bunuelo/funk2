@@ -20,9 +20,9 @@
 
 'edit_sequence'
 
-[deftypefunk edit_sequence execute add         [type from to cost_function]            [edit_sequence-add         this type from to cost_function]]
-[deftypefunk edit_sequence execute add_mapping [left_node right_node]                  [edit_sequence-add_mapping this left_node right_node]]
-[deftypefunk edit_sequence get     combine     [that lattice_node graph cost_function] [edit_sequence-combine     this that lattice_node graph cost_function]]
+[deftypefunk graph_edit_sequence execute add         [type from to cost_function]            [graph_edit_sequence-add         this type from to cost_function]]
+[deftypefunk graph_edit_sequence execute add_mapping [left_node right_node]                  [graph_edit_sequence-add_mapping this left_node right_node]]
+[deftypefunk graph_edit_sequence get     combine     [that lattice_node graph cost_function] [graph_edit_sequence-combine     this that lattice_node graph cost_function]]
 
 'graph_decomposition_lattice'
 

@@ -60,7 +60,7 @@ boolean_t raw__frame__ball_size_is_less_than_with_ptypehash(f2ptr cause, f2ptr t
 boolean_t raw__frame__ball_size_is_less_than(f2ptr cause, f2ptr this, s64 maximum_size, s64* possibly_null_exact_size) {
   f2ptr     ptypehash = f2__ptypehash__new(cause);
   s64       exact_size;
-  boolean_t is_less_than = raw__frame__ball_size_is_less_than_with_ptypehash(cause, this, ptypehash, maximum_size, exact_size);
+  boolean_t is_less_than = raw__frame__ball_size_is_less_than_with_ptypehash(cause, this, ptypehash, maximum_size, &exact_size);
   if (possibly_null_exact_size != NULL) {
     *possibly_null_exact_size = exact_size;
   }

@@ -452,7 +452,7 @@ f2ptr raw__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr gra
     this_node = f2__graph_node__new(cause, this);
     f2__ptypehash__add(cause, node_ptypehash, this, this_node);
   }
-  f2__graph__add_node(cause, this_node);
+  f2__graph__add_node(cause, graph, this_node);
   frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
 		   f2ptr type_slot_name__string = f2__exp__as__string(cause, type_slot_name);
 		   f2ptr slot_name__string      = f2__exp__as__string(cause, slot_name);
@@ -462,7 +462,7 @@ f2ptr raw__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr gra
 		     node = f2__graph_node__new(cause, node_ptypehash, slot_value);
 		     f2__ptypehash__add(cause, node_ptypehash, slot_value, node);
 		   }
-		   f2__graph__add_new_edge(cause, combined_slot_name, this_node, node);
+		   f2__graph__add_new_edge(cause, graph, combined_slot_name, this_node, node);
 		   );
   return nil;
 }

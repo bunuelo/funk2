@@ -21,3 +21,26 @@
 
 #include "../../c/funk2.h"
 
+
+
+
+// **
+
+f2ptr f2__forward_planner__core_extension_ping(f2ptr cause) {
+  return nil;
+}
+export_cefunk0(forward_planner__core_extension_ping, 0, "");
+
+f2ptr f2__forward_planner__core_extension_initialize(f2ptr cause) {
+  printf("\nforward_planner initialized."); fflush(stdout);
+  return nil;
+}
+export_cefunk0(forward_planner__core_extension_initialize, 0, "");
+
+f2ptr f2__forward_planner__core_extension_destroy(f2ptr cause) {
+  printf("\nforward_planner destroyed."); fflush(stdout);
+  return nil;
+}
+export_cefunk0(forward_planner__core_extension_destroy, 0, "");
+
+

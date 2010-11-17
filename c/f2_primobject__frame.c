@@ -196,7 +196,7 @@ f2ptr f2__frame__key_types(f2ptr cause, f2ptr this) {
   }
   return raw__frame__key_types(cause, this);
 }
-def_pcfunk2(frame__key_types, this, return f2__frame__key_types(this_cause, this));
+def_pcfunk1(frame__key_types, this, return f2__frame__key_types(this_cause, this));
 
 
 f2ptr f2__frame__type_var__keys(f2ptr cause, f2ptr this, f2ptr type) {

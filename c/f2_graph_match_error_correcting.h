@@ -44,6 +44,8 @@ f2ptr  f2__graph_edit_sequence__add_mapping(f2ptr cause, f2ptr this, f2ptr left_
 f2ptr raw__graph_edit_sequence__combine    (f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function);
 f2ptr  f2__graph_edit_sequence__combine    (f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function);
 
+f2ptr f2graph_edit_sequence__primobject_type__new_aux(f2ptr cause);
+
 // graph_decomposition_lattice
 f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph, f2ptr cost_function);
 f2ptr  f2__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph, f2ptr cost_function);

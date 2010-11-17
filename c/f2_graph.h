@@ -135,11 +135,15 @@ f2ptr      f2__graph_isomorphism__map_right_to_left(f2ptr cause, f2ptr this, f2p
 f2ptr     raw__graph_isomorphism__as__frame        (f2ptr cause, f2ptr this);
 f2ptr      f2__graph_isomorphism__as__frame        (f2ptr cause, f2ptr this);
 
+f2ptr f2graph_decomposition_isomorphism__primobject_type__new_aux(f2ptr cause);
+
 // graph_decomposition_lattice_node
 declare_primobject_5_slot(graph_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, between_graph, root_graph_set);
 
 f2ptr raw__graph_decomposition_lattice_node__new(f2ptr cause, f2ptr parent_graph, f2ptr left_child_graph, f2ptr right_child_graph);
 f2ptr  f2__graph_decomposition_lattice_node__new(f2ptr cause, f2ptr parent_graph, f2ptr left_child_graph, f2ptr right_child_graph);
+
+f2ptr f2graph_decomposition_lattice_node__primobject_type__new_aux(f2ptr cause);
 
 // graph_decomposition_lattice
 declare_primobject_7_slot(graph_decomposition_lattice, graph_set, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_graph_set, root_graph_set);
@@ -149,6 +153,8 @@ f2ptr raw__graph_decomposition_lattice__add_node       (f2ptr cause, f2ptr this,
 f2ptr  f2__graph_decomposition_lattice__add_node       (f2ptr cause, f2ptr this, f2ptr node);
 void  raw__graph_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, f2ptr graph);
 f2ptr  f2__graph_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, f2ptr graph);
+
+f2ptr f2graph_decomposition_lattice__primobject_type__new_aux(f2ptr cause);
 
 // **
 

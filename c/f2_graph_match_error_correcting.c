@@ -222,6 +222,41 @@ void dfs_visit(f2ptr cause, f2ptr this, f2ptr node_parent_hash, f2ptr used_hash,
   *root_to_leaf_list = f2__cons__new(cause, this, *root_to_leaf_list);
 }
 
+
+f2ptr raw__graph_edit_sequence__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"), new__symbol(cause, "graph_edit_sequence"));
+    f2__frame__add_var_value(cause, frame, new__symbol(cause, "operations"),        f2__graph_edit_sequence__operations( cause, this));
+    f2__frame__add_var_value(cause, frame, new__symbol(cause, "cost"),              f2__graph_edit_sequence__cost(       cause, this));
+    f2__frame__add_var_value(cause, frame, new__symbol(cause, "isomorphism"),       f2__graph_edit_sequence__isomorphism(cause, this));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__graph_edit_sequence__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__graph_edit_sequence__is_type(cause, this)) &&
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph_edit_sequence__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(graph_edit_sequence__terminal_print_with_frame, this, terminal_print_frame, return f2__graph_edit_sequence__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr f2graph_edit_sequence__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2graph_edit_sequence__primobject_type__new(cause);
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph_edit_sequence.terminal_print_with_frame__funk);}
+  return this;
+}
+
+
+
+
+
 f2ptr cost_compare(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
   f2ptr operations_1 = f2__cons__car(cause, args);
   f2ptr operations_2 = f2__cons__car(cause, f2__cons__cdr(cause, args));
@@ -464,6 +499,7 @@ f2ptr f2__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f2
 }
 def_pcfunk3(graph_decomposition_lattice__error_correcting_subgraph_isomorphisms, this, graph, cost_function, return f2__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(this_cause, this, graph, cost_function));
 
+
 // **
 
 void f2__graph_match_error_correcting__reinitialize_globalvars() {
@@ -484,6 +520,9 @@ void f2__graph_match_error_correcting__initialize() {
   f2__primcfunk__init__5(graph_edit_sequence__add, this, type, from, to, cost_function, "");
   f2__primcfunk__init__3(graph_edit_sequence__add_mapping, this, left_node, right_node, "");
   f2__primcfunk__init__5(graph_edit_sequence__combine, this, that, lattice_node, graph, cost_function, "");
+  
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_edit_sequence.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_edit_sequence__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_graph_edit_sequence.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // graph_decomposition_lattice
   f2__primcfunk__init__3(graph_decomposition_lattice__error_correcting_subgraph_isomorphisms, this, graph, cost_function, "");

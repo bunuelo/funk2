@@ -93,36 +93,38 @@ f2ptr raw__frame__copy_recursively_with_ptypehash(f2ptr cause, f2ptr this, f2ptr
   return frame;
 }
 
-// this function is dangerous.  make sure you know this recursion won't become self-recursive (infinite).
-f2ptr raw__frame__copy_recursively(f2ptr cause, f2ptr this) {
-  return raw__frame__copy_recursively_with_ptypehash(cause, this, f2__ptypehash__new(cause));
-}
-
 
 // frame_ball
 
-f2ptr raw__frame_ball__new(f2ptr cause, f2ptr user_root_frame) {
+f2ptr raw__frame_ball__new(f2ptr cause, f2ptr user_root_frames) {
   // we first test the size of the recursive structure is smaller (shorter) than baller_frame_height. (see Skee Lo's "I wish I was a Baller")
-  if (! raw__frame__wishes_to_be_a_baller(cause, user_root_frame)) {
+  if (! raw__frame__wishes_to_be_a_baller(cause, user_root_frames)) {
     return f2larva__new(cause, 444, nil);
     // there is a problem printing bugs involving global environment, which is usually where this is a problem.
     //return f2larva__new(cause, 444, f2__bug__new(cause, f2integer__new(cause, 444), f2__frame__new(cause, f2list4__new(cause,
     //														       new__symbol(cause, "bug_type"), new__symbol(cause, "frame_is_too_large_to_make_a_frame_ball_copy"),
     //														       new__symbol(cause, "funkname"), new__symbol(cause, "frame_ball-new")))));
   }
-  f2ptr root_frame = raw__frame__copy_recursively(cause, user_root_frame);
+  f2ptr ptypehash   = f2__ptypehash__new(cause);
+  f2ptr root_frames = nil;
+  f2ptr iter        = user_root_frames;
+  while (iter != nil) {
+    f2ptr user_root_frame = f2__cons__car(cause, iter);
+    f2ptr root_frame = raw__frame__copy_recursively_with_ptypehash(cause, user_root_frame, ptypehash);
+    root_frames = f2cons__new(cause, root_frame, root_frames);
+  }
   return f2__frame__new(cause, f2list4__new(cause,
 					    new__symbol(cause, "type"),       new__symbol(cause, "frame_ball"),
-					    new__symbol(cause, "root_frame"), root_frame));
+					    new__symbol(cause, "root_frames"), root_frames));
 }
 
-f2ptr f2__frame_ball__new(f2ptr cause, f2ptr root_frame) {
-  if (! raw__frame__is_type(cause, root_frame)) {
+f2ptr f2__frame_ball__new(f2ptr cause, f2ptr root_frames) {
+  if (! raw__frame__is_type(cause, root_frames)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__frame_ball__new(cause, root_frame);
+  return raw__frame_ball__new(cause, root_frames);
 }
-export_cefunk1(frame_ball__new, images, 0, "Returns a new frame_ball object.");
+export_cefunk0_and_rest(frame_ball__new, user_root_frames, 0, "Takes frames and returns a new frame_ball object.");
 
 
 boolean_t raw__frame_ball__is_type(f2ptr cause, f2ptr thing) {
@@ -160,39 +162,39 @@ f2ptr f2__frame_ball__type(f2ptr cause, f2ptr this) {
 export_cefunk1(frame_ball__type, thing, 0, "Returns the specific type of object that this frame_ball is.");
 
 
-f2ptr raw__frame_ball__root_frame(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "root_frame"), nil);
+f2ptr raw__frame_ball__root_frames(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "root_frames"), nil);
 }
 
-f2ptr f2__frame_ball__root_frame(f2ptr cause, f2ptr this) {
+f2ptr f2__frame_ball__root_frames(f2ptr cause, f2ptr this) {
   if (! raw__frame_ball__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__frame_ball__root_frame(cause, this);
+  return raw__frame_ball__root_frames(cause, this);
 }
-export_cefunk1(frame_ball__root_frame, thing, 0, "Returns the root_frame of the frame_ball.");
+export_cefunk1(frame_ball__root_frames, thing, 0, "Returns the root_frames of the frame_ball.");
 
 
-f2ptr raw__frame_ball__root_frame__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "root_frame"), value);
+f2ptr raw__frame_ball__root_frames__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "root_frames"), value);
 }
 
-f2ptr f2__frame_ball__root_frame__set(f2ptr cause, f2ptr this, f2ptr value) {
+f2ptr f2__frame_ball__root_frames__set(f2ptr cause, f2ptr this, f2ptr value) {
   if (! raw__frame_ball__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__frame_ball__root_frame__set(cause, this, value);
+  return raw__frame_ball__root_frames__set(cause, this, value);
 }
-export_cefunk2(frame_ball__root_frame__set, thing, value, 0, "Sets the root_frame of the frame_ball.");
+export_cefunk2(frame_ball__root_frames__set, thing, value, 0, "Sets the root_frames of the frame_ball.");
 
 
 f2ptr f2__frame_ball_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),        f2__core_extension_funk__new(cause, new__symbol(cause, "frame_ball"), new__symbol(cause, "frame_ball__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "frame_ball"), new__symbol(cause, "frame_ball__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),       f2__core_extension_funk__new(cause, new__symbol(cause, "frame_ball"), new__symbol(cause, "frame_ball__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "root_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "frame_ball"), new__symbol(cause, "frame_ball__root_frame")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "root_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "frame_ball"), new__symbol(cause, "frame_ball__root_frame__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),         f2__core_extension_funk__new(cause, new__symbol(cause, "frame_ball"), new__symbol(cause, "frame_ball__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),     f2__core_extension_funk__new(cause, new__symbol(cause, "frame_ball"), new__symbol(cause, "frame_ball__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),        f2__core_extension_funk__new(cause, new__symbol(cause, "frame_ball"), new__symbol(cause, "frame_ball__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "root_frames"), f2__core_extension_funk__new(cause, new__symbol(cause, "frame_ball"), new__symbol(cause, "frame_ball__root_frames")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "root_frames"), f2__core_extension_funk__new(cause, new__symbol(cause, "frame_ball"), new__symbol(cause, "frame_ball__root_frames__set")));}
   return this;
 }
 

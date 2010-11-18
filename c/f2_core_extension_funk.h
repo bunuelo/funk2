@@ -226,7 +226,7 @@ struct funk2_object_type__core_extension_funk__slot_s {
   f2ptr f2__##name##__args(f2ptr cause) {return f2list2__new(cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2));}
 
 #define def_cefunk2_and_rest__args(name, arg1, arg2, and_rest)		\
-  f2ptr f2__##name##__args(f2ptr cause) {return f2list4__new(cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2), new__symbol(cause, #":rest"), new__symbol(cause, #and_rest));}
+  f2ptr f2__##name##__args(f2ptr cause) {return f2list4__new(cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2), new__symbol(cause, ":rest"), new__symbol(cause, #and_rest));}
 
 #define def_cefunk3__args(name, arg1, arg2, arg3)			\
   f2ptr f2__##name##__args(f2ptr cause) {return f2list3__new(cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2), new__symbol(cause, #arg3));}

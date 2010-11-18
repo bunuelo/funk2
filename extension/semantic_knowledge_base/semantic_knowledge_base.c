@@ -153,9 +153,10 @@ f2ptr f2__semantic_realm_type__new(f2ptr cause) {
 // semantic_frame
 
 f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr realm) {
-  return f2__frame__new(cause, f2list4__new(cause,
+  return f2__frame__new(cause, f2list6__new(cause,
 					    new__symbol(cause, "type"),  new__symbol(cause, "semantic_frame"),
-					    new__symbol(cause, "realm"), realm));
+					    new__symbol(cause, "realm"), realm,
+					    new__symbol(cause, "frame"), f2__frame__new(cause, nil)));
 }
 
 f2ptr f2__semantic_frame__new(f2ptr cause, f2ptr realm) {

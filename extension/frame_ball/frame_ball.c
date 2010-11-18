@@ -108,6 +108,7 @@ f2ptr raw__frame_ball__new(f2ptr cause, f2ptr user_root_frames) {
     }
     f2ptr root_frame = raw__frame__copy_recursively_with_ptypehash(cause, user_root_frame, ptypehash);
     root_frames = f2cons__new(cause, root_frame, root_frames);
+    iter = f2__cons__cdr(cause, iter);
   }
   return f2__frame__new(cause, f2list4__new(cause,
 					    new__symbol(cause, "type"),       new__symbol(cause, "frame_ball"),

@@ -162,7 +162,7 @@ f2ptr f2__semantic_frame__new(f2ptr cause, f2ptr realm) {
   if (! raw__semantic_realm__is_type(cause, realm)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_frame__new(cause);
+  return raw__semantic_frame__new(cause, realm);
 }
 export_cefunk1(semantic_frame__new, realm, 0, "Returns a new semantic_frame object.");
 

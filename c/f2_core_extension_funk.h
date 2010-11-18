@@ -175,38 +175,38 @@ struct funk2_object_type__core_extension_funk__slot_s {
 #define export_basic_cefunk0(name)          def_basic_cefunk0(name,	\
 							      return f2__##name(cause));
 
-#define export_basic_cefunk0_and_rest(name) def_basic_cefunk0(name, and_rest, \
-							      return f2__##name(cause, and_rest));
+#define export_basic_cefunk0_and_rest(name) def_basic_cefunk0_and_rest(name, and_rest, \
+								       return f2__##name(cause, and_rest));
 
 #define export_basic_cefunk1(name)          def_basic_cefunk1(name, arg1, \
 							      return f2__##name(cause, arg1));
 
-#define export_basic_cefunk1_and_rest(name) def_basic_cefunk1(name, arg1, and_rest, \
-							      return f2__##name(cause, arg1, and_rest));
+#define export_basic_cefunk1_and_rest(name) def_basic_cefunk1_and_rest(name, arg1, and_rest, \
+								       return f2__##name(cause, arg1, and_rest));
 
 #define export_basic_cefunk2(name)          def_basic_cefunk2(name, arg1, arg2,	\
 							      return f2__##name(cause, arg1, arg2));
 
-#define export_basic_cefunk2_and_rest(name) def_basic_cefunk2(name, arg1, arg2,	and_rest, \
-							      return f2__##name(cause, arg1, arg2, and_rest));
+#define export_basic_cefunk2_and_rest(name) def_basic_cefunk2_and_rest(name, arg1, arg2, and_rest, \
+								       return f2__##name(cause, arg1, arg2, and_rest));
 
 #define export_basic_cefunk3(name)          def_basic_cefunk3(name, arg1, arg2, arg3, \
 							      return f2__##name(cause, arg1, arg2, arg3));
 
-#define export_basic_cefunk3_and_rest(name) def_basic_cefunk3(name, arg1, arg2, arg3, and_rest,	\
-							      return f2__##name(cause, arg1, arg2, arg3, and_rest));
+#define export_basic_cefunk3_and_rest(name) def_basic_cefunk3_and_rest(name, arg1, arg2, arg3, and_rest, \
+								       return f2__##name(cause, arg1, arg2, arg3, and_rest));
 
 #define export_basic_cefunk4(name)          def_basic_cefunk4(name, arg1, arg2, arg3, arg4, \
 							      return f2__##name(cause, arg1, arg2, arg3, arg4));
 
-#define export_basic_cefunk4_and_rest(name) def_basic_cefunk4(name, arg1, arg2, arg3, arg4, and_rest, \
-							      return f2__##name(cause, arg1, arg2, arg3, arg4, and_rest));
+#define export_basic_cefunk4_and_rest(name) def_basic_cefunk4_and_rest(name, arg1, arg2, arg3, arg4, and_rest, \
+								       return f2__##name(cause, arg1, arg2, arg3, arg4, and_rest));
 
 #define export_basic_cefunk5(name)          def_basic_cefunk5(name, arg1, arg2, arg3, arg4, arg5, \
 							      return f2__##name(cause, arg1, arg2, arg3, arg4, arg5));
 
-#define export_basic_cefunk5_and_rest(name) def_basic_cefunk5(name, arg1, arg2, arg3, arg4, arg5, and_rest, \
-							      return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, and_rest));
+#define export_basic_cefunk5_and_rest(name) def_basic_cefunk5_and_rest(name, arg1, arg2, arg3, arg4, arg5, and_rest, \
+								       return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, and_rest));
 
 
 
@@ -271,7 +271,7 @@ struct funk2_object_type__core_extension_funk__slot_s {
 
 #define export_cefunk0_and_rest(name, and_rest, is_funktional, documentation_string) \
   export_basic_cefunk0_and_rest(name);						\
-  def_cefunk0_and_rest__args(name, and_rest)						\
+  def_cefunk0_and_rest__args(name, and_rest)				\
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
 #define export_cefunk1(name, arg1, is_funktional, documentation_string)	\

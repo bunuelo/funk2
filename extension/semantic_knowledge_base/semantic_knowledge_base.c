@@ -198,32 +198,6 @@ f2ptr f2__semantic_frame__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_frame__type, thing, 0, "Returns the specific type of object that this semantic_frame is.");
 
 
-f2ptr raw__semantic_realm__semantic_hash(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "semantic_hash"), nil);
-}
-
-f2ptr f2__semantic_realm__semantic_hash(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_realm__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_realm__semantic_hash(cause, this);
-}
-export_cefunk1(semantic_realm__semantic_hash, thing, 0, "Returns the semantic_hash of the semantic_realm.");
-
-
-f2ptr raw__semantic_realm__semantic_hash__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_hash"), value);
-}
-
-f2ptr f2__semantic_realm__semantic_hash__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__semantic_realm__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_realm__semantic_hash__set(cause, this, value);
-}
-export_cefunk2(semantic_realm__semantic_hash__set, thing, value, 0, "Sets the semantic_hash of the semantic_realm.");
-
-
 f2ptr f2__semantic_frame_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__new")));}

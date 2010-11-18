@@ -21,8 +21,6 @@
 
 'semantic_frame'
 
-[deframe semantic_frame [frame] []]
-
 [deftypefunk semantic_frame execute add [type name value]
   [let [[type_key [have semantic_key_hash lookup type]]]
     [if [null type_key]

@@ -103,6 +103,10 @@
     matching_frames]]
 
 
+[deftypefunk semantic_knowledge_base get as-frame_ball []
+  [new-apply frame_ball semantic_frames]]
+
+
 
 [defunk skb-test []
   [let [[semantic_knowledge_base [new semantic_knowledge_base]]]

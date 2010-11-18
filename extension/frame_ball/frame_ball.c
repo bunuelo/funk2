@@ -185,6 +185,27 @@ f2ptr f2__frame_ball__root_frames__set(f2ptr cause, f2ptr this, f2ptr value) {
 export_cefunk2(frame_ball__root_frames__set, thing, value, 0, "Sets the root_frames of the frame_ball.");
 
 
+f2ptr raw__frame_ball__as__graph(f2ptr cause, f2ptr this) {
+  f2ptr node_ptypehash = f2__ptypehash__new(cause);
+  f2ptr graph          = f2__graph__new(cause);
+  f2ptr iter = raw__frame_ball__root_frames(cause, this);
+  while (iter != nil) {
+    f2ptr root_frame = f2__cons__car(cause, iter);
+    raw__frame__add_recursively_to_graph_with_ptypehash(cause, root_frame, graph, node_ptypehash);
+    iter = f2__cons__cdr(cause, iter);
+  }
+  return graph;
+}
+
+f2ptr f2__frame_ball__as__graph(f2ptr cause, f2ptr this) {
+  if (! raw__frame_ball__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__frame_ball__as__graph(cause, this);
+}
+export_cefunk1(frame_ball__as__graph, this, 0, "Converts the frame_ball to a graph.");
+
+
 f2ptr f2__frame_ball_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),         f2__core_extension_funk__new(cause, new__symbol(cause, "frame_ball"), new__symbol(cause, "frame_ball__new")));}
@@ -192,6 +213,7 @@ f2ptr f2__frame_ball_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),        f2__core_extension_funk__new(cause, new__symbol(cause, "frame_ball"), new__symbol(cause, "frame_ball__type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "root_frames"), f2__core_extension_funk__new(cause, new__symbol(cause, "frame_ball"), new__symbol(cause, "frame_ball__root_frames")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "root_frames"), f2__core_extension_funk__new(cause, new__symbol(cause, "frame_ball"), new__symbol(cause, "frame_ball__root_frames__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-graph"),    f2__core_extension_funk__new(cause, new__symbol(cause, "frame_ball"), new__symbol(cause, "frame_ball__as__graph")));}
   return this;
 }
 

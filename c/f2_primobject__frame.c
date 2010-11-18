@@ -500,6 +500,31 @@ f2ptr f2__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr grap
 def_pcfunk3(frame__add_to_graph_with_ptypehash, this, graph, node_ptypehash, return f2__frame__add_to_graph_with_ptypehash(this_cause, this, graph, node_ptypehash));
 
 
+// this function is dangerous.  make sure that you are sure of the size of the recursive structure you are asking it to iterate over.
+// this is function is safely used from the frame_ball core_extension.  it is recommended that you use that interface unless you know what you are doing.
+f2ptr raw__frame__add_recursively_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash) {
+  f2ptr this_node = f2__ptypehash__lookup(cause, node_ptypehash, this);
+  if (this_node == nil) {
+    this_node = f2__graph_node__new(cause, this);
+    f2__ptypehash__add(cause, node_ptypehash, this, this_node);
+    f2__graph__add_node(cause, graph, this_node);
+    frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
+		     f2ptr slot_value_node = f2__ptypehash__lookup(cause, node_ptypehash, slot_value);
+		     if (slot_value_node == nil) {
+		       slot_value_node = f2__graph_node__new(cause, slot_value);
+		       if (raw__frame__is_type(cause, slot_value)) {
+			 raw__frame__add_recursively_to_graph_with_ptypehash(cause, slot_value, graph, node_ptypehash);
+		       }
+		     }
+		     f2__graph__add_new_edge(cause, graph, slot_name, this_node, slot_value_node);
+		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key_type"), slot_value_node, f2__graph_node__new(cause, type_slot_name));
+		     );
+    return f2bool__new(boolean__true);
+  }
+  return f2bool__new(boolean__false);
+}
+
+
 f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr use_one_line = raw__terminal_print_frame__use_one_line(cause, terminal_print_frame);
   f2ptr max_size     = raw__terminal_print_frame__max_size(cause, terminal_print_frame);

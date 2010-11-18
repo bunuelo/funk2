@@ -270,7 +270,7 @@ struct funk2_object_type__core_extension_funk__slot_s {
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
 #define export_cefunk0_and_rest(name, and_rest, is_funktional, documentation_string) \
-  export_basic_cefunk1(name);						\
+  export_basic_cefunk0_and_rest(name);						\
   def_cefunk0_and_rest__args(name, and_rest)						\
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
@@ -280,7 +280,7 @@ struct funk2_object_type__core_extension_funk__slot_s {
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
 #define export_cefunk1_and_rest(name, arg1, and_rest, is_funktional, documentation_string) \
-  export_basic_cefunk2(name);						\
+  export_basic_cefunk1_and_rest(name);						\
   def_cefunk2__args(name, arg1, arg2)					\
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
@@ -289,9 +289,19 @@ struct funk2_object_type__core_extension_funk__slot_s {
   def_cefunk2__args(name, arg1, arg2)					\
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
+#define export_cefunk2_and_rest(name, arg1, arg2, and_rest, is_funktional, documentation_string) \
+  export_basic_cefunk2_and_rest(name);					\
+  def_cefunk2_and_rest__args(name, arg1, arg2, and_rest)		\
+  export_cefunk_without_args(name, is_funktional, documentation_string)
+
 #define export_cefunk3(name, arg1, arg2, arg3, is_funktional, documentation_string) \
   export_basic_cefunk3(name);						\
   def_cefunk3__args(name, arg1, arg2, arg3)				\
+  export_cefunk_without_args(name, is_funktional, documentation_string)
+
+#define export_cefunk3_and_rest(name, arg1, arg2, arg3, and_rest, is_funktional, documentation_string) \
+  export_basic_cefunk3_and_rest(name);					\
+  def_cefunk3_and_rest__args(name, arg1, arg2, arg3, and_rest)		\
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
 #define export_cefunk4(name, arg1, arg2, arg3, arg4, is_funktional, documentation_string) \
@@ -299,9 +309,19 @@ struct funk2_object_type__core_extension_funk__slot_s {
   def_cefunk4__args(name, arg1, arg2, arg3, arg4)			\
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
+#define export_cefunk4_and_rest(name, arg1, arg2, arg3, arg4, and_rest, is_funktional, documentation_string) \
+  export_basic_cefunk4_and_rest(name);					\
+  def_cefunk4_and_rest__args(name, arg1, arg2, arg3, arg4, and_rest)	\
+  export_cefunk_without_args(name, is_funktional, documentation_string)
+
 #define export_cefunk5(name, arg1, arg2, arg3, arg4, arg5, is_funktional, documentation_string) \
   export_basic_cefunk5(name);						\
   def_cefunk5__args(name, arg1, arg2, arg3, arg4, arg5)			\
+  export_cefunk_without_args(name, is_funktional, documentation_string)
+
+#define export_cefunk5_and_rest(name, arg1, arg2, arg3, arg4, arg5, and_rest, is_funktional, documentation_string) \
+  export_basic_cefunk5_and_rest(name);					\
+  def_cefunk5_and_rest__args(name, arg1, arg2, arg3, arg4, arg5, and_rest) \
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
 

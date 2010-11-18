@@ -474,6 +474,8 @@ f2ptr raw__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr gra
     f2__ptypehash__add(cause, node_ptypehash, this, this_node);
     f2__graph__add_node(cause, graph, this_node);
     frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
+		     f2ptr key_type_node   = f2__graph_node__new(cause, type_slot_name);
+		     f2ptr key_node        = f2__graph_node__new(cause, slot_name);
 		     f2ptr slot_value_node = f2__ptypehash__lookup(cause, node_ptypehash, slot_value);
 		     if (slot_value_node == nil) {
 		       slot_value_node = f2__graph_node__new(cause, slot_value);
@@ -481,8 +483,9 @@ f2ptr raw__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr gra
 			 f2__ptypehash__add(cause, node_ptypehash, slot_value, slot_value_node);
 		       }
 		     }
-		     f2__graph__add_new_edge(cause, graph, slot_name, this_node, slot_value_node);
-		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key_type"), slot_value_node, f2__graph_node__new(cause, type_slot_name));
+		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key_type"), this_node,     key_type_node);
+		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key"),      key_type_node, key_node);
+		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "value"),    key_node,      slot_value_node);
 		     );
     return f2bool__new(boolean__true);
   }
@@ -509,6 +512,8 @@ f2ptr raw__frame__add_recursively_to_graph_with_ptypehash(f2ptr cause, f2ptr thi
     f2__ptypehash__add(cause, node_ptypehash, this, this_node);
     f2__graph__add_node(cause, graph, this_node);
     frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
+		     f2ptr key_type_node   = f2__graph_node__new(cause, type_slot_name);
+		     f2ptr key_node        = f2__graph_node__new(cause, slot_name);
 		     f2ptr slot_value_node = f2__ptypehash__lookup(cause, node_ptypehash, slot_value);
 		     if (slot_value_node == nil) {
 		       slot_value_node = f2__graph_node__new(cause, slot_value);
@@ -516,8 +521,9 @@ f2ptr raw__frame__add_recursively_to_graph_with_ptypehash(f2ptr cause, f2ptr thi
 			 raw__frame__add_recursively_to_graph_with_ptypehash(cause, slot_value, graph, node_ptypehash);
 		       }
 		     }
-		     f2__graph__add_new_edge(cause, graph, slot_name, this_node, slot_value_node);
-		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key_type"), slot_value_node, f2__graph_node__new(cause, type_slot_name));
+		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key_type"), this_node,     key_type_node);
+		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key"),      key_type_node, key_node);
+		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "value"),    key_node,      slot_value_node);
 		     );
     return f2bool__new(boolean__true);
   }

@@ -19,6 +19,8 @@
 
 [globalize semantic_key_hash [hash]]
 
+'semantic_frame'
+
 [deframe semantic_frame [frame] []]
 
 [deftypefunk semantic_frame execute add [type name value]
@@ -63,6 +65,29 @@
     is_match]]
 
 
+'semantic_knowledge_base'
+
+[deframe semantic_knowledge_base [frame] [semantic_frames]]
+
+[deftypefunk semantic_knowledge_base execute add_semantic_frame [semantic_frame]
+  [if [not [is-type `semantic_frame semantic_frame]]
+      [error bug_type       `must_be_semantic_frame_to_be_added_to_semantic_knowledge_base
+	     semantic_frame semantic_frame]
+    [= semantic_frames [cons semantic_frame semantic_frames]]]]
+
+[deftypefunk semantic_knowledge_base execute lookup_matching_semantic_frames [index_semantic_frame]
+  [let [[matching_frames nil]]
+    [mapc [funk [semantic_frame]
+		[if [have index_semantic_frame check_match semantic_frame]
+		    [= matching_frames [cons semantic_frame matching_frames]]]]
+	  semantic_frames]
+    matching_frames]]
+
+[deftypefunk semantic_knowledge_base get as-frame_ball []
+  [new-apply frame_ball semantic_frames]]
+
+
+
 [deframe noun_semantic_frame [semantic_frame] []]
 
 [deftypefunk noun_semantic_frame execute add_noun [symbols]
@@ -82,29 +107,6 @@
 
 [deftypefunk visual_object_semantic_frame execute add_visual_object_name [visual_object_name]
   [have this add `visual_object_name visual_object_name t]]
-
-
-[deframe semantic_knowledge_base [frame] [semantic_frames]]
-
-[deftypefunk semantic_knowledge_base execute add_semantic_frame [semantic_frame]
-  [if [not [is-type `semantic_frame semantic_frame]]
-      [error bug_type       `must_be_semantic_frame_to_be_added_to_semantic_knowledge_base
-	     semantic_frame semantic_frame]
-    [= semantic_frames [cons semantic_frame semantic_frames]]]]
-
-
-
-[deftypefunk semantic_knowledge_base execute lookup_matching_semantic_frames [index_semantic_frame]
-  [let [[matching_frames nil]]
-    [mapc [funk [semantic_frame]
-		[if [have index_semantic_frame check_match semantic_frame]
-		    [= matching_frames [cons semantic_frame matching_frames]]]]
-	  semantic_frames]
-    matching_frames]]
-
-
-[deftypefunk semantic_knowledge_base get as-frame_ball []
-  [new-apply frame_ball semantic_frames]]
 
 
 

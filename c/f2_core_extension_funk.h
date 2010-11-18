@@ -85,7 +85,7 @@ struct funk2_object_type__core_extension_funk__slot_s {
 
 #define def_basic_cefunk_define_arg_and_rest(name, arg_name)		\
   if ((simple_args_iter != nil) && (! raw__cons__is_type(cause, simple_args_iter))) {return f2larva__new(cause, 1, nil);} \
-  f2ptr arg_name = simple_args_iter, cause;				\
+  f2ptr arg_name = simple_args_iter;					\
   simple_args_iter = nil
 
 

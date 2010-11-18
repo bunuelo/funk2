@@ -24,19 +24,19 @@
 
 // semantic_knowledge_base
 
-f2ptr raw__semantic_knowledge_base__new(f2ptr cause, f2ptr root_frames) {
+f2ptr raw__semantic_knowledge_base__new(f2ptr cause, f2ptr semantic_frames) {
   return f2__frame__new(cause, f2list4__new(cause,
-					    new__symbol(cause, "type"),        new__symbol(cause, "semantic_knowledge_base"),
-					    new__symbol(cause, "root_frames"), root_frames));
+					    new__symbol(cause, "type"),            new__symbol(cause, "semantic_knowledge_base"),
+					    new__symbol(cause, "semantic_frames"), semantic_frames));
 }
 
-f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr root_frames) {
-  if (! raw__cons__is_type(cause, root_frames)) {
+f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr semantic_frames) {
+  if ((semantic_frames != nil) && (! raw__cons__is_type(cause, semantic_frames))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_knowledge_base__new(cause, root_frames);
+  return raw__semantic_knowledge_base__new(cause, semantic_frames);
 }
-export_cefunk0_and_rest(semantic_knowledge_base__new, user_root_frames, 0, "Takes frames and returns a new semantic_knowledge_base object.");
+export_cefunk0_and_rest(semantic_knowledge_base__new, user_semantic_frames, 0, "Takes frames and returns a new semantic_knowledge_base object.");
 
 
 boolean_t raw__semantic_knowledge_base__is_type(f2ptr cause, f2ptr thing) {
@@ -74,36 +74,36 @@ f2ptr f2__semantic_knowledge_base__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_knowledge_base__type, thing, 0, "Returns the specific type of object that this semantic_knowledge_base is.");
 
 
-f2ptr raw__semantic_knowledge_base__root_frames(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "root_frames"), nil);
+f2ptr raw__semantic_knowledge_base__semantic_frames(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "semantic_frames"), nil);
 }
 
-f2ptr f2__semantic_knowledge_base__root_frames(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_knowledge_base__semantic_frames(f2ptr cause, f2ptr this) {
   if (! raw__semantic_knowledge_base__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_knowledge_base__root_frames(cause, this);
+  return raw__semantic_knowledge_base__semantic_frames(cause, this);
 }
-export_cefunk1(semantic_knowledge_base__root_frames, thing, 0, "Returns the root_frames of the semantic_knowledge_base.");
+export_cefunk1(semantic_knowledge_base__semantic_frames, thing, 0, "Returns the semantic_frames of the semantic_knowledge_base.");
 
 
-f2ptr raw__semantic_knowledge_base__root_frames__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "root_frames"), value);
+f2ptr raw__semantic_knowledge_base__semantic_frames__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_frames"), value);
 }
 
-f2ptr f2__semantic_knowledge_base__root_frames__set(f2ptr cause, f2ptr this, f2ptr value) {
+f2ptr f2__semantic_knowledge_base__semantic_frames__set(f2ptr cause, f2ptr this, f2ptr value) {
   if (! raw__semantic_knowledge_base__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_knowledge_base__root_frames__set(cause, this, value);
+  return raw__semantic_knowledge_base__semantic_frames__set(cause, this, value);
 }
-export_cefunk2(semantic_knowledge_base__root_frames__set, thing, value, 0, "Sets the root_frames of the semantic_knowledge_base.");
+export_cefunk2(semantic_knowledge_base__semantic_frames__set, thing, value, 0, "Sets the semantic_frames of the semantic_knowledge_base.");
 
 
 f2ptr raw__semantic_knowledge_base__as__graph(f2ptr cause, f2ptr this) {
   f2ptr node_ptypehash = f2__ptypehash__new(cause);
   f2ptr graph          = f2__graph__new(cause);
-  f2ptr iter = raw__semantic_knowledge_base__root_frames(cause, this);
+  f2ptr iter = raw__semantic_knowledge_base__semantic_frames(cause, this);
   while (iter != nil) {
     f2ptr root_frame = f2__cons__car(cause, iter);
     raw__frame__add_recursively_to_graph_with_ptypehash(cause, root_frame, graph, node_ptypehash);
@@ -123,12 +123,12 @@ export_cefunk1(semantic_knowledge_base__as__graph, this, 0, "Converts the semant
 
 f2ptr f2__semantic_knowledge_base_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "root_frames"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__root_frames")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "root_frames"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__root_frames__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-graph"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__as__graph")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "semantic_frames"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__semantic_frames")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "semantic_frames"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__semantic_frames__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-graph"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__as__graph")));}
   return this;
 }
 

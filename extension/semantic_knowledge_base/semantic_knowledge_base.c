@@ -135,6 +135,28 @@ f2ptr f2__semantic_realm__add_object_key(f2ptr cause, f2ptr this, f2ptr object) 
 export_cefunk2(semantic_realm__add_object_key, this, object, 0, "Generates an internal `equals key mapping for this object for use within this semantic realm.");
 
 
+f2ptr raw__semantic_realm__object_key(f2ptr cause, f2ptr this, f2ptr object) {
+  if (object == nil) {
+    return nil;
+  }
+  f2ptr object_key = raw__semantic_realm__lookup_object_key(cause, this, object);
+  if (object_key != nil) {
+    return object_key;
+  }
+  raw__semantic_realm__add_object_key(cause, this, object);
+  return raw__semantic_realm__lookup_object_key(cause, this, object);
+}
+
+f2ptr f2__semantic_realm__object_key(f2ptr cause, f2ptr this, f2ptr object) {
+  if (! raw__semantic_realm__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_realm__object_key(cause, this, object);
+}
+export_cefunk2(semantic_realm__object_key, this, object, 0, "Returns an `equals key mapping for this object for use within this semantic realm.");
+
+
+
 f2ptr f2__semantic_realm_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),               f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__new")));}
@@ -144,6 +166,7 @@ f2ptr f2__semantic_realm_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "semantic_hash"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__semantic_hash__set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lookup_object_key"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__lookup_object_key")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_object_key"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__add_object_key")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "object_key"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__object_key")));}
   return this;
 }
 
@@ -229,6 +252,42 @@ f2ptr f2__semantic_frame__realm__set(f2ptr cause, f2ptr this, f2ptr value) {
 export_cefunk2(semantic_frame__realm__set, thing, value, 0, "Sets the realm of the semantic_frame.");
 
 
+f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  f2ptr realm                = raw__semantic_frame__realm(cause, this);
+  f2ptr frame                = raw__semantic_frame__frame(cause, this);
+  f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, realm);
+  f2ptr key__object_key      = raw__semantic_realm__object_key(cause, realm);
+  f2ptr values               = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key);
+  raw__frame__add_type_var_value(cause, frame, key_type__object_key, key__object_key, f2cons__new(cause, value, values));
+  return nil;
+}
+
+f2ptr f2__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  if (! raw__semantic_frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame__add(cause, this, key_type, key, value);
+}
+export_cefunk3(semantic_frame__add, key_type, key, value, 0, "Adds the value to the key_type and key list of values.");
+
+
+f2ptr raw__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+  f2ptr realm                = raw__semantic_frame__realm(cause, this);
+  f2ptr frame                = raw__semantic_frame__frame(cause, this);
+  f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, realm);
+  f2ptr key__object_key      = raw__semantic_realm__object_key(cause, realm);
+  return raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key);
+}
+
+f2ptr f2__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+  if (! raw__semantic_frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame__lookup(cause, this, key_type, key);
+}
+export_cefunk2(semantic_frame__lookup, key_type, key, 0, "Returns the values associated with the key_type and key.");
+
+
 f2ptr f2__semantic_frame_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__new")));}
@@ -236,6 +295,8 @@ f2ptr f2__semantic_frame_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "realm"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__realm")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "realm"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__realm__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lookup"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__lookup")));}
   return this;
 }
 

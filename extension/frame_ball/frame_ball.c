@@ -115,7 +115,7 @@ f2ptr raw__frame_ball__new(f2ptr cause, f2ptr user_root_frames) {
 }
 
 f2ptr f2__frame_ball__new(f2ptr cause, f2ptr root_frames) {
-  if (! raw__frame__is_type(cause, root_frames)) {
+  if (! raw__cons__is_type(cause, root_frames)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__frame_ball__new(cause, root_frames);

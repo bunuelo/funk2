@@ -67,8 +67,6 @@
 
 'semantic_knowledge_base'
 
-[deframe semantic_knowledge_base [frame] [semantic_frames]]
-
 [deftypefunk semantic_knowledge_base execute add_semantic_frame [semantic_frame]
   [if [not [is-type `semantic_frame semantic_frame]]
       [error bug_type       `must_be_semantic_frame_to_be_added_to_semantic_knowledge_base

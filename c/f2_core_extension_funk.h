@@ -92,7 +92,7 @@ struct funk2_object_type__core_extension_funk__slot_s {
 #define def_basic_cefunk_define_arg0_iter(name)
 
 #define def_basic_cefunk_define_arg0_and_rest(name, and_rest)	\
-  def_basic_cefunk_define_arg_and_rest(name, rest)
+  def_basic_cefunk_define_arg_and_rest(name, and_rest)
 
 #define def_basic_cefunk_define_arg1_iter(name, arg1)	\
   def_basic_cefunk_define_arg0_iter(name);		\

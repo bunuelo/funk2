@@ -23,6 +23,7 @@
 					     [retina_image_sequence [new image_sequence nil]]]
   [new [name]
        [construct moral_agent_body name]
+       [have this say '']
        this]]
 
 [deftypefunk isis_agent_body execute user_activate [layer_name agency_name resource_name :rest args]

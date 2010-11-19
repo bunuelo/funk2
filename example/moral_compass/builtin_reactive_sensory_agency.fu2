@@ -25,7 +25,7 @@
        [construct resource `continuous_sensing
 		  [funk []
 			[let [[body [get this body]]]
-			  [have this-resource think_to_self 'Continuous sensing is starting.']
+			  `[have this-resource think_to_self 'Continuous sensing is starting.']
 			  [let [[last_time_step nil]]
 			    [while t
 			      [let [[time_step [get body time_step]]]

@@ -230,7 +230,16 @@ def_pcfunk2(frame__type_var__values, this, type, return f2__frame__type_var__val
 
 f2ptr f2__frame__var_ptypehash(f2ptr cause, f2ptr this) {return f2__ptypehash__lookup(cause, f2frame__type_ptypehash(this, cause), __funk2.primobject__frame.variable__symbol);}
 
-f2ptr f2__frame__add_var_value(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {return f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, var, value);}
+f2ptr raw__frame__add_var_value(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
+  return f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, var, value);
+}
+
+f2ptr f2__frame__add_var_value(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
+  if (! raw__frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__frame__add_var_value(cause, this, var, value);
+}
 def_pcfunk3(frame__add_var_value, this, var, value, return f2__frame__add_var_value(this_cause, this, var, value));
 
 f2ptr f2__frame__lookup_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value) {return f2__frame__lookup_type_var_assignment_cons(cause, this, __funk2.primobject__frame.variable__symbol, var, not_defined_value);}

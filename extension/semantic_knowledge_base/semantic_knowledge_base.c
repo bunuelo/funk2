@@ -294,7 +294,7 @@ f2ptr f2__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key
   }
   return raw__semantic_frame__add(cause, this, key_type, key, value);
 }
-export_cefunk3(semantic_frame__add, key_type, key, value, 0, "Adds the value to the key_type and key list of values.");
+export_cefunk4(semantic_frame__add, this, key_type, key, value, 0, "Adds the value to the key_type and key list of values.");
 
 
 f2ptr raw__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {

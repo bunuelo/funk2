@@ -54,20 +54,16 @@
 
 
 
-[deframe noun_semantic_frame [semantic_frame] []
-  [new [realm]
-       [= this [new semantic_frame realm]]]]
-
-[deftypefunk noun_semantic_frame execute add_noun [symbols]
+`[deftypefunk noun_semantic_frame execute add_noun [symbols]
   [have this add `noun symbols t]]
 
-[deftypefunk noun_semantic_frame execute add_classifier [symbols]
+`[deftypefunk noun_semantic_frame execute add_classifier [symbols]
   [have this add `classifier symbols t]]
 
-[deftypefunk noun_semantic_frame execute add_adjective [symbols]
+`[deftypefunk noun_semantic_frame execute add_adjective [symbols]
   [have this add `adjective symbols t]]
 
-[deftypefunk noun_semantic_frame execute add_preposition [preposition_symbols :rest semantic_objects]
+`[deftypefunk noun_semantic_frame execute add_preposition [preposition_symbols :rest semantic_objects]
   [have this add `preposition preposition_symbols [cons semantic_objects [have this lookup `preposition preposition_symbols]]]]
 
 

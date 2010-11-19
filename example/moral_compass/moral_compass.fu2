@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe moral_compass [mind] [semantic_realm]
+[deframe moral_compass [mind] [global_semantic_realm]
   [new []
        [construct mind]
        [= semantic_realm [new semantic_realm]]
@@ -28,6 +28,11 @@
        [have this add_layer [new self_reflective_layer]]
        [have this add_layer [new self_conscious_layer]]
        this]]
+
+[deftypefunk moral_compass get semantic_realm []
+  [if [null global_semantic_realm]
+      [= global_semantic_realm [new semantic_realm]]]
+  global_semantic_realm]
 
 [deftypefunk moral_compass get visual_objects []
   [get [get this layer `builtin_reactive] visual_objects]]

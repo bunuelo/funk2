@@ -435,7 +435,8 @@ f2ptr raw__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, 
 }
 
 f2ptr f2__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
-  if (! raw__semantic_knowledge_base__is_type(cause, this)) {
+  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
+      (! raw__semantic_frame__is_type(cause, semantic_frame))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_knowledge_base__add_semantic_frame(cause, this, semantic_frame);

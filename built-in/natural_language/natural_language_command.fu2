@@ -19,29 +19,7 @@
 
 'semantic_frame'
 
-[deftypefunk semantic_frame execute add [type name value]
-  [let [[type_key [have semantic_key_hash lookup type]]]
-    [if [null type_key]
-	[prog [have semantic_key_hash add type type]
-	      [= type_key type]]]
-    [let [[name_key [have semantic_key_hash lookup name]]]
-      [if [null name_key]
-	  [prog [have semantic_key_hash add name name]
-		[= name_key name]]]
-      [have this add_type_var_value type_key name_key value]]]]
-
-[deftypefunk semantic_frame execute lookup [type name]
-  [let [[type_key [have semantic_key_hash lookup type]]]
-    [if [null type_key]
-	[prog [have semantic_key_hash add type type]
-	      [= type_key type]]]
-    [let [[name_key [have semantic_key_hash lookup name]]]
-      [if [null name_key]
-	  [prog [have semantic_key_hash add name name]
-		[= name_key name]]]
-      [get this type_var_value type_key name_key nil]]]]
-
-[deftypefunk semantic_frame execute check_match [semantic_frame]
+`[deftypefunk semantic_frame execute check_match [semantic_frame]
   [let [[is_match t]]
     [let [[type_key_iter [get [get this type_ptypehash] keys]]]
       [while type_key_iter
@@ -82,7 +60,9 @@
 
 
 
-[deframe noun_semantic_frame [semantic_frame] []]
+[deframe noun_semantic_frame [semantic_frame] []
+  [new [realm]
+       [= this [new semantic_frame realm]]]]
 
 [deftypefunk noun_semantic_frame execute add_noun [symbols]
   [have this add `noun symbols t]]
@@ -97,7 +77,9 @@
   [have this add `preposition preposition_symbols [cons semantic_objects [have this lookup `preposition preposition_symbols]]]]
 
 
-[deframe visual_object_semantic_frame [noun_semantic_frame] []]
+[deframe visual_object_semantic_frame [noun_semantic_frame] []
+  [new [realm]
+       [construct noun_semantic_frame realm]]]
 
 [deftypefunk visual_object_semantic_frame execute add_visual_object_name [visual_object_name]
   [have this add `visual_object_name visual_object_name t]]

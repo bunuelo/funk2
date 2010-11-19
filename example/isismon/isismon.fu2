@@ -319,7 +319,7 @@
 				   [funk []
 					 [let [[seconds 1.0]]
 					   [terminal_format standard-terminal '\nIsisMon: Stepping ' seconds ' seconds.']
-					   [have isis_world step_simulation seconds]]]]
+					   [have isis_world raw_step_simulation seconds]]]]
 			     
 			     [= step_size_hbox  [gtk-hbox-new 2]]
 			     [= step_size_label [gtk-label-new 'Step Size: ']]

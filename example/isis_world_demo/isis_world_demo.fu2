@@ -19,13 +19,13 @@
 
 
 [deframe ralph_body [isis_agent_body] []
-  [new []
-       [construct isis_agent_body `Ralph]
+  [new [physical_world]
+       [construct isis_agent_body physical_world `Ralph]
        this]]
 
 [deframe lauren_body [isis_agent_body] []
-  [new []
-       [construct isis_agent_body `Lauren]
+  [new [physical_world]
+       [construct isis_agent_body physical_world `Lauren]
        this]]
 
 
@@ -38,9 +38,9 @@
     [print 'creating new isis_world.']
     [let [[isis_world [new isis_world client]]]
       [print 'creating new ralph agent.']
-      [have isis_world add_agent_body [new ralph_body]]
+      [have isis_world add_agent_body [new ralph_body isis_world]]
       [print 'creating new lauren agent.']
-      [have isis_world add_agent_body [new lauren_body]]
+      [have isis_world add_agent_body [new lauren_body isis_world]]
       
       [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
       [cause-define cause-time_step [get isis_world time_step]]

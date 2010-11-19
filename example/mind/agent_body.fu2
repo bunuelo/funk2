@@ -20,8 +20,9 @@
 
 'agent_body'
 
-[deframe agent_body [frame] [name physical_world mind]
-  [new [name mind]
+[deframe agent_body [frame] [physical_world name mind]
+  [new [physical_world name mind]
+       [= physical_world physical_world]
        [prog [if [get mind body]
 		 [error bug_type `mind_already_has_body]]
 	     [set mind body this]]

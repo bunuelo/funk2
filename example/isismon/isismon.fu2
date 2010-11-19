@@ -81,10 +81,12 @@
 						   pick_up_with_left_hand_resource__target__entry
 						   use_right_hand_resource__hbox
 						   use_right_hand_resource__button
-						   use_right_hand_resource__target use_right_hand_resource__object__entry
+						   use_right_hand_resource__target__entry
+						   use_right_hand_resource__object__entry
 						   use_left_hand_resource__hbox
 						   use_left_hand_resource__button
-						   use_left_hand_resource__target use_left_hand_resource__object__entry
+						   use_left_hand_resource__target__entry
+						   use_left_hand_resource__object__entry
 						   say_resource__hbox
 						   say_resource__button
 						   say_resource__message__entry

@@ -20,19 +20,23 @@
 
 'agent_body'
 
-[deframe agent_body [frame] [physical_world name mind]
-  [new [initial-physical_world name mind]
-       [= physical_world initial-physical_world]
+[deframe agent_body [frame] [physical_world_reference name mind]
+  [new [physical_world name mind]
+       [= physical_world_reference physical_world]
        [prog [if [get mind body]
 		 [error bug_type `mind_already_has_body]]
 	     [set mind body this]]
        [set this name           name]
        [set this physical_world nil]
        [set this mind           mind]
+       [have physical_world add_agent_body this]
        this]]
 
 [deftypefunk agent_body execute destroy []
   [have [get this mind] destroy]]
+
+[deftypefunk agent_body get physical_world []
+  physical_world_reference]
 
 [deftypefunk agent_body get time_step []
   [get [get this physical_world] time_step]]

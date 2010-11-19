@@ -41,22 +41,16 @@
 
 'semantic_knowledge_base'
 
-[deftypefunk semantic_knowledge_base execute add_semantic_frame [semantic_frame]
-  [if [not [is-type `semantic_frame semantic_frame]]
-      [error bug_type       `must_be_semantic_frame_to_be_added_to_semantic_knowledge_base
-	     semantic_frame semantic_frame]
-    [= semantic_frames [cons semantic_frame semantic_frames]]]]
+`[deftypefunk semantic_knowledge_base execute lookup_matching_semantic_frames [index_semantic_frame]
+   [let [[matching_frames nil]]
+     [mapc [funk [semantic_frame]
+		 [if [have index_semantic_frame check_match semantic_frame]
+		     [= matching_frames [cons semantic_frame matching_frames]]]]
+	   semantic_frames]
+     matching_frames]]
 
-[deftypefunk semantic_knowledge_base execute lookup_matching_semantic_frames [index_semantic_frame]
-  [let [[matching_frames nil]]
-    [mapc [funk [semantic_frame]
-		[if [have index_semantic_frame check_match semantic_frame]
-		    [= matching_frames [cons semantic_frame matching_frames]]]]
-	  semantic_frames]
-    matching_frames]]
-
-[deftypefunk semantic_knowledge_base get as-frame_ball []
-  [new-apply frame_ball semantic_frames]]
+`[deftypefunk semantic_knowledge_base get as-frame_ball []
+   [new-apply frame_ball semantic_frames]]
 
 
 
@@ -88,14 +82,14 @@
 
 [defunk skb-test []
   [let [[semantic_knowledge_base [new semantic_knowledge_base]]]
-    [let [[knife_semantic_frame        [new visual_object_semantic_frame]]
-	  [toaster_semantic_frame      [new visual_object_semantic_frame]]
-	  [counter_semantic_frame      [new visual_object_semantic_frame]]
-	  [kitchen_semantic_frame      [new visual_object_semantic_frame]]
-	  [refrigerator_semantic_frame [new visual_object_semantic_frame]]
-	  [butter_semantic_frame       [new visual_object_semantic_frame]]
-	  [Ralph_semantic_frame        [new visual_object_semantic_frame]]
-	  [Lauren_semantic_frame       [new visual_object_semantic_frame]]]
+    [let [[knife_semantic_frame        [new visual_object_semantic_frame semantic_realm]]
+	  [toaster_semantic_frame      [new visual_object_semantic_frame semantic_realm]]
+	  [counter_semantic_frame      [new visual_object_semantic_frame semantic_realm]]
+	  [kitchen_semantic_frame      [new visual_object_semantic_frame semantic_realm]]
+	  [refrigerator_semantic_frame [new visual_object_semantic_frame semantic_realm]]
+	  [butter_semantic_frame       [new visual_object_semantic_frame semantic_realm]]
+	  [Ralph_semantic_frame        [new visual_object_semantic_frame semantic_realm]]
+	  [Lauren_semantic_frame       [new visual_object_semantic_frame semantic_realm]]]
       [have knife_semantic_frame        add_noun        `knife]
       [have knife_semantic_frame        add_classifier  `butter]
       [have knife_semantic_frame        add_preposition `on counter_semantic_frame]
@@ -128,7 +122,7 @@
 
 [defunk skb_match-test []
   [let [[semantic_knowledge_base [skb-test]]]
-    [let [[index_semantic_frame [new visual_object_semantic_frame]]]
+    [let [[index_semantic_frame [new visual_object_semantic_frame semantic_realm]]]
       [have index_semantic_frame add_noun `toaster]
       [have semantic_knowledge_base lookup_matching_semantic_frames index_semantic_frame]]]]
 

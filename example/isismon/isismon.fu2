@@ -241,7 +241,7 @@
        [have vbox pack_start pick_up_with_right_hand_resource__hbox nil nil 0]
        [have pick_up_with_right_hand_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `builtin_reactive `physical `pick_up_with_right_hand_resource__button [get pick_up_with_right_hand_resource__target__entry text]]]]
+		   [have this activate_resource `builtin_reactive `physical `pick_up_with_right_hand_resource [get pick_up_with_right_hand_resource__target__entry text]]]]
        
        [= pick_up_with_left_hand_resource__hbox [gtk-hbox-new 2]]
        [= pick_up_with_left_hand_resource__button [gtk-button-new_with_label 'Pick Up with Left Hand']]

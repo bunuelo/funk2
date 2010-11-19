@@ -440,7 +440,7 @@ f2ptr f2__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, f
   }
   return raw__semantic_knowledge_base__add_semantic_frame(cause, this, semantic_frame);
 }
-export_cefunk2(semantic_knowledge_base__add_semantic_frame, this, 0, "Adds a semantic_frame to this semantic_knowledge_base.");
+export_cefunk2(semantic_knowledge_base__add_semantic_frame, this, semantic_frame, 0, "Adds a semantic_frame to this semantic_knowledge_base.");
 
 
 f2ptr f2__semantic_knowledge_base_type__new(f2ptr cause) {

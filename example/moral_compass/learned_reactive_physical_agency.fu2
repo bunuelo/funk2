@@ -48,6 +48,11 @@ learned pick up activated builtin pickup (needs to be verified)
 right now, changed [get mind objects] to [get mind isis_object_frame], which still deals with isis_world. Potentially, need to change to [get mind visual knowledge]
 [get body objects]==>
 [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `sensory] visual_objects]
+
+
+hold objects, test ralph overshoot. make movies!
+use object
+
 '
 
 [deftypefunk mind get visual_objects []
@@ -302,10 +307,15 @@ right now, changed [get mind objects] to [get mind isis_object_frame], which sti
 			       [name  [get body name]]]
 			  [format stdout '/n slice_toast']
 			  [mind-wait_to_activate mind learned_reactive physical hold_with_left_hand `knife]
-			  [mind-wait_to_activate mind learned_reactive physical walk_directly_towards `loaf]
+			  [while [null [string-contains [get mind left_hand_object_name] 'knife']]
+			    [sleep 3]]
+			  [mind-wait_to_activate mind learned_reactive physical hold_with_left_hand  `loaf]
+			  [while [null [string-contains [get mind right\t_hand_object_name] 'loaf']]
+			    [sleep 3]]
 			  [mind-wait_to_activate mind builtin_reactive physical use_left_hand knife `loaf]]]]
 		  
        nil]] 
+'make the resouce *use* in isis_world.fu2'
 
 [deframe center_body_on_resource [resource] []
   [new []

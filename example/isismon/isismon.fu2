@@ -95,6 +95,7 @@
 						   use_left_hand_resource__action__entry
 						   say_resource__hbox
 						   say_resource__button
+						   say_resource__message__label
 						   say_resource__message__entry
 						   ]
   [new [initial-isismon_agent]

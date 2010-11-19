@@ -31,7 +31,7 @@
 	     [load_task_result     [isis-call client meta_load_task task 'task_toaster_in_view']]
 	     [train_result         [isis-call client meta_train]]
 	     [pause_result         [isis-call client meta_pause]]
-	     [step_result          [have this raw_step_simulation 2.0]]]
+	     [step_result          [have this raw_step_simulation 1.0]]]
 	 [terminal_format standard-terminal '\n  reset.......................: ' reset_result]
 	 [terminal_format standard-terminal '\n  scenarios...................: ' scenario_list]
 	 [terminal_format standard-terminal '\n  load make_toast scenario....: ' load_scenario_result]

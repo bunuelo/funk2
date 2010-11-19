@@ -20,7 +20,6 @@
 [deframe moral_compass [mind] [global_semantic_realm]
   [new []
        [construct mind]
-       [= semantic_realm [new semantic_realm]]
        [have this add_layer [new builtin_reactive_layer]]
        [have this add_layer [new learned_reactive_layer]]
        [have this add_layer [new deliberative_layer]]

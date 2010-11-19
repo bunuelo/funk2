@@ -67,14 +67,15 @@
   [have this add `preposition preposition_symbols [cons semantic_objects [have this lookup `preposition preposition_symbols]]]]
 
 
-[deframe visual_object_semantic_frame [noun_semantic_frame] []
+`[deframe visual_object_semantic_frame [noun_semantic_frame] []
   [new [realm]
        [construct noun_semantic_frame realm]]]
 
-[deftypefunk visual_object_semantic_frame execute add_visual_object_name [visual_object_name]
+`[deftypefunk visual_object_semantic_frame execute add_visual_object_name [visual_object_name]
   [have this add `visual_object_name visual_object_name t]]
 
 
+'note: you need to [cause-define semantic_realm [new semantic_realm]] to use these test functions.'
 
 [defunk skb-test []
   [let [[semantic_knowledge_base [new semantic_knowledge_base]]]

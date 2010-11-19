@@ -18,11 +18,11 @@
  rights to redistribute these changes.'
 
 
-[defunk visual_semantic_knowledge-new_from_visual_objects [visual_objects]
+[defunk visual_semantic_knowledge-new_from_visual_objects [visual_objects semantic_realm]
   [let [[semantic_knowledge_base [new semantic_knowledge_base]]]
     [let [[semantic_object_frame [frame]]]
       [mapc [funk [object]
-		  [let [[visual_object_semantic_frame [new visual_object_semantic_frame]]
+		  [let [[visual_object_semantic_frame [new visual_object_semantic_frame semantic_realm]]
 			[phenomenal_name              [get object phenomenal_name]]]
 		    [have visual_object_semantic_frame add_visual_object_name phenomenal_name]
 		    [have semantic_knowledge_base add_semantic_frame visual_object_semantic_frame]
@@ -64,7 +64,7 @@
 			[let [[body [get this body]]]
 			  [let [[visual_objects [get [get this mind] visual_objects]]]
 			    `[have this-resource think_to_self 'Propogating visual objects to visual knowledge.']
-			    [let [[new_visual_knowledge [visual_semantic_knowledge-new_from_visual_objects visual_objects]]]
+			    [let [[new_visual_knowledge [visual_semantic_knowledge-new_from_visual_objects visual_objects [get [get this mind] semantic_realm]]]]
 			      [= visual_knowledge new_visual_knowledge]
 			      [mind-wait_to_activate [get this mind] deliberative reality include_learned_reactive_visual_knowledge_into_deliberative_knowledge]
 			      `[have this-resource think_to_self 'I created this knowledge: ' visual_knowledge '.']

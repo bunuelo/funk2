@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize semantic_key_hash [hash]]
-
 'semantic_frame'
 
 [deftypefunk semantic_frame execute add [type name value]

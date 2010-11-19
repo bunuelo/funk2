@@ -75,18 +75,24 @@
 						   drop_from_left_hand_resource__button
 						   pick_up_with_right_hand_resource__hbox
 						   pick_up_with_right_hand_resource__button
+						   pick_up_with_right_hand_resource__target__label
 						   pick_up_with_right_hand_resource__target__entry
 						   pick_up_with_left_hand_resource__hbox
 						   pick_up_with_left_hand_resource__button
+						   pick_up_with_left_hand_resource__target__label
 						   pick_up_with_left_hand_resource__target__entry
 						   use_right_hand_resource__hbox
 						   use_right_hand_resource__button
+						   use_right_hand_resource__target__label
 						   use_right_hand_resource__target__entry
-						   use_right_hand_resource__object__entry
+						   use_right_hand_resource__action__label
+						   use_right_hand_resource__action__entry
 						   use_left_hand_resource__hbox
 						   use_left_hand_resource__button
+						   use_left_hand_resource__target__label
 						   use_left_hand_resource__target__entry
-						   use_left_hand_resource__object__entry
+						   use_left_hand_resource__action__label
+						   use_left_hand_resource__action__entry
 						   say_resource__hbox
 						   say_resource__button
 						   say_resource__message__entry
@@ -112,111 +118,125 @@
        
        
        [= turn_right_start_resource__hbox [gtk-hbox-new 2]]
-       [= turn_right_start_resource__button [gtk-button-new_with_label '']]
+       [= turn_right_start_resource__button [gtk-button-new_with_label 'Turn Right - Start']]
        [have turn_right_start_resource__hbox pack_start turn_right_start_resource__button nil nil 0]
        [have vbox pack_start turn_right_start_resource__hbox nil nil 0]
        
        [= turn_right_stop_resource__hbox [gtk-hbox-new 2]]
-       [= turn_right_stop_resource__button [gtk-button-new_with_label '']]
+       [= turn_right_stop_resource__button [gtk-button-new_with_label 'Turn Right - Stop']]
        [have turn_right_stop_resource__hbox pack_start turn_right_stop_resource__button nil nil 0]
        [have vbox pack_start turn_right_stop_resource__hbox nil nil 0]
        
        [= turn_left_start_resource__hbox [gtk-hbox-new 2]]
-       [= turn_left_start_resource__button [gtk-button-new_with_label '']]
+       [= turn_left_start_resource__button [gtk-button-new_with_label 'Turn Left - Start']]
        [have turn_left_start_resource__hbox pack_start turn_left_start_resource__button nil nil 0]
        [have vbox pack_start turn_left_start_resource__hbox nil nil 0]
        
        [= turn_left_stop_resource__hbox [gtk-hbox-new 2]]
-       [= turn_left_stop_resource__button [gtk-button-new_with_label '']]
+       [= turn_left_stop_resource__button [gtk-button-new_with_label 'Turn Left - Stop']]
        [have turn_left_stop_resource__hbox pack_start turn_left_stop_resource__button nil nil 0]
        [have vbox pack_start turn_left_stop_resource__hbox nil nil 0]
        
        [= look_up_start_resource__hbox [gtk-hbox-new 2]]
-       [= look_up_start_resource__button [gtk-button-new_with_label '']]
+       [= look_up_start_resource__button [gtk-button-new_with_label 'Look Up - Start']]
        [have look_up_start_resource__hbox pack_start look_up_start_resource__button nil nil 0]
        [have vbox pack_start look_up_start_resource__hbox nil nil 0]
        
        [= look_up_stop_resource__hbox [gtk-hbox-new 2]]
-       [= look_up_stop_resource__button [gtk-button-new_with_label '']]
+       [= look_up_stop_resource__button [gtk-button-new_with_label 'Look Up - Stop']]
        [have look_up_stop_resource__hbox pack_start look_up_stop_resource__button nil nil 0]
        [have vbox pack_start look_up_stop_resource__hbox nil nil 0]
        
        [= look_down_start_resource__hbox [gtk-hbox-new 2]]
-       [= look_down_start_resource__button [gtk-button-new_with_label '']]
+       [= look_down_start_resource__button [gtk-button-new_with_label 'Look Down - Start']]
        [have look_down_start_resource__hbox pack_start look_down_start_resource__button nil nil 0]
        [have vbox pack_start look_down_start_resource__hbox nil nil 0]
        
        [= look_down_stop_resource__hbox [gtk-hbox-new 2]]
-       [= look_down_stop_resource__button [gtk-button-new_with_label '']]
+       [= look_down_stop_resource__button [gtk-button-new_with_label 'Look Down - Stop']]
        [have look_down_stop_resource__hbox pack_start look_down_stop_resource__button nil nil 0]
        [have vbox pack_start look_down_stop_resource__hbox nil nil 0]
        
        [= move_forward_start_resource__hbox [gtk-hbox-new 2]]
-       [= move_forward_start_resource__button [gtk-button-new_with_label '']]
+       [= move_forward_start_resource__button [gtk-button-new_with_label 'Move Forward - Start']]
        [have move_forward_start_resource__hbox pack_start move_forward_start_resource__button nil nil 0]
        [have vbox pack_start move_forward_start_resource__hbox nil nil 0]
        
        [= move_forward_stop_resource__hbox [gtk-hbox-new 2]]
-       [= move_forward_stop_resource__button [gtk-button-new_with_label '']]
+       [= move_forward_stop_resource__button [gtk-button-new_with_label 'Move Forward - Stop']]
        [have move_forward_stop_resource__hbox pack_start move_forward_stop_resource__button nil nil 0]
        [have vbox pack_start move_forward_stop_resource__hbox nil nil 0]
        
        [= move_backward_start_resource__hbox [gtk-hbox-new 2]]
-       [= move_backward_start_resource__button [gtk-button-new_with_label '']]
+       [= move_backward_start_resource__button [gtk-button-new_with_label 'Move Backward - Start']]
        [have move_backward_start_resource__hbox pack_start move_backward_start_resource__button nil nil 0]
        [have vbox pack_start move_backward_start_resource__hbox nil nil 0]
        
        [= move_backward_stop_resource__hbox [gtk-hbox-new 2]]
-       [= move_backward_stop_resource__button [gtk-button-new_with_label '']]
+       [= move_backward_stop_resource__button [gtk-button-new_with_label 'Move Backward - Stop']]
        [have move_backward_stop_resource__hbox pack_start move_backward_stop_resource__button nil nil 0]
        [have vbox pack_start move_backward_stop_resource__hbox nil nil 0]
        
        [= drop_from_right_hand_resource__hbox [gtk-hbox-new 2]]
-       [= drop_from_right_hand_resource__button [gtk-button-new_with_label '']]
+       [= drop_from_right_hand_resource__button [gtk-button-new_with_label 'Drop from Right Hand']]
        [have drop_from_right_hand_resource__hbox pack_start drop_from_right_hand_resource__button nil nil 0]
        [have vbox pack_start drop_from_right_hand_resource__hbox nil nil 0]
        
        [= drop_from_left_hand_resource__hbox [gtk-hbox-new 2]]
-       [= drop_from_left_hand_resource__button [gtk-button-new_with_label '']]
+       [= drop_from_left_hand_resource__button [gtk-button-new_with_label 'Drop from Left Hand']]
        [have drop_from_left_hand_resource__hbox pack_start drop_from_left_hand_resource__button nil nil 0]
        [have vbox pack_start drop_from_left_hand_resource__hbox nil nil 0]
        
        [= pick_up_with_right_hand_resource__hbox [gtk-hbox-new 2]]
-       [= pick_up_with_right_hand_resource__button [gtk-button-new_with_label '']]
+       [= pick_up_with_right_hand_resource__button [gtk-button-new_with_label 'Pick Up with Right Hand']]
+       [= pick_up_with_right_hand_resource__target__label [gtk-label-new 'Target: ']]
        [= pick_up_with_right_hand_resource__target__entry [gtk-entry-new]]
        [have pick_up_with_right_hand_resource__hbox pack_start pick_up_with_right_hand_resource__button nil nil 0]
+       [have pick_up_with_right_hand_resource__hbox pack_start pick_up_with_right_hand_resource__target__label nil nil 0]
        [have pick_up_with_right_hand_resource__hbox pack_start pick_up_with_right_hand_resource__target__entry t t 0]
        [have vbox pack_start pick_up_with_right_hand_resource__hbox nil nil 0]
        
        [= pick_up_with_left_hand_resource__hbox [gtk-hbox-new 2]]
-       [= pick_up_with_left_hand_resource__button [gtk-button-new_with_label '']]
+       [= pick_up_with_left_hand_resource__button [gtk-button-new_with_label 'Pick Up with Left Hand']]
+       [= pick_up_with_left_hand_resource__target__label [gtk-label-new 'Target: ']]
        [= pick_up_with_left_hand_resource__target__entry [gtk-entry-new]]
        [have pick_up_with_left_hand_resource__hbox pack_start pick_up_with_left_hand_resource__button nil nil 0]
+       [have pick_up_with_left_hand_resource__hbox pack_start pick_up_with_left_hand_resource__target__label nil nil 0]
        [have pick_up_with_left_hand_resource__hbox pack_start pick_up_with_left_hand_resource__target__entry t t 0]
        [have vbox pack_start pick_up_with_left_hand_resource__hbox nil nil 0]
        
        [= use_right_hand_resource__hbox [gtk-hbox-new 2]]
-       [= use_right_hand_resource__button [gtk-button-new_with_label '']]
+       [= use_right_hand_resource__button [gtk-button-new_with_label 'Use Right Hand']]
+       [= use_right_hand_resource__target__label [gtk-label-new 'Target: ']]
        [= use_right_hand_resource__target__entry [gtk-entry-new]]
-       [= use_right_hand_resource__object__entry [gtk-entry-new]]
+       [= use_right_hand_resource__action__label [gtk-label-new 'Action: ']]
+       [= use_right_hand_resource__action__entry [gtk-entry-new]]
        [have use_right_hand_resource__hbox pack_start use_right_hand_resource__button nil nil 0]
+       [have use_right_hand_resource__hbox pack_start use_right_hand_resource__target__label nil nil 0]
        [have use_right_hand_resource__hbox pack_start use_right_hand_resource__target__entry t t 0]
-       [have use_right_hand_resource__hbox pack_start use_right_hand_resource__object__entry t t 0]
+       [have use_right_hand_resource__hbox pack_start use_right_hand_resource__action__label nil nil 0]
+       [have use_right_hand_resource__hbox pack_start use_right_hand_resource__action__entry t t 0]
        [have vbox pack_start use_right_hand_resource__hbox nil nil 0]
        
        [= use_left_hand_resource__hbox [gtk-hbox-new 2]]
-       [= use_left_hand_resource__button [gtk-button-new_with_label '']]
+       [= use_left_hand_resource__button [gtk-button-new_with_label 'Use Left Hand']]
+       [= use_left_hand_resource__target__label [gtk-label-new 'Target: ']]
        [= use_left_hand_resource__target__entry [gtk-entry-new]]
-       [= use_left_hand_resource__object__entry [gtk-entry-new]]
+       [= use_left_hand_resource__action__label [gtk-label-new 'Action: ']]
+       [= use_left_hand_resource__action__entry [gtk-entry-new]]
        [have use_left_hand_resource__hbox pack_start use_left_hand_resource__button nil nil 0]
+       [have use_left_hand_resource__hbox pack_start use_left_hand_resource__target__label nil nil 0]
        [have use_left_hand_resource__hbox pack_start use_left_hand_resource__target__entry t t 0]
-       [have use_left_hand_resource__hbox pack_start use_left_hand_resource__object__entry t t 0]
+       [have use_left_hand_resource__hbox pack_start use_left_hand_resource__action__label nil nil 0]
+       [have use_left_hand_resource__hbox pack_start use_left_hand_resource__action__entry t t 0]
        [have vbox pack_start use_left_hand_resource__hbox nil nil 0]
        
        [= say_resource__hbox [gtk-hbox-new 2]]
-       [= say_resource__button [gtk-button-new_with_label '']]
+       [= say_resource__button [gtk-button-new_with_label 'Say']]
+       [= say_resource__message__label [gtk-label-new 'Message: ']]
        [= say_resource__message__entry [gtk-entry-new]]
        [have say_resource__hbox pack_start say_resource__button nil nil 0]
+       [have say_resource__hbox pack_start say_resource__message__label nil nil 0]
        [have say_resource__hbox pack_start say_resource__message__entry t t 0]
        [have vbox pack_start say_resource__hbox nil nil 0]
        

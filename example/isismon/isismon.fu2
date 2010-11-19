@@ -17,6 +17,34 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[deframe isismon_agent_resource_activator [frame] [isismon_agent
+						   window
+						   vbox
+						   label
+						   entry
+						   button_hbox
+						   save_button
+						   cancel_button]
+  [new [initial-isismon_agent]
+       [= isismon_agent initial-isismon_agent]
+       [= window [gtk-window-new]]
+       [set window title [format nil 'isismon - agent resource activator [' [get [get isismon_agent isis_agent] name] ']']]
+       [= vbox [gtk-vbox-new 2]]
+       [= label [gtk-label-new 'Please enter a filename\nwith an MPEG extension,\nto which you would like\nto save your movie.']]
+       [= entry [gtk-entry-new]]
+       [= button_hbox [gtk-hbox-new 2]]
+       [= save_button [gtk-button-new_with_label 'Save']]
+       [= cancel_button [gtk-button-new_with_label 'Cancel']]
+       [have vbox pack_start label nil nil 0]
+       [have vbox pack_start entry nil nil 0]
+       [have button_hbox pack_start save_button nil nil 0]
+       [have button_hbox pack_start cancel_button nil nil 0]
+       [have vbox pack_start button_hbox nil nil 0]
+       
+       [have window add vbox]
+       [have window show_all]]]
+
+
 [deframe isismon_agent [frame] [isis_agent
 				isismon
 				
@@ -27,6 +55,7 @@
 				entry
 				status_button_hbox
 				mindmon_button
+				activator_button
 				sense_button
 				visual_objects_button
 				visual_knowledge_button
@@ -86,6 +115,13 @@
 		   [terminal_format standard-terminal '\nLaunching MindMon to monitor ' [get this name] '\'s mind.']
 		   [mindmon [get isis_agent mind]]]]
        [have status_button_hbox pack_start mindmon_button nil nil 0]
+       
+       [= activator_button [gtk-button-new_with_label 'Activator']]
+       [have activator_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\nLaunching activator for agent ' [get this name] '.']
+		   [new isismon_agent_resource_activator this]]]
+       [have status_button_hbox pack_start activator_button nil nil 0]
        
        [= sense_button [gtk-button-new_with_label 'Sense']]
        [have sense_button signal_connect 'clicked'

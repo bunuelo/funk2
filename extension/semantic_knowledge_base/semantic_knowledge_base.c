@@ -311,7 +311,7 @@ f2ptr f2__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr 
   }
   return raw__semantic_frame__lookup(cause, this, key_type, key);
 }
-export_cefunk2(semantic_frame__lookup, key_type, key, 0, "Returns the values associated with the key_type and key.");
+export_cefunk3(semantic_frame__lookup, this, key_type, key, 0, "Returns the values associated with the key_type and key.");
 
 
 f2ptr f2__semantic_frame_type__new(f2ptr cause) {

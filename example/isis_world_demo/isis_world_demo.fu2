@@ -19,13 +19,13 @@
 
 
 [deframe ralph_body [isis_agent_body] []
-  [new [physical_world]
-       [construct isis_agent_body physical_world `Ralph]
+  [new [initial-physical_world]
+       [construct isis_agent_body initial-physical_world `Ralph]
        this]]
 
 [deframe lauren_body [isis_agent_body] []
-  [new [physical_world]
-       [construct isis_agent_body physical_world `Lauren]
+  [new [initial-physical_world]
+       [construct isis_agent_body initial-physical_world `Lauren]
        this]]
 
 

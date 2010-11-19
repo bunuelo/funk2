@@ -19,6 +19,6 @@
 
 
 [deframe moral_agent_body [agent_body] []
-  [new [physical_world name]
-       [construct agent_body physical_world name [new moral_compass]]]]
+  [new [initial-physical_world name]
+       [construct agent_body initial-physical_world name [new moral_compass]]]]
 

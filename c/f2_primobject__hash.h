@@ -54,10 +54,12 @@ declare_primobject_6_slot(hash, write_mutex, key_count, bin_num_power, bin_array
 f2ptr      f2__hash                      (f2ptr cause);
 f2ptr     raw__hash__new                 (f2ptr cause, s64 bin_num_power, f2ptr hash_value_funk, f2ptr equals_funk);
 f2ptr      f2__hash__new                 (f2ptr cause, f2ptr hash_value_funk, f2ptr equals_funk);
+f2ptr     raw__hash__add                 (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
 f2ptr      f2__hash__add                 (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
 f2ptr      f2__hash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key);
 boolean_t raw__hash__contains            (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__hash__contains            (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr     raw__hash__lookup              (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__hash__lookup              (f2ptr cause, f2ptr this, f2ptr key);
 
 f2ptr raw__hash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);

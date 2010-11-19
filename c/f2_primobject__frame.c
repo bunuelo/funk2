@@ -79,7 +79,7 @@ f2ptr f2__frame__new(f2ptr cause, f2ptr slot_value_pairs) {
 }
 def_pcfunk0_and_rest(frame__new, slot_value_pairs, return f2__frame__new(this_cause, slot_value_pairs));
 
-f2ptr f2__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+f2ptr raw__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   f2ptr frame__type_ptypehash = f2frame__type_ptypehash(this, cause);
   release__assert(raw__ptypehash__is_type(cause, frame__type_ptypehash), nil, "frame__type_ptypehash is not ptypehash.");
   f2ptr type__ptypehash = f2__ptypehash__lookup(cause, frame__type_ptypehash, type);
@@ -95,6 +95,13 @@ f2ptr f2__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr v
   release__assert(raw__ptypehash__is_type(cause, type__ptypehash), nil, "type__ptypehash is not ptypehash.");
   f2__ptypehash__add(cause, type__ptypehash, var, value);
   return nil;
+}
+
+f2ptr f2__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+  if (! raw__frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__frame__add_type_var_value(cause, this, type, var, value);
 }
 def_pcfunk4(frame__add_type_var_value, this, type, var, value, return f2__frame__add_type_var_value(this_cause, this, type, var, value));
 
@@ -223,7 +230,16 @@ def_pcfunk2(frame__type_var__values, this, type, return f2__frame__type_var__val
 
 f2ptr f2__frame__var_ptypehash(f2ptr cause, f2ptr this) {return f2__ptypehash__lookup(cause, f2frame__type_ptypehash(this, cause), __funk2.primobject__frame.variable__symbol);}
 
-f2ptr f2__frame__add_var_value(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {return f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, var, value);}
+f2ptr raw__frame__add_var_value(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
+  return f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, var, value);
+}
+
+f2ptr f2__frame__add_var_value(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
+  if (! raw__frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__frame__add_var_value(cause, this, var, value);
+}
 def_pcfunk3(frame__add_var_value, this, var, value, return f2__frame__add_var_value(this_cause, this, var, value));
 
 f2ptr f2__frame__lookup_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value) {return f2__frame__lookup_type_var_assignment_cons(cause, this, __funk2.primobject__frame.variable__symbol, var, not_defined_value);}
@@ -467,19 +483,22 @@ f2ptr raw__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr gra
     f2__ptypehash__add(cause, node_ptypehash, this, this_node);
     f2__graph__add_node(cause, graph, this_node);
     frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
-		     f2ptr type_slot_name__string = f2__exp__as__string(cause, type_slot_name);
-		     f2ptr slot_name__string      = f2__exp__as__string(cause, slot_name);
-		     f2ptr combined_slot_name     = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list3__new(cause, type_slot_name__string, new__string(cause, "-"), slot_name__string)));
-		     f2__terminal_print(cause, combined_slot_name);
-		     f2ptr node                   = f2__ptypehash__lookup(cause, node_ptypehash, slot_value);
-		     if (node == nil) {
-		       node = f2__graph_node__new(cause, slot_value);
-		       f2__ptypehash__add(cause, node_ptypehash, slot_value, node);
+		     f2ptr key_type_node   = f2__graph_node__new(cause, type_slot_name);
+		     f2ptr key_node        = f2__graph_node__new(cause, slot_name);
+		     f2ptr slot_value_node = f2__ptypehash__lookup(cause, node_ptypehash, slot_value);
+		     if (slot_value_node == nil) {
+		       slot_value_node = f2__graph_node__new(cause, slot_value);
+		       if (raw__frame__is_type(cause, slot_value)) {
+			 f2__ptypehash__add(cause, node_ptypehash, slot_value, slot_value_node);
+		       }
 		     }
-		     f2__graph__add_new_edge(cause, graph, combined_slot_name, this_node, node);
+		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key_type"), this_node,     key_type_node);
+		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key"),      key_type_node, key_node);
+		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "value"),    key_node,      slot_value_node);
 		     );
+    return f2bool__new(boolean__true);
   }
-  return nil;
+  return f2bool__new(boolean__false);
 }
 
 f2ptr f2__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash) {
@@ -491,6 +510,34 @@ f2ptr f2__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr grap
   return raw__frame__add_to_graph_with_ptypehash(cause, this, graph, node_ptypehash);
 }
 def_pcfunk3(frame__add_to_graph_with_ptypehash, this, graph, node_ptypehash, return f2__frame__add_to_graph_with_ptypehash(this_cause, this, graph, node_ptypehash));
+
+
+// this function is dangerous.  make sure that you are sure of the size of the recursive structure you are asking it to iterate over.
+// this is function is safely used from the frame_ball core_extension.  it is recommended that you use that interface unless you know what you are doing.
+f2ptr raw__frame__add_recursively_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash) {
+  f2ptr this_node = f2__ptypehash__lookup(cause, node_ptypehash, this);
+  if (this_node == nil) {
+    this_node = f2__graph_node__new(cause, this);
+    f2__ptypehash__add(cause, node_ptypehash, this, this_node);
+    f2__graph__add_node(cause, graph, this_node);
+    frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
+		     f2ptr key_type_node   = f2__graph_node__new(cause, type_slot_name);
+		     f2ptr key_node        = f2__graph_node__new(cause, slot_name);
+		     f2ptr slot_value_node = f2__ptypehash__lookup(cause, node_ptypehash, slot_value);
+		     if (slot_value_node == nil) {
+		       slot_value_node = f2__graph_node__new(cause, slot_value);
+		       if (raw__frame__is_type(cause, slot_value)) {
+			 raw__frame__add_recursively_to_graph_with_ptypehash(cause, slot_value, graph, node_ptypehash);
+		       }
+		     }
+		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key_type"), this_node,     key_type_node);
+		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key"),      key_type_node, key_node);
+		     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "value"),    key_node,      slot_value_node);
+		     );
+    return f2bool__new(boolean__true);
+  }
+  return f2bool__new(boolean__false);
+}
 
 
 f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

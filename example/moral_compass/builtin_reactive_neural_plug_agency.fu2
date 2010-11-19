@@ -27,7 +27,7 @@
   [new []
        [construct resource [type this]
 		  [funk []
-			[have this-resource think_to_self 'Neural plug activate_resource ready.']
+			`[have this-resource think_to_self 'Neural plug activate_resource ready.']
 			[while t
 			  [have command_mutex lock]
 			  [if command_ready

@@ -17,26 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defcore semantic_knowledge_base 'extension/semantic_knowledge_base/.libs/libsemantic_knowledge_base.so']
 
-'agent_body'
+[defcorefunk semantic_knowledge_base-core_extension_ping       semantic_knowledge_base semantic_knowledge_base__core_extension_ping]
+[defcorefunk semantic_knowledge_base-core_extension_initialize semantic_knowledge_base semantic_knowledge_base__core_extension_initialize]
 
-[deframe agent_body [frame] [physical_world_reference name mind]
-  [new [physical_world name mind]
-       [= physical_world_reference physical_world]
-       [prog [if [get mind body]
-		 [error bug_type `mind_already_has_body]]
-	     [set mind body this]]
-       [set this name name]
-       [set this mind mind]
-       [have physical_world add_agent_body this]
-       this]]
 
-[deftypefunk agent_body execute destroy []
-  [have [get this mind] destroy]]
 
-[deftypefunk agent_body get physical_world []
-  physical_world_reference]
-
-[deftypefunk agent_body get time_step []
-  [get [get this physical_world] time_step]]
-
+[semantic_knowledge_base-core_extension_ping]

@@ -86,35 +86,38 @@ f2ptr      f2__typedframe__type(f2ptr cause, f2ptr this);
 
 declare_primobject_2_slot(frame, new_type_mutex, type_ptypehash);
 
-f2ptr      f2__frame__new                            (f2ptr cause, f2ptr slot_value_pairs);
-f2ptr      f2__frame__add_type_var_value             (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
-f2ptr      f2__frame__var_ptypehash                  (f2ptr cause, f2ptr this);
-f2ptr      f2__frame__funkvar_ptypehash              (f2ptr cause, f2ptr this);
-f2ptr      f2__frame__add_var_value                  (f2ptr cause, f2ptr this, f2ptr var, f2ptr value);
-f2ptr      f2__frame__add_funkvar_value              (f2ptr cause, f2ptr this, f2ptr var, f2ptr value);
-f2ptr      f2__frame__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value);
-f2ptr      f2__frame__lookup_type_var_value          (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value);              // *
-f2ptr      f2__frame__type_var_value__set            (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value, f2ptr not_defined_value); // *
-boolean_t raw__frame__contains_type_var              (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
-f2ptr      f2__frame__contains_type_var              (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
-f2ptr      f2__frame__lookup_var_assignment_cons     (f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value);
-f2ptr      f2__frame__lookup_var_value               (f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value);                          // *
-f2ptr      f2__frame__var_value__set                 (f2ptr cause, f2ptr this, f2ptr var, f2ptr value, f2ptr not_defined_value);             // *
-boolean_t raw__frame__contains_var                   (f2ptr cause, f2ptr this, f2ptr var);
-f2ptr      f2__frame__contains_var                   (f2ptr cause, f2ptr this, f2ptr var);
-f2ptr      f2__frame__lookup_funkvar_assignment_cons (f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value);
-f2ptr      f2__frame__lookup_funkvar_value           (f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr not_defined_value);                      // *
-f2ptr      f2__frame__funkvar_value__set             (f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value, f2ptr not_defined_value);         // *
-f2ptr     raw__frame__type_var__mapc_keys            (f2ptr cause, f2ptr this, f2ptr type, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
-f2ptr      f2__frame__type_var__keys                 (f2ptr cause, f2ptr this, f2ptr type);
-f2ptr      f2__frame__type_var__values               (f2ptr cause, f2ptr this, f2ptr type);
-void      raw__frame__copy                           (f2ptr cause, f2ptr this, f2ptr source);
-f2ptr      f2__frame__copy                           (f2ptr cause, f2ptr this, f2ptr source);
-f2ptr     raw__frame__new_copy                       (f2ptr cause, f2ptr this);
-f2ptr      f2__frame__new_copy                       (f2ptr cause, f2ptr this);
-
-boolean_t raw__frame__check_has_type_slot(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr slot_name);
-f2ptr      f2__frame__check_has_type_slot(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr slot_name);
+f2ptr      f2__frame__new                                    (f2ptr cause, f2ptr slot_value_pairs);
+f2ptr     raw__frame__add_type_var_value                     (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
+f2ptr      f2__frame__add_type_var_value                     (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
+f2ptr      f2__frame__var_ptypehash                          (f2ptr cause, f2ptr this);
+f2ptr      f2__frame__funkvar_ptypehash                      (f2ptr cause, f2ptr this);
+f2ptr     raw__frame__add_var_value                          (f2ptr cause, f2ptr this, f2ptr var, f2ptr value);
+f2ptr      f2__frame__add_var_value                          (f2ptr cause, f2ptr this, f2ptr var, f2ptr value);
+f2ptr      f2__frame__add_funkvar_value                      (f2ptr cause, f2ptr this, f2ptr var, f2ptr value);
+f2ptr      f2__frame__lookup_type_var_assignment_cons        (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value);
+f2ptr     raw__frame__lookup_type_var_value                  (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value);
+f2ptr      f2__frame__lookup_type_var_value                  (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value);              // *
+f2ptr      f2__frame__type_var_value__set                    (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value, f2ptr not_defined_value); // *
+boolean_t raw__frame__contains_type_var                      (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
+f2ptr      f2__frame__contains_type_var                      (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
+f2ptr      f2__frame__lookup_var_assignment_cons             (f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value);
+f2ptr      f2__frame__lookup_var_value                       (f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value);                          // *
+f2ptr      f2__frame__var_value__set                         (f2ptr cause, f2ptr this, f2ptr var, f2ptr value, f2ptr not_defined_value);             // *
+boolean_t raw__frame__contains_var                           (f2ptr cause, f2ptr this, f2ptr var);
+f2ptr      f2__frame__contains_var                           (f2ptr cause, f2ptr this, f2ptr var);
+f2ptr      f2__frame__lookup_funkvar_assignment_cons         (f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value);
+f2ptr      f2__frame__lookup_funkvar_value                   (f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr not_defined_value);                      // *
+f2ptr      f2__frame__funkvar_value__set                     (f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value, f2ptr not_defined_value);         // *
+f2ptr     raw__frame__type_var__mapc_keys                    (f2ptr cause, f2ptr this, f2ptr type, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
+f2ptr      f2__frame__type_var__keys                         (f2ptr cause, f2ptr this, f2ptr type);
+f2ptr      f2__frame__type_var__values                       (f2ptr cause, f2ptr this, f2ptr type);
+void      raw__frame__copy                                   (f2ptr cause, f2ptr this, f2ptr source);
+f2ptr      f2__frame__copy                                   (f2ptr cause, f2ptr this, f2ptr source);
+f2ptr     raw__frame__new_copy                               (f2ptr cause, f2ptr this);
+f2ptr      f2__frame__new_copy                               (f2ptr cause, f2ptr this);
+f2ptr     raw__frame__add_recursively_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash);
+boolean_t raw__frame__check_has_type_slot                    (f2ptr cause, f2ptr this, f2ptr type_name, f2ptr slot_name);
+f2ptr      f2__frame__check_has_type_slot                    (f2ptr cause, f2ptr this, f2ptr type_name, f2ptr slot_name);
 
 typedef struct funk2_primobject__frame_s {
   f2ptr frame__symbol;

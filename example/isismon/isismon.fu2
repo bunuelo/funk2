@@ -17,26 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-`[deframe turn_right_start_resource        [resource] [] [new [] [construct resource `turn_right_start        [funk []              [have [get this body] turn_right-start]]]]]
-`[deframe turn_right_stop_resource         [resource] [] [new [] [construct resource `turn_right_stop         [funk []              [have [get this body] turn_right-stop]]]]]
-`[deframe turn_left_start_resource         [resource] [] [new [] [construct resource `turn_left_start         [funk []              [have [get this body] turn_left-start]]]]]
-`[deframe turn_left_stop_resource          [resource] [] [new [] [construct resource `turn_left_stop          [funk []              [have [get this body] turn_left-stop]]]]]
-`[deframe look_up_start_resource           [resource] [] [new [] [construct resource `look_up_start           [funk []              [have [get this body] look_up-start]]]]]
-`[deframe look_up_stop_resource            [resource] [] [new [] [construct resource `look_up_stop            [funk []              [have [get this body] look_up-stop]]]]]
-`[deframe look_down_start_resource         [resource] [] [new [] [construct resource `look_down_start         [funk []              [have [get this body] look_down-start]]]]]
-`[deframe look_down_stop_resource          [resource] [] [new [] [construct resource `look_down_stop          [funk []              [have [get this body] look_down-stop]]]]]
-`[deframe move_forward_start_resource      [resource] [] [new [] [construct resource `move_forward_start      [funk []              [have [get this body] move_forward-start]]]]]
-`[deframe move_forward_stop_resource       [resource] [] [new [] [construct resource `move_forward_stop       [funk []              [have [get this body] move_forward-stop]]]]]
-`[deframe move_backward_start_resource     [resource] [] [new [] [construct resource `move_backward_start     [funk []              [have [get this body] move_backward-start]]]]]
-`[deframe move_backward_stop_resource      [resource] [] [new [] [construct resource `move_backward_stop      [funk []              [have [get this body] move_backward-stop]]]]]
-`[deframe drop_from_right_hand_resource    [resource] [] [new [] [construct resource `drop_from_right_hand    [funk []              [have [get this body] drop_from_right_hand]]]]]
-`[deframe drop_from_left_hand_resource     [resource] [] [new [] [construct resource `drop_from_left_hand     [funk []              [have [get this body] drop_from_left_hand]]]]]
-`[deframe pick_up_with_right_hand_resource [resource] [] [new [] [construct resource `pick_up_with_right_hand [funk [target]        [have [get this body] pick_up_with_right_hand target]]]]]
-`[deframe pick_up_with_left_hand_resource  [resource] [] [new [] [construct resource `pick_up_with_left_hand  [funk [target]        [have [get this body] pick_up_with_left_hand  target]]]]]
-`[deframe use_right_hand_resource          [resource] [] [new [] [construct resource `use_right_hand          [funk [target object] [have [get this body] use_right_hand          target object]]]]]
-`[deframe use_left_hand_resource           [resource] [] [new [] [construct resource `use_left_hand           [funk [target object] [have [get this body] use_left_hand           target object]]]]]
-`[deframe say_resource                     [resource] [] [new [] [construct resource `say                     [funk [message]       [have [get this body] say                     message]]]]]
-
 [deframe isismon_agent_resource_activator [frame] [isismon_agent
 						   
 						   window
@@ -473,6 +453,9 @@
       [if [< image_index [get retina_image_sequence length]]
 	  [set image image [get retina_image_sequence elt image_index]]]]]]
 
+[deftypefunk isismon_agent get retina_image_sequence []
+  [get isis_agent retina_image_sequence]]
+
 [deftypefunk isismon_agent execute command-look_for [object_type]
   [terminal_format standard-terminal '\nMindMon: Commanding ' [get this name] ' to look for ' object_type '.']
   [have [get [get isis_agent mind] resource `builtin_reactive `neural_plug `activate_resource]
@@ -713,13 +696,39 @@
 	  [set scale value [- overview_image_sequence-length 1]]]]]
   [have this update]]
 
+[deftypefunk isismon get new_movie [index]
+  [let [[overview_image_sequence [get this overview_image_sequence]]]
+    [let [[agent_names    [get agent_frame keys]]
+	  [movie_length   [get overview_image_sequence length]]
+	  [image_sequence [new image_sequence]]]
+      [let [[agent_count [if [null agent_names]
+			     0
+			   [length agent_names]]]]
+	[let [[image_width [+ 640 [if agent_names
+				      320
+				    0]]]
+	      [image_height [if [> [* agent_count 240] 480]
+				[* agent_count 240]
+			      640]]]
+	  [dotimes [index movie_length]
+	    [let [[image [new image image_width image_height]]]
+	      [have image clear 0 0 0 255]
+	      [let [[overview_image [get overview_image_sequence elt index]]]
+		[have overview_image copy_rectangle_to 0 0 image 0 0 640 480]
+		[mapc [funk [agent_name]
+			    [let [[isismon_agent [get agent_frame agent_name]]]
+			      [let [[retina_image_sequence [get isismon_agent retina_image_sequence]]]
+				[let [[retina_image [get retina_image_sequence elt index]]]
+				  [have retina_image copy_rectangle_to 0 0 image 640 [* index 240] 320 240]]]]]
+		      agent_names]]
+	      [have image_sequence add_image_to_end image]]]]]
+      [let [[bit_rate   5000000]
+	    [frame_rate 25]]
+	[movie-new_from_image_sequence image_sequence bit_rate frame_rate]]]]]
+
 [deftypefunk isismon execute save_movie_as [filename]
   [terminal_format standard-terminal '\nIsisMon Save Movie Dialog: Saving MPEG to file: ' filename]
-  [let [[overview_image_sequence [get this overview_image_sequence]]]
-    [let [[bit_rate   5000000]
-	  [frame_rate 25]]
-      [let [[overview_movie [movie-new_from_image_sequence overview_image_sequence bit_rate frame_rate]]]
-	[have overview_movie save filename]]]]]
+  [have [get this new_movie] save filename]]
 
 
 [defmetro isismon [:rest args]

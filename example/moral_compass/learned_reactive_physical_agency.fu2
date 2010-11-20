@@ -55,6 +55,7 @@ use object
 
 '
 
+
 [deftypefunk mind get visual_objects []
   [get [get [get mind layer `builtin_reactive] agency `sensory] visual_objects]]
 
@@ -64,18 +65,34 @@ use object
 [deftypefunk mind get right_hand_object_name []
  [get [get [get mind layer `builtin_reactive] agency `sensory] right_hand_object_name]]
 
-[defunk demo_hold [object_name]
+[defunk demo_pick_up_loaf_and_butter []
   [print 1]
   [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
-	command `learned_reactive `physical `look_for object_name]
-  [print 2]
-  [while [null [have [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] 
-			  resource `look_for] lookup `my_current_object]]
-    [sleep 3]]
-  [print 4]
+	command `learned_reactive `physical `look_for_vertically `loaf]
   [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
 	command `learned_reactive `physical `hold_with_right_hand 
 	[have [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] 
+		   resource `look_for] lookup `my_current_object]]
+  [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
+	command `learned_reactive `physical `look_for_vertically `butter]
+  [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
+	command `learned_reactive `physical `hold_with_right_hand 
+	[have [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] 
+		   resource `look_for] lookup `my_current_object]]
+  
+
+[defunk demo_hold [object_name]
+  [print 1]
+  [have [get [get [get [get isis_world agent_mind `Lauren] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
+	command `learned_reactive `physical `look_for object_name]
+  [print 2]
+  [while [null [have [get [get [get [get isis_world agent_mind `Lauren] layer `learned_reactive] agency `physical] 
+			  resource `look_for] lookup `my_current_object]]
+    [sleep 3]]
+  [print 4]
+  [have [get [get [get [get isis_world agent_mind `Lauren] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
+	command `learned_reactive `physical `hold_with_right_hand 
+	[have [get [get [get [get isis_world agent_mind `Lauren] layer `learned_reactive] agency `physical] 
 		   resource `look_for] lookup `my_current_object]]]
 
 
@@ -109,6 +126,7 @@ use object
   match]]
 
 
+
 [deframe turn_right_resource [resource] []
   [new []
        [construct resource `turn_right
@@ -123,7 +141,6 @@ use object
 			      [millisleep 100]]
 			    [mind-wait_to_activate mind builtin_reactive physical turn_right_stop]]]]]
        nil]]
-
 [deframe turn_left_resource [resource] []
   [new []
        [construct resource `turn_left
@@ -139,6 +156,38 @@ use object
 			      [millisleep 50]]
 			    [mind-wait_to_activate mind builtin_reactive physical turn_left_stop]]]]]
        nil]]
+
+[deframe look_down_resource [resource] []
+  [new []
+       [construct resource `look_down
+		  [funk [steps]
+			[let* [[body  [get this body]]
+			       [mind  [get body mind]]
+			       [name  [get body name]]]
+			  [have this-resource think_to_self 'Turning right is starting.']
+			  [mind-wait_to_activate mind builtin_reactive physical look_down_start]
+			  [let [[starting_time [get body time_step]]]
+			    [while [< [- [get body time_step] starting_time] steps] 
+			      [millisleep 100]]
+			    [mind-wait_to_activate mind builtin_reactive physical look_down_stop]]]]]
+       nil]]
+
+[deframe look_up_resource [resource] []
+  [new []
+       [construct resource `look_up
+		  [funk [steps]
+			[let* [[body  [get this body]]
+			       [mind  [get body mind]]
+			       [name  [get body name]]]
+			  [have this-resource think_to_self 'Turning right is starting.']
+			  [mind-wait_to_activate mind builtin_reactive physical look_up_start]
+			  [let [[starting_time [get body time_step]]]
+			    [while [< [- [get body time_step] starting_time] steps] 
+			      [millisleep 100]]
+			    [mind-wait_to_activate mind builtin_reactive physical look_up_stop]]]]]
+       nil]]
+
+
 
 [deframe move_forward_resource [resource] []
   [new []
@@ -312,7 +361,7 @@ use object
 			  [mind-wait_to_activate mind learned_reactive physical hold_with_left_hand  `loaf]
 			  [while [null [string-contains [get mind right\t_hand_object_name] 'loaf']]
 			    [sleep 3]]
-			  [mind-wait_to_activate mind builtin_reactive physical use_left_hand knife `loaf]]]]
+			  [mind-wait_to_activate mind builtin_reactive physical use_left_hand  `loaf `divide]]]]
 		  
        nil]] 
 'make the resouce *use* in isis_world.fu2'
@@ -461,6 +510,39 @@ use object
 					[have this-resource think_to_self 'found'my_current_object ]
 					]]]]
 			    [have this-resource think_to_self 'finished searching']]]]]
+       nil]]
+
+[deframe look_for_resource_vertically [resource] [[my_current_object nil]]
+  [new []
+       [construct resource `look_for_vertically
+		  [funk [desired_object_type]
+			[print 'look for']
+			[let* [[body [get this body]]
+			       [mind  [get body mind]]
+			       [name  [get body name]]
+			       
+			       ]
+			  [let [[patience 30]]
+			    [have this-resource think_to_self 'look_for_vertically activated']
+			    [while 
+				[> patience 0]
+			      [have this-resource think_to_self 'I still have patience']
+			      [if [null [get mind visual_objects]]
+				  [prog 
+				   [have this-resource think_to_self  'no objects in view']
+				   [mind-wait_to_activate mind learned_reactive physical turn_left 1]
+				   ]
+				[if [null [visual_objects_contain_object_type [get mind visual_objects] desired_object_type]]
+				    [prog [have this-resource think_to_self 'i see these objects:' [get mind visual_objects]]
+					  [mind-wait_to_activate mind learned_reactive physical look_down 1]
+					  [print 'activated look_down']
+					[= patience [- patience 1]]
+					]
+				  [prog [= patience 0]
+					[= my_current_object [visual_objects_contain_object_type [get mind visual_objects] desired_object_type] ]
+					[have this-resource think_to_self 'found'my_current_object ]
+					]]]]
+			    [have this-resource think_to_self 'finished searching vertically']]]]]
        nil]]
 
 [deframe search_for_resource [resource] []

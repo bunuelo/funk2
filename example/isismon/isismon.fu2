@@ -321,6 +321,7 @@
 				status_button_hbox
 				mindmon_button
 				activator_button
+				learned_reactive_physical_activator_button
 				sense_button
 				visual_objects_button
 				visual_knowledge_button
@@ -387,6 +388,13 @@
 		   [terminal_format standard-terminal '\nLaunching activator for agent ' [get this name] '.']
 		   [new isismon_agent_resource_activator this]]]
        [have status_button_hbox pack_start activator_button nil nil 0]
+
+       [= learned_reactive_physical_activator_button [gtk-button-new_with_label 'LRF_Activator']]
+       [have learned_reactive_physical_activator_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\nLaunching LRF_activator for agent ' [get this name] '.']
+		   [new isismon_agent_learned_reactive_physical_resource_activator this]]]
+       [have status_button_hbox pack_start learned_reactive_physical_activator_button nil nil 0]
        
        [= sense_button [gtk-button-new_with_label 'Sense']]
        [have sense_button signal_connect 'clicked'

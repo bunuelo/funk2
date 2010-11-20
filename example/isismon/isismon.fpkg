@@ -24,5 +24,6 @@
 	     image_sequence
 	     movie
 	     mindmon]
-   :sources ['isismon.fu2']]
+   :sources ['isismon.fu2'
+	     'isismon_learned_reactive_physical_activator.fu2']]
 

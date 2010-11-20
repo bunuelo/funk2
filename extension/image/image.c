@@ -380,16 +380,14 @@ f2ptr f2__image__fill_rectangle(f2ptr cause, f2ptr this, f2ptr min_x, f2ptr min_
       (! raw__integer__is_type(cause, alpha))) {
     return f2larva__new(cause, 1, nil);
   }
-  s64 min_x__i        = f2integer__i(min_x,        cause);
-  s64 min_y__i        = f2integer__i(min_y,        cause);
-  s64 target_min_x__i = f2integer__i(target_min_x, cause);
-  s64 target_min_y__i = f2integer__i(target_min_y, cause);
-  s64 width__i        = f2integer__i(width,        cause);
-  s64 height__i       = f2integer__i(height,       cause);
-  s64 red__i          = f2integer__i(red,          cause);
-  s64 green__i        = f2integer__i(green,        cause);
-  s64 blue__i         = f2integer__i(blue,         cause);
-  s64 alpha__i        = f2integer__i(alpha,        cause);
+  s64 min_x__i        = f2integer__i(min_x,  cause);
+  s64 min_y__i        = f2integer__i(min_y,  cause);
+  s64 width__i        = f2integer__i(width,  cause);
+  s64 height__i       = f2integer__i(height, cause);
+  s64 red__i          = f2integer__i(red,    cause);
+  s64 green__i        = f2integer__i(green,  cause);
+  s64 blue__i         = f2integer__i(blue,   cause);
+  s64 alpha__i        = f2integer__i(alpha,  cause);
   if (((red__i   < 0) || (red__i   >= 256)) ||
       ((green__i < 0) || (green__i >= 256)) ||
       ((blue__i  < 0) || (blue__i  >= 256)) ||

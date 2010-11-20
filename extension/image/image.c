@@ -268,7 +268,7 @@ f2ptr f2__image__write_reduction_image_part(f2ptr cause, f2ptr this, f2ptr reduc
 export_cefunk5(image__write_reduction_image_part, this, reduced_image, reduction_factor, x_offset, y_offset, 0, "");
 
 
-f2ptr raw__image__rectangle_copy_to(f2ptr cause, f2ptr this, s64 min_x, s64 min_y, f2ptr target, s64 target_min_x, s64 target_min_y, s64 rectangle_width, s64 rectangle_height) {
+f2ptr raw__image__copy_rectangle_to(f2ptr cause, f2ptr this, s64 min_x, s64 min_y, f2ptr target, s64 target_min_x, s64 target_min_y, s64 rectangle_width, s64 rectangle_height) {
   f2ptr this__width       = raw__image__width(cause, this);
   s64   this__width__i    = f2integer__i(this__width, cause);
   f2ptr this__height      = raw__image__height(cause, this);
@@ -314,7 +314,7 @@ f2ptr raw__image__rectangle_copy_to(f2ptr cause, f2ptr this, s64 min_x, s64 min_
   return nil;
 }
 
-f2ptr f2__image__rectangle_copy_to(f2ptr cause, f2ptr this, f2ptr min_x, f2ptr min_y, f2ptr target, f2ptr target_min_x, f2ptr target_min_y, f2ptr rectangle_width, f2ptr rectangle_height) {
+f2ptr f2__image__copy_rectangle_to(f2ptr cause, f2ptr this, f2ptr min_x, f2ptr min_y, f2ptr target, f2ptr target_min_x, f2ptr target_min_y, f2ptr rectangle_width, f2ptr rectangle_height) {
   if ((! raw__image__is_type(cause, this)) ||
       (! raw__integer__is_type(cause, min_x)) ||
       (! raw__integer__is_type(cause, min_y)) ||
@@ -331,9 +331,9 @@ f2ptr f2__image__rectangle_copy_to(f2ptr cause, f2ptr this, f2ptr min_x, f2ptr m
   s64 target_min_y__i     = f2integer__i(target_min_y,     cause);
   s64 rectangle_width__i  = f2integer__i(rectangle_width,  cause);
   s64 rectangle_height__i = f2integer__i(rectangle_height, cause);
-  return raw__image__rectangle_copy_to(cause, this, min_x__i, min_y__i, target, target_min_x__i, target_min_y__i, rectangle_width__i, rectangle_height__i);
+  return raw__image__copy_rectangle_to(cause, this, min_x__i, min_y__i, target, target_min_x__i, target_min_y__i, rectangle_width__i, rectangle_height__i);
 }
-export_cefunk8(image__rectangle_copy_to, this, min_x, min_y, target, target_min_x, target_min_y, rectangle_width, rectangle_height, 0, "Copy a rectangle from this image to the target image.");
+export_cefunk8(image__copy_rectangle_to, this, min_x, min_y, target, target_min_x, target_min_y, rectangle_width, rectangle_height, 0, "Copy a rectangle from this image to the target image.");
 
 
 f2ptr raw__image__fill_rectangle(f2ptr cause, f2ptr this, s64 min_x, s64 min_y, s64 width, s64 height, u8 red, u8 green, u8 blue, u8 alpha) {
@@ -412,7 +412,7 @@ f2ptr f2__image_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "rgba_data"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__rgba_data")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "rgba_data"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__rgba_data__set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "write_reduction_image_part"), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__write_reduction_image_part")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "copy_rectangle_copy_to"),     f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__rectangle_copy_to")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "copy_rectangle_to"),          f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__copy_rectangle_to")));}
   return this;
 }
 

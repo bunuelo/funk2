@@ -725,7 +725,7 @@
       [have image_sequence add_image_to_end [get this movie_image index]]]
     [let [[bit_rate   5000000]
 	  [frame_rate 25]]
-      [movie-new_from_image_sequence image_sequence bit_rate frame_rate]]]]
+      [movie-new_from_image_sequence [get image_sequence new_sequence_by_stretch 5.0] bit_rate frame_rate]]]]
 
 [deftypefunk isismon execute save_movie_as [filename]
   [terminal_format standard-terminal '\nIsisMon Save Movie Dialog: Saving MPEG to file: ' filename]

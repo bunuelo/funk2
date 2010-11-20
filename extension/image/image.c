@@ -355,12 +355,12 @@ f2ptr raw__image__fill_rectangle(f2ptr cause, f2ptr this, s64 min_x, s64 min_y, 
       {
 	s64 x;
 	for (x = 0; x < width; x ++) {
-	  s64 this__x           = min_x + x;
-	  s64 this__pixel_index = ((this__y * this__width__i) + this__x) * 4;
-	  raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 0, red);
-	  raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 1, green);
-	  raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 2, blue);
-	  raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 3, alpha);
+	  s64 this__x     = min_x + x;
+	  s64 pixel_index = ((this__y * this__width__i) + this__x) * 4;
+	  raw__chunk__bit8__elt__set(cause, this__rgba_data, pixel_index + 0, red);
+	  raw__chunk__bit8__elt__set(cause, this__rgba_data, pixel_index + 1, green);
+	  raw__chunk__bit8__elt__set(cause, this__rgba_data, pixel_index + 2, blue);
+	  raw__chunk__bit8__elt__set(cause, this__rgba_data, pixel_index + 3, alpha);
 	}
       }
     }

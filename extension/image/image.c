@@ -285,7 +285,19 @@ f2ptr raw__image__copy_rectangle_to(f2ptr cause, f2ptr this, s64 min_x, s64 min_
       ((min_y           < 0) || (min_y        + rectangle_height > this__height__i)) ||
       ((target_min_x    < 0) || (target_min_x + rectangle_width  > target__width__i)) ||
       ((target_min_y    < 0) || (target_min_y + rectangle_height > target__height__i))) {
-    return f2larva__new(cause, 3, nil);
+    return f2larva__new(cause, 3, f2__bug__new(cause, f2integer__new(cause, 3), f2__frame__new(cause, f2list24__new(cause,
+														    new__symbol(cause, "bug_type"),         new__symbol(cause, "copy_dimensions_are_outside_of_image_dimensions"),
+														    new__symbol(cause, "funkname"),         new__symbol(cause, "image-copy_rectangle_to"),
+														    new__symbol(cause, "rectangle_width"),  f2integer__new(cause, rectangle_width),
+														    new__symbol(cause, "rectangle_height"), f2integer__new(cause, rectangle_height),
+														    new__symbol(cause, "this-min_x"),       f2integer__new(cause, min_x),
+														    new__symbol(cause, "this-min_y"),       f2integer__new(cause, min_y),
+														    new__symbol(cause, "target-min_x"),     f2integer__new(cause, target_min_x),
+														    new__symbol(cause, "target-min_y"),     f2integer__new(cause, target_min_y),
+														    new__symbol(cause, "this-width"),       f2integer__new(cause, this__width__i),
+														    new__symbol(cause, "this-height"),      f2integer__new(cause, this__height__i),
+														    new__symbol(cause, "target-width"),     f2integer__new(cause, target__width__i),
+														    new__symbol(cause, "target-height"),    f2integer__new(cause, target__height__i)))));
   }
   {
     s64 y;

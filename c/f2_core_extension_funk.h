@@ -345,10 +345,10 @@ struct funk2_object_type__core_extension_funk__slot_s {
   f2ptr f2__##name##__args(f2ptr cause) {return f2list10__new(cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2), new__symbol(cause, #arg3), new__symbol(cause, #arg4), new__symbol(cause, #arg5), new__symbol(cause, #arg6), new__symbol(cause, #arg7), new__symbol(cause, #arg8), new__symbol(cause, ":rest"), new__symbol(cause, #and_rest));}
 
 #define def_cefunk9__args(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9) \
-  f2ptr f2__##name##__args(f2ptr cause) {return f2list8__new(cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2), new__symbol(cause, #arg3), new__symbol(cause, #arg4), new__symbol(cause, #arg5), new__symbol(cause, #arg6), new__symbol(cause, #arg7), new__symbol(cause, #arg8), new__symbol(cause, #arg9));}
+  f2ptr f2__##name##__args(f2ptr cause) {return f2list9__new(cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2), new__symbol(cause, #arg3), new__symbol(cause, #arg4), new__symbol(cause, #arg5), new__symbol(cause, #arg6), new__symbol(cause, #arg7), new__symbol(cause, #arg8), new__symbol(cause, #arg9));}
 
 #define def_cefunk9_and_rest__args(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, and_rest) \
-  f2ptr f2__##name##__args(f2ptr cause) {return f2list10__new(cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2), new__symbol(cause, #arg3), new__symbol(cause, #arg4), new__symbol(cause, #arg5), new__symbol(cause, #arg6), new__symbol(cause, #arg7), new__symbol(cause, #arg8), new__symbol(cause, #arg9), new__symbol(cause, ":rest"), new__symbol(cause, #and_rest));}
+  f2ptr f2__##name##__args(f2ptr cause) {return f2list11__new(cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2), new__symbol(cause, #arg3), new__symbol(cause, #arg4), new__symbol(cause, #arg5), new__symbol(cause, #arg6), new__symbol(cause, #arg7), new__symbol(cause, #arg8), new__symbol(cause, #arg9), new__symbol(cause, ":rest"), new__symbol(cause, #and_rest));}
 
 
 #define def_cefunk__is_funktional(name, is_funktional)			\

@@ -363,7 +363,6 @@ f2ptr f2__image_sequence_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_image_to_end"),    f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__add_image_to_end")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "elt"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__elt")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "new_by_time_stretch"), f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__new_by_time_stretch")));}
-  printf("\nhello.");
   return this;
 }
 
@@ -377,7 +376,6 @@ f2ptr f2__image_sequence__core_extension_ping(f2ptr cause) {
 export_cefunk0(image_sequence__core_extension_ping, 0, "");
 
 f2ptr f2__image_sequence__core_extension_initialize(f2ptr cause) {
-  printf("\nhello?");
   f2__add_type(cause, new__symbol(cause, "image_sequence"), f2__image_sequence_type__new(cause));
   f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__core_extension_ping")), nil);
   printf("\nimage_sequence initialized."); fflush(stdout);

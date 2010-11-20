@@ -563,7 +563,7 @@
 					 [new isismon_save_movie_dialog this]]
 				   nil]
 			     
-			     [= movie_gtk_image [gtk-image-new_from_image [new image 640 480 nil]]]
+			     [= movie_gtk_image [gtk-image-new_from_image [new image [+ 640 320] 480 nil]]]
 			     [have vbox pack_start movie_gtk_image nil nil 0]
 			     
 			     [= scale [gtk-scale-new_with_range `horizontal 0.0 1.0 1.0]]

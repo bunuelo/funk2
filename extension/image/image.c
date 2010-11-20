@@ -290,18 +290,24 @@ f2ptr raw__image__rectangle_copy_to(f2ptr cause, f2ptr this, s64 min_x, s64 min_
   {
     s64 y;
     for (y = 0; y < rectangle_height; y ++) {
-      s64 x;
-      for (x = 0; x < rectangle_width; x ++) {
-	s64 this__pixel_index   = ((y * this__width__i)   + x) * 4;
-	s64 target__pixel_index = ((y * target__width__i) + x) * 4;
-	u8 red   = raw__chunk__bit8__elt(cause, this__rgba_data, this__pixel_index + 0);
-	u8 green = raw__chunk__bit8__elt(cause, this__rgba_data, this__pixel_index + 1);
-	u8 blue  = raw__chunk__bit8__elt(cause, this__rgba_data, this__pixel_index + 2);
-	u8 alpha = raw__chunk__bit8__elt(cause, this__rgba_data, this__pixel_index + 3);
-	raw__chunk__bit8__elt__set(cause, target__rgba_data, target__pixel_index + 0, red);
-	raw__chunk__bit8__elt__set(cause, target__rgba_data, target__pixel_index + 1, green);
-	raw__chunk__bit8__elt__set(cause, target__rgba_data, target__pixel_index + 2, blue);
-	raw__chunk__bit8__elt__set(cause, target__rgba_data, target__pixel_index + 3, alpha);
+      s64 this__y   = min_y + y;
+      s64 target__y = target_min_y + y;
+      {
+	s64 x;
+	for (x = 0; x < rectangle_width; x ++) {
+	  s64 this__x             = min_x        + x;
+	  s64 target__x           = target_min_x + x;
+	  s64 this__pixel_index   = ((this__y   * this__width__i)   + this__x)   * 4;
+	  s64 target__pixel_index = ((target__y * target__width__i) + target__x) * 4;
+	  u8 red   = raw__chunk__bit8__elt(cause, this__rgba_data, this__pixel_index + 0);
+	  u8 green = raw__chunk__bit8__elt(cause, this__rgba_data, this__pixel_index + 1);
+	  u8 blue  = raw__chunk__bit8__elt(cause, this__rgba_data, this__pixel_index + 2);
+	  u8 alpha = raw__chunk__bit8__elt(cause, this__rgba_data, this__pixel_index + 3);
+	  raw__chunk__bit8__elt__set(cause, target__rgba_data, target__pixel_index + 0, red);
+	  raw__chunk__bit8__elt__set(cause, target__rgba_data, target__pixel_index + 1, green);
+	  raw__chunk__bit8__elt__set(cause, target__rgba_data, target__pixel_index + 2, blue);
+	  raw__chunk__bit8__elt__set(cause, target__rgba_data, target__pixel_index + 3, alpha);
+	}
       }
     }
   }
@@ -336,10 +342,10 @@ f2ptr raw__image__fill_rectangle(f2ptr cause, f2ptr this, s64 min_x, s64 min_y, 
   f2ptr this__height      = raw__image__height(cause, this);
   s64   this__height__i   = f2integer__i(this__height, cause);
   f2ptr this__rgba_data   = raw__image__rgba_data(cause, this);
-  if ((rectangle_width  < 0) ||
-      (rectangle_height < 0) ||
-      ((min_x           < 0) || (min_x + rectangle_width  > this__width__i)) ||
-      ((min_y           < 0) || (min_y + rectangle_height > this__height__i)) ||
+  if ((width  < 0) ||
+      (height < 0) ||
+      ((min_x < 0) || (min_x + width  > this__width__i)) ||
+      ((min_y < 0) || (min_y + height > this__height__i)) ||
     return f2larva__new(cause, 3, nil);
   }
   if (((red__i   < 0) || (red__i   >= 256)) ||
@@ -350,14 +356,18 @@ f2ptr raw__image__fill_rectangle(f2ptr cause, f2ptr this, s64 min_x, s64 min_y, 
   }
   {
     s64 y;
-    for (y = 0; y < rectangle_height; y ++) {
-      s64 x;
-      for (x = 0; x < rectangle_width; x ++) {
-	s64 this__pixel_index   = ((y * this__width__i)   + x) * 4;
-	raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 0, red);
-	raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 1, green);
-	raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 2, blue);
-	raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 3, alpha);
+    for (y = 0; y < height; y ++) {
+      s64 this__y = min_y + y;
+      {
+	s64 x;
+	for (x = 0; x < width; x ++) {
+	  s64 this__x           = min_x + x;
+	  s64 this__pixel_index = ((this__y * this__width__i) + this__x) * 4;
+	  raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 0, red);
+	  raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 1, green);
+	  raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 2, blue);
+	  raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 3, alpha);
+	}
       }
     }
   }

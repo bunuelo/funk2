@@ -399,6 +399,36 @@ f2ptr f2__image__fill_rectangle(f2ptr cause, f2ptr this, f2ptr min_x, f2ptr min_
 export_cefunk9(image__fill_rectangle, this, min_x, min_y, width, height, red, green, blue, alpha, 0, "Fill a rectangle in this image with the given red, green, blue, and alpha components, each within the range from 0 to 255.");
 
 
+f2ptr raw__image__clear(f2ptr cause, f2ptr this, u8 red, u8 green, u8 blue, u8 alpha) {
+  f2ptr width     = raw__image__width( cause, this);
+  f2ptr height    = raw__image__height(cause, this);
+  s64   width__i  = f2integer__i(width,  cause);
+  s64   height__i = f2integer__i(height, cause);
+  return raw__image__fill_rectangle(cause, this, 0, 0, width__i, height__i, red, green, blue, alpha);
+}
+
+f2ptr f2__image__clear(f2ptr cause, f2ptr this, f2ptr red, f2ptr green, f2ptr blue, f2ptr alpha) {
+  if ((! raw__image__is_type(  cause, this)) ||
+      (! raw__integer__is_type(cause, red)) ||
+      (! raw__integer__is_type(cause, green)) ||
+      (! raw__integer__is_type(cause, blue)) ||
+      (! raw__integer__is_type(cause, alpha))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  s64 red__i          = f2integer__i(red,    cause);
+  s64 green__i        = f2integer__i(green,  cause);
+  s64 blue__i         = f2integer__i(blue,   cause);
+  s64 alpha__i        = f2integer__i(alpha,  cause);
+  if (((red__i   < 0) || (red__i   >= 256)) ||
+      ((green__i < 0) || (green__i >= 256)) ||
+      ((blue__i  < 0) || (blue__i  >= 256)) ||
+      ((alpha__i < 0) || (alpha__i >= 256))) {
+    return f2larva__new(cause, 592, nil);
+  }
+  return raw__image__clear(cause, this, red__i, green__i, blue__i, alpha__i);
+}
+export_cefunk5(image__clear, this, red, green, blue, alpha, 0, "Fills this entire image with the given red, green, blue, and alpha components, each within the range from 0 to 255.");
+
 
 f2ptr f2__image_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
@@ -413,6 +443,8 @@ f2ptr f2__image_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "rgba_data"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__rgba_data__set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "write_reduction_image_part"), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__write_reduction_image_part")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "copy_rectangle_to"),          f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__copy_rectangle_to")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "fill_rectangle"),             f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__fill_rectangle")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "clear"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__clear")));}
   return this;
 }
 

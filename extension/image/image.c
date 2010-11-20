@@ -348,12 +348,6 @@ f2ptr raw__image__fill_rectangle(f2ptr cause, f2ptr this, s64 min_x, s64 min_y, 
       ((min_y < 0) || (min_y + height > this__height__i))) {
     return f2larva__new(cause, 3, nil);
   }
-  if (((red__i   < 0) || (red__i   >= 256)) ||
-      ((green__i < 0) || (green__i >= 256)) ||
-      ((blue__i  < 0) || (blue__i  >= 256)) ||
-      ((alpha__i < 0) || (alpha__i >= 256))) {
-    return f2larva__new(cause, 592, nil);
-  }
   {
     s64 y;
     for (y = 0; y < height; y ++) {
@@ -396,6 +390,12 @@ f2ptr f2__image__fill_rectangle(f2ptr cause, f2ptr this, f2ptr min_x, f2ptr min_
   s64 green__i        = f2integer__i(green,        cause);
   s64 blue__i         = f2integer__i(blue,         cause);
   s64 alpha__i        = f2integer__i(alpha,        cause);
+  if (((red__i   < 0) || (red__i   >= 256)) ||
+      ((green__i < 0) || (green__i >= 256)) ||
+      ((blue__i  < 0) || (blue__i  >= 256)) ||
+      ((alpha__i < 0) || (alpha__i >= 256))) {
+    return f2larva__new(cause, 592, nil);
+  }
   return raw__image__fill_rectangle(cause, this, min_x__i, min_y__i, width__i, height__i, red__i, green__i, blue__i, alpha__i);
 }
 export_cefunk9(image__fill_rectangle, this, min_x, min_y, target, width, height, red, green, blue, alpha, 0, "Fill a rectangle in this image with the given red, green, blue, and alpha components, each within the range from 0 to 255.");

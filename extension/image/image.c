@@ -325,7 +325,7 @@ f2ptr f2__image__rectangle_copy_to(f2ptr cause, f2ptr this, f2ptr min_x, f2ptr m
   s64 target_min_y__i     = f2integer__i(target_min_y,     cause);
   s64 rectangle_width__i  = f2integer__i(rectangle_width,  cause);
   s64 rectangle_height__i = f2integer__i(rectangle_height, cause);
-  return raw__image__rectangle_copy_to(cause, this, min_x__i, min_x__i, target, target_min_x__i, target_min_y__i, rectangle_width__i, rectangle_height__i);
+  return raw__image__rectangle_copy_to(cause, this, min_x__i, min_y__i, target, target_min_x__i, target_min_y__i, rectangle_width__i, rectangle_height__i);
 }
 export_cefunk8(image__rectangle_copy_to, this, min_x, min_y, target, target_min_x, target_min_y, rectangle_width, rectangle_height, 0, "Copy a rectangle from this image to the target image.");
 

@@ -345,7 +345,7 @@ f2ptr raw__image__fill_rectangle(f2ptr cause, f2ptr this, s64 min_x, s64 min_y, 
   if ((width  < 0) ||
       (height < 0) ||
       ((min_x < 0) || (min_x + width  > this__width__i)) ||
-      ((min_y < 0) || (min_y + height > this__height__i)) ||
+      ((min_y < 0) || (min_y + height > this__height__i))) {
     return f2larva__new(cause, 3, nil);
   }
   if (((red__i   < 0) || (red__i   >= 256)) ||

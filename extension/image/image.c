@@ -314,7 +314,7 @@ f2ptr f2__image__rectangle_copy_to(f2ptr cause, f2ptr this, f2ptr min_x, f2ptr m
       (! raw__integer__is_type(cause, min_y)) ||
       (! raw__image__is_type(cause, target)) ||
       (! raw__integer__is_type(cause, target_min_x)) ||
-      (! raw__integer__is_type(cause, target_max_x)) ||
+      (! raw__integer__is_type(cause, target_min_y)) ||
       (! raw__integer__is_type(cause, rectangle_width)) ||
       (! raw__integer__is_type(cause, rectangle_height))) {
     return f2larva__new(cause, 1, nil);

@@ -268,6 +268,130 @@ f2ptr f2__image__write_reduction_image_part(f2ptr cause, f2ptr this, f2ptr reduc
 export_cefunk5(image__write_reduction_image_part, this, reduced_image, reduction_factor, x_offset, y_offset, 0, "");
 
 
+f2ptr raw__image__rectangle_copy_to(f2ptr cause, f2ptr this, s64 min_x, s64 min_y, f2ptr target, s64 target_min_x, s64 target_min_y, s64 rectangle_width, s64 rectangle_height) {
+  f2ptr this__width       = raw__image__width(cause, this);
+  s64   this__width__i    = f2integer__i(this__width, cause);
+  f2ptr this__height      = raw__image__height(cause, this);
+  s64   this__height__i   = f2integer__i(this__height, cause);
+  f2ptr this__rgba_data   = raw__image__rgba_data(cause, this);
+  f2ptr target__width     = raw__image__width(cause, target);
+  s64   target__width__i  = f2integer__i(target__width, cause);
+  f2ptr target__height    = raw__image__height(cause, target);
+  s64   target__height__i = f2integer__i(target__height, cause);
+  f2ptr target__rgba_data = raw__image__rgba_data(cause, target);
+  if ((rectangle_width  < 0) ||
+      (rectangle_height < 0) ||
+      ((min_x           < 0) || (min_x        + rectangle_width  > this__width__i)) ||
+      ((min_y           < 0) || (min_y        + rectangle_height > this__height__i)) ||
+      ((target_min_x    < 0) || (target_min_x + rectangle_width  > target__width__i)) ||
+      ((target_min_y    < 0) || (target_min_y + rectangle_height > target__height__i))) {
+    return f2larva__new(cause, 3, nil);
+  }
+  {
+    s64 y;
+    for (y = 0; y < rectangle_height; y ++) {
+      s64 x;
+      for (x = 0; x < rectangle_width; x ++) {
+	s64 this__pixel_index   = ((y * this__width__i)   + x) * 4;
+	s64 target__pixel_index = ((y * target__width__i) + x) * 4;
+	u8 red   = raw__chunk__bit8__elt(cause, this__rgba_data, this__pixel_index + 0);
+	u8 green = raw__chunk__bit8__elt(cause, this__rgba_data, this__pixel_index + 1);
+	u8 blue  = raw__chunk__bit8__elt(cause, this__rgba_data, this__pixel_index + 2);
+	u8 alpha = raw__chunk__bit8__elt(cause, this__rgba_data, this__pixel_index + 3);
+	raw__chunk__bit8__elt__set(cause, target__rgba_data, target__pixel_index + 0, red);
+	raw__chunk__bit8__elt__set(cause, target__rgba_data, target__pixel_index + 1, green);
+	raw__chunk__bit8__elt__set(cause, target__rgba_data, target__pixel_index + 2, blue);
+	raw__chunk__bit8__elt__set(cause, target__rgba_data, target__pixel_index + 3, alpha);
+      }
+    }
+  }
+  return nil;
+}
+
+f2ptr f2__image__rectangle_copy_to(f2ptr cause, f2ptr this, f2ptr min_x, f2ptr min_y, f2ptr target, f2ptr target_min_x, f2ptr target_min_y, f2ptr rectangle_width, f2ptr rectangle_height) {
+  if ((! raw__image__is_type(cause, this)) ||
+      (! raw__integer__is_type(cause, min_x)) ||
+      (! raw__integer__is_type(cause, min_y)) ||
+      (! raw__image__is_type(cause, target)) ||
+      (! raw__integer__is_type(cause, target_min_x)) ||
+      (! raw__integer__is_type(cause, target_max_x)) ||
+      (! raw__integer__is_type(cause, rectangle_width)) ||
+      (! raw__integer__is_type(cause, rectangle_height))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  s64 min_x__i            = f2integer__i(min_x,            cause);
+  s64 min_y__i            = f2integer__i(min_y,            cause);
+  s64 target_min_x__i     = f2integer__i(target_min_x,     cause);
+  s64 target_min_y__i     = f2integer__i(target_min_y,     cause);
+  s64 rectangle_width__i  = f2integer__i(rectangle_width,  cause);
+  s64 rectangle_height__i = f2integer__i(rectangle_height, cause);
+  return raw__image__rectangle_copy_to(cause, this, min_x__i, min_x__i, target, target_min_x__i, target_min_y__i, rectangle_width__i, rectangle_height__i);
+}
+export_cefunk8(image__rectangle_copy_to, this, min_x, min_y, target, target_min_x, target_min_y, rectangle_width, rectangle_height, 0, "Copy a rectangle from this image to the target image.");
+
+
+f2ptr raw__image__fill_rectangle(f2ptr cause, f2ptr this, s64 min_x, s64 min_y, s64 width, s64 height, u8 red, u8 green, u8 blue, u8 alpha) {
+  f2ptr this__width       = raw__image__width(cause, this);
+  s64   this__width__i    = f2integer__i(this__width, cause);
+  f2ptr this__height      = raw__image__height(cause, this);
+  s64   this__height__i   = f2integer__i(this__height, cause);
+  f2ptr this__rgba_data   = raw__image__rgba_data(cause, this);
+  if ((rectangle_width  < 0) ||
+      (rectangle_height < 0) ||
+      ((min_x           < 0) || (min_x + rectangle_width  > this__width__i)) ||
+      ((min_y           < 0) || (min_y + rectangle_height > this__height__i)) ||
+    return f2larva__new(cause, 3, nil);
+  }
+  if (((red__i   < 0) || (red__i   >= 256)) ||
+      ((green__i < 0) || (green__i >= 256)) ||
+      ((blue__i  < 0) || (blue__i  >= 256)) ||
+      ((alpha__i < 0) || (alpha__i >= 256))) {
+    return f2larva__new(cause, 592, nil);
+  }
+  {
+    s64 y;
+    for (y = 0; y < rectangle_height; y ++) {
+      s64 x;
+      for (x = 0; x < rectangle_width; x ++) {
+	s64 this__pixel_index   = ((y * this__width__i)   + x) * 4;
+	raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 0, red);
+	raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 1, green);
+	raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 2, blue);
+	raw__chunk__bit8__elt__set(cause, this__rgba_data, target__pixel_index + 3, alpha);
+      }
+    }
+  }
+  return nil;
+}
+
+f2ptr f2__image__fill_rectangle(f2ptr cause, f2ptr this, f2ptr min_x, f2ptr min_y, f2ptr width, f2ptr height, f2ptr red, f2ptr green, f2ptr blue, f2ptr alpha) {
+  if ((! raw__image__is_type(cause, this)) ||
+      (! raw__integer__is_type(cause, min_x)) ||
+      (! raw__integer__is_type(cause, min_y)) ||
+      (! raw__integer__is_type(cause, width)) ||
+      (! raw__integer__is_type(cause, height)) ||
+      (! raw__integer__is_type(cause, red)) ||
+      (! raw__integer__is_type(cause, green)) ||
+      (! raw__integer__is_type(cause, blue)) ||
+      (! raw__integer__is_type(cause, alpha))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  s64 min_x__i        = f2integer__i(min_x,        cause);
+  s64 min_y__i        = f2integer__i(min_y,        cause);
+  s64 target_min_x__i = f2integer__i(target_min_x, cause);
+  s64 target_min_y__i = f2integer__i(target_min_y, cause);
+  s64 width__i        = f2integer__i(width,        cause);
+  s64 height__i       = f2integer__i(height,       cause);
+  s64 red__i          = f2integer__i(red,          cause);
+  s64 green__i        = f2integer__i(green,        cause);
+  s64 blue__i         = f2integer__i(blue,         cause);
+  s64 alpha__i        = f2integer__i(alpha,        cause);
+  return raw__image__fill_rectangle(cause, this, min_x__i, min_y__i, width__i, height__i, red__i, green__i, blue__i, alpha__i);
+}
+export_cefunk9(image__fill_rectangle, this, min_x, min_y, target, width, height, red, green, blue, alpha, 0, "Fill a rectangle in this image with the given red, green, blue, and alpha components, each within the range from 0 to 255.");
+
+
+
 f2ptr f2__image_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                        f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__new")));}
@@ -280,6 +404,7 @@ f2ptr f2__image_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "rgba_data"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__rgba_data")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "rgba_data"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__rgba_data__set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "write_reduction_image_part"), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__write_reduction_image_part")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "copy_rectangle_copy_to"),     f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__rectangle_copy_to")));}
   return this;
 }
 

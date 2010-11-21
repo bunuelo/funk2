@@ -20,7 +20,7 @@
 // 
 
 #include "../../c/funk2.h"
-
+#include "../semantic_knowledge_base/semantic_knowledge_base.h"
 
 boolean_t raw__semantic_frame__ball_size_is_less_than_with_ptypehash(f2ptr cause, f2ptr this, f2ptr ptypehash, s64 maximum_size, s64* exact_size) {
   if (maximum_size <= 0) {

@@ -350,6 +350,34 @@ f2ptr f2__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr 
 export_cefunk3(semantic_frame__lookup, this, key_type, key, 0, "Returns the values associated with the key_type and key.");
 
 
+// this function is dangerous.  make sure that you are sure of the size of the recursive structure you are asking it to iterate over.
+// this is function is safely used from the semantic_frame_ball core_extension.  it is recommended that you use that interface unless you know what you are doing.
+f2ptr raw__semantic_frame__add_recursively_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash) {
+  f2ptr this_node = f2__ptypehash__lookup(cause, node_ptypehash, this);
+  if (this_node == nil) {
+    this_node = f2__graph_node__new(cause, this);
+    f2__ptypehash__add(cause, node_ptypehash, this, this_node);
+    f2__graph__add_node(cause, graph, this_node);
+    semantic_frame__iteration(cause, this, key_type_name, key_name, slot_value,
+			      f2ptr key_type_node   = f2__graph_node__new(cause, key_type_name);
+			      f2ptr key_node        = f2__graph_node__new(cause, key_name);
+			      f2ptr slot_value_node = f2__ptypehash__lookup(cause, node_ptypehash, slot_value);
+			      if (slot_value_node == nil) {
+				slot_value_node = f2__graph_node__new(cause, slot_value);
+				if (raw__semantic_frame__is_type(cause, slot_value)) {
+				  raw__semantic_frame__add_recursively_to_graph_with_ptypehash(cause, slot_value, graph, node_ptypehash);
+				}
+			      }
+			      f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key_type"), this_node,     key_type_node);
+			      f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key"),      key_type_node, key_node);
+			      f2__graph__add_new_edge(cause, graph, new__symbol(cause, "value"),    key_node,      slot_value_node);
+			      );
+    return f2bool__new(boolean__true);
+  }
+  return f2bool__new(boolean__false);
+}
+
+
 f2ptr f2__semantic_frame_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__new")));}

@@ -17,67 +17,9 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-'semantic_frame'
-
-`[deftypefunk semantic_frame execute check_match [semantic_frame]
-  [let [[is_match t]]
-    [let [[type_key_iter [get [get this type_ptypehash] keys]]]
-      [while type_key_iter
-	[let [[type_key [car type_key_iter]]]
-	  [let [[key_iter [get this type_var-keys type_key]]]
-	    [while key_iter
-	      [let [[key [car key_iter]]]
-		[if [not [equals [get this           type_var_value type_key key nil]
-				 [get semantic_frame type_var_value type_key key nil]]]
-		    [prog [= is_match      nil]
-			  [= key_iter      nil]
-			  [= type_key_iter nil]]]]
-	      [if key_iter
-		  [= key_iter [cdr key_iter]]]]]]
-	[if type_key_iter
-	    [= type_key_iter [cdr type_key_iter]]]]]
-    is_match]]
 
 
-'semantic_knowledge_base'
-
-`[deftypefunk semantic_knowledge_base execute lookup_matching_semantic_frames [index_semantic_frame]
-   [let [[matching_frames nil]]
-     [mapc [funk [semantic_frame]
-		 [if [have index_semantic_frame check_match semantic_frame]
-		     [= matching_frames [cons semantic_frame matching_frames]]]]
-	   semantic_frames]
-     matching_frames]]
-
-`[deftypefunk semantic_knowledge_base get as-frame_ball []
-   [new-apply frame_ball semantic_frames]]
-
-
-
-`[deftypefunk noun_semantic_frame execute add_noun [symbols]
-  [have this add `noun symbols t]]
-
-`[deftypefunk noun_semantic_frame execute add_classifier [symbols]
-  [have this add `classifier symbols t]]
-
-`[deftypefunk noun_semantic_frame execute add_adjective [symbols]
-  [have this add `adjective symbols t]]
-
-`[deftypefunk noun_semantic_frame execute add_preposition [preposition_symbols :rest semantic_objects]
-  [have this add `preposition preposition_symbols [cons semantic_objects [have this lookup `preposition preposition_symbols]]]]
-
-
-`[deframe visual_object_semantic_frame [noun_semantic_frame] []
-  [new [realm]
-       [construct noun_semantic_frame realm]]]
-
-`[deftypefunk visual_object_semantic_frame execute add_visual_object_name [visual_object_name]
-  [have this add `visual_object_name visual_object_name t]]
-
-
-'note: you need to [cause-define semantic_realm [new semantic_realm]] to use these test functions.'
-
-[defunk skb-test []
+[defunk skb-test [semantic_realm]
   [let [[semantic_knowledge_base [new semantic_knowledge_base]]]
     [let [[knife_semantic_frame        [new visual_object_semantic_frame semantic_realm]]
 	  [toaster_semantic_frame      [new visual_object_semantic_frame semantic_realm]]
@@ -117,8 +59,8 @@
       [have semantic_knowledge_base add_semantic_frame Lauren_semantic_frame]
       semantic_knowledge_base]]]
 
-[defunk skb_match-test []
-  [let [[semantic_knowledge_base [skb-test]]]
+[defunk skb_match-test [semantic_realm]
+  [let [[semantic_knowledge_base [skb-test semantic_realm]]]
     [let [[index_semantic_frame [new visual_object_semantic_frame semantic_realm]]]
       [have index_semantic_frame add_noun `toaster]
       [have semantic_knowledge_base lookup_matching_semantic_frames index_semantic_frame]]]]

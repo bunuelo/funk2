@@ -95,7 +95,7 @@ f2ptr raw__semantic_frame__copy_recursively_with_ptypehash(f2ptr cause, f2ptr th
 		     f2ptr slot_value = f2__cons__car(cause, slot_value_iter);
 		     
 		     if (raw__semantic_frame__is_type(cause, slot_value)) {
-		       f2ptr slot_value_copy = raw__frame__copy_recursively_with_ptypehash(cause, slot_value, ptypehash);
+		       f2ptr slot_value_copy = raw__semantic_frame__copy_recursively_with_ptypehash(cause, slot_value, ptypehash);
 		       raw__semantic_frame__add(cause, frame, type_slot_name, slot_name, slot_value_copy);
 		     } else {
 		       raw__semantic_frame__add(cause, frame, type_slot_name, slot_name, slot_value);
@@ -205,7 +205,7 @@ f2ptr raw__semantic_frame_ball__as__graph(f2ptr cause, f2ptr this) {
   f2ptr iter = raw__semantic_frame_ball__root_semantic_frames(cause, this);
   while (iter != nil) {
     f2ptr root_frame = f2__cons__car(cause, iter);
-    raw__frame__add_recursively_to_graph_with_ptypehash(cause, root_frame, graph, node_ptypehash);
+    raw__semantic_frame__add_recursively_to_graph_with_ptypehash(cause, root_frame, graph, node_ptypehash);
     iter = f2__cons__cdr(cause, iter);
   }
   return graph;

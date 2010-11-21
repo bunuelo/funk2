@@ -20,6 +20,7 @@
 // 
 
 #include "../../c/funk2.h"
+#include "../semantic_knowledge_base/semantic_knowledge_base.h"
 
 
 // semantic_realm

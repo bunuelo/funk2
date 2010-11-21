@@ -131,14 +131,9 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
 def_pcfunk1(graphviz__exp__as__label, exp, return f2__graphviz__exp__as__label(this_cause, exp));
 
 f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
-  s64 unique_id__i = (s64)exp;
-  if (unique_id__i < 0) {
-    unique_id__i = -unique_id__i;
-  }
-  f2ptr unique_id = f2integer__new(cause, unique_id__i);
-  return f2__stringlist__concat(cause, f2list2__new(cause,
-						    new__string(cause, "ptr_"),
-						    f2__exp__as__string(cause, unique_id)));
+  char name_str[128];
+  snprintf(name_str, 127, "ptr_" u64__fstr, (u64)exp);
+  return new__string(cause, name_str);
   /*
     if (exp == nil) {
     return new__string(cause, "nil");

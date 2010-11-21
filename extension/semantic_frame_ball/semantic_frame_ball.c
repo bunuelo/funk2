@@ -91,7 +91,7 @@ f2ptr raw__semantic_frame__copy_recursively_with_ptypehash(f2ptr cause, f2ptr th
 			      raw__semantic_frame__add(cause, semantic_frame, type_slot_name, slot_name, slot_value);
 			    }
 			    );
-  return frame;
+  return semantic_frame;
 }
 
 

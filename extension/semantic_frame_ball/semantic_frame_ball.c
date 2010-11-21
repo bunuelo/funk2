@@ -186,6 +186,8 @@ f2ptr f2__semantic_frame_ball__root_semantic_frames__set(f2ptr cause, f2ptr this
 export_cefunk2(semantic_frame_ball__root_semantic_frames__set, thing, value, 0, "Sets the root_semantic_frames of the semantic_frame_ball.");
 
 
+
+/*
 f2ptr raw__semantic_frame_ball__as__graph(f2ptr cause, f2ptr this) {
   f2ptr node_ptypehash = f2__ptypehash__new(cause);
   f2ptr graph          = f2__graph__new(cause);
@@ -205,7 +207,7 @@ f2ptr f2__semantic_frame_ball__as__graph(f2ptr cause, f2ptr this) {
   return raw__semantic_frame_ball__as__graph(cause, this);
 }
 export_cefunk1(semantic_frame_ball__as__graph, this, 0, "Converts the semantic_frame_ball to a graph.");
-
+*/
 
 f2ptr f2__semantic_frame_ball_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
@@ -214,7 +216,7 @@ f2ptr f2__semantic_frame_ball_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame_ball"), new__symbol(cause, "semantic_frame_ball__type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "root_semantic_frames"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame_ball"), new__symbol(cause, "semantic_frame_ball__root_semantic_frames")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "root_semantic_frames"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame_ball"), new__symbol(cause, "semantic_frame_ball__root_semantic_frames__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-graph"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame_ball"), new__symbol(cause, "semantic_frame_ball__as__graph")));}
+  //{f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-graph"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame_ball"), new__symbol(cause, "semantic_frame_ball__as__graph")));}
   return this;
 }
 

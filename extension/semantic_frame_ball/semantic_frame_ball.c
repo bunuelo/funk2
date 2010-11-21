@@ -100,7 +100,7 @@ f2ptr raw__semantic_frame__copy_recursively_with_ptypehash(f2ptr cause, f2ptr th
 f2ptr raw__semantic_frame_ball__new(f2ptr cause, f2ptr user_root_semantic_frames) {
   f2ptr ptypehash            = f2__ptypehash__new(cause);
   f2ptr root_semantic_frames = nil;
-  f2ptr iter                 = user_root_frames;
+  f2ptr iter                 = user_root_semantic_frames;
   while (iter != nil) {
     f2ptr user_root_semantic_frame = f2__cons__car(cause, iter);
     // we first test the size of the recursive structure of each frame is smaller (shorter) than baller_frame_height. (see Skee Lo's "I wish I was a Baller")

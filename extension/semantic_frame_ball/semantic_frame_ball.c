@@ -34,31 +34,25 @@ boolean_t raw__semantic_frame__ball_size_is_less_than_with_ptypehash(f2ptr cause
   raw__ptypehash__add(cause, ptypehash, this, f2bool__new(boolean__true));
   // semantic_frame nodes count as one.
   s64 this_size = 1;
-  frame__iteration(cause, this, type_slot_name, slot_name, slot_values,
-		   type_slot_name = nil;
-		   slot_name      = nil;
-		   f2ptr slot_value_iter = slot_values;
-		   while (slot_value_iter != nil) {
-		     f2ptr slot_value = f2__cons__car(cause, slot_value_iter);
-		     
-		     if (raw__semantic_frame__is_type(cause, slot_value)) {
-		       s64 slot_value__exact_size;
-		       if (raw__semantic_frame__ball_size_is_less_than_with_ptypehash(cause, slot_value, ptypehash, maximum_size - this_size, &slot_value__exact_size)) {
-			 this_size += slot_value__exact_size;
-		       } else {
-			 return boolean__false;
-		       }
-		     } else {
-		       // non-semantic_frame leaf nodes count as one.
-		       this_size ++;
-		     }
-		     if (this_size >= maximum_size) {
-		       return boolean__false;
-		     }
-		     
-		     slot_value_iter = f2__cons__cdr(cause, slot_value_iter);
-		   }
-		   );
+  semantic_frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
+			    type_slot_name = nil;
+			    slot_name      = nil;
+			    
+			    if (raw__semantic_frame__is_type(cause, slot_value)) {
+			      s64 slot_value__exact_size;
+			      if (raw__semantic_frame__ball_size_is_less_than_with_ptypehash(cause, slot_value, ptypehash, maximum_size - this_size, &slot_value__exact_size)) {
+				this_size += slot_value__exact_size;
+			      } else {
+				return boolean__false;
+			      }
+			    } else {
+			      // non-semantic_frame leaf nodes count as one.
+			      this_size ++;
+			    }
+			    if (this_size >= maximum_size) {
+			      return boolean__false;
+			    }
+			    );
   *exact_size = this_size;
   return boolean__true;
 }
@@ -89,21 +83,14 @@ f2ptr raw__semantic_frame__copy_recursively_with_ptypehash(f2ptr cause, f2ptr th
   }
   f2ptr semantic_frame = f2__semantic_frame__new(cause, raw__semantic_frame__realm(cause, this));
   raw__ptypehash__add(cause, ptypehash, this, semantic_frame);
-  frame__iteration(cause, this, type_slot_name, slot_name, slot_values,
-		   f2ptr slot_value_iter = slot_values;
-		   while (slot_value_iter != nil) {
-		     f2ptr slot_value = f2__cons__car(cause, slot_value_iter);
-		     
-		     if (raw__semantic_frame__is_type(cause, slot_value)) {
-		       f2ptr slot_value_copy = raw__semantic_frame__copy_recursively_with_ptypehash(cause, slot_value, ptypehash);
-		       raw__semantic_frame__add(cause, semantic_frame, type_slot_name, slot_name, slot_value_copy);
-		     } else {
-		       raw__semantic_frame__add(cause, semantic_frame, type_slot_name, slot_name, slot_value);
-		     }
-		     
-		     slot_value_iter = f2__cons__cdr(cause, slot_value_iter);
-		   }
-		   );
+  semantic_frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
+			    if (raw__semantic_frame__is_type(cause, slot_value)) {
+			      f2ptr slot_value_copy = raw__semantic_frame__copy_recursively_with_ptypehash(cause, slot_value, ptypehash);
+			      raw__semantic_frame__add(cause, semantic_frame, type_slot_name, slot_name, slot_value_copy);
+			    } else {
+			      raw__semantic_frame__add(cause, semantic_frame, type_slot_name, slot_name, slot_value);
+			    }
+			    );
   return frame;
 }
 

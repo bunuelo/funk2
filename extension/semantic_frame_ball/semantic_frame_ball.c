@@ -104,6 +104,9 @@ f2ptr raw__semantic_frame_ball__new(f2ptr cause, f2ptr user_root_semantic_frames
   while (iter != nil) {
     f2ptr user_root_semantic_frame = f2__cons__car(cause, iter);
     // we first test the size of the recursive structure of each frame is smaller (shorter) than baller_frame_height. (see Skee Lo's "I wish I was a Baller")
+    if (! raw__semantic_frame__is_type(cause, user_root_semantic_frame)) {
+      return f2larva__new(cause, 1, nil);
+    }
     if (! raw__semantic_frame__wishes_to_be_a_baller(cause, user_root_semantic_frame)) {
       return f2larva__new(cause, 444, nil);
     }

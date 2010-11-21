@@ -364,12 +364,7 @@ f2ptr raw__semantic_frame__add_recursively_to_graph_with_ptypehash(f2ptr cause, 
 			      f2ptr key_node        = f2__graph_node__new(cause, key_name);
 			      f2ptr slot_value_node;
 			      if (raw__semantic_frame__is_type(cause, slot_value)) {
-				slot_value_node = f2__ptypehash__lookup(cause, node_ptypehash, slot_value);
-				if (slot_value_node == nil) {
-				  slot_value_node = f2__graph_node__new(cause, slot_value);
-				  f2__ptypehash__add(cause, node_ptypehash, slot_value, slot_value_node);
-				  raw__semantic_frame__add_recursively_to_graph_with_ptypehash(cause, slot_value, graph, node_ptypehash);
-				}
+				slot_value_node = raw__semantic_frame__add_recursively_to_graph_with_ptypehash(cause, slot_value, graph, node_ptypehash);
 			      } else {
 				slot_value_node = f2__graph_node__new(cause, slot_value);
 			      }
@@ -377,9 +372,8 @@ f2ptr raw__semantic_frame__add_recursively_to_graph_with_ptypehash(f2ptr cause, 
 			      f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key"),      key_type_node, key_node);
 			      f2__graph__add_new_edge(cause, graph, new__symbol(cause, "value"),    key_node,      slot_value_node);
 			      );
-    return f2bool__new(boolean__true);
   }
-  return f2bool__new(boolean__false);
+  return this_node;
 }
 
 

@@ -381,7 +381,7 @@ f2ptr raw__semantic_frame__add_recursively_to_graph_with_ptypehash(f2ptr cause, 
 
 f2ptr raw__semantic_frame__as__graphviz_label(f2ptr cause, f2ptr this) {
   char label[128];
-  snprintf(label, 127, "semantic_frame_" u64__fstr, (u64)this);
+  snprintf(label, 127, "semantic_frame\n" u64__fstr, (u64)this);
   return new__string(cause, label);
 }
 

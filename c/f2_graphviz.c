@@ -75,7 +75,7 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
   {
     f2ptr as_graphviz_label_funk = f2__object__slot__type_funk(cause, exp, new__symbol(cause, "get"), new__symbol(cause, "as-graphviz_label"));
     if (raw__funkable__is_type(cause, as_graphviz_label_funk)) {
-      return f2__force_funk_apply(cause, as_graphviz_label_funk, f2list1__new(cause, exp));
+      return f2__force_funk_apply(cause, f2__this__fiber(cause), as_graphviz_label_funk, f2list1__new(cause, exp));
     }
   }
   f2ptr string = nil;

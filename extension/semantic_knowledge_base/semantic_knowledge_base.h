@@ -75,7 +75,8 @@ f2ptr      f2__semantic_frame__lookup    (f2ptr cause, f2ptr this, f2ptr key_typ
 f2ptr f2__semantic_frame_type__new(f2ptr cause);
 
 #define semantic_frame__iteration(cause, this, key_type_name, key_name, slot_value, code) { \
-    frame__iteration(cause, this, key_type_name, key_name, semantic_frame__iteration__slot_values, \
+    f2ptr semantic_frame__iteration__frame = raw__semantic_frame__frame(cause, this); \
+    frame__iteration(cause, semantic_frame__iteration__frame, key_type_name, key_name, semantic_frame__iteration__slot_values, \
 		     f2ptr semantic_frame__iteration__slot_value__iter = semantic_frame__iteration__slot_values; \
 		     while (semantic_frame__iteration__slot_value__iter != nil) { \
 		       f2ptr slot_value = f2__cons__car(cause, semantic_frame__iteration__slot_value__iter); \

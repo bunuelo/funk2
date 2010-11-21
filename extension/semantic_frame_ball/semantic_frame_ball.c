@@ -87,7 +87,7 @@ f2ptr raw__semantic_frame__copy_recursively_with_ptypehash(f2ptr cause, f2ptr th
   if (previous_copy_of_this_frame != nil) {
     return previous_copy_of_this_frame;
   }
-  f2ptr semantic_frame = f2__semantic_frame__new(cause, raw__semantic_frame__semantic_realm(cause, this));
+  f2ptr semantic_frame = f2__semantic_frame__new(cause, raw__semantic_frame__realm(cause, this));
   raw__ptypehash__add(cause, ptypehash, this, semantic_frame);
   frame__iteration(cause, this, type_slot_name, slot_name, slot_values,
 		   f2ptr slot_value_iter = slot_values;

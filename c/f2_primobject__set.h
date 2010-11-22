@@ -60,6 +60,7 @@ declare_primobject_4_slot(set, write_mutex, key_count, bin_num_power, bin_array)
 
 f2ptr     raw__set__new       (f2ptr cause, s64 bin_num_power);
 f2ptr      f2__set__new       (f2ptr cause);
+f2ptr     raw__set__add       (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__set__add       (f2ptr cause, f2ptr this, f2ptr key);
 boolean_t raw__set__remove    (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__set__remove    (f2ptr cause, f2ptr this, f2ptr key);

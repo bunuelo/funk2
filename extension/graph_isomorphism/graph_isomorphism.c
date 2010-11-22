@@ -500,9 +500,21 @@ f2ptr raw__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that) {
   {
     f2ptr cost                             = f2integer__new(cause, 0);
     f2ptr these_nodes_remaining_label_hash = f2__ptypehash__new(cause);
+    set__iteration(cause, this__node_set, node,
+		   f2ptr node__label = f2__graph_node__label(cause, node);
+		   raw__ptypehash__add(cause, these_nodes_remaining_label_hash, node__label, node));
     f2ptr those_nodes_remaining_label_hash = f2__ptypehash__new(cause);
+    set__iteration(cause, that__node_set, node,
+		   f2ptr node__label = f2__graph_node__label(cause, node);
+		   raw__ptypehash__add(cause, those_nodes_remaining_label_hash, node__label, node));
     f2ptr these_edges_remaining_label_hash = f2__ptypehash__new(cause);
+    set__iteration(cause, this__edge_set, edge,
+		   f2ptr edge__label = f2__graph_edge__label(cause, edge);
+		   raw__ptypehash__add(cause, these_edges_remaining_label_hash, edge__label, edge));
     f2ptr those_edges_remaining_label_hash = f2__ptypehash__new(cause);
+    set__iteration(cause, that__edge_set, edge,
+		   f2ptr edge__label = f2__graph_edge__label(cause, edge);
+		   raw__ptypehash__add(cause, those_edges_remaining_label_hash, edge__label, edge));
     f2ptr matched_nodes                    = nil;
     f2ptr changed_node_labels              = nil;
     f2ptr changed_edge_labels              = nil;

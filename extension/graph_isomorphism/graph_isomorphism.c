@@ -36,7 +36,7 @@ f2ptr raw__error_correcting_graph_isomorphism__new(f2ptr cause,
 						   f2ptr added_edges,
 						   f2ptr removed_nodes,
 						   f2ptr removed_edges) {
-  return f2__frame__new(cause, f2list22__new(cause,
+  return f2__frame__new(cause, f2list26__new(cause,
 					     new__symbol(cause, "type"),                  new__symbol(cause, "error_correcting_graph_isomorphism"),
 					     new__symbol(cause, "cost"),                  cost,
 					     new__symbol(cause, "these_nodes_remaining"), these_nodes_remaining,

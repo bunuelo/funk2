@@ -855,12 +855,12 @@ def_pcfunk1(redblacktree__size, this, return f2__redblacktree__size(this_cause, 
 
 f2ptr raw__redblacktree__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
-  f2ptr frame               = raw__redblacktree__lookup(cause, print_as_frame_hash, this);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
     frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"), new__symbol(cause, "redblacktree"));
     f2__frame__add_var_value(cause, frame, new__symbol(cause, "elements"),          f2__redblacktree__elements(cause, this));
-    f2__redblacktree__add(cause, print_as_frame_hash, this, frame);
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }

@@ -53,27 +53,44 @@ f2ptr f2__semantic_realm_type__new(f2ptr cause);
 
 // semantic_frame
 
-f2ptr     raw__semantic_frame__new                                    (f2ptr cause, f2ptr realm);
-f2ptr      f2__semantic_frame__new                                    (f2ptr cause, f2ptr realm);
-boolean_t raw__semantic_frame__is_type                                (f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_frame__is_type                                (f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_frame__type                                   (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_frame__type                                   (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_frame__realm                                  (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_frame__realm                                  (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_frame__realm__set                             (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__semantic_frame__realm__set                             (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__semantic_frame__frame                                  (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_frame__frame                                  (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_frame__frame__set                             (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__semantic_frame__frame__set                             (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__semantic_frame__add                                    (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
-f2ptr      f2__semantic_frame__add                                    (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
-f2ptr     raw__semantic_frame__lookup                                 (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
-f2ptr      f2__semantic_frame__lookup                                 (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
+f2ptr     raw__semantic_frame_event__compare(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
+f2ptr     raw__semantic_frame__new(f2ptr cause, f2ptr realm, f2ptr trace_add, f2ptr trace_remove);
+f2ptr      f2__semantic_frame__new(f2ptr cause, f2ptr realm);
+boolean_t raw__semantic_frame__is_type(f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_frame__is_type(f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_frame__type(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_frame__type(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_frame__realm(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_frame__realm(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_frame__realm__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__semantic_frame__realm__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__semantic_frame__trace_add(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_frame__trace_add(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_frame__trace_add__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__semantic_frame__trace_add__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__semantic_frame__trace_remove(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_frame__trace_remove(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_frame__trace_remove__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__semantic_frame__trace_remove__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__semantic_frame__trace_event_redblacktree(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_frame__trace_event_redblacktree(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_frame__trace_event_redblacktree__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__semantic_frame__trace_event_redblacktree__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__semantic_frame__frame(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_frame__frame(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_frame__frame__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__semantic_frame__frame__set(f2ptr cause, f2ptr this, f2ptr value);
+void      raw__semantic_frame__initialize_tracing(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
+f2ptr      f2__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
+f2ptr     raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
+f2ptr      f2__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
+f2ptr     raw__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
+f2ptr      f2__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
 f2ptr     raw__semantic_frame__add_recursively_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash);
-
-f2ptr f2__semantic_frame_type__new(f2ptr cause);
+f2ptr     raw__semantic_frame__as__graphviz_label(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_frame__as__graphviz_label(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_frame_type__new(f2ptr cause);
 
 #define semantic_frame__iteration(cause, this, key_type_name, key_name, slot_value, code) { \
     f2ptr semantic_frame__iteration__frame = raw__semantic_frame__frame(cause, this); \

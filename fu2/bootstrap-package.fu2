@@ -116,6 +116,7 @@
 				  'extension/movie/'
 				  'extension/forward_planner/'
 				  'extension/frame_ball/'
+				  'extension/graph_isomorphism/'
 				  'extension/semantic_frame_ball/'
 				  'extension/semantic_knowledge_base/'
 				  'example/conceptnet/'

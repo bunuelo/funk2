@@ -17,9 +17,9 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk graph_edit_sequence-new                                            &primfunk:graph_edit_sequence__new]
-[globalize-funk graph_edit_sequence-add                                            &primfunk:graph_edit_sequence__add]
-[globalize-funk graph_edit_sequence-add_mapping                                    &primfunk:graph_edit_sequence__add_mapping]
-[globalize-funk graph_edit_sequence-combine                                        &primfunk:graph_edit_sequence__combine]
-[globalize-funk graph_decomposition_lattice-error_correcting_subgraph_isomorphisms &primfunk:graph_decomposition_lattice__error_correcting_subgraph_isomorphisms]
+[defcore graph_isomorphism 'extension/graph_isomorphism/.libs/libgraph_isomorphism.so']
 
+[defcorefunk graph_isomorphism-core_extension_ping       graph_isomorphism graph_isomorphism__core_extension_ping]
+[defcorefunk graph_isomorphism-core_extension_initialize graph_isomorphism graph_isomorphism__core_extension_initialize]
+
+[graph_isomorphism-core_extension_ping]

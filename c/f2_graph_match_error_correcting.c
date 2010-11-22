@@ -43,9 +43,9 @@
 def_primobject_3_slot(graph_edit_sequence, operations, cost, isomorphism);
 
 f2ptr f2__graph_edit_sequence__new(f2ptr cause) {
-  f2ptr operations    = nil;
-  f2ptr cost          = f2integer__new(cause, 0);
-  f2ptr isomorphism   = f2__graph_isomorphism__new(cause);
+  f2ptr operations  = nil;
+  f2ptr cost        = f2integer__new(cause, 0);
+  f2ptr isomorphism = f2__graph_isomorphism__new(cause);
   return f2graph_edit_sequence__new(cause, operations, cost, isomorphism);
 }
 def_pcfunk0(graph_edit_sequence__new, return f2__graph_edit_sequence__new(this_cause));
@@ -278,7 +278,7 @@ f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f
   f2ptr node_parent_hash      = f2__graph_decomposition_lattice__node_parent_hash     (cause, this);
   f2ptr node_left_child_hash  = f2__graph_decomposition_lattice__node_left_child_hash (cause, this);
   f2ptr node_right_child_hash = f2__graph_decomposition_lattice__node_right_child_hash(cause, this);
-
+  
   f2ptr unsolved_graph_set = f2__set__new(cause);
   set__iteration(cause, graph_set, graph,
 		 f2__set__add(cause, unsolved_graph_set, graph);

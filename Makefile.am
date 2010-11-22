@@ -212,6 +212,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/movie/libmovie.la \
                   extension/forward_planner/libforward_planner.la \
                   extension/frame_ball/libframe_ball.la \
+                  extension/graph_isomorphism/libgraph_isomorphism.la \
                   extension/semantic_frame_ball/libsemantic_frame_ball.la \
                   extension/semantic_knowledge_base/libsemantic_knowledge_base.la \
                   extension/mindmon/libmindmon.la \
@@ -352,6 +353,7 @@ extension_image_sequence_libimage_sequence_la_SOURCES                   = extens
 extension_movie_libmovie_la_SOURCES                                     = extension/movie/movie.c
 extension_forward_planner_libforward_planner_la_SOURCES                 = extension/forward_planner/forward_planner.c
 extension_frame_ball_libframe_ball_la_SOURCES                           = extension/frame_ball/frame_ball.c
+extension_graph_isomorphism_libgraph_isomorphism_la_SOURCES             = extension/graph_isomorphism/graph_isomorphism.c
 extension_semantic_frame_ball_libsemantic_frame_ball_la_SOURCES         = extension/semantic_frame_ball/semantic_frame_ball.c
 extension_semantic_knowledge_base_libsemantic_knowledge_base_la_SOURCES = extension/semantic_knowledge_base/semantic_knowledge_base.c
 extension_mindmon_libmindmon_la_SOURCES                                 = extension/mindmon/mindmon.c
@@ -399,6 +401,9 @@ extension_forward_planner_libforward_planner_la_CFLAGS  = $(lib_libfunk2_la_CFLA
 
 extension_frame_ball_libframe_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_frame_ball_libframe_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_graph_isomorphism_libgraph_isomorphism_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_graph_isomorphism_libgraph_isomorphism_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_frame_ball_libsemantic_frame_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_frame_ball_libsemantic_frame_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

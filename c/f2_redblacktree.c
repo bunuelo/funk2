@@ -23,13 +23,26 @@
 
 // ****************************************************************
 // **                                                            **
-// ** This code was not originally written by Bo Morgan, but was **
-// ** downloaded from a webpage and modified.  The original      **
-// ** source was found here:                                     **
+// ** This code was originally downloaded from here:             **
 // **                                                            **
 // **   http://en.wikipedia.org/wiki/Red-black_tree              **
 // **                                                            **
+// ** It has been funkified by Bo Morgan.                        **
+// **                                                            **
 // ****************************************************************
+
+
+void rbt_node__free_all_nodes(rbt_node_t* node) {
+  rbt_node_t* left  = node->left;
+  rbt_node_t* right = node->right;
+  f2__free(to_ptr(node));
+  if (left != NULL) {
+    rbt_node__free_all_nodes(left);
+  }
+  if (right != NULL) {
+    rbt_node__free_all_nodes(right);
+  }
+}
 
 int rbt_node__is_black(rbt_node_t* node) {
   if (!node || node->color == rbt_color__black) {
@@ -419,6 +432,16 @@ void rbt_tree__reinit(rbt_tree_t* tree, ptr new_memorypool_beginning) {
     rbt_node__reinit(tree->head, difference);
   }
   tree->memorypool_beginning = new_memorypool_beginning;
+}
+
+void rbt_tree__free_all_nodes(rbt_tree_t* tree) {
+  if (tree->head != NULL) {
+    rbt_node__free_all_nodes(tree->head);
+  }
+}
+
+boolean_t rbt_tree__empty(rbt_tree_t* tree) {
+  return (tree->head == NULL);
 }
 
 void rbt_tree__print(rbt_tree_t* tree) {

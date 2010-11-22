@@ -31,6 +31,8 @@ declare_object_type_4_slot(set, write_mutex, key_count, bin_num_power, bin_array
 			   f2ptr add__funk;
 			   f2ptr remove__symbol;
 			   f2ptr remove__funk;
+			   f2ptr copy_from__symbol;
+			   f2ptr copy_from__funk;
 			   f2ptr lookup__symbol;
 			   f2ptr lookup__funk;
 			   f2ptr contains__symbol;
@@ -61,6 +63,8 @@ f2ptr      f2__set__new       (f2ptr cause);
 f2ptr      f2__set__add       (f2ptr cause, f2ptr this, f2ptr key);
 boolean_t raw__set__remove    (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__set__remove    (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr     raw__set__copy_from (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__set__copy_from (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__set__lookup    (f2ptr cause, f2ptr this, f2ptr key);
 boolean_t raw__set__contains  (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__set__contains  (f2ptr cause, f2ptr this, f2ptr key);

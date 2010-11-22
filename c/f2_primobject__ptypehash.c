@@ -119,6 +119,7 @@ f2ptr f2__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
 }
 def_pcfunk3(ptypehash__add, this, slot_name, value, return f2__ptypehash__add(this_cause, this, slot_name, value));
 
+
 boolean_t raw__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__add assert failed: f2__ptypehash__valid(this)");
   boolean_t key_was_removed = boolean__false;
@@ -168,6 +169,23 @@ f2ptr f2__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
   return f2bool__new(raw__ptypehash__remove(cause, this, key));
 }
 def_pcfunk2(ptypehash__remove, this, key, return f2__ptypehash__remove(this_cause, this, key));
+
+
+void raw__ptypehash__copy_from(f2ptr cause, f2ptr this, f2ptr that) {
+  ptypehash__iteration(cause, that, key, value,
+		       raw__ptypehash__add(cause, this, key, value));
+}
+
+f2ptr f2__ptypehash__copy_from(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__ptypehash__is_type(cause, this)) ||
+      (! raw__ptypehash__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__ptypehash__copy_from(cause, this, that);
+  return nil;
+}
+def_pcfunk2(ptypehash__copy_from, this, that, return f2__ptypehash__copy_from(this_cause, this, that));
+
 
 f2ptr raw__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__lookup_keyvalue_pair assert failed: f2__ptypehash__valid(this)");
@@ -405,6 +423,7 @@ f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "values";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.values__funk);}
   {char* slot_name = "add";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.add__funk);}
   {char* slot_name = "remove";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.remove__funk);}
+  {char* slot_name = "copy_from";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.copy_from__funk);}
   {char* slot_name = "lookup";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.lookup__funk);}
   {char* slot_name = "is_empty";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.is_empty__funk);}
   {char* slot_name = "as-frame";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.as__frame__funk);}
@@ -455,6 +474,8 @@ void f2__primobject__ptypehash__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(ptypehash__add, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.add__funk = never_gc(cfunk);}
   {char* symbol_str = "remove"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.remove__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(ptypehash__remove, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.remove__funk = never_gc(cfunk);}
+  {char* symbol_str = "copy_from"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.copy_from__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__copy_from, this, that, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.copy_from__funk = never_gc(cfunk);}
   {char* symbol_str = "lookup"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.lookup__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__lookup, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.lookup__funk = never_gc(cfunk);}
   {char* symbol_str = "is_empty"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.is_empty__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

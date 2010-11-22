@@ -531,6 +531,36 @@ f2ptr f2__semantic_frame_event_redblacktree__events(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_frame_event_redblacktree__events, this, 0, "Returns the events within this semantic_frame_event_redblacktree, ordered in time.");
 
 
+f2ptr raw__semantic_frame_event_redblacktree__add(f2ptr cause, f2ptr this, f2ptr event) {
+  f2ptr redblacktree = raw__semantic_frame_event_redblacktree__redblacktree(cause, this);
+  return raw__redblacktree__insert(cause, redblacktree, event);
+}
+
+f2ptr f2__semantic_frame_event_redblacktree__add(f2ptr cause, f2ptr this, f2ptr event) {
+  if ((! raw__semantic_frame_event_redblacktree__is_type(cause, this)) ||
+      (! raw__semantic_frame_event__is_type(cause, event))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame_event_redblacktree__add(cause, this, event);
+}
+export_cefunk2(semantic_frame_event_redblacktree__add, this, event, 0, "Adds a semantic_frame_event to this semantic_frame_event_redblacktree.");
+
+
+f2ptr raw__semantic_frame_event_redblacktree__remove(f2ptr cause, f2ptr this, f2ptr event) {
+  f2ptr redblacktree = raw__semantic_frame_event_redblacktree__redblacktree(cause, this);
+  return raw__redblacktree__remove(cause, redblacktree, event);
+}
+
+f2ptr f2__semantic_frame_event_redblacktree__remove(f2ptr cause, f2ptr this, f2ptr event) {
+  if ((! raw__semantic_frame_event_redblacktree__is_type(cause, this)) ||
+      (! raw__semantic_frame_event__is_type(cause, event))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame_event_redblacktree__remove(cause, this, event);
+}
+export_cefunk2(semantic_frame_event_redblacktree__remove, this, event, 0, "Removes a semantic_frame_event from this semantic_frame_event_redblacktree.");
+
+
 f2ptr raw__semantic_frame_event_redblacktree__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -560,6 +590,8 @@ f2ptr f2__semantic_frame_event_redblacktree_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "redblacktree"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event_redblacktree__redblacktree")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "redblacktree"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event_redblacktree__redblacktree__set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "events"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event_redblacktree__events")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event_redblacktree__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remove"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event_redblacktree__remove")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event_redblacktree__terminal_print_with_frame")));}
   return this;
 }
@@ -780,10 +812,7 @@ export_cefunk2(semantic_frame__frame__set, thing, value, 0, "Sets the frame of t
 
 
 void raw__semantic_frame__initialize_tracing(f2ptr cause, f2ptr this) {
-  f2ptr compare_event_cfunk       = f2cfunk__new(cause, nil, 
-						 f2list2__new(cause, new__symbol(cause, "this"), new__symbol(cause, "that")),
-						 f2pointer__new(cause, raw_executable__to__relative_ptr(raw__semantic_frame_event__compare)), global_environment(), nil, nil);
-  f2ptr trace_event_redblacktree  = f2__redblacktree__new(cause, compare_event_cfunk);
+  f2ptr trace_event_redblacktree = f2__semantic_frame_event_redblacktree__new(cause);
   raw__semantic_frame__trace_event_redblacktree__set(cause, this, trace_event_redblacktree);
 }
 
@@ -793,7 +822,7 @@ f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr ke
     raw__semantic_frame__initialize_tracing(cause, this);
     f2ptr trace_event_redblacktree = raw__semantic_frame__trace_event_redblacktree(cause, this);
     f2ptr semantic_frame_event = raw__semantic_frame_event__new(cause, f2__time(cause), new__symbol(cause, "add"), key_type, key, value);
-    raw__redblacktree__insert(cause, trace_event_redblacktree, semantic_frame_event);
+    raw__semantic_trace_event_redblacktree__add(cause, trace_event_redblacktree, semantic_frame_event);
   }
   f2ptr realm                = raw__semantic_frame__realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
@@ -822,7 +851,7 @@ f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
     raw__semantic_frame__initialize_tracing(cause, this);
     f2ptr trace_event_redblacktree = raw__semantic_frame__trace_event_redblacktree(cause, this);
     f2ptr semantic_frame_event = raw__semantic_frame_event__new(cause, f2__time(cause), new__symbol(cause, "remove"), key_type, key, value);
-    raw__redblacktree__insert(cause, trace_event_redblacktree, semantic_frame_event);
+    raw__semantic_frame_event_redblacktree__add(cause, trace_event_redblacktree, semantic_frame_event);
   }
   f2ptr realm                = raw__semantic_frame__realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);

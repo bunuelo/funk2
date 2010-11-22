@@ -91,6 +91,10 @@ f2ptr f2graph_edge__primobject_type__new_aux(f2ptr cause);
 declare_primobject_5_slot(graph, node_set, edge_set, nodes_label_hash, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);
 
 f2ptr      f2__graph__new                            (f2ptr cause);
+f2ptr     raw__graph__nodes                          (f2ptr cause, f2ptr this);
+f2ptr      f2__graph__nodes                          (f2ptr cause, f2ptr this);
+f2ptr     raw__graph__edges                          (f2ptr cause, f2ptr this);
+f2ptr      f2__graph__edges                          (f2ptr cause, f2ptr this);
 f2ptr     raw__graph__add_node                       (f2ptr cause, f2ptr this, f2ptr node);
 f2ptr      f2__graph__add_node                       (f2ptr cause, f2ptr this, f2ptr node);
 f2ptr     raw__graph__add_new_node                   (f2ptr cause, f2ptr this, f2ptr label);

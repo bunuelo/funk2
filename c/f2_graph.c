@@ -147,7 +147,7 @@ def_pcfunk0(graph__new, return f2__graph__new(this_cause));
 
 
 f2ptr raw__graph__nodes(f2ptr cause, f2ptr this) {
-  f2ptr node_set = raw__graph__node_set(cause, this);
+  f2ptr node_set = f2__graph__node_set(cause, this);
   f2ptr nodes    = raw__set__elements(cause, node_set);
   return nodes;
 }
@@ -162,7 +162,7 @@ def_pcfunk1(graph__nodes, this, return f2__graph__nodes(this_cause, this));
 
 
 f2ptr raw__graph__edges(f2ptr cause, f2ptr this) {
-  f2ptr edge_set = raw__graph__edge_set(cause, this);
+  f2ptr edge_set = f2__graph__edge_set(cause, this);
   f2ptr edges    = raw__set__elements(cause, edge_set);
   return edges;
 }

@@ -100,11 +100,11 @@ export_cefunk2(error_correcting_graph_isomorphism__width__set, thing, value, 0, 
 
 f2ptr f2__error_correcting_graph_isomorphism_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "error_correcting_graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "error_correcting_graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "error_correcting_graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "error_correcting_graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__width")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "error_correcting_graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__width__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__width")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__width__set")));}
   return this;
 }
 

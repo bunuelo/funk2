@@ -486,7 +486,7 @@ f2ptr raw__graph_isomorphism__isomorphism__cost_compare(f2ptr cause, f2ptr fiber
   return f2bool__new(isomorphism_1__cost__i < isomorphism_2__cost__i);
 }
 
-f2ptr raw__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that, s64 beam_width) {
   f2ptr this__node_set           = f2__graph__node_set(cause, this);
   f2ptr that__node_set           = f2__graph__node_set(cause, that);
   f2ptr this__edge_set           = f2__graph__edge_set(cause, this);
@@ -498,7 +498,7 @@ f2ptr raw__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that) {
   
   f2ptr initial_isomorphism;
   {
-    f2ptr cost                             = f2integer__new(cause, 0);
+    f2ptr cost = f2integer__new(cause, 0);
     f2ptr these_nodes_remaining_label_hash = f2__ptypehash__new(cause);
     set__iteration(cause, this__node_set, node,
 		   f2ptr node__label = f2__graph_node__label(cause, node);
@@ -515,13 +515,13 @@ f2ptr raw__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that) {
     set__iteration(cause, that__edge_set, edge,
 		   f2ptr edge__label = f2__graph_edge__label(cause, edge);
 		   raw__ptypehash__add(cause, those_edges_remaining_label_hash, edge__label, edge));
-    f2ptr matched_nodes                    = nil;
-    f2ptr changed_node_labels              = nil;
-    f2ptr changed_edge_labels              = nil;
-    f2ptr added_nodes                      = nil;
-    f2ptr added_edges                      = nil;
-    f2ptr removed_nodes                    = nil;
-    f2ptr removed_edges                    = nil;
+    f2ptr matched_nodes       = nil;
+    f2ptr changed_node_labels = nil;
+    f2ptr changed_edge_labels = nil;
+    f2ptr added_nodes         = nil;
+    f2ptr added_edges         = nil;
+    f2ptr removed_nodes       = nil;
+    f2ptr removed_edges       = nil;
     initial_isomorphism = raw__error_correcting_graph_isomorphism__new(cause,
 								       cost,
 								       these_nodes_remaining_label_hash,
@@ -537,13 +537,28 @@ f2ptr raw__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that) {
 								       removed_edges);
   }
   raw__redblacktree__insert(cause, search_beam_redblacktree, initial_isomorphism);
-  //while (boolean__true) {
-    
-  //}
-  return search_beam_redblacktree;
+  f2ptr best_complete_isomorphism = nil;
+  while (! raw__redblacktree__empty(cause, search_beam_redblacktree)) {
+    f2ptr expansion_redblacktree = f2__redblacktree__new(cause, compare_cfunk);
+    {
+      s64 beam_index = 0;
+      while ((beam_index < beam_width) &&
+	     (! raw__redblacktree__empty(cause, search_beam_redblacktree))) {
+	f2ptr minimum_cost_isomorphism = raw__redblacktree__minimum(cause, search_beam_redblacktree);
+	raw__redblacktree__remove(cause, search_beam_redblacktree, minimum_cost_isomorphism);
+	{
+	  // expand minimum_cost_isomorphism
+	  // check for complete isomorphisms and update best_complete_isomorphism
+	}
+	beam_index ++;
+      }
+    }
+    search_beam_redblacktree = expansion_redblacktree;
+  }
+  return best_complete_isomorphism;
 }
 
-f2ptr f2__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that) {
+    f2ptr f2__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that, f2ptr beam_width) {
   if ((! raw__graph__is_type(cause, this)) ||
       (! raw__graph__is_type(cause, that))) {
     return f2larva__new(cause, 1, nil);

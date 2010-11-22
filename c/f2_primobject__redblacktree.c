@@ -834,6 +834,20 @@ f2ptr f2__redblacktree__leaves(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(redblacktree__leaves, this, return f2__redblacktree__leaves(this_cause, this));
 
+
+boolean_t raw__redblacktree__empty(f2ptr cause, f2ptr this) {
+  return (raw__redblacktree__head(cause, this) == nil);
+}
+
+f2ptr f2__redblacktree__empty(f2ptr cause, f2ptr this) {
+  if (! raw__redblacktree__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__redblacktree__empty(cause, this);
+}
+def_pcfunk1(redblacktree__empty, this, return f2__redblacktree__empty(this_cause, this));
+
+
 u64 raw__redblacktree__size(f2ptr cause, f2ptr this) {
   u64 size = 0;
   f2ptr iter = raw__redblacktree__minimum_node(cause, this);
@@ -877,6 +891,7 @@ def_pcfunk2(redblacktree__terminal_print_with_frame, this, terminal_print_frame,
 
 f2ptr f2redblacktree__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2redblacktree__primobject_type__new(cause);
+  {char* slot_name = "empty";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.empty__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__funk);}
   return this;
 }
@@ -909,6 +924,9 @@ void f2__primobject__redblacktree__initialize() {
   f2__primcfunk__init__1(redblacktree__maximum, this,      "Returns the maximum key within a red-black-tree or nil if tree is empty.");
   f2__primcfunk__init__1(redblacktree__leaves,  this,      "Returns all leaves in this red-black-tree in order in a new list.");
   f2__primcfunk__init__1(redblacktree__size,    this,      "Returns the number of leaves in this red-black-tree.");
+  
+  {char* symbol_str = "empty"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.empty__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__empty, this, cfunk, 0, "Returns whether this redblacktree is empty."); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.empty__funk = never_gc(cfunk);}
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(redblacktree__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__funk = never_gc(cfunk);}

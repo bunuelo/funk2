@@ -529,6 +529,14 @@ f2ptr raw__graph__isormorphism(f2ptr cause, f2ptr this, f2ptr that) {
   return nil;
 }
 
+f2ptr f2__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__graph__is_type(cause, this)) ||
+      (! raw__graph__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__isomorphism(cause, this, that);
+}
+export_cefunk2(graph__isomorphism, this, that, 0, "A* breadth-first beam search for an error correcting isomorphism between this and that graph.");
 
 
 

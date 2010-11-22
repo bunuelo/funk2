@@ -210,14 +210,249 @@ f2ptr f2__semantic_realm_type__new(f2ptr cause) {
 
 
 
+// semantic_frame_event
+
+f2ptr raw__semantic_frame_event__new(f2ptr cause, f2ptr time, f2ptr event_type, f2ptr key_type, f2ptr key, f2ptr value) {
+  return f2__frame__new(cause, f2list12__new(cause,
+					     new__symbol(cause, "type"),       new__symbol(cause, "semantic_frame_event"),
+					     new__symbol(cause, "time"),       time,
+					     new__symbol(cause, "event_type"), event_type,
+					     new__symbol(cause, "key_type"),   key_type,
+					     new__symbol(cause, "key"),        key,
+					     new__symbol(cause, "value"),      value));
+}
+
+f2ptr f2__semantic_frame_event__new(f2ptr cause, f2ptr time, f2ptr event_type, f2ptr key_type, f2ptr key, f2ptr value) {
+  return raw__semantic_frame_event__new(cause);
+}
+export_cefunk5(semantic_frame_event__new, time, event_type, key_type, key, value, 0, "Returns a new semantic_frame_event object.");
+
+
+boolean_t raw__semantic_frame_event__is_type(f2ptr cause, f2ptr thing) {
+  if (! raw__frame__is_type(cause, thing)) {
+    return boolean__false;
+  }
+  f2ptr this_type_name_symbol = new__symbol(cause, "semantic_frame_event");
+  f2ptr thing_type_name       = f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil);
+  if (raw__eq(cause, this_type_name_symbol, thing_type_name)) {
+    return boolean__true;
+  }
+  f2ptr thing_type = f2__lookup_type(cause, thing_type_name);
+  if (raw__primobject_type__has_parent_type(cause, thing_type, this_type_name_symbol)) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
+f2ptr f2__semantic_frame_event__is_type(f2ptr cause, f2ptr thing) {
+  return f2bool__new(raw__semantic_frame_event__is_type(cause, thing));
+}
+export_cefunk1(semantic_frame_event__is_type, thing, 0, "Returns whether or not thing is of type semantic_frame_event.");
+
+
+f2ptr raw__semantic_frame_event__type(f2ptr cause, f2ptr this) {
+  return f2__object__type(cause, this);
+}
+
+f2ptr f2__semantic_frame_event__type(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_frame_event__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame_event__type(cause, this);
+}
+export_cefunk1(semantic_frame_event__type, thing, 0, "Returns the specific type of object that this semantic_frame_event is.");
+
+
+f2ptr raw__semantic_frame_event__time(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "time"), nil);
+}
+
+f2ptr f2__semantic_frame_event__time(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_frame_event__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame_event__time(cause, this);
+}
+export_cefunk1(semantic_frame_event__time, thing, 0, "Returns the time of the semantic_frame_event.");
+
+
+f2ptr raw__semantic_frame_event__time__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "time"), value);
+}
+
+f2ptr f2__semantic_frame_event__time__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__semantic_frame_event__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame_event__time__set(cause, this, value);
+}
+export_cefunk2(semantic_frame_event__time__set, thing, value, 0, "Sets the time of the semantic_frame_event.");
+
+
+f2ptr raw__semantic_frame_event__event_type(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "event_type"), nil);
+}
+
+f2ptr f2__semantic_frame_event__event_type(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_frame_event__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame_event__event_type(cause, this);
+}
+export_cefunk1(semantic_frame_event__event_type, thing, 0, "Returns the event_type of the semantic_frame_event.");
+
+
+f2ptr raw__semantic_frame_event__event_type__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "event_type"), value);
+}
+
+f2ptr f2__semantic_frame_event__event_type__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__semantic_frame_event__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame_event__event_type__set(cause, this, value);
+}
+export_cefunk2(semantic_frame_event__event_type__set, thing, value, 0, "Sets the event_type of the semantic_frame_event.");
+
+
+f2ptr raw__semantic_frame_event__key_type(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "key_type"), nil);
+}
+
+f2ptr f2__semantic_frame_event__key_type(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_frame_event__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame_event__key_type(cause, this);
+}
+export_cefunk1(semantic_frame_event__key_type, thing, 0, "Returns the key_type of the semantic_frame_event.");
+
+
+f2ptr raw__semantic_frame_event__key_type__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "key_type"), value);
+}
+
+f2ptr f2__semantic_frame_event__key_type__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__semantic_frame_event__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame_event__key_type__set(cause, this, value);
+}
+export_cefunk2(semantic_frame_event__key_type__set, thing, value, 0, "Sets the key_type of the semantic_frame_event.");
+
+
+f2ptr raw__semantic_frame_event__key(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "key"), nil);
+}
+
+f2ptr f2__semantic_frame_event__key(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_frame_event__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame_event__key(cause, this);
+}
+export_cefunk1(semantic_frame_event__key, thing, 0, "Returns the key of the semantic_frame_event.");
+
+
+f2ptr raw__semantic_frame_event__key__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "key"), value);
+}
+
+f2ptr f2__semantic_frame_event__key__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__semantic_frame_event__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame_event__key__set(cause, this, value);
+}
+export_cefunk2(semantic_frame_event__key__set, thing, value, 0, "Sets the key of the semantic_frame_event.");
+
+
+f2ptr raw__semantic_frame_event__value(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "value"), nil);
+}
+
+f2ptr f2__semantic_frame_event__value(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_frame_event__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame_event__value(cause, this);
+}
+export_cefunk1(semantic_frame_event__value, thing, 0, "Returns the value of the semantic_frame_event.");
+
+
+f2ptr raw__semantic_frame_event__value__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "value"), value);
+}
+
+f2ptr f2__semantic_frame_event__value__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__semantic_frame_event__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame_event__value__set(cause, this, value);
+}
+export_cefunk2(semantic_frame_event__value__set, thing, value, 0, "Sets the value of the semantic_frame_event.");
+
+
+f2ptr raw__semantic_frame_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list4__new(cause,
+					       new__symbol(cause, "print_object_type"), new__symbol(cause, "semantic_frame_event"),
+					       new__symbol(cause, "key_count"),         f2__semantic_frame_event__key_count(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__semantic_frame_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if (! raw__semantic_frame_event__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame_event__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+export_cefunk2(semantic_frame_event__terminal_print_with_frame, this, terminal_print_frame, 0, "");
+
+
+f2ptr f2__semantic_frame_event_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "time"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event__time")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "time"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event__time__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "event_type"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event__event_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "event_type"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event__event_type__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "key_type"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event__key_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "key_type"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event__key_type__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "key"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event__key")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "key"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event__key__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "value"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event__value")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "value"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event__value__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame_event__terminal_print_with_frame")));}
+  return this;
+}
+
+
+
+
 // semantic_frame
 
 f2ptr raw__semantic_frame_event__compare(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
   f2ptr args_iter = args;
   f2ptr this = f2__cons__car(cause, args_iter); args_iter = f2__cons__cdr(cause, args_iter);
   f2ptr that = f2__cons__car(cause, args_iter);
-  
+  {
+    f2ptr this__time = raw__semantic_frame_event__time(cause, this);
+    f2ptr that__time = raw__semantic_frame_event__time(cause, that);
+    f2ptr this__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, this__time);
+    f2ptr that__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, that__time);
+    s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
+    s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
+    return (this__nanoseconds_since_1970__i < that__nanoseconds_since_1970__i);
+  }
 }
+
 
 void raw__semantic_frame__initialize_tracing(f2ptr cause, f2ptr this) {
   f2ptr compare_event_cfunk = f2cfunk__new(cause, nil, 

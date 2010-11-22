@@ -32,7 +32,7 @@ f2ptr raw__error_correcting_graph_isomorphism__new(f2ptr cause, f2ptr width) {
 f2ptr f2__error_correcting_graph_isomorphism__new(f2ptr cause, f2ptr width) {
   return raw__error_correcting_graph_isomorphism__new(cause, width);
 }
-export_cefunk3(error_correcting_graph_isomorphism__new, width, height, rgba_data, 0, "Returns a new error_correcting_graph_isomorphism object.");
+export_cefunk1(error_correcting_graph_isomorphism__new, width, 0, "Returns a new error_correcting_graph_isomorphism object.");
 
 
 boolean_t raw__error_correcting_graph_isomorphism__is_type(f2ptr cause, f2ptr thing) {

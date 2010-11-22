@@ -558,14 +558,15 @@ f2ptr raw__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that, s64 beam_widt
   return best_complete_isomorphism;
 }
 
-    f2ptr f2__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that, f2ptr beam_width) {
+f2ptr f2__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that, f2ptr beam_width) {
   if ((! raw__graph__is_type(cause, this)) ||
-      (! raw__graph__is_type(cause, that))) {
+      (! raw__graph__is_type(cause, that)) ||
+      (! raw__integer__is_type(cause, beam_width))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__graph__isomorphism(cause, this, that);
+  return raw__graph__isomorphism(cause, this, that, beam_width);
 }
-export_cefunk2(graph__isomorphism, this, that, 0, "A* breadth-first beam search for an error correcting isomorphism between this and that graph.");
+export_cefunk3(graph__isomorphism, this, that, beam_width, 0, "A* breadth-first beam search for an error correcting isomorphism between this and that graph.");
 
 
 

@@ -487,10 +487,10 @@ f2ptr raw__graph_isomorphism__isomorphism__cost_compare(f2ptr cause, f2ptr fiber
 }
 
 f2ptr raw__graph__isormorphism(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__node_set           = raw__graph__node_set(cause, this);
-  f2ptr that__node_set           = raw__graph__node_set(cause, that);
-  f2ptr this__edge_set           = raw__graph__edge_set(cause, this);
-  f2ptr that__edge_set           = raw__graph__edge_set(cause, that);
+  f2ptr this__node_set           = f2__graph__node_set(cause, this);
+  f2ptr that__node_set           = f2__graph__node_set(cause, that);
+  f2ptr this__edge_set           = f2__graph__edge_set(cause, this);
+  f2ptr that__edge_set           = f2__graph__edge_set(cause, that);
   f2ptr compare_cfunk            = f2cfunk__new(cause, nil, 
 						f2list2__new(cause, new__symbol(cause, "x"), new__symbol(cause, "y")),
 						f2pointer__new(cause, raw_executable__to__relative_ptr(raw__graph_isomorphism__isomorphism__cost_compare)), global_environment(), nil, nil);

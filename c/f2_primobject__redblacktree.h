@@ -26,6 +26,8 @@
 
 typedef struct funk2_object_type__redblacktree__slot_s funk2_object_type__redblacktree__slot_t;
 declare_object_type_2_slot(redblacktree, head, comparison_funk,
+			   f2ptr empty__symbol;
+			   f2ptr empty__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );

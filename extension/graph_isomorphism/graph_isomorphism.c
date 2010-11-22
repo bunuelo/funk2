@@ -24,7 +24,7 @@
 
 
 f2ptr raw__error_correcting_graph_isomorphism__new(f2ptr cause, f2ptr width) {
-  return f2__frame__new(cause, f2list8__new(cause,
+  return f2__frame__new(cause, f2list4__new(cause,
 					    new__symbol(cause, "type"),  new__symbol(cause, "error_correcting_graph_isomorphism"),
 					    new__symbol(cause, "width"), width));
 }

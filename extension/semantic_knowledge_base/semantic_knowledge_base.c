@@ -397,9 +397,13 @@ f2ptr raw__semantic_frame_event__terminal_print_with_frame(f2ptr cause, f2ptr th
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list4__new(cause,
-					       new__symbol(cause, "print_object_type"), new__symbol(cause, "semantic_frame_event"),
-					       new__symbol(cause, "key_count"),         f2__semantic_frame_event__key_count(cause, this)));
+    frame = f2__frame__new(cause, f2list12__new(cause,
+						new__symbol(cause, "print_object_type"), new__symbol(cause, "semantic_frame_event"),
+						new__symbol(cause, "time"),              raw__semantic_frame_event__time(cause, this),
+						new__symbol(cause, "event_type"),        raw__semantic_frame_event__event_type(cause, this),
+						new__symbol(cause, "key_type"),          raw__semantic_frame_event__key_type(cause, this),
+						new__symbol(cause, "key"),               raw__semantic_frame_event__key(cause, this),
+						new__symbol(cause, "value"),             raw__semantic_frame_event__value(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);

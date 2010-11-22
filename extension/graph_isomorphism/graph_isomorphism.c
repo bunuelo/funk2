@@ -113,11 +113,11 @@ f2ptr f2__error_correcting_graph_isomorphism_type__new(f2ptr cause) {
 
 
 
-f2ptr raw__graph__isormorphism(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__node_set = raw__graph__node_set(cause, this);
-  f2ptr that__node_set = raw__graph__node_set(cause, that);
-  f2ptr this__node_map = 
-}
+//f2ptr raw__graph__isormorphism(f2ptr cause, f2ptr this, f2ptr that) {
+//  f2ptr this__node_set = raw__graph__node_set(cause, this);
+//  f2ptr that__node_set = raw__graph__node_set(cause, that);
+//  f2ptr this__node_map = 
+//}
 
 
 

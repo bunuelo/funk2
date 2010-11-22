@@ -471,7 +471,7 @@ f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr realm, f2ptr trace_add, f2ptr 
 
 
 f2ptr f2__semantic_frame__new(f2ptr cause, f2ptr realm, f2ptr trace_add, f2ptr trace_remove) {
-  if (! raw__semantic_realm__is_type(cause, realm, trace_add, trace_remove)) {
+  if (! raw__semantic_realm__is_type(cause, realm)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_frame__new(cause, realm, trace_add, trace_remove);

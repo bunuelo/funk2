@@ -548,6 +548,9 @@ f2ptr raw__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that, s64 beam_widt
 	raw__redblacktree__remove(cause, search_beam_redblacktree, minimum_cost_isomorphism);
 	{
 	  // expand minimum_cost_isomorphism
+	  {
+	    // expand minimum_cost_isomorphism by finding a node with a matching label and matching edges
+	  }
 	  // check for complete isomorphisms and update best_complete_isomorphism
 	}
 	beam_index ++;

@@ -320,8 +320,12 @@ f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr ke
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
   f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, realm, key_type);
   f2ptr key__object_key      = raw__semantic_realm__object_key(cause, realm, key);
-  f2ptr values               = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
-  raw__frame__add_type_var_value(cause, frame, key_type__object_key, key__object_key, f2cons__new(cause, value, values));
+  f2ptr value_set            = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
+  if (value_set == nil) {
+    value_set = f2__set__new(cause);
+    raw__frame__add_type_var_value(cause, frame, key_type__object_key, key__object_key, value_set);
+  }
+  raw__set__add(cause, value_set, value);
   return nil;
 }
 

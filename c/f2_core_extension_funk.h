@@ -236,7 +236,7 @@ struct funk2_object_type__core_extension_funk__slot_s {
   def_basic_cefunk_define_args(name, 9, def_basic_cefunk_define_arg9_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, and_rest), body);
 
 #define def_basic_cefunk10(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, body) \
-  def_basic_cefunk_define_args(name, 10, def_basic_cefunk_define_arg9_iter(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10), body);
+  def_basic_cefunk_define_args(name, 10, def_basic_cefunk_define_arg10_iter(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10), body);
 
 #define def_basic_cefunk10_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, and_rest, body) \
   def_basic_cefunk_define_args(name, 10, def_basic_cefunk_define_arg10_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, and_rest), body);

@@ -470,13 +470,13 @@ f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr realm, f2ptr trace_add, f2ptr 
 }
 
 
-f2ptr f2__semantic_frame__new(f2ptr cause, f2ptr realm) {
-  if (! raw__semantic_realm__is_type(cause, realm)) {
+f2ptr f2__semantic_frame__new(f2ptr cause, f2ptr realm, f2ptr trace_add, f2ptr trace_remove) {
+  if (! raw__semantic_realm__is_type(cause, realm, trace_add, trace_remove)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_frame__new(cause, realm);
+  return raw__semantic_frame__new(cause, realm, trace_add, trace_remove);
 }
-export_cefunk1(semantic_frame__new, realm, 0, "Returns a new semantic_frame object.");
+export_cefunk3(semantic_frame__new, realm, trace_add, trace_remove, 0, "Returns a new semantic_frame object.");
 
 
 boolean_t raw__semantic_frame__is_type(f2ptr cause, f2ptr thing) {

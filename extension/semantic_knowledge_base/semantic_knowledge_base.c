@@ -659,6 +659,8 @@ f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr ke
   if (raw__semantic_frame__trace_add(cause, this) != nil) {
     raw__semantic_frame__initialize_tracing(cause, this);
     f2ptr trace_event_redblacktree = raw__semantic_frame__trace_event_redblacktree(cause, this);
+    f2ptr semantic_frame_event = raw__semantic_frame_event__new(cause, f2__time(cause), new__symbol(cause, "add"), key_type, key, value);
+    raw__redblacktree__insert(cause, trace_event_redblacktree, semantic_frame_event);
   }
   f2ptr realm                = raw__semantic_frame__realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
@@ -686,6 +688,8 @@ f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
   if (raw__semantic_frame__trace_remove(cause, this) != nil) {
     raw__semantic_frame__initialize_tracing(cause, this);
     f2ptr trace_event_redblacktree = raw__semantic_frame__trace_event_redblacktree(cause, this);
+    f2ptr semantic_frame_event = raw__semantic_frame_event__new(cause, f2__time(cause), new__symbol(cause, "remove"), key_type, key, value);
+    raw__redblacktree__insert(cause, trace_event_redblacktree, semantic_frame_event);
   }
   f2ptr realm                = raw__semantic_frame__realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);

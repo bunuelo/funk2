@@ -459,10 +459,10 @@ f2ptr raw__semantic_frame_event__compare(f2ptr cause, f2ptr fiber, f2ptr environ
 
 
 void raw__semantic_frame__initialize_tracing(f2ptr cause, f2ptr this) {
-  f2ptr compare_event_cfunk = f2cfunk__new(cause, nil, 
-					   f2list2__new(cause, new__symbol(cause, "this"), new__symbol(cause, "that")),
-					   f2pointer__new(cause, raw_executable__to__relative_ptr(raw__semantic_frame_event__compare)), global_environment(), nil, nil);
-  trace_event_redblacktree  = f2__redblacktree__new(cause, compare_event_cfunk);
+  f2ptr compare_event_cfunk       = f2cfunk__new(cause, nil, 
+						 f2list2__new(cause, new__symbol(cause, "this"), new__symbol(cause, "that")),
+						 f2pointer__new(cause, raw_executable__to__relative_ptr(raw__semantic_frame_event__compare)), global_environment(), nil, nil);
+  f2ptr trace_event_redblacktree  = f2__redblacktree__new(cause, compare_event_cfunk);
   raw__semantic_frame__trace_event_redblacktree__set(cause, this, trace_event_redblacktree);
 }
 

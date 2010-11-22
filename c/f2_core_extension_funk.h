@@ -166,6 +166,14 @@ struct funk2_object_type__core_extension_funk__slot_s {
   def_basic_cefunk_define_arg9_iter(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9); \
   def_basic_cefunk_define_arg_and_rest(name, and_rest)
 
+#define def_basic_cefunk_define_arg10_iter(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10) \
+  def_basic_cefunk_define_arg9_iter(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9); \
+  def_basic_cefunk_define_arg_iter(name, arg10)
+
+#define def_basic_cefunk_define_arg10_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, and_rest) \
+  def_basic_cefunk_define_arg10_iter(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10); \
+  def_basic_cefunk_define_arg_and_rest(name, and_rest)
+
 
 #define def_basic_cefunk0(name, body)					\
   def_basic_cefunk_define_args(name, 0, def_basic_cefunk_define_arg0_iter(name), body);
@@ -227,66 +235,78 @@ struct funk2_object_type__core_extension_funk__slot_s {
 #define def_basic_cefunk9_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, and_rest, body) \
   def_basic_cefunk_define_args(name, 9, def_basic_cefunk_define_arg9_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, and_rest), body);
 
+#define def_basic_cefunk10(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, body) \
+  def_basic_cefunk_define_args(name, 10, def_basic_cefunk_define_arg9_iter(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10), body);
 
-#define export_basic_cefunk0(name)          def_basic_cefunk0(name,	\
-							      return f2__##name(cause));
+#define def_basic_cefunk10_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, and_rest, body) \
+  def_basic_cefunk_define_args(name, 10, def_basic_cefunk_define_arg10_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, and_rest), body);
 
-#define export_basic_cefunk0_and_rest(name) def_basic_cefunk0_and_rest(name, and_rest, \
-								       return f2__##name(cause, and_rest));
 
-#define export_basic_cefunk1(name)          def_basic_cefunk1(name, arg1, \
-							      return f2__##name(cause, arg1));
+#define export_basic_cefunk0(name)           def_basic_cefunk0(name,	\
+							       return f2__##name(cause));
 
-#define export_basic_cefunk1_and_rest(name) def_basic_cefunk1_and_rest(name, arg1, and_rest, \
-								       return f2__##name(cause, arg1, and_rest));
+#define export_basic_cefunk0_and_rest(name)  def_basic_cefunk0_and_rest(name, and_rest, \
+									return f2__##name(cause, and_rest));
 
-#define export_basic_cefunk2(name)          def_basic_cefunk2(name, arg1, arg2,	\
-							      return f2__##name(cause, arg1, arg2));
+#define export_basic_cefunk1(name)           def_basic_cefunk1(name, arg1, \
+							       return f2__##name(cause, arg1));
 
-#define export_basic_cefunk2_and_rest(name) def_basic_cefunk2_and_rest(name, arg1, arg2, and_rest, \
-								       return f2__##name(cause, arg1, arg2, and_rest));
+#define export_basic_cefunk1_and_rest(name)  def_basic_cefunk1_and_rest(name, arg1, and_rest, \
+									return f2__##name(cause, arg1, and_rest));
 
-#define export_basic_cefunk3(name)          def_basic_cefunk3(name, arg1, arg2, arg3, \
-							      return f2__##name(cause, arg1, arg2, arg3));
+#define export_basic_cefunk2(name)           def_basic_cefunk2(name, arg1, arg2, \
+							       return f2__##name(cause, arg1, arg2));
 
-#define export_basic_cefunk3_and_rest(name) def_basic_cefunk3_and_rest(name, arg1, arg2, arg3, and_rest, \
-								       return f2__##name(cause, arg1, arg2, arg3, and_rest));
+#define export_basic_cefunk2_and_rest(name)  def_basic_cefunk2_and_rest(name, arg1, arg2, and_rest, \
+									return f2__##name(cause, arg1, arg2, and_rest));
 
-#define export_basic_cefunk4(name)          def_basic_cefunk4(name, arg1, arg2, arg3, arg4, \
-							      return f2__##name(cause, arg1, arg2, arg3, arg4));
+#define export_basic_cefunk3(name)           def_basic_cefunk3(name, arg1, arg2, arg3, \
+							       return f2__##name(cause, arg1, arg2, arg3));
 
-#define export_basic_cefunk4_and_rest(name) def_basic_cefunk4_and_rest(name, arg1, arg2, arg3, arg4, and_rest, \
-								       return f2__##name(cause, arg1, arg2, arg3, arg4, and_rest));
+#define export_basic_cefunk3_and_rest(name)  def_basic_cefunk3_and_rest(name, arg1, arg2, arg3, and_rest, \
+									return f2__##name(cause, arg1, arg2, arg3, and_rest));
 
-#define export_basic_cefunk5(name)          def_basic_cefunk5(name, arg1, arg2, arg3, arg4, arg5, \
-							      return f2__##name(cause, arg1, arg2, arg3, arg4, arg5));
+#define export_basic_cefunk4(name)           def_basic_cefunk4(name, arg1, arg2, arg3, arg4, \
+							       return f2__##name(cause, arg1, arg2, arg3, arg4));
 
-#define export_basic_cefunk5_and_rest(name) def_basic_cefunk5_and_rest(name, arg1, arg2, arg3, arg4, arg5, and_rest, \
-								       return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, and_rest));
+#define export_basic_cefunk4_and_rest(name)  def_basic_cefunk4_and_rest(name, arg1, arg2, arg3, arg4, and_rest, \
+									return f2__##name(cause, arg1, arg2, arg3, arg4, and_rest));
 
-#define export_basic_cefunk6(name)          def_basic_cefunk6(name, arg1, arg2, arg3, arg4, arg5, arg6,	\
-							      return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6));
+#define export_basic_cefunk5(name)           def_basic_cefunk5(name, arg1, arg2, arg3, arg4, arg5, \
+							       return f2__##name(cause, arg1, arg2, arg3, arg4, arg5));
 
-#define export_basic_cefunk6_and_rest(name) def_basic_cefunk6_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, and_rest, \
-								       return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, and_rest));
+#define export_basic_cefunk5_and_rest(name)  def_basic_cefunk5_and_rest(name, arg1, arg2, arg3, arg4, arg5, and_rest, \
+									return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, and_rest));
 
-#define export_basic_cefunk7(name)          def_basic_cefunk7(name, arg1, arg2, arg3, arg4, arg5, arg6,	arg7, \
-							      return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, arg7));
+#define export_basic_cefunk6(name)           def_basic_cefunk6(name, arg1, arg2, arg3, arg4, arg5, arg6, \
+							       return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6));
 
-#define export_basic_cefunk7_and_rest(name) def_basic_cefunk7_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, and_rest, \
-								       return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, arg7, and_rest));
+#define export_basic_cefunk6_and_rest(name)  def_basic_cefunk6_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, and_rest, \
+									return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, and_rest));
 
-#define export_basic_cefunk8(name)          def_basic_cefunk8(name, arg1, arg2, arg3, arg4, arg5, arg6,	arg7, arg8, \
-							      return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8));
+#define export_basic_cefunk7(name)           def_basic_cefunk7(name, arg1, arg2, arg3, arg4, arg5, arg6,	arg7, \
+							       return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, arg7));
 
-#define export_basic_cefunk8_and_rest(name) def_basic_cefunk8_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, and_rest, \
-								       return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, and_rest));
+#define export_basic_cefunk7_and_rest(name)  def_basic_cefunk7_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, and_rest, \
+									return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, arg7, and_rest));
 
-#define export_basic_cefunk9(name)          def_basic_cefunk9(name, arg1, arg2, arg3, arg4, arg5, arg6,	arg7, arg8, arg9, \
-							      return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9));
+#define export_basic_cefunk8(name)           def_basic_cefunk8(name, arg1, arg2, arg3, arg4, arg5, arg6,	arg7, arg8, \
+							       return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8));
 
-#define export_basic_cefunk9_and_rest(name) def_basic_cefunk9_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, and_rest, \
-								       return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, and_rest));
+#define export_basic_cefunk8_and_rest(name)  def_basic_cefunk8_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, and_rest, \
+									return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, and_rest));
+
+#define export_basic_cefunk9(name)           def_basic_cefunk9(name, arg1, arg2, arg3, arg4, arg5, arg6,	arg7, arg8, arg9, \
+							       return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9));
+
+#define export_basic_cefunk9_and_rest(name)  def_basic_cefunk9_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, and_rest, \
+									return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, and_rest));
+
+#define export_basic_cefunk10(name)          def_basic_cefunk10(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, \
+								return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10));
+
+#define export_basic_cefunk10_and_rest(name) def_basic_cefunk10_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, and_rest, \
+									 return f2__##name(cause, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, and_rest));
 
 
 
@@ -349,6 +369,12 @@ struct funk2_object_type__core_extension_funk__slot_s {
 
 #define def_cefunk9_and_rest__args(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, and_rest) \
   f2ptr f2__##name##__args(f2ptr cause) {return f2list11__new(cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2), new__symbol(cause, #arg3), new__symbol(cause, #arg4), new__symbol(cause, #arg5), new__symbol(cause, #arg6), new__symbol(cause, #arg7), new__symbol(cause, #arg8), new__symbol(cause, #arg9), new__symbol(cause, ":rest"), new__symbol(cause, #and_rest));}
+
+#define def_cefunk10__args(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10) \
+  f2ptr f2__##name##__args(f2ptr cause) {return f2list10__new(cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2), new__symbol(cause, #arg3), new__symbol(cause, #arg4), new__symbol(cause, #arg5), new__symbol(cause, #arg6), new__symbol(cause, #arg7), new__symbol(cause, #arg8), new__symbol(cause, #arg9), new__symbol(cause, #arg10));}
+
+#define def_cefunk10_and_rest__args(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, and_rest) \
+  f2ptr f2__##name##__args(f2ptr cause) {return f2list12__new(cause, new__symbol(cause, #arg1), new__symbol(cause, #arg2), new__symbol(cause, #arg3), new__symbol(cause, #arg4), new__symbol(cause, #arg5), new__symbol(cause, #arg6), new__symbol(cause, #arg7), new__symbol(cause, #arg8), new__symbol(cause, #arg9), new__symbol(cause, #arg10), new__symbol(cause, ":rest"), new__symbol(cause, #and_rest));}
 
 
 #define def_cefunk__is_funktional(name, is_funktional)			\
@@ -466,6 +492,16 @@ struct funk2_object_type__core_extension_funk__slot_s {
 #define export_cefunk9_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, and_rest, is_funktional, documentation_string) \
   export_basic_cefunk9_and_rest(name);					\
   def_cefunk9_and_rest__args(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, and_rest) \
+  export_cefunk_without_args(name, is_funktional, documentation_string)
+
+#define export_cefunk10(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, is_funktional, documentation_string) \
+  export_basic_cefunk10(name);						\
+  def_cefunk10__args(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10) \
+  export_cefunk_without_args(name, is_funktional, documentation_string)
+
+#define export_cefunk10_and_rest(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, and_rest, is_funktional, documentation_string) \
+  export_basic_cefunk10_and_rest(name);					\
+  def_cefunk10_and_rest__args(name, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, and_rest) \
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
 

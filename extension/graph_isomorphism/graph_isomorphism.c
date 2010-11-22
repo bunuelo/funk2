@@ -23,16 +23,65 @@
 #include "graph_isomorphism.h"
 
 
-f2ptr raw__error_correcting_graph_isomorphism__new(f2ptr cause, f2ptr width) {
+f2ptr raw__error_correcting_graph_isomorphism__new(f2ptr cause,
+						   f2ptr cost,
+						   f2ptr these_nodes_remaining,
+						   f2ptr those_nodes_remaining,
+						   f2ptr matched_nodes,
+						   f2ptr changed_node_labels,
+						   f2ptr changed_edge_labels,
+						   f2ptr added_nodes,
+						   f2ptr added_edges,
+						   f2ptr removed_nodes,
+						   f2ptr removed_edges) {
   return f2__frame__new(cause, f2list4__new(cause,
-					    new__symbol(cause, "type"),  new__symbol(cause, "error_correcting_graph_isomorphism"),
-					    new__symbol(cause, "width"), width));
+					    new__symbol(cause, "type"),                  new__symbol(cause, "error_correcting_graph_isomorphism"),
+					    new__symbol(cause, "cost"),                  cost,
+					    new__symbol(cause, "these_nodes_remaining"), these_nodes_remaining,
+					    new__symbol(cause, "those_nodes_remaining"), those_nodes_remaining,
+					    new__symbol(cause, "matched_nodes"),         matched_nodes,
+					    new__symbol(cause, "changed_node_labels"),   changed_node_labels,
+					    new__symbol(cause, "changed_edge_labels"),   changed_edge_labels,
+					    new__symbol(cause, "added_nodes"),           added_nodes,
+					    new__symbol(cause, "added_edges"),           added_edges,
+					    new__symbol(cause, "removed_nodes"),         removed_nodes,
+					    new__symbol(cause, "removed_edges"),         removed_edges));
 }
 
-f2ptr f2__error_correcting_graph_isomorphism__new(f2ptr cause, f2ptr width) {
-  return raw__error_correcting_graph_isomorphism__new(cause, width);
+f2ptr f2__error_correcting_graph_isomorphism__new(f2ptr cause,
+						  f2ptr cost,
+						  f2ptr these_nodes_remaining,
+						  f2ptr those_nodes_remaining,
+						  f2ptr matched_nodes,
+						  f2ptr changed_node_labels,
+						  f2ptr changed_edge_labels,
+						  f2ptr added_nodes,
+						  f2ptr added_edges,
+						  f2ptr removed_nodes,
+						  f2ptr removed_edges) {
+  return raw__error_correcting_graph_isomorphism__new(cause,
+						      cost,
+						      these_nodes_remaining,
+						      those_nodes_remaining,
+						      matched_nodes,
+						      changed_node_labels,
+						      changed_edge_labels,
+						      added_nodes,
+						      added_edges,
+						      removed_nodes,
+						      removed_edges);
 }
-export_cefunk1(error_correcting_graph_isomorphism__new, width, 0, "Returns a new error_correcting_graph_isomorphism object.");
+export_cefunk10(error_correcting_graph_isomorphism__new,
+		cost,
+		these_nodes_remaining,
+		those_nodes_remaining,
+		matched_nodes,
+		changed_node_labels,
+		changed_edge_labels,
+		added_nodes,
+		added_edges,
+		removed_nodes,
+		removed_edges, 0, "Returns a new error_correcting_graph_isomorphism object.");
 
 
 boolean_t raw__error_correcting_graph_isomorphism__is_type(f2ptr cause, f2ptr thing) {

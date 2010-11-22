@@ -119,41 +119,294 @@ f2ptr f2__error_correcting_graph_isomorphism__type(f2ptr cause, f2ptr this) {
 export_cefunk1(error_correcting_graph_isomorphism__type, thing, 0, "Returns the specific type of object that this error_correcting_graph_isomorphism is.");
 
 
-f2ptr raw__error_correcting_graph_isomorphism__width(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"), nil);
+f2ptr raw__error_correcting_graph_isomorphism__cost(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "cost"), nil);
 }
 
-f2ptr f2__error_correcting_graph_isomorphism__width(f2ptr cause, f2ptr this) {
+f2ptr f2__error_correcting_graph_isomorphism__cost(f2ptr cause, f2ptr this) {
   if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__error_correcting_graph_isomorphism__width(cause, this);
+  return raw__error_correcting_graph_isomorphism__cost(cause, this);
 }
-export_cefunk1(error_correcting_graph_isomorphism__width, thing, 0, "Returns the width of the error_correcting_graph_isomorphism.");
+export_cefunk1(error_correcting_graph_isomorphism__cost, thing, 0, "Returns the cost of the error_correcting_graph_isomorphism.");
 
 
-f2ptr raw__error_correcting_graph_isomorphism__width__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "width"), value);
+f2ptr raw__error_correcting_graph_isomorphism__cost__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "cost"), value);
 }
 
-f2ptr f2__error_correcting_graph_isomorphism__width__set(f2ptr cause, f2ptr this, f2ptr value) {
+f2ptr f2__error_correcting_graph_isomorphism__cost__set(f2ptr cause, f2ptr this, f2ptr value) {
   if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__error_correcting_graph_isomorphism__width__set(cause, this, value);
+  return raw__error_correcting_graph_isomorphism__cost__set(cause, this, value);
 }
-export_cefunk2(error_correcting_graph_isomorphism__width__set, thing, value, 0, "Sets the width of the error_correcting_graph_isomorphism.");
+export_cefunk2(error_correcting_graph_isomorphism__cost__set, thing, value, 0, "Sets the cost of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__these_nodes_remaining(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "these_nodes_remaining"), nil);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__these_nodes_remaining(f2ptr cause, f2ptr this) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__these_nodes_remaining(cause, this);
+}
+export_cefunk1(error_correcting_graph_isomorphism__these_nodes_remaining, thing, 0, "Returns the these_nodes_remaining of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__these_nodes_remaining__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "these_nodes_remaining"), value);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__these_nodes_remaining__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__these_nodes_remaining__set(cause, this, value);
+}
+export_cefunk2(error_correcting_graph_isomorphism__these_nodes_remaining__set, thing, value, 0, "Sets the these_nodes_remaining of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__those_nodes_remaining(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "those_nodes_remaining"), nil);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__those_nodes_remaining(f2ptr cause, f2ptr this) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__those_nodes_remaining(cause, this);
+}
+export_cefunk1(error_correcting_graph_isomorphism__those_nodes_remaining, thing, 0, "Returns the those_nodes_remaining of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__those_nodes_remaining__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "those_nodes_remaining"), value);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__those_nodes_remaining__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__those_nodes_remaining__set(cause, this, value);
+}
+export_cefunk2(error_correcting_graph_isomorphism__those_nodes_remaining__set, thing, value, 0, "Sets the those_nodes_remaining of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__matched_nodes(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "matched_nodes"), nil);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__matched_nodes(f2ptr cause, f2ptr this) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__matched_nodes(cause, this);
+}
+export_cefunk1(error_correcting_graph_isomorphism__matched_nodes, thing, 0, "Returns the matched_nodes of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__matched_nodes__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "matched_nodes"), value);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__matched_nodes__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__matched_nodes__set(cause, this, value);
+}
+export_cefunk2(error_correcting_graph_isomorphism__matched_nodes__set, thing, value, 0, "Sets the matched_nodes of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__changed_node_labels(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "changed_node_labels"), nil);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__changed_node_labels(f2ptr cause, f2ptr this) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__changed_node_labels(cause, this);
+}
+export_cefunk1(error_correcting_graph_isomorphism__changed_node_labels, thing, 0, "Returns the changed_node_labels of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__changed_node_labels__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "changed_node_labels"), value);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__changed_node_labels__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__changed_node_labels__set(cause, this, value);
+}
+export_cefunk2(error_correcting_graph_isomorphism__changed_node_labels__set, thing, value, 0, "Sets the changed_node_labels of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__changed_edge_labels(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "changed_edge_labels"), nil);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__changed_edge_labels(f2ptr cause, f2ptr this) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__changed_edge_labels(cause, this);
+}
+export_cefunk1(error_correcting_graph_isomorphism__changed_edge_labels, thing, 0, "Returns the changed_edge_labels of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__changed_edge_labels__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "changed_edge_labels"), value);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__changed_edge_labels__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__changed_edge_labels__set(cause, this, value);
+}
+export_cefunk2(error_correcting_graph_isomorphism__changed_edge_labels__set, thing, value, 0, "Sets the changed_edge_labels of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__added_nodes(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "added_nodes"), nil);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__added_nodes(f2ptr cause, f2ptr this) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__added_nodes(cause, this);
+}
+export_cefunk1(error_correcting_graph_isomorphism__added_nodes, thing, 0, "Returns the added_nodes of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__added_nodes__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "added_nodes"), value);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__added_nodes__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__added_nodes__set(cause, this, value);
+}
+export_cefunk2(error_correcting_graph_isomorphism__added_nodes__set, thing, value, 0, "Sets the added_nodes of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__added_edges(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "added_edges"), nil);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__added_edges(f2ptr cause, f2ptr this) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__added_edges(cause, this);
+}
+export_cefunk1(error_correcting_graph_isomorphism__added_edges, thing, 0, "Returns the added_edges of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__added_edges__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "added_edges"), value);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__added_edges__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__added_edges__set(cause, this, value);
+}
+export_cefunk2(error_correcting_graph_isomorphism__added_edges__set, thing, value, 0, "Sets the added_edges of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__removed_nodes(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "removed_nodes"), nil);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__removed_nodes(f2ptr cause, f2ptr this) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__removed_nodes(cause, this);
+}
+export_cefunk1(error_correcting_graph_isomorphism__removed_nodes, thing, 0, "Returns the removed_nodes of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__removed_nodes__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "removed_nodes"), value);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__removed_nodes__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__removed_nodes__set(cause, this, value);
+}
+export_cefunk2(error_correcting_graph_isomorphism__removed_nodes__set, thing, value, 0, "Sets the removed_nodes of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__removed_edges(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "removed_edges"), nil);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__removed_edges(f2ptr cause, f2ptr this) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__removed_edges(cause, this);
+}
+export_cefunk1(error_correcting_graph_isomorphism__removed_edges, thing, 0, "Returns the removed_edges of the error_correcting_graph_isomorphism.");
+
+
+f2ptr raw__error_correcting_graph_isomorphism__removed_edges__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "removed_edges"), value);
+}
+
+f2ptr f2__error_correcting_graph_isomorphism__removed_edges__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__error_correcting_graph_isomorphism__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__error_correcting_graph_isomorphism__removed_edges__set(cause, this, value);
+}
+export_cefunk2(error_correcting_graph_isomorphism__removed_edges__set, thing, value, 0, "Sets the removed_edges of the error_correcting_graph_isomorphism.");
+
 
 
 
 
 f2ptr f2__error_correcting_graph_isomorphism_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__width")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__width__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),               f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "cost"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__cost")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "cost"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__cost__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "these_nodes_remaining"), f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__these_nodes_remaining")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "these_nodes_remaining"), f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__these_nodes_remaining__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "those_nodes_remaining"), f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__those_nodes_remaining")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "those_nodes_remaining"), f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__those_nodes_remaining__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "matched_nodes"),         f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__matched_nodes")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "matched_nodes"),         f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__matched_nodes__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "changed_node_labels"),   f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__changed_node_labels")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "changed_node_labels"),   f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__changed_node_labels__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "changed_edge_labels"),   f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__changed_edge_labels")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "changed_edge_labels"),   f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__changed_edge_labels__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "added_nodes"),           f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__added_nodes")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "added_nodes"),           f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__added_nodes__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "added_edges"),           f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__added_edges")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "added_edges"),           f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__added_edges__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "removed_nodes"),         f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__removed_nodes")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "removed_nodes"),         f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__removed_nodes__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "removed_edges"),         f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__removed_edges")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "removed_edges"),         f2__core_extension_funk__new(cause, new__symbol(cause, "graph_isomorphism"), new__symbol(cause, "error_correcting_graph_isomorphism__removed_edges__set")));}
   return this;
 }
 

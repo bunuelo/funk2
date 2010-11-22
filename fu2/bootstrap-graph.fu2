@@ -17,6 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[deftypefunk graph get     nodes                           []                           [graph-nodes                           this]]
+[deftypefunk graph get     edges                           []                           [graph-edges                           this]]
 [deftypefunk graph execute add_node                        [node]                       [graph-add_node                        this node]]
 [deftypefunk graph execute add_new_node                    [label]                      [graph-add_new_node                    this label]]
 [deftypefunk graph get     nodes_with_label                [label]                      [graph-nodes_with_label                this label]]

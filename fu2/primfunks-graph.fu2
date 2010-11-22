@@ -17,6 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[globalize-funk graph-nodes                           &primfunk:graph__nodes]
+[globalize-funk graph-edges                           &primfunk:graph__edges]
 [globalize-funk graph-add_node                        &primfunk:graph__add_node]
 [globalize-funk graph-add_new_node                    &primfunk:graph__add_new_node]
 [globalize-funk graph-nodes_with_label                &primfunk:graph__nodes_with_label]

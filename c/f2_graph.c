@@ -145,6 +145,37 @@ f2ptr f2__graph__new(f2ptr cause) {
 }
 def_pcfunk0(graph__new, return f2__graph__new(this_cause));
 
+
+f2ptr raw__graph__nodes(f2ptr cause, f2ptr this) {
+  f2ptr node_set = raw__graph__node_set(cause, this);
+  f2ptr nodes    = raw__set__elements(cause, node_set);
+  return nodes;
+}
+
+f2ptr f2__graph__nodes(f2ptr cause, f2ptr this) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__nodes(cause, this);
+}
+def_pcfunk1(graph__nodes, this, return f2__graph__nodes(this_cause, this));
+
+
+f2ptr raw__graph__edges(f2ptr cause, f2ptr this) {
+  f2ptr edge_set = raw__graph__edge_set(cause, this);
+  f2ptr edges    = raw__set__elements(cause, edge_set);
+  return edges;
+}
+
+f2ptr f2__graph__edges(f2ptr cause, f2ptr this) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__edges(cause, this);
+}
+def_pcfunk1(graph__edges, this, return f2__graph__edges(this_cause, this));
+
+
 f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr node_set = f2__graph__node_set(cause, this);
   f2ptr already_contains_node = f2__set__add(cause, node_set, node);
@@ -1267,6 +1298,8 @@ void f2__graph__initialize() {
   // graph
   initialize_primobject_5_slot(graph, node_set, edge_set, nodes_label_hash, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);
   
+  f2__primcfunk__init__1(graph__nodes,                           this,                               "Returns the nodes in this graph.");
+  f2__primcfunk__init__1(graph__edges,                           this,                               "Returns the edges in this graph.");
   f2__primcfunk__init__2(graph__add_node,                        this, node,                         "Add a graph_node to this graph.");
   f2__primcfunk__init__2(graph__add_new_node,                    this, label,                        "Add a new graph_node to this graph.");
   f2__primcfunk__init__2(graph__nodes_with_label,                this, label,                        "Returns a list of nodes with label in this graph.");

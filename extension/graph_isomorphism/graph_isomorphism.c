@@ -486,7 +486,7 @@ f2ptr raw__graph_isomorphism__isomorphism__cost_compare(f2ptr cause, f2ptr fiber
   return f2bool__new(isomorphism_1__cost__i < isomorphism_2__cost__i);
 }
 
-f2ptr raw__graph__isormorphism(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__node_set           = f2__graph__node_set(cause, this);
   f2ptr that__node_set           = f2__graph__node_set(cause, that);
   f2ptr this__edge_set           = f2__graph__edge_set(cause, this);

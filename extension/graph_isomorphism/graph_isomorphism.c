@@ -499,10 +499,10 @@ f2ptr raw__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr initial_isomorphism;
   {
     f2ptr cost                             = f2integer__new(cause, 0);
-    f2ptr these_nodes_remaining_label_hash = raw__ptypehash__new(cause);
-    f2ptr those_nodes_remaining_label_hash = raw__ptypehash__new(cause);
-    f2ptr these_edges_remaining_label_hash = raw__ptypehash__new(cause);
-    f2ptr those_edges_remaining_label_hash = raw__ptypehash__new(cause);
+    f2ptr these_nodes_remaining_label_hash = f2__ptypehash__new(cause);
+    f2ptr those_nodes_remaining_label_hash = f2__ptypehash__new(cause);
+    f2ptr these_edges_remaining_label_hash = f2__ptypehash__new(cause);
+    f2ptr those_edges_remaining_label_hash = f2__ptypehash__new(cause);
     f2ptr matched_nodes                    = nil;
     f2ptr changed_node_labels              = nil;
     f2ptr changed_edge_labels              = nil;

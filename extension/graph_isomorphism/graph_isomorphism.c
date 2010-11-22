@@ -494,7 +494,7 @@ f2ptr raw__graph__isormorphism(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr compare_cfunk            = f2cfunk__new(cause, nil, 
 						f2list2__new(cause, new__symbol(cause, "x"), new__symbol(cause, "y")),
 						f2pointer__new(cause, raw_executable__to__relative_ptr(raw__graph_isomorphism__isomorphism__cost_compare)), global_environment(), nil, nil);
-  f2ptr search_beam_redblacktree = raw__redblacktree__new(cause, compare_cfunk);
+  f2ptr search_beam_redblacktree = f2__redblacktree__new(cause, compare_cfunk);
   
   f2ptr initial_isomorphism;
   {

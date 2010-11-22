@@ -537,10 +537,10 @@ f2ptr raw__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that) {
 								       removed_edges);
   }
   raw__redblacktree__insert(cause, search_beam_redblacktree, initial_isomorphism);
-  while (boolean__true) {
+  //while (boolean__true) {
     
-  }
-  return nil;
+  //}
+  return search_beam_redblacktree;
 }
 
 f2ptr f2__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that) {

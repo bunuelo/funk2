@@ -537,7 +537,7 @@ f2ptr raw__semantic_frame_event_redblacktree__terminal_print_with_frame(f2ptr ca
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list4__new(cause,
 					       new__symbol(cause, "print_object_type"), new__symbol(cause, "semantic_frame_event_redblacktree"),
-					       new__symbol(cause, "events"),            f2__semantic_frame_event_redblacktree__key_count(cause, this)));
+					       new__symbol(cause, "events"),            f2__semantic_frame_event_redblacktree__events(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);

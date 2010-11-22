@@ -223,7 +223,7 @@ f2ptr raw__semantic_frame_event__new(f2ptr cause, f2ptr time, f2ptr event_type, 
 }
 
 f2ptr f2__semantic_frame_event__new(f2ptr cause, f2ptr time, f2ptr event_type, f2ptr key_type, f2ptr key, f2ptr value) {
-  return raw__semantic_frame_event__new(cause);
+  return raw__semantic_frame_event__new(cause, time, event_type, key_type, key, value);
 }
 export_cefunk5(semantic_frame_event__new, time, event_type, key_type, key, value, 0, "Returns a new semantic_frame_event object.");
 

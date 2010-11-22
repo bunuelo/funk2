@@ -460,13 +460,13 @@ f2ptr raw__semantic_frame_event__compare(f2ptr cause, f2ptr fiber, f2ptr environ
 
 f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr realm, f2ptr trace_add, f2ptr trace_remove) {
   f2ptr trace_event_redblacktree = nil;
-  return f2__frame__new(cause, f2list6__new(cause,
-					    new__symbol(cause, "type"),                     new__symbol(cause, "semantic_frame"),
-					    new__symbol(cause, "realm"),                    realm,
-					    new__symbol(cause, "trace_add"),                trace_add,
-					    new__symbol(cause, "trace_remove"),             trace_remove,
-					    new__symbol(cause, "trace_event_redblacktree"), trace_event_redblacktree,
-					    new__symbol(cause, "frame"),                    f2__frame__new(cause, nil)));
+  return f2__frame__new(cause, f2list12__new(cause,
+					     new__symbol(cause, "type"),                     new__symbol(cause, "semantic_frame"),
+					     new__symbol(cause, "realm"),                    realm,
+					     new__symbol(cause, "trace_add"),                trace_add,
+					     new__symbol(cause, "trace_remove"),             trace_remove,
+					     new__symbol(cause, "trace_event_redblacktree"), trace_event_redblacktree,
+					     new__symbol(cause, "frame"),                    f2__frame__new(cause, nil)));
 }
 
 

@@ -482,7 +482,7 @@ f2ptr f2__semantic_frame__new(f2ptr cause, f2ptr realm) {
   }
   return raw__semantic_frame__new(cause, realm);
 }
-export_cefunk3(semantic_frame__new, realm, 0, "Returns a new semantic_frame object.");
+export_cefunk1(semantic_frame__new, realm, 0, "Returns a new semantic_frame object.");
 
 
 boolean_t raw__semantic_frame__is_type(f2ptr cause, f2ptr thing) {

@@ -101,7 +101,7 @@ f2ptr  f2__redblacktree__leaves(      f2ptr cause, f2ptr this);
 u64   raw__redblacktree__size(        f2ptr cause, f2ptr this);
 f2ptr  f2__redblacktree__size(        f2ptr cause, f2ptr this);
 
-f2ptr f2redblacktree__primobject_type__new(f2ptr cause);
+f2ptr f2redblacktree__primobject_type__new_aux(f2ptr cause);
 
 // redblacktree_node
 

@@ -852,6 +852,36 @@ f2ptr f2__redblacktree__size(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(redblacktree__size, this, return f2__redblacktree__size(this_cause, this));
 
+
+f2ptr raw__redblacktree__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__redblacktree__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"), new__symbol(cause, "redblacktree"));
+    f2__frame__add_var_value(cause, frame, new__symbol(cause, "elements"),          f2__redblacktree__elements(cause, this));
+    f2__redblacktree__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__redblacktree__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__redblacktree__is_type(cause, this)) &&
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__redblacktree__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(redblacktree__terminal_print_with_frame, this, terminal_print_frame, return f2__redblacktree__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr f2redblacktree__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2redblacktree__primobject_type__new(cause);
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__funk);}
+  return this;
+}
+
+
 // **
 
 void f2__primobject__redblacktree__reinitialize_globalvars() {
@@ -879,6 +909,9 @@ void f2__primobject__redblacktree__initialize() {
   f2__primcfunk__init__1(redblacktree__maximum, this,      "Returns the maximum key within a red-black-tree or nil if tree is empty.");
   f2__primcfunk__init__1(redblacktree__leaves,  this,      "Returns all leaves in this red-black-tree in order in a new list.");
   f2__primcfunk__init__1(redblacktree__size,    this,      "Returns the number of leaves in this red-black-tree.");
+  
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(redblacktree__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // redblacktree_node
   

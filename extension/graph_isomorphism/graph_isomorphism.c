@@ -499,10 +499,10 @@ f2ptr raw__graph__isormorphism(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr initial_isomorphism;
   {
     f2ptr cost                  = f2integer__new(cause, 0);
-    f2ptr these_nodes_remaining = raw__set__nodes(cause, this__node_set);
-    f2ptr those_nodes_remaining = raw__set__nodes(cause, that__node_set);
-    f2ptr these_edges_remaining = raw__set__edges(cause, this__edge_set);
-    f2ptr those_edges_remaining = raw__set__edges(cause, that__edge_set);
+    f2ptr these_nodes_remaining = raw__set__elements(cause, this__node_set);
+    f2ptr those_nodes_remaining = raw__set__elements(cause, that__node_set);
+    f2ptr these_edges_remaining = raw__set__elements(cause, this__edge_set);
+    f2ptr those_edges_remaining = raw__set__elements(cause, that__edge_set);
     f2ptr matched_nodes         = nil;
     f2ptr changed_node_labels   = nil;
     f2ptr changed_edge_labels   = nil;

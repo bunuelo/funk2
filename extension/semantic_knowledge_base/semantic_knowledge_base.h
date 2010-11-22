@@ -54,8 +54,8 @@ f2ptr f2__semantic_realm_type__new(f2ptr cause);
 // semantic_frame
 
 f2ptr     raw__semantic_frame_event__compare(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
-f2ptr     raw__semantic_frame__new(f2ptr cause, f2ptr realm, f2ptr trace_add, f2ptr trace_remove);
-f2ptr      f2__semantic_frame__new(f2ptr cause, f2ptr realm, f2ptr trace_add, f2ptr trace_remove);
+f2ptr     raw__semantic_frame__new(f2ptr cause, f2ptr realm);
+f2ptr      f2__semantic_frame__new(f2ptr cause, f2ptr realm);
 boolean_t raw__semantic_frame__is_type(f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_frame__is_type(f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_frame__type(f2ptr cause, f2ptr this);

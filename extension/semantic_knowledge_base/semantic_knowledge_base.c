@@ -458,8 +458,13 @@ f2ptr raw__semantic_frame_event__compare(f2ptr cause, f2ptr fiber, f2ptr environ
 }
 
 
-f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr realm, f2ptr trace_add, f2ptr trace_remove) {
+f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr realm) {
   f2ptr trace_event_redblacktree = nil;
+  f2ptr trace_add = nil;
+  if (cause != nil) {
+    trace_add    = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_add"));
+    trace_remove = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_remove"));
+  }
   return f2__frame__new(cause, f2list12__new(cause,
 					     new__symbol(cause, "type"),                     new__symbol(cause, "semantic_frame"),
 					     new__symbol(cause, "realm"),                    realm,
@@ -470,13 +475,13 @@ f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr realm, f2ptr trace_add, f2ptr 
 }
 
 
-f2ptr f2__semantic_frame__new(f2ptr cause, f2ptr realm, f2ptr trace_add, f2ptr trace_remove) {
+f2ptr f2__semantic_frame__new(f2ptr cause, f2ptr realm) {
   if (! raw__semantic_realm__is_type(cause, realm)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_frame__new(cause, realm, trace_add, trace_remove);
+  return raw__semantic_frame__new(cause, realm);
 }
-export_cefunk3(semantic_frame__new, realm, trace_add, trace_remove, 0, "Returns a new semantic_frame object.");
+export_cefunk3(semantic_frame__new, realm, 0, "Returns a new semantic_frame object.");
 
 
 boolean_t raw__semantic_frame__is_type(f2ptr cause, f2ptr thing) {

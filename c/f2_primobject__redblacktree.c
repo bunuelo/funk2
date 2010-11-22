@@ -836,7 +836,7 @@ def_pcfunk1(redblacktree__leaves, this, return f2__redblacktree__leaves(this_cau
 
 
 boolean_t raw__redblacktree__empty(f2ptr cause, f2ptr this) {
-  return (raw__redblacktree__head(cause, this) == nil);
+  return (f2__redblacktree__head(cause, this) == nil);
 }
 
 f2ptr f2__redblacktree__empty(f2ptr cause, f2ptr this) {

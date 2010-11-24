@@ -257,25 +257,25 @@ does empty right hand need argument target??!?!?!?!?!?!?!? fghjkl
 [deframe empty_left_hand_resource [resource] []
   [new []
        [construct resource `empty_left_hand
-		  [funk [target]
+		  [funk []
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]
 			      [name  [get body name]]]
 			  [have this-resource think_to_self 'Emptying left  hand is starting.']
-			  [mind-wait_to_activate mind builtin_reactive physical drop_from_left_hand target]]]]
+			  [mind-wait_to_activate mind builtin_reactive physical drop_from_left_hand]]]]
        
        nil]]
 
 [deframe empty_right_hand_resource [resource] []
   [new []
        [construct resource `empty_right_hand
-		  [funk [target]
+		  [funk []
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]
 			      [name  [get body name]]
 			      ]
 			  [have this-resource think_to_self 'Emptying right hand is starting.']
-			  [mind-wait_to_activate mind builtin_reactive physical drop_from_right_hand target]]]]
+			  [mind-wait_to_activate mind builtin_reactive physical drop_from_right_hand ]]]]
        nil]]
 
 
@@ -298,7 +298,7 @@ does empty right hand need argument target??!?!?!?!?!?!?!? fghjkl
 						      [prog [print 'nothing in right hand'] 
 							    [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]
 							    [print 'activated built-in pick_up']]
-						    [mind-wait_to_activate mind learned_reactive physical empty_right_hand [get_right_hand_object_name mind]]]]
+						    [mind-wait_to_activate mind learned_reactive physical empty_right_hand ]]]
 					  [prog 
 					   [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
 					   [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]]]
@@ -328,7 +328,7 @@ does empty right hand need argument target??!?!?!?!?!?!?!? fghjkl
 				  [if [> [get [get this body] arm_length] [have [lookup_visual_object [get_visual_objects mind] target]lookup  `distance]]
 				      [if [eq '' [get_left_hand_object_name mind]]
 					  [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]
-					[mind-wait_to_activate mind learned_reactive physical empty_left_hand [get_right_hand_object_name mind]]]
+					[mind-wait_to_activate mind learned_reactive physical empty_left_hand ]]
 				    [prog 
 				     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
 				     [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]]]

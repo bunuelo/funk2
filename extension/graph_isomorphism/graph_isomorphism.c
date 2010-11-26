@@ -475,12 +475,16 @@ f2ptr f2__error_correcting_graph_isomorphism_type__new(f2ptr cause) {
 }
 
 
+f2ptr raw__graph_isomorphism__isomorphism__cost(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
+  f2ptr args_iter = args;
+  f2ptr isomorphism = f2__cons__car(cause, args_iter); args_iter = f2__cons__cdr(cause, args_iter);
+  return raw__error_correcting_graph_isomorphism__cost(cause, isomorphism);
+}
+
 f2ptr raw__graph_isomorphism__isomorphism__cost_compare(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
   f2ptr args_iter = args;
-  f2ptr isomorphism_1 = f2__cons__car(cause, args_iter); args_iter = f2__cons__cdr(cause, args_iter);
-  f2ptr isomorphism_2 = f2__cons__car(cause, args_iter);
-  f2ptr isomorphism_1__cost = raw__error_correcting_graph_isomorphism__cost(cause, isomorphism_1);
-  f2ptr isomorphism_2__cost = raw__error_correcting_graph_isomorphism__cost(cause, isomorphism_2);
+  f2ptr isomorphism_1__cost = f2__cons__car(cause, args_iter); args_iter = f2__cons__cdr(cause, args_iter);
+  f2ptr isomorphism_2__cost = f2__cons__car(cause, args_iter);
   s64   isomorphism_1__cost__i = f2integer__i(isomorphism_1__cost, cause);
   s64   isomorphism_2__cost__i = f2integer__i(isomorphism_2__cost, cause);
   return f2bool__new(isomorphism_1__cost__i < isomorphism_2__cost__i);
@@ -491,10 +495,13 @@ f2ptr raw__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that, s64 beam_widt
   f2ptr that__node_set           = f2__graph__node_set(cause, that);
   f2ptr this__edge_set           = f2__graph__edge_set(cause, this);
   f2ptr that__edge_set           = f2__graph__edge_set(cause, that);
-  f2ptr compare_cfunk            = f2cfunk__new(cause, nil, 
+  f2ptr value_cfunk              = f2cfunk__new(cause, nil, 
+						f2list1__new(cause, new__symbol(cause, "x")),
+						f2pointer__new(cause, raw_executable__to__relative_ptr(raw__graph_isomorphism__isomorphism__cost)), global_environment(), nil, nil);
+  f2ptr value_compare_cfunk      = f2cfunk__new(cause, nil, 
 						f2list2__new(cause, new__symbol(cause, "x"), new__symbol(cause, "y")),
 						f2pointer__new(cause, raw_executable__to__relative_ptr(raw__graph_isomorphism__isomorphism__cost_compare)), global_environment(), nil, nil);
-  f2ptr search_beam_redblacktree = f2__redblacktree__new(cause, compare_cfunk);
+  f2ptr search_beam_redblacktree = f2__redblacktree__new(cause, value_cfunk, value_compare_cfunk);
   
   f2ptr initial_isomorphism;
   {
@@ -539,7 +546,7 @@ f2ptr raw__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that, s64 beam_widt
   raw__redblacktree__insert(cause, search_beam_redblacktree, initial_isomorphism);
   f2ptr best_complete_isomorphism = nil;
   while (! raw__redblacktree__empty(cause, search_beam_redblacktree)) {
-    f2ptr expansion_redblacktree = f2__redblacktree__new(cause, compare_cfunk);
+    f2ptr expansion_redblacktree = f2__redblacktree__new(cause, value_cfunk, value_compare_cfunk);
     {
       s64 beam_index = 0;
       while ((beam_index < beam_width) &&

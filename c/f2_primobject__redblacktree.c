@@ -423,12 +423,12 @@ f2ptr raw__redblacktree_node__simple_binary_insert(f2ptr cause, f2ptr this, f2pt
   f2ptr this__key         = f2__redblacktree_node__key(cause, this);
   f2ptr fiber             = f2__this__fiber(cause);
   f2ptr new_node__key__value = f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, new_node__key));
-  if (raw__larva__is_type(cause, new_code__key__value)) {
-    return new_code__key__value;
+  if (raw__larva__is_type(cause, new_node__key__value)) {
+    return new_node__key__value;
   }
   f2ptr this__key__value = f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, this__key));
   if (raw__larva__is_type(cause, this__key__value)) {
-    return new_code__key__value;
+    return this__key__value;
   }
   f2ptr comparison_result = f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, new_node__key__value, this__key__value));
   if (raw__larva__is_type(cause, comparison_result)) {

@@ -1041,8 +1041,18 @@ def_pcfunk2(redblacktree__terminal_print_with_frame, this, terminal_print_frame,
 
 f2ptr f2redblacktree__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2redblacktree__primobject_type__new(cause);
-  {char* slot_name = "empty";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.empty__funk);}
-  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__funk);}
+  {char* slot_name = "insert";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.insert__funk);}
+  {char* slot_name = "remove";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.remove__funk);}
+  {char* slot_name = "minimum";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum__funk);}
+  {char* slot_name = "maximum";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum__funk);}
+  {char* slot_name = "minimum_not_less_than-node";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum_not_less_than__node__funk);}
+  {char* slot_name = "minimum_not_less_than";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum_not_less_than__funk);}
+  {char* slot_name = "maximum_not_greater_than-node"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum_not_greater_than__node__funk);}
+  {char* slot_name = "maximum_not_greater_than";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum_not_greater_than__funk);}
+  {char* slot_name = "leaves";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.leaves__funk);}
+  {char* slot_name = "size";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.size__funk);}
+  {char* slot_name = "empty";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.empty__funk);}
+  {char* slot_name = "terminal_print_with_frame";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -1068,16 +1078,35 @@ void f2__primobject__redblacktree__initialize() {
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__new, comparison_funk, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__funk = never_gc(cfunk);}
   
-  f2__primcfunk__init__2(redblacktree__insert,                         this, key,                                      "Insert one instance of a key into a red-black-tree.");
-  f2__primcfunk__init__2(redblacktree__remove,                         this, key,                                      "Remove one instance of a key from a red-black-tree.");
-  f2__primcfunk__init__1(redblacktree__minimum,                        this,                                           "Returns the minimum key within a red-black-tree or nil if tree is empty.");
-  f2__primcfunk__init__1(redblacktree__maximum,                        this,                                           "Returns the maximum key within a red-black-tree or nil if tree is empty.");
-  f2__primcfunk__init__4(redblacktree__minimum_not_less_than__node,    this, value_funk, value_comparison_funk, value, "Returns the node whose key value as retrieved by value_funk is the minimum as determined by value_comparison_funk that is not less than the given value.");
-  f2__primcfunk__init__4(redblacktree__minimum_not_less_than,          this, value_funk, value_comparison_funk, value, "Returns the key of the node whose key value as retrieved by value_funk is the minimum as determined by value_comparison_funk that is not less than the given value.");
-  f2__primcfunk__init__4(redblacktree__maximum_not_greater_than__node, this, value_funk, value_comparison_funk, value, "Returns the node whose key value as retrieved by value_funk is the maximum as determined by value_comparison_funk that is not greater than the given value.");
-  f2__primcfunk__init__4(redblacktree__maximum_not_greater_than,       this, value_funk, value_comparison_funk, value, "Returns the key of the node whose key value as retrieved by value_funk is the maximum as determined by value_comparison_funk that is not greater than the given value.");
-  f2__primcfunk__init__1(redblacktree__leaves,                         this,                                           "Returns all leaves in this red-black-tree in order in a new list.");
-  f2__primcfunk__init__1(redblacktree__size,                           this,                                           "Returns the number of leaves in this red-black-tree.");
+  {char* symbol_str = "insert"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.insert__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(redblacktree__insert, this, key, cfunk, 0, "Insert one instance of a key into a red-black-tree."); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.insert__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "remove"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.remove__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(redblacktree__remove, this, key, cfunk, 0, "Remove one instance of a key from a red-black-tree."); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.remove__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "minimum"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__minimum, this, cfunk, 0, "Returns the minimum key within a red-black-tree or nil if tree is empty."); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "maximum"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__maximum, this, cfunk, 0, "Returns the maximum key within a red-black-tree or nil if tree is empty."); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "minimum_not_less_than-node"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum_not_less_than__node__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__4_arg(redblacktree__minimum_not_less_than__node, this, value_funk, value_comparison_funk, value, cfunk, 0, "Returns the node whose key value as retrieved by value_funk is the minimum as determined by value_comparison_funk that is not less than the given value."); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum_not_less_than__node__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "minimum_not_less_than"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum_not_less_than__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__4_arg(redblacktree__minimum_not_less_than, this, value_funk, value_comparison_funk, value, cfunk, 0, "Returns the key of the node whose key value as retrieved by value_funk is the minimum as determined by value_comparison_funk that is not less than the given value."); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum_not_less_than__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "maximum_not_greater_than-node"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum_not_greater_than__node__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__4_arg(redblacktree__maximum_not_greater_than__node, this, value_funk, value_comparison_funk, value, cfunk, 0, "Returns the node whose key value as retrieved by value_funk is the maximum as determined by value_comparison_funk that is not greater than the given value."); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum_not_greater_than__node__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "maximum_not_greater_than"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum_not_greater_than__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__4_arg(redblacktree__maximum_not_greater_than, this, value_funk, value_comparison_funk, value, cfunk, 0, "Returns the key of the node whose key value as retrieved by value_funk is the maximum as determined by value_comparison_funk that is not greater than the given value."); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum_not_greater_than__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "leaves"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.leaves__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__leaves, this, cfunk, 0, "Returns all leaves in this red-black-tree in order in a new list."); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.leaves__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "size"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.size__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__size, this, cfunk, 0, "Returns the number of leaves in this red-black-tree."); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.size__funk = never_gc(cfunk);}
   
   {char* symbol_str = "empty"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.empty__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__empty, this, cfunk, 0, "Returns whether this redblacktree is empty."); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.empty__funk = never_gc(cfunk);}

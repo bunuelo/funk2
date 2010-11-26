@@ -17,12 +17,12 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deftypefunk redblacktree execute insert  [key] [redblacktree-insert  this key]]
-[deftypefunk redblacktree execute remove  [key] [redblacktree-remove  this key]]
-[deftypefunk redblacktree get     minimum []    [redblacktree-minimum this]]
-[deftypefunk redblacktree get     maximum []    [redblacktree-maximum this]]
-[deftypefunk redblacktree get     leaves  []    [redblacktree-leaves  this]]
-[deftypefunk redblacktree get     size    []    [redblacktree-size    this]]
+`[deftypefunk redblacktree execute insert  [key] [redblacktree-insert  this key]]
+`[deftypefunk redblacktree execute remove  [key] [redblacktree-remove  this key]]
+`[deftypefunk redblacktree get     minimum []    [redblacktree-minimum this]]
+`[deftypefunk redblacktree get     maximum []    [redblacktree-maximum this]]
+`[deftypefunk redblacktree get     leaves  []    [redblacktree-leaves  this]]
+`[deftypefunk redblacktree get     size    []    [redblacktree-size    this]]
 
-[defunk redblacktree [] [new redblacktree &<]]
+`[defunk redblacktree [] [new redblacktree &<]]
 

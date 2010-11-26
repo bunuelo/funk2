@@ -26,6 +26,26 @@
 
 typedef struct funk2_object_type__redblacktree__slot_s funk2_object_type__redblacktree__slot_t;
 declare_object_type_2_slot(redblacktree, head, comparison_funk,
+			   f2ptr insert__symbol;
+			   f2ptr insert__funk;
+			   f2ptr remove__symbol;
+			   f2ptr remove__funk;
+			   f2ptr minimum__symbol;
+			   f2ptr minimum__funk;
+			   f2ptr maximum__symbol;
+			   f2ptr maximum__funk;
+			   f2ptr minimum_not_less_than__node__symbol;
+			   f2ptr minimum_not_less_than__node__funk;
+			   f2ptr minimum_not_less_than__symbol;
+			   f2ptr minimum_not_less_than__funk;
+			   f2ptr maximum_not_greater_than__node__symbol;
+			   f2ptr maximum_not_greater_than__node__funk;
+			   f2ptr maximum_not_greater_than__symbol;
+			   f2ptr maximum_not_greater_than__funk;
+			   f2ptr leaves__symbol;
+			   f2ptr leaves__funk;
+			   f2ptr size__symbol;
+			   f2ptr size__funk;
 			   f2ptr empty__symbol;
 			   f2ptr empty__funk;
 			   f2ptr terminal_print_with_frame__symbol;

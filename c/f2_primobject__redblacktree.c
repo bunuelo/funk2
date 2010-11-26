@@ -886,15 +886,15 @@ f2ptr raw__redblacktree__minimum_not_less_than(f2ptr cause, f2ptr this, f2ptr va
   return key;
 }
 
-f2ptr f2__redblacktree__minimum_not_greater_than(f2ptr cause, f2ptr this, f2ptr value_funk, f2ptr value_comparison_funk, f2ptr value) {
+f2ptr f2__redblacktree__minimum_not_less_than(f2ptr cause, f2ptr this, f2ptr value_funk, f2ptr value_comparison_funk, f2ptr value) {
   if ((! raw__redblacktree__is_type(cause, this)) ||
       (! raw__funkable__is_type(cause, value_funk)) ||
       (! raw__funkable__is_type(cause, value_comparison_funk))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__redblacktree__minimum_not_greater_than(cause, this, value_funk, value_comparison_funk, value);
+  return raw__redblacktree__minimum_not_less_than(cause, this, value_funk, value_comparison_funk, value);
 }
-def_pcfunk4(redblacktree__minimum_not_greater_than, this, value_funk, value_comparison_funk, value, return f2__redblacktree__minimum_not_greater_than(this_cause, this, value_funk, value_comparison_funk, value));
+def_pcfunk4(redblacktree__minimum_not_less_than, this, value_funk, value_comparison_funk, value, return f2__redblacktree__minimum_not_less_than(this_cause, this, value_funk, value_comparison_funk, value));
 
 
 f2ptr raw__redblacktree__maximum_not_greater_than__node(f2ptr cause, f2ptr this, f2ptr value_funk, f2ptr value_comparison_funk, f2ptr value) {

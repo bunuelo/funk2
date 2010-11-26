@@ -53,32 +53,47 @@ right now, changed [get mind objects] to [get mind isis_object_frame], which sti
 hold objects, test ralph overshoot. make movies!
 use object
 
+[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
+	command `learned_reactive `physical `empty_right_hand `loaf+167743436]
+does empty right hand need argument target??!?!?!?!?!?!?!? fghjkl
 '
 
 
-[deftypefunk mind get visual_objects []
+[defunk get_visual_objects [mind]
   [get [get [get mind layer `builtin_reactive] agency `sensory] visual_objects]]
 
-[deftypefunk mind get left_hand_object_name []
+[defunk get_left_hand_object_name [mind]
  [get [get [get mind layer `builtin_reactive] agency `sensory] left_hand_object_name]]
 
-[deftypefunk mind get right_hand_object_name []
+[defunk get_right_hand_object_name [mind]
  [get [get [get mind layer `builtin_reactive] agency `sensory] right_hand_object_name]]
+
+
+
 
 [defunk demo_pick_up_loaf_and_butter []
   [print 1]
   [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
 	command `learned_reactive `physical `look_for_vertically `loaf]
+  [while [null [have [get [get [get [get isis_world agent_mind `Lauren] layer `learned_reactive] agency `physical] 
+			  resource `look_for_vertically] lookup `my_current_object]]
+    [sleep 3]]
   [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
 	command `learned_reactive `physical `hold_with_right_hand 
 	[have [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] 
-		   resource `look_for] lookup `my_current_object]]
+		   resource `look_for_vertically] lookup `my_current_object]]
+  
   [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
 	command `learned_reactive `physical `look_for_vertically `butter]
+
+  [while [null [string-contains [get [have [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] 
+		   resource `look_for_vertically] lookup `my_current_object] as-string] 'butter']]
+    [sleep 3]]
+  
   [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
 	command `learned_reactive `physical `hold_with_right_hand 
 	[have [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] 
-		   resource `look_for] lookup `my_current_object]]
+		   resource `look_for_vertically] lookup `my_current_object]]]
   
 
 [defunk demo_hold [object_name]
@@ -164,7 +179,7 @@ use object
 			[let* [[body  [get this body]]
 			       [mind  [get body mind]]
 			       [name  [get body name]]]
-			  [have this-resource think_to_self 'Turning right is starting.']
+			  [have this-resource think_to_self 'Looking down is starting.']
 			  [mind-wait_to_activate mind builtin_reactive physical look_down_start]
 			  [let [[starting_time [get body time_step]]]
 			    [while [< [- [get body time_step] starting_time] steps] 
@@ -179,7 +194,7 @@ use object
 			[let* [[body  [get this body]]
 			       [mind  [get body mind]]
 			       [name  [get body name]]]
-			  [have this-resource think_to_self 'Turning right is starting.']
+			  [have this-resource think_to_self 'Looking up is starting.']
 			  [mind-wait_to_activate mind builtin_reactive physical look_up_start]
 			  [let [[starting_time [get body time_step]]]
 			    [while [< [- [get body time_step] starting_time] steps] 
@@ -187,6 +202,21 @@ use object
 			    [mind-wait_to_activate mind builtin_reactive physical look_up_stop]]]]]
        nil]]
 
+`[deframe level_head_resource [resource] []
+  [new []
+       [construct resource `level_head
+		  [funk [steps]
+			[let* [[body  [get this body]]
+			       [mind  [get body mind]]
+			       [name  [get body name]]]
+			  [have this-resource think_to_self 'Leveling head is starting.']
+			  [while [
+			  [mind-wait_to_activate mind builtin_reactive physical look_up_start]
+			  [let [[starting_time [get body time_step]]]
+			    [while [< [- [get body time_step] starting_time] steps] 
+			      [millisleep 100]]
+			    [mind-wait_to_activate mind builtin_reactive physical look_up_stop]]]]]
+       nil]]]]
 
 
 [deframe move_forward_resource [resource] []
@@ -238,14 +268,14 @@ use object
 
 [deframe empty_right_hand_resource [resource] []
   [new []
-       [construct resource `empty_from_right_hand
+       [construct resource `empty_right_hand
 		  [funk []
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]
 			      [name  [get body name]]
 			      ]
 			  [have this-resource think_to_self 'Emptying right hand is starting.']
-			  [mind-wait_to_activate mind builtin_reactive physical drop_from_right_hand]]]]
+			  [mind-wait_to_activate mind builtin_reactive physical drop_from_right_hand ]]]]
        nil]]
 
 
@@ -259,16 +289,16 @@ use object
 			       ] 
 			  [have this-resource think_to_self 'hold with right hand is starting']
 			  [print target]
-			  [if [get mind visual_objects]
+			  [if [get_visual_objects mind]
 			      [prog [print 11]
-				    [if [lookup_visual_object [get mind visual_objects] target]
-					[if [> [get [get this body] arm_length] [have [lookup_visual_object [get mind visual_objects] target] lookup `distance]]
+				    [if [lookup_visual_object [get_visual_objects mind] target]
+					[if [> [get [get this body] arm_length] [have [lookup_visual_object [get_visual_objects mind] target] lookup `distance]]
 					    [prog [print 22]
-						  [if [eq '' [get mind right_hand_object_name]]
+						  [if [equals '' [get_right_hand_object_name mind]]
 						      [prog [print 'nothing in right hand'] 
 							    [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]
 							    [print 'activated built-in pick_up']]
-						    [mind-wait_to_activate mind learned_reactive physical empty_right_hand]]]
+						    [mind-wait_to_activate mind learned_reactive physical empty_right_hand ]]]
 					  [prog 
 					   [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
 					   [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]]]
@@ -293,12 +323,12 @@ use object
 			      ] 
 			  [have this-resource think_to_self 'hold with left hand is starting']
 			  [print target]
-			  [if [get mind visual_objects]
-			      [if [lookup_visual_object [get mind visual_objects] target]
-				  [if [> [get [get this body] arm_length] [have [lookup_visual_object [get mind visual_objects] target]lookup  `distance]]
-				      [if [eq '' [get mind left_hand_object_name]]
+			  [if [get_visual_objects mind]
+			      [if [lookup_visual_object [get_visual_objects mind] target]
+				  [if [> [get [get this body] arm_length] [have [lookup_visual_object [get_visual_objects mind] target]lookup  `distance]]
+				      [if [eq '' [get_left_hand_object_name mind]]
 					  [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]
-					[mind-wait_to_activate mind learned_reactive physical empty_left_hand]]
+					[mind-wait_to_activate mind learned_reactive physical empty_left_hand ]]
 				    [prog 
 				     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards target]
 				     [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]]]
@@ -329,9 +359,9 @@ use object
 			  [let[[ fridge [have [get [get [get mind layer `builtin_reactive] agency `physical] resource `look_for_resource] lookup `my_current_object]]]
 			    [print 'ha']
 			    
-			    [if [get mind visual_objects]
-				[if [lookup_visual_object [get mind visual_objects] fridge]
-				    [if [> [get [get this body] arm_length] [have [lookup_visual_object [get mind visual_objects] fridge] lookup  `distance]]
+			    [if [get_visual_objects mind]
+				[if [lookup_visual_object [get_visual_objects mind] fridge]
+				    [if [> [get [get this body] arm_length] [have [lookup_visual_object [get_visual_objects mind] fridge] lookup  `distance]]
 					[mind-wait_to_activate mind builtin_reactive physical open_fridge]
 				      [prog 
 				       [mind-wait_to_activate mind learned_reactive physical walk_directly_towards fridge]
@@ -377,9 +407,9 @@ use object
 			  [have this-resource think_to_self 'center_body_on_object activated']
 			  [labels[[ turn_left_and_right []
 							[print 'here']
-							[if [get mind visual_objects]
-							    [if [lookup_visual_object [get mind visual_objects] desired_object] 
-								[let [[retina_position_horizontal [have [lookup_visual_object [get mind visual_objects] desired_object] lookup `retina_position_horizontal]]]
+							[if [get_visual_objects mind]
+							    [if [lookup_visual_object [get_visual_objects mind] desired_object] 
+								[let [[retina_position_horizontal [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `retina_position_horizontal]]]
 								  [cond [[>  retina_position_horizontal 0.4]
 									 [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
 									       [mind-wait_to_activate mind learned_reactive physical turn_right 1]
@@ -415,13 +445,13 @@ use object
 			  [mind-wait_to_activate mind learned_reactive physical center_body_on desired_object]
 			  [labels [[cautiously_walk []
 						    [cond [[and [null [have this check_obstacle]] 
-								[< [get [get this body] arm_length] [have [lookup_visual_object [get mind visual_objects] desired_object] lookup `distance]]]
+								[< [get [get this body] arm_length] [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
 							   [prog [mind-wait_to_activate mind learned_reactive physical move_forward 1]
 								 [cautiously_walk]]]
-							  [[> [get [get this body] arm_length] [have [lookup_visual_object [get mind visual_objects] desired_object] lookup `distance]]
+							  [[> [get [get this body] arm_length] [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]
 							 nil]
 							  [[and [have this check_obstacle] 
-								[< [get [get this body] arm_length] [have [lookup_visual_object [get mind visual_objects] desired_object] lookup `distance]]]
+								[< [get [get this body] arm_length] [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
 							   [mind-wait_to_activate mind learned_reactive physical avoid_obstacle desired_object [have this check_obstacle]]]
 							  [t
 							   [print 'weird, no conditions applied']]]]
@@ -444,12 +474,12 @@ use object
 			    [while  [null achieved]
 			      [have this-resource think_to_self ' not achieved']
 			      
-			      [if [get mind visual_objects]
-				  [if [lookup_visual_object [get mind visual_objects] desired_object]
-				      [if [< [get [get this body] arm_length] [have [lookup_visual_object [get mind visual_objects] desired_object] lookup `distance]]
+			      [if [get_visual_objects mind]
+				  [if [lookup_visual_object [get_visual_objects mind] desired_object]
+				      [if [< [get [get this body] arm_length] [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]
 					  [prog 
-					   [have this-resource think_to_self 'current distance:' [have [lookup_visual_object [get mind visual_objects] desired_object] lookup `distance]]
-					   [while [< [get [get this body] arm_length] [have [lookup_visual_object [get mind visual_objects] desired_object] lookup `distance]]
+					   [have this-resource think_to_self 'current distance:' [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]
+					   [while [< [get [get this body] arm_length] [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]
 					     [have this-resource think_to_self 'yes object, activating center on']
 					     [mind-wait_to_activate mind learned_reactive physical center_body_on desired_object]
 					     
@@ -457,7 +487,7 @@ use object
 					     [mind-wait_to_activate mind learned_reactive physical move_forward 1]
 					     
 					     [print 'end of while loop']
-					     [have this-resource think_to_self 'current distance:' [have [lookup_visual_object [get mind visual_objects] desired_object] lookup `distance]]
+					     [have this-resource think_to_self 'current distance:' [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]
 					     [print 'printed current distance']]
 					   [have this-resource think_to_self 'object within arm_length now']]
 					[prog [have this-resource think_to_self 'finally got it']
@@ -487,32 +517,34 @@ use object
 			       [name  [get body name]]
 			       
 			       ]
-			  [let [[patience 30]]
+			  [let [[patience 15]]
 			    [have this-resource think_to_self 'look_for activated']
 			    [while 
 				[> patience 0]
 			      [have this-resource think_to_self 'I still have patience']
 			      [print 'here']
 
-			      [if [null [get mind visual_objects]]
+			      [if [null [get_visual_objects mind]]
 				  [prog 
 				   [have this-resource think_to_self  'no objects in view']
 				   [mind-wait_to_activate mind learned_reactive physical turn_left 1]
 				   ]
-				[if [null [visual_objects_contain_object_type [get mind visual_objects] desired_object_type]]
-				    [prog [have this-resource think_to_self 'i see these objects:' [get mind visual_objects]]
+				[if [null [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type]]
+				    [prog [have this-resource think_to_self 'i see these objects:' [get_visual_objects mind]]
 					  [mind-wait_to_activate mind learned_reactive physical turn_left 1]
 					  [print 'activated turn-left']
 					[= patience [- patience 1]]
 					]
 				  [prog [= patience 0]
-					[= my_current_object [visual_objects_contain_object_type [get mind visual_objects] desired_object_type] ]
+					[= my_current_object [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type] ]
 					[have this-resource think_to_self 'found'my_current_object ]
 					]]]]
-			    [have this-resource think_to_self 'finished searching']]]]]
+			    [if [null my_current_object]
+				[mind-wait_to_activate mind learned_reactive physical look_for_vertically desired_object_type]
+			      [have this-resource think_to_self 'finished searching']]]]]]
        nil]]
 
-[deframe look_for_resource_vertically [resource] [[my_current_object nil]]
+[deframe look_for_vertically_resource [resource] [[my_current_object nil]]
   [new []
        [construct resource `look_for_vertically
 		  [funk [desired_object_type]
@@ -522,28 +554,36 @@ use object
 			       [name  [get body name]]
 			       
 			       ]
-			  [let [[patience 30]]
+			  [let [[patience 10]]
 			    [have this-resource think_to_self 'look_for_vertically activated']
 			    [while 
 				[> patience 0]
 			      [have this-resource think_to_self 'I still have patience']
-			      [if [null [get mind visual_objects]]
+			      [if [null [get_visual_objects mind]]
 				  [prog 
 				   [have this-resource think_to_self  'no objects in view']
-				   [mind-wait_to_activate mind learned_reactive physical turn_left 1]
+				   [mind-wait_to_activate mind learned_reactive physical look_down 1]
 				   ]
-				[if [null [visual_objects_contain_object_type [get mind visual_objects] desired_object_type]]
-				    [prog [have this-resource think_to_self 'i see these objects:' [get mind visual_objects]]
+				[if [null [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type]]
+				    [prog [have this-resource think_to_self 'i see these objects:' [get_visual_objects mind]]
 					  [mind-wait_to_activate mind learned_reactive physical look_down 1]
 					  [print 'activated look_down']
 					[= patience [- patience 1]]
 					]
 				  [prog [= patience 0]
-					[= my_current_object [visual_objects_contain_object_type [get mind visual_objects] desired_object_type] ]
+					[= my_current_object [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type] ]
 					[have this-resource think_to_self 'found'my_current_object ]
 					]]]]
 			    [have this-resource think_to_self 'finished searching vertically']]]]]
        nil]]
+
+'[while [neck position not the lowest]
+   [look down]]
+ [while [neck position not the highest]
+   [look up]
+ [if no found]
+   [level head]'
+ 
 
 [deframe search_for_resource [resource] []
   [new []
@@ -559,13 +599,13 @@ use object
 				[> patience 0]
 			      [have this-resource think_to_self 'I still have patience']
 
-			      [if [null [get mind visual_objects]]
+			      [if [null [get_visual_objects mind]]
 				  [prog 
 				   [have this-resource think_to_self  'no objects in view']
 				   [mind-wait_to_activate mind learned_reactive physical turn_left 1]
 				   ]
-				[if [null [lookup_visual_object [get mind visual_objects] desired_object]]
-				    [prog [have this-resource think_to_self 'i see these objects:' [get mind visual_objects]]
+				[if [null [lookup_visual_object [get_visual_objects mind] desired_object]]
+				    [prog [have this-resource think_to_self 'i see these objects:' [get_visual_objects mind]]
 					  [mind-wait_to_activate mind learned_reactive physical turn_left 1]
 					  [print 'activated turn-left']
 					[= patience [- patience 1]]
@@ -592,7 +632,7 @@ use object
 							    [while [and [have this check_obstacle desired_object] [> patience 0]]
 							      [mind-wait_to_activate mind learned_reactive physical move_forward 3]
 							      [mind-wait_to_activate mind learned_reactive physical center_head_on obstacle]
-							      [let [[distance [have [have [get mind visual_objects] lokup desired_object] lookup `distance]]]
+							      [let [[distance [have [have [get_visual_objects mind] lokup desired_object] lookup `distance]]]
 								[cond [[> distance 8]
 								       [mind-wait_to_activate mind learned_reactive physical turn_left 2]]
 								      [[> distance 2]
@@ -605,7 +645,7 @@ use object
 							  [while [and [have this check_obstacle desired_object] [patience >0]]
 							    [mind-wait_to_activate mind learned_reactive physical move_forward 3]
 							    [mind-wait_to_activate mind learned_reactive physical center_head_on obstacle]
-							    [let [[distance [have [lookup_visual_object [get mind visual_objects] desired_object] lookup `distance]]]
+							    [let [[distance [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
 							      [cond [[> distance 8]
 								     [mind-wait_to_activate mind learned_reactive physical turn_right 2]]
 								    [[> distance 2]
@@ -614,7 +654,7 @@ use object
 								     [mind-wait_to_activate mind learned_reactive physical move_forward 2]]]
 							      [mind-wait_to_activate mind learned_reactive physical search_for desired_object]
 							      [= patience [patience -1]]]]]]]]]
-				  [walk_around [> 0 [have [lookup_visual_object [get mind visual_objects] obstacle] lookup `retina_position_horizontal]]]]
+				  [walk_around [> 0 [have [lookup_visual_object [get_visual_objects mind] obstacle] lookup `retina_position_horizontal]]]]
 			  [mind-wait_to_activate mind learned_reactive physical walk_directly_towards desired_object]]]]
 		  
 		  nil]]
@@ -623,7 +663,9 @@ use object
 [deframe learned_reactive_physical_agency [agency] []
   [new []
        [construct agency `physical]
-       
+
+       [have this add_resource [new look_up_resource]]
+       [have this add_resource [new look_down_resource]]
        [have this add_resource [new turn_right_resource]]
        [have this add_resource [new turn_left_resource]]
        [have this add_resource [new move_forward_resource]]			
@@ -640,7 +682,11 @@ use object
        [have this add_resource [new search_for_resource]]
        [have this add_resource [new avoid_obstacle_resource]]
        [have this add_resource [new look_for_resource]]
+       [have this add_resource [new look_for_vertically_resource]]
        
        this]]
+
+[defmetro JJ-init []
+  `[isis_world-initialize '18.85.59.46']]
 
 

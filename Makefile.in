@@ -142,6 +142,16 @@ extension_frame_ball_libframe_ball_la_LINK = $(LIBTOOL) $(AM_V_lt) \
 	$(CCLD) $(extension_frame_ball_libframe_ball_la_CFLAGS) \
 	$(CFLAGS) $(extension_frame_ball_libframe_ball_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
+extension_graph_isomorphism_libgraph_isomorphism_la_LIBADD =
+am_extension_graph_isomorphism_libgraph_isomorphism_la_OBJECTS = extension/graph_isomorphism/extension_graph_isomorphism_libgraph_isomorphism_la-graph_isomorphism.lo
+extension_graph_isomorphism_libgraph_isomorphism_la_OBJECTS = $(am_extension_graph_isomorphism_libgraph_isomorphism_la_OBJECTS)
+extension_graph_isomorphism_libgraph_isomorphism_la_LINK = $(LIBTOOL) \
+	$(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CCLD) \
+	$(extension_graph_isomorphism_libgraph_isomorphism_la_CFLAGS) \
+	$(CFLAGS) \
+	$(extension_graph_isomorphism_libgraph_isomorphism_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 extension_image_libimage_la_LIBADD =
 am_extension_image_libimage_la_OBJECTS =  \
 	extension/image/extension_image_libimage_la-image.lo
@@ -180,6 +190,16 @@ extension_movie_libmovie_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(extension_movie_libmovie_la_CFLAGS) $(CFLAGS) \
 	$(extension_movie_libmovie_la_LDFLAGS) $(LDFLAGS) -o $@
+extension_semantic_frame_ball_libsemantic_frame_ball_la_LIBADD =
+am_extension_semantic_frame_ball_libsemantic_frame_ball_la_OBJECTS = extension/semantic_frame_ball/extension_semantic_frame_ball_libsemantic_frame_ball_la-semantic_frame_ball.lo
+extension_semantic_frame_ball_libsemantic_frame_ball_la_OBJECTS = $(am_extension_semantic_frame_ball_libsemantic_frame_ball_la_OBJECTS)
+extension_semantic_frame_ball_libsemantic_frame_ball_la_LINK =  \
+	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(extension_semantic_frame_ball_libsemantic_frame_ball_la_CFLAGS) \
+	$(CFLAGS) \
+	$(extension_semantic_frame_ball_libsemantic_frame_ball_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 extension_semantic_knowledge_base_libsemantic_knowledge_base_la_LIBADD =
 am_extension_semantic_knowledge_base_libsemantic_knowledge_base_la_OBJECTS = extension/semantic_knowledge_base/extension_semantic_knowledge_base_libsemantic_knowledge_base_la-semantic_knowledge_base.lo
 extension_semantic_knowledge_base_libsemantic_knowledge_base_la_OBJECTS = $(am_extension_semantic_knowledge_base_libsemantic_knowledge_base_la_OBJECTS)
@@ -335,20 +355,24 @@ SOURCES = $(extension_causality_libcausality_la_SOURCES) \
 	$(extension_fibermon_libfibermon_la_SOURCES) \
 	$(extension_forward_planner_libforward_planner_la_SOURCES) \
 	$(extension_frame_ball_libframe_ball_la_SOURCES) \
+	$(extension_graph_isomorphism_libgraph_isomorphism_la_SOURCES) \
 	$(extension_image_libimage_la_SOURCES) \
 	$(extension_image_sequence_libimage_sequence_la_SOURCES) \
 	$(extension_mindmon_libmindmon_la_SOURCES) \
 	$(extension_movie_libmovie_la_SOURCES) \
+	$(extension_semantic_frame_ball_libsemantic_frame_ball_la_SOURCES) \
 	$(extension_semantic_knowledge_base_libsemantic_knowledge_base_la_SOURCES) \
 	$(lib_libfunk2_la_SOURCES)
 DIST_SOURCES = $(extension_causality_libcausality_la_SOURCES) \
 	$(extension_fibermon_libfibermon_la_SOURCES) \
 	$(extension_forward_planner_libforward_planner_la_SOURCES) \
 	$(extension_frame_ball_libframe_ball_la_SOURCES) \
+	$(extension_graph_isomorphism_libgraph_isomorphism_la_SOURCES) \
 	$(extension_image_libimage_la_SOURCES) \
 	$(extension_image_sequence_libimage_sequence_la_SOURCES) \
 	$(extension_mindmon_libmindmon_la_SOURCES) \
 	$(extension_movie_libmovie_la_SOURCES) \
+	$(extension_semantic_frame_ball_libsemantic_frame_ball_la_SOURCES) \
 	$(extension_semantic_knowledge_base_libsemantic_knowledge_base_la_SOURCES) \
 	$(lib_libfunk2_la_SOURCES)
 ETAGS = etags
@@ -626,6 +650,8 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/movie/libmovie.la \
                   extension/forward_planner/libforward_planner.la \
                   extension/frame_ball/libframe_ball.la \
+                  extension/graph_isomorphism/libgraph_isomorphism.la \
+                  extension/semantic_frame_ball/libsemantic_frame_ball.la \
                   extension/semantic_knowledge_base/libsemantic_knowledge_base.la \
                   extension/mindmon/libmindmon.la \
                   extension/causality/libcausality.la
@@ -765,6 +791,8 @@ extension_image_sequence_libimage_sequence_la_SOURCES = extension/image_sequence
 extension_movie_libmovie_la_SOURCES = extension/movie/movie.c
 extension_forward_planner_libforward_planner_la_SOURCES = extension/forward_planner/forward_planner.c
 extension_frame_ball_libframe_ball_la_SOURCES = extension/frame_ball/frame_ball.c
+extension_graph_isomorphism_libgraph_isomorphism_la_SOURCES = extension/graph_isomorphism/graph_isomorphism.c
+extension_semantic_frame_ball_libsemantic_frame_ball_la_SOURCES = extension/semantic_frame_ball/semantic_frame_ball.c
 extension_semantic_knowledge_base_libsemantic_knowledge_base_la_SOURCES = extension/semantic_knowledge_base/semantic_knowledge_base.c
 extension_mindmon_libmindmon_la_SOURCES = extension/mindmon/mindmon.c
 extension_causality_libcausality_la_SOURCES = extension/causality/causality.c
@@ -801,6 +829,10 @@ extension_forward_planner_libforward_planner_la_LDFLAGS = $(lib_libfunk2_la_LDFL
 extension_forward_planner_libforward_planner_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_frame_ball_libframe_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_frame_ball_libframe_ball_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_graph_isomorphism_libgraph_isomorphism_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_graph_isomorphism_libgraph_isomorphism_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_semantic_frame_ball_libsemantic_frame_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_frame_ball_libsemantic_frame_ball_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_knowledge_base_libsemantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_knowledge_base_libsemantic_knowledge_base_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_mindmon_libmindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
@@ -941,6 +973,17 @@ extension/frame_ball/extension_frame_ball_libframe_ball_la-frame_ball.lo:  \
 	extension/frame_ball/$(DEPDIR)/$(am__dirstamp)
 extension/frame_ball/libframe_ball.la: $(extension_frame_ball_libframe_ball_la_OBJECTS) $(extension_frame_ball_libframe_ball_la_DEPENDENCIES) extension/frame_ball/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_frame_ball_libframe_ball_la_LINK) -rpath $(libdir) $(extension_frame_ball_libframe_ball_la_OBJECTS) $(extension_frame_ball_libframe_ball_la_LIBADD) $(LIBS)
+extension/graph_isomorphism/$(am__dirstamp):
+	@$(MKDIR_P) extension/graph_isomorphism
+	@: > extension/graph_isomorphism/$(am__dirstamp)
+extension/graph_isomorphism/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/graph_isomorphism/$(DEPDIR)
+	@: > extension/graph_isomorphism/$(DEPDIR)/$(am__dirstamp)
+extension/graph_isomorphism/extension_graph_isomorphism_libgraph_isomorphism_la-graph_isomorphism.lo:  \
+	extension/graph_isomorphism/$(am__dirstamp) \
+	extension/graph_isomorphism/$(DEPDIR)/$(am__dirstamp)
+extension/graph_isomorphism/libgraph_isomorphism.la: $(extension_graph_isomorphism_libgraph_isomorphism_la_OBJECTS) $(extension_graph_isomorphism_libgraph_isomorphism_la_DEPENDENCIES) extension/graph_isomorphism/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_graph_isomorphism_libgraph_isomorphism_la_LINK) -rpath $(libdir) $(extension_graph_isomorphism_libgraph_isomorphism_la_OBJECTS) $(extension_graph_isomorphism_libgraph_isomorphism_la_LIBADD) $(LIBS)
 extension/image/$(am__dirstamp):
 	@$(MKDIR_P) extension/image
 	@: > extension/image/$(am__dirstamp)
@@ -985,6 +1028,17 @@ extension/movie/extension_movie_libmovie_la-movie.lo:  \
 	extension/movie/$(DEPDIR)/$(am__dirstamp)
 extension/movie/libmovie.la: $(extension_movie_libmovie_la_OBJECTS) $(extension_movie_libmovie_la_DEPENDENCIES) extension/movie/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_movie_libmovie_la_LINK) -rpath $(libdir) $(extension_movie_libmovie_la_OBJECTS) $(extension_movie_libmovie_la_LIBADD) $(LIBS)
+extension/semantic_frame_ball/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_frame_ball
+	@: > extension/semantic_frame_ball/$(am__dirstamp)
+extension/semantic_frame_ball/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_frame_ball/$(DEPDIR)
+	@: > extension/semantic_frame_ball/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_frame_ball/extension_semantic_frame_ball_libsemantic_frame_ball_la-semantic_frame_ball.lo:  \
+	extension/semantic_frame_ball/$(am__dirstamp) \
+	extension/semantic_frame_ball/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_frame_ball/libsemantic_frame_ball.la: $(extension_semantic_frame_ball_libsemantic_frame_ball_la_OBJECTS) $(extension_semantic_frame_ball_libsemantic_frame_ball_la_DEPENDENCIES) extension/semantic_frame_ball/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_semantic_frame_ball_libsemantic_frame_ball_la_LINK) -rpath $(libdir) $(extension_semantic_frame_ball_libsemantic_frame_ball_la_OBJECTS) $(extension_semantic_frame_ball_libsemantic_frame_ball_la_LIBADD) $(LIBS)
 extension/semantic_knowledge_base/$(am__dirstamp):
 	@$(MKDIR_P) extension/semantic_knowledge_base
 	@: > extension/semantic_knowledge_base/$(am__dirstamp)
@@ -1518,6 +1572,8 @@ mostlyclean-compile:
 	-rm -f extension/forward_planner/extension_forward_planner_libforward_planner_la-forward_planner.lo
 	-rm -f extension/frame_ball/extension_frame_ball_libframe_ball_la-frame_ball.$(OBJEXT)
 	-rm -f extension/frame_ball/extension_frame_ball_libframe_ball_la-frame_ball.lo
+	-rm -f extension/graph_isomorphism/extension_graph_isomorphism_libgraph_isomorphism_la-graph_isomorphism.$(OBJEXT)
+	-rm -f extension/graph_isomorphism/extension_graph_isomorphism_libgraph_isomorphism_la-graph_isomorphism.lo
 	-rm -f extension/image/extension_image_libimage_la-image.$(OBJEXT)
 	-rm -f extension/image/extension_image_libimage_la-image.lo
 	-rm -f extension/image_sequence/extension_image_sequence_libimage_sequence_la-image_sequence.$(OBJEXT)
@@ -1526,6 +1582,8 @@ mostlyclean-compile:
 	-rm -f extension/mindmon/extension_mindmon_libmindmon_la-mindmon.lo
 	-rm -f extension/movie/extension_movie_libmovie_la-movie.$(OBJEXT)
 	-rm -f extension/movie/extension_movie_libmovie_la-movie.lo
+	-rm -f extension/semantic_frame_ball/extension_semantic_frame_ball_libsemantic_frame_ball_la-semantic_frame_ball.$(OBJEXT)
+	-rm -f extension/semantic_frame_ball/extension_semantic_frame_ball_libsemantic_frame_ball_la-semantic_frame_ball.lo
 	-rm -f extension/semantic_knowledge_base/extension_semantic_knowledge_base_libsemantic_knowledge_base_la-semantic_knowledge_base.$(OBJEXT)
 	-rm -f extension/semantic_knowledge_base/extension_semantic_knowledge_base_libsemantic_knowledge_base_la-semantic_knowledge_base.lo
 
@@ -1661,10 +1719,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@extension/fibermon/$(DEPDIR)/extension_fibermon_libfibermon_la-fibermon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/forward_planner/$(DEPDIR)/extension_forward_planner_libforward_planner_la-forward_planner.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/frame_ball/$(DEPDIR)/extension_frame_ball_libframe_ball_la-frame_ball.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/graph_isomorphism/$(DEPDIR)/extension_graph_isomorphism_libgraph_isomorphism_la-graph_isomorphism.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/image/$(DEPDIR)/extension_image_libimage_la-image.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/image_sequence/$(DEPDIR)/extension_image_sequence_libimage_sequence_la-image_sequence.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/mindmon/$(DEPDIR)/extension_mindmon_libmindmon_la-mindmon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/movie/$(DEPDIR)/extension_movie_libmovie_la-movie.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_frame_ball/$(DEPDIR)/extension_semantic_frame_ball_libsemantic_frame_ball_la-semantic_frame_ball.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_knowledge_base/$(DEPDIR)/extension_semantic_knowledge_base_libsemantic_knowledge_base_la-semantic_knowledge_base.Plo@am__quote@
 
 .c.o:
@@ -1726,6 +1786,14 @@ extension/frame_ball/extension_frame_ball_libframe_ball_la-frame_ball.lo: extens
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_frame_ball_libframe_ball_la_CFLAGS) $(CFLAGS) -c -o extension/frame_ball/extension_frame_ball_libframe_ball_la-frame_ball.lo `test -f 'extension/frame_ball/frame_ball.c' || echo '$(srcdir)/'`extension/frame_ball/frame_ball.c
 
+extension/graph_isomorphism/extension_graph_isomorphism_libgraph_isomorphism_la-graph_isomorphism.lo: extension/graph_isomorphism/graph_isomorphism.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_graph_isomorphism_libgraph_isomorphism_la_CFLAGS) $(CFLAGS) -MT extension/graph_isomorphism/extension_graph_isomorphism_libgraph_isomorphism_la-graph_isomorphism.lo -MD -MP -MF extension/graph_isomorphism/$(DEPDIR)/extension_graph_isomorphism_libgraph_isomorphism_la-graph_isomorphism.Tpo -c -o extension/graph_isomorphism/extension_graph_isomorphism_libgraph_isomorphism_la-graph_isomorphism.lo `test -f 'extension/graph_isomorphism/graph_isomorphism.c' || echo '$(srcdir)/'`extension/graph_isomorphism/graph_isomorphism.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/graph_isomorphism/$(DEPDIR)/extension_graph_isomorphism_libgraph_isomorphism_la-graph_isomorphism.Tpo extension/graph_isomorphism/$(DEPDIR)/extension_graph_isomorphism_libgraph_isomorphism_la-graph_isomorphism.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/graph_isomorphism/graph_isomorphism.c' object='extension/graph_isomorphism/extension_graph_isomorphism_libgraph_isomorphism_la-graph_isomorphism.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_graph_isomorphism_libgraph_isomorphism_la_CFLAGS) $(CFLAGS) -c -o extension/graph_isomorphism/extension_graph_isomorphism_libgraph_isomorphism_la-graph_isomorphism.lo `test -f 'extension/graph_isomorphism/graph_isomorphism.c' || echo '$(srcdir)/'`extension/graph_isomorphism/graph_isomorphism.c
+
 extension/image/extension_image_libimage_la-image.lo: extension/image/image.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_image_libimage_la_CFLAGS) $(CFLAGS) -MT extension/image/extension_image_libimage_la-image.lo -MD -MP -MF extension/image/$(DEPDIR)/extension_image_libimage_la-image.Tpo -c -o extension/image/extension_image_libimage_la-image.lo `test -f 'extension/image/image.c' || echo '$(srcdir)/'`extension/image/image.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/image/$(DEPDIR)/extension_image_libimage_la-image.Tpo extension/image/$(DEPDIR)/extension_image_libimage_la-image.Plo
@@ -1757,6 +1825,14 @@ extension/movie/extension_movie_libmovie_la-movie.lo: extension/movie/movie.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/movie/movie.c' object='extension/movie/extension_movie_libmovie_la-movie.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_movie_libmovie_la_CFLAGS) $(CFLAGS) -c -o extension/movie/extension_movie_libmovie_la-movie.lo `test -f 'extension/movie/movie.c' || echo '$(srcdir)/'`extension/movie/movie.c
+
+extension/semantic_frame_ball/extension_semantic_frame_ball_libsemantic_frame_ball_la-semantic_frame_ball.lo: extension/semantic_frame_ball/semantic_frame_ball.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_frame_ball_libsemantic_frame_ball_la_CFLAGS) $(CFLAGS) -MT extension/semantic_frame_ball/extension_semantic_frame_ball_libsemantic_frame_ball_la-semantic_frame_ball.lo -MD -MP -MF extension/semantic_frame_ball/$(DEPDIR)/extension_semantic_frame_ball_libsemantic_frame_ball_la-semantic_frame_ball.Tpo -c -o extension/semantic_frame_ball/extension_semantic_frame_ball_libsemantic_frame_ball_la-semantic_frame_ball.lo `test -f 'extension/semantic_frame_ball/semantic_frame_ball.c' || echo '$(srcdir)/'`extension/semantic_frame_ball/semantic_frame_ball.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/semantic_frame_ball/$(DEPDIR)/extension_semantic_frame_ball_libsemantic_frame_ball_la-semantic_frame_ball.Tpo extension/semantic_frame_ball/$(DEPDIR)/extension_semantic_frame_ball_libsemantic_frame_ball_la-semantic_frame_ball.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/semantic_frame_ball/semantic_frame_ball.c' object='extension/semantic_frame_ball/extension_semantic_frame_ball_libsemantic_frame_ball_la-semantic_frame_ball.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_frame_ball_libsemantic_frame_ball_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_frame_ball/extension_semantic_frame_ball_libsemantic_frame_ball_la-semantic_frame_ball.lo `test -f 'extension/semantic_frame_ball/semantic_frame_ball.c' || echo '$(srcdir)/'`extension/semantic_frame_ball/semantic_frame_ball.c
 
 extension/semantic_knowledge_base/extension_semantic_knowledge_base_libsemantic_knowledge_base_la-semantic_knowledge_base.lo: extension/semantic_knowledge_base/semantic_knowledge_base.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_knowledge_base_libsemantic_knowledge_base_la_CFLAGS) $(CFLAGS) -MT extension/semantic_knowledge_base/extension_semantic_knowledge_base_libsemantic_knowledge_base_la-semantic_knowledge_base.lo -MD -MP -MF extension/semantic_knowledge_base/$(DEPDIR)/extension_semantic_knowledge_base_libsemantic_knowledge_base_la-semantic_knowledge_base.Tpo -c -o extension/semantic_knowledge_base/extension_semantic_knowledge_base_libsemantic_knowledge_base_la-semantic_knowledge_base.lo `test -f 'extension/semantic_knowledge_base/semantic_knowledge_base.c' || echo '$(srcdir)/'`extension/semantic_knowledge_base/semantic_knowledge_base.c
@@ -2776,10 +2852,12 @@ clean-libtool:
 	-rm -rf extension/fibermon/.libs extension/fibermon/_libs
 	-rm -rf extension/forward_planner/.libs extension/forward_planner/_libs
 	-rm -rf extension/frame_ball/.libs extension/frame_ball/_libs
+	-rm -rf extension/graph_isomorphism/.libs extension/graph_isomorphism/_libs
 	-rm -rf extension/image/.libs extension/image/_libs
 	-rm -rf extension/image_sequence/.libs extension/image_sequence/_libs
 	-rm -rf extension/mindmon/.libs extension/mindmon/_libs
 	-rm -rf extension/movie/.libs extension/movie/_libs
+	-rm -rf extension/semantic_frame_ball/.libs extension/semantic_frame_ball/_libs
 	-rm -rf extension/semantic_knowledge_base/.libs extension/semantic_knowledge_base/_libs
 	-rm -rf lib/.libs lib/_libs
 
@@ -3021,6 +3099,8 @@ distclean-generic:
 	-rm -f extension/forward_planner/$(am__dirstamp)
 	-rm -f extension/frame_ball/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/frame_ball/$(am__dirstamp)
+	-rm -f extension/graph_isomorphism/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/graph_isomorphism/$(am__dirstamp)
 	-rm -f extension/image/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/image/$(am__dirstamp)
 	-rm -f extension/image_sequence/$(DEPDIR)/$(am__dirstamp)
@@ -3029,6 +3109,8 @@ distclean-generic:
 	-rm -f extension/mindmon/$(am__dirstamp)
 	-rm -f extension/movie/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/movie/$(am__dirstamp)
+	-rm -f extension/semantic_frame_ball/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/semantic_frame_ball/$(am__dirstamp)
 	-rm -f extension/semantic_knowledge_base/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_knowledge_base/$(am__dirstamp)
 	-rm -f lib/$(am__dirstamp)
@@ -3041,7 +3123,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -3089,7 +3171,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

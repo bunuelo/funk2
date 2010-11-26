@@ -30,7 +30,7 @@
 		    initial-result]]]]
 
 [deframe isis_visual_agent [moral_compass_visual_agent] []
-  [new [isis_name isis_agent_frame]
+  [new [isis_name isis_sensory_frame isis_agent_frame]
        [let [[isis_agent_class         [have isis_agent_frame lookup `class]]
 	     [isis_agent_action_frames [have isis_agent_frame lookup `actions]]]
 	 [let [[initial-agent_type                 [if [null isis_agent_class]
@@ -40,6 +40,7 @@
 	       [initial-retina_position_horizontal [have isis_agent_frame lookup `x_pos]]
 	       [initial-retina_position_vertical   [have isis_agent_frame lookup `y_pos]]
 	       [initial-distance                   [have isis_agent_frame lookup `distance]]
+	       [initial-preposition_frame          [new frame]]
 	       [initial-actions                    [if isis_agent_action_frames
 						       [mapcar [funk [isis_agent_action_frame]
 								     [new isis_visual_agent_action isis_agent_action_frame]]
@@ -51,6 +52,7 @@
 		      initial-retina_position_horizontal
 		      initial-retina_position_vertical
 		      initial-distance
+		      initial-preposition_frame
 		      initial-actions]
 	   ]]]]
 

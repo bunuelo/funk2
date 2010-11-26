@@ -22,17 +22,20 @@
 					      phenomenal_name
 					      retina_position_horizontal
 					      retina_position_vertical
-					      distance]
+					      distance
+					      preposition_frame]
   [new [initial-object_type
 	initial-phenomenal_name
 	initial-retina_position_horizontal
 	initial-retina_position_vertical
-	initial-distance]
+	initial-distance
+	initial-preposition_frame]
        [= object_type                initial-object_type]
        [= phenomenal_name            initial-phenomenal_name]
        [= retina_position_horizontal initial-retina_position_horizontal]
        [= retina_position_vertical   initial-retina_position_vertical]
        [= distance                   initial-distance]
+       [= preposition_frame          initial-preposition_frame]
        ]]
 
 

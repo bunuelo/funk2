@@ -47,19 +47,19 @@
   [set [get [get this agent_mind agent_name] agency layer_name agency_name] user_activate_resource resource_name]
   [set [get [get this agent_mimd agent_name] agency layer_name agency_name] user_activate_args     args]]
 
-[deftypefunk isis_world get agent_says [agent_name]
-  [get [get this agent_body agent_name] says]]
+`[deftypefunk isis_world get agent_says [agent_name]
+   [get [get this agent_body agent_name] says]]
 
-[deftypefunk isis_world execute sense_world [agent_name]
-  [let [[sense [isis-call [get this client] sense agent agent_name]]]
-    `[let [[agent_frame [frame]]]
-       [mapc [funk [sense_agent_name]
-		   [if [not [eq agent_name sense_agent_name]]
-		       [have agent_frame add sense_agent_name [frame distance       15.0
-								     recent_actions nil
-								     says           [get this agent_says sense_agent_name]]]]]
-	     [get this agent_names]]
-       [have sense add `agents agent_frame]]
+`[deftypefunk isis_world execute sense_world [agent_name]
+   [let [[sense [isis-call [get this client] sense agent agent_name]]]
+     `[let [[agent_frame [frame]]]
+	[mapc [funk [sense_agent_name]
+		    [if [not [eq agent_name sense_agent_name]]
+			[have agent_frame add sense_agent_name [frame distance       15.0
+								      recent_actions nil
+								      says           [get this agent_says sense_agent_name]]]]]
+	      [get this agent_names]]
+	[have sense add `agents agent_frame]]
      sense]]
 
 [deftypefunk isis_world get screenshot []

@@ -257,20 +257,29 @@ void depth_first_search_visit(f2ptr cause, f2ptr this, f2ptr node_parent_hash, f
   *root_to_leaf_list = f2__cons__new(cause, this, *root_to_leaf_list);
 }
 
+f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__cost(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
+  f2ptr operations = f2__cons__car(cause, args);
+  return f2__graph_edit_sequence__cost(cause, operations);
+}
+
 f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__cost_compare(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
-  f2ptr operations_1 = f2__cons__car(cause, args);
-  f2ptr operations_2 = f2__cons__car(cause, f2__cons__cdr(cause, args));
-  if (f2__integer__eq(cause, f2__graph_edit_sequence__cost(cause, operations_1), f2__graph_edit_sequence__cost(cause, operations_2))) {
-    return f2bool__new(operations_1 < operations_2);
+  f2ptr cost_1 = f2__cons__car(cause, args);
+  f2ptr cost_2 = f2__cons__car(cause, f2__cons__cdr(cause, args));
+  if (f2__integer__eq(cause, cost_1, cost_2)) {
+    return f2bool__new(cost_1 < cost_2);
   }
-  return f2__integer__less_than(cause, f2__graph_edit_sequence__cost(cause, operations_1), f2__graph_edit_sequence__cost(cause, operations_2));
+  return f2__integer__less_than(cause, cost_1, cost_2);
 }
 
 f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph, f2ptr cost_function) {
   
-  f2ptr compare_cfunk = f2cfunk__new(cause, nil, 
-                                     f2list2__new(cause, new__symbol(cause, "x"), new__symbol(cause, "y")),
-				     f2pointer__new(cause, raw_executable__to__relative_ptr(raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__cost_compare)), global_environment(), nil, nil);
+  f2ptr value_cfunk = f2cfunk__new(cause, nil, 
+				   f2list1__new(cause, new__symbol(cause, "x")),
+				   f2pointer__new(cause, raw_executable__to__relative_ptr(raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__cost)), global_environment(), nil, nil);
+  
+  f2ptr value_compare_cfunk = f2cfunk__new(cause, nil, 
+					   f2list2__new(cause, new__symbol(cause, "x"), new__symbol(cause, "y")),
+					   f2pointer__new(cause, raw_executable__to__relative_ptr(raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__cost_compare)), global_environment(), nil, nil);
   
   f2ptr graph_set             = f2__graph_decomposition_lattice__graph_set            (cause, this);
   //f2ptr node_set              = f2__graph_decomposition_lattice__node_set             (cause, this);
@@ -283,12 +292,12 @@ f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f
   set__iteration(cause, graph_set, graph,
 		 f2__set__add(cause, unsolved_graph_set, graph);
 		 );
-
+  
   f2ptr open_operations_rbt_hash   = f2__ptypehash__new(cause);   // rbt = redblacktree
   f2ptr closed_operations_rbt_hash = f2__ptypehash__new(cause);
   set__iteration(cause, graph_set, graph,
-		 f2__ptypehash__add(cause, open_operations_rbt_hash,   graph, f2__redblacktree__new(cause, compare_cfunk)); //f2__set__new(cause));
-		 f2__ptypehash__add(cause, closed_operations_rbt_hash, graph, f2__redblacktree__new(cause, compare_cfunk)); //f2__set__new(cause));
+		 f2__ptypehash__add(cause, open_operations_rbt_hash,   graph, f2__redblacktree__new(cause, value_cfunk, value_compare_cfunk));
+		 f2__ptypehash__add(cause, closed_operations_rbt_hash, graph, f2__redblacktree__new(cause, value_cfunk, value_compare_cfunk));
 		 );
 
   f2ptr leaf_graph_set = f2__graph_decomposition_lattice__leaf_graph_set(cause, this);

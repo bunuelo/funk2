@@ -1712,7 +1712,7 @@ f2ptr f2__common_variable_subgraph_possibility__new_with_compression(f2ptr cause
 }
 
 // no type checking, not meant to be user-accessible
-def_pcfunk2(common_variable_subgraph_possibility__worth, this, return raw__common_variable_subgraph_possibility__worth(this_cause, this));
+def_pcfunk1(common_variable_subgraph_possibility__worth, this, return raw__common_variable_subgraph_possibility__worth(this_cause, this));
 
 f2ptr raw__common_variable_subgraph_possibility__compare_worth(f2ptr cause, f2ptr this__worth, f2ptr that__worth) {
   s64 this__worth__i = f2integer__i(this__worth, cause);

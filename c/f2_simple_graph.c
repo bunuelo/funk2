@@ -1711,9 +1711,6 @@ f2ptr f2__common_variable_subgraph_possibility__new_with_compression(f2ptr cause
   return f2__common_variable_subgraph_possibility__new(cause, f2integer__new(cause, worth), common_subgraph, this_remaining_subgraph, that_remaining_subgraph);
 }
 
-f2ptr raw__common_variable_subgraph_possibility__worth(f2ptr cause, f2ptr this) {
-  return raw__common_variable_subgraph_possibility__worth(cause, this);
-}
 // no type checking, not meant to be user-accessible
 def_pcfunk2(common_variable_subgraph_possibility__worth, this, return raw__common_variable_subgraph_possibility__worth(this_cause, this));
 

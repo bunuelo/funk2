@@ -1073,6 +1073,40 @@ f2ptr f2__redblacktree__size(f2ptr cause, f2ptr this) {
 def_pcfunk1(redblacktree__size, this, return f2__redblacktree__size(this_cause, this));
 
 
+f2ptr raw__redblacktree__leaves_within_range(f2ptr cause, f2ptr this, f2ptr minimum, f2ptr maximum) {
+  f2ptr maximum_node = raw__redblacktree__maximum_not_greater_than_or_equal_to__node(cause, this, maximum);
+  if (raw__larva__is_type(cause, maximum_node)) {
+    return maximum_node;
+  }
+  f2ptr minimum_node = raw__redblacktree__minimum_not_less_than__node(cause, this, minimum);
+  if (raw__larva__is_type(cause, minimum_node)) {
+    return minimum_node;
+  }
+  f2ptr     sequence     = nil;
+  f2ptr     iter_node    = maximum_node;
+  boolean_t done         = boolean__false;
+  while (! done) {
+    sequence = f2cons__new(cause, raw__redblacktree_node__key(cause, iter_node), sequence);
+    if (raw__eq(cause, iter_node, minimum_node)) {
+      done = boolean__true;
+    }
+    iter_node = raw__redblacktree_node__prev(cause, iter_node);
+    if (iter_node == nil) {
+      done = boolean__true;
+    }
+  }
+  return sequence;
+}
+
+f2ptr f2__redblacktree__leaves_within_range(f2ptr cause, f2ptr this, f2ptr minimum, f2ptr maximum) {
+  if (! raw__redblacktree__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__redblacktree__leaves_within_range(cause, this, minimum, maximum);
+}
+def_pcfunk3(redblacktree__leaves_within_range, this, minimum, maximum, return f2__redblacktree__leaves_within_range(this_cause, this, minimum, maximum));
+
+
 f2ptr raw__redblacktree__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -1097,18 +1131,19 @@ def_pcfunk2(redblacktree__terminal_print_with_frame, this, terminal_print_frame,
 
 f2ptr f2redblacktree__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2redblacktree__primobject_type__new(cause);
-  {char* slot_name = "insert";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.insert__funk);}
-  {char* slot_name = "remove";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.remove__funk);}
-  {char* slot_name = "minimum";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum__funk);}
-  {char* slot_name = "maximum";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum__funk);}
-  {char* slot_name = "minimum_not_less_than-node";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum_not_less_than__node__funk);}
-  {char* slot_name = "minimum_not_less_than";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum_not_less_than__funk);}
+  {char* slot_name = "insert";                                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.insert__funk);}
+  {char* slot_name = "remove";                                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.remove__funk);}
+  {char* slot_name = "minimum";                                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum__funk);}
+  {char* slot_name = "maximum";                                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum__funk);}
+  {char* slot_name = "minimum_not_less_than-node";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum_not_less_than__node__funk);}
+  {char* slot_name = "minimum_not_less_than";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum_not_less_than__funk);}
   {char* slot_name = "maximum_not_greater_than_or_equal_to-node"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum_not_greater_than_or_equal_to__node__funk);}
   {char* slot_name = "maximum_not_greater_than_or_equal_to";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum_not_greater_than_or_equal_to__funk);}
-  {char* slot_name = "leaves";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.leaves__funk);}
-  {char* slot_name = "size";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.size__funk);}
-  {char* slot_name = "empty";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.empty__funk);}
-  {char* slot_name = "terminal_print_with_frame";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__funk);}
+  {char* slot_name = "leaves";                                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.leaves__funk);}
+  {char* slot_name = "size";                                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.size__funk);}
+  {char* slot_name = "empty";                                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.empty__funk);}
+  {char* slot_name = "leaves_within_range";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.leaves_within_range__funk);}
+  {char* slot_name = "terminal_print_with_frame";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -1166,6 +1201,9 @@ void f2__primobject__redblacktree__initialize() {
   
   {char* symbol_str = "empty"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.empty__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__empty, this, cfunk, 0, "Returns whether this redblacktree is empty."); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.empty__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "leaves_within_range"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.leaves_within_range__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__leaves_within_range, this, cfunk, 0, "Returns leaves within the range."); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.leaves_within_range__funk = never_gc(cfunk);}
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(redblacktree__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__funk = never_gc(cfunk);}

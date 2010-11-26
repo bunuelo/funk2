@@ -443,7 +443,7 @@ f2ptr f2__semantic_frame_event_type__new(f2ptr cause) {
 f2ptr raw__semantic_frame_event_redblacktree__new(f2ptr cause) {
   f2ptr value_event_cfunk   = f2cfunk__new(cause, nil, 
 					   f2list1__new(cause, new__symbol(cause, "this")),
-					   f2pointer__new(cause, raw_executable__to__relative_ptr(raw__semantic_frame_event__value)), global_environment(), nil, nil);
+					   f2pointer__new(cause, raw_executable__to__relative_ptr(raw__semantic_frame_event__time_value)), global_environment(), nil, nil);
   f2ptr compare_event_cfunk = f2cfunk__new(cause, nil, 
 					   f2list2__new(cause, new__symbol(cause, "this"), new__symbol(cause, "that")),
 					   f2pointer__new(cause, raw_executable__to__relative_ptr(raw__semantic_frame_event__compare_value)), global_environment(), nil, nil);
@@ -604,7 +604,7 @@ f2ptr f2__semantic_frame_event_redblacktree_type__new(f2ptr cause) {
 
 // semantic_frame
 
-f2ptr raw__semantic_frame_event__value(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
+f2ptr raw__semantic_frame_event__time_value(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
   f2ptr args_iter = args;
   f2ptr this = f2__cons__car(cause, args_iter);
   return raw__semantic_frame_event__time(cause, this);

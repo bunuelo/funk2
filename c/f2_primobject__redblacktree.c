@@ -327,7 +327,7 @@ f2ptr raw__redblacktree_node__minimum_not_less_than__node(f2ptr cause, f2ptr thi
     if (left_node == nil) {
       return this;
     } else {
-      f2ptr better_left_node = raw__redblacktree_node__minimum_not_less_than__node(cause, left, value_funk, value_comparison_funk, value);
+      f2ptr better_left_node = raw__redblacktree_node__minimum_not_less_than__node(cause, left_node, value_funk, value_comparison_funk, value);
       if (better_left_node == nil) {
 	return this;
       } else {

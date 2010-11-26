@@ -1711,19 +1711,24 @@ f2ptr f2__common_variable_subgraph_possibility__new_with_compression(f2ptr cause
   return f2__common_variable_subgraph_possibility__new(cause, f2integer__new(cause, worth), common_subgraph, this_remaining_subgraph, that_remaining_subgraph);
 }
 
-f2ptr raw__common_variable_subgraph_possibility__compare(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__worth    = raw__common_variable_subgraph_possibility__worth(cause, this);
-  f2ptr that__worth    = raw__common_variable_subgraph_possibility__worth(cause, that);
-  s64   this__worth__i = f2integer__i(this__worth, cause);
-  s64   that__worth__i = f2integer__i(that__worth, cause);
+f2ptr raw__common_variable_subgraph_possibility__worth(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__common_variable_subgraph_possibility__worth(cause, this);
+}
+// no type checking, not meant to be user-accessible
+def_pcfunk2(common_variable_subgraph_possibility__worth, this, return raw__common_variable_subgraph_possibility__worth(this_cause, this));
+
+f2ptr raw__common_variable_subgraph_possibility__compare_worth(f2ptr cause, f2ptr this__worth, f2ptr that__worth) {
+  s64 this__worth__i = f2integer__i(this__worth, cause);
+  s64 that__worth__i = f2integer__i(that__worth, cause);
   return f2bool__new(this__worth__i < that__worth__i);
 }
 // no type checking, not meant to be user-accessible
-def_pcfunk2(common_variable_subgraph_possibility__compare, this, that, return raw__common_variable_subgraph_possibility__compare(this_cause, this, that));
+def_pcfunk2(common_variable_subgraph_possibility__compare_worth, this__worth, that__worth, return raw__common_variable_subgraph_possibility__compare_worth(this_cause, this__worth, that__worth));
 
 f2ptr f2__common_variable_subgraph_possibility_redblacktree__new(f2ptr cause) {
-  f2ptr comparison_funk = __funk2.simple_graph.common_variable_subgraph_possibility__compare__funk;
-  return f2__redblacktree__new(cause, comparison_funk);
+  f2ptr value_funk            = __funk2.simple_graph.common_variable_subgraph_possibility__worth__funk;
+  f2ptr value_comparison_funk = __funk2.simple_graph.common_variable_subgraph_possibility__compare_worth__funk;
+  return f2__redblacktree__new(cause, value_funk, value_comparison_funk);
 }
 
 f2ptr raw__common_variable_subgraph_possibility_redblacktree__consider_inserting(f2ptr cause, f2ptr this, f2ptr possibility) {
@@ -1913,8 +1918,12 @@ void f2__simple_graph__initialize() {
   f2__primcfunk__init__3(simple_graph__bind_variable,                 this, variable_name, value,                                          "returns true if variable is successfully bound, false otherwise.");
   f2__primcfunk__init__1(simple_graph__as__dot_code,                  this,                                                                "returns dot code in a string suitable for simple_graphing with graphviz.");
   {
-    {char* str = "common_variable_subgraph_possibility-compare"; __funk2.simple_graph.common_variable_subgraph_possibility__compare__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-    {f2__primcfunk__init__with_c_cfunk_var__2_arg(common_variable_subgraph_possibility__compare, this, that, cfunk, 0,              "Internal part of simple_graph-find_common_variable_subgraph.  Should not be end-user-accessible."); __funk2.simple_graph.common_variable_subgraph_possibility__compare__funk = never_gc(cfunk);}
+    {char* str = "common_variable_subgraph_possibility-compare_worth"; __funk2.simple_graph.common_variable_subgraph_possibility__compare_worth__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+    {f2__primcfunk__init__with_c_cfunk_var__2_arg(common_variable_subgraph_possibility__compare_worth, this__worth, that__worth, cfunk, 0,              "Internal part of simple_graph-find_common_variable_subgraph.  Should not be end-user-accessible."); __funk2.simple_graph.common_variable_subgraph_possibility__compare_worth__funk = never_gc(cfunk);}
+    
+    {char* str = "common_variable_subgraph_possibility-worth"; __funk2.simple_graph.common_variable_subgraph_possibility__worth__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+    {f2__primcfunk__init__with_c_cfunk_var__2_arg(common_variable_subgraph_possibility__worth, this, that, cfunk, 0,              "Internal part of simple_graph-find_common_variable_subgraph.  Should not be end-user-accessible."); __funk2.simple_graph.common_variable_subgraph_possibility__worth__funk = never_gc(cfunk);}
+    
     f2__primcfunk__init__2(simple_graph__find_common_variable_subgraph, this, that,                                                        "return the largest common variable subgraph shared by two simple_graphs.");
   }
   f2__primcfunk__init__2(simple_graph__abstract_frame_node_slot, this, slot_name, "For all nodes that are frames, lookup the slot_name and create a new simple_graph based on these slot values.");

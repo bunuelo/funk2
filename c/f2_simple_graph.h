@@ -179,8 +179,10 @@ declare_object_type_2_slot(trans, remove, add,
 			   );
 
 typedef struct funk2_simple_graph_s {
-  f2ptr common_variable_subgraph_possibility__compare__symbol;
-  f2ptr common_variable_subgraph_possibility__compare__funk;
+  f2ptr common_variable_subgraph_possibility__worth__symbol;
+  f2ptr common_variable_subgraph_possibility__worth__funk;
+  f2ptr common_variable_subgraph_possibility__compare_worth__symbol;
+  f2ptr common_variable_subgraph_possibility__compare_worth__funk;
 } funk2_simple_graph_t;
 
 #endif // F2__SIMPLE_GRAPH__TYPE__H

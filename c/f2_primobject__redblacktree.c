@@ -321,7 +321,13 @@ f2ptr raw__redblacktree_node__minimum_not_less_than__node(f2ptr cause, f2ptr thi
     return comparison_result;
   }
   if (comparison_result != nil) {
-    return nil;
+    f2ptr right_node        = f2__redblacktree_node__right(cause, this);
+    f2ptr better_right_node = raw__redblacktree_node__minimum_not_less_than__node(cause, right_node, value_funk, value_comparison_funk, value);
+    if (better_right_node == nil) {
+      return nil;
+    } else {
+      return better_right_node;
+    }
   } else {
     f2ptr left_node = f2__redblacktree_node__left(cause, this);
     if (left_node == nil) {
@@ -350,7 +356,13 @@ f2ptr raw__redblacktree_node__maximum_not_greater_than__node(f2ptr cause, f2ptr 
     return comparison_result;
   }
   if (comparison_result == nil) {
-    return nil;
+    f2ptr left_node        = f2__redblacktree_node__left(cause, this);
+    f2ptr better_left_node = raw__redblacktree_node__maximum_not_greater_than__node(cause, left_node, value_funk, value_comparison_funk, value);
+    if (better_left_node == nil) {
+      return nil;
+    } else {
+      return better_left_node;
+    }
   } else {
     f2ptr right_node = f2__redblacktree_node__right(cause, this);
     if (right_node == nil) {

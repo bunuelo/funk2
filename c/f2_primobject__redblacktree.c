@@ -338,6 +338,35 @@ f2ptr raw__redblacktree_node__minimum_not_less_than__node(f2ptr cause, f2ptr thi
 }
 
 
+f2ptr raw__redblacktree_node__maximum_not_greater_than__node(f2ptr cause, f2ptr this, f2ptr value_funk, f2ptr value_comparison_funk, f2ptr value) {
+  f2ptr fiber      = f2__this__fiber(cause);
+  f2ptr key        = f2__redblacktree_node__key(cause, this);
+  f2ptr key__value = f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, key));
+  if (raw__larva__is_type(cause, key__value)) {
+    return key__value;
+  }
+  f2ptr comparison_result = f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, key__value, value));
+  if (raw__larva__is_type(cause, comparison_result)) {
+    return comparison_result;
+  }
+  if (comparison_result == nil) {
+    return nil;
+  } else {
+    f2ptr right_node = f2__redblacktree_node__right(cause, this);
+    if (right_node == nil) {
+      return this;
+    } else {
+      f2ptr better_right_node = raw__redblacktree_node__maximum_not_greater_than__node(cause, right_node, value_funk, value_comparison_funk, value);
+      if (better_right_node == nil) {
+	return this;
+      } else {
+	return better_right_node;
+      }
+    }
+  }
+}
+
+
 
 boolean_t raw__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
   if (this == nil) {

@@ -1086,7 +1086,7 @@ f2ptr raw__redblacktree__leaves_within_range(f2ptr cause, f2ptr this, f2ptr mini
   f2ptr     iter_node    = maximum_node;
   boolean_t done         = boolean__false;
   while (! done) {
-    sequence = f2cons__new(cause, raw__redblacktree_node__key(cause, iter_node), sequence);
+    sequence = f2cons__new(cause, f2__redblacktree_node__key(cause, iter_node), sequence);
     if (raw__eq(cause, iter_node, minimum_node)) {
       done = boolean__true;
     }

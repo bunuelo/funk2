@@ -466,7 +466,7 @@ f2ptr raw__redblacktree_node__lookup_node_with_key(f2ptr cause, f2ptr this, f2pt
   f2ptr     fiber     = f2__this__fiber(cause);
   f2ptr key__value = f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, key));
   if (raw__larva__is_type(cause, key__value)) {
-    return this__key__value;
+    return key__value;
   }
   f2ptr this__key__value = f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, this__key));
   if (raw__larva__is_type(cause, this__key__value)) {

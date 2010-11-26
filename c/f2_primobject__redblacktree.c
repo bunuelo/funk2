@@ -459,6 +459,7 @@ f2ptr raw__redblacktree_node__simple_binary_insert(f2ptr cause, f2ptr this, f2pt
       }
     }
   }
+  return nil;
 }
 
 f2ptr raw__redblacktree_node__lookup_node_with_key(f2ptr cause, f2ptr this, f2ptr key, f2ptr value_funk, f2ptr value_comparison_funk) {

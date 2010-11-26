@@ -25,7 +25,7 @@
 // redblacktree
 
 typedef struct funk2_object_type__redblacktree__slot_s funk2_object_type__redblacktree__slot_t;
-declare_object_type_2_slot(redblacktree, head, comparison_funk,
+declare_object_type_3_slot(redblacktree, head, value_funk, value_comparison_funk,
 			   f2ptr insert__symbol;
 			   f2ptr insert__funk;
 			   f2ptr remove__symbol;
@@ -38,10 +38,10 @@ declare_object_type_2_slot(redblacktree, head, comparison_funk,
 			   f2ptr minimum_not_less_than__node__funk;
 			   f2ptr minimum_not_less_than__symbol;
 			   f2ptr minimum_not_less_than__funk;
-			   f2ptr maximum_not_greater_than__node__symbol;
-			   f2ptr maximum_not_greater_than__node__funk;
-			   f2ptr maximum_not_greater_than__symbol;
-			   f2ptr maximum_not_greater_than__funk;
+			   f2ptr maximum_not_greater_than_or_equal_to__node__symbol;
+			   f2ptr maximum_not_greater_than_or_equal_to__node__funk;
+			   f2ptr maximum_not_greater_than_or_equal_to__symbol;
+			   f2ptr maximum_not_greater_than_or_equal_to__funk;
 			   f2ptr leaves__symbol;
 			   f2ptr leaves__funk;
 			   f2ptr size__symbol;
@@ -66,7 +66,7 @@ declare_object_type_5_slot(redblacktree_node, parent, left, right, color, key, )
 
 // redblacktree
 
-declare_primobject_2_slot(redblacktree, head, comparison_funk);
+declare_primobject_3_slot(redblacktree, head, value_funk, value_comparison_funk);
 
 #define redblacktree__iteration_forward_by_node(cause, this, node, code) \
   {									\
@@ -109,8 +109,8 @@ declare_primobject_2_slot(redblacktree, head, comparison_funk);
 					   }				\
 					   )
 
-f2ptr     raw__redblacktree__new(         f2ptr cause, f2ptr head, f2ptr comparison_funk);
-f2ptr      f2__redblacktree__new(         f2ptr cause, f2ptr comparison_funk);
+f2ptr     raw__redblacktree__new(         f2ptr cause, f2ptr head, f2ptr value_funk, f2ptr value_comparison_funk);
+f2ptr      f2__redblacktree__new(         f2ptr cause, f2ptr value_funk, f2ptr value_comparison_funk);
 f2ptr     raw__redblacktree__insert(      f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__redblacktree__insert(      f2ptr cause, f2ptr this, f2ptr key);
 f2ptr     raw__redblacktree__remove(      f2ptr cause, f2ptr this, f2ptr key);

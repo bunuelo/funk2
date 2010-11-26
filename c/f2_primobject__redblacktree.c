@@ -322,11 +322,15 @@ f2ptr raw__redblacktree_node__minimum_not_less_than__node(f2ptr cause, f2ptr thi
   }
   if (comparison_result != nil) {
     f2ptr right_node        = f2__redblacktree_node__right(cause, this);
-    f2ptr better_right_node = raw__redblacktree_node__minimum_not_less_than__node(cause, right_node, value_funk, value_comparison_funk, value);
-    if (better_right_node == nil) {
+    if (right_node == nil) {
       return nil;
     } else {
-      return better_right_node;
+      f2ptr better_right_node = raw__redblacktree_node__minimum_not_less_than__node(cause, right_node, value_funk, value_comparison_funk, value);
+      if (better_right_node == nil) {
+	return nil;
+      } else {
+	return better_right_node;
+      }
     }
   } else {
     f2ptr left_node = f2__redblacktree_node__left(cause, this);
@@ -357,11 +361,18 @@ f2ptr raw__redblacktree_node__maximum_not_greater_than__node(f2ptr cause, f2ptr 
   }
   if (comparison_result == nil) {
     f2ptr left_node        = f2__redblacktree_node__left(cause, this);
-    f2ptr better_left_node = raw__redblacktree_node__maximum_not_greater_than__node(cause, left_node, value_funk, value_comparison_funk, value);
-    if (better_left_node == nil) {
+    if (left_node == nil) {
       return nil;
     } else {
-      return better_left_node;
+      f2ptr better_left_node = raw__redblacktree_node__maximum_not_greater_than__node(cause, left_node, value_funk, value_comparison_funk, value);
+      if (raw__larva__is_type(cause, better_left_node)) {
+	return better_left_node;
+      }
+      if (better_left_node == nil) {
+	return nil;
+      } else {
+	return better_left_node;
+      }
     }
   } else {
     f2ptr right_node = f2__redblacktree_node__right(cause, this);
@@ -369,6 +380,9 @@ f2ptr raw__redblacktree_node__maximum_not_greater_than__node(f2ptr cause, f2ptr 
       return this;
     } else {
       f2ptr better_right_node = raw__redblacktree_node__maximum_not_greater_than__node(cause, right_node, value_funk, value_comparison_funk, value);
+      if (raw__larva__is_type(cause, better_right_node)) {
+	return better_right_node;
+      }
       if (better_right_node == nil) {
 	return this;
       } else {

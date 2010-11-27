@@ -17,6 +17,18 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defunk isis_sensory_frame-add_prepositions_to_object_proposition_frame [isis_sensory_frame object_name preposition_frame]
+  [let [[spatial_relations_array [have isis_sensory_frame lookup `spatial_relations]]]
+    [dotimes [index [get spatial_relations_array length]]
+      [let [[spatial_relation [get spatial_relations_array elt index]]]
+	[let [[relation_type       [get spatial_relation elt 0]]
+	      [relation_object_one [get spatial_relation elt 1]]
+	      [relation_object_two [get spatial_relation elt 2]]]
+	  [if [eq object_name [get relation_object_two as-symbol]]
+	      [cond [[equals relation_type 'in'] [have preposition_frame add `in [get relation_object_one as-symbol]]]
+		    [[equals relation_type 'on'] [have preposition_frame add `on [get relation_object_one as-symbol]]]
+		    [t                           [terminal_format stardard-terminal '\nisis_visual_object warning: unrecognized relation type, \'' relation_type '\'.']]]]]]]]
+
 [deframe isis_visual_object [moral_compass_visual_object] []
   [new [isis_name isis_sensory_frame isis_object_frame]
        [let [[isis_object_class [have isis_object_frame lookup `class]]]
@@ -28,16 +40,7 @@
 	       [initial-retina_position_vertical   [have isis_object_frame lookup `y_pos]]
 	       [initial-distance                   [have isis_object_frame lookup `distance]]
 	       [initial-preposition_frame          [new frame]]]
-	   [let [[spatial_relations_array [have isis_sensory_frame lookup `spatial_relations]]]
-	     [dotimes [index [get spatial_relations_array length]]
-	       [let [[spatial_relation [get spatial_relations_array elt index]]]
-		 [let [[relation_type       [get spatial_relation elt 0]]
-		       [relation_object_one [get spatial_relation elt 1]]
-		       [relation_object_two [get spatial_relation elt 2]]]
-		   [if [eq isis_name [get relation_object_one as-symbol]]
-		       [cond [[equals relation_type 'in'] [have initial-preposition_frame add `in [get relation_object_two as-symbol]]]
-			     [[equals relation_type 'on'] [have initial-preposition_frame add `on [get relation_object_two as-symbol]]]
-			     [t                           [terminal_format stardard-terminal '\nisis_visual_object warning: unrecognized relation type, \'' relation_type '\'.']]]]]]]]
+	   [isis_sensory_frame-add_prepositions_to_object_proposition_frame isis_sensory_frame isis_name initial-preposition_frame]
 	   [construct moral_compass_visual_object
 		      initial-object_type
 		      initial-phenomenal_name

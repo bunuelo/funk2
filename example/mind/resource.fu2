@@ -39,6 +39,12 @@
        [= fiber_starting_mutex        [new traced_mutex]] [have fiber_starting_mutex        lock]
        [= fiber         [fiber [funk []
 				     [cause-enable_reactive_critics [this-cause]]
+				     
+				     'Turn on appropriate causal tracing.'
+				     [cause-define semantic_frame-trace_add                         t]
+				     [cause-define semantic_frame-trace_remove                      t]
+				     [cause-define semantic_knowledge_base-trace_add_semantic_frame t]
+				     
 				     [= name         initial-name]
 				     [= agency       nil]  'We set this when the resource is added to an agency.'
 				     [= active_funk  initial-active_funk]

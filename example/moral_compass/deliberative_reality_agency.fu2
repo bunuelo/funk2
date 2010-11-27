@@ -88,9 +88,7 @@
 
 [deftypefunk deliberative_reality_agency get reality_semantic_knowledge_base []
   [if [null reality_semantic_knowledge_base-internal]
-      [prog [cause-define semantic_frame-trace_add    t]
-	    [cause-define semantic_frame-trace_remove t]
-	    [= reality_semantic_knowledge_base-internal [let [[semantic_knowledge_base [new semantic_knowledge_base]]]
+      [prog [= reality_semantic_knowledge_base-internal [let [[semantic_knowledge_base [new semantic_knowledge_base]]]
 							  [let [[knife_semantic_frame        [new visual_object_semantic_frame [get [get this mind] semantic_realm]]]
 								[toaster_semantic_frame      [new visual_object_semantic_frame [get [get this mind] semantic_realm]]]
 								[counter_semantic_frame      [new visual_object_semantic_frame [get [get this mind] semantic_realm]]]

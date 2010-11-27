@@ -967,11 +967,11 @@ f2ptr f2__semantic_frame_type__new(f2ptr cause) {
 // semantic_knowledge_base_event
 
 f2ptr raw__semantic_knowledge_base_event__new(f2ptr cause, f2ptr time, f2ptr event_type, f2ptr semantic_frame) {
-  return f2__frame__new(cause, f2list12__new(cause,
-					     new__symbol(cause, "type"),           new__symbol(cause, "semantic_knowledge_base_event"),
-					     new__symbol(cause, "time"),           time,
-					     new__symbol(cause, "event_type"),     event_type,
-					     new__symbol(cause, "semantic_frame"), semantic_frame));
+  return f2__frame__new(cause, f2list8__new(cause,
+					    new__symbol(cause, "type"),           new__symbol(cause, "semantic_knowledge_base_event"),
+					    new__symbol(cause, "time"),           time,
+					    new__symbol(cause, "event_type"),     event_type,
+					    new__symbol(cause, "semantic_frame"), semantic_frame));
 }
 
 f2ptr f2__semantic_knowledge_base_event__new(f2ptr cause, f2ptr time, f2ptr event_type, f2ptr semantic_frame) {

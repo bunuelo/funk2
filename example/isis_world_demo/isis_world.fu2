@@ -20,6 +20,7 @@
 
 [deframe isis_world [physical_world] [[step_mutex [new traced_mutex]]
 				      client
+				      sense_agent_frame
 				      [overview_image_sequence [new image_sequence nil]]]
   [new [client]
        [construct physical_world]
@@ -50,17 +51,9 @@
 `[deftypefunk isis_world get agent_says [agent_name]
    [get [get this agent_body agent_name] says]]
 
-`[deftypefunk isis_world execute sense_world [agent_name]
-   [let [[sense [isis-call [get this client] sense agent agent_name]]]
-     `[let [[agent_frame [frame]]]
-	[mapc [funk [sense_agent_name]
-		    [if [not [eq agent_name sense_agent_name]]
-			[have agent_frame add sense_agent_name [frame distance       15.0
-								      recent_actions nil
-								      says           [get this agent_says sense_agent_name]]]]]
-	      [get this agent_names]]
-	[have sense add `agents agent_frame]]
-     sense]]
+[deftypefunk isis_world execute raw_sense_world [agent_name]
+  [let [[sense [isis-call [get this client] sense agent agent_name]]]
+    sense]]
 
 [deftypefunk isis_world get screenshot []
   [let [[screenshot_frame [isis-call [get this client] meta_screenshot max_x 320 max_y 240 x_offset 0 y_offset 0]]]

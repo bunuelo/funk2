@@ -20,6 +20,7 @@
 
 [deframe isis_agent_body [moral_agent_body] [says
 					     [arm_length 3.5]
+					     sense_frame
 					     [retina_image_sequence [new image_sequence nil]]]
   [new [physical_world name]
        [construct moral_agent_body physical_world name]
@@ -32,7 +33,7 @@
 
 'isis_world agent specific control functions'
 
-[deftypefunk isis_agent_body execute sense_world             []              [have [get this physical_world] sense_world             [get this name]]]
+[deftypefunk isis_agent_body execute raw_sense_world         []              [have [get this physical_world] raw_sense_world         [get this name]]]
 [deftypefunk isis_agent_body execute sense_retina_image      []              [have [get this physical_world] sense_retina_image      [get this name]]]
 [deftypefunk isis_agent_body execute turn_right-start        []              [have [get this physical_world] turn_right-start        [get this name]]]
 [deftypefunk isis_agent_body execute turn_right-stop         []              [have [get this physical_world] turn_right-stop         [get this name]]]
@@ -61,9 +62,13 @@
 	  [rgb_data [have retina_image_frame lookup `rgb_data]]]
       [image-new_from_rgb_data width height rgb_data]]]]
 
+[deftypefunk isis_agent_body execute sense_world []
+  sense_frame]
+
 [deftypefunk isis_agent_body execute update_after_step_simulation []
   [let [[image [have this sense_funk2_retina_image]]]
-    [have retina_image_sequence add_image_to_end image]]]
+    [have retina_image_sequence add_image_to_end image]
+    [= sense_frame [have this raw_sense_world]]]]
 
 [deftypefunk isis_agent_body get objects []
   [print 'This funktion is deprecated.']

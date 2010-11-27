@@ -53,6 +53,9 @@
        
        this]]
 
+[deftypefunk builtin_reactive_sensory_agency get perception []
+  [get [get this resource `continuous_sensing] perception]]
+
 [deftypefunk builtin_reactive_sensory_agency get visual_objects []
   [get [get this resource `continuous_sensing] visual_objects]]
 

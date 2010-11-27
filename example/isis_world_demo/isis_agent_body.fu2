@@ -114,7 +114,7 @@
 
 [deftypefunk isis_agent_body execute sense_perception []
   [let [[retina_image           [get  this retina_image]]
-	[visual_objects         [get  this sense_visual_objects]]
+	[visual_objects         [have this sense_visual_objects]]
 	[left_hand_object_name  [have this sense_left_hand_object_name]]
 	[right_hand_object_name [have this sense_right_hand_object_name]]]
     [new moral_compass_perception

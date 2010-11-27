@@ -12,8 +12,8 @@ Build-Depends:
  libxmlrpc-c3-dev,
  libcurl4-openssl-dev,
  libgtk2.0-dev,
- libavcodec-dev [! amd64],
- libswscale-dev [! amd64]
+ libavcodec-dev,
+ libswscale-dev
 Standards-Version: 3.8.0
 Homepage: http://funk2.org/
 
@@ -25,8 +25,8 @@ Depends:
  libxmlrpc-c3,
  libcurl3,
  libgtk2.0-0,
- libavcodec52 [! amd64],
- libswscale0 [! amd64]
+ libavcodec52,
+ libswscale0
 Description: reflective programming language
  Funk2 is a novel programming language that introduced a programming
  technology that we call Causal Reflective Programming. The language

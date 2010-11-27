@@ -36,6 +36,7 @@
 
 
 
+
 'builtin_reactive_layer'
 
 [defpackage builtin_reactive_layer
@@ -58,6 +59,7 @@
    :sources ['builtin_reactive_physical_agency.fu2']]
 
 
+
 'learned_reactive_layer'
 
 [defpackage learned_reactive_layer
@@ -72,6 +74,7 @@
   :packages [mind]
    :sources ['learned_reactive_physical_agency.fu2']]
 
+
 [defpackage moral_compass_visual_object
   :packages [mind]
    :sources ['moral_compass_visual_object.fu2']]
@@ -80,13 +83,19 @@
   :packages [mind moral_compass_visual_object]
    :sources ['moral_compass_visual_agent.fu2']]
 
-[defpackage learned_reactive_sensory_agency
+[defpackage moral_compass_perception
   :packages [mind moral_compass_visual_object moral_compass_visual_agent]
+   :sources ['moral_compass_visual_agent.fu2']]
+
+[defpackage learned_reactive_sensory_agency
+  :packages [mind moral_compass_perception]
    :sources ['learned_reactive_sensory_agency.fu2']]
+
 
 [defpackage learned_reactive_language_agency
   :packages [mind]
    :sources ['learned_reactive_language_agency.fu2']]
+
 
 
 'deliberative_layer'
@@ -112,6 +121,7 @@
    :sources ['deliberative_execution_agency.fu2']]
 
 
+
 'reflective_layer'
 
 [defpackage reflective_layer
@@ -125,6 +135,7 @@
    :sources ['reflective_credit_assignment_agency.fu2']]
 
 
+
 'self_reflective_layer'
 
 [defpackage self_reflective_layer
@@ -136,6 +147,7 @@
 [defpackage self_reflective_personality_agency
   :packages [mind]
    :sources ['self_reflective_personality_agency.fu2']]
+
 
 
 'self_conscious_layer'

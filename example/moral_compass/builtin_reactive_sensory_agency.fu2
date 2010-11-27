@@ -20,7 +20,8 @@
 [deframe continuous_sensing_resource [resource] [visual_objects
 						 retina_image
 						 left_hand_object_name
-						 right_hand_object_name]
+						 right_hand_object_name
+						 perception]
   [new []
        [construct resource `continuous_sensing
 		  [funk []
@@ -36,6 +37,7 @@
 					[= retina_image           [get  body retina_image]]
 					[= left_hand_object_name  [have body sense_left_hand_object_name]]
 					[= right_hand_object_name [have body sense_right_hand_object_name]]    
+					[= perception             [have body sense_perception]]
 					[= last_time_step         time_step]
 					[mind-wait_to_activate [get this mind] learned_reactive sensory propogate_visual_objects_to_visual_knowledge]
 					]]]

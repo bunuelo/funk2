@@ -302,6 +302,7 @@
 				activator_button
 				learned_reactive_physical_activator_button
 				sense_button
+				perception_button
 				visual_objects_button
 				visual_knowledge_button
 				
@@ -379,6 +380,13 @@
 		   [terminal_format standard-terminal '\n' [get this name] '\'s sensory information:'
 				    '\n  ' [have isis_agent sense_world]]]]
        [have status_button_hbox pack_start sense_button nil nil 0]
+       
+       [= perception_button [gtk-button-new_with_label 'Perception']]
+       [have perception_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\n' [get this name] '\'s perception:'
+				    '\n  ' [get [get isis_agent mind] perception]]]]
+       [have status_button_hbox pack_start perception_button nil nil 0]
        
        [= visual_objects_button [gtk-button-new_with_label 'Visual Objects']]
        [have visual_objects_button signal_connect 'clicked'

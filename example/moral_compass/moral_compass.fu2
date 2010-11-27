@@ -33,6 +33,9 @@
       [= global_semantic_realm [new semantic_realm]]]
   global_semantic_realm]
 
+[deftypefunk moral_compass get perception []
+  [get [get this layer `builtin_reactive] perception]]
+
 [deftypefunk moral_compass get visual_objects []
   [get [get this layer `builtin_reactive] visual_objects]]
 

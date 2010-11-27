@@ -48,9 +48,6 @@
   [set [get [get this agent_mind agent_name] agency layer_name agency_name] user_activate_resource resource_name]
   [set [get [get this agent_mimd agent_name] agency layer_name agency_name] user_activate_args     args]]
 
-`[deftypefunk isis_world get agent_says [agent_name]
-   [get [get this agent_body agent_name] says]]
-
 [deftypefunk isis_world execute raw_sense_world [agent_name]
   [let [[sense [isis-call [get this client] sense agent agent_name]]]
     sense]]

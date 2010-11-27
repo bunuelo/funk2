@@ -154,6 +154,9 @@ f2ptr      f2__semantic_frame_type__new(f2ptr cause);
 
 // semantic_knowledge_base
 
+f2ptr raw__semantic_knowledge_base_event__time_value(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
+f2ptr raw__semantic_knowledge_base_event__compare_value(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
+
 f2ptr     raw__semantic_knowledge_base__new                 (f2ptr cause, f2ptr semantic_frames);
 f2ptr      f2__semantic_knowledge_base__new                 (f2ptr cause, f2ptr semantic_frames);
 boolean_t raw__semantic_knowledge_base__is_type             (f2ptr cause, f2ptr thing);

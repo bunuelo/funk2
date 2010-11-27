@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore semantic_frame_ball 'extension/semantic_frame_ball/.libs/libsemantic_frame_ball.so']
+[defcore semantic_frame_ball 'extension/semantic_frame_ball/.libs/libf2e_semantic_frame_ball.so']
 
 [defcorefunk semantic_frame_ball-core_extension_ping       semantic_frame_ball semantic_frame_ball__core_extension_ping]
 [defcorefunk semantic_frame_ball-core_extension_initialize semantic_frame_ball semantic_frame_ball__core_extension_initialize]

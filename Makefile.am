@@ -1,5 +1,5 @@
 # 
-# Copyright (c) 2007-2009 Bo Morgan.
+# Copyright (c) 2007-2010 Bo Morgan.
 # All rights reserved.
 # 
 # Author: Bo Morgan
@@ -206,17 +206,17 @@ img/bootstrap.img: img/bootstrap-repl.img
 ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES = lib/libfunk2.la \
-                  extension/fibermon/libfibermon.la \
-                  extension/image/libimage.la \
-                  extension/image_sequence/libimage_sequence.la \
-                  extension/movie/libmovie.la \
-                  extension/forward_planner/libforward_planner.la \
-                  extension/frame_ball/libframe_ball.la \
-                  extension/graph_isomorphism/libgraph_isomorphism.la \
-                  extension/semantic_frame_ball/libsemantic_frame_ball.la \
-                  extension/semantic_knowledge_base/libsemantic_knowledge_base.la \
-                  extension/mindmon/libmindmon.la \
-                  extension/causality/libcausality.la
+                  extension/fibermon/libf2e_fibermon.la \
+                  extension/image/libf2e_image.la \
+                  extension/image_sequence/libf2e_image_sequence.la \
+                  extension/movie/libf2e_movie.la \
+                  extension/forward_planner/libf2e_forward_planner.la \
+                  extension/frame_ball/libf2e_frame_ball.la \
+                  extension/graph_isomorphism/libf2e_graph_isomorphism.la \
+                  extension/semantic_frame_ball/libf2e_semantic_frame_ball.la \
+                  extension/semantic_knowledge_base/libf2e_semantic_knowledge_base.la \
+                  extension/mindmon/libf2e_mindmon.la \
+                  extension/causality/libf2e_causality.la
 #bin_PROGRAMS    = bin/funk2-static
 
 lib_libfunk2_la_SOURCES = \
@@ -347,17 +347,17 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
-extension_fibermon_libfibermon_la_SOURCES                               = extension/fibermon/fibermon.c
-extension_image_libimage_la_SOURCES                                     = extension/image/image.c
-extension_image_sequence_libimage_sequence_la_SOURCES                   = extension/image_sequence/image_sequence.c
-extension_movie_libmovie_la_SOURCES                                     = extension/movie/movie.c
-extension_forward_planner_libforward_planner_la_SOURCES                 = extension/forward_planner/forward_planner.c
-extension_frame_ball_libframe_ball_la_SOURCES                           = extension/frame_ball/frame_ball.c
-extension_graph_isomorphism_libgraph_isomorphism_la_SOURCES             = extension/graph_isomorphism/graph_isomorphism.c
-extension_semantic_frame_ball_libsemantic_frame_ball_la_SOURCES         = extension/semantic_frame_ball/semantic_frame_ball.c
-extension_semantic_knowledge_base_libsemantic_knowledge_base_la_SOURCES = extension/semantic_knowledge_base/semantic_knowledge_base.c
-extension_mindmon_libmindmon_la_SOURCES                                 = extension/mindmon/mindmon.c
-extension_causality_libcausality_la_SOURCES                             = extension/causality/causality.c
+extension_fibermon_libf2e_fibermon_la_SOURCES                               = extension/fibermon/fibermon.c
+extension_image_libf2e_image_la_SOURCES                                     = extension/image/image.c
+extension_image_sequence_libf2e_image_sequence_la_SOURCES                   = extension/image_sequence/image_sequence.c
+extension_movie_libf2e_movie_la_SOURCES                                     = extension/movie/movie.c
+extension_forward_planner_libf2e_forward_planner_la_SOURCES                 = extension/forward_planner/forward_planner.c
+extension_frame_ball_libf2e_frame_ball_la_SOURCES                           = extension/frame_ball/frame_ball.c
+extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES             = extension/graph_isomorphism/graph_isomorphism.c
+extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_SOURCES         = extension/semantic_frame_ball/semantic_frame_ball.c
+extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES = extension/semantic_knowledge_base/semantic_knowledge_base.c
+extension_mindmon_libf2e_mindmon_la_SOURCES                                 = extension/mindmon/mindmon.c
+extension_causality_libf2e_causality_la_SOURCES                             = extension/causality/causality.c
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 
@@ -384,38 +384,38 @@ lib_libfunk2_la_CFLAGS  = $(cc_flags)
 bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_fibermon_libfibermon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_fibermon_libfibermon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_fibermon_libf2e_fibermon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_fibermon_libf2e_fibermon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_image_libimage_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_image_libimage_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_image_libf2e_image_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_image_libf2e_image_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_image_sequence_libimage_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_image_sequence_libimage_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_image_sequence_libf2e_image_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_image_sequence_libf2e_image_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_movie_libmovie_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_movie_libmovie_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_movie_libf2e_movie_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_movie_libf2e_movie_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_forward_planner_libforward_planner_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_forward_planner_libforward_planner_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_forward_planner_libf2e_forward_planner_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_forward_planner_libf2e_forward_planner_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_frame_ball_libframe_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_frame_ball_libframe_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_frame_ball_libf2e_frame_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_frame_ball_libf2e_frame_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_graph_isomorphism_libgraph_isomorphism_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_graph_isomorphism_libgraph_isomorphism_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_graph_isomorphism_libf2e_graph_isomorphism_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_graph_isomorphism_libf2e_graph_isomorphism_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_semantic_frame_ball_libsemantic_frame_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_semantic_frame_ball_libsemantic_frame_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_semantic_knowledge_base_libsemantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_semantic_knowledge_base_libsemantic_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_mindmon_libmindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_mindmon_libmindmon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_mindmon_libf2e_mindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_mindmon_libf2e_mindmon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_causality_libcausality_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_causality_libcausality_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_causality_libf2e_causality_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_causality_libf2e_causality_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h

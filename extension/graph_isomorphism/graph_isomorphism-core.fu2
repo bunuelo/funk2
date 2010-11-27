@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore graph_isomorphism 'extension/graph_isomorphism/.libs/libgraph_isomorphism.so']
+[defcore graph_isomorphism 'extension/graph_isomorphism/.libs/libf2e_graph_isomorphism.so']
 
 [defcorefunk graph-isomorphism graph_isomorphism graph__isomorphism]
 

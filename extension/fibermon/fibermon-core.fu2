@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore fibermon 'extension/fibermon/.libs/libfibermon.so']
+[defcore fibermon 'extension/fibermon/.libs/libf2e_fibermon.so']
 
 [defcorefunk fibermon-bytes-to_memory_string              fibermon fibermon__bytes__to_memory_string]
 [defcorefunk fibermon-nanoseconds-to_time_string          fibermon fibermon__nanoseconds__to_time_string]

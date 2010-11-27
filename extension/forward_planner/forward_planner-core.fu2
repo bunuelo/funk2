@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore forward_planner 'extension/forward_planner/.libs/libforward_planner.so']
+[defcore forward_planner 'extension/forward_planner/.libs/libf2e_forward_planner.so']
 
 [defcorefunk forward_planner-core_extension_ping       forward_planner forward_planner__core_extension_ping]
 [defcorefunk forward_planner-core_extension_initialize forward_planner forward_planner__core_extension_initialize]

@@ -1483,7 +1483,7 @@ void raw__semantic_knowledge_base__initialize_tracing(f2ptr cause, f2ptr this) {
 
 
 f2ptr raw__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
-  if (raw__semantic_knowledge_base__trace_add(cause, this) != nil) {
+  if (raw__semantic_knowledge_base__trace_add_semantic_frame(cause, this) != nil) {
     raw__semantic_knowledge_base__initialize_tracing(cause, this);
     f2ptr trace_event_redblacktree = raw__semantic_knowledge_base__trace_event_redblacktree(cause, this);
     f2ptr semantic_knowledge_base_event = raw__semantic_knowledge_base_event__new(cause, f2__time(cause), new__symbol(cause, "add_semantic_frame"), semantic_frame);

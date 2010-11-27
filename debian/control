@@ -8,7 +8,8 @@ Homepage: http://funk2.org/
 
 Package: funk2
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libxmlrpc-c3, libcurl3, libgtk2.0-0, libavcodec52, libswscale0
+Depends: ${shlibs:Depends}, ${misc:Depends}, libxmlrpc-c3, libcurl3, libgtk2.0-0
+Recommends: libavcodec52, libswscale0
 Description: reflective programming language
  Funk2 is a novel programming language that introduced a programming
  technology that we call Causal Reflective Programming. The language

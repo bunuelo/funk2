@@ -41,8 +41,9 @@
 [deframe story [frame] [character_frame event_redblacktree]
   [new []
        [set this character_frame    [frame]]
-       [set this event_redblacktree [new redblacktree [funk [event-x event-y]
-							    [< [get event-x time] [get event-y time]]]]]
+       [set this event_redblacktree [new redblacktree
+					 [funk [event] [get event time]]
+					 &<]]
        this]]
 
 [deftypefunk story get character [character_name]

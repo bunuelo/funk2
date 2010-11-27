@@ -27,7 +27,7 @@
 	  [if [eq object_name [get relation_object_two as-symbol]]
 	      [cond [[equals relation_type 'in'] [have preposition_frame add `in [get relation_object_one as-symbol]]]
 		    [[equals relation_type 'on'] [have preposition_frame add `on [get relation_object_one as-symbol]]]
-		    [t                           [terminal_format stardard-terminal '\nisis_visual_object warning: unrecognized relation type, \'' relation_type '\'.']]]]]]]]
+		    [t                           [terminal_format stardard-terminal '\nisis_visual_object warning: unrecognized relation type, \'' relation_type '\'.']]]]]]]]]
 
 [deframe isis_visual_object [moral_compass_visual_object] []
   [new [isis_name isis_sensory_frame isis_object_frame]

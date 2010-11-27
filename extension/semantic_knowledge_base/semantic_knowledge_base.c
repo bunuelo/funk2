@@ -819,8 +819,10 @@ export_cefunk2(semantic_frame__frame__set, thing, value, 0, "Sets the frame of t
 
 
 void raw__semantic_frame__initialize_tracing(f2ptr cause, f2ptr this) {
-  f2ptr trace_event_redblacktree = f2__semantic_frame_event_redblacktree__new(cause);
-  raw__semantic_frame__trace_event_redblacktree__set(cause, this, trace_event_redblacktree);
+  if (raw__semantic_frame__trace_event_redblacktree(cause, this) == nil) {
+    f2ptr trace_event_redblacktree = f2__semantic_frame_event_redblacktree__new(cause);
+    raw__semantic_frame__trace_event_redblacktree__set(cause, this, trace_event_redblacktree);
+  }
 }
 
 
@@ -1477,8 +1479,10 @@ export_cefunk1(semantic_knowledge_base__as__graph, this, 0, "Converts the semant
 
 
 void raw__semantic_knowledge_base__initialize_tracing(f2ptr cause, f2ptr this) {
-  f2ptr trace_event_redblacktree = f2__semantic_knowledge_base_event_redblacktree__new(cause);
-  raw__semantic_knowledge_base__trace_event_redblacktree__set(cause, this, trace_event_redblacktree);
+  if (raw__semantic_knowledge_base__trace_event_redblacktree(cause, this) == nil) {
+    f2ptr trace_event_redblacktree = f2__semantic_knowledge_base_event_redblacktree__new(cause);
+    raw__semantic_knowledge_base__trace_event_redblacktree__set(cause, this, trace_event_redblacktree);
+  }
 }
 
 

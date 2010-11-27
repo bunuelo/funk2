@@ -77,31 +77,34 @@
 [deftypefunk isis_agent_body execute sense_visual_objects []
   [let [[visual_objects nil]]
     [let [[isis_sense_frame [have this sense_world]]]
-      [let [[isis_object_frame [have isis_sense_frame lookup `objects]]]
-	[if isis_object_frame
-	    [mapc [funk [isis_name]
-			[let [[visual_object [new isis_visual_object isis_name isis_sense_frame [have isis_object_frame lookup isis_name]]]]
-			  [= visual_objects [cons visual_object visual_objects]]]]
-		  [get isis_object_frame keys]]]]
-      [let [[isis_agent_frame [have isis_sense_frame lookup `agents]]]
-	[if isis_agent_frame
-	    [mapc [funk [isis_name]
-			[let [[visual_agent [new isis_visual_agent isis_name isis_sense_frame [have isis_agent_frame lookup isis_name]]]]
-			  [= visual_objects [cons visual_agent visual_objects]]]]
-		  [get isis_agent_frame keys]]]]
+      [if isis_sense_frame
+	  [prog [let [[isis_object_frame [have isis_sense_frame lookup `objects]]]
+		  [if isis_object_frame
+		      [mapc [funk [isis_name]
+				  [let [[visual_object [new isis_visual_object isis_name isis_sense_frame [have isis_object_frame lookup isis_name]]]]
+				    [= visual_objects [cons visual_object visual_objects]]]]
+			    [get isis_object_frame keys]]]]
+		[let [[isis_agent_frame [have isis_sense_frame lookup `agents]]]
+		  [if isis_agent_frame
+		      [mapc [funk [isis_name]
+				  [let [[visual_agent [new isis_visual_agent isis_name isis_sense_frame [have isis_agent_frame lookup isis_name]]]]
+				    [= visual_objects [cons visual_agent visual_objects]]]]
+			    [get isis_agent_frame keys]]]]]]
       visual_objects]]]
 
 [deftypefunk isis_agent_body execute sense_right_hand_object_name []
   [let [[isis_sense_frame [have this sense_world]]]
-    [let [[position_frame [have isis_sense_frame lookup `position]]]
-      [let [[right_hand_object_name [have position_frame lookup `in_right_hand]]]
-	right_hand_object_name]]]]
+    [if isis_sense_frame
+	[let [[position_frame [have isis_sense_frame lookup `position]]]
+	  [let [[right_hand_object_name [have position_frame lookup `in_right_hand]]]
+	    right_hand_object_name]]]]]
 
 [deftypefunk isis_agent_body execute sense_left_hand_object_name []
   [let [[isis_sense_frame [have this sense_world]]]
-    [let [[position_frame [have isis_sense_frame lookup `position]]]
-      [let [[left_hand_object_name [have position_frame lookup `in_left_hand]]]
-	left_hand_object_name]]]]
+    [if isis_sense_frame
+	[let [[position_frame [have isis_sense_frame lookup `position]]]
+	  [let [[left_hand_object_name [have position_frame lookup `in_left_hand]]]
+	    left_hand_object_name]]]]]
 
 
 [deftypefunk isis_agent_body get retina_image []

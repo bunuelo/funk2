@@ -1734,13 +1734,13 @@ f2ptr f2__semantic_knowledge_base__core_extension_initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "semantic_knowledge_base"),                    f2__semantic_knowledge_base_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "noun_semantic_frame"),                        f2__noun_semantic_frame_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "visual_object_semantic_frame"),               f2__visual_object_semantic_frame_type__new(cause));
-  printf("\nsemantic_knowledge_base initialized."); fflush(stdout);
+  status("semantic_knowledge_base initialized.");
   return nil;
 }
 export_cefunk0(semantic_knowledge_base__core_extension_initialize, 0, "");
 
 f2ptr f2__semantic_knowledge_base__core_extension_destroy(f2ptr cause) {
-  printf("\nsemantic_knowledge_base destroyed."); fflush(stdout);
+  status("\nsemantic_knowledge_base destroyed.");
   return nil;
 }
 export_cefunk0(semantic_knowledge_base__core_extension_destroy, 0, "");

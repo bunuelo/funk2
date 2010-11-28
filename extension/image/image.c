@@ -471,13 +471,13 @@ export_cefunk0(image__core_extension_ping, 0, "");
 
 f2ptr f2__image__core_extension_initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "image"), f2__image_type__new(cause));
-  printf("\nimage initialized."); fflush(stdout);
+  status("image initialized.");
   return nil;
 }
 export_cefunk0(image__core_extension_initialize, 0, "");
 
 f2ptr f2__image__core_extension_destroy(f2ptr cause) {
-  printf("\nimage destroyed."); fflush(stdout);
+  status("image destroyed.");
   return nil;
 }
 export_cefunk0(image__core_extension_destroy, 0, "");

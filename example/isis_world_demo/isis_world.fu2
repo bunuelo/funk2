@@ -35,12 +35,13 @@
        [have initialize_events insert [frame time [time] event_type `train_result         event_result [isis-call client meta_train]]]
        [have initialize_events insert [frame time [time] event_type `pause_result         event_result [isis-call client meta_pause]]]
        [have initialize_events insert [frame time [time] event_type `step_result          event_result [have this raw_step_simulation 1.0]]]
-       [terminal_format standard-terminal '\nisis_world initialize_events:']
-       [mapc [funk [event]
-		   [terminal_format standard-terminal '\n  ' event]]
-	     [get initialize_events leaves]]]]
+       ]]
 
-
+[deftypefunk isis_world execute print_initialize_events []
+  [terminal_format standard-terminal '\nisis_world initialize_events:']
+  [mapc [funk [event]
+	      [terminal_format standard-terminal '\n  ' event]]
+	[get initialize_events leaves]]]
 
 [deftypefunk isis_world execute user_activate [agent_name layer_name agency_name resource_name :rest args]
   [set [get [get this agent_mind agent_name] agency layer_name agency_name] user_activate_resource resource_name]

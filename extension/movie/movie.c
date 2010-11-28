@@ -475,17 +475,16 @@ f2ptr f2__movie__core_extension_initialize(f2ptr cause) {
   f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__core_extension_ping")), nil);
 #ifdef F2__LIBAVCODEC_SUPPORTED
   libavcodec__initialize();
-  //libavcodec__video_encode_example("example.mpeg");
-  printf("\nmovie initialized."); fflush(stdout);
+  status("movie initialized.");
 #else
-  printf("\nmovie initialized, but libavcodec was not compiled into this version of Funk2."); fflush(stdout);
+  status("movie initialized, but libavcodec was not compiled into this version of Funk2.");
 #endif // F2__LIBAVCODEC_SUPPORTED
   return nil;
 }
 export_cefunk0(movie__core_extension_initialize, 0, "");
 
 f2ptr f2__movie__core_extension_destroy(f2ptr cause) {
-  printf("\nmovie destroyed."); fflush(stdout);
+  status("movie destroyed.");
   return nil;
 }
 export_cefunk0(movie__core_extension_destroy, 0, "");

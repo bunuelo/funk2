@@ -40,10 +40,10 @@
 		    
 		    [cond [[> [get object_one retina_position_vertical]
 			      [get object_two retina_position_vertical]]
-			   [have semantic_object_one add_preposition `on semantic_object_two]]
+			   [have semantic_object_one add_preposition `visually_above semantic_object_two]]
 			  [[< [get object_one retina_position_vertical]
 			      [get object_two retina_position_vertical]]
-			   [have semantic_object_two add_preposition `on semantic_object_one]]]
+			   [have semantic_object_two add_preposition `visually_above semantic_object_one]]]
 		    
 		    '...'
 		    

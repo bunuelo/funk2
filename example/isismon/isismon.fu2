@@ -390,8 +390,14 @@
        [= visual_knowledge_button [gtk-button-new_with_label 'Visual Knowledge']]
        [have visual_knowledge_button signal_connect 'clicked'
 	     [funk []
-		   [terminal_format standard-terminal '\n' [get this name] '\'s visual semantic knowledge:'
-				    '\n  ' [get [get isis_agent mind] visual_knowledge]]]]
+		   [let [[visual_semantic_knowledge_base [get [get isis_agent mind] visual_knowledge]]]
+		     [terminal_format standard-terminal '\n' [get this name] '\'s visual semantic knowledge:'
+				      '\n  ' visual_semantic_knowledge_base]
+		     [let [[visual_semantic_frame_ball [new-apply semantic_frame_ball [get visual_semantic_knowledge_base semantic_frames]]]]
+		       [let [[visual_semantic_graph [get visual_semantic_frame_ball as-graph]]]
+			 [fiber [funk [] [have visual_semantic_graph gview]] nil]]]
+		     ]]]
+       
        [have status_button_hbox pack_start visual_knowledge_button nil nil 0]
        
        [have vbox pack_start status_button_hbox nil nil 0]

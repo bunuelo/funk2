@@ -391,8 +391,7 @@
        [have visual_knowledge_button signal_connect 'clicked'
 	     [funk []
 		   [let [[visual_semantic_knowledge_base [get [get isis_agent mind] visual_knowledge]]]
-		     [terminal_format standard-terminal '\n' [get this name] '\'s visual semantic knowledge:'
-				      '\n  ' visual_semantic_knowledge_base]
+		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s visual semantic knowledge.']
 		     [let [[visual_semantic_frame_ball [new-apply semantic_frame_ball [get visual_semantic_knowledge_base semantic_frames]]]]
 		       [let [[visual_semantic_graph [get visual_semantic_frame_ball as-graph]]]
 			 [fiber [funk [] [have visual_semantic_graph gview]] nil]]]

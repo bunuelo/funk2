@@ -96,15 +96,21 @@
   [let [[isis_sense_frame [have this sense_world]]]
     [if isis_sense_frame
 	[let [[position_frame [have isis_sense_frame lookup `position]]]
-	  [let [[right_hand_object_name [have position_frame lookup `in_right_hand]]]
-	    right_hand_object_name]]]]]
+	  [let [[right_hand_object_name_string [have position_frame lookup `in_right_hand]]]
+	    [let [[right_hand_object_name [if [equals '' right_hand_object_name_string]
+					     nil
+					   [get right_hand_object_name_string as-symbol]]]]
+	      right_hand_object_name]]]]]]
 
 [deftypefunk isis_agent_body execute sense_left_hand_object_name []
   [let [[isis_sense_frame [have this sense_world]]]
     [if isis_sense_frame
 	[let [[position_frame [have isis_sense_frame lookup `position]]]
-	  [let [[left_hand_object_name [have position_frame lookup `in_left_hand]]]
-	    left_hand_object_name]]]]]
+	  [let [[left_hand_object_name_string [have position_frame lookup `in_left_hand]]]
+	    [let [[left_hand_object_name [if [equals '' left_hand_object_name_string]
+					     nil
+					   [get left_hand_object_name_string as-symbol]]]]
+	      left_hand_object_name]]]]]]
 
 [deftypefunk isis_agent_body get retina_image []
   [let [[retina_image_sequence-length [get retina_image_sequence length]]]

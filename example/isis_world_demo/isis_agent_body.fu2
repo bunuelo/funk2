@@ -118,11 +118,61 @@
 	[get retina_image_sequence elt [- retina_image_sequence-length 1]]
       nil]]]
 
+[deftypefunk isis_agent_body execute sense_proprioceptual_frame []
+  [let [[isis_sense_frame [have this sense_world]]]
+    [let [[sense_position_frame [have isis_sense_frame lookup `position]]]
+      [let [[left_hand_xyzhpr  [have sense_position_frame lookup `left_hand_pos]]
+	    [right_hand_xyzhpr [have sense_position_frame lookup `right_hand_pos]]
+	    [body_xyzhpr       [have sense_position_frame lookup `body_pos]]
+	    [neck_xyzhpr       [have sense_position_frame lookup `neck_pos]]]
+	[frame left_hand  [new moral_compass_proprioceptual_object
+			       `left_hand
+			       [new moral_compass_proprioceptual_position
+				    [get left_hand_xyzhpr elt 0]
+				    [get left_hand_xyzhpr elt 1]
+				    [get left_hand_xyzhpr elt 2]]
+			       [new moral_compass_proprioceptual_orientation
+				    [get left_hand_xyzhpr elt 3]
+				    [get left_hand_xyzhpr elt 4]
+				    [get left_hand_xyzhpr elt 5]]]
+	       right_hand [new moral_compass_proprioceptual_object
+			       `right_hand
+			       [new moral_compass_proprioceptual_position
+				    [get right_hand_xyzhpr elt 0]
+				    [get right_hand_xyzhpr elt 1]
+				    [get right_hand_xyzhpr elt 2]]
+			       [new moral_compass_proprioceptual_orientation
+				    [get right_hand_xyzhpr elt 3]
+				    [get right_hand_xyzhpr elt 4]
+				    [get right_hand_xyzhpr elt 5]]]
+	       body       [new moral_compass_proprioceptual_object
+			       `body
+			       [new moral_compass_proprioceptual_position
+				    [get body_xyzhpr elt 0]
+				    [get body_xyzhpr elt 1]
+				    [get body_xyzhpr elt 2]]
+			       [new moral_compass_proprioceptual_orientation
+				    [get body_xyzhpr elt 3]
+				    [get body_xyzhpr elt 4]
+				    [get body_xyzhpr elt 5]]]
+	       neck       [new moral_compass_proprioceptual_object
+			       `neck
+			       [new moral_compass_proprioceptual_position
+				    [get body_xyzhpr elt 0]
+				    [get body_xyzhpr elt 1]
+				    [get body_xyzhpr elt 2]]
+			       [new moral_compass_proprioceptual_orientation
+				    [get body_xyzhpr elt 3]
+				    [get body_xyzhpr elt 4]
+				    [get body_xyzhpr elt 5]]]
+	       ]]]]]
+
 [deftypefunk isis_agent_body execute sense_perception []
   [let [[retina_image           [get  this retina_image]]
 	[visual_objects         [have this sense_visual_objects]]
 	[left_hand_object_name  [have this sense_left_hand_object_name]]
-	[right_hand_object_name [have this sense_right_hand_object_name]]]
+	[right_hand_object_name [have this sense_right_hand_object_name]]
+	[proprioceptual_frame   [have this sense_proprioceptual_frame]]]
     [new moral_compass_perception
 	 retina_image
 	 visual_objects

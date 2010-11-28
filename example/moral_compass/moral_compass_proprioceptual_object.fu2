@@ -18,19 +18,27 @@
  rights to redistribute these changes.'
 
 
-[deframe moral_compass_perception [frame] [retina_image
-					   visual_objects
-					   left_hand_object_name
-					   right_hand_object_name
-					   proprioceptual_frame]
-  [new [initial-retina_image
-	initial-visual_objects
-	initial-left_hand_object_name
-	initial-right_hand_object_name
-	initial-proprioceptual_frame]
-       [= retina_image           initial-retina_image]
-       [= visual_objects         initial-visual_objects]
-       [= left_hand_object_name  initial-left_hand_object_name]
-       [= right_hand_object_name initial-right_hand_object_name]
-       [= proprioceptual_frame   initial-proprioceptual_frame]]]
+[deframe moral_compass_proprioceptual_position [frame] [x y z]
+  [new [initial-x initial-y initial-z]
+       [= x initial-x]
+       [= y initial-y]
+       [= z initial-z]]]
+
+[deframe moral_compass_proprioceptual_orientation [frame] [heading pitch roll]
+  [new [initial-heading initial-pitch initial-roll]
+       [= heading initial-heading]
+       [= pitch   initial-pitch]
+       [= roll    initial-roll]]]
+
+[deframe moral_compass_proprioceptual_object [frame] [object_type
+						      position
+						      orientation]
+  [new [initial-object_type
+	initial-position
+	initial-orientation]
+       [= object_type initial-object_type]
+       [= position    initial-position]
+       [= orientation initial-orientation]
+       ]]
+
 

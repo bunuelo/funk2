@@ -75,6 +75,10 @@
    :sources ['learned_reactive_physical_agency.fu2']]
 
 
+[defpackage moral_compass_proprioceptual_object
+  :packages [mind]
+   :sources ['moral_compass_proprioceptual_object.fu2']]
+
 [defpackage moral_compass_visual_object
   :packages [mind]
    :sources ['moral_compass_visual_object.fu2']]
@@ -84,7 +88,7 @@
    :sources ['moral_compass_visual_agent.fu2']]
 
 [defpackage moral_compass_perception
-  :packages [mind moral_compass_visual_object moral_compass_visual_agent]
+  :packages [mind moral_compass_proprioceptual_object moral_compass_visual_object moral_compass_visual_agent]
    :sources ['moral_compass_perception.fu2']]
 
 [defpackage learned_reactive_sensory_agency

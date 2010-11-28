@@ -27,7 +27,7 @@
 [deftypefunk isis_world_client execute call [command args_frame]
   [let [[call_mutex [get this call_mutex]]]
     [have call_mutex lock]
-    [let [[result [have-apply [get this xmlrpc_client] call [print `[do ,command ,args_frame]]]]]
+    [let [[result [have-apply [get this xmlrpc_client] call `[do ,command ,args_frame]]]]
       [have call_mutex unlock]
       result]]]
 

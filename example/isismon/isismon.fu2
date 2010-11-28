@@ -303,7 +303,6 @@
 				learned_reactive_physical_activator_button
 				sense_button
 				perception_button
-				visual_objects_button
 				visual_knowledge_button
 				
 				look_for_hbox
@@ -387,13 +386,6 @@
 		   [terminal_format standard-terminal '\n' [get this name] '\'s perception:'
 				    '\n  ' [get [get isis_agent mind] perception]]]]
        [have status_button_hbox pack_start perception_button nil nil 0]
-       
-       [= visual_objects_button [gtk-button-new_with_label 'Visual Objects']]
-       [have visual_objects_button signal_connect 'clicked'
-	     [funk []
-		   [terminal_format standard-terminal '\n' [get this name] '\'s visual objects:'
-				    '\n  ' [get [get isis_agent mind] visual_objects]]]]
-       [have status_button_hbox pack_start visual_objects_button nil nil 0]
        
        [= visual_knowledge_button [gtk-button-new_with_label 'Visual Knowledge']]
        [have visual_knowledge_button signal_connect 'clicked'

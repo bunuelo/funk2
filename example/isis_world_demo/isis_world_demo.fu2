@@ -31,15 +31,10 @@
 
 [defunk isis_world-initialize [hostname]
   [cause-define cause-name `isis_world-initialize]
-  [print 'destroying old isis_world.']
   [shelter [have isis_world destroy]]
-  [print 'creating new client.']
   [let [[client [new isis_world_client hostname]]]
-    [print 'creating new isis_world.']
     [let [[isis_world [new isis_world client]]]
-      [print 'creating new ralph agent.']
-      [new ralph_body isis_world]
-      [print 'creating new lauren agent.']
+      [new ralph_body  isis_world]
       [new lauren_body isis_world]
       
       [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]

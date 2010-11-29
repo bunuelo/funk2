@@ -25,26 +25,12 @@
 
 // meta_semantic_knowledge_base
 
-f2ptr     raw__meta_semantic_knowledge_base__new                      (f2ptr cause);
-f2ptr      f2__meta_semantic_knowledge_base__new                      (f2ptr cause);
-boolean_t raw__meta_semantic_knowledge_base__is_type                  (f2ptr cause, f2ptr thing);
-f2ptr      f2__meta_semantic_knowledge_base__is_type                  (f2ptr cause, f2ptr thing);
-f2ptr     raw__meta_semantic_knowledge_base__type                     (f2ptr cause, f2ptr this);
-f2ptr      f2__meta_semantic_knowledge_base__type                     (f2ptr cause, f2ptr this);
-f2ptr     raw__meta_semantic_knowledge_base__semantic_hash            (f2ptr cause, f2ptr this);
-f2ptr      f2__meta_semantic_knowledge_base__semantic_hash            (f2ptr cause, f2ptr this);
-f2ptr     raw__meta_semantic_knowledge_base__semantic_hash__set       (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__meta_semantic_knowledge_base__semantic_hash__set       (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__meta_semantic_knowledge_base__lookup_object_key        (f2ptr cause, f2ptr this, f2ptr object);
-f2ptr      f2__meta_semantic_knowledge_base__lookup_object_key        (f2ptr cause, f2ptr this, f2ptr object);
-f2ptr     raw__meta_semantic_knowledge_base__add_object_key           (f2ptr cause, f2ptr this, f2ptr object);
-f2ptr      f2__meta_semantic_knowledge_base__add_object_key           (f2ptr cause, f2ptr this, f2ptr object);
-f2ptr     raw__meta_semantic_knowledge_base__object_key               (f2ptr cause, f2ptr this, f2ptr object);
-f2ptr      f2__meta_semantic_knowledge_base__object_key               (f2ptr cause, f2ptr this, f2ptr object);
-f2ptr     raw__meta_semantic_knowledge_base__key_count                (f2ptr cause, f2ptr this);
-f2ptr      f2__meta_semantic_knowledge_base__key_count                (f2ptr cause, f2ptr this);
-f2ptr     raw__meta_semantic_knowledge_base__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
-f2ptr      f2__meta_semantic_knowledge_base__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr     raw__meta_semantic_knowledge_base__new    (f2ptr cause, f2ptr semantic_frames);
+f2ptr      f2__meta_semantic_knowledge_base__new    (f2ptr cause, f2ptr semantic_frames);
+boolean_t raw__meta_semantic_knowledge_base__is_type(f2ptr cause, f2ptr thing);
+f2ptr      f2__meta_semantic_knowledge_base__is_type(f2ptr cause, f2ptr thing);
+f2ptr     raw__meta_semantic_knowledge_base__type   (f2ptr cause, f2ptr this);
+f2ptr      f2__meta_semantic_knowledge_base__type   (f2ptr cause, f2ptr this);
 
 f2ptr f2__meta_semantic_knowledge_base_type__new(f2ptr cause);
 

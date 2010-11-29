@@ -147,16 +147,20 @@ f2ptr f2__meta_semantic_knowledge_base_type__new(f2ptr cause) {
 
 // relationship_meta_semantic_frame
 
-f2ptr raw__relationship_meta_semantic_frame__new(f2ptr cause, f2ptr realm) {
+f2ptr raw__relationship_meta_semantic_frame__new(f2ptr cause, f2ptr realm, f2ptr relationship__source, f2ptr relationship__key_type, f2ptr relationship__key, f2ptr relationship__target) {
   f2ptr this = f2__meta_semantic_frame__new(cause, realm);
   raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "relationship_meta_semantic_frame"));
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "source"),   relationship__source);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "target"),   relationship__target);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "key_type"), relationship__key_type);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "key"),      relationship__key);
   return this;
 }
 
-f2ptr f2__relationship_meta_semantic_frame__new(f2ptr cause, f2ptr realm) {
-  return raw__relationship_meta_semantic_frame__new(cause, realm);
+f2ptr f2__relationship_meta_semantic_frame__new(f2ptr cause, f2ptr realm, f2ptr relationship__source, f2ptr relationship__key_type, f2ptr relationship__key, f2ptr relationship__target) {
+  return raw__relationship_meta_semantic_frame__new(cause, realm, relationship__source, relationship__key_type, relationship__key, relationship__target);
 }
-export_cefunk1(relationship_meta_semantic_frame__new, realm, 0, "Returns a new relationship_meta_semantic_frame object.");
+export_cefunk5(relationship_meta_semantic_frame__new, realm, relationship__source, relationship__key_type, relationship__key, relationship__target, 0, "Returns a new relationship_meta_semantic_frame object.");
 
 
 boolean_t raw__relationship_meta_semantic_frame__is_type(f2ptr cause, f2ptr thing) {

@@ -52,7 +52,7 @@
 	  [= object_iter_one [cdr object_iter_one]]]]
       [mapc [funk [visual_object]
 		  [let [[semantic_object [have semantic_object_frame lookup [get visual_object phenomenal_name]]]]
-		    [let [[preposition_frame [get semantic_object prepositional_frame]]]
+		    [let [[preposition_frame [get semantic_object preposition_frame]]]
 		      [mapc [funk [preposition]
 				  [let [[prepositional_object_names [have preposition_frame lookup preposition]]]
 				    [mapc [funk [prepositional_object_name]

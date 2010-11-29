@@ -11,34 +11,52 @@
 									     turn_right_resource__button
 									     turn_right_resource__target__label
 									     turn_right_resource__target__entry
+
 									     turn_left_resource__hbox
 									     turn_left_resource__button
 									     turn_left_resource__target__label
 									     turn_left_resource__target__entry
+
 									     look_up_resource__hbox
 									     look_up_resource__button
 									     look_up_resource__target__label
 									     look_up_resource__target__entry
+
 									     look_down_resource__hbox
 									     look_down_resource__button
 									     look_down_resource__target__label
 									     look_down_resource__target__entry
+
 									     move_forward_resource__hbox
 									     move_forward_resource__button
 									     move_forward_resource__target__label
 									     move_forward_resource__target__entry
+	
 									     move_backward_resource__hbox
 									     move_backward_resource__button
 									     move_backward_resource__target__label
 									     move_backward_resource__target__entry
+									     
 									     empty_right_hand_resource__hbox
 									     empty_right_hand_resource__button
 									     empty_left_hand_resource__hbox
 									     empty_left_hand_resource__button
+									     
+									     look_for_resource__hbox
+									     look_for_resource__button
+									     look_for_resource__target__label
+									     look_for_resource__target__entry
+									     
+									     look_for_vertically_resource__hbox
+									     look_for_vertically_resource__button
+									     look_for_vertically_resource__target__label
+									     look_for_vertically_resource__target__entry
+
 									     hold_with_right_hand_resource__hbox
 									     hold_with_right_hand_resource__button
 									     hold_with_right_hand_resource__target__label
 									     hold_with_right_hand_resource__target__entry
+									     
 									     hold_with_left_hand_resource__hbox
 									     hold_with_left_hand_resource__button
 									     hold_with_left_hand_resource__target__label
@@ -156,6 +174,31 @@
        [have empty_left_hand_resource__button signal_connect 'clicked'
 	     [funk []
 		   [have this activate_resource `learned_reactive `physical `empty_left_hand]]]
+
+       [= look_for_resource__hbox [gtk-hbox-new 2]]
+       [= look_for_resource__button [gtk-button-new_with_label 'look_for']]
+       [= look_for_resource__target__label [gtk-label-new 'Target: ']]
+       [= look_for_resource__target__entry [gtk-entry-new]]
+       [have look_for_resource__hbox pack_start look_for_resource__button nil nil 0]
+       [have look_for_resource__hbox pack_start look_for_resource__target__label nil nil 0]
+       [have look_for_resource__hbox pack_start look_for_resource__target__entry t t 0]
+       [have vbox pack_start look_for_resource__hbox nil nil 0]
+       [have look_for_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `learned_reactive `physical `look_for [get [get  look_for_resource__target__entry text] as-symbol]]]]
+       
+       
+       [= look_for_vertically_resource__hbox [gtk-hbox-new 2]]
+       [= look_for_vertically_resource__button [gtk-button-new_with_label 'Look for vertically']]
+       [= look_for_vertically_resource__target__label [gtk-label-new 'Target: ']]
+       [= look_for_vertically_resource__target__entry [gtk-entry-new]]
+       [have look_for_vertically_resource__hbox pack_start look_for_vertically_resource__button nil nil 0]
+       [have look_for_vertically_resource__hbox pack_start look_for_vertically_resource__target__label nil nil 0]
+       [have look_for_vertically_resource__hbox pack_start look_for_vertically_resource__target__entry t t 0]
+       [have vbox pack_start look_for_vertically_resource__hbox nil nil 0]
+       [have look_for_vertically_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `learned_reactive `physical `look_for_vertically [get [get  look_for_vertically_resource__target__entry text] as-symbol]]]]
        
        [= hold_with_right_hand_resource__hbox [gtk-hbox-new 2]]
        [= hold_with_right_hand_resource__button [gtk-button-new_with_label 'Hold with Right Hand']]

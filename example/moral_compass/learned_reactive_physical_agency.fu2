@@ -60,14 +60,16 @@ does empty right hand need argument target??!?!?!?!?!?!?!? fghjkl
 
 
 [defunk get_visual_objects [mind]
-  [get [get [get mind layer `builtin_reactive] agency `sensory] visual_objects]]
+  [get [get mind perception] visual_objects]]
 
 [defunk get_left_hand_object_name [mind]
- [get [get [get mind layer `builtin_reactive] agency `sensory] left_hand_object_name]]
+ [get[get mind perception] left_hand_object_name]]
 
 [defunk get_right_hand_object_name [mind]
- [get [get [get mind layer `builtin_reactive] agency `sensory] right_hand_object_name]]
+ [get [get mind perception] right_hand_object_name]]
 
+[defunk get_neck_pitch [mind]
+ [get [get mind perception] right_hand_object_name]]
 
 
 
@@ -91,7 +93,7 @@ does empty right hand need argument target??!?!?!?!?!?!?!? fghjkl
     [sleep 3]]
   
   [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
-	command `learned_reactive `physical `hold_with_right_hand 
+	command `learned_reactive `physical `hold_with_left_hand 
 	[have [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] 
 		   resource `look_for_vertically] lookup `my_current_object]]]
   
@@ -294,7 +296,7 @@ does empty right hand need argument target??!?!?!?!?!?!?!? fghjkl
 				    [if [lookup_visual_object [get_visual_objects mind] target]
 					[if [> [get [get this body] arm_length] [have [lookup_visual_object [get_visual_objects mind] target] lookup `distance]]
 					    [prog [print 22]
-						  [if [equals '' [get_right_hand_object_name mind]]
+						  [if [null [get_right_hand_object_name mind]]
 						      [prog [print 'nothing in right hand'] 
 							    [mind-wait_to_activate mind builtin_reactive physical pick_up_with_right_hand target]
 							    [print 'activated built-in pick_up']]
@@ -326,7 +328,7 @@ does empty right hand need argument target??!?!?!?!?!?!?!? fghjkl
 			  [if [get_visual_objects mind]
 			      [if [lookup_visual_object [get_visual_objects mind] target]
 				  [if [> [get [get this body] arm_length] [have [lookup_visual_object [get_visual_objects mind] target]lookup  `distance]]
-				      [if [eq '' [get_left_hand_object_name mind]]
+				      [if [null [get_left_hand_object_name mind]]
 					  [mind-wait_to_activate mind builtin_reactive physical pick_up_with_left_hand target]
 					[mind-wait_to_activate mind learned_reactive physical empty_left_hand ]]
 				    [prog 

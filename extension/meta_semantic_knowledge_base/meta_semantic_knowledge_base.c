@@ -26,15 +26,16 @@
 
 // meta_semantic_knowledge_base
 
-f2ptr raw__meta_semantic_knowledge_base__new(f2ptr cause) {
-  return f2__frame__new(cause, f2list2__new(cause,
-					    new__symbol(cause, "type"), new__symbol(cause, "meta_semantic_knowledge_base")));
+f2ptr raw__meta_semantic_knowledge_base__new(f2ptr cause, f2ptr semantic_frames) {
+  f2ptr this = f2__semantic_knowledge_base__new(cause, semantic_frames);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "meta_semantic_knowledge_base"));
+  return this;
 }
 
-f2ptr f2__meta_semantic_knowledge_base__new(f2ptr cause) {
-  return raw__meta_semantic_knowledge_base__new(cause);
+f2ptr f2__meta_semantic_knowledge_base__new(f2ptr cause, f2ptr semantic_frames) {
+  return raw__meta_semantic_knowledge_base__new(cause, semantic_frames);
 }
-export_cefunk0(meta_semantic_knowledge_base__new, 0, "Returns a new meta_semantic_knowledge_base object.");
+export_cefunk1(meta_semantic_knowledge_base__new, semantic_frames, 0, "Returns a new meta_semantic_knowledge_base object.");
 
 
 boolean_t raw__meta_semantic_knowledge_base__is_type(f2ptr cause, f2ptr thing) {

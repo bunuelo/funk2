@@ -26,16 +26,16 @@
 
 // meta_semantic_frame
 
-f2ptr raw__meta_semantic_frame__new(f2ptr cause, f2ptr semantic_frames) {
-  f2ptr this = f2__semantic_knowledge_base__new(cause, semantic_frames);
+f2ptr raw__meta_semantic_frame__new(f2ptr cause, f2ptr realm) {
+  f2ptr this = f2__semantic_frame__new(cause, realm);
   raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "meta_semantic_frame"));
   return this;
 }
 
-f2ptr f2__meta_semantic_frame__new(f2ptr cause, f2ptr semantic_frames) {
-  return raw__meta_semantic_frame__new(cause, semantic_frames);
+f2ptr f2__meta_semantic_frame__new(f2ptr cause, f2ptr realm) {
+  return raw__meta_semantic_frame__new(cause, realm);
 }
-export_cefunk1(meta_semantic_frame__new, semantic_frames, 0, "Returns a new meta_semantic_frame object.");
+export_cefunk1(meta_semantic_frame__new, realm, 0, "Returns a new meta_semantic_frame object.");
 
 
 boolean_t raw__meta_semantic_frame__is_type(f2ptr cause, f2ptr thing) {

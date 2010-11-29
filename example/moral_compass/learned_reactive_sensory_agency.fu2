@@ -45,11 +45,24 @@
 			      [get object_two retina_position_vertical]]
 			   [have semantic_object_two add_preposition `visually_above semantic_object_one]]]
 		    
-		    '...'
+		    '...more tests for object x object patterns...'
 		    
 		    ]]
 		[= object_iter_two [cdr object_iter_two]]]]]
-	  [= object_iter_one [cdr object_iter_one]]]]]
+	  [= object_iter_one [cdr object_iter_one]]]]
+      [mapc [funk [visual_object]
+		  [let [[semantic_object [have semantic_object_frame lookup [get visual_object phenomenal_name]]]]
+		    [let [[preposition_frame [get semantic_object prepositional_frame]]]
+		      [mapc [funk [preposition]
+				  [let [[prepositional_object_names [have preposition_frame lookup preposition]]]
+				    [mapc [funk [prepositional_object_name]
+						[let [[prepositional_semantic_object [have semantic_object_frame lookup prepositional_object_name]]]
+						  [if [null prepositional_semantic_object]
+						      [terminal_format standard-terminal '\nvisual_semantic_knowledge-new_from_visual_objects warning: don\'t know of prepositional object, ' prepositional_object_name '.']
+						    [have semantic_object add_preposition preposition prepositional_semantic_object]]]]
+					  prepositional_object_names]]]
+			    [get preposition_frame keys]]]]]
+	    visual_objects]]
     semantic_knowledge_base]]
 
 

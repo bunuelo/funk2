@@ -24,6 +24,66 @@
 #include "meta_semantic_knowledge_base.h"
 
 
+// meta_semantic_frame
+
+f2ptr raw__meta_semantic_frame__new(f2ptr cause, f2ptr semantic_frames) {
+  f2ptr this = f2__semantic_knowledge_base__new(cause, semantic_frames);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "meta_semantic_frame"));
+  return this;
+}
+
+f2ptr f2__meta_semantic_frame__new(f2ptr cause, f2ptr semantic_frames) {
+  return raw__meta_semantic_frame__new(cause, semantic_frames);
+}
+export_cefunk1(meta_semantic_frame__new, semantic_frames, 0, "Returns a new meta_semantic_frame object.");
+
+
+boolean_t raw__meta_semantic_frame__is_type(f2ptr cause, f2ptr thing) {
+  if (! raw__frame__is_type(cause, thing)) {
+    return boolean__false;
+  }
+  f2ptr this_type_name_symbol = new__symbol(cause, "meta_semantic_frame");
+  f2ptr thing_type_name       = f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil);
+  if (raw__eq(cause, this_type_name_symbol, thing_type_name)) {
+    return boolean__true;
+  }
+  f2ptr thing_type = f2__lookup_type(cause, thing_type_name);
+  if (raw__primobject_type__has_parent_type(cause, thing_type, this_type_name_symbol)) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
+f2ptr f2__meta_semantic_frame__is_type(f2ptr cause, f2ptr thing) {
+  return f2bool__new(raw__meta_semantic_frame__is_type(cause, thing));
+}
+export_cefunk1(meta_semantic_frame__is_type, thing, 0, "Returns whether or not thing is of type meta_semantic_frame.");
+
+
+f2ptr raw__meta_semantic_frame__type(f2ptr cause, f2ptr this) {
+  return f2__object__type(cause, this);
+}
+
+f2ptr f2__meta_semantic_frame__type(f2ptr cause, f2ptr this) {
+  if (! raw__meta_semantic_frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__meta_semantic_frame__type(cause, this);
+}
+export_cefunk1(meta_semantic_frame__type, thing, 0, "Returns the specific type of object that this meta_semantic_frame is.");
+
+
+f2ptr f2__meta_semantic_frame_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_frame")));
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "meta_semantic_frame__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "meta_semantic_frame__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "meta_semantic_frame__type")));}
+  return this;
+}
+
+
+
+
 // meta_semantic_knowledge_base
 
 f2ptr raw__meta_semantic_knowledge_base__new(f2ptr cause, f2ptr semantic_frames) {
@@ -91,6 +151,7 @@ export_cefunk0(meta_semantic_knowledge_base__core_extension_ping, 0, "");
 
 f2ptr f2__meta_semantic_knowledge_base__core_extension_initialize(f2ptr cause) {
   f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__core_extension_ping")), nil);
+  f2__add_type(cause, new__symbol(cause, "meta_semantic_frame"),          f2__meta_semantic_frame_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "meta_semantic_knowledge_base"), f2__meta_semantic_knowledge_base_type__new(cause));
   status("meta_semantic_knowledge_base initialized.");
   return nil;

@@ -17,17 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-
-'deliberative_layer'
-
-[deframe deliberative_layer [mental_layer] []
-  [new []
-       [construct mental_layer 2 `deliberative]
-       [have this add_agency [new deliberative_reality_agency]]
-       [have this add_agency [new deliberative_imagination_agency]]
-       [have this add_agency [new deliberative_execution_agency]]
-       this]]
-
-[deftypefunk deliberative_layer get reality_knowledge []
-  [get [get this agency `reality] reality_knowledge]]
+[defpackage meta_semantic_knowledge_base
+  :sources ['meta_semantic_knowledge_base-core.fu2']]
 

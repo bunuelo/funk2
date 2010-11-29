@@ -17,17 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defcore meta_semantic_knowledge_base 'extension/meta_semantic_knowledge_base/.libs/libf2e_meta_semantic_knowledge_base.so']
 
-'deliberative_layer'
+[defcorefunk meta_semantic_knowledge_base-core_extension_ping       meta_semantic_knowledge_base meta_semantic_knowledge_base__core_extension_ping]
+[defcorefunk meta_semantic_knowledge_base-core_extension_initialize meta_semantic_knowledge_base meta_semantic_knowledge_base__core_extension_initialize]
 
-[deframe deliberative_layer [mental_layer] []
-  [new []
-       [construct mental_layer 2 `deliberative]
-       [have this add_agency [new deliberative_reality_agency]]
-       [have this add_agency [new deliberative_imagination_agency]]
-       [have this add_agency [new deliberative_execution_agency]]
-       this]]
 
-[deftypefunk deliberative_layer get reality_knowledge []
-  [get [get this agency `reality] reality_knowledge]]
 
+[meta_semantic_knowledge_base-core_extension_ping]

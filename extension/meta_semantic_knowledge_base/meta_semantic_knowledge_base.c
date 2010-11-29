@@ -27,7 +27,7 @@
 // meta_semantic_knowledge_base
 
 f2ptr raw__meta_semantic_knowledge_base__new(f2ptr cause) {
-  return f2__frame__new(cause, f2list4__new(cause,
+  return f2__frame__new(cause, f2list2__new(cause,
 					    new__symbol(cause, "type"), new__symbol(cause, "meta_semantic_knowledge_base")));
 }
 

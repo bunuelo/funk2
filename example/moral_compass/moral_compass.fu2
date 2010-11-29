@@ -42,6 +42,9 @@
 [deftypefunk moral_compass get visual_knowledge []
   [get [get this layer `learned_reactive] visual_knowledge]]
 
+[deftypefunk moral_compass get reality_knowledge []
+  [get [get this layer `deliberative] reality_knowledge]]
+
 [deftypefunk moral_compass get objects []
   [print 'get-moral_compass-objects is deprecated.']
   [let [[reactive_sensory_sense [get [get this agency `builtin_reactive `sensory] builtin_reactive_sensory_sense]]]

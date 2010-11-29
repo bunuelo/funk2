@@ -28,3 +28,6 @@
        [have this add_agency [new deliberative_execution_agency]]
        this]]
 
+[deftypefunk learned_reactive_layer get reality_knowledge []
+  [get [get this agency `reality] reality_knowledge]]
+

@@ -304,6 +304,7 @@
 				sense_button
 				perception_button
 				visual_knowledge_button
+				reality_knowledge_button
 				
 				look_for_hbox
 				look_for_button
@@ -396,8 +397,18 @@
 		       [let [[visual_semantic_graph [get visual_semantic_frame_ball as-graph]]]
 			 [fiber [funk [] [have visual_semantic_graph gview]] nil]]]
 		     ]]]
-       
        [have status_button_hbox pack_start visual_knowledge_button nil nil 0]
+       
+       [= reality_knowledge_button [gtk-button-new_with_label 'Reality Knowledge']]
+       [have reality_knowledge_button signal_connect 'clicked'
+	     [funk []
+		   [let [[reality_semantic_knowledge_base [get [get isis_agent mind] reality_knowledge]]]
+		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s reality semantic knowledge.']
+		     [let [[reality_semantic_frame_ball [new-apply semantic_frame_ball [get reality_semantic_knowledge_base semantic_frames]]]]
+		       [let [[reality_semantic_graph [get reality_semantic_frame_ball as-graph]]]
+			 [fiber [funk [] [have reality_semantic_graph gview]] nil]]]
+		     ]]]
+       [have status_button_hbox pack_start reality_knowledge_button nil nil 0]
        
        [have vbox pack_start status_button_hbox nil nil 0]
        

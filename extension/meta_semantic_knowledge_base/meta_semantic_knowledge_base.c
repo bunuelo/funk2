@@ -200,7 +200,7 @@ export_cefunk1(relationship_meta_semantic_frame__type, thing, 0, "Returns the sp
 
 
 f2ptr raw__relationship_meta_semantic_frame__source(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_single_value(cause, new__symbol(cause, "relationship_meta_semantic_frame"), new__symbol(cause, "source"));
+  return raw__semantic_frame__lookup_single_value(cause, this, new__symbol(cause, "relationship_meta_semantic_frame"), new__symbol(cause, "source"));
 }
 
 f2ptr f2__relationship_meta_semantic_frame__source(f2ptr cause, f2ptr this) {
@@ -214,7 +214,7 @@ export_cefunk1(relationship_meta_semantic_frame__source, this, 0, "Returns the s
 
 
 f2ptr raw__relationship_meta_semantic_frame__key_type(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_single_value(cause, new__symbol(cause, "relationship_meta_semantic_frame"), new__symbol(cause, "key_type"));
+  return raw__semantic_frame__lookup_single_value(cause, this, new__symbol(cause, "relationship_meta_semantic_frame"), new__symbol(cause, "key_type"));
 }
 
 f2ptr f2__relationship_meta_semantic_frame__key_type(f2ptr cause, f2ptr this) {
@@ -228,7 +228,7 @@ export_cefunk1(relationship_meta_semantic_frame__key_type, this, 0, "Returns the
 
 
 f2ptr raw__relationship_meta_semantic_frame__key(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_single_value(cause, new__symbol(cause, "relationship_meta_semantic_frame"), new__symbol(cause, "key"));
+  return raw__semantic_frame__lookup_single_value(cause, this, new__symbol(cause, "relationship_meta_semantic_frame"), new__symbol(cause, "key"));
 }
 
 f2ptr f2__relationship_meta_semantic_frame__key(f2ptr cause, f2ptr this) {
@@ -242,7 +242,7 @@ export_cefunk1(relationship_meta_semantic_frame__key, this, 0, "Returns the key 
 
 
 f2ptr raw__relationship_meta_semantic_frame__target(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_single_value(cause, new__symbol(cause, "relationship_meta_semantic_frame"), new__symbol(cause, "target"));
+  return raw__semantic_frame__lookup_single_value(cause, this, new__symbol(cause, "relationship_meta_semantic_frame"), new__symbol(cause, "target"));
 }
 
 f2ptr f2__relationship_meta_semantic_frame__target(f2ptr cause, f2ptr this) {

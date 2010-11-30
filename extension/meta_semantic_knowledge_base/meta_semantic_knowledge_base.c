@@ -259,7 +259,7 @@ export_cefunk1(relationship_meta_semantic_object__type, thing, 0, "Returns the s
 
 
 f2ptr raw__relationship_meta_semantic_object__source(f2ptr cause, f2ptr this) {
-  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "source"), nil);
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "source"), nil);
 }
 
 f2ptr f2__relationship_meta_semantic_object__source(f2ptr cause, f2ptr this) {
@@ -273,7 +273,7 @@ export_cefunk1(relationship_meta_semantic_object__source, this, 0, "Returns the 
 
 
 f2ptr raw__relationship_meta_semantic_object__key_type(f2ptr cause, f2ptr this) {
-  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "key_type"), nil);
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "key_type"), nil);
 }
 
 f2ptr f2__relationship_meta_semantic_object__key_type(f2ptr cause, f2ptr this) {
@@ -287,7 +287,7 @@ export_cefunk1(relationship_meta_semantic_object__key_type, this, 0, "Returns th
 
 
 f2ptr raw__relationship_meta_semantic_object__key(f2ptr cause, f2ptr this) {
-  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "key"), nil);
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "key"), nil);
 }
 
 f2ptr f2__relationship_meta_semantic_object__key(f2ptr cause, f2ptr this) {
@@ -301,7 +301,7 @@ export_cefunk1(relationship_meta_semantic_object__key, this, 0, "Returns the key
 
 
 f2ptr raw__relationship_meta_semantic_object__target(f2ptr cause, f2ptr this) {
-  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "target"), nil);
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "target"), nil);
 }
 
 f2ptr f2__relationship_meta_semantic_object__target(f2ptr cause, f2ptr this) {

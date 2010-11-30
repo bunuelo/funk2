@@ -972,7 +972,7 @@ f2ptr raw__semantic_frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list12__new(cause,
-						new__symbol(cause, "print_object_type"), f2__type(cause, this),
+						new__symbol(cause, "print_object_type"), f2__object__type(cause, this),
 						new__symbol(cause, "realm"),                    raw__semantic_frame__realm(cause, this),
 						new__symbol(cause, "trace_add"),                raw__semantic_frame__trace_add(cause, this),
 						new__symbol(cause, "trace_remove"),             raw__semantic_frame__trace_remove(cause, this),

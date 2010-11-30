@@ -209,10 +209,10 @@ f2ptr f2__meta_semantic_knowledge_base_type__new(f2ptr cause) {
 f2ptr raw__relationship_meta_semantic_object__new(f2ptr cause, f2ptr realm, f2ptr source, f2ptr key_type, f2ptr key, f2ptr target) {
   f2ptr this = f2__meta_semantic_frame__new(cause, realm);
   raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "relationship_meta_semantic_object"));
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship_meta_semantic_object"), new__symbol(cause, "source"),   source);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship_meta_semantic_object"), new__symbol(cause, "key_type"), key_type);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship_meta_semantic_object"), new__symbol(cause, "key"),      key);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship_meta_semantic_object"), new__symbol(cause, "target"),   target);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "source"),   source);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "key_type"), key_type);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "key"),      key);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "target"),   target);
   return this;
 }
 
@@ -259,7 +259,7 @@ export_cefunk1(relationship_meta_semantic_object__type, thing, 0, "Returns the s
 
 
 f2ptr raw__relationship_meta_semantic_object__source(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_single_value(cause, this, new__symbol(cause, "relationship_meta_semantic_object"), new__symbol(cause, "source"));
+  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "source"), nil);
 }
 
 f2ptr f2__relationship_meta_semantic_object__source(f2ptr cause, f2ptr this) {
@@ -273,7 +273,7 @@ export_cefunk1(relationship_meta_semantic_object__source, this, 0, "Returns the 
 
 
 f2ptr raw__relationship_meta_semantic_object__key_type(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_single_value(cause, this, new__symbol(cause, "relationship_meta_semantic_object"), new__symbol(cause, "key_type"));
+  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "key_type"), nil);
 }
 
 f2ptr f2__relationship_meta_semantic_object__key_type(f2ptr cause, f2ptr this) {
@@ -287,7 +287,7 @@ export_cefunk1(relationship_meta_semantic_object__key_type, this, 0, "Returns th
 
 
 f2ptr raw__relationship_meta_semantic_object__key(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_single_value(cause, this, new__symbol(cause, "relationship_meta_semantic_object"), new__symbol(cause, "key"));
+  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "key"), nil);
 }
 
 f2ptr f2__relationship_meta_semantic_object__key(f2ptr cause, f2ptr this) {
@@ -301,7 +301,7 @@ export_cefunk1(relationship_meta_semantic_object__key, this, 0, "Returns the key
 
 
 f2ptr raw__relationship_meta_semantic_object__target(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_single_value(cause, this, new__symbol(cause, "relationship_meta_semantic_object"), new__symbol(cause, "target"));
+  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "target"), nil);
 }
 
 f2ptr f2__relationship_meta_semantic_object__target(f2ptr cause, f2ptr this) {
@@ -314,41 +314,15 @@ export_cefunk1(relationship_meta_semantic_object__target, this, 0, "Returns the 
 
 
 
-f2ptr raw__relationship_meta_semantic_object__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
-  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
-  if (frame == nil) {
-    frame = f2__frame__new(cause, f2list10__new(cause,
-						new__symbol(cause, "print_object_type"), new__symbol(cause, "relationship_meta_semantic_object"),
-						new__symbol(cause, "source"),            raw__relationship_meta_semantic_object__source(cause, this),
-						new__symbol(cause, "key_type"),          raw__relationship_meta_semantic_object__key_type(cause, this),
-						new__symbol(cause, "key"),               raw__relationship_meta_semantic_object__key(cause, this),
-						new__symbol(cause, "target"),            raw__relationship_meta_semantic_object__target(cause, this)));
-    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
-  }
-  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
-}
-
-f2ptr f2__relationship_meta_semantic_object__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if (! raw__relationship_meta_semantic_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__relationship_meta_semantic_object__terminal_print_with_frame(cause, this, terminal_print_frame);
-}
-export_cefunk2(relationship_meta_semantic_object__terminal_print_with_frame, this, terminal_print_frame, 0, "");
-
-
-
 f2ptr f2__relationship_meta_semantic_object_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "meta_semantic_object")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "source"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__source")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "key_type"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__key_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "key"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__key")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "target"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__target")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__terminal_print_with_frame")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),      f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),  f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),     f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "source"),   f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__source")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "key_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__key_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "key"),      f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__key")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "target"),   f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__target")));}
   return this;
 }
 

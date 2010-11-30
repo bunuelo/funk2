@@ -24,7 +24,7 @@
   [cause-define semantic_frame-trace_remove                      t]
   [cause-define semantic_knowledge_base-trace_add_semantic_frame t]
   [let [[semantic_knowledge_base      [new semantic_knowledge_base]]
-	[meta_semantic_knowledge_base [new meta_semantic_knowledge_base]]]
+	[meta_semantic_knowledge_base [new meta_semantic_knowledge_base nil]]]
     [let [[knife_semantic_frame        [new visual_object_semantic_frame semantic_realm]]
 	  [toaster_semantic_frame      [new visual_object_semantic_frame semantic_realm]]
 	  [counter_semantic_frame      [new visual_object_semantic_frame semantic_realm]]
@@ -41,7 +41,7 @@
       [have semantic_knowledge_base add_semantic_frame butter_semantic_frame]
       [have semantic_knowledge_base add_semantic_frame Ralph_semantic_frame]
       [have semantic_knowledge_base add_semantic_frame Lauren_semantic_frame]
-      
+      [print 'debug 0']
       [have knife_semantic_frame        add_noun        `knife]                          [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm knife_semantic_frame `noun `knife t]]]
 											   [have meta_semantic_knowledge_base add_semantic_frame relationship_meta_semantic_object]]
       [have knife_semantic_frame        add_classifier  `butter]                         [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm knife_semantic_frame `classifier `butter t]]]
@@ -51,6 +51,7 @@
       [have knife_semantic_frame        add_preposition `in kitchen_semantic_frame]      [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm knife_semantic_frame `preposition `in kitchen_semantic_frame]]]
 											   [have meta_semantic_knowledge_base add_semantic_frame relationship_meta_semantic_object]]
       
+      [print 'debug 1']
       [have toaster_semantic_frame      add_noun        `toaster]                        [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm toaster_semantic_frame `noun `toaster t]]]
 											   [have meta_semantic_knowledge_base add_semantic_frame relationship_meta_semantic_object]]
       [have toaster_semantic_frame      add_preposition `on counter_semantic_frame]      [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm toaster_semantic_frame `preposition `on counter_semantic_frame]]]
@@ -58,6 +59,7 @@
       [have toaster_semantic_frame      add_preposition `in kitchen_semantic_frame]      [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm toaster_semantic_frame `preposition `in kitchen_semantic_frame]]]
 											   [have meta_semantic_knowledge_base add_semantic_frame relationship_meta_semantic_object]]
       
+      [print 'debug 2']
       [have counter_semantic_frame      add_noun        `counter]                        [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm counter_semantic_frame `noun `counter t]]]
 											   [have meta_semantic_knowledge_base add_semantic_frame relationship_meta_semantic_object]]
       [have counter_semantic_frame      add_classifier  `kitchen]                        [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm counter_semantic_frame `classifier `kitchen t]]]
@@ -68,11 +70,13 @@
       [have kitchen_semantic_frame      add_noun        `kitchen]                        [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm kitchen_semantic_frame `noun `kitchen t]]]
 											   [have meta_semantic_knowledge_base add_semantic_frame relationship_meta_semantic_object]]
       
+      [print 'debug 3']
       [have refrigerator_semantic_frame add_noun        `refrigerator]                   [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm refrigerator_semantic_frame `noun `refrigerator t]]]
 											   [have meta_semantic_knowledge_base add_semantic_frame relationship_meta_semantic_object]]
       [have refrigerator_semantic_frame add_preposition `in kitchen_semantic_frame]      [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm refrigerator_semantic_frame `preposition `in kitchen_semantic_frame]]]
 											   [have meta_semantic_knowledge_base add_semantic_frame relationship_meta_semantic_object]]
       
+      [print 'debug 4']
       [have butter_semantic_frame       add_noun        `butter]                         [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm butter_semantic_frame `noun `butter t]]]
 											   [have meta_semantic_knowledge_base add_semantic_frame relationship_meta_semantic_object]]
       [have butter_semantic_frame       add_preposition `in kitchen_semantic_frame]      [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm butter_semantic_frame `preposition `in kitchen_semantic_frame]]]
@@ -80,16 +84,19 @@
       [have butter_semantic_frame       add_preposition `in refrigerator_semantic_frame] [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm butter_semantic_frame `preposition `in refrigerator_semantic_frame]]]
 											   [have meta_semantic_knowledge_base add_semantic_frame relationship_meta_semantic_object]]
       
+      [print 'debug 5']
       [have Ralph_semantic_frame        add_noun        `Ralph]                          [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm Ralph_semantic_frame `noun `Ralph t]]]
 											   [have meta_semantic_knowledge_base add_semantic_frame relationship_meta_semantic_object]]
       [have Ralph_semantic_frame        add_preposition `in kitchen_semantic_frame]      [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm Ralph_semantic_frame `preposition `in kitchen_semantic_frame]]]
 											   [have meta_semantic_knowledge_base add_semantic_frame relationship_meta_semantic_object]]
       
+      [print 'debug 6']
       [have Lauren_semantic_frame       add_noun        `Lauren]                         [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm Lauren_semantic_frame `noun `Lauren t]]]
 											   [have meta_semantic_knowledge_base add_semantic_frame relationship_meta_semantic_object]]
       [have Lauren_semantic_frame       add_preposition `in kitchen_semantic_frame]      [let [[relationship_meta_semantic_object [new relationship_meta_semantic_object semantic_realm Lauren_semantic_frame `preposition `in kitchen_semantic_frame]]]
 											   [have meta_semantic_knowledge_base add_semantic_frame relationship_meta_semantic_object]]
       
+      [print 'debug 7']
       [frame semantic_knowledge_base      semantic_knowledge_base
 	     meta_semantic_knowledge_base meta_semantic_knowledge_base]]]]
 

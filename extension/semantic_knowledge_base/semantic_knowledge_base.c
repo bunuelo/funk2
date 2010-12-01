@@ -1004,10 +1004,10 @@ void raw__semantic_frame__add_to_graph_with_node_ptypehash(f2ptr cause, f2ptr th
 			    } else {
 			      slot_value_node = f2__graph_node__new(cause, slot_value);
 			    }
-			    f2ptr edge_name = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list3__new(cause,
-														       f2__exp__as__string(cause, key_type_name),
-														       new__string(cause, "\n"),
-														       f2__exp__as__string(cause, key_name))));
+			    f2ptr edge_name = f2__stringlist__concat(cause, f2list3__new(cause,
+											 f2__exp__as__string(cause, key_type_name),
+											 new__string(cause, "\n"),
+											 f2__exp__as__string(cause, key_name)));
 			    f2__graph__add_new_edge(cause, graph, edge_name, this_node, slot_value_node);
 			    );
 }

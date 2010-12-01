@@ -1001,8 +1001,6 @@ void raw__semantic_frame__add_to_graph_with_node_ptypehash(f2ptr cause, f2ptr th
 				f2__ptypehash__add(cause, node_ptypehash, slot_value, slot_value_node);
 			      }
 			    } else {
-			      // non-semantic_frame leaf nodes count as one.
-			      this_size ++;
 			      slot_value_node = f2__graph_node__new(cause, slot_value);
 			    }
 			    f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key_type"), this_node,     key_type_node);

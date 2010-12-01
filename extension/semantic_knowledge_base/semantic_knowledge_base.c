@@ -931,19 +931,18 @@ boolean_t raw__semantic_frame__recursively_add_to_set(f2ptr cause, f2ptr this, f
   if (maximum_size <= 0) {
     return boolean__false;
   }
-  f2ptr this_node = f2__set__lookup(cause, set, this);
-  if (this_node != nil) {
+  boolean_t this_is_in_set = raw__set__contains(cause, set, this);
+  if (this_is_in_set) {
     *exact_size = 0;
     return boolean__true;
   }
-  f2__set__add(cause, set, this, this_node);
-  f2__graph__add_node(cause, graph, this_node);
+  f2__set__add(cause, set, this);
   // semantic_frame nodes count as one.
   s64 this_size = 1;
   semantic_frame__iteration(cause, this, key_type_name, key_name, slot_value,
 			    if (raw__semantic_frame__is_type(cause, slot_value)) {
 			      s64 slot_value__exact_size;
-			      if (raw__semantic_frame__add_recursively_to_graph_with_ptypehash(cause, slot_value, graph, set, maximum_size - this_size, &slot_value__exact_size)) {
+			      if (raw__semantic_frame__add_recursively_to_set(cause, slot_value, set, maximum_size - this_size, &slot_value__exact_size)) {
 				this_size += slot_value__exact_size;
 			      } else {
 				return boolean__false;

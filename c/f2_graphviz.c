@@ -213,9 +213,7 @@ f2ptr f2__graphviz__raw_labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node,
   if (raw__larva__is_type(cause, color)) {
     return color;
   }
-  if (color != nil) {
-    color = f2__exp__as__string(cause, color);
-  } else {
+  if (color == nil) {
     if (raw__simple_graph_variable__is_type(cause, label)) {
       color = new__string(cause, "#CF0000");
     }
@@ -236,9 +234,7 @@ f2ptr f2__graphviz__labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node, f2p
   if (raw__larva__is_type(cause, color)) {
     return color;
   }
-  if (color != nil) {
-    color = f2__exp__as__string(cause, color);
-  } else {
+  if (color == nil) {
     if (raw__simple_graph_variable__is_type(cause, label)) {
       color = new__string(cause, "#CF0000");
     }

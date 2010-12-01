@@ -159,20 +159,24 @@ f2ptr      f2__semantic_frame_type__new                               (f2ptr cau
 f2ptr raw__semantic_knowledge_base_event__time_value(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
 f2ptr raw__semantic_knowledge_base_event__compare_value(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
 
-f2ptr     raw__semantic_knowledge_base__new                 (f2ptr cause, f2ptr semantic_frames);
-f2ptr      f2__semantic_knowledge_base__new                 (f2ptr cause, f2ptr semantic_frames);
-boolean_t raw__semantic_knowledge_base__is_type             (f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_knowledge_base__is_type             (f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_knowledge_base__type                (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_knowledge_base__type                (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_knowledge_base__semantic_frames     (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_knowledge_base__semantic_frames     (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_knowledge_base__semantic_frames__set(f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__semantic_knowledge_base__semantic_frames__set(f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__semantic_knowledge_base__as__graph           (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_knowledge_base__as__graph           (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_knowledge_base__add_semantic_frame  (f2ptr cause, f2ptr this, f2ptr semantic_frame);
-f2ptr      f2__semantic_knowledge_base__add_semantic_frame  (f2ptr cause, f2ptr this, f2ptr semantic_frame);
+f2ptr     raw__semantic_knowledge_base__new                                   (f2ptr cause, f2ptr semantic_frames);
+f2ptr      f2__semantic_knowledge_base__new                                   (f2ptr cause, f2ptr semantic_frames);
+boolean_t raw__semantic_knowledge_base__is_type                               (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_knowledge_base__is_type                               (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_knowledge_base__type                                  (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_knowledge_base__type                                  (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_knowledge_base__semantic_frames                       (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_knowledge_base__semantic_frames                       (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_knowledge_base__semantic_frames__set                  (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__semantic_knowledge_base__semantic_frames__set                  (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__semantic_knowledge_base__as__graph                             (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_knowledge_base__as__graph                             (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_knowledge_base__add_semantic_frame                    (f2ptr cause, f2ptr this, f2ptr semantic_frame);
+f2ptr      f2__semantic_knowledge_base__add_semantic_frame                    (f2ptr cause, f2ptr this, f2ptr semantic_frame);
+boolean_t raw__semantic_knowledge_base__recursively_add_semantic_frames_to_set(f2ptr cause, f2ptr this, f2ptr set, s64 maximum_size, s64* exact_size);
+f2ptr      f2__semantic_knowledge_base__recursively_add_semantic_frames_to_set(f2ptr cause, f2ptr this, f2ptr set, f2ptr maximum_size, f2ptr exact_size_place);
+boolean_t raw__semantic_knowledge_base__add_to_graph_with_node_ptypehash      (f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash, s64 maximum_size, s64 *exact_size);
+f2ptr      f2__semantic_knowledge_base__add_to_graph_with_node_ptypehash      (f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash, f2ptr maximum_size, f2ptr exact_size_place);
 
 f2ptr f2__semantic_knowledge_base_type__new(f2ptr cause);
 

@@ -957,6 +957,7 @@ boolean_t raw__semantic_frame__recursively_add_to_set(f2ptr cause, f2ptr this, f
 			      return boolean__false;
 			    }
 			    );
+  *exact_size = this_size;
   return boolean__true;
 }
 
@@ -1638,7 +1639,7 @@ boolean_t raw__semantic_knowledge_base__recursively_add_semantic_frames_to_set(f
       f2ptr semantic_frame = f2__cons__car(cause, iter);
       {
 	s64 semantic_frame__exact_size = 0;
-	f2__terminal_print(cause, new__string(cause, "\nsemantic_frame: ")); f2__terminal_print(cause, semantic_frame);
+	f2__terminal_print(cause, new__string(cause, "semantic_frame: ")); f2__terminal_print(cause, semantic_frame);
 	if (raw__semantic_frame__recursively_add_to_set(cause, semantic_frame, set, maximum_size - this_size, &semantic_frame__exact_size)) {
 	  this_size += semantic_frame__exact_size;
 	  if (this_size > maximum_size) {

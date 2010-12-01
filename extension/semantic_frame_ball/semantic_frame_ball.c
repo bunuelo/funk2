@@ -21,6 +21,7 @@
 
 #include "../../c/funk2.h"
 #include "../semantic_knowledge_base/semantic_knowledge_base.h"
+#include "semantic_frame_ball.h"
 
 boolean_t raw__semantic_frame__ball_size_is_less_than_with_ptypehash(f2ptr cause, f2ptr this, f2ptr ptypehash, s64 maximum_size, s64* exact_size) {
   if (maximum_size <= 0) {
@@ -81,7 +82,9 @@ f2ptr raw__semantic_frame__copy_recursively_with_ptypehash(f2ptr cause, f2ptr th
   if (previous_copy_of_this_frame != nil) {
     return previous_copy_of_this_frame;
   }
-  f2ptr semantic_frame = f2__semantic_frame__new(cause, raw__semantic_frame__realm(cause, this));
+  //f2ptr semantic_frame = f2__semantic_frame__new(cause, raw__semantic_frame__realm(cause, this));
+  f2ptr semantic_frame = f2__frame__new(cause, nil);
+  f2__frame__copy(cause, semantic_frame, this);
   raw__ptypehash__add(cause, ptypehash, this, semantic_frame);
   semantic_frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
 			    if (raw__semantic_frame__is_type(cause, slot_value)) {
@@ -93,6 +96,7 @@ f2ptr raw__semantic_frame__copy_recursively_with_ptypehash(f2ptr cause, f2ptr th
 			    );
   return semantic_frame;
 }
+
 
 
 // semantic_frame_ball

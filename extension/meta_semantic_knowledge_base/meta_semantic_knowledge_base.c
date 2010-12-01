@@ -200,7 +200,7 @@ f2ptr raw__meta_semantic_knowledge_base__add_trans_level_edges_to_graph_with_nod
     return f2larva__new(cause, 42132, nil);
   }
   set__iteration(cause, set, semantic_frame,
-		 f2ptr add_trans_edges_funk = f2__object__slot__type_funk(cause, exp, new__symbol(cause, "execute"), new__symbol(cause, "add_trans_level_edges_to_graph_with_node_ptypehash"));
+		 f2ptr add_trans_edges_funk = f2__object__slot__type_funk(cause, semantic_frame, new__symbol(cause, "execute"), new__symbol(cause, "add_trans_level_edges_to_graph_with_node_ptypehash"));
 		 if (raw__funkable__is_type(cause, add_trans_edges_funk)) {
 		   f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), add_trans_edges_funk, f2list3__new(cause, semantic_frame, graph, node_ptypehash));
 		   if (raw__larva__is_type(cause, result)) {

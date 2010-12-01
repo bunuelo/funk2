@@ -135,7 +135,7 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
     }
   }
   {
-    f2ptr color = f2__graphviz__exp__as_color(cause, exp);
+    f2ptr color = f2__graphviz__exp__as__color(cause, exp);
     if (raw__larva__is_type(cause, color)) {
       return color;
     }

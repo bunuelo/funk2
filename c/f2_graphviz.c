@@ -71,6 +71,14 @@ f2ptr f2__graphviz__edge(f2ptr cause, f2ptr from_node, f2ptr to_node, f2ptr colo
 }
 def_pcfunk3(graphviz__edge, from_node, to_node, color, return f2__graphviz__edge(this_cause, from_node, to_node, color));
 
+f2ptr f2__graphviz__exp__as__color(f2ptr cause, f2ptr exp) {
+  f2ptr as_graphviz_color_funk = f2__object__slot__type_funk(cause, exp, new__symbol(cause, "get"), new__symbol(cause, "as-graphviz_color"));
+  if (raw__funkable__is_type(cause, as_graphviz_color_funk)) {
+    return f2__force_funk_apply(cause, f2__this__fiber(cause), as_graphviz_color_funk, f2list1__new(cause, exp));
+  }
+  return nil;
+}
+
 f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
   {
     f2ptr as_graphviz_label_funk = f2__object__slot__type_funk(cause, exp, new__symbol(cause, "get"), new__symbol(cause, "as-graphviz_label"));
@@ -124,6 +132,20 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
       if (raw__string__contains(cause, string, token)) {
 	string = f2__string__replace_all(cause, string, token, new__string(cause, replacement_pairs[index][1]));
       }
+    }
+  }
+  {
+    f2ptr color = f2__graphviz__exp__as_color(cause, exp);
+    if (raw__larva__is_type(cause, color)) {
+      return color;
+    }
+    if (color != nil) {
+      string = f2__stringlist__concat(cause, f2list3__new(cause,
+							  new__string(cause, "<font color=\""),
+							  f2__exp__as__string(cause, color),
+							  new__string(cause, "\">?"),
+							  string,
+							  new__string(cause, "</font>")));
     }
   }
   return string;
@@ -185,8 +207,16 @@ def_pcfunk3(graphviz__edge_name, label, left_node, right_node, return f2__graphv
 f2ptr f2__graphviz__raw_labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node) {
   f2ptr edge__name = f2__graphviz__edge_name(cause, label, left_node, right_node);
   f2ptr color      = nil;
-  if (raw__simple_graph_variable__is_type(cause, label)) {
-    color = new__string(cause, "#CF0000");
+  color = f2__graphviz__exp__as__color(cause, label);
+  if (raw__larva__is_type(cause, color)) {
+    return color;
+  }
+  if (color != nil) {
+    color = f2__exp__as__string(cause, color);
+  } else {
+    if (raw__simple_graph_variable__is_type(cause, label)) {
+      color = new__string(cause, "#CF0000");
+    }
   }
   return f2__stringlist__rawcode(cause, f2list5__new(cause,
 						     f2__graphviz__box_node(      cause, edge__name, f2__graphviz__exp__as__label(cause, label), color),
@@ -200,8 +230,16 @@ def_pcfunk3(graphviz__raw_labelled_edge, label, left_node, right_node, return f2
 f2ptr f2__graphviz__labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node) {
   f2ptr edge__name = f2__graphviz__edge_name(cause, label, left_node, right_node);
   f2ptr color      = nil;
-  if (raw__simple_graph_variable__is_type(cause, label)) {
-    color = new__string(cause, "#CF0000");
+  color = f2__graphviz__exp__as__color(cause, label);
+  if (raw__larva__is_type(cause, color)) {
+    return color;
+  }
+  if (color != nil) {
+    color = f2__exp__as__string(cause, color);
+  } else {
+    if (raw__simple_graph_variable__is_type(cause, label)) {
+      color = new__string(cause, "#CF0000");
+    }
   }
   return f2__stringlist__rawcode(cause, f2list5__new(cause,
 						     f2__graphviz__box_node(      cause, edge__name, f2__graphviz__exp__as__label(cause, label), color),

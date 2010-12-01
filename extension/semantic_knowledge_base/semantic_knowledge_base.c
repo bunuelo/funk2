@@ -969,8 +969,7 @@ f2ptr f2__semantic_frame__recursively_add_to_set(f2ptr cause, f2ptr this, f2ptr 
   }
   s64 maximum_size__i = f2integer__i(maximum_size, cause);
   s64 exact_size__i   = 0;
-  boolean_t result = raw__semantic_frame__recursively_add_to_set(cause, this, set, maximum_size, &exact_size__i);
-  if (result) {
+  if (! raw__semantic_frame__recursively_add_to_set(cause, this, set, maximum_size__i, &exact_size__i)) {
     return f2larva__new(cause, 4151, nil);
   }
   if (raw__place__is_type(cause, exact_size_place)) {

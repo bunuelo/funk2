@@ -942,7 +942,7 @@ boolean_t raw__semantic_frame__recursively_add_to_set(f2ptr cause, f2ptr this, f
   semantic_frame__iteration(cause, this, key_type_name, key_name, slot_value,
 			    if (raw__semantic_frame__is_type(cause, slot_value)) {
 			      s64 slot_value__exact_size;
-			      if (raw__semantic_frame__add_recursively_to_set(cause, slot_value, set, maximum_size - this_size, &slot_value__exact_size)) {
+			      if (raw__semantic_frame__recursively_add_to_set(cause, slot_value, set, maximum_size - this_size, &slot_value__exact_size)) {
 				this_size += slot_value__exact_size;
 			      } else {
 				return boolean__false;

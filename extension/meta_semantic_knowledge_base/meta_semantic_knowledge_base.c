@@ -314,17 +314,17 @@ export_cefunk1(relationship_meta_semantic_object__target, this, 0, "Returns the 
 
 
 
-f2ptr raw__semantic_frame__as__graphviz_color(f2ptr cause, f2ptr this) {
+f2ptr raw__relationship_meta_semantic_object__as__graphviz_color(f2ptr cause, f2ptr this) {
   return new__string(cause, "#00007f");
 }
 
-f2ptr f2__semantic_frame__as__graphviz_color(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_frame__is_type(cause, this)) {
+f2ptr f2__relationship_meta_semantic_object__as__graphviz_color(f2ptr cause, f2ptr this) {
+  if (! raw__relationship_meta_semantic_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_frame__as__graphviz_color(cause, this);
+  return raw__relationship_meta_semantic_object__as__graphviz_color(cause, this);
 }
-export_cefunk1(semantic_frame__as__graphviz_color, this, 0, "Simply returns the string 'semantic_frame' for rendering semantic frames in graphviz.");
+export_cefunk1(relationship_meta_semantic_object__as__graphviz_color, this, 0, "Simply returns the color for rendering this relationship_meta_semantic_object in graphviz.");
 
 
 

@@ -66,7 +66,7 @@ def_pcfunk2(graph_node__terminal_print_with_frame, this, terminal_print_frame, r
 
 
 f2ptr raw__graph_node__as__dot_code(f2ptr cause, f2ptr this) {
-  f2ptr color     = f2__graphviz__exp__as__color(cause, this);
+  f2ptr color = f2__graphviz__exp__as__color(cause, this);
   if (color == nil) {
     color = new__string(cause, "#000000");
   }

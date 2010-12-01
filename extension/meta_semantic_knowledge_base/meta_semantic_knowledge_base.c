@@ -194,11 +194,51 @@ f2ptr f2__meta_semantic_knowledge_base__type(f2ptr cause, f2ptr this) {
 export_cefunk1(meta_semantic_knowledge_base__type, thing, 0, "Returns the specific type of object that this meta_semantic_knowledge_base is.");
 
 
+f2ptr raw__meta_semantic_knowledge_base__add_trans_level_edges_to_graph_with_node_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash, s64 maximum_size, s64* exact_size) {
+  f2ptr set = f2__set__new(cause);
+  if (! raw__semantic_knowledge_base__recursively_add_semantic_frames_to_set(cause, this, set, maximum_size, exact_size)) {
+    return f2larva__new(cause, 42132, nil);
+  }
+  set__iteration(cause, set, semantic_frame,
+		 f2ptr add_trans_edges_funk = f2__object__slot__type_funk(cause, exp, new__symbol(cause, "execute"), new__symbol(cause, "add_trans_level_edges_to_graph_with_node_ptypehash"));
+		 if (raw__funkable__is_type(cause, add_trans_edges_funk)) {
+		   f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), add_trans_edges_funk, f2list3__new(cause, semantic_frame, graph, node_ptypehash));
+		   if (raw__larva__is_type(cause, result)) {
+		     return result;
+		   }
+		 }
+		 );
+  return nil;
+}
+
+f2ptr f2__meta_semantic_knowledge_base__add_trans_level_edges_to_graph_with_node_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash, f2ptr maximum_size, f2ptr exact_size_place) {
+  if ((! raw__meta_semantic_knowledge_base__is_type(cause, this)) ||
+      (! raw__graph__is_type(cause, graph)) ||
+      (! raw__ptypehash__is_type(cause, node_ptypehash)) ||
+      (! raw__integer__is_type(cause, maximum_size)) ||
+      ((exact_size_place != nil) && (! raw__place__is_type(cause, exact_size_place)))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  s64 maximum_size__i = f2integer__i(maximum_size, cause);
+  s64 exact_size__i   = 0;
+  f2ptr result = raw__meta_semantic_knowledge_base__add_trans_level_edges_to_graph_with_node_ptypehash(cause, this, graph, node_ptypehash, maximum_size__i, &exact_size__i);
+  if (raw__larva__is_type(cause, result)) {
+    return result;
+  }
+  if (raw__place__is_type(cause, exact_size_place)) {
+    f2__place__thing__set(cause, exact_size_place, f2integer__new(cause, exact_size__i));
+  }
+  return result;
+}
+export_cefunk5(meta_semantic_knowledge_base__add_trans_level_edges_to_graph_with_node_ptypehash, this, graph, node_ptypehash, maximum_size, exact_size_place, 0, "Adds trans-level edges from all nodes (if they exist).");
+
+
 f2ptr f2__meta_semantic_knowledge_base_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_knowledge_base")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "meta_semantic_knowledge_base__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "meta_semantic_knowledge_base__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "meta_semantic_knowledge_base__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                                                f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "meta_semantic_knowledge_base__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),                                            f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "meta_semantic_knowledge_base__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                                               f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "meta_semantic_knowledge_base__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_trans_level_edges_to_graph_with_node_ptypehash"), f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "meta_semantic_knowledge_base__add_trans_level_edges_to_graph_with_node_ptypehash")));}
   return this;
 }
 
@@ -327,17 +367,58 @@ f2ptr f2__relationship_meta_semantic_object__as__graphviz_color(f2ptr cause, f2p
 export_cefunk1(relationship_meta_semantic_object__as__graphviz_color, this, 0, "Simply returns the color for rendering this relationship_meta_semantic_object in graphviz.");
 
 
+void raw__relationship_meta_semantic_object__add_trans_level_edges_to_graph_with_node_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash) {
+  f2ptr this_node = f2__ptypehash__lookup(cause, node_ptypehash, this);
+  if (this_node == nil) {
+    this_node = f2__graph_node__new(cause, this);
+    f2__ptypehash__add(cause, node_ptypehash, this, this_node);
+    f2__graph__add_node(cause, graph, this_node);
+  }
+  {
+    f2ptr source      = f2__relationship_meta_semantic_object__source(cause, this);
+    f2ptr source_node = f2__ptypehash__lookup(cause, node_ptypehash, source);
+    if (source_node == nil) {
+      source_node = f2__graph_node__new(cause, source);
+      f2__ptypehash__add(cause, node_ptypehash, source, source_node);
+      f2__graph__add_node(cause, graph, source_node);
+    }
+    f2__graph__add_new_edge(cause, graph, new__symbol(cause, "source"), this_node, source_node);
+  }
+  {
+    f2ptr target      = f2__relationship_meta_semantic_object__target(cause, this);
+    f2ptr target_node = f2__ptypehash__lookup(cause, node_ptypehash, target);
+    if (target_node == nil) {
+      target_node = f2__graph_node__new(cause, target);
+      f2__ptypehash__add(cause, node_ptypehash, target, target_node);
+      f2__graph__add_node(cause, graph, target_node);
+    }
+    f2__graph__add_new_edge(cause, graph, new__symbol(cause, "target"), this_node, target_node);
+  }
+}
+
+f2ptr f2__relationship_meta_semantic_object__add_trans_level_edges_to_graph_with_node_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash) {
+  if ((! raw__relationship_meta_semantic_object__is_type(cause, this)) ||
+      (! raw__graph__is_type(cause, graph)) ||
+      (! raw__ptypehash__is_type(cause, node_ptypehash))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__relationship_meta_semantic_object__add_trans_level_edges_to_graph_with_node_ptypehash(cause, this, graph, node_ptypehash);
+  return nil;
+}
+export_cefunk3(relationship_meta_semantic_object__add_trans_level_edges_to_graph_with_node_ptypehash, this, graph, node_ptypehash, 0, "Adds the trans-level source and target edges to a given graph using the given node_ptypehash.");
+
 
 f2ptr f2__relationship_meta_semantic_object_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "meta_semantic_object")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),               f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),           f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),              f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "source"),            f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__source")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "key_type"),          f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__key_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "key"),               f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__key")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "target"),            f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__target")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-graphviz_color"), f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__as__graphviz_color")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                                                f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),                                            f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                                               f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "source"),                                             f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__source")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "key_type"),                                           f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__key_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "key"),                                                f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__key")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "target"),                                             f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__target")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-graphviz_color"),                                  f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__as__graphviz_color")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_trans_level_edges_to_graph_with_node_ptypehash"), f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__add_trans_level_edges_to_graph_with_node_ptypehash")));}
   return this;
 }
 

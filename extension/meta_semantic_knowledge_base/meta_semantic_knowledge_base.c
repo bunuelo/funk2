@@ -391,36 +391,15 @@ void raw__relationship_meta_semantic_object__add_trans_level_edges_to_graph_with
     f2__graph__add_new_edge(cause, graph, new__symbol(cause, "source"), this_node, source_node);
   }
   {
-    f2ptr key_type      = f2__relationship_meta_semantic_object__key_type(cause, this);
-    f2ptr key_type_node = nil;
-    if (! raw__semantic_frame__is_type(cause, key_type)) {
-      key_type_node = f2__graph_node__new(cause, key_type);
-      f2__graph__add_node(cause, graph, key_type_node);
-    } else {
-      key_type_node = f2__ptypehash__lookup(cause, node_ptypehash, key_type);
-      if (key_type_node == nil) {
-	key_type_node = f2__graph_node__new(cause, key_type);
-	f2__ptypehash__add(cause, node_ptypehash, key_type, key_type_node);
-	f2__graph__add_node(cause, graph, key_type_node);
-      }
-    }
-    f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key_type"), this_node, key_type_node);
-  }
-  {
-    f2ptr key      = f2__relationship_meta_semantic_object__key(cause, this);
-    f2ptr key_node = nil;
-    if (! raw__semantic_frame__is_type(cause, key)) {
-      key_node = f2__graph_node__new(cause, key);
-      f2__graph__add_node(cause, graph, key_node);
-    } else {
-      key_node = f2__ptypehash__lookup(cause, node_ptypehash, key);
-      if (key_node == nil) {
-	key_node = f2__graph_node__new(cause, key);
-	f2__ptypehash__add(cause, node_ptypehash, key, key_node);
-	f2__graph__add_node(cause, graph, key_node);
-      }
-    }
-    f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key"), this_node, key_node);
+    f2ptr key_type          = f2__relationship_meta_semantic_object__key_type(cause, this);
+    f2ptr key               = f2__relationship_meta_semantic_object__key(cause, this);
+    f2ptr key_type_key_node = nil;
+    key_type_key_node = f2__graph_node__new(cause, f2__stringlist__concat(cause, f2list3__new(cause,
+											      f2__exp__as__string(cause, key_type),
+											      new__string(cause, "-"),
+											      f2__exp__as__string(cause, key))));
+    f2__graph__add_node(cause, graph, key_type_key_node);
+    f2__graph__add_new_edge(cause, graph, new__symbol(cause, "key_type-key"), this_node, key_type_key_node);
   }
   {
     f2ptr target      = f2__relationship_meta_semantic_object__target(cause, this);

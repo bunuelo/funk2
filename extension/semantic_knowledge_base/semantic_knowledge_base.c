@@ -964,7 +964,7 @@ f2ptr f2__semantic_frame__recursively_add_to_set(f2ptr cause, f2ptr this, f2ptr 
   if ((! raw__semantic_frame__is_type(cause, this)) ||
       (! raw__set__is_type(cause, set)) ||
       (! raw__integer__is_type(cause, maximum_size)) ||
-      ((exact_size != nil) && (! raw__place__is_type(cause, exact_size)))) {
+      ((exact_size_place != nil) && (! raw__place__is_type(cause, exact_size_place)))) {
     return f2larva__new(cause, 1, nil);
   }
   s64 maximum_size__i = f2integer__i(maximum_size, cause);

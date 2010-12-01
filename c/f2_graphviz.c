@@ -140,7 +140,7 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
       return color;
     }
     if (color != nil) {
-      string = f2__stringlist__concat(cause, f2list3__new(cause,
+      string = f2__stringlist__concat(cause, f2list5__new(cause,
 							  new__string(cause, "<font color=\""),
 							  f2__exp__as__string(cause, color),
 							  new__string(cause, "\">?"),

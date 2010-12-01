@@ -364,7 +364,7 @@ f2ptr f2__meta_semantic_knowledge_base__core_extension_initialize(f2ptr cause) {
 export_cefunk0(meta_semantic_knowledge_base__core_extension_initialize, 0, "");
 
 f2ptr f2__meta_semantic_knowledge_base__core_extension_destroy(f2ptr cause) {
-  status("\nmeta_semantic_knowledge_base destroyed.");
+  status("meta_semantic_knowledge_base destroyed.");
   return nil;
 }
 export_cefunk0(meta_semantic_knowledge_base__core_extension_destroy, 0, "");

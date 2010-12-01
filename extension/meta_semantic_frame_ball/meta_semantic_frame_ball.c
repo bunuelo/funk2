@@ -161,13 +161,13 @@ export_cefunk0(meta_semantic_frame_ball__core_extension_ping, 0, "");
 
 f2ptr f2__meta_semantic_frame_ball__core_extension_initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "meta_semantic_frame_ball"), f2__meta_semantic_frame_ball_type__new(cause));
-  printf("\nmeta_semantic_frame_ball initialized."); fflush(stdout);
+  status("meta_semantic_frame_ball initialized.");
   return nil;
 }
 export_cefunk0(meta_semantic_frame_ball__core_extension_initialize, 0, "");
 
 f2ptr f2__meta_semantic_frame_ball__core_extension_destroy(f2ptr cause) {
-  printf("\nmeta_semantic_frame_ball destroyed."); fflush(stdout);
+  status("meta_semantic_frame_ball destroyed.");
   return nil;
 }
 export_cefunk0(meta_semantic_frame_ball__core_extension_destroy, 0, "");

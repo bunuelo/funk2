@@ -23,81 +23,6 @@
 #include "../semantic_knowledge_base/semantic_knowledge_base.h"
 #include "semantic_frame_ball.h"
 
-boolean_t raw__semantic_frame__ball_size_is_less_than_with_ptypehash(f2ptr cause, f2ptr this, f2ptr ptypehash, s64 maximum_size, s64* exact_size) {
-  if (maximum_size <= 0) {
-    return boolean__false;
-  }
-  f2ptr already_counted_this_frame = raw__ptypehash__lookup(cause, ptypehash, this);
-  if (already_counted_this_frame != nil) {
-    *exact_size = 0;
-    return boolean__true;
-  }
-  raw__ptypehash__add(cause, ptypehash, this, f2bool__new(boolean__true));
-  // semantic_frame nodes count as one.
-  s64 this_size = 1;
-  semantic_frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
-			    type_slot_name = nil;
-			    slot_name      = nil;
-			    
-			    if (raw__semantic_frame__is_type(cause, slot_value)) {
-			      s64 slot_value__exact_size;
-			      if (raw__semantic_frame__ball_size_is_less_than_with_ptypehash(cause, slot_value, ptypehash, maximum_size - this_size, &slot_value__exact_size)) {
-				this_size += slot_value__exact_size;
-			      } else {
-				return boolean__false;
-			      }
-			    } else {
-			      // non-semantic_frame leaf nodes count as one.
-			      this_size ++;
-			    }
-			    if (this_size >= maximum_size) {
-			      return boolean__false;
-			    }
-			    );
-  *exact_size = this_size;
-  return boolean__true;
-}
-
-
-boolean_t raw__semantic_frame__ball_size_is_less_than(f2ptr cause, f2ptr this, s64 maximum_size, s64* possibly_null_exact_size) {
-  f2ptr     ptypehash = f2__ptypehash__new(cause);
-  s64       exact_size;
-  boolean_t is_less_than = raw__semantic_frame__ball_size_is_less_than_with_ptypehash(cause, this, ptypehash, maximum_size, &exact_size);
-  if (possibly_null_exact_size != NULL) {
-    *possibly_null_exact_size = exact_size;
-  }
-  return is_less_than;
-}
-
-
-#define baller_frame_height 100000
-
-boolean_t raw__semantic_frame__wishes_to_be_a_baller(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__ball_size_is_less_than(cause, this, baller_frame_height, NULL);
-}
-
-// this function is dangerous.  make sure you know this recursion won't become infinitely self-recursive.
-f2ptr raw__semantic_frame__copy_recursively_with_ptypehash(f2ptr cause, f2ptr this, f2ptr ptypehash) {
-  f2ptr previous_copy_of_this_frame = raw__ptypehash__lookup(cause, ptypehash, this);
-  if (previous_copy_of_this_frame != nil) {
-    return previous_copy_of_this_frame;
-  }
-  //f2ptr semantic_frame = f2__semantic_frame__new(cause, raw__semantic_frame__realm(cause, this));
-  f2ptr semantic_frame = f2__frame__new(cause, nil);
-  f2__frame__copy(cause, semantic_frame, this);
-  raw__ptypehash__add(cause, ptypehash, this, semantic_frame);
-  semantic_frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
-			    if (raw__semantic_frame__is_type(cause, slot_value)) {
-			      f2ptr slot_value_copy = raw__semantic_frame__copy_recursively_with_ptypehash(cause, slot_value, ptypehash);
-			      raw__semantic_frame__add(cause, semantic_frame, type_slot_name, slot_name, slot_value_copy);
-			    } else {
-			      raw__semantic_frame__add(cause, semantic_frame, type_slot_name, slot_name, slot_value);
-			    }
-			    );
-  return semantic_frame;
-}
-
-
 
 // semantic_frame_ball
 
@@ -242,7 +167,7 @@ f2ptr f2__semantic_frame_ball__core_extension_initialize(f2ptr cause) {
 export_cefunk0(semantic_frame_ball__core_extension_initialize, 0, "");
 
 f2ptr f2__semantic_frame_ball__core_extension_destroy(f2ptr cause) {
-  status("semantic_frame_ball destroyed.");
+  status("\nsemantic_frame_ball destroyed.");
   return nil;
 }
 export_cefunk0(semantic_frame_ball__core_extension_destroy, 0, "");

@@ -80,44 +80,46 @@ f2ptr f2__graphviz__exp__as__color(f2ptr cause, f2ptr exp) {
 }
 
 f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
+  f2ptr string = nil;
   {
     f2ptr as_graphviz_label_funk = f2__object__slot__type_funk(cause, exp, new__symbol(cause, "get"), new__symbol(cause, "as-graphviz_label"));
     if (raw__funkable__is_type(cause, as_graphviz_label_funk)) {
-      return f2__force_funk_apply(cause, f2__this__fiber(cause), as_graphviz_label_funk, f2list1__new(cause, exp));
+      string = f2__force_funk_apply(cause, f2__this__fiber(cause), as_graphviz_label_funk, f2list1__new(cause, exp));
     }
   }
-  f2ptr string = nil;
-  if (exp == nil) {
-    string = new__string(cause, "[]");
-  } else if (raw__string__is_type(cause, exp)) {
-    string = exp;
-  } else if (raw__symbol__is_type(cause, exp)) {
-    string = f2__exp__as__string(cause, exp);
-  } else if (raw__integer__is_type(cause, exp)) {
-    string = f2__exp__as__string(cause, exp);
-  } else if (raw__double__is_type(cause, exp)) {
-    string = f2__exp__as__string(cause, exp);
-  } else if (raw__char__is_type(cause, exp)) {
-    string = f2__exp__as__string(cause, exp);
-  } else if (raw__cons__is_type(cause, exp)) {
-    string = f2__exp__as__string(cause, exp);
-  } else if (raw__frame__is_type(cause, exp)) {
-    string = f2__exp__as__string(cause, exp);
-  } else if (raw__list__is_type(cause, exp)) {
-    string = f2__exp__as__string(cause, exp);
-  } else if (raw__simple_graph_variable__is_type(cause, exp)) {
-    return f2__stringlist__concat(cause, f2list3__new(cause,
-						      new__string(cause, "<font color=\"#CF0000\">?"),
-						      f2__graphviz__exp__as__label(cause, f2__simple_graph_variable__name(cause, exp)),
-						      new__string(cause, "</font>")));
-  } else if (raw__array__is_type(cause, exp) && (! raw__primobject__is_type(cause, exp))) {
-    string = f2__exp__as__string(cause, exp);
-  } else {
-    f2ptr type = f2__object__type(cause, exp);
-    string = f2__stringlist__concat(cause, f2list3__new(cause,
-							f2__exp__as__string(cause, type),
-							new__string(cause, "_"),
-							f2__exp__as__string(cause, f2__pointer(cause, exp))));
+  if (string == nil) {
+    if (exp == nil) {
+      string = new__string(cause, "[]");
+    } else if (raw__string__is_type(cause, exp)) {
+      string = exp;
+    } else if (raw__symbol__is_type(cause, exp)) {
+      string = f2__exp__as__string(cause, exp);
+    } else if (raw__integer__is_type(cause, exp)) {
+      string = f2__exp__as__string(cause, exp);
+    } else if (raw__double__is_type(cause, exp)) {
+      string = f2__exp__as__string(cause, exp);
+    } else if (raw__char__is_type(cause, exp)) {
+      string = f2__exp__as__string(cause, exp);
+    } else if (raw__cons__is_type(cause, exp)) {
+      string = f2__exp__as__string(cause, exp);
+    } else if (raw__frame__is_type(cause, exp)) {
+      string = f2__exp__as__string(cause, exp);
+    } else if (raw__list__is_type(cause, exp)) {
+      string = f2__exp__as__string(cause, exp);
+    } else if (raw__simple_graph_variable__is_type(cause, exp)) {
+      return f2__stringlist__concat(cause, f2list3__new(cause,
+							new__string(cause, "<font color=\"#CF0000\">?"),
+							f2__graphviz__exp__as__label(cause, f2__simple_graph_variable__name(cause, exp)),
+							new__string(cause, "</font>")));
+    } else if (raw__array__is_type(cause, exp) && (! raw__primobject__is_type(cause, exp))) {
+      string = f2__exp__as__string(cause, exp);
+    } else {
+      f2ptr type = f2__object__type(cause, exp);
+      string = f2__stringlist__concat(cause, f2list3__new(cause,
+							  f2__exp__as__string(cause, type),
+							  new__string(cause, "_"),
+							  f2__exp__as__string(cause, f2__pointer(cause, exp))));
+    }
   }
   char* replacement_pairs[][2] = {{"&",  "&amp;"},
 				  {"\"", "&quot;"},

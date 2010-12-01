@@ -1942,7 +1942,7 @@ f2ptr f2__semantic_knowledge_base__core_extension_initialize(f2ptr cause) {
 export_cefunk0(semantic_knowledge_base__core_extension_initialize, 0, "");
 
 f2ptr f2__semantic_knowledge_base__core_extension_destroy(f2ptr cause) {
-  status("\nsemantic_knowledge_base destroyed.");
+  status("semantic_knowledge_base destroyed.");
   return nil;
 }
 export_cefunk0(semantic_knowledge_base__core_extension_destroy, 0, "");

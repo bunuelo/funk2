@@ -40,18 +40,6 @@
 				
 				label
 				entry
-				status_button_hbox
-				mindmon_button
-				builtin_reactive_physical_activator_button
-				learned_reactive_physical_activator_button
-				perception_hbox 
-				sense_button
-				perception_button
-				visual_knowledge_button
-				reality_hbox
-				reality_knowledge_button
-				meta_reality_knowledge_button
-				
 				]
   [new [initial_isismon initial_isis_agent]
        [= isismon    initial_isismon]
@@ -70,21 +58,24 @@
        [= tools_mindmon_menu_item [gtk-menu_item-new 'MindMon']]
        [have tools_mindmon_menu_item signal_connect 'activate'
 	     [funk []
-		   [print 'mindmon']]
+		   [terminal_format standard-terminal '\nLaunching MindMon to monitor ' [get this name] '\'s mind.']
+		   [mindmon [get isis_agent mind]]]
 	     nil]
        [have tools_menu append tools_mindmon_menu_item]
        
        [= tools_builtin_reactive_physical_activator_menu_item [gtk-menu_item-new 'Built-in Reactive Physical Activator']]
        [have tools_builtin_reactive_physical_activator_menu_item signal_connect 'activate'
 	     [funk []
-		   [print 'builtin_reactive_physical_activator']]
+		   [terminal_format standard-terminal '\nLaunching built-in reactive physical activator for agent ' [get this name] '.']
+		   [new isismon_agent_builtin_reactive_physical_resource_activator this]]
 	     nil]
        [have tools_menu append tools_builtin_reactive_physical_activator_menu_item]
        
        [= tools_learned_reactive_physical_activator_menu_item [gtk-menu_item-new 'Learned Reactive Physical Activator']]
        [have tools_learned_reactive_physical_activator_menu_item signal_connect 'activate'
 	     [funk []
-		   [print 'learned_reactive_physical_activator']]
+		   [terminal_format standard-terminal '\nLaunching learned reactive physical activator for agent ' [get this name] '.']
+		   [new isismon_agent_learned_reactive_physical_resource_activator this]]
 	     nil]
        [have tools_menu append tools_learned_reactive_physical_activator_menu_item]
        
@@ -103,14 +94,24 @@
        [= view_visual_knowledge_menu_item [gtk-menu_item-new 'Visual Knowledge']]
        [have view_visual_knowledge_menu_item signal_connect 'activate'
 	     [funk []
-		   [print 'visual_knowledge']]
+		   [let [[visual_semantic_knowledge_base [get [get isis_agent mind] visual_knowledge]]]
+		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s visual semantic knowledge.']
+		     [let [[visual_semantic_frame_ball [new-apply semantic_frame_ball [get visual_semantic_knowledge_base semantic_frames]]]]
+		       [let [[visual_semantic_graph [get visual_semantic_frame_ball as-graph]]]
+			 [fiber [funk [] [have visual_semantic_graph gview]] nil]]]
+		     ]]
 	     nil]
        [have view_menu append view_visual_knowledge_menu_item]
        
        [= view_reality_knowledge_menu_item [gtk-menu_item-new 'Reality Knowledge']]
        [have view_reality_knowledge_menu_item signal_connect 'activate'
 	     [funk []
-		   [print 'reality_knowledge']]
+		   [let [[reality_semantic_knowledge_base [get [get isis_agent mind] reality_knowledge]]]
+		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s reality semantic knowledge.']
+		     [let [[reality_semantic_frame_ball [new-apply semantic_frame_ball [get reality_semantic_knowledge_base semantic_frames]]]]
+		       [let [[reality_semantic_graph [get reality_semantic_frame_ball as-graph]]]
+			 [fiber [funk [] [have reality_semantic_graph gview]] nil]]]
+		     ]]
 	     nil]
        [have view_menu append view_reality_knowledge_menu_item]
        
@@ -152,67 +153,6 @@
        
        [have vbox pack_start label t t 0]
        [have vbox pack_start entry nil nil 0]
-       
-       [= status_button_hbox    [gtk-hbox-new 2]]
-       
-       [= mindmon_button [gtk-button-new_with_label 'MindMon']]
-       [have mindmon_button signal_connect 'clicked'
-	     [funk []
-		   [terminal_format standard-terminal '\nLaunching MindMon to monitor ' [get this name] '\'s mind.']
-		   [mindmon [get isis_agent mind]]]]
-       [have status_button_hbox pack_start mindmon_button nil nil 0]
-       
-       [= builtin_reactive_physical_activator_button [gtk-button-new_with_label 'BRP Activator']]
-       [have builtin_reactive_physical_activator_button signal_connect 'clicked'
-	     [funk []
-		   [terminal_format standard-terminal '\nLaunching built-in reactive physical activator for agent ' [get this name] '.']
-		   [new isismon_agent_builtin_reactive_physical_resource_activator this]]]
-       [have status_button_hbox pack_start builtin_reactive_physical_activator_button nil nil 0]
-       
-       [= learned_reactive_physical_activator_button [gtk-button-new_with_label 'LRP Activator']]
-       [have learned_reactive_physical_activator_button signal_connect 'clicked'
-	     [funk []
-		   [terminal_format standard-terminal '\nLaunching learned reactive physical activator for agent ' [get this name] '.']
-		   [new isismon_agent_learned_reactive_physical_resource_activator this]]]
-       [have status_button_hbox pack_start learned_reactive_physical_activator_button nil nil 0]
-       
-       [= sense_button [gtk-button-new_with_label 'Sense']]
-       [have sense_button signal_connect 'clicked'
-	     [funk []
-		   [terminal_format standard-terminal '\n' [get this name] '\'s sensory information:'
-				    '\n  ' [have isis_agent sense_world]]]]
-       [have status_button_hbox pack_start sense_button nil nil 0]
-       
-       [= perception_button [gtk-button-new_with_label 'Perception']]
-       [have perception_button signal_connect 'clicked'
-	     [funk []
-		   [terminal_format standard-terminal '\n' [get this name] '\'s perception:'
-				    '\n  ' [get [get isis_agent mind] perception]]]]
-       [have status_button_hbox pack_start perception_button nil nil 0]
-       
-       [= visual_knowledge_button [gtk-button-new_with_label 'Visual Knowledge']]
-       [have visual_knowledge_button signal_connect 'clicked'
-	     [funk []
-		   [let [[visual_semantic_knowledge_base [get [get isis_agent mind] visual_knowledge]]]
-		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s visual semantic knowledge.']
-		     [let [[visual_semantic_frame_ball [new-apply semantic_frame_ball [get visual_semantic_knowledge_base semantic_frames]]]]
-		       [let [[visual_semantic_graph [get visual_semantic_frame_ball as-graph]]]
-			 [fiber [funk [] [have visual_semantic_graph gview]] nil]]]
-		     ]]]
-       [have status_button_hbox pack_start visual_knowledge_button nil nil 0]
-       
-       [= reality_knowledge_button [gtk-button-new_with_label 'Reality Knowledge']]
-       [have reality_knowledge_button signal_connect 'clicked'
-	     [funk []
-		   [let [[reality_semantic_knowledge_base [get [get isis_agent mind] reality_knowledge]]]
-		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s reality semantic knowledge.']
-		     [let [[reality_semantic_frame_ball [new-apply semantic_frame_ball [get reality_semantic_knowledge_base semantic_frames]]]]
-		       [let [[reality_semantic_graph [get reality_semantic_frame_ball as-graph]]]
-			 [fiber [funk [] [have reality_semantic_graph gview]] nil]]]
-		     ]]]
-       [have status_button_hbox pack_start reality_knowledge_button nil nil 0]
-       
-       [have vbox pack_start status_button_hbox nil nil 0]
        
        [have frame add vbox]
        nil]]

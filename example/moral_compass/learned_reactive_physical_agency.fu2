@@ -52,25 +52,33 @@ right now, changed [get mind objects] to [get mind isis_object_frame], which sti
 
 hold objects, test ralph overshoot. make movies!
 use object
-
+[[
 [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
 	command `learned_reactive `physical `empty_right_hand `loaf+167743436]
 does empty right hand need argument target??!?!?!?!?!?!?!? fghjkl
+
+[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
+	command `learned_reactive `physical `empty_right_hand]
+dont think drop from right hand works
 '
 
 
 [defunk get_visual_objects [mind]
-  [get [get mind perception] visual_objects]]
+  [if [get mind perception]
+      [get [get mind perception] visual_objects]]]
 
 [defunk get_left_hand_object_name [mind]
- [get[get mind perception] left_hand_object_name]]
+   [if [get mind perception]
+       [get[get mind perception] left_hand_object_name]]]
 
 [defunk get_right_hand_object_name [mind]
- [get [get mind perception] right_hand_object_name]]
+  [if [get mind perception]
+      [get [get mind perception] right_hand_object_name]]]
 
 [defunk get_neck_pitch [mind]
- [get [get mind perception] right_hand_object_name]]
-
+  [if [get mind perception]
+      [get [get mind perception] right_hand_object_name]]]
+							   
 
 
 [defunk demo_pick_up_loaf_and_butter []

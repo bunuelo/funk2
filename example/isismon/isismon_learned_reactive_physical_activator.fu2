@@ -61,6 +61,9 @@
 									     hold_with_left_hand_resource__button
 									     hold_with_left_hand_resource__target__label
 									     hold_with_left_hand_resource__target__entry
+									     
+									     demo_hold__hbox
+									     demo_hold__button
 
 									     ]
   [new [initial-isismon_agent]
@@ -223,6 +226,15 @@
        [have hold_with_left_hand_resource__button signal_connect 'clicked'
 	     [funk []
 		   [have this activate_resource `learned_reactive `physical `hold_with_left_hand [get [get hold_with_left_hand_resource__target__entry text] as-symbol]]]]
+       
+
+       [= demo_hold__hbox [gtk-hbox-new 2]]
+       [= demo_hold__button [gtk-button-new_with_label 'demo - hold knife']]
+       [have demo_hold__hbox  pack_start demo_hold__button nil nil 0]
+       [have vbox pack_start demo_hold__hbox nil nil 0]
+       [have demo_hold__button signal_connect 'clicked'
+	     [funk []
+		   [demo_hold `knife]]]
        
       
        [have window add vbox]

@@ -111,7 +111,7 @@
 		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s reality semantic knowledge.']
 		     [let [[graph          [new graph]]
 			   [node_ptypehash [new ptypehash]]]
-		       [have reality_semantic_knowledge_base add_to_graph_with_node_ptypehash graph node_ptypehash]
+		       [have reality_semantic_knowledge_base add_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
 		       [fiber [funk [] [have graph gview]] nil]]]]
 	     nil]
        [have view_menu append view_reality_knowledge_menu_item]

@@ -37,6 +37,7 @@
 				view_visual_knowledge_menu_item
 				view_reality_knowledge_menu_item
 				view_meta_reality_knowledge_menu_item
+				view_reality_and_meta_reality_knowledge_menu_item
 				
 				label
 				entry
@@ -120,9 +121,28 @@
        [have view_meta_reality_knowledge_menu_item signal_connect 'activate'
 	     [funk []
 		   [let [[meta_reality_knowledge_base [get [get isis_agent mind] meta_reality_knowledge]]]
-		     [terminal_format standard-terminal '\nmeta_reality_knowledge_base: ' meta_reality_knowledge_base]]]
+		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s meta-reality semantic knowledge.']
+		     [let [[graph          [new graph]]
+			   [node_ptypehash [new ptypehash]]]
+		       [have meta_reality_semantic_knowledge_base add_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
+		       [fiber [funk [] [have graph gview]] nil]]]]
 	     nil]
        [have view_menu append view_meta_reality_knowledge_menu_item]
+       
+       [= view_reality_and_meta_reality_knowledge_menu_item [gtk-menu_item-new 'Reality and Meta-Reality Knowledge']]
+       [have view_reality_and_meta_reality_knowledge_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[reality_knowledge_base      [get [get isis_agent mind] reality_knowledge]]
+			 [meta_reality_knowledge_base [get [get isis_agent mind] meta_reality_knowledge]]]
+		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s reality and meta-reality semantic knowledge.']
+		     [let [[graph          [new graph]]
+			   [node_ptypehash [new ptypehash]]]
+		       [have reality_semantic_knowledge_base      add_to_graph_with_node_ptypehash                   graph node_ptypehash 100000 nil]
+		       [have meta_reality_semantic_knowledge_base add_to_graph_with_node_ptypehash                   graph node_ptypehash 100000 nil]
+		       [have meta_reality_semantic_knowledge_base add_trans_level_edges_to_graph_with_node_ptypehash graph node_ptypehash]
+		       [fiber [funk [] [have graph gview]] nil]]]]
+	     nil]
+       [have view_menu append view_reality_and_meta_reality_knowledge_menu_item]
        
        
        [= label [gtk-label-new '']]

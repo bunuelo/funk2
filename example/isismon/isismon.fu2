@@ -119,7 +119,8 @@
        [= view_meta_reality_knowledge_menu_item [gtk-menu_item-new 'Meta-Reality Knowledge']]
        [have view_meta_reality_knowledge_menu_item signal_connect 'activate'
 	     [funk []
-		   [print 'meta_reality_knowledge']]
+		   [let [[meta_reality_knowledge_base [get [get isis_agent mind] meta_reality_knowledge]]]
+		     [terminal_format standard-terminal '\nmeta_reality_knowledge_base: ' meta_reality_knowledge_base]]]
 	     nil]
        [have view_menu append view_meta_reality_knowledge_menu_item]
        

@@ -18,16 +18,21 @@
  rights to redistribute these changes.'
 
 
-'reflective_layer'
+[defunk extend_current_frame_assumptions_resource-activate []
+  [print 'extend_current_frame_assumptions_resource-activate here.']
+  ]
 
-[deframe reflective_layer [mental_layer] []
+[deframe extend_current_frame_assumptions_resource [resource] []
   [new []
-       [construct mental_layer 3 `reflective]
-       [set this credit_assignment_agency ]
-       [have this add_agency [new reflective_meta_knowledge_agency]]
-       [have this add_agency [new reflective_credit_assignment_agency]]
-       this]]
+       [construct resource [type this]
+		  &extend_current_frame_assumptions_resource-activate]
+       nil]]
 
-[deftypefunk reflective_layer get meta_reality_knowledge []
-  [get [get this agency `meta_knowledge] meta_reality_knowledge]]
+[deframe reflective_meta_knowledge_agency [agency] [[meta_reality_knowledge [new meta_semantic_knowledge_base]]]
+  [new []
+       [construct agency `meta_knowledge]
+       
+       [have this add_resource [new extend_current_frame_assumptions_resource]]
+       
+       this]]
 

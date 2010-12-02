@@ -130,9 +130,14 @@
 
 [defpackage reflective_layer
   :packages [mind
+	     reflective_meta_knowledge_agency
 	     reflective_credit_assignment_agency
 	     english_language]
    :sources ['reflective_layer.fu2']]
+
+[defpackage reflective_meta_knowledge_agency
+  :packages [mind meta_semantic_knowledge_base]
+   :sources ['reflective_meta_knowledge_agency.fu2']]
 
 [defpackage reflective_credit_assignment_agency
   :packages [mind]

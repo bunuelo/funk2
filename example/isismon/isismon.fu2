@@ -87,7 +87,8 @@
        [= view_sense_menu_item [gtk-menu_item-new 'Sense']]
        [have view_sense_menu_item signal_connect 'activate'
 	     [funk []
-		   [print 'sense']]
+		   [terminal_format standard-terminal '\n' [get this name] '\'s sensory information:'
+				    '\n  ' [have isis_agent sense_world]]]
 	     nil]
        [have view_menu append view_sense_menu_item]
        

@@ -34,15 +34,7 @@
 				visual_knowledge_button
 				reality_knowledge_button
 				
-				look_for_hbox
-				look_for_button
-				look_for_entry
-				hold_with_right_hand_hbox
-				hold_with_right_hand_button
-				hold_with_right_hand_entry
-				hold_with_left_hand_hbox
-				hold_with_left_hand_button
-				hold_with_left_hand_entry]
+				]
   [new [initial_isismon initial_isis_agent]
        [= isismon    initial_isismon]
        [= isis_agent initial_isis_agent]
@@ -139,40 +131,6 @@
        [have status_button_hbox pack_start reality_knowledge_button nil nil 0]
        
        [have vbox pack_start status_button_hbox nil nil 0]
-       
-       [= look_for_hbox               [gtk-hbox-new 2]]
-       [= look_for_button             [gtk-button-new_with_label 'Look for Object Type: ']]
-       [= look_for_entry              [gtk-entry-new]]
-       [set look_for_entry            text 'knife']
-       [have look_for_hbox pack_start look_for_button nil nil 0]
-       [have look_for_hbox pack_start look_for_entry  t t 0]
-       [have vbox pack_start look_for_hbox nil nil 0]
-       
-       [have look_for_button signal_connect 'clicked'
-	     [funk []
-		   [have this command-look_for [get [get look_for_entry text] as-symbol]]]]
-       
-       [= hold_with_right_hand_hbox   [gtk-hbox-new 2]]
-       [= hold_with_right_hand_button [gtk-button-new_with_label 'Hold with Right Hand: ']]
-       [= hold_with_right_hand_entry  [gtk-entry-new]]
-       [have hold_with_right_hand_hbox pack_start hold_with_right_hand_button nil nil 0]
-       [have hold_with_right_hand_hbox pack_start hold_with_right_hand_entry  t t 0]
-       [have vbox pack_start hold_with_right_hand_hbox nil nil 0]
-       
-       [have hold_with_right_hand_button signal_connect 'clicked'
-	     [funk []
-		   [have this command-hold_with_right_hand [get [get hold_with_right_hand_entry text] as-symbol]]]]
-       
-       [= hold_with_left_hand_hbox   [gtk-hbox-new 2]]
-       [= hold_with_left_hand_button [gtk-button-new_with_label 'Hold with Left Hand: ']]
-       [= hold_with_left_hand_entry  [gtk-entry-new]]
-       [have hold_with_left_hand_hbox pack_start hold_with_left_hand_button nil nil 0]
-       [have hold_with_left_hand_hbox pack_start hold_with_left_hand_entry  t t 0]
-       [have vbox pack_start hold_with_left_hand_hbox nil nil 0]
-       
-       [have hold_with_left_hand_button signal_connect 'clicked'
-	     [funk []
-		   [have this command-hold_with_left_hand [get [get hold_with_left_hand_entry text] as-symbol]]]]
        
        [have frame add vbox]
        nil]]

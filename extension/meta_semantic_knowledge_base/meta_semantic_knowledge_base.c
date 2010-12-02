@@ -447,8 +447,6 @@ f2ptr f2__relationship_meta_semantic_object_type__new(f2ptr cause) {
 
 
 
-
-
 // **
 
 f2ptr f2__meta_semantic_knowledge_base__core_extension_ping(f2ptr cause) {

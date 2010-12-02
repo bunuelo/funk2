@@ -27,7 +27,7 @@
 				entry
 				status_button_hbox
 				mindmon_button
-				activator_button
+				builtin_reactive_physical_activator_button
 				learned_reactive_physical_activator_button
 				sense_button
 				perception_button
@@ -88,17 +88,17 @@
 		   [mindmon [get isis_agent mind]]]]
        [have status_button_hbox pack_start mindmon_button nil nil 0]
        
-       [= activator_button [gtk-button-new_with_label 'Activator']]
-       [have activator_button signal_connect 'clicked'
+       [= builtin_reactive_physical_activator_button [gtk-button-new_with_label 'BRP Activator']]
+       [have builtin_reactive_physical_activator_button signal_connect 'clicked'
 	     [funk []
-		   [terminal_format standard-terminal '\nLaunching activator for agent ' [get this name] '.']
+		   [terminal_format standard-terminal '\nLaunching built-in reactive physical activator for agent ' [get this name] '.']
 		   [new isismon_agent_builtin_reactive_physical_resource_activator this]]]
-       [have status_button_hbox pack_start activator_button nil nil 0]
+       [have status_button_hbox pack_start builtin_reactive_physical_activator_button nil nil 0]
 
-       [= learned_reactive_physical_activator_button [gtk-button-new_with_label 'LRF_Activator']]
+       [= learned_reactive_physical_activator_button [gtk-button-new_with_label 'LRP Activator']]
        [have learned_reactive_physical_activator_button signal_connect 'clicked'
 	     [funk []
-		   [terminal_format standard-terminal '\nLaunching LRF_activator for agent ' [get this name] '.']
+		   [terminal_format standard-terminal '\nLaunching learned reactive physical activator for agent ' [get this name] '.']
 		   [new isismon_agent_learned_reactive_physical_resource_activator this]]]
        [have status_button_hbox pack_start learned_reactive_physical_activator_button nil nil 0]
        

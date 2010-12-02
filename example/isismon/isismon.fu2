@@ -23,16 +23,27 @@
 				
 				frame
 				vbox
+
+				menu_bar
+				tools_menu
+				tools_menu_item
+				tools_mindmon_menu_item
+				tools_builtin_reactive_physical_activator_menu_item
+				tools_learned_reactive_physical_activator_menu_item
+				
 				label
 				entry
 				status_button_hbox
 				mindmon_button
 				builtin_reactive_physical_activator_button
 				learned_reactive_physical_activator_button
+				perception_hbox 
 				sense_button
 				perception_button
 				visual_knowledge_button
+				reality_hbox
 				reality_knowledge_button
+				meta_reality_knowledge_button
 				
 				]
   [new [initial_isismon initial_isis_agent]
@@ -40,6 +51,36 @@
        [= isis_agent initial_isis_agent]
        [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
        [= vbox  [gtk-vbox-new 2]]
+       
+       [= menu_bar [gtk-menu_bar-new]]
+       [set tools_menu_item submenu tools_menu]
+       [have vbox pack_start menu_bar nil nil 0]
+       [= tools_menu      [gtk-menu-new]]
+       [= tools_menu_item [gtk-menu_item-new 'Tools']]
+       [have menu_bar append tools_menu_item]
+       
+       [= tools_mindmon_menu_item [gtk-menu_item-new 'MindMon']]
+       [have tools_mindmon_menu_item signal_connect 'activate'
+	     [funk []
+		   [print 'mindmon']]
+	     nil]
+       [have tools_menu append tools_mindmon_menu_item]
+       
+       [= tools_builtin_reactive_physical_activator_menu_item [gtk-menu_item-new 'Built-in Reactive Physical Activator']]
+       [have tools_builtin_reactive_physical_activator_menu_item signal_connect 'activate'
+	     [funk []
+		   [print 'builtin_reactive_physical_activator']]
+	     nil]
+       [have tools_menu append tools_builtin_reactive_physical_activator_menu_item]
+       
+       [= tools_learned_reactive_physical_activator_menu_item [gtk-menu_item-new 'Learned Reactive Physical Activator']]
+       [have tools_learned_reactive_physical_activator_menu_item signal_connect 'activate'
+	     [funk []
+		   [print 'learned_reactive_physical_activator']]
+	     nil]
+       [have tools_menu append tools_learned_reactive_physical_activator_menu_item]
+       
+
        [= label [gtk-label-new '']]
        [= entry [gtk-entry-new]]
        
@@ -86,7 +127,7 @@
 		   [terminal_format standard-terminal '\nLaunching built-in reactive physical activator for agent ' [get this name] '.']
 		   [new isismon_agent_builtin_reactive_physical_resource_activator this]]]
        [have status_button_hbox pack_start builtin_reactive_physical_activator_button nil nil 0]
-
+       
        [= learned_reactive_physical_activator_button [gtk-button-new_with_label 'LRP Activator']]
        [have learned_reactive_physical_activator_button signal_connect 'clicked'
 	     [funk []

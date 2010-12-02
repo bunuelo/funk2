@@ -52,11 +52,11 @@
        [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
        [= vbox  [gtk-vbox-new 2]]
        
-       [= menu_bar [gtk-menu_bar-new]]
-       [set tools_menu_item submenu tools_menu]
-       [have vbox pack_start menu_bar nil nil 0]
+       [= menu_bar        [gtk-menu_bar-new]]
        [= tools_menu      [gtk-menu-new]]
        [= tools_menu_item [gtk-menu_item-new 'Tools']]
+       [set tools_menu_item submenu tools_menu]
+       [have vbox pack_start menu_bar nil nil 0]
        [have menu_bar append tools_menu_item]
        
        [= tools_mindmon_menu_item [gtk-menu_item-new 'MindMon']]

@@ -905,7 +905,7 @@ f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
   }
   {
     f2ptr semantic_knowledge_base_set = raw__semantic_frame__semantic_knowledge_base_set(cause, this);
-    set__iteration(semantic_knowledge_base_set, semantic_knowledge_base,
+    set__iteration(cause, semantic_knowledge_base_set, semantic_knowledge_base,
 		   raw__semantic_knowledge_base__know_of_semantic_frame_value_removal(cause, semantic_knowledge_base, this, key_type, key, value));
   }
   return nil;

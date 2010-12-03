@@ -106,15 +106,10 @@
 
 [defpackage deliberative_layer
   :packages [mind
-	     deliberative_reality_agency
 	     deliberative_imagination_agency
 	     deliberative_execution_agency
 	     english_language]
    :sources ['deliberative_layer.fu2']]
-
-[defpackage deliberative_reality_agency
-  :packages [mind]
-   :sources ['deliberative_reality_agency.fu2']]
 
 [defpackage deliberative_imagination_agency
   :packages [mind]
@@ -130,14 +125,9 @@
 
 [defpackage reflective_layer
   :packages [mind
-	     reflective_meta_knowledge_agency
 	     reflective_credit_assignment_agency
 	     english_language]
    :sources ['reflective_layer.fu2']]
-
-[defpackage reflective_meta_knowledge_agency
-  :packages [mind meta_semantic_knowledge_base]
-   :sources ['reflective_meta_knowledge_agency.fu2']]
 
 [defpackage reflective_credit_assignment_agency
   :packages [mind]

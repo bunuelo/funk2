@@ -1681,7 +1681,7 @@ export_cefunk2(semantic_knowledge_base__add_semantic_knowledge_base, this, seman
 f2ptr raw__semantic_knowledge_base__add_trace_callback_funk(f2ptr cause, f2ptr this, f2ptr trace_callback_name, f2ptr trace_callback_funk) {
   f2ptr trace_callback_funks_frame = raw__semantic_knowledge_base__trace_callback_funks_frame(cause, this);
   f2ptr trace_callback_funks       = f2__frame__lookup_var_value(cause, trace_callback_funks_frame, trace_callback_name, nil);
-  f2__frame__add_var_value(cause, trace_callback_funks_frame, callback_name, f2cons__new(cause, trace_callback_funk, trace_callback_funks));
+  f2__frame__add_var_value(cause, trace_callback_funks_frame, trace_callback_name, f2cons__new(cause, trace_callback_funk, trace_callback_funks));
 }
 
 f2ptr f2__semantic_knowledge_base__add_trace_callback_funk(f2ptr cause, f2ptr this, f2ptr trace_callback_name, f2ptr trace_callback_funk) {

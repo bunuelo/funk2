@@ -1,0 +1,293 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+[deframe isismon_agent_builtin_reactive_physical_resource_activator [frame] [isismon_agent
+									     
+									     window
+									     vbox
+									     menu_bar
+									     file_menu_item
+									     file_menu
+									     file_exit_menu_item
+									     
+									     turn_right_start_resource__hbox
+									     turn_right_start_resource__button
+									     turn_right_stop_resource__hbox
+									     turn_right_stop_resource__button
+									     turn_left_start_resource__hbox
+									     turn_left_start_resource__button
+									     turn_left_stop_resource__hbox
+									     turn_left_stop_resource__button
+									     look_up_start_resource__hbox
+									     look_up_start_resource__button
+									     look_up_stop_resource__hbox
+									     look_up_stop_resource__button
+									     look_down_start_resource__hbox
+									     look_down_start_resource__button
+									     look_down_stop_resource__hbox
+									     look_down_stop_resource__button
+									     move_forward_start_resource__hbox
+									     move_forward_start_resource__button
+									     move_forward_stop_resource__hbox
+									     move_forward_stop_resource__button
+									     move_backward_start_resource__hbox
+									     move_backward_start_resource__button
+									     move_backward_stop_resource__hbox
+									     move_backward_stop_resource__button
+									     drop_from_right_hand_resource__hbox
+									     drop_from_right_hand_resource__button
+									     drop_from_left_hand_resource__hbox
+									     drop_from_left_hand_resource__button
+									     pick_up_with_right_hand_resource__hbox
+									     pick_up_with_right_hand_resource__button
+									     pick_up_with_right_hand_resource__target__label
+									     pick_up_with_right_hand_resource__target__entry
+									     pick_up_with_left_hand_resource__hbox
+									     pick_up_with_left_hand_resource__button
+									     pick_up_with_left_hand_resource__target__label
+									     pick_up_with_left_hand_resource__target__entry
+									     use_right_hand_resource__hbox
+									     use_right_hand_resource__button
+									     use_right_hand_resource__target__label
+									     use_right_hand_resource__target__entry
+									     use_right_hand_resource__action__label
+									     use_right_hand_resource__action__entry
+									     use_left_hand_resource__hbox
+									     use_left_hand_resource__button
+									     use_left_hand_resource__target__label
+									     use_left_hand_resource__target__entry
+									     use_left_hand_resource__action__label
+									     use_left_hand_resource__action__entry
+									     say_resource__hbox
+									     say_resource__button
+									     say_resource__message__label
+									     say_resource__message__entry
+									     ]
+  [new [initial-isismon_agent]
+       [= isismon_agent initial-isismon_agent]
+       [= window [gtk-window-new]]
+       [set window title [format nil 'isismon - agent built-in reactive resource activator - ' [get [get isismon_agent isis_agent] name]]]
+       [= vbox [gtk-vbox-new 2]]
+
+       [= menu_bar            [gtk-menu_bar-new]]
+       [= file_menu_item      [gtk-menu_item-new 'File']]
+       [= file_menu           [gtk-menu-new]]
+       [= file_exit_menu_item [gtk-menu_item-new 'Exit']]
+       [have file_exit_menu_item signal_connect 'activate'
+	     [funk []
+		   [have window destroy]]
+	     nil]
+       [have menu_bar append  file_menu_item]
+       [have file_menu append file_exit_menu_item]
+       [set file_menu_item submenu file_menu]
+       [have vbox pack_start menu_bar nil nil 0]
+       
+       
+       [= turn_right_start_resource__hbox [gtk-hbox-new 2]]
+       [= turn_right_start_resource__button [gtk-button-new_with_label 'Turn Right - Start']]
+       [have turn_right_start_resource__hbox pack_start turn_right_start_resource__button nil nil 0]
+       [have vbox pack_start turn_right_start_resource__hbox nil nil 0]
+       [have turn_right_start_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `turn_right_start]]]
+       
+       [= turn_right_stop_resource__hbox [gtk-hbox-new 2]]
+       [= turn_right_stop_resource__button [gtk-button-new_with_label 'Turn Right - Stop']]
+       [have turn_right_stop_resource__hbox pack_start turn_right_stop_resource__button nil nil 0]
+       [have vbox pack_start turn_right_stop_resource__hbox nil nil 0]
+       [have turn_right_stop_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `turn_right_stop]]]
+       
+       [= turn_left_start_resource__hbox [gtk-hbox-new 2]]
+       [= turn_left_start_resource__button [gtk-button-new_with_label 'Turn Left - Start']]
+       [have turn_left_start_resource__hbox pack_start turn_left_start_resource__button nil nil 0]
+       [have vbox pack_start turn_left_start_resource__hbox nil nil 0]
+       [have turn_left_start_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `turn_left_start]]]
+       
+       [= turn_left_stop_resource__hbox [gtk-hbox-new 2]]
+       [= turn_left_stop_resource__button [gtk-button-new_with_label 'Turn Left - Stop']]
+       [have turn_left_stop_resource__hbox pack_start turn_left_stop_resource__button nil nil 0]
+       [have vbox pack_start turn_left_stop_resource__hbox nil nil 0]
+       [have turn_left_stop_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `turn_left_stop]]]
+       
+       [= look_up_start_resource__hbox [gtk-hbox-new 2]]
+       [= look_up_start_resource__button [gtk-button-new_with_label 'Look Up - Start']]
+       [have look_up_start_resource__hbox pack_start look_up_start_resource__button nil nil 0]
+       [have vbox pack_start look_up_start_resource__hbox nil nil 0]
+       [have look_up_start_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `look_up_start]]]
+       
+       [= look_up_stop_resource__hbox [gtk-hbox-new 2]]
+       [= look_up_stop_resource__button [gtk-button-new_with_label 'Look Up - Stop']]
+       [have look_up_stop_resource__hbox pack_start look_up_stop_resource__button nil nil 0]
+       [have vbox pack_start look_up_stop_resource__hbox nil nil 0]
+       [have look_up_stop_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `look_up_stop]]]
+       
+       [= look_down_start_resource__hbox [gtk-hbox-new 2]]
+       [= look_down_start_resource__button [gtk-button-new_with_label 'Look Down - Start']]
+       [have look_down_start_resource__hbox pack_start look_down_start_resource__button nil nil 0]
+       [have vbox pack_start look_down_start_resource__hbox nil nil 0]
+       [have look_down_start_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `look_down_start]]]
+       
+       [= look_down_stop_resource__hbox [gtk-hbox-new 2]]
+       [= look_down_stop_resource__button [gtk-button-new_with_label 'Look Down - Stop']]
+       [have look_down_stop_resource__hbox pack_start look_down_stop_resource__button nil nil 0]
+       [have vbox pack_start look_down_stop_resource__hbox nil nil 0]
+       [have look_down_stop_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `look_down_stop]]]
+       
+       [= move_forward_start_resource__hbox [gtk-hbox-new 2]]
+       [= move_forward_start_resource__button [gtk-button-new_with_label 'Move Forward - Start']]
+       [have move_forward_start_resource__hbox pack_start move_forward_start_resource__button nil nil 0]
+       [have vbox pack_start move_forward_start_resource__hbox nil nil 0]
+       [have move_forward_start_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `move_forward_start]]]
+       
+       [= move_forward_stop_resource__hbox [gtk-hbox-new 2]]
+       [= move_forward_stop_resource__button [gtk-button-new_with_label 'Move Forward - Stop']]
+       [have move_forward_stop_resource__hbox pack_start move_forward_stop_resource__button nil nil 0]
+       [have vbox pack_start move_forward_stop_resource__hbox nil nil 0]
+       [have move_forward_stop_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `move_forward_stop]]]
+       
+       [= move_backward_start_resource__hbox [gtk-hbox-new 2]]
+       [= move_backward_start_resource__button [gtk-button-new_with_label 'Move Backward - Start']]
+       [have move_backward_start_resource__hbox pack_start move_backward_start_resource__button nil nil 0]
+       [have vbox pack_start move_backward_start_resource__hbox nil nil 0]
+       [have move_backward_start_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `move_backward_start]]]
+       
+       [= move_backward_stop_resource__hbox [gtk-hbox-new 2]]
+       [= move_backward_stop_resource__button [gtk-button-new_with_label 'Move Backward - Stop']]
+       [have move_backward_stop_resource__hbox pack_start move_backward_stop_resource__button nil nil 0]
+       [have vbox pack_start move_backward_stop_resource__hbox nil nil 0]
+       [have move_backward_stop_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `move_backward_stop]]]
+       
+       [= drop_from_right_hand_resource__hbox [gtk-hbox-new 2]]
+       [= drop_from_right_hand_resource__button [gtk-button-new_with_label 'Drop from Right Hand']]
+       [have drop_from_right_hand_resource__hbox pack_start drop_from_right_hand_resource__button nil nil 0]
+       [have vbox pack_start drop_from_right_hand_resource__hbox nil nil 0]
+       [have drop_from_right_hand_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `drop_from_right_hand]]]
+       
+       [= drop_from_left_hand_resource__hbox [gtk-hbox-new 2]]
+       [= drop_from_left_hand_resource__button [gtk-button-new_with_label 'Drop from Left Hand']]
+       [have drop_from_left_hand_resource__hbox pack_start drop_from_left_hand_resource__button nil nil 0]
+       [have vbox pack_start drop_from_left_hand_resource__hbox nil nil 0]
+       [have drop_from_left_hand_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `drop_from_left_hand]]]
+       
+       [= pick_up_with_right_hand_resource__hbox [gtk-hbox-new 2]]
+       [= pick_up_with_right_hand_resource__button [gtk-button-new_with_label 'Pick Up with Right Hand']]
+       [= pick_up_with_right_hand_resource__target__label [gtk-label-new 'Target: ']]
+       [= pick_up_with_right_hand_resource__target__entry [gtk-entry-new]]
+       [have pick_up_with_right_hand_resource__hbox pack_start pick_up_with_right_hand_resource__button nil nil 0]
+       [have pick_up_with_right_hand_resource__hbox pack_start pick_up_with_right_hand_resource__target__label nil nil 0]
+       [have pick_up_with_right_hand_resource__hbox pack_start pick_up_with_right_hand_resource__target__entry t t 0]
+       [have vbox pack_start pick_up_with_right_hand_resource__hbox nil nil 0]
+       [have pick_up_with_right_hand_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `pick_up_with_right_hand [get pick_up_with_right_hand_resource__target__entry text]]]]
+       
+       [= pick_up_with_left_hand_resource__hbox [gtk-hbox-new 2]]
+       [= pick_up_with_left_hand_resource__button [gtk-button-new_with_label 'Pick Up with Left Hand']]
+       [= pick_up_with_left_hand_resource__target__label [gtk-label-new 'Target: ']]
+       [= pick_up_with_left_hand_resource__target__entry [gtk-entry-new]]
+       [have pick_up_with_left_hand_resource__hbox pack_start pick_up_with_left_hand_resource__button nil nil 0]
+       [have pick_up_with_left_hand_resource__hbox pack_start pick_up_with_left_hand_resource__target__label nil nil 0]
+       [have pick_up_with_left_hand_resource__hbox pack_start pick_up_with_left_hand_resource__target__entry t t 0]
+       [have vbox pack_start pick_up_with_left_hand_resource__hbox nil nil 0]
+       [have pick_up_with_left_hand_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `pick_up_with_left_hand [get pick_up_with_left_hand_resource__target__entry text]]]]
+       
+       [= use_right_hand_resource__hbox [gtk-hbox-new 2]]
+       [= use_right_hand_resource__button [gtk-button-new_with_label 'Use Right Hand']]
+       [= use_right_hand_resource__target__label [gtk-label-new 'Target: ']]
+       [= use_right_hand_resource__target__entry [gtk-entry-new]]
+       [= use_right_hand_resource__action__label [gtk-label-new 'Action: ']]
+       [= use_right_hand_resource__action__entry [gtk-entry-new]]
+       [have use_right_hand_resource__hbox pack_start use_right_hand_resource__button nil nil 0]
+       [have use_right_hand_resource__hbox pack_start use_right_hand_resource__target__label nil nil 0]
+       [have use_right_hand_resource__hbox pack_start use_right_hand_resource__target__entry t t 0]
+       [have use_right_hand_resource__hbox pack_start use_right_hand_resource__action__label nil nil 0]
+       [have use_right_hand_resource__hbox pack_start use_right_hand_resource__action__entry t t 0]
+       [have vbox pack_start use_right_hand_resource__hbox nil nil 0]
+       [have use_right_hand_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `use_right_hand [get use_right_hand_resource__target__entry text] [get use_right_hand_resource__action__entry text]]]]
+       
+       [= use_left_hand_resource__hbox [gtk-hbox-new 2]]
+       [= use_left_hand_resource__button [gtk-button-new_with_label 'Use Left Hand']]
+       [= use_left_hand_resource__target__label [gtk-label-new 'Target: ']]
+       [= use_left_hand_resource__target__entry [gtk-entry-new]]
+       [= use_left_hand_resource__action__label [gtk-label-new 'Action: ']]
+       [= use_left_hand_resource__action__entry [gtk-entry-new]]
+       [have use_left_hand_resource__hbox pack_start use_left_hand_resource__button nil nil 0]
+       [have use_left_hand_resource__hbox pack_start use_left_hand_resource__target__label nil nil 0]
+       [have use_left_hand_resource__hbox pack_start use_left_hand_resource__target__entry t t 0]
+       [have use_left_hand_resource__hbox pack_start use_left_hand_resource__action__label nil nil 0]
+       [have use_left_hand_resource__hbox pack_start use_left_hand_resource__action__entry t t 0]
+       [have vbox pack_start use_left_hand_resource__hbox nil nil 0]
+       [have use_left_hand_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `use_left_hand [get use_left_hand_resource__target__entry text] [get use_left_hand_resource__action__entry text]]]]
+       
+       [= say_resource__hbox [gtk-hbox-new 2]]
+       [= say_resource__button [gtk-button-new_with_label 'Say']]
+       [= say_resource__message__label [gtk-label-new 'Message: ']]
+       [= say_resource__message__entry [gtk-entry-new]]
+       [have say_resource__hbox pack_start say_resource__button nil nil 0]
+       [have say_resource__hbox pack_start say_resource__message__label nil nil 0]
+       [have say_resource__hbox pack_start say_resource__message__entry t t 0]
+       [have vbox pack_start say_resource__hbox nil nil 0]
+       [have say_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `say [get say_resource__message__entry text]]]]
+       
+       [have window add vbox]
+       
+       [have window show_all]]]
+
+
+[deftypefunk isismon_agent_builtin_reactive_physical_resource_activator execute activate_resource [layer_name agency_name resource_name :rest args]
+  [let [[activate_resource [get [get [get isismon_agent isis_agent] mind] resource `builtin_reactive `neural_plug `activate_resource]]]
+    [have-apply activate_resource command `[,layer_name ,agency_name ,resource_name @args]]]]
+
+
+

@@ -113,6 +113,7 @@
 				  'extension/fibermon/'
 				  'extension/image/'
 				  'extension/image_sequence/'
+				  'extension/meta_semantic_frame_ball/'
 				  'extension/meta_semantic_knowledge_base'
 				  'extension/movie/'
 				  'extension/forward_planner/'

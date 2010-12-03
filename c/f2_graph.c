@@ -66,7 +66,10 @@ def_pcfunk2(graph_node__terminal_print_with_frame, this, terminal_print_frame, r
 
 
 f2ptr raw__graph_node__as__dot_code(f2ptr cause, f2ptr this) {
-  f2ptr color     = new__string(cause, "#000000");
+  f2ptr color = f2__graphviz__exp__as__color(cause, this);
+  if (color == nil) {
+    color = new__string(cause, "#000000");
+  }
   f2ptr label     = f2__graph_node__label(cause, this);
   f2ptr node_code = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, this), f2__graphviz__exp__as__label(cause, label), color);
   return node_code;

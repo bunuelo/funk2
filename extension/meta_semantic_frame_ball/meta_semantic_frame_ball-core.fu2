@@ -17,14 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage isismon
-  :packages [isis_world_demo
-	     gtk
-	     image
-	     image_sequence
-	     semantic_frame_ball
-	     movie
-	     mindmon]
-   :sources ['isismon.fu2'
-	     'isismon_learned_reactive_physical_activator.fu2']]
+[defcore meta_semantic_frame_ball 'extension/meta_semantic_frame_ball/.libs/libf2e_meta_semantic_frame_ball.so']
 
+[defcorefunk meta_semantic_frame_ball-core_extension_ping       meta_semantic_frame_ball meta_semantic_frame_ball__core_extension_ping]
+[defcorefunk meta_semantic_frame_ball-core_extension_initialize meta_semantic_frame_ball meta_semantic_frame_ball__core_extension_initialize]
+
+
+
+[meta_semantic_frame_ball-core_extension_ping]

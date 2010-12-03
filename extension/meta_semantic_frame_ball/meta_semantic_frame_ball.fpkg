@@ -17,17 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage parse_tree
-  :sources ['natural_language-primfunks.fu2'
-	    'parse_tree.fu2']]
-
-[defpackage dictionary_frame
-  :sources ['dictionary_frame.fu2']]
-
-[defpackage natural_language_command
-  :packages [parse_tree dictionary_frame frame_ball semantic_knowledge_base meta_semantic_knowledge_base]
-   :sources ['natural_language_command.fu2']]
-
-[defpackage natural_language
-  :packages [natural_language_command]]
+[defpackage meta_semantic_frame_ball
+  :packages [semantic_frame_ball]
+  :sources ['meta_semantic_frame_ball-core.fu2']]
 

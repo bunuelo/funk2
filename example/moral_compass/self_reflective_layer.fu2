@@ -20,10 +20,9 @@
 
 'self_reflective_layer'
 
-[deframe self_reflective_layer [mental_layer] [personality_agency]
+[deframe self_reflective_layer [mental_layer] [[self_reflective_knowledge_base [new meta_semantic_knowledge_base nil]]]
   [new []
        [construct mental_layer 4 `self_reflective]
-       [set this personality_agency [new self_reflective_personality_agency]]
-       [have this add_agency [get this personality_agency]]
+       [have this add_agency [new self_reflective_personality_agency]]
        this]]
 

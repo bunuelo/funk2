@@ -20,7 +20,7 @@
 
 'learned_reactive_layer'
 
-[deframe learned_reactive_layer [mental_layer] []
+[deframe learned_reactive_layer [mental_layer] [[learned_reactive_knowledge_base [new meta_semantic_knowledge_base nil]]]
   [new []
        [construct mental_layer 1 `learned_reactive]
        [have this add_agency [new learned_reactive_sensory_agency]]

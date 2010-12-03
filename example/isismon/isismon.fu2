@@ -190,7 +190,7 @@
 			 [reflective_knowledge_base       [get [get isis_agent mind] reflective_knowledge]]
 			 [self_reflective_knowledge_base  [get [get isis_agent mind] self_reflective_knowledge]]
 			 [self_conscious_knowledge_base   [get [get isis_agent mind] self_conscious_knowledge]]]
-		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s all semantic knowledge.']
+		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of all of ' [get this name] '\'s semantic knowledge.']
 		     [let [[graph          [new graph]]
 			   [node_ptypehash [new ptypehash]]]
 		       [have builtin_reactive_knowledge_base add_to_graph_with_node_ptypehash                   graph node_ptypehash 100000 nil]

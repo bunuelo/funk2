@@ -28,16 +28,27 @@
        [have this add_layer [new self_conscious_layer]]
        this]]
 
-[deftypefunk moral_compass get semantic_realm []
-  [if [null global_semantic_realm]
-      [= global_semantic_realm [new semantic_realm]]]
-  global_semantic_realm]
+'perception functions'
 
 [deftypefunk moral_compass get perception []
   [get [get this layer `builtin_reactive] perception]]
 
 [deftypefunk moral_compass get visual_objects []
   [get [get this layer `builtin_reactive] visual_objects]]
+
+[deftypefunk moral_compass get semantic_realm []
+  [if [null global_semantic_realm]
+      [= global_semantic_realm [new semantic_realm]]]
+  global_semantic_realm]
+
+'knowledge and meta-knowledge functions'
+
+[deftypefunk moral_compass get builtin_reactive_knowledge [] [get [get this layer `builtin_reactive] builtin_reactive_knowledge]]
+[deftypefunk moral_compass get learned_reactive_knowledge [] [get [get this layer `learned_reactive] learned_reactive_knowledge]]
+[deftypefunk moral_compass get deliberative_knowledge     [] [get [get this layer `deliberative]     deliberative_knowledge]]
+[deftypefunk moral_compass get reflective_knowledge       [] [get [get this layer `reflective]       reflective_knowledge]]
+[deftypefunk moral_compass get self_reflective_knowledge  [] [get [get this layer `self_reflective]  self_reflective_knowledge]]
+[deftypefunk moral_compass get self_conscious_knowledge   [] [get [get this layer `self_conscious]   self_conscious_knowledge]]
 
 [deftypefunk moral_compass get visual_knowledge []
   [get [get this layer `learned_reactive] visual_knowledge]]
@@ -47,7 +58,6 @@
 
 [deftypefunk moral_compass get meta_reality_knowledge []
   [get [get this layer `reflective] meta_reality_knowledge]]
-
 
 [deftypefunk moral_compass get objects []
   [print 'get-moral_compass-objects is deprecated.']

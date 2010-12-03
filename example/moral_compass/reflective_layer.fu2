@@ -20,7 +20,7 @@
 
 'reflective_layer'
 
-[deframe reflective_layer [mental_layer] [[reflective_knowledge_base [new meta_semantic_knowledge_base nil]]]
+[deframe reflective_layer [mental_layer] [[reflective_knowledge [new meta_semantic_knowledge_base nil]]]
   [new []
        [construct mental_layer 3 `reflective]
        [have this add_agency [new reflective_meta_knowledge_agency]]

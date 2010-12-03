@@ -20,7 +20,7 @@
 
 'deliberative_layer'
 
-[deframe deliberative_layer [mental_layer] [[deliberative_knowledge_base [new meta_semantic_knowledge_base nil]]]
+[deframe deliberative_layer [mental_layer] [[deliberative_knowledge [new meta_semantic_knowledge_base nil]]]
   [new []
        [construct mental_layer 2 `deliberative]
        [have this add_agency [new deliberative_reality_agency]]

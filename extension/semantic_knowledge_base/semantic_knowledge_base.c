@@ -871,7 +871,11 @@ f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr ke
   {
     f2ptr semantic_knowledge_base_set = raw__semantic_frame__semantic_knowledge_base_set(cause, this);
     set__iteration(cause, semantic_knowledge_base_set, semantic_knowledge_base,
-		   raw__semantic_knowledge_base__know_of_semantic_frame_value_addition(cause, semantic_knowledge_base, this, key_type, key, value));
+		   f2ptr result = raw__semantic_knowledge_base__know_of_semantic_frame_value_addition(cause, semantic_knowledge_base, this, key_type, key, value);
+		   if (raw__larva__is_type(cause, result)) {
+		     return result;
+		   }
+		   );
   }
   return nil;
 }
@@ -906,7 +910,11 @@ f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
   {
     f2ptr semantic_knowledge_base_set = raw__semantic_frame__semantic_knowledge_base_set(cause, this);
     set__iteration(cause, semantic_knowledge_base_set, semantic_knowledge_base,
-		   raw__semantic_knowledge_base__know_of_semantic_frame_value_removal(cause, semantic_knowledge_base, this, key_type, key, value));
+		   f2ptr result = raw__semantic_knowledge_base__know_of_semantic_frame_value_removal(cause, semantic_knowledge_base, this, key_type, key, value);
+		   if (raw__larva__is_type(cause, result)) {
+		     return result;
+		   }
+		   );
   }
   return nil;
 }
@@ -1754,7 +1762,7 @@ f2ptr f2__semantic_knowledge_base__add_trace_callback_funk(f2ptr cause, f2ptr th
 export_cefunk3(semantic_knowledge_base__add_trace_callback_funk, this, trace_callback_name, trace_callback_funk, 0, "Adds the trace_callback_funk to the trace_callback_funks_frame under the appropriate trace_callback_name.");
 
 
-void raw__semantic_knowledge_base__know_of_semantic_frame_value_addition(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
+f2ptr raw__semantic_knowledge_base__know_of_semantic_frame_value_addition(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
   f2ptr trace_callback_funks_frame   = raw__semantic_knowledge_base__trace_callback_funks_frame(cause, this);
   f2ptr add_semantic_frame_value_callbacks = f2__frame__lookup_var_value(cause, trace_callback_funks_frame, new__symbol(cause, "add_semantic_frame_value"), nil);
   {
@@ -1770,6 +1778,7 @@ void raw__semantic_knowledge_base__know_of_semantic_frame_value_addition(f2ptr c
       iter = f2__cons__cdr(cause, iter);
     }
   }
+  return nil;
 }
 
 f2ptr f2__semantic_knowledge_base__know_of_semantic_frame_value_addition(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
@@ -1783,7 +1792,7 @@ f2ptr f2__semantic_knowledge_base__know_of_semantic_frame_value_addition(f2ptr c
 export_cefunk5(semantic_knowledge_base__know_of_semantic_frame_value_addition, this, semantic_frame, key_type, key, value, 0, "Usually called by a semantic_frame that belongs to this knowledge base when a value is added to the frame.");
 
 
-void raw__semantic_knowledge_base__know_of_semantic_frame_value_removal(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
+f2ptr raw__semantic_knowledge_base__know_of_semantic_frame_value_removal(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
   f2ptr trace_callback_funks_frame   = raw__semantic_knowledge_base__trace_callback_funks_frame(cause, this);
   f2ptr remove_semantic_frame_value_callbacks = f2__frame__lookup_var_value(cause, trace_callback_funks_frame, new__symbol(cause, "remove_semantic_frame_value"), nil);
   {
@@ -1799,6 +1808,7 @@ void raw__semantic_knowledge_base__know_of_semantic_frame_value_removal(f2ptr ca
       iter = f2__cons__cdr(cause, iter);
     }
   }
+  return nil;
 }
 
 f2ptr f2__semantic_knowledge_base__know_of_semantic_frame_value_removal(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {

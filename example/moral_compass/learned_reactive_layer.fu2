@@ -28,6 +28,3 @@
        [have this add_agency [new learned_reactive_language_agency]]
        this]]
 
-[deftypefunk learned_reactive_layer get visual_knowledge []
-  [get [get this agency `sensory] visual_knowledge]]
-

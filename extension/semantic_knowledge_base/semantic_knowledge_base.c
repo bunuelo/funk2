@@ -1428,12 +1428,12 @@ f2ptr raw__semantic_knowledge_base__new(f2ptr cause, f2ptr semantic_frames) {
   if (cause != nil) {
     trace_add_semantic_frame = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_knowledge_base-trace_add_semantic_frame"));
   }
-  return f2__frame__new(cause, f2list8__new(cause,
-					    new__symbol(cause, "type"),                     new__symbol(cause, "semantic_knowledge_base"),
-					    new__symbol(cause, "semantic_frames"),          semantic_frames,
-					    new__symbol(cause, "trace_event_redblacktree"), trace_event_redblacktree,
-					    new__symbol(cause, "trace_add_semantic_frame"), trace_add_semantic_frame,
-					    new__symbol(cause, "trace_callbacks_frame"),     f2__frame__new(cause, nil)));
+  return f2__frame__new(cause, f2list10__new(cause,
+					     new__symbol(cause, "type"),                     new__symbol(cause, "semantic_knowledge_base"),
+					     new__symbol(cause, "semantic_frames"),          semantic_frames,
+					     new__symbol(cause, "trace_event_redblacktree"), trace_event_redblacktree,
+					     new__symbol(cause, "trace_add_semantic_frame"), trace_add_semantic_frame,
+					     new__symbol(cause, "trace_callbacks_frame"),    f2__frame__new(cause, nil)));
 }
 
 f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr semantic_frames) {

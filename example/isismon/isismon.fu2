@@ -1,0 +1,588 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+[deframe isismon_agent [frame] [isis_agent
+				isismon
+				
+				frame
+				vbox
+
+				menu_bar
+				tools_menu
+				tools_menu_item
+				tools_mindmon_menu_item
+				tools_builtin_reactive_physical_activator_menu_item
+				tools_learned_reactive_physical_activator_menu_item
+				view_menu
+				view_menu_item
+				view_sense_menu_item
+				view_perception_menu_item
+				view_visual_knowledge_menu_item
+				view_builtin_reactive_knowledge_menu_item
+				view_learned_reactive_knowledge_menu_item
+				view_deliberative_knowledge_menu_item
+				view_reflective_knowledge_menu_item
+				view_self_reflective_knowledge_menu_item
+				view_self_conscious_knowledge_menu_item
+				view_all_knowledge_menu_item
+				
+				label
+				entry
+				]
+  [new [initial_isismon initial_isis_agent]
+       [= isismon    initial_isismon]
+       [= isis_agent initial_isis_agent]
+       [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
+       [= vbox  [gtk-vbox-new 2]]
+       
+       [= menu_bar        [gtk-menu_bar-new]]
+       [have vbox pack_start menu_bar nil nil 0]
+       
+       [= tools_menu      [gtk-menu-new]]
+       [= tools_menu_item [gtk-menu_item-new 'Tools']]
+       [set tools_menu_item submenu tools_menu]
+       [have menu_bar append tools_menu_item]
+       
+       [= tools_mindmon_menu_item [gtk-menu_item-new 'MindMon']]
+       [have tools_mindmon_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\nLaunching MindMon to monitor ' [get this name] '\'s mind.']
+		   [mindmon [get isis_agent mind]]]
+	     nil]
+       [have tools_menu append tools_mindmon_menu_item]
+       
+       [= tools_builtin_reactive_physical_activator_menu_item [gtk-menu_item-new 'Built-in Reactive Physical Activator']]
+       [have tools_builtin_reactive_physical_activator_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\nLaunching built-in reactive physical activator for agent ' [get this name] '.']
+		   [new isismon_agent_builtin_reactive_physical_resource_activator this]]
+	     nil]
+       [have tools_menu append tools_builtin_reactive_physical_activator_menu_item]
+       
+       [= tools_learned_reactive_physical_activator_menu_item [gtk-menu_item-new 'Learned Reactive Physical Activator']]
+       [have tools_learned_reactive_physical_activator_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\nLaunching learned reactive physical activator for agent ' [get this name] '.']
+		   [new isismon_agent_learned_reactive_physical_resource_activator this]]
+	     nil]
+       [have tools_menu append tools_learned_reactive_physical_activator_menu_item]
+       
+       [= view_menu      [gtk-menu-new]]
+       [= view_menu_item [gtk-menu_item-new 'View']]
+       [set view_menu_item submenu view_menu]
+       [have menu_bar append view_menu_item]
+       
+       [= view_sense_menu_item [gtk-menu_item-new 'Sense']]
+       [have view_sense_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\n' [get this name] '\'s sensory information:'
+				    '\n  ' [have isis_agent sense_world]]]
+	     nil]
+       [have view_menu append view_sense_menu_item]
+       
+       [= view_visual_knowledge_menu_item [gtk-menu_item-new 'Visual Knowledge']]
+       [have view_visual_knowledge_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[visual_knowledge_base [get [get isis_agent mind] visual_knowledge]]]
+		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s visual semantic knowledge.']
+		     [let [[graph          [new graph]]
+			   [node_ptypehash [new ptypehash]]]
+		       [have visual_knowledge_base add_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
+		       [fiber [funk [] [have graph gview]] nil]]]]
+	     nil]
+       [have view_menu append view_visual_knowledge_menu_item]
+       
+       [= view_builtin_reactive_knowledge_menu_item [gtk-menu_item-new 'Builtin-Reactive Knowledge']]
+       [have view_builtin_reactive_knowledge_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[builtin_reactive_knowledge_base [get [get isis_agent mind] builtin_reactive_knowledge]]]
+		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s builtin-reactive semantic knowledge.']
+		     [let [[graph          [new graph]]
+			   [node_ptypehash [new ptypehash]]]
+		       [have builtin_reactive_knowledge_base add_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
+		       [fiber [funk [] [have graph gview]] nil]]]]
+	     nil]
+       [have view_menu append view_builtin_reactive_knowledge_menu_item]
+       
+       [= view_learned_reactive_knowledge_menu_item [gtk-menu_item-new 'Learned-Reactive Knowledge']]
+       [have view_learned_reactive_knowledge_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[learned_reactive_knowledge_base [get [get isis_agent mind] learned_reactive_knowledge]]]
+		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s learned-reactive semantic knowledge.']
+		     [let [[graph          [new graph]]
+			   [node_ptypehash [new ptypehash]]]
+		       [have learned_reactive_knowledge_base add_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
+		       [fiber [funk [] [have graph gview]] nil]]]]
+	     nil]
+       [have view_menu append view_learned_reactive_knowledge_menu_item]
+       
+       [= view_deliberative_knowledge_menu_item [gtk-menu_item-new 'Deliberative Knowledge']]
+       [have view_deliberative_knowledge_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[deliberative_knowledge_base [get [get isis_agent mind] deliberative_knowledge]]]
+		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s deliberative semantic knowledge.']
+		     [let [[graph          [new graph]]
+			   [node_ptypehash [new ptypehash]]]
+		       [have deliberative_knowledge_base add_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
+		       [fiber [funk [] [have graph gview]] nil]]]]
+	     nil]
+       [have view_menu append view_deliberative_knowledge_menu_item]
+       
+       [= view_reflective_knowledge_menu_item [gtk-menu_item-new 'Reflective Knowledge']]
+       [have view_reflective_knowledge_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[reflective_knowledge_base [get [get isis_agent mind] reflective_knowledge]]]
+		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s reflective semantic knowledge.']
+		     [let [[graph          [new graph]]
+			   [node_ptypehash [new ptypehash]]]
+		       [have reflective_knowledge_base add_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
+		       [fiber [funk [] [have graph gview]] nil]]]]
+	     nil]
+       [have view_menu append view_reflective_knowledge_menu_item]
+       
+       [= view_self_reflective_knowledge_menu_item [gtk-menu_item-new 'Self-Reflective Knowledge']]
+       [have view_self_reflective_knowledge_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[self_reflective_knowledge_base [get [get isis_agent mind] self_reflective_knowledge]]]
+		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s self-reflective semantic knowledge.']
+		     [let [[graph          [new graph]]
+			   [node_ptypehash [new ptypehash]]]
+		       [have self_reflective_knowledge_base add_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
+		       [fiber [funk [] [have graph gview]] nil]]]]
+	     nil]
+       [have view_menu append view_self_reflective_knowledge_menu_item]
+       
+       [= view_self_conscious_knowledge_menu_item [gtk-menu_item-new 'Self-Conscious Knowledge']]
+       [have view_self_conscious_knowledge_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[self_conscious_knowledge_base [get [get isis_agent mind] self_conscious_knowledge]]]
+		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s self-conscious semantic knowledge.']
+		     [let [[graph          [new graph]]
+			   [node_ptypehash [new ptypehash]]]
+		       [have self_conscious_knowledge_base add_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
+		       [fiber [funk [] [have graph gview]] nil]]]]
+	     nil]
+       [have view_menu append view_self_conscious_knowledge_menu_item]
+       
+       [= view_all_knowledge_menu_item [gtk-menu_item-new 'All Knowledge']]
+       [have view_all_knowledge_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[builtin_reactive_knowledge_base [get [get isis_agent mind] builtin_reactive_knowledge]]
+			 [learned_reactive_knowledge_base [get [get isis_agent mind] learned_reactive_knowledge]]
+			 [deliberative_knowledge_base     [get [get isis_agent mind] deliberative_knowledge]]
+			 [reflective_knowledge_base       [get [get isis_agent mind] reflective_knowledge]]
+			 [self_reflective_knowledge_base  [get [get isis_agent mind] self_reflective_knowledge]]
+			 [self_conscious_knowledge_base   [get [get isis_agent mind] self_conscious_knowledge]]]
+		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of all of ' [get this name] '\'s semantic knowledge.']
+		     [let [[graph          [new graph]]
+			   [node_ptypehash [new ptypehash]]]
+		       [have builtin_reactive_knowledge_base add_to_graph_with_node_ptypehash                   graph node_ptypehash 100000 nil]
+		       [have learned_reactive_knowledge_base add_to_graph_with_node_ptypehash                   graph node_ptypehash 100000 nil]
+		       [have learned_reactive_knowledge_base add_trans_level_edges_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
+		       [have deliberative_knowledge_base     add_to_graph_with_node_ptypehash                   graph node_ptypehash 100000 nil]
+		       [have deliberative_knowledge_base     add_trans_level_edges_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
+		       [have reflective_knowledge_base       add_to_graph_with_node_ptypehash                   graph node_ptypehash 100000 nil]
+		       [have reflective_knowledge_base       add_trans_level_edges_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
+		       [have self_reflective_knowledge_base  add_to_graph_with_node_ptypehash                   graph node_ptypehash 100000 nil]
+		       [have self_reflective_knowledge_base  add_trans_level_edges_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
+		       [have self_conscious_knowledge_base   add_to_graph_with_node_ptypehash                   graph node_ptypehash 100000 nil]
+		       [have self_conscious_knowledge_base   add_trans_level_edges_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
+		       [fiber [funk [] [have graph gview]] nil]]]]
+	     nil]
+       [have view_menu append view_all_knowledge_menu_item]
+       
+       
+       [= label [gtk-label-new '']]
+       [= entry [gtk-entry-new]]
+       
+       [have entry key_press_event-signal_connect
+	     [funk [key_event]
+		   [let [[keyval [have key_event lookup `keyval]]]
+		     `[terminal_format standard-terminal '\nkey event: ' key_event]
+		     [if [eq keyval GDK_Return]
+			 [let [[text [get entry text]]]
+			   [set entry text '']
+			   [let [[strings [have text split ' ']]]
+			     [let [[reverse_symbols nil]]
+			       [mapc [funk [string]
+					   [if [not [equals string '']]
+					       [= reverse_symbols [cons [get string as-symbol] reverse_symbols]]]]
+				     strings]
+			       [let [[symbols [reverse reverse_symbols]]]
+				 [terminal_format standard-terminal '\nSending symbols, ' symbols ', through ' [get isis_agent name] '\'s neural plug.']
+				 [let [[activate_resource [get [get isis_agent mind] resource `builtin_reactive `neural_plug `activate_resource]]]
+				   [have activate_resource command `learned_reactive `language `speak_language symbols]
+				   [let [[other_agent_name [if [eq [get isis_agent name] `Ralph]
+							       `Lauren
+							     `Ralph]]]
+				     [let [[other_mind [get isis_world agent_mind other_agent_name]]]
+				       [let [[other_activate_resource [get other_mind resource `builtin_reactive `neural_plug `activate_resource]]]
+					 [have other_activate_resource command `learned_reactive `language `hear_language_from_agent [get isis_agent name] symbols]]]]
+				   ]]]]]]]]]
+       
+       [have vbox pack_start label t t 0]
+       [have vbox pack_start entry nil nil 0]
+       
+       [have frame add vbox]
+       nil]]
+
+[deftypefunk isismon_agent get name []
+  [get isis_agent name]]
+
+[deftypefunk isismon_agent get widget []
+  frame]
+
+[deftypefunk isismon_agent execute update_entry []
+  [let [[look_for_resource [get [get isis_agent mind] resource `learned_reactive `physical `look_for]]]
+    [set entry text [format nil 'look_for-current_object: \t' [have look_for_resource lookup `my_current_object]]]
+    ]]
+
+[deftypefunk isismon_agent execute update []
+  nil]
+
+[deftypefunk isismon_agent get retina_image_sequence []
+  [get isis_agent retina_image_sequence]]
+
+[deftypefunk isismon_agent execute command-look_for [object_type]
+  [terminal_format standard-terminal '\nMindMon: Commanding ' [get this name] ' to look for ' object_type '.']
+  [have [get [get isis_agent mind] resource `builtin_reactive `neural_plug `activate_resource]
+	command `learned_reactive `physical `look_for [get [get object_type as-string] as-symbol]]
+  ]
+
+[deftypefunk isismon_agent execute command-hold_with_right_hand [object]
+  [terminal_format standard-terminal '\nMindMon: Commanding ' [get this name] ' to hold with right hand ' object '.']
+  ]
+
+[deftypefunk isismon_agent execute command-hold_with_left_hand [object]
+  [terminal_format standard-terminal '\nMindMon: Commanding ' [get this name] ' to hold with left hand ' object '.']
+  ]
+
+
+[deframe isismon_save_movie_dialog [frame] [isismon
+					    window
+					    vbox
+					    label
+					    entry
+					    button_hbox
+					    save_button
+					    cancel_button]
+  [new [initial-isismon]
+       [= isismon initial-isismon]
+       [= window [gtk-window-new]]
+       [set window title 'isismon - save movie dialog']
+       [= vbox [gtk-vbox-new 2]]
+       [= label [gtk-label-new 'Please enter a filename\nwith an MPEG extension,\nto which you would like\nto save your movie.']]
+       [= entry [gtk-entry-new]]
+       [= button_hbox [gtk-hbox-new 2]]
+       [= save_button [gtk-button-new_with_label 'Save']]
+       [= cancel_button [gtk-button-new_with_label 'Cancel']]
+       [have vbox pack_start label nil nil 0]
+       [have vbox pack_start entry nil nil 0]
+       [have button_hbox pack_start save_button nil nil 0]
+       [have button_hbox pack_start cancel_button nil nil 0]
+       [have vbox pack_start button_hbox nil nil 0]
+       
+       [have save_button signal_connect 'clicked'
+	     [funk []
+		   [let [[filename [get entry text]]]
+		     [have isismon save_movie_as filename]
+		     [have window destroy]]]]
+       
+       [have cancel_button signal_connect 'clicked'
+	     [funk []
+		   [have window destroy]]]
+       
+       [have window add vbox]
+       [have window show_all]]]
+
+
+[deframe isismon [frame] [isis_world
+			  [initialize_mutex [new mutex]]
+			  [done             nil]
+			  fiber
+			  
+			  window
+			  vbox
+			  menu_bar
+			  file_menu_item
+			  file_menu
+			  file_exit_menu_item
+			  file_save_movie_menu_item
+			  movie_gtk_image
+			  scale
+			  agent_hbox
+			  controller_frame
+			  controller_vbox
+			  controller_button_hbox
+			  step_size_hbox
+			  step_size_label
+			  step_size_entry
+			  
+			  play_button
+			  stop_button
+			  step_button
+			  
+			  [agent_frame [frame]]
+			  
+			  [simulation_playing           nil]
+			  [last_stepped_simulation_time nil]
+			  ]
+  [new [isis_world_object isis_world_object_description]
+       [= isis_world isis_world_object]
+       [have initialize_mutex lock]
+       [= fiber [fiber [funk []
+			     [= window                    [gtk-window-new]]
+			     [set window title            [format nil 'isismon - ' isis_world_object_description]]
+			     [= vbox                      [gtk-vbox-new 2]]
+			     [= menu_bar                  [gtk-menu_bar-new]]
+			     [have vbox pack_start menu_bar nil nil 0]
+			     [= file_menu_item            [gtk-menu_item-new 'File']]
+			     [= file_menu                 [gtk-menu-new]]
+			     [= file_exit_menu_item       [gtk-menu_item-new 'Exit']]
+			     [= file_save_movie_menu_item [gtk-menu_item-new 'Save Movie...']]
+			     [have menu_bar append  file_menu_item]
+			     [have file_menu append file_exit_menu_item]
+			     [have file_menu append file_save_movie_menu_item]
+			     [set file_menu_item submenu file_menu]
+			     [have window add vbox]
+			     
+			     [have file_exit_menu_item signal_connect 'activate'
+				   [funk []
+					 [= done t]]
+				   nil]
+			     
+			     [have file_save_movie_menu_item signal_connect 'activate'
+				   [funk []
+					 [new isismon_save_movie_dialog this]]
+				   nil]
+			     
+			     [= movie_gtk_image [gtk-image-new_from_image [new image [+ 640 320] 480 nil]]]
+			     [have vbox pack_start movie_gtk_image nil nil 0]
+			     
+			     [= scale [gtk-scale-new_with_range `horizontal 0.0 1.0 1.0]]
+			     [set scale digits 0]
+			     [have vbox pack_start scale t t 0]
+			     [let [[movie_length [get this movie_length]]]
+			       [if [> movie_length 1]
+				   [prog [set scale range 0.0 [- movie_length 1]]
+					 [set scale value [- movie_length 1]]]]]
+			     
+			     [= agent_hbox [gtk-hbox-new 2]]
+			     [have vbox pack_start agent_hbox nil nil 0]
+			     
+			     [have this add_agent [get isis_world agent_body `Ralph]]
+			     [have this add_agent [get isis_world agent_body `Lauren]]
+			     
+			     [= controller_frame [gtk-frame-new [format nil 'isis_world']]]
+			     [= controller_vbox  [gtk-vbox-new 2]]
+			     
+			     [= controller_button_hbox [gtk-hbox-new 2]]
+			     [= play_button [gtk-button-new_with_label 'Play']]
+			     [= stop_button [gtk-button-new_with_label 'Stop']]
+			     [= step_button [gtk-button-new_with_label 'Step']]
+			     [have controller_button_hbox pack_start play_button nil nil 0]
+			     [have controller_button_hbox pack_start stop_button nil nil 0]
+			     [have controller_button_hbox pack_start step_button nil nil 0]
+			     [have controller_vbox pack_start controller_button_hbox nil nil 0]
+			     
+			     [have play_button signal_connect 'clicked'
+				   [funk []
+					 [terminal_format standard-terminal '\nIsisMon: Playing.']
+					 [= simulation_playing t]]]
+			     [have stop_button signal_connect 'clicked'
+				   [funk []
+					 [terminal_format standard-terminal '\nIsisMon: Stopped.']
+					 [= simulation_playing nil]]]
+			     [have step_button signal_connect 'clicked'
+				   [funk []
+					 [let [[seconds 1.0]]
+					   [terminal_format standard-terminal '\nIsisMon: Stepping ' seconds ' seconds.']
+					   [have isis_world raw_step_simulation seconds]]]]
+			     
+			     [= step_size_hbox  [gtk-hbox-new 2]]
+			     [= step_size_label [gtk-label-new 'Step Size: ']]
+			     [= step_size_entry [gtk-entry-new]]
+			     [have step_size_hbox pack_start step_size_label nil nil 0]
+			     [have step_size_hbox pack_start step_size_entry t t 0]
+			     [set step_size_entry text '0.03']
+			     [have controller_vbox pack_start step_size_hbox nil nil 0]
+			     
+			     [have controller_frame add controller_vbox nil nil 0]
+			     
+			     [have vbox pack_start controller_frame nil nil 0]
+			     
+			     [have window connect_hide_on_delete]
+			     [have window show_all]
+			     [have initialize_mutex unlock]
+			     
+			     [while [not done]
+			       [have this cycle]]
+			     [have window destroy]]
+		       nil]]
+       [have initialize_mutex lock]
+       nil]]
+
+[deftypefunk isismon execute cycle []
+  [if [not [get window visible]]
+      [= done t]]
+  [if [and simulation_playing [or [null last_stepped_simulation_time]
+				  [> [/ [- [get [time] nanoseconds_since_1970] [get last_stepped_simulation_time nanoseconds_since_1970]] 1000000000.0] 5]]]
+      [let [[step_size [have [get step_size_entry text] read]]]
+	[let [[as_double_funk [get [lookup_type [type step_size]] type_var_value `get `as-double nil]]]
+	  [if [null as_double_funk]
+	      [prog [terminal_format standard-terminal '\nStep size, \'' [get step_size_entry text] '\', cannot be recognized as a number.  Pausing IsisMon and ignoring step command.']
+		    [= simulation_playing nil]]
+	    [prog [have isis_world step_simulation [get step_size as-double]]
+		  [have this update]
+		  [let [[movie_length [get this movie_length]]]
+		    [if [> movie_length 1]
+			[set scale value [- movie_length 1]]]]
+		  'Don\'t save movies every frame because this takes too long for now.'
+		  `[let [[file_index 0]]
+		     [labels [[find_nonexistent_filename []
+							 [let [[filename [format nil 'isismon_movie-' file_index '.mpeg']]]
+							   [if [pathname-exists filename]
+							       [prog [= file_index [+ file_index 1]]
+								     [find_nonexistent_filename]]
+							     filename]]]]
+			     [have this save_movie_as [find_nonexistent_filename]]]]
+		  [= last_stepped_simulation_time [time]]]]]]]
+  [have this update]
+  [millisleep 100]]
+
+[deftypefunk isismon execute add_agent [agent]
+  [let [[isismon_agent [new isismon_agent this agent]]]
+    [have agent_frame add [get isismon_agent name] isismon_agent]
+    [have agent_hbox pack_start isismon_agent t t 0]]]
+
+[deftypefunk isismon execute update_agents []
+  [mapc [funk [agent]
+	      [have agent update]]
+	[get agent_frame values]]]
+
+[deftypefunk isismon execute update []
+  [let [[movie_length [get this movie_length]]]
+    [if [> movie_length 1]
+	[set scale range 0.0 [- movie_length 1]]]
+    [let [[image_index [get [get scale value] as-integer]]]
+      [if [< image_index movie_length]
+	  [set movie_gtk_image image [get this movie_image image_index]]]]]
+  [have this update_agents]]
+
+[deftypefunk isismon execute step []
+  [have isis_world normal_step]
+  [let [[movie_length [get this movie_length]]]
+    [if [> movie_length 1]
+	[set scale range 0.0 [- movie_length 1]]]
+    [let [[scale_value [get scale value]]]
+      [if [== scale_value [- movie_length 2]]
+	  [set scale value [- movie_length 1]]]]]
+  [have this update]]
+
+[deftypefunk isismon get overview_image_sequence []
+  [get isis_world overview_image_sequence]]
+
+[deftypefunk isismon get movie_length []
+  [let [[overview_image_sequence [get this overview_image_sequence]]]
+    [get overview_image_sequence length]]]
+
+[deftypefunk isismon get movie_image [index]
+  [let [[agent_names    [get agent_frame keys]]
+	[image_sequence [new image_sequence nil]]]
+    [let [[agent_count [if [null agent_names]
+			   0
+			 [length agent_names]]]]
+      [let [[image_width [+ 1 640 1 [if agent_names
+					320
+				      0] 1]]
+	    [image_height [+ 1 [if [> [* agent_count [+ 240 1]] [+ 480 1]]
+				   [* agent_count [+ 240 1]]
+				 [+ 480 1]]]]]
+	[if [!= [* [/ image_width 2] 2]
+		image_width]
+	    [= image_width [+ image_width 1]]]
+	[if [!= [* [/ image_height 2] 2]
+		image_height]
+	    [= image_height [+ image_height 1]]]
+	[let [[image [new image image_width image_height nil]]]
+	  [have image clear 0 0 0 255]
+	  [let [[overview_image_sequence [get this overview_image_sequence]]]
+	    [let [[overview_image [get overview_image_sequence elt index]]]
+	      [have overview_image copy_rectangle_to 0 0 image 1 1 640 480]]]
+	  [let [[agent_index 0]]
+	    [mapc [funk [agent_name]
+			[let [[isismon_agent [have agent_frame lookup agent_name]]]
+			  [let [[retina_image_sequence [get isismon_agent retina_image_sequence]]]
+			    [let [[retina_image [get retina_image_sequence elt index]]]
+			      [have retina_image copy_rectangle_to 0 0 image [+ 1 640 1] [+ 1 [* agent_index [+ 240 1]]] 320 240]]]]
+			[= agent_index [+ agent_index 1]]]
+		  agent_names]]
+	  image]]]]]
+
+[deftypefunk isismon get new_movie []
+  [let [[movie_length   [get this movie_length]]
+	[image_sequence [new image_sequence nil]]]
+    [dotimes [index movie_length]
+      [have image_sequence add_image_to_end [get this movie_image index]]]
+    [let [[bit_rate   5000000]
+	  [frame_rate 25]]
+      [movie-new_from_image_sequence [get image_sequence new_by_time_stretch 3.0] bit_rate frame_rate]]]]
+
+[deftypefunk isismon execute save_movie_as [filename]
+  [terminal_format standard-terminal '\nIsisMon Save Movie: Saving MPEG to file: ' filename]
+  [have [get this new_movie] save filename]
+  [terminal_format standard-terminal '\nIsisMon Save Movie: Completed saving MPEG to file: ' filename]]
+
+
+[defmetro isismon [:rest args]
+  [let [[isis_worlds                  nil]
+	[print_usage_message_and_exit nil]]
+    [if args
+	[let [[iter args]]
+	  [while iter
+	    [let [[arg [first iter]]]
+	      [cond [[or [eq arg `-h]
+			 [eq arg `help]] [prog [= print_usage_message_and_exit t]]]
+		    [t                   [prog [terminal_format standard-terminal '\nisismon: compiling isis_world command line argument, ' arg '.']
+					       [= isis_worlds [cons arg isis_worlds]]]]]]
+	    [= iter [next iter]]]]]
+    [if [not print_usage_message_and_exit]
+	[cond [[> [simple_length isis_worlds] 1]
+	       [prog [terminal_format standard-terminal 'isismon fatal: isismon can only monitor exactly one isis_world at a time, user supplied ' [simple_length isis_worlds] ': ' isis_worlds '.\n']
+		     [= print_usage_message_and_exit t]]]
+	      [[== [simple_length isis_worlds] 0]
+	       [prog [terminal_format standard-terminal 'isismon fatal: isismon can only monitor exactly one isis_world at a time, user supplied none.\n']
+		     [= print_usage_message_and_exit t]]]]]
+    [if print_usage_message_and_exit
+	[terminal_format standard-terminal 'ISISMON(1)'
+			 '\n'   'NAME'
+			 '\n'   '       isismon - monitor and control an isis_world experiment.'
+			 '\n'   ''
+			 '\n'   'SYNOPSIS'
+			 '\n'   '       isismon -h <isis_world>'
+			 '\n'   ''
+			 '\n'   'DESCRIPTION'
+			 '\n'   '       The isismon program provides dynamic real-time monitoring of a running isis_world experiment.'
+			 '\n'   '']
+      [let [[isis_world [first isis_worlds]]]
+	`[prog [new isismon ,isis_world [quote ,isis_world]]
+	       nil]]]]]
+
+

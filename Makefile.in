@@ -171,6 +171,26 @@ extension_image_sequence_libf2e_image_sequence_la_LINK = $(LIBTOOL) \
 	$(CFLAGS) \
 	$(extension_image_sequence_libf2e_image_sequence_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
+extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_LIBADD =
+am_extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_OBJECTS = extension/meta_semantic_frame_ball/extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la-meta_semantic_frame_ball.lo
+extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_OBJECTS = $(am_extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_OBJECTS)
+extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_LINK =  \
+	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_CFLAGS) \
+	$(CFLAGS) \
+	$(extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
+extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LIBADD =
+am_extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_OBJECTS = extension/meta_semantic_knowledge_base/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.lo
+extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_OBJECTS = $(am_extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_OBJECTS)
+extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LINK =  \
+	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_CFLAGS) \
+	$(CFLAGS) \
+	$(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 extension_mindmon_libf2e_mindmon_la_LIBADD =
 am_extension_mindmon_libf2e_mindmon_la_OBJECTS = extension/mindmon/extension_mindmon_libf2e_mindmon_la-mindmon.lo
 extension_mindmon_libf2e_mindmon_la_OBJECTS =  \
@@ -357,6 +377,8 @@ SOURCES = $(extension_causality_libf2e_causality_la_SOURCES) \
 	$(extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES) \
 	$(extension_image_libf2e_image_la_SOURCES) \
 	$(extension_image_sequence_libf2e_image_sequence_la_SOURCES) \
+	$(extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_SOURCES) \
+	$(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES) \
 	$(extension_mindmon_libf2e_mindmon_la_SOURCES) \
 	$(extension_movie_libf2e_movie_la_SOURCES) \
 	$(extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_SOURCES) \
@@ -369,6 +391,8 @@ DIST_SOURCES = $(extension_causality_libf2e_causality_la_SOURCES) \
 	$(extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES) \
 	$(extension_image_libf2e_image_la_SOURCES) \
 	$(extension_image_sequence_libf2e_image_sequence_la_SOURCES) \
+	$(extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_SOURCES) \
+	$(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES) \
 	$(extension_mindmon_libf2e_mindmon_la_SOURCES) \
 	$(extension_movie_libf2e_movie_la_SOURCES) \
 	$(extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_SOURCES) \
@@ -651,7 +675,9 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/frame_ball/libf2e_frame_ball.la \
                   extension/graph_isomorphism/libf2e_graph_isomorphism.la \
                   extension/semantic_frame_ball/libf2e_semantic_frame_ball.la \
+                  extension/meta_semantic_frame_ball/libf2e_meta_semantic_frame_ball.la \
                   extension/semantic_knowledge_base/libf2e_semantic_knowledge_base.la \
+                  extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la \
                   extension/mindmon/libf2e_mindmon.la \
                   extension/causality/libf2e_causality.la
 
@@ -792,7 +818,9 @@ extension_forward_planner_libf2e_forward_planner_la_SOURCES = extension/forward_
 extension_frame_ball_libf2e_frame_ball_la_SOURCES = extension/frame_ball/frame_ball.c
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES = extension/graph_isomorphism/graph_isomorphism.c
 extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_SOURCES = extension/semantic_frame_ball/semantic_frame_ball.c
+extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_SOURCES = extension/meta_semantic_frame_ball/meta_semantic_frame_ball.c
 extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES = extension/semantic_knowledge_base/semantic_knowledge_base.c
+extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
 extension_mindmon_libf2e_mindmon_la_SOURCES = extension/mindmon/mindmon.c
 extension_causality_libf2e_causality_la_SOURCES = extension/causality/causality.c
 
@@ -832,8 +860,12 @@ extension_graph_isomorphism_libf2e_graph_isomorphism_la_LDFLAGS = $(lib_libfunk2
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_mindmon_libf2e_mindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_mindmon_libf2e_mindmon_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_causality_libf2e_causality_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
@@ -1005,6 +1037,28 @@ extension/image_sequence/extension_image_sequence_libf2e_image_sequence_la-image
 	extension/image_sequence/$(DEPDIR)/$(am__dirstamp)
 extension/image_sequence/libf2e_image_sequence.la: $(extension_image_sequence_libf2e_image_sequence_la_OBJECTS) $(extension_image_sequence_libf2e_image_sequence_la_DEPENDENCIES) extension/image_sequence/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_image_sequence_libf2e_image_sequence_la_LINK) -rpath $(libdir) $(extension_image_sequence_libf2e_image_sequence_la_OBJECTS) $(extension_image_sequence_libf2e_image_sequence_la_LIBADD) $(LIBS)
+extension/meta_semantic_frame_ball/$(am__dirstamp):
+	@$(MKDIR_P) extension/meta_semantic_frame_ball
+	@: > extension/meta_semantic_frame_ball/$(am__dirstamp)
+extension/meta_semantic_frame_ball/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/meta_semantic_frame_ball/$(DEPDIR)
+	@: > extension/meta_semantic_frame_ball/$(DEPDIR)/$(am__dirstamp)
+extension/meta_semantic_frame_ball/extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la-meta_semantic_frame_ball.lo:  \
+	extension/meta_semantic_frame_ball/$(am__dirstamp) \
+	extension/meta_semantic_frame_ball/$(DEPDIR)/$(am__dirstamp)
+extension/meta_semantic_frame_ball/libf2e_meta_semantic_frame_ball.la: $(extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_OBJECTS) $(extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_DEPENDENCIES) extension/meta_semantic_frame_ball/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_LINK) -rpath $(libdir) $(extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_OBJECTS) $(extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_LIBADD) $(LIBS)
+extension/meta_semantic_knowledge_base/$(am__dirstamp):
+	@$(MKDIR_P) extension/meta_semantic_knowledge_base
+	@: > extension/meta_semantic_knowledge_base/$(am__dirstamp)
+extension/meta_semantic_knowledge_base/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/meta_semantic_knowledge_base/$(DEPDIR)
+	@: > extension/meta_semantic_knowledge_base/$(DEPDIR)/$(am__dirstamp)
+extension/meta_semantic_knowledge_base/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.lo:  \
+	extension/meta_semantic_knowledge_base/$(am__dirstamp) \
+	extension/meta_semantic_knowledge_base/$(DEPDIR)/$(am__dirstamp)
+extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la: $(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_OBJECTS) $(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_DEPENDENCIES) extension/meta_semantic_knowledge_base/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LINK) -rpath $(libdir) $(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_OBJECTS) $(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LIBADD) $(LIBS)
 extension/mindmon/$(am__dirstamp):
 	@$(MKDIR_P) extension/mindmon
 	@: > extension/mindmon/$(am__dirstamp)
@@ -1577,6 +1631,10 @@ mostlyclean-compile:
 	-rm -f extension/image/extension_image_libf2e_image_la-image.lo
 	-rm -f extension/image_sequence/extension_image_sequence_libf2e_image_sequence_la-image_sequence.$(OBJEXT)
 	-rm -f extension/image_sequence/extension_image_sequence_libf2e_image_sequence_la-image_sequence.lo
+	-rm -f extension/meta_semantic_frame_ball/extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la-meta_semantic_frame_ball.$(OBJEXT)
+	-rm -f extension/meta_semantic_frame_ball/extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la-meta_semantic_frame_ball.lo
+	-rm -f extension/meta_semantic_knowledge_base/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.$(OBJEXT)
+	-rm -f extension/meta_semantic_knowledge_base/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.lo
 	-rm -f extension/mindmon/extension_mindmon_libf2e_mindmon_la-mindmon.$(OBJEXT)
 	-rm -f extension/mindmon/extension_mindmon_libf2e_mindmon_la-mindmon.lo
 	-rm -f extension/movie/extension_movie_libf2e_movie_la-movie.$(OBJEXT)
@@ -1721,6 +1779,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@extension/graph_isomorphism/$(DEPDIR)/extension_graph_isomorphism_libf2e_graph_isomorphism_la-graph_isomorphism.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/image/$(DEPDIR)/extension_image_libf2e_image_la-image.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/image_sequence/$(DEPDIR)/extension_image_sequence_libf2e_image_sequence_la-image_sequence.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/meta_semantic_frame_ball/$(DEPDIR)/extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la-meta_semantic_frame_ball.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/meta_semantic_knowledge_base/$(DEPDIR)/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/mindmon/$(DEPDIR)/extension_mindmon_libf2e_mindmon_la-mindmon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/movie/$(DEPDIR)/extension_movie_libf2e_movie_la-movie.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_frame_ball/$(DEPDIR)/extension_semantic_frame_ball_libf2e_semantic_frame_ball_la-semantic_frame_ball.Plo@am__quote@
@@ -1808,6 +1868,22 @@ extension/image_sequence/extension_image_sequence_libf2e_image_sequence_la-image
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/image_sequence/image_sequence.c' object='extension/image_sequence/extension_image_sequence_libf2e_image_sequence_la-image_sequence.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_image_sequence_libf2e_image_sequence_la_CFLAGS) $(CFLAGS) -c -o extension/image_sequence/extension_image_sequence_libf2e_image_sequence_la-image_sequence.lo `test -f 'extension/image_sequence/image_sequence.c' || echo '$(srcdir)/'`extension/image_sequence/image_sequence.c
+
+extension/meta_semantic_frame_ball/extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la-meta_semantic_frame_ball.lo: extension/meta_semantic_frame_ball/meta_semantic_frame_ball.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_CFLAGS) $(CFLAGS) -MT extension/meta_semantic_frame_ball/extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la-meta_semantic_frame_ball.lo -MD -MP -MF extension/meta_semantic_frame_ball/$(DEPDIR)/extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la-meta_semantic_frame_ball.Tpo -c -o extension/meta_semantic_frame_ball/extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la-meta_semantic_frame_ball.lo `test -f 'extension/meta_semantic_frame_ball/meta_semantic_frame_ball.c' || echo '$(srcdir)/'`extension/meta_semantic_frame_ball/meta_semantic_frame_ball.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/meta_semantic_frame_ball/$(DEPDIR)/extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la-meta_semantic_frame_ball.Tpo extension/meta_semantic_frame_ball/$(DEPDIR)/extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la-meta_semantic_frame_ball.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/meta_semantic_frame_ball/meta_semantic_frame_ball.c' object='extension/meta_semantic_frame_ball/extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la-meta_semantic_frame_ball.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_CFLAGS) $(CFLAGS) -c -o extension/meta_semantic_frame_ball/extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la-meta_semantic_frame_ball.lo `test -f 'extension/meta_semantic_frame_ball/meta_semantic_frame_ball.c' || echo '$(srcdir)/'`extension/meta_semantic_frame_ball/meta_semantic_frame_ball.c
+
+extension/meta_semantic_knowledge_base/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.lo: extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_CFLAGS) $(CFLAGS) -MT extension/meta_semantic_knowledge_base/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.lo -MD -MP -MF extension/meta_semantic_knowledge_base/$(DEPDIR)/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.Tpo -c -o extension/meta_semantic_knowledge_base/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.lo `test -f 'extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c' || echo '$(srcdir)/'`extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/meta_semantic_knowledge_base/$(DEPDIR)/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.Tpo extension/meta_semantic_knowledge_base/$(DEPDIR)/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c' object='extension/meta_semantic_knowledge_base/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_CFLAGS) $(CFLAGS) -c -o extension/meta_semantic_knowledge_base/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.lo `test -f 'extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c' || echo '$(srcdir)/'`extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
 
 extension/mindmon/extension_mindmon_libf2e_mindmon_la-mindmon.lo: extension/mindmon/mindmon.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_mindmon_libf2e_mindmon_la_CFLAGS) $(CFLAGS) -MT extension/mindmon/extension_mindmon_libf2e_mindmon_la-mindmon.lo -MD -MP -MF extension/mindmon/$(DEPDIR)/extension_mindmon_libf2e_mindmon_la-mindmon.Tpo -c -o extension/mindmon/extension_mindmon_libf2e_mindmon_la-mindmon.lo `test -f 'extension/mindmon/mindmon.c' || echo '$(srcdir)/'`extension/mindmon/mindmon.c
@@ -2854,6 +2930,8 @@ clean-libtool:
 	-rm -rf extension/graph_isomorphism/.libs extension/graph_isomorphism/_libs
 	-rm -rf extension/image/.libs extension/image/_libs
 	-rm -rf extension/image_sequence/.libs extension/image_sequence/_libs
+	-rm -rf extension/meta_semantic_frame_ball/.libs extension/meta_semantic_frame_ball/_libs
+	-rm -rf extension/meta_semantic_knowledge_base/.libs extension/meta_semantic_knowledge_base/_libs
 	-rm -rf extension/mindmon/.libs extension/mindmon/_libs
 	-rm -rf extension/movie/.libs extension/movie/_libs
 	-rm -rf extension/semantic_frame_ball/.libs extension/semantic_frame_ball/_libs
@@ -3104,6 +3182,10 @@ distclean-generic:
 	-rm -f extension/image/$(am__dirstamp)
 	-rm -f extension/image_sequence/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/image_sequence/$(am__dirstamp)
+	-rm -f extension/meta_semantic_frame_ball/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/meta_semantic_frame_ball/$(am__dirstamp)
+	-rm -f extension/meta_semantic_knowledge_base/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/meta_semantic_knowledge_base/$(am__dirstamp)
 	-rm -f extension/mindmon/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/mindmon/$(am__dirstamp)
 	-rm -f extension/movie/$(DEPDIR)/$(am__dirstamp)
@@ -3122,7 +3204,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -3170,7 +3252,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

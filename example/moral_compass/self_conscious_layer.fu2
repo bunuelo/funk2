@@ -20,10 +20,9 @@
 
 'self_conscious_layer'
 
-[deframe self_conscious_layer [mental_layer] [imprimer_agency]
+[deframe self_conscious_layer [mental_layer] [[self_conscious_knowledge [new meta_semantic_knowledge_base nil]]]
   [new []
        [construct mental_layer 5 `self_conscious]
-       [set this imprimer_agency [new self_conscious_imprimer_agency]]
-       [have this add_agency [get this imprimer_agency]]
+       [have this add_agency [new self_conscious_imprimer_agency]]
        this]]
 

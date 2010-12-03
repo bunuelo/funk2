@@ -106,15 +106,10 @@
 
 [defpackage deliberative_layer
   :packages [mind
-	     deliberative_reality_agency
 	     deliberative_imagination_agency
 	     deliberative_execution_agency
 	     english_language]
    :sources ['deliberative_layer.fu2']]
-
-[defpackage deliberative_reality_agency
-  :packages [mind]
-   :sources ['deliberative_reality_agency.fu2']]
 
 [defpackage deliberative_imagination_agency
   :packages [mind]

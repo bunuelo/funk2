@@ -20,7 +20,7 @@
 
 'builtin_reactive_layer'
 
-[deframe builtin_reactive_layer [mental_layer] []
+[deframe builtin_reactive_layer [mental_layer] [[builtin_reactive_knowledge [new semantic_knowledge_base]]]
   [new []
        [construct mental_layer 0 `builtin_reactive]
        [have this add_agency [new builtin_reactive_neural_plug_agency]]
@@ -33,4 +33,7 @@
 
 [deftypefunk builtin_reactive_layer get visual_objects []
   [get [get this agency `sensory] visual_objects]]
+
+[deftypefunk builtin_reactive_layer get visual_knowledge []
+  [get [get this agency `sensory] visual_knowledge]]
 

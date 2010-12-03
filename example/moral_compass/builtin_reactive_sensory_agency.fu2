@@ -45,11 +45,74 @@
        nil]]
 
 
+[defunk visual_semantic_knowledge-new_from_visual_objects [visual_objects semantic_realm]
+  [let [[semantic_knowledge_base [new semantic_knowledge_base]]]
+    [let [[semantic_object_frame [frame]]]
+      [mapc [funk [object]
+		  [let [[visual_object_semantic_frame [new visual_object_semantic_frame semantic_realm]]
+			[phenomenal_name              [get object phenomenal_name]]]
+		    [have visual_object_semantic_frame add_visual_object_name phenomenal_name]
+		    [have semantic_knowledge_base add_semantic_frame visual_object_semantic_frame]
+		    [have semantic_object_frame add phenomenal_name visual_object_semantic_frame]]]
+	    visual_objects]
+      [let [[object_iter_one visual_objects]]
+	[while object_iter_one
+	  [let [[object_one      [car object_iter_one]]
+		[object_iter_two [cdr object_iter_one]]]
+	    [let [[semantic_object_one [have semantic_object_frame lookup [get object_one phenomenal_name]]]]
+	      [while object_iter_two
+		[let [[object_two [car object_iter_two]]]
+		  [let [[semantic_object_two [have semantic_object_frame lookup [get object_two phenomenal_name]]]]
+		    'pairwise pattern recognitions between objects'
+		    
+		    [cond [[> [get object_one retina_position_vertical]
+			      [get object_two retina_position_vertical]]
+			   [have semantic_object_one add_preposition `visually_above semantic_object_two]]
+			  [[< [get object_one retina_position_vertical]
+			      [get object_two retina_position_vertical]]
+			   [have semantic_object_two add_preposition `visually_above semantic_object_one]]]
+		    
+		    '...more tests for object x object patterns...'
+		    
+		    ]]
+		[= object_iter_two [cdr object_iter_two]]]]]
+	  [= object_iter_one [cdr object_iter_one]]]]
+      [mapc [funk [visual_object]
+		  [let [[semantic_object [have semantic_object_frame lookup [get visual_object phenomenal_name]]]]
+		    [let [[preposition_frame [get visual_object preposition_frame]]]
+		      [mapc [funk [preposition]
+				  [let [[prepositional_object_names [have preposition_frame lookup preposition]]]
+				    [mapc [funk [prepositional_object_name]
+						[let [[prepositional_semantic_object [have semantic_object_frame lookup prepositional_object_name]]]
+						  [if [null prepositional_semantic_object]
+						      [terminal_format standard-terminal '\nvisual_semantic_knowledge-new_from_visual_objects warning: don\'t know of prepositional object, ' prepositional_object_name '.']
+						    [have semantic_object add_preposition preposition prepositional_semantic_object]]]]
+					  prepositional_object_names]]]
+			    [get preposition_frame keys]]]]]
+	    visual_objects]]
+    semantic_knowledge_base]]
+
+
+
+
+
+
+[deframe propogate_visual_objects_to_visual_knowledge_resource [resource] [visual_knowledge]
+  [new []
+       [construct resource `propogate_visual_objects_to_visual_knowledge
+		  [funk []
+			[let [[visual_objects [get [get this mind] visual_objects]]]
+			  [let [[new_visual_knowledge [visual_semantic_knowledge-new_from_visual_objects visual_objects [get [get this mind] semantic_realm]]]]
+			    [= visual_knowledge new_visual_knowledge]]]]]
+       nil]]
+
+
 [deframe builtin_reactive_sensory_agency [agency] []
   [new []
        [construct agency `sensory]
        
        [have this add_resource [new continuous_sensing_resource]]
+       [have this add_resource [new propogate_visual_objects_to_visual_knowledge_resource]]
        
        this]]
 
@@ -64,4 +127,7 @@
 
 [deftypefunk builtin_reactive_sensory_agency get left_hand_object_name  []
   [get [get this resource `continuous_sensing] left_hand_object_name]]
+
+[deftypefunk builtin_reactive_sensory_agency get visual_knowledge []
+  [get [get this resource `propogate_visual_objects_to_visual_knowledge] visual_knowledge]]
 

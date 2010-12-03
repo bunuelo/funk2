@@ -20,10 +20,9 @@
 
 'reflective_layer'
 
-[deframe reflective_layer [mental_layer] [credit_assignment_agency]
+[deframe reflective_layer [mental_layer] [[reflective_knowledge [new meta_semantic_knowledge_base nil]]]
   [new []
        [construct mental_layer 3 `reflective]
-       [set this credit_assignment_agency [new reflective_credit_assignment_agency]]
-       [have this add_agency [get this credit_assignment_agency]]
+       [have this add_agency [new reflective_credit_assignment_agency]]
        this]]
 

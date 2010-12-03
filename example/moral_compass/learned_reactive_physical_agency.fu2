@@ -58,8 +58,9 @@ use object
 does empty right hand need argument target??!?!?!?!?!?!?!? fghjkl
 
 [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
-	command `learned_reactive `physical `empty_right_hand]
+	command `builtin_reactive `physical `drop_from_right_hand]
 dont think drop from right hand works
+[isis-call [get isis_world client] drop_from_right_hand agent `Ralph]
 '
 
 
@@ -77,7 +78,7 @@ dont think drop from right hand works
 
 [defunk get_neck_pitch [mind]
   [if [get mind perception]
-      [get [get mind perception] right_hand_object_name]]]
+      [have [have [have [get [get mind perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `pitch]]]
 							   
 
 
@@ -212,21 +213,22 @@ dont think drop from right hand works
 			    [mind-wait_to_activate mind builtin_reactive physical look_up_stop]]]]]
        nil]]
 
-`[deframe level_head_resource [resource] []
+[deframe level_pitch_resource [resource] []
   [new []
-       [construct resource `level_head
+       [construct resource `level_pitch
 		  [funk [steps]
 			[let* [[body  [get this body]]
 			       [mind  [get body mind]]
 			       [name  [get body name]]]
-			  [have this-resource think_to_self 'Leveling head is starting.']
-			  [while [
-			  [mind-wait_to_activate mind builtin_reactive physical look_up_start]
-			  [let [[starting_time [get body time_step]]]
-			    [while [< [- [get body time_step] starting_time] steps] 
-			      [millisleep 100]]
-			    [mind-wait_to_activate mind builtin_reactive physical look_up_stop]]]]]
-       nil]]]]
+			  [= slightly_looking_up 'somevalue']
+			  [= slightly_looking_down 'somevalue']
+
+			  [have this-resource think_to_self 'Leveling pitch is starting.']
+			  [while [ > [[get_neck_pitch mind] - level_neck_pitch] slightly_looking_up]
+			    [mind-wait_to_activate mind learned_reactive physical look_down 1]]
+			  [while [ < [[get_neck_pitch mind] - level_neck_pitch] slightly_looking_down]
+			    [mind-wait_to_activate mind learned_reactive physical look_up 1]]
+			  [have this-resource think_to_self 'I am looking forward']]]]]]
 
 
 [deframe move_forward_resource [resource] []
@@ -558,17 +560,19 @@ dont think drop from right hand works
   [new []
        [construct resource `look_for_vertically
 		  [funk [desired_object_type]
-			[print 'look for']
+			[print 'look for_vertically']
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]
 			       [name  [get body name]]
 			       
 			       ]
-			  [let [[patience 10]]
-			    [have this-resource think_to_self 'look_for_vertically activated']
+			  [let [[patience 15]]
+			    [have this-resource think_to_self 'look_for activated']
 			    [while 
 				[> patience 0]
 			      [have this-resource think_to_self 'I still have patience']
+			      [print 'here']
+
 			      [if [null [get_visual_objects mind]]
 				  [prog 
 				   [have this-resource think_to_self  'no objects in view']
@@ -584,8 +588,66 @@ dont think drop from right hand works
 					[= my_current_object [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type] ]
 					[have this-resource think_to_self 'found'my_current_object ]
 					]]]]
+			    
+			    [have this-resource think_to_self 'finished searching']]]]]
+       nil]]
+
+`[deframe look_for_vertically_resource [resource] [[my_current_object nil]]
+  [new []
+       [construct resource `look_for_vertically
+		  [funk [desired_object_type]
+			[print 'look for']
+			[let* [[body [get this body]]
+			       [mind  [get body mind]]
+			       [name  [get body name]]
+			       [looking_at_floor 'somenumber']
+			       [looking_at_sky 'somenumber']
+			       [already_searched_down nil]
+			       ]
+			  [let [[patience 10]]
+			    [have this-resource think_to_self 'look_for_vertically activated']
+			    [while [> patience 0]
+			      [if
+				  [null already_searched_down]
+				  [prog [while [> [get_neck_pitch mind] looking_at_floor]
+					  
+					  [have this-resource think_to_self 'I still have patience, and im searching downward']
+					  [if [null [get_visual_objects mind]]
+					      [prog 
+					       [have this-resource think_to_self  'no objects in view']
+					       [mind-wait_to_activate mind learned_reactive physical look_down 1]
+					       ]
+					    [if [null [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type]]
+						[prog [have this-resource think_to_self 'i see these objects:' [get_visual_objects mind]]
+						      [mind-wait_to_activate mind learned_reactive physical look_down 1]
+						      [print 'activated look_down']
+						      [= patience [- patience 1]]
+						      ]
+					      [prog [= patience 0]
+						    [= my_current_object [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type] ]
+						    [have this-resource think_to_self 'found'my_current_object ]
+						    ]]]]]
+				[prog [while [< [get_neck_pitch mind] looking_at_ceiling]	 
+					[have this-resource think_to_self 'I still have patience, and im searching downward']
+					[if [null [get_visual_objects mind]]
+					    [prog 
+					     [have this-resource think_to_self  'no objects in view']
+					     [mind-wait_to_activate mind learned_reactive physical look_up 1]
+					     ]
+					  [if [null [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type]]
+					      [prog [have this-resource think_to_self 'i see these objects:' [get_visual_objects mind]]
+						    [mind-wait_to_activate mind learned_reactive physical look_up 1]
+						    [print 'activated look_up']
+						    [= patience [- patience 1]]
+						    ]
+					    [prog [= patience 0]
+						  [= my_current_object [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type] ]
+						  [have this-resource think_to_self 'found'my_current_object ]
+						  ]]]]]]]
 			    [have this-resource think_to_self 'finished searching vertically']]]]]
        nil]]
+
+
 
 '[while [neck position not the lowest]
    [look down]]
@@ -693,7 +755,7 @@ dont think drop from right hand works
        [have this add_resource [new avoid_obstacle_resource]]
        [have this add_resource [new look_for_resource]]
        [have this add_resource [new look_for_vertically_resource]]
-       
+       [have this add_resource [new level_pitch_resource]]
        this]]
 
 [defmetro JJ-init []

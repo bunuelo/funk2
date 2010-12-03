@@ -972,7 +972,8 @@ f2ptr f2__semantic_frame__know_of_addition_to_semantic_knowledge_base(f2ptr caus
       (! raw__semantic_knowledge_base__is_type(cause, this))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_frame__know_of_addition_to_semantic_knowledge_base(cause, this, semantic_knowledge_base);
+  raw__semantic_frame__know_of_addition_to_semantic_knowledge_base(cause, this, semantic_knowledge_base);
+  return nil;
 }
 export_cefunk2(semantic_frame__know_of_addition_to_semantic_knowledge_base, this, semantic_knowledge_base, 0, "Adds the given semantic_knowledge_base to this semantic_frame's semantic_knowledge_base_set.");
 

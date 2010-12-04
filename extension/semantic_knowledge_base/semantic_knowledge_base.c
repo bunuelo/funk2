@@ -26,7 +26,7 @@
 // semantic_realm
 
 f2ptr raw__semantic_realm__new(f2ptr cause) {
-  return f2__frame__new(cause, f2list4__new(cause,
+  return f2__frame__new(cause, f2list6__new(cause,
 					    new__symbol(cause, "type"),                   new__symbol(cause, "semantic_realm"),
 					    new__symbol(cause, "semantic_hash"),          f2__hash(cause),
 					    new__symbol(cause, "meta_relationship_hash"), f2__hash(cause)));;

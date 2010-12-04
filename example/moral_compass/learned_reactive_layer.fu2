@@ -43,11 +43,13 @@
   [let [[builtin_reactive_knowledge [get [get this mind] builtin_reactive_knowledge]]]
     [have builtin_reactive_knowledge add_trace_callback_funk `add_semantic_frame_value
 	  [funk [semantic_knowledge_base semantic_frame key_type key value]
+		[print 'add callback!']
 		[if [eq semantic_knowledge_base builtin_reactive_knowledge]
-		    [have this reflective_know_of_addition_of_semantic_frame_value semantic_frame key_type key value]]]]
+		    [have this reflectively_know_of_addition_of_semantic_frame_value semantic_frame key_type key value]]]]
     [have builtin_reactive_knowledge add_trace_callback_funk `remove_semantic_frame_value
 	  [funk [semantic_knowledge_base semantic_frame key_type key value]
-		[if [eq semantic_knowledge_base builtin_reactive_knowledge]
+		[print 'remove callback!']
+		[if [eq semantic_knowledgely_base builtin_reactive_knowledge]
 		    [have this reflectively_know_of_removal_of_semantic_frame_value semantic_frame key_type key value]]]]
     ]]
 

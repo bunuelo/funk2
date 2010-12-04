@@ -1764,6 +1764,14 @@ f2ptr raw__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, 
       }
     }
   }
+  {
+    semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
+			      f2ptr result = raw__semantic_knowledge_base__know_of_semantic_frame_value_addition(cause, this, semantic_frame, key_type, key, value);
+			      if (raw__larva__is_type(cause, result)) {
+				return result;
+			      }
+			      );
+  }
   return nil;
 }
 

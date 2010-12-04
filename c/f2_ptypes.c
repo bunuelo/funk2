@@ -4571,14 +4571,14 @@ f2ptr raw__traced_array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f
   return raw__array__equals_hash_value__loop_free(cause, this, node_hash);
 }
 
-f2ptr f2__traced_array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
-  if ((! raw__traced_array__is_type(cause, 1, nil)) ||
-      (! raw__ptypehash__is_type(cause, node_hash))) {
+f2ptr f2__traced_array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
+  if ((! raw__traced_array__is_type(cause, this)) ||
+      (! raw__ptypehash__is_type(cause, node_ptypehash))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__traced_array__equals_hash_value__loop_free(cause, this, node_hash);
+  return raw__traced_array__equals_hash_value__loop_free(cause, this, node_ptypehash);
 }
-def_pcfunk2(traced_array__equals_hash_value__loop_free, this, node_hash, return f2__traced_array__equals_hash_value__loop_free(this_cause, this, node_hash));
+def_pcfunk2(traced_array__equals_hash_value__loop_free, this, node_ptypehash, return f2__traced_array__equals_hash_value__loop_free(this_cause, this, node_ptypehash));
 
 
 f2ptr f2__traced_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

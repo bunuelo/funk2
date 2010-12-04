@@ -200,10 +200,10 @@ export_cefunk1(semantic_realm__key_count, this, 0, "Returns the count of how man
 
 f2ptr raw__semantic_realm__lookup_or_create_meta_relationship(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
   f2ptr relationship_equals_key = raw__array__new(cause, 4);
-  raw__array__elt__set(cause, relationship_key, 0, semantic_frame);
-  raw__array__elt__set(cause, relationship_key, 1, key_type);
-  raw__array__elt__set(cause, relationship_key, 2, key);
-  raw__array__elt__set(cause, relationship_key, 3, value);
+  raw__array__elt__set(cause, relationship_equals_key, 0, semantic_frame);
+  raw__array__elt__set(cause, relationship_equals_key, 1, key_type);
+  raw__array__elt__set(cause, relationship_equals_key, 2, key);
+  raw__array__elt__set(cause, relationship_equals_key, 3, value);
   f2ptr meta_relationship_hash          = raw__semantic_realm__meta_relationship_hash(cause, this);
   f2ptr previously_created_relationship = f2__hash__lookup(cause, meta_relationship_hash, relationship_equals_key);
   if (previously_created_relationship != nil) {

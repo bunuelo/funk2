@@ -103,7 +103,9 @@
 		  [funk []
 			[let [[visual_objects [get [get this mind] visual_objects]]]
 			  [let [[new_visual_knowledge [visual_semantic_knowledge-new_from_visual_objects visual_objects [get [get this mind] semantic_realm]]]]
-			    [= visual_knowledge new_visual_knowledge]]]]]
+			    [= visual_knowledge new_visual_knowledge]
+			    [have [get [get this mind] builtin_reactive_knowledge] add_semantic_knowledge_base visual_knowledge]
+			    ]]]]
        nil]]
 
 

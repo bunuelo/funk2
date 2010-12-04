@@ -4555,7 +4555,7 @@ def_pcfunk2(traced_array__equals, this, that, return f2__traced_array__equals(th
 
 
 f2ptr raw__traced_array__equals_hash_value(f2ptr cause, f2ptr this) {
-  return raw__array__equals_hash_value(cause, this)
+  return raw__array__equals_hash_value(cause, this);
 }
 
 f2ptr f2__traced_array__equals_hash_value(f2ptr cause, f2ptr this) {

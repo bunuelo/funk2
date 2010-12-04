@@ -26,8 +26,8 @@
        [have this add_layer [new reflective_layer]]
        [have this add_layer [new self_reflective_layer]]
        [have this add_layer [new self_conscious_layer]]
-       [have this [get this layer `builtin_reactive] setup_knowledge]
-       [have this [get this layer `learned_reactive] setup_knowledge]
+       [have [get this layer `builtin_reactive] setup_knowledge]
+       [have [get this layer `learned_reactive] setup_knowledge]
        this]]
 
 'pre-knowledge perception functions'

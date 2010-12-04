@@ -2494,6 +2494,9 @@ def_pcfunk1(string__equals_hash_value, this, return f2__string__equals_hash_valu
 
 
 boolean_t raw__string__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__string__is_type(cause, that)) {
+    return boolean__false;
+  }
   u64 this_len = f2string__length(this, cause);
   u64 that_len = f2string__length(that, cause);
   if (this_len != that_len) {

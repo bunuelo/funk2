@@ -4795,7 +4795,7 @@ def_pcfunk2(larva__equals, this, that, return f2__larva__equals(this_cause, this
 
 
 u64 raw__larva__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
-  return raw__larva__eq_hash_value(cause, this, node_ptypehash);
+  return raw__larva__eq_hash_value(cause, this);
 }
 
 f2ptr f2__larva__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {

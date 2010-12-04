@@ -3905,8 +3905,8 @@ f2ptr  f2__simple_array__eq_hash_value(f2ptr cause, f2ptr this) {return f2intege
 def_pcfunk1(simple_array__eq_hash_value, this, return f2__simple_array__eq_hash_value(this_cause, this));
 
 
-boolean_t raw__simple_array__equals(f2ptr cause, f2ptr this) {
-  return raw__array__equals(cause, this);
+boolean_t raw__simple_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__array__equals(cause, this, that);
 }
 
 f2ptr f2__simple_array__equals(f2ptr cause, f2ptr this, f2ptr that) {

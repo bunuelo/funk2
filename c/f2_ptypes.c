@@ -2004,7 +2004,7 @@ def_pcfunk2(mutex__equals, this, that, return f2__mutex__equals(this_cause, this
 
 u64 raw__mutex__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
   funk2_processor_mutex_t* m = __pure__f2mutex__m(this);
-  return funk2_processor_mutex__equals_hash_value__loop_free(m);
+  return funk2_processor_mutex__equals_hash_value(m);
 }
 
 f2ptr f2__mutex__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {

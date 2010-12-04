@@ -25,26 +25,32 @@
 
 // semantic_realm
 
-f2ptr     raw__semantic_realm__new                      (f2ptr cause);
-f2ptr      f2__semantic_realm__new                      (f2ptr cause);
-boolean_t raw__semantic_realm__is_type                  (f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_realm__is_type                  (f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_realm__type                     (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_realm__type                     (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_realm__semantic_hash            (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_realm__semantic_hash            (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_realm__semantic_hash__set       (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__semantic_realm__semantic_hash__set       (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__semantic_realm__lookup_object_key        (f2ptr cause, f2ptr this, f2ptr object);
-f2ptr      f2__semantic_realm__lookup_object_key        (f2ptr cause, f2ptr this, f2ptr object);
-f2ptr     raw__semantic_realm__add_object_key           (f2ptr cause, f2ptr this, f2ptr object);
-f2ptr      f2__semantic_realm__add_object_key           (f2ptr cause, f2ptr this, f2ptr object);
-f2ptr     raw__semantic_realm__object_key               (f2ptr cause, f2ptr this, f2ptr object);
-f2ptr      f2__semantic_realm__object_key               (f2ptr cause, f2ptr this, f2ptr object);
-f2ptr     raw__semantic_realm__key_count                (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_realm__key_count                (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_realm__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
-f2ptr      f2__semantic_realm__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr     raw__semantic_realm__new                               (f2ptr cause);
+f2ptr      f2__semantic_realm__new                               (f2ptr cause);
+boolean_t raw__semantic_realm__is_type                           (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_realm__is_type                           (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_realm__type                              (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_realm__type                              (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_realm__semantic_hash                     (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_realm__semantic_hash                     (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_realm__semantic_hash__set                (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__semantic_realm__semantic_hash__set                (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__semantic_realm__meta_relationship_hash            (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_realm__meta_relationship_hash            (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_realm__meta_relationship_hash__set       (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__semantic_realm__meta_relationship_hash__set       (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__semantic_realm__lookup_object_key                 (f2ptr cause, f2ptr this, f2ptr object);
+f2ptr      f2__semantic_realm__lookup_object_key                 (f2ptr cause, f2ptr this, f2ptr object);
+f2ptr     raw__semantic_realm__add_object_key                    (f2ptr cause, f2ptr this, f2ptr object);
+f2ptr      f2__semantic_realm__add_object_key                    (f2ptr cause, f2ptr this, f2ptr object);
+f2ptr     raw__semantic_realm__object_key                        (f2ptr cause, f2ptr this, f2ptr object);
+f2ptr      f2__semantic_realm__object_key                        (f2ptr cause, f2ptr this, f2ptr object);
+f2ptr     raw__semantic_realm__key_count                         (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_realm__key_count                         (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_realm__lookup_or_create_meta_relationship(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value);
+f2ptr      f2__semantic_realm__lookup_or_create_meta_relationship(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value);
+f2ptr     raw__semantic_realm__terminal_print_with_frame         (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__semantic_realm__terminal_print_with_frame         (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 
 f2ptr f2__semantic_realm_type__new(f2ptr cause);
 

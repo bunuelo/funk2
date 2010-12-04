@@ -30,13 +30,13 @@
 
 [deftypefunk learned_reactive_layer execute reflectively_know_of_addition_of_semantic_frame_value [semantic_frame key_type key value]
   [let [[relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship semantic_frame key_type key value]]]
-    [have meta_semantic_knowledge_base add_semantic_frame relationship]
-    [have relationship add `instant_event `added_at_time [time]]]]
+    [have relationship add `instant_event `added_at_time [time]]
+    [have learned_reactive_knowledge add_semantic_frame relationship]]]
 
 [deftypefunk learned_reactive_layer execute reflectively_know_of_removal_of_semantic_frame_value [semantic_frame key_type key value]
   [let [[relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship semantic_frame key_type key value]]]
-    [have meta_semantic_knowledge_base add_semantic_frame added_relationship]
-    [have relationship add `instant_event `removed_at_time [time]]]]
+    [have relationship add `instant_event `removed_at_time [time]]
+    [have learned_reactive_knowledge add_semantic_frame added_relationship]]]
 
 [deftypefunk learned_reactive_layer execute setup_knowledge []
   'set up reflective input to this layer'

@@ -159,13 +159,13 @@
 		   neck       [new moral_compass_proprioceptual_object
 				   `neck
 				   [new moral_compass_proprioceptual_position
-					[get body_xyzhpr elt 0]
-					[get body_xyzhpr elt 1]
-					[get body_xyzhpr elt 2]]
+					[get neck_xyzhpr elt 0]
+					[get neck_xyzhpr elt 1]
+					[get neck_xyzhpr elt 2]]
 				   [new moral_compass_proprioceptual_orientation
-					[get body_xyzhpr elt 3]
-					[get body_xyzhpr elt 4]
-					[get body_xyzhpr elt 5]]]
+					[get neck_xyzhpr elt 3]
+					[get neck_xyzhpr elt 4]
+					[get neck_xyzhpr elt 5]]]
 		   ]]]]]]
 
 [deftypefunk isis_agent_body execute sense_perception []

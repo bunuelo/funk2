@@ -107,7 +107,7 @@
        
        
        [= turn_right_resource__hbox [gtk-hbox-new 2]]
-       [= turn_right_resource__button [gtk-button-new_with_label 'Turn Right - Start']]
+       [= turn_right_resource__button [gtk-button-new_with_label 'Turn Right - ']]
        [= turn_right_resource__target__label [gtk-label-new 'Step: ']]
        [= turn_right_resource__target__entry [gtk-entry-new]]
        [have turn_right_resource__hbox pack_start turn_right_resource__button nil nil 0]
@@ -120,7 +120,7 @@
        
        
        [= turn_left_resource__hbox [gtk-hbox-new 2]]
-       [= turn_left_resource__button [gtk-button-new_with_label 'Turn Left - Start']]
+       [= turn_left_resource__button [gtk-button-new_with_label 'Turn Left - ']]
        [= turn_left_resource__target__label [gtk-label-new 'Step: ']]
        [= turn_left_resource__target__entry [gtk-entry-new]]
        [have turn_left_resource__hbox pack_start turn_left_resource__button nil nil 0]
@@ -132,7 +132,7 @@
 		   [have this activate_resource `learned_reactive `physical `turn_left [have [get turn_left_resource__target__entry text]  read]]]]
        
        [= look_up_resource__hbox [gtk-hbox-new 2]]
-       [= look_up_resource__button [gtk-button-new_with_label 'Look Up - Start']]
+       [= look_up_resource__button [gtk-button-new_with_label 'Look Up - ']]
        [= look_up_resource__target__label [gtk-label-new 'Step: ']]
        [= look_up_resource__target__entry [gtk-entry-new]]
        [have look_up_resource__hbox pack_start look_up_resource__button nil nil 0]
@@ -141,10 +141,11 @@
        [have vbox pack_start look_up_resource__hbox nil nil 0]
        [have look_up_resource__button signal_connect 'clicked'
 	     [funk []
+		   [print [have [get look_up_resource__target__entry text] read]]
 		   [have this activate_resource `learned_reactive `physical `look_up [have [get look_up_resource__target__entry text] read] ]]]
        
        [= look_down_resource__hbox [gtk-hbox-new 2]]
-       [= look_down_resource__button [gtk-button-new_with_label 'Look Down - Start']]
+       [= look_down_resource__button [gtk-button-new_with_label 'Look Down - ']]
        [= look_down_resource__target__label [gtk-label-new 'Step: ']]
        [= look_down_resource__target__entry [gtk-entry-new]]
        [have look_down_resource__hbox pack_start look_down_resource__button nil nil 0]
@@ -155,9 +156,9 @@
 	     [funk []
 		   [have this activate_resource `learned_reactive `physical `look_down [have  [get look_down_resource__target__entry text] read]]]]
        
-    
+       
        [= move_forward_resource__hbox [gtk-hbox-new 2]]
-       [= move_forward_resource__button [gtk-button-new_with_label 'Move Forward - Start']]
+       [= move_forward_resource__button [gtk-button-new_with_label 'Move Forward - ']]
        [= move_forward_resource__target__label [gtk-label-new 'Step: ']]
        [= move_forward_resource__target__entry [gtk-entry-new]]
        [have move_forward_resource__hbox pack_start move_forward_resource__button nil nil 0]
@@ -169,7 +170,7 @@
 		   [have this activate_resource `learned_reactive `physical `move_forward [have [get move_forward_resource__target__entry text]read]]]]
            
        [= move_backward_resource__hbox [gtk-hbox-new 2]]
-       [= move_backward_resource__button [gtk-button-new_with_label 'Move Backward - Start']]
+       [= move_backward_resource__button [gtk-button-new_with_label 'Move Backward - ']]
        [= move_backward_resource__target__label [gtk-label-new 'Step: ']]
        [= move_backward_resource__target__entry [gtk-entry-new]]
        [have move_backward_resource__hbox pack_start move_backward_resource__button nil nil 0]
@@ -221,6 +222,8 @@
        [have vbox pack_start look_for_vertically_resource__hbox nil nil 0]
        [have look_for_vertically_resource__button signal_connect 'clicked'
 	     [funk []
+		   [print [get [get  look_for_vertically_resource__target__entry text] as-symbol]]
+		   [print [type [get [get  look_for_vertically_resource__target__entry text] as-symbol]]]
 		   [have this activate_resource `learned_reactive `physical `look_for_vertically [get [get  look_for_vertically_resource__target__entry text] as-symbol]]]]
        
        [= hold_with_right_hand_resource__hbox [gtk-hbox-new 2]]
@@ -233,6 +236,7 @@
        [have vbox pack_start hold_with_right_hand_resource__hbox nil nil 0]
        [have hold_with_right_hand_resource__button signal_connect 'clicked'
 	     [funk []
+		   [print [get [get  hold_with_right_hand_resource__target__entry text] as-symbol]]
 		   [have this activate_resource `learned_reactive `physical `hold_with_right_hand [get [get  hold_with_right_hand_resource__target__entry text] as-symbol]]]]
        
        [= hold_with_left_hand_resource__hbox [gtk-hbox-new 2]]

@@ -3376,7 +3376,7 @@ u64 raw__chunk__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node
     u64 previous_hash_value__i = f2integer__i(previous_hash_value, cause);
     return previous_hash_value__i;
   }
-  u64 hash_value__i = f2chunk__equals_hash_value__loop_free(this, cause);
+  u64 hash_value__i = f2chunk__equals_hash_value(this, cause);
   raw__ptypehash__add(cause, node_ptypehash, this, f2integer__new(cause, hash_value__i));
   return hash_value__i;
 }

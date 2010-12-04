@@ -26,7 +26,6 @@
        [have this add_agency [new learned_reactive_sensory_agency]]
        [have this add_agency [new learned_reactive_physical_agency]]
        [have this add_agency [new learned_reactive_language_agency]]
-       [have this setup_learned_reactive_knowledge]
        this]]
 
 [deftypefunk learned_reactive_layer execute reflectively_know_of_addition_of_semantic_frame_value [semantic_frame key_type key value]
@@ -39,7 +38,7 @@
     [have meta_semantic_knowledge_base add_semantic_frame added_relationship]
     [have added_relationship add `instant_event `removed_at_time [time]]]]
 
-[deftypefunk learned_reactive_layer execute setup_learned_reactive_knowledge []
+[deftypefunk learned_reactive_layer execute setup_knowledge []
   'set up reflective callbacks over this layer'
   `...
   'set up reflective input to this layer'

@@ -26,7 +26,6 @@
        [have this add_agency [new builtin_reactive_neural_plug_agency]]
        [have this add_agency [new builtin_reactive_sensory_agency]]
        [have this add_agency [new builtin_reactive_physical_agency]]
-       [have this setup_builtin_reactive_knowledge]
        this]]
 
 [deftypefunk builtin_reactive_layer execute know_of_addition_of_semantic_frame_value [semantic_frame key_type key value]
@@ -35,7 +34,7 @@
 [deftypefunk builtin_reactive_layer execute know_of_removal_of_semantic_frame_value [semantic_frame key_type key value]
   ]
 
-[deftypefunk builtin_reactive_layer execute setup_builtin_reactive_knowledge []
+[deftypefunk builtin_reactive_layer execute setup_knowledge []
   [have builtin_reactive_knowledge add_trace_callback_funk `add_semantic_frame_value
 	[funk [semantic_knowledge_base semantic_frame key_type key value]
 	      [if [eq semantic_knowledge_base builtin_reactive_knowledge]

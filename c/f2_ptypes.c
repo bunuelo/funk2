@@ -322,7 +322,7 @@ f2ptr f2__integer__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr n
       (! raw__ptypehash__is_type(cause, node_ptypehash))) {
     return f2larva__new(cause, 1, nil);
   }
-  return f2integer__new(cause, raw__integer__equals_hash_value__loop_free(cause, this));
+  return f2integer__new(cause, raw__integer__equals_hash_value__loop_free(cause, this, node_ptypehash));
 }
 def_pcfunk2(integer__equals_hash_value__loop_free, this, node_ptypehash, return f2__integer__equals_hash_value__loop_free(this_cause, this, node_ptypehash));
 

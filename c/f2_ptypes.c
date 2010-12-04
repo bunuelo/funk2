@@ -2451,7 +2451,7 @@ def_pcfunk2(string__elt, this, index, return f2__string__elt(this_cause, this, i
 
 
 u64 raw__string__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
-  f2ptr previous_equals_hash_value = raw__ptypehash__lookup(cause, node_ptypehash, this)) {
+  f2ptr previous_equals_hash_value = raw__ptypehash__lookup(cause, node_ptypehash, this);
   if (previous_equals_hash_value != nil) {
     u64 previous_equals_hash_value__i = f2integer__i(previous_equals_hash_value, cause);
     return previous_equals_hash_value__i;

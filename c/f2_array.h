@@ -64,6 +64,7 @@ boolean_t raw__array__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__array__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr     raw__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash);
 f2ptr      f2__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash);
+f2ptr     raw__array__equals_hash_value(f2ptr cause, f2ptr this);
 f2ptr      f2__array__equals_hash_value(f2ptr cause, f2ptr this);
 f2ptr     raw__array__as__conslist(f2ptr cause, f2ptr this);
 f2ptr      f2__array__as__conslist(f2ptr cause, f2ptr this);

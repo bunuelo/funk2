@@ -133,6 +133,7 @@ f2ptr f2__array(f2ptr cause, f2ptr and_rest) {
 }
 def_pcfunk0_and_rest(array, and_rest, return f2__array(this_cause, and_rest));
 
+
 u64 raw__array__length(f2ptr cause, f2ptr x) {
   if      (raw__simple_array__is_type(cause, x)) {return f2simple_array__length(x, cause);}
   else if (raw__traced_array__is_type(cause, x)) {return f2traced_array__length(x, cause);}
@@ -145,6 +146,7 @@ f2ptr f2__array__length(f2ptr cause, f2ptr x) {
 }
 def_pcfunk1(array__length, x, return f2__array__length(this_cause, x));
 
+
 boolean_t raw__array__eq(f2ptr cause, f2ptr this, f2ptr that) {
   return this == that;
 }
@@ -153,6 +155,7 @@ f2ptr f2__array__eq(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__array__eq(cause, this, that));
 }
 def_pcfunk2(array__eq, this, that, return f2__array__eq(this_cause, this, that));
+
 
 u64 raw__array__eq_hash_value(f2ptr cause, f2ptr this) {
   if      (raw__simple_array__is_type(cause, this)) {return raw__simple_array__eq_hash_value(cause, this);}
@@ -165,6 +168,7 @@ f2ptr f2__array__eq_hash_value(f2ptr cause, f2ptr this) {
   else {return f2larva__new(cause, 1, nil);}
 }
 def_pcfunk1(array__eq_hash_value, this, return f2__array__eq_hash_value(this_cause, this));
+
 
 boolean_t raw__array__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__array__is_type(cause, that)) {
@@ -193,6 +197,7 @@ f2ptr f2__array__equals(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__array__equals(cause, this, that));
 }
 def_pcfunk2(array__equals, this, that, return f2__array__equals(this_cause, this, that));
+
 
 f2ptr raw__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
   if (raw__ptypehash__contains(cause, node_hash, this)) {
@@ -237,6 +242,7 @@ f2ptr f2__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr nod
 }
 def_pcfunk2(array__equals_hash_value__loop_free, this, node_hash, return f2__array__equals_hash_value__loop_free(this_cause, this, node_hash));
 
+
 f2ptr raw__array__equals_hash_value(f2ptr cause, f2ptr this) {
   f2ptr node_hash = f2__ptypehash__new(cause);
   return raw__array__equals_hash_value__loop_free(cause, this, node_hash);
@@ -249,6 +255,7 @@ f2ptr f2__array__equals_hash_value(f2ptr cause, f2ptr this) {
   return raw__array__equals_hash_value(cause, this);
 }
 def_pcfunk1(array__equals_hash_value, this, return f2__array__equals_hash_value(this_cause, this));
+
 
 f2ptr raw__array__elt(f2ptr cause, f2ptr this, u64 index) {
   if (raw__simple_array__is_type(cause, this)) {

@@ -320,11 +320,16 @@
 			  
 			  window
 			  vbox
+			  
 			  menu_bar
 			  file_menu_item
 			  file_menu
 			  file_exit_menu_item
 			  file_save_movie_menu_item
+			  view_menu_item
+			  view_menu
+			  view_initialization_events_menu_item
+			  
 			  movie_gtk_image
 			  scale
 			  agent_hbox
@@ -348,20 +353,20 @@
        [= isis_world isis_world_object]
        [have initialize_mutex lock]
        [= fiber [fiber [funk []
-			     [= window                    [gtk-window-new]]
-			     [set window title            [format nil 'isismon - ' isis_world_object_description]]
-			     [= vbox                      [gtk-vbox-new 2]]
-			     [= menu_bar                  [gtk-menu_bar-new]]
+			     [=    window          [gtk-window-new]]
+			     [set  window title    [format nil 'isismon - ' isis_world_object_description]]
+			     [=    vbox            [gtk-vbox-new 2]]
+			     [=    menu_bar        [gtk-menu_bar-new]]
 			     [have vbox pack_start menu_bar nil nil 0]
-			     [= file_menu_item            [gtk-menu_item-new 'File']]
-			     [= file_menu                 [gtk-menu-new]]
-			     [= file_exit_menu_item       [gtk-menu_item-new 'Exit']]
-			     [= file_save_movie_menu_item [gtk-menu_item-new 'Save Movie...']]
-			     [have menu_bar append  file_menu_item]
-			     [have file_menu append file_exit_menu_item]
-			     [have file_menu append file_save_movie_menu_item]
-			     [set file_menu_item submenu file_menu]
-			     [have window add vbox]
+			     
+			     [=    file_menu_item            [gtk-menu_item-new 'File']]
+			     [=    file_menu                 [gtk-menu-new]]
+			     [=    file_exit_menu_item       [gtk-menu_item-new 'Exit']]
+			     [=    file_save_movie_menu_item [gtk-menu_item-new 'Save Movie...']]
+			     [have menu_bar       append     file_menu_item]
+			     [set  file_menu_item submenu    file_menu]
+			     [have file_menu      append     file_exit_menu_item]
+			     [have file_menu      append     file_save_movie_menu_item]
 			     
 			     [have file_exit_menu_item signal_connect 'activate'
 				   [funk []
@@ -372,6 +377,23 @@
 				   [funk []
 					 [new isismon_save_movie_dialog this]]
 				   nil]
+			     
+			     [= view_menu_item                       [gtk-menu_item-new 'View']]
+			     [= view_menu                            [gtk-menu-new]]
+			     [= view_initialization_events_menu_item [gtk-menu_item-new 'Initialization Events']]
+			     [have menu_bar       append             view_menu_item]
+			     [set  view_menu_item submenu            view_menu]
+			     [have view_menu      append             view_initialization_events_menu_item]
+			     
+			     [have view_initialization_events_menu_item signal_connect 'activate'
+				   [funk []
+					 [terminal_format standard-terminal '\nIsisMon  ' `isis_world-initialize ' events:']]
+				   [mapc [funk [event]
+					       [terminal_format standard-terminal '\n  ' event]]
+					 [get [get isis_world initialize_events] leaves]]
+				   nil]
+			     
+			     [have window add vbox]
 			     
 			     [= movie_gtk_image [gtk-image-new_from_image [new image [+ 640 320] 480 nil]]]
 			     [have vbox pack_start movie_gtk_image nil nil 0]

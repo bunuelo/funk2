@@ -160,6 +160,9 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
     f2ptr as_graphviz_name_funk = f2__object__slot__type_funk(cause, exp, new__symbol(cause, "get"), new__symbol(cause, "as-graphviz_name"));
     if (raw__funkable__is_type(cause, as_graphviz_name_funk)) {
       string = f2__force_funk_apply(cause, f2__this__fiber(cause), as_graphviz_name_funk, f2list1__new(cause, exp));
+      if (! raw__string__is_type(cause, string)) {
+	string = f2__exp__as__string(cause, string);
+      }
     }
   }
   if (string == nil) {

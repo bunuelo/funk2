@@ -2016,7 +2016,7 @@ void raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this)
 				    node_codes = f2cons__new(cause, node_code, node_codes));
 	nodes_code = f2__stringlist__concat(cause, node_codes);
       }
-      f2ptr edges_codes;
+      f2ptr edges_code;
       {
 	f2ptr edge_codes = nil;
 	ptypehash__value__iteration(cause, node_code_ptypehash, edge_code,

@@ -1973,8 +1973,11 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 	f2ptr iter = semantic_frames;
 	while (iter != nil) {
 	  f2ptr semantic_frame = f2__cons__car(cause, iter);
+	  status("debug 0");
 	  if (! raw__ptypehash__contains(cause, node_code_ptypehash, semantic_frame)) {
+	    status("debug 1");
 	    if (! raw__relationship_meta_semantic_object__is_type(cause, semantic_frame)) {
+	      status("debug 2");
 	      f2ptr color = f2__graphviz__exp__as__color(cause, semantic_frame);
 	      if (raw__larva__is_type(cause, color)) {
 		return color;
@@ -1982,25 +1985,32 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 	      if (color == nil) {
 		color = new__string(cause, "#7f7fff");
 	      }
+	      status("debug 3");
 	      f2ptr semantic_frame_name = f2__graphviz__exp__as__name(cause, semantic_frame);
 	      if (raw__larva__is_type(cause, semantic_frame_name)) {
 		return semantic_frame_name;
 	      }
+	      status("debug 4");
 	      f2ptr semantic_frame_label = f2__graphviz__exp__as__label(cause, semantic_frame);
 	      if (raw__larva__is_type(cause, semantic_frame_label)) {
 		return semantic_frame_label;
 	      }
+	      status("debug 5");
 	      f2ptr node_code = f2__graphviz__node(cause, semantic_frame_name, semantic_frame_label, color);
 	      if (raw__larva__is_type(cause, node_code)) {
 		return node_code;
 	      }
 	      raw__ptypehash__add(cause, node_code_ptypehash, semantic_frame, node_code);
+	      status("debug 6");
 	    }
 	    {
 	      f2ptr semantic_realm = raw__semantic_frame__realm(cause, semantic_frame);
 	      semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
+					status("debug 10");
 					if (! raw__ptypehash__contains(cause, node_code_ptypehash, value)) {
+					  status("debug 11");
 					  if (! raw__relationship_meta_semantic_object__is_type(cause, value)) {
+					    status("debug 12");
 					    f2ptr value_color = f2__graphviz__exp__as__color(cause, value);
 					    if (raw__larva__is_type(cause, value_color)) {
 					      return value_color;
@@ -2008,34 +2018,43 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 					    if (value_color == nil) {
 					      value_color = new__string(cause, "#3f3fff");
 					    }
+					    status("debug 13");
 					    f2ptr value_name = f2__graphviz__exp__as__name(cause, value);
 					    if (raw__larva__is_type(cause, value_name)) {
 					      return value_name;
 					    }
+					    status("debug 14");
 					    f2ptr value_label = f2__graphviz__exp__as__label(cause, value);
 					    if (raw__larva__is_type(cause, value_label)) {
 					      return value_label;
 					    }
+					    status("debug 15");
 					    f2ptr value_node_code = f2__graphviz__node(cause, value_name, value_label, value_color);
 					    if (raw__larva__is_type(cause, value_node_code)) {
 					      return value_node_code;
 					    }
 					    raw__ptypehash__add(cause, node_code_ptypehash, value, value_node_code);
+					    status("debug 16");
 					  }
 					}
 					{
+					  status("debug 17");
 					  f2ptr relationship = raw__semantic_realm__lookup_or_create_meta_relationship(cause, semantic_realm, semantic_frame, key_type, key, value);
 					  if (raw__larva__is_type(cause, relationship)) {
 					    return relationship;
 					  }
+					  status("debug 18");
 					  if (! raw__ptypehash__contains(cause, edge_code_ptypehash, relationship)) {
+					    status("debug 19");
 					    f2ptr edge_code = f2__graphviz__raw_labelled_edge(cause, relationship, semantic_frame, value);
 					    if (raw__larva__is_type(cause, edge_code)) {
 					      return edge_code;
 					    }
 					    raw__ptypehash__add(cause, edge_code_ptypehash, relationship, edge_code);
+					    status("debug 20");
 					  }
 					}
+					status("debug 21");
 					);
 	    }
 	  }
@@ -2043,6 +2062,7 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 	}
       }
     }
+    status("debug 22");
     {
       f2ptr nodes_code;
       {

@@ -387,10 +387,10 @@
 			     
 			     [have view_initialization_events_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\nIsisMon  ' `isis_world-initialize ' events:']]
-				   [mapc [funk [event]
-					       [terminal_format standard-terminal '\n  ' event]]
-					 [get [get isis_world initialize_events] leaves]]
+					 [terminal_format standard-terminal '\nIsisMon  ' `isis_world-initialize ' events:']
+					 [mapc [funk [event]
+						     [terminal_format standard-terminal '\n  ' event]]
+					       [get [get isis_world initialize_events] leaves]]]
 				   nil]
 			     
 			     [have window add vbox]

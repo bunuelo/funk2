@@ -2560,7 +2560,7 @@ export_cefunk1(visual_object_semantic_frame__type, thing, 0, "Returns the specif
 
 
 f2ptr raw__visual_object_semantic_frame__add_visual_object_name(f2ptr cause, f2ptr this, f2ptr visual_object_name) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "visual_object_name"), visual_object_name, f2bool__new(boolean__true));
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "visual_object_name"), visual_object_name);
 }
 
 f2ptr f2__visual_object_semantic_frame__add_visual_object_name(f2ptr cause, f2ptr this, f2ptr visual_object_name) {

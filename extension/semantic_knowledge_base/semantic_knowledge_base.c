@@ -1962,6 +1962,81 @@ f2ptr f2__semantic_knowledge_base__add_to_graph_with_node_ptypehash(f2ptr cause,
 export_cefunk5(semantic_knowledge_base__add_to_graph_with_node_ptypehash, this, graph, node_ptypehash, maximum_size, exact_size_place, 0, "Add all semantic frames from this knowledge base as well as all semantic frames referenced from those frames.");
 
 
+void raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this) {
+  f2ptr code;
+  {
+    f2ptr node_code_ptypehash = f2__ptypehash__new(cause);
+    f2ptr edge_code_ptypehash = f2__ptypehash__new(cause);
+    {
+      f2ptr semantic_frames = raw__semantic_knowledge_base__semantic_frames(cause, this);
+      {
+	f2ptr iter = semantic_frames;
+	while (iter != nil) {
+	  f2ptr semantic_frame = f2__cons__car(cause, this);
+	  if (! raw__ptypehash__contains(cause, node_code_ptypehash, semantic_frame)) {
+	    f2ptr color = f2__graphviz__exp__as__color(cause, semantic_frame);
+	    if (color == nil) {
+	      color = new__string(cause, "#7f7fff");
+	    }
+	    f2ptr node_code = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, semantic_frame), f2__graphviz__exp__as__label(cause, semantic_frame), color);
+	    raw__ptypehash__add(cause, node_ptypehash, semantic_frame, node_code);
+	    {
+	      f2ptr semantic_realm = raw__semantic_frame__semantic_realm(cause, semantic_frame);
+	      semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
+					if (! raw__ptypehash__contains(cause, node_code_ptypehash, value)) {
+					  f2ptr value_color = f2__graphviz__exp__as__color(cause, value);
+					  if (value_color == nil) {
+					    value_color = new__string(cause, "#3f3fff");
+					  }
+					  f2ptr value_node_code = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, value), f2__graphviz__exp__as__label(cause, value), value_color);
+					  raw__ptypehash__add(cause, node_ptypehash, value, value_node_code);
+					}
+					{
+					  f2ptr relationship = raw__semantic_realm__lookup_or_create_meta_relationship(cause, semantic_realm, semantic_frame, key_type, key, value);
+					  if (! raw__ptypehash__contains(cause, edge_code_ptypehash, relationship)) {
+					    f2ptr relationship__label      = f2__graph_edge__label(cause, relationship);
+					    f2ptr relationship__left_node  = f2__graph_edge__left_node(cause, semantic_frame);
+					    f2ptr relationship__right_node = f2__graph_edge__right_node(cause, value);
+					    f2ptr edge_code                = f2__graphviz__raw_labelled_edge(cause, relationship__label, f2__graphviz__exp__as__name(cause, relationship__left_node), f2__graphviz__exp__as__name(cause, relationship__right_node));
+					    raw__ptypehash__add(cause, edge_ptypehash, relationship, edge_code);
+					  }
+					}
+					);
+	    }
+	  }
+	  iter = f2__cons__cdr(cause, this);
+	}
+      }
+    }
+    {
+      f2ptr nodes_code;
+      {
+	f2ptr node_codes = nil;
+	ptypehash__value__iteration(cause, node_code_ptypehash, node_code,
+				    node_codes = f2cons__new(cause, node_code, node_codes));
+	nodes_code = f2__stringlist__concat(cause, node_codes);
+      }
+      f2ptr edges_codes;
+      {
+	f2ptr edge_codes = nil;
+	ptypehash__value__iteration(cause, node_code_ptypehash, edge_code,
+				    edge_codes = f2cons__new(cause, edge_code, edge_codes));
+	edges_code = f2__stringlist__concat(cause, edge_codes);
+      }
+      code = f2__stringlist__concat(cause, f2list2__new(cause, nodes_code, edges_code));
+    }
+  }
+  return code;
+}
+
+f2ptr f2__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_knowledge_base__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_knowledge_base__as__digraph_dot_code(cause, this);
+}
+export_cefunk1(semantic_knowledge_base__as__digraph_dot_code, this, 0, "Compile this semantic_knowledge base as digraph dot code (needs a digraph dot wrapper to be fully compiled).");
+
 
 f2ptr f2__semantic_knowledge_base_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
@@ -1984,6 +2059,7 @@ f2ptr f2__semantic_knowledge_base_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "know_of_semantic_frame_value_removal"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__know_of_semantic_frame_value_removal")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "recursively_add_semantic_frames_to_set"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__recursively_add_semantic_frames_to_set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_to_graph_with_node_ptypehash"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__add_to_graph_with_node_ptypehash")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-digraph_dot_code"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__as__digraph_dot_code")));}
   return this;
 }
 

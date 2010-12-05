@@ -257,10 +257,10 @@ boolean_t raw__semantic_relationship_key__equals(f2ptr cause, f2ptr this, f2ptr 
   f2ptr that__key_type = raw__semantic_relationship_key__key_type(cause, that);
   f2ptr that__key      = raw__semantic_relationship_key__key(     cause, that);
   f2ptr that__target   = raw__semantic_relationship_key__target(  cause, that);
-  return ((! raw__eq(    cause, this__source,   that__source))   ||
-	  (! raw__eq(    cause, this__target,   that__target))   ||
-	  (! raw__equals(cause, this__key_type, that__key_type)) ||
-	  (! raw__equals(cause, this__key,      that__key)));
+  return (raw__eq(    cause, this__source,   that__source)   &&
+	  raw__eq(    cause, this__target,   that__target)   &&
+	  raw__equals(cause, this__key_type, that__key_type) &&
+	  raw__equals(cause, this__key,      that__key));
 }
 
 f2ptr f2__semantic_relationship_key__equals(f2ptr cause, f2ptr this, f2ptr that) {

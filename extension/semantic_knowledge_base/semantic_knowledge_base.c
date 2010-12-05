@@ -2008,7 +2008,7 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 					{
 					  f2ptr relationship = raw__semantic_realm__lookup_or_create_meta_relationship(cause, semantic_realm, semantic_frame, key_type, key, value);
 					  if (! raw__ptypehash__contains(cause, edge_code_ptypehash, relationship)) {
-					    f2ptr edge_code = f2__graphviz__raw_labelled_edge(cause, relationship, semantic_frame__graphviz_name, value__graphviz_name);
+					    f2ptr edge_code = f2__graphviz__raw_labelled_edge(cause, relationship, semantic_frame, value);
 					    raw__ptypehash__add(cause, edge_code_ptypehash, relationship, edge_code);
 					  }
 					}

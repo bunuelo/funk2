@@ -398,7 +398,7 @@ export_cefunk1(relationship_meta_semantic_object__as__graphviz_label, this, 0, "
 
 
 f2ptr raw__relationship_meta_semantic_object__as__graphviz_name(f2ptr cause, f2ptr this) {
-  f2ptr label  = raw__relationship_meta_semantic_object__label(cause, this);
+  f2ptr label  = raw__relationship_meta_semantic_object__as__graphviz_label(cause, this);
   f2ptr source = raw__relationship_meta_semantic_object__source(cause, this);
   f2ptr target = raw__relationship_meta_semantic_object__target(cause, this);
   return f2__graphviz__edge_name(cause, label, source, target);

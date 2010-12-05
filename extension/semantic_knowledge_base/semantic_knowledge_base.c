@@ -1979,7 +1979,7 @@ void raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this)
 	      color = new__string(cause, "#7f7fff");
 	    }
 	    f2ptr node_code = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, semantic_frame), f2__graphviz__exp__as__label(cause, semantic_frame), color);
-	    raw__ptypehash__add(cause, node_ptypehash, semantic_frame, node_code);
+	    raw__ptypehash__add(cause, node_code_ptypehash, semantic_frame, node_code);
 	    {
 	      f2ptr semantic_realm = raw__semantic_frame__semantic_realm(cause, semantic_frame);
 	      semantic_frame__iteration(cause, semantic_frame, key_type, key, value,

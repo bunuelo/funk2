@@ -267,7 +267,7 @@ f2ptr f2__semantic_relationship_key__equals(f2ptr cause, f2ptr this, f2ptr that)
   if (! raw__semantic_relationship_key__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return f2bool__new(cause, raw__semantic_relationship_key__equals(cause, this, that));
+  return f2bool__new(raw__semantic_relationship_key__equals(cause, this, that));
 }
 export_cefunk2(semantic_relationship_key__equals, this, that, 0, "");
 

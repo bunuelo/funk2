@@ -382,6 +382,21 @@ f2ptr f2__relationship_meta_semantic_object__as__graphviz_label(f2ptr cause, f2p
 export_cefunk1(relationship_meta_semantic_object__as__graphviz_label, this, 0, "Simply returns the color for rendering this relationship_meta_semantic_object in graphviz.");
 
 
+f2ptr raw__relationship_meta_semantic_object__as__graphviz_name(f2ptr cause, f2ptr this) {
+  f2ptr source = raw__relationship_meta_semantic_object__source(cause, this);
+  f2ptr target = raw__relationship_meta_semantic_object__target(cause, this);
+  return f2__graphviz__edge_name(cause, this, source, target);
+}
+
+f2ptr f2__relationship_meta_semantic_object__as__graphviz_name(f2ptr cause, f2ptr this) {
+  if (! raw__relationship_meta_semantic_object__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__relationship_meta_semantic_object__as__graphviz_name(cause, this);
+}
+export_cefunk1(relationship_meta_semantic_object__as__graphviz_name, this, 0, "Simply returns the color for rendering this relationship_meta_semantic_object in graphviz.");
+
+
 void raw__relationship_meta_semantic_object__add_trans_level_edges_to_graph_with_node_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash) {
   f2ptr this_node = f2__ptypehash__lookup(cause, node_ptypehash, this);
   if (this_node == nil) {
@@ -457,6 +472,7 @@ f2ptr f2__relationship_meta_semantic_object_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "target"),                                             f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__target")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-graphviz_color"),                                  f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__as__graphviz_color")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-graphviz_label"),                                  f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__as__graphviz_label")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-graphviz_name"),                                   f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__as__graphviz_name")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_trans_level_edges_to_graph_with_node_ptypehash"), f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__add_trans_level_edges_to_graph_with_node_ptypehash")));}
   return this;
 }

@@ -1973,27 +1973,38 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 	f2ptr iter = semantic_frames;
 	while (iter != nil) {
 	  f2ptr semantic_frame = f2__cons__car(cause, iter);
-	  if (! raw__semantic_frame__is_type(cause, semantic_frame)) {
-	    status("semantic_frame is not semantic_frame...");
-	    return f2larva__new(cause, 111, nil);
-	  }
 	  if (! raw__ptypehash__contains(cause, node_code_ptypehash, semantic_frame)) {
-	    f2ptr color = f2__graphviz__exp__as__color(cause, semantic_frame);
-	    if (color == nil) {
-	      color = new__string(cause, "#7f7fff");
+	    f2ptr semantic_frame__graphviz_name;
+	    if (! raw__relationship_meta_semantic_object__is_type(cause, semantic_frame)) {
+	      f2ptr color = f2__graphviz__exp__as__color(cause, semantic_frame);
+	      if (color == nil) {
+		color = new__string(cause, "#7f7fff");
+	      }
+	      semantic_frame__graphviz_name = f2__graphviz__exp__as__name(cause, semantic_frame);
+	      f2ptr node_code = f2__graphviz__node(cause, semantic_frame__graphviz_name, f2__graphviz__exp__as__label(cause, semantic_frame), color);
+	      raw__ptypehash__add(cause, node_code_ptypehash, semantic_frame, node_code);
+	    } else {
+	      semantic_frame__graphviz_name = raw__relationship_meta_semantic_object__as__graphviz_name(cause, semantic_frame);
 	    }
-	    f2ptr node_code = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, semantic_frame), f2__graphviz__exp__as__label(cause, semantic_frame), color);
-	    raw__ptypehash__add(cause, node_code_ptypehash, semantic_frame, node_code);
 	    {
 	      f2ptr semantic_realm = raw__semantic_frame__realm(cause, semantic_frame);
 	      semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
+					f2ptr value__graphviz_name;
+					if (! raw__relationship_meta_semantic_object__is_type(cause, semantic_frame)) {
+					  value__graphviz_name = f2__graphviz__exp__as__name(cause, value);
+					} else {
+					  value__graphviz_name = raw__relationship_meta_semantic_object__as__graphviz_name(cause, semantic_frame);
+					}
 					if (! raw__ptypehash__contains(cause, node_code_ptypehash, value)) {
-					  f2ptr value_color = f2__graphviz__exp__as__color(cause, value);
-					  if (value_color == nil) {
-					    value_color = new__string(cause, "#3f3fff");
+					  f2ptr value__graphviz_name;
+					  if (! raw__relationship_meta_semantic_object__is_type(cause, semantic_frame)) {
+					    f2ptr value_color = f2__graphviz__exp__as__color(cause, value);
+					    if (value_color == nil) {
+					      value_color = new__string(cause, "#3f3fff");
+					    }
+					    f2ptr value_node_code = f2__graphviz__node(cause, value__graphviz_name, f2__graphviz__exp__as__label(cause, value), value_color);
+					    raw__ptypehash__add(cause, node_code_ptypehash, value, value_node_code);
 					  }
-					  f2ptr value_node_code = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, value), f2__graphviz__exp__as__label(cause, value), value_color);
-					  raw__ptypehash__add(cause, node_code_ptypehash, value, value_node_code);
 					}
 					{
 					  f2ptr relationship = raw__semantic_realm__lookup_or_create_meta_relationship(cause, semantic_realm, semantic_frame, key_type, key, value);
@@ -2001,7 +2012,7 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 					    f2ptr relationship__label      = relationship;
 					    f2ptr relationship__left_node  = semantic_frame;
 					    f2ptr relationship__right_node = value;
-					    f2ptr edge_code                = f2__graphviz__raw_labelled_edge(cause, relationship__label, f2__graphviz__exp__as__name(cause, relationship__left_node), f2__graphviz__exp__as__name(cause, relationship__right_node));
+					    f2ptr edge_code                = f2__graphviz__raw_labelled_edge(cause, relationship__label, semantic_frame__graphviz_name, value__graphviz_name);
 					    raw__ptypehash__add(cause, edge_code_ptypehash, relationship, edge_code);
 					  }
 					}

@@ -79,6 +79,10 @@ f2ptr     raw__relationship_meta_semantic_object__target                        
 f2ptr      f2__relationship_meta_semantic_object__target                                            (f2ptr cause, f2ptr this);
 f2ptr     raw__relationship_meta_semantic_object__as__graphviz_color                                (f2ptr cause, f2ptr this);
 f2ptr      f2__relationship_meta_semantic_object__as__graphviz_color                                (f2ptr cause, f2ptr this);
+f2ptr     raw__relationship_meta_semantic_object__as__graphviz_label                                (f2ptr cause, f2ptr this);
+f2ptr      f2__relationship_meta_semantic_object__as__graphviz_label                                (f2ptr cause, f2ptr this);
+f2ptr     raw__relationship_meta_semantic_object__as__graphviz_name                                 (f2ptr cause, f2ptr this);
+f2ptr      f2__relationship_meta_semantic_object__as__graphviz_name                                 (f2ptr cause, f2ptr this);
 void      raw__relationship_meta_semantic_object__add_trans_level_edges_to_graph_with_node_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash);
 f2ptr      f2__relationship_meta_semantic_object__add_trans_level_edges_to_graph_with_node_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash);
 

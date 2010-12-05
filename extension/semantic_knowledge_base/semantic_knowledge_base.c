@@ -1983,22 +1983,35 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 	    {
 	      f2ptr semantic_realm = raw__semantic_frame__realm(cause, semantic_frame);
 	      semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
+					status("debug 0");
 					if (! raw__ptypehash__contains(cause, node_code_ptypehash, value)) {
+					  status("debug 1");
 					  f2ptr value_color = f2__graphviz__exp__as__color(cause, value);
+					  status("debug 2");
 					  if (value_color == nil) {
 					    value_color = new__string(cause, "#3f3fff");
 					  }
+					  status("debug 3");
 					  f2ptr value_node_code = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, value), f2__graphviz__exp__as__label(cause, value), value_color);
+					  status("debug 4");
 					  raw__ptypehash__add(cause, node_code_ptypehash, value, value_node_code);
 					}
 					{
+					  status("debug 5");
 					  f2ptr relationship = raw__semantic_realm__lookup_or_create_meta_relationship(cause, semantic_realm, semantic_frame, key_type, key, value);
+					  status("debug 6");
 					  if (! raw__ptypehash__contains(cause, edge_code_ptypehash, relationship)) {
+					    status("debug 7");
 					    f2ptr relationship__label      = f2__graphviz__exp__as__label(cause, relationship);
+					    status("debug 8");
 					    f2ptr relationship__left_node  = semantic_frame;
+					    status("debug 9");
 					    f2ptr relationship__right_node = value;
+					    status("debug 10");
 					    f2ptr edge_code                = f2__graphviz__raw_labelled_edge(cause, relationship__label, f2__graphviz__exp__as__name(cause, relationship__left_node), f2__graphviz__exp__as__name(cause, relationship__right_node));
+					    status("debug 11");
 					    raw__ptypehash__add(cause, edge_code_ptypehash, relationship, edge_code);
+					    status("debug 12");
 					  }
 					}
 					);

@@ -1972,7 +1972,7 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
       {
 	f2ptr iter = semantic_frames;
 	while (iter != nil) {
-	  f2ptr semantic_frame = f2__cons__car(cause, this);
+	  f2ptr semantic_frame = f2__cons__car(cause, iter);
 	  if (! raw__ptypehash__contains(cause, node_code_ptypehash, semantic_frame)) {
 	    f2ptr color = f2__graphviz__exp__as__color(cause, semantic_frame);
 	    if (color == nil) {

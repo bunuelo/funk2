@@ -1974,34 +1974,24 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 	while (iter != nil) {
 	  f2ptr semantic_frame = f2__cons__car(cause, iter);
 	  if (! raw__ptypehash__contains(cause, node_code_ptypehash, semantic_frame)) {
-	    f2ptr semantic_frame__graphviz_name;
 	    if (! raw__relationship_meta_semantic_object__is_type(cause, semantic_frame)) {
 	      f2ptr color = f2__graphviz__exp__as__color(cause, semantic_frame);
 	      if (color == nil) {
 		color = new__string(cause, "#7f7fff");
 	      }
-	      semantic_frame__graphviz_name = f2__graphviz__exp__as__name(cause, semantic_frame);
-	      f2ptr node_code = f2__graphviz__node(cause, semantic_frame__graphviz_name, f2__graphviz__exp__as__label(cause, semantic_frame), color);
+	      f2ptr node_code = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, semantic_frame), f2__graphviz__exp__as__label(cause, semantic_frame), color);
 	      raw__ptypehash__add(cause, node_code_ptypehash, semantic_frame, node_code);
-	    } else {
-	      semantic_frame__graphviz_name = raw__relationship_meta_semantic_object__as__graphviz_name(cause, semantic_frame);
 	    }
 	    {
 	      f2ptr semantic_realm = raw__semantic_frame__realm(cause, semantic_frame);
 	      semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
-					f2ptr value__graphviz_name;
-					if (! raw__relationship_meta_semantic_object__is_type(cause, value)) {
-					  value__graphviz_name = f2__graphviz__exp__as__name(cause, value);
-					} else {
-					  value__graphviz_name = raw__relationship_meta_semantic_object__as__graphviz_name(cause, value);
-					}
 					if (! raw__ptypehash__contains(cause, node_code_ptypehash, value)) {
 					  if (! raw__relationship_meta_semantic_object__is_type(cause, value)) {
 					    f2ptr value_color = f2__graphviz__exp__as__color(cause, value);
 					    if (value_color == nil) {
 					      value_color = new__string(cause, "#3f3fff");
 					    }
-					    f2ptr value_node_code = f2__graphviz__node(cause, value__graphviz_name, f2__graphviz__exp__as__label(cause, value), value_color);
+					    f2ptr value_node_code = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, value), f2__graphviz__exp__as__label(cause, value), value_color);
 					    raw__ptypehash__add(cause, node_code_ptypehash, value, value_node_code);
 					  }
 					}

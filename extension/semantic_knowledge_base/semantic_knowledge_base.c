@@ -193,7 +193,7 @@ u64 raw__semantic_relationship_key__equals_hash_value__loop_free(f2ptr cause, f2
   if (source__eq_hash_value__i == 0) {
     source__eq_hash_value__i = 1;
   }
-  f2ptr target__eq_hash_value = f2__object__eq_hash_value(cause, source);
+  f2ptr target__eq_hash_value = f2__object__eq_hash_value(cause, target);
   if (raw__larva__is_type(cause, target__eq_hash_value)) {
     return target__eq_hash_value;
   }

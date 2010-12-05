@@ -1990,7 +1990,7 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 	      f2ptr semantic_realm = raw__semantic_frame__realm(cause, semantic_frame);
 	      semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
 					f2ptr value__graphviz_name;
-					if (! raw__relationship_meta_semantic_object__is_type(cause, semantic_frame)) {
+					if (! raw__relationship_meta_semantic_object__is_type(cause, value)) {
 					  value__graphviz_name = f2__graphviz__exp__as__name(cause, value);
 					} else {
 					  value__graphviz_name = raw__relationship_meta_semantic_object__as__graphviz_name(cause, semantic_frame);

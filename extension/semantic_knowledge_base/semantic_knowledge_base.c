@@ -2122,7 +2122,7 @@ export_cefunk1(noun_semantic_frame__type, thing, 0, "Returns the specific type o
 
 
 f2ptr raw__noun_semantic_frame__add_noun(f2ptr cause, f2ptr this, f2ptr noun) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "noun"), noun, f2bool__new(boolean__true));
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "noun"), noun);
 }
 
 f2ptr f2__noun_semantic_frame__add_noun(f2ptr cause, f2ptr this, f2ptr noun) {
@@ -2135,7 +2135,7 @@ export_cefunk2(noun_semantic_frame__add_noun, this, noun, 0, "Adds a noun to thi
 
 
 f2ptr raw__noun_semantic_frame__add_classifier(f2ptr cause, f2ptr this, f2ptr classifier) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "classifier"), classifier, f2bool__new(boolean__true));
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "classifier"), classifier);
 }
 
 f2ptr f2__noun_semantic_frame__add_classifier(f2ptr cause, f2ptr this, f2ptr classifier) {
@@ -2148,7 +2148,7 @@ export_cefunk2(noun_semantic_frame__add_classifier, this, classifier, 0, "Adds a
 
 
 f2ptr raw__noun_semantic_frame__add_adjective(f2ptr cause, f2ptr this, f2ptr adjective) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "adjective"), adjective, f2bool__new(boolean__true));
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "adjective"), adjective);
 }
 
 f2ptr f2__noun_semantic_frame__add_adjective(f2ptr cause, f2ptr this, f2ptr adjective) {

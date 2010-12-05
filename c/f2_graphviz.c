@@ -155,9 +155,19 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
 def_pcfunk1(graphviz__exp__as__label, exp, return f2__graphviz__exp__as__label(this_cause, exp));
 
 f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
-  char name_str[128];
-  snprintf(name_str, 127, "ptr_" u64__fstr, (u64)exp);
-  return new__string(cause, name_str);
+  f2ptr string = nil;
+  {
+    f2ptr as_graphviz_name_funk = f2__object__slot__type_funk(cause, exp, new__symbol(cause, "get"), new__symbol(cause, "as-graphviz_name"));
+    if (raw__funkable__is_type(cause, as_graphviz_name_funk)) {
+      string = f2__force_funk_apply(cause, f2__this__fiber(cause), as_graphviz_name_funk, f2list1__new(cause, exp));
+    }
+  }
+  if (string == nil) {
+    char name_str[128];
+    snprintf(name_str, 127, "ptr_" u64__fstr, (u64)exp);
+    string = new__string(cause, name_str);
+  }
+  return string;
   /*
     if (exp == nil) {
     return new__string(cause, "nil");

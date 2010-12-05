@@ -2023,7 +2023,7 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
       f2ptr edges_code;
       {
 	f2ptr edge_codes = nil;
-	ptypehash__value__iteration(cause, node_code_ptypehash, edge_code,
+	ptypehash__value__iteration(cause, edge_code_ptypehash, edge_code,
 				    edge_codes = f2cons__new(cause, edge_code, edge_codes));
 	edges_code = f2__stringlist__intersperse(cause, edge_codes, new__string(cause, "\n"));
       }

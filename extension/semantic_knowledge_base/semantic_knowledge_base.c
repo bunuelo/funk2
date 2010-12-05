@@ -227,12 +227,12 @@ f2ptr f2__semantic_relationship_key__equals_hash_value__loop_free(f2ptr cause, f
   if (! raw__semantic_relationship_key__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_relationship_key__equals_hash_value__loop_free(cause, this, node_ptypehash);
+  return f2integer__new(cause, raw__semantic_relationship_key__equals_hash_value__loop_free(cause, this, node_ptypehash));
 }
 export_cefunk2(semantic_relationship_key__equals_hash_value__loop_free, this, node_ptypehash, 0, "");
 
 
-f2ptr raw__semantic_relationship_key__equals_hash_value(f2ptr cause, f2ptr this) {
+u64 raw__semantic_relationship_key__equals_hash_value(f2ptr cause, f2ptr this) {
   return raw__semantic_relationship_key__equals_hash_value__loop_free(cause, this, f2__ptypehash__new(cause));
 }
 
@@ -240,7 +240,7 @@ f2ptr f2__semantic_relationship_key__equals_hash_value(f2ptr cause, f2ptr this) 
   if (! raw__semantic_relationship_key__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_relationship_key__equals_hash_value(cause, this);
+  return f2integer__new(cause, raw__semantic_relationship_key__equals_hash_value(cause, this));
 }
 export_cefunk1(semantic_relationship_key__equals_hash_value, this, 0, "");
 

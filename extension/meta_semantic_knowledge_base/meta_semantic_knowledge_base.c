@@ -417,7 +417,7 @@ f2ptr raw__relationship_meta_semantic_object__as__graphviz_edge_code(f2ptr cause
   f2ptr value                = raw__relationship_meta_semantic_object__target(cause, this);
   f2ptr semantic_frame__name = f2__graphviz__exp__as__name(cause, semantic_frame);
   f2ptr value__name          = f2__graphviz__exp__as__name(cause, value);
-  return f2__graphviz__raw_labelled_edge(cause, relationship, semantic_frame__name, value__name);
+  return f2__graphviz__raw_labelled_edge(cause, this, semantic_frame__name, value__name);
 }
 
 f2ptr f2__relationship_meta_semantic_object__as__graphviz_edge_code(f2ptr cause, f2ptr this) {

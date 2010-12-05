@@ -1141,7 +1141,7 @@ export_cefunk3(semantic_frame__add_to_graph_with_node_ptypehash, this, graph, no
 
 
 f2ptr raw__semantic_frame__as__graphviz_label(f2ptr cause, f2ptr this) {
-  return f2__exp__as__string(cause, f2__object__type(cause, this));
+  return new__string(cause, "[frame]");
 }
 
 f2ptr f2__semantic_frame__as__graphviz_label(f2ptr cause, f2ptr this) {

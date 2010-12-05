@@ -35,10 +35,10 @@ f2ptr raw__semantic_relationship_key__new(f2ptr cause, f2ptr source, f2ptr key_t
 					     new__symbol(cause, "target"),   target));
 }
 
-f2ptr f2__semantic_relationship_key__new(f2ptr cause) {
-  return raw__semantic_relationship_key__new(cause);
+f2ptr f2__semantic_relationship_key__new(f2ptr cause, f2ptr source, f2ptr key_type, f2ptr key, f2ptr target) {
+  return raw__semantic_relationship_key__new(cause, source, key_type, key, target);
 }
-export_cefunk0(semantic_relationship_key__new, 0, "Returns a new semantic_relationship_key object.");
+export_cefunk4(semantic_relationship_key__new, source, key_type, key, target, 0, "Returns a new semantic_relationship_key object.");
 
 
 boolean_t raw__semantic_relationship_key__is_type(f2ptr cause, f2ptr thing) {

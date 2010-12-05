@@ -191,20 +191,16 @@
 			 [self_reflective_knowledge_base  [get [get isis_agent mind] self_reflective_knowledge]]
 			 [self_conscious_knowledge_base   [get [get isis_agent mind] self_conscious_knowledge]]]
 		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of all of ' [get this name] '\'s semantic knowledge.']
-		     [let [[graph          [new graph]]
-			   [node_ptypehash [new ptypehash]]]
-		       [have builtin_reactive_knowledge_base add_to_graph_with_node_ptypehash                   graph node_ptypehash 100000 nil]
-		       [have learned_reactive_knowledge_base add_to_graph_with_node_ptypehash                   graph node_ptypehash 100000 nil]
-		       [have learned_reactive_knowledge_base add_trans_level_edges_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
-		       [have deliberative_knowledge_base     add_to_graph_with_node_ptypehash                   graph node_ptypehash 100000 nil]
-		       [have deliberative_knowledge_base     add_trans_level_edges_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
-		       [have reflective_knowledge_base       add_to_graph_with_node_ptypehash                   graph node_ptypehash 100000 nil]
-		       [have reflective_knowledge_base       add_trans_level_edges_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
-		       [have self_reflective_knowledge_base  add_to_graph_with_node_ptypehash                   graph node_ptypehash 100000 nil]
-		       [have self_reflective_knowledge_base  add_trans_level_edges_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
-		       [have self_conscious_knowledge_base   add_to_graph_with_node_ptypehash                   graph node_ptypehash 100000 nil]
-		       [have self_conscious_knowledge_base   add_trans_level_edges_to_graph_with_node_ptypehash graph node_ptypehash 100000 nil]
-		       [fiber [funk [] [have graph gview]] nil]]]]
+		     [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
+											     [get knowledge_base as-digraph_dot_code]]
+										       [conslist builtin_reactive_knowledge_base
+												 learned_reactive_knowledge_base
+												 deliberative_knowledge_base
+												 reflective_knowledge_base
+												 self_reflective_knowledge_base
+												 self_conscious_knowledge_base]]
+									       '\n']]]]
+		       [fiber [funk [] [dot_code-gview dot_code]] nil]]]]
 	     nil]
        [have view_menu append view_all_knowledge_menu_item]
        

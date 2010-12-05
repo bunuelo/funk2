@@ -2051,7 +2051,7 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 					      return edge_label;
 					    }
 					    status("debug 19.5");
-					    f2ptr edge_code = f2__graphviz__raw_labelled_edge(cause, edge_label, semantic_frame, value);
+					    f2ptr edge_code = f2__graphviz__raw_labelled_edge(cause, edge_label, f2__exp__as__graphviz_name(cause, semantic_frame), f2__exp__as__graphviz_name(cause, value));
 					    if (raw__larva__is_type(cause, edge_code)) {
 					      return edge_code;
 					    }

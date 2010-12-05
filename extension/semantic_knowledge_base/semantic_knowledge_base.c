@@ -1962,7 +1962,7 @@ f2ptr f2__semantic_knowledge_base__add_to_graph_with_node_ptypehash(f2ptr cause,
 export_cefunk5(semantic_knowledge_base__add_to_graph_with_node_ptypehash, this, graph, node_ptypehash, maximum_size, exact_size_place, 0, "Add all semantic frames from this knowledge base as well as all semantic frames referenced from those frames.");
 
 
-void raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this) {
+f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this) {
   f2ptr code;
   {
     f2ptr node_code_ptypehash = f2__ptypehash__new(cause);

@@ -2046,7 +2046,7 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 					  status("debug 18");
 					  if (! raw__ptypehash__contains(cause, edge_code_ptypehash, relationship)) {
 					    status("debug 19");
-					    f2ptr edge_code = f2__graphviz__raw_labelled_edge(cause, relationship, f2__graphviz__exp__as__name(cause, semantic_frame), f2__graphviz__exp__as__name(cause, value));
+					    f2ptr edge_code = f2__relationship_meta_semantic_object__as__graphviz_edge_code(cause, relationship);
 					    if (raw__larva__is_type(cause, edge_code)) {
 					      return edge_code;
 					    }

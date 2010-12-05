@@ -412,6 +412,24 @@ f2ptr f2__relationship_meta_semantic_object__as__graphviz_name(f2ptr cause, f2pt
 export_cefunk1(relationship_meta_semantic_object__as__graphviz_name, this, 0, "Simply returns the color for rendering this relationship_meta_semantic_object in graphviz.");
 
 
+f2ptr raw__relationship_meta_semantic_object__as__graphviz_edge_code(f2ptr cause, f2ptr this) {
+  f2ptr this__label          = raw__relationship_meta_semantic_object__label(cause, this);
+  f2ptr semantic_frame       = raw__relationship_meta_semantic_object__source(cause, this);
+  f2ptr value                = raw__relationship_meta_semantic_object__target(cause, this);
+  f2ptr semantic_frame__name = f2__graphviz__exp__as__name(cause, semantic_frame);
+  f2ptr value__name          = f2__graphviz__exp__as__name(cause, value);
+  return f2__graphviz__raw_labelled_edge(cause, this__label, semantic_frame__name, value__name);
+}
+
+f2ptr f2__relationship_meta_semantic_object__as__graphviz_edge_code(f2ptr cause, f2ptr this) {
+  if (! raw__relationship_meta_semantic_object__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__relationship_meta_semantic_object__as__graphviz_edge_code(cause, this);
+}
+export_cefunk1(relationship_meta_semantic_object__as__graphviz_edge_code, this, 0, "Returns the edge dot code for this relationship.");
+
+
 void raw__relationship_meta_semantic_object__add_trans_level_edges_to_graph_with_node_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash) {
   f2ptr this_node = f2__ptypehash__lookup(cause, node_ptypehash, this);
   if (this_node == nil) {

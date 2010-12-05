@@ -1993,10 +1993,10 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 					if (! raw__relationship_meta_semantic_object__is_type(cause, value)) {
 					  value__graphviz_name = f2__graphviz__exp__as__name(cause, value);
 					} else {
-					  value__graphviz_name = raw__relationship_meta_semantic_object__as__graphviz_name(cause, semantic_frame);
+					  value__graphviz_name = raw__relationship_meta_semantic_object__as__graphviz_name(cause, value);
 					}
 					if (! raw__ptypehash__contains(cause, node_code_ptypehash, value)) {
-					  if (! raw__relationship_meta_semantic_object__is_type(cause, semantic_frame)) {
+					  if (! raw__relationship_meta_semantic_object__is_type(cause, value)) {
 					    f2ptr value_color = f2__graphviz__exp__as__color(cause, value);
 					    if (value_color == nil) {
 					      value_color = new__string(cause, "#3f3fff");

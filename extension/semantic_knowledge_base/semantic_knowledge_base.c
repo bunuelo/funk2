@@ -276,9 +276,12 @@ f2ptr raw__semantic_relationship_key__terminal_print_with_frame(f2ptr cause, f2p
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list4__new(cause,
-					       new__symbol(cause, "print_object_type"), new__symbol(cause, "semantic_relationship_key"),
-					       new__symbol(cause, "key_count"),         f2__semantic_relationship_key__key_count(cause, this)));
+    frame = f2__frame__new(cause, f2list10__new(cause,
+						new__symbol(cause, "print_object_type"), new__symbol(cause, "semantic_relationship_key"),
+						new__symbol(cause, "source"),            f2__semantic_relationship_key__source(  cause, this),
+						new__symbol(cause, "key_type"),          f2__semantic_relationship_key__key_type(cause, this),
+						new__symbol(cause, "key"),               f2__semantic_relationship_key__key(     cause, this),
+						new__symbol(cause, "target"),            f2__semantic_relationship_key__target(  cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);

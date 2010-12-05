@@ -330,19 +330,19 @@
 			  view_menu
 			  view_initialization_events_menu_item
 			  
-			  movie_gtk_image
-			  scale
-			  agent_hbox
 			  controller_frame
 			  controller_vbox
 			  controller_button_hbox
 			  step_size_hbox
 			  step_size_label
 			  step_size_entry
-			  
 			  play_button
 			  stop_button
 			  step_button
+			  
+			  movie_gtk_image
+			  scale
+			  agent_hbox
 			  
 			  [agent_frame [frame]]
 			  
@@ -356,6 +356,11 @@
 			     [=    window          [gtk-window-new]]
 			     [set  window title    [format nil 'isismon - ' isis_world_object_description]]
 			     [=    vbox            [gtk-vbox-new 2]]
+			     [have window add vbox]
+			     
+			     
+			     'window menu'
+			     
 			     [=    menu_bar        [gtk-menu_bar-new]]
 			     [have vbox pack_start menu_bar nil nil 0]
 			     
@@ -387,30 +392,14 @@
 			     
 			     [have view_initialization_events_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\nIsisMon  ' `isis_world-initialize ' events:']
+					 [terminal_format standard-terminal '\nIsisMon ' `isis_world-initialize ' events in temporal order:']
 					 [mapc [funk [event]
 						     [terminal_format standard-terminal '\n  ' event]]
 					       [get [get isis_world initialize_events] leaves]]]
 				   nil]
 			     
-			     [have window add vbox]
 			     
-			     [= movie_gtk_image [gtk-image-new_from_image [new image [+ 640 320] 480 nil]]]
-			     [have vbox pack_start movie_gtk_image nil nil 0]
-			     
-			     [= scale [gtk-scale-new_with_range `horizontal 0.0 1.0 1.0]]
-			     [set scale digits 0]
-			     [have vbox pack_start scale t t 0]
-			     [let [[movie_length [get this movie_length]]]
-			       [if [> movie_length 1]
-				   [prog [set scale range 0.0 [- movie_length 1]]
-					 [set scale value [- movie_length 1]]]]]
-			     
-			     [= agent_hbox [gtk-hbox-new 2]]
-			     [have vbox pack_start agent_hbox nil nil 0]
-			     
-			     [have this add_agent [get isis_world agent_body `Ralph]]
-			     [have this add_agent [get isis_world agent_body `Lauren]]
+			     'simulator controller'
 			     
 			     [= controller_frame [gtk-frame-new [format nil 'isis_world']]]
 			     [= controller_vbox  [gtk-vbox-new 2]]
@@ -449,6 +438,29 @@
 			     [have controller_frame add controller_vbox nil nil 0]
 			     
 			     [have vbox pack_start controller_frame nil nil 0]
+			     
+			     
+			     'movie image'
+			     
+			     [= movie_gtk_image [gtk-image-new_from_image [new image [+ 640 320] 480 nil]]]
+			     [have vbox pack_start movie_gtk_image nil nil 0]
+			     
+			     [= scale [gtk-scale-new_with_range `horizontal 0.0 1.0 1.0]]
+			     [set scale digits 0]
+			     [have vbox pack_start scale t t 0]
+			     [let [[movie_length [get this movie_length]]]
+			       [if [> movie_length 1]
+				   [prog [set scale range 0.0 [- movie_length 1]]
+					 [set scale value [- movie_length 1]]]]]
+			     
+			     
+			     'agents'
+			     
+			     [= agent_hbox [gtk-hbox-new 2]]
+			     [have vbox pack_start agent_hbox nil nil 0]
+			     
+			     [have this add_agent [get isis_world agent_body `Ralph]]
+			     [have this add_agent [get isis_world agent_body `Lauren]]
 			     
 			     [have window connect_hide_on_delete]
 			     [have window show_all]

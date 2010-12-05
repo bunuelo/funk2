@@ -367,6 +367,21 @@ f2ptr f2__relationship_meta_semantic_object__as__graphviz_color(f2ptr cause, f2p
 export_cefunk1(relationship_meta_semantic_object__as__graphviz_color, this, 0, "Simply returns the color for rendering this relationship_meta_semantic_object in graphviz.");
 
 
+f2ptr raw__relationship_meta_semantic_object__label(f2ptr cause, f2ptr this) {
+  f2ptr key_type = raw__relationship_meta_semantic_object__key_type(cause, this);
+  f2ptr key      = raw__relationship_meta_semantic_object__key(cause, this);
+  return f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list3__new(cause, f2__exp__as__string(cause, key_type), new__string(cause, "-"), f2__exp__as__string(cause, key))));
+}
+
+f2ptr f2__relationship_meta_semantic_object__label(f2ptr cause, f2ptr this) {
+  if (! raw__relationship_meta_semantic_object__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__relationship_meta_semantic_object__label(cause, this);
+}
+export_cefunk1(relationship_meta_semantic_object__label, this, 0, "Returns a symbolic label for this relationship.");
+
+
 f2ptr raw__relationship_meta_semantic_object__as__graphviz_label(f2ptr cause, f2ptr this) {
   f2ptr key_type = raw__relationship_meta_semantic_object__key_type(cause, this);
   f2ptr key      = raw__relationship_meta_semantic_object__key(cause, this);
@@ -383,9 +398,10 @@ export_cefunk1(relationship_meta_semantic_object__as__graphviz_label, this, 0, "
 
 
 f2ptr raw__relationship_meta_semantic_object__as__graphviz_name(f2ptr cause, f2ptr this) {
+  f2ptr label  = raw__relationship_meta_semantic_object__label(cause, this);
   f2ptr source = raw__relationship_meta_semantic_object__source(cause, this);
   f2ptr target = raw__relationship_meta_semantic_object__target(cause, this);
-  return f2__graphviz__edge_name(cause, this, source, target);
+  return f2__graphviz__edge_name(cause, label, source, target);
 }
 
 f2ptr f2__relationship_meta_semantic_object__as__graphviz_name(f2ptr cause, f2ptr this) {

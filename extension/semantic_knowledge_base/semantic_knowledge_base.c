@@ -1994,9 +1994,9 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 					{
 					  f2ptr relationship = raw__semantic_realm__lookup_or_create_meta_relationship(cause, semantic_realm, semantic_frame, key_type, key, value);
 					  if (! raw__ptypehash__contains(cause, edge_code_ptypehash, relationship)) {
-					    f2ptr relationship__label      = f2__graph_edge__label(cause, relationship);
-					    f2ptr relationship__left_node  = f2__graph_edge__left_node(cause, semantic_frame);
-					    f2ptr relationship__right_node = f2__graph_edge__right_node(cause, value);
+					    f2ptr relationship__label      = f2__graphviz__exp__as__label(cause, relationship);
+					    f2ptr relationship__left_node  = semantic_frame;
+					    f2ptr relationship__right_node = value;
 					    f2ptr edge_code                = f2__graphviz__raw_labelled_edge(cause, relationship__label, f2__graphviz__exp__as__name(cause, relationship__left_node), f2__graphviz__exp__as__name(cause, relationship__right_node));
 					    raw__ptypehash__add(cause, edge_code_ptypehash, relationship, edge_code);
 					  }

@@ -2023,7 +2023,7 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 					);
 	    }
 	  }
-	  iter = f2__cons__cdr(cause, this);
+	  iter = f2__cons__cdr(cause, iter);
 	}
       }
     }

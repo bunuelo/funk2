@@ -31,11 +31,25 @@
        [= natural_language_command_frame [new natural_language_command_frame]]
        [have natural_language_command_frame add_command `[pick up] `[direct_object] nil
 	     [funk [direct_object]
-		   [terminal_format standard-terminal '\nPicking up ' [get direct_object leaf_symbols] '!  :-D']
+		   [terminal_format standard-terminal '\nPicking up ' [get direct_object leaf_symbols] '.']
 		   [let [[language_command_frame [new semantic_frame [get [get this mind] semantic_realm]]]]
 		     [have learned_reactive_knowledge add_semantic_frame language_command_frame]
 		     [have language_command_frame add `interpretation `cause-of    semantic_cause_of_language_command]
 		     [have language_command_frame add `interpretation `possibility [frame command `[pick up] direct_object direct_object]]]]]
+       [have natural_language_command_frame add_command `[look down] `[] nil
+	     [funk [direct_object]
+		   [terminal_format standard-terminal '\nLooking down.']
+		   [let [[language_command_frame [new semantic_frame [get [get this mind] semantic_realm]]]]
+		     [have learned_reactive_knowledge add_semantic_frame language_command_frame]
+		     [have language_command_frame add `interpretation `cause-of    semantic_cause_of_language_command]
+		     [have language_command_frame add `interpretation `possibility [frame command `[look down]]]]]]
+       [have natural_language_command_frame add_command `[look up] `[] nil
+	     [funk [direct_object]
+		   [terminal_format standard-terminal '\nLooking up.']
+		   [let [[language_command_frame [new semantic_frame [get [get this mind] semantic_realm]]]]
+		     [have learned_reactive_knowledge add_semantic_frame language_command_frame]
+		     [have language_command_frame add `interpretation `cause-of    semantic_cause_of_language_command]
+		     [have language_command_frame add `interpretation `possibility [frame command `[look up]]]]]]
        this]]
 
 [deftypefunk learned_reactive_layer get semantic_visual_object [visual_object_name]

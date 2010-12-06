@@ -30,10 +30,11 @@
        this]]
 
 [deftypefunk learned_reactive_layer get semantic_visual_object [visual_object_name]
-  [let [[semantic_visual_object [get semantic_visual_object_name_hash lookup visual_object_name]]]
+  [let [[semantic_visual_object [have semantic_visual_object_name_hash lookup visual_object_name]]]
     [if [null semantic_visual_object]
 	[let [[new_semantic_visual_object [new semantic_frame [get [get this mind] semantic_realm]]]]
-	  [have new_semantic_visual_object add `property `visual_object]
+	  [print 'creating new visual object!']
+	  [have new_semantic_visual_object add `property `category `visual_object]
 	  [have semantic_visual_object_name_hash add visual_object_name new_semantic_visual_object]
 	  [have learned_reactive_knowledge add_semantic_frame new_semantic_visual_object]
 	  [= semantic_visual_object new_semantic_visual_object]]]
@@ -41,11 +42,13 @@
 
 [deftypefunk learned_reactive_layer execute reflectively_know_of_addition_of_semantic_frame_value [semantic_frame key_type key value]
   [let [[relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship semantic_frame key_type key value]]]
-    [have relationship add `instant_event `added_at_time [time]]
     [have learned_reactive_knowledge add_semantic_frame relationship]
+    `[have relationship add `instant_event `added_at_time [time]]
     
+    [print [conslist key_type key]]
     [cond [[and [eq key_type `property] [cond [[eq key `visual_object_name] [let [[visual_object_name value]]
 									      [let [[semantic_visual_object [get this semantic_visual_object visual_object_name]]]
+										[print 'adding category example!']
 										[have semantic_visual_object add `category `example relationship]]]]
 					      ]]]
 	  ]

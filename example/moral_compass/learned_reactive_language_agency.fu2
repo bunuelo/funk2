@@ -31,15 +31,9 @@
        [construct resource [type this]
 		  [funk [agent_description agent_speech]
 			[have this-resource think_to_self 'I hear from ' agent_description ', ' agent_speech '.']
-			[let [[parse_trees [get english_dictionary parse_trees agent_speech]]]
-			  [if parse_trees
-			      [prog [mapc [funk [parse_tree]
-						[have this-resource think_to_self 'I parse ' [get parse_tree serialized]]]
-					  parse_trees]
-				    ]
-			    [have this-resource think_to_self 'I cannot parse.']]
-			  ]
-			]]
+			[let [[hear_language_frame [new semantic_frame [get [get this mind] semantic_realm]]]]
+			  [have [get [get this mind] builtin_reactive_knowledge] add_semantic_frame hear_language_frame]
+			  [have hear_language_frame add `language `symbols agent_speech]]]]
        nil]]
 
 [deframe learned_reactive_language_agency [agency] []

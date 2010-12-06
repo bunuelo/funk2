@@ -165,7 +165,10 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
       }
     }
   }
-  if (! raw__string__is_type(cause, string)) {
+  if (raw__string__is_type(cause, string)) {
+    string = f2__string__as__symbol(cause, string);
+  }
+  {
     char name_str[128];
     snprintf(name_str, 127, "ptr_" u64__fstr, (u64)string);
     string = new__string(cause, name_str);

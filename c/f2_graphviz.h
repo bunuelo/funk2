@@ -33,7 +33,7 @@ f2ptr f2__graphviz__exp__as__color   (f2ptr cause, f2ptr exp);
 f2ptr f2__graphviz__exp__as__label   (f2ptr cause, f2ptr exp);
 f2ptr f2__graphviz__exp__as__name    (f2ptr cause, f2ptr exp);
 f2ptr f2__graphviz__edge_name        (f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node);
-f2ptr f2__graphviz__raw_labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node);
+f2ptr f2__graphviz__raw_labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node, f2ptr color);
 f2ptr f2__graphviz__labelled_edge    (f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node);
 
 // **

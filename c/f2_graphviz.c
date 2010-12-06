@@ -219,13 +219,8 @@ f2ptr f2__graphviz__edge_name(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr r
 }
 def_pcfunk3(graphviz__edge_name, label, left_node, right_node, return f2__graphviz__edge_name(this_cause, label, left_node, right_node));
 
-f2ptr f2__graphviz__raw_labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node) {
+f2ptr f2__graphviz__raw_labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node, f2ptr color) {
   f2ptr edge__name = f2__graphviz__edge_name(cause, label, left_node, right_node);
-  f2ptr color      = nil;
-  color = f2__graphviz__exp__as__color(cause, label);
-  if (raw__larva__is_type(cause, color)) {
-    return color;
-  }
   if (color == nil) {
     if (raw__simple_graph_variable__is_type(cause, label)) {
       color = new__string(cause, "#CF0000");

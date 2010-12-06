@@ -121,7 +121,7 @@ f2ptr raw__graph_edge__as__dot_code(f2ptr cause, f2ptr this) {
   f2ptr this__label      = f2__graph_edge__label(cause, this);
   f2ptr this__left_node  = f2__graph_edge__left_node(cause, this);
   f2ptr this__right_node = f2__graph_edge__right_node(cause, this);
-  f2ptr edge_code        = f2__graphviz__raw_labelled_edge(cause, this__label, f2__graphviz__exp__as__name(cause, this__left_node), f2__graphviz__exp__as__name(cause, this__right_node));
+  f2ptr edge_code        = f2__graphviz__raw_labelled_edge(cause, this__label, f2__graphviz__exp__as__name(cause, this__left_node), f2__graphviz__exp__as__name(cause, this__right_node), nil);
   return edge_code;
 }
 

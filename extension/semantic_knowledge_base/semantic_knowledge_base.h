@@ -146,6 +146,10 @@ f2ptr     raw__semantic_frame__lookup                                 (f2ptr cau
 f2ptr      f2__semantic_frame__lookup                                 (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
 f2ptr     raw__semantic_frame__lookup_single_value                    (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
 f2ptr      f2__semantic_frame__lookup_single_value                    (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
+void      raw__semantic_frame__remove_all                             (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
+f2ptr      f2__semantic_frame__remove_all                             (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
+f2ptr     raw__semantic_frame__replace_all                            (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
+f2ptr      f2__semantic_frame__replace_all                            (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
 f2ptr     raw__semantic_frame__add_recursively_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash);
 f2ptr     raw__semantic_frame__as__graphviz_label                     (f2ptr cause, f2ptr this);
 f2ptr      f2__semantic_frame__as__graphviz_label                     (f2ptr cause, f2ptr this);

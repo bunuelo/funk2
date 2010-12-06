@@ -1346,17 +1346,16 @@ f2ptr f2__semantic_frame__remove_all(f2ptr cause, f2ptr this, f2ptr key_type, f2
 export_cefunk3(semantic_frame__remove_all, this, key_type, key, 0, "Removes all associated values from this key_type and key.");
 
 
-void raw__semantic_frame__replace_all(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+f2ptr raw__semantic_frame__replace_all(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
   raw__semantic_frame__remove_all(cause, this, key_type, key);
-  raw__semantic_frame__add(cause, this, key_type, key, value);
+  return raw__semantic_frame__add(cause, this, key_type, key, value);
 }
 
 f2ptr f2__semantic_frame__replace_all(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
   if (! raw__semantic_frame__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  raw__semantic_frame__replace_all(cause, this, key_type, key, value);
-  return nil;
+  return raw__semantic_frame__replace_all(cause, this, key_type, key, value);
 }
 export_cefunk4(semantic_frame__replace_all, this, key_type, key, value, 0, "Removes all associated values from this key_type and key, and adds the given value.");
 

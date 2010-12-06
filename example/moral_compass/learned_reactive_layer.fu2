@@ -18,15 +18,28 @@
  rights to redistribute these changes.'
 
 
+[defunk moral_compass_natural_language_command_frame-new []
+  [let [
+    ]]
+
 'learned_reactive_layer'
 
 [deframe learned_reactive_layer [mental_layer] [[semantic_visual_object_name_hash [new ptypehash]]
+						[natural_language_command_frame   nil]
 						[learned_reactive_knowledge       [new meta_semantic_knowledge_base nil]]]
   [new []
        [construct mental_layer 1 `learned_reactive]
        [have this add_agency [new learned_reactive_sensory_agency]]
        [have this add_agency [new learned_reactive_physical_agency]]
        [have this add_agency [new learned_reactive_language_agency]]
+       [= natural_language_command_frame [new natural_language_command_frame]]
+       [have natural_language_command_frame add_command `[pick up] `[direct_object] nil
+	     [funk [direct_object]
+		   [terminal_format standard-terminal '\nPicking up ' [get direct_object leaf_symbols] '!  :-D']
+		   [let [[language_command_frame [new semantic_frame [get [get this mind] semantic_realm]]]]
+		     [have learned_reactive_knowledge add_semantic_frame language_command_frame]
+		     [have language_command_frame add `interpretation `cause-of    semantic_cause_of_language_command]
+		     [have language_command_frame add `interpretation `possibility [new frame command `[pick up] direct_object direct_object]]]]]
        this]]
 
 [deftypefunk learned_reactive_layer get semantic_visual_object [visual_object_name]
@@ -49,6 +62,16 @@
 										[have semantic_visual_object add         `category `example             relationship]]]]
 					      ]]]
 	  [[and [eq key_type `language] [cond [[eq key `symbols] [let [[symbols value]]
+								   [let [[parse_trees [get english_dictionary parse_trees symbols]]]
+								     [if parse_trees
+									 [prog [mapc [funk [parse_tree]
+											   [have this-resource think_to_self 'I parse ' [get parse_tree serialized]]
+											   [cause-define semantic_cause_of_language_command relationship]
+											   [have natural_language_command_frame execute_parse_tree parse_tree]]
+										     parse_trees]
+									       ]
+								       [have this-resource think_to_self 'I cannot parse.']]]]]]]]
+	  [[and [eq key_type `language] [cond [[eq key `command] [let [[symbols language_command]]
 								   [let [[parse_trees [get english_dictionary parse_trees symbols]]]
 								     [if parse_trees
 									 [prog [mapc [funk [parse_tree]

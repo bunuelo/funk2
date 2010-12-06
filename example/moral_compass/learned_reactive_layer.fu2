@@ -35,7 +35,7 @@
 		   [let [[language_command_frame [new semantic_frame [get [get this mind] semantic_realm]]]]
 		     [have learned_reactive_knowledge add_semantic_frame language_command_frame]
 		     [have language_command_frame add `interpretation `cause-of    semantic_cause_of_language_command]
-		     [have language_command_frame add `interpretation `possibility [new frame command `[pick up] direct_object direct_object]]]]]
+		     [have language_command_frame add `interpretation `possibility [frame command `[pick up] direct_object direct_object]]]]]
        this]]
 
 [deftypefunk learned_reactive_layer get semantic_visual_object [visual_object_name]

@@ -231,7 +231,7 @@
 			       [let [[symbols [reverse reverse_symbols]]]
 				 [terminal_format standard-terminal '\nSending symbols, ' symbols ', through ' [get isis_agent name] '\'s neural plug.']
 				 [let [[activate_resource [get [get isis_agent mind] resource `builtin_reactive `neural_plug `activate_resource]]]
-				   [have activate_resource command `learned_reactive `language `speak_language [append `[I hear] symbols [from nil]]]
+				   [have activate_resource command `learned_reactive `language `speak_language [append `[I hear] symbols `[from nil]]]
 				   [have activate_resource command `learned_reactive `language `hear_language_from_agent nil symbols]
 				   ]]]]]]]]]
        

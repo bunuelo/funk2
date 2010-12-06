@@ -1343,7 +1343,7 @@ f2ptr f2__simple_graph__as__dot_code(f2ptr cause, f2ptr this) {
       f2ptr edge__right_node        = f2__simple_graph_edge__right_node(cause, edge);
       f2ptr edge__left_node__label  = f2__simple_graph_node__label(cause, edge__left_node);
       f2ptr edge__right_node__label = f2__simple_graph_node__label(cause, edge__right_node);
-      f2ptr edge_code               = f2__graphviz__raw_labelled_edge(cause, edge__label, f2__graphviz__exp__as__name(cause, edge__left_node__label), f2__graphviz__exp__as__name(cause, edge__right_node__label));
+      f2ptr edge_code               = f2__graphviz__raw_labelled_edge(cause, edge__label, f2__graphviz__exp__as__name(cause, edge__left_node__label), f2__graphviz__exp__as__name(cause, edge__right_node__label), nil);
       edge_codes = f2cons__new(cause, edge_code, edge_codes);
       iter = f2__cons__cdr(cause, iter);
     }

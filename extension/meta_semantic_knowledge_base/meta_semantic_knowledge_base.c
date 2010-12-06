@@ -428,10 +428,17 @@ export_cefunk1(relationship_meta_semantic_object__as__graphviz_edge_code, this, 
 
 f2ptr raw__relationship_meta_semantic_object__as__graphviz_name(f2ptr cause, f2ptr this) {
   f2ptr edge_label           = raw__relationship_meta_semantic_object__label(cause, this);
+  f2__terminal_print(cause, edge_label);
   f2ptr semantic_frame       = raw__relationship_meta_semantic_object__source(cause, this);
   f2ptr value                = raw__relationship_meta_semantic_object__target(cause, this);
   f2ptr semantic_frame__name = f2__graphviz__exp__as__name(cause, semantic_frame);
-  f2ptr value__name          = f2__graphviz__exp__as__name(cause, value);
+  if (raw__larva__is_type(cause, semantic_frame__name)) {
+    return semantic_frame__name;
+  }
+  f2ptr value__name = f2__graphviz__exp__as__name(cause, value);
+  if (raw__larva__is_type(cause, value__name)) {
+    return value__name;
+  }
   return f2__graphviz__edge_name(cause, edge_label, semantic_frame__name, value__name);
 }
 

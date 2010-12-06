@@ -189,7 +189,7 @@
 		[if [not [get main_verb_group imperative]]
 		    [error bug_type        `main_verb_group_must_be_imperative
 			   main_verb_group main_verb_group]
-		  [let [[main_verb_group_symbols [get main_verb_group symbols]]]
+		  [let [[main_verb_group_symbols [print [get main_verb_group symbols]]]]
 		    [let [[natural_language_command [get this type_var_value `natural_language_command [get this symbols_key main_verb_group_symbols] nil]]]
 		      [if [null natural_language_command]
 			  [error bug_type                `do_not_know_natural_language_command

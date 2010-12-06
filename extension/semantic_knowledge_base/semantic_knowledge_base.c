@@ -1317,6 +1317,50 @@ f2ptr f2__semantic_frame__lookup_single_value(f2ptr cause, f2ptr this, f2ptr key
 export_cefunk3(semantic_frame__lookup_single_value, this, key_type, key, 0, "Returns the single value associated with the key_type and key.  If there is no value associated, nil is returned.  It is a bug if more than one value is associated.");
 
 
+void raw__semantic_frame__remove_all(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+  f2ptr realm                = raw__semantic_frame__realm(cause, this);
+  f2ptr frame                = raw__semantic_frame__frame(cause, this);
+  f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, realm, key_type);
+  f2ptr key__object_key      = raw__semantic_realm__object_key(cause, realm, key);
+  f2ptr set                  = raw__frame__add_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
+  if (set != nil) {
+    f2ptr elements = raw__set__elements(cause, set);
+    {
+      f2ptr iter = elements;
+      while (iter != nil) {
+	f2ptr element = f2__cons__car(cause, iter);
+	raw__semantic_frame__remove(cause, this, key_type, key, element);
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+  }
+}
+
+f2ptr f2__semantic_frame__remove_all(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+  if (! raw__semantic_frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__semantic_frame__remove_all(cause, this, key_type, key);
+  return nil;
+}
+export_cefunk3(semantic_frame__remove_all, this, key_type, key, 0, "Removes all associated values from this key_type and key.");
+
+
+void raw__semantic_frame__replace_all(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+  raw__semantic_frame__remove_all(cause, this, key_type, key);
+  raw__semantic_frame__add(cause, this, key_type, key, value);
+}
+
+f2ptr f2__semantic_frame__replace_all(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  if (! raw__semantic_frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__semantic_frame__replace_all(cause, this, key_type, key, value);
+  return nil;
+}
+export_cefunk4(semantic_frame__replace_all, this, key_type, key, value, 0, "Removes all associated values from this key_type and key, and adds the given value.");
+
+
 void raw__semantic_frame__know_of_addition_to_semantic_knowledge_base(f2ptr cause, f2ptr this, f2ptr semantic_knowledge_base) {
   f2ptr semantic_knowledge_base_set = raw__semantic_frame__semantic_knowledge_base_set(cause, this);
   f2__set__add(cause, semantic_knowledge_base_set, semantic_knowledge_base);
@@ -1465,6 +1509,8 @@ f2ptr f2__semantic_frame_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remove"),                                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__remove")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lookup"),                                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__lookup")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lookup_single_value"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__lookup_single_value")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remove_all"),                                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__remove_all")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "replace_all"),                                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__replace_all")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "know_of_addition_to_semantic_knowledge_base"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__know_of_addition_to_semantic_knowledge_base")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "recursively_add_to_set"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__recursively_add_to_set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_to_graph_with_node_ptypehash"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__add_to_graph_with_node_ptypehash")));}

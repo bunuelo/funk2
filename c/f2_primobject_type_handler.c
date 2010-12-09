@@ -51,6 +51,11 @@ f2ptr f2__add_type(f2ptr cause, f2ptr type_name, f2ptr type) {
     status(  "add_type warning: tried to add a new type that is not of type primobject_type.");
     return f2larva__new(cause, 1, nil);
   }
+  if (! raw__symbol__is_type(cause, type_name)) {
+    printf("\nadd_type warning: tried to add a new type with a name that is not of type symbol.");
+    status(  "add_type warning: tried to add a new type with a name that is not of type symbol.");
+    return f2larva__new(cause, 1, nil);
+  }
   funk2_primobject_type_handler__add_type(&(__funk2.primobject_type_handler), cause, type_name, type);
   return nil;
 }

@@ -45,7 +45,15 @@ void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* th
   funk2_processor_mutex__unlock(&(this->type_hash_mutex));
 }
 
-f2ptr f2__add_type(f2ptr cause, f2ptr type_name, f2ptr type) {funk2_primobject_type_handler__add_type(&(__funk2.primobject_type_handler), cause, type_name, type); return nil;}
+f2ptr f2__add_type(f2ptr cause, f2ptr type_name, f2ptr type) {
+  if (! raw__primobject_type__is_type(cause, type)) {
+    printf("\nadd_type warning: tried to add a new type that is not of type primobject_type.");
+    status(  "add_type warning: tried to add a new type that is not of type primobject_type.");
+    return f2larva__new(cause, 1, nil);
+  }
+  funk2_primobject_type_handler__add_type(&(__funk2.primobject_type_handler), cause, type_name, type);
+  return nil;
+}
 def_pcfunk2(add_type, type_name, type, return f2__add_type(this_cause, type_name, type));
 
 f2ptr funk2_primobject_type_handler__types(funk2_primobject_type_handler_t* this, f2ptr cause) {

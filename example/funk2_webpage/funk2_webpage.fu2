@@ -369,7 +369,8 @@
 
 [defunk compile_funk2_about [root_dir posts examples]
   [let [[about [funk2_about posts examples]]]
-    [have about save [string-concat root_dir 'index.html']]
+    [shelter [mkdir  [string-concat root_dir 'about']]]
+    [have about save [string-concat root_dir 'about/index.html']]
     nil]]
 
 
@@ -552,7 +553,7 @@
 
 [defunk compile_funk2_download [root_dir posts examples]
   [let [[download [funk2_download posts examples]]]
-    [shelter [mkdir [string-concat root_dir 'download']]]
+    [shelter [mkdir     [string-concat root_dir 'download']]]
     [have download save [string-concat root_dir 'download/index.html']]
     nil]]
 

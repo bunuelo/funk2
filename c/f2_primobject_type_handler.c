@@ -43,7 +43,7 @@ void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* th
     printf(  "\nadd_type warning: tried to add a new type that is not of type primobject_type.");
     error(nil, "add_type warning: tried to add a new type that is not of type primobject_type.");
   }
-  if (! raw__symbol__is_type(cause, type_name)) {
+  if ((type_name != nil) && (! raw__symbol__is_type(cause, type_name))) {
     printf(  "\nadd_type warning: tried to add a new type with a name that is not of type symbol.");
     error(nil, "add_type warning: tried to add a new type with a name that is not of type symbol.");
   }

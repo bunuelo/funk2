@@ -39,6 +39,14 @@ void funk2_primobject_type_handler__reset_type_hash(funk2_primobject_type_handle
 }
 
 void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name, f2ptr type) {
+  if (! raw__primobject_type__is_type(cause, type)) {
+    printf(  "\nadd_type warning: tried to add a new type that is not of type primobject_type.");
+    error(nil, "add_type warning: tried to add a new type that is not of type primobject_type.");
+  }
+  if (! raw__symbol__is_type(cause, type_name)) {
+    printf(  "\nadd_type warning: tried to add a new type with a name that is not of type symbol.");
+    error(nil, "add_type warning: tried to add a new type with a name that is not of type symbol.");
+  }
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
   funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
   f2__ptypehash__add(cause, this->type_hash, type_name, type);

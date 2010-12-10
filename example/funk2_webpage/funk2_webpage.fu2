@@ -891,8 +891,8 @@
 [let [[root_dir '/home/neptune/Desktop/www/funk2/']
       [posts    [generate_all_posts]]
       [examples [generate_all_examples]]]
-
-  [defunk webpage-save             [] [compile_webpage             root_dir posts examples]]
+  
+  [defunk webpage-save             [] [compile_funk2_webpage       root_dir posts examples]]
   [defunk funk2_homepage-save      [] [compile_funk2_homepage      root_dir posts examples]]
   [defunk funk2_about-save         [] [compile_funk2_about         root_dir posts examples]]
   [defunk funk2_news-save          [] [compile_funk2_news          root_dir posts examples]]

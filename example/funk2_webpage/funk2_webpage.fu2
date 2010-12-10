@@ -400,7 +400,7 @@
   [let [[news [funk2_news posts examples]]]
     [have news save [string-concat root_dir 'index.html']]
     [shelter [mkdir [string-concat root_dir 'news']]]
-    [have news save [string-concat root_dir 'news/news.html']]
+    [have news save [string-concat root_dir 'news/index.html']]
     nil]]
 
 

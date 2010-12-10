@@ -21,6 +21,19 @@
 
 #include "funk2.h"
 
+f2ptr raw__nil__as__string(f2ptr cause, f2ptr this) {
+  return new__string(cause, "[]");
+}
+
+f2ptr f2__nil__as__string(f2ptr cause, f2ptr this) {
+  if (this != nil) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__nil__as__string(cause, this);
+}
+def_pcfunk1(nil__as__string, this, return f2__nil__as__string(this_cause, this));
+
+
 f2ptr raw__nil__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   {
     f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
@@ -45,6 +58,7 @@ def_pcfunk2(nil__terminal_print_with_frame, this, terminal_print_frame, return f
 
 f2ptr f2nil__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, nil);
+  {char* slot_name = "as-string";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.nil_type.as__string__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.nil_type.terminal_print_with_frame__funk);}
   return this;
 }
@@ -62,6 +76,8 @@ void f2__nil__initialize() {
   
   f2ptr cause = initial_cause();
   
+  {char* str = "as-string"; __funk2.globalenv.object_type.nil_type.as__string__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(nil__as__string, this, terminal_print_frame, cfunk, 1, "prints the nil value using the given terminal_print_frame object."); __funk2.globalenv.object_type.nil_type.as__string__funk = never_gc(cfunk);}
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.nil_type.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(nil__terminal_print_with_frame, this, terminal_print_frame, cfunk, 1, "prints the nil value using the given terminal_print_frame object."); __funk2.globalenv.object_type.nil_type.terminal_print_with_frame__funk = never_gc(cfunk);}
   

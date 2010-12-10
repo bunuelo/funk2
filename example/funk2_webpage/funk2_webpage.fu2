@@ -192,7 +192,6 @@
 	       '	</div>'
 	       '	<div id="menu">'
 	       '		<ul id="main">'
-	       '			<li class="current_page_item"><a href="/">Homepage</a></li>'
 	       '			<li><a href="/about">About</a></li>'
 	       '			<li><a href="/news">News</a></li>'
 	       '			<li><a href="/documentation">Documentation</a></li>'
@@ -317,29 +316,6 @@
 	       '</body>'
 	       '</html>']]
   
-[defunk funk2_homepage-content [posts]
-  [string-prog [stringlist-prog [let [[index 0]]
-				  [mapcar [funk [post]
-						[= index [+ index 1]]
-						[string-prog '<div class="post">'
-							     [stringlist-concat `['<h1 class="title"><a name=post' ,[exp-as-string index] '>' ,[get post title] '</a></h1>']]
-							     [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get post date] ' by ' ,[get post author] '</small></p>']]
-							     '  <div class="entry">'
-							     [get post entry]
-							     '	<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
-							     '  </div>'
-							     '</div>']]
-					  posts]]]
-	       ]]
-
-[defunk funk2_homepage [posts examples]
-  [funk2_page posts examples
-	      [funk2_homepage-content posts]]]
-
-[defunk compile_funk2_homepage [root_dir posts examples]
-  [let [[homepage [funk2_homepage posts examples]]]
-    [have homepage save [string-concat root_dir 'index.html']]
-    nil]]
 
 
 [defunk funk2_about-content []
@@ -393,25 +369,44 @@
 
 [defunk compile_funk2_about [root_dir posts examples]
   [let [[about [funk2_about posts examples]]]
-    [shelter [mkdir [string-concat root_dir 'about']]]
-    [have about save [string-concat root_dir 'about/index.html']]
+    [have about save [string-concat root_dir 'index.html']]
     nil]]
 
 
-[defunk funk2_news-content []
-  [string-prog '<h1>News</h1>'
-	       ''
-	       '<p>Coming soon!</p>']]
+
+
+
+
+[defunk funk2_news-content [posts]
+  [string-prog [stringlist-prog [let [[index 0]]
+				  [mapcar [funk [post]
+						[= index [+ index 1]]
+						[string-prog '<div class="post">'
+							     [stringlist-concat `['<h1 class="title"><a name=post' ,[exp-as-string index] '>' ,[get post title] '</a></h1>']]
+							     [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get post date] ' by ' ,[get post author] '</small></p>']]
+							     '  <div class="entry">'
+							     [get post entry]
+							     '	<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
+							     '  </div>'
+							     '</div>']]
+					  posts]]]
+	       ]]
 
 [defunk funk2_news [posts examples]
   [funk2_page posts examples
-	      [funk2_news-content]]]
+	      [funk2_news-content posts]]]
 
 [defunk compile_funk2_news [root_dir posts examples]
   [let [[news [funk2_news posts examples]]]
+    [have news save [string-concat root_dir 'index.html']]
     [shelter [mkdir [string-concat root_dir 'news']]]
-    [have news save [string-concat root_dir 'news/index.html']]
+    [have news save [string-concat root_dir 'news/news.html']]
     nil]]
+
+
+
+
+
 
 
 [defunk funk2_object_documentation [posts examples type_name]
@@ -876,7 +871,6 @@
 	]]
 
 [defunk compile_funk2_webpage [root_dir posts examples]
-  [print 'compiling funk2 homepage']      [compile_funk2_homepage      root_dir posts examples]
   [print 'compiling funk2 about']         [compile_funk2_about         root_dir posts examples]
   [print 'compiling funk2 news']          [compile_funk2_news          root_dir posts examples]
   [print 'compiling funk2 documentation'] [compile_funk2_documentation root_dir posts examples]
@@ -893,7 +887,6 @@
       [examples [generate_all_examples]]]
   
   [defunk webpage-save             [] [compile_funk2_webpage       root_dir posts examples]]
-  [defunk funk2_homepage-save      [] [compile_funk2_homepage      root_dir posts examples]]
   [defunk funk2_about-save         [] [compile_funk2_about         root_dir posts examples]]
   [defunk funk2_news-save          [] [compile_funk2_news          root_dir posts examples]]
   [defunk funk2_documentation-save [] [compile_funk2_documentation root_dir posts examples]]

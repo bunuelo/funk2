@@ -18,5 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage funk2_webpage
-  :sources ['funk2_webpage.fu2']]
+  :packages [math]
+   :sources ['funk2_webpage.fu2']]
 

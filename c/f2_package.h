@@ -87,7 +87,7 @@ declare_primobject_5_slot(package,
 			  object_types_defined
 			  );
 
-f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies);
+f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies, f2ptr object_types_defined);
 
 f2ptr f2package__primobject_type__new_aux(f2ptr cause);
 

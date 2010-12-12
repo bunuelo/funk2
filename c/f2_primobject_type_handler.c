@@ -50,7 +50,7 @@ void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* th
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
   funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
   printf("\nfunk2_primobject_type_handler__add_type adding type."); fflush(stdout);
-  f2__terminal_print(cause, type_name);
+  f2__print(cause, type_name);
   if (cause != nil) {
     printf("\nfunk2_primobject_type_handler__add_type adding type: debug 1"); fflush(stdout);
     f2ptr object_types_defined__symbol = new__symbol(cause, "cause-object_types_defined");

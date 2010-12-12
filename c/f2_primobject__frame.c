@@ -163,7 +163,7 @@ def_pcfunk5(frame__type_var_value__set, this, type, var, value, not_defined_valu
 
 boolean_t raw__frame__contains_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
   f2ptr not_defined_value = __funk2.primobject__frame.type_variable_not_defined__symbol;
-  f2ptr value = raw__frame__lookup_type_var_value(cause, this, type, var, not_defined_value);
+  f2ptr value             = raw__frame__lookup_type_var_value(cause, this, type, var, not_defined_value);
   return (! raw__eq(cause, value, not_defined_value));
 }
 

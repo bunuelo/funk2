@@ -47,6 +47,10 @@ declare_object_type_18_slot(cause,
 			    event_graph_last_event,
 			    critics,
 			    
+			    f2ptr type_var_defined__symbol;
+			    f2ptr type_var_defined__funk;
+			    f2ptr var_defined__symbol;
+			    f2ptr var_defined__funk;
 			    f2ptr define__symbol;
 			    f2ptr define__funk;
 			    f2ptr define__funk__symbol;
@@ -105,15 +109,19 @@ declare_primobject_18_slot(cause,
 			   critics
 			   );
 
-f2ptr  f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source);
-f2ptr  f2__cause__new_imaginary(                f2ptr cause, f2ptr imagination_name);
-f2ptr  f2__cause__add_fiber(                    f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr  f2__cause__remove_fiber(                 f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr  f2__cause(                               f2ptr cause);
-f2ptr  f2__cause__bytecode_tracing_on(          f2ptr cause, f2ptr this);
-f2ptr  f2__cause__lookup_type_var_value(        f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
-f2ptr raw__cause__lookup(                       f2ptr cause, f2ptr this, f2ptr var);
-f2ptr  f2__cause__lookup(                       f2ptr cause, f2ptr this, f2ptr var);
+f2ptr      f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source);
+f2ptr      f2__cause__new_imaginary(                f2ptr cause, f2ptr imagination_name);
+f2ptr      f2__cause__add_fiber(                    f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr      f2__cause__remove_fiber(                 f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr      f2__cause(                               f2ptr cause);
+f2ptr      f2__cause__bytecode_tracing_on(          f2ptr cause, f2ptr this);
+f2ptr      f2__cause__lookup_type_var_value(        f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
+boolean_t raw__cause__type_var_defined(             f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
+f2ptr      f2__cause__type_var_defined(             f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
+boolean_t raw__cause__var_defined(                  f2ptr cause, f2ptr this, f2ptr var);
+f2ptr      f2__cause__var_defined(                  f2ptr cause, f2ptr this, f2ptr var);
+f2ptr     raw__cause__lookup(                       f2ptr cause, f2ptr this, f2ptr var);
+f2ptr      f2__cause__lookup(                       f2ptr cause, f2ptr this, f2ptr var);
 
 f2ptr f2cause__primobject_type__new_aux(f2ptr cause);
 

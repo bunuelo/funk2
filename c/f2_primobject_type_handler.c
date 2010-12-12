@@ -49,6 +49,13 @@ void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* th
   }
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
   funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
+  if (cause != nil) {
+    f2ptr object_types_defined__symbol = new__symbol(cause, "cause-object_types_defined");
+    if (raw__cause__var_defined(cause, cause, object_types_defined__symbol)) {
+      f2ptr object_types_defined = raw__cause__lookup(cause, cause, object_types_defined__symbol);
+      raw__cause__define(cause, cause, object_types_defined__symbol, f2cons__new(cause, type_name, object_types_defined));
+    }
+  }
   f2__ptypehash__add(cause, this->type_hash, type_name, type);
   funk2_processor_mutex__unlock(&(this->type_hash_mutex));
 }

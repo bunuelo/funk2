@@ -250,11 +250,11 @@ f2ptr raw__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr
     }
     cause_iter = f2__ptype__cause(cause, cause_iter);
   }
-  return f2larva__new(cause, f2__frame__new(cause, f2list8__new(cause,
-								new__symbol(cause, "bug_type"),      new__symbol(cause, "cannot_set_value_of_undefined_cause_variable"),
-								new__symbol(cause, "funkname"),      new__symbol(cause, "cause-type_var_value-set"),
-								new__symbol(cause, "variable_type"), type,
-								new__symbol(cause, "variable_name"), var)));
+  return f2larva__new(cause, 621, f2__bug__new(cause, f2integer__new(cause, 621), f2__frame__new(cause, f2list8__new(cause,
+														     new__symbol(cause, "bug_type"),      new__symbol(cause, "cannot_set_value_of_undefined_cause_variable"),
+														     new__symbol(cause, "funkname"),      new__symbol(cause, "cause-type_var_value-set"),
+														     new__symbol(cause, "variable_type"), type,
+														     new__symbol(cause, "variable_name"), var))));
 }
 
 f2ptr f2__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {

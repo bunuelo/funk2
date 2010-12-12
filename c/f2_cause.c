@@ -242,13 +242,55 @@ f2ptr f2__cause__var_defined(f2ptr cause, f2ptr this, f2ptr var) {
 def_pcfunk2(cause__var_defined, this, var, return f2__cause__var_defined(this_cause, this, var));
 
 
+boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
+  if (! this) {
+    return (cause__allocate_traced_arrays__default_value != nil);
+  }
+  if (! raw__cause__is_type(cause, this)) {
+    status("error: cause is not a cause");
+    return boolean__false;
+  }
+  return (f2cause__allocate_traced_arrays(this, cause) != nil);
+}
+
+void raw__cause__define_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+  f2ptr cause_frame = f2cause__frame(this, cause);
+  f2__frame__add_type_var_value(cause, cause_frame, type, var, value);
+}
+
+f2ptr f2__cause__define_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+  if (! raw__cause__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__cause__define_type_var(cause, this, type, var, value);
+  return nil;
+}
+
+
+void raw__cause__define(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
+  raw__cause__define_type_var(cause, this, __funk2.primobject__frame.variable__symbol, var, value);
+}
+
 f2ptr f2__cause__define(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
-  return f2__cause__define_type_var(cause, this, __funk2.primobject__frame.variable__symbol, var, value);
+  if (! raw__cause__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__cause__define_type_var(cause, this, __funk2.primobject__frame.variable__symbol, var, value);
+  return nil;
 }
 def_pcfunk3(cause__define, this, var, value, return f2__cause__define(this_cause, this, var, value));
 
+
+void raw__cause__define__funk(f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value) {
+  raw__cause__define_type_var(cause, this, __funk2.primobject__frame.funk_variable__symbol, funkvar, value);
+}
+
 f2ptr f2__cause__define__funk(f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value) {
-  return f2__cause__define_type_var(cause, this, __funk2.primobject__frame.funk_variable__symbol, funkvar, value);
+  if (! raw__cause__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__cause__define__funk(cause, this, funkvar, value);
+  return nil;
 }
 def_pcfunk3(cause__define__funk, this, funkvar, value, return f2__cause__define__funk(this_cause, this, funkvar, value));
 

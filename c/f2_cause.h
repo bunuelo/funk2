@@ -120,6 +120,13 @@ boolean_t raw__cause__type_var_defined(             f2ptr cause, f2ptr this, f2p
 f2ptr      f2__cause__type_var_defined(             f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
 boolean_t raw__cause__var_defined(                  f2ptr cause, f2ptr this, f2ptr var);
 f2ptr      f2__cause__var_defined(                  f2ptr cause, f2ptr this, f2ptr var);
+boolean_t raw__cause__allocate_traced_arrays(       f2ptr cause, f2ptr this);
+void      raw__cause__define_type_var(              f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
+f2ptr      f2__cause__define_type_var(              f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
+void      raw__cause__define(                       f2ptr cause, f2ptr this, f2ptr var, f2ptr value);
+f2ptr      f2__cause__define(                       f2ptr cause, f2ptr this, f2ptr var, f2ptr value);
+void      raw__cause__define__funk(                 f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value);
+f2ptr      f2__cause__define__funk(                 f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value);
 f2ptr     raw__cause__lookup(                       f2ptr cause, f2ptr this, f2ptr var);
 f2ptr      f2__cause__lookup(                       f2ptr cause, f2ptr this, f2ptr var);
 

@@ -465,25 +465,6 @@ f2ptr f2__conslistlist__append(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(conslistlist__append, this, return f2__conslistlist__append(this_cause, this));
 
-// cause
-
-boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
-  if (! this) {
-    return (cause__allocate_traced_arrays__default_value != nil);
-  }
-  if (! raw__cause__is_type(cause, this)) {
-    status("error: cause is not a cause");
-    return boolean__false;
-  }
-  return (f2cause__allocate_traced_arrays(this, cause) != nil);
-}
-
-f2ptr f2__cause__define_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
-  f2ptr cause_frame = f2cause__frame(this, cause);
-  f2__frame__add_type_var_value(cause, cause_frame, type, var, value);
-  return nil;
-}
-
 // time
 
 f2ptr f2__time(f2ptr cause) {

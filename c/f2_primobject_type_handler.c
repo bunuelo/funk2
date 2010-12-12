@@ -53,7 +53,7 @@ void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* th
     f2ptr object_types_defined__symbol = new__symbol(cause, "cause-object_types_defined");
     if (raw__cause__var_defined(cause, cause, object_types_defined__symbol)) {
       f2ptr object_types_defined = raw__cause__lookup(cause, cause, object_types_defined__symbol);
-      raw__cause__define(cause, cause, object_types_defined__symbol, f2cons__new(cause, type_name, object_types_defined));
+      raw__cause__var_value__set(cause, cause, object_types_defined__symbol, f2cons__new(cause, type_name, object_types_defined));
     }
   }
   f2__ptypehash__add(cause, this->type_hash, type_name, type);

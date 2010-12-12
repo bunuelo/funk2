@@ -210,10 +210,8 @@ boolean_t raw__cause__type_var_defined(f2ptr cause, f2ptr this, f2ptr type, f2pt
   f2ptr cause_iter = this;
   while (cause_iter != nil) {
     f2ptr cause__frame = f2cause__frame(cause_iter, cause);
-    if (cause__frame) {
-      if (raw__frame__contains_type_var(cause, cause__frame, type, var)) {
-	return boolean__true;
-      }
+    if (raw__frame__contains_type_var(cause, cause__frame, type, var)) {
+      return boolean__true;
     }
     cause_iter = f2__ptype__cause(cause, cause_iter);
   }
@@ -240,6 +238,45 @@ f2ptr f2__cause__var_defined(f2ptr cause, f2ptr this, f2ptr var) {
   return f2bool__new(raw__cause__var_defined(cause, this, var));
 }
 def_pcfunk2(cause__var_defined, this, var, return f2__cause__var_defined(this_cause, this, var));
+
+
+f2ptr raw__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+  f2ptr cause_iter = this;
+  while (cause_iter != nil) {
+    f2ptr cause__frame = f2cause__frame(cause_iter, cause);
+    if (raw__frame__contains_type_var(cause, cause__frame, type, var)) {
+      raw__frame__add_type_var_value(cause, cause__frame, type, var, value);
+      return nil;
+    }
+    cause_iter = f2__ptype__cause(cause, cause_iter);
+  }
+  return f2larva__new(cause, f2__frame__new(cause, f2list8__new(cause,
+								new__symbol(cause, "bug_type"),      new__symbol(cause, "cannot_set_value_of_undefined_cause_variable"),
+								new__symbol(cause, "funkname"),      new__symbol(cause, "cause-type_var_value-set"),
+								new__symbol(cause, "variable_type"), type,
+								new__symbol(cause, "variable_name"), var)));
+}
+
+f2ptr f2__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+  if (! raw__cause__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cause__type_var_value__set(cause, this, type, var, value);
+}
+def_pcfunk4(cause__type_var_value__set, this, type, var, value, return f2__cause__type_var_value__set(this_cause, this, type, var, value));
+
+
+f2ptr raw__cause__var_value__set(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
+  return raw__cause__type_var_value__set(cause, this, __funk2.primobject__frame.variable__symbol, var, value);
+}
+
+f2ptr f2__cause__var_value__set(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
+  if (! raw__cause__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cause__var_value__set(cause, this, var, value);
+}
+def_pcfunk3(cause__var_value__set, this, var, value, return f2__cause__var_value__set(this_cause, this, var, value));
 
 
 boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
@@ -620,6 +657,8 @@ f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2cause__primobject_type__new(cause);
   {char* slot_name = "type_var_defined";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.type_var_defined__funk);}
   {char* slot_name = "var_defined";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.var_defined__funk);}
+  {char* slot_name = "type_var_value";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.type_var_value__set__funk);}
+  {char* slot_name = "var_value";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.var_value__set__funk);}
   {char* slot_name = "define";                             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk);}
   {char* slot_name = "define-funk";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__funk);}
   {char* slot_name = "lookup";                             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk);}
@@ -674,6 +713,10 @@ void f2__cause__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__type_var_defined, this, type, var, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.type_var_defined__funk = never_gc(cfunk);}
   {char* symbol_str = "var_defined"; __funk2.globalenv.object_type.primobject.primobject_type_cause.var_defined__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__var_defined, this, type, var, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.var_defined__funk = never_gc(cfunk);}
+  {char* symbol_str = "type_var_value"; __funk2.globalenv.object_type.primobject.primobject_type_cause.type_var_value__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__type_var_value__set, this, type, var, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.type_var_value__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "var_value"; __funk2.globalenv.object_type.primobject.primobject_type_cause.var_value__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__var_value__set, this, type, var, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.var_value__set__funk = never_gc(cfunk);}
   {char* symbol_str = "define"; __funk2.globalenv.object_type.primobject.primobject_type_cause.define__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__define, this, var, value, cfunk, 0, "primobject_type funktion (defined in f2_cause.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk = never_gc(cfunk);}
   {char* symbol_str = "define-funk"; __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

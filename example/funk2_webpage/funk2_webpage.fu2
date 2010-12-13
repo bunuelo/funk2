@@ -471,8 +471,7 @@
 					  '<ul>'
 					  [stringlist-prog [mapcar [funk [package_dependency]
 									 [print [string-concat '  package dependency: ' [get package_dependency as-string]]]
-									 [let [[funk [get type type_var_value `get key_name nil]]]
-									   [string-prog [string-concat '<li><tt>' [get package_dependency as-string] '</tt></li>']]]]
+									 [string-prog [string-concat '<li><tt>' [get package_dependency as-string] '</tt></li>']]]
 								   [get package package_dependencies]]]
 					  '</ul>'
 					  ''

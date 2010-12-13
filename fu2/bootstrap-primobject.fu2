@@ -80,7 +80,7 @@
 			  [t                       [error bug_type      `unrecognized_deframe_property_type
 							  property_type property_type]]]]]]
 	  properties]
-    [let [[primobject_type [primobject_type-new nil nil]]
+    [let [[primobject_type [primobject_type-new nil]]
 	  [type_create_funk [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-type_create']] as-symbol] [this]
 							[if [not [frame-contains_var this `type]]
 							    [frame-add_var_value this `type [quote ,type_name]]]

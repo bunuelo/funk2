@@ -471,7 +471,7 @@
 					  '<ul>'
 					  [stringlist-prog [mapcar [funk [package_dependency]
 									 [print [string-concat '  package dependency: ' [get package_dependency as-string]]]
-									 [string-prog [string-concat '<li><tt>' [get package_dependency as-string] '</tt></li>']]]
+									 [string-prog [string-concat '<li><a href=../' [get package_dependency as-string] '><tt>' [get package_dependency as-string] '</tt></a></li>']]]
 								   [get package package_dependencies]]]
 					  '</ul>'
 					  ''
@@ -482,6 +482,7 @@
 					      [get documentation as-string]]]]]]]]
 
 [defunk funk2_documentation-all_packages-save [root_dir posts examples]
+  [shelter [mkdir [string-concat root_dir 'documentation/package']]]
   [mapc [funk [package_name]
 	      [let [[package_name_string   [get package_name as-string]]
 		    [package_documentation [funk2_package_documentation posts examples package_name]]]

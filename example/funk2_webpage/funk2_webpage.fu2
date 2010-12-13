@@ -481,6 +481,7 @@
 						documentation
 					      [get documentation as-string]]]
 					  ''
+					  '<h2>Objects Defined</h2>'
 					  '<ul>'
 					  [stringlist-prog [mapcar [funk [object_type_defined]
 									 [print [string-concat '  object type defined: ' [get object_type_defined as-string]]]

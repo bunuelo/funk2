@@ -454,6 +454,14 @@
 			   ''
 			   ]]]
 
+[defunk funk2_documentation-all_objects-save [root_dir posts examples]
+  [mapc [funk [type_name]
+	      [let [[type_name_string     [get type_name as-string]]
+		    [object_documentation [funk2_object_documentation posts examples type_name]]]
+		[shelter [mkdir [string-concat root_dir 'documentation/object/' type_name_string]]]
+		[have object_documentation save [string-concat root_dir 'documentation/object/' type_name_string '/index.html']]]]
+	[system-type_names]]]
+
 [defunk funk2_documentation-content [root_dir posts examples]
   [shelter [mkdir [string-concat root_dir 'documentation']]]
   [shelter [mkdir [string-concat root_dir 'documentation/object']]]
@@ -473,20 +481,16 @@
 	       '</tt>'
 	       ''
 	       '<p>In the short example above, we have defined a global variable named <tt>a</tt> that stores a list of numbers.'
-	       'Then, we get the <tt>car</tt> and <tt>cdr</tt> slot values of this object, like in the Lisp programming language.</p>'
-	       'Finally, we execute the <tt>sort</tt> funk and give it the <tt>></tt> comparison function.'
+	       'Then, we get the <tt>car</tt> and <tt>cdr</tt> slot values of this object, like in the Lisp programming language.'
+	       'Finally, we execute the <tt>sort</tt> funk and give it the <tt>></tt> comparison function.</p>'
 	       ''
-	       '<h2>Object Types</h2>'
+	       '<h2>All Object Types</h2>'
 	       ''
 	       '<ul>'
 	       [stringlist-prog [mapcar [funk [type_name_string]
 					      [string-concat '<li><a href="/documentation/object/' type_name_string '"><strong>' type_name_string '</strong></a></li>']]
 					[have [mapcar [funk [type_name]
-							    [let [[type_name_string     [get type_name as-string]]
-								  [object_documentation [funk2_object_documentation posts examples type_name]]]
-							      [shelter [mkdir [string-concat root_dir 'documentation/object/' type_name_string]]]
-							      [have object_documentation save [string-concat root_dir 'documentation/object/' type_name_string '/index.html']]
-							      type_name_string]]
+							    [get type_name as-string]]
 						      [system-type_names]]
 					      sort &>]]]
 	       '</ul>'
@@ -500,7 +504,7 @@
   [let [[documentation [funk2_documentation root_dir posts examples]]]
     [shelter [mkdir [string-concat root_dir 'documentation']]]
     [have documentation save [string-concat root_dir 'documentation/index.html']]
-    
+    [funk2_documentation-all_objects-save root_dir posts examples]
     nil]]
 
 

@@ -164,6 +164,9 @@
 						 [conslist @source_dependencies]
 						 ,documentation]]]]
 
+[defunk package_names []
+  [get packages_frame keys]]
+
 [defunk lookup-package [name]
   [have packages_frame lookup name]]
 

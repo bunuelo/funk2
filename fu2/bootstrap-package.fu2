@@ -114,7 +114,7 @@
 				  'extension/image/'
 				  'extension/image_sequence/'
 				  'extension/meta_semantic_frame_ball/'
-				  'extension/meta_semantic_knowledge_base'
+				  'extension/meta_semantic_knowledge_base/'
 				  'extension/movie/'
 				  'extension/forward_planner/'
 				  'extension/frame_ball/'
@@ -159,8 +159,7 @@
 						 [conslist @[mapcar [funk [package_dependency]
 									  `[quote ,package_dependency]]
 								    package_dependencies]]
-						 [conslist @source_dependencies]
-						 nil]]]]
+						 [conslist @source_dependencies]]]]]
 
 [defunk lookup-package [name]
   [have packages_frame lookup name]]
@@ -200,7 +199,9 @@
 		    [mapc [funk [source_dependency]
 				[package_filename-load [pathname-concat [get package pathname] source_dependency]]]
 			  [get package source_dependencies]]
-		    [set package object_types_defined cause-object_types_defined]]]]
+		    [mapc [funk [object_type_defined]
+				[have [get package object_types_defined_set] add object_type_defined]]
+			  cause-object_types_defined]]]]
 
 [defunk package-load_if_modified [name]
   [let [[package             [lookup-package name]]
@@ -215,15 +216,19 @@
 		  [if dependency_was_loaded
 		      [= loaded_a_dependency t]]]]
 	  [get package package_dependencies]]
-    [mapc [funk [source_dependency]
-		[let [[filename [pathname-concat [get package pathname] source_dependency]]]
-		  [if loaded_a_dependency
-		      [prog [package_filename-load filename]
-			    [= package_was_loaded t]]
-		    [let [[a_file_was_loaded [load-if-modified filename]]]
-		      [if a_file_was_loaded
-			  [= package_was_loaded t]]]]]]
-	  [get package source_dependencies]]
+    [with-new-cause [cause-define cause-object_types_defined nil]
+		    [mapc [funk [source_dependency]
+				[let [[filename [pathname-concat [get package pathname] source_dependency]]]
+				  [if loaded_a_dependency
+				      [prog [package_filename-load filename]
+					    [= package_was_loaded t]]
+				    [let [[a_file_was_loaded [load-if-modified filename]]]
+				      [if a_file_was_loaded
+					  [= package_was_loaded t]]]]]]
+			  [get package source_dependencies]]
+		    [mapc [funk [object_type_defined]
+				[have [get package object_types_defined_set] add object_type_defined]]
+			  cause-object_types_defined]]
     [or loaded_a_dependency
 	package_was_loaded]]]
 

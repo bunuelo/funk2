@@ -48,7 +48,7 @@ declare_object_type_5_slot(package,
 			   name,
 			   package_dependencies,
 			   source_dependencies,
-			   object_types_defined,
+			   object_types_defined_set,
 			   );
 
 #endif // F2__PACKAGE__TYPES__H
@@ -84,10 +84,10 @@ declare_primobject_5_slot(package,
 			  name,
 			  package_dependencies,
 			  source_dependencies,
-			  object_types_defined
+			  object_types_defined_set
 			  );
 
-f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies, f2ptr object_types_defined);
+f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies);
 
 f2ptr f2package__primobject_type__new_aux(f2ptr cause);
 

@@ -60,7 +60,7 @@ void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* th
     if (raw__cause__var_defined(cause, cause, object_types_defined__symbol)) {
       printf("\nfunk2_primobject_type_handler__add_type adding type: debug 2"); fflush(stdout);
       f2ptr object_types_defined = raw__cause__lookup(cause, cause, object_types_defined__symbol);
-      f2__terminal_print(cause, object_types_defined);
+      //f2__terminal_print(cause, object_types_defined);
       raw__cause__var_value__set(cause, cause, object_types_defined__symbol, f2cons__new(cause, type_name, object_types_defined));
       printf("\nfunk2_primobject_type_handler__add_type adding type: debug 3"); fflush(stdout);
     }

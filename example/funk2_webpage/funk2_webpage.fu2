@@ -542,7 +542,8 @@
   [let [[documentation [funk2_documentation root_dir posts examples]]]
     [shelter [mkdir [string-concat root_dir 'documentation']]]
     [have documentation save [string-concat root_dir 'documentation/index.html']]
-    [funk2_documentation-all_objects-save root_dir posts examples]
+    [funk2_documentation-all_packages-save root_dir posts examples]
+    [funk2_documentation-all_objects-save  root_dir posts examples]
     nil]]
 
 

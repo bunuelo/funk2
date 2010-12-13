@@ -1097,7 +1097,7 @@ declare_primobject_3_slot(compound_object, compound_object_type, frame, part_fra
 
 // primobject_type
 
-declare_primobject_1_slot(primobject_type, parents);
+declare_primobject_1_slot(primobject_type, parents, documentation);
 
 // place
 

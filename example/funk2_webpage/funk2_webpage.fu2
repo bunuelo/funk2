@@ -476,10 +476,10 @@
 					  '</ul>'
 					  ''
 					  '<h2>Documentation</h2>'
-					  [get package documentation]
-					  ]]
-			   ''
-			   ]]]
+					  [let [[documentation [get package documentation]]]
+					    [if [is-type `string documentation]
+						documentation
+					      [get documentation as-string]]]]]]]]
 
 [defunk funk2_documentation-all_packages-save [root_dir posts examples]
   [mapc [funk [package_name]

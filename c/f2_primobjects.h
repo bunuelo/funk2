@@ -388,8 +388,8 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   f2ptr f2__##name##__type(f2ptr cause, f2ptr x) {return __##name##__symbol;} \
   def_pcfunk1(name##__type, x, return f2__##name##__type(this_cause, x)); \
    \
-  f2ptr f2##name##__primobject_type__new(f2ptr cause) { \
-    f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil)); \
+  f2ptr f2##name##__primobject_type__new(f2ptr cause) {			\
+    f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil), nil); \
     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), __funk2.globalenv.object_type.primobject.primobject_type_##name.is_type__funk); \
     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    __funk2.globalenv.object_type.primobject.primobject_type_##name.type__funk); \
     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     __funk2.globalenv.object_type.primobject.primobject_type_##name.new__funk); \

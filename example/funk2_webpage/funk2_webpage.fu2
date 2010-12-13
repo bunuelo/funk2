@@ -479,7 +479,15 @@
 					  [let [[documentation [get package documentation]]]
 					    [if [is-type `string documentation]
 						documentation
-					      [get documentation as-string]]]]]]]]
+					      [get documentation as-string]]]
+					  ''
+					  '<ul>'
+					  [stringlist-prog [mapcar [funk [object_type_defined]
+									 [print [string-concat '  object type defined: ' [get object_type_defined as-string]]]
+									 [string-prog [string-concat '<li><a href=../../object/' [get object_type_defined as-string] '><tt>' [get object_type_defined as-string] '</tt></a></li>']]]
+								   [get package object_types_defined]]]
+					  '</ul>'
+					  ]]]]]
 
 [defunk funk2_documentation-all_packages-save [root_dir posts examples]
   [shelter [mkdir [string-concat root_dir 'documentation/package']]]

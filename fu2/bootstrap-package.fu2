@@ -144,14 +144,16 @@
 
 [defmetro defpackage [name :rest dependencies]
   [let [[package_dependencies nil]
-	[source_dependencies  nil]]
+	[source_dependencies  nil]
+	[documentation        nil]]
     [let [[iter dependencies]]
       [while iter
 	[let [[key   [car  iter]]
 	      [value [cadr iter]]]
-	  [cond [[eq key `:packages] [= package_dependencies value]]
-		[[eq key `:sources]  [= source_dependencies  value]]
-		[t                   [error bug_type `unknown_package_dependency_key_type funkname `defpackage]]]]
+	  [cond [[eq key `:packages]      [= package_dependencies value]]
+		[[eq key `:sources]       [= source_dependencies  value]]
+		[[eq key `:documentation] [= documentation        value]]
+		[t                        [error bug_type `unknown_package_dependency_key_type funkname `defpackage]]]]
 	[= iter [cddr iter]]]]
     `[have packages_frame add [quote ,name] [new package
 						 [pathname-directory_pathname source-filename]
@@ -159,7 +161,8 @@
 						 [conslist @[mapcar [funk [package_dependency]
 									  `[quote ,package_dependency]]
 								    package_dependencies]]
-						 [conslist @source_dependencies]]]]]
+						 [conslist @source_dependencies]
+						 ,documentation]]]]
 
 [defunk lookup-package [name]
   [have packages_frame lookup name]]

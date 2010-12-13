@@ -49,23 +49,16 @@ void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* th
   }
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
   funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
-  printf("\nfunk2_primobject_type_handler__add_type adding type."); fflush(stdout);
-  //f2__print(cause, type_name);
   if (cause != nil) {
-    printf("\nfunk2_primobject_type_handler__add_type adding type: debug 1"); fflush(stdout);
     if (! raw__cause__is_type(cause, cause)) {
       error(nil, "funk2_primobject_type_handler__add_type error: cause is not cause.");
     }
     f2ptr object_types_defined__symbol = new__symbol(cause, "cause-object_types_defined");
     if (raw__cause__var_defined(cause, cause, object_types_defined__symbol)) {
-      printf("\nfunk2_primobject_type_handler__add_type adding type: debug 2"); fflush(stdout);
       f2ptr object_types_defined = raw__cause__lookup(cause, cause, object_types_defined__symbol);
-      //f2__terminal_print(cause, object_types_defined);
       raw__cause__var_value__set(cause, cause, object_types_defined__symbol, f2cons__new(cause, type_name, object_types_defined));
-      printf("\nfunk2_primobject_type_handler__add_type adding type: debug 3"); fflush(stdout);
     }
   }
-  printf("\nfunk2_primobject_type_handler__add_type adding type: debug 4"); fflush(stdout);
   f2__ptypehash__add(cause, this->type_hash, type_name, type);
   funk2_processor_mutex__unlock(&(this->type_hash_mutex));
 }

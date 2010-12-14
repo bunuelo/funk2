@@ -492,6 +492,7 @@
 
 [defunk funk2_documentation-all_packages-require []
   [mapc [funk [package_name]
+	      [print [format nil 'requiring ' package_name '.']]
 	      [require-package package_name]]
 	[package_names]]]
 

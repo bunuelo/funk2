@@ -246,7 +246,7 @@
 	names]]
 
 [defmetro require [:rest names]
-  `[require-package @names]]
+  `[require-package @[mapcar [funk [name] `[quote ,name]] names]]]
 
 [defmetro load-package [name]
   `[package-load [quote ,name]]]

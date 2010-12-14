@@ -17,29 +17,19 @@
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
-'
-todo: find out why [get [get story as-graph] as-story] is missing the prep frame
-      
-
-'
-
-
-
-
-
 
 
 [deftypefunk story_event get as-graph []
-  [let [[graph [new bruno_graph]]]
-    [let* [[story_event [new bruno_graph_node `story_event]]
-	   [time        [new bruno_graph_node [have this lookup `time]]]
-	   [action      [new bruno_graph_node [have this lookup `action_name]]]
-	   [character   [new bruno_graph_node [have this lookup `character_name]]]
-	   [prep_frame  [new bruno_graph_node `prepositional_frame]]
-	   [time_edge       [new bruno_graph_edge `time                story_event time]]
-	   [action_edge     [new bruno_graph_edge `action              story_event action]]
-	   [character_edge  [new bruno_graph_edge `character           story_event character]]
-	   [prep_frame_edge [new bruno_graph_edge `prepositional_frame story_event prep_frame]]]
+  [let [[graph [new graph]]]
+    [let* [[story_event [new graph_node `story_event]]
+	   [time        [new graph_node [have this lookup `time]]]
+	   [action      [new graph_node [have this lookup `action_name]]]
+	   [character   [new graph_node [have this lookup `character_name]]]
+	   [prep_frame  [new graph_node `prepositional_frame]]
+	   [time_edge       [new graph_edge `time                story_event time]]
+	   [action_edge     [new graph_edge `action              story_event action]]
+	   [character_edge  [new graph_edge `character           story_event character]]
+	   [prep_frame_edge [new graph_edge `prepositional_frame story_event prep_frame]]]
       [have graph add_edge time_edge]
       [have graph add_edge action_edge]
       [have graph add_edge character_edge]
@@ -48,11 +38,11 @@ todo: find out why [get [get story as-graph] as-story] is missing the prep frame
 	[let [[direct_object [have prepositional_frame lookup `direct_object]]]
 	  [mapcar [funk [preposition]
 			[if [eq preposition `direct_object]
-			    [prog [let* [[direct_object_node [new bruno_graph_node direct_object]]
-					 [direct_object_edge [new bruno_graph_edge `direct_object prep_frame direct_object_node]]]
+			    [prog [let* [[direct_object_node [new graph_node direct_object]]
+					 [direct_object_edge [new graph_edge `direct_object prep_frame direct_object_node]]]
 				    [have graph add_edge direct_object_edge]]]
-			  [prog [let* [[preposition_node [new bruno_graph_node [have prepositional_frame lookup preposition]]]
-				       [preposition_edge   [new bruno_graph_edge preposition  prep_frame preposition_node]]]
+			  [prog [let* [[preposition_node [new graph_node [have prepositional_frame lookup preposition]]]
+				       [preposition_edge   [new graph_edge preposition  prep_frame preposition_node]]]
 				  [have graph add_edge preposition_edge]]]]]
 		  [get prepositional_frame slots]]]]]
     graph]]
@@ -61,7 +51,7 @@ todo: find out why [get [get story as-graph] as-story] is missing the prep frame
 [deftypefunk story get as-graph []
   [let  [[event_list [conslist-sort [get this events] [funk [event-x event-y]
 							    [< [get event-x time] [get event-y time]]]]]
-	 [graph [new bruno_graph]]]
+	 [graph [new graph]]]
     [print 'let1']
 		      
     [mapc [funk [event]
@@ -107,7 +97,7 @@ todo: find out why [get [get story as-graph] as-story] is missing the prep frame
       [mapc [funk [event_node]
 		  [if [find_previous_node event_node nodes_list]
 		      [let [[happens_after 
-			     [new bruno_graph_edge `happens_after 
+			     [new graph_edge `happens_after 
 				  event_node 
 				  [find_previous_node event_node nodes_list]]]]
 			[have graph add_edge happens_after]
@@ -121,7 +111,7 @@ todo: find out why [get [get story as-graph] as-story] is missing the prep frame
 
 [print 'beginning defining get as story_event']
 
-[deftypefunk bruno_graph get as-story_event []
+[deftypefunk graph get as-story_event []
   [let [[prep_frame     [new frame]]
 	[story_event    [new story_event `time `character_name `action_name `prep_frame]]
 	[nodes_list     [get [get this node_set] elements]]
@@ -178,13 +168,13 @@ todo: find out why [get [get story as-graph] as-story] is missing the prep frame
 
 [print 'done defining get as story_event']
 
-[deftypefunk bruno_graph get as-story []
+[deftypefunk graph get as-story []
   [let [[story [new story]]
 	[nodes_list     [get [get this node_set] elements]]
 	[edges_list     [get [get this edge_set] elements]]
 	[origin_this    this]]
     
-    [deftypefunk bruno_graph get indiv_story_event [event_node]
+    [deftypefunk graph get indiv_story_event [event_node]
       [let [[prep_frame     [new frame]]
 	    [story_event    [new story_event `time `character_name `action_name `prep_frame]]]
 	[defunk find_right_node [node_list left_node edge_label]

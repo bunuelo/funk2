@@ -20,6 +20,6 @@
 [defpackage graph_match
   :sources ['graph_match.fu2']]
 
-[defpackage basic_analogy
-  :sources ['basic_analogy.fu2']]
+`[defpackage basic_analogy
+   :sources ['basic_analogy.fu2']]
 

@@ -490,6 +490,11 @@
 					  '</ul>'
 					  ]]]]]
 
+[defunk funk2_documentation-all_packages-require []
+  [mapc [funk [package_name]
+	      [require-package package_name]]
+	[package_names]]]
+
 [defunk funk2_documentation-all_packages-save [root_dir posts examples]
   [shelter [mkdir [string-concat root_dir 'documentation/package']]]
   [mapc [funk [package_name]
@@ -548,6 +553,7 @@
 	      [funk2_documentation-content root_dir posts examples]]]
 
 [defunk compile_funk2_documentation [root_dir posts examples]
+  [funk2_documentation-all_packages-require]
   [let [[documentation [funk2_documentation root_dir posts examples]]]
     [shelter [mkdir [string-concat root_dir 'documentation']]]
     [have documentation save [string-concat root_dir 'documentation/index.html']]

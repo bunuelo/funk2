@@ -238,11 +238,15 @@
     [or loaded_a_dependency
 	package_was_loaded]]]
 
+[defunk require-package [:rest names]
+  [global_core_extension_handler-unload_changed]
+  [global_dlfcn_dynamic_library-unload_changed]
+  [mapc [funk [name]
+	      [package-load_if_modified name]]
+	names]]
+
 [defmetro require [:rest names]
-  `[prog [global_dlfcn_dynamic_library-unload_changed]
-	 @[mapcar [funk [name]
-			`[package-load_if_modified [quote ,name]]]
-		  names]]]
+  `[require-package @names]]
 
 [defmetro load-package [name]
   `[package-load [quote ,name]]]

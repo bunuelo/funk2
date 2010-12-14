@@ -416,57 +416,60 @@
 		 
 		 ]]]
 
-[globalize carol [new female_child_agent [bluegreen_blouse-new]
-          		                 [red_skirt-new]
-					 [pink_left_shoe-new]
-					 [pink_right_shoe-new]
-					 nil
-					 nil
-					 nil]]
-[let [[position [get [get carol transform] position]]]
-  [set position x  0.5]
-  [set position y -0.5]
-  [set position z  0.0]]
-
-[globalize bucket [bucket_object-new nil nil]]
-[let [[position [get [get bucket transform] position]]]
-  [set position x 0.3]
-  [set position y 0.0]
-  [set position z 0.0]]
-
-[globalize spoon [spoon_object-new  nil nil]]
-[let [[position [get [get spoon transform] position]]]
-  [set position x -0.3]
-  [set position y  0.0]
-  [set position z  0.0]]
-
-[globalize fork [fork_object-new   nil nil]]
-[let [[position [get [get fork transform] position]]]
-  [set position x -0.1]
-  [set position y  0.0]
-  [set position z  0.0]]
-
-[globalize mud [mud_object-new nil]]
-[let [[position [get [get mud transform] position]]]
-  [set position x 0.1]
-  [set position y 0.0]
-  [set position z 0.0]]
-
-[defunk carol_playing_in_mud_scene-new []
-  [new physical_scene `mud_puddle_scene
-       [conslist bucket
-		 spoon
-		 fork
-		 mud
-		 
-		 carol
-		 ]]]
-
-[globalize knowledge [get carol reactive_trace_knowledge_base]]
-
-[globalize carol_scene [carol_playing_in_mud_scene-new]]
-
-[globalize glwindow_value carol_scene]
+[defunk little_carol_world-initialize []
+  [globalize carol [new female_child_agent [bluegreen_blouse-new]
+			[red_skirt-new]
+			[pink_left_shoe-new]
+			[pink_right_shoe-new]
+			nil
+			nil
+			nil]]
+  [let [[position [get [get carol transform] position]]]
+    [set position x  0.5]
+    [set position y -0.5]
+    [set position z  0.0]]
+  
+  [globalize bucket [bucket_object-new nil nil]]
+  [let [[position [get [get bucket transform] position]]]
+    [set position x 0.3]
+    [set position y 0.0]
+    [set position z 0.0]]
+      
+  [globalize spoon [spoon_object-new  nil nil]]
+  [let [[position [get [get spoon transform] position]]]
+    [set position x -0.3]
+    [set position y  0.0]
+    [set position z  0.0]]
+      
+  [globalize fork [fork_object-new   nil nil]]
+  [let [[position [get [get fork transform] position]]]
+    [set position x -0.1]
+    [set position y  0.0]
+    [set position z  0.0]]
+  
+  [globalize mud [mud_object-new nil]]
+  [let [[position [get [get mud transform] position]]]
+    [set position x 0.1]
+    [set position y 0.0]
+    [set position z 0.0]]
+  
+  [defunk carol_playing_in_mud_scene-new []
+    [new physical_scene `mud_puddle_scene
+	 [conslist bucket
+		   spoon
+		   fork
+		   mud
+		   
+		   carol
+		   ]]]
+  
+  [globalize knowledge [get carol reactive_trace_knowledge_base]]
+  
+  [globalize carol_scene [carol_playing_in_mud_scene-new]]
+  
+  [globalize glwindow_value carol_scene]
+  
+  nil]
 
 [defunk little_carol-display_in_serial_with_params [title width height depth fullscreen]
   [if [not [glwindow-supported]]

@@ -137,6 +137,21 @@ void libavcodec__video_encode_example(const char *filename) {
 // funk2_movie_context
 
 boolean_t funk2_movie_context__init(funk2_movie_context_t* this, s64 width, s64 height, s64 bit_rate, s64 frames_per_second) {
+  if (((width  & 1) != 0) ||
+      ((height & 1) != 0)) {
+    printf("\nwidth and height must both be a power of two.");
+    return boolean__false;
+  }
+  // valid frames per second for MPEG-1: 23.976, 24, 25, 29.97, 30, 50, 59.94, and 60
+  if ((frames_per_second != 24) &&
+      (frames_per_second != 25) &&
+      (frames_per_second != 30) &&
+      (frames_per_second != 50) &&
+      (frames_per_second != 60)) {
+    printf("\nframes_per_second for MPEG-1 must be one of 24, 25, 30, 50, or 60.");
+    return boolean__false;
+  }
+  
   this->width            = width;
   this->height           = height;
   this->av_codec_context = NULL;
@@ -214,19 +229,34 @@ void funk2_movie_context__destroy(funk2_movie_context_t* this) {
 
 // movie_context
 
-f2ptr raw__movie_context__new(f2ptr cause, f2ptr pointer) {
-  return f2__frame__new(cause, f2list4__new(cause,
-					    new__symbol(cause, "type"),    new__symbol(cause, "movie_context"),
-					    new__symbol(cause, "pointer"), pointer));
+f2ptr raw__movie_context__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr bit_rate, f2ptr frames_per_second, f2ptr pointer) {
+  return f2__frame__new(cause, f2list6__new(cause,
+					    new__symbol(cause, "type"),              new__symbol(cause, "movie_context"),
+					    new__symbol(cause, "width"),             width,
+					    new__symbol(cause, "height"),            height,
+					    new__symbol(cause, "bit_rate"),          bit_rate,
+					    new__symbol(cause, "frames_per_second"), frames_per_second,
+					    new__symbol(cause, "pointer"),           pointer));
 }
 
-f2ptr f2__movie_context__new(f2ptr cause, f2ptr pointer) {
-  if (! raw__pointer__is_type(cause, pointer)) {
+f2ptr f2__movie_context__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr bit_rate, f2ptr frames_per_second) {
+  if ((! raw__integer__is_type(cause, width)) ||
+      (! raw__integer__is_type(cause, height)) ||
+      (! raw__integer__is_type(cause, bit_rate)) ||
+      (! raw__integer__is_type(cause, frames_per_second))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__movie_context__new(cause, pointer);
+  s64 width__i             = f2integer__i(width,             cause);
+  s64 height__i            = f2integer__i(height,            cause);
+  s64 bit_rate__i          = f2integer__i(bit_rate,          cause);
+  s64 frames_per_second__i = f2integer__i(frames_per_second, cause);
+  if (! funk2_movie_context__init(movie_context, width__i, height__i, bit_rate__i, frames_per_second__i)) {
+    return f2larva__new(cause, 12335, nil);
+  }
+  f2ptr pointer = f2pointer__new(cause, to_ptr(movie_context));
+  return raw__movie_context__new(cause, width, height, bit_rate, frames_per_second, pointer);
 }
-export_cefunk1(movie_context__new, images, 0, "Returns a new movie_context object.");
+export_cefunk4(movie_context__new, width, height, bit_rate, frames_per_second, 0, "Returns a new movie_context object.");
 
 
 boolean_t raw__movie_context__is_type(f2ptr cause, f2ptr thing) {
@@ -264,6 +294,110 @@ f2ptr f2__movie_context__type(f2ptr cause, f2ptr this) {
 export_cefunk1(movie_context__type, thing, 0, "Returns the specific type of object that this movie_context is.");
 
 
+f2ptr raw__movie_context__width(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"), nil);
+}
+
+f2ptr f2__movie_context__width(f2ptr cause, f2ptr this) {
+  if (! raw__movie_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__movie_context__width(cause, this);
+}
+export_cefunk1(movie_context__width, thing, 0, "Returns the width of the movie_context.");
+
+
+f2ptr raw__movie_context__width__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "width"), value);
+}
+
+f2ptr f2__movie_context__width__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__movie_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__movie_context__width__set(cause, this, value);
+}
+export_cefunk2(movie_context__width__set, thing, value, 0, "Sets the width of the movie_context.");
+
+
+f2ptr raw__movie_context__height(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "height"), nil);
+}
+
+f2ptr f2__movie_context__height(f2ptr cause, f2ptr this) {
+  if (! raw__movie_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__movie_context__height(cause, this);
+}
+export_cefunk1(movie_context__height, thing, 0, "Returns the height of the movie_context.");
+
+
+f2ptr raw__movie_context__height__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "height"), value);
+}
+
+f2ptr f2__movie_context__height__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__movie_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__movie_context__height__set(cause, this, value);
+}
+export_cefunk2(movie_context__height__set, thing, value, 0, "Sets the height of the movie_context.");
+
+
+f2ptr raw__movie_context__bit_rate(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "bit_rate"), nil);
+}
+
+f2ptr f2__movie_context__bit_rate(f2ptr cause, f2ptr this) {
+  if (! raw__movie_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__movie_context__bit_rate(cause, this);
+}
+export_cefunk1(movie_context__bit_rate, thing, 0, "Returns the bit_rate of the movie_context.");
+
+
+f2ptr raw__movie_context__bit_rate__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "bit_rate"), value);
+}
+
+f2ptr f2__movie_context__bit_rate__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__movie_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__movie_context__bit_rate__set(cause, this, value);
+}
+export_cefunk2(movie_context__bit_rate__set, thing, value, 0, "Sets the bit_rate of the movie_context.");
+
+
+f2ptr raw__movie_context__frames_per_second(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "frames_per_second"), nil);
+}
+
+f2ptr f2__movie_context__frames_per_second(f2ptr cause, f2ptr this) {
+  if (! raw__movie_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__movie_context__frames_per_second(cause, this);
+}
+export_cefunk1(movie_context__frames_per_second, thing, 0, "Returns the frames_per_second of the movie_context.");
+
+
+f2ptr raw__movie_context__frames_per_second__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "frames_per_second"), value);
+}
+
+f2ptr f2__movie_context__frames_per_second__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__movie_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__movie_context__frames_per_second__set(cause, this, value);
+}
+export_cefunk2(movie_context__frames_per_second__set, thing, value, 0, "Sets the frames_per_second of the movie_context.");
+
+
 f2ptr raw__movie_context__pointer(f2ptr cause, f2ptr this) {
   return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "pointer"), nil);
 }
@@ -290,12 +424,38 @@ f2ptr f2__movie_context__pointer__set(f2ptr cause, f2ptr this, f2ptr value) {
 export_cefunk2(movie_context__pointer__set, thing, value, 0, "Sets the pointer of the movie_context.");
 
 
+void raw__movie_context__destroy(f2ptr cause, f2ptr this) {
+  f2ptr                  pointer       = raw__movie_context__pointer(cause, this);
+  funk2_movie_context_t* movie_context = (funk2_movie_context_t*)from_ptr(f2pointer__p(pointer, cause)); 
+  funk2_movie_context__destroy(movie_context);
+}
+
+f2ptr f2__movie_context__destroy(f2ptr cause, f2ptr this) {
+  if (! raw__movie_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__movie_context__destroy(cause, this);
+}
+export_cefunk1(movie_context__destroy, this, 0, "Frees all of the resources associated with this movie_context.");
+
+
+
 f2ptr f2__movie_context_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__pointer")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),               f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),           f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),              f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "width"),             f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__width")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "width"),             f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__width__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "height"),            f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__height")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "height"),            f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__height__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "bit_rate"),          f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__bit_rate")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "bit_rate"),          f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__bit_rate__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "frames_per_second"), f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__frames_per_second")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "frames_per_second"), f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__frames_per_second__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "pointer"),           f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__pointer")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "pointer"),           f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__pointer__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "destroy"),           f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__destroy")));}
   return this;
 }
 
@@ -308,20 +468,6 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
   s64 frames_per_second__i = f2integer__i(frames_per_second,                                  cause);
   s64 width__i             = f2integer__i(raw__image_sequence__width( cause, image_sequence), cause);
   s64 height__i            = f2integer__i(raw__image_sequence__height(cause, image_sequence), cause);
-  if (((width__i  & 1) != 0) ||
-      ((height__i & 1) != 0)) {
-    printf("\nwidth and height must both be a power of two.");
-    return f2larva__new(cause, 3, nil);
-  }
-  // valid frames per second for MPEG-1: 23.976, 24, 25, 29.97, 30, 50, 59.94, and 60
-  if ((frames_per_second__i != 24) &&
-      (frames_per_second__i != 25) &&
-      (frames_per_second__i != 30) &&
-      (frames_per_second__i != 50) &&
-      (frames_per_second__i != 60)) {
-    printf("\nframes_per_second for MPEG-1 must be one of 24, 25, 30, 50, or 60.");
-    return  f2larva__new(cause, 3, nil);
-  }
   f2ptr video_chunk_list = nil;
   {
     funk2_movie_context_t* movie_context = (funk2_movie_context_t*)from_ptr(f2__malloc(sizeof(funk2_movie_context_t)));

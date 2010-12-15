@@ -485,7 +485,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr m
   if (movie_context__pointer == nil) {
     return f2larva__new(cause, 2461, nil);
   }
-  funk2_movie_context_t* funk2_movie_context = (funk2_movie_context_t*)from_ptr(f2pointer__p(movie_context__pointer));
+  funk2_movie_context_t* funk2_movie_context = (funk2_movie_context_t*)from_ptr(f2pointer__p(movie_context__pointer, cause));
   
   f2ptr video_chunk_list = nil;
   {

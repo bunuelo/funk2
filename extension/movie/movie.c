@@ -136,7 +136,7 @@ void libavcodec__video_encode_example(const char *filename) {
 
 // funk2_movie_context
 
-boolean_t funk2_movie_context__init(funk2_movie_context_t* this, s64 width, s64 height, s64 bit_rate) {
+boolean_t funk2_movie_context__init(funk2_movie_context_t* this, s64 width, s64 height, s64 bit_rate, s64 frames_per_second) {
   this->width            = width;
   this->height           = height;
   this->av_codec_context = NULL;
@@ -154,7 +154,7 @@ boolean_t funk2_movie_context__init(funk2_movie_context_t* this, s64 width, s64 
   this->av_codec_context->width         = width;
   this->av_codec_context->height        = height;
   this->av_codec_context->time_base.num = 1;
-  this->av_codec_context->time_base.den = frames_per_second__i;
+  this->av_codec_context->time_base.den = frames_per_second;
   this->av_codec_context->gop_size      = 10; // emit one intra frame every ten frames
   this->av_codec_context->max_b_frames  = 1;
   this->av_codec_context->pix_fmt       = PIX_FMT_YUV420P;
@@ -324,7 +324,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
   f2ptr video_chunk_list = nil;
   {
     funk2_movie_context_t* movie_context = (funk2_movie_context_t*)from_ptr(f2__malloc(sizeof(funk2_movie_context_t)));
-    if (! funk2_movie_context__init(movie_context, width__i, height__i, bit_rate__i)) {
+    if (! funk2_movie_context__init(movie_context, width__i, height__i, bit_rate__i, frames_per_second__i)) {
       return f2larva__new(cause, 13415, nil);
     }
     

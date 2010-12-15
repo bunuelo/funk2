@@ -471,12 +471,10 @@ f2ptr f2__movie_context_type__new(f2ptr cause) {
 
 f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr movie_context, f2ptr image_sequence) {
 #ifdef F2__LIBAVCODEC_SUPPORTED
-  s64 bit_rate__i               = f2integer__i(raw__movie_context__bit_rate(         cause, movie_context),  cause);
-  s64 frames_per_second__i      = f2integer__i(raw__movie_context__frames_per_second(cause, movie_context),  cause);
-  s64 width__i                  = f2integer__i(raw__movie_context__width(            cause, movie_context),  cause);
-  s64 height__i                 = f2integer__i(raw__movie_context__height(           cause, movie_context),  cause);
-  s64 image_sequence__width__i  = f2integer__i(raw__image_sequence__width(           cause, image_sequence), cause);
-  s64 image_sequence__height__i = f2integer__i(raw__image_sequence__height(          cause, image_sequence), cause);
+  s64 width__i                  = f2integer__i(raw__movie_context__width(  cause, movie_context),  cause);
+  s64 height__i                 = f2integer__i(raw__movie_context__height( cause, movie_context),  cause);
+  s64 image_sequence__width__i  = f2integer__i(raw__image_sequence__width( cause, image_sequence), cause);
+  s64 image_sequence__height__i = f2integer__i(raw__image_sequence__height(cause, image_sequence), cause);
   if ((width__i  != image_sequence__width__i) ||
       (height__i != image_sequence__height__i)) {
     return f2larva__new(cause, 15316, nil);

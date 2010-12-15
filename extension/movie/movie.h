@@ -56,8 +56,8 @@ f2ptr     raw__movie__video_chunk            (f2ptr cause, f2ptr this);
 f2ptr      f2__movie__video_chunk            (f2ptr cause, f2ptr this);
 f2ptr     raw__movie__video_chunk__set       (f2ptr cause, f2ptr this, f2ptr value);
 f2ptr      f2__movie__video_chunk__set       (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__movie__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second);
-f2ptr      f2__movie__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second);
+f2ptr     raw__movie__new_from_image_sequence(f2ptr cause, f2ptr movie_context, f2ptr image_sequence);
+f2ptr      f2__movie__new_from_image_sequence(f2ptr cause, f2ptr movie_context, f2ptr image_sequence);
 f2ptr     raw__movie__save                   (f2ptr cause, f2ptr this, f2ptr filename);
 f2ptr      f2__movie__save                   (f2ptr cause, f2ptr this, f2ptr filename);
 

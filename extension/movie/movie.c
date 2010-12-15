@@ -136,9 +136,9 @@ void libavcodec__video_encode_example(const char *filename) {
 
 // funk2_movie_context
 
-void funk2_movie_context__init(funk2_movie_context_t* this) {
-  this->width            = width__i;
-  this->height           = height__i;
+void funk2_movie_context__init(funk2_movie_context_t* this, s64 width, s64 height) {
+  this->width            = width;
+  this->height           = height;
   this->av_codec_context = NULL;
   
   // find the mpeg1 video encoder
@@ -324,7 +324,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
   f2ptr video_chunk_list = nil;
   {
     funk2_movie_context_t* movie_context = (funk2_movie_context_t*)from_ptr(f2__malloc(sizeof(funk2_movie_context_t)));
-    funk2_movie_context__init(movie_context);
+    funk2_movie_context__init(movie_context, width__i, height__i);
     {
       
       s64 out_size = 0;

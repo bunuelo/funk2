@@ -40,6 +40,7 @@ struct funk2_movie_context_s {
   struct SwsContext* image_convert_context;
   s64                out_buffer_size;
   u8*                out_buffer;
+#endif // F2__LIBAVCODEC_SUPPORTED
 };
 
 f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second);

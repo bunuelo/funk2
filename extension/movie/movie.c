@@ -436,7 +436,8 @@ f2ptr f2__movie_context__destroy(f2ptr cause, f2ptr this) {
   if (! raw__movie_context__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__movie_context__destroy(cause, this);
+  raw__movie_context__destroy(cause, this);
+  return nil;
 }
 export_cefunk1(movie_context__destroy, this, 0, "Frees all of the resources associated with this movie_context.");
 

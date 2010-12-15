@@ -425,19 +425,23 @@ f2ptr f2__movie_context__pointer__set(f2ptr cause, f2ptr this, f2ptr value) {
 export_cefunk2(movie_context__pointer__set, thing, value, 0, "Sets the pointer of the movie_context.");
 
 
-void raw__movie_context__destroy(f2ptr cause, f2ptr this) {
-  f2ptr                  pointer       = raw__movie_context__pointer(cause, this);
+f2ptr raw__movie_context__destroy(f2ptr cause, f2ptr this) {
+  f2ptr pointer = raw__movie_context__pointer(cause, this);
+  if (pointer == nil) {
+    return f2larva__new(cause, 123, nil);
+  }
   funk2_movie_context_t* movie_context = (funk2_movie_context_t*)from_ptr(f2pointer__p(pointer, cause)); 
   funk2_movie_context__destroy(movie_context);
   f2__free(to_ptr(movie_context));
+  raw__movie_context__pointer__set(cause, this, nil);
+  return nil;
 }
 
 f2ptr f2__movie_context__destroy(f2ptr cause, f2ptr this) {
   if (! raw__movie_context__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  raw__movie_context__destroy(cause, this);
-  return nil;
+  return raw__movie_context__destroy(cause, this);
 }
 export_cefunk1(movie_context__destroy, this, 0, "Frees all of the resources associated with this movie_context.");
 
@@ -465,18 +469,26 @@ f2ptr f2__movie_context_type__new(f2ptr cause) {
 
 
 
-f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second) {
+f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr movie_context, f2ptr image_sequence) {
 #ifdef F2__LIBAVCODEC_SUPPORTED
-  s64 bit_rate__i          = f2integer__i(bit_rate,                                           cause);
-  s64 frames_per_second__i = f2integer__i(frames_per_second,                                  cause);
-  s64 width__i             = f2integer__i(raw__image_sequence__width( cause, image_sequence), cause);
-  s64 height__i            = f2integer__i(raw__image_sequence__height(cause, image_sequence), cause);
+  s64 bit_rate__i               = f2integer__i(raw__movie_context__bit_rate(         cause, movie_context),  cause);
+  s64 frames_per_second__i      = f2integer__i(raw__movie_context__frames_per_second(cause, movie_context),  cause);
+  s64 width__i                  = f2integer__i(raw__movie_context__width(            cause, movie_context),  cause);
+  s64 height__i                 = f2integer__i(raw__movie_context__height(           cause, movie_context),  cause);
+  s64 image_sequence__width__i  = f2integer__i(raw__image_sequence__width(           cause, image_sequence), cause);
+  s64 image_sequence__height__i = f2integer__i(raw__image_sequence__height(          cause, image_sequence), cause);
+  if ((width__i  != image_sequence__width__i) ||
+      (height__i != image_sequence__height__i)) {
+    return f2larva__new(cause, 15316, nil);
+  }
+  f2ptr movie_context__pointer = raw__movie_context__pointer(cause, movie_context);
+  if (movie_context__pointer == nil) {
+    return f2larva__new(cause, 2461, nil);
+  }
+  funk2_movie_context_t* funk2_movie_context = (funk2_movie_context_t*)from_ptr(f2pointer__p(movie_context__pointer));
+  
   f2ptr video_chunk_list = nil;
   {
-    funk2_movie_context_t* movie_context = (funk2_movie_context_t*)from_ptr(f2__malloc(sizeof(funk2_movie_context_t)));
-    if (! funk2_movie_context__init(movie_context, width__i, height__i, bit_rate__i, frames_per_second__i)) {
-      return f2larva__new(cause, 13415, nil);
-    }
     
     {
       
@@ -488,11 +500,11 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	  f2ptr rgba_data = f2__image__rgba_data(cause, image);
 	  
 	  s64 chunk__length = f2chunk__length(rgba_data, cause);
-	  if (chunk__length != movie_context->rgb_picture_frame__size) {
+	  if (chunk__length != funk2_movie_context->rgb_picture_frame__size) {
 	    printf("\nmovie.c error: chunk__length != rgb_picture_frame__size");
 	    return f2larva__new(cause, 453, nil);
 	  }
-	  raw__chunk__str_copy(cause, rgba_data, movie_context->rgb_picture_frame__buffer);
+	  raw__chunk__str_copy(cause, rgba_data, funk2_movie_context->rgb_picture_frame__buffer);
 	  
 	  { // swap red and blue
 	    s64 y;
@@ -500,24 +512,24 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	      s64 x;
 	      for (x = 0; x < width__i; x ++) {
 		s64 pixel_index = ((y * width__i) + x) << 2;
-		u8 red                                                    = movie_context->rgb_picture_frame__buffer[pixel_index + 0];
-		movie_context->rgb_picture_frame__buffer[pixel_index + 0] = movie_context->rgb_picture_frame__buffer[pixel_index + 2];
-		movie_context->rgb_picture_frame__buffer[pixel_index + 2] = red;
+		u8 red                                                    = funk2_movie_context->rgb_picture_frame__buffer[pixel_index + 0];
+		funk2_movie_context->rgb_picture_frame__buffer[pixel_index + 0] = funk2_movie_context->rgb_picture_frame__buffer[pixel_index + 2];
+		funk2_movie_context->rgb_picture_frame__buffer[pixel_index + 2] = red;
 	      }
 	    }
 	  }
 	  
-	  sws_scale(movie_context->image_convert_context,
-		    (const uint8_t* const*)(((AVPicture*)movie_context->rgb_picture_frame)->data),
-		    ((AVPicture*)movie_context->rgb_picture_frame)->linesize,
+	  sws_scale(funk2_movie_context->image_convert_context,
+		    (const uint8_t* const*)(((AVPicture*)funk2_movie_context->rgb_picture_frame)->data),
+		    ((AVPicture*)funk2_movie_context->rgb_picture_frame)->linesize,
 		    0,
 		    height__i,
-		    ((AVPicture*)movie_context->yuv_picture_frame)->data,
-		    ((AVPicture*)movie_context->yuv_picture_frame)->linesize);	
+		    ((AVPicture*)funk2_movie_context->yuv_picture_frame)->data,
+		    ((AVPicture*)funk2_movie_context->yuv_picture_frame)->linesize);	
 	  
 	  // encode the image
-	  out_size = avcodec_encode_video(movie_context->av_codec_context, movie_context->out_buffer, movie_context->out_buffer_size, movie_context->yuv_picture_frame);
-	  f2ptr chunk      = f2chunk__new(cause, out_size, movie_context->out_buffer);
+	  out_size = avcodec_encode_video(funk2_movie_context->av_codec_context, funk2_movie_context->out_buffer, funk2_movie_context->out_buffer_size, funk2_movie_context->yuv_picture_frame);
+	  f2ptr chunk      = f2chunk__new(cause, out_size, funk2_movie_context->out_buffer);
 	  video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
 	  
 	  iter = f2__doublelink__next(cause, iter);
@@ -526,25 +538,24 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
       
       // get the delayed frames
       while (out_size != 0) {
-	out_size = avcodec_encode_video(movie_context->av_codec_context, movie_context->out_buffer, movie_context->out_buffer_size, NULL);
-	f2ptr chunk      = f2chunk__new(cause, out_size, movie_context->out_buffer);
+	out_size = avcodec_encode_video(funk2_movie_context->av_codec_context, funk2_movie_context->out_buffer, funk2_movie_context->out_buffer_size, NULL);
+	f2ptr chunk      = f2chunk__new(cause, out_size, funk2_movie_context->out_buffer);
 	video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
       }
       
       /* add sequence end code to have a real mpeg file */
       {
-	movie_context->out_buffer[0] = 0x00;
-	movie_context->out_buffer[1] = 0x00;
-	movie_context->out_buffer[2] = 0x01;
-	movie_context->out_buffer[3] = 0xb7;
+	funk2_movie_context->out_buffer[0] = 0x00;
+	funk2_movie_context->out_buffer[1] = 0x00;
+	funk2_movie_context->out_buffer[2] = 0x01;
+	funk2_movie_context->out_buffer[3] = 0xb7;
 	out_size = 4;
-	f2ptr chunk      = f2chunk__new(cause, out_size, movie_context->out_buffer);
+	f2ptr chunk      = f2chunk__new(cause, out_size, funk2_movie_context->out_buffer);
 	video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
       }
     }
     
-    funk2_movie_context__destroy(movie_context);
-    f2__free(to_ptr(movie_context));
+    raw__movie_context__destroy(cause, movie_context);
   }
   video_chunk_list = f2__reverse(cause, video_chunk_list);
   s64 total_length = 0;
@@ -579,15 +590,14 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 #endif // F2__LIBAVCODEC_SUPPORTED
 }
 
-f2ptr f2__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second) {
-  if ((! raw__image_sequence__is_type(cause, image_sequence)) ||
-      (! raw__integer__is_type(cause, bit_rate)) ||
-      (! raw__integer__is_type(cause, frames_per_second))) {
+f2ptr f2__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr movie_context, f2ptr image_sequence) {
+  if ((! raw__movie_context__is_type(cause, movie_context)) ||
+      (! raw__image_sequence__is_type(cause, image_sequence))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__libavcodec__video_chunk__new_from_image_sequence(cause, image_sequence, bit_rate, frames_per_second);
+  return raw__libavcodec__video_chunk__new_from_image_sequence(cause, movie_context, image_sequence);
 }
-export_cefunk3(libavcodec__video_chunk__new_from_image_sequence, image_sequence, bit_rate, frames_per_second, 0, "");
+export_cefunk2(libavcodec__video_chunk__new_from_image_sequence, movie_context, image_sequence, 0, "");
 
 
 
@@ -669,23 +679,22 @@ f2ptr f2__movie__video_chunk__set(f2ptr cause, f2ptr this, f2ptr value) {
 export_cefunk2(movie__video_chunk__set, thing, value, 0, "Sets the video_chunk of the movie.");
 
 
-f2ptr raw__movie__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second) {
-  f2ptr video_chunk = raw__libavcodec__video_chunk__new_from_image_sequence(cause, image_sequence, bit_rate, frames_per_second);
+f2ptr raw__movie__new_from_image_sequence(f2ptr cause, f2ptr movie_context, f2ptr image_sequence) {
+  f2ptr video_chunk = raw__libavcodec__video_chunk__new_from_image_sequence(cause, movie_context, image_sequence);
   if (raw__larva__is_type(cause, video_chunk)) {
     return video_chunk;
   }
   return f2__movie__new(cause, video_chunk);
 }
 
-f2ptr f2__movie__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second) {
-  if ((! raw__image_sequence__is_type(cause, image_sequence)) ||
-      (! raw__integer__is_type(cause, bit_rate)) ||
-      (! raw__integer__is_type(cause, frames_per_second))) {
+f2ptr f2__movie__new_from_image_sequence(f2ptr cause, f2ptr movie_context, f2ptr image_sequence) {
+  if ((! raw__movie_context__is_type(cause, movie_context)) ||
+      (! raw__image_sequence__is_type(cause, image_sequence))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__movie__new_from_image_sequence(cause, image_sequence, bit_rate, frames_per_second);
+  return raw__movie__new_from_image_sequence(cause, movie_context, image_sequence);
 }
-export_cefunk3(movie__new_from_image_sequence, image_sequence, bit_rate, frames_per_second, 0, "Creates a new movie from an image sequence.");
+export_cefunk2(movie__new_from_image_sequence, movie_context, image_sequence, 0, "Creates a new movie from an image sequence.");
 
 
 f2ptr raw__movie__save(f2ptr cause, f2ptr this, f2ptr filename) {

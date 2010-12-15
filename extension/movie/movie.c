@@ -230,13 +230,13 @@ void funk2_movie_context__destroy(funk2_movie_context_t* this) {
 // movie_context
 
 f2ptr raw__movie_context__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr bit_rate, f2ptr frames_per_second, f2ptr pointer) {
-  return f2__frame__new(cause, f2list6__new(cause,
-					    new__symbol(cause, "type"),              new__symbol(cause, "movie_context"),
-					    new__symbol(cause, "width"),             width,
-					    new__symbol(cause, "height"),            height,
-					    new__symbol(cause, "bit_rate"),          bit_rate,
-					    new__symbol(cause, "frames_per_second"), frames_per_second,
-					    new__symbol(cause, "pointer"),           pointer));
+  return f2__frame__new(cause, f2list12__new(cause,
+					     new__symbol(cause, "type"),              new__symbol(cause, "movie_context"),
+					     new__symbol(cause, "width"),             width,
+					     new__symbol(cause, "height"),            height,
+					     new__symbol(cause, "bit_rate"),          bit_rate,
+					     new__symbol(cause, "frames_per_second"), frames_per_second,
+					     new__symbol(cause, "pointer"),           pointer));
 }
 
 f2ptr f2__movie_context__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr bit_rate, f2ptr frames_per_second) {

@@ -246,10 +246,11 @@ f2ptr f2__movie_context__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr bit_r
       (! raw__integer__is_type(cause, frames_per_second))) {
     return f2larva__new(cause, 1, nil);
   }
-  s64 width__i             = f2integer__i(width,             cause);
-  s64 height__i            = f2integer__i(height,            cause);
-  s64 bit_rate__i          = f2integer__i(bit_rate,          cause);
-  s64 frames_per_second__i = f2integer__i(frames_per_second, cause);
+  s64                    width__i             = f2integer__i(width,             cause);
+  s64                    height__i            = f2integer__i(height,            cause);
+  s64                    bit_rate__i          = f2integer__i(bit_rate,          cause);
+  s64                    frames_per_second__i = f2integer__i(frames_per_second, cause);
+  funk2_movie_context_t* movie_context        = (funk2_movie_context_t*)from_ptr(f2__malloc(sizeof(funk2_movie_context_t)));
   if (! funk2_movie_context__init(movie_context, width__i, height__i, bit_rate__i, frames_per_second__i)) {
     return f2larva__new(cause, 12335, nil);
   }
@@ -428,6 +429,7 @@ void raw__movie_context__destroy(f2ptr cause, f2ptr this) {
   f2ptr                  pointer       = raw__movie_context__pointer(cause, this);
   funk2_movie_context_t* movie_context = (funk2_movie_context_t*)from_ptr(f2pointer__p(pointer, cause)); 
   funk2_movie_context__destroy(movie_context);
+  f2__free(to_ptr(movie_context));
 }
 
 f2ptr f2__movie_context__destroy(f2ptr cause, f2ptr this) {
@@ -541,6 +543,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
     }
     
     funk2_movie_context__destroy(movie_context);
+    f2__free(to_ptr(movie_context));
   }
   video_chunk_list = f2__reverse(cause, video_chunk_list);
   s64 total_length = 0;

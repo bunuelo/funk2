@@ -136,7 +136,7 @@ void libavcodec__video_encode_example(const char *filename) {
 
 // funk2_movie_context
 
-void funk2_movie_context__init(funk2_movie_context_t* this, s64 width, s64 height) {
+boolean_t funk2_movie_context__init(funk2_movie_context_t* this, s64 width, s64 height) {
   this->width            = width;
   this->height           = height;
   this->av_codec_context = NULL;
@@ -145,7 +145,7 @@ void funk2_movie_context__init(funk2_movie_context_t* this, s64 width, s64 heigh
   this->av_codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
   if (this->av_codec == NULL) {
     printf("codec not found\n");
-    return f2larva__new(cause, 43111, nil);
+    return boolean__false;
   }
   
   // put sample parameters
@@ -162,14 +162,14 @@ void funk2_movie_context__init(funk2_movie_context_t* this, s64 width, s64 heigh
   
   if (avcodec_open(this->av_codec_context, this->av_codec) < 0) {
     printf("could not open codec\n");
-    return f2larva__new(cause, 43111, nil);
+    return boolean__false;
   }
   
   {    
     this->rgb_picture_frame = avcodec_alloc_frame();
     if (this->rgb_picture_frame == NULL) {
       printf("\ncouldn't allocate rgb_picture_frame.");
-      return f2larva__new(cause, 231, nil);
+      return boolean__false;
     }
     
     this->rgb_picture_frame__size   = avpicture_get_size(PIX_FMT_RGB32, width__i, height__i);
@@ -182,7 +182,7 @@ void funk2_movie_context__init(funk2_movie_context_t* this, s64 width, s64 heigh
     this->yuv_picture_frame = avcodec_alloc_frame();
     if (this->yuv_picture_frame == NULL) {
       printf("\ncouldn't allocate yuv_picture_frame.");
-      return f2larva__new(cause, 231, nil);
+      return boolean__false;
     }
     
     this->yuv_picture_frame__size   = avpicture_get_size(PIX_FMT_YUV420P, width__i, height__i);
@@ -324,7 +324,10 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
   f2ptr video_chunk_list = nil;
   {
     funk2_movie_context_t* movie_context = (funk2_movie_context_t*)from_ptr(f2__malloc(sizeof(funk2_movie_context_t)));
-    funk2_movie_context__init(movie_context, width__i, height__i);
+    if (! funk2_movie_context__init(movie_context, width__i, height__i)) {
+      return f2larva__new(cause, 13415, nil);
+    }
+    
     {
       
       s64 out_size = 0;

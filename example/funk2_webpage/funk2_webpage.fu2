@@ -476,10 +476,12 @@
 					  '</ul>'
 					  ''
 					  '<h2>Documentation</h2>'
+					  '<p>'
 					  [let [[documentation [get package documentation]]]
 					    [if [is-type `string documentation]
 						documentation
 					      [get documentation as-string]]]
+					  '</p>'
 					  ''
 					  '<h2>Objects Defined</h2>'
 					  '<ul>'

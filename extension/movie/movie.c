@@ -19,7 +19,7 @@
 // rights to redistribute these changes.
 // 
 
-#include "../../c/funk2.h"
+#include "movie.h"
 #include "../image/image.h"
 #include "../image_sequence/image_sequence.h"
 
@@ -157,143 +157,143 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
   }
   f2ptr video_chunk_list = nil;
   {
-    AVCodec*        av_codec;
-    AVCodecContext* av_codec_context = NULL;
+    funk2_movie_context_t* movie_context = (funk2_movie_context_t*)from_ptr(f2__malloc(sizeof(funk2_movie_context_t)));
+    
+    movie_context->width            = width__i;
+    movie_context->height           = height__i;
+    movie_context->av_codec_context = NULL;
     
     // find the mpeg1 video encoder
-    av_codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
-    if (av_codec == NULL) {
+    movie_context->av_codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
+    if (movie_context->av_codec == NULL) {
       printf("codec not found\n");
       return f2larva__new(cause, 43111, nil);
     }
     
     // put sample parameters
-    av_codec_context                = avcodec_alloc_context();
-    av_codec_context->bit_rate      = bit_rate__i;
-    av_codec_context->width         = width__i;
-    av_codec_context->height        = height__i;
-    av_codec_context->time_base.num = 1;
-    av_codec_context->time_base.den = frames_per_second__i;
-    av_codec_context->gop_size      = 10; // emit one intra frame every ten frames
-    av_codec_context->max_b_frames  = 1;
-    av_codec_context->pix_fmt       = PIX_FMT_YUV420P;
-    av_codec_context->qmin          = 3;
+    movie_context->av_codec_context                = avcodec_alloc_context();
+    movie_context->av_codec_context->bit_rate      = bit_rate__i;
+    movie_context->av_codec_context->width         = width__i;
+    movie_context->av_codec_context->height        = height__i;
+    movie_context->av_codec_context->time_base.num = 1;
+    movie_context->av_codec_context->time_base.den = frames_per_second__i;
+    movie_context->av_codec_context->gop_size      = 10; // emit one intra frame every ten frames
+    movie_context->av_codec_context->max_b_frames  = 1;
+    movie_context->av_codec_context->pix_fmt       = PIX_FMT_YUV420P;
+    movie_context->av_codec_context->qmin          = 3;
     
-    if (avcodec_open(av_codec_context, av_codec) < 0) {
+    if (avcodec_open(movie_context->av_codec_context, movie_context->av_codec) < 0) {
       printf("could not open codec\n");
       return f2larva__new(cause, 43111, nil);
     }
     
-    s64 out_buffer_size = bit_rate__i;
-    u8* out_buffer      = (u8*)from_ptr(f2__malloc(out_buffer_size));
-    
-    
-    AVFrame* rgb_picture_frame;
-    s64      rgb_picture_frame__size;
-    u8*      rgb_picture_frame__buffer;
     {    
-      rgb_picture_frame = avcodec_alloc_frame();
-      if (rgb_picture_frame == NULL) {
+      movie_context->rgb_picture_frame = avcodec_alloc_frame();
+      if (movie_context->rgb_picture_frame == NULL) {
 	printf("\ncouldn't allocate rgb_picture_frame.");
 	return f2larva__new(cause, 231, nil);
       }
       
-      rgb_picture_frame__size   = avpicture_get_size(PIX_FMT_RGB32, width__i, height__i);
-      rgb_picture_frame__buffer = (u8*)from_ptr(f2__malloc(rgb_picture_frame__size));
+      movie_context->rgb_picture_frame__size   = avpicture_get_size(PIX_FMT_RGB32, width__i, height__i);
+      movie_context->rgb_picture_frame__buffer = (u8*)from_ptr(f2__malloc(movie_context->rgb_picture_frame__size));
       
-      avpicture_fill((AVPicture*)rgb_picture_frame, rgb_picture_frame__buffer, PIX_FMT_RGB32, width__i, height__i);
+      avpicture_fill((AVPicture*)movie_context->rgb_picture_frame, movie_context->rgb_picture_frame__buffer, PIX_FMT_RGB32, width__i, height__i);
     }
     
-    AVFrame* yuv_picture_frame;
-    s64      yuv_picture_frame__size;
-    u8*      yuv_picture_frame__buffer;
     {    
-      yuv_picture_frame = avcodec_alloc_frame();
-      if (yuv_picture_frame == NULL) {
+      movie_context->yuv_picture_frame = avcodec_alloc_frame();
+      if (movie_context->yuv_picture_frame == NULL) {
 	printf("\ncouldn't allocate yuv_picture_frame.");
 	return f2larva__new(cause, 231, nil);
       }
       
-      yuv_picture_frame__size   = avpicture_get_size(PIX_FMT_YUV420P, width__i, height__i);
-      yuv_picture_frame__buffer = (u8*)from_ptr(f2__malloc(yuv_picture_frame__size));
+      movie_context->yuv_picture_frame__size   = avpicture_get_size(PIX_FMT_YUV420P, width__i, height__i);
+      movie_context->yuv_picture_frame__buffer = (u8*)from_ptr(f2__malloc(movie_context->yuv_picture_frame__size));
       
-      avpicture_fill((AVPicture*)yuv_picture_frame, yuv_picture_frame__buffer, PIX_FMT_YUV420P, width__i, height__i);
+      avpicture_fill((AVPicture*)movie_context->yuv_picture_frame, movie_context->yuv_picture_frame__buffer, PIX_FMT_YUV420P, width__i, height__i);
     }
     
+    movie_context->image_convert_context = sws_getContext(width__i, height__i, PIX_FMT_RGB32, width__i, height__i, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
     
-    struct SwsContext* img_convert_ctx = sws_getContext(width__i, height__i, PIX_FMT_RGB32, width__i, height__i, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
     
-    s64 out_size = 0;
+    movie_context->out_buffer_size = bit_rate__i;
+    movie_context->out_buffer      = (u8*)from_ptr(f2__malloc(movie_context->out_buffer_size));
+    
     {
-      f2ptr iter = f2__image_sequence__first_image_link(cause, image_sequence);
-      while (iter != nil) {
-	f2ptr image     = f2__doublelink__value(cause, iter);
-	f2ptr rgba_data = f2__image__rgba_data(cause, image);
-	
-	s64 chunk__length = f2chunk__length(rgba_data, cause);
-	if (chunk__length != rgb_picture_frame__size) {
-	  printf("\nmovie.c error: chunk__length != rgb_picture_frame__size");
-	  return f2larva__new(cause, 453, nil);
-	}
-	raw__chunk__str_copy(cause, rgba_data, rgb_picture_frame__buffer);
-	
-	{ // swap red and blue
-	  s64 y;
-	  for (y = 0; y < height__i; y ++) {
-	    s64 x;
-	    for (x = 0; x < width__i; x ++) {
-	      s64 pixel_index = ((y * width__i) + x) << 2;
-	      u8 red = rgb_picture_frame__buffer[pixel_index + 0];
-	      rgb_picture_frame__buffer[pixel_index + 0] = rgb_picture_frame__buffer[pixel_index + 2];
-	      rgb_picture_frame__buffer[pixel_index + 2] = red;
+      
+      s64 out_size = 0;
+      {
+	f2ptr iter = f2__image_sequence__first_image_link(cause, image_sequence);
+	while (iter != nil) {
+	  f2ptr image     = f2__doublelink__value(cause, iter);
+	  f2ptr rgba_data = f2__image__rgba_data(cause, image);
+	  
+	  s64 chunk__length = f2chunk__length(rgba_data, cause);
+	  if (chunk__length != movie_context->rgb_picture_frame__size) {
+	    printf("\nmovie.c error: chunk__length != rgb_picture_frame__size");
+	    return f2larva__new(cause, 453, nil);
+	  }
+	  raw__chunk__str_copy(cause, rgba_data, movie_context->rgb_picture_frame__buffer);
+	  
+	  { // swap red and blue
+	    s64 y;
+	    for (y = 0; y < height__i; y ++) {
+	      s64 x;
+	      for (x = 0; x < width__i; x ++) {
+		s64 pixel_index = ((y * width__i) + x) << 2;
+		u8 red = movie_context->rgb_picture_frame__buffer[pixel_index + 0];
+		movie_context->rgb_picture_frame__buffer[pixel_index + 0] = movie_context->rgb_picture_frame__buffer[pixel_index + 2];
+		movie_context->rgb_picture_frame__buffer[pixel_index + 2] = red;
+	      }
 	    }
 	  }
+	  
+	  sws_scale(movie_context->image_convert_context,
+		    (const uint8_t* const*)(((AVPicture*)movie_context->rgb_picture_frame)->data),
+		    ((AVPicture*)movie_context->rgb_picture_frame)->linesize,
+		    0,
+		    height__i,
+		    ((AVPicture*)movie_context->yuv_picture_frame)->data,
+		    ((AVPicture*)movie_context->yuv_picture_frame)->linesize);	
+	  
+	  // encode the image
+	  out_size = avcodec_encode_video(movie_context->av_codec_context, movie_context->out_buffer, movie_context->out_buffer_size, movie_context->yuv_picture_frame);
+	  f2ptr chunk      = f2chunk__new(cause, out_size, movie_context->out_buffer);
+	  video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
+	  
+	  iter = f2__doublelink__next(cause, iter);
 	}
-	
-	sws_scale(img_convert_ctx,
-		  (const uint8_t* const*)(((AVPicture*)rgb_picture_frame)->data),
-		  ((AVPicture*)rgb_picture_frame)->linesize,
-		  0,
-		  height__i,
-		  ((AVPicture*)yuv_picture_frame)->data,
-		  ((AVPicture*)yuv_picture_frame)->linesize);	
-	
-	// encode the image
-	out_size = avcodec_encode_video(av_codec_context, out_buffer, out_buffer_size, yuv_picture_frame);
-	f2ptr chunk      = f2chunk__new(cause, out_size, out_buffer);
+      }
+      
+      // get the delayed frames
+      while (out_size != 0) {
+	out_size = avcodec_encode_video(movie_context->av_codec_context, movie_context->out_buffer, movie_context->out_buffer_size, NULL);
+	f2ptr chunk      = f2chunk__new(cause, out_size, movie_context->out_buffer);
 	video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
-	
-	iter = f2__doublelink__next(cause, iter);
+      }
+      
+      /* add sequence end code to have a real mpeg file */
+      {
+	movie_context->out_buffer[0] = 0x00;
+	movie_context->out_buffer[1] = 0x00;
+	movie_context->out_buffer[2] = 0x01;
+	movie_context->out_buffer[3] = 0xb7;
+	out_size = 4;
+	f2ptr chunk      = f2chunk__new(cause, out_size, movie_context->out_buffer);
+	video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
       }
     }
     
-    // get the delayed frames
-    while (out_size != 0) {
-      out_size = avcodec_encode_video(av_codec_context, out_buffer, out_buffer_size, NULL);
-      f2ptr chunk      = f2chunk__new(cause, out_size, out_buffer);
-      video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
-    }
+    sws_freeContext(movie_context->image_convert_context);
     
-    /* add sequence end code to have a real mpeg file */
-    {
-      out_buffer[0] = 0x00;
-      out_buffer[1] = 0x00;
-      out_buffer[2] = 0x01;
-      out_buffer[3] = 0xb7;
-      out_size = 4;
-      f2ptr chunk      = f2chunk__new(cause, out_size, out_buffer);
-      video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
-    }
-    sws_freeContext(img_convert_ctx);
+    f2__free(to_ptr(movie_context->rgb_picture_frame__buffer));
+    av_free(movie_context->rgb_picture_frame);
+    f2__free(to_ptr(movie_context->yuv_picture_frame__buffer));
+    av_free(movie_context->yuv_picture_frame);
+    f2__free(to_ptr(movie_context->out_buffer));
     
-    f2__free(to_ptr(rgb_picture_frame__buffer));
-    av_free(rgb_picture_frame);
-    f2__free(to_ptr(yuv_picture_frame__buffer));
-    av_free(yuv_picture_frame);
-    f2__free(to_ptr(out_buffer));
-    
-    avcodec_close(av_codec_context);
-    av_free(av_codec_context);
+    avcodec_close(movie_context->av_codec_context);
+    av_free(movie_context->av_codec_context);
   }
   video_chunk_list = f2__reverse(cause, video_chunk_list);
   s64 total_length = 0;

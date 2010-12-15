@@ -43,8 +43,8 @@ struct funk2_movie_context_s {
 #endif // F2__LIBAVCODEC_SUPPORTED
 };
 
-f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second);
-f2ptr  f2__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second);
+f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr movie_context, f2ptr image_sequence);
+f2ptr  f2__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr movie_context, f2ptr image_sequence);
 
 f2ptr     raw__movie__new                    (f2ptr cause, f2ptr video_chunk);
 f2ptr      f2__movie__new                    (f2ptr cause, f2ptr video_chunk);

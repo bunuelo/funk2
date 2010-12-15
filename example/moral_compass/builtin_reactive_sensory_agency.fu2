@@ -55,6 +55,7 @@
 		    [have semantic_knowledge_base add_semantic_frame visual_object_semantic_frame]
 		    [have semantic_object_frame add phenomenal_name visual_object_semantic_frame]]]
 	    visual_objects]
+      
       [let [[object_iter_one visual_objects]]
 	[while object_iter_one
 	  [let [[object_one      [car object_iter_one]]
@@ -65,18 +66,19 @@
 		  [let [[semantic_object_two [have semantic_object_frame lookup [get object_two phenomenal_name]]]]
 		    'pairwise pattern recognitions between objects'
 		    
-		    [cond [[> [get object_one retina_position_vertical]
-			      [get object_two retina_position_vertical]]
-			   [have semantic_object_one add_preposition `visually_above semantic_object_two]]
-			  [[< [get object_one retina_position_vertical]
-			      [get object_two retina_position_vertical]]
-			   [have semantic_object_two add_preposition `visually_above semantic_object_one]]]
+		    `[cond [[> [get object_one retina_position_vertical]
+			       [get object_two retina_position_vertical]]
+			    [have semantic_object_one add_preposition `visually_above semantic_object_two]]
+			   [[< [get object_one retina_position_vertical]
+			       [get object_two retina_position_vertical]]
+			    [have semantic_object_two add_preposition `visually_above semantic_object_one]]]
 		    
 		    '...more tests for object x object patterns...'
 		    
 		    ]]
 		[= object_iter_two [cdr object_iter_two]]]]]
 	  [= object_iter_one [cdr object_iter_one]]]]
+      
       [mapc [funk [visual_object]
 		  [let [[semantic_object [have semantic_object_frame lookup [get visual_object phenomenal_name]]]]
 		    [let [[preposition_frame [get visual_object preposition_frame]]]

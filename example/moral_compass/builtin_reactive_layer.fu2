@@ -54,3 +54,4 @@
 [deftypefunk builtin_reactive_layer get visual_knowledge []
   [get [get this agency `sensory] visual_knowledge]]
 
+'I\'m a driver.  I\'m a winner.  Things are gonna change.  I can feel it.  --Soy un perdidor.'

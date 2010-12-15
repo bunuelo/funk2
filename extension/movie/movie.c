@@ -552,8 +552,6 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr m
 	video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
       }
     }
-    
-    raw__movie_context__destroy(cause, movie_context);
   }
   video_chunk_list = f2__reverse(cause, video_chunk_list);
   s64 total_length = 0;

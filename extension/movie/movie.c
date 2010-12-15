@@ -134,6 +134,172 @@ void libavcodec__video_encode_example(const char *filename) {
 #endif // F2__LIBAVCODEC_SUPPORTED
 
 
+// funk2_movie_context
+
+void funk2_movie_context__init(funk2_movie_context_t* this) {
+  this->width            = width__i;
+  this->height           = height__i;
+  this->av_codec_context = NULL;
+  
+  // find the mpeg1 video encoder
+  this->av_codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
+  if (this->av_codec == NULL) {
+    printf("codec not found\n");
+    return f2larva__new(cause, 43111, nil);
+  }
+  
+  // put sample parameters
+  this->av_codec_context                = avcodec_alloc_context();
+  this->av_codec_context->bit_rate      = bit_rate__i;
+  this->av_codec_context->width         = width__i;
+  this->av_codec_context->height        = height__i;
+  this->av_codec_context->time_base.num = 1;
+  this->av_codec_context->time_base.den = frames_per_second__i;
+  this->av_codec_context->gop_size      = 10; // emit one intra frame every ten frames
+  this->av_codec_context->max_b_frames  = 1;
+  this->av_codec_context->pix_fmt       = PIX_FMT_YUV420P;
+  this->av_codec_context->qmin          = 3;
+  
+  if (avcodec_open(this->av_codec_context, this->av_codec) < 0) {
+    printf("could not open codec\n");
+    return f2larva__new(cause, 43111, nil);
+  }
+  
+  {    
+    this->rgb_picture_frame = avcodec_alloc_frame();
+    if (this->rgb_picture_frame == NULL) {
+      printf("\ncouldn't allocate rgb_picture_frame.");
+      return f2larva__new(cause, 231, nil);
+    }
+    
+    this->rgb_picture_frame__size   = avpicture_get_size(PIX_FMT_RGB32, width__i, height__i);
+    this->rgb_picture_frame__buffer = (u8*)from_ptr(f2__malloc(this->rgb_picture_frame__size));
+    
+    avpicture_fill((AVPicture*)this->rgb_picture_frame, this->rgb_picture_frame__buffer, PIX_FMT_RGB32, width__i, height__i);
+  }
+  
+  {    
+    this->yuv_picture_frame = avcodec_alloc_frame();
+    if (this->yuv_picture_frame == NULL) {
+      printf("\ncouldn't allocate yuv_picture_frame.");
+      return f2larva__new(cause, 231, nil);
+    }
+    
+    this->yuv_picture_frame__size   = avpicture_get_size(PIX_FMT_YUV420P, width__i, height__i);
+    this->yuv_picture_frame__buffer = (u8*)from_ptr(f2__malloc(this->yuv_picture_frame__size));
+    
+    avpicture_fill((AVPicture*)this->yuv_picture_frame, this->yuv_picture_frame__buffer, PIX_FMT_YUV420P, width__i, height__i);
+  }
+  
+  this->image_convert_context = sws_getContext(width__i, height__i, PIX_FMT_RGB32, width__i, height__i, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
+  
+  this->out_buffer_size = bit_rate__i;
+  this->out_buffer      = (u8*)from_ptr(f2__malloc(this->out_buffer_size));
+}
+
+void funk2_movie_context__destroy(funk2_movie_context_t* this) {
+  sws_freeContext(this->image_convert_context);
+  
+  f2__free(to_ptr(this->rgb_picture_frame__buffer));
+  av_free(this->rgb_picture_frame);
+  f2__free(to_ptr(this->yuv_picture_frame__buffer));
+  av_free(this->yuv_picture_frame);
+  f2__free(to_ptr(this->out_buffer));
+  
+  avcodec_close(this->av_codec_context);
+  av_free(this->av_codec_context);
+}
+
+
+// movie_context
+
+f2ptr raw__movie_context__new(f2ptr cause, f2ptr pointer) {
+  return f2__frame__new(cause, f2list4__new(cause,
+					    new__symbol(cause, "type"),    new__symbol(cause, "movie_context"),
+					    new__symbol(cause, "pointer"), pointer));
+}
+
+f2ptr f2__movie_context__new(f2ptr cause, f2ptr pointer) {
+  if (! raw__pointer__is_type(cause, pointer)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__movie_context__new(cause, pointer);
+}
+export_cefunk1(movie_context__new, images, 0, "Returns a new movie_context object.");
+
+
+boolean_t raw__movie_context__is_type(f2ptr cause, f2ptr thing) {
+  if (! raw__frame__is_type(cause, thing)) {
+    return boolean__false;
+  }
+  f2ptr this_type_name_symbol = new__symbol(cause, "movie_context");
+  f2ptr thing_type_name       = f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil);
+  if (raw__eq(cause, this_type_name_symbol, thing_type_name)) {
+    return boolean__true;
+  }
+  f2ptr thing_type = f2__lookup_type(cause, thing_type_name);
+  if (raw__primobject_type__has_parent_type(cause, thing_type, this_type_name_symbol)) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
+f2ptr f2__movie_context__is_type(f2ptr cause, f2ptr thing) {
+  return f2bool__new(raw__movie_context__is_type(cause, thing));
+}
+export_cefunk1(movie_context__is_type, thing, 0, "Returns whether or not thing is of type movie_context.");
+
+
+f2ptr raw__movie_context__type(f2ptr cause, f2ptr this) {
+  return f2__object__type(cause, this);
+}
+
+f2ptr f2__movie_context__type(f2ptr cause, f2ptr this) {
+  if (! raw__movie_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__movie_context__type(cause, this);
+}
+export_cefunk1(movie_context__type, thing, 0, "Returns the specific type of object that this movie_context is.");
+
+
+f2ptr raw__movie_context__pointer(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "pointer"), nil);
+}
+
+f2ptr f2__movie_context__pointer(f2ptr cause, f2ptr this) {
+  if (! raw__movie_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__movie_context__pointer(cause, this);
+}
+export_cefunk1(movie_context__pointer, thing, 0, "Returns the pointer of the movie_context.");
+
+
+f2ptr raw__movie_context__pointer__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "pointer"), value);
+}
+
+f2ptr f2__movie_context__pointer__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__movie_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__movie_context__pointer__set(cause, this, value);
+}
+export_cefunk2(movie_context__pointer__set, thing, value, 0, "Sets the pointer of the movie_context.");
+
+
+f2ptr f2__movie_context_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "movie"), new__symbol(cause, "movie_context__pointer")));}
+  return this;
+}
+
+
+
 
 f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr image_sequence, f2ptr bit_rate, f2ptr frames_per_second) {
 #ifdef F2__LIBAVCODEC_SUPPORTED
@@ -158,67 +324,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
   f2ptr video_chunk_list = nil;
   {
     funk2_movie_context_t* movie_context = (funk2_movie_context_t*)from_ptr(f2__malloc(sizeof(funk2_movie_context_t)));
-    
-    movie_context->width            = width__i;
-    movie_context->height           = height__i;
-    movie_context->av_codec_context = NULL;
-    
-    // find the mpeg1 video encoder
-    movie_context->av_codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
-    if (movie_context->av_codec == NULL) {
-      printf("codec not found\n");
-      return f2larva__new(cause, 43111, nil);
-    }
-    
-    // put sample parameters
-    movie_context->av_codec_context                = avcodec_alloc_context();
-    movie_context->av_codec_context->bit_rate      = bit_rate__i;
-    movie_context->av_codec_context->width         = width__i;
-    movie_context->av_codec_context->height        = height__i;
-    movie_context->av_codec_context->time_base.num = 1;
-    movie_context->av_codec_context->time_base.den = frames_per_second__i;
-    movie_context->av_codec_context->gop_size      = 10; // emit one intra frame every ten frames
-    movie_context->av_codec_context->max_b_frames  = 1;
-    movie_context->av_codec_context->pix_fmt       = PIX_FMT_YUV420P;
-    movie_context->av_codec_context->qmin          = 3;
-    
-    if (avcodec_open(movie_context->av_codec_context, movie_context->av_codec) < 0) {
-      printf("could not open codec\n");
-      return f2larva__new(cause, 43111, nil);
-    }
-    
-    {    
-      movie_context->rgb_picture_frame = avcodec_alloc_frame();
-      if (movie_context->rgb_picture_frame == NULL) {
-	printf("\ncouldn't allocate rgb_picture_frame.");
-	return f2larva__new(cause, 231, nil);
-      }
-      
-      movie_context->rgb_picture_frame__size   = avpicture_get_size(PIX_FMT_RGB32, width__i, height__i);
-      movie_context->rgb_picture_frame__buffer = (u8*)from_ptr(f2__malloc(movie_context->rgb_picture_frame__size));
-      
-      avpicture_fill((AVPicture*)movie_context->rgb_picture_frame, movie_context->rgb_picture_frame__buffer, PIX_FMT_RGB32, width__i, height__i);
-    }
-    
-    {    
-      movie_context->yuv_picture_frame = avcodec_alloc_frame();
-      if (movie_context->yuv_picture_frame == NULL) {
-	printf("\ncouldn't allocate yuv_picture_frame.");
-	return f2larva__new(cause, 231, nil);
-      }
-      
-      movie_context->yuv_picture_frame__size   = avpicture_get_size(PIX_FMT_YUV420P, width__i, height__i);
-      movie_context->yuv_picture_frame__buffer = (u8*)from_ptr(f2__malloc(movie_context->yuv_picture_frame__size));
-      
-      avpicture_fill((AVPicture*)movie_context->yuv_picture_frame, movie_context->yuv_picture_frame__buffer, PIX_FMT_YUV420P, width__i, height__i);
-    }
-    
-    movie_context->image_convert_context = sws_getContext(width__i, height__i, PIX_FMT_RGB32, width__i, height__i, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
-    
-    
-    movie_context->out_buffer_size = bit_rate__i;
-    movie_context->out_buffer      = (u8*)from_ptr(f2__malloc(movie_context->out_buffer_size));
-    
+    funk2_movie_context__init(movie_context);
     {
       
       s64 out_size = 0;
@@ -241,7 +347,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
 	      s64 x;
 	      for (x = 0; x < width__i; x ++) {
 		s64 pixel_index = ((y * width__i) + x) << 2;
-		u8 red = movie_context->rgb_picture_frame__buffer[pixel_index + 0];
+		u8 red                                                    = movie_context->rgb_picture_frame__buffer[pixel_index + 0];
 		movie_context->rgb_picture_frame__buffer[pixel_index + 0] = movie_context->rgb_picture_frame__buffer[pixel_index + 2];
 		movie_context->rgb_picture_frame__buffer[pixel_index + 2] = red;
 	      }
@@ -284,16 +390,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr i
       }
     }
     
-    sws_freeContext(movie_context->image_convert_context);
-    
-    f2__free(to_ptr(movie_context->rgb_picture_frame__buffer));
-    av_free(movie_context->rgb_picture_frame);
-    f2__free(to_ptr(movie_context->yuv_picture_frame__buffer));
-    av_free(movie_context->yuv_picture_frame);
-    f2__free(to_ptr(movie_context->out_buffer));
-    
-    avcodec_close(movie_context->av_codec_context);
-    av_free(movie_context->av_codec_context);
+    funk2_movie_context__destroy(movie_context);
   }
   video_chunk_list = f2__reverse(cause, video_chunk_list);
   s64 total_length = 0;
@@ -339,6 +436,8 @@ f2ptr f2__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr im
 export_cefunk3(libavcodec__video_chunk__new_from_image_sequence, image_sequence, bit_rate, frames_per_second, 0, "");
 
 
+
+// movie
 
 f2ptr raw__movie__new(f2ptr cause, f2ptr video_chunk) {
   return f2__frame__new(cause, f2list4__new(cause,
@@ -471,7 +570,8 @@ f2ptr f2__movie__core_extension_ping(f2ptr cause) {
 export_cefunk0(movie__core_extension_ping, 0, "");
 
 f2ptr f2__movie__core_extension_initialize(f2ptr cause) {
-  f2__add_type(cause, new__symbol(cause, "movie"), f2__movie_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "movie_context"), f2__movie_context_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "movie"),         f2__movie_type__new(cause));
   f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__core_extension_ping")), nil);
 #ifdef F2__LIBAVCODEC_SUPPORTED
   libavcodec__initialize();

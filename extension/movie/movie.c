@@ -195,6 +195,7 @@ boolean_t funk2_movie_context__init(funk2_movie_context_t* this, s64 width, s64 
   
   this->out_buffer_size = bit_rate;
   this->out_buffer      = (u8*)from_ptr(f2__malloc(this->out_buffer_size));
+  return boolean__true;
 }
 
 void funk2_movie_context__destroy(funk2_movie_context_t* this) {

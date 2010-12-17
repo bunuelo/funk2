@@ -121,6 +121,7 @@
 				  'extension/graph_isomorphism/'
 				  'extension/semantic_frame_ball/'
 				  'extension/semantic_knowledge_base/'
+				  'extension/semantic_object_type/'
 				  'example/conceptnet/'
 				  'example/divisi2/'
 				  'example/english_language/'

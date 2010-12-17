@@ -33,10 +33,10 @@ f2ptr raw__semantic_physical_object__new(f2ptr cause, f2ptr source) {
 					    new__symbol(cause, "source"), source));
 }
 
-f2ptr f2__semantic_physical_object__new(f2ptr cause, f2ptr source, f2ptr key_type, f2ptr key, f2ptr target) {
-  return raw__semantic_physical_object__new(cause, source, key_type, key, target);
+f2ptr f2__semantic_physical_object__new(f2ptr cause, f2ptr source) {
+  return raw__semantic_physical_object__new(cause, source);
 }
-export_cefunk4(semantic_physical_object__new, source, key_type, key, target, 0, "Returns a new semantic_physical_object object.");
+export_cefunk1(semantic_physical_object__new, source, 0, "Returns a new semantic_physical_object object.");
 
 
 boolean_t raw__semantic_physical_object__is_type(f2ptr cause, f2ptr thing) {

@@ -27,16 +27,23 @@
 
 // semantic_physical_object
 
-f2ptr raw__semantic_physical_object__new(f2ptr cause, f2ptr source) {
-  return f2__frame__new(cause, f2list4__new(cause,
-					    new__symbol(cause, "type"),   new__symbol(cause, "semantic_physical_object"),
-					    new__symbol(cause, "source"), source));
+f2ptr raw__semantic_physical_object__new(f2ptr cause, f2ptr semantic_realm) {
+  f2ptr this = f2__semantic_frame__new(cause, semantic_realm);
+  if (raw__larva__is_type(cause, this)) {
+    return this;
+  }
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_physical_object"));
+  raw__semantic_frame__add( cause, this, new__symbol(cause, "type"), new__symbol(cause, "name"), new__symbol(cause, "semantic_physical_object"));
+  return this;
 }
 
-f2ptr f2__semantic_physical_object__new(f2ptr cause, f2ptr source) {
-  return raw__semantic_physical_object__new(cause, source);
+f2ptr f2__semantic_physical_object__new(f2ptr cause, f2ptr semantic_realm) {
+  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_physical_object__new(cause, semantic_realm);
 }
-export_cefunk1(semantic_physical_object__new, source, 0, "Returns a new semantic_physical_object object.");
+export_cefunk1(semantic_physical_object__new, semantic_realm, 0, "Returns a new semantic_physical_object object.");
 
 
 boolean_t raw__semantic_physical_object__is_type(f2ptr cause, f2ptr thing) {
@@ -74,39 +81,11 @@ f2ptr f2__semantic_physical_object__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_physical_object__type, thing, 0, "Returns the specific type of object that this semantic_physical_object is.");
 
 
-f2ptr raw__semantic_physical_object__source(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "source"), nil);
-}
-
-f2ptr f2__semantic_physical_object__source(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_physical_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_physical_object__source(cause, this);
-}
-export_cefunk1(semantic_physical_object__source, thing, 0, "Returns the source of the semantic_physical_object.");
-
-
-f2ptr raw__semantic_physical_object__source__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "source"), value);
-}
-
-f2ptr f2__semantic_physical_object__source__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__semantic_physical_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_physical_object__source__set(cause, this, value);
-}
-export_cefunk2(semantic_physical_object__source__set, thing, value, 0, "Sets the source of the semantic_physical_object.");
-
-
 f2ptr f2__semantic_physical_object_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_frame")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__new")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "source"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__source")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "source"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__source__set")));}
   return this;
 }
 

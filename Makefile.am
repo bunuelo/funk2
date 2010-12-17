@@ -218,6 +218,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/semantic_knowledge_base/libf2e_semantic_knowledge_base.la \
                   extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la \
                   extension/semantic_object_type/libf2e_semantic_object_type.la \
+                  extension/semantic_physical_object/libf2e_semantic_physical_object.la \
                   extension/mindmon/libf2e_mindmon.la \
                   extension/causality/libf2e_causality.la
 #bin_PROGRAMS    = bin/funk2-static
@@ -362,6 +363,7 @@ extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_SOURCES   
 extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES           = extension/semantic_knowledge_base/semantic_knowledge_base.c
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
 extension_semantic_object_type_libf2e_semantic_object_type_la_SOURCES                 = extension/semantic_object_type/semantic_object_type.c
+extension_semantic_physical_object_libf2e_semantic_physical_object_la_SOURCES         = extension/semantic_physical_object/semantic_physical_object.c
 extension_mindmon_libf2e_mindmon_la_SOURCES                                           = extension/mindmon/mindmon.c
 extension_causality_libf2e_causality_la_SOURCES                                       = extension/causality/causality.c
 
@@ -425,6 +427,9 @@ extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_CF
 
 extension_semantic_object_type_libf2e_semantic_object_type_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_object_type_libf2e_semantic_object_type_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_physical_object_libf2e_semantic_physical_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_physical_object_libf2e_semantic_physical_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_mindmon_libf2e_mindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_mindmon_libf2e_mindmon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

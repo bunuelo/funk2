@@ -25,6 +25,92 @@
 #include "../meta_semantic_knowledge_base/meta_semantic_knowledge_base.h"
 
 
+// semantic_object_type
+
+f2ptr raw__semantic_object_type__new(f2ptr cause, f2ptr source) {
+  return f2__frame__new(cause, f2list4__new(cause,
+					    new__symbol(cause, "type"),   new__symbol(cause, "semantic_object_type"),
+					    new__symbol(cause, "source"), source));
+}
+
+f2ptr f2__semantic_object_type__new(f2ptr cause, f2ptr source, f2ptr key_type, f2ptr key, f2ptr target) {
+  return raw__semantic_object_type__new(cause, source, key_type, key, target);
+}
+export_cefunk4(semantic_object_type__new, source, key_type, key, target, 0, "Returns a new semantic_object_type object.");
+
+
+boolean_t raw__semantic_object_type__is_type(f2ptr cause, f2ptr thing) {
+  if (! raw__frame__is_type(cause, thing)) {
+    return boolean__false;
+  }
+  f2ptr this_type_name_symbol = new__symbol(cause, "semantic_object_type");
+  f2ptr thing_type_name       = f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil);
+  if (raw__eq(cause, this_type_name_symbol, thing_type_name)) {
+    return boolean__true;
+  }
+  f2ptr thing_type = f2__lookup_type(cause, thing_type_name);
+  if (raw__primobject_type__has_parent_type(cause, thing_type, this_type_name_symbol)) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
+f2ptr f2__semantic_object_type__is_type(f2ptr cause, f2ptr thing) {
+  return f2bool__new(raw__semantic_object_type__is_type(cause, thing));
+}
+export_cefunk1(semantic_object_type__is_type, thing, 0, "Returns whether or not thing is of type semantic_object_type.");
+
+
+f2ptr raw__semantic_object_type__type(f2ptr cause, f2ptr this) {
+  return f2__object__type(cause, this);
+}
+
+f2ptr f2__semantic_object_type__type(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_object_type__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_object_type__type(cause, this);
+}
+export_cefunk1(semantic_object_type__type, thing, 0, "Returns the specific type of object that this semantic_object_type is.");
+
+
+f2ptr raw__semantic_object_type__source(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "source"), nil);
+}
+
+f2ptr f2__semantic_object_type__source(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_object_type__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_object_type__source(cause, this);
+}
+export_cefunk1(semantic_object_type__source, thing, 0, "Returns the source of the semantic_object_type.");
+
+
+f2ptr raw__semantic_object_type__source__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "source"), value);
+}
+
+f2ptr f2__semantic_object_type__source__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__semantic_object_type__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_object_type__source__set(cause, this, value);
+}
+export_cefunk2(semantic_object_type__source__set, thing, value, 0, "Sets the source of the semantic_object_type.");
+
+
+f2ptr f2__semantic_object_type_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "source"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__source")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "source"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__source__set")));}
+  return this;
+}
+
+
 
 
 

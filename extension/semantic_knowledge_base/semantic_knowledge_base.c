@@ -47,7 +47,11 @@ f2ptr f2__object__add(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   return result;
 }
 export_cefunk2_and_rest(object__add,        this, slot, args, 0, "");
-export_cefunk3(         object__add__apply, this, slot, args, 0, "");
+
+f2ptr f2__object__add__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__add(cause, this, slot, args);
+}
+export_cefunk3(object__add__apply, this, slot, args, 0, "");
 
 
 // object-remove, object-remove-apply
@@ -73,7 +77,11 @@ f2ptr f2__object__remove(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   return result;
 }
 export_cefunk2_and_rest(object__remove,        this, slot, args, 0, "");
-export_cefunk3(         object__remove__apply, this, slot, args, 0, "");
+
+f2ptr f2__object__remove__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__remove(cause, this, slot, args);
+}
+export_cefunk3(object__remove__apply, this, slot, args, 0, "");
 
 
 

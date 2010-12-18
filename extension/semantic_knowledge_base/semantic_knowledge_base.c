@@ -1492,7 +1492,7 @@ f2ptr raw__semantic_frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list2__new(cause,
-					       new__symbol(cause, "print_object_type"), new__symbol(cause, "semantic_frame")));   
+					       new__symbol(cause, "print_object_type"), f2__object__type(cause, this)));
     f2ptr semantic_frame__frame = raw__semantic_frame__frame(cause, this);
     frame__iteration(cause, semantic_frame__frame, type_slot_name, slot_name, slot_value,
 		     f2ptr set           = slot_value;

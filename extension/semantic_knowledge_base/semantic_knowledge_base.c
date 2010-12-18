@@ -1491,8 +1491,14 @@ f2ptr raw__semantic_frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = raw__semantic_frame__frame(cause, this);
-    raw__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"), new__symbol(cause, "semantic_frame"));
+    frame = f2__frame__new(cause, f2list2__new(cause,
+					       new__symbol(cause, "print_object_type"), new__symbol(cause, "semantic_frame")));   
+    f2ptr semantic_frame__frame = raw__semantic_frame__frame(cause, this);
+    frame__iteration(cause, semantic_frame__frame, type_slot_name, slot_name, slot_value,
+		     f2ptr set           = slot_value;
+		     f2ptr set__elements = f2__set__elements(cause, set);
+		     raw__frame__add_var_value(cause, frame, type_slot_name, slot_name, set__elements);
+		     );
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);

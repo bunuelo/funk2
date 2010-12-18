@@ -1497,7 +1497,7 @@ f2ptr raw__semantic_frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2
     frame__iteration(cause, semantic_frame__frame, type_slot_name, slot_name, slot_value,
 		     f2ptr set           = slot_value;
 		     f2ptr set__elements = f2__set__elements(cause, set);
-		     raw__frame__add_var_value(cause, frame, type_slot_name, slot_name, set__elements);
+		     raw__frame__add_type_var_value(cause, frame, type_slot_name, slot_name, set__elements);
 		     );
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }

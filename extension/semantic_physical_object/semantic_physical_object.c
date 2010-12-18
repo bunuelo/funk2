@@ -110,7 +110,7 @@ export_cefunk2(semantic_physical_object__preposition__on__remove, this, that, 0,
 
 
 f2ptr raw__semantic_physical_object__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"), that);
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"), that);
 }
 
 f2ptr f2__semantic_physical_object__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
@@ -124,7 +124,7 @@ export_cefunk2(semantic_physical_object__preposition__in__add, this, that, 0, ""
 
 
 f2ptr raw__semantic_physical_object__preposition__in__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  raw__semantic_frame__remove(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"), that);
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"), that);
 }
 
 f2ptr f2__semantic_physical_object__preposition__in__remove(f2ptr cause, f2ptr this, f2ptr that) {

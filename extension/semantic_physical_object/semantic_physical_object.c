@@ -81,11 +81,71 @@ f2ptr f2__semantic_physical_object__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_physical_object__type, thing, 0, "Returns the specific type of object that this semantic_physical_object is.");
 
 
+f2ptr raw__semantic_physical_object__preposition__on__add(f2ptr cause, f2ptr this, f2ptr that) {
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"), that);
+}
+
+f2ptr f2__semantic_physical_object__preposition__on__add(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__semantic_physical_object__is_type(cause, this)) ||
+      (! raw__semantic_physical_object__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_physical_object__preposition__on__add(cause, this, that);
+}
+export_cefunk2(semantic_physical_object__preposition__on__add, this, that, 0, "");
+
+
+f2ptr raw__semantic_physical_object__preposition__on__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  raw__semantic_frame__remove(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"), that);
+}
+
+f2ptr f2__semantic_physical_object__preposition__on__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__semantic_physical_object__is_type(cause, this)) ||
+      (! raw__semantic_physical_object__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_physical_object__preposition__on__remove(cause, this, that);
+}
+export_cefunk2(semantic_physical_object__preposition__on__remove, this, that, 0, "");
+
+
+f2ptr raw__semantic_physical_object__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"), that);
+}
+
+f2ptr f2__semantic_physical_object__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__semantic_physical_object__is_type(cause, this)) ||
+      (! raw__semantic_physical_object__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_physical_object__preposition__in__add(cause, this, that);
+}
+export_cefunk2(semantic_physical_object__preposition__in__add, this, that, 0, "");
+
+
+f2ptr raw__semantic_physical_object__preposition__in__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  raw__semantic_frame__remove(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"), that);
+}
+
+f2ptr f2__semantic_physical_object__preposition__in__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__semantic_physical_object__is_type(cause, this)) ||
+      (! raw__semantic_physical_object__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_physical_object__preposition__in__remove(cause, this, that);
+}
+export_cefunk2(semantic_physical_object__preposition__in__remove, this, that, 0, "");
+
+
 f2ptr f2__semantic_physical_object_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "add"),         new__symbol(cause, "preposition-in"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__preposition__in__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "remove"),      new__symbol(cause, "preposition-in"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__preposition__in__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "add"),         new__symbol(cause, "preposition-on"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__preposition__on__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "remove"),      new__symbol(cause, "preposition-on"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__preposition__on__remove")));}
   return this;
 }
 

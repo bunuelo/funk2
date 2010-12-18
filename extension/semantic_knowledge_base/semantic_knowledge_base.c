@@ -1491,7 +1491,7 @@ f2ptr raw__semantic_frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = raw__semantic_frame__semantic_frame(cause, this);
+    frame = raw__semantic_frame__frame(cause, this);
     raw__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"), new__symbol(cause, "semantic_frame"));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }

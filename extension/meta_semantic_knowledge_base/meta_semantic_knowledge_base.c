@@ -541,7 +541,10 @@ f2ptr f2__meta_semantic_knowledge_base__core_extension_ping(f2ptr cause) {
 export_cefunk0(meta_semantic_knowledge_base__core_extension_ping, 0, "");
 
 f2ptr f2__meta_semantic_knowledge_base__core_extension_initialize(f2ptr cause) {
-  f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__core_extension_ping")), nil);
+  f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__core_extension_ping")), nil);
+  if (raw__larva__is_type(cause, result)) {
+    return result;
+  }
   f2__add_type(cause, new__symbol(cause, "meta_semantic_frame"),               f2__meta_semantic_frame_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "meta_semantic_object"),              f2__meta_semantic_object_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "meta_semantic_knowledge_base"),      f2__meta_semantic_knowledge_base_type__new(cause));

@@ -82,7 +82,7 @@ export_cefunk1(semantic_physical_object__type, thing, 0, "Returns the specific t
 
 
 f2ptr raw__semantic_physical_object__preposition__on__add(f2ptr cause, f2ptr this, f2ptr that) {
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"), that);
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"), that);
 }
 
 f2ptr f2__semantic_physical_object__preposition__on__add(f2ptr cause, f2ptr this, f2ptr that) {
@@ -96,7 +96,7 @@ export_cefunk2(semantic_physical_object__preposition__on__add, this, that, 0, ""
 
 
 f2ptr raw__semantic_physical_object__preposition__on__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  raw__semantic_frame__remove(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"), that);
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"), that);
 }
 
 f2ptr f2__semantic_physical_object__preposition__on__remove(f2ptr cause, f2ptr this, f2ptr that) {

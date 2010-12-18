@@ -22,6 +22,37 @@
 [defcorefunk semantic_knowledge_base-core_extension_ping       semantic_knowledge_base semantic_knowledge_base__core_extension_ping]
 [defcorefunk semantic_knowledge_base-core_extension_initialize semantic_knowledge_base semantic_knowledge_base__core_extension_initialize]
 
-
+[defcorefunk object-add          semantic_knowledge_base object__add]
+[defcorefunk object-add-apply    semantic_knowledge_base object__add__apply]
+[defcorefunk object-remove       semantic_knowledge_base object__remove]
+[defcorefunk object-remove-apply semantic_knowledge_base object__remove__apply]
 
 [semantic_knowledge_base-core_extension_ping]
+
+
+[defmetro object_type-add-funk [name slot_name]
+  `[object_type-type-funk ,name `add ,slot_name]]
+
+[defmetro object-add-funk [this slot_name]
+  `[object-slot-type_funk ,this `add slot_name]]
+
+[defmetro add [this slot_name :rest args]
+  `[object-add ,this [quote ,slot_name] @args]]
+
+[defmetro add-apply [this slot_name args]
+  `[object-add-apply ,this [quote ,slot_name] ,args]]
+
+
+[defmetro object_type-remove-funk [name slot_name]
+  `[object_type-type-funk ,name `remove ,slot_name]]
+
+[defmetro object-remove-funk [this slot_name]
+  `[object-slot-type_funk ,this `remove slot_name]]
+
+[defmetro remove [this slot_name :rest args]
+  `[object-remove ,this [quote ,slot_name] @args]]
+
+[defmetro remove-apply [this slot_name args]
+  `[object-remove-apply ,this [quote ,slot_name] ,args]]
+
+

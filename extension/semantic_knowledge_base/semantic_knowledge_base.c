@@ -24,6 +24,59 @@
 #include "../meta_semantic_knowledge_base/meta_semantic_knowledge_base.h"
 
 
+// object-add, object-add-apply
+
+f2ptr f2__object__add(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  f2ptr fiber = f2__this__fiber(cause);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "add"), slot);
+  if (! raw__funkable__is_type(cause, funk)) {
+    if (raw__larva__is_type(cause, funk)) {
+      return funk;
+    }
+    return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_add_funk"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-add"),
+															  new__symbol(cause, "this"),     this,
+															  new__symbol(cause, "slot"),     slot,
+															  new__symbol(cause, "args"),     args))));
+  }
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  if (raw__larva__is_type(cause, result)) {
+    f2__terminal_print(cause, result);
+  }
+  return result;
+}
+export_cefunk2_and_rest(object__add,        this, slot, args, 0, "");
+export_cefunk3(         object__add__apply, this, slot, args, 0, "");
+
+
+// object-remove, object-remove-apply
+
+f2ptr f2__object__remove(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  f2ptr fiber = f2__this__fiber(cause);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "remove"), slot);
+  if (! raw__funkable__is_type(cause, funk)) {
+    if (raw__larva__is_type(cause, funk)) {
+      return funk;
+    }
+    return f2larva__new(cause, 2346, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list10__new(cause,
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_remove_funk"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-remove"),
+															  new__symbol(cause, "this"),     this,
+															  new__symbol(cause, "slot"),     slot,
+															  new__symbol(cause, "args"),     args))));
+  }
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  if (raw__larva__is_type(cause, result)) {
+    f2__terminal_print(cause, result);
+  }
+  return result;
+}
+export_cefunk2_and_rest(object__remove,        this, slot, args, 0, "");
+export_cefunk3(         object__remove__apply, this, slot, args, 0, "");
+
+
+
 // semantic_relationship_key
 
 f2ptr raw__semantic_relationship_key__new(f2ptr cause, f2ptr source, f2ptr key_type, f2ptr key, f2ptr target) {

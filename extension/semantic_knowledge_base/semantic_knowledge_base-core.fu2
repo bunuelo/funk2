@@ -30,24 +30,12 @@
 [semantic_knowledge_base-core_extension_ping]
 
 
-[defmetro object_type-semantic-add-funk [name slot_name]
-  `[object_type-type-funk ,name `semantic-add ,slot_name]]
-
-[defmetro object-semantic-add-funk [this slot_name]
-  `[object-slot-type_funk ,this `semantic-add slot_name]]
-
 [defmetro semantic-add [this slot_name :rest args]
   `[object-semantic-add ,this [quote ,slot_name] @args]]
 
 [defmetro semantic-add-apply [this slot_name args]
   `[object-semantic-add-apply ,this [quote ,slot_name] ,args]]
 
-
-[defmetro object_type-semantic-remove-funk [name slot_name]
-  `[object_type-type-funk ,name `semantic-remove ,slot_name]]
-
-[defmetro object-semantic-remove-funk [this slot_name]
-  `[object-slot-type_funk ,this `semantic-remove slot_name]]
 
 [defmetro semantic-remove [this slot_name :rest args]
   `[object-semantic-remove ,this [quote ,slot_name] @args]]

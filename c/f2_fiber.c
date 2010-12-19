@@ -604,9 +604,9 @@ f2ptr raw__fiber_stack_trace_block__funk_name(f2ptr cause, f2ptr this) {
   f2ptr funk = f2__fiber_stack_trace_block__funk(cause, this);
   f2ptr funk_name;
   if (raw__funkable__is_type(cause, funk)) {
-    funk__name = f2__funkable__name(cause, funk);
+    funk_name = f2__funkable__name(cause, funk);
   } else {
-    funk__name = f2list2__new(cause, new__symbol(cause, "error:funk_is_not_funkable"), funk);
+    funk_name = f2list2__new(cause, new__symbol(cause, "error:funk_is_not_funkable"), funk);
   }
   return funk_name;
 }

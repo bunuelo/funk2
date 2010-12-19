@@ -601,10 +601,12 @@ def_pcfunk2(fiber_stack_trace_block__new, funk, argument_frame, return f2__fiber
 
 
 f2ptr raw__fiber_stack_trace_block__funk_name(f2ptr cause, f2ptr this) {
-  f2ptr funk      = f2__fiber_stack_trace_block__funk(cause, this);
-  f2ptr funk_name = nil;
+  f2ptr funk = f2__fiber_stack_trace_block__funk(cause, this);
+  f2ptr funk_name;
   if (raw__funkable__is_type(cause, funk)) {
-    funk_name = f2__funkable__name(cause, funk);
+    funk__name = f2__funkable__name(cause, funk);
+  } else {
+    funk__name = f2list2__new(cause, new__symbol(cause, "error:funk_is_not_funkable"), funk);
   }
   return funk_name;
 }
@@ -660,13 +662,7 @@ def_pcfunk1(fiber_stack_trace_block__print, this, return f2__fiber_stack_trace_b
 
 
 f2ptr raw__fiber_stack_trace_block__as__printable(f2ptr cause, f2ptr this) {
-  f2ptr funk       = f2__fiber_stack_trace_block__funk(cause, this);
-  f2ptr funk__name = nil;
-  if (raw__funkable__is_type(cause, funk__name)) {
-    funk__name = f2__funkable__name(cause, funk);
-  } else {
-    funk__name = f2list2__new(cause, new__symbol(cause, "error:funk_is_not_funkable"), funk);
-  }
+  f2ptr funk__name               = f2__fiber_stack_trace_block__funk_name(cause, this);
   f2ptr printable_argument_frame = f2__fiber_stack_trace_block__printable_argument_frame(cause, this);
   return f2list2__new(cause, funk__name, printable_argument_frame);
 }

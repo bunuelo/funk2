@@ -22,37 +22,37 @@
 [defcorefunk semantic_knowledge_base-core_extension_ping       semantic_knowledge_base semantic_knowledge_base__core_extension_ping]
 [defcorefunk semantic_knowledge_base-core_extension_initialize semantic_knowledge_base semantic_knowledge_base__core_extension_initialize]
 
-[defcorefunk object-add          semantic_knowledge_base object__add]
-[defcorefunk object-add-apply    semantic_knowledge_base object__add__apply]
-[defcorefunk object-remove       semantic_knowledge_base object__remove]
-[defcorefunk object-remove-apply semantic_knowledge_base object__remove__apply]
+[defcorefunk object-semantic-add          semantic_knowledge_base object__semantic__add]
+[defcorefunk object-semantic-add-apply    semantic_knowledge_base object__semantic__add__apply]
+[defcorefunk object-semantic-remove       semantic_knowledge_base object__semantic__remove]
+[defcorefunk object-semantic-remove-apply semantic_knowledge_base object__semantic__remove__apply]
 
 [semantic_knowledge_base-core_extension_ping]
 
 
-[defmetro object_type-add-funk [name slot_name]
-  `[object_type-type-funk ,name `add ,slot_name]]
+[defmetro object_type-semantic-add-funk [name slot_name]
+  `[object_type-type-funk ,name `semantic-add ,slot_name]]
 
-[defmetro object-add-funk [this slot_name]
-  `[object-slot-type_funk ,this `add slot_name]]
+[defmetro object-semantic-add-funk [this slot_name]
+  `[object-slot-type_funk ,this `semantic-add slot_name]]
 
-[defmetro add [this slot_name :rest args]
-  `[object-add ,this [quote ,slot_name] @args]]
+[defmetro semantic-add [this slot_name :rest args]
+  `[object-semantic-add ,this [quote ,slot_name] @args]]
 
-[defmetro add-apply [this slot_name args]
-  `[object-add-apply ,this [quote ,slot_name] ,args]]
+[defmetro semantic-add-apply [this slot_name args]
+  `[object-semantic-add-apply ,this [quote ,slot_name] ,args]]
 
 
-[defmetro object_type-remove-funk [name slot_name]
-  `[object_type-type-funk ,name `remove ,slot_name]]
+[defmetro object_type-semantic-remove-funk [name slot_name]
+  `[object_type-type-funk ,name `semantic-remove ,slot_name]]
 
-[defmetro object-remove-funk [this slot_name]
-  `[object-slot-type_funk ,this `remove slot_name]]
+[defmetro object-semantic-remove-funk [this slot_name]
+  `[object-slot-type_funk ,this `semantic-remove slot_name]]
 
-[defmetro remove [this slot_name :rest args]
-  `[object-remove ,this [quote ,slot_name] @args]]
+[defmetro semantic-remove [this slot_name :rest args]
+  `[object-semantic-remove ,this [quote ,slot_name] @args]]
 
-[defmetro remove-apply [this slot_name args]
-  `[object-remove-apply ,this [quote ,slot_name] ,args]]
+[defmetro semantic-remove-apply [this slot_name args]
+  `[object-semantic-remove-apply ,this [quote ,slot_name] ,args]]
 
 

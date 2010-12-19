@@ -1284,8 +1284,14 @@ f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr ke
   f2ptr realm                = raw__semantic_frame__realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
   f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, realm, key_type);
-  f2ptr key__object_key      = raw__semantic_realm__object_key(cause, realm, key);
-  f2ptr value_set            = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
+  if (raw__larva__is_type(cause, key_type__object_key)) {
+    return key_type__object_key;
+  }
+  f2ptr key__object_key = raw__semantic_realm__object_key(cause, realm, key);
+  if (raw__larva__is_type(cause, key__object_key)) {
+    return key__object_key;
+  }
+  f2ptr value_set = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
   if (value_set == nil) {
     value_set = f2__set__new(cause);
     raw__frame__add_type_var_value(cause, frame, key_type__object_key, key__object_key, value_set);
@@ -1322,8 +1328,14 @@ f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
   f2ptr realm                = raw__semantic_frame__realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
   f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, realm, key_type);
-  f2ptr key__object_key      = raw__semantic_realm__object_key(cause, realm, key);
-  f2ptr value_set            = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
+  if (raw__larva__is_type(cause, key_type__object_key)) {
+    return key_type__object_key;
+  }
+  f2ptr key__object_key = raw__semantic_realm__object_key(cause, realm, key);
+  if (raw__larva__is_type(cause, key__object_key)) {
+    return key__object_key;
+  }
+  f2ptr value_set = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
   if (value_set == nil) {
     return f2larva__new(cause, 53, nil);
   }
@@ -1355,7 +1367,13 @@ f2ptr raw__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
   f2ptr realm                = raw__semantic_frame__realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
   f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, realm, key_type);
-  f2ptr key__object_key      = raw__semantic_realm__object_key(cause, realm, key);
+  if (raw__larva__is_type(cause, key_type__object_key)) {
+    return key_type__object_key;
+  }
+  f2ptr key__object_key = raw__semantic_realm__object_key(cause, realm, key);
+  if (raw__larva__is_type(cause, key__object_key)) {
+    return key__object_key;
+  }
   return raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
 }
 
@@ -1397,8 +1415,14 @@ void raw__semantic_frame__remove_all(f2ptr cause, f2ptr this, f2ptr key_type, f2
   f2ptr realm                = raw__semantic_frame__realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
   f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, realm, key_type);
-  f2ptr key__object_key      = raw__semantic_realm__object_key(cause, realm, key);
-  f2ptr set                  = raw__frame__add_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
+  if (raw__larva__is_type(cause, key_type__object_key)) {
+    return key_type__object_key;
+  }
+  f2ptr key__object_key = raw__semantic_realm__object_key(cause, realm, key);
+  if (raw__larva__is_type(cause, key__object_key)) {
+    return key__object_key;
+  }
+  f2ptr set = raw__frame__add_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
   if (set != nil) {
     f2ptr elements = raw__set__elements(cause, set);
     {

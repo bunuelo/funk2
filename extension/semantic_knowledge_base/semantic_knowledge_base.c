@@ -31,8 +31,10 @@ f2ptr f2__object__semantic__add(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args)
   f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-add"), slot);
   if (! raw__funkable__is_type(cause, funk)) {
     if (raw__larva__is_type(cause, funk)) {
+      printf("\ndebug 0"); fflush(stdout);
       return funk;
     }
+    printf("\ndebug 1"); fflush(stdout);
     return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
 															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-add_funk"),
 															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-add"),
@@ -42,11 +44,13 @@ f2ptr f2__object__semantic__add(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args)
   }
   f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
   if (raw__larva__is_type(cause, result)) {
+    printf("\ndebug 2"); fflush(stdout);
     f2__terminal_print(cause, result);
   }
+  printf("\ndebug 3"); fflush(stdout);
   return result;
 }
-export_cefunk2_and_rest(object__semantic__add,        this, slot, args, 0, "");
+export_cefunk2_and_rest(object__semantic__add, this, slot, args, 0, "");
 
 f2ptr f2__object__semantic__add__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   return f2__object__semantic__add(cause, this, slot, args);

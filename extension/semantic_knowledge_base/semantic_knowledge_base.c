@@ -1411,7 +1411,7 @@ f2ptr f2__semantic_frame__lookup_single_value(f2ptr cause, f2ptr this, f2ptr key
 export_cefunk3(semantic_frame__lookup_single_value, this, key_type, key, 0, "Returns the single value associated with the key_type and key.  If there is no value associated, nil is returned.  It is a bug if more than one value is associated.");
 
 
-void raw__semantic_frame__remove_all(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+f2ptr raw__semantic_frame__remove_all(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
   f2ptr realm                = raw__semantic_frame__realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
   f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, realm, key_type);
@@ -1434,14 +1434,14 @@ void raw__semantic_frame__remove_all(f2ptr cause, f2ptr this, f2ptr key_type, f2
       }
     }
   }
+  return nil;
 }
 
 f2ptr f2__semantic_frame__remove_all(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
   if (! raw__semantic_frame__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  raw__semantic_frame__remove_all(cause, this, key_type, key);
-  return nil;
+  return raw__semantic_frame__remove_all(cause, this, key_type, key);
 }
 export_cefunk3(semantic_frame__remove_all, this, key_type, key, 0, "Removes all associated values from this key_type and key.");
 

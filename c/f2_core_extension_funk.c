@@ -96,6 +96,19 @@ f2ptr f2__core_extension_funk__pointer(f2ptr cause, f2ptr this) {
 def_pcfunk1(core_extension_funk__pointer, this, return f2__core_extension_funk__pointer(this_cause, this));
 
 
+f2ptr raw__core_extension_funk__env(f2ptr cause, f2ptr this) {
+  return global_environment();
+}
+
+f2ptr f2__core_extension_funk__env(f2ptr cause, f2ptr this) {
+  if (! raw__core_extension_funk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__core_extension_funk__env(cause, this);
+}
+def_pcfunk1(core_extension_funk__env, this, return f2__core_extension_funk__env(this_cause, this));
+
+
 f2ptr raw__core_extension_funk__cfunk(f2ptr cause, f2ptr this) {
   f2ptr pointer = f2__core_extension_funk__pointer(cause, this);
   if (raw__larva__is_type(cause, pointer)) {
@@ -115,7 +128,7 @@ f2ptr raw__core_extension_funk__cfunk(f2ptr cause, f2ptr this) {
   f2ptr name          = f2__core_extension_funk__name(cause, this);
   f2ptr args          = f2__core_extension_funk__args(cause, this);
   f2ptr cfunkptr      = f2pointer__new(cause, raw_executable__to__relative_ptr(f2pointer__p(pointer, cause)));
-  f2ptr env           = global_environment();
+  f2ptr env           = f2__core_extension_funk__env(cause, this);
   f2ptr is_funktional = f2__core_extension_funk__is_funktional(cause, this);
   f2ptr documentation = f2__core_extension_funk__documentation(cause, this);
   return f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);
@@ -472,6 +485,7 @@ def_pcfunk2(core_extension_funk__terminal_print_with_frame, this, terminal_print
 f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2core_extension_funk__primobject_type__new(cause);
   {char* slot_name = "pointer";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.pointer__funk);}
+  {char* slot_name = "env";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.env__funk);}
   {char* slot_name = "cfunk";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.cfunk__funk);}
   {char* slot_name = "apply";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.apply__funk);}
   {char* slot_name = "apply_without_initializing"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.apply_without_initializing__funk);}
@@ -513,6 +527,9 @@ void f2__core_extension_funk__initialize() {
   
   {char* symbol_str = "pointer"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.pointer__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__pointer, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.pointer__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "env"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.env__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__env, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.env__funk = never_gc(cfunk);}
   
   {char* symbol_str = "cfunk"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.cfunk__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__cfunk, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.cfunk__funk = never_gc(cfunk);}

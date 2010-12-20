@@ -1403,6 +1403,8 @@ f2ptr f2__funkable__env(f2ptr cause, f2ptr this) {
     return f2funk__env(this, cause);
   } else if (raw__metro__is_type(cause, this)) {
     return f2metro__env(this, cause);
+  } else if (raw__core_extension_funk__is_type(cause, this)) {
+    return raw__core_extension_funk__env(cause, this);
   } else {
     return f2larva__new(cause, 1, nil);
   }
@@ -1415,6 +1417,8 @@ f2ptr f2__funkable__name(f2ptr cause, f2ptr this) {
     return f2funk__name(this, cause);
   } else if (raw__metro__is_type(cause, this)) {
     return f2metro__name(this, cause);
+  } else if (raw__core_extension_funk__is_type(cause, this)) {
+    return raw__core_extension_funk__name(cause, this);
   } else {
     return f2larva__new(cause, 1, nil);
   }
@@ -1427,6 +1431,8 @@ f2ptr f2__funkable__args(f2ptr cause, f2ptr this) {
     return f2funk__args(this, cause);
   } else if (raw__metro__is_type(cause, this)) {
     return f2metro__args(this, cause);
+  } else if (raw__core_extension_funk__is_type(cause, this)) {
+    return raw__core_extension_funk__args(cause, this);
   } else {
     return f2larva__new(cause, 1, nil);
   }

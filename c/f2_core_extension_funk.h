@@ -28,6 +28,8 @@ typedef struct funk2_object_type__core_extension_funk__slot_s funk2_object_type_
 struct funk2_object_type__core_extension_funk__slot_s {
   f2ptr pointer__symbol;
   f2ptr pointer__funk;
+  f2ptr env__symbol;
+  f2ptr env__funk;
   f2ptr cfunk__symbol;
   f2ptr cfunk__funk;
   f2ptr apply_without_initializing__symbol;
@@ -583,6 +585,8 @@ f2ptr raw__core_extension_funk__new(                       f2ptr cause, f2ptr fi
 f2ptr  f2__core_extension_funk__new(                       f2ptr cause, f2ptr filename, f2ptr name);
 f2ptr raw__core_extension_funk__pointer(                   f2ptr cause, f2ptr this);
 f2ptr  f2__core_extension_funk__pointer(                   f2ptr cause, f2ptr this);
+f2ptr raw__core_extension_funk__env(                       f2ptr cause, f2ptr this);
+f2ptr  f2__core_extension_funk__env(                       f2ptr cause, f2ptr this);
 f2ptr raw__core_extension_funk__cfunk(                     f2ptr cause, f2ptr this);
 f2ptr  f2__core_extension_funk__cfunk(                     f2ptr cause, f2ptr this);
 f2ptr raw__core_extension_funk__apply_without_initializing(f2ptr cause, f2ptr this, f2ptr args);

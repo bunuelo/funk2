@@ -122,6 +122,7 @@
 				  'extension/semantic_frame_ball/'
 				  'extension/semantic_knowledge_base/'
 				  'extension/semantic_object_type/'
+				  'extension/semantic_object/'
 				  'extension/semantic_physical_object/'
 				  'example/conceptnet/'
 				  'example/divisi2/'

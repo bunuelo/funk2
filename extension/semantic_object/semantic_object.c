@@ -83,8 +83,7 @@ f2ptr raw__semantic_object__property__noun__add(f2ptr cause, f2ptr this, f2ptr t
 }
 
 f2ptr f2__semantic_object__property__noun__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_object__is_type(cause, this)) ||
-      (! raw__semantic_object__is_type(cause, that))) {
+  if (! raw__semantic_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_object__property__noun__add(cause, this, that);
@@ -97,8 +96,7 @@ f2ptr raw__semantic_object__property__noun__remove(f2ptr cause, f2ptr this, f2pt
 }
 
 f2ptr f2__semantic_object__property__noun__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_object__is_type(cause, this)) ||
-      (! raw__semantic_object__is_type(cause, that))) {
+  if (! raw__semantic_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_object__property__noun__remove(cause, this, that);
@@ -111,8 +109,7 @@ f2ptr raw__semantic_object__property__classifier__add(f2ptr cause, f2ptr this, f
 }
 
 f2ptr f2__semantic_object__property__classifier__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_object__is_type(cause, this)) ||
-      (! raw__semantic_object__is_type(cause, that))) {
+  if (! raw__semantic_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_object__property__classifier__add(cause, this, that);
@@ -125,8 +122,7 @@ f2ptr raw__semantic_object__property__classifier__remove(f2ptr cause, f2ptr this
 }
 
 f2ptr f2__semantic_object__property__classifier__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_object__is_type(cause, this)) ||
-      (! raw__semantic_object__is_type(cause, that))) {
+  if (! raw__semantic_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_object__property__classifier__remove(cause, this, that);

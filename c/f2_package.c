@@ -98,17 +98,19 @@ def_pcfunk1(source__eval, this, return f2__source__eval(this_cause, this));
 
 // package
 
-def_primobject_6_slot(package,
+def_primobject_7_slot(package,
 		      pathname,
 		      name,
 		      package_dependencies,
 		      source_dependencies,
 		      object_types_defined_set,
+		      loaded_all_dependencies_time,
 		      documentation);
 
 f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies, f2ptr documentation) {
-  f2ptr object_types_defined_set = f2__set__new(cause);
-  return f2package__new(cause, pathname, name, package_dependencies, source_dependencies, object_types_defined_set, documentation);
+  f2ptr object_types_defined_set     = f2__set__new(cause);
+  f2ptr loaded_all_dependencies_time = nil;
+  return f2package__new(cause, pathname, name, package_dependencies, source_dependencies, object_types_defined_set, loaded_all_dependencies_time, documentation);
 }
 def_pcfunk5(package__new, pathname, name, package_dependencies, source_dependencies, documentation, return f2__package__new(this_cause, pathname, name, package_dependencies, source_dependencies, documentation));
 
@@ -542,12 +544,13 @@ void f2__package__initialize() {
   
   // package
   
-  initialize_primobject_6_slot(package,
+  initialize_primobject_7_slot(package,
 			       pathname,
 			       name,
 			       package_dependencies,
 			       source_dependencies,
 			       object_types_defined_set,
+			       loaded_all_dependencies_time,
 			       documentation);
   
   // pathname

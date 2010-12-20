@@ -49,36 +49,12 @@
   [let [[semantic_knowledge_base [new semantic_knowledge_base]]]
     [let [[semantic_object_frame [frame]]]
       [mapc [funk [object]
-		  [let [[visual_object_semantic_frame [new visual_object_semantic_frame semantic_realm]]
-			[phenomenal_name              [get object phenomenal_name]]]
-		    [have visual_object_semantic_frame add_visual_object_name phenomenal_name]
-		    [have semantic_knowledge_base add_semantic_frame visual_object_semantic_frame]
-		    [have semantic_object_frame add phenomenal_name visual_object_semantic_frame]]]
+		  [let [[semantic_visual_object [new semantic_visual_object semantic_realm]]
+			[phenomenal_name        [get object phenomenal_name]]]
+		    [have semantic_visual_object add_visual_object_name phenomenal_name]
+		    [have semantic_knowledge_base add_semantic_frame semantic_visual_object]
+		    [have semantic_object_frame add phenomenal_name semantic_visual_object]]]
 	    visual_objects]
-      
-      [let [[object_iter_one visual_objects]]
-	[while object_iter_one
-	  [let [[object_one      [car object_iter_one]]
-		[object_iter_two [cdr object_iter_one]]]
-	    [let [[semantic_object_one [have semantic_object_frame lookup [get object_one phenomenal_name]]]]
-	      [while object_iter_two
-		[let [[object_two [car object_iter_two]]]
-		  [let [[semantic_object_two [have semantic_object_frame lookup [get object_two phenomenal_name]]]]
-		    'pairwise pattern recognitions between objects'
-		    
-		    `[cond [[> [get object_one retina_position_vertical]
-			       [get object_two retina_position_vertical]]
-			    [have semantic_object_one add_preposition `visually_above semantic_object_two]]
-			   [[< [get object_one retina_position_vertical]
-			       [get object_two retina_position_vertical]]
-			    [have semantic_object_two add_preposition `visually_above semantic_object_one]]]
-		    
-		    '...more tests for object x object patterns...'
-		    
-		    ]]
-		[= object_iter_two [cdr object_iter_two]]]]]
-	  [= object_iter_one [cdr object_iter_one]]]]
-      
       [mapc [funk [visual_object]
 		  [let [[semantic_object [have semantic_object_frame lookup [get visual_object phenomenal_name]]]]
 		    [let [[preposition_frame [get visual_object preposition_frame]]]
@@ -88,7 +64,9 @@
 						[let [[prepositional_semantic_object [have semantic_object_frame lookup prepositional_object_name]]]
 						  [if [null prepositional_semantic_object]
 						      [terminal_format standard-terminal '\nvisual_semantic_knowledge-new_from_visual_objects warning: don\'t know of prepositional object, ' prepositional_object_name '.']
-						    [have semantic_object add_preposition preposition prepositional_semantic_object]]]]
+						    [cond [[eq preposition `in] [semantic-add semantic_object preposition-in prepositional_semantic_object]]
+							  [[eq preposition `on] [semantic-add semantic_object preposition-on prepositional_semantic_object]]
+							  [t                    [terminal_format standard-terminal '\n\nvisual_semantic_knowledge-new_from_visual_objects warning: don\'t know of preposition, ' preposition '.']]]]]]
 					  prepositional_object_names]]]
 			    [get preposition_frame keys]]]]]
 	    visual_objects]]

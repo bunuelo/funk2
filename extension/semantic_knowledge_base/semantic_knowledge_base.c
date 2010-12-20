@@ -2559,6 +2559,7 @@ f2ptr f2__semantic_knowledge_base_type__new(f2ptr cause) {
 }
 
 
+/*
 
 // noun_semantic_frame
 
@@ -2751,6 +2752,7 @@ f2ptr f2__visual_object_semantic_frame_type__new(f2ptr cause) {
   return this;
 }
 
+*/
 
 // **
 
@@ -2768,8 +2770,8 @@ f2ptr f2__semantic_knowledge_base__core_extension_initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "semantic_knowledge_base_event"),              f2__semantic_knowledge_base_event_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "semantic_knowledge_base_event_redblacktree"), f2__semantic_knowledge_base_event_redblacktree_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "semantic_knowledge_base"),                    f2__semantic_knowledge_base_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "noun_semantic_frame"),                        f2__noun_semantic_frame_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "visual_object_semantic_frame"),               f2__visual_object_semantic_frame_type__new(cause));
+  //  f2__add_type(cause, new__symbol(cause, "noun_semantic_frame"),                        f2__noun_semantic_frame_type__new(cause));
+  //  f2__add_type(cause, new__symbol(cause, "visual_object_semantic_frame"),               f2__visual_object_semantic_frame_type__new(cause));
   status("semantic_knowledge_base initialized.");
   return nil;
 }

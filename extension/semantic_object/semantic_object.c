@@ -19,10 +19,7 @@
 // rights to redistribute these changes.
 // 
 
-#include "../../c/funk2.h"
 #include "semantic_object.h"
-#include "../semantic_knowledge_base/semantic_knowledge_base.h"
-#include "../meta_semantic_knowledge_base/meta_semantic_knowledge_base.h"
 
 
 // semantic_object

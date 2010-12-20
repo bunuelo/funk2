@@ -22,6 +22,9 @@
 #ifndef F2__EXTENSION__SEMANTIC_OBJECT__H
 #define F2__EXTENSION__SEMANTIC_OBJECT__H
 
+#include "../../c/funk2.h"
+#include "../semantic_knowledge_base/semantic_knowledge_base.h"
+#include "../meta_semantic_knowledge_base/meta_semantic_knowledge_base.h"
 
 
 // **

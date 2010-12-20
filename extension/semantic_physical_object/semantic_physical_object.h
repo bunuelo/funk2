@@ -22,6 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_PHYSICAL_OBJECT__H
 #define F2__EXTENSION__SEMANTIC_PHYSICAL_OBJECT__H
 
+#include "../semantic_object/semantic_object.h"
 
 
 // **

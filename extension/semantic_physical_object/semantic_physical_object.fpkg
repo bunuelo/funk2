@@ -19,6 +19,6 @@
 
 [defpackage semantic_physical_object
   :documentation 'Basic physical knowledge for dealing with containment and other semantic physical relationships.'
-   :packages [semantic_knowledge_base]
+   :packages [semantic_object]
     :sources ['semantic_physical_object-core.fu2']]
 

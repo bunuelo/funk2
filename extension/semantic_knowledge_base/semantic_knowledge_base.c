@@ -394,9 +394,10 @@ f2ptr f2__semantic_relationship_key_type__new(f2ptr cause) {
 
 f2ptr raw__semantic_realm__new(f2ptr cause) {
   return f2__frame__new(cause, f2list6__new(cause,
-					    new__symbol(cause, "type"),                   new__symbol(cause, "semantic_realm"),
-					    new__symbol(cause, "semantic_hash"),          f2__hash(cause),
-					    new__symbol(cause, "meta_relationship_hash"), f2__hash(cause)));
+					    new__symbol(cause, "type"),                        new__symbol(cause, "semantic_realm"),
+					    new__symbol(cause, "semantic_hash"),               f2__hash(cause),
+					    new__symbol(cause, "meta_relationship_hash"),      f2__hash(cause),
+					    new__symbol(cause, "semantic_knowledge_base_set"), f2__set__new(cause)));
 }
 
 f2ptr f2__semantic_realm__new(f2ptr cause) {
@@ -586,6 +587,28 @@ f2ptr f2__semantic_realm__lookup_or_create_meta_relationship(f2ptr cause, f2ptr 
 }
 export_cefunk5(semantic_realm__lookup_or_create_meta_relationship, this, semantic_frame, key_type, key, value, 0, "Returns an eq representative relationship_meta_semantic_object for the given meta relationship by hash lookup, or creation and hashing.");
 
+
+f2ptr raw__semantic_realm__add_semantic_knowledge_base(f2ptr cause, f2ptr this, f2ptr semantic_knowledge_base) {
+  f2ptr semantic_knowledge_base__semantic_realm = raw__semantic_realm__semantic_realm(cause, semantic_knowledge_base);
+  if (! raw__eq(cause, this, semantic_knowledge_base__semantic_realm)) {
+    return f2larva__new(cause, 65826, f2__bug__new(cause, f2integer__new(cause, 65826), f2__frame__new(cause, f2list8__new(cause,
+															   new__symbol(cause, "bug_type"),                new__symbol(cause, "tried_to_add_semantic_knowledge_base_to_different_semantic_realm"),
+															   new__symbol(cause, "funk_name"),               new__symbol(cause, "semantic_realm-add_semantic_knowledge_base"),
+															   new__symbol(cause, "this"),                    this,
+															   new__symbol(cause, "semantic_knowledge_base"), semantic_knowledge_base))));
+  }
+  f2ptr semantic__knowledge_base_set = raw__semantic_realm__semantic_knowledge_base_set(cause, this);
+  f2__set__add(cause, semantic_knowledge_base_set, semantic_knowledge_base);
+}
+
+f2ptr f2__semantic_realm__add_semantic_knowledge_base(f2ptr cause, f2ptr this, f2ptr semantic_knowledge_base) {
+  if ((! raw__semantic_realm__is_type(cause, this)) ||
+      (! raw__semantic_knowledge_base__is_type(cause, semantic_knowledge_base))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_realm__add_semantic_knowledge_base(cause, this, semantic_knowledge_base);
+}
+export_cefunk2(semantic_realm__add_semantic_knowledge_base, this, semantic_knowledge_base, 0, "Adds a semantic knowledge base to this mental realm.");
 
 
 f2ptr raw__semantic_realm__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -2007,13 +2030,15 @@ f2ptr raw__semantic_knowledge_base__new(f2ptr cause, f2ptr semantic_realm) {
   if (cause != nil) {
     trace_add_semantic_frame = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_knowledge_base-trace_add_semantic_frame"));
   }
-  return f2__frame__new(cause, f2list12__new(cause,
-					     new__symbol(cause, "type"),                       new__symbol(cause, "semantic_knowledge_base"),
-					     new__symbol(cause, "semantic_realm"),             semantic_realm,
-					     new__symbol(cause, "semantic_frames"),            nil,
-					     new__symbol(cause, "trace_event_redblacktree"),   trace_event_redblacktree,
-					     new__symbol(cause, "trace_add_semantic_frame"),   trace_add_semantic_frame,
-					     new__symbol(cause, "trace_callback_funks_frame"), f2__frame__new(cause, nil)));
+  f2ptr this = f2__frame__new(cause, f2list12__new(cause,
+						   new__symbol(cause, "type"),                       new__symbol(cause, "semantic_knowledge_base"),
+						   new__symbol(cause, "semantic_realm"),             semantic_realm,
+						   new__symbol(cause, "semantic_frames"),            nil,
+						   new__symbol(cause, "trace_event_redblacktree"),   trace_event_redblacktree,
+						   new__symbol(cause, "trace_add_semantic_frame"),   trace_add_semantic_frame,
+						   new__symbol(cause, "trace_callback_funks_frame"), f2__frame__new(cause, nil)));
+  f2__semantic_realm__add_semantic_knowledge_base(cause, semantic_realm, this);
+  return this;
 }
 
 f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr semantic_realm) {

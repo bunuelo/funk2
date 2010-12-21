@@ -22,7 +22,7 @@
 
 [deframe learned_reactive_layer [mental_layer] [[semantic_visual_object_name_hash [new ptypehash]]
 						[natural_language_command_frame   nil]
-						[learned_reactive_knowledge       [new meta_semantic_knowledge_base nil]]]
+						[learned_reactive_knowledge       nil]]
   [new []
        [construct mental_layer 1 `learned_reactive]
        [have this add_agency [new learned_reactive_sensory_agency]]
@@ -93,6 +93,7 @@
 
 [deftypefunk learned_reactive_layer execute setup_knowledge []
   [let [[builtin_reactive_knowledge [get [get this mind] builtin_reactive_knowledge]]]
+    [= learned_reactive_knowledge [new meta_semantic_knowledge_base [get [get this mind] semantic_realm]]]
     [have builtin_reactive_knowledge add_trace_callback_funk `add_semantic_frame_value
 	  [funk [semantic_knowledge_base semantic_frame key_type key value]
 		[if [eq semantic_knowledge_base builtin_reactive_knowledge]

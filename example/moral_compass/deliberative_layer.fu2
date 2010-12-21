@@ -20,10 +20,13 @@
 
 'deliberative_layer'
 
-[deframe deliberative_layer [mental_layer] [[deliberative_knowledge [new meta_semantic_knowledge_base nil]]]
+[deframe deliberative_layer [mental_layer] [[deliberative_knowledge nil]]
   [new []
        [construct mental_layer 2 `deliberative]
        [have this add_agency [new deliberative_imagination_agency]]
        [have this add_agency [new deliberative_execution_agency]]
        this]]
+
+[deftypefunk deliberative_layer execute setup_knowledge []
+  [= deliberative_knowledge [new meta_semantic_knowledge_base [get [get this mind] semantic_realm]]]]
 

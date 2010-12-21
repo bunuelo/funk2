@@ -20,9 +20,12 @@
 
 'reflective_layer'
 
-[deframe reflective_layer [mental_layer] [[reflective_knowledge [new meta_semantic_knowledge_base nil]]]
+[deframe reflective_layer [mental_layer] [[reflective_knowledge nil]]
   [new []
        [construct mental_layer 3 `reflective]
        [have this add_agency [new reflective_credit_assignment_agency]]
        this]]
+
+[deftypefunk reflective_layer execute setup_knowledge []
+  [= reflective_knowledge [new meta_semantic_knowledge_base [get [get this mind] semantic_realm]]]]
 

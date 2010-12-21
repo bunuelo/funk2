@@ -2481,7 +2481,7 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 					  if (raw__larva__is_type(cause, value_node_code)) {
 					    return value_node_code;
 					  }
-					  raw__ptypehash__add(cause, node_code_ptypehash, value, value_node_code);
+					  //raw__ptypehash__add(cause, node_code_ptypehash, value, value_node_code);
 					}
 				      }
 				      {

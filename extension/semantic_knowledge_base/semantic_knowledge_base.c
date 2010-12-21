@@ -1044,7 +1044,7 @@ f2ptr raw__semantic_frame_event__compare_value(f2ptr cause, f2ptr fiber, f2ptr e
 }
 
 
-f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr realm) {
+f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr semantic_realm) {
   f2ptr trace_event_redblacktree = nil;
   f2ptr trace_add    = nil;
   f2ptr trace_remove = nil;
@@ -1054,7 +1054,7 @@ f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr realm) {
   }
   return f2__frame__new(cause, f2list14__new(cause,
 					     new__symbol(cause, "type"),                        new__symbol(cause, "semantic_frame"),
-					     new__symbol(cause, "realm"),                       realm,
+					     new__symbol(cause, "semantic_realm"),              semantic_realm,
 					     new__symbol(cause, "trace_add"),                   trace_add,
 					     new__symbol(cause, "trace_remove"),                trace_remove,
 					     new__symbol(cause, "trace_event_redblacktree"),    trace_event_redblacktree,
@@ -1063,13 +1063,13 @@ f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr realm) {
 }
 
 
-f2ptr f2__semantic_frame__new(f2ptr cause, f2ptr realm) {
-  if (! raw__semantic_realm__is_type(cause, realm)) {
+f2ptr f2__semantic_frame__new(f2ptr cause, f2ptr semantic_realm) {
+  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_frame__new(cause, realm);
+  return raw__semantic_frame__new(cause, semantic_realm);
 }
-export_cefunk1(semantic_frame__new, realm, 0, "Returns a new semantic_frame object.");
+export_cefunk1(semantic_frame__new, semantic_realm, 0, "Returns a new semantic_frame object.");
 
 
 boolean_t raw__semantic_frame__is_type(f2ptr cause, f2ptr thing) {
@@ -1107,30 +1107,30 @@ f2ptr f2__semantic_frame__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_frame__type, thing, 0, "Returns the specific type of object that this semantic_frame is.");
 
 
-f2ptr raw__semantic_frame__realm(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "realm"), nil);
+f2ptr raw__semantic_frame__semantic_realm(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "semantic_realm"), nil);
 }
 
-f2ptr f2__semantic_frame__realm(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_frame__semantic_realm(f2ptr cause, f2ptr this) {
   if (! raw__semantic_frame__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_frame__realm(cause, this);
+  return raw__semantic_frame__semantic_realm(cause, this);
 }
-export_cefunk1(semantic_frame__realm, thing, 0, "Returns the realm of the semantic_frame.");
+export_cefunk1(semantic_frame__semantic_realm, thing, 0, "Returns the semantic_realm of the semantic_frame.");
 
 
-f2ptr raw__semantic_frame__realm__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "realm"), value);
+f2ptr raw__semantic_frame__semantic_realm__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_realm"), value);
 }
 
-f2ptr f2__semantic_frame__realm__set(f2ptr cause, f2ptr this, f2ptr value) {
+f2ptr f2__semantic_frame__semantic_realm__set(f2ptr cause, f2ptr this, f2ptr value) {
   if (! raw__semantic_frame__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_frame__realm__set(cause, this, value);
+  return raw__semantic_frame__semantic_realm__set(cause, this, value);
 }
-export_cefunk2(semantic_frame__realm__set, thing, value, 0, "Sets the realm of the semantic_frame.");
+export_cefunk2(semantic_frame__semantic_realm__set, thing, value, 0, "Sets the semantic_realm of the semantic_frame.");
 
 
 f2ptr raw__semantic_frame__trace_add(f2ptr cause, f2ptr this) {
@@ -1278,13 +1278,13 @@ f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr ke
     f2ptr semantic_frame_event = raw__semantic_frame_event__new(cause, f2__time(cause), new__symbol(cause, "add"), key_type, key, value);
     raw__semantic_frame_event_redblacktree__add(cause, trace_event_redblacktree, semantic_frame_event);
   }
-  f2ptr realm                = raw__semantic_frame__realm(cause, this);
+  f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
-  f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, realm, key_type);
+  f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key_type);
   if (raw__larva__is_type(cause, key_type__object_key)) {
     return key_type__object_key;
   }
-  f2ptr key__object_key = raw__semantic_realm__object_key(cause, realm, key);
+  f2ptr key__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key);
   if (raw__larva__is_type(cause, key__object_key)) {
     return key__object_key;
   }
@@ -1322,13 +1322,13 @@ f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
     f2ptr semantic_frame_event = raw__semantic_frame_event__new(cause, f2__time(cause), new__symbol(cause, "remove"), key_type, key, value);
     raw__semantic_frame_event_redblacktree__add(cause, trace_event_redblacktree, semantic_frame_event);
   }
-  f2ptr realm                = raw__semantic_frame__realm(cause, this);
+  f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
-  f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, realm, key_type);
+  f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key_type);
   if (raw__larva__is_type(cause, key_type__object_key)) {
     return key_type__object_key;
   }
-  f2ptr key__object_key = raw__semantic_realm__object_key(cause, realm, key);
+  f2ptr key__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key);
   if (raw__larva__is_type(cause, key__object_key)) {
     return key__object_key;
   }
@@ -1361,13 +1361,13 @@ export_cefunk4(semantic_frame__remove, this, key_type, key, value, 0, "Removes t
 
 
 f2ptr raw__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
-  f2ptr realm                = raw__semantic_frame__realm(cause, this);
+  f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
-  f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, realm, key_type);
+  f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key_type);
   if (raw__larva__is_type(cause, key_type__object_key)) {
     return key_type__object_key;
   }
-  f2ptr key__object_key = raw__semantic_realm__object_key(cause, realm, key);
+  f2ptr key__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key);
   if (raw__larva__is_type(cause, key__object_key)) {
     return key__object_key;
   }
@@ -1409,13 +1409,13 @@ export_cefunk3(semantic_frame__lookup_single_value, this, key_type, key, 0, "Ret
 
 
 f2ptr raw__semantic_frame__remove_all(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
-  f2ptr realm                = raw__semantic_frame__realm(cause, this);
+  f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
-  f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, realm, key_type);
+  f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key_type);
   if (raw__larva__is_type(cause, key_type__object_key)) {
     return key_type__object_key;
   }
-  f2ptr key__object_key = raw__semantic_realm__object_key(cause, realm, key);
+  f2ptr key__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key);
   if (raw__larva__is_type(cause, key__object_key)) {
     return key__object_key;
   }
@@ -1616,8 +1616,8 @@ f2ptr f2__semantic_frame_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__new")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),                                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                                        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "realm"),                                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__realm")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "realm"),                                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__realm__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "semantic_realm"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__semantic_realm")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "semantic_realm"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__semantic_realm__set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "trace_add"),                                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__trace_add")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "trace_add"),                                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__trace_add__set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "trace_remove"),                                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__trace_remove")));}
@@ -2600,201 +2600,6 @@ f2ptr f2__semantic_knowledge_base_type__new(f2ptr cause) {
 }
 
 
-/*
-
-// noun_semantic_frame
-
-f2ptr raw__noun_semantic_frame__new(f2ptr cause, f2ptr realm) {
-  f2ptr this = f2__semantic_frame__new(cause, realm);
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "noun_semantic_frame"));
-  return this;
-}
-
-f2ptr f2__noun_semantic_frame__new(f2ptr cause, f2ptr realm) {
-  if (! raw__semantic_realm__is_type(cause, realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__noun_semantic_frame__new(cause, realm);
-}
-export_cefunk1(noun_semantic_frame__new, realm, 0, "Returns a new noun_semantic_frame object.");
-
-
-boolean_t raw__noun_semantic_frame__is_type(f2ptr cause, f2ptr thing) {
-  if (! raw__frame__is_type(cause, thing)) {
-    return boolean__false;
-  }
-  f2ptr this_type_name_symbol = new__symbol(cause, "noun_semantic_frame");
-  f2ptr thing_type_name       = f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil);
-  if (raw__eq(cause, this_type_name_symbol, thing_type_name)) {
-    return boolean__true;
-  }
-  f2ptr thing_type = f2__lookup_type(cause, thing_type_name);
-  if (raw__primobject_type__has_parent_type(cause, thing_type, this_type_name_symbol)) {
-    return boolean__true;
-  }
-  return boolean__false;
-}
-
-f2ptr f2__noun_semantic_frame__is_type(f2ptr cause, f2ptr thing) {
-  return f2bool__new(raw__noun_semantic_frame__is_type(cause, thing));
-}
-export_cefunk1(noun_semantic_frame__is_type, thing, 0, "Returns whether or not thing is of type noun_semantic_frame.");
-
-
-f2ptr raw__noun_semantic_frame__type(f2ptr cause, f2ptr this) {
-  return f2__object__type(cause, this);
-}
-
-f2ptr f2__noun_semantic_frame__type(f2ptr cause, f2ptr this) {
-  if (! raw__noun_semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__noun_semantic_frame__type(cause, this);
-}
-export_cefunk1(noun_semantic_frame__type, thing, 0, "Returns the specific type of object that this noun_semantic_frame is.");
-
-
-f2ptr raw__noun_semantic_frame__add_noun(f2ptr cause, f2ptr this, f2ptr noun) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "noun"), noun);
-}
-
-f2ptr f2__noun_semantic_frame__add_noun(f2ptr cause, f2ptr this, f2ptr noun) {
-  if (! raw__noun_semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__noun_semantic_frame__add_noun(cause, this, noun);
-}
-export_cefunk2(noun_semantic_frame__add_noun, this, noun, 0, "Adds a noun to this noun_semantic_frame.");
-
-
-f2ptr raw__noun_semantic_frame__add_classifier(f2ptr cause, f2ptr this, f2ptr classifier) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "classifier"), classifier);
-}
-
-f2ptr f2__noun_semantic_frame__add_classifier(f2ptr cause, f2ptr this, f2ptr classifier) {
-  if (! raw__noun_semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__noun_semantic_frame__add_classifier(cause, this, classifier);
-}
-export_cefunk2(noun_semantic_frame__add_classifier, this, classifier, 0, "Adds a classifier to this noun_semantic_frame.");
-
-
-f2ptr raw__noun_semantic_frame__add_adjective(f2ptr cause, f2ptr this, f2ptr adjective) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "adjective"), adjective);
-}
-
-f2ptr f2__noun_semantic_frame__add_adjective(f2ptr cause, f2ptr this, f2ptr adjective) {
-  if (! raw__noun_semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__noun_semantic_frame__add_adjective(cause, this, adjective);
-}
-export_cefunk2(noun_semantic_frame__add_adjective, this, adjective, 0, "Adds a adjective to this noun_semantic_frame.");
-
-
-f2ptr raw__noun_semantic_frame__add_preposition(f2ptr cause, f2ptr this, f2ptr preposition, f2ptr semantic_object) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), preposition, semantic_object);
-}
-
-f2ptr f2__noun_semantic_frame__add_preposition(f2ptr cause, f2ptr this, f2ptr preposition, f2ptr semantic_object) {
-  if (! raw__noun_semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__noun_semantic_frame__add_preposition(cause, this, preposition, semantic_object);
-}
-export_cefunk3(noun_semantic_frame__add_preposition, this, preposition, semantic_object, 0, "Adds a preposition and object to this noun_semantic_frame.");
-
-
-f2ptr f2__noun_semantic_frame_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "noun_semantic_frame__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "noun_semantic_frame__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "noun_semantic_frame__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_noun"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "noun_semantic_frame__add_noun")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_classifier"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "noun_semantic_frame__add_classifier")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_adjective"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "noun_semantic_frame__add_adjective")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_preposition"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "noun_semantic_frame__add_preposition")));}
-  return this;
-}
-
-
-// visual_object_semantic_frame
-
-f2ptr raw__visual_object_semantic_frame__new(f2ptr cause, f2ptr realm) {
-  f2ptr this = f2__noun_semantic_frame__new(cause, realm);
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "visual_object_semantic_frame"));
-  return this;
-}
-
-f2ptr f2__visual_object_semantic_frame__new(f2ptr cause, f2ptr realm) {
-  if (! raw__semantic_realm__is_type(cause, realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__visual_object_semantic_frame__new(cause, realm);
-}
-export_cefunk1(visual_object_semantic_frame__new, realm, 0, "Returns a new visual_object_semantic_frame object.");
-
-
-boolean_t raw__visual_object_semantic_frame__is_type(f2ptr cause, f2ptr thing) {
-  if (! raw__frame__is_type(cause, thing)) {
-    return boolean__false;
-  }
-  f2ptr this_type_name_symbol = new__symbol(cause, "visual_object_semantic_frame");
-  f2ptr thing_type_name       = f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil);
-  if (raw__eq(cause, this_type_name_symbol, thing_type_name)) {
-    return boolean__true;
-  }
-  f2ptr thing_type = f2__lookup_type(cause, thing_type_name);
-  if (raw__primobject_type__has_parent_type(cause, thing_type, this_type_name_symbol)) {
-    return boolean__true;
-  }
-  return boolean__false;
-}
-
-f2ptr f2__visual_object_semantic_frame__is_type(f2ptr cause, f2ptr thing) {
-  return f2bool__new(raw__visual_object_semantic_frame__is_type(cause, thing));
-}
-export_cefunk1(visual_object_semantic_frame__is_type, thing, 0, "Returns whether or not thing is of type visual_object_semantic_frame.");
-
-
-f2ptr raw__visual_object_semantic_frame__type(f2ptr cause, f2ptr this) {
-  return f2__object__type(cause, this);
-}
-
-f2ptr f2__visual_object_semantic_frame__type(f2ptr cause, f2ptr this) {
-  if (! raw__visual_object_semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__visual_object_semantic_frame__type(cause, this);
-}
-export_cefunk1(visual_object_semantic_frame__type, thing, 0, "Returns the specific type of object that this visual_object_semantic_frame is.");
-
-
-f2ptr raw__visual_object_semantic_frame__add_visual_object_name(f2ptr cause, f2ptr this, f2ptr visual_object_name) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "visual_object_name"), visual_object_name);
-}
-
-f2ptr f2__visual_object_semantic_frame__add_visual_object_name(f2ptr cause, f2ptr this, f2ptr visual_object_name) {
-  if (! raw__visual_object_semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__visual_object_semantic_frame__add_visual_object_name(cause, this, visual_object_name);
-}
-export_cefunk2(visual_object_semantic_frame__add_visual_object_name, this, visual_object_name, 0, "Adds a visual_object_name to this visual_object_semantic_frame.");
-
-
-f2ptr f2__visual_object_semantic_frame_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "noun_semantic_frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "visual_object_semantic_frame__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "visual_object_semantic_frame__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "visual_object_semantic_frame__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_visual_object_name"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "visual_object_semantic_frame__add_visual_object_name")));}
-  return this;
-}
-
-*/
-
 // **
 
 f2ptr f2__semantic_knowledge_base__core_extension_ping(f2ptr cause) {
@@ -2811,8 +2616,6 @@ f2ptr f2__semantic_knowledge_base__core_extension_initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "semantic_knowledge_base_event"),              f2__semantic_knowledge_base_event_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "semantic_knowledge_base_event_redblacktree"), f2__semantic_knowledge_base_event_redblacktree_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "semantic_knowledge_base"),                    f2__semantic_knowledge_base_type__new(cause));
-  //  f2__add_type(cause, new__symbol(cause, "noun_semantic_frame"),                        f2__noun_semantic_frame_type__new(cause));
-  //  f2__add_type(cause, new__symbol(cause, "visual_object_semantic_frame"),               f2__visual_object_semantic_frame_type__new(cause));
   status("semantic_knowledge_base initialized.");
   return nil;
 }

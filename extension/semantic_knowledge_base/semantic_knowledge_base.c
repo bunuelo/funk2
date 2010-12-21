@@ -615,7 +615,7 @@ export_cefunk5(semantic_realm__lookup_or_create_meta_relationship, this, semanti
 
 
 f2ptr raw__semantic_realm__add_semantic_knowledge_base(f2ptr cause, f2ptr this, f2ptr semantic_knowledge_base) {
-  f2ptr semantic_knowledge_base__semantic_realm = raw__semantic_realm__semantic_realm(cause, semantic_knowledge_base);
+  f2ptr semantic_knowledge_base__semantic_realm = raw__semantic_knowledge_base__semantic_realm(cause, semantic_knowledge_base);
   if (! raw__eq(cause, this, semantic_knowledge_base__semantic_realm)) {
     return f2larva__new(cause, 65826, f2__bug__new(cause, f2integer__new(cause, 65826), f2__frame__new(cause, f2list8__new(cause,
 															   new__symbol(cause, "bug_type"),                new__symbol(cause, "tried_to_add_semantic_knowledge_base_to_different_semantic_realm"),

@@ -27,5 +27,5 @@
        this]]
 
 [deftypefunk self_conscious_layer execute setup_knowledge []
-  [= self_conscious_knowledge [new meta_semantic_knowledge_base [get [get this mind] semantic_realm]]]]
+  [= self_conscious_knowledge [new meta_semantic_knowledge_base `self_conscious_knowledge [get [get this mind] semantic_realm]]]]
 

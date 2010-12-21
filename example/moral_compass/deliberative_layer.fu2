@@ -28,5 +28,5 @@
        this]]
 
 [deftypefunk deliberative_layer execute setup_knowledge []
-  [= deliberative_knowledge [new meta_semantic_knowledge_base [get [get this mind] semantic_realm]]]]
+  [= deliberative_knowledge [new meta_semantic_knowledge_base `deliberative_knowledge [get [get this mind] semantic_realm]]]]
 

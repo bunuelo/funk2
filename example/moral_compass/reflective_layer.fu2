@@ -27,5 +27,5 @@
        this]]
 
 [deftypefunk reflective_layer execute setup_knowledge []
-  [= reflective_knowledge [new meta_semantic_knowledge_base [get [get this mind] semantic_realm]]]]
+  [= reflective_knowledge [new meta_semantic_knowledge_base `reflective_knowledge [get [get this mind] semantic_realm]]]]
 

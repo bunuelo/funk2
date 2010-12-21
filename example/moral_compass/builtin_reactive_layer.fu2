@@ -35,7 +35,7 @@
   ]
 
 [deftypefunk builtin_reactive_layer execute setup_knowledge []
-  [= builtin_reactive_knowledge [new semantic_knowledge_base [get [get this mind] semantic_realm]]]
+  [= builtin_reactive_knowledge [new semantic_knowledge_base `builtin_reactive_knowledge [get [get this mind] semantic_realm]]]
   [have builtin_reactive_knowledge add_trace_callback_funk `add_semantic_frame_value
 	[funk [semantic_knowledge_base semantic_frame key_type key value]
 	      [if [eq semantic_knowledge_base builtin_reactive_knowledge]
@@ -44,6 +44,7 @@
 	[funk [semantic_knowledge_base semantic_frame key_type key value]
 	      [if [eq semantic_knowledge_base builtin_reactive_knowledge]
 		  [have this know_of_removal_of_semantic_frame_value semantic_frame key_type key value]]]]
+  [have [get this agency `sensory] setup_knowledge]
   ]
 
 [deftypefunk builtin_reactive_layer get perception []

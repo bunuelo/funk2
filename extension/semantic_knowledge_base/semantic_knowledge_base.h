@@ -175,6 +175,10 @@ boolean_t raw__semantic_knowledge_base__is_type                               (f
 f2ptr      f2__semantic_knowledge_base__is_type                               (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_knowledge_base__type                                  (f2ptr cause, f2ptr this);
 f2ptr      f2__semantic_knowledge_base__type                                  (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_knowledge_base__semantic_realm                        (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_knowledge_base__semantic_realm                        (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_knowledge_base__semantic_realm__set                   (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__semantic_knowledge_base__semantic_realm__set                   (f2ptr cause, f2ptr this, f2ptr value);
 f2ptr     raw__semantic_knowledge_base__semantic_frames                       (f2ptr cause, f2ptr this);
 f2ptr      f2__semantic_knowledge_base__semantic_frames                       (f2ptr cause, f2ptr this);
 f2ptr     raw__semantic_knowledge_base__semantic_frames__set                  (f2ptr cause, f2ptr this, f2ptr value);

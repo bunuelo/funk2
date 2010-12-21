@@ -624,15 +624,15 @@ f2ptr raw__semantic_realm__add_semantic_knowledge_base(f2ptr cause, f2ptr this, 
 															   new__symbol(cause, "semantic_knowledge_base"), semantic_knowledge_base))));
   }
   f2ptr semantic_knowledge_base_frame = raw__semantic_realm__semantic_knowledge_base_frame(cause, this);
-  if (raw__frame__contains_var(cause, semantic_knowledge_base_frame, name)) {
+  f2ptr semantic_knowledge_base__name = raw__semantic_knowledge_base__name(cause, semantic_knowledge_base);
+  if (raw__frame__contains_var(cause, semantic_knowledge_base_frame, semantic_knowledge_base__name)) {
     return f2larva__new(cause, 65827, f2__bug__new(cause, f2integer__new(cause, 65827), f2__frame__new(cause, f2list8__new(cause,
 															   new__symbol(cause, "bug_type"),                new__symbol(cause, "knowledge_base_already_in_realm_with_same_name"),
 															   new__symbol(cause, "funk_name"),               new__symbol(cause, "semantic_realm-add_semantic_knowledge_base"),
 															   new__symbol(cause, "this"),                    this,
 															   new__symbol(cause, "semantic_knowledge_base"), semantic_knowledge_base))));
   }
-  f2ptr name = f2__semantic_knowledge_base__name(cause, semantic_knowledge_base);
-  f2__frame__add_var_value(cause, semantic_knowledge_base_frame, name, semantic_knowledge_base);
+  f2__frame__add_var_value(cause, semantic_knowledge_base_frame, semantic_knowledge_base__name, semantic_knowledge_base);
   return nil;
 }
 

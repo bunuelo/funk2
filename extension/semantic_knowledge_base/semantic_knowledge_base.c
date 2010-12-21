@@ -2224,6 +2224,7 @@ f2ptr raw__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, 
   raw__semantic_frame__know_of_addition_to_semantic_knowledge_base(cause, semantic_frame, this);
   {
     // check for semantic_realm match.
+    f2ptr semantic_realm                 = raw__semantic_knowledge_base__semantic_realm(cause, this);
     f2ptr semantic_frame__semantic_realm = raw__semantic_frame__semantic_realm(cause, semantic_frame);
     if (! raw__eq(cause, semantic_frame__semantic_realm, semantic_realm)) {
       return f2larva__new(cause, 8924, f2__bug__new(cause, f2integer__new(cause, 8924), f2__frame__new(cause, f2list8__new(cause,

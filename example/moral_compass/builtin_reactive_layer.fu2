@@ -20,7 +20,7 @@
 
 'builtin_reactive_layer'
 
-[deframe builtin_reactive_layer [mental_layer] [[builtin_reactive_knowledge [new semantic_knowledge_base]]]
+[deframe builtin_reactive_layer [mental_layer] [builtin_reactive_knowledge]]
   [new []
        [construct mental_layer 0 `builtin_reactive]
        [have this add_agency [new builtin_reactive_neural_plug_agency]]
@@ -35,6 +35,7 @@
   ]
 
 [deftypefunk builtin_reactive_layer execute setup_knowledge []
+  [= builtin_reactive_knowledge [new semantic_knowledge_base [get [get this mind] semantic_realm]]]
   [have builtin_reactive_knowledge add_trace_callback_funk `add_semantic_frame_value
 	[funk [semantic_knowledge_base semantic_frame key_type key value]
 	      [if [eq semantic_knowledge_base builtin_reactive_knowledge]

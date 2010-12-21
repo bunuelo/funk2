@@ -2016,7 +2016,7 @@ f2ptr raw__semantic_knowledge_base__new(f2ptr cause, f2ptr semantic_realm) {
 					     new__symbol(cause, "trace_callback_funks_frame"), f2__frame__new(cause, nil)));
 }
 
-f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr semantic_realm, f2ptr semantic_frames) {
+f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr semantic_realm) {
   if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
     return f2larva__new(cause, 1, nil);
   }

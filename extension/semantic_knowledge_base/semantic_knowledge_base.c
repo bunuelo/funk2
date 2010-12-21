@@ -2068,7 +2068,7 @@ f2ptr raw__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_
   if (cause != nil) {
     trace_add_semantic_frame = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_knowledge_base-trace_add_semantic_frame"));
   }
-  f2ptr this = f2__frame__new(cause, f2list14__new(cause,
+  f2ptr this = f2__frame__new(cause, f2list16__new(cause,
 						   new__symbol(cause, "type"),                        new__symbol(cause, "semantic_knowledge_base"),
 						   new__symbol(cause, "name"),                        name,
 						   new__symbol(cause, "semantic_realm"),              semantic_realm,

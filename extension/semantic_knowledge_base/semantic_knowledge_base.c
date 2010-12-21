@@ -2493,7 +2493,8 @@ f2ptr f2__semantic_knowledge_base__remove_all(f2ptr cause, f2ptr this) {
   if (! raw__semantic_knowledge_base__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_knowledge_base__remove_all(cause, this);
+  raw__semantic_knowledge_base__remove_all(cause, this);
+  return nil;
 }
 export_cefunk1(semantic_knowledge_base__remove_all, this, 0, "Removes all semantic_frames from this knowledge_base.");
 

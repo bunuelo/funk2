@@ -49,8 +49,8 @@ f2ptr f2__meta_semantic_object_type__new(f2ptr cause);
 
 // meta_semantic_knowledge_base
 
-f2ptr     raw__meta_semantic_knowledge_base__new                                               (f2ptr cause, f2ptr semantic_frames);
-f2ptr      f2__meta_semantic_knowledge_base__new                                               (f2ptr cause, f2ptr semantic_frames);
+f2ptr     raw__meta_semantic_knowledge_base__new                                               (f2ptr cause, f2ptr name, f2ptr semantic_frames);
+f2ptr      f2__meta_semantic_knowledge_base__new                                               (f2ptr cause, f2ptr name, f2ptr semantic_frames);
 boolean_t raw__meta_semantic_knowledge_base__is_type                                           (f2ptr cause, f2ptr thing);
 f2ptr      f2__meta_semantic_knowledge_base__is_type                                           (f2ptr cause, f2ptr thing);
 f2ptr     raw__meta_semantic_knowledge_base__type                                              (f2ptr cause, f2ptr this);

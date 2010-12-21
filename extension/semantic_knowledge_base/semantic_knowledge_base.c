@@ -623,7 +623,7 @@ f2ptr raw__semantic_realm__add_semantic_knowledge_base(f2ptr cause, f2ptr this, 
 															   new__symbol(cause, "this"),                    this,
 															   new__symbol(cause, "semantic_knowledge_base"), semantic_knowledge_base))));
   }
-  f2ptr semantic__knowledge_base_set = raw__semantic_realm__semantic_knowledge_base_set(cause, this);
+  f2ptr semantic_knowledge_base_set = raw__semantic_realm__semantic_knowledge_base_set(cause, this);
   f2__set__add(cause, semantic_knowledge_base_set, semantic_knowledge_base);
 }
 

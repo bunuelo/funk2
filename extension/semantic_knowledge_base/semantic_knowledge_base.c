@@ -2497,7 +2497,7 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 	    }
 	  }
 	  {
-	    f2ptr semantic_realm = raw__semantic_frame__realm(cause, semantic_frame);
+	    f2ptr semantic_realm = raw__semantic_frame__semantic_realm(cause, semantic_frame);
 	    semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
 				      if (! raw__ptypehash__contains(cause, node_code_ptypehash, value)) {
 					if (! raw__relationship_meta_semantic_object__is_type(cause, value)) {

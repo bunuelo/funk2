@@ -19,7 +19,6 @@
 // rights to redistribute these changes.
 // 
 
-#include "../../c/funk2.h"
 #include "event_stream.h"
 
 f2ptr raw__event_stream__new(f2ptr cause) {

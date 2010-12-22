@@ -22,6 +22,8 @@
 #ifndef F2__EXTENSION__EVENT_STREAM__H
 #define F2__EXTENSION__EVENT_STREAM__H
 
+#include "../../c/funk2.h"
+
 f2ptr     raw__event_stream__new(       f2ptr cause);
 f2ptr      f2__event_stream__new(       f2ptr cause);
 boolean_t raw__event_stream__is_type(   f2ptr cause, f2ptr thing);

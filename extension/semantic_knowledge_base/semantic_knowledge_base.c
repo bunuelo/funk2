@@ -22,6 +22,7 @@
 #include "../../c/funk2.h"
 #include "semantic_knowledge_base.h"
 #include "../meta_semantic_knowledge_base/meta_semantic_knowledge_base.h"
+#include "../event_stream/event_stream.h"
 
 
 // object-semantic-add, object-semantic-add-apply

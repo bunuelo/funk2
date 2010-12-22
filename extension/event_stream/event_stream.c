@@ -120,16 +120,38 @@ f2ptr f2__event_stream_event__time__set(f2ptr cause, f2ptr this, f2ptr value) {
 export_cefunk2(event_stream_event__time__set, thing, value, 0, "Sets the time of the event_stream_event.");
 
 
-f2ptr f2__event_stream_event_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_event__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_event__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_event__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "time"),    f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_event__time")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "time"),    f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_event__time__set")));}
-  return this;
+f2ptr raw__event_stream_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, nil);
+    raw__frame__copy(cause, frame, this);
+    raw__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"), f2__object__type(cause, this));
+    raw__frame__add_var_value(cause, frame, new__symbol(cause, "time"),              raw__event_stream_event__time(cause, this));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
+f2ptr f2__event_stream_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if (! raw__event_stream_event__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__event_stream_event__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+export_cefunk2(event_stream_event__terminal_print_with_frame, this, terminal_print_frame, 0, "");
+
+
+f2ptr f2__event_stream_event_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_event__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_event__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_event__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "time"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_event__time")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "time"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_event__time__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_event__terminal_print_with_frame")));}
+  return this;
+}
 
 
 // event_stream

@@ -30,8 +30,8 @@
 f2ptr raw__event_stream_event__time_value   (f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
 f2ptr raw__event_stream_event__compare_value(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
 
-f2ptr     raw__event_stream_event__new       (f2ptr cause, f2ptr time, f2ptr frame);
-f2ptr      f2__event_stream_event__new       (f2ptr cause, f2ptr time, f2ptr frame);
+f2ptr     raw__event_stream_event__new       (f2ptr cause, f2ptr time);
+f2ptr      f2__event_stream_event__new       (f2ptr cause, f2ptr time);
 boolean_t raw__event_stream_event__is_type   (f2ptr cause, f2ptr thing);
 f2ptr      f2__event_stream_event__is_type   (f2ptr cause, f2ptr thing);
 f2ptr     raw__event_stream_event__type      (f2ptr cause, f2ptr this);
@@ -40,10 +40,6 @@ f2ptr     raw__event_stream_event__time      (f2ptr cause, f2ptr this);
 f2ptr      f2__event_stream_event__time      (f2ptr cause, f2ptr this);
 f2ptr     raw__event_stream_event__time__set (f2ptr cause, f2ptr this, f2ptr value);
 f2ptr      f2__event_stream_event__time__set (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__event_stream_event__frame     (f2ptr cause, f2ptr this);
-f2ptr      f2__event_stream_event__frame     (f2ptr cause, f2ptr this);
-f2ptr     raw__event_stream_event__frame__set(f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__event_stream_event__frame__set(f2ptr cause, f2ptr this, f2ptr value);
 
 f2ptr f2__event_stream_event_type__new(f2ptr cause);
 

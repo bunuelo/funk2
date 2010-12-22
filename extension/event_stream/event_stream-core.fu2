@@ -19,7 +19,6 @@
 
 [defcore event_stream 'extension/event_stream/.libs/libf2e_event_stream.so']
 
-[defcorefunk event_stream-new_from_rgb_data         event_stream event_stream__new_from_rgb_data]
 [defcorefunk event_stream-core_extension_ping       event_stream event_stream__core_extension_ping]
 [defcorefunk event_stream-core_extension_initialize event_stream event_stream__core_extension_initialize]
 

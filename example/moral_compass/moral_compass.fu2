@@ -19,6 +19,9 @@
 
 [deframe moral_compass [mind] [global_semantic_realm]
   [new []
+       [cause-define semantic_frame-trace_add                         t]
+       [cause-define semantic_frame-trace_remove                      t]
+       [cause-define semantic_knowledge_base-trace_add_semantic_frame t]
        [construct mind]
        [have this add_layer [new builtin_reactive_layer]]
        [have this add_layer [new learned_reactive_layer]]

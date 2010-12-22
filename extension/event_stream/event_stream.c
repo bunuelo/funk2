@@ -231,7 +231,7 @@ export_cefunk2(event_stream__add, this, event_stream_event, 0, "Add an event_str
 
 f2ptr raw__event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
   f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
-  return raw__redblacktree__insert(cause, event_time_redblacktree, event_stream_event);
+  return raw__redblacktree__remove(cause, event_time_redblacktree, event_stream_event);
 }
 
 f2ptr f2__event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event) {

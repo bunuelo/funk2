@@ -56,6 +56,10 @@ f2ptr     raw__event_stream__event_time_redblacktree     (f2ptr cause, f2ptr thi
 f2ptr      f2__event_stream__event_time_redblacktree     (f2ptr cause, f2ptr this);
 f2ptr     raw__event_stream__event_time_redblacktree__set(f2ptr cause, f2ptr this, f2ptr value);
 f2ptr      f2__event_stream__event_time_redblacktree__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__event_stream__add                         (f2ptr cause, f2ptr this, f2ptr event_stream_event);
+f2ptr      f2__event_stream__add                         (f2ptr cause, f2ptr this, f2ptr event_stream_event);
+f2ptr     raw__event_stream__remove                      (f2ptr cause, f2ptr this, f2ptr event_stream_event);
+f2ptr      f2__event_stream__remove                      (f2ptr cause, f2ptr this, f2ptr event_stream_event);
 
 f2ptr f2__event_stream_type__new(f2ptr cause);
 

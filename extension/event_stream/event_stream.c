@@ -24,7 +24,7 @@
 f2ptr raw__event_stream__new(f2ptr cause) {
   return f2__frame__new(cause, f2list4__new(cause,
 					    new__symbol(cause, "type"),  new__symbol(cause, "event_stream"),
-					    new__symbol(cause, "width"), width));
+					    new__symbol(cause, "width"), nil));
 }
 
 f2ptr f2__event_stream__new(f2ptr cause) {

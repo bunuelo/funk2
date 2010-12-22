@@ -2346,6 +2346,10 @@ f2ptr f2__semantic_knowledge_base__core_extension_ping(f2ptr cause) {
 export_cefunk0(semantic_knowledge_base__core_extension_ping, 0, "");
 
 f2ptr f2__semantic_knowledge_base__core_extension_initialize(f2ptr cause) {
+  f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__core_extension_ping")), nil);
+  if (raw__larva__is_type(cause, result)) {
+    return result;
+  }
   f2__add_type(cause, new__symbol(cause, "semantic_relationship_key"),     f2__semantic_relationship_key_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "semantic_realm"),                f2__semantic_realm_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "semantic_frame_event"),          f2__semantic_frame_event_type__new(cause));

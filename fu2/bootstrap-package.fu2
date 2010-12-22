@@ -116,6 +116,7 @@
 				  'extension/meta_semantic_frame_ball/'
 				  'extension/meta_semantic_knowledge_base/'
 				  'extension/movie/'
+				  'extension/event_stream/'
 				  'extension/forward_planner/'
 				  'extension/frame_ball/'
 				  'extension/graph_isomorphism/'

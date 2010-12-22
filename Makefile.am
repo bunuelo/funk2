@@ -210,6 +210,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/image/libf2e_image.la \
                   extension/image_sequence/libf2e_image_sequence.la \
                   extension/movie/libf2e_movie.la \
+                  extension/event_stream/libf2e_event_stream.la \
                   extension/forward_planner/libf2e_forward_planner.la \
                   extension/frame_ball/libf2e_frame_ball.la \
                   extension/graph_isomorphism/libf2e_graph_isomorphism.la \
@@ -357,6 +358,7 @@ extension_fibermon_libf2e_fibermon_la_SOURCES                                   
 extension_image_libf2e_image_la_SOURCES                                               = extension/image/image.c
 extension_image_sequence_libf2e_image_sequence_la_SOURCES                             = extension/image_sequence/image_sequence.c
 extension_movie_libf2e_movie_la_SOURCES                                               = extension/movie/movie.c
+extension_event_stream_libf2e_event_stream_la_SOURCES                                 = extension/event_stream/event_stream.c
 extension_forward_planner_libf2e_forward_planner_la_SOURCES                           = extension/forward_planner/forward_planner.c
 extension_frame_ball_libf2e_frame_ball_la_SOURCES                                     = extension/frame_ball/frame_ball.c
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES                       = extension/graph_isomorphism/graph_isomorphism.c
@@ -407,6 +409,9 @@ extension_image_sequence_libf2e_image_sequence_la_CFLAGS  = $(lib_libfunk2_la_CF
 
 extension_movie_libf2e_movie_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_movie_libf2e_movie_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_event_stream_libf2e_event_stream_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_event_stream_libf2e_event_stream_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_forward_planner_libf2e_forward_planner_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_forward_planner_libf2e_forward_planner_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

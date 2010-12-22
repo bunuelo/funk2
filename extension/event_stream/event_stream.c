@@ -23,8 +23,8 @@
 
 f2ptr raw__event_stream__new(f2ptr cause) {
   return f2__frame__new(cause, f2list4__new(cause,
-					    new__symbol(cause, "type"),  new__symbol(cause, "event_stream"),
-					    new__symbol(cause, "width"), nil));
+					    new__symbol(cause, "type"),                    new__symbol(cause, "event_stream"),
+					    new__symbol(cause, "event_time_redblacktree"), nil));
 }
 
 f2ptr f2__event_stream__new(f2ptr cause) {
@@ -68,39 +68,39 @@ f2ptr f2__event_stream__type(f2ptr cause, f2ptr this) {
 export_cefunk1(event_stream__type, thing, 0, "Returns the specific type of object that this event_stream is.");
 
 
-f2ptr raw__event_stream__width(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"), nil);
+f2ptr raw__event_stream__event_time_redblacktree(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "event_time_redblacktree"), nil);
 }
 
-f2ptr f2__event_stream__width(f2ptr cause, f2ptr this) {
+f2ptr f2__event_stream__event_time_redblacktree(f2ptr cause, f2ptr this) {
   if (! raw__event_stream__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__event_stream__width(cause, this);
+  return raw__event_stream__event_time_redblacktree(cause, this);
 }
-export_cefunk1(event_stream__width, thing, 0, "Returns the width of the event_stream.");
+export_cefunk1(event_stream__event_time_redblacktree, thing, 0, "Returns the event_time_redblacktree of the event_stream.");
 
 
-f2ptr raw__event_stream__width__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "width"), value);
+f2ptr raw__event_stream__event_time_redblacktree__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "event_time_redblacktree"), value);
 }
 
-f2ptr f2__event_stream__width__set(f2ptr cause, f2ptr this, f2ptr value) {
+f2ptr f2__event_stream__event_time_redblacktree__set(f2ptr cause, f2ptr this, f2ptr value) {
   if (! raw__event_stream__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__event_stream__width__set(cause, this, value);
+  return raw__event_stream__event_time_redblacktree__set(cause, this, value);
 }
-export_cefunk2(event_stream__width__set, thing, value, 0, "Sets the width of the event_stream.");
+export_cefunk2(event_stream__event_time_redblacktree__set, thing, value, 0, "Sets the event_time_redblacktree of the event_stream.");
 
 
 f2ptr f2__event_stream_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__width")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__width__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "event_time_redblacktree"), f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__event_time_redblacktree")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "event_time_redblacktree"), f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__event_time_redblacktree__set")));}
   return this;
 }
 

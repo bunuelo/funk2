@@ -23,6 +23,26 @@
 
 // event_stream_event
 
+f2ptr raw__event_stream_event__time_value(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
+  f2ptr args_iter = args;
+  f2ptr this = f2__cons__car(cause, args_iter);
+  return raw__event_stream_event__time(cause, this);
+}
+
+f2ptr raw__event_stream_event__compare_value(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
+  f2ptr args_iter = args;
+  f2ptr this__time = f2__cons__car(cause, args_iter); args_iter = f2__cons__cdr(cause, args_iter);
+  f2ptr that__time = f2__cons__car(cause, args_iter);
+  {
+    f2ptr this__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, this__time);
+    f2ptr that__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, that__time);
+    s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
+    s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
+    return f2bool__new(this__nanoseconds_since_1970__i < that__nanoseconds_since_1970__i);
+  }
+}
+
+
 f2ptr raw__event_stream_event__new(f2ptr cause, f2ptr time, f2ptr frame) {
   return f2__frame__new(cause, f2list6__new(cause,
 					    new__symbol(cause, "type"),  new__symbol(cause, "event_stream_event"),
@@ -144,9 +164,16 @@ f2ptr f2__event_stream_event_type__new(f2ptr cause) {
 // event_stream
 
 f2ptr raw__event_stream__new(f2ptr cause) {
+  f2ptr event_time_redblacktree__value_event_cfunk   = f2cfunk__new(cause, nil, 
+								    f2list1__new(cause, new__symbol(cause, "this")),
+								    f2pointer__new(cause, raw_executable__to__relative_ptr(raw__event_stream_event__time_value)), global_environment(), nil, nil);
+  f2ptr event_time_redblacktree__compare_event_cfunk = f2cfunk__new(cause, nil, 
+								    f2list2__new(cause, new__symbol(cause, "this"), new__symbol(cause, "that")),
+								    f2pointer__new(cause, raw_executable__to__relative_ptr(raw__event_stream_event__compare_value)), global_environment(), nil, nil);
+  f2ptr event_time_redblacktree = f2__redblacktree__new(cause, event_time_redblacktree__value_event_cfunk, event_time_redblacktree__compare_event_cfunk);
   return f2__frame__new(cause, f2list4__new(cause,
 					    new__symbol(cause, "type"),                    new__symbol(cause, "event_stream"),
-					    new__symbol(cause, "event_time_redblacktree"), nil));
+					    new__symbol(cause, "event_time_redblacktree"), event_time_redblacktree));
 }
 
 f2ptr f2__event_stream__new(f2ptr cause) {

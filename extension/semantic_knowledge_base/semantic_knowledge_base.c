@@ -1099,7 +1099,7 @@ f2ptr raw__semantic_frame_event__compare_value(f2ptr cause, f2ptr fiber, f2ptr e
     f2ptr that__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, that__time);
     s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
     s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
-    return (this__nanoseconds_since_1970__i < that__nanoseconds_since_1970__i);
+    return f2bool__new(this__nanoseconds_since_1970__i < that__nanoseconds_since_1970__i);
   }
 }
 
@@ -2073,7 +2073,7 @@ f2ptr raw__semantic_knowledge_base_event__compare_value(f2ptr cause, f2ptr fiber
     f2ptr that__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, that__time);
     s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
     s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
-    return (this__nanoseconds_since_1970__i < that__nanoseconds_since_1970__i);
+    return f2bool__new(this__nanoseconds_since_1970__i < that__nanoseconds_since_1970__i);
   }
 }
 

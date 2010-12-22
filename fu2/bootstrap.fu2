@@ -50,6 +50,7 @@
 [load 'fu2/bootstrap-core_extension.fu2']
 [load 'fu2/bootstrap-package.fu2']
 [reload_all_package_definitions]
+[require number]
 [require ansi]
 
 `[require utilities]

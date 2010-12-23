@@ -121,6 +121,10 @@ f2ptr raw__lick__new(f2ptr cause, f2ptr root_object) {
 						  new__symbol(cause, "type"),            new__symbol(cause, "lick"),
 						  new__symbol(cause, "root_note"),       root_note,
 						  new__symbol(cause, "chunk_note_hash"), chunk_note_hash));
+  f2ptr result = f2__object__execute(cause, root_object, new__symbol(cause, "lick_to_chunk"), f2list1__new(cause, this));
+  if (raw__larva__is_type(cause, result)) {
+    return result;
+  }
   return this;
 }
 
@@ -202,6 +206,230 @@ f2ptr f2__lick_type__new(f2ptr cause) {
 }
 
 
+// ptype lick_to_chunk funks
+
+//   integer lick_to_chunk
+
+f2ptr raw__integer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  return nil;
+}
+
+f2ptr f2__integer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  if ((! raw__integer__is_type(cause, this)) ||
+      (! raw__lick__is_type(cause, lick))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__integer__lick_to_chunk(cause, this, lick);
+}
+export_cefunk2(integer__lick_to_chunk, this, lick, 0, "Licks this integer.");
+
+
+//   float lick_to_chunk
+
+f2ptr raw__float__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  return nil;
+}
+
+f2ptr f2__float__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  if ((! raw__float__is_type(cause, this)) ||
+      (! raw__lick__is_type(cause, lick))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__float__lick_to_chunk(cause, this, lick);
+}
+export_cefunk2(float__lick_to_chunk, this, lick, 0, "Licks this float.");
+
+
+//   double lick_to_chunk
+
+f2ptr raw__double__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  return nil;
+}
+
+f2ptr f2__double__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  if ((! raw__double__is_type(cause, this)) ||
+      (! raw__lick__is_type(cause, lick))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__double__lick_to_chunk(cause, this, lick);
+}
+export_cefunk2(double__lick_to_chunk, this, lick, 0, "Licks this double.");
+
+
+//   pointer lick_to_chunk
+
+f2ptr raw__pointer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  return nil;
+}
+
+f2ptr f2__pointer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  if ((! raw__pointer__is_type(cause, this)) ||
+      (! raw__lick__is_type(cause, lick))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__pointer__lick_to_chunk(cause, this, lick);
+}
+export_cefunk2(pointer__lick_to_chunk, this, lick, 0, "Licks this pointer.");
+
+
+//   string lick_to_chunk
+
+f2ptr raw__string__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  return nil;
+}
+
+f2ptr f2__string__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  if ((! raw__string__is_type(cause, this)) ||
+      (! raw__lick__is_type(cause, lick))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__string__lick_to_chunk(cause, this, lick);
+}
+export_cefunk2(string__lick_to_chunk, this, lick, 0, "Licks this string.");
+
+
+//   symbol lick_to_chunk
+
+f2ptr raw__symbol__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  return nil;
+}
+
+f2ptr f2__symbol__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  if ((! raw__symbol__is_type(cause, this)) ||
+      (! raw__lick__is_type(cause, lick))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__symbol__lick_to_chunk(cause, this, lick);
+}
+export_cefunk2(symbol__lick_to_chunk, this, lick, 0, "Licks this symbol.");
+
+
+//   chunk lick_to_chunk
+
+f2ptr raw__chunk__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  return nil;
+}
+
+f2ptr f2__chunk__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  if ((! raw__chunk__is_type(cause, this)) ||
+      (! raw__lick__is_type(cause, lick))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__chunk__lick_to_chunk(cause, this, lick);
+}
+export_cefunk2(chunk__lick_to_chunk, this, lick, 0, "Licks this chunk.");
+
+
+//   array lick_to_chunk
+
+f2ptr raw__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  return nil;
+}
+
+f2ptr f2__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
+  if ((! raw__array__is_type(cause, this)) ||
+      (! raw__lick__is_type(cause, lick))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__array__lick_to_chunk(cause, this, lick);
+}
+export_cefunk2(array__lick_to_chunk, this, lick, 0, "Licks this array.");
+
+
+f2ptr raw__add_all_lick_to_chunk_to_ptypes(f2ptr cause) {
+  {
+    f2ptr integer_type = f2__lookup_type(cause, new__symbol(cause, "integer"));
+    if (raw__larva__is_type(cause, integer_type)) {
+      return integer_type;
+    }
+    f2ptr result = f2__primobject_type__add_slot_type(cause, integer_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "integer__lick_to_chunk")));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr float_type = f2__lookup_type(cause, new__symbol(cause, "float"));
+    if (raw__larva__is_type(cause, float_type)) {
+      return float_type;
+    }
+    f2ptr result = f2__primobject_type__add_slot_type(cause, float_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "float__lick_to_chunk")));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr double_type = f2__lookup_type(cause, new__symbol(cause, "double"));
+    if (raw__larva__is_type(cause, double_type)) {
+      return double_type;
+    }
+    f2ptr result = f2__primobject_type__add_slot_type(cause, double_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "double__lick_to_chunk")));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr pointer_type = f2__lookup_type(cause, new__symbol(cause, "pointer"));
+    if (raw__larva__is_type(cause, pointer_type)) {
+      return pointer_type;
+    }
+    f2ptr result = f2__primobject_type__add_slot_type(cause, pointer_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "pointer__lick_to_chunk")));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr string_type = f2__lookup_type(cause, new__symbol(cause, "string"));
+    if (raw__larva__is_type(cause, string_type)) {
+      return string_type;
+    }
+    f2ptr result = f2__primobject_type__add_slot_type(cause, string_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "string__lick_to_chunk")));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr symbol_type = f2__lookup_type(cause, new__symbol(cause, "symbol"));
+    if (raw__larva__is_type(cause, symbol_type)) {
+      return symbol_type;
+    }
+    f2ptr result = f2__primobject_type__add_slot_type(cause, symbol_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "symbol__lick_to_chunk")));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr chunk_type = f2__lookup_type(cause, new__chunk(cause, "chunk"));
+    if (raw__larva__is_type(cause, chunk_type)) {
+      return chunk_type;
+    }
+    f2ptr result = f2__primobject_type__add_slot_type(cause, chunk_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "chunk__lick_to_chunk")));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr simple_array_type = f2__lookup_type(cause, new__simple_array(cause, "simple_array"));
+    if (raw__larva__is_type(cause, simple_array_type)) {
+      return simple_array_type;
+    }
+    f2ptr result = f2__primobject_type__add_slot_type(cause, simple_array_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "array__lick_to_chunk")));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr traced_array_type = f2__lookup_type(cause, new__traced_array(cause, "traced_array"));
+    if (raw__larva__is_type(cause, traced_array_type)) {
+      return traced_array_type;
+    }
+    f2ptr result = f2__primobject_type__add_slot_type(cause, traced_array_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "array__lick_to_chunk")));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  return nil;
+}
+
 
 // **
 
@@ -213,6 +441,12 @@ export_cefunk0(lick__core_extension_ping, 0, "");
 f2ptr f2__lick__core_extension_initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "lick_note"), f2__lick_note_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "lick"),      f2__lick_type__new(cause));
+  {
+    f2ptr result = raw__add_all_lick_to_chunk_to_ptypes(cause);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   status("lick initialized.");
   return nil;
 }

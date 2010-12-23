@@ -42,8 +42,8 @@ f2ptr     raw__lick__chunk_note_hash      (f2ptr cause, f2ptr this);
 f2ptr      f2__lick__chunk_note_hash      (f2ptr cause, f2ptr this);
 f2ptr     raw__lick__chunk_note_hash__set (f2ptr cause, f2ptr this, f2ptr value);
 f2ptr      f2__lick__chunk_note_hash__set (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__lick__object__as__note     (f2ptr cause, f2ptr this, f2ptr object);
-f2ptr      f2__lick__object__as__note     (f2ptr cause, f2ptr this, f2ptr object);
+f2ptr     raw__lick__object__as__note     (f2ptr cause, f2ptr this, f2ptr object, f2ptr note_object_hash);
+f2ptr      f2__lick__object__as__note     (f2ptr cause, f2ptr this, f2ptr object, f2ptr note_object_hash);
 
 
 

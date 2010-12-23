@@ -398,7 +398,7 @@ f2ptr raw__add_all_lick_to_chunk_to_ptypes(f2ptr cause) {
     }
   }
   {
-    f2ptr chunk_type = f2__lookup_type(cause, new__chunk(cause, "chunk"));
+    f2ptr chunk_type = f2__lookup_type(cause, new__symbol(cause, "chunk"));
     if (raw__larva__is_type(cause, chunk_type)) {
       return chunk_type;
     }
@@ -408,7 +408,7 @@ f2ptr raw__add_all_lick_to_chunk_to_ptypes(f2ptr cause) {
     }
   }
   {
-    f2ptr simple_array_type = f2__lookup_type(cause, new__simple_array(cause, "simple_array"));
+    f2ptr simple_array_type = f2__lookup_type(cause, new__symbol(cause, "simple_array"));
     if (raw__larva__is_type(cause, simple_array_type)) {
       return simple_array_type;
     }
@@ -418,7 +418,7 @@ f2ptr raw__add_all_lick_to_chunk_to_ptypes(f2ptr cause) {
     }
   }
   {
-    f2ptr traced_array_type = f2__lookup_type(cause, new__traced_array(cause, "traced_array"));
+    f2ptr traced_array_type = f2__lookup_type(cause, new__symbol(cause, "traced_array"));
     if (raw__larva__is_type(cause, traced_array_type)) {
       return traced_array_type;
     }

@@ -24,8 +24,8 @@
 
 #include "../../c/funk2.h"
 
-f2ptr     raw__lick__new       (f2ptr cause, f2ptr width);
-f2ptr      f2__lick__new       (f2ptr cause, f2ptr width);
+f2ptr     raw__lick__new       (f2ptr cause, f2ptr object);
+f2ptr      f2__lick__new       (f2ptr cause, f2ptr object);
 boolean_t raw__lick__is_type   (f2ptr cause, f2ptr thing);
 f2ptr      f2__lick__is_type   (f2ptr cause, f2ptr thing);
 f2ptr     raw__lick__type      (f2ptr cause, f2ptr this);

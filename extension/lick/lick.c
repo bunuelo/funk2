@@ -111,16 +111,23 @@ f2ptr f2__lick_note_type__new(f2ptr cause) {
 
 // lick
 
-f2ptr raw__lick__new(f2ptr cause, f2ptr width) {
-  return f2__frame__new(cause, f2list4__new(cause,
-					    new__symbol(cause, "type"),  new__symbol(cause, "lick"),
-					    new__symbol(cause, "width"), width));
+f2ptr raw__lick__new(f2ptr cause, f2ptr root_object) {
+  f2ptr root_note = f2__lick_note__new(cause, root_object);
+  if (raw__larva__is_type(cause, root_note)) {
+    return root_note;
+  }
+  f2ptr chunk_note_hash = f2__ptypehash__new(cause);
+  f2ptr this = f2__frame__new(cause, f2list6__new(cause,
+						  new__symbol(cause, "type"),            new__symbol(cause, "lick"),
+						  new__symbol(cause, "root_note"),       root_note,
+						  new__symbol(cause, "chunk_note_hash"), chunk_note_hash));
+  return this;
 }
 
-f2ptr f2__lick__new(f2ptr cause, f2ptr width) {
-  return raw__lick__new(cause, width);
+f2ptr f2__lick__new(f2ptr cause, f2ptr chunk_note_hash) {
+  return raw__lick__new(cause, chunk_note_hash);
 }
-export_cefunk1(lick__new, width, 0, "Returns a new lick object.");
+export_cefunk1(lick__new, chunk_note_hash, 0, "Returns a new lick object.");
 
 
 boolean_t raw__lick__is_type(f2ptr cause, f2ptr thing) {
@@ -158,39 +165,39 @@ f2ptr f2__lick__type(f2ptr cause, f2ptr this) {
 export_cefunk1(lick__type, thing, 0, "Returns the specific type of object that this lick is.");
 
 
-f2ptr raw__lick__width(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"), nil);
+f2ptr raw__lick__chunk_note_hash(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "chunk_note_hash"), nil);
 }
 
-f2ptr f2__lick__width(f2ptr cause, f2ptr this) {
+f2ptr f2__lick__chunk_note_hash(f2ptr cause, f2ptr this) {
   if (! raw__lick__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__lick__width(cause, this);
+  return raw__lick__chunk_note_hash(cause, this);
 }
-export_cefunk1(lick__width, thing, 0, "Returns the width of the lick.");
+export_cefunk1(lick__chunk_note_hash, thing, 0, "Returns the chunk_note_hash of the lick.");
 
 
-f2ptr raw__lick__width__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "width"), value);
+f2ptr raw__lick__chunk_note_hash__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "chunk_note_hash"), value);
 }
 
-f2ptr f2__lick__width__set(f2ptr cause, f2ptr this, f2ptr value) {
+f2ptr f2__lick__chunk_note_hash__set(f2ptr cause, f2ptr this, f2ptr value) {
   if (! raw__lick__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__lick__width__set(cause, this, value);
+  return raw__lick__chunk_note_hash__set(cause, this, value);
 }
-export_cefunk2(lick__width__set, thing, value, 0, "Sets the width of the lick.");
+export_cefunk2(lick__chunk_note_hash__set, thing, value, 0, "Sets the chunk_note_hash of the lick.");
 
 
 f2ptr f2__lick_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__width")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__width__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),             f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),         f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),            f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "chunk_note_hash"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__chunk_note_hash")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "chunk_note_hash"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__chunk_note_hash__set")));}
   return this;
 }
 

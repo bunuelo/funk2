@@ -109,6 +109,125 @@ f2ptr f2__lick_note_type__new(f2ptr cause) {
 }
 
 
+// lick_chunk
+
+f2ptr raw__lick_chunk__new(f2ptr cause, f2ptr type_name, f2ptr chunk) {
+  return f2__frame__new(cause, f2list4__new(cause,
+					    new__symbol(cause, "type"),      new__symbol(cause, "lick_chunk"),
+					    new__symbol(cause, "type_name"), type_name,
+					    new__symbol(cause, "chunk"),     chunk));
+}
+
+f2ptr f2__lick_chunk__new(f2ptr cause, f2ptr type_name, f2ptr chunk) {
+  if (((type_name != nil) && (! raw__symbol__is_type(cause, type_name))) ||
+      (! raw__chunk__is_type(cause, chunk))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__lick_chunk__new(cause, object);
+}
+export_cefunk2(lick_chunk__new, type_name, chunk, 0, "Given a type_name and a chunk, returns a unique lick_chunk object.");
+
+
+boolean_t raw__lick_chunk__is_type(f2ptr cause, f2ptr thing) {
+  if (! raw__frame__is_type(cause, thing)) {
+    return boolean__false;
+  }
+  f2ptr this_type_name_symbol = new__symbol(cause, "lick_chunk");
+  f2ptr thing_type_name       = f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil);
+  if (raw__eq(cause, this_type_name_symbol, thing_type_name)) {
+    return boolean__true;
+  }
+  f2ptr thing_type = f2__lookup_type(cause, thing_type_name);
+  if (raw__primobject_type__has_parent_type(cause, thing_type, this_type_name_symbol)) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
+f2ptr f2__lick_chunk__is_type(f2ptr cause, f2ptr thing) {
+  return f2bool__new(raw__lick_chunk__is_type(cause, thing));
+}
+export_cefunk1(lick_chunk__is_type, thing, 0, "Returns whether or not thing is of type lick_chunk.");
+
+
+f2ptr raw__lick_chunk__type(f2ptr cause, f2ptr this) {
+  return f2__object__type(cause, this);
+}
+
+f2ptr f2__lick_chunk__type(f2ptr cause, f2ptr this) {
+  if (! raw__lick_chunk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__lick_chunk__type(cause, this);
+}
+export_cefunk1(lick_chunk__type, thing, 0, "Returns the specific type of object that this lick_chunk is.");
+
+
+f2ptr raw__lick_chunk__type_name(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "type_name"), nil);
+}
+
+f2ptr f2__lick_chunk__type_name(f2ptr cause, f2ptr this) {
+  if (! raw__lick_chunk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__lick_chunk__type_name(cause, this);
+}
+export_cefunk1(lick_chunk__type_name, thing, 0, "Returns the type_name of the lick_chunk.");
+
+
+f2ptr raw__lick_chunk__type_name__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "type_name"), value);
+}
+
+f2ptr f2__lick_chunk__type_name__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__lick_chunk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__lick_chunk__type_name__set(cause, this, value);
+}
+export_cefunk2(lick_chunk__type_name__set, thing, value, 0, "Sets the type_name of the lick_chunk.");
+
+
+f2ptr raw__lick_chunk__chunk(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "chunk"), nil);
+}
+
+f2ptr f2__lick_chunk__chunk(f2ptr cause, f2ptr this) {
+  if (! raw__lick_chunk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__lick_chunk__chunk(cause, this);
+}
+export_cefunk1(lick_chunk__chunk, thing, 0, "Returns the chunk of the lick_chunk.");
+
+
+f2ptr raw__lick_chunk__chunk__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "chunk"), value);
+}
+
+f2ptr f2__lick_chunk__chunk__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__lick_chunk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__lick_chunk__chunk__set(cause, this, value);
+}
+export_cefunk2(lick_chunk__chunk__set, thing, value, 0, "Sets the chunk of the lick_chunk.");
+
+
+f2ptr f2__lick_chunk_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),       f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),   f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),      f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type_name"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__type_name")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "type_name"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__type_name__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "chunk"),     f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__chunk")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "chunk"),     f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__chunk__set")));}
+  return this;
+}
+
+
 // lick
 
 f2ptr raw__lick__new(f2ptr cause, f2ptr root_object) {
@@ -549,8 +668,9 @@ f2ptr f2__lick__core_extension_ping(f2ptr cause) {
 export_cefunk0(lick__core_extension_ping, 0, "");
 
 f2ptr f2__lick__core_extension_initialize(f2ptr cause) {
-  f2__add_type(cause, new__symbol(cause, "lick_note"), f2__lick_note_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "lick"),      f2__lick_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "lick_note"),  f2__lick_note_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "lick_chunk"), f2__lick_chunk_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "lick"),       f2__lick_type__new(cause));
   {
     f2ptr result = raw__add_all_lick_to_chunk_to_ptypes(cause);
     if (raw__larva__is_type(cause, result)) {

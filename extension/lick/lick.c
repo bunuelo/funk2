@@ -297,7 +297,10 @@ f2ptr f2__lick_type__new(f2ptr cause) {
 //   integer lick_to_chunk
 
 f2ptr raw__integer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {
-  return nil;
+  f2ptr chunk   = raw__chunk__new(cause, 8);
+  s64   this__i = f2integer__i(this, cause);
+  raw__chunk__bit64__elt__set(cause, chunk, 0, this__i);
+  return chunk;
 }
 
 f2ptr f2__integer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick) {

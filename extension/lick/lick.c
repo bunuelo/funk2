@@ -437,20 +437,16 @@ export_cefunk3(array__lick_to_chunk, this, lick, note_object_hash, 0, "Licks thi
 
 
 f2ptr raw__add_all_lick_to_chunk_to_ptypes(f2ptr cause) {
-  printf("\ndebug 0\n"); fflush(stdout);
   {
-    printf("\ndebug 1\n"); fflush(stdout);
-    f2ptr nil_type = f2__lookup_type(cause, new__symbol(cause, "nil"));
+    f2ptr nil_type = f2__lookup_type(cause, nil);
     if (raw__larva__is_type(cause, nil_type)) {
       return nil_type;
     }
-    printf("\ndebug 2\n"); fflush(stdout);
     f2ptr result = f2__primobject_type__add_slot_type(cause, nil_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "nil__lick_to_chunk")));
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  printf("\ndebug 3\n"); fflush(stdout);
   {
     f2ptr integer_type = f2__lookup_type(cause, new__symbol(cause, "integer"));
     if (raw__larva__is_type(cause, integer_type)) {

@@ -168,6 +168,32 @@ f2ptr f2__lick__type(f2ptr cause, f2ptr this) {
 export_cefunk1(lick__type, thing, 0, "Returns the specific type of object that this lick is.");
 
 
+f2ptr raw__lick__root_note(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "root_note"), nil);
+}
+
+f2ptr f2__lick__root_note(f2ptr cause, f2ptr this) {
+  if (! raw__lick__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__lick__root_note(cause, this);
+}
+export_cefunk1(lick__root_note, thing, 0, "Returns the root_note of the lick.");
+
+
+f2ptr raw__lick__root_note__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "root_note"), value);
+}
+
+f2ptr f2__lick__root_note__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__lick__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__lick__root_note__set(cause, this, value);
+}
+export_cefunk2(lick__root_note__set, thing, value, 0, "Sets the root_note of the lick.");
+
+
 f2ptr raw__lick__note_object_hash(f2ptr cause, f2ptr this) {
   return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "note_object_hash"), nil);
 }
@@ -255,6 +281,8 @@ f2ptr f2__lick_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),              f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__new")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),          f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),             f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "root_note"),        f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__root_note")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "root_note"),        f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__root_note__set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "note_object_hash"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__note_object_hash")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "note_object_hash"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__note_object_hash__set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "chunk_note_hash"),  f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__chunk_note_hash")));}

@@ -112,7 +112,7 @@ f2ptr f2__lick_note_type__new(f2ptr cause) {
 // lick_chunk
 
 f2ptr raw__lick_chunk__new(f2ptr cause, f2ptr type_name, f2ptr chunk) {
-  return f2__frame__new(cause, f2list4__new(cause,
+  return f2__frame__new(cause, f2list6__new(cause,
 					    new__symbol(cause, "type"),      new__symbol(cause, "lick_chunk"),
 					    new__symbol(cause, "type_name"), type_name,
 					    new__symbol(cause, "chunk"),     chunk));

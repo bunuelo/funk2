@@ -117,7 +117,7 @@ f2ptr raw__lick__new(f2ptr cause, f2ptr root_object) {
   f2ptr this = f2__frame__new(cause, f2list8__new(cause,
 						  new__symbol(cause, "type"),             new__symbol(cause, "lick"),
 						  new__symbol(cause, "root_note"),        nil,
-						  new__symbol(cause, "note_object_hash"), object_note_hash,
+						  new__symbol(cause, "note_object_hash"), note_object_hash,
 						  new__symbol(cause, "chunk_note_hash"),  chunk_note_hash));
   f2ptr root_note = raw__lick__object__as__note(cause, this, root_object);
   if (raw__larva__is_type(cause, root_note)) {

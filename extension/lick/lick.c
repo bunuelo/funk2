@@ -121,7 +121,7 @@ f2ptr raw__lick__new(f2ptr cause, f2ptr root_object) {
 						  new__symbol(cause, "chunk_note_hash"),  chunk_note_hash));
   f2ptr root_note = raw__lick__object__as__note(cause, this, root_object);
   if (raw__larva__is_type(cause, root_note)) {
-    return result;
+    return root_note;
   }
   raw__lick__root_note__set(cause, this, root_note);
   return this;

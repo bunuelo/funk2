@@ -123,7 +123,7 @@ f2ptr f2__lick_chunk__new(f2ptr cause, f2ptr type_name, f2ptr chunk) {
       (! raw__chunk__is_type(cause, chunk))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__lick_chunk__new(cause, object);
+  return raw__lick_chunk__new(cause, type_name, chunk);
 }
 export_cefunk2(lick_chunk__new, type_name, chunk, 0, "Given a type_name and a chunk, returns a unique lick_chunk object.");
 

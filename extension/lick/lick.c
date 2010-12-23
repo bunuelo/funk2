@@ -264,6 +264,24 @@ f2ptr f2__lick_type__new(f2ptr cause) {
 
 // ptype lick_to_chunk funks
 
+//   nil lick_to_chunk
+
+f2ptr raw__nil__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+  f2ptr chunk = raw__chunk__new(cause, 0);
+  return chunk;
+}
+
+f2ptr f2__nil__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+  if ((this != nil) ||
+      (! raw__lick__is_type(cause, lick)) ||
+      (! raw__ptypehash__is_type(cause, note_object_hash))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__nil__lick_to_chunk(cause, this, lick, note_object_hash);
+}
+export_cefunk3(nil__lick_to_chunk, this, lick, note_object_hash, 0, "Licks this nil.");
+
+
 //   integer lick_to_chunk
 
 f2ptr raw__integer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
@@ -389,7 +407,22 @@ export_cefunk3(chunk__lick_to_chunk, this, lick, note_object_hash, 0, "Licks thi
 //   array lick_to_chunk
 
 f2ptr raw__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
-  return nil;
+  s64   this__length = raw__array__length(cause, this);
+  f2ptr chunk        = raw__chunk__new(cause, this__length * 8);
+  {
+    s64 index;
+    for (index = 0; index < this__length; index ++) {
+      f2ptr element       = raw__array__elt(cause, this, index);
+      f2ptr element__note = raw__lick__object__as__note(cause, lick, element, note_object_hash);
+      if (raw__larva__is_type(cause, element__note)) {
+	return element__note;
+      }
+      f2ptr element__note__unique_identifier    = raw__lick_note__unique_identifier(cause, element__note);
+      s64   element__note__unique_identifier__i = f2integer__i(element__note__unique_identifier, cause);
+      raw__chunk__bit64__elt__set(cause, chunk, index * 8, (s64)(element__note__unique_identifier__i));
+    }
+  }
+  return chunk;
 }
 
 f2ptr f2__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
@@ -404,6 +437,16 @@ export_cefunk3(array__lick_to_chunk, this, lick, note_object_hash, 0, "Licks thi
 
 
 f2ptr raw__add_all_lick_to_chunk_to_ptypes(f2ptr cause) {
+  {
+    f2ptr nil_type = f2__lookup_type(cause, new__symbol(cause, "nil"));
+    if (raw__larva__is_type(cause, nil_type)) {
+      return nil_type;
+    }
+    f2ptr result = f2__primobject_type__add_slot_type(cause, nil_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "nil__lick_to_chunk")));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   {
     f2ptr integer_type = f2__lookup_type(cause, new__symbol(cause, "integer"));
     if (raw__larva__is_type(cause, integer_type)) {

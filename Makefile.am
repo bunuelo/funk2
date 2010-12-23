@@ -206,24 +206,26 @@ img/bootstrap.img: img/bootstrap-repl.img
 ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES = lib/libfunk2.la \
-                  extension/fibermon/libf2e_fibermon.la \
-                  extension/image/libf2e_image.la \
-                  extension/image_sequence/libf2e_image_sequence.la \
-                  extension/movie/libf2e_movie.la \
+                  extension/causality/libf2e_causality.la \
                   extension/event_stream/libf2e_event_stream.la \
+                  extension/fibermon/libf2e_fibermon.la \
                   extension/forward_planner/libf2e_forward_planner.la \
                   extension/frame_ball/libf2e_frame_ball.la \
                   extension/graph_isomorphism/libf2e_graph_isomorphism.la \
-                  extension/semantic_frame_ball/libf2e_semantic_frame_ball.la \
+                  extension/image/libf2e_image.la \
+                  extension/image_sequence/libf2e_image_sequence.la \
+                  extension/lick/libf2e_lick.la \
                   extension/meta_semantic_frame_ball/libf2e_meta_semantic_frame_ball.la \
-                  extension/semantic_knowledge_base/libf2e_semantic_knowledge_base.la \
                   extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la \
+                  extension/mindmon/libf2e_mindmon.la \
+                  extension/movie/libf2e_movie.la \
+                  extension/semantic_frame_ball/libf2e_semantic_frame_ball.la \
+                  extension/semantic_knowledge_base/libf2e_semantic_knowledge_base.la \
                   extension/semantic_object_type/libf2e_semantic_object_type.la \
                   extension/semantic_object/libf2e_semantic_object.la \
                   extension/semantic_physical_object/libf2e_semantic_physical_object.la \
-                  extension/semantic_visual_object/libf2e_semantic_visual_object.la \
-                  extension/mindmon/libf2e_mindmon.la \
-                  extension/causality/libf2e_causality.la
+                  extension/semantic_visual_object/libf2e_semantic_visual_object.la
+
 #bin_PROGRAMS    = bin/funk2-static
 
 lib_libfunk2_la_SOURCES = \
@@ -354,24 +356,25 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
-extension_fibermon_libf2e_fibermon_la_SOURCES                                         = extension/fibermon/fibermon.c
-extension_image_libf2e_image_la_SOURCES                                               = extension/image/image.c
-extension_image_sequence_libf2e_image_sequence_la_SOURCES                             = extension/image_sequence/image_sequence.c
-extension_movie_libf2e_movie_la_SOURCES                                               = extension/movie/movie.c
+extension_causality_libf2e_causality_la_SOURCES                                       = extension/causality/causality.c
 extension_event_stream_libf2e_event_stream_la_SOURCES                                 = extension/event_stream/event_stream.c
+extension_fibermon_libf2e_fibermon_la_SOURCES                                         = extension/fibermon/fibermon.c
 extension_forward_planner_libf2e_forward_planner_la_SOURCES                           = extension/forward_planner/forward_planner.c
 extension_frame_ball_libf2e_frame_ball_la_SOURCES                                     = extension/frame_ball/frame_ball.c
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES                       = extension/graph_isomorphism/graph_isomorphism.c
-extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_SOURCES                   = extension/semantic_frame_ball/semantic_frame_ball.c
+extension_image_libf2e_image_la_SOURCES                                               = extension/image/image.c
+extension_image_sequence_libf2e_image_sequence_la_SOURCES                             = extension/image_sequence/image_sequence.c
+extension_lick_libf2e_lick_la_SOURCES                                                 = extension/lick/lick.c
 extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_SOURCES         = extension/meta_semantic_frame_ball/meta_semantic_frame_ball.c
-extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES           = extension/semantic_knowledge_base/semantic_knowledge_base.c
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
+extension_mindmon_libf2e_mindmon_la_SOURCES                                           = extension/mindmon/mindmon.c
+extension_movie_libf2e_movie_la_SOURCES                                               = extension/movie/movie.c
+extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_SOURCES                   = extension/semantic_frame_ball/semantic_frame_ball.c
+extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES           = extension/semantic_knowledge_base/semantic_knowledge_base.c
 extension_semantic_object_type_libf2e_semantic_object_type_la_SOURCES                 = extension/semantic_object_type/semantic_object_type.c
 extension_semantic_object_libf2e_semantic_object_la_SOURCES                           = extension/semantic_object/semantic_object.c
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_SOURCES         = extension/semantic_physical_object/semantic_physical_object.c
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES             = extension/semantic_visual_object/semantic_visual_object.c
-extension_mindmon_libf2e_mindmon_la_SOURCES                                           = extension/mindmon/mindmon.c
-extension_causality_libf2e_causality_la_SOURCES                                       = extension/causality/causality.c
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 
@@ -424,6 +427,9 @@ extension_graph_isomorphism_libf2e_graph_isomorphism_la_CFLAGS  = $(lib_libfunk2
 
 extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_lick_libf2e_lick_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_lick_libf2e_lick_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

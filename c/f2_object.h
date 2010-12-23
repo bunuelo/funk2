@@ -65,6 +65,8 @@ f2ptr      f2__object__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2p
 f2ptr      f2__object__equals_hash_value(f2ptr cause, f2ptr this);
 f2ptr      f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr property_funk);
 
+f2ptr f2__object__execute(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
+
 f2ptr f2__object__get_0(f2ptr cause, f2ptr this, f2ptr slot);
 f2ptr     object__get_0(f2ptr cause, f2ptr this, char* slot_cstr);
 f2ptr f2__object__get_1(f2ptr cause, f2ptr this, f2ptr slot,      f2ptr arg0);

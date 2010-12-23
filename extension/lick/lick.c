@@ -387,7 +387,7 @@ f2ptr f2__lick_type__new(f2ptr cause) {
 
 f2ptr raw__nil__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
   f2ptr chunk = raw__chunk__new(cause, 0);
-  return chunk;
+  return raw__lick_chunk__new(cause, nil, chunk);
 }
 
 f2ptr f2__nil__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
@@ -407,7 +407,7 @@ f2ptr raw__integer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr not
   f2ptr chunk   = raw__chunk__new(cause, 8);
   s64   this__i = f2integer__i(this, cause);
   raw__chunk__bit64__elt__set(cause, chunk, 0, this__i);
-  return chunk;
+  return raw__lick_chunk__new(cause, new__symbol(cause, "integer"), chunk);
 }
 
 f2ptr f2__integer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
@@ -541,7 +541,7 @@ f2ptr raw__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_
       raw__chunk__bit64__elt__set(cause, chunk, index * 8, (s64)(element__note__unique_identifier__i));
     }
   }
-  return chunk;
+  return raw__lick_chunk__new(cause, new__symbol(cause, "array"), chunk);
 }
 
 f2ptr f2__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {

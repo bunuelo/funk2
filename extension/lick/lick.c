@@ -259,8 +259,8 @@ f2ptr raw__lick__object__as__note(f2ptr cause, f2ptr this, f2ptr object) {
     if (raw__larva__is_type(cause, chunk)) {
       return chunk;
     }
-    f2ptr chunk_note_hash = raw__lick__chunk_note_hash(cause, this);
-    f2ptr unique_indentifier = raw__lick_note__unique_identifier(cause, note);
+    f2ptr chunk_note_hash   = raw__lick__chunk_note_hash(cause, this);
+    f2ptr unique_identifier = raw__lick_note__unique_identifier(cause, note);
     raw__ptypehash__add(cause, chunk_note_hash, unique_identifier, chunk);
   }
   return note;

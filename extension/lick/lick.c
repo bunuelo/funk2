@@ -24,16 +24,17 @@
 
 // lick_note
 
-f2ptr raw__lick_note__new(f2ptr cause, f2ptr width) {
+f2ptr raw__lick_note__new(f2ptr cause, f2ptr object) {
+  f2ptr unique_identifier = f2integer__new(cause, (s64)object);
   return f2__frame__new(cause, f2list4__new(cause,
-					    new__symbol(cause, "type"),  new__symbol(cause, "lick_note"),
-					    new__symbol(cause, "width"), width));
+					    new__symbol(cause, "type"),              new__symbol(cause, "lick_note"),
+					    new__symbol(cause, "unique_identifier"), unique_identifier));
 }
 
-f2ptr f2__lick_note__new(f2ptr cause, f2ptr width) {
-  return raw__lick_note__new(cause, width);
+f2ptr f2__lick_note__new(f2ptr cause, f2ptr object) {
+  return raw__lick_note__new(cause, object);
 }
-export_cefunk1(lick_note__new, width, 0, "Returns a new lick_note object.");
+export_cefunk1(lick_note__new, object, 0, "Given any object, returns a unique lick_note object identifier.");
 
 
 boolean_t raw__lick_note__is_type(f2ptr cause, f2ptr thing) {
@@ -71,39 +72,39 @@ f2ptr f2__lick_note__type(f2ptr cause, f2ptr this) {
 export_cefunk1(lick_note__type, thing, 0, "Returns the specific type of object that this lick_note is.");
 
 
-f2ptr raw__lick_note__width(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"), nil);
+f2ptr raw__lick_note__unique_identifier(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "unique_identifier"), nil);
 }
 
-f2ptr f2__lick_note__width(f2ptr cause, f2ptr this) {
+f2ptr f2__lick_note__unique_identifier(f2ptr cause, f2ptr this) {
   if (! raw__lick_note__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__lick_note__width(cause, this);
+  return raw__lick_note__unique_identifier(cause, this);
 }
-export_cefunk1(lick_note__width, thing, 0, "Returns the width of the lick_note.");
+export_cefunk1(lick_note__unique_identifier, thing, 0, "Returns the unique_identifier of the lick_note.");
 
 
-f2ptr raw__lick_note__width__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "width"), value);
+f2ptr raw__lick_note__unique_identifier__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "unique_identifier"), value);
 }
 
-f2ptr f2__lick_note__width__set(f2ptr cause, f2ptr this, f2ptr value) {
+f2ptr f2__lick_note__unique_identifier__set(f2ptr cause, f2ptr this, f2ptr value) {
   if (! raw__lick_note__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__lick_note__width__set(cause, this, value);
+  return raw__lick_note__unique_identifier__set(cause, this, value);
 }
-export_cefunk2(lick_note__width__set, thing, value, 0, "Sets the width of the lick_note.");
+export_cefunk2(lick_note__unique_identifier__set, thing, value, 0, "Sets the unique_identifier of the lick_note.");
 
 
 f2ptr f2__lick_note_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_note__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_note__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_note__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_note__width")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_note__width__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),               f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_note__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),           f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_note__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),              f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_note__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "unique_identifier"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_note__unique_identifier")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "unique_identifier"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_note__unique_identifier__set")));}
   return this;
 }
 

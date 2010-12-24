@@ -261,7 +261,7 @@ f2ptr raw__lick_chunk__remember_with_notes(f2ptr cause, f2ptr this, f2ptr object
     if (raw__larva__is_type(cause, remembered_object_with_notes)) {
       return remembered_object_with_notes;
     }
-    raw__ptypehash__add(cause, object_note_hash, lick_note__unique_identifier, remember_object_with_notes);
+    raw__ptypehash__add(cause, object_note_hash, lick_note__unique_identifier, remembered_object_with_notes);
   }
   return remembered_object_with_notes;
 }

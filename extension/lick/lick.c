@@ -538,7 +538,7 @@ f2ptr f2__float__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, 
   }
   return raw__float__lick_chunk__remember_with_notes(cause, lick_chunk, object_note_hash);
 }
-export_cefunk3(float__lick_chunk__remember_with_notes, lick_chunk, object_note_hash, 0, "Remembers this float lick_chunk with notes.");
+export_cefunk2(float__lick_chunk__remember_with_notes, lick_chunk, object_note_hash, 0, "Remembers this float lick_chunk with notes.");
 
 
 //   double lick_to_chunk

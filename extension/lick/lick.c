@@ -191,6 +191,32 @@ f2ptr f2__lick_chunk__type_name__set(f2ptr cause, f2ptr this, f2ptr value) {
 export_cefunk2(lick_chunk__type_name__set, thing, value, 0, "Sets the type_name of the lick_chunk.");
 
 
+f2ptr raw__lick_chunk__lick_note(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "lick_note"), nil);
+}
+
+f2ptr f2__lick_chunk__lick_note(f2ptr cause, f2ptr this) {
+  if (! raw__lick_chunk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__lick_chunk__lick_note(cause, this);
+}
+export_cefunk1(lick_chunk__lick_note, thing, 0, "Returns the lick_note of the lick_chunk.");
+
+
+f2ptr raw__lick_chunk__lick_note__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "lick_note"), value);
+}
+
+f2ptr f2__lick_chunk__lick_note__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__lick_chunk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__lick_chunk__lick_note__set(cause, this, value);
+}
+export_cefunk2(lick_chunk__lick_note__set, thing, value, 0, "Sets the lick_note of the lick_chunk.");
+
+
 f2ptr raw__lick_chunk__chunk(f2ptr cause, f2ptr this) {
   return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "chunk"), nil);
 }

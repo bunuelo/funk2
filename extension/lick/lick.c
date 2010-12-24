@@ -218,20 +218,25 @@ export_cefunk2(lick_chunk__chunk__set, thing, value, 0, "Sets the chunk of the l
 
 
 f2ptr raw__lick_chunk__remember_with_notes(f2ptr cause, f2ptr this, f2ptr object_note_hash) {
-  f2ptr type_name = raw__lick_chunk__type_name(cause, this);
-  f2ptr type      = f2__lookup_type(cause, type_name);
-  if (raw__larva__is_type(cause, type)) {
-    return type;
+  f2ptr lick_note                    = raw__lick_chunk__lick_note(cause, this);
+  f2ptr lick_note__unique_identifier = raw__lick_note__unique_identifier(cause, lick_note);
+  f2ptr remembered_object_with_notes = raw__ptypehash__lookup(cause, object_note_hash, lick_note__unique_identifier);
+  if (remembered_object_with_notes == nil) {
+    f2ptr type_name = raw__lick_chunk__type_name(cause, this);
+    f2ptr type      = f2__lookup_type(cause, type_name);
+    if (raw__larva__is_type(cause, type)) {
+      return type;
+    }
+    f2ptr lick_chunk__remember_with_notes__funk = f2__primobject_type__lookup_slot_type_funk(cause, type, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-remember_with_notes"));
+    if (raw__larva__is_type(cause, lick_chunk__remember_with_notes__funk)) {
+      return lick_chunk__remember_with_notes__funk;
+    }
+    remembered_object_with_notes = f2__force_funk_apply(cause, f2__this__fiber(cause), lick_chunk__remember_with_notes__funk, f2list2__new(cause, this, object_note_hash));
+    if (raw__larva__is_type(cause, remembered_object_with_notes)) {
+      return remembered_object_with_notes;
+    }
+    raw__ptypehash__add(cause, object_note_hash, lick_note__unique_identifier, remember_object_with_notes);
   }
-  f2ptr lick_chunk__remember_with_notes__funk = f2__primobject_type__lookup_slot_type_funk(cause, type, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-remember_with_notes"));
-  if (raw__larva__is_type(cause, lick_chunk__remember_with_notes__funk)) {
-    return lick_chunk__remember_with_notes__funk;
-  }
-  f2ptr remembered_object_with_notes = f2__force_funk_apply(cause, f2__this__fiber(cause), lick_chunk__remember_with_notes__funk, f2list2__new(cause, this, object_note_hash));
-  if (raw__larva__is_type(cause, remembered_object_with_notes)) {
-    return remembered_object_with_notes;
-  }
-  raw__ptypehash__add(cause, object_note_hash, 
   return remembered_object_with_notes;
 }
 

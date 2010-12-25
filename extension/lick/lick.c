@@ -610,8 +610,8 @@ export_cefunk2(integer__lick_chunk__remember_replace_notes_with_objects, this, o
 f2ptr raw__float__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
   f2ptr chunk   = raw__chunk__new(cause, 4);
   float this__f = f2float__f(this, cause);
-  u32   data    = *((u32*)(&this__f));
-  raw__chunk__bit32__elt__set(cause, chunk, 0, data);
+  u32*  data    = (u32*)(&this__f);
+  raw__chunk__bit32__elt__set(cause, chunk, 0, *data);
   f2ptr unique_identifier = f2integer__new(cause, (s64)this);
   return raw__lick_chunk__new(cause, new__symbol(cause, "float"), raw__lick_note__new(cause, unique_identifier), chunk);
 }

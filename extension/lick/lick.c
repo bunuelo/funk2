@@ -279,11 +279,8 @@ f2ptr raw__lick_chunk__remember_replace_notes_with_objects(f2ptr cause, f2ptr th
   f2ptr lick_note                    = raw__lick_chunk__lick_note(cause, this);
   f2ptr lick_note__unique_identifier = raw__lick_note__unique_identifier(cause, lick_note);
   f2ptr remembered_object_with_notes = raw__ptypehash__lookup(cause, object_note_hash, lick_note__unique_identifier);
-  if (remembered_object_with_notes == nil) {
-    return f2larva__new(cause, 21351, nil);
-  }
-  f2ptr type_name = raw__lick_chunk__type_name(cause, this);
-  f2ptr type      = f2__lookup_type(cause, type_name);
+  f2ptr type_name                    = raw__lick_chunk__type_name(cause, this);
+  f2ptr type                         = f2__lookup_type(cause, type_name);
   if (raw__larva__is_type(cause, type)) {
     return type;
   }

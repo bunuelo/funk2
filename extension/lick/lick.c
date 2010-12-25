@@ -275,16 +275,50 @@ f2ptr f2__lick_chunk__remember_with_notes(f2ptr cause, f2ptr this, f2ptr object_
 export_cefunk2(lick_chunk__remember_with_notes, this, object_note_hash, 0, "Remembers this lick_chunk as an actual object, but with notes instead of sub-objects.");
 
 
+f2ptr raw__lick_chunk__remember_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr object_note_hash) {
+  f2ptr lick_note                    = raw__lick_chunk__lick_note(cause, this);
+  f2ptr lick_note__unique_identifier = raw__lick_note__unique_identifier(cause, lick_note);
+  f2ptr remembered_object_with_notes = raw__ptypehash__lookup(cause, object_note_hash, lick_note__unique_identifier);
+  if (remembered_object_with_notes == nil) {
+    return f2larva__new(cause, 21351, nil);
+  }
+  f2ptr type_name = raw__lick_chunk__type_name(cause, this);
+  f2ptr type      = f2__lookup_type(cause, type_name);
+  if (raw__larva__is_type(cause, type)) {
+    return type;
+  }
+  f2ptr lick_chunk__remember_replace_notes_with_objects__funk = f2__primobject_type__lookup_slot_type_funk(cause, type, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-remember_replace_notes_with_objects"));
+  if (raw__larva__is_type(cause, lick_chunk__remember_replace_notes_with_objects__funk)) {
+    return lick_chunk__remember_replace_notes_with_objects__funk;
+  }
+  f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), lick_chunk__remember_replace_notes_with_objects__funk, f2list2__new(cause, remembered_object_with_notes, object_note_hash));
+  if (raw__larva__is_type(cause, result)) {
+    return result;
+  }
+  return nil;
+}
+
+f2ptr f2__lick_chunk__remember_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr object_note_hash) {
+  if ((! raw__lick_chunk__is_type(cause, this)) ||
+      (! raw__ptypehash__is_type(cause, object_note_hash))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__lick_chunk__remember_replace_notes_with_objects(cause, this, object_note_hash);
+}
+export_cefunk2(lick_chunk__remember_replace_notes_with_objects, this, object_note_hash, 0, "Remembers this lick_chunk as an actual object, but with notes instead of sub-objects.");
+
+
 f2ptr f2__lick_chunk_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),             f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type_name"),           f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__type_name")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "type_name"),           f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__type_name__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "chunk"),               f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__chunk")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "chunk"),               f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__chunk__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remember_with_notes"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__remember_with_notes")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                                 f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),                             f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                                f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type_name"),                           f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__type_name")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "type_name"),                           f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__type_name__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "chunk"),                               f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__chunk")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "chunk"),                               f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__chunk__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remember_with_notes"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__remember_with_notes")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remember_replace_notes_with_objects"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick_chunk__remember_replace_notes_with_objects")));}
   return this;
 }
 
@@ -427,6 +461,35 @@ f2ptr f2__lick__object__as__note(f2ptr cause, f2ptr this, f2ptr object, f2ptr no
 export_cefunk3(lick__object__as__note, this, object, note_object_hash, 0, "Get this lick's object as note.");
 
 
+f2ptr raw__lick__remember(f2ptr cause, f2ptr this) {
+  f2ptr chunk_note_hash  = raw__lick__chunk_note_hash(cause, this);
+  f2ptr object_note_hash = f2__ptypehash__new(cause);
+  ptypehash__value__iteration(cause, chunk_note_hash, lick_chunk,
+			      raw__lick_chunk__remember_with_notes(cause, lick_chunk, object_note_hash);
+			      );
+  ptypehash__value__iteration(cause, chunk_note_hash, lick_chunk,
+			      f2ptr lick_note                    = raw__lick_chunk__lick_note(cause, lick_chunk);
+			      f2ptr lick_note__unique_identifier = raw__lick_note__unique_identifier(cause, lick_note);
+			      f2ptr object                       = raw__ptypehash__lookup(cause, object_note_hash, lick_note__unique_identifier);
+			      f2ptr result                       = raw__object__lick_chunk__remember_replace_notes_with_objects(cause, object, object_note_hash);
+			      if (raw__larva__is_type(cause, result)) {
+				return result;
+			      }
+			      );
+  f2ptr root_note                    = raw__lick__root_note(cause, this);
+  f2ptr root_note__unique_identifier = raw__lick_note__unique_identifier(cause, root_note);
+  return raw__ptypehash__lookup(cause, object_note_hash, root_note__unique_identifier);
+}
+
+f2ptr f2__lick__remember(f2ptr cause, f2ptr this) {
+  if (! raw__lick__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__lick__remember(cause, this);
+}
+export_cefunk1(lick__remember, this, 0, "Remember this lick.");
+
+
 f2ptr f2__lick_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),             f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__new")));}
@@ -437,6 +500,7 @@ f2ptr f2__lick_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "chunk_note_hash"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__chunk_note_hash")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "chunk_note_hash"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__chunk_note_hash__set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "object-as-note"),  f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__object__as__note")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remember"),        f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__remember")));}
   return this;
 }
 
@@ -498,7 +562,9 @@ export_cefunk3(integer__lick_to_chunk, this, lick, note_object_hash, 0, "Licks t
 
 
 f2ptr raw__integer__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
-  return nil;
+  f2ptr chunk   = raw__lick_chunk__chunk(cause, lick_chunk);
+  f2ptr integer = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 0));
+  return integer;
 }
 
 f2ptr f2__integer__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {

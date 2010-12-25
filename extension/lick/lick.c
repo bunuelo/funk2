@@ -741,8 +741,8 @@ f2ptr raw__array__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk,
   {
     s64 index;
     for (index = 0; index < array__length; index ++) {
-      s64 unique_indentifier = raw__chunk__bit64__elt(cause, chunk, index << 3);
-      f2ptr lick_note        = raw__lick_note__new(cause, unique_identifier);
+      s64   unique_identifier = raw__chunk__bit64__elt(cause, chunk, index << 3);
+      f2ptr lick_note         = raw__lick_note__new(cause, unique_identifier);
       raw__array__elt__set(cause, array, index, lick_note);
     }
   }

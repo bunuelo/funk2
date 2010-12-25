@@ -938,6 +938,16 @@ export_cefunk2(array__lick_chunk__remember_with_notes, lick_chunk, object_note_h
 
 
 f2ptr raw__array__lick_chunk__remember_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr object_note_hash) {
+  s64 array__length = raw__array__length(cause, this);
+  {
+    s64 index;
+    for (index = 0; index < array__length; index ++) {
+      f2ptr lick_note                    = raw__array__elt(cause, index);
+      f2ptr lick_note__unique_identifier = raw__lick_note__unique_identifier(cause, lick_note);
+      f2ptr object                       = raw__ptypehash__lookup(cause, object_note_hash, lick_note__unique_identifier);
+      raw__array__elt__set(cause, this, index, object);
+    }
+  }
   return nil;
 }
 

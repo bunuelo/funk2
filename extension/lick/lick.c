@@ -608,7 +608,11 @@ export_cefunk2(integer__lick_chunk__remember_replace_notes_with_objects, this, o
 //   float lick_to_chunk
 
 f2ptr raw__float__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
-  return nil;
+  f2ptr chunk   = raw__chunk__new(cause, 4);
+  float this__f = f2float__f(this, cause);
+  raw__chunk__bit32__elt__set(cause, chunk, 0, *((u32*)(&this__f)));
+  f2ptr unique_identifier = f2integer__new(cause, (s64)this);
+  return raw__lick_chunk__new(cause, new__symbol(cause, "float"), raw__lick_note__new(cause, unique_identifier), chunk);
 }
 
 f2ptr f2__float__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
@@ -623,7 +627,9 @@ export_cefunk3(float__lick_to_chunk, this, lick, note_object_hash, 0, "Licks thi
 
 
 f2ptr raw__float__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
-  return nil;
+  f2ptr chunk = raw__lick_chunk__chunk(cause, lick_chunk);
+  u32   data  = raw__chunk__bit32__elt(cause, chunk, 0);
+  return f2float__new(cause, *((float*)(&data)));
 }
 
 f2ptr f2__float__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
@@ -653,7 +659,11 @@ export_cefunk2(float__lick_chunk__remember_replace_notes_with_objects, this, obj
 //   double lick_to_chunk
 
 f2ptr raw__double__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
-  return nil;
+  f2ptr chunk   = raw__chunk__new(cause, 8);
+  float this__d = f2double__d(this, cause);
+  raw__chunk__bit64__elt__set(cause, chunk, 0, *((u64*)(&this__d)));
+  f2ptr unique_identifier = f2integer__new(cause, (s64)this);
+  return raw__lick_chunk__new(cause, new__symbol(cause, "double"), raw__lick_note__new(cause, unique_identifier), chunk);
 }
 
 f2ptr f2__double__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
@@ -668,7 +678,9 @@ export_cefunk3(double__lick_to_chunk, this, lick, note_object_hash, 0, "Licks th
 
 
 f2ptr raw__double__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
-  return nil;
+  f2ptr chunk = raw__lick_chunk__chunk(cause, lick_chunk);
+  u64   data  = raw__chunk__bit64__elt(cause, chunk, 0);
+  return f2double__new(cause, *((double*)(&data)));
 }
 
 f2ptr f2__double__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
@@ -698,7 +710,11 @@ export_cefunk2(double__lick_chunk__remember_replace_notes_with_objects, this, ob
 //   pointer lick_to_chunk
 
 f2ptr raw__pointer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
-  return nil;
+  f2ptr chunk   = raw__chunk__new(cause, 8);
+  u64   this__p = f2pointer__p(this, cause);
+  raw__chunk__bit64__elt__set(cause, chunk, 0, this__p);
+  f2ptr unique_identifier = f2integer__new(cause, (s64)this);
+  return raw__lick_chunk__new(cause, new__symbol(cause, "pointer"), raw__lick_note__new(cause, unique_identifier), chunk);
 }
 
 f2ptr f2__pointer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
@@ -713,7 +729,9 @@ export_cefunk3(pointer__lick_to_chunk, this, lick, note_object_hash, 0, "Licks t
 
 
 f2ptr raw__pointer__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
-  return nil;
+  f2ptr chunk = raw__lick_chunk__chunk(cause, lick_chunk);
+  u64   data  = raw__chunk__bit64__elt(cause, chunk, 0);
+  return f2pointer__new(cause, *((u64*)(&data)));
 }
 
 f2ptr f2__pointer__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {

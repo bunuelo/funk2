@@ -942,7 +942,7 @@ f2ptr raw__array__lick_chunk__remember_replace_notes_with_objects(f2ptr cause, f
   {
     s64 index;
     for (index = 0; index < array__length; index ++) {
-      f2ptr lick_note                    = raw__array__elt(cause, index);
+      f2ptr lick_note                    = raw__array__elt(cause, this, index);
       f2ptr lick_note__unique_identifier = raw__lick_note__unique_identifier(cause, lick_note);
       f2ptr object                       = raw__ptypehash__lookup(cause, object_note_hash, lick_note__unique_identifier);
       raw__array__elt__set(cause, this, index, object);

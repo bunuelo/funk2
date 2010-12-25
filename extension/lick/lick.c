@@ -256,6 +256,9 @@ f2ptr raw__lick_chunk__remember_with_notes(f2ptr cause, f2ptr this, f2ptr object
     if (raw__larva__is_type(cause, lick_chunk__remember_with_notes__funk)) {
       return lick_chunk__remember_with_notes__funk;
     }
+  if (! raw__funkable__is_type(cause, lick_chunk__remember_with_notes__funk)) {
+    return f2larva__new(cause, 23444, nil);
+  }
     remembered_object_with_notes = f2__force_funk_apply(cause, f2__this__fiber(cause), lick_chunk__remember_with_notes__funk, f2list2__new(cause, this, object_note_hash));
     if (raw__larva__is_type(cause, remembered_object_with_notes)) {
       return remembered_object_with_notes;
@@ -287,6 +290,9 @@ f2ptr raw__lick_chunk__remember_replace_notes_with_objects(f2ptr cause, f2ptr th
   f2ptr lick_chunk__remember_replace_notes_with_objects__funk = f2__primobject_type__lookup_slot_type_funk(cause, type, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-remember_replace_notes_with_objects"));
   if (raw__larva__is_type(cause, lick_chunk__remember_replace_notes_with_objects__funk)) {
     return lick_chunk__remember_replace_notes_with_objects__funk;
+  }
+  if (! raw__funkable__is_type(cause, lick_chunk__remember_replace_notes_with_objects__funk)) {
+    return f2larva__new(cause, 23445, nil);
   }
   f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), lick_chunk__remember_replace_notes_with_objects__funk, f2list2__new(cause, remembered_object_with_notes, object_note_hash));
   if (raw__larva__is_type(cause, result)) {

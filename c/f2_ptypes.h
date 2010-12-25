@@ -365,25 +365,21 @@ f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int 
 
 f2ptr f2chunk__primobject_type__new(f2ptr cause);
 
-f2ptr raw__chunk__new(f2ptr cause, u64 length);
-f2ptr  f2__chunk__new(f2ptr cause, f2ptr length);
-
-boolean_t raw__chunk__is_type(f2ptr cause, f2ptr exp);
-f2ptr f2__chunk__is_type(f2ptr cause, f2ptr exp);
-
-void raw__chunk__str_copy(f2ptr cause, f2ptr this, u8* str);
-
-boolean_t raw__chunk__eq(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__chunk__eq(f2ptr cause, f2ptr this, f2ptr that);
-
-u64   raw__chunk__eq_hash_value(f2ptr cause, f2ptr this);
-f2ptr  f2__chunk__eq_hash_value(f2ptr cause, f2ptr this);
-
-u64   raw__chunk__equals_hash_value(f2ptr cause, f2ptr this);
-f2ptr  f2__chunk__equals_hash_value(f2ptr cause, f2ptr this);
-
-boolean_t raw__chunk__equals(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__chunk__equals(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__chunk__new              (f2ptr cause, u64 length);
+f2ptr      f2__chunk__new              (f2ptr cause, f2ptr length);
+boolean_t raw__chunk__is_type          (f2ptr cause, f2ptr exp);
+f2ptr      f2__chunk__is_type          (f2ptr cause, f2ptr exp);
+void      raw__chunk__str_copy         (f2ptr cause, f2ptr this, u8* str);
+u64       raw__chunk__length           (f2ptr cause, f2ptr this);
+f2ptr      f2__chunk__length           (f2ptr cause, f2ptr this);
+boolean_t raw__chunk__eq               (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__chunk__eq               (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__chunk__eq_hash_value    (f2ptr cause, f2ptr this);
+f2ptr      f2__chunk__eq_hash_value    (f2ptr cause, f2ptr this);
+u64       raw__chunk__equals_hash_value(f2ptr cause, f2ptr this);
+f2ptr      f2__chunk__equals_hash_value(f2ptr cause, f2ptr this);
+boolean_t raw__chunk__equals           (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__chunk__equals           (f2ptr cause, f2ptr this, f2ptr that);
 
 u8    raw__chunk__bit8__elt(      f2ptr cause, f2ptr this, s64   index);
 f2ptr  f2__chunk__bit8__elt(      f2ptr cause, f2ptr this, f2ptr index);

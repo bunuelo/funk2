@@ -468,10 +468,7 @@ f2ptr raw__lick__remember(f2ptr cause, f2ptr this) {
 			      raw__lick_chunk__remember_with_notes(cause, lick_chunk, object_note_hash);
 			      );
   ptypehash__value__iteration(cause, chunk_note_hash, lick_chunk,
-			      f2ptr lick_note                    = raw__lick_chunk__lick_note(cause, lick_chunk);
-			      f2ptr lick_note__unique_identifier = raw__lick_note__unique_identifier(cause, lick_note);
-			      f2ptr object                       = raw__ptypehash__lookup(cause, object_note_hash, lick_note__unique_identifier);
-			      f2ptr result                       = raw__object__lick_chunk__remember_replace_notes_with_objects(cause, object, object_note_hash);
+			      f2ptr result = raw__lick_chunk__remember_replace_notes_with_objects(cause, lick_chunk, object_note_hash);
 			      if (raw__larva__is_type(cause, result)) {
 				return result;
 			      }

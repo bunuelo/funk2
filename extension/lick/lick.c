@@ -681,9 +681,10 @@ export_cefunk3(double__lick_to_chunk, this, lick, note_object_hash, 0, "Licks th
 
 
 f2ptr raw__double__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
-  f2ptr chunk = raw__lick_chunk__chunk(cause, lick_chunk);
-  u64   data  = raw__chunk__bit64__elt(cause, chunk, 0);
-  return f2double__new(cause, *((double*)(&data)));
+  f2ptr   chunk = raw__lick_chunk__chunk(cause, lick_chunk);
+  u64     data  = raw__chunk__bit64__elt(cause, chunk, 0);
+  double* d_ptr = (double*)(&data);
+  return f2double__new(cause, *d_ptr);
 }
 
 f2ptr f2__double__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {

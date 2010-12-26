@@ -1356,11 +1356,10 @@ export_cefunk4(ptypehash__lick_to_chunk, this, lick, note_object_hash, max_size,
 f2ptr raw__ptypehash__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
   f2ptr chunk         = raw__lick_chunk__chunk(cause, lick_chunk);
   s64   chunk__length = raw__chunk__length(cause, chunk);
-  if ((chunk__length < 8) ||
-      (((chunk__length - 8) >> 4) << 4) != (chunk__length - 8)) {
+  if (((chunk__length >> 4) << 4) != chunk__length) {
     return f2larva__new(cause, 32555, nil);
   }
-  s64   ptypehash__key_count = (chunk__length - 8) >> 4;
+  s64   ptypehash__key_count = chunk__length >> 4;
   f2ptr ptypehash            = f2__ptypehash__new(cause);
   {
     s64 index;

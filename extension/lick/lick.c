@@ -358,7 +358,7 @@ f2ptr raw__lick__object__as__note(f2ptr cause, f2ptr this, f2ptr object, f2ptr n
       return chunk;
     }
     f2ptr chunk_note_hash = raw__lick__chunk_note_hash(cause, this);
-    raw__ptypehash__add(cause, chunk_note_hash, unique_identifier, chunk);
+    raw__ptypehash__add(cause, chunk_note_hash, lick_note, chunk);
   }
   return lick_note;
 }

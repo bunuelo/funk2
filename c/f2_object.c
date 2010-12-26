@@ -78,6 +78,7 @@ f2ptr f2__object__type(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(object__type, this, return f2__object__type(this_cause, this));
 
+
 f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (this == nil) {
     f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, nil);

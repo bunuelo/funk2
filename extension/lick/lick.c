@@ -397,6 +397,36 @@ f2ptr f2__lick__remember(f2ptr cause, f2ptr this) {
 export_cefunk1(lick__remember, this, 0, "Remember this lick.");
 
 
+f2ptr raw__lick__chunk_length(f2ptr cause, f2ptr this) {
+  s64   chunk_length    = 8; // root_note
+  f2ptr chunk_note_hash = raw__lick__chunk_note_hash(cause, this);
+  ptypehash__value__iteration(cause, chunk_note_hash, lick_chunk,
+			      chunk_length += 8; // lick_note
+			      f2ptr type_name = raw__lick_chunk__type_name(cause, lick_chunk);
+			      chunk_length += 8; // type_name__length 
+			      if (type_name == nil) {
+				chunk_length += 0; // type_name__str
+			      } else if (raw__symbol__is_type(cause, type_name)) {
+				chunk_length += raw__symbol__length(cause, type_name);
+			      } else {
+				return f2larva__new(cause, 13251, nil);
+			      }
+			      chunk_length += 8; // chunk__length
+			      f2ptr chunk = raw__lick_chunk__chunk(cause, lick_chunk);
+			      chunk_length += raw__chunk__length(cause, chunk);
+			      );
+  return f2integer__new(cause, chunk_length);
+}
+
+f2ptr f2__lick__chunk_length(f2ptr cause, f2ptr this) {
+  if (! raw__lick__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__lick__chunk_length(cause, this);
+}
+export_cefunk1(lick__chunk_length, this, 0, "Returns the length of this lick as a chunk.");
+
+
 f2ptr f2__lick_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),             f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__new")));}
@@ -408,6 +438,7 @@ f2ptr f2__lick_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "chunk_note_hash"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__chunk_note_hash__set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "object-as-note"),  f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__object__as__note")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remember"),        f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__remember")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "chunk_length"),    f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__chunk_length")));}
   return this;
 }
 

@@ -644,9 +644,11 @@ f2ptr f2__lick_type__new(f2ptr cause) {
 }
 
 
-// ptype lick_to_chunk funks
+///////////////////////
+// ptypes lick funks //
+///////////////////////
 
-//   nil lick_to_chunk
+// nil lick funks
 
 f2ptr raw__nil__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr chunk = raw__chunk__new(cause, 0);
@@ -694,7 +696,7 @@ f2ptr f2__nil__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr 
 export_cefunk2(nil__lick_chunk__unlick_replace_notes_with_objects, this, object_note_hash, 0, "Unlicks this nil with notes.");
 
 
-//   integer lick_to_chunk
+// integer lick funks
 
 f2ptr raw__integer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr chunk   = raw__chunk__new(cause, 8);
@@ -746,7 +748,7 @@ f2ptr f2__integer__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2
 export_cefunk2(integer__lick_chunk__unlick_replace_notes_with_objects, this, object_note_hash, 0, "Unlicks this integer with notes.");
 
 
-//   float lick_to_chunk
+// float lick funks
 
 f2ptr raw__float__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr chunk   = raw__chunk__new(cause, 4);
@@ -800,7 +802,7 @@ f2ptr f2__float__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2pt
 export_cefunk2(float__lick_chunk__unlick_replace_notes_with_objects, this, object_note_hash, 0, "Unlicks this float with notes.");
 
 
-//   double lick_to_chunk
+// double lick funks
 
 f2ptr raw__double__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr  chunk    = raw__chunk__new(cause, 8);
@@ -855,7 +857,7 @@ f2ptr f2__double__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2p
 export_cefunk2(double__lick_chunk__unlick_replace_notes_with_objects, this, object_note_hash, 0, "Unlicks this double with notes.");
 
 
-//   pointer lick_to_chunk
+// pointer lick funks
 
 f2ptr raw__pointer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr chunk   = raw__chunk__new(cause, 8);
@@ -907,7 +909,7 @@ f2ptr f2__pointer__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2
 export_cefunk2(pointer__lick_chunk__unlick_replace_notes_with_objects, this, object_note_hash, 0, "Unlicks this pointer with notes.");
 
 
-//   mutex lick_to_chunk
+// mutex lick funks
 
 f2ptr raw__mutex__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr     chunk           = raw__chunk__new(cause, 1);
@@ -963,7 +965,7 @@ f2ptr f2__mutex__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2pt
 export_cefunk2(mutex__lick_chunk__unlick_replace_notes_with_objects, this, object_note_hash, 0, "Unlicks this mutex with notes.");
 
 
-//   char lick_to_chunk
+// char lick funks
 
 f2ptr raw__char__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr chunk    = raw__chunk__new(cause, 8);
@@ -1016,7 +1018,7 @@ f2ptr f2__char__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr
 export_cefunk2(char__lick_chunk__unlick_replace_notes_with_objects, this, object_note_hash, 0, "Unlicks this char with notes.");
 
 
-//   string lick_to_chunk
+// string lick funks
 
 f2ptr raw__string__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   s64   this__length = raw__string__length(cause, this);
@@ -1085,7 +1087,7 @@ f2ptr f2__string__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2p
 export_cefunk2(string__lick_chunk__unlick_replace_notes_with_objects, this, object_note_hash, 0, "Unlicks this string with notes.");
 
 
-//   symbol lick_to_chunk
+// symbol lick funks
 
 f2ptr raw__symbol__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   s64   this__length = raw__symbol__length(cause, this);
@@ -1154,7 +1156,7 @@ f2ptr f2__symbol__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2p
 export_cefunk2(symbol__lick_chunk__unlick_replace_notes_with_objects, this, object_note_hash, 0, "Unlicks this symbol with notes.");
 
 
-//   chunk lick_to_chunk
+// chunk lick funks
 
 f2ptr raw__chunk__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   s64   this__length = raw__chunk__length(cause, this);
@@ -1223,7 +1225,7 @@ f2ptr f2__chunk__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2pt
 export_cefunk2(chunk__lick_chunk__unlick_replace_notes_with_objects, this, object_note_hash, 0, "Unlicks this chunk with notes.");
 
 
-//   array lick_to_chunk
+// array lick funks
 
 f2ptr raw__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   s64   this__length = raw__array__length(cause, this);
@@ -1306,6 +1308,134 @@ f2ptr f2__array__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2pt
 }
 export_cefunk2(array__lick_chunk__unlick_replace_notes_with_objects, this, object_note_hash, 0, "Unlicks this array with notes.");
 
+
+// ptypehash lick funks
+
+f2ptr raw__ptypehash__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
+  f2ptr key_count    = f2__ptypehash__key_count(cause, this);
+  s64   key_count__i = f2integer__i(key_count, cause);
+  f2ptr chunk        = raw__chunk__new(cause, this__length * 8 * 2);
+  {
+    s64 index = 0;
+    ptypehash__iteration(cause, this, key, value,
+			 {
+			   f2ptr key__note = raw__lick__object__as__note(cause, lick, key, note_object_hash, max_size);
+			   if (raw__larva__is_type(cause, key__note)) {
+			     return key__note;
+			   }
+			   s64 key__note__i = f2integer__i(key__note, cause);
+			   raw__chunk__bit64__elt__set(cause, chunk, (index * 8 * 2) + 0, (s64)(key__note__i));
+			 }
+			 {
+			   f2ptr value__note = raw__lick__object__as__note(cause, lick, value, note_object_hash, max_size);
+			   if (raw__larva__is_type(cause, value__note)) {
+			     return value__note;
+			   }
+			   s64 value__note__i = f2integer__i(value__note, cause);
+			   raw__chunk__bit64__elt__set(cause, chunk, (index * 8 * 2) + 1, (s64)(value__note__i));
+			 }
+			 index ++;
+			 );
+  }
+  f2ptr lick_note = f2integer__new(cause, (s64)this);
+  return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);
+}
+
+f2ptr f2__ptypehash__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
+  if ((! raw__ptypehash__is_type(cause, this)) ||
+      (! raw__lick__is_type(cause, lick)) ||
+      (! raw__ptypehash__is_type(cause, note_object_hash)) ||
+      (! raw__integer__is_type(cause, max_size))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__ptypehash__lick_to_chunk(cause, this, lick, note_object_hash, max_size);
+}
+export_cefunk4(ptypehash__lick_to_chunk, this, lick, note_object_hash, max_size, 0, "Licks this ptypehash.");
+
+
+f2ptr raw__ptypehash__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
+  f2ptr chunk         = raw__lick_chunk__chunk(cause, lick_chunk);
+  s64   chunk__length = raw__chunk__length(cause, chunk);
+  if ((chunk__length < 8) ||
+      (((chunk__length - 8) >> 4) << 4) != (chunk__length - 8)) {
+    return f2larva__new(cause, 32555, nil);
+  }
+  s64   ptypehash__key_count = (chunk__length - 8) >> 4;
+  f2ptr ptypehash            = f2__ptypehash__new(cause);
+  {
+    s64 index;
+    for (index = 0; index < ptypehash__key_count; index ++) {
+      f2ptr key__lick_note   = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, (index << 4) + 0));
+      f2ptr value__lick_note = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, (index << 4) + 1));
+      raw__ptypehash__add(cause, ptypehash, key__lick_note, value__lick_note);
+    }
+  }
+  return ptypehash;
+}
+
+f2ptr f2__ptypehash__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
+  if ((! raw__lick_chunk__is_type(cause, lick_chunk)) ||
+      (! raw__ptypehash__is_type(cause, object_note_hash))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__ptypehash__lick_chunk__unlick_with_notes(cause, lick_chunk, object_note_hash);
+}
+export_cefunk2(ptypehash__lick_chunk__unlick_with_notes, lick_chunk, object_note_hash, 0, "Unlicks this ptypehash lick_chunk with notes.");
+
+
+f2ptr raw__ptypehash__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr object_note_hash) {
+  f2ptr key_notes   = nil;
+  f2ptr value_notes = nil;
+  ptypehash__iteration(cause, this, key_note, value_note,
+		       key_notes   = f2cons__new(cause, key_note,   key_notes);
+		       value_notes = f2cons__new(cause, value_note, value_notes);
+		       );
+  f2ptr key_objects   = nil;
+  f2ptr value_objects = nil;
+  {
+    f2ptr key_note_iter   = key_notes;
+    f2ptr value_note_iter = value_notes;
+    while (key_note_iter != nil) {
+      f2ptr key_note   = f2__cons__car(cause, key_iter);
+      f2ptr value_note = f2__cons__car(cause, value_iter);
+      {
+	f2ptr key_object   = raw__ptypehash__lookup(cause, object_note_hash, key_note);
+	f2ptr value_object = raw__ptypehash__lookup(cause, object_note_hash, value_note);
+	key_objects   = f2cons__new(cause, key_object,   key_objects);
+	value_objects = f2cons__new(cause, value_object, value_objects);
+	raw__ptypehash__remove(cause, this, key_note);
+      }
+      key_note_iter   = f2__cons__cdr(cause, key_note_iter);
+      value_note_iter = f2__cons__cdr(cause, value_note_iter);
+    }
+  }
+  {
+    f2ptr key_object_iter   = key_objects;
+    f2ptr value_object_iter = value_objects;
+    while (key_object_iter != nil) {
+      f2ptr key_object   = f2__cons__car(cause, key_object_iter);
+      f2ptr value_object = f2__cons__car(cause, value_object_iter);
+      {
+	raw__ptypehash__add(cause, this, key_object, value_object);
+      }
+      key_object_iter   = f2__cons__cdr(cause, key_object_iter);
+      value_object_iter = f2__cons__cdr(cause, value_object_iter);
+    }
+  }
+  return nil;
+}
+
+f2ptr f2__ptypehash__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr object_note_hash) {
+  if ((! raw__ptypehash__is_type(cause, this)) ||
+      (! raw__ptypehash__is_type(cause, object_note_hash))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__ptypehash__lick_chunk__unlick_replace_notes_with_objects(cause, this, object_note_hash);
+}
+export_cefunk2(ptypehash__lick_chunk__unlick_replace_notes_with_objects, this, object_note_hash, 0, "Unlicks this ptypehash with notes.");
+
+
+// end of type lick funks
 
 f2ptr raw__add_all_lick_to_chunk_to_ptypes(f2ptr cause) {
   {
@@ -1621,6 +1751,30 @@ f2ptr raw__add_all_lick_to_chunk_to_ptypes(f2ptr cause) {
     }
     {
       f2ptr result = f2__primobject_type__add_slot_type(cause, array_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-unlick_replace_notes_with_objects"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "array__lick_chunk__unlick_replace_notes_with_objects")));
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+  }
+  {
+    f2ptr ptypehash_type = f2__lookup_type(cause, new__symbol(cause, "ptypehash"));
+    if (raw__larva__is_type(cause, ptypehash_type)) {
+      return ptypehash_type;
+    }
+    {
+      f2ptr result = f2__primobject_type__add_slot_type(cause, ptypehash_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "ptypehash__lick_to_chunk")));
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+    {
+      f2ptr result = f2__primobject_type__add_slot_type(cause, ptypehash_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-unlick_with_notes"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "ptypehash__lick_chunk__unlick_with_notes")));
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+    {
+      f2ptr result = f2__primobject_type__add_slot_type(cause, ptypehash_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-unlick_replace_notes_with_objects"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "ptypehash__lick_chunk__unlick_replace_notes_with_objects")));
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }

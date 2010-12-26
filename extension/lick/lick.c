@@ -249,7 +249,7 @@ f2ptr raw__lick__new(f2ptr cause, f2ptr root_note, f2ptr chunk_note_hash) {
 
 f2ptr f2__lick__new(f2ptr cause, f2ptr root_object) {
   f2ptr chunk_note_hash  = f2__ptypehash__new(cause);
-  f2ptr this             = raw__lick__new(nil, chunk_note_hash);
+  f2ptr this             = raw__lick__new(cause, nil, chunk_note_hash);
   f2ptr note_object_hash = f2__ptypehash__new(cause);
   f2ptr root_note        = raw__lick__object__as__note(cause, this, root_object, note_object_hash);
   if (raw__larva__is_type(cause, root_note)) {

@@ -1294,6 +1294,30 @@ f2ptr raw__add_all_lick_to_chunk_to_ptypes(f2ptr cause) {
       }
     }
   }
+  {
+    f2ptr array_type = f2__lookup_type(cause, new__symbol(cause, "array"));
+    if (raw__larva__is_type(cause, array_type)) {
+      return array_type;
+    }
+    {
+      f2ptr result = f2__primobject_type__add_slot_type(cause, array_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "array__lick_to_chunk")));
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+    {
+      f2ptr result = f2__primobject_type__add_slot_type(cause, array_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-remember_with_notes"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "array__lick_chunk__remember_with_notes")));
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+    {
+      f2ptr result = f2__primobject_type__add_slot_type(cause, array_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-remember_replace_notes_with_objects"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "array__lick_chunk__remember_replace_notes_with_objects")));
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+  }
   return nil;
 }
 

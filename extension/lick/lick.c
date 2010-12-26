@@ -1336,9 +1336,9 @@ f2ptr raw__ptypehash__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr n
 			 }
 			 index ++;
 			 );
-  }
-  if (index != key_count__i) {
-    return f2larva__new(cause, 23445, nil);
+    if (index != key_count__i) {
+      return f2larva__new(cause, 23445, nil);
+    }
   }
   f2ptr lick_note = f2integer__new(cause, (s64)this);
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);

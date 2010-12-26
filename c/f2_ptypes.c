@@ -2173,7 +2173,15 @@ f2ptr f2__char__type(f2ptr cause, f2ptr this) {return f2symbol__new(cause, strle
 def_pcfunk1(char__type, this, return f2__char__type(this_cause, this));
 
 def_pcfunk1(char__new, ch, return f2char__new(this_cause, f2char__ch(ch, this_cause)));
-def_pcfunk1(char__ch, this, return this);
+
+u64 raw__char__ch(f2ptr cause, f2ptr this) {
+  return f2char__ch(this, cause);
+}
+
+f2ptr f2__char__ch(f2ptr cause, f2ptr this) {
+  return f2char__new(cause, raw__char__ch(cause, this));
+}
+def_pcfunk1(char__ch, this, return f2__char__ch(this_cause, this));
 
 boolean_t raw__char__eq(f2ptr cause, f2ptr this, f2ptr that) {
   return f2char__ch(this, cause) == f2char__ch(that, cause);

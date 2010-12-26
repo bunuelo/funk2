@@ -340,7 +340,7 @@ f2ptr f2__stream__try_read_hex_digits(f2ptr cause, f2ptr stream) {
   if (! raw__char__is_type(cause, read_ch)) {
     return f2larva__new(cause, 19, nil);
   }
-  if (raw__char__is_hex_digit(cause, read_ch)) {
+  if (! raw__char__is_hex_digit(cause, read_ch)) {
     f2__stream__ungetc(cause, stream, read_ch);
     return nil;
   }

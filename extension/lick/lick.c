@@ -1396,8 +1396,8 @@ f2ptr raw__ptypehash__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause,
     f2ptr key_note_iter   = key_notes;
     f2ptr value_note_iter = value_notes;
     while (key_note_iter != nil) {
-      f2ptr key_note   = f2__cons__car(cause, key_iter);
-      f2ptr value_note = f2__cons__car(cause, value_iter);
+      f2ptr key_note   = f2__cons__car(cause, key_note_iter);
+      f2ptr value_note = f2__cons__car(cause, value_note_iter);
       {
 	f2ptr key_object   = raw__ptypehash__lookup(cause, object_note_hash, key_note);
 	f2ptr value_object = raw__ptypehash__lookup(cause, object_note_hash, value_note);

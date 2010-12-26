@@ -364,7 +364,7 @@ f2ptr raw__lick__object__as__note(f2ptr cause, f2ptr this, f2ptr object, f2ptr n
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, object);
   if (lick_note == nil) {
     {
-      f2ptr key_count    = raw__ptypehash__key_count(cause, note_object_hash);
+      f2ptr key_count    = f2__ptypehash__key_count(cause, note_object_hash);
       s64   key_count__i = f2integer__i(key_count, cause);
       f2ptr max_size__i  = f2integer__i(max_size, cause);
       if (key_count__i > max_size__i) {

@@ -929,7 +929,18 @@ export_cefunk3(chunk__lick_to_chunk, this, lick, note_object_hash, 0, "Licks thi
 
 
 f2ptr raw__chunk__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
-  return nil;
+  f2ptr chunk        = raw__lick_chunk__chunk(cause, lick_chunk);
+  s64   this__length = raw__chunk__length(cause, chunk);
+  u8*   this__str    = (u8*)from_ptr(f2__malloc(this__length));
+  {
+    s64 index;
+    for (index = 0; index < this__length; index ++) {
+      this__str[index] = raw__chunk__bit8__elt(cause, chunk, index);
+    }
+  }
+  f2ptr this = f2chunk__new(cause, this__length, this__str);
+  f2__free(to_ptr(this__str));
+  return this;
 }
 
 f2ptr f2__chunk__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {

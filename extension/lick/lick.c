@@ -349,7 +349,7 @@ export_cefunk2(lick__chunk_note_hash__set, thing, value, 0, "Sets the chunk_note
 
 
 f2ptr raw__lick__object__as__note(f2ptr cause, f2ptr this, f2ptr object, f2ptr note_object_hash) {
-  f2ptr note = raw__ptypehash__lookup(cause, note_object_hash, object);
+  f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, object);
   if (note == nil) {
     f2ptr lick_note = f2integer__new(cause, (s64)object);
     raw__ptypehash__add(cause, note_object_hash, object, lick_note);

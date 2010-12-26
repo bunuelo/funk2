@@ -268,7 +268,7 @@ f2ptr f2__lick__new_from_object(f2ptr cause, f2ptr root_object, f2ptr max_size) 
 
 f2ptr f2__lick__new(f2ptr cause, f2ptr root_object) {
   f2ptr max_size = f2integer__new(cause, 1000000);
-  return f2__lick__new_from_object(causee, root_object, max_size);
+  return f2__lick__new_from_object(cause, root_object, max_size);
 }
 export_cefunk1(lick__new, chunk_note_hash, 0, "Returns a new lick object.");
 

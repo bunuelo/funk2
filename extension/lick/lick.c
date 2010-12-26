@@ -395,7 +395,7 @@ f2ptr raw__lick__object__as__note(f2ptr cause, f2ptr this, f2ptr object, f2ptr n
   if (current_size__i >= max_size__i) {
     return f2larva__new(cause, 244510, nil);
   }
-  raw__lick__current_size(cause, this, f2integer__new(cause, current_size__i + 1));
+  raw__lick__current_size__set(cause, this, f2integer__new(cause, current_size__i + 1));
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, object);
   if (lick_note == nil) {
     lick_note = f2integer__new(cause, (s64)object);

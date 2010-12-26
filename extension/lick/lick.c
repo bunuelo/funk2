@@ -767,7 +767,7 @@ export_cefunk2(pointer__lick_chunk__remember_replace_notes_with_objects, this, o
 
 f2ptr raw__mutex__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
   f2ptr     chunk           = raw__chunk__new(cause, 1);
-  boolean_t this__is_locked = raw__mutex__is_locked(this, cause);
+  boolean_t this__is_locked = raw__mutex__is_locked(cause, this);
   raw__chunk__bit8__elt__set(cause, chunk, 0, this__is_locked ? 0x01 : 0x00);
   f2ptr unique_identifier = f2integer__new(cause, (s64)this);
   return raw__lick_chunk__new(cause, new__symbol(cause, "mutex"), raw__lick_note__new(cause, unique_identifier), chunk);

@@ -1314,7 +1314,7 @@ export_cefunk2(array__lick_chunk__unlick_replace_notes_with_objects, this, objec
 f2ptr raw__ptypehash__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr key_count    = f2__ptypehash__key_count(cause, this);
   s64   key_count__i = f2integer__i(key_count, cause);
-  f2ptr chunk        = raw__chunk__new(cause, this__length * 8 * 2);
+  f2ptr chunk        = raw__chunk__new(cause, key_count__i * 8 * 2);
   {
     s64 index = 0;
     ptypehash__iteration(cause, this, key, value,

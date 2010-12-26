@@ -612,7 +612,7 @@ f2ptr raw__chunk__as__lick(f2ptr cause, f2ptr this) {
   if (chunk_index != chunk__length) {
     return f2larva__new(cause, 3, nil);
   }
-  return raw__lick__new(cause, root_note, chunk_note_hash);
+  return raw__lick__new(cause, root_note, chunk_note_hash, nil);
 }
 
 f2ptr f2__chunk__as__lick(f2ptr cause, f2ptr this) {

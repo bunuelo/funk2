@@ -793,8 +793,8 @@ export_cefunk3(string__lick_to_chunk, this, lick, note_object_hash, 0, "Licks th
 
 
 f2ptr raw__string__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
-  f2ptr chunk = raw__lick_chunk__chunk(cause, lick_chunk);
-  s64   this__length = raw__chunk__length(cause, chunk, 0);
+  f2ptr chunk        = raw__lick_chunk__chunk(cause, lick_chunk);
+  s64   this__length = raw__chunk__length(cause, chunk);
   u8*   this__str    = (u8*)from_ptr(f2__malloc(this__length));
   {
     s64 index;

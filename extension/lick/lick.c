@@ -902,7 +902,19 @@ export_cefunk2(symbol__lick_chunk__remember_replace_notes_with_objects, this, ob
 //   chunk lick_to_chunk
 
 f2ptr raw__chunk__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
-  return nil;
+  s64   this__length = raw__chunk__length(cause, this);
+  f2ptr chunk   = raw__chunk__new(cause, this__length);
+  u8*   this__str = (u8*)from_ptr(f2__malloc(this__length));
+  raw__chunk__str_copy(cause, this, this__str);
+  {
+    s64 index;
+    for (index = 0; index < this__length; index ++) {
+      raw__chunk__bit8__elt__set(cause, chunk, index, this__str[index]);
+    }
+  }
+  f2__free(to_ptr(this__str));
+  f2ptr unique_identifier = f2integer__new(cause, (s64)this);
+  return raw__lick_chunk__new(cause, new__symbol(cause, "chunk"), raw__lick_note__new(cause, unique_identifier), chunk);
 }
 
 f2ptr f2__chunk__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {

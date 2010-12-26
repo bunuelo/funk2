@@ -247,16 +247,28 @@ f2ptr raw__lick__new(f2ptr cause, f2ptr root_note, f2ptr chunk_note_hash) {
 					    new__symbol(cause, "chunk_note_hash"), chunk_note_hash));
 }
 
-f2ptr f2__lick__new(f2ptr cause, f2ptr root_object) {
+f2ptr raw__lick__new_from_object(f2ptr cause, f2ptr root_object, f2ptr max_size) {
   f2ptr chunk_note_hash  = f2__ptypehash__new(cause);
   f2ptr this             = raw__lick__new(cause, nil, chunk_note_hash);
   f2ptr note_object_hash = f2__ptypehash__new(cause);
-  f2ptr root_note        = raw__lick__object__as__note(cause, this, root_object, note_object_hash);
+  f2ptr root_note        = raw__lick__object__as__note(cause, this, root_object, note_object_hash, max_size);
   if (raw__larva__is_type(cause, root_note)) {
     return root_note;
   }
   raw__lick__root_note__set(cause, this, root_note);
   return this;
+}
+
+f2ptr f2__lick__new_from_object(f2ptr cause, f2ptr root_object, f2ptr max_size) {
+  if (! raw__integer__is_type(cause, max_size)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__lick__new_from_object(cause, root_object, max_size);
+}
+
+f2ptr f2__lick__new(f2ptr cause, f2ptr root_object) {
+  f2ptr max_size = f2integer__new(cause, 1000000);
+  return f2__lick__new_from_object(causee, root_object, max_size);
 }
 export_cefunk1(lick__new, chunk_note_hash, 0, "Returns a new lick object.");
 
@@ -348,12 +360,20 @@ f2ptr f2__lick__chunk_note_hash__set(f2ptr cause, f2ptr this, f2ptr value) {
 export_cefunk2(lick__chunk_note_hash__set, thing, value, 0, "Sets the chunk_note_hash of the lick.");
 
 
-f2ptr raw__lick__object__as__note(f2ptr cause, f2ptr this, f2ptr object, f2ptr note_object_hash) {
+f2ptr raw__lick__object__as__note(f2ptr cause, f2ptr this, f2ptr object, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, object);
   if (lick_note == nil) {
+    {
+      f2ptr key_count    = raw__ptypehash__key_count(cause, note_object_hash);
+      s64   key_count__i = f2integer__i(key_count, cause);
+      f2ptr max_size__i  = f2integer__i(max_size, cause);
+      if (key_count__i > max_size__i) {
+	return f2larva__new(cause, 244510, nil);
+      }
+    }
     lick_note = f2integer__new(cause, (s64)object);
     raw__ptypehash__add(cause, note_object_hash, object, lick_note);
-    f2ptr chunk = f2__object__execute(cause, object, new__symbol(cause, "lick_to_chunk"), f2list2__new(cause, this, note_object_hash));
+    f2ptr chunk = f2__object__execute(cause, object, new__symbol(cause, "lick_to_chunk"), f2list3__new(cause, this, note_object_hash, max_size));
     if (raw__larva__is_type(cause, chunk)) {
       return chunk;
     }
@@ -363,13 +383,14 @@ f2ptr raw__lick__object__as__note(f2ptr cause, f2ptr this, f2ptr object, f2ptr n
   return lick_note;
 }
 
-f2ptr f2__lick__object__as__note(f2ptr cause, f2ptr this, f2ptr object, f2ptr note_object_hash) {
-  if (! raw__lick__is_type(cause, this)) {
+f2ptr f2__lick__object__as__note(f2ptr cause, f2ptr this, f2ptr object, f2ptr note_object_hash, f2ptr max_size) {
+  if ((! raw__lick__is_type(cause, this)) ||
+      (! raw__integer__is_type(cause, max_size))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__lick__object__as__note(cause, this, object, note_object_hash);
+  return raw__lick__object__as__note(cause, this, object, note_object_hash, max_size);
 }
-export_cefunk3(lick__object__as__note, this, object, note_object_hash, 0, "Get this lick's object as note.");
+export_cefunk4(lick__object__as__note, this, object, note_object_hash, max_size, 0, "Get this lick's object as note.");
 
 
 f2ptr raw__lick__remember(f2ptr cause, f2ptr this) {
@@ -598,21 +619,22 @@ f2ptr f2__lick_type__new(f2ptr cause) {
 
 //   nil lick_to_chunk
 
-f2ptr raw__nil__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr raw__nil__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr chunk = raw__chunk__new(cause, 0);
   f2ptr lick_note = f2integer__new(cause, (s64)this);
   return raw__lick_chunk__new(cause, nil, lick_note, chunk);
 }
 
-f2ptr f2__nil__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr f2__nil__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   if ((this != nil) ||
       (! raw__lick__is_type(cause, lick)) ||
-      (! raw__ptypehash__is_type(cause, note_object_hash))) {
+      (! raw__ptypehash__is_type(cause, note_object_hash)) ||
+      (! raw__integer__is_type(cause, max_size))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__nil__lick_to_chunk(cause, this, lick, note_object_hash);
+  return raw__nil__lick_to_chunk(cause, this, lick, note_object_hash, max_size);
 }
-export_cefunk3(nil__lick_to_chunk, this, lick, note_object_hash, 0, "Licks this nil.");
+export_cefunk4(nil__lick_to_chunk, this, lick, note_object_hash, max_size, 0, "Licks this nil.");
 
 
 f2ptr raw__nil__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
@@ -645,7 +667,7 @@ export_cefunk2(nil__lick_chunk__remember_replace_notes_with_objects, this, objec
 
 //   integer lick_to_chunk
 
-f2ptr raw__integer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr raw__integer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr chunk   = raw__chunk__new(cause, 8);
   s64   this__i = f2integer__i(this, cause);
   raw__chunk__bit64__elt__set(cause, chunk, 0, this__i);
@@ -653,15 +675,16 @@ f2ptr raw__integer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr not
   return raw__lick_chunk__new(cause, new__symbol(cause, "integer"), lick_note, chunk);
 }
 
-f2ptr f2__integer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr f2__integer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   if ((! raw__integer__is_type(cause, this)) ||
       (! raw__lick__is_type(cause, lick)) ||
-      (! raw__ptypehash__is_type(cause, note_object_hash))) {
+      (! raw__ptypehash__is_type(cause, note_object_hash)) ||
+      (! raw__integer__is_type(cause, max_size))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__integer__lick_to_chunk(cause, this, lick, note_object_hash);
+  return raw__integer__lick_to_chunk(cause, this, lick, note_object_hash, max_size);
 }
-export_cefunk3(integer__lick_to_chunk, this, lick, note_object_hash, 0, "Licks this integer.");
+export_cefunk4(integer__lick_to_chunk, this, lick, note_object_hash, max_size, 0, "Licks this integer.");
 
 
 f2ptr raw__integer__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
@@ -696,7 +719,7 @@ export_cefunk2(integer__lick_chunk__remember_replace_notes_with_objects, this, o
 
 //   float lick_to_chunk
 
-f2ptr raw__float__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr raw__float__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr chunk   = raw__chunk__new(cause, 4);
   float this__f = f2float__f(this, cause);
   u32*  data    = (u32*)(&this__f);
@@ -705,15 +728,16 @@ f2ptr raw__float__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_
   return raw__lick_chunk__new(cause, new__symbol(cause, "float"), lick_note, chunk);
 }
 
-f2ptr f2__float__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr f2__float__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   if ((! raw__float__is_type(cause, this)) ||
       (! raw__lick__is_type(cause, lick)) ||
-      (! raw__ptypehash__is_type(cause, note_object_hash))) {
+      (! raw__ptypehash__is_type(cause, note_object_hash)) ||
+      (! raw__integer__is_type(cause, max_size))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__float__lick_to_chunk(cause, this, lick, note_object_hash);
+  return raw__float__lick_to_chunk(cause, this, lick, note_object_hash, max_size);
 }
-export_cefunk3(float__lick_to_chunk, this, lick, note_object_hash, 0, "Licks this float.");
+export_cefunk4(float__lick_to_chunk, this, lick, note_object_hash, max_size, 0, "Licks this float.");
 
 
 f2ptr raw__float__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
@@ -749,7 +773,7 @@ export_cefunk2(float__lick_chunk__remember_replace_notes_with_objects, this, obj
 
 //   double lick_to_chunk
 
-f2ptr raw__double__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr raw__double__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr  chunk    = raw__chunk__new(cause, 8);
   double this__d  = f2double__d(this, cause);
   u64    data;
@@ -759,15 +783,16 @@ f2ptr raw__double__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note
   return raw__lick_chunk__new(cause, new__symbol(cause, "double"), lick_note, chunk);
 }
 
-f2ptr f2__double__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr f2__double__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   if ((! raw__double__is_type(cause, this)) ||
       (! raw__lick__is_type(cause, lick)) ||
-      (! raw__ptypehash__is_type(cause, note_object_hash))) {
+      (! raw__ptypehash__is_type(cause, note_object_hash)) ||
+      (! raw__integer__is_type(cause, max_size))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__double__lick_to_chunk(cause, this, lick, note_object_hash);
+  return raw__double__lick_to_chunk(cause, this, lick, note_object_hash, max_size);
 }
-export_cefunk3(double__lick_to_chunk, this, lick, note_object_hash, 0, "Licks this double.");
+export_cefunk4(double__lick_to_chunk, this, lick, note_object_hash, max_size, 0, "Licks this double.");
 
 
 f2ptr raw__double__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
@@ -803,7 +828,7 @@ export_cefunk2(double__lick_chunk__remember_replace_notes_with_objects, this, ob
 
 //   pointer lick_to_chunk
 
-f2ptr raw__pointer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr raw__pointer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr chunk   = raw__chunk__new(cause, 8);
   u64   this__p = f2pointer__p(this, cause);
   raw__chunk__bit64__elt__set(cause, chunk, 0, this__p);
@@ -811,15 +836,16 @@ f2ptr raw__pointer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr not
   return raw__lick_chunk__new(cause, new__symbol(cause, "pointer"), lick_note, chunk);
 }
 
-f2ptr f2__pointer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr f2__pointer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   if ((! raw__pointer__is_type(cause, this)) ||
       (! raw__lick__is_type(cause, lick)) ||
-      (! raw__ptypehash__is_type(cause, note_object_hash))) {
+      (! raw__ptypehash__is_type(cause, note_object_hash)) ||
+      (! raw__integer__is_type(cause, max_size))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__pointer__lick_to_chunk(cause, this, lick, note_object_hash);
+  return raw__pointer__lick_to_chunk(cause, this, lick, note_object_hash, max_size);
 }
-export_cefunk3(pointer__lick_to_chunk, this, lick, note_object_hash, 0, "Licks this pointer.");
+export_cefunk4(pointer__lick_to_chunk, this, lick, note_object_hash, max_size, 0, "Licks this pointer.");
 
 
 f2ptr raw__pointer__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
@@ -854,7 +880,7 @@ export_cefunk2(pointer__lick_chunk__remember_replace_notes_with_objects, this, o
 
 //   mutex lick_to_chunk
 
-f2ptr raw__mutex__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr raw__mutex__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr     chunk           = raw__chunk__new(cause, 1);
   boolean_t this__is_locked = raw__mutex__is_locked(cause, this);
   raw__chunk__bit8__elt__set(cause, chunk, 0, this__is_locked ? 0x01 : 0x00);
@@ -862,15 +888,16 @@ f2ptr raw__mutex__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_
   return raw__lick_chunk__new(cause, new__symbol(cause, "mutex"), lick_note, chunk);
 }
 
-f2ptr f2__mutex__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr f2__mutex__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   if ((! raw__mutex__is_type(cause, this)) ||
       (! raw__lick__is_type(cause, lick)) ||
-      (! raw__ptypehash__is_type(cause, note_object_hash))) {
+      (! raw__ptypehash__is_type(cause, note_object_hash)) ||
+      (! raw__integer__is_type(cause, max_size))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__mutex__lick_to_chunk(cause, this, lick, note_object_hash);
+  return raw__mutex__lick_to_chunk(cause, this, lick, note_object_hash, max_size);
 }
-export_cefunk3(mutex__lick_to_chunk, this, lick, note_object_hash, 0, "Licks this mutex.");
+export_cefunk4(mutex__lick_to_chunk, this, lick, note_object_hash, max_size, 0, "Licks this mutex.");
 
 
 f2ptr raw__mutex__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
@@ -909,7 +936,7 @@ export_cefunk2(mutex__lick_chunk__remember_replace_notes_with_objects, this, obj
 
 //   string lick_to_chunk
 
-f2ptr raw__string__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr raw__string__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   s64   this__length = raw__string__length(cause, this);
   f2ptr chunk   = raw__chunk__new(cause, this__length);
   u8*   this__str = (u8*)from_ptr(f2__malloc(this__length));
@@ -925,15 +952,16 @@ f2ptr raw__string__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note
   return raw__lick_chunk__new(cause, new__symbol(cause, "string"), lick_note, chunk);
 }
 
-f2ptr f2__string__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr f2__string__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   if ((! raw__string__is_type(cause, this)) ||
       (! raw__lick__is_type(cause, lick)) ||
-      (! raw__ptypehash__is_type(cause, note_object_hash))) {
+      (! raw__ptypehash__is_type(cause, note_object_hash)) ||
+      (! raw__integer__is_type(cause, max_size))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__string__lick_to_chunk(cause, this, lick, note_object_hash);
+  return raw__string__lick_to_chunk(cause, this, lick, note_object_hash, max_size);
 }
-export_cefunk3(string__lick_to_chunk, this, lick, note_object_hash, 0, "Licks this string.");
+export_cefunk4(string__lick_to_chunk, this, lick, note_object_hash, max_size, 0, "Licks this string.");
 
 
 f2ptr raw__string__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
@@ -977,7 +1005,7 @@ export_cefunk2(string__lick_chunk__remember_replace_notes_with_objects, this, ob
 
 //   symbol lick_to_chunk
 
-f2ptr raw__symbol__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr raw__symbol__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   s64   this__length = raw__symbol__length(cause, this);
   f2ptr chunk   = raw__chunk__new(cause, this__length);
   u8*   this__str = (u8*)from_ptr(f2__malloc(this__length));
@@ -993,15 +1021,16 @@ f2ptr raw__symbol__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note
   return raw__lick_chunk__new(cause, new__symbol(cause, "symbol"), lick_note, chunk);
 }
 
-f2ptr f2__symbol__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr f2__symbol__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   if ((! raw__symbol__is_type(cause, this)) ||
       (! raw__lick__is_type(cause, lick)) ||
-      (! raw__ptypehash__is_type(cause, note_object_hash))) {
+      (! raw__ptypehash__is_type(cause, note_object_hash)) ||
+      (! raw__integer__is_type(cause, max_size))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__symbol__lick_to_chunk(cause, this, lick, note_object_hash);
+  return raw__symbol__lick_to_chunk(cause, this, lick, note_object_hash, max_size);
 }
-export_cefunk3(symbol__lick_to_chunk, this, lick, note_object_hash, 0, "Licks this symbol.");
+export_cefunk4(symbol__lick_to_chunk, this, lick, note_object_hash, max_size, 0, "Licks this symbol.");
 
 
 f2ptr raw__symbol__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
@@ -1045,7 +1074,7 @@ export_cefunk2(symbol__lick_chunk__remember_replace_notes_with_objects, this, ob
 
 //   chunk lick_to_chunk
 
-f2ptr raw__chunk__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr raw__chunk__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   s64   this__length = raw__chunk__length(cause, this);
   f2ptr chunk   = raw__chunk__new(cause, this__length);
   u8*   this__str = (u8*)from_ptr(f2__malloc(this__length));
@@ -1061,15 +1090,16 @@ f2ptr raw__chunk__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_
   return raw__lick_chunk__new(cause, new__symbol(cause, "chunk"), lick_note, chunk);
 }
 
-f2ptr f2__chunk__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr f2__chunk__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   if ((! raw__chunk__is_type(cause, this)) ||
       (! raw__lick__is_type(cause, lick)) ||
-      (! raw__ptypehash__is_type(cause, note_object_hash))) {
+      (! raw__ptypehash__is_type(cause, note_object_hash)) ||
+      (! raw__integer__is_type(cause, max_size))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__chunk__lick_to_chunk(cause, this, lick, note_object_hash);
+  return raw__chunk__lick_to_chunk(cause, this, lick, note_object_hash, max_size);
 }
-export_cefunk3(chunk__lick_to_chunk, this, lick, note_object_hash, 0, "Licks this chunk.");
+export_cefunk4(chunk__lick_to_chunk, this, lick, note_object_hash, max_size, 0, "Licks this chunk.");
 
 
 f2ptr raw__chunk__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
@@ -1113,7 +1143,7 @@ export_cefunk2(chunk__lick_chunk__remember_replace_notes_with_objects, this, obj
 
 //   array lick_to_chunk
 
-f2ptr raw__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr raw__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   s64   this__length = raw__array__length(cause, this);
   f2ptr chunk        = raw__chunk__new(cause, this__length * 8);
   {
@@ -1132,15 +1162,16 @@ f2ptr raw__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);
 }
 
-f2ptr f2__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash) {
+f2ptr f2__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   if ((! raw__array__is_type(cause, this)) ||
       (! raw__lick__is_type(cause, lick)) ||
-      (! raw__ptypehash__is_type(cause, note_object_hash))) {
+      (! raw__ptypehash__is_type(cause, note_object_hash)) ||
+      (! raw__integer__is_type(cause, max_size))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__array__lick_to_chunk(cause, this, lick, note_object_hash);
+  return raw__array__lick_to_chunk(cause, this, lick, note_object_hash, max_size);
 }
-export_cefunk3(array__lick_to_chunk, this, lick, note_object_hash, 0, "Licks this array.");
+export_cefunk4(array__lick_to_chunk, this, lick, note_object_hash, max_size, 0, "Licks this array.");
 
 
 f2ptr raw__array__lick_chunk__remember_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {

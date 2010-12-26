@@ -351,7 +351,7 @@ export_cefunk2(lick__chunk_note_hash__set, thing, value, 0, "Sets the chunk_note
 f2ptr raw__lick__object__as__note(f2ptr cause, f2ptr this, f2ptr object, f2ptr note_object_hash) {
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, object);
   if (lick_note == nil) {
-    f2ptr lick_note = f2integer__new(cause, (s64)object);
+    lick_note = f2integer__new(cause, (s64)object);
     raw__ptypehash__add(cause, note_object_hash, object, lick_note);
     f2ptr chunk = f2__object__execute(cause, object, new__symbol(cause, "lick_to_chunk"), f2list2__new(cause, this, note_object_hash));
     if (raw__larva__is_type(cause, chunk)) {
@@ -942,7 +942,7 @@ f2ptr raw__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_
       if (raw__larva__is_type(cause, element__note)) {
 	return element__note;
       }
-      s64   element__note__i = f2integer__i(element__note, cause);
+      s64 element__note__i = f2integer__i(element__note, cause);
       raw__chunk__bit64__elt__set(cause, chunk, index * 8, (s64)(element__note__i));
     }
   }

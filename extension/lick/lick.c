@@ -240,12 +240,16 @@ f2ptr f2__lick_chunk_type__new(f2ptr cause) {
 
 // lick
 
-f2ptr raw__lick__new(f2ptr cause, f2ptr root_object) {
-  f2ptr chunk_note_hash = f2__ptypehash__new(cause);
-  f2ptr this = f2__frame__new(cause, f2list6__new(cause,
-						  new__symbol(cause, "type"),            new__symbol(cause, "lick"),
-						  new__symbol(cause, "root_note"),       nil,
-						  new__symbol(cause, "chunk_note_hash"), chunk_note_hash));
+f2ptr raw__lick__new(f2ptr cause, f2ptr root_note, f2ptr chunk_note_hash) {
+  return f2__frame__new(cause, f2list6__new(cause,
+					    new__symbol(cause, "type"),            new__symbol(cause, "lick"),
+					    new__symbol(cause, "root_note"),       root_note,
+					    new__symbol(cause, "chunk_note_hash"), chunk_note_hash));
+}
+
+f2ptr f2__lick__new(f2ptr cause, f2ptr root_object) {
+  f2ptr chunk_note_hash  = f2__ptypehash__new(cause);
+  f2ptr this             = raw__lick__new(nil, chunk_note_hash);
   f2ptr note_object_hash = f2__ptypehash__new(cause);
   f2ptr root_note        = raw__lick__object__as__note(cause, this, root_object, note_object_hash);
   if (raw__larva__is_type(cause, root_note)) {
@@ -253,10 +257,6 @@ f2ptr raw__lick__new(f2ptr cause, f2ptr root_object) {
   }
   raw__lick__root_note__set(cause, this, root_note);
   return this;
-}
-
-f2ptr f2__lick__new(f2ptr cause, f2ptr chunk_note_hash) {
-  return raw__lick__new(cause, chunk_note_hash);
 }
 export_cefunk1(lick__new, chunk_note_hash, 0, "Returns a new lick object.");
 
@@ -464,7 +464,7 @@ f2ptr raw__lick__as__chunk(f2ptr cause, f2ptr this) {
 			      }
 			      if (raw__symbol__is_type(cause, type_name)) {
 				s64 type_name__length = raw__symbol__length(cause, type_name);
-				u8* type_name__str = (u8*)from_ptr(f2__malloc(type_name__length));
+				u8* type_name__str    = (u8*)from_ptr(f2__malloc(type_name__length));
 				raw__symbol__str_copy(cause, type_name, type_name__str);
 				{
 				  s64 index;
@@ -476,21 +476,21 @@ f2ptr raw__lick__as__chunk(f2ptr cause, f2ptr this) {
 				f2__free(to_ptr(type_name__str));
 			      }
 			      {
-				f2ptr lick_note__chunk         = raw__lick_chunk__chunk(cause, lick_chunk);
-				s64   lick_note__chunk__length = raw__chunk__length(cause, lick_note__chunk);
-				raw__chunk__bit64__elt__set(cause, chunk, chunk_index, lick_note__chunk__length);
+				f2ptr lick_chunk__chunk         = raw__lick_chunk__chunk(cause, lick_chunk);
+				s64   lick_chunk__chunk__length = raw__chunk__length(cause, lick_chunk__chunk);
+				raw__chunk__bit64__elt__set(cause, chunk, chunk_index, lick_chunk__chunk__length);
 				chunk_index += 8;
 				{
-				  u8* lick_note__chunk__str = (u8*)from_ptr(f2__malloc(lick_note__chunk__length));
-				  raw__chunk__str_copy(cause, lick_note__chunk, lick_note__chunk__str);
+				  u8* lick_chunk__chunk__str = (u8*)from_ptr(f2__malloc(lick_chunk__chunk__length));
+				  raw__chunk__str_copy(cause, lick_chunk__chunk, lick_chunk__chunk__str);
 				  {
 				    s64 index;
-				    for (index = 0; index < lick_note__chunk__length; index ++) {
-				      raw__chunk__bit8__elt__set(cause, chunk, chunk_index, lick_note__chunk__str[index]);
+				    for (index = 0; index < lick_chunk__chunk__length; index ++) {
+				      raw__chunk__bit8__elt__set(cause, chunk, chunk_index, lick_chunk__chunk__str[index]);
 				      chunk_index ++;
 				    }
 				  }
-				  f2__free(to_ptr(lick_note__chunk__str));
+				  f2__free(to_ptr(lick_chunk__chunk__str));
 				}
 			      }
 			      );
@@ -504,6 +504,77 @@ f2ptr f2__lick__as__chunk(f2ptr cause, f2ptr this) {
   return raw__lick__as__chunk(cause, this);
 }
 export_cefunk1(lick__as__chunk, this, 0, "Returns this lick as a chunk.");
+
+
+f2ptr raw__chunk__as__lick(f2ptr cause, f2ptr this) {
+  s64 chunk__length = raw__chunk__length(cause, this);
+  s64 chunk_index   = 0;
+  if (chunk_index + 8 > chunk__length) {
+    return f2larva__new(cause, 2, nil);
+  }
+  s64   root_note__i = raw__chunk__bit64__elt(cause, this, chunk_index); chunk_index += 8;
+  f2ptr root_note    = f2integer__new(cause, root_note__i);
+  f2ptr chunk_note_hash = f2__ptypehash__new(cause);
+  while (chunk_index < chunk__length) {
+    if (chunk_index + 8 > chunk__length) {
+      return f2larva__new(cause, 2, nil);
+    }
+    s64   lick_note__i = raw__chunk__bit64__elt(cause, this, chunk_index); chunk_index += 8;
+    f2ptr lick_note    = f2integer__new(cause, lick_note__i);
+    
+    if (chunk_index + 8 > chunk__length) {
+      return f2larva__new(cause, 2, nil);
+    }
+    s64   type_name__length = raw__chunk__bit64__elt(cause, this, chunk_index); chunk_index += 8;
+    f2ptr type_name;
+    if (type_name__length == 0) {
+      type_name = nil;
+    } else {
+      if (chunk_index + type_name__length > chunk__length) {
+	return f2larva__new(cause, 2, nil);
+      }
+      u8* type_name__str = (u8*)from_ptr(f2__malloc(type_name__length));
+      {
+	s64 index;
+	for (index = 0; index < type_name__length; index ++) {
+	  type_name__str[index] = raw__chunk__bit8__elt(cause, this, chunk_index); chunk_index ++;
+	}
+      }
+      type_name = f2symbol__new(cause, type_name__length, type_name__str);
+      f2__free(to_ptr(type_name__str));
+    }
+    
+    if (chunk_index + 8 > chunk__length) {
+      return f2larva__new(cause, 2, nil);
+    }
+    s64 lick_chunk__chunk__length = raw__chunk__bit64__elt(cause, this, chunk_index); chunk_index += 8;
+    if (chunk_index + lick_chunk__chunk__length > chunk__length) {
+      return f2larva__new(cause, 2, nil);
+    }
+    f2ptr lick_chunk__chunk = raw__chunk__new(cause, lick_chunk__chunk__length);
+    {
+      s64 index;
+      for (index = 0; index < lick_chunk__chunk__length; index ++) {
+	raw__chunk__bit8__elt__set(cause, lick_chunk__chunk, index, raw__chunk__bit8__elt(cause, this, chunk_index)); chunk_index ++;
+      }
+    }
+    f2ptr lick_chunk = raw__lick_chunk__new(cause, type_name, lick_note, lick_chunk__chunk);
+    raw__ptypehash__add(cause, chunk_note_hash, lick_note, lick_chunk);
+  }
+  if (chunk_index != chunk__length) {
+    return f2larva__new(cause, 3, nil);
+  }
+  return raw__lick__new(cause, root_note, chunk_note_hash);
+}
+
+f2ptr f2__chunk__as__lick(f2ptr cause, f2ptr this) {
+  if (! raw__chunk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__chunk__as__lick(cause, this);
+}
+export_cefunk1(chunk__as__lick, this, 0, "Returns this chunk as a lick.");
+
 
 
 f2ptr f2__lick_type__new(f2ptr cause) {
@@ -1335,6 +1406,12 @@ f2ptr raw__add_all_lick_to_chunk_to_ptypes(f2ptr cause) {
     }
     {
       f2ptr result = f2__primobject_type__add_slot_type(cause, chunk_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-remember_replace_notes_with_objects"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "chunk__lick_chunk__remember_replace_notes_with_objects")));
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+    {
+      f2ptr result = f2__primobject_type__add_slot_type(cause, chunk_type, new__symbol(cause, "get"), new__symbol(cause, "as-lick"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "chunk__as__lick")));
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }

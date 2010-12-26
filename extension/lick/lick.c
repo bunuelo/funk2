@@ -1324,7 +1324,7 @@ f2ptr raw__ptypehash__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr n
 			     return key__note;
 			   }
 			   s64 key__note__i = f2integer__i(key__note, cause);
-			   raw__chunk__bit64__elt__set(cause, chunk, (index * 8 * 2) + 0, (s64)(key__note__i));
+			   raw__chunk__bit64__elt__set(cause, chunk, ((index * 2) + 0) * 8, (s64)(key__note__i));
 			 }
 			 {
 			   f2ptr value__note = raw__lick__object__as__note(cause, lick, value, note_object_hash, max_size);
@@ -1332,10 +1332,13 @@ f2ptr raw__ptypehash__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr n
 			     return value__note;
 			   }
 			   s64 value__note__i = f2integer__i(value__note, cause);
-			   raw__chunk__bit64__elt__set(cause, chunk, (index * 8 * 2) + 1, (s64)(value__note__i));
+			   raw__chunk__bit64__elt__set(cause, chunk, ((index * 2) + 1) * 8, (s64)(value__note__i));
 			 }
 			 index ++;
 			 );
+  }
+  if (index != key_count__i) {
+    return f2larva__new(cause, 23445, nil);
   }
   f2ptr lick_note = f2integer__new(cause, (s64)this);
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);
@@ -1364,8 +1367,8 @@ f2ptr raw__ptypehash__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chun
   {
     s64 index;
     for (index = 0; index < ptypehash__key_count; index ++) {
-      f2ptr key__lick_note   = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, (index << 4) + 0));
-      f2ptr value__lick_note = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, (index << 4) + 1));
+      f2ptr key__lick_note   = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, ((index * 2) + 0) * 8));
+      f2ptr value__lick_note = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, ((index * 2) + 1) * 8));
       raw__ptypehash__add(cause, ptypehash, key__lick_note, value__lick_note);
     }
   }

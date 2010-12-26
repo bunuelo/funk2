@@ -1150,7 +1150,7 @@ f2ptr raw__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_
     s64 index;
     for (index = 0; index < this__length; index ++) {
       f2ptr element       = raw__array__elt(cause, this, index);
-      f2ptr element__note = raw__lick__object__as__note(cause, lick, element, note_object_hash);
+      f2ptr element__note = raw__lick__object__as__note(cause, lick, element, note_object_hash, max_size);
       if (raw__larva__is_type(cause, element__note)) {
 	return element__note;
       }

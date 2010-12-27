@@ -22,16 +22,16 @@
 #ifndef F2__EXTENSION__EQUALS_HASH__H
 #define F2__EXTENSION__EQUALS_HASH__H
 
-f2ptr     raw__equals_hash__new       (f2ptr cause, f2ptr width);
-f2ptr      f2__equals_hash__new       (f2ptr cause, f2ptr width);
-boolean_t raw__equals_hash__is_type   (f2ptr cause, f2ptr thing);
-f2ptr      f2__equals_hash__is_type   (f2ptr cause, f2ptr thing);
-f2ptr     raw__equals_hash__type      (f2ptr cause, f2ptr this);
-f2ptr      f2__equals_hash__type      (f2ptr cause, f2ptr this);
-f2ptr     raw__equals_hash__width     (f2ptr cause, f2ptr this);
-f2ptr      f2__equals_hash__width     (f2ptr cause, f2ptr this);
-f2ptr     raw__equals_hash__width__set(f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__equals_hash__width__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__equals_hash__new      (f2ptr cause, f2ptr hash);
+f2ptr      f2__equals_hash__new      (f2ptr cause);
+boolean_t raw__equals_hash__is_type  (f2ptr cause, f2ptr thing);
+f2ptr      f2__equals_hash__is_type  (f2ptr cause, f2ptr thing);
+f2ptr     raw__equals_hash__type     (f2ptr cause, f2ptr this);
+f2ptr      f2__equals_hash__type     (f2ptr cause, f2ptr this);
+f2ptr     raw__equals_hash__hash     (f2ptr cause, f2ptr this);
+f2ptr      f2__equals_hash__hash     (f2ptr cause, f2ptr this);
+f2ptr     raw__equals_hash__hash__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__equals_hash__hash__set(f2ptr cause, f2ptr this, f2ptr value);
 
 f2ptr f2__equals_hash_type__new(f2ptr cause);
 

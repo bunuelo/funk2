@@ -111,6 +111,7 @@
 				  'built-in/natural_language/'
 				  'built-in/simple_graph/'
 				  'extension/event_stream/'
+				  'extension/equals_hash/'
 				  'extension/fibermon/'
 				  'extension/forward_planner/'
 				  'extension/frame_ball/'

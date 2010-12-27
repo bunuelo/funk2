@@ -668,6 +668,7 @@ f2ptr f2__semantic_realm__terminal_print_with_frame(f2ptr cause, f2ptr this, f2p
 export_cefunk2(semantic_realm__terminal_print_with_frame, this, terminal_print_frame, 0, "");
 
 
+
 f2ptr f2__semantic_realm_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__new")));}

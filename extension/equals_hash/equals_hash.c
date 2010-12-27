@@ -337,6 +337,12 @@ f2ptr f2__equals_hash__core_extension_ping(f2ptr cause) {
 export_cefunk0(equals_hash__core_extension_ping, 0, "");
 
 f2ptr f2__equals_hash__core_extension_initialize(f2ptr cause) {
+  {
+    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__core_extension_ping")), nil);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   f2__add_type(cause, new__symbol(cause, "equals_hash"), f2__equals_hash_type__new(cause));
   status("equals_hash initialized.");
   return nil;

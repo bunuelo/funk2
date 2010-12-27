@@ -22,19 +22,36 @@
 #include "../../c/funk2.h"
 #include "equals_hash.h"
 
-f2ptr raw__equals_hash__new(f2ptr cause, f2ptr width) {
+f2ptr raw__equals_hash__new(f2ptr cause, f2ptr hash) {
   return f2__frame__new(cause, f2list4__new(cause,
-					    new__symbol(cause, "type"),  new__symbol(cause, "equals_hash"),
-					    new__symbol(cause, "width"), width));
+					    new__symbol(cause, "type"), new__symbol(cause, "equals_hash"),
+					    new__symbol(cause, "hash"), hash));
 }
 
-f2ptr f2__equals_hash__new(f2ptr cause, f2ptr width) {
-  if (! raw__integer__is_type(cause, width)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__equals_hash__new(cause, width);
+f2ptr raw__equals_hash__equals_hash_value_funk(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
+  f2ptr args_iter = args;
+  f2ptr this = f2__cons__car(cause, args_iter);
+  return f2__object__equals_hash_value(cause, this);
 }
-export_cefunk1(equals_hash__new, width, 0, "Returns a new equals_hash object.");
+
+f2ptr raw__equals_hash__equals_funk(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
+  f2ptr args_iter = args;
+  f2ptr this = f2__cons__car(cause, args_iter); args_iter = f2__cons__cdr(cause, args_iter);
+  f2ptr that = f2__cons__car(cause, args_iter);
+  return f2__object__equals(cause, this, that);
+}
+
+f2ptr f2__equals_hash__new(f2ptr cause) {
+  f2ptr equals_hash__equals_hash_value_cfunk = f2cfunk__new(cause, nil, 
+							    f2list1__new(cause, new__symbol(cause, "this")),
+							    f2pointer__new(cause, raw_executable__to__relative_ptr(raw__equals_hash__equals_hash_value_funk)), global_environment(), nil, nil);
+  f2ptr equals_hash__equals_cfunk = f2cfunk__new(cause, nil, 
+						 f2list2__new(cause, new__symbol(cause, "this"), new__symbol(cause, "that")),
+						 f2pointer__new(cause, raw_executable__to__relative_ptr(raw__equals_hash__equals_funk)), global_environment(), nil, nil);
+  f2ptr hash = f2__hash__new(cause, equals_hash__equals_hash_value_cfunk, equals_hash__equals_cfunk);
+  return raw__equals_hash__new(cause, hash);
+}
+export_cefunk1(equals_hash__new, hash, 0, "Returns a new equals_hash object.");
 
 
 boolean_t raw__equals_hash__is_type(f2ptr cause, f2ptr thing) {
@@ -72,30 +89,30 @@ f2ptr f2__equals_hash__type(f2ptr cause, f2ptr this) {
 export_cefunk1(equals_hash__type, thing, 0, "Returns the specific type of object that this equals_hash is.");
 
 
-f2ptr raw__equals_hash__width(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"), nil);
+f2ptr raw__equals_hash__hash(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "hash"), nil);
 }
 
-f2ptr f2__equals_hash__width(f2ptr cause, f2ptr this) {
+f2ptr f2__equals_hash__hash(f2ptr cause, f2ptr this) {
   if (! raw__equals_hash__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__equals_hash__width(cause, this);
+  return raw__equals_hash__hash(cause, this);
 }
-export_cefunk1(equals_hash__width, thing, 0, "Returns the width of the equals_hash.");
+export_cefunk1(equals_hash__hash, thing, 0, "Returns the hash of the equals_hash.");
 
 
-f2ptr raw__equals_hash__width__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "width"), value);
+f2ptr raw__equals_hash__hash__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "hash"), value);
 }
 
-f2ptr f2__equals_hash__width__set(f2ptr cause, f2ptr this, f2ptr value) {
+f2ptr f2__equals_hash__hash__set(f2ptr cause, f2ptr this, f2ptr value) {
   if (! raw__equals_hash__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__equals_hash__width__set(cause, this, value);
+  return raw__equals_hash__hash__set(cause, this, value);
 }
-export_cefunk2(equals_hash__width__set, thing, value, 0, "Sets the width of the equals_hash.");
+export_cefunk2(equals_hash__hash__set, thing, value, 0, "Sets the hash of the equals_hash.");
 
 
 
@@ -104,8 +121,8 @@ f2ptr f2__equals_hash_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__new")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__width")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__width__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "hash"),    f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__hash")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "hash"),    f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__hash__set")));}
   return this;
 }
 

@@ -251,7 +251,7 @@ f2ptr raw__equals_hash__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_ch
 
 f2ptr f2__equals_hash__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
   if ((! raw__lick_chunk__is_type(cause, lick_chunk)) ||
-      (! raw__equals_hash__is_type(cause, object_note_hash))) {
+      (! raw__ptypehash__is_type(cause, object_note_hash))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__equals_hash__lick_chunk__unlick_with_notes(cause, lick_chunk, object_note_hash);

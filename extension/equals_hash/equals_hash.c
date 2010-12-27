@@ -117,7 +117,7 @@ export_cefunk2(equals_hash__hash__set, thing, value, 0, "Sets the hash of the eq
 
 f2ptr raw__equals_hash__key_count(f2ptr cause, f2ptr this) {
   f2ptr hash = raw__equals_hash__hash(cause, this);
-  return raw__hash__key_count(cause, hash);
+  return f2__hash__key_count(cause, hash);
 }
 
 f2ptr f2__equals_hash__key_count(f2ptr cause, f2ptr this) {

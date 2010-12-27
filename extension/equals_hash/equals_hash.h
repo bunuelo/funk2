@@ -43,6 +43,10 @@ f2ptr      f2__equals_hash__terminal_print_with_frame(f2ptr cause, f2ptr this, f
 
 f2ptr f2__equals_hash_type__new(f2ptr cause);
 
+#define equals_hash__iteration(cause, this, key, value, code) {		\
+    hash__iteration(cause, raw__equals_hash__hash(cause, this), key, value, code); \
+  }
+
 // **
 
 f2ptr f2__equals_hash__core_extension_ping      (f2ptr cause);

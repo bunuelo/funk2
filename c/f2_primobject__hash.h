@@ -58,6 +58,8 @@ f2ptr     raw__hash__new                 (f2ptr cause, s64 bin_num_power, f2ptr 
 f2ptr      f2__hash__new                 (f2ptr cause, f2ptr hash_value_funk, f2ptr equals_funk);
 f2ptr     raw__hash__add                 (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
 f2ptr      f2__hash__add                 (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
+boolean_t raw__hash__remove              (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr      f2__hash__remove              (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__hash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key);
 boolean_t raw__hash__contains            (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__hash__contains            (f2ptr cause, f2ptr this, f2ptr key);

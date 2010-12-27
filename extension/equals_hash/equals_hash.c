@@ -42,12 +42,12 @@ f2ptr raw__equals_hash__equals_funk(f2ptr cause, f2ptr fiber, f2ptr environment,
 }
 
 f2ptr f2__equals_hash__new(f2ptr cause) {
-  f2ptr equals_hash__equals_hash_value_cfunk = f2cfunk__new(cause, nil, 
+  f2ptr equals_hash__equals_hash_value_cfunk = f2cfunk__new(cause, new__symbol(cause, "object-equals_hash_value"), 
 							    f2list1__new(cause, new__symbol(cause, "this")),
 							    f2pointer__new(cause, raw_executable__to__relative_ptr(raw__equals_hash__equals_hash_value_funk)), global_environment(), nil, nil);
-  f2ptr equals_hash__equals_cfunk = f2cfunk__new(cause, nil, 
-						 f2list2__new(cause, new__symbol(cause, "this"), new__symbol(cause, "that")),
-						 f2pointer__new(cause, raw_executable__to__relative_ptr(raw__equals_hash__equals_funk)), global_environment(), nil, nil);
+  f2ptr equals_hash__equals_cfunk            = f2cfunk__new(cause, new__symbol(cause, "object-equals"), 
+							    f2list2__new(cause, new__symbol(cause, "this"), new__symbol(cause, "that")),
+							    f2pointer__new(cause, raw_executable__to__relative_ptr(raw__equals_hash__equals_funk)), global_environment(), nil, nil);
   f2ptr hash = f2__hash__new(cause, equals_hash__equals_hash_value_cfunk, equals_hash__equals_cfunk);
   return raw__equals_hash__new(cause, hash);
 }

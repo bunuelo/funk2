@@ -21,6 +21,7 @@
 
 #include "../../c/funk2.h"
 #include "semantic_knowledge_base.h"
+#include "../equals_hash/equals_hash.h"
 #include "../meta_semantic_knowledge_base/meta_semantic_knowledge_base.h"
 #include "../event_stream/event_stream.h"
 
@@ -396,8 +397,8 @@ f2ptr f2__semantic_relationship_key_type__new(f2ptr cause) {
 f2ptr raw__semantic_realm__new(f2ptr cause) {
   return f2__frame__new(cause, f2list8__new(cause,
 					    new__symbol(cause, "type"),                          new__symbol(cause, "semantic_realm"),
-					    new__symbol(cause, "semantic_hash"),                 f2__hash(cause),
-					    new__symbol(cause, "meta_relationship_hash"),        f2__hash(cause),
+					    new__symbol(cause, "semantic_hash"),                 f2__equals_hash__new(cause),
+					    new__symbol(cause, "meta_relationship_hash"),        f2__equals_hash__new(cause),
 					    new__symbol(cause, "semantic_knowledge_base_frame"), f2__frame__new(cause, nil)));
 }
 
@@ -525,7 +526,7 @@ f2ptr raw__semantic_realm__lookup_object_key(f2ptr cause, f2ptr this, f2ptr obje
     return nil;
   }
   f2ptr hash = raw__semantic_realm__semantic_hash(cause, this);
-  return f2__hash__lookup(cause, hash, object);
+  return f2__equals_hash__lookup(cause, hash, object);
 }
 
 f2ptr f2__semantic_realm__lookup_object_key(f2ptr cause, f2ptr this, f2ptr object) {
@@ -542,9 +543,9 @@ f2ptr raw__semantic_realm__add_object_key(f2ptr cause, f2ptr this, f2ptr object)
     return nil;
   }
   f2ptr hash = raw__semantic_realm__semantic_hash(cause, this);
-  f2ptr key  = raw__hash__lookup(cause, hash, object);
+  f2ptr key  = raw__equals_hash__lookup(cause, hash, object);
   if (key == nil) {
-    raw__hash__add(cause, hash, object, object);
+    raw__equals_hash__add(cause, hash, object, object);
   }
   return nil;
 }
@@ -581,7 +582,7 @@ export_cefunk2(semantic_realm__object_key, this, object, 0, "Returns an `equals 
 
 f2ptr raw__semantic_realm__key_count(f2ptr cause, f2ptr this) {
   f2ptr semantic_hash = raw__semantic_realm__semantic_hash(cause, this);
-  return f2__hash__key_count(cause, semantic_hash);
+  return f2__equals_hash__key_count(cause, semantic_hash);
 }
 
 f2ptr f2__semantic_realm__key_count(f2ptr cause, f2ptr this) {
@@ -596,12 +597,12 @@ export_cefunk1(semantic_realm__key_count, this, 0, "Returns the count of how man
 f2ptr raw__semantic_realm__lookup_or_create_meta_relationship(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
   f2ptr relationship_equals_key         = raw__semantic_relationship_key__new(cause, semantic_frame, key_type, key, value);
   f2ptr meta_relationship_hash          = raw__semantic_realm__meta_relationship_hash(cause, this);
-  f2ptr previously_created_relationship = f2__hash__lookup(cause, meta_relationship_hash, relationship_equals_key);
+  f2ptr previously_created_relationship = f2__equals_hash__lookup(cause, meta_relationship_hash, relationship_equals_key);
   if (previously_created_relationship != nil) {
     return previously_created_relationship;
   }
   f2ptr relationship = f2__relationship_meta_semantic_object__new(cause, this, semantic_frame, key_type, key, value);
-  f2__hash__add(cause, meta_relationship_hash, relationship_equals_key, relationship);
+  f2__equals_hash__add(cause, meta_relationship_hash, relationship_equals_key, relationship);
   return relationship;
 }
 

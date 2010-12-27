@@ -115,6 +115,20 @@ f2ptr f2__equals_hash__hash__set(f2ptr cause, f2ptr this, f2ptr value) {
 export_cefunk2(equals_hash__hash__set, thing, value, 0, "Sets the hash of the equals_hash.");
 
 
+f2ptr raw__equals_hash__key_count(f2ptr cause, f2ptr this) {
+  f2ptr hash = raw__equals_hash__hash(cause, this);
+  return raw__hash__key_count(cause, hash);
+}
+
+f2ptr f2__equals_hash__key_count(f2ptr cause, f2ptr this) {
+  if (! raw__equals_hash__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__equals_hash__key_count(cause, this);
+}
+export_cefunk1(equals_hash__key_count, this, 0, "Returns the key_count of this equals_hash.");
+
+
 f2ptr raw__equals_hash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   f2ptr hash = raw__equals_hash__hash(cause, this);
   return raw__hash__add(cause, hash, key, value);
@@ -175,6 +189,7 @@ f2ptr f2__equals_hash_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "hash"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__hash")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "hash"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__hash__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "key_count"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__key_count")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__add")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lookup"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__lookup")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__terminal_print_with_frame")));}

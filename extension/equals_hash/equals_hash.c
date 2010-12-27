@@ -51,7 +51,7 @@ f2ptr f2__equals_hash__new(f2ptr cause) {
   f2ptr hash = f2__hash__new(cause, equals_hash__equals_hash_value_cfunk, equals_hash__equals_cfunk);
   return raw__equals_hash__new(cause, hash);
 }
-export_cefunk1(equals_hash__new, hash, 0, "Returns a new equals_hash object.");
+export_cefunk0(equals_hash__new, 0, "Returns a new equals_hash object.");
 
 
 boolean_t raw__equals_hash__is_type(f2ptr cause, f2ptr thing) {

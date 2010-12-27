@@ -121,7 +121,8 @@ f2ptr raw__equals_hash__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list2__new(cause,
 					       new__symbol(cause, "print_object_type"), new__symbol(cause, "equals_hash")));
-    hash__iteration(cause, this, key, value,
+    f2ptr hash = raw__equals_hash__hash(cause, this);
+    hash__iteration(cause, hash, key, value,
 		    raw__frame__add_var_value(cause, frame, key, value);
 		    );
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);

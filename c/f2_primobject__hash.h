@@ -30,6 +30,8 @@ declare_object_type_6_slot(hash, write_mutex, key_count, bin_num_power, bin_arra
 			   f2ptr slot_names__funk;
 			   f2ptr add__symbol;
 			   f2ptr add__funk;
+			   f2ptr remove__symbol;
+			   f2ptr remove__funk;
 			   f2ptr lookup__symbol;
 			   f2ptr lookup__funk;
 			   f2ptr equals__symbol;

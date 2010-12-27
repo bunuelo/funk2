@@ -21,6 +21,7 @@
 
 #include "../../c/funk2.h"
 #include "equals_hash.h"
+#include "../lick/lick.h"
 
 f2ptr raw__equals_hash__new(f2ptr cause, f2ptr hash) {
   return f2__frame__new(cause, f2list4__new(cause,

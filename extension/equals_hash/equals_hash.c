@@ -144,6 +144,20 @@ f2ptr f2__equals_hash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
 export_cefunk3(equals_hash__add, this, key, value, 0, "Adds a key/value pair to this equals_hash.");
 
 
+f2ptr raw__equals_hash__remove(f2ptr cause, f2ptr this, f2ptr key) {
+  f2ptr hash = raw__equals_hash__hash(cause, this);
+  return raw__hash__remove(cause, hash, key);
+}
+
+f2ptr f2__equals_hash__remove(f2ptr cause, f2ptr this, f2ptr key) {
+  if (! raw__equals_hash__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__equals_hash__remove(cause, this, key);
+}
+export_cefunk2(equals_hash__remove, this, key, 0, "Looks up the given key's value in this equals hash.");
+
+
 f2ptr raw__equals_hash__lookup(f2ptr cause, f2ptr this, f2ptr key) {
   f2ptr hash = raw__equals_hash__hash(cause, this);
   return raw__hash__lookup(cause, hash, key);

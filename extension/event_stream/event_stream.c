@@ -352,6 +352,8 @@ f2ptr raw__event_stream__lick_chunk__unlick_replace_notes_with_objects(f2ptr cau
     for (index = 0; index < event_stream__size; index ++) {
       f2ptr event__lick_note = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, index * 8));
       f2ptr event__object    = raw__ptypehash__lookup(cause, object_note_hash, event__lick_note);
+      printf("\n--event.\n"); fflush(stdout);
+      f2__print(cause, event__object);
       raw__event_stream__add(cause, this, event__object);
     }
   }

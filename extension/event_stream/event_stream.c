@@ -20,6 +20,7 @@
 // 
 
 #include "event_stream.h"
+#include "../lick/lick.h"
 
 
 // event_stream_event

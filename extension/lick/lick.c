@@ -1323,33 +1323,24 @@ export_cefunk3(array__lick_chunk__unlick_replace_notes_with_objects, this, lick_
 // ptypehash lick funks
 
 f2ptr raw__ptypehash__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
-  f2ptr key_count    = f2__ptypehash__key_count(cause, this);
-  s64   key_count__i = f2integer__i(key_count, cause);
-  f2ptr chunk        = raw__chunk__new(cause, key_count__i * 8 * 2);
+  f2ptr chunk = raw__chunk__new(cause, 8 * 3);
   {
-    s64 index = 0;
-    ptypehash__iteration(cause, this, key, value,
-			 {
-			   f2ptr key__note = raw__lick__object__as__note(cause, lick, key, note_object_hash, max_size);
-			   if (raw__larva__is_type(cause, key__note)) {
-			     return key__note;
-			   }
-			   s64 key__note__i = f2integer__i(key__note, cause);
-			   raw__chunk__bit64__elt__set(cause, chunk, ((index * 2) + 0) * 8, (s64)(key__note__i));
-			 }
-			 {
-			   f2ptr value__note = raw__lick__object__as__note(cause, lick, value, note_object_hash, max_size);
-			   if (raw__larva__is_type(cause, value__note)) {
-			     return value__note;
-			   }
-			   s64 value__note__i = f2integer__i(value__note, cause);
-			   raw__chunk__bit64__elt__set(cause, chunk, ((index * 2) + 1) * 8, (s64)(value__note__i));
-			 }
-			 index ++;
-			 );
-    if (index != key_count__i) {
-      return f2larva__new(cause, 23445, nil);
-    }
+    f2ptr key_count               = f2__ptypehash__key_count(    cause, this);
+    f2ptr key_count__lick_note    = raw__lick__object__as__note(cause, lick, key_count, note_object_hash, max_size);
+    s64   key_count__lick_note__i = f2integer__i(key_count__lick_note, cause);
+    raw__chunk__bit64__elt__set(cause, chunk, 0, (s64)key_count__lick_note__i);
+  }
+  {
+    f2ptr bin_num_power               = f2__ptypehash__bin_num_power(cause, this);
+    f2ptr bin_num_power__lick_note    = raw__lick__object__as__note(cause, lick, bin_num_power, note_object_hash, max_size);
+    f2ptr bin_num_power__lick_note__i = f2integer__i(bin_num_power__lick_note, cause);
+    raw__chunk__bit64__elt__set(cause, chunk, 8, (s64)bin_num_power__lick_note__i);
+  }
+  {
+    f2ptr bin_array               = f2__ptypehash__bin_array(    cause, this);
+    f2ptr bin_array__lick_note    = raw__lick__object__as__note(cause, lick, bin_array, note_object_hash, max_size);
+    f2ptr bin_array__lick_note__i = f2integer__i(bin_array__lick_note, cause);
+    raw__chunk__bit64__elt__set(cause, chunk, 16, (s64)bin_array__lick_note__i);
   }
   f2ptr lick_note = f2integer__new(cause, (s64)this);
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);
@@ -1370,19 +1361,13 @@ export_cefunk4(ptypehash__lick_to_chunk, this, lick, note_object_hash, max_size,
 f2ptr raw__ptypehash__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
   f2ptr chunk         = raw__lick_chunk__chunk(cause, lick_chunk);
   s64   chunk__length = raw__chunk__length(cause, chunk);
-  if (((chunk__length >> 4) << 4) != chunk__length) {
+  if (chunk__length != (8 * 3)) {
     return f2larva__new(cause, 32555, nil);
   }
-  s64   ptypehash__key_count = chunk__length >> 4;
-  f2ptr ptypehash            = f2__ptypehash__new(cause);
-  {
-    s64 index;
-    for (index = 0; index < ptypehash__key_count; index ++) {
-      f2ptr key__lick_note   = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, ((index * 2) + 0) * 8));
-      f2ptr value__lick_note = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, ((index * 2) + 1) * 8));
-      raw__ptypehash__add(cause, ptypehash, key__lick_note, value__lick_note);
-    }
-  }
+  f2ptr key_count__lick_note     = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 0));
+  f2ptr bin_num_power__lick_note = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 8));
+  f2ptr bin_array__lick_note     = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 16));
+  f2ptr ptypehash = f2ptypehash__new(cause, f2__mutex__new(cause), key_count__lick_note, bin_num_power__lick_note, bin_array__lick_note);
   return ptypehash;
 }
 
@@ -1397,43 +1382,20 @@ export_cefunk2(ptypehash__lick_chunk__unlick_with_notes, lick_chunk, object_note
 
 
 f2ptr raw__ptypehash__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr lick_chunk, f2ptr object_note_hash) {
-  f2ptr key_notes   = nil;
-  f2ptr value_notes = nil;
-  ptypehash__iteration(cause, this, key_note, value_note,
-		       key_notes   = f2cons__new(cause, key_note,   key_notes);
-		       value_notes = f2cons__new(cause, value_note, value_notes);
-		       );
-  f2ptr key_objects   = nil;
-  f2ptr value_objects = nil;
   {
-    f2ptr key_note_iter   = key_notes;
-    f2ptr value_note_iter = value_notes;
-    while (key_note_iter != nil) {
-      f2ptr key_note   = f2__cons__car(cause, key_note_iter);
-      f2ptr value_note = f2__cons__car(cause, value_note_iter);
-      {
-	f2ptr key_object   = raw__ptypehash__lookup(cause, object_note_hash, key_note);
-	f2ptr value_object = raw__ptypehash__lookup(cause, object_note_hash, value_note);
-	key_objects   = f2cons__new(cause, key_object,   key_objects);
-	value_objects = f2cons__new(cause, value_object, value_objects);
-	raw__ptypehash__remove(cause, this, key_note);
-      }
-      key_note_iter   = f2__cons__cdr(cause, key_note_iter);
-      value_note_iter = f2__cons__cdr(cause, value_note_iter);
-    }
+    f2ptr key_count__lick_note = f2__ptypehash__key_count(cause, this);
+    f2ptr key_count__object    = raw__ptypehash__lookup(cause, object_note_hash, key_count__lick_note);
+    f2__ptypehash__key_count__set(cause, this, key_count__object);
   }
   {
-    f2ptr key_object_iter   = key_objects;
-    f2ptr value_object_iter = value_objects;
-    while (key_object_iter != nil) {
-      f2ptr key_object   = f2__cons__car(cause, key_object_iter);
-      f2ptr value_object = f2__cons__car(cause, value_object_iter);
-      {
-	raw__ptypehash__add(cause, this, key_object, value_object);
-      }
-      key_object_iter   = f2__cons__cdr(cause, key_object_iter);
-      value_object_iter = f2__cons__cdr(cause, value_object_iter);
-    }
+    f2ptr bin_num_power__lick_note = f2__ptypehash__bin_num_power(cause, this);
+    f2ptr bin_num_power__object    = raw__ptypehash__lookup(cause, object_note_hash, bin_num_power__lick_note);
+    f2__ptypehash__bin_num_power__set(cause, this, bin_num_power__object);
+  }
+  {
+    f2ptr bin_array__lick_note = f2__ptypehash__bin_array(cause, this);
+    f2ptr bin_array__object    = raw__ptypehash__lookup(cause, object_note_hash, bin_array__lick_note);
+    f2__ptypehash__bin_array__set(cause, this, bin_array__object);
   }
   return nil;
 }

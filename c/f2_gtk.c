@@ -3946,7 +3946,7 @@ f2ptr raw__gtk__file_chooser_dialog__set_current_folder(f2ptr cause, f2ptr this,
 }
 
 f2ptr f2__gtk__file_chooser_dialog__set_current_folder(f2ptr cause, f2ptr this, f2ptr filename) {
-  if ((! raw__file_chooser_dialog__is_type(cause, this)) ||
+  if ((! raw__gtk_file_chooser_dialog__is_type(cause, this)) ||
       (! raw__string__is_type(cause, filename))) {
     return f2larva__new(cause, 1, nil);
   }
@@ -3975,7 +3975,7 @@ f2ptr raw__gtk__file_chooser_dialog__set_current_name(f2ptr cause, f2ptr this, f
 }
 
 f2ptr f2__gtk__file_chooser_dialog__set_current_name(f2ptr cause, f2ptr this, f2ptr current_name) {
-  if ((! raw__file_chooser_dialog__is_type(cause, this)) ||
+  if ((! raw__gtk_file_chooser_dialog__is_type(cause, this)) ||
       (! raw__string__is_type(cause, current_name))) {
     return f2larva__new(cause, 1, nil);
   }
@@ -4004,7 +4004,7 @@ f2ptr raw__gtk__file_chooser_dialog__set_filename(f2ptr cause, f2ptr this, f2ptr
 }
 
 f2ptr f2__gtk__file_chooser_dialog__set_filename(f2ptr cause, f2ptr this, f2ptr filename) {
-  if ((! raw__file_chooser_dialog__is_type(cause, this)) ||
+  if ((! raw__gtk_file_chooser_dialog__is_type(cause, this)) ||
       (! raw__string__is_type(cause, filename))) {
     return f2larva__new(cause, 1, nil);
   }

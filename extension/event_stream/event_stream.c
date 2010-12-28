@@ -285,29 +285,15 @@ export_cefunk1(event_stream__size, this, 0, "Returns the number of events in the
 // event_stream lick funks
 
 f2ptr raw__event_stream__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
-  f2ptr size    = f2__event_stream__size(cause, this);
-  s64   size__i = f2integer__i(size, cause);
-  printf("\nsize__i=" s64__fstr "\n", size__i); fflush(stdout);
-  f2ptr chunk   = raw__chunk__new(cause, size__i * 8);
-  {
-    s64 index = 0;
-    event_stream__iteration(cause, this, event,
-			    printf("\n  event 0.\n"); fflush(stdout);
-			    {
-			      f2ptr event__note = raw__lick__object__as__note(cause, lick, event, note_object_hash, max_size);
-			      if (raw__larva__is_type(cause, event__note)) {
-				return event__note;
-			      }
-			      printf("\n  event 1.\n"); fflush(stdout);
-			      s64 event__note__i = f2integer__i(event__note, cause);
-			      raw__chunk__bit64__elt__set(cause, chunk, index * 8, (s64)(event__note__i));
-			    }
-			    index ++;
-			    );
-    if (index != size__i) {
-      return f2larva__new(cause, 23448, nil);
-    }
+  f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
+  f2ptr head                    = f2__redblacktree__head(cause, event_time_redblacktree);
+  f2ptr chunk                   = raw__chunk__new(cause, 8);
+  f2ptr head__note              = raw__lick__object__as__note(cause, lick, head, note_object_hash, max_size);
+  if (raw__larva__is_type(cause, head__note)) {
+    return head__note;
   }
+  s64 head__note__i = f2integer__i(head__note, cause);
+  raw__chunk__bit64__elt__set(cause, chunk, 0, (s64)(head__note__i));
   f2ptr lick_note = f2integer__new(cause, (s64)this);
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);
 }
@@ -325,7 +311,15 @@ export_cefunk4(event_stream__lick_to_chunk, this, lick, note_object_hash, max_si
 
 
 f2ptr raw__event_stream__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
-  f2ptr event_stream = f2__event_stream__new(cause);
+  f2ptr chunk         = raw__lick_chunk__chunk(cause, lick_chunk);
+  s64   chunk__length = raw__chunk__length(cause, chunk);
+  if (chunk__length != 8) {
+    return f2larva__new(cause, 32558, nil);
+  }
+  f2ptr event_stream            = f2__event_stream__new(cause);
+  f2ptr head__lick_note         = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 0));
+  f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, event_stream);
+  f2__redblacktree__head__set(cause, event_time_redblacktree, head__lick_note);
   return event_stream;
 }
 
@@ -340,23 +334,10 @@ export_cefunk2(event_stream__lick_chunk__unlick_with_notes, lick_chunk, object_n
 
 
 f2ptr raw__event_stream__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr lick_chunk, f2ptr object_note_hash) {
-  f2ptr chunk         = raw__lick_chunk__chunk(cause, lick_chunk);
-  s64   chunk__length = raw__chunk__length(cause, chunk);
-  if (((chunk__length >> 3) << 3) != chunk__length) {
-    return f2larva__new(cause, 32558, nil);
-  }
-  s64 event_stream__size = chunk__length >> 3;
-  printf("\n--size__i=" s64__fstr "\n", event_stream__size); fflush(stdout);
-  {
-    s64 index;
-    for (index = 0; index < event_stream__size; index ++) {
-      f2ptr event__lick_note = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, index * 8));
-      f2ptr event__object    = raw__ptypehash__lookup(cause, object_note_hash, event__lick_note);
-      printf("\n--event.\n"); fflush(stdout);
-      f2__print(cause, event__object);
-      raw__event_stream__add(cause, this, event__object);
-    }
-  }
+  f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
+  f2ptr head__lick_note         = f2__redblacktree__head(cause, event_time_redblacktree);
+  f2ptr head__object            = raw__ptypehash__lookup(cause, object_note_hash, head__lick_note);
+  f2__redblacktree__head__set(cause, event_time_redblacktree, head__object);
   return nil;
 }
 

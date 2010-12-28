@@ -1441,12 +1441,12 @@ GtkFileChooserDialog* funk2_gtk__file_chooser_dialog__new_for_file_open(funk2_gt
   GtkFileChooserDialog* file_chooser_dialog;
   {
     gdk_threads_enter();
-    file_chooser_dialog = GTK_FILE_CHOOSER(gtk_file_chooser_dialog_new ("Open File",
-									(GtkWindow*)parent_window,
-									GTK_FILE_CHOOSER_ACTION_OPEN,
-									GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-									GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-									NULL));
+    file_chooser_dialog = GTK_FILE_CHOOSER_DIALOG(gtk_file_chooser_dialog_new("Open File",
+									      (GtkWindow*)parent_window,
+									      GTK_FILE_CHOOSER_ACTION_OPEN,
+									      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+									      GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+									      NULL));
     gdk_threads_leave();
   }
   return file_chooser_dialog;
@@ -1456,12 +1456,12 @@ GtkFileChooserDialog* funk2_gtk__file_chooser_dialog__new_for_file_save(funk2_gt
   GtkFileChooserDialog* file_chooser_dialog;
   {
     gdk_threads_enter();
-    file_chooser_dialog = GTK_FILE_CHOOSER(gtk_file_chooser_dialog_new ("Save File",
-									(GtkWindow*)parent_window,
-									GTK_FILE_CHOOSER_ACTION_SAVE,
-									GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-									GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
-									NULL));
+    file_chooser_dialog = GTK_FILE_CHOOSER_DIALOG(gtk_file_chooser_dialog_new("Save File",
+									      (GtkWindow*)parent_window,
+									      GTK_FILE_CHOOSER_ACTION_SAVE,
+									      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+									      GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+									      NULL));
     gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(file_chooser_dialog), TRUE);
     gdk_threads_leave();
   }

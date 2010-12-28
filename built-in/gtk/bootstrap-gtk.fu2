@@ -141,6 +141,10 @@
 [deftypefunk gtk_menu get     widget []      this]
 [deftypefunk gtk_menu execute append [child] [gtk-menu-append [get this widget] [get child widget]]]
 
+'GtkFileChooserDialog'
+
+[deftypefunk gtk_file_chooser_dialog get widget [] this]
+
 'GtkScale'
 
 [deftypefunk gtk_scale set digits [digits] [gtk-scale-set_digits [get this widget] [get digits as-integer]]]

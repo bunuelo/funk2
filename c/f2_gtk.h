@@ -151,6 +151,11 @@ f2ptr f2gtk_menu_bar__primobject_type__new_aux(f2ptr cause);
 f2ptr f2gtk_menu__primobject_type__new_aux(f2ptr cause);
 
 
+// gtk_file_chooser_dialog
+
+f2ptr f2gtk_file_chooser_dialog__primobject_type__new_aux(f2ptr cause);
+
+
 // gtk_image
 
 f2ptr f2gtk_image__primobject_type__new_aux(f2ptr cause);

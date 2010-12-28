@@ -268,8 +268,8 @@ export_cefunk2(event_stream__remove, this, event_stream_event, 0, "Remove an eve
 
 
 f2ptr raw__event_stream__size(f2ptr cause, f2ptr this) {
-  f2ptr event_time_redblacktree = f2__event_stream__event_time_redblacktree(cause, this);
-  return raw__redblacktree__size(cause, event_time_redblacktree);
+  f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
+  return f2__redblacktree__size(cause, event_time_redblacktree);
 }
 
 f2ptr f2__event_stream__size(f2ptr cause, f2ptr this) {

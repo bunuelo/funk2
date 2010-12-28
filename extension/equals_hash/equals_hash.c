@@ -273,7 +273,7 @@ f2ptr f2__equals_hash__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chu
 export_cefunk2(equals_hash__lick_chunk__unlick_with_notes, lick_chunk, object_note_hash, 0, "Unlicks this equals_hash lick_chunk with notes.");
 
 
-f2ptr raw__equals_hash__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr object_note_hash) {
+f2ptr raw__equals_hash__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr lick_chunk, f2ptr object_note_hash) {
   f2ptr key_notes   = nil;
   f2ptr value_notes = nil;
   equals_hash__iteration(cause, this, key_note, value_note,
@@ -315,14 +315,15 @@ f2ptr raw__equals_hash__lick_chunk__unlick_replace_notes_with_objects(f2ptr caus
   return nil;
 }
 
-f2ptr f2__equals_hash__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr object_note_hash) {
+f2ptr f2__equals_hash__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr lick_chunk, f2ptr object_note_hash) {
   if ((! raw__equals_hash__is_type(cause, this)) ||
+      (! raw__lick_chunk__is_type(cause, lick_chunk)) ||
       (! raw__ptypehash__is_type(cause, object_note_hash))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__equals_hash__lick_chunk__unlick_replace_notes_with_objects(cause, this, object_note_hash);
+  return raw__equals_hash__lick_chunk__unlick_replace_notes_with_objects(cause, this, lick_chunk, object_note_hash);
 }
-export_cefunk2(equals_hash__lick_chunk__unlick_replace_notes_with_objects, this, object_note_hash, 0, "Unlicks this equals_hash with notes.");
+export_cefunk2(equals_hash__lick_chunk__unlick_replace_notes_with_objects, this, lick_chunk, object_note_hash, 0, "Unlicks this equals_hash with notes.");
 
 
 f2ptr f2__equals_hash_type__new(f2ptr cause) {

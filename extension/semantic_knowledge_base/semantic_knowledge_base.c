@@ -650,7 +650,7 @@ export_cefunk2(semantic_realm__add_semantic_knowledge_base, this, semantic_knowl
 
 f2ptr raw__semantic_realm__lookup_semantic_knowledge_base(f2ptr cause, f2ptr this, f2ptr name) {
   f2ptr semantic_knowledge_base_frame = raw__semantic_realm__semantic_knowledge_base_frame(cause, this);
-  return raw__ptypehash__lookup(cause, semantic_knowledge_base_frame, name);
+  return raw__frame__lookup_var_value(cause, semantic_knowledge_base_frame, name);
 }
 
 f2ptr f2__semantic_realm__lookup_semantic_knowledge_base(f2ptr cause, f2ptr this, f2ptr name) {

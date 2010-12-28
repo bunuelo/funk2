@@ -292,6 +292,7 @@ f2ptr raw__event_stream__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2pt
   {
     s64 index = 0;
     event_stream__iteration(cause, this, event,
+			    printf("\n  event.\n"); fflush(stdout);
 			    {
 			      f2ptr event__note = raw__lick__object__as__note(cause, lick, event, note_object_hash, max_size);
 			      if (raw__larva__is_type(cause, event__note)) {

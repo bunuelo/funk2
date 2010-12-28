@@ -322,13 +322,7 @@ export_cefunk4(event_stream__lick_to_chunk, this, lick, note_object_hash, max_si
 
 
 f2ptr raw__event_stream__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
-  f2ptr chunk         = raw__lick_chunk__chunk(cause, lick_chunk);
-  s64   chunk__length = raw__chunk__length(cause, chunk);
-  if (((chunk__length >> 3) << 3) != chunk__length) {
-    return f2larva__new(cause, 32558, nil);
-  }
-  s64   event_stream__size = chunk__length >> 3;
-  f2ptr event_stream       = f2__event_stream__new(cause);
+  f2ptr event_stream = f2__event_stream__new(cause);
   return event_stream;
 }
 

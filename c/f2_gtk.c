@@ -1481,7 +1481,7 @@ boolean_t funk2_gtk__file_chooser_dialog__set_current_folder(funk2_gtk_t* this, 
 void funk2_gtk__file_chooser_dialog__set_current_name(funk2_gtk_t* this, GtkFileChooserDialog* file_chooser_dialog, u8* current_name) {
   {
     gdk_threads_enter();
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(file_chooser_dialog), (char*)current_name) ? boolean__true : boolean__false;
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(file_chooser_dialog), (char*)current_name);
     gdk_threads_leave();
   }
 }

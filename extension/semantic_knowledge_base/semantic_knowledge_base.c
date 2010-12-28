@@ -648,6 +648,20 @@ f2ptr f2__semantic_realm__add_semantic_knowledge_base(f2ptr cause, f2ptr this, f
 export_cefunk2(semantic_realm__add_semantic_knowledge_base, this, semantic_knowledge_base, 0, "Adds a semantic knowledge base to this mental realm.");
 
 
+f2ptr raw__semantic_realm__lookup_semantic_knowledge_base(f2ptr cause, f2ptr this, f2ptr name) {
+  f2ptr semantic_knowledge_base_frame = raw__semantic_realm__semantic_knowledge_base_frame(cause, this);
+  return raw__ptypehash__lookup(cause, semantic_knowledge_base_frame, name);
+}
+
+f2ptr f2__semantic_realm__lookup_semantic_knowledge_base(f2ptr cause, f2ptr this, f2ptr name) {
+  if (! raw__semantic_realm__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_realm__lookup_semantic_knowledge_base(cause, this, name);
+}
+export_cefunk2(semantic_realm__lookup_semantic_knowledge_base, this, name, 0, "Given a name, looks up a semantic knowledge base from this mental realm.");
+
+
 f2ptr raw__semantic_realm__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -686,6 +700,7 @@ f2ptr f2__semantic_realm_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "object_key"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__object_key")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "key_count"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__key_count")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lookup_or_create_meta_relationship"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__lookup_or_create_meta_relationship")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lookup_semantic_knowledge_base"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__lookup_semantic_knowledge_base")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__terminal_print_with_frame")));}
   return this;
 }

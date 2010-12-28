@@ -287,6 +287,7 @@ export_cefunk1(event_stream__size, this, 0, "Returns the number of events in the
 f2ptr raw__event_stream__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr size    = f2__event_stream__size(cause, this);
   s64   size__i = f2integer__i(size, cause);
+  printf("\nsize__i=" s64__fstr "\n", size__i); fflush(stdout);
   f2ptr chunk   = raw__chunk__new(cause, size__i * 8);
   {
     s64 index = 0;

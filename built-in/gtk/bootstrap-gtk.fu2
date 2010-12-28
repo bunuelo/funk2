@@ -143,7 +143,10 @@
 
 'GtkFileChooserDialog'
 
-[deftypefunk gtk_file_chooser_dialog get widget [] this]
+[deftypefunk gtk_file_chooser_dialog get widget         []             this]
+[deftypefunk gtk_file_chooser_dialog set current_folder [filename]     [gtk-file_chooser_dialog-set_current_folder [get this widget] filename]]
+[deftypefunk gtk_file_chooser_dialog set current_name   [current_name] [gtk-file_chooser_dialog-set_current_name   [get this widget] current_name]]
+[deftypefunk gtk_file_chooser_dialog set filename       [filename]     [gtk-file_chooser_dialog-set_filename       [get this widget] filename]]
 
 'GtkScale'
 

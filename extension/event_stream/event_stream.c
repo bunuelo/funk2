@@ -292,12 +292,13 @@ f2ptr raw__event_stream__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2pt
   {
     s64 index = 0;
     event_stream__iteration(cause, this, event,
-			    printf("\n  event.\n"); fflush(stdout);
+			    printf("\n  event 0.\n"); fflush(stdout);
 			    {
 			      f2ptr event__note = raw__lick__object__as__note(cause, lick, event, note_object_hash, max_size);
 			      if (raw__larva__is_type(cause, event__note)) {
 				return event__note;
 			      }
+			      printf("\n  event 1.\n"); fflush(stdout);
 			      s64 event__note__i = f2integer__i(event__note, cause);
 			      raw__chunk__bit64__elt__set(cause, chunk, index * 8, (s64)(event__note__i));
 			    }
@@ -345,6 +346,7 @@ f2ptr raw__event_stream__lick_chunk__unlick_replace_notes_with_objects(f2ptr cau
     return f2larva__new(cause, 32558, nil);
   }
   s64 event_stream__size = chunk__length >> 3;
+  printf("\n--size__i=" s64__fstr "\n", event_stream__size); fflush(stdout);
   {
     s64 index;
     for (index = 0; index < event_stream__size; index ++) {

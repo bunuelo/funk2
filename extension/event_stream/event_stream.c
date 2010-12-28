@@ -329,13 +329,6 @@ f2ptr raw__event_stream__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_c
   }
   s64   event_stream__size = chunk__length >> 3;
   f2ptr event_stream       = f2__event_stream__new(cause);
-  {
-    s64 index;
-    for (index = 0; index < event_stream__size; index ++) {
-      f2ptr event__lick_note = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, index * 8));
-      raw__event_stream__add(cause, event_stream, event__lick_note);
-    }
-  }
   return event_stream;
 }
 

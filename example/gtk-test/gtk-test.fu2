@@ -109,6 +109,9 @@
 	  [funk []
 		[terminal_format standard-terminal '\n  open button clicked.']
 		[let [[open_dialog [gtk-file_chooser_dialog-new_for_file_open nil]]]
+		  [have open_dialog signal_connect 'response'
+			[funk []
+			      [have open_dialog destroy]]]
 		  [have open_dialog show_all]
 		  ]]]
     
@@ -118,6 +121,9 @@
 		[let [[save_dialog [gtk-file_chooser_dialog-new_for_file_save nil]]]
 		  [set  save_dialog current_name   'Untitled Document']
 		  [set  save_dialog current_folder [getenv 'HOME']]
+		  [have save_dialog signal_connect 'response'
+			[funk []
+			      [have save_dialog destroy]]]
 		  [have save_dialog show_all]
 		  ]]]
     

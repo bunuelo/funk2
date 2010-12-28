@@ -66,6 +66,11 @@ f2ptr      f2__event_stream__size                        (f2ptr cause, f2ptr thi
 f2ptr f2__event_stream_type__new(f2ptr cause);
 
 
+#define event_stream__iteration(cause, this, event, code) {		\
+    redblacktree__iteration(cause, f2__event_stream__event_time_redblacktree(cause, this), event, code); \
+  }
+
+
 // **
 
 f2ptr f2__event_stream__core_extension_ping(f2ptr cause);

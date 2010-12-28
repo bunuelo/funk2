@@ -403,6 +403,29 @@ f2ptr f2gtk_menu_bar__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// gtk_file_chooser_dialog
+
+def_frame_object__global__1_slot(gtk_file_chooser_dialog, pointer);
+
+f2ptr f2__gtk_file_chooser_dialog__new(f2ptr cause, f2ptr pointer) {
+  return f2gtk_file_chooser_dialog__new(cause, pointer);
+}
+
+#if defined(F2__GTK__SUPPORTED)
+
+GtkFileChooserDialog* raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(f2ptr cause, f2ptr this) {
+  return (GtkFileChooserDialog*)from_ptr(f2pointer__p(f2__gtk_file_chooser_dialog__pointer(cause, this), cause));
+}
+
+#endif // F2__GTK__SUPPORTED
+
+f2ptr f2gtk_file_chooser_dialog__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2gtk_file_chooser_dialog__primobject_type__new(cause);
+  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  return this;
+}
+
+
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -1410,6 +1433,41 @@ void funk2_gtk__menu__append(funk2_gtk_t* this, GtkMenu* menu, GtkWidget* append
     gdk_threads_leave();
   }
 }
+
+
+// file_chooser_dialog
+
+GtkFileChooserDialog* funk2_gtk__file_chooser_dialog__new_for_file_open(funk2_gtk_t* this, GtkWidget* parent_window) {
+  GtkFileChooserDialog* file_chooser_dialog;
+  {
+    gdk_threads_enter();
+    file_chooser_dialog = GTK_FILE_CHOOSER(gtk_file_chooser_dialog_new ("Open File",
+									parent_window,
+									GTK_FILE_CHOOSER_ACTION_OPEN,
+									GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+									GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+									NULL));
+    gdk_threads_leave();
+  }
+  return file_chooser_dialog;
+}
+
+GtkFileChooserDialog* funk2_gtk__file_chooser_dialog__new_for_file_save(funk2_gtk_t* this, GtkWidget* parent_window) {
+  GtkFileChooserDialog* file_chooser_dialog;
+  {
+    gdk_threads_enter();
+    file_chooser_dialog = GTK_FILE_CHOOSER(gtk_file_chooser_dialog_new ("Save File",
+									parent_window,
+									GTK_FILE_CHOOSER_ACTION_SAVE,
+									GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+									GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+									NULL));
+    gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(file_chooser_dialog), TRUE);
+    gdk_threads_leave();
+  }
+  return file_chooser_dialog;
+}
+
 
 
 #endif // F2__GTK__SUPPORTED
@@ -3783,6 +3841,66 @@ f2ptr f2__gtk__menu__append(f2ptr cause, f2ptr menu, f2ptr append_widget) {
 def_pcfunk2(gtk__menu__append, menu, append_widget, return f2__gtk__menu__append(this_cause, menu, append_widget));
 
 
+// file_chooser_dialog
+
+f2ptr raw__gtk__file_chooser_dialog__new_for_file_open(f2ptr cause, f2ptr parent_window) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_parent_window;
+    if (parent_window == nil) {
+      gtk_parent_window = NULL;
+    } else {
+      gtk_parent_window = raw__gtk_widget__as__GtkWidget(cause, parent_window);
+    }
+    GtkFileChooserDialog* file_chooser_dialog = funk2_gtk__file_chooser_dialog__new_for_file_open(&(__funk2.gtk), gtk_parent_window);
+    return f2__gtk_file_chooser_dialog__new(cause, f2pointer__new(cause, to_ptr(file_chooser_dialog)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__file_chooser_dialog__new_for_file_open(f2ptr cause, f2ptr parent_window) {
+  if ((parent_window != nil) && (! raw__gtk_widget__is_type(cause, parent_window))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__file_chooser_dialog__new_for_file_open(cause, parent_window);
+}
+def_pcfunk1(gtk__file_chooser_dialog__new_for_file_open, parent_window, return f2__gtk__file_chooser_dialog__new_for_file_open(this_cause, parent_window));
+
+
+f2ptr raw__gtk__file_chooser_dialog__new_for_file_save(f2ptr cause, f2ptr parent_window) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_parent_window;
+    if (parent_window == nil) {
+      gtk_parent_window = NULL;
+    } else {
+      gtk_parent_window = raw__gtk_widget__as__GtkWidget(cause, parent_window);
+    }
+    GtkFileChooserDialog* file_chooser_dialog = funk2_gtk__file_chooser_dialog__new_for_file_save(&(__funk2.gtk), gtk_parent_window);
+    return f2__gtk_file_chooser_dialog__new(cause, f2pointer__new(cause, to_ptr(file_chooser_dialog)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__file_chooser_dialog__new_for_file_save(f2ptr cause, f2ptr parent_window) {
+  if ((parent_window != nil) && (! raw__gtk_widget__is_type(cause, parent_window))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__file_chooser_dialog__new_for_file_save(cause, parent_window);
+}
+def_pcfunk1(gtk__file_chooser_dialog__new_for_file_save, parent_window, return f2__gtk__file_chooser_dialog__new_for_file_save(this_cause, parent_window));
+
+
+// gdk_keyval
+
 f2ptr raw__gtk__gdk_keyval_to_unicode(f2ptr cause, f2ptr keyval) {
 #if defined(F2__GTK__SUPPORTED)
   u64   keyval__i  = f2integer__i(keyval, cause);
@@ -4270,6 +4388,11 @@ void f2__gtk__initialize() {
   
   f2__primcfunk__init__0(gtk__menu_bar__new,                          "Returns a new GtkMenuBar.");
   f2__primcfunk__init__2(gtk__menu_bar__append, menu_bar, add_widget, "Appends a widget to a menu_bar.");
+  
+  // file_chooser_dialog
+  
+  f2__primcfunk__init__1(gtk__file_chooser_dialog__new_for_file_open, parent_window, "Given a parent_window, which can be nil, returns a new GtkFileChooserDialog for opening a file.");
+  f2__primcfunk__init__1(gtk__file_chooser_dialog__new_for_file_save, parent_window, "Given a parent_window, which can be nil, returns a new GtkFileChooserDialog for saving a file.");
   
   // menu_item
   

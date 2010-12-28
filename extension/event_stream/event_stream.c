@@ -283,7 +283,6 @@ export_cefunk1(event_stream__size, this, 0, "Returns the number of events in the
 
 // event_stream lick funks
 
-/*
 f2ptr raw__event_stream__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr size    = f2__event_stream__size(cause, this);
   s64   size__i = f2integer__i(size, cause);
@@ -349,56 +348,34 @@ f2ptr f2__event_stream__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_ch
 export_cefunk2(event_stream__lick_chunk__unlick_with_notes, lick_chunk, object_note_hash, 0, "Unlicks this event_stream lick_chunk with notes.");
 
 
-f2ptr raw__event_stream__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr object_note_hash) {
-  f2ptr key_notes   = nil;
-  f2ptr value_notes = nil;
-  event_stream__iteration(cause, this, event_note,
-			  event_notes = f2cons__new(cause, event_note, event_notes);
-			  );
-  f2ptr event_objects   = nil;
-  f2ptr value_objects = nil;
-  {
-    f2ptr key_note_iter   = key_notes;
-    f2ptr value_note_iter = value_notes;
-    while (key_note_iter != nil) {
-      f2ptr key_note   = f2__cons__car(cause, key_note_iter);
-      f2ptr value_note = f2__cons__car(cause, value_note_iter);
-      {
-	f2ptr key_object   = raw__ptypehash__lookup(cause, object_note_hash, key_note);
-	f2ptr value_object = raw__ptypehash__lookup(cause, object_note_hash, value_note);
-	key_objects   = f2cons__new(cause, key_object,   key_objects);
-	value_objects = f2cons__new(cause, value_object, value_objects);
-	raw__event_stream__remove(cause, this, key_note);
-      }
-      key_note_iter   = f2__cons__cdr(cause, key_note_iter);
-      value_note_iter = f2__cons__cdr(cause, value_note_iter);
-    }
+f2ptr raw__event_stream__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr lick_chunk, f2ptr object_note_hash) {
+  f2ptr chunk         = raw__lick_chunk__chunk(cause, lick_chunk);
+  s64   chunk__length = raw__chunk__length(cause, chunk);
+  if (((chunk__length >> 3) << 3) != chunk__length) {
+    return f2larva__new(cause, 32558, nil);
   }
+  s64   event_stream__size = chunk__length >> 3;
+  f2ptr event_stream       = f2__event_stream__new(cause);
   {
-    f2ptr key_object_iter   = key_objects;
-    f2ptr value_object_iter = value_objects;
-    while (key_object_iter != nil) {
-      f2ptr key_object   = f2__cons__car(cause, key_object_iter);
-      f2ptr value_object = f2__cons__car(cause, value_object_iter);
-      {
-	raw__event_stream__add(cause, this, key_object, value_object);
-      }
-      key_object_iter   = f2__cons__cdr(cause, key_object_iter);
-      value_object_iter = f2__cons__cdr(cause, value_object_iter);
+    s64 index;
+    for (index = 0; index < event_stream__size; index ++) {
+      f2ptr event__lick_note = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, index * 8));
+      f2ptr event__object    = raw__ptypehash__lookup(cause, object_note_hash, event__lick_note);
+      raw__event_stream__add(cause, event_stream, event__object);
     }
   }
   return nil;
 }
 
-f2ptr f2__event_stream__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr object_note_hash) {
+f2ptr f2__event_stream__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr lick_chunk, f2ptr object_note_hash) {
   if ((! raw__event_stream__is_type(cause, this)) ||
+      (! raw__lick_chunk__is_type(cause, lick_chunk)) ||
       (! raw__ptypehash__is_type(cause, object_note_hash))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__event_stream__lick_chunk__unlick_replace_notes_with_objects(cause, this, object_note_hash);
+  return raw__event_stream__lick_chunk__unlick_replace_notes_with_objects(cause, this, lick_chunk, object_note_hash);
 }
-export_cefunk2(event_stream__lick_chunk__unlick_replace_notes_with_objects, this, object_note_hash, 0, "Unlicks this event_stream with notes.");
-*/
+export_cefunk3(event_stream__lick_chunk__unlick_replace_notes_with_objects, this, lick_chunk, object_note_hash, 0, "Unlicks this event_stream with notes.");
 
 
 f2ptr f2__event_stream_type__new(f2ptr cause) {

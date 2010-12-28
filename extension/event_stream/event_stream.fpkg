@@ -18,6 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage event_stream
-  :packages []
+  :packages [lick]
    :sources ['event_stream-core.fu2']]
 

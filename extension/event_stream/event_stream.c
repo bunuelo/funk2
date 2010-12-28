@@ -342,14 +342,13 @@ f2ptr raw__event_stream__lick_chunk__unlick_replace_notes_with_objects(f2ptr cau
   if (((chunk__length >> 3) << 3) != chunk__length) {
     return f2larva__new(cause, 32558, nil);
   }
-  s64   event_stream__size = chunk__length >> 3;
-  f2ptr event_stream       = f2__event_stream__new(cause);
+  s64 event_stream__size = chunk__length >> 3;
   {
     s64 index;
     for (index = 0; index < event_stream__size; index ++) {
       f2ptr event__lick_note = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, index * 8));
       f2ptr event__object    = raw__ptypehash__lookup(cause, object_note_hash, event__lick_note);
-      raw__event_stream__add(cause, event_stream, event__object);
+      raw__event_stream__add(cause, this, event__object);
     }
   }
   return nil;

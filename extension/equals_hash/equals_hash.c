@@ -323,7 +323,7 @@ f2ptr f2__equals_hash__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause
   }
   return raw__equals_hash__lick_chunk__unlick_replace_notes_with_objects(cause, this, lick_chunk, object_note_hash);
 }
-export_cefunk2(equals_hash__lick_chunk__unlick_replace_notes_with_objects, this, lick_chunk, object_note_hash, 0, "Unlicks this equals_hash with notes.");
+export_cefunk3(equals_hash__lick_chunk__unlick_replace_notes_with_objects, this, lick_chunk, object_note_hash, 0, "Unlicks this equals_hash with notes.");
 
 
 f2ptr f2__equals_hash_type__new(f2ptr cause) {

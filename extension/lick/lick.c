@@ -858,7 +858,7 @@ f2ptr f2__double__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2p
   }
   return raw__double__lick_chunk__unlick_replace_notes_with_objects(cause, this, lick_chunk, object_note_hash);
 }
-export_cefunk2(double__lick_chunk__unlick_replace_notes_with_objects, this, lick_chunk, object_note_hash, 0, "Unlicks this double with notes.");
+export_cefunk3(double__lick_chunk__unlick_replace_notes_with_objects, this, lick_chunk, object_note_hash, 0, "Unlicks this double with notes.");
 
 
 // pointer lick funks
@@ -1232,7 +1232,7 @@ f2ptr f2__chunk__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2pt
   }
   return raw__chunk__lick_chunk__unlick_replace_notes_with_objects(cause, this, lick_chunk, object_note_hash);
 }
-export_cefunk2(chunk__lick_chunk__unlick_replace_notes_with_objects, this, lick_chunk, object_note_hash, 0, "Unlicks this chunk with notes.");
+export_cefunk3(chunk__lick_chunk__unlick_replace_notes_with_objects, this, lick_chunk, object_note_hash, 0, "Unlicks this chunk with notes.");
 
 
 // array lick funks

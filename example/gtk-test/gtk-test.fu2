@@ -108,14 +108,14 @@
     [have open_button signal_connect 'clicked'
 	  [funk []
 		[terminal_format standard-terminal '\n  open button clicked.']
-		[let [[open_dialog [gtk-file_chooser_dialog-new_for_open_file nil]]]
+		[let [[open_dialog [gtk-file_chooser_dialog-new_for_file_open nil]]]
 		  [have open_dialog show_all]
 		  ]]]
     
     [have save_button signal_connect 'clicked'
 	  [funk []
 		[terminal_format standard-terminal '\n  save button clicked.']
-		[let [[save_dialog [gtk-file_chooser_dialog-new_for_save_file nil]]]
+		[let [[save_dialog [gtk-file_chooser_dialog-new_for_file_save nil]]]
 		  [have save_dialog show_all]
 		  ]]]
     

@@ -3929,7 +3929,7 @@ def_pcfunk1(gtk__file_chooser_dialog__new_for_file_save, parent_window, return f
 f2ptr raw__gtk__file_chooser_dialog__set_current_folder(f2ptr cause, f2ptr this, f2ptr filename) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
-    GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, parent_window);
+    GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
     s64 filename__length = raw__string__length(cause, filename);
     u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
     raw__string__str_copy(cause, filename, filename__str);
@@ -3958,7 +3958,7 @@ def_pcfunk2(gtk__file_chooser_dialog__set_current_folder, this, filename, return
 f2ptr raw__gtk__file_chooser_dialog__set_current_name(f2ptr cause, f2ptr this, f2ptr current_name) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
-    GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, parent_window);
+    GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
     s64 current_name__length = raw__string__length(cause, current_name);
     u8* current_name__str    = (u8*)from_ptr(f2__malloc(current_name__length + 1));
     raw__string__str_copy(cause, current_name, current_name__str);
@@ -3987,7 +3987,7 @@ def_pcfunk2(gtk__file_chooser_dialog__set_current_name, this, current_name, retu
 f2ptr raw__gtk__file_chooser_dialog__set_filename(f2ptr cause, f2ptr this, f2ptr filename) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
-    GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, parent_window);
+    GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
     s64 filename__length = raw__string__length(cause, filename);
     u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
     raw__string__str_copy(cause, filename, filename__str);

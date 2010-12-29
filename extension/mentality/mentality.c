@@ -173,9 +173,6 @@ f2ptr f2__mentality__new(f2ptr cause) {
   // file_save_project_menu_item
   f2__gtk__menu__append(cause, file_menu, file_save_project_menu_item);
   
-  // file_open_project_menu_item
-  f2__gtk__menu__append(cause, file_menu, file_open_project_menu_item);
-  
   // file_exit_menu_item
   f2__gtk__menu__append(cause, file_menu, file_exit_menu_item);
   

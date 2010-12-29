@@ -144,13 +144,14 @@
 
 'GtkFileChooserDialog'
 
-[deftypefunk gtk_file_chooser_dialog get widget          []                this]
-[deftypefunk gtk_file_chooser_dialog set current_folder  [filename]        [gtk-file_chooser_dialog-set_current_folder  [get this widget] filename]]
-[deftypefunk gtk_file_chooser_dialog set current_name    [current_name]    [gtk-file_chooser_dialog-set_current_name    [get this widget] current_name]]
-[deftypefunk gtk_file_chooser_dialog set filename        [filename]        [gtk-file_chooser_dialog-set_filename        [get this widget] filename]]
-[deftypefunk gtk_file_chooser_dialog get filenames       []                [gtk-file_chooser_dialog-get_filenames       [get this widget]]]
-[deftypefunk gtk_file_chooser_dialog get filename        []                [first [get this filenames]]]
-[deftypefunk gtk_file_chooser_dialog set select_multiple [select_multiple] [gtk-file_chooser_dialog-set_select_multiple [get this widget] select_multiple]]
+[deftypefunk gtk_file_chooser_dialog get     widget                  []                this]
+[deftypefunk gtk_file_chooser_dialog set     current_folder          [filename]        [gtk-file_chooser_dialog-set_current_folder  [get this widget] filename]]
+[deftypefunk gtk_file_chooser_dialog set     current_name            [current_name]    [gtk-file_chooser_dialog-set_current_name    [get this widget] current_name]]
+[deftypefunk gtk_file_chooser_dialog set     filename                [filename]        [gtk-file_chooser_dialog-set_filename        [get this widget] filename]]
+[deftypefunk gtk_file_chooser_dialog get     filenames               []                [gtk-file_chooser_dialog-get_filenames       [get this widget]]]
+[deftypefunk gtk_file_chooser_dialog get     filename                []                [first [get this filenames]]]
+[deftypefunk gtk_file_chooser_dialog set     select_multiple         [select_multiple] [gtk-file_chooser_dialog-set_select_multiple [get this widget] select_multiple]]
+[deftypefunk gtk_file_chooser_dialog execute add_file_filter_pattern [pattern]         [gtk-file_chooser_dialog-add_file_filter_pattern [get this widget] pattern]]
 
 'GtkScale'
 

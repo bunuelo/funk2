@@ -112,6 +112,10 @@
 		  [have open_dialog response_event-signal_connect
 			[funk [event_frame]
 			      [terminal_format standard-terminal '\nresponse event frame: ' event_frame]
+			      [let [[response_id [have event_frame lookup `response_id]]]
+				[if [eq response_id GTK_RESPONSE_OK]
+				    [prog [terminal_format '\ngot ok response.']
+					  ]]]
 			      [have open_dialog destroy]]]
 		  [have open_dialog show_all]
 		  ]]]
@@ -125,6 +129,10 @@
 		  [have save_dialog response_event-signal_connect
 			[funk [event_frame]
 			      [terminal_format standard-terminal '\nresponse event frame: ' event_frame]
+			      [let [[response_id [have event_frame lookup `response_id]]]
+				[if [eq response_id GTK_RESPONSE_OK]
+				    [prog [terminal_format '\ngot ok response.']
+					  ]]]
 			      [have save_dialog destroy]]]
 		  [have save_dialog show_all]
 		  ]]]

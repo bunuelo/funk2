@@ -23,7 +23,7 @@
 #define F2__EXTENSION__MENTALITY__H
 
 f2ptr     raw__mentality__new(       f2ptr cause, f2ptr width);
-f2ptr      f2__mentality__new(       f2ptr cause, f2ptr width);
+f2ptr      f2__mentality__new(       f2ptr cause);
 boolean_t raw__mentality__is_type(   f2ptr cause, f2ptr thing);
 f2ptr      f2__mentality__is_type(   f2ptr cause, f2ptr thing);
 f2ptr     raw__mentality__type(      f2ptr cause, f2ptr this);

@@ -163,19 +163,19 @@ f2ptr f2__mentality__new(f2ptr cause) {
   f2__gtk__menu_item__set_submenu(cause, file_menu_item, file_menu);
   
   // file_open_project_menu_item
-  f2__gtk__menu_item__append(cause, file_menu, file_open_project_menu_item);
+  f2__gtk__menu__append(cause, file_menu, file_open_project_menu_item);
   
   // file_close_project_menu_item
-  f2__gtk__menu_item__append(cause, file_menu, file_close_project_menu_item);
+  f2__gtk__menu__append(cause, file_menu, file_close_project_menu_item);
   
   // file_save_project_menu_item
-  f2__gtk__menu_item__append(cause, file_menu, file_save_project_menu_item);
+  f2__gtk__menu__append(cause, file_menu, file_save_project_menu_item);
   
   // file_open_project_menu_item
-  f2__gtk__menu_item__append(cause, file_menu, file_open_project_menu_item);
+  f2__gtk__menu__append(cause, file_menu, file_open_project_menu_item);
   
   // file_exit_menu_item
-  f2__gtk__menu_item__append(cause, file_menu, file_exit_menu_item);
+  f2__gtk__menu__append(cause, file_menu, file_exit_menu_item);
   
   
   f2__gtk__widget__show_all(cause, main_window);

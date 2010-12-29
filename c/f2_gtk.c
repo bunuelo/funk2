@@ -608,9 +608,11 @@ void funk2_gtk__key_press_event__signal_connect(funk2_gtk_t* this, GtkWidget* wi
 
 // response_event
 
-void funk2_gtk__response_event__signal_connect__callback_handler(GtkWidget* widget, gpointer data) {
+void funk2_gtk__response_event__signal_connect__callback_handler(GtkWidget* widget, gint gtk_response_id, gpointer data) {
   funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)data;
-  funk2_gtk__add_callback_event(&(__funk2.gtk), callback, NULL);
+  s64* response_id = (s64*)from_ptr(f2__malloc(sizeof(s64)));
+  *response_id = (s64)gtk_response_id;
+  funk2_gtk__add_callback_event(&(__funk2.gtk), callback, response_id);
 }
 
 void funk2_gtk__response_event__signal_connect(funk2_gtk_t* this, GtkWidget* widget, f2ptr funk) {
@@ -628,11 +630,9 @@ void funk2_gtk__response_event__signal_connect(funk2_gtk_t* this, GtkWidget* wid
 
 // update_preview_event
 
-void funk2_gtk__update_preview_event__signal_connect__callback_handler(GtkWidget* widget, gint gtk_update_preview_id, gpointer data) {
+void funk2_gtk__update_preview_event__signal_connect__callback_handler(GtkWidget* widget, gpointer data) {
   funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)data;
-  s64* update_preview_id = (s64*)from_ptr(f2__malloc(sizeof(s64)));
-  *update_preview_id = (s64)gtk_update_preview_id;
-  funk2_gtk__add_callback_event(&(__funk2.gtk), callback, update_preview_id);
+  funk2_gtk__add_callback_event(&(__funk2.gtk), callback, NULL);
 }
 
 void funk2_gtk__update_preview_event__signal_connect(funk2_gtk_t* this, GtkWidget* widget, f2ptr funk) {
@@ -642,7 +642,7 @@ void funk2_gtk__update_preview_event__signal_connect(funk2_gtk_t* this, GtkWidge
   funk2_gtk__add_callback(this, callback);
   {
     gdk_threads_enter();
-    g_signal_connect(G_OBJECT(widget), "update_preview", G_CALLBACK(funk2_gtk__update_preview_event__signal_connect__callback_handler), callback);
+    g_signal_connect(G_OBJECT(widget), "update-preview", G_CALLBACK(funk2_gtk__update_preview_event__signal_connect__callback_handler), callback);
     gdk_threads_leave();
   }
 }

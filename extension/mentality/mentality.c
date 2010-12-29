@@ -179,7 +179,16 @@ f2ptr f2__mentality__new(f2ptr cause) {
   
   
   f2__gtk__widget__show_all(cause, main_window);
-  return raw__mentality__new(cause, main_window);
+  return raw__mentality__new(cause,
+			     main_window,
+			     menu_bar_vbox,
+			     menu_bar,
+			     file_menu_item,
+			     file_menu,
+			     file_open_project_menu_item,
+			     file_close_project_menu_item,
+			     file_save_project_menu_item,
+			     file_exit_menu_item);
 }
 export_cefunk0(mentality__new, 0, "Returns a new mentality object.");
 

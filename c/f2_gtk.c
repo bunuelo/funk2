@@ -607,6 +607,28 @@ void funk2_gtk__key_press_event__signal_connect(funk2_gtk_t* this, GtkWidget* wi
 }
 
 
+// response_event
+
+void funk2_gtk__response_event__signal_connect__callback_handler(GtkWidget* widget, gint gtk_response_id, gpointer data) {
+  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)data;
+  s64* response_id = (s64*)from_ptr(f2__malloc(sizeof(s64)));
+  *response_id = (s64)gtk_response_id;
+  funk2_gtk__add_callback_event(&(__funk2.gtk), callback, response_id);
+}
+
+void funk2_gtk__response_event__signal_connect(funk2_gtk_t* this, GtkWidget* widget, f2ptr funk) {
+  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_t)));
+  callback->funk      = funk;
+  callback->args_type = funk2_gtk_callback_args_type__response;
+  funk2_gtk__add_callback(this, callback);
+  {
+    gdk_threads_enter();
+    g_signal_connect(G_OBJECT(widget), "response", G_CALLBACK(funk2_gtk__response_event__signal_connect__callback_handler), callback);
+    gdk_threads_leave();
+  }
+}
+
+
 // object
 
 void funk2_gtk__object__unref(funk2_gtk_t* this, GObject* object) {
@@ -2019,6 +2041,32 @@ f2ptr f2__gtk__key_press_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr 
 def_pcfunk2(gtk__key_press_event__signal_connect, widget, funk, return f2__gtk__key_press_event__signal_connect(this_cause, widget, funk));
 
 
+// response_event
+
+f2ptr raw__gtk__response_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    funk2_gtk__response_event__signal_connect(&(__funk2.gtk), gtk_widget, funk);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__response_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk) {
+  if ((! raw__gtk_widget__is_type(cause, widget)) ||
+      (! raw__funkable__is_type(  cause, funk))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__response_event__signal_connect(cause, widget, funk);
+}
+def_pcfunk2(gtk__response_event__signal_connect, widget, funk, return f2__gtk__response_event__signal_connect(this_cause, widget, funk));
+
+
 // works for 'clicked' event but not 'expose_event'
 
 f2ptr raw__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk) {
@@ -2559,6 +2607,13 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 								    new__symbol(cause, "group"),            f2integer__new(cause, key->group),
 								    new__symbol(cause, "is_modifier"),      f2bool__new(key->is_modifier)));
 	f2__free(to_ptr(key));
+	args = f2cons__new(cause, key_event_frame, nil);
+      } break;
+      case funk2_gtk_callback_args_type__response: {
+	gint* response_id     = (gint*)(callback_event->args);
+	f2ptr key_event_frame = f2__frame__new(cause, f2list2__new(cause,
+								   new__symbol(cause, "response_id"), f2integer__new(cause, *response_id)));
+	f2__free(to_ptr(response_id));
 	args = f2cons__new(cause, key_event_frame, nil);
       } break;
       default:
@@ -4365,6 +4420,10 @@ void f2__gtk__initialize() {
   // key_press_event
   
   f2__primcfunk__init__2(gtk__key_press_event__signal_connect,    widget, funk,                                          "Connects an key_press_event signal handler to a GtkWidget.");
+  
+  // response_event
+  
+  f2__primcfunk__init__2(gtk__response_event__signal_connect,     widget, funk,                                          "Connects an response_event signal handler to a GtkWidget.");
   
   // widget
   

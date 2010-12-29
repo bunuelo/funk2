@@ -27,6 +27,10 @@
 
 [globalize-funk gtk-key_press_event-signal_connect         &primfunk:gtk__key_press_event__signal_connect]
 
+'response_event'
+
+[globalize-funk gtk-response_event-signal_connect          &primfunk:gtk__response_event__signal_connect]
+
 
 'widget'
 

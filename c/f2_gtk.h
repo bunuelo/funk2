@@ -35,7 +35,8 @@ typedef struct funk2_gtk_s                     funk2_gtk_t;
 enum funk2_gtk_callback_args_type_e {
   funk2_gtk_callback_args_type__nil = 0,
   funk2_gtk_callback_args_type__expose,
-  funk2_gtk_callback_args_type__key_press
+  funk2_gtk_callback_args_type__key_press,
+  funk2_gtk_callback_args_type__response
 };
 
 struct funk2_gtk_callback_s {

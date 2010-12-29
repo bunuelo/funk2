@@ -2722,10 +2722,10 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 	args = f2cons__new(cause, key_event_frame, nil);
       } break;
       case funk2_gtk_callback_args_type__response: {
-	gint* update_preview_id = (gint*)(callback_event->args);
+	gint* response_id = (gint*)(callback_event->args);
 	f2ptr key_event_frame = f2__frame__new(cause, f2list2__new(cause,
-								   new__symbol(cause, "update_preview_id"), f2integer__new(cause, *update_preview_id)));
-	f2__free(to_ptr(update_preview_id));
+								   new__symbol(cause, "response_id"), f2integer__new(cause, *response_id)));
+	f2__free(to_ptr(response_id));
 	args = f2cons__new(cause, key_event_frame, nil);
       } break;
       case funk2_gtk_callback_args_type__update_preview: {

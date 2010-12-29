@@ -4089,6 +4089,25 @@ f2ptr f2__gtk__gdk_keyval_to_unicode(f2ptr cause, f2ptr keyval) {
 def_pcfunk1(gtk__gdk_keyval_to_unicode, keyval, return f2__gtk__gdk_keyval_to_unicode(this_cause, keyval));
 
 
+f2ptr f2__gtk__responses_frame__new(f2ptr cause) {
+  f2ptr responses_frame = f2__frame__new(cause, nil);
+#if defined(F2__GTK__SUPPORTED)
+  f2__frame__add_var_value(cause, responses_frame, new__symbol(cause, "GTK_RESPONSE_NONE"),         f2integer__new(cause, GTK_RESPONSE_NONE));
+  f2__frame__add_var_value(cause, responses_frame, new__symbol(cause, "GTK_RESPONSE_REJECT"),       f2integer__new(cause, GTK_RESPONSE_REJECT));
+  f2__frame__add_var_value(cause, responses_frame, new__symbol(cause, "GTK_RESPONSE_ACCEPT"),       f2integer__new(cause, GTK_RESPONSE_ACCEPT));
+  f2__frame__add_var_value(cause, responses_frame, new__symbol(cause, "GTK_RESPONSE_DELETE_EVENT"), f2integer__new(cause, GTK_RESPONSE_DELETE_EVENT));
+  f2__frame__add_var_value(cause, responses_frame, new__symbol(cause, "GTK_RESPONSE_OK"),           f2integer__new(cause, GTK_RESPONSE_OK));
+  f2__frame__add_var_value(cause, responses_frame, new__symbol(cause, "GTK_RESPONSE_CANCEL"),       f2integer__new(cause, GTK_RESPONSE_CANCEL));
+  f2__frame__add_var_value(cause, responses_frame, new__symbol(cause, "GTK_RESPONSE_CLOSE"),        f2integer__new(cause, GTK_RESPONSE_CLOSE));
+  f2__frame__add_var_value(cause, responses_frame, new__symbol(cause, "GTK_RESPONSE_YES"),          f2integer__new(cause, GTK_RESPONSE_YES));
+  f2__frame__add_var_value(cause, responses_frame, new__symbol(cause, "GTK_RESPONSE_NO"),           f2integer__new(cause, GTK_RESPONSE_NO));
+  f2__frame__add_var_value(cause, responses_frame, new__symbol(cause, "GTK_RESPONSE_APPLY"),        f2integer__new(cause, GTK_RESPONSE_APPLY));
+  f2__frame__add_var_value(cause, responses_frame, new__symbol(cause, "GTK_RESPONSE_HELP"),         f2integer__new(cause, GTK_RESPONSE_HELP));
+#endif
+  return responses_frame;
+}
+def_pcfunk0(gtk__responses_frame__new, return f2__gtk__responses_frame__new(this_cause));
+
 f2ptr f2__gtk__gdk_keysyms_frame__new(f2ptr cause) {
   f2ptr gdk_keysyms_frame = f2__frame__new(cause, nil);
 #if defined(F2__GTK__SUPPORTED)
@@ -4585,9 +4604,13 @@ void f2__gtk__initialize() {
   
   f2__primcfunk__init__1(gtk__gdk_keyval_to_unicode, keyval, "converts a keyval integer to a unicode integer");
   
-  // keysyms_frame
+  // gdk_keysyms_frame
   
   f2__primcfunk__init__0(gtk__gdk_keysyms_frame__new, "creates a new keysyms frame.");
+  
+  // responses_frame
+  
+  f2__primcfunk__init__0(gtk__responses_frame__new, "creates a new responses frame.");
   
 }
 

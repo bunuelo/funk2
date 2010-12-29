@@ -167,6 +167,13 @@
 [defunk gtk-pixbuf-new_from_image [image]
   [gtk-pixbuf-new_from_rgba_data [get image width] [get image height] [get image rgba_data]]]
 
+[defunk gtk-globalize_responses []
+  [print `[gtk-globalize_responses]]
+  [let [[responses_frame [gtk-responses_frame-new]]]
+    [mapc [funk [response_name]
+		[eval `[globalize ,response_name ,[have responses_frame lookup response_name]]]]
+	  [get responses_frame keys]]]]
+
 [defunk gtk-globalize_keysyms []
   [print `[gtk-globalize_keysyms]]
   [let [[keysyms_frame [gtk-gdk_keysyms_frame-new]]]
@@ -197,7 +204,8 @@
   nil]
 
 [if [gtk-is_supported]
-    [gtk-globalize_keysyms]]
+    [prog [gtk-globalize_responses]
+	  [gtk-globalize_keysyms]]]
 
 [if [gtk-is_supported]
     [gtk-event_handling_fiber-start]

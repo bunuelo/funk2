@@ -129,3 +129,7 @@
 
 [globalize-funk gtk-gdk_keysyms_frame-new                  &primfunk:gtk__gdk_keysyms_frame__new]
 
+'gtk-responses-frame'
+
+[globalize-funk gtk-responses_frame-new &primfunk:gtk__responses_frame__new]
+

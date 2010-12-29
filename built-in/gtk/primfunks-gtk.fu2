@@ -122,6 +122,7 @@
 [globalize-funk gtk-file_chooser_dialog-get_filenames           &primfunk:gtk__file_chooser_dialog__get_filenames]
 [globalize-funk gtk-file_chooser_dialog-set_select_multiple     &primfunk:gtk__file_chooser_dialog__set_select_multiple]
 [globalize-funk gtk-file_chooser_dialog-add_file_filter_pattern &primfunk:gtk__file_chooser_dialog__add_file_filter_pattern]
+[globalize-funk gtk-file_chooser_dialog-set_preview_widget      &primfunk:gtk__file_chooser_dialog__set_preview_widget]
 
 
 'keyval'

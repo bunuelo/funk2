@@ -19,7 +19,6 @@
 
 [defcore mentality 'extension/mentality/.libs/libf2e_mentality.so']
 
-[defcorefunk mentality-new_from_rgb_data         mentality mentality__new_from_rgb_data]
 [defcorefunk mentality-core_extension_ping       mentality mentality__core_extension_ping]
 [defcorefunk mentality-core_extension_initialize mentality mentality__core_extension_initialize]
 

@@ -22,28 +22,16 @@
 #ifndef F2__EXTENSION__MENTALITY__H
 #define F2__EXTENSION__MENTALITY__H
 
-f2ptr     raw__mentality__new(                       f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data);
-f2ptr      f2__mentality__new(                       f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data);
-f2ptr     raw__mentality__new_from_rgb_data(         f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data);
-f2ptr      f2__mentality__new_from_rgb_data(         f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data);
-boolean_t raw__mentality__is_type(                   f2ptr cause, f2ptr thing);
-f2ptr      f2__mentality__is_type(                   f2ptr cause, f2ptr thing);
-f2ptr     raw__mentality__type(                      f2ptr cause, f2ptr this);
-f2ptr      f2__mentality__type(                      f2ptr cause, f2ptr this);
-f2ptr     raw__mentality__width(                     f2ptr cause, f2ptr this);
-f2ptr      f2__mentality__width(                     f2ptr cause, f2ptr this);
-f2ptr     raw__mentality__width__set(                f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__mentality__width__set(                f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__mentality__height(                    f2ptr cause, f2ptr this);
-f2ptr      f2__mentality__height(                    f2ptr cause, f2ptr this);
-f2ptr     raw__mentality__height__set(               f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__mentality__height__set(               f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__mentality__rgba_data(                 f2ptr cause, f2ptr this);
-f2ptr      f2__mentality__rgba_data(                 f2ptr cause, f2ptr this);
-f2ptr     raw__mentality__rgba_data__set(            f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__mentality__rgba_data__set(            f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__mentality__write_reduction_mentality_part(f2ptr cause, f2ptr this, f2ptr reduced_mentality, f2ptr reduction_factor, f2ptr x_offset, f2ptr y_offset);
-f2ptr      f2__mentality__write_reduction_mentality_part(f2ptr cause, f2ptr this, f2ptr reduced_mentality, f2ptr reduction_factor, f2ptr x_offset, f2ptr y_offset);
+f2ptr     raw__mentality__new(       f2ptr cause, f2ptr width);
+f2ptr      f2__mentality__new(       f2ptr cause, f2ptr width);
+boolean_t raw__mentality__is_type(   f2ptr cause, f2ptr thing);
+f2ptr      f2__mentality__is_type(   f2ptr cause, f2ptr thing);
+f2ptr     raw__mentality__type(      f2ptr cause, f2ptr this);
+f2ptr      f2__mentality__type(      f2ptr cause, f2ptr this);
+f2ptr     raw__mentality__width(     f2ptr cause, f2ptr this);
+f2ptr      f2__mentality__width(     f2ptr cause, f2ptr this);
+f2ptr     raw__mentality__width__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__mentality__width__set(f2ptr cause, f2ptr this, f2ptr value);
 
 f2ptr f2__mentality_type__new(f2ptr cause);
 

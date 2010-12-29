@@ -128,7 +128,6 @@
 		[let [[save_dialog [gtk-file_chooser_dialog-new_for_file_save nil]]]
 		  [have save_dialog connect_hide_on_delete]
 		  [set  save_dialog current_name   'Untitled Document']
-		  [set  save_dialog current_folder [getenv 'HOME']]
 		  [have save_dialog response_event-signal_connect
 			[funk [event_frame]
 			      [terminal_format standard-terminal '\nresponse event frame: ' event_frame]

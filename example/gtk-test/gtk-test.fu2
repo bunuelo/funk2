@@ -125,7 +125,7 @@
 		  [have open_dialog update_preview_event-signal_connect
 			[funk []
 			      [let [[preview_filename [get open_dialog preview_filename]]]
-				[set preview_label text [format nil preview_filename]]
+				[set preview_label text [stringlist-intersperse [have [format nil preview_filename] split '/'] '\n']]
 				[set open_dialog preview_widget_active t]]]]
 		  [have open_dialog show_all]
 		  ]]]

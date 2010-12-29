@@ -120,18 +120,20 @@ f2ptr raw__mentality__new(f2ptr cause,
 			  f2ptr menu_bar,
 			  f2ptr file_menu_item,
 			  f2ptr file_menu,
+			  f2ptr file_new_project_menu_item,
 			  f2ptr file_open_project_menu_item,
 			  f2ptr file_close_project_menu_item,
 			  f2ptr file_save_project_menu_item,
 			  f2ptr file_exit_menu_item,
 			  f2ptr current_project) {
-  return f2__frame__new(cause, f2list22__new(cause,
+  return f2__frame__new(cause, f2list24__new(cause,
 					     new__symbol(cause, "type"),                         new__symbol(cause, "mentality"),
 					     new__symbol(cause, "main_window"),                  main_window,
 					     new__symbol(cause, "menu_bar_vbox"),                menu_bar_vbox,
 					     new__symbol(cause, "menu_bar"),                     menu_bar,
 					     new__symbol(cause, "file_menu_item"),               file_menu_item,
 					     new__symbol(cause, "file_menu"),                    file_menu,
+					     new__symbol(cause, "file_new_project_menu_item"),   file_new_project_menu_item,
 					     new__symbol(cause, "file_open_project_menu_item"),  file_open_project_menu_item,
 					     new__symbol(cause, "file_close_project_menu_item"), file_close_project_menu_item,
 					     new__symbol(cause, "file_save_project_menu_item"),  file_save_project_menu_item,
@@ -145,6 +147,7 @@ f2ptr f2__mentality__new(f2ptr cause) {
   f2ptr menu_bar                     = f2__gtk__menu_bar__new(cause);
   f2ptr file_menu_item               = f2__gtk__menu_item__new(cause, new__string(cause, "File"));
   f2ptr file_menu                    = f2__gtk__menu__new(cause);
+  f2ptr file_new_project_menu_item   = f2__gtk__menu_item__new(cause, new__string(cause, "New Project..."));
   f2ptr file_open_project_menu_item  = f2__gtk__menu_item__new(cause, new__string(cause, "Open Project..."));
   f2ptr file_close_project_menu_item = f2__gtk__menu_item__new(cause, new__string(cause, "Close Project..."));
   f2ptr file_save_project_menu_item  = f2__gtk__menu_item__new(cause, new__string(cause, "Save Project..."));
@@ -166,6 +169,9 @@ f2ptr f2__mentality__new(f2ptr cause) {
   
   // file_menu
   f2__gtk__menu_item__set_submenu(cause, file_menu_item, file_menu);
+  
+  // file_new_project_menu_item
+  f2__gtk__menu__append(cause, file_menu, file_new_project_menu_item);
   
   // file_open_project_menu_item
   f2__gtk__menu__append(cause, file_menu, file_open_project_menu_item);
@@ -189,6 +195,7 @@ f2ptr f2__mentality__new(f2ptr cause) {
 			     menu_bar,
 			     file_menu_item,
 			     file_menu,
+			     file_new_project_menu_item,
 			     file_open_project_menu_item,
 			     file_close_project_menu_item,
 			     file_save_project_menu_item,

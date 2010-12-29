@@ -1520,7 +1520,7 @@ boolean_t funk2_gtk__file_chooser_dialog__set_filename(funk2_gtk_t* this, GtkFil
   return success;
 }
 
-f2ptr funk2_gtk__file_chooser_dialog__get_filenames(funk2_gtk_t* this, GtkFileChooserDialog* file_chooser_dialog) {
+f2ptr funk2_gtk__file_chooser_dialog__get_filenames(funk2_gtk_t* this, f2ptr cause, GtkFileChooserDialog* file_chooser_dialog) {
   f2ptr filenames = nil;
   {
     gdk_threads_enter();
@@ -4103,7 +4103,7 @@ f2ptr raw__gtk__file_chooser_dialog__get_filenames(f2ptr cause, f2ptr this) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
     GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
-    return funk2_gtk__file_chooser_dialog__get_filenames(&(__funk2.gtk), gtk_this);
+    return funk2_gtk__file_chooser_dialog__get_filenames(&(__funk2.gtk), cause, gtk_this);
   } else {
     return f2__gtk_not_supported_larva__new(cause);
   }

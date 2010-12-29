@@ -152,7 +152,7 @@ f2ptr f2__mentality__new(f2ptr cause) {
   
   // main_window
   f2__gtk__window__set_title(cause, main_window, new__string(cause, "Mentality"));
-  f2__gtk__window__set_default_size(cause, main_window, f2integer__new(cause, 1024), f2integer__new(cause, 768));
+  f2__gtk__window__set_default_size(cause, main_window, f2integer__new(cause, 800), f2integer__new(cause, 600));
   f2__gtk__widget__connect_hide_on_delete(cause, main_window);
   
   // menu_bar_vbox

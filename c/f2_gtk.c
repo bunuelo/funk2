@@ -1539,14 +1539,12 @@ f2ptr funk2_gtk__file_chooser_dialog__get_filenames(funk2_gtk_t* this, f2ptr cau
   return filenames;
 }
 
-boolean_t funk2_gtk__file_chooser_dialog__set_select_multiple(funk2_gtk_t* this, GtkFileChooserDialog* file_chooser_dialog, boolean_t select_multiple) {
-  boolean_t success;
+void funk2_gtk__file_chooser_dialog__set_select_multiple(funk2_gtk_t* this, GtkFileChooserDialog* file_chooser_dialog, boolean_t select_multiple) {
   {
     gdk_threads_enter();
-    success = gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(file_chooser_dialog), select_multiple ? TRUE : FALSE) ? boolean__true : boolean__false;
+    gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(file_chooser_dialog), select_multiple ? TRUE : FALSE);
     gdk_threads_leave();
   }
-  return success;
 }
 
 
@@ -4125,7 +4123,8 @@ f2ptr raw__gtk__file_chooser_dialog__set_select_multiple(f2ptr cause, f2ptr this
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
     GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
-    return f2bool__new(funk2_gtk__file_chooser_dialog__set_select_multiple(&(__funk2.gtk), gtk_this, (select_multiple != nil) ? boolean__true : boolean__false));
+    funk2_gtk__file_chooser_dialog__set_select_multiple(&(__funk2.gtk), gtk_this, (select_multiple != nil) ? boolean__true : boolean__false);
+    return nil;
   } else {
     return f2__gtk_not_supported_larva__new(cause);
   }

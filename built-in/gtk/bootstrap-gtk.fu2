@@ -153,7 +153,7 @@
 [deftypefunk gtk_file_chooser_dialog get     filename                []                           [first [get this filenames]]]
 [deftypefunk gtk_file_chooser_dialog set     select_multiple         [select_multiple]            [gtk-file_chooser_dialog-set_select_multiple       [get this widget] select_multiple]]
 [deftypefunk gtk_file_chooser_dialog execute add_file_filter_pattern [name pattern]               [gtk-file_chooser_dialog-add_file_filter_pattern   [get this widget] name pattern]]
-[deftypefunk gtk_file_chooser_dialog set     preview_widget          [name widget]                [gtk-file_chooser_dialog-set_preview_widget        [get this widget] widget]]
+[deftypefunk gtk_file_chooser_dialog set     preview_widget          [widget]                     [gtk-file_chooser_dialog-set_preview_widget        [get this widget] widget]]
 [deftypefunk gtk_file_chooser_dialog set     preview_widget_active   [name preview_widget_active] [gtk-file_chooser_dialog-set_preview_widget_active [get this widget] preview_widget_active]]
 [deftypefunk gtk_file_chooser_dialog get     preview_filename        []                           [gtk-file_chooser_dialog-get_preview_filename      [get this widget]]]
 

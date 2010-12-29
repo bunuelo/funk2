@@ -216,6 +216,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/image/libf2e_image.la \
                   extension/image_sequence/libf2e_image_sequence.la \
                   extension/lick/libf2e_lick.la \
+                  extension/mentality/libf2e_mentality.la \
                   extension/meta_semantic_frame_ball/libf2e_meta_semantic_frame_ball.la \
                   extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la \
                   extension/mindmon/libf2e_mindmon.la \
@@ -367,6 +368,7 @@ extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES                 
 extension_image_libf2e_image_la_SOURCES                                               = extension/image/image.c
 extension_image_sequence_libf2e_image_sequence_la_SOURCES                             = extension/image_sequence/image_sequence.c
 extension_lick_libf2e_lick_la_SOURCES                                                 = extension/lick/lick.c
+extension_mentality_libf2e_mentality_la_SOURCES                                       = extension/mentality/mentality.c
 extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_SOURCES         = extension/meta_semantic_frame_ball/meta_semantic_frame_ball.c
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
 extension_mindmon_libf2e_mindmon_la_SOURCES                                           = extension/mindmon/mindmon.c
@@ -435,6 +437,9 @@ extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_CFLAGS  = $(lib_libf
 
 extension_lick_libf2e_lick_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_lick_libf2e_lick_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_mentality_libf2e_mentality_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_mentality_libf2e_mentality_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

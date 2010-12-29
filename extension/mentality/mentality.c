@@ -22,19 +22,113 @@
 #include "../../c/funk2.h"
 #include "mentality.h"
 
-f2ptr raw__mentality__new(f2ptr cause, f2ptr width) {
-  return f2__frame__new(cause, f2list8__new(cause,
-					    new__symbol(cause, "type"),  new__symbol(cause, "mentality"),
+
+// mentality_project
+
+f2ptr raw__mentality_project__new(f2ptr cause, f2ptr width) {
+  return f2__frame__new(cause, f2list4__new(cause,
+					    new__symbol(cause, "type"),  new__symbol(cause, "mentality_project"),
 					    new__symbol(cause, "width"), width));
 }
 
-f2ptr f2__mentality__new(f2ptr cause, f2ptr width) {
+f2ptr f2__mentality_project__new(f2ptr cause, f2ptr width) {
   if (! raw__integer__is_type(cause, width)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__mentality__new(cause, width);
+  return raw__mentality_project__new(cause, width);
 }
-export_cefunk1(mentality__new, width, 0, "Returns a new mentality object.");
+export_cefunk1(mentality_project__new, width, 0, "Returns a new mentality_project object.");
+
+
+boolean_t raw__mentality_project__is_type(f2ptr cause, f2ptr thing) {
+  if (! raw__frame__is_type(cause, thing)) {
+    return boolean__false;
+  }
+  f2ptr this_type_name_symbol = new__symbol(cause, "mentality_project");
+  f2ptr thing_type_name       = f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil);
+  if (raw__eq(cause, this_type_name_symbol, thing_type_name)) {
+    return boolean__true;
+  }
+  f2ptr thing_type = f2__lookup_type(cause, thing_type_name);
+  if (raw__primobject_type__has_parent_type(cause, thing_type, this_type_name_symbol)) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
+f2ptr f2__mentality_project__is_type(f2ptr cause, f2ptr thing) {
+  return f2bool__new(raw__mentality_project__is_type(cause, thing));
+}
+export_cefunk1(mentality_project__is_type, thing, 0, "Returns whether or not thing is of type mentality_project.");
+
+
+f2ptr raw__mentality_project__type(f2ptr cause, f2ptr this) {
+  return f2__object__type(cause, this);
+}
+
+f2ptr f2__mentality_project__type(f2ptr cause, f2ptr this) {
+  if (! raw__mentality_project__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality_project__type(cause, this);
+}
+export_cefunk1(mentality_project__type, thing, 0, "Returns the specific type of object that this mentality_project is.");
+
+
+f2ptr raw__mentality_project__width(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"), nil);
+}
+
+f2ptr f2__mentality_project__width(f2ptr cause, f2ptr this) {
+  if (! raw__mentality_project__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality_project__width(cause, this);
+}
+export_cefunk1(mentality_project__width, thing, 0, "Returns the width of the mentality_project.");
+
+
+f2ptr raw__mentality_project__width__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "width"), value);
+}
+
+f2ptr f2__mentality_project__width__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality_project__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality_project__width__set(cause, this, value);
+}
+export_cefunk2(mentality_project__width__set, thing, value, 0, "Sets the width of the mentality_project.");
+
+
+f2ptr f2__mentality_project_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality_project__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality_project__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality_project__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality_project__width")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality_project__width__set")));}
+  return this;
+}
+
+
+// mentality
+
+f2ptr raw__mentality__new(f2ptr cause, f2ptr main_window) {
+  return f2__frame__new(cause, f2list4__new(cause,
+					    new__symbol(cause, "type"),  new__symbol(cause, "mentality"),
+					    new__symbol(cause, "main_window"), main_window));
+}
+
+f2ptr f2__mentality__new(f2ptr cause) {
+  f2ptr main_window = f2__gtk__window__new(cause);
+  f2__gtk__window__set_title(cause, main_window, new__string(cause, "Mentality"));
+  f2__gtk__window__set_default_size(cause, main_window, f2integer__new(cause, 1024), f2integer__new(cause, 768));
+  
+  f2__gtk__widget__show_all(cause, main_window);
+  return raw__mentality__new(cause, main_window);
+}
+export_cefunk1(mentality__new, main_window, 0, "Returns a new mentality object.");
 
 
 boolean_t raw__mentality__is_type(f2ptr cause, f2ptr thing) {
@@ -72,39 +166,39 @@ f2ptr f2__mentality__type(f2ptr cause, f2ptr this) {
 export_cefunk1(mentality__type, thing, 0, "Returns the specific type of object that this mentality is.");
 
 
-f2ptr raw__mentality__width(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"), nil);
+f2ptr raw__mentality__main_window(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "main_window"), nil);
 }
 
-f2ptr f2__mentality__width(f2ptr cause, f2ptr this) {
+f2ptr f2__mentality__main_window(f2ptr cause, f2ptr this) {
   if (! raw__mentality__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__mentality__width(cause, this);
+  return raw__mentality__main_window(cause, this);
 }
-export_cefunk1(mentality__width, thing, 0, "Returns the width of the mentality.");
+export_cefunk1(mentality__main_window, thing, 0, "Returns the main_window of the mentality.");
 
 
-f2ptr raw__mentality__width__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "width"), value);
+f2ptr raw__mentality__main_window__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "main_window"), value);
 }
 
-f2ptr f2__mentality__width__set(f2ptr cause, f2ptr this, f2ptr value) {
+f2ptr f2__mentality__main_window__set(f2ptr cause, f2ptr this, f2ptr value) {
   if (! raw__mentality__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__mentality__width__set(cause, this, value);
+  return raw__mentality__main_window__set(cause, this, value);
 }
-export_cefunk2(mentality__width__set, thing, value, 0, "Sets the width of the mentality.");
+export_cefunk2(mentality__main_window__set, thing, value, 0, "Sets the main_window of the mentality.");
 
 
 f2ptr f2__mentality_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__width")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "width"),   f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__width__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),         f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),     f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),        f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "main_window"), f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__main_window")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "main_window"), f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__main_window__set")));}
   return this;
 }
 
@@ -118,7 +212,8 @@ f2ptr f2__mentality__core_extension_ping(f2ptr cause) {
 export_cefunk0(mentality__core_extension_ping, 0, "");
 
 f2ptr f2__mentality__core_extension_initialize(f2ptr cause) {
-  f2__add_type(cause, new__symbol(cause, "mentality"), f2__mentality_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "mentality_project"), f2__mentality_project_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "mentality"),         f2__mentality_type__new(cause));
   status("mentality initialized.");
   return nil;
 }

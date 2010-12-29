@@ -119,6 +119,7 @@
 [globalize-funk gtk-file_chooser_dialog-set_current_folder &primfunk:gtk__file_chooser_dialog__set_current_folder]
 [globalize-funk gtk-file_chooser_dialog-set_current_name   &primfunk:gtk__file_chooser_dialog__set_current_name]
 [globalize-funk gtk-file_chooser_dialog-set_filename       &primfunk:gtk__file_chooser_dialog__set_filename]
+[globalize-funk gtk-file_chooser_dialog-get_filenames      &primfunk:gtk__file_chooser_dialog__get_filenames]
 
 
 'keyval'

@@ -114,16 +114,69 @@ f2ptr f2__mentality_project_type__new(f2ptr cause) {
 
 // mentality
 
-f2ptr raw__mentality__new(f2ptr cause, f2ptr main_window) {
-  return f2__frame__new(cause, f2list4__new(cause,
-					    new__symbol(cause, "type"),  new__symbol(cause, "mentality"),
-					    new__symbol(cause, "main_window"), main_window));
+f2ptr raw__mentality__new(f2ptr cause,
+			  f2ptr main_window,
+			  f2ptr menu_bar,
+			  f2ptr file_menu_item,
+			  f2ptr file_menu,
+			  f2ptr file_open_project_menu_item,
+			  f2ptr file_close_project_menu_item,
+			  f2ptr file_save_project_menu_item,
+			  f2ptr file_exit_menu_item) {
+  return f2__frame__new(cause, f2list18__new(cause,
+					     new__symbol(cause, "type"),                         new__symbol(cause, "mentality"),
+					     new__symbol(cause, "main_window"),                  main_window,
+					     new__symbol(cause, "menu_bar"),                     menu_bar,
+					     new__symbol(cause, "file_menu_item"),               file_menu_item,
+					     new__symbol(cause, "file_menu"),                    file_menu,
+					     new__symbol(cause, "file_open_project_menu_item"),  file_open_project_menu_item,
+					     new__symbol(cause, "file_close_project_menu_item"), file_close_project_menu_item,
+					     new__symbol(cause, "file_save_project_menu_item"),  file_save_project_menu_item,
+					     new__symbol(cause, "file_exit_menu_item"),          file_exit_menu_item));
 }
 
 f2ptr f2__mentality__new(f2ptr cause) {
-  f2ptr main_window = f2__gtk__window__new(cause);
+  f2ptr main_window                  = f2__gtk__window__new(cause);
+  f2ptr menu_bar_vbox                = f2__gtk__vbox__new(cause, f2integer__new(cause, 0));
+  f2ptr menu_bar                     = f2__gtk__menu_bar__new(cause);
+  f2ptr file_menu_item               = f2__gtk__menu_item__new(cause, new__string(cause, "File"));
+  f2ptr file_menu                    = f2__gtk__menu__new(cause);
+  f2ptr file_open_project_menu_item  = f2__gtk__menu_item__new(cause, new__string(cause, "Open Project..."));
+  f2ptr file_close_project_menu_item = f2__gtk__menu_item__new(cause, new__string(cause, "Close Project..."));
+  f2ptr file_save_project_menu_item  = f2__gtk__menu_item__new(cause, new__string(cause, "Save Project..."));
+  f2ptr file_exit_menu_item          = f2__gtk__menu_item__new(cause, new__string(cause, "Exit"));
+  
+  // main_window
   f2__gtk__window__set_title(cause, main_window, new__string(cause, "Mentality"));
   f2__gtk__window__set_default_size(cause, main_window, f2integer__new(cause, 1024), f2integer__new(cause, 768));
+  
+  // menu_bar_vbox
+  f2__gtk__container__add(cause, main_window, menu_bar_vbox);
+  
+  // menu_bar
+  f2__gtk__box__pack_start(cause, menu_bar_vbox, menu_bar, nil, nil, f2integer__new(cause, 0));
+  
+  // file_menu_item
+  f2__gtk__menu_bar__append(cause, menu_bar, file_menu_item);
+  
+  // file_menu
+  f2__gtk__menu_item__set_submenu(cause, file_menu_item, file_menu);
+  
+  // file_open_project_menu_item
+  f2__gtk__menu_item__append(cause, file_menu, file_open_project_menu_item);
+  
+  // file_close_project_menu_item
+  f2__gtk__menu_item__append(cause, file_menu, file_close_project_menu_item);
+  
+  // file_save_project_menu_item
+  f2__gtk__menu_item__append(cause, file_menu, file_save_project_menu_item);
+  
+  // file_open_project_menu_item
+  f2__gtk__menu_item__append(cause, file_menu, file_open_project_menu_item);
+  
+  // file_exit_menu_item
+  f2__gtk__menu_item__append(cause, file_menu, file_exit_menu_item);
+  
   
   f2__gtk__widget__show_all(cause, main_window);
   return raw__mentality__new(cause, main_window);

@@ -110,6 +110,7 @@
 		[terminal_format standard-terminal '\n  open button clicked.']
 		[let [[open_dialog [gtk-file_chooser_dialog-new_for_file_open nil]]]
 		  [have open_dialog connect_hide_on_delete]
+		  [set  open_dialog select_multiple t]
 		  [have open_dialog response_event-signal_connect
 			[funk [event_frame]
 			      [terminal_format standard-terminal '\nresponse event frame: ' event_frame]

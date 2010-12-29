@@ -1551,9 +1551,9 @@ void funk2_gtk__file_chooser_dialog__add_file_filter_pattern(funk2_gtk_t* this, 
   {
     gdk_threads_enter();
     GtkFileFilter* file_filter = gtk_file_filter_new();
-    gtk_file_filter_add_name(   file_filter, (char*)name);
+    gtk_file_filter_set_name(   file_filter, (char*)name);
     gtk_file_filter_add_pattern(file_filter, (char*)pattern);
-    gtk_file_chooser_add_file_filter(GTK_FILE_CHOOSER(file_chooser_dialog), file_filter);
+    gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(file_chooser_dialog), file_filter);
     gdk_threads_leave();
   }
 }

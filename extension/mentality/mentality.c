@@ -266,13 +266,265 @@ f2ptr f2__mentality__main_window__set(f2ptr cause, f2ptr this, f2ptr value) {
 export_cefunk2(mentality__main_window__set, thing, value, 0, "Sets the main_window of the mentality.");
 
 
+f2ptr raw__mentality__menu_bar_vbox(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "menu_bar_vbox"), nil);
+}
+
+f2ptr f2__mentality__menu_bar_vbox(f2ptr cause, f2ptr this) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__menu_bar_vbox(cause, this);
+}
+export_cefunk1(mentality__menu_bar_vbox, thing, 0, "Returns the menu_bar_vbox of the mentality.");
+
+
+f2ptr raw__mentality__menu_bar_vbox__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "menu_bar_vbox"), value);
+}
+
+f2ptr f2__mentality__menu_bar_vbox__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__menu_bar_vbox__set(cause, this, value);
+}
+export_cefunk2(mentality__menu_bar_vbox__set, thing, value, 0, "Sets the menu_bar_vbox of the mentality.");
+
+
+f2ptr raw__mentality__menu_bar(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "menu_bar"), nil);
+}
+
+f2ptr f2__mentality__menu_bar(f2ptr cause, f2ptr this) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__menu_bar(cause, this);
+}
+export_cefunk1(mentality__menu_bar, thing, 0, "Returns the menu_bar of the mentality.");
+
+
+f2ptr raw__mentality__menu_bar__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "menu_bar"), value);
+}
+
+f2ptr f2__mentality__menu_bar__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__menu_bar__set(cause, this, value);
+}
+export_cefunk2(mentality__menu_bar__set, thing, value, 0, "Sets the menu_bar of the mentality.");
+
+
+f2ptr raw__mentality__file_menu_item(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "file_menu_item"), nil);
+}
+
+f2ptr f2__mentality__file_menu_item(f2ptr cause, f2ptr this) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__file_menu_item(cause, this);
+}
+export_cefunk1(mentality__file_menu_item, thing, 0, "Returns the file_menu_item of the mentality.");
+
+
+f2ptr raw__mentality__file_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "file_menu_item"), value);
+}
+
+f2ptr f2__mentality__file_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__file_menu_item__set(cause, this, value);
+}
+export_cefunk2(mentality__file_menu_item__set, thing, value, 0, "Sets the file_menu_item of the mentality.");
+
+
+f2ptr raw__mentality__file_menu__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "file_menu"), value);
+}
+
+f2ptr f2__mentality__file_menu__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__file_menu__set(cause, this, value);
+}
+export_cefunk2(mentality__file_menu__set, thing, value, 0, "Sets the file_menu of the mentality.");
+
+
+f2ptr raw__mentality__file_menu__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "file_menu"), value);
+}
+
+f2ptr f2__mentality__file_menu__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__file_menu__set(cause, this, value);
+}
+export_cefunk2(mentality__file_menu__set, thing, value, 0, "Sets the file_menu of the mentality.");
+
+
+f2ptr raw__mentality__file_new_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "file_new_project_menu_item"), value);
+}
+
+f2ptr f2__mentality__file_new_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__file_new_project_menu_item__set(cause, this, value);
+}
+export_cefunk2(mentality__file_new_project_menu_item__set, thing, value, 0, "Sets the file_new_project_menu_item of the mentality.");
+
+
+f2ptr raw__mentality__file_new_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "file_new_project_menu_item"), value);
+}
+
+f2ptr f2__mentality__file_new_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__file_new_project_menu_item__set(cause, this, value);
+}
+export_cefunk2(mentality__file_new_project_menu_item__set, thing, value, 0, "Sets the file_new_project_menu_item of the mentality.");
+
+
+f2ptr raw__mentality__file_open_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "file_open_project_menu_item"), value);
+}
+
+f2ptr f2__mentality__file_open_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__file_open_project_menu_item__set(cause, this, value);
+}
+export_cefunk2(mentality__file_open_project_menu_item__set, thing, value, 0, "Sets the file_open_project_menu_item of the mentality.");
+
+
+f2ptr raw__mentality__file_open_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "file_open_project_menu_item"), value);
+}
+
+f2ptr f2__mentality__file_open_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__file_open_project_menu_item__set(cause, this, value);
+}
+export_cefunk2(mentality__file_open_project_menu_item__set, thing, value, 0, "Sets the file_open_project_menu_item of the mentality.");
+
+
+f2ptr raw__mentality__file_close_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "file_close_project_menu_item"), value);
+}
+
+f2ptr f2__mentality__file_close_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__file_close_project_menu_item__set(cause, this, value);
+}
+export_cefunk2(mentality__file_close_project_menu_item__set, thing, value, 0, "Sets the file_close_project_menu_item of the mentality.");
+
+
+f2ptr raw__mentality__file_close_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "file_close_project_menu_item"), value);
+}
+
+f2ptr f2__mentality__file_close_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__file_close_project_menu_item__set(cause, this, value);
+}
+export_cefunk2(mentality__file_close_project_menu_item__set, thing, value, 0, "Sets the file_close_project_menu_item of the mentality.");
+
+
+f2ptr raw__mentality__file_save_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "file_save_project_menu_item"), value);
+}
+
+f2ptr f2__mentality__file_save_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__file_save_project_menu_item__set(cause, this, value);
+}
+export_cefunk2(mentality__file_save_project_menu_item__set, thing, value, 0, "Sets the file_save_project_menu_item of the mentality.");
+
+
+f2ptr raw__mentality__file_save_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "file_save_project_menu_item"), value);
+}
+
+f2ptr f2__mentality__file_save_project_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__file_save_project_menu_item__set(cause, this, value);
+}
+export_cefunk2(mentality__file_save_project_menu_item__set, thing, value, 0, "Sets the file_save_project_menu_item of the mentality.");
+
+
+f2ptr raw__mentality__file_exit_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "file_exit_menu_item"), value);
+}
+
+f2ptr f2__mentality__file_exit_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__file_exit_menu_item__set(cause, this, value);
+}
+export_cefunk2(mentality__file_exit_menu_item__set, thing, value, 0, "Sets the file_exit_menu_item of the mentality.");
+
+
+f2ptr raw__mentality__file_exit_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "file_exit_menu_item"), value);
+}
+
+f2ptr f2__mentality__file_exit_menu_item__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__file_exit_menu_item__set(cause, this, value);
+}
+export_cefunk2(mentality__file_exit_menu_item__set, thing, value, 0, "Sets the file_exit_menu_item of the mentality.");
+
+
 f2ptr f2__mentality_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),         f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),     f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),        f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "main_window"), f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__main_window")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "main_window"), f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__main_window__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "main_window"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__main_window")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "main_window"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__main_window__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "menu_bar_vbox"),                f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__menu_bar_vbox")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "menu_bar_vbox"),                f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__menu_bar_vbox__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "menu_bar"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__menu_bar")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "menu_bar"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__menu_bar__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "file_menu_item"),               f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__file_menu_item")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "file_menu_item"),               f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__file_menu_item__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "file_menu"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__file_menu")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "file_menu"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__file_menu__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "file_new_project_menu_item"),   f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__file_new_project_menu_item")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "file_new_project_menu_item"),   f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__file_new_project_menu_item__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "file_open_project_menu_item"),  f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__file_open_project_menu_item")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "file_open_project_menu_item"),  f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__file_open_project_menu_item__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "file_close_project_menu_item"), f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__file_close_project_menu_item")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "file_close_project_menu_item"), f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__file_close_project_menu_item__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "file_save_project_menu_item"),  f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__file_save_project_menu_item")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "file_save_project_menu_item"),  f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__file_save_project_menu_item__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "file_exit_menu_item"),          f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__file_exit_menu_item")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "file_exit_menu_item"),          f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__file_exit_menu_item__set")));}
   return this;
 }
 

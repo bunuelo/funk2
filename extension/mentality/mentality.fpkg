@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage image
+[defpackage mentality
   :packages []
-   :sources ['image-core.fu2']]
+   :sources ['mentality-core.fu2']]
 

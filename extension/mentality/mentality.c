@@ -123,8 +123,9 @@ f2ptr raw__mentality__new(f2ptr cause,
 			  f2ptr file_open_project_menu_item,
 			  f2ptr file_close_project_menu_item,
 			  f2ptr file_save_project_menu_item,
-			  f2ptr file_exit_menu_item) {
-  return f2__frame__new(cause, f2list20__new(cause,
+			  f2ptr file_exit_menu_item,
+			  f2ptr current_project) {
+  return f2__frame__new(cause, f2list22__new(cause,
 					     new__symbol(cause, "type"),                         new__symbol(cause, "mentality"),
 					     new__symbol(cause, "main_window"),                  main_window,
 					     new__symbol(cause, "menu_bar_vbox"),                menu_bar_vbox,
@@ -134,7 +135,8 @@ f2ptr raw__mentality__new(f2ptr cause,
 					     new__symbol(cause, "file_open_project_menu_item"),  file_open_project_menu_item,
 					     new__symbol(cause, "file_close_project_menu_item"), file_close_project_menu_item,
 					     new__symbol(cause, "file_save_project_menu_item"),  file_save_project_menu_item,
-					     new__symbol(cause, "file_exit_menu_item"),          file_exit_menu_item));
+					     new__symbol(cause, "file_exit_menu_item"),          file_exit_menu_item,
+					     new__symbol(cause, "current_project"),              current_project));
 }
 
 f2ptr f2__mentality__new(f2ptr cause) {
@@ -151,6 +153,7 @@ f2ptr f2__mentality__new(f2ptr cause) {
   // main_window
   f2__gtk__window__set_title(cause, main_window, new__string(cause, "Mentality"));
   f2__gtk__window__set_default_size(cause, main_window, f2integer__new(cause, 1024), f2integer__new(cause, 768));
+  f2__gtk__widget__connect_hide_on_delete(cause, main_window);
   
   // menu_bar_vbox
   f2__gtk__container__add(cause, main_window, menu_bar_vbox);
@@ -178,6 +181,8 @@ f2ptr f2__mentality__new(f2ptr cause) {
   
   
   f2__gtk__widget__show_all(cause, main_window);
+  
+  f2ptr current_project = nil;
   return raw__mentality__new(cause,
 			     main_window,
 			     menu_bar_vbox,
@@ -187,7 +192,8 @@ f2ptr f2__mentality__new(f2ptr cause) {
 			     file_open_project_menu_item,
 			     file_close_project_menu_item,
 			     file_save_project_menu_item,
-			     file_exit_menu_item);
+			     file_exit_menu_item,
+			     current_project);
 }
 export_cefunk0(mentality__new, 0, "Returns a new mentality object.");
 

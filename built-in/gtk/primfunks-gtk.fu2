@@ -31,6 +31,10 @@
 
 [globalize-funk gtk-response_event-signal_connect                 &primfunk:gtk__response_event__signal_connect]
 
+'update_preview_event'
+
+[globalize-funk gtk-update_preview_event-signal_connect           &primfunk:gtk__update_preview_event__signal_connect]
+
 
 'widget'
 
@@ -124,6 +128,7 @@
 [globalize-funk gtk-file_chooser_dialog-add_file_filter_pattern   &primfunk:gtk__file_chooser_dialog__add_file_filter_pattern]
 [globalize-funk gtk-file_chooser_dialog-set_preview_widget        &primfunk:gtk__file_chooser_dialog__set_preview_widget]
 [globalize-funk gtk-file_chooser_dialog-set_preview_widget_active &primfunk:gtk__file_chooser_dialog__set_preview_widget_active]
+[globalize-funk gtk-file_chooser_dialog-get_preview_filename      &primfunk:gtk__file_chooser_dialog__get_preview_filename]
 
 
 'keyval'

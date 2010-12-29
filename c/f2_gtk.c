@@ -608,11 +608,9 @@ void funk2_gtk__key_press_event__signal_connect(funk2_gtk_t* this, GtkWidget* wi
 
 // response_event
 
-void funk2_gtk__response_event__signal_connect__callback_handler(GtkWidget* widget, gint gtk_response_id, gpointer data) {
+void funk2_gtk__response_event__signal_connect__callback_handler(GtkWidget* widget, gpointer data) {
   funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)data;
-  s64* response_id = (s64*)from_ptr(f2__malloc(sizeof(s64)));
-  *response_id = (s64)gtk_response_id;
-  funk2_gtk__add_callback_event(&(__funk2.gtk), callback, response_id);
+  funk2_gtk__add_callback_event(&(__funk2.gtk), callback, NULL);
 }
 
 void funk2_gtk__response_event__signal_connect(funk2_gtk_t* this, GtkWidget* widget, f2ptr funk) {
@@ -623,6 +621,28 @@ void funk2_gtk__response_event__signal_connect(funk2_gtk_t* this, GtkWidget* wid
   {
     gdk_threads_enter();
     g_signal_connect(G_OBJECT(widget), "response", G_CALLBACK(funk2_gtk__response_event__signal_connect__callback_handler), callback);
+    gdk_threads_leave();
+  }
+}
+
+
+// update_preview_event
+
+void funk2_gtk__update_preview_event__signal_connect__callback_handler(GtkWidget* widget, gint gtk_update_preview_id, gpointer data) {
+  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)data;
+  s64* update_preview_id = (s64*)from_ptr(f2__malloc(sizeof(s64)));
+  *update_preview_id = (s64)gtk_update_preview_id;
+  funk2_gtk__add_callback_event(&(__funk2.gtk), callback, update_preview_id);
+}
+
+void funk2_gtk__update_preview_event__signal_connect(funk2_gtk_t* this, GtkWidget* widget, f2ptr funk) {
+  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_t)));
+  callback->funk      = funk;
+  callback->args_type = funk2_gtk_callback_args_type__update_preview;
+  funk2_gtk__add_callback(this, callback);
+  {
+    gdk_threads_enter();
+    g_signal_connect(G_OBJECT(widget), "update_preview", G_CALLBACK(funk2_gtk__update_preview_event__signal_connect__callback_handler), callback);
     gdk_threads_leave();
   }
 }
@@ -1574,6 +1594,16 @@ void funk2_gtk__file_chooser_dialog__set_preview_widget_active(funk2_gtk_t* this
   }
 }
 
+char* funk2_gtk__file_chooser_dialog__get_preview_filename(funk2_gtk_t* this, GtkFileChooserDialog* file_chooser_dialog) {
+  char* filename;
+  {
+    gdk_threads_enter();
+    filename = gtk_file_chooser_get_preview_filename(GTK_FILE_CHOOSER(file_chooser_dialog));
+    gdk_threads_leave();
+  }
+  return filename;
+}
+
 
 #endif // F2__GTK__SUPPORTED
 
@@ -2123,6 +2153,32 @@ f2ptr f2__gtk__response_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr f
 def_pcfunk2(gtk__response_event__signal_connect, widget, funk, return f2__gtk__response_event__signal_connect(this_cause, widget, funk));
 
 
+// update_preview_event
+
+f2ptr raw__gtk__update_preview_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    funk2_gtk__update_preview_event__signal_connect(&(__funk2.gtk), gtk_widget, funk);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__update_preview_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk) {
+  if ((! raw__gtk_widget__is_type(cause, widget)) ||
+      (! raw__funkable__is_type(  cause, funk))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__update_preview_event__signal_connect(cause, widget, funk);
+}
+def_pcfunk2(gtk__update_preview_event__signal_connect, widget, funk, return f2__gtk__update_preview_event__signal_connect(this_cause, widget, funk));
+
+
 // works for 'clicked' event but not 'expose_event'
 
 f2ptr raw__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk) {
@@ -2666,10 +2722,13 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 	args = f2cons__new(cause, key_event_frame, nil);
       } break;
       case funk2_gtk_callback_args_type__response: {
-	gint* response_id     = (gint*)(callback_event->args);
+	args = nil;
+      } break;
+      case funk2_gtk_callback_args_type__update_preview: {
+	gint* update_preview_id     = (gint*)(callback_event->args);
 	f2ptr key_event_frame = f2__frame__new(cause, f2list2__new(cause,
-								   new__symbol(cause, "response_id"), f2integer__new(cause, *response_id)));
-	f2__free(to_ptr(response_id));
+								   new__symbol(cause, "update_preview_id"), f2integer__new(cause, *update_preview_id)));
+	f2__free(to_ptr(update_preview_id));
 	args = f2cons__new(cause, key_event_frame, nil);
       } break;
       default:
@@ -4252,6 +4311,36 @@ f2ptr f2__gtk__file_chooser_dialog__set_preview_widget_active(f2ptr cause, f2ptr
 def_pcfunk2(gtk__file_chooser_dialog__set_preview_widget_active, this, preview_widget_active, return f2__gtk__file_chooser_dialog__set_preview_widget_active(this_cause, this, preview_widget_active));
 
 
+f2ptr raw__gtk__file_chooser_dialog__get_preview_filename(f2ptr cause, f2ptr this) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
+    char* gtk_filename = funk2_gtk__file_chooser_dialog__get_preview_filename(&(__funk2.gtk), gtk_this);
+    f2ptr filename;
+    if (gtk_filename != NULL) {
+      filename = new__string(cause, gtk_filename);
+    } else {
+      filename = nil;
+    }
+    g_free(gtk_filename);
+    return filename;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__file_chooser_dialog__get_preview_filename(f2ptr cause, f2ptr this) {
+  if (! raw__gtk_file_chooser_dialog__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__file_chooser_dialog__get_preview_filename(cause, this);
+}
+def_pcfunk1(gtk__file_chooser_dialog__get_preview_filename, this, return f2__gtk__file_chooser_dialog__get_preview_filename(this_cause, this));
+
+
 // gdk_keyval
 
 f2ptr raw__gtk__gdk_keyval_to_unicode(f2ptr cause, f2ptr keyval) {
@@ -4618,63 +4707,67 @@ void f2__gtk__initialize() {
   
   // expose_event
   
-  f2__primcfunk__init__2(gtk__expose_event__signal_connect,       widget, funk,                                          "Connects an expose_event signal handler to a GtkWidget.");
+  f2__primcfunk__init__2(gtk__expose_event__signal_connect,         widget, funk,                                          "Connects an expose_event signal handler to a GtkWidget.");
   
   // key_press_event
   
-  f2__primcfunk__init__2(gtk__key_press_event__signal_connect,    widget, funk,                                          "Connects an key_press_event signal handler to a GtkWidget.");
+  f2__primcfunk__init__2(gtk__key_press_event__signal_connect,      widget, funk,                                          "Connects an key_press_event signal handler to a GtkWidget.");
   
   // response_event
   
-  f2__primcfunk__init__2(gtk__response_event__signal_connect,     widget, funk,                                          "Connects an response_event signal handler to a GtkWidget.");
+  f2__primcfunk__init__2(gtk__response_event__signal_connect,       widget, funk,                                          "Connects an response_event signal handler to a GtkWidget.");
+  
+  // update_preview_event
+  
+  f2__primcfunk__init__2(gtk__update_preview_event__signal_connect, widget, funk,                                          "Connects an update_preview_event signal handler to a GtkWidget.");
   
   // widget
   
-  f2__primcfunk__init__1(gtk__widget__show_all,                   widget,                                                "Shows the widget and all children.");
-  f2__primcfunk__init__1(gtk__widget__hide_all,                   widget,                                                "Hides the widget and all children.");
-  f2__primcfunk__init__3(gtk__widget__set_size_request,           widget, width, height,                                 "Requests that the widget be a specific size.");
-  f2__primcfunk__init__5(gtk__widget__queue_draw_area,            widget, x, y, width, height,                           "Requests that a specific rectangle of the widget be redrawn.");
-  f2__primcfunk__init__1(gtk__widget__get_visible,                widget,                                                "Returns whether or not a window is visible, which does not mean the window is viewable, which wouold require all parents to also be visible.");
-  f2__primcfunk__init__1(gtk__widget__destroy,                    widget,                                                "Destroys the widget.");  f2__primcfunk__init__1(gtk__widget__connect_hide_on_delete,     widget,                                                "Add a delete-event callback handler to the widget that hides the window rather than destroying the window.");
-  f2__primcfunk__init__3(gtk__widget__modify_fg,                  widget, state, color,                                  "Sets the foreground color of a widget.  State must be one of the following symbolic values: normal, active, prelight, selected, or insensitive.  Color must be a GdkColor object (see gdk-color-new).");
-  f2__primcfunk__init__3(gtk__widget__modify_bg,                  widget, state, color,                                  "Sets the background color of a widget.  State must be one of the following symbolic values: normal, active, prelight, selected, or insensitive.  Color must be a GdkColor object (see gdk-color-new).");
+  f2__primcfunk__init__1(gtk__widget__show_all,                     widget,                                                "Shows the widget and all children.");
+  f2__primcfunk__init__1(gtk__widget__hide_all,                     widget,                                                "Hides the widget and all children.");
+  f2__primcfunk__init__3(gtk__widget__set_size_request,             widget, width, height,                                 "Requests that the widget be a specific size.");
+  f2__primcfunk__init__5(gtk__widget__queue_draw_area,              widget, x, y, width, height,                           "Requests that a specific rectangle of the widget be redrawn.");
+  f2__primcfunk__init__1(gtk__widget__get_visible,                  widget,                                                "Returns whether or not a window is visible, which does not mean the window is viewable, which wouold require all parents to also be visible.");
+  f2__primcfunk__init__1(gtk__widget__destroy,                      widget,                                                "Destroys the widget.");  f2__primcfunk__init__1(gtk__widget__connect_hide_on_delete,     widget,                                                "Add a delete-event callback handler to the widget that hides the window rather than destroying the window.");
+  f2__primcfunk__init__3(gtk__widget__modify_fg,                    widget, state, color,                                  "Sets the foreground color of a widget.  State must be one of the following symbolic values: normal, active, prelight, selected, or insensitive.  Color must be a GdkColor object (see gdk-color-new).");
+  f2__primcfunk__init__3(gtk__widget__modify_bg,                    widget, state, color,                                  "Sets the background color of a widget.  State must be one of the following symbolic values: normal, active, prelight, selected, or insensitive.  Color must be a GdkColor object (see gdk-color-new).");
   // widget draw funks
-  f2__primcfunk__init__8(gtk__widget__draw_arc,                   widget, filled, x, y, width, height, angle1, angle2,   "Draws an arc in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
-  f2__primcfunk__init__6(gtk__widget__draw_rectangle,             widget, filled, x, y, width, height,                   "Draws a rectangle in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
+  f2__primcfunk__init__8(gtk__widget__draw_arc,                     widget, filled, x, y, width, height, angle1, angle2,   "Draws an arc in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
+  f2__primcfunk__init__6(gtk__widget__draw_rectangle,               widget, filled, x, y, width, height,                   "Draws a rectangle in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
   f2__primcfunk__init__0(gtk__window__new,                                                                               "Returns a new window widget.");
-  f2__primcfunk__init__2(gtk__window__set_title,                  window, title,                                         "Sets the title of this gtk_window.");
-  f2__primcfunk__init__3(gtk__window__set_default_size,           window, width, height,                                 "Sets the default width and height of this gtk_window.");
+  f2__primcfunk__init__2(gtk__window__set_title,                    window, title,                                         "Sets the title of this gtk_window.");
+  f2__primcfunk__init__3(gtk__window__set_default_size,             window, width, height,                                 "Sets the default width and height of this gtk_window.");
   
-  f2__primcfunk__init__1(gtk__vbox__new,                          spacing,                                               "Returns a new vbox widget with spacing.");
-  f2__primcfunk__init__1(gtk__hbox__new,                          spacing,                                               "Returns a new hbox widget with spacing.");
-  f2__primcfunk__init__1(gtk__button__new_with_label,             label,                                                 "Returns a new button widget with label.");
+  f2__primcfunk__init__1(gtk__vbox__new,                            spacing,                                               "Returns a new vbox widget with spacing.");
+  f2__primcfunk__init__1(gtk__hbox__new,                            spacing,                                               "Returns a new hbox widget with spacing.");
+  f2__primcfunk__init__1(gtk__button__new_with_label,               label,                                                 "Returns a new button widget with label.");
   f2__primcfunk__init__0(gtk__scrolled_window__new,                                                                      "Returns a new scrolled_window widget.");
-  f2__primcfunk__init__2(gtk__scrolled_window__add_with_viewport, scrolled_window, child,                                "Adds a non-scrollable widget to a scroll window.");
-  f2__primcfunk__init__3(gtk__scrolled_window__set_policy,        scrolled_window, hscrollbar_policy, vscrollbar_policy, "Sets the policy for the vertical and horizontal scrollbars of a scrolled window.  Valid policies are (1) `always, (2) `automatic, and (3) `never.");
+  f2__primcfunk__init__2(gtk__scrolled_window__add_with_viewport,   scrolled_window, child,                                "Adds a non-scrollable widget to a scroll window.");
+  f2__primcfunk__init__3(gtk__scrolled_window__set_policy,          scrolled_window, hscrollbar_policy, vscrollbar_policy, "Sets the policy for the vertical and horizontal scrollbars of a scrolled window.  Valid policies are (1) `always, (2) `automatic, and (3) `never.");
 
   // text_view
   
   f2__primcfunk__init__0(gtk__text_view__new,                                                                            "Returns a new text_view widget.");
-  f2__primcfunk__init__1(gtk__text_view__get_buffer,              text_view,                                             "Returns the buffer widget of a text_view widget.");
+  f2__primcfunk__init__1(gtk__text_view__get_buffer,                text_view,                                             "Returns the buffer widget of a text_view widget.");
   
   // gdk_pixbuf
   
-  f2__primcfunk__init__3(gtk__pixbuf__new_from_rgb_data,          width, height, rgb_data,                               "Returns a new gdk_pixbuf object.");
-  f2__primcfunk__init__3(gtk__pixbuf__new_from_rgba_data,         width, height, rgba_data,                              "Returns a new gdk_pixbuf object.");
-  f2__primcfunk__init__1(gtk__pixbuf__unref,                      this,                                                  "Removes one reference to a pixbuf.  Use this if you don't need a funk2 reference to a GdkPixbuf anymore.");
+  f2__primcfunk__init__3(gtk__pixbuf__new_from_rgb_data,            width, height, rgb_data,                               "Returns a new gdk_pixbuf object.");
+  f2__primcfunk__init__3(gtk__pixbuf__new_from_rgba_data,           width, height, rgba_data,                              "Returns a new gdk_pixbuf object.");
+  f2__primcfunk__init__1(gtk__pixbuf__unref,                        this,                                                  "Removes one reference to a pixbuf.  Use this if you don't need a funk2 reference to a GdkPixbuf anymore.");
   
   // container
   
-  f2__primcfunk__init__2(gtk__container__add,                     widget, add_widget,                                    "Adds a widget to a container.");
-  f2__primcfunk__init__2(gtk__container__remove,                  widget, remove_widget,                                 "Removes a widget from a container.");
-  f2__primcfunk__init__5(gtk__box__pack_start,                    widget, child_widget, expand, fill, padding,           "Packs a child widget in a box.");
-  f2__primcfunk__init__3(gtk__signal_connect,                     widget, signal_name, funk,                             "Creates a callback for a widget (see gtk-pop_callback_event).");
+  f2__primcfunk__init__2(gtk__container__add,                       widget, add_widget,                                    "Adds a widget to a container.");
+  f2__primcfunk__init__2(gtk__container__remove,                    widget, remove_widget,                                 "Removes a widget from a container.");
+  f2__primcfunk__init__5(gtk__box__pack_start,                      widget, child_widget, expand, fill, padding,           "Packs a child widget in a box.");
+  f2__primcfunk__init__3(gtk__signal_connect,                       widget, signal_name, funk,                             "Creates a callback for a widget (see gtk-pop_callback_event).");
   f2__primcfunk__init__0(gtk__pop_callback_event,                                                                        "Returns the next waiting callback event, if one exists, nil otherwise.");
-  f2__primcfunk__init__1(gtk__text_buffer__get_start_iter,        text_buffer,                                           "Returns the starting text_iter of a text_buffer.");
-  f2__primcfunk__init__2(gtk__text_buffer__select_range,          text_buffer, range,                                    "Sets select range in this text_buffer.");
-  f2__primcfunk__init__1(gtk__text_buffer__get_text,              text_buffer,                                           "Gets the text as a string from a gtk text_buffer widget.");
-  f2__primcfunk__init__2(gtk__text_buffer__set_text,              text_buffer, text,                                     "Sets the text for a gtk text_buffer widget.");
-  f2__primcfunk__init__2(gtk__text_iter__forward_search,          text_iter, text,                                       "Returns a range composed of two text_iters that represent the successful search forward from the text_iter for a string.  Returns nil on failure to find the text.");
+  f2__primcfunk__init__1(gtk__text_buffer__get_start_iter,          text_buffer,                                           "Returns the starting text_iter of a text_buffer.");
+  f2__primcfunk__init__2(gtk__text_buffer__select_range,            text_buffer, range,                                    "Sets select range in this text_buffer.");
+  f2__primcfunk__init__1(gtk__text_buffer__get_text,                text_buffer,                                           "Gets the text as a string from a gtk text_buffer widget.");
+  f2__primcfunk__init__2(gtk__text_buffer__set_text,                text_buffer, text,                                     "Sets the text for a gtk text_buffer widget.");
+  f2__primcfunk__init__2(gtk__text_iter__forward_search,            text_iter, text,                                       "Returns a range composed of two text_iters that represent the successful search forward from the text_iter for a string.  Returns nil on failure to find the text.");
   
   // misc
   
@@ -4777,6 +4870,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__3(gtk__file_chooser_dialog__add_file_filter_pattern,   this, name, pattern,         "Given a name string and a pattern string, adds the name and pattern as a gtk_file_filter to this gtk_file_chooser_dialog.");
   f2__primcfunk__init__2(gtk__file_chooser_dialog__set_preview_widget,        this, widget,                "Given a gtk_widget, sets the preview widget of this gtk_file_chooser_dialog.");
   f2__primcfunk__init__2(gtk__file_chooser_dialog__set_preview_widget_active, this, preview_widget_active, "Given a boolean value, sets whether this gtk_file_chooser_dialog has an active preview widget.");
+  f2__primcfunk__init__1(gtk__file_chooser_dialog__get_preview_filename,      this,                        "Gets this gtk_file_chooser_dialog's preview filename, or nil if one is no file is currently selected.");
   
   // menu_item
   

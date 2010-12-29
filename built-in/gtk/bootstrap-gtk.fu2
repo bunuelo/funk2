@@ -20,11 +20,12 @@
 
 'Lazy Porting: A technique for implementing object type functionality only when member functions for get/set/execute funks have the same names.'
 
-[deftypefunk gtk_widget get     widget                         []                 this]
-[deftypefunk gtk_widget execute signal_connect                 [signal_name funk] [gtk-signal_connect                 [get this widget] signal_name funk]]
-[deftypefunk gtk_widget execute expose_event-signal_connect    [funk]             [gtk-expose_event-signal_connect    [get this widget] funk]]
-[deftypefunk gtk_widget execute key_press_event-signal_connect [funk]             [gtk-key_press_event-signal_connect [get this widget] funk]]
-[deftypefunk gtk_widget execute response_event-signal_connect  [funk]             [gtk-response_event-signal_connect  [get this widget] funk]]
+[deftypefunk gtk_widget get     widget                              []                 this]
+[deftypefunk gtk_widget execute signal_connect                      [signal_name funk] [gtk-signal_connect                      [get this widget] signal_name funk]]
+[deftypefunk gtk_widget execute expose_event-signal_connect         [funk]             [gtk-expose_event-signal_connect         [get this widget] funk]]
+[deftypefunk gtk_widget execute key_press_event-signal_connect      [funk]             [gtk-key_press_event-signal_connect      [get this widget] funk]]
+[deftypefunk gtk_widget execute response_event-signal_connect       [funk]             [gtk-response_event-signal_connect       [get this widget] funk]]
+[deftypefunk gtk_widget execute update_preview_event-signal_connect [funk]             [gtk-update_preview_event-signal_connect [get this widget] funk]]
 
 'GtkWidget'
 [deftypefunk gtk_widget execute show_all               []                                      [gtk-widget-show_all               [get this widget]]]
@@ -154,6 +155,7 @@
 [deftypefunk gtk_file_chooser_dialog execute add_file_filter_pattern [name pattern]               [gtk-file_chooser_dialog-add_file_filter_pattern   [get this widget] name pattern]]
 [deftypefunk gtk_file_chooser_dialog set     preview_widget          [name widget]                [gtk-file_chooser_dialog-set_preview_widget        [get this widget] widget]]
 [deftypefunk gtk_file_chooser_dialog set     preview_widget_active   [name preview_widget_active] [gtk-file_chooser_dialog-set_preview_widget_active [get this widget] preview_widget_active]]
+[deftypefunk gtk_file_chooser_dialog get     preview_filename        []                           [gtk-file_chooser_dialog-get_preview_filename      [get this widget]]]
 
 'GtkScale'
 

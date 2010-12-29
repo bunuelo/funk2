@@ -108,10 +108,12 @@
     [have open_button signal_connect 'clicked'
 	  [funk []
 		[terminal_format standard-terminal '\n  open button clicked.']
-		[let [[open_dialog [gtk-file_chooser_dialog-new_for_file_open nil]]]
+		[let [[open_dialog   [gtk-file_chooser_dialog-new_for_file_open nil]]
+		      [preview_label [gtk-label-new [format nil nil]]]]
 		  [have open_dialog connect_hide_on_delete]
 		  [set  open_dialog select_multiple t]
 		  [have open_dialog add_file_filter_pattern 'Text Files' '*.txt']
+		  [set  open_dialog preview_widget preview_label]
 		  [have open_dialog response_event-signal_connect
 			[funk [event_frame]
 			      [terminal_format standard-terminal '\nresponse event frame: ' event_frame]
@@ -120,6 +122,11 @@
 				    [prog [terminal_format standard-terminal '\ngot accept response: filenames = ' [get open_dialog filenames]]
 					  ]]]
 			      [have open_dialog destroy]]]
+		  [have open_dialog update_preview_event-signal_connect
+			[funk []
+			      [let [[preview_filename [get open_dialog preview_filename]]]
+				[set preview_label text [format nil preview_filename]]
+				[set open_dialog preview_widget_active t]]]]
 		  [have open_dialog show_all]
 		  ]]]
     

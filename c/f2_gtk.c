@@ -1469,7 +1469,6 @@ GtkFileChooserDialog* funk2_gtk__file_chooser_dialog__new_for_file_open(funk2_gt
 									      GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
 									      NULL));
     gtk_file_chooser_set_show_hidden(GTK_FILE_CHOOSER(file_chooser_dialog), TRUE);
-    gtk_file_chooser_set_local_only( GTK_FILE_CHOOSER(file_chooser_dialog), FALSE);
     gdk_threads_leave();
   }
   return file_chooser_dialog;
@@ -1488,7 +1487,6 @@ GtkFileChooserDialog* funk2_gtk__file_chooser_dialog__new_for_file_save(funk2_gt
     gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(file_chooser_dialog), TRUE);
     gtk_file_chooser_set_create_folders(           GTK_FILE_CHOOSER(file_chooser_dialog), TRUE);
     gtk_file_chooser_set_show_hidden(              GTK_FILE_CHOOSER(file_chooser_dialog), TRUE);
-    gtk_file_chooser_set_local_only(               GTK_FILE_CHOOSER(file_chooser_dialog), FALSE);
     gdk_threads_leave();
   }
   return file_chooser_dialog;
@@ -1498,7 +1496,7 @@ boolean_t funk2_gtk__file_chooser_dialog__set_current_folder(funk2_gtk_t* this, 
   boolean_t success;
   {
     gdk_threads_enter();
-    success = gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(file_chooser_dialog), (char*)filename) ? boolean__true : boolean__false;
+    success = gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(file_chooser_dialog), (char*)filename) ? boolean__true : boolean__false;
     gdk_threads_leave();
   }
   return success;
@@ -1516,7 +1514,7 @@ boolean_t funk2_gtk__file_chooser_dialog__set_filename(funk2_gtk_t* this, GtkFil
   boolean_t success;
   {
     gdk_threads_enter();
-    success = gtk_file_chooser_set_uri(GTK_FILE_CHOOSER(file_chooser_dialog), (char*)filename) ? boolean__true : boolean__false;
+    success = gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(file_chooser_dialog), (char*)filename) ? boolean__true : boolean__false;
     gdk_threads_leave();
   }
   return success;

@@ -111,7 +111,7 @@
 		[let [[open_dialog [gtk-file_chooser_dialog-new_for_file_open nil]]]
 		  [have open_dialog connect_hide_on_delete]
 		  [set  open_dialog select_multiple t]
-		  [have open_dialog add_file_filter_pattern '*.txt']
+		  [have open_dialog add_file_filter_pattern 'Text Files' '*.txt']
 		  [have open_dialog response_event-signal_connect
 			[funk [event_frame]
 			      [terminal_format standard-terminal '\nresponse event frame: ' event_frame]
@@ -128,7 +128,7 @@
 		[terminal_format standard-terminal '\n  save button clicked.']
 		[let [[save_dialog [gtk-file_chooser_dialog-new_for_file_save nil]]]
 		  [have save_dialog connect_hide_on_delete]
-		  [have open_dialog add_file_filter_pattern '*.txt']
+		  [have open_dialog add_file_filter_pattern 'Text Files' '*.txt']
 		  [set  save_dialog current_name   'Untitled Document']
 		  [have save_dialog response_event-signal_connect
 			[funk [event_frame]

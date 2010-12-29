@@ -1547,10 +1547,11 @@ void funk2_gtk__file_chooser_dialog__set_select_multiple(funk2_gtk_t* this, GtkF
   }
 }
 
-void funk2_gtk__file_chooser_dialog__add_file_filter_pattern(funk2_gtk_t* this, GtkFileChooserDialog* file_chooser_dialog, u8* pattern) {
+void funk2_gtk__file_chooser_dialog__add_file_filter_pattern(funk2_gtk_t* this, GtkFileChooserDialog* file_chooser_dialog, u8* name, u8* pattern) {
   {
     gdk_threads_enter();
     GtkFileFilter* file_filter = gtk_file_filter_new();
+    gtk_file_filter_add_name(   file_filter, (char*)name);
     gtk_file_filter_add_pattern(file_filter, (char*)pattern);
     gtk_file_chooser_add_file_filter(GTK_FILE_CHOOSER(file_chooser_dialog), file_filter);
     gdk_threads_leave();
@@ -4152,7 +4153,7 @@ f2ptr f2__gtk__file_chooser_dialog__set_select_multiple(f2ptr cause, f2ptr this,
 def_pcfunk2(gtk__file_chooser_dialog__set_select_multiple, this, select_multiple, return f2__gtk__file_chooser_dialog__set_select_multiple(this_cause, this, select_multiple));
 
 
-f2ptr raw__gtk__file_chooser_dialog__add_file_filter_pattern(f2ptr cause, f2ptr this, f2ptr pattern) {
+f2ptr raw__gtk__file_chooser_dialog__add_file_filter_pattern(f2ptr cause, f2ptr this, f2ptr name, f2ptr pattern) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
     GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
@@ -4160,7 +4161,12 @@ f2ptr raw__gtk__file_chooser_dialog__add_file_filter_pattern(f2ptr cause, f2ptr 
     u8* pattern__str    = (u8*)from_ptr(f2__malloc(pattern__length + 1));
     raw__string__str_copy(cause, pattern, pattern__str);
     pattern__str[pattern__length] = 0;
-    funk2_gtk__file_chooser_dialog__add_file_filter_pattern(&(__funk2.gtk), gtk_this, pattern__str);
+    s64 name__length = raw__string__length(cause, name);
+    u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
+    raw__string__str_copy(cause, name, name__str);
+    name__str[name__length] = 0;
+    funk2_gtk__file_chooser_dialog__add_file_filter_pattern(&(__funk2.gtk), gtk_this, name__str, pattern__str);
+    f2__free(to_ptr(name__str));
     f2__free(to_ptr(pattern__str));
     return nil;
   } else {
@@ -4171,14 +4177,15 @@ f2ptr raw__gtk__file_chooser_dialog__add_file_filter_pattern(f2ptr cause, f2ptr 
 #endif
 }
 
-f2ptr f2__gtk__file_chooser_dialog__add_file_filter_pattern(f2ptr cause, f2ptr this, f2ptr pattern) {
+f2ptr f2__gtk__file_chooser_dialog__add_file_filter_pattern(f2ptr cause, f2ptr this, f2ptr name, f2ptr pattern) {
   if ((! raw__gtk_file_chooser_dialog__is_type(cause, this)) ||
+      (! raw__string__is_type(cause, name)) ||
       (! raw__string__is_type(cause, pattern))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__file_chooser_dialog__add_file_filter_pattern(cause, this, pattern);
+  return raw__gtk__file_chooser_dialog__add_file_filter_pattern(cause, this, name, pattern);
 }
-def_pcfunk2(gtk__file_chooser_dialog__add_file_filter_pattern, this, pattern, return f2__gtk__file_chooser_dialog__add_file_filter_pattern(this_cause, this, pattern));
+def_pcfunk3(gtk__file_chooser_dialog__add_file_filter_pattern, this, name, pattern, return f2__gtk__file_chooser_dialog__add_file_filter_pattern(this_cause, this, name, pattern));
 
 
 // gdk_keyval
@@ -4703,7 +4710,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__2(gtk__file_chooser_dialog__set_filename,            this, filename,        "Given a filename string, sets this gtk_file_chooser_dialog's filename.");
   f2__primcfunk__init__1(gtk__file_chooser_dialog__get_filenames,           this,                  "Gets this gtk_file_chooser_dialog's currently selected filenames.");
   f2__primcfunk__init__2(gtk__file_chooser_dialog__set_select_multiple,     this, select_multiple, "Given a boolean value, sets whether this gtk_file_chooser_dialog allows the user to select multiple files or folders.");
-  f2__primcfunk__init__2(gtk__file_chooser_dialog__add_file_filter_pattern, this, pattern,         "Given a pattern string, adds the pattern as a gtk_file_filter to this gtk_file_chooser_dialog.");
+  f2__primcfunk__init__3(gtk__file_chooser_dialog__add_file_filter_pattern, this, name, pattern,   "Given a name string and a pattern string, adds the name and pattern as a gtk_file_filter to this gtk_file_chooser_dialog.");
   
   // menu_item
   

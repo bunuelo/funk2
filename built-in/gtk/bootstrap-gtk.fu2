@@ -151,7 +151,7 @@
 [deftypefunk gtk_file_chooser_dialog get     filenames               []                [gtk-file_chooser_dialog-get_filenames       [get this widget]]]
 [deftypefunk gtk_file_chooser_dialog get     filename                []                [first [get this filenames]]]
 [deftypefunk gtk_file_chooser_dialog set     select_multiple         [select_multiple] [gtk-file_chooser_dialog-set_select_multiple [get this widget] select_multiple]]
-[deftypefunk gtk_file_chooser_dialog execute add_file_filter_pattern [pattern]         [gtk-file_chooser_dialog-add_file_filter_pattern [get this widget] pattern]]
+[deftypefunk gtk_file_chooser_dialog execute add_file_filter_pattern [name pattern]    [gtk-file_chooser_dialog-add_file_filter_pattern [get this widget] name pattern]]
 
 'GtkScale'
 

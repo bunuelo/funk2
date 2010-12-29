@@ -1566,6 +1566,14 @@ void funk2_gtk__file_chooser_dialog__set_preview_widget(funk2_gtk_t* this, GtkFi
   }
 }
 
+void funk2_gtk__file_chooser_dialog__set_preview_widget_active(funk2_gtk_t* this, GtkFileChooserDialog* file_chooser_dialog, boolean_t preview_widget_active) {
+  {
+    gdk_threads_enter();
+    gtk_file_chooser_set_preview_widget_active(GTK_FILE_CHOOSER(file_chooser_dialog), preview_widget_active ? TRUE : FALSE);
+    gdk_threads_leave();
+  }
+}
+
 
 #endif // F2__GTK__SUPPORTED
 
@@ -4221,6 +4229,29 @@ f2ptr f2__gtk__file_chooser_dialog__set_preview_widget(f2ptr cause, f2ptr this, 
 def_pcfunk2(gtk__file_chooser_dialog__set_preview_widget, this, widget, return f2__gtk__file_chooser_dialog__set_preview_widget(this_cause, this, widget));
 
 
+f2ptr raw__gtk__file_chooser_dialog__set_preview_widget_active(f2ptr cause, f2ptr this, f2ptr preview_widget_active) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
+    funk2_gtk__file_chooser_dialog__set_preview_widget_active(&(__funk2.gtk), gtk_this, (preview_widget_active != nil) ? boolean__true : boolean__false);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__file_chooser_dialog__set_preview_widget_active(f2ptr cause, f2ptr this, f2ptr preview_widget_active) {
+  if (! raw__gtk_file_chooser_dialog__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__file_chooser_dialog__set_preview_widget_active(cause, this, preview_widget_active);
+}
+def_pcfunk2(gtk__file_chooser_dialog__set_preview_widget_active, this, preview_widget_active, return f2__gtk__file_chooser_dialog__set_preview_widget_active(this_cause, this, preview_widget_active));
+
+
 // gdk_keyval
 
 f2ptr raw__gtk__gdk_keyval_to_unicode(f2ptr cause, f2ptr keyval) {
@@ -4736,15 +4767,16 @@ void f2__gtk__initialize() {
   
   // file_chooser_dialog
   
-  f2__primcfunk__init__1(gtk__file_chooser_dialog__new_for_file_open,       parent_window,         "Given a parent_window, which can be nil, returns a new GtkFileChooserDialog for opening a file.");
-  f2__primcfunk__init__1(gtk__file_chooser_dialog__new_for_file_save,       parent_window,         "Given a parent_window, which can be nil, returns a new GtkFileChooserDialog for saving a file.");
-  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_current_folder,      this, filename,        "Given a filename string, sets this gtk_file_chooser_dialog's current folder.");
-  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_current_name,        this, current_name,    "Given a current_name string, sets this gtk_file_chooser_dialog's current name.");
-  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_filename,            this, filename,        "Given a filename string, sets this gtk_file_chooser_dialog's filename.");
-  f2__primcfunk__init__1(gtk__file_chooser_dialog__get_filenames,           this,                  "Gets this gtk_file_chooser_dialog's currently selected filenames.");
-  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_select_multiple,     this, select_multiple, "Given a boolean value, sets whether this gtk_file_chooser_dialog allows the user to select multiple files or folders.");
-  f2__primcfunk__init__3(gtk__file_chooser_dialog__add_file_filter_pattern, this, name, pattern,   "Given a name string and a pattern string, adds the name and pattern as a gtk_file_filter to this gtk_file_chooser_dialog.");
-  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_preview_widget,      this, widget,          "Given a gtk_widget, sets the preview widget of this gtk_file_chooser_dialog.");
+  f2__primcfunk__init__1(gtk__file_chooser_dialog__new_for_file_open,         parent_window,               "Given a parent_window, which can be nil, returns a new GtkFileChooserDialog for opening a file.");
+  f2__primcfunk__init__1(gtk__file_chooser_dialog__new_for_file_save,         parent_window,               "Given a parent_window, which can be nil, returns a new GtkFileChooserDialog for saving a file.");
+  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_current_folder,        this, filename,              "Given a filename string, sets this gtk_file_chooser_dialog's current folder.");
+  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_current_name,          this, current_name,          "Given a current_name string, sets this gtk_file_chooser_dialog's current name.");
+  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_filename,              this, filename,              "Given a filename string, sets this gtk_file_chooser_dialog's filename.");
+  f2__primcfunk__init__1(gtk__file_chooser_dialog__get_filenames,             this,                        "Gets this gtk_file_chooser_dialog's currently selected filenames.");
+  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_select_multiple,       this, select_multiple,       "Given a boolean value, sets whether this gtk_file_chooser_dialog allows the user to select multiple files or folders.");
+  f2__primcfunk__init__3(gtk__file_chooser_dialog__add_file_filter_pattern,   this, name, pattern,         "Given a name string and a pattern string, adds the name and pattern as a gtk_file_filter to this gtk_file_chooser_dialog.");
+  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_preview_widget,        this, widget,                "Given a gtk_widget, sets the preview widget of this gtk_file_chooser_dialog.");
+  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_preview_widget_active, this, preview_widget_active, "Given a boolean value, sets whether this gtk_file_chooser_dialog has an active preview widget.");
   
   // menu_item
   

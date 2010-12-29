@@ -124,7 +124,7 @@ f2ptr raw__mentality__new(f2ptr cause,
 			  f2ptr file_close_project_menu_item,
 			  f2ptr file_save_project_menu_item,
 			  f2ptr file_exit_menu_item) {
-  return f2__frame__new(cause, f2list18__new(cause,
+  return f2__frame__new(cause, f2list20__new(cause,
 					     new__symbol(cause, "type"),                         new__symbol(cause, "mentality"),
 					     new__symbol(cause, "main_window"),                  main_window,
 					     new__symbol(cause, "menu_bar_vbox"),                menu_bar_vbox,

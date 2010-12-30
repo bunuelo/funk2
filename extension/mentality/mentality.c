@@ -162,7 +162,7 @@ f2ptr raw__mentality__user_command__open_project(f2ptr cause, f2ptr this) {
 
 f2ptr f2__mentality__user_command__open_project(f2ptr cause, f2ptr this) {
   if (! raw__mentality__is_type(cause, this)) {
-    return f2larva__open(cause, 1, nil);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__mentality__user_command__open_project(cause, this);
 }
@@ -176,7 +176,7 @@ f2ptr raw__mentality__user_command__close_project(f2ptr cause, f2ptr this) {
 
 f2ptr f2__mentality__user_command__close_project(f2ptr cause, f2ptr this) {
   if (! raw__mentality__is_type(cause, this)) {
-    return f2larva__close(cause, 1, nil);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__mentality__user_command__close_project(cause, this);
 }
@@ -190,7 +190,7 @@ f2ptr raw__mentality__user_command__save_project(f2ptr cause, f2ptr this) {
 
 f2ptr f2__mentality__user_command__save_project(f2ptr cause, f2ptr this) {
   if (! raw__mentality__is_type(cause, this)) {
-    return f2larva__save(cause, 1, nil);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__mentality__user_command__save_project(cause, this);
 }

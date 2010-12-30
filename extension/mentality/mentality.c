@@ -106,7 +106,7 @@ f2ptr f2__mentality_main_window__new(f2ptr cause, f2ptr mentality) {
   // file_exit_menu_item
   f2__gtk__menu__append(cause, file_menu, file_exit_menu_item);
   f2__gtk__signal_connect(cause, file_exit_menu_item, new__string(cause, "activate"),
-  			  new__core_extension_funk(cause, mentality, mentality__user_command__exit_project),
+  			  new__core_extension_funk(cause, mentality, mentality__user_command__exit),
 			  f2list1__new(cause, mentality));
   
   f2__gtk__widget__show_all(cause, window);
@@ -201,6 +201,20 @@ f2ptr f2__mentality__user_command__save_project(f2ptr cause, f2ptr this) {
 export_cefunk1(mentality__user_command__save_project, this, 0, "");
 
 
+f2ptr raw__mentality__user_command__exit(f2ptr cause, f2ptr this) {
+  printf("\nyup.  exit."); fflush(stdout);
+  return nil;
+}
+
+f2ptr f2__mentality__user_command__exit(f2ptr cause, f2ptr this) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__user_command__exit(cause, this);
+}
+export_cefunk1(mentality__user_command__exit, this, 0, "");
+
+
 
 f2ptr f2__mentality_type__new_aux(f2ptr cause) {
   f2ptr this = f2__mentality_type__new(cause);
@@ -208,6 +222,7 @@ f2ptr f2__mentality_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "user_command-open_project"),  f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__user_command__open_project")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "user_command-close_project"), f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__user_command__close_project")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "user_command-save_project"),  f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__user_command__save_project")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "user_command-exit"),          f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__user_command__exit")));}
   return this;
 }
 

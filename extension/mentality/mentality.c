@@ -128,6 +128,21 @@ f2ptr f2__mentality_main_window__new(f2ptr cause, f2ptr mentality) {
 export_cefunk1(mentality_main_window__new, mentality, 0, "Given a mentality object, returns a new mentality_main_window object.");
 
 
+f2ptr raw__mentality_main_window__destroy(f2ptr cause, f2ptr this) {
+  f2ptr window = raw__mentality_main_window__window(cause, this);
+  return f2__gtk__widget__destroy(cause, window);
+}
+
+f2ptr f2__mentality_main_window__destroy(f2ptr cause, f2ptr this) {
+  if (! raw__mentality_main_window__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality_main_window__destroy(cause, this);
+}
+export_cefunk1(mentality_main_window__destroy, this, 0, "Destroys the main mentality window.");
+
+
+
 // mentality
 
 def_ceframe2(mentality, mentality,
@@ -203,7 +218,7 @@ export_cefunk1(mentality__user_command__save_project, this, 0, "");
 
 f2ptr raw__mentality__user_command__exit(f2ptr cause, f2ptr this) {
   f2ptr main_window = f2__mentality__main_window(cause, this);
-  f2__gtk__widget__destroy(cause, main_window);
+  f2__mentality_main_window__destroy(cause, main_window);
   return nil;
 }
 

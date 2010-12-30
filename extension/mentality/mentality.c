@@ -23,58 +23,58 @@
 #include "mentality.h"
 
 
-#define def_ceframe__name__common(name, slot_defs)	\
+#define def_ceframe__new__common(name, slot_defs)	\
   f2ptr this = f2__frame__new(cause, nil);				\
   f2__frame__add_var_value(cause, new__symbol(cause, "type"), new__symbol(cause, #name)); \
   slot_defs;								\
   return this;								\
 
-#define def_ceframe__name__arg(slot)					\
+#define def_ceframe__new__arg(slot)					\
   f2__frame__add_var_value(cause, new__symbol(cause, #slot), slot)
 
-#define def_ceframe__name__arg1(slot1)		\
-  def_ceframe__name__arg(slot1)
+#define def_ceframe__new__arg1(slot1)		\
+  def_ceframe__new__arg(slot1)
 
-#define def_ceframe__name__arg2(slot1, slot2)		\
-  def_ceframe__name__arg1(slot1);			\
-  def_ceframe__name__arg(slot2)
+#define def_ceframe__new__arg2(slot1, slot2)		\
+  def_ceframe__new__arg1(slot1);			\
+  def_ceframe__new__arg(slot2)
 
-#define def_ceframe__name__arg3(slot1, slot2, slot3)			\
-  def_ceframe__name__arg2(slot1, slot2);				\
-  def_ceframe__name__arg(slot3)
+#define def_ceframe__new__arg3(slot1, slot2, slot3)			\
+  def_ceframe__new__arg2(slot1, slot2);				\
+  def_ceframe__new__arg(slot3)
 
-#define def_ceframe__name__arg4(slot1, slot2, slot3, slot4)		\
-  def_ceframe__name__arg3(slot1, slot2, slot3);				\
-  def_ceframe__name__arg(slot4)
+#define def_ceframe__new__arg4(slot1, slot2, slot3, slot4)		\
+  def_ceframe__new__arg3(slot1, slot2, slot3);				\
+  def_ceframe__new__arg(slot4)
 
-#define def_ceframe__name__arg5(slot1, slot2, slot3, slot4, slot5)	\
-  def_ceframe__name__arg4(slot1, slot2, slot3, slot4);			\
-  def_ceframe__name__arg(slot5)
+#define def_ceframe__new__arg5(slot1, slot2, slot3, slot4, slot5)	\
+  def_ceframe__new__arg4(slot1, slot2, slot3, slot4);			\
+  def_ceframe__new__arg(slot5)
 
 
-#define def_ceframe0__name(name)					\
+#define def_ceframe0__new(name)					\
   f2ptr raw__##name##__new(f2ptr cause) {				\
-    def_ceframe__name__common(name, ); }
+    def_ceframe__new__common(name, ); }
 
-#define def_ceframe1__name(name, slot1)					\
+#define def_ceframe1__new(name, slot1)					\
   f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1) {			\
-    def_ceframe__name__common(name, def_ceframe__name__arg1(slot1)); }
+    def_ceframe__new__common(name, def_ceframe__new__arg1(slot1)); }
 
-#define def_ceframe2__name(name, slot1, slot2)				\
+#define def_ceframe2__new(name, slot1, slot2)				\
   f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2) {	\
-    def_ceframe__name__common(name, def_ceframe__name__arg2(slot1, slot2)); }
+    def_ceframe__new__common(name, def_ceframe__new__arg2(slot1, slot2)); }
 
-#define def_ceframe3__name(name, slot1, slot2, slot3)			\
+#define def_ceframe3__new(name, slot1, slot2, slot3)			\
   f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3) { \
-    def_ceframe__name__common(name, def_ceframe__name__arg3(slot1, slot2, slot3)); }
+    def_ceframe__new__common(name, def_ceframe__new__arg3(slot1, slot2, slot3)); }
 
-#define def_ceframe4__name(name, slot1, slot2, slot3, slot4)		\
+#define def_ceframe4__new(name, slot1, slot2, slot3, slot4)		\
   f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4) { \
-    def_ceframe__name__common(name, def_ceframe__name__arg4(slot1, slot2, slot3, slot4)); }
+    def_ceframe__new__common(name, def_ceframe__new__arg4(slot1, slot2, slot3, slot4)); }
 
-#define def_ceframe5__name(name, slot1, slot2, slot3, slot4, slot5)	\
+#define def_ceframe5__new(name, slot1, slot2, slot3, slot4, slot5)	\
   f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5) { \
-    def_ceframe__name__common(name, def_ceframe__name__arg5(slot1, slot2, slot3, slot4, slot5)); }
+    def_ceframe__new__common(name, def_ceframe__new__arg5(slot1, slot2, slot3, slot4, slot5)); }
 
 
 #define def_ceframe__is_type(name)			       \

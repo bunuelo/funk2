@@ -277,7 +277,7 @@ struct funk2_object_type__core_extension_handler__slot_s {
   def_ceframe__slot_funk(name, slot11)
 
 #define def_ceframe__slot_funk12(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12) \
-  def_ceframe__slot_funk12(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11) \
+  def_ceframe__slot_funk11(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11) \
   def_ceframe__slot_funk(name, slot12)
 
 

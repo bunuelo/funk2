@@ -211,8 +211,10 @@ export_cefunk0(mentality__new, 0, "Returns a new mentality object.");
 
 
 f2ptr raw__mentality__user_command__new_project(f2ptr cause, f2ptr this) {
+  f2ptr main_window = f2__mentality__main_window(cause, this);
   f2ptr project = f2__mentality_project__new(cause);
-  f2__mentality_main_window__project__set(cause, this, project);
+  f2__mentality__current_project__set(cause, this, project);
+  f2__mentality_main_window__project__set(cause, main_window, project);
   printf("\nyup.  new project."); fflush(stdout);
   return nil;
 }

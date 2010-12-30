@@ -263,6 +263,7 @@ f2ptr  f2__gtk__widget__set_size_request(      f2ptr cause, f2ptr widget, f2ptr 
 f2ptr raw__gtk__widget__get_visible(           f2ptr cause, f2ptr widget);
 f2ptr  f2__gtk__widget__get_visible(           f2ptr cause, f2ptr widget);
 f2ptr raw__gtk__widget__destroy(               f2ptr cause, f2ptr widget);
+f2ptr  f2__gtk__widget__destroy(               f2ptr cause, f2ptr widget);
 f2ptr raw__gtk__widget__connect_hide_on_delete(f2ptr cause, f2ptr widget);
 f2ptr  f2__gtk__widget__connect_hide_on_delete(f2ptr cause, f2ptr widget);
 f2ptr raw__gtk__widget__modify_fg(             f2ptr cause, f2ptr widget, f2ptr state, f2ptr color);

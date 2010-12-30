@@ -30,7 +30,7 @@
   return this;								\
 
 #define def_ceframe__new__arg(slot)					\
-  f2__frame__add_var_value(cause, new__symbol(cause, #slot), slot)
+  f2__frame__add_var_value(cause, this, new__symbol(cause, #slot), slot)
 
 #define def_ceframe__new__arg1(slot1)		\
   def_ceframe__new__arg(slot1)

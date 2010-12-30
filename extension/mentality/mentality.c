@@ -168,11 +168,11 @@
     {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, #name), new__symbol(cause, #name "__new")));} \
     {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, #name), new__symbol(cause, #name "__is_type")));} \
     {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, #name), new__symbol(cause, #name "__type")));} \
-    slot_defs;
-    return this;
+    slot_defs;								\
+    return this;							\
   }
-  
-#define def_ceframe__primobject_type__new__slot(name, slot)	\
+
+#define def_ceframe__primobject_type__new__slot(name, slot)		\
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, #slot), f2__core_extension_funk__new(cause, new__symbol(cause, #name), new__symbol(cause, #name "__" #slot)));} \
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, #slot), f2__core_extension_funk__new(cause, new__symbol(cause, #name), new__symbol(cause, #name "__" #slot "__set")));}
 

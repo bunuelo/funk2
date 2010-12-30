@@ -302,9 +302,10 @@ f2ptr f2__mentality__core_extension_ping(f2ptr cause) {
 export_cefunk0(mentality__core_extension_ping, 0, "");
 
 f2ptr f2__mentality__core_extension_initialize(f2ptr cause) {
-  f2__add_type(cause, new__symbol(cause, "mentality_project"),     f2__mentality_project_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "mentality_main_window"), f2__mentality_main_window_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "mentality"),             f2__mentality_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "mentality_project_widget"), f2__mentality_project_widget_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "mentality_project"),        f2__mentality_project_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "mentality_main_window"),    f2__mentality_main_window_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "mentality"),                f2__mentality_type__new_aux(cause));
   status("mentality initialized.");
   return nil;
 }

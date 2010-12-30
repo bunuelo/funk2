@@ -116,7 +116,8 @@
        [have vbox pack_start turn_right_resource__hbox nil nil 0]
        [have turn_right_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `turn_right [have [get turn_right_resource__target__entry text] read]]]]
+		   [have this activate_resource `learned_reactive `physical `turn_right [have [get turn_right_resource__target__entry text] read]]]
+	     nil]
        
        
        [= turn_left_resource__hbox [gtk-hbox-new 2]]
@@ -129,7 +130,8 @@
        [have vbox pack_start turn_left_resource__hbox nil nil 0]
        [have turn_left_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `turn_left [have [get turn_left_resource__target__entry text]  read]]]]
+		   [have this activate_resource `learned_reactive `physical `turn_left [have [get turn_left_resource__target__entry text]  read]]]
+	     nil]
        
        [= look_up_resource__hbox [gtk-hbox-new 2]]
        [= look_up_resource__button [gtk-button-new_with_label 'Look Up - ']]
@@ -142,7 +144,8 @@
        [have look_up_resource__button signal_connect 'clicked'
 	     [funk []
 		   [print [have [get look_up_resource__target__entry text] read]]
-		   [have this activate_resource `learned_reactive `physical `look_up [have [get look_up_resource__target__entry text] read] ]]]
+		   [have this activate_resource `learned_reactive `physical `look_up [have [get look_up_resource__target__entry text] read] ]]
+	     nil]
        
        [= look_down_resource__hbox [gtk-hbox-new 2]]
        [= look_down_resource__button [gtk-button-new_with_label 'Look Down - ']]
@@ -154,7 +157,8 @@
        [have vbox pack_start look_down_resource__hbox nil nil 0]
        [have look_down_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `look_down [have  [get look_down_resource__target__entry text] read]]]]
+		   [have this activate_resource `learned_reactive `physical `look_down [have  [get look_down_resource__target__entry text] read]]]
+	     nil]
        
        
        [= move_forward_resource__hbox [gtk-hbox-new 2]]
@@ -167,7 +171,8 @@
        [have vbox pack_start move_forward_resource__hbox nil nil 0]
        [have move_forward_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `move_forward [have [get move_forward_resource__target__entry text]read]]]]
+		   [have this activate_resource `learned_reactive `physical `move_forward [have [get move_forward_resource__target__entry text]read]]]
+	     nil]
            
        [= move_backward_resource__hbox [gtk-hbox-new 2]]
        [= move_backward_resource__button [gtk-button-new_with_label 'Move Backward - ']]
@@ -179,7 +184,8 @@
        [have vbox pack_start move_backward_resource__hbox nil nil 0]
        [have move_backward_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `move_backward [have [get move_backward_resource__target__entry text] read]]]]
+		   [have this activate_resource `learned_reactive `physical `move_backward [have [get move_backward_resource__target__entry text] read]]]
+	     nil]
        
       
 
@@ -189,7 +195,8 @@
        [have vbox pack_start empty_right_hand_resource__hbox nil nil 0]
        [have empty_right_hand_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `empty_right_hand]]]
+		   [have this activate_resource `learned_reactive `physical `empty_right_hand]]
+	     nil]
        
        [= empty_left_hand_resource__hbox [gtk-hbox-new 2]]
        [= empty_left_hand_resource__button [gtk-button-new_with_label 'Empty Left Hand']]
@@ -197,7 +204,8 @@
        [have vbox pack_start empty_left_hand_resource__hbox nil nil 0]
        [have empty_left_hand_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `empty_left_hand]]]
+		   [have this activate_resource `learned_reactive `physical `empty_left_hand]]
+	     nil]
 
        [= look_for_resource__hbox [gtk-hbox-new 2]]
        [= look_for_resource__button [gtk-button-new_with_label 'look_for']]
@@ -209,7 +217,8 @@
        [have vbox pack_start look_for_resource__hbox nil nil 0]
        [have look_for_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `look_for [get [get  look_for_resource__target__entry text] as-symbol]]]]
+		   [have this activate_resource `learned_reactive `physical `look_for [get [get  look_for_resource__target__entry text] as-symbol]]]
+	     nil]
        
        
        [= look_for_vertically_resource__hbox [gtk-hbox-new 2]]
@@ -224,7 +233,8 @@
 	     [funk []
 		   [print [get [get  look_for_vertically_resource__target__entry text] as-symbol]]
 		   [print [type [get [get  look_for_vertically_resource__target__entry text] as-symbol]]]
-		   [have this activate_resource `learned_reactive `physical `look_for_vertically [get [get  look_for_vertically_resource__target__entry text] as-symbol]]]]
+		   [have this activate_resource `learned_reactive `physical `look_for_vertically [get [get  look_for_vertically_resource__target__entry text] as-symbol]]]
+	     nil]
        
        [= hold_with_right_hand_resource__hbox [gtk-hbox-new 2]]
        [= hold_with_right_hand_resource__button [gtk-button-new_with_label 'Hold with Right Hand']]
@@ -237,7 +247,8 @@
        [have hold_with_right_hand_resource__button signal_connect 'clicked'
 	     [funk []
 		   [print [get [get  hold_with_right_hand_resource__target__entry text] as-symbol]]
-		   [have this activate_resource `learned_reactive `physical `hold_with_right_hand [get [get  hold_with_right_hand_resource__target__entry text] as-symbol]]]]
+		   [have this activate_resource `learned_reactive `physical `hold_with_right_hand [get [get  hold_with_right_hand_resource__target__entry text] as-symbol]]]
+	     nil]
        
        [= hold_with_left_hand_resource__hbox [gtk-hbox-new 2]]
        [= hold_with_left_hand_resource__button [gtk-button-new_with_label 'Hold with Left Hand']]
@@ -249,7 +260,8 @@
        [have vbox pack_start hold_with_left_hand_resource__hbox nil nil 0]
        [have hold_with_left_hand_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `hold_with_left_hand [get [get hold_with_left_hand_resource__target__entry text] as-symbol]]]]
+		   [have this activate_resource `learned_reactive `physical `hold_with_left_hand [get [get hold_with_left_hand_resource__target__entry text] as-symbol]]]
+	     nil]
        
 
        [= demo_hold__hbox [gtk-hbox-new 2]]
@@ -258,7 +270,8 @@
        [have vbox pack_start demo_hold__hbox nil nil 0]
        [have demo_hold__button signal_connect 'clicked'
 	     [funk []
-		   [demo_hold `knife]]]
+		   [demo_hold `knife]]
+	     nil]
        
       
        [have window add vbox]

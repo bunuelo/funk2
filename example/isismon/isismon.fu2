@@ -288,11 +288,13 @@
 	     [funk []
 		   [let [[filename [get entry text]]]
 		     [have isismon save_movie_as filename]
-		     [have window destroy]]]]
+		     [have window destroy]]]
+	     nil]
        
        [have cancel_button signal_connect 'clicked'
 	     [funk []
-		   [have window destroy]]]
+		   [have window destroy]]
+	     nil]
        
        [have window add vbox]
        [have window show_all]]]
@@ -401,16 +403,19 @@
 			     [have play_button signal_connect 'clicked'
 				   [funk []
 					 [terminal_format standard-terminal '\nIsisMon: Playing.']
-					 [= simulation_playing t]]]
+					 [= simulation_playing t]]
+				   nil]
 			     [have stop_button signal_connect 'clicked'
 				   [funk []
 					 [terminal_format standard-terminal '\nIsisMon: Stopped.']
-					 [= simulation_playing nil]]]
+					 [= simulation_playing nil]]
+				   nil]
 			     [have step_button signal_connect 'clicked'
 				   [funk []
 					 [let [[seconds 1.0]]
 					   [terminal_format standard-terminal '\nIsisMon: Stepping ' seconds ' seconds.']
-					   [have isis_world raw_step_simulation seconds]]]]
+					   [have isis_world raw_step_simulation seconds]]]
+				   nil]
 			     
 			     [= step_size_hbox  [gtk-hbox-new 2]]
 			     [= step_size_label [gtk-label-new 'Step Size: ']]

@@ -48,7 +48,7 @@ export_cefunk1(mentality_project_widget__gtk_widget, this, 0, "");
 
 // mentality_project
 
-def_ceframe2(mentality, mentality_project, widget, width, height);
+def_ceframe3(mentality, mentality_project, widget, width, height);
 
 f2ptr f2__mentality_project__new(f2ptr cause) {
   f2ptr this   = f2mentality_project__new(cause, nil, nil, nil);

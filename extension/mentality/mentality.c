@@ -118,25 +118,25 @@
   f2ptr raw__##name##__##slot(f2ptr cause, f2ptr this) {		\
     return f2__frame__lookup_var_value(cause, this, new__symbol(cause, #slot), nil); \
   }									\
-									\
-  f2ptr f2__##name##__##slot(f2ptr cause, f2ptr this) {		\
+  									\
+  f2ptr f2__##name##__##slot(f2ptr cause, f2ptr this) {			\
     if (! raw__##name##__is_type(cause, this)) {			\
       return f2larva__new(cause, 1, nil);				\
     }									\
-    return raw__##name##__##slot(cause, this);			\
+    return raw__##name##__##slot(cause, this);				\
   }									\
   export_cefunk1(name##__##slot, thing, 0, "Returns the " #slot " of the " #name "."); \
-									\
-									\
+  									\
+  									\
   f2ptr raw__##name##__##slot##__set(f2ptr cause, f2ptr this, f2ptr value) { \
     return f2__frame__add_var_value(cause, this, new__symbol(cause, #slot), value); \
   }									\
-									\
+  									\
   f2ptr f2__##name##__##slot##__set(f2ptr cause, f2ptr this, f2ptr value) { \
     if (! raw__##name##__is_type(cause, this)) {			\
       return f2larva__new(cause, 1, nil);				\
     }									\
-    return raw__##name##__##slot##__set(cause, this, value);	\
+    return raw__##name##__##slot##__set(cause, this, value);		\
   }									\
   export_cefunk2(name##__##slot##__set, thing, value, 0, "Sets the " #slot " of the " #name ".");
 
@@ -162,100 +162,100 @@
 
 
 
-#define def_ceframe__primobject_type__new__common(name, slot_defs)	\
+#define def_ceframe__primobject_type__new__common(extension_name, name, slot_defs) \
   f2ptr f2__##name##_type__new(f2ptr cause) {				\
     f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame"))); \
-    {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, #name), new__symbol(cause, #name "__new")));} \
-    {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, #name), new__symbol(cause, #name "__is_type")));} \
-    {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, #name), new__symbol(cause, #name "__type")));} \
+    {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, #extension_name), new__symbol(cause, #name "__new")));} \
+    {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, #extension_name), new__symbol(cause, #name "__is_type")));} \
+    {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, #extension_name), new__symbol(cause, #name "__type")));} \
     slot_defs;								\
     return this;							\
   }
 
-#define def_ceframe__primobject_type__new__slot(name, slot)		\
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, #slot), f2__core_extension_funk__new(cause, new__symbol(cause, #name), new__symbol(cause, #name "__" #slot)));} \
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, #slot), f2__core_extension_funk__new(cause, new__symbol(cause, #name), new__symbol(cause, #name "__" #slot "__set")));}
+#define def_ceframe__primobject_type__new__slot(extension_name, name, slot) \
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, #slot), f2__core_extension_funk__new(cause, new__symbol(cause, #extension_name), new__symbol(cause, #name "__" #slot)));} \
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, #slot), f2__core_extension_funk__new(cause, new__symbol(cause, #extension_name), new__symbol(cause, #name "__" #slot "__set")));}
 
-#define def_ceframe__primobject_type__new__slot1(name, slot1)	\
-  def_ceframe__primobject_type__new__slot(name, slot1)
+#define def_ceframe__primobject_type__new__slot1(extension_name, name, slot1)	\
+  def_ceframe__primobject_type__new__slot(extension_name, name, slot1)
 
-#define def_ceframe__primobject_type__new__slot2(name, slot1, slot2)	\
-  def_ceframe__primobject_type__new__slot1(name, slot1)			\
-  def_ceframe__primobject_type__new__slot(name, slot2)
+#define def_ceframe__primobject_type__new__slot2(extension_name, name, slot1, slot2)	\
+  def_ceframe__primobject_type__new__slot1(extension_name, name, slot1)			\
+  def_ceframe__primobject_type__new__slot(extension_name, name, slot2)
 
-#define def_ceframe__primobject_type__new__slot3(name, slot1, slot2, slot3) \
-  def_ceframe__primobject_type__new__slot2(name, slot1, slot2)		\
-  def_ceframe__primobject_type__new__slot(name, slot3)
+#define def_ceframe__primobject_type__new__slot3(extension_name, name, slot1, slot2, slot3) \
+  def_ceframe__primobject_type__new__slot2(extension_name, name, slot1, slot2)		\
+  def_ceframe__primobject_type__new__slot(extension_name, name, slot3)
 
-#define def_ceframe__primobject_type__new__slot4(name, slot1, slot2, slot3, slot4) \
-  def_ceframe__primobject_type__new__slot3(name, slot1, slot2, slot3)	\
-  def_ceframe__primobject_type__new__slot(name, slot4)
+#define def_ceframe__primobject_type__new__slot4(extension_name, name, slot1, slot2, slot3, slot4) \
+  def_ceframe__primobject_type__new__slot3(extension_name, name, slot1, slot2, slot3)	\
+  def_ceframe__primobject_type__new__slot(extension_name, name, slot4)
 
-#define def_ceframe__primobject_type__new__slot5(name, slot1, slot2, slot3, slot4, slot5) \
-  def_ceframe__primobject_type__new__slot4(name, slot1, slot2, slot3, slot4) \
-  def_ceframe__primobject_type__new__slot(name, slot5)
-
-
-#define def_ceframe0__primobject_type__new(name)	\
-  def_ceframe__primobject_type__new__common(name, )
-
-#define def_ceframe1__primobject_type__new(name, slot1)			\
-  def_ceframe__primobject_type__new__common(name, def_ceframe__primobject_type__new__slot1(name, slot1))
-
-#define def_ceframe2__primobject_type__new(name, slot1, slot2)		\
-  def_ceframe__primobject_type__new__common(name, def_ceframe__primobject_type__new__slot2(name, slot1, slot2))
-
-#define def_ceframe3__primobject_type__new(name, slot1, slot2, slot3)	\
-  def_ceframe__primobject_type__new__common(name, def_ceframe__primobject_type__new__slot3(name, slot1, slot2, slot3))
-
-#define def_ceframe4__primobject_type__new(name, slot1, slot2, slot3, slot4) \
-  def_ceframe__primobject_type__new__common(name, def_ceframe__primobject_type__new__slot4(name, slot1, slot2, slot3, slot4))
-
-#define def_ceframe5__primobject_type__new(name, slot1, slot2, slot3, slot4, slot5) \
-  def_ceframe__primobject_type__new__common(name, def_ceframe__primobject_type__new__slot5(name, slot1, slot2, slot3, slot4, slot5))
+#define def_ceframe__primobject_type__new__slot5(extension_name, name, slot1, slot2, slot3, slot4, slot5) \
+  def_ceframe__primobject_type__new__slot4(extension_name, name, slot1, slot2, slot3, slot4) \
+  def_ceframe__primobject_type__new__slot(extension_name, name, slot5)
 
 
+#define def_ceframe0__primobject_type__new(extension_name, name)	\
+  def_ceframe__primobject_type__new__common(extension_name, name, )
 
-#define def_ceframe0(name)			\
-  def_ceframe0__new(name);			\
-  def_ceframe__is_type(name);			\
-  def_ceframe__type(name);			\
-  def_ceframe0__primobject_type__new(name)
+#define def_ceframe1__primobject_type__new(extension_name, name, slot1)			\
+  def_ceframe__primobject_type__new__common(extension_name, name, def_ceframe__primobject_type__new__slot1(extension_name, name, slot1))
 
-#define def_ceframe1(name, slot1)			\
-  def_ceframe1__new(name, slot1);			\
-  def_ceframe__is_type(name);				\
-  def_ceframe__type(name);				\
-  def_ceframe__slot_funk1(name, slot1)			\
-  def_ceframe1__primobject_type__new(name, slot1)
+#define def_ceframe2__primobject_type__new(extension_name, name, slot1, slot2)		\
+  def_ceframe__primobject_type__new__common(extension_name, name, def_ceframe__primobject_type__new__slot2(extension_name, name, slot1, slot2))
 
-#define def_ceframe2(name, slot1, slot2)				\
+#define def_ceframe3__primobject_type__new(extension_name, name, slot1, slot2, slot3)	\
+  def_ceframe__primobject_type__new__common(extension_name, name, def_ceframe__primobject_type__new__slot3(extension_name, name, slot1, slot2, slot3))
+
+#define def_ceframe4__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4) \
+  def_ceframe__primobject_type__new__common(extension_name, name, def_ceframe__primobject_type__new__slot4(extension_name, name, slot1, slot2, slot3, slot4))
+
+#define def_ceframe5__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5) \
+  def_ceframe__primobject_type__new__common(extension_name, name, def_ceframe__primobject_type__new__slot5(extension_name, name, slot1, slot2, slot3, slot4, slot5))
+
+
+
+#define def_ceframe0(extension_name, name)			\
+  def_ceframe0__new(name);					\
+  def_ceframe__is_type(name);					\
+  def_ceframe__type(name);					\
+  def_ceframe0__primobject_type__new(extension_name, name)
+
+#define def_ceframe1(extension_name, name, slot1)			\
+  def_ceframe1__new(name, slot1);					\
+  def_ceframe__is_type(name);						\
+  def_ceframe__type(name);						\
+  def_ceframe__slot_funk1(name, slot1)					\
+  def_ceframe1__primobject_type__new(extension_name, name, slot1)
+
+#define def_ceframe2(extension_name, name, slot1, slot2)		\
   def_ceframe2__new(name, slot1, slot2);				\
   def_ceframe__is_type(name);						\
   def_ceframe__type(name);						\
   def_ceframe__slot_funk2(name, slot1, slot2)				\
-  def_ceframe2__primobject_type__new(name, slot1, slot2)
+  def_ceframe2__primobject_type__new(extension_name, name, slot1, slot2)
 
-#define def_ceframe3(name, slot1, slot2, slot3)				\
+#define def_ceframe3(extension_name, name, slot1, slot2, slot3)		\
   def_ceframe3__new(name, slot1, slot2, slot3);				\
   def_ceframe__is_type(name);						\
   def_ceframe__type(name);						\
   def_ceframe__slot_funk3(name, slot1, slot2, slot3)			\
-  def_ceframe3__primobject_type__new(name, slot1, slot2, slot3)
+  def_ceframe3__primobject_type__new(extension_name, name, slot1, slot2, slot3)
 
-#define def_ceframe4(name, slot1, slot2, slot3, slot4)			\
+#define def_ceframe4(extension_name, name, slot1, slot2, slot3, slot4)	\
   def_ceframe4__new(name, slot1, slot2, slot3, slot4);			\
   def_ceframe__is_type(name);						\
   def_ceframe__type(name);						\
   def_ceframe__slot_funk4(name, slot1, slot2, slot3, slot4)		\
-  def_ceframe4__primobject_type__new(name, slot1, slot2, slot3, slot4)
+  def_ceframe4__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4)
 
-#define def_ceframe5(name, slot1, slot2, slot3, slot4, slot5)		\
+#define def_ceframe5(extension_name, name, slot1, slot2, slot3, slot4, slot5) \
   def_ceframe5__new(name, slot1, slot2, slot3, slot4, slot5);		\
   def_ceframe__is_type(name);						\
   def_ceframe__type(name);						\
   def_ceframe__slot_funk5(name, slot1, slot2, slot3, slot4, slot5)	\
-  def_ceframe5__primobject_type__new(name, slot1, slot2, slot3, slot4, slot5)
+  def_ceframe5__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5)
 
 
 // mentality_project

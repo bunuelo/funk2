@@ -202,7 +202,8 @@ export_cefunk1(mentality__user_command__save_project, this, 0, "");
 
 
 f2ptr raw__mentality__user_command__exit(f2ptr cause, f2ptr this) {
-  printf("\nyup.  exit."); fflush(stdout);
+  f2ptr main_window = f2__mentality__main_window(cause, this);
+  f2__widget__destroy(cause, main_window);
   return nil;
 }
 

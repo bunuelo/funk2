@@ -23,3 +23,31 @@
 [defcorefunk mentality-core_extension_initialize mentality mentality__core_extension_initialize]
 
 [mentality-core_extension_ping]
+
+[defmetro mentality [:rest args]
+  [let [[isis_worlds                  nil]
+	[print_usage_message_and_exit nil]]
+    [if args
+	[let [[iter args]]
+	  [while iter
+	    [let [[arg [first iter]]]
+	      [cond [[or [eq arg `-h]
+			 [eq arg `help]] [prog [= print_usage_message_and_exit t]]]
+		    [t                   [prog [terminal_format standard-terminal '\nmentality: unknown command line argument: ' arg '.\n\n']
+					       [= print_usage_message_and_exit t]]]]]
+	    [= iter [next iter]]]]]
+    [if print_usage_message_and_exit
+	[terminal_format standard-terminal 'MENTALITY(1)'
+			 '\n'   'NAME'
+			 '\n'   '       mentality - monitor and control mind experiments.'
+			 '\n'   ''
+			 '\n'   'SYNOPSIS'
+			 '\n'   '       mentality -h'
+			 '\n'   ''
+			 '\n'   'DESCRIPTION'
+			 '\n'   '       The mentality program provides dynamic real-time monitoring of a running mind experiments.'
+			 '\n'   '']
+      `[prog [new mentality]
+	     nil]]]]
+
+

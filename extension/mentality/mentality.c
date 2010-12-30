@@ -452,7 +452,7 @@ export_cefunk0(mentality_project__new, 0, "Returns a new mentality_project objec
 
 // mentality
 
-def_ceframe12(mentality, mentality,
+def_ceframe11(mentality, mentality,
 	      main_window,
 	      menu_bar_vbox,
 	      menu_bar,

@@ -43,7 +43,7 @@ f2ptr f2__mentality_project_widget__gtk_widget(f2ptr cause, f2ptr this) {
   }
   return raw__mentality_project_widget__gtk_widget(cause, this);
 }
-export_cefunk1(mentality_project_widget__get_widget, this, 0, "");
+export_cefunk1(mentality_project_widget__gtk_widget, this, 0, "");
 
 
 // mentality_project

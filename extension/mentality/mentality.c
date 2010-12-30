@@ -198,6 +198,15 @@ export_cefunk1(mentality__user_command__save_project, this, 0, "");
 
 
 
+f2ptr f2__mentality_type__new_aux(f2ptr cause) {
+  f2ptr this = f2__mentality_type__new(cause);
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "user_command-new_project"),   f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__user_command__new_project")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "user_command-open_project"),  f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__user_command__open_project")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "user_command-close_project"), f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__user_command__close_project")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "user_command-save_project"),  f2__core_extension_funk__new(cause, new__symbol(cause, "mentality"), new__symbol(cause, "mentality__user_command__save_project")));}
+  return this;
+}
+
 // **
 
 f2ptr f2__mentality__core_extension_ping(f2ptr cause) {
@@ -208,7 +217,7 @@ export_cefunk0(mentality__core_extension_ping, 0, "");
 f2ptr f2__mentality__core_extension_initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "mentality_project"),     f2__mentality_project_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "mentality_main_window"), f2__mentality_main_window_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "mentality"),             f2__mentality_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "mentality"),             f2__mentality_type__new_aux(cause));
   status("mentality initialized.");
   return nil;
 }

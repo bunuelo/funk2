@@ -81,29 +81,33 @@ f2ptr f2__mentality_main_window__new(f2ptr cause, f2ptr mentality) {
   
   // file_new_project_menu_item
   f2__gtk__menu__append(cause, file_menu, file_new_project_menu_item);
-  //f2__gtk__signal_connect(cause, file_new_project_menu_item, new__string(cause, "activate"),
-  //                        new__core_extension_funk(cause, "mentality", "mentality__user_command__new_project"));
+  f2__gtk__signal_connect(cause, file_new_project_menu_item, new__string(cause, "activate"),
+                          new__core_extension_funk(cause, "mentality", "mentality__user_command__new_project"),
+			  f2list1__new(cause, mentality));
   
   // file_open_project_menu_item
   f2__gtk__menu__append(cause, file_menu, file_open_project_menu_item);
-  //f2__gtk__signal_connect(cause, file_new_project_menu_item, new__string(cause, "activate"),
-  //                        new__core_extension_funk(cause, "mentality", "mentality__user_command__open_project"));
+  f2__gtk__signal_connect(cause, file_new_project_menu_item, new__string(cause, "activate"),
+                          new__core_extension_funk(cause, "mentality", "mentality__user_command__open_project"),
+			  f2list1__new(cause, mentality));
   
   // file_close_project_menu_item
   f2__gtk__menu__append(cause, file_menu, file_close_project_menu_item);
-  //f2__gtk__signal_connect(cause, file_new_project_menu_item, new__string(cause, "activate"),
-  //			  new__core_extension_funk(cause, "mentality", "mentality__user_command__close_project"));
+  f2__gtk__signal_connect(cause, file_new_project_menu_item, new__string(cause, "activate"),
+  			  new__core_extension_funk(cause, "mentality", "mentality__user_command__close_project"),
+			  f2list1__new(cause, mentality));
   
   // file_save_project_menu_item
   f2__gtk__menu__append(cause, file_menu, file_save_project_menu_item);
-  //f2__gtk__signal_connect(cause, file_new_project_menu_item, new__string(cause, "activate"),
-  //			  new__core_extension_funk(cause, "mentality", "mentality__user_command__save_project"));
+  f2__gtk__signal_connect(cause, file_new_project_menu_item, new__string(cause, "activate"),
+  			  new__core_extension_funk(cause, "mentality", "mentality__user_command__save_project"),
+			  f2list1__new(cause, mentality));
   
   // file_exit_menu_item
   f2__gtk__menu__append(cause, file_menu, file_exit_menu_item);
-  //f2__gtk__signal_connect(cause, file_new_project_menu_item, new__string(cause, "activate"),
-  //			  new__core_extension_funk(cause, "mentality", "mentality__user_command__exit_project"));
-  
+  f2__gtk__signal_connect(cause, file_new_project_menu_item, new__string(cause, "activate"),
+  			  new__core_extension_funk(cause, "mentality", "mentality__user_command__exit_project"),
+			  f2list1__new(cause, mentality));
   
   f2__gtk__widget__show_all(cause, window);
   

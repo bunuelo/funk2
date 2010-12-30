@@ -78,7 +78,8 @@
 		  [if [eq keyval GDK_Return]
 		      [prog [print 'Return!']
 			    [set search_entry text '']
-			    ]]]]]
+			    ]]]]
+	  nil]
     
     [have search_button signal_connect 'clicked'
 	  [funk []
@@ -86,7 +87,8 @@
 		  [if found_range
 		      [prog [terminal_format standard-terminal '\n  found "' [get search_entry text] '"!']
 			    [have [get text_view buffer] select_range found_range]]
-		    [prog [terminal_format standard-terminal '\n  could not find "' [get search_entry text] '".']]]]]]
+		    [prog [terminal_format standard-terminal '\n  could not find "' [get search_entry text] '".']]]]]
+	  nil]
     
     [have next_button signal_connect 'clicked'
 	  [funk []
@@ -103,7 +105,8 @@
 									       [set data bit8-elt [+ pixel 1] [get [if [== [- x y] 0] 255 0] as-pointer]]
 									       [set data bit8-elt [+ pixel 2] [get 0                         as-pointer]]]]]
 									 data]]]
-		[print 'Next button clicked!']]]
+		[print 'Next button clicked!']]
+	  nil]
     
     [have open_button signal_connect 'clicked'
 	  [funk []
@@ -128,7 +131,8 @@
 				[set preview_label text [stringlist-intersperse [have [format nil preview_filename] split '/'] '\n']]
 				[set open_dialog preview_widget_active t]]]]
 		  [have open_dialog show_all]
-		  ]]]
+		  ]]
+	  nil]
     
     [have save_button signal_connect 'clicked'
 	  [funk []
@@ -146,7 +150,8 @@
 					  ]]]
 			      [have save_dialog destroy]]]
 		  [have save_dialog show_all]
-		  ]]]
+		  ]]
+	  nil]
     
     [have drawing_area expose_event-signal_connect
 	  [funk [expose_event]
@@ -154,7 +159,8 @@
 		[have drawing_area draw_arc       nil  0  0 100 100 [* 64   0] [* 64  90]]
 		[have drawing_area draw_arc       nil  0  0 100 100 [* 64 270] [* 64 -90]]
 		[have drawing_area draw_rectangle nil  0  0 100 100]
-		[have drawing_area draw_rectangle nil 45 45  10  10]]]
+		[have drawing_area draw_rectangle nil 45 45  10  10]]
+	  nil]
     
     [have win show_all]]]
 

@@ -131,15 +131,15 @@ export_cefunk1(mentality_main_window__new, mentality, 0, "Given a mentality obje
 // mentality
 
 def_ceframe2(mentality, mentality,
-	     mentality_main_window,
+	     main_window,
 	     current_project);
 
 f2ptr f2__mentality__new(f2ptr cause) {
-  f2ptr mentality_main_window = nil;
-  f2ptr current_project       = nil;
-  f2ptr this                  = f2mentality__new(cause, mentality_main_window, current_project);
-  mentality_main_window = f2__mentality_main_window__new(cause, this);
-  raw__mentality__mentality_main_window__set(cause, this, mentality_main_window);
+  f2ptr main_window     = nil;
+  f2ptr current_project = nil;
+  f2ptr this            = f2mentality__new(cause, main_window, current_project);
+  main_window           = f2__mentality_main_window__new(cause, this);
+  raw__mentality__main_window__set(cause, this, main_window);
   return this;
 }
 export_cefunk0(mentality__new, 0, "Returns a new mentality object.");
@@ -203,7 +203,7 @@ export_cefunk1(mentality__user_command__save_project, this, 0, "");
 
 f2ptr raw__mentality__user_command__exit(f2ptr cause, f2ptr this) {
   f2ptr main_window = f2__mentality__main_window(cause, this);
-  f2__widget__destroy(cause, main_window);
+  f2__gtk__widget__destroy(cause, main_window);
   return nil;
 }
 

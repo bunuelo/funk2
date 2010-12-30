@@ -23,12 +23,38 @@
 #include "mentality.h"
 
 
+// mentality_project_widget
+
+def_ceframe2(mentality, mentality_project_widget, project, label);
+
+f2ptr f2__mentality_project_widget__new(f2ptr cause, f2ptr project) {
+  f2ptr label = f2__gtk__label__new(cause, new__string(cause, "Mentality Project"));
+  return f2mentality_project_widget__new(cause, project, label);
+}
+export_cefunk1(mentality_project_widget__new, project, 0, "Given a mentality_project, returns a new mentality_project_widget object.");
+
+f2ptr raw__mentality_project_widget__gtk_widget(f2ptr cause, f2ptr this) {
+  return f2__mentality_project_widget__label(cause, this);
+}
+
+f2ptr f2__mentality_project_widget__gtk_widget(f2ptr cause, f2ptr this) {
+  if (! raw__mentality_project_widget__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality_project_widget__gtk_widget(cause, this);
+}
+export_cefunk1(mentality_project_widget__get_widget, this, 0, "");
+
+
 // mentality_project
 
-def_ceframe2(mentality, mentality_project, width, height);
+def_ceframe2(mentality, mentality_project, widget, width, height);
 
 f2ptr f2__mentality_project__new(f2ptr cause) {
-  return f2mentality_project__new(cause, nil, nil);
+  f2ptr this   = f2mentality_project__new(cause, nil, nil, nil);
+  f2ptr widget = f2__mentality_project_widget__new(cause, this);
+  f2__mentality_project__widget__set(cause, this, widget);
+  return this;
 }
 export_cefunk0(mentality_project__new, 0, "Returns a new mentality_project object.");
 
@@ -149,6 +175,21 @@ f2ptr f2__mentality_main_window__destroy(f2ptr cause, f2ptr this) {
 export_cefunk1(mentality_main_window__destroy, this, 0, "Destroys the main mentality window.");
 
 
+f2ptr raw__mentality_main_window__project__set(f2ptr cause, f2ptr this, f2ptr project) {
+  f2ptr project_scrolled_window     = raw__mentality_main_window__project_scrolled_window(cause, this);
+  f2ptr project__widget             = f2__mentality_project__widget(cause, project);
+  f2ptr project__widget__gtk_widget = f2__mentality_project_widget__gtk_widget(cause, project__widget);
+  return f2__gtk__scrolled_window__add_with_viewport(cause, project_scrolled_window, project__widget__gtk_widget);
+}
+
+f2ptr f2__mentality_main_window__project__set(f2ptr cause, f2ptr this, f2ptr project) {
+  if ((! raw__mentality_main_window__is_type(cause, this)) ||
+      (! raw__mentality_project__is_type(cause, project))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality_main_window__project_widget__set(cause, this, project);
+}
+export_cefunk2(mentality_main_window__project__set, this, project, 0, "");
 
 
 
@@ -170,6 +211,8 @@ export_cefunk0(mentality__new, 0, "Returns a new mentality object.");
 
 
 f2ptr raw__mentality__user_command__new_project(f2ptr cause, f2ptr this) {
+  f2ptr project = f2__mentality_project__new(cause);
+  f2__mentality_main_window__project__set(cause, this, project);
   printf("\nyup.  new project."); fflush(stdout);
   return nil;
 }

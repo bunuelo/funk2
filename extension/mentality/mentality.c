@@ -25,7 +25,7 @@
 
 #define def_ceframe__new__common(name, slot_defs)	\
   f2ptr this = f2__frame__new(cause, nil);				\
-  f2__frame__add_var_value(cause, new__symbol(cause, "type"), new__symbol(cause, #name)); \
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, #name)); \
   slot_defs;								\
   return this;								\
 

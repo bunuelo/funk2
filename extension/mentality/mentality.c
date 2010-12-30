@@ -35,7 +35,7 @@ export_cefunk0(mentality_project__new, 0, "Returns a new mentality_project objec
 
 // mentality_main_window
 
-def_ceframe12(mentality, mentality_main_window,
+def_ceframe13(mentality, mentality_main_window,
 	      mentality,
 	      window,
 	      menu_bar_vbox,
@@ -47,6 +47,7 @@ def_ceframe12(mentality, mentality_main_window,
 	      file_close_project_menu_item,
 	      file_save_project_menu_item,
 	      file_exit_menu_item,
+	      project_scrolled_window,
 	      waiting_for_modal_child);
 
 f2ptr f2__mentality_main_window__new(f2ptr cause, f2ptr mentality) {
@@ -60,6 +61,7 @@ f2ptr f2__mentality_main_window__new(f2ptr cause, f2ptr mentality) {
   f2ptr file_close_project_menu_item = f2__gtk__menu_item__new(cause, new__string(cause, "Close Project..."));
   f2ptr file_save_project_menu_item  = f2__gtk__menu_item__new(cause, new__string(cause, "Save Project..."));
   f2ptr file_exit_menu_item          = f2__gtk__menu_item__new(cause, new__string(cause, "Exit"));
+  f2ptr project_scrolled_window      = f2__gtk__scrolled_window__new(cause);
   f2ptr waiting_for_modal_child      = nil;
   
   // window
@@ -109,6 +111,10 @@ f2ptr f2__mentality_main_window__new(f2ptr cause, f2ptr mentality) {
   			  new__core_extension_funk(cause, mentality, mentality__user_command__exit),
 			  f2list1__new(cause, mentality));
   
+  // project_scrolled_window
+  f2__gtk__box__pack_start(cause, menu_bar_vbox, project_scrolled_window, f2bool__new(boolean__true), f2bool__new(boolean__true), f2integer__new(cause, 0));
+  
+  
   f2__gtk__widget__show_all(cause, window);
   
   return f2mentality_main_window__new(cause,
@@ -140,6 +146,8 @@ f2ptr f2__mentality_main_window__destroy(f2ptr cause, f2ptr this) {
   return raw__mentality_main_window__destroy(cause, this);
 }
 export_cefunk1(mentality_main_window__destroy, this, 0, "Destroys the main mentality window.");
+
+
 
 
 

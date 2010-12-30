@@ -217,27 +217,27 @@
   def_ceframe__slot_funk(name, slot5)
 
 #define def_ceframe__slot_funk6(name, slot1, slot2, slot3, slot4, slot5, slot6) \
-  def_ceframe__slot_funk6(name, slot1, slot2, slot3, slot4, slot5)	\
+  def_ceframe__slot_funk5(name, slot1, slot2, slot3, slot4, slot5)	\
   def_ceframe__slot_funk(name, slot6)
 
 #define def_ceframe__slot_funk7(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
-  def_ceframe__slot_funk7(name, slot1, slot2, slot3, slot4, slot5, slot6) \
+  def_ceframe__slot_funk6(name, slot1, slot2, slot3, slot4, slot5, slot6) \
   def_ceframe__slot_funk(name, slot7)
 
 #define def_ceframe__slot_funk8(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8) \
-  def_ceframe__slot_funk8(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
+  def_ceframe__slot_funk7(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
   def_ceframe__slot_funk(name, slot8)
 
 #define def_ceframe__slot_funk9(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9) \
-  def_ceframe__slot_funk9(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8) \
+  def_ceframe__slot_funk8(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8) \
   def_ceframe__slot_funk(name, slot9)
 
 #define def_ceframe__slot_funk10(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10) \
-  def_ceframe__slot_funk10(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9) \
+  def_ceframe__slot_funk9(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9) \
   def_ceframe__slot_funk(name, slot10)
 
 #define def_ceframe__slot_funk11(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11) \
-  def_ceframe__slot_funk11(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10) \
+  def_ceframe__slot_funk10(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10) \
   def_ceframe__slot_funk(name, slot11)
 
 #define def_ceframe__slot_funk12(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12) \

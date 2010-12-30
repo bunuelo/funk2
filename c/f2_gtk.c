@@ -2134,7 +2134,7 @@ f2ptr f2__gtk__key_press_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr 
   }
   return raw__gtk__key_press_event__signal_connect(cause, widget, funk, args);
 }
-def_pcfunk2(gtk__key_press_event__signal_connect, widget, funk, return f2__gtk__key_press_event__signal_connect(this_cause, widget, funk, args));
+def_pcfunk3(gtk__key_press_event__signal_connect, widget, funk, args, return f2__gtk__key_press_event__signal_connect(this_cause, widget, funk, args));
 
 
 // response_event

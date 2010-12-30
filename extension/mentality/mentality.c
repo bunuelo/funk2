@@ -81,55 +81,55 @@
 
 
 #define def_ceframe0__new(name)					\
-  f2ptr raw__##name##__new(f2ptr cause) {				\
+  f2ptr f2##name##__new(f2ptr cause) {				\
     def_ceframe__new__common(name, ); }
 
 #define def_ceframe1__new(name, slot1)					\
-  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1) {			\
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot1) {			\
     def_ceframe__new__common(name, def_ceframe__new__arg1(slot1)); }
 
 #define def_ceframe2__new(name, slot1, slot2)				\
-  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2) {	\
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2) {	\
     def_ceframe__new__common(name, def_ceframe__new__arg2(slot1, slot2)); }
 
 #define def_ceframe3__new(name, slot1, slot2, slot3)			\
-  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3) { \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3) { \
     def_ceframe__new__common(name, def_ceframe__new__arg3(slot1, slot2, slot3)); }
 
 #define def_ceframe4__new(name, slot1, slot2, slot3, slot4)		\
-  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4) { \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4) { \
     def_ceframe__new__common(name, def_ceframe__new__arg4(slot1, slot2, slot3, slot4)); }
 
 #define def_ceframe5__new(name, slot1, slot2, slot3, slot4, slot5)	\
-  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5) { \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5) { \
     def_ceframe__new__common(name, def_ceframe__new__arg5(slot1, slot2, slot3, slot4, slot5)); }
 
 #define def_ceframe6__new(name, slot1, slot2, slot3, slot4, slot5, slot6) \
-  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6) { \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6) { \
     def_ceframe__new__common(name, def_ceframe__new__arg6(slot1, slot2, slot3, slot4, slot5, slot6)); }
 
 #define def_ceframe7__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
-  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7) { \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7) { \
     def_ceframe__new__common(name, def_ceframe__new__arg7(slot1, slot2, slot3, slot4, slot5, slot6, slot7)); }
 
 #define def_ceframe8__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8) \
-  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7, f2ptr slot8) { \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7, f2ptr slot8) { \
     def_ceframe__new__common(name, def_ceframe__new__arg8(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8)); }
 
 #define def_ceframe9__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9) \
-  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7, f2ptr slot8, f2ptr slot9) { \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7, f2ptr slot8, f2ptr slot9) { \
     def_ceframe__new__common(name, def_ceframe__new__arg9(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9)); }
 
 #define def_ceframe10__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10) \
-  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7, f2ptr slot8, f2ptr slot9, f2ptr slot10) { \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7, f2ptr slot8, f2ptr slot9, f2ptr slot10) { \
     def_ceframe__new__common(name, def_ceframe__new__arg10(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10)); }
 
 #define def_ceframe11__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11) \
-  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7, f2ptr slot8, f2ptr slot9, f2ptr slot10, f2ptr slot11) { \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7, f2ptr slot8, f2ptr slot9, f2ptr slot10, f2ptr slot11) { \
     def_ceframe__new__common(name, def_ceframe__new__arg11(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11)); }
 
 #define def_ceframe12__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12) \
-  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7, f2ptr slot8, f2ptr slot9, f2ptr slot10, f2ptr slot11, f2ptr slot12) { \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7, f2ptr slot8, f2ptr slot9, f2ptr slot10, f2ptr slot11, f2ptr slot12) { \
     def_ceframe__new__common(name, def_ceframe__new__arg12(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12)); }
 
 
@@ -445,7 +445,7 @@
 def_ceframe2(mentality, mentality_project, width, height);
 
 f2ptr f2__mentality_project__new(f2ptr cause) {
-  return raw__mentality_project__new(cause, nil, nil);
+  return f2mentality_project__new(cause, nil, nil);
 }
 export_cefunk0(mentality_project__new, 0, "Returns a new mentality_project object.");
 
@@ -513,18 +513,18 @@ f2ptr f2__mentality__new(f2ptr cause) {
   f2__gtk__widget__show_all(cause, main_window);
   
   f2ptr current_project = nil;
-  return raw__mentality__new(cause,
-			     main_window,
-			     menu_bar_vbox,
-			     menu_bar,
-			     file_menu_item,
-			     file_menu,
-			     file_new_project_menu_item,
-			     file_open_project_menu_item,
-			     file_close_project_menu_item,
-			     file_save_project_menu_item,
-			     file_exit_menu_item,
-			     current_project);
+  return f2mentality__new(cause,
+			  main_window,
+			  menu_bar_vbox,
+			  menu_bar,
+			  file_menu_item,
+			  file_menu,
+			  file_new_project_menu_item,
+			  file_open_project_menu_item,
+			  file_close_project_menu_item,
+			  file_save_project_menu_item,
+			  file_exit_menu_item,
+			  current_project);
 }
 export_cefunk0(mentality__new, 0, "Returns a new mentality object.");
 

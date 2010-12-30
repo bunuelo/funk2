@@ -113,7 +113,9 @@ export_cefunk0(mentality_main_window__new, 0, "Returns a new mentality_main_wind
 
 // mentality
 
-def_ceframe1(mentality, mentality, mentality_main_window, current_project);
+def_ceframe2(mentality, mentality,
+	     mentality_main_window,
+	     current_project);
 
 f2ptr f2__mentality__new(f2ptr cause) {
   f2ptr mentality_main_window = nil;

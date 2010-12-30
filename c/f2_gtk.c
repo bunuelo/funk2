@@ -2132,7 +2132,7 @@ f2ptr f2__gtk__key_press_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr 
       (! raw__conslist__is_type(  cause, args))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__key_press_event__signal_connect(cause, widget, funk);
+  return raw__gtk__key_press_event__signal_connect(cause, widget, funk, args);
 }
 def_pcfunk2(gtk__key_press_event__signal_connect, widget, funk, return f2__gtk__key_press_event__signal_connect(this_cause, widget, funk, args));
 

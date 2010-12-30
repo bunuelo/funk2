@@ -108,7 +108,7 @@ f2ptr f2__mentality_main_window__new(f2ptr cause, f2ptr mentality) {
 				      file_save_project_menu_item,
 				      file_exit_menu_item);
 }
-export_cefunk0(mentality_main_window__new, 0, "Returns a new mentality_main_window object.");
+export_cefunk1(mentality_main_window__new, mentality, 0, "Given a mentality object, returns a new mentality_main_window object.");
 
 
 // mentality

@@ -29,12 +29,13 @@ def_ceframe2(mentality, mentality_project_widget, project, label);
 
 f2ptr f2__mentality_project_widget__new(f2ptr cause, f2ptr project) {
   f2ptr label = f2__gtk__label__new(cause, new__string(cause, "Mentality Project"));
+  f2__gtk__widget__show_all(cause, label);
   return f2mentality_project_widget__new(cause, project, label);
 }
 export_cefunk1(mentality_project_widget__new, project, 0, "Given a mentality_project, returns a new mentality_project_widget object.");
 
 f2ptr raw__mentality_project_widget__gtk_widget(f2ptr cause, f2ptr this) {
-  return f2__mentality_project_widget__label(cause, this);
+  return raw__mentality_project_widget__label(cause, this);
 }
 
 f2ptr f2__mentality_project_widget__gtk_widget(f2ptr cause, f2ptr this) {

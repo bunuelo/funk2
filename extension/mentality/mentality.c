@@ -262,6 +262,11 @@
 
 def_ceframe1(mentality_project, width);
 
+f2ptr f2__mentality_project__new(f2ptr cause) {
+  return raw__mentality_project__new(cause, nil);
+}
+export_cefunk0(mentality_project__new, 0, "Returns a new mentality_project object.");
+
 
 // mentality
 

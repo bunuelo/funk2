@@ -187,7 +187,7 @@ f2ptr f2__mentality_main_window__project__set(f2ptr cause, f2ptr this, f2ptr pro
       (! raw__mentality_project__is_type(cause, project))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__mentality_main_window__project_widget__set(cause, this, project);
+  return raw__mentality_main_window__project__set(cause, this, project);
 }
 export_cefunk2(mentality_main_window__project__set, this, project, 0, "");
 

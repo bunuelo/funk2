@@ -51,6 +51,34 @@
   def_ceframe__new__arg4(slot1, slot2, slot3, slot4);			\
   def_ceframe__new__arg(slot5)
 
+#define def_ceframe__new__arg6(slot1, slot2, slot3, slot4, slot5, slot6) \
+  def_ceframe__new__arg5(slot1, slot2, slot3, slot4, slot5);		\
+  def_ceframe__new__arg(slot6)
+
+#define def_ceframe__new__arg7(slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
+  def_ceframe__new__arg6(slot1, slot2, slot3, slot4, slot5, slot6);	\
+  def_ceframe__new__arg(slot7)
+
+#define def_ceframe__new__arg8(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8) \
+  def_ceframe__new__arg7(slot1, slot2, slot3, slot4, slot5, slot6, slot7); \
+  def_ceframe__new__arg(slot8)
+
+#define def_ceframe__new__arg9(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9) \
+  def_ceframe__new__arg8(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8); \
+  def_ceframe__new__arg(slot9)
+
+#define def_ceframe__new__arg10(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10) \
+  def_ceframe__new__arg9(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9); \
+  def_ceframe__new__arg(slot10)
+
+#define def_ceframe__new__arg11(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11) \
+  def_ceframe__new__arg10(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10); \
+  def_ceframe__new__arg(slot11)
+
+#define def_ceframe__new__arg12(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12) \
+  def_ceframe__new__arg11(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11); \
+  def_ceframe__new__arg(slot12)
+
 
 #define def_ceframe0__new(name)					\
   f2ptr raw__##name##__new(f2ptr cause) {				\
@@ -75,6 +103,34 @@
 #define def_ceframe5__new(name, slot1, slot2, slot3, slot4, slot5)	\
   f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5) { \
     def_ceframe__new__common(name, def_ceframe__new__arg5(slot1, slot2, slot3, slot4, slot5)); }
+
+#define def_ceframe6__new(name, slot1, slot2, slot3, slot4, slot5, slot6) \
+  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6) { \
+    def_ceframe__new__common(name, def_ceframe__new__arg6(slot1, slot2, slot3, slot4, slot5, slot6)); }
+
+#define def_ceframe7__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
+  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7) { \
+    def_ceframe__new__common(name, def_ceframe__new__arg7(slot1, slot2, slot3, slot4, slot5, slot6, slot7)); }
+
+#define def_ceframe8__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8) \
+  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7, f2ptr slot8) { \
+    def_ceframe__new__common(name, def_ceframe__new__arg8(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8)); }
+
+#define def_ceframe9__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9) \
+  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7, f2ptr slot8, f2ptr slot9) { \
+    def_ceframe__new__common(name, def_ceframe__new__arg9(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9)); }
+
+#define def_ceframe10__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10) \
+  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7, f2ptr slot8, f2ptr slot9, f2ptr slot10) { \
+    def_ceframe__new__common(name, def_ceframe__new__arg10(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10)); }
+
+#define def_ceframe11__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11) \
+  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7, f2ptr slot8, f2ptr slot9, f2ptr slot10, f2ptr slot11) { \
+    def_ceframe__new__common(name, def_ceframe__new__arg11(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11)); }
+
+#define def_ceframe12__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12) \
+  f2ptr raw__##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7, f2ptr slot8, f2ptr slot9, f2ptr slot10, f2ptr slot11, f2ptr slot12) { \
+    def_ceframe__new__common(name, def_ceframe__new__arg12(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12)); }
 
 
 #define def_ceframe__is_type(name)			       \
@@ -160,6 +216,34 @@
   def_ceframe__slot_funk4(name, slot1, slot2, slot3, slot4)		\
   def_ceframe__slot_funk(name, slot5)
 
+#define def_ceframe__slot_funk6(name, slot1, slot2, slot3, slot4, slot5, slot6) \
+  def_ceframe__slot_funk6(name, slot1, slot2, slot3, slot4, slot5)	\
+  def_ceframe__slot_funk(name, slot6)
+
+#define def_ceframe__slot_funk7(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
+  def_ceframe__slot_funk7(name, slot1, slot2, slot3, slot4, slot5, slot6) \
+  def_ceframe__slot_funk(name, slot7)
+
+#define def_ceframe__slot_funk8(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8) \
+  def_ceframe__slot_funk8(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
+  def_ceframe__slot_funk(name, slot8)
+
+#define def_ceframe__slot_funk9(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9) \
+  def_ceframe__slot_funk9(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8) \
+  def_ceframe__slot_funk(name, slot9)
+
+#define def_ceframe__slot_funk10(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10) \
+  def_ceframe__slot_funk10(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9) \
+  def_ceframe__slot_funk(name, slot10)
+
+#define def_ceframe__slot_funk11(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11) \
+  def_ceframe__slot_funk11(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10) \
+  def_ceframe__slot_funk(name, slot11)
+
+#define def_ceframe__slot_funk12(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12) \
+  def_ceframe__slot_funk12(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11) \
+  def_ceframe__slot_funk(name, slot12)
+
 
 
 #define def_ceframe__primobject_type__new__common(extension_name, name, slot_defs) \
@@ -195,6 +279,34 @@
   def_ceframe__primobject_type__new__slot4(extension_name, name, slot1, slot2, slot3, slot4) \
   def_ceframe__primobject_type__new__slot(extension_name, name, slot5)
 
+#define def_ceframe__primobject_type__new__slot6(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6) \
+  def_ceframe__primobject_type__new__slot5(extension_name, name, slot1, slot2, slot3, slot4, slot5) \
+  def_ceframe__primobject_type__new__slot(extension_name, name, slot6)
+
+#define def_ceframe__primobject_type__new__slot7(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
+  def_ceframe__primobject_type__new__slot6(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6) \
+  def_ceframe__primobject_type__new__slot(extension_name, name, slot7)
+
+#define def_ceframe__primobject_type__new__slot8(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8) \
+  def_ceframe__primobject_type__new__slot7(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
+  def_ceframe__primobject_type__new__slot(extension_name, name, slot8)
+
+#define def_ceframe__primobject_type__new__slot9(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9) \
+  def_ceframe__primobject_type__new__slot8(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8) \
+  def_ceframe__primobject_type__new__slot(extension_name, name, slot9)
+
+#define def_ceframe__primobject_type__new__slot10(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10) \
+  def_ceframe__primobject_type__new__slot9(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9) \
+  def_ceframe__primobject_type__new__slot(extension_name, name, slot10)
+
+#define def_ceframe__primobject_type__new__slot11(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11) \
+  def_ceframe__primobject_type__new__slot10(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10) \
+  def_ceframe__primobject_type__new__slot(extension_name, name, slot11)
+
+#define def_ceframe__primobject_type__new__slot12(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12) \
+  def_ceframe__primobject_type__new__slot11(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11) \
+  def_ceframe__primobject_type__new__slot(extension_name, name, slot12)
+
 
 #define def_ceframe0__primobject_type__new(extension_name, name)	\
   def_ceframe__primobject_type__new__common(extension_name, name, )
@@ -213,6 +325,27 @@
 
 #define def_ceframe5__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5) \
   def_ceframe__primobject_type__new__common(extension_name, name, def_ceframe__primobject_type__new__slot5(extension_name, name, slot1, slot2, slot3, slot4, slot5))
+
+#define def_ceframe6__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6) \
+  def_ceframe__primobject_type__new__common(extension_name, name, def_ceframe__primobject_type__new__slot6(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6))
+
+#define def_ceframe7__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
+  def_ceframe__primobject_type__new__common(extension_name, name, def_ceframe__primobject_type__new__slot7(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7))
+
+#define def_ceframe8__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8) \
+  def_ceframe__primobject_type__new__common(extension_name, name, def_ceframe__primobject_type__new__slot8(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8))
+
+#define def_ceframe9__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9) \
+  def_ceframe__primobject_type__new__common(extension_name, name, def_ceframe__primobject_type__new__slot9(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9))
+
+#define def_ceframe10__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10) \
+  def_ceframe__primobject_type__new__common(extension_name, name, def_ceframe__primobject_type__new__slot10(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10))
+
+#define def_ceframe11__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11) \
+  def_ceframe__primobject_type__new__common(extension_name, name, def_ceframe__primobject_type__new__slot11(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11))
+
+#define def_ceframe12__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12) \
+  def_ceframe__primobject_type__new__common(extension_name, name, def_ceframe__primobject_type__new__slot12(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12))
 
 
 
@@ -256,6 +389,55 @@
   def_ceframe__type(name);						\
   def_ceframe__slot_funk5(name, slot1, slot2, slot3, slot4, slot5)	\
   def_ceframe5__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5)
+
+#define def_ceframe6(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6) \
+  def_ceframe6__new(name, slot1, slot2, slot3, slot4, slot5, slot6);	\
+  def_ceframe__is_type(name);						\
+  def_ceframe__type(name);						\
+  def_ceframe__slot_funk6(name, slot1, slot2, slot3, slot4, slot5, slot6) \
+  def_ceframe6__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6)
+
+#define def_ceframe7(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
+  def_ceframe7__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7); \
+  def_ceframe__is_type(name);						\
+  def_ceframe__type(name);						\
+  def_ceframe__slot_funk7(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
+  def_ceframe7__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
+
+#define def_ceframe8(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8) \
+  def_ceframe8__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8); \
+  def_ceframe__is_type(name);						\
+  def_ceframe__type(name);						\
+  def_ceframe__slot_funk8(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8) \
+  def_ceframe8__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8)
+
+#define def_ceframe9(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9) \
+  def_ceframe9__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9); \
+  def_ceframe__is_type(name);						\
+  def_ceframe__type(name);						\
+  def_ceframe__slot_funk9(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9) \
+  def_ceframe9__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9)
+
+#define def_ceframe10(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10) \
+  def_ceframe10__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10); \
+  def_ceframe__is_type(name);						\
+  def_ceframe__type(name);						\
+  def_ceframe__slot_funk10(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10) \
+  def_ceframe10__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10)
+
+#define def_ceframe11(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11) \
+  def_ceframe11__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11); \
+  def_ceframe__is_type(name);						\
+  def_ceframe__type(name);						\
+  def_ceframe__slot_funk11(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11) \
+  def_ceframe11__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11)
+
+#define def_ceframe12(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot122) \
+  def_ceframe12__new(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12); \
+  def_ceframe__is_type(name);						\
+  def_ceframe__type(name);						\
+  def_ceframe__slot_funk12(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12) \
+  def_ceframe12__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12)
 
 
 // mentality_project

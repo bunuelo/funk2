@@ -129,6 +129,7 @@ f2ptr f2__mentality_main_window__new(f2ptr cause, f2ptr mentality) {
 				      file_close_project_menu_item,
 				      file_save_project_menu_item,
 				      file_exit_menu_item,
+				      project_scrolled_window,
 				      waiting_for_modal_child);
 }
 export_cefunk1(mentality_main_window__new, mentality, 0, "Given a mentality object, returns a new mentality_main_window object.");

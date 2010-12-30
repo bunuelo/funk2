@@ -476,7 +476,6 @@ struct funk2_object_type__core_extension_handler__slot_s {
   def_ceframe12__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12)
 
 
-
 // core_extension
 
 declare_frame_object_3_slot(core_extension, name, filename, initialized);

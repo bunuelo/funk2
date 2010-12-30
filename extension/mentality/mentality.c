@@ -35,9 +35,9 @@ export_cefunk0(mentality_project__new, 0, "Returns a new mentality_project objec
 
 // mentality_main_window
 
-def_ceframe11(mentality, mentality_main_window,
+def_ceframe12(mentality, mentality_main_window,
 	      mentality,
-	      main_window,
+	      window,
 	      menu_bar_vbox,
 	      menu_bar,
 	      file_menu_item,
@@ -46,10 +46,11 @@ def_ceframe11(mentality, mentality_main_window,
 	      file_open_project_menu_item,
 	      file_close_project_menu_item,
 	      file_save_project_menu_item,
-	      file_exit_menu_item);
+	      file_exit_menu_item,
+	      waiting_for_modal_child);
 
 f2ptr f2__mentality_main_window__new(f2ptr cause, f2ptr mentality) {
-  f2ptr main_window                  = f2__gtk__window__new(cause);
+  f2ptr window                       = f2__gtk__window__new(cause);
   f2ptr menu_bar_vbox                = f2__gtk__vbox__new(cause, f2integer__new(cause, 0));
   f2ptr menu_bar                     = f2__gtk__menu_bar__new(cause);
   f2ptr file_menu_item               = f2__gtk__menu_item__new(cause, new__string(cause, "File"));
@@ -59,14 +60,15 @@ f2ptr f2__mentality_main_window__new(f2ptr cause, f2ptr mentality) {
   f2ptr file_close_project_menu_item = f2__gtk__menu_item__new(cause, new__string(cause, "Close Project..."));
   f2ptr file_save_project_menu_item  = f2__gtk__menu_item__new(cause, new__string(cause, "Save Project..."));
   f2ptr file_exit_menu_item          = f2__gtk__menu_item__new(cause, new__string(cause, "Exit"));
+  f2ptr waiting_for_modal_child      = nil;
   
-  // main_window
-  f2__gtk__window__set_title(cause, main_window, new__string(cause, "Mentality"));
-  f2__gtk__window__set_default_size(cause, main_window, f2integer__new(cause, 800), f2integer__new(cause, 600));
-  f2__gtk__widget__connect_hide_on_delete(cause, main_window);
+  // window
+  f2__gtk__window__set_title(cause, window, new__string(cause, "Mentality"));
+  f2__gtk__window__set_default_size(cause, window, f2integer__new(cause, 800), f2integer__new(cause, 600));
+  f2__gtk__widget__connect_hide_on_delete(cause, window);
   
   // menu_bar_vbox
-  f2__gtk__container__add(cause, main_window, menu_bar_vbox);
+  f2__gtk__container__add(cause, window, menu_bar_vbox);
   
   // menu_bar
   f2__gtk__box__pack_start(cause, menu_bar_vbox, menu_bar, nil, nil, f2integer__new(cause, 0));
@@ -79,25 +81,35 @@ f2ptr f2__mentality_main_window__new(f2ptr cause, f2ptr mentality) {
   
   // file_new_project_menu_item
   f2__gtk__menu__append(cause, file_menu, file_new_project_menu_item);
+  //f2__gtk__signal_connect(cause, file_new_project_menu_item, new__string(cause, "activate"),
+  //                        new__core_extension_funk(cause, "mentality", "mentality__user_command__new_project"));
   
   // file_open_project_menu_item
   f2__gtk__menu__append(cause, file_menu, file_open_project_menu_item);
+  //f2__gtk__signal_connect(cause, file_new_project_menu_item, new__string(cause, "activate"),
+  //                        new__core_extension_funk(cause, "mentality", "mentality__user_command__open_project"));
   
   // file_close_project_menu_item
   f2__gtk__menu__append(cause, file_menu, file_close_project_menu_item);
+  //f2__gtk__signal_connect(cause, file_new_project_menu_item, new__string(cause, "activate"),
+  //			  new__core_extension_funk(cause, "mentality", "mentality__user_command__close_project"));
   
   // file_save_project_menu_item
   f2__gtk__menu__append(cause, file_menu, file_save_project_menu_item);
+  //f2__gtk__signal_connect(cause, file_new_project_menu_item, new__string(cause, "activate"),
+  //			  new__core_extension_funk(cause, "mentality", "mentality__user_command__save_project"));
   
   // file_exit_menu_item
   f2__gtk__menu__append(cause, file_menu, file_exit_menu_item);
+  //f2__gtk__signal_connect(cause, file_new_project_menu_item, new__string(cause, "activate"),
+  //			  new__core_extension_funk(cause, "mentality", "mentality__user_command__exit_project"));
   
   
-  f2__gtk__widget__show_all(cause, main_window);
+  f2__gtk__widget__show_all(cause, window);
   
   return f2mentality_main_window__new(cause,
 				      mentality,
-				      main_window,
+				      window,
 				      menu_bar_vbox,
 				      menu_bar,
 				      file_menu_item,
@@ -106,7 +118,8 @@ f2ptr f2__mentality_main_window__new(f2ptr cause, f2ptr mentality) {
 				      file_open_project_menu_item,
 				      file_close_project_menu_item,
 				      file_save_project_menu_item,
-				      file_exit_menu_item);
+				      file_exit_menu_item,
+				      waiting_for_modal_child);
 }
 export_cefunk1(mentality_main_window__new, mentality, 0, "Given a mentality object, returns a new mentality_main_window object.");
 
@@ -126,6 +139,63 @@ f2ptr f2__mentality__new(f2ptr cause) {
   return this;
 }
 export_cefunk0(mentality__new, 0, "Returns a new mentality object.");
+
+
+f2ptr raw__mentality__user_command__new_project(f2ptr cause, f2ptr this) {
+  printf("\nyup.  new project."); fflush(stdout);
+  return nil;
+}
+
+f2ptr f2__mentality__user_command__new_project(f2ptr cause, f2ptr this) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__mentality__user_command__new_project(cause, this);
+}
+export_cefunk1(mentality__user_command__new_project, this, 0, "");
+
+
+f2ptr raw__mentality__user_command__open_project(f2ptr cause, f2ptr this) {
+  printf("\nyup.  open project."); fflush(stdout);
+  return nil;
+}
+
+f2ptr f2__mentality__user_command__open_project(f2ptr cause, f2ptr this) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__open(cause, 1, nil);
+  }
+  return raw__mentality__user_command__open_project(cause, this);
+}
+export_cefunk1(mentality__user_command__open_project, this, 0, "");
+
+
+f2ptr raw__mentality__user_command__close_project(f2ptr cause, f2ptr this) {
+  printf("\nyup.  close project."); fflush(stdout);
+  return nil;
+}
+
+f2ptr f2__mentality__user_command__close_project(f2ptr cause, f2ptr this) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__close(cause, 1, nil);
+  }
+  return raw__mentality__user_command__close_project(cause, this);
+}
+export_cefunk1(mentality__user_command__close_project, this, 0, "");
+
+
+f2ptr raw__mentality__user_command__save_project(f2ptr cause, f2ptr this) {
+  printf("\nyup.  save project."); fflush(stdout);
+  return nil;
+}
+
+f2ptr f2__mentality__user_command__save_project(f2ptr cause, f2ptr this) {
+  if (! raw__mentality__is_type(cause, this)) {
+    return f2larva__save(cause, 1, nil);
+  }
+  return raw__mentality__user_command__save_project(cause, this);
+}
+export_cefunk1(mentality__user_command__save_project, this, 0, "");
+
 
 
 // **

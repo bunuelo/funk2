@@ -199,6 +199,7 @@
 	       '			<li><a href="/community">Community</a></li>'
 	       '			<li><a href="/support">Support</a></li>'
 	       '			<li><a href="/development">Development</a></li>'
+	       '			<li><a href="/applications">Applications</a></li>'
 	       '		</ul>'
 	       '	</div>'
 	       '	'
@@ -667,6 +668,22 @@
     nil]]
 
 
+[defunk funk2_applications-content []
+  [string-prog '<h1>Applications</h1>'
+	       ''
+	       'Coming soon!']]
+
+[defunk funk2_applications [posts examples]
+  [funk2_page posts examples
+	      [funk2_applications-content]]]
+
+[defunk compile_funk2_applications [root_dir posts examples]
+  [let [[applications [funk2_applications posts examples]]]
+    [shelter [mkdir [string-concat root_dir 'applications']]]
+    [have applications save [string-concat root_dir 'applications/index.html']]
+    nil]]
+
+
 [defunk funk2_example [posts examples example]
   [let [[content [string-prog '<!-- start content -->'
 			      '<div id="content">'
@@ -940,6 +957,7 @@
   [print 'compiling funk2 community']     [compile_funk2_community     root_dir posts examples]
   [print 'compiling funk2 support']       [compile_funk2_support       root_dir posts examples]
   [print 'compiling funk2 development']   [compile_funk2_development   root_dir posts examples]
+  [print 'compiling funk2 applications']  [compile_funk2_applications  root_dir posts examples]
   [print 'compiling funk2 examples']      [compile_funk2_examples      root_dir posts examples]
   [print 'done compiling']
   nil]]
@@ -956,6 +974,7 @@
   [defunk funk2_community-save     [] [compile_funk2_community     root_dir posts examples]]
   [defunk funk2_support-save       [] [compile_funk2_support       root_dir posts examples]]
   [defunk funk2_development-save   [] [compile_funk2_development   root_dir posts examples]]
+  [defunk funk2_applications-save  [] [compile_funk2_applications  root_dir posts examples]]
   [defunk funk2_examples-save      [] [compile_funk2_examples      root_dir posts examples]]
   
   ]

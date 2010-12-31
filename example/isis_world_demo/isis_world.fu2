@@ -29,7 +29,7 @@
        [= initialize_events [new redblacktree [funk [event] [have event lookup `time]] &<]]
        [have initialize_events insert [frame time [time] event_type `reset         result [isis-call client meta_reset]]]
        [have initialize_events insert [frame time [time] event_type `scenario_list result [isis-call client meta_list_scenarios]]]
-       [have initialize_events insert [frame time [time] event_type `load_scenario result [isis-call client meta_load_scenario scenario 'make toast']]]
+       [have initialize_events insert [frame time [time] event_type `load_scenario result [isis-call client meta_load_scenario scenario 'make_toast.py']]]
        [have initialize_events insert [frame time [time] event_type `task_list     result [isis-call client meta_list_tasks]]]
        [have initialize_events insert [frame time [time] event_type `load_task     result [isis-call client meta_load_task task 'task_toaster_in_view']]]
        [have initialize_events insert [frame time [time] event_type `train         result [isis-call client meta_train]]]

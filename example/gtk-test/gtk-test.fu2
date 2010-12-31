@@ -33,6 +33,7 @@
 	[search_button [gtk-button-new_with_label 'Search']]
 	[next_button   [gtk-button-new_with_label 'Next']]
 	[open_button   [gtk-button-new_with_label 'Open']]
+	[select_button [gtk-button-new_with_label 'Select']]
 	[save_button   [gtk-button-new_with_label 'Save']]
 	[swindow       [gtk-scrolled_window-new]]
 	[notebook      [gtk-notebook-new]]
@@ -47,6 +48,7 @@
     [have hbox         pack_start   search_button nil nil 0]
     [have hbox         pack_start   next_button nil nil 0]
     [have hbox         pack_start   open_button nil nil 0]
+    [have hbox         pack_start   select_button nil nil 0]
     [have hbox         pack_start   save_button nil nil 0]
     [have vpaned       pack1        hbox nil nil]
     
@@ -133,6 +135,25 @@
 				[set open_dialog preview_widget_active t]]]
 			nil]
 		  [have open_dialog show_all]
+		  ]]
+	  nil]
+    
+    [have select_button signal_connect 'clicked'
+	  [funk []
+		[terminal_format standard-terminal '\n  select button clicked.']
+		[let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select nil]]
+		      [preview_label [gtk-label-new [format nil nil]]]]
+		  [have select_dialog connect_hide_on_delete]
+		  [have select_dialog response_event-signal_connect
+			[funk [event_frame]
+			      [terminal_format standard-terminal '\nresponse event frame: ' event_frame]
+			      [let [[response_id [have event_frame lookup `response_id]]]
+				[if [eq response_id GTK_RESPONSE_ACCEPT]
+				    [prog [terminal_format standard-terminal '\ngot accept response: filenames = ' [get select_dialog filenames]]
+					  ]]]
+			      [have select_dialog destroy]]
+			nil]
+		  [have select_dialog show_all]
 		  ]]
 	  nil]
     

@@ -276,7 +276,7 @@
 		   [let [[response_id [have event_frame lookup `response_id]]]
 		     [if [eq response_id GTK_RESPONSE_ACCEPT]
 			 [let [[filename [get save_dialog filename]]]
-			   [have isismon save_movie_as filename]
+			   [have isismon export_movie_as filename]
 			   ]]]
 		   [have save_dialog destroy]]
 	     nil]
@@ -294,8 +294,9 @@
 			  menu_bar
 			  file_menu_item
 			  file_menu
-			  file_exit_menu_item
+			  file_open
 			  file_export_movie_menu_item
+			  file_exit_menu_item
 			  view_menu_item
 			  view_menu
 			  view_initialization_events_menu_item
@@ -336,21 +337,21 @@
 			     
 			     [=    file_menu_item              [gtk-menu_item-new 'File']]
 			     [=    file_menu                   [gtk-menu-new]]
-			     [=    file_exit_menu_item         [gtk-menu_item-new 'Exit']]
 			     [=    file_export_movie_menu_item [gtk-menu_item-new 'Export Movie...']]
+			     [=    file_exit_menu_item         [gtk-menu_item-new 'Exit']]
 			     [have menu_bar       append       file_menu_item]
 			     [set  file_menu_item submenu      file_menu]
-			     [have file_menu      append       file_exit_menu_item]
 			     [have file_menu      append       file_export_movie_menu_item]
-			     
-			     [have file_exit_menu_item signal_connect 'activate'
-				   [funk []
-					 [= done t]]
-				   nil]
+			     [have file_menu      append       file_exit_menu_item]
 			     
 			     [have file_export_movie_menu_item signal_connect 'activate'
 				   [funk []
 					 [new isismon_export_movie_dialog this]]
+				   nil]
+			     
+			     [have file_exit_menu_item signal_connect 'activate'
+				   [funk []
+					 [= done t]]
 				   nil]
 			     
 			     [= view_menu_item                       [gtk-menu_item-new 'View']]

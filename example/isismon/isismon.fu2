@@ -299,6 +299,76 @@
       result]]]
 
 
+[deframe isismon_preference_editor [frame] [isismon
+					    
+					    vbox
+					    menu_bar
+					    file_menu_item
+					    file_menu
+					    file_exit_menu_item
+					    
+					    project_directory__hbox
+					    project_directory__message__label
+					    project_directory__message__entry
+					    
+					    movie_export_directory__hbox
+					    movie_export_directory__message__label
+					    movie_export_directory__message__entry
+					    
+					    button_hbox
+					    cancel_button
+					    ok_button]
+  [new [initial-isismon]
+       [= isismon initial-isismon]
+       
+       [= window [gtk-window-new]]
+       [set window title 'IsisMon - Edit Preferences']
+       [= vbox [gtk-vbox-new 0]]
+       
+       [= project_directory__hbox [gtk-hbox-new 0]]
+       [= project_directory__label [gtk-label-new 'Project Directory: ']]
+       [= project_directory__entry [gtk-entry-new]]
+       [have project_directory__hbox pack_start project_directory__label nil nil 0]
+       [have project_directory__hbox pack_start project_directory__entry t t 0]
+       [have vbox pack_start project_directory__hbox nil nil 0]
+       [set project_directory__entry text [get [get isismon preferences] project_directory]]
+       
+       [= movie_export_directory__hbox [gtk-hbox-new 0]]
+       [= movie_export_directory__label [gtk-label-new 'Movie Export Directory: ']]
+       [= movie_export_directory__entry [gtk-entry-new]]
+       [have movie_export_directory__hbox pack_start movie_export_directory__label nil nil 0]
+       [have movie_export_directory__hbox pack_start movie_export_directory__entry t t 0]
+       [have vbox pack_start movie_export_directory__hbox nil nil 0]
+       [set movie_export_directory__entry text [get [get isismon preferences] movie_export_directory]]
+       
+       [= button__hbox [gtk-hbox-new 0]]
+       [= cancel_button [gtk-button-new_with_label 'Cancel']]
+       [= ok_button     [gtk-button-new_with_label 'OK']]
+       [have button__hbox pack_start cancel_button nil nil 0]
+       [have button__hbox pack_start ok_button t t 0]
+       [have vbox pack_start button__hbox nil nil 0]
+       
+       [have cancel_button signal_connect 'clicked'
+	     [funk []
+		   [have window destroy]]
+	     nil]
+       
+       [have ok_button signal_connect 'clicked'
+	     [funk []
+		   [let [[preferences [new isismon_preferences]]]
+		     [set preferences project_directory      [get project_directory__entry text]]
+		     [set preferences movie_export_directory [get movie_export_directory__entry text]]
+		     [set isismon preferences preferences]
+		     [have isismon save_preferences]]
+		   [have window destroy]]
+	     nil]
+       
+       [have window add vbox]
+       
+       [have window show_all]]]
+
+
+
 [deframe isismon [frame] [isis_world
 			  [initialize_mutex [new mutex]]
 			  [done             nil]
@@ -407,7 +477,8 @@
 			     
 			     [have edit_preferences_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\nIsisMon: edit preferences.']]
+					 [terminal_format standard-terminal '\nIsisMon: edit preferences.']
+					 [new isismon_preference_editor this]]
 				   nil]
 			     
 			     [= view_menu_item                       [gtk-menu_item-new 'View']]

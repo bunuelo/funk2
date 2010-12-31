@@ -294,9 +294,9 @@
 			  menu_bar
 			  file_menu_item
 			  file_menu
-			  file_new
-			  file_open
-			  file_save
+			  file_new_project_menu_item
+			  file_open_project_menu_item
+			  file_save_project_menu_item
 			  file_export_movie_menu_item
 			  file_exit_menu_item
 			  view_menu_item
@@ -339,12 +339,33 @@
 			     
 			     [=    file_menu_item              [gtk-menu_item-new 'File']]
 			     [=    file_menu                   [gtk-menu-new]]
+			     [=    file_new_project_menu_item  [gtk-menu_item-new 'New Project']]
+			     [=    file_open_project_menu_item [gtk-menu_item-new 'Open Project...']]
+			     [=    file_save_project_menu_item [gtk-menu_item-new 'Save Project...']]
 			     [=    file_export_movie_menu_item [gtk-menu_item-new 'Export Movie...']]
 			     [=    file_exit_menu_item         [gtk-menu_item-new 'Exit']]
 			     [have menu_bar       append       file_menu_item]
 			     [set  file_menu_item submenu      file_menu]
+			     [have file_menu      append       file_new_project_menu_item]
+			     [have file_menu      append       file_open_project_menu_item]
+			     [have file_menu      append       file_save_project_menu_item]
 			     [have file_menu      append       file_export_movie_menu_item]
 			     [have file_menu      append       file_exit_menu_item]
+			     
+			     [have file_new_project_menu_item signal_connect 'activate'
+				   [funk []
+					 [terminal_format standard-terminal '\nIsisMon: new project.']]
+				   nil]
+			     
+			     [have file_open_project_menu_item signal_connect 'activate'
+				   [funk []
+					 [terminal_format standard-terminal '\nIsisMon: open project.']]
+				   nil]
+			     
+			     [have file_save_project_menu_item signal_connect 'activate'
+				   [funk []
+					 [terminal_format standard-terminal '\nIsisMon: save project.']]
+				   nil]
 			     
 			     [have file_export_movie_menu_item signal_connect 'activate'
 				   [funk []

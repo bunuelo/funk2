@@ -316,7 +316,7 @@
 					    movie_export_directory__label
 					    movie_export_directory__entry
 					    
-					    button_hbox
+					    button__hbox
 					    cancel_button
 					    ok_button]
   [new [initial-isismon]

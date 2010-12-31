@@ -48,13 +48,13 @@
 
 'knowledge and meta-knowledge functions'
 
-[deftypefunk moral_compass get builtin_reactive_knowledge [] [get [get this semantic_realm] lookup_semantic_knowledge_base `builtin_reactive_knowledge]]
-[deftypefunk moral_compass get learned_reactive_knowledge [] [get [get this semantic_realm] lookup_semantic_knowledge_base `learned_reactive_knowledge]]
-[deftypefunk moral_compass get deliberative_knowledge     [] [get [get this semantic_realm] lookup_semantic_knowledge_base `deliberative_knowledge]]
-[deftypefunk moral_compass get reflective_knowledge       [] [get [get this semantic_realm] lookup_semantic_knowledge_base `reflective_knowledge]]
-[deftypefunk moral_compass get self_reflective_knowledge  [] [get [get this semantic_realm] lookup_semantic_knowledge_base `self_reflective_knowledge]]
-[deftypefunk moral_compass get self_conscious_knowledge   [] [get [get this semantic_realm] lookup_semantic_knowledge_base `self_conscious_knowledge]]
-[deftypefunk moral_compass get visual_knowledge           [] [get [get this semantic_realm] lookup_semantic_knowledge_base `visual_knowledge]]
+[deftypefunk moral_compass get builtin_reactive_knowledge [] [have [get this semantic_realm] lookup_semantic_knowledge_base `builtin_reactive_knowledge]]
+[deftypefunk moral_compass get learned_reactive_knowledge [] [have [get this semantic_realm] lookup_semantic_knowledge_base `learned_reactive_knowledge]]
+[deftypefunk moral_compass get deliberative_knowledge     [] [have [get this semantic_realm] lookup_semantic_knowledge_base `deliberative_knowledge]]
+[deftypefunk moral_compass get reflective_knowledge       [] [have [get this semantic_realm] lookup_semantic_knowledge_base `reflective_knowledge]]
+[deftypefunk moral_compass get self_reflective_knowledge  [] [have [get this semantic_realm] lookup_semantic_knowledge_base `self_reflective_knowledge]]
+[deftypefunk moral_compass get self_conscious_knowledge   [] [have [get this semantic_realm] lookup_semantic_knowledge_base `self_conscious_knowledge]]
+[deftypefunk moral_compass get visual_knowledge           [] [have [get this semantic_realm] lookup_semantic_knowledge_base `visual_knowledge]]
 
 [deftypefunk moral_compass get objects []
   [print 'get-moral_compass-objects is deprecated.']

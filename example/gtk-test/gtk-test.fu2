@@ -141,8 +141,7 @@
     [have select_button signal_connect 'clicked'
 	  [funk []
 		[terminal_format standard-terminal '\n  select button clicked.']
-		[let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select nil]]
-		      [preview_label [gtk-label-new [format nil nil]]]]
+		[let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select nil]]]
 		  [have select_dialog connect_hide_on_delete]
 		  [have select_dialog response_event-signal_connect
 			[funk [event_frame]

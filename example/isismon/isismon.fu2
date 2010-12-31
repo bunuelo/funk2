@@ -298,7 +298,6 @@
 	nil
       result]]]
 
-
 [deframe isismon_preference_editor [frame] [isismon
 					    
 					    window
@@ -308,13 +307,17 @@
 					    file_menu
 					    file_exit_menu_item
 					    
+					    project_directory
 					    project_directory__hbox
-					    project_directory__label
-					    project_directory__entry
+					    project_directory__title_label
+					    project_directory__select_button
+					    project_directory__data_label
 					    
+					    movie_export_directory
 					    movie_export_directory__hbox
-					    movie_export_directory__label
-					    movie_export_directory__entry
+					    movie_export_directory__title_label
+					    movie_export_directory__select_button
+					    movie_export_directory__data_label
 					    
 					    button__hbox
 					    cancel_button
@@ -326,21 +329,57 @@
        [set window title 'IsisMon - Edit Preferences']
        [= vbox [gtk-vbox-new 0]]
        
+       [= project_directory [get [get isismon preferences] project_directory]]
        [= project_directory__hbox [gtk-hbox-new 0]]
-       [= project_directory__label [gtk-label-new 'Project Directory: ']]
-       [= project_directory__entry [gtk-entry-new]]
-       [have project_directory__hbox pack_start project_directory__label nil nil 0]
-       [have project_directory__hbox pack_start project_directory__entry t t 0]
+       [= project_directory__title_label   [gtk-label-new             'Project Directory: ']]
+       [= project_directory__select_button [gtk-button-new_with_label '...']]
+       [= project_directory__data_label    [gtk-label-new             project_directory]]
+       [have project_directory__hbox pack_start project_directory__title_label   nil nil 0]
+       [have project_directory__hbox pack_start project_directory__select_button nil nil 0]
+       [have project_directory__hbox pack_start project_directory__data_label    nil nil 0]
        [have vbox pack_start project_directory__hbox nil nil 0]
-       [set project_directory__entry text [get [get isismon preferences] project_directory]]
        
+       [have project_directory__select_button signal_connect 'clicked'
+	     [funk []
+		   [let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select window]]]
+		     [have select_dialog response_event-signal_connect
+			   [funk [event_frame]
+				 [let [[response_id [have event_frame lookup `response_id]]]
+				   [if [eq response_id GTK_RESPONSE_ACCEPT]
+				       [prog [= project_directory [get select_dialog filename]]
+					     [set project_directory__data_label text project_directory]
+					     ]]]
+				 [have select_dialog destroy]]
+			   nil]
+		     [have select_dialog show_all]
+		     ]]
+	     nil]
+       
+       [= movie_export_directory [get [get isismon preferences] movie_export_directory]]
        [= movie_export_directory__hbox [gtk-hbox-new 0]]
-       [= movie_export_directory__label [gtk-label-new 'Movie Export Directory: ']]
-       [= movie_export_directory__entry [gtk-entry-new]]
-       [have movie_export_directory__hbox pack_start movie_export_directory__label nil nil 0]
-       [have movie_export_directory__hbox pack_start movie_export_directory__entry t t 0]
+       [= movie_export_directory__title_label   [gtk-label-new             'Movie Export Directory: ']]
+       [= movie_export_directory__select_button [gtk-button-new_with_label '...']]
+       [= movie_export_directory__data_label    [gtk-label-new             movie_export_directory]]
+       [have movie_export_directory__hbox pack_start movie_export_directory__title_label   nil nil 0]
+       [have movie_export_directory__hbox pack_start movie_export_directory__select_button nil nil 0]
+       [have movie_export_directory__hbox pack_start movie_export_directory__data_label    nil nil 0]
        [have vbox pack_start movie_export_directory__hbox nil nil 0]
-       [set movie_export_directory__entry text [get [get isismon preferences] movie_export_directory]]
+       
+       [have movie_export_directory__select_button signal_connect 'clicked'
+	     [funk []
+		   [let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select window]]]
+		     [have select_dialog response_event-signal_connect
+			   [funk [event_frame]
+				 [let [[response_id [have event_frame lookup `response_id]]]
+				   [if [eq response_id GTK_RESPONSE_ACCEPT]
+				       [prog [= movie_export_directory [get select_dialog filename]]
+					     [set movie_export_directory__data_label text movie_export_directory]
+					     ]]]
+				 [have select_dialog destroy]]
+			   nil]
+		     [have select_dialog show_all]
+		     ]]
+	     nil]
        
        [= button__hbox [gtk-hbox-new 0]]
        [= cancel_button [gtk-button-new_with_label 'Cancel']]
@@ -357,8 +396,8 @@
        [have ok_button signal_connect 'clicked'
 	     [funk []
 		   [let [[preferences [new isismon_preferences]]]
-		     [set preferences project_directory      [get project_directory__entry text]]
-		     [set preferences movie_export_directory [get movie_export_directory__entry text]]
+		     [set preferences project_directory      project_directory]
+		     [set preferences movie_export_directory movie_export_directory]
 		     [set isismon preferences preferences]
 		     [have isismon save_preferences]]
 		   [have window destroy]]

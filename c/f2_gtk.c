@@ -1512,7 +1512,8 @@ GtkFileChooserDialog* funk2_gtk__file_chooser_dialog__new_for_folder_select(funk
 									      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 									      GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
 									      NULL));
-    gtk_file_chooser_set_show_hidden(GTK_FILE_CHOOSER(file_chooser_dialog), TRUE);
+    gtk_file_chooser_set_show_hidden(   GTK_FILE_CHOOSER(file_chooser_dialog), TRUE);
+    gtk_file_chooser_set_create_folders(GTK_FILE_CHOOSER(file_chooser_dialog), TRUE);
     gdk_threads_leave();
   }
   return file_chooser_dialog;

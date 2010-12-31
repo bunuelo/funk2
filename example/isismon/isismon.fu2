@@ -301,6 +301,7 @@
 
 [deframe isismon_preference_editor [frame] [isismon
 					    
+					    window
 					    vbox
 					    menu_bar
 					    file_menu_item

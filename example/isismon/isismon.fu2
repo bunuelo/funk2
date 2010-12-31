@@ -261,15 +261,15 @@
 
 
 
-[deframe isismon_save_movie_dialog [frame] [isismon
-					    save_dialog]
+[deframe isismon_export_movie_dialog [frame] [isismon
+					      save_dialog]
   [new [initial-isismon]
        [= isismon initial-isismon]
        [= save_dialog [gtk-file_chooser_dialog-new_for_file_save [get isismon window]]]
        
        [have save_dialog connect_hide_on_delete]
-       [have save_dialog add_file_filter_pattern 'All Files'                                 '*.*']
-       [have save_dialog add_file_filter_pattern 'Moving Picture Experts Group (MPEG) Files' '*.mpeg']
+       [have save_dialog add_file_filter_pattern 'Moving Picture Experts Group Files (*.mpeg)' '*.mpeg']
+       [have save_dialog add_file_filter_pattern 'All Files (*.*)'                             '*.*']
        [set  save_dialog current_name 'Untitled Movie.mpeg']
        [have save_dialog response_event-signal_connect
 	     [funk [event_frame]
@@ -295,7 +295,7 @@
 			  file_menu_item
 			  file_menu
 			  file_exit_menu_item
-			  file_save_movie_menu_item
+			  file_export_movie_menu_item
 			  view_menu_item
 			  view_menu
 			  view_initialization_events_menu_item
@@ -334,23 +334,23 @@
 			     [=    menu_bar        [gtk-menu_bar-new]]
 			     [have vbox pack_start menu_bar nil nil 0]
 			     
-			     [=    file_menu_item            [gtk-menu_item-new 'File']]
-			     [=    file_menu                 [gtk-menu-new]]
-			     [=    file_exit_menu_item       [gtk-menu_item-new 'Exit']]
-			     [=    file_save_movie_menu_item [gtk-menu_item-new 'Save Movie...']]
-			     [have menu_bar       append     file_menu_item]
-			     [set  file_menu_item submenu    file_menu]
-			     [have file_menu      append     file_exit_menu_item]
-			     [have file_menu      append     file_save_movie_menu_item]
+			     [=    file_menu_item              [gtk-menu_item-new 'File']]
+			     [=    file_menu                   [gtk-menu-new]]
+			     [=    file_exit_menu_item         [gtk-menu_item-new 'Exit']]
+			     [=    file_export_movie_menu_item [gtk-menu_item-new 'Export Movie...']]
+			     [have menu_bar       append       file_menu_item]
+			     [set  file_menu_item submenu      file_menu]
+			     [have file_menu      append       file_exit_menu_item]
+			     [have file_menu      append       file_export_movie_menu_item]
 			     
 			     [have file_exit_menu_item signal_connect 'activate'
 				   [funk []
 					 [= done t]]
 				   nil]
 			     
-			     [have file_save_movie_menu_item signal_connect 'activate'
+			     [have file_export_movie_menu_item signal_connect 'activate'
 				   [funk []
-					 [new isismon_save_movie_dialog this]]
+					 [new isismon_export_movie_dialog this]]
 				   nil]
 			     
 			     [= view_menu_item                       [gtk-menu_item-new 'View']]
@@ -462,7 +462,7 @@
 		  [let [[movie_length [get this movie_length]]]
 		    [if [> movie_length 1]
 			[set scale value [- movie_length 1]]]]
-		  'Don\'t save movies every frame because this takes too long for now.'
+		  'Don\'t export movies every frame because this takes too long for now.'
 		  `[let [[file_index 0]]
 		     [labels [[find_nonexistent_filename []
 							 [let [[filename [format nil 'isismon_movie-' file_index '.mpeg']]]
@@ -470,7 +470,7 @@
 							       [prog [= file_index [+ file_index 1]]
 								     [find_nonexistent_filename]]
 							     filename]]]]
-			     [have this save_movie_as [find_nonexistent_filename]]]]
+			     [have this export_movie_as [find_nonexistent_filename]]]]
 		  [= last_stepped_simulation_time [time]]]]]]]
   [have this update]
   [millisleep 100]]
@@ -556,10 +556,10 @@
 	  [have movie_context destroy]
 	  new_movie]]]]]
 
-[deftypefunk isismon execute save_movie_as [filename]
-  [terminal_format standard-terminal '\nIsisMon Save Movie: Saving MPEG to file: ' filename]
+[deftypefunk isismon execute export_movie_as [filename]
+  [terminal_format standard-terminal '\nIsisMon Export Movie: Saving MPEG to file: ' filename]
   [have [get this new_movie] save filename]
-  [terminal_format standard-terminal '\nIsisMon Save Movie: Completed saving MPEG to file: ' filename]]
+  [terminal_format standard-terminal '\nIsisMon Export Movie: Completed saving MPEG to file: ' filename]]
 
 
 [defmetro isismon [:rest args]

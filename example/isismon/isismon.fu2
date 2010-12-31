@@ -286,6 +286,9 @@
 [deframe isismon_preferences [frame] [project_directory
 				      movie_export_directory]
   [new []
+       [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data']]]
+       [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]]
+       [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]
        [= project_directory      [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]
        [= movie_export_directory [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]]
 

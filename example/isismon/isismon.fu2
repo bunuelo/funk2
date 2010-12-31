@@ -267,7 +267,6 @@
        [= isismon initial-isismon]
        [= save_dialog [gtk-file_chooser_dialog-new_for_file_save [get isismon window]]]
        
-       [have save_dialog connect_hide_on_delete]
        [have save_dialog add_file_filter_pattern 'Moving Picture Experts Group Files (*.mpeg)' '*.mpeg']
        [have save_dialog add_file_filter_pattern 'All Files (*.*)'                             '*.*']
        [set  save_dialog current_name 'Untitled Movie.mpeg']
@@ -278,10 +277,65 @@
 		     [if [eq response_id GTK_RESPONSE_ACCEPT]
 			 [let [[filename [get save_dialog filename]]]
 			   [have save_dialog destroy]
-			   [have isismon export_movie_as filename]]
+			   [have isismon export_movie filename]]
 		       [have save_dialog destroy]]]]
 	     nil]
        [have save_dialog show_all]]]
+
+
+[deframe isismon_save_project_dialog [frame] [isismon
+					      save_dialog]
+  [new [initial-isismon]
+       [= isismon initial-isismon]
+       [= save_dialog [gtk-file_chooser_dialog-new_for_file_save [get isismon window]]]
+       
+       [have save_dialog add_file_filter_pattern 'IsisMon Project Files (*.isis)' '*.isis']
+       [have save_dialog add_file_filter_pattern 'All Files (*.*)'                '*.*']
+       [set  save_dialog current_name 'Untitled Project.isis']
+       [set  save_dialog current_folder [get [get isismon preferences] project_directory]]
+       [have save_dialog response_event-signal_connect
+	     [funk [event_frame]
+		   [let [[response_id [have event_frame lookup `response_id]]]
+		     [if [eq response_id GTK_RESPONSE_ACCEPT]
+			 [let [[filename [get save_dialog filename]]]
+			   [have save_dialog destroy]
+			   [have isismon save_project filename]]
+		       [have save_dialog destroy]]]]
+	     nil]
+       [have save_dialog show_all]]]
+
+
+[deframe isismon_open_project_dialog [frame] [isismon
+					      open_dialog
+					      preview_label]
+  [new [initial-isismon]
+       [= isismon initial-isismon]
+       [= open_dialog   [gtk-file_chooser_dialog-new_for_file_open [get isismon window]]]
+       [= preview_label [gtk-label-new '']]
+       
+       [have open_dialog add_file_filter_pattern 'IsisMon Project Files (*.isis)' '*.isis']
+       [have open_dialog add_file_filter_pattern 'All Files (*.*)'                '*.*']
+       [set  open_dialog current_folder [get [get isismon preferences] project_directory]]
+       [set  open_dialog preview_widget preview_label]
+       
+       [have open_dialog response_event-signal_connect
+	     [funk [event_frame]
+		   [let [[response_id [have event_frame lookup `response_id]]]
+		     [if [eq response_id GTK_RESPONSE_ACCEPT]
+			 [let [[filename [get open_dialog filename]]]
+			   [have open_dialog destroy]
+			   [have isismon open_project filename]]
+		       [have open_dialog destroy]]]]
+	     nil]
+       
+       [have open_dialog update_preview_event-signal_connect
+	     [funk []
+		   [let [[preview_filename [get open_dialog preview_filename]]]
+		     [set preview_label text [stringlist-intersperse [have [format nil preview_filename] split '/'] '\n']]
+		     [set open_dialog preview_widget_active t]]]
+	     nil]
+       
+       [have open_dialog show_all]]]
 
 
 [deframe isismon_preferences [frame] [project_directory
@@ -494,12 +548,12 @@
 			     
 			     [have file_open_project_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\nIsisMon: open project.']]
+					 [new isismon_open_project_dialog this]]
 				   nil]
 			     
 			     [have file_save_project_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\nIsisMon: save project.']]
+					 [new isismon_save_project_dialog this]]
 				   nil]
 			     
 			     [have file_export_movie_menu_item signal_connect 'activate'
@@ -645,7 +699,7 @@
 							       [prog [= file_index [+ file_index 1]]
 								     [find_nonexistent_filename]]
 							     filename]]]]
-			     [have this export_movie_as [find_nonexistent_filename]]]]
+			     [have this export_movie [find_nonexistent_filename]]]]
 		  [= last_stepped_simulation_time [time]]]]]]]
   [have this update]
   [millisleep 100]]
@@ -751,10 +805,18 @@
 	  [have movie_context destroy]
 	  new_movie]]]]]
 
-[deftypefunk isismon execute export_movie_as [filename]
+[deftypefunk isismon execute export_movie [filename]
   [terminal_format standard-terminal '\nIsisMon Export Movie: Saving MPEG to file: ' filename]
   [have [get this new_movie] save filename]
   [terminal_format standard-terminal '\nIsisMon Export Movie: Completed saving MPEG to file: ' filename]]
+
+[deftypefunk isismon execute save_project [filename]
+  [terminal_format standard-terminal '\nIsisMon Save Project: ' filename]
+  ]
+
+[deftypefunk isismon execute open_project [filename]
+  [terminal_format standard-terminal '\nIsisMon Open Project: ' filename]
+  ]
 
 
 [defmetro isismon [:rest args]

@@ -401,6 +401,9 @@
 			     [= edit_menu_item             [gtk-menu_item-new 'Edit']]
 			     [= edit_menu                  [gtk-menu-new]]
 			     [= edit_preferences_menu_item [gtk-menu_item-new 'Preferences...']]
+			     [have menu_bar       append  edit_menu_item]
+			     [set  edit_menu_item submenu edit_menu]
+			     [have edit_menu      append  edit_preferences_menu_item]
 			     
 			     [have edit_preferences_menu_item signal_connect 'activate'
 				   [funk []

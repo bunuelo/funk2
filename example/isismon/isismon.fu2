@@ -276,9 +276,9 @@
 		   [let [[response_id [have event_frame lookup `response_id]]]
 		     [if [eq response_id GTK_RESPONSE_ACCEPT]
 			 [let [[filename [get save_dialog filename]]]
-			   [have isismon export_movie_as filename]
-			   ]]]
-		   [have save_dialog destroy]]
+			   [have save_dialog destroy]
+			   [have isismon export_movie_as filename]]
+		       [have save_dialog destroy]]]]
 	     nil]
        [have save_dialog show_all]]]
 
@@ -294,7 +294,9 @@
 			  menu_bar
 			  file_menu_item
 			  file_menu
+			  file_new
 			  file_open
+			  file_save
 			  file_export_movie_menu_item
 			  file_exit_menu_item
 			  view_menu_item

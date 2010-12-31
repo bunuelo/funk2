@@ -283,6 +283,22 @@
        [have save_dialog show_all]]]
 
 
+[deframe isismon_preferences [frame] [project_directory
+				      movie_export_directory]
+  [new []
+       [= project_directory      [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]
+       [= movie_export_directory [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]]
+
+[deftypefunk isismon_preferences execute save [filename]
+  [lick-to-file this filename]]
+
+[defunk isismon_preferences-load [filename]
+  [let [[result [shelter [unlick-from-file filename]]]]
+    [if [eq result `bug]
+	nil
+      result]]]
+
+
 [deframe isismon [frame] [isis_world
 			  [initialize_mutex [new mutex]]
 			  [done             nil]
@@ -299,6 +315,9 @@
 			  file_save_project_menu_item
 			  file_export_movie_menu_item
 			  file_exit_menu_item
+			  edit_menu_item
+			  edit_menu
+			  edit_preferences_menu_item
 			  view_menu_item
 			  view_menu
 			  view_initialization_events_menu_item
@@ -318,6 +337,8 @@
 			  agent_hbox
 			  
 			  [agent_frame [frame]]
+			  
+			  preferences
 			  
 			  [simulation_playing           nil]
 			  [last_stepped_simulation_time nil]
@@ -375,6 +396,15 @@
 			     [have file_exit_menu_item signal_connect 'activate'
 				   [funk []
 					 [= done t]]
+				   nil]
+			     
+			     [= edit_menu_item             [gtk-menu_item-new 'Edit']]
+			     [= edit_menu                  [gtk-menu-new]]
+			     [= edit_preferences_menu_item [gtk-menu_item-new 'Preferences...']]
+			     
+			     [have edit_preferences_menu_item signal_connect 'activate'
+				   [funk []
+					 [terminal_format standard-terminal '\nIsisMon: edit preferences.']]
 				   nil]
 			     
 			     [= view_menu_item                       [gtk-menu_item-new 'View']]
@@ -461,6 +491,9 @@
 			     
 			     [have window connect_hide_on_delete]
 			     [have window show_all]
+			     
+			     [have this load_preferences]
+			     
 			     [have initialize_mutex unlock]
 			     
 			     [while [not done]
@@ -498,6 +531,25 @@
 		  [= last_stepped_simulation_time [time]]]]]]]
   [have this update]
   [millisleep 100]]
+
+[deftypefunk isismon execute load_preferences []
+  [let [[home_dir [getenv 'HOME']]]
+    [if [null home_dir]
+	[prog [terminal_format standard-terminal '\nIsisMon Warning: Could not load preferences because HOME is not a defined environment variable.']
+	      [= preferences [new isismon_preferences]]]
+      [let [[preferences_filename [pathname-concat home_dir '.isismon']]]
+	[let [[loaded_preferences [isismon_preferences-load preferences_filename]]]
+	  [if [null loaded_preferences]
+	      [prog [terminal_format standard-terminal '\nIsisMon Warning: Could not load preferences from ' preferences_filename '.']
+		    [= preferences [new isismon_preferences]]]
+	    [= preferences loaded_preferences]]]]]]]
+
+[deftypefunk isismon execute save_preferences []
+  [let [[home_dir [getenv 'HOME']]]
+    [if [null home_dir]
+	[terminal_format standard-terminal '\nIsisMon Warning: Could not save preferences because HOME is not a defined environment variable.']
+      [let [[preferences_filename [pathname-concat home_dir '.isismon']]]
+	[have preferences save preferences_filename]]]]]
 
 [deftypefunk isismon execute add_agent [agent]
   [let [[isismon_agent [new isismon_agent this agent]]]

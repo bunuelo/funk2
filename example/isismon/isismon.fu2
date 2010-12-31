@@ -271,6 +271,7 @@
        [have save_dialog add_file_filter_pattern 'Moving Picture Experts Group Files (*.mpeg)' '*.mpeg']
        [have save_dialog add_file_filter_pattern 'All Files (*.*)'                             '*.*']
        [set  save_dialog current_name 'Untitled Movie.mpeg']
+       [set  save_dialog current_folder [get [get isismon preferences] movie_export_directory]]
        [have save_dialog response_event-signal_connect
 	     [funk [event_frame]
 		   [let [[response_id [have event_frame lookup `response_id]]]

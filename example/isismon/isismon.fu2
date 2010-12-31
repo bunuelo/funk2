@@ -615,8 +615,9 @@
       [let [[preferences_filename [pathname-concat home_dir '.isismon']]]
 	[let [[loaded_preferences [isismon_preferences-load preferences_filename]]]
 	  [if [null loaded_preferences]
-	      [prog [terminal_format standard-terminal '\nIsisMon Warning: Could not load preferences from ' preferences_filename '.']
-		    [= preferences [new isismon_preferences]]]
+	      [prog [terminal_format standard-terminal '\nIsisMon Warning: Could not load preferences from ' preferences_filename '.  Creating new default preferences file.']
+		    [= preferences [new isismon_preferences]]
+		    [have this save_preferences]]
 	    [= preferences loaded_preferences]]]]]]]
 
 [deftypefunk isismon execute save_preferences []

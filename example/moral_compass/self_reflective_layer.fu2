@@ -20,12 +20,12 @@
 
 'self_reflective_layer'
 
-[deframe self_reflective_layer [mental_layer] [[self_reflective_knowledge nil]]
+[deframe self_reflective_layer [mental_layer] []
   [new []
        [construct mental_layer 4 `self_reflective]
        [have this add_agency [new self_reflective_personality_agency]]
        this]]
 
 [deftypefunk self_reflective_layer execute setup_knowledge []
-  [= self_reflective_knowledge [new meta_semantic_knowledge_base `self_reflective_knowledge [get [get this mind] semantic_realm]]]]
+  [new meta_semantic_knowledge_base `self_reflective_knowledge [get [get this mind] semantic_realm]]]
 

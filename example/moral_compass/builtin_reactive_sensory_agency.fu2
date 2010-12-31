@@ -46,7 +46,7 @@
 
 
 
-[deframe propogate_visual_objects_to_visual_knowledge_resource [resource] [visual_knowledge]
+[deframe propogate_visual_objects_to_visual_knowledge_resource [resource] []
   [new []
        [construct resource `propogate_visual_objects_to_visual_knowledge
 		  [funk []
@@ -55,17 +55,17 @@
        nil]]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute setup_knowledge []
-  [= visual_knowledge [new semantic_knowledge_base `visual_knowledge [get [get this mind] semantic_realm]]]]
+  [new semantic_knowledge_base `visual_knowledge [get [get this mind] semantic_realm]]]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute update_visual_knowledge_from_visual_objects [visual_objects]
-  [have visual_knowledge remove_all]
+  [have [get [get this mind] visual_knowledge] remove_all]
   [let [[semantic_realm        [get [get this mind] semantic_realm]]
 	[semantic_object_frame [frame]]]
     [mapc [funk [object]
 		[let [[semantic_visual_object [new semantic_visual_object semantic_realm]]
 		      [phenomenal_name        [get object phenomenal_name]]]
 		  [semantic-add semantic_visual_object property-visual_phenomenal_name phenomenal_name]
-		  [have visual_knowledge add_semantic_frame semantic_visual_object]
+		  [have [get [get this mind] visual_knowledge] add_semantic_frame semantic_visual_object]
 		  [have semantic_object_frame add phenomenal_name semantic_visual_object]]]
 	  visual_objects]
     [mapc [funk [visual_object]
@@ -110,7 +110,4 @@
 
 [deftypefunk builtin_reactive_sensory_agency get left_hand_object_name  []
   [get [get this resource `continuous_sensing] left_hand_object_name]]
-
-[deftypefunk builtin_reactive_sensory_agency get visual_knowledge []
-  [get [get this resource `propogate_visual_objects_to_visual_knowledge] visual_knowledge]]
 

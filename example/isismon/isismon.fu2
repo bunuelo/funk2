@@ -309,12 +309,12 @@
 					    file_exit_menu_item
 					    
 					    project_directory__hbox
-					    project_directory__message__label
-					    project_directory__message__entry
+					    project_directory__label
+					    project_directory__entry
 					    
 					    movie_export_directory__hbox
-					    movie_export_directory__message__label
-					    movie_export_directory__message__entry
+					    movie_export_directory__label
+					    movie_export_directory__entry
 					    
 					    button_hbox
 					    cancel_button

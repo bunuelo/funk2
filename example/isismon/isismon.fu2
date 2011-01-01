@@ -758,6 +758,7 @@
 			  simulation_view_initialization_events_menu_item
 			  
 			  project_vbox
+			  project_vbox__contained_widget
 			  isismon_project
 			  
 			  preferences
@@ -795,7 +796,7 @@
 			     
 			     [have file_new_project_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\nIsisMon: new project.']]
+					 [have this start_new_project]]
 				   nil]
 			     
 			     [have file_open_project_menu_item signal_connect 'activate'
@@ -856,6 +857,7 @@
 			     
 			     [= isismon_project [new isismon_project this]]
 			     [have project_vbox add [get isismon_project widget]]
+			     [= project_vbox__contained_widget [get isismon_project widget]]
 			     
 			     [have window connect_hide_on_delete]
 			     [have window show_all]
@@ -904,12 +906,20 @@
   [have [get isismon_project new_movie] save filename]
   [terminal_format standard-terminal '\nIsisMon Export Movie: Completed saving MPEG to file: ' filename]]
 
-[deftypefunk isismon execute save_project [filename]
-  [terminal_format standard-terminal '\nIsisMon Save Project: ' filename]
+[deftypefunk isismon execute start_new_project [filename]
+  [terminal_format standard-terminal '\nIsisMon New Project']
+  [= isismon_project [new isismon_project this]]
+  [have project_vbox remove project_vbox__contained_widget]
+  [have project_vbox add [get isismon_project widget]]
+  [= project_vbox__contained_widget [get isismon_project widget]]
   ]
 
 [deftypefunk isismon execute open_project [filename]
   [terminal_format standard-terminal '\nIsisMon Open Project: ' filename]
+  ]
+
+[deftypefunk isismon execute save_project [filename]
+  [terminal_format standard-terminal '\nIsisMon Save Project: ' filename]
   ]
 
 

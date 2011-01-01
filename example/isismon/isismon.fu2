@@ -416,6 +416,7 @@
        [have project_directory__select_button signal_connect 'clicked'
 	     [funk []
 		   [let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select window]]]
+		     [set select_dialog current_folder project_directory]
 		     [have select_dialog response_event-signal_connect
 			   [funk [event_frame]
 				 [let [[response_id [have event_frame lookup `response_id]]]
@@ -442,6 +443,7 @@
        [have movie_export_directory__select_button signal_connect 'clicked'
 	     [funk []
 		   [let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select window]]]
+		     [set select_dialog current_folder movie_export_directory]
 		     [have select_dialog response_event-signal_connect
 			   [funk [event_frame]
 				 [let [[response_id [have event_frame lookup `response_id]]]

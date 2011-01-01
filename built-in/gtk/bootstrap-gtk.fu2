@@ -37,6 +37,7 @@
 [deftypefunk gtk_widget execute connect_hide_on_delete []                                      [gtk-widget-connect_hide_on_delete [get this widget]]]
 [deftypefunk gtk_widget execute modify_fg              [state color]                           [gtk-widget-modify_fg              [get this widget] state color]]
 [deftypefunk gtk_widget execute modify_bg              [state color]                           [gtk-widget-modify_bg              [get this widget] state color]]
+[deftypefunk gtk_widget set     sensitive              [sensitive]                             [gtk-widget-set_sensitive          [get this widget] sensitive]]
 [deftypefunk gtk_widget execute draw_arc               [filled x y width height angle1 angle2] [gtk-widget-draw_arc               [get this widget] filled x y width height angle1 angle2]]
 [deftypefunk gtk_widget execute draw_rectangle         [filled x y width height]               [gtk-widget-draw_rectangle         [get this widget] filled x y width height]]
 

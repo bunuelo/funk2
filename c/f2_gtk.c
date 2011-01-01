@@ -743,6 +743,14 @@ void funk2_gtk__widget__modify_bg(funk2_gtk_t* this, GtkWidget* widget, GtkState
   }
 }
 
+void funk2_gtk__widget__set_sensitive(funk2_gtk_t* this, GtkWidget widget, boolean_t sensitive) {
+  {
+    gdk_threads_enter();
+    gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive ? TRUE : FALSE);
+    gdk_threads_leave();
+  }
+}
+
 
 // GtkWidget.GdkWindow ? widget draw functions...
 
@@ -2467,6 +2475,29 @@ f2ptr f2__gtk__widget__modify_bg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr c
   return raw__gtk__widget__modify_bg(cause, widget, state, color);
 }
 def_pcfunk3(gtk__widget__modify_bg, widget, state, color, return f2__gtk__widget__modify_bg(this_cause, widget, state, color));
+
+
+f2ptr raw__gtk__widget__set_sensitive(f2ptr cause, f2ptr widget, f2ptr sensitive) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    funk2_gtk__widget__set_sensitive(&(__funk2.gtk), gtk_widget, (sensitive != nil));
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__widget__set_sensitive(f2ptr cause, f2ptr widget, f2ptr sensitive) {
+  if (! raw__gtk_widget__is_type(cause, widget)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__widget__set_sensitive(cause, widget, sensitive);
+}
+def_pcfunk2(gtk__widget__set_sensitive, widget, sensitive, return f2__gtk__widget__set_sensitive(this_cause, widget, sensitive));
 
 
 // beginning of GtkWidget drawing fuctions, which are not really GtkWidget functions in the GTK library.
@@ -4790,6 +4821,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__1(gtk__widget__destroy,                      widget,                                                "Destroys the widget.");  f2__primcfunk__init__1(gtk__widget__connect_hide_on_delete,     widget,                                                "Add a delete-event callback handler to the widget that hides the window rather than destroying the window.");
   f2__primcfunk__init__3(gtk__widget__modify_fg,                    widget, state, color,                                  "Sets the foreground color of a widget.  State must be one of the following symbolic values: normal, active, prelight, selected, or insensitive.  Color must be a GdkColor object (see gdk-color-new).");
   f2__primcfunk__init__3(gtk__widget__modify_bg,                    widget, state, color,                                  "Sets the background color of a widget.  State must be one of the following symbolic values: normal, active, prelight, selected, or insensitive.  Color must be a GdkColor object (see gdk-color-new).");
+  f2__primcfunk__init__2(gtk__widget__set_sensitive,                widget, sensitive,                                     "Sets the sensitivity of a widget.  Insensitive widgets are greyed out.");
   // widget draw funks
   f2__primcfunk__init__8(gtk__widget__draw_arc,                     widget, filled, x, y, width, height, angle1, angle2,   "Draws an arc in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
   f2__primcfunk__init__6(gtk__widget__draw_rectangle,               widget, filled, x, y, width, height,                   "Draws a rectangle in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");

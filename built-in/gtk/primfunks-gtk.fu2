@@ -47,6 +47,7 @@
 [globalize-funk gtk-widget-connect_hide_on_delete                 &primfunk:gtk__widget__connect_hide_on_delete]
 [globalize-funk gtk-widget-modify_fg                              &primfunk:gtk__widget__modify_fg]
 [globalize-funk gtk-widget-modify_bg                              &primfunk:gtk__widget__modify_bg]
+[globalize-funk gtk-widget-set_sensitive                          &primfunk:gtk__widget__set_sensitive]
 [globalize-funk gtk-widget-draw_arc                               &primfunk:gtk__widget__draw_arc]
 [globalize-funk gtk-widget-draw_rectangle                         &primfunk:gtk__widget__draw_rectangle]
 [globalize-funk gtk-misc-set_alignment                            &primfunk:gtk__misc__set_alignment]

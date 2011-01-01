@@ -850,6 +850,8 @@
 			       [have project_vbox pack_start no_project_widget t t 0]
 			       [= project_vbox__contained_widget no_project_widget]]
 			     
+			     [set window default_size [+ 640 320] [* 240 2]]
+			     
 			     [have window connect_hide_on_delete]
 			     [have window show_all]
 			     

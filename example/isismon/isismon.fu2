@@ -503,6 +503,7 @@
 
 [deframe isismon_project [frame] [isismon
 				  
+				  initialized
 				  execute_mutex
 				  
 				  isis_world
@@ -617,6 +618,7 @@
        [have this add_agent [get isis_world agent_body `Ralph]]
        [have this add_agent [get isis_world agent_body `Lauren]]
        
+       [= initialized t]
        [have execute_mutex unlock]
        ]]
 
@@ -626,8 +628,7 @@
 [deftypefunk isismon_project execute add_agent [agent]
   [let [[isismon_agent [new isismon_agent this agent]]]
     [have agent_frame add [get isismon_agent name] isismon_agent]
-    [have agent_hbox pack_start isismon_agent t t 0]]]
-
+    [have agent_hbox pack_start isismon_agent t t 0]]]]
 
 [deftypefunk isismon_project execute update_agents []
   [mapc [funk [agent]
@@ -644,32 +645,33 @@
   [have this update_agents]]
 
 [deftypefunk isismon_project execute cycle []
-  [have execute_mutex lock]
-  [if [and simulation_playing [or [null last_stepped_simulation_time]
-				  [> [/ [- [get [time] nanoseconds_since_1970] [get last_stepped_simulation_time nanoseconds_since_1970]] 1000000000.0] 5]]]
-      [let [[step_size [have [get step_size_entry text] read]]]
-	[let [[as_double_funk [get [lookup_type [type step_size]] type_var_value `get `as-double nil]]]
-	  [if [null as_double_funk]
-	      [prog [terminal_format standard-terminal '\nStep size, \'' [get step_size_entry text] '\', cannot be recognized as a number.  Pausing IsisMon and ignoring step command.']
-		    [= simulation_playing nil]]
-	    [prog [terminal_format standard-terminal '\nStepping simulation by ' [get step_size as-double] ' seconds.']
-		  [have isis_world step_simulation [get step_size as-double]]
-		  [have this update]
-		  [let [[movie_length [get this movie_length]]]
-		    [if [> movie_length 1]
-			[set scale value [- movie_length 1]]]]
-		  'Don\'t export movies every frame because this takes too long for now.'
-		  `[let [[file_index 0]]
-		     [labels [[find_nonexistent_filename []
-							 [let [[filename [format nil 'isismon_movie-' file_index '.mpeg']]]
-							   [if [pathname-exists filename]
-							       [prog [= file_index [+ file_index 1]]
-								     [find_nonexistent_filename]]
-							     filename]]]]
-			     [have this export_movie [find_nonexistent_filename]]]]
-		  [= last_stepped_simulation_time [time]]]]]]]
-  [have this update]
-  [have execute_mutex unlock]]
+  [if initialized
+      [prog [have execute_mutex lock]
+	    [if [and simulation_playing [or [null last_stepped_simulation_time]
+					    [> [/ [- [get [time] nanoseconds_since_1970] [get last_stepped_simulation_time nanoseconds_since_1970]] 1000000000.0] 5]]]
+		[let [[step_size [have [get step_size_entry text] read]]]
+		  [let [[as_double_funk [get [lookup_type [type step_size]] type_var_value `get `as-double nil]]]
+		    [if [null as_double_funk]
+			[prog [terminal_format standard-terminal '\nStep size, \'' [get step_size_entry text] '\', cannot be recognized as a number.  Pausing IsisMon and ignoring step command.']
+			      [= simulation_playing nil]]
+		      [prog [terminal_format standard-terminal '\nStepping simulation by ' [get step_size as-double] ' seconds.']
+			    [have isis_world step_simulation [get step_size as-double]]
+			    [have this update]
+			    [let [[movie_length [get this movie_length]]]
+			      [if [> movie_length 1]
+				  [set scale value [- movie_length 1]]]]
+			    'Don\'t export movies every frame because this takes too long for now.'
+			    `[let [[file_index 0]]
+			       [labels [[find_nonexistent_filename []
+								   [let [[filename [format nil 'isismon_movie-' file_index '.mpeg']]]
+								     [if [pathname-exists filename]
+									 [prog [= file_index [+ file_index 1]]
+									       [find_nonexistent_filename]]
+								       filename]]]]
+				       [have this export_movie [find_nonexistent_filename]]]]
+			    [= last_stepped_simulation_time [time]]]]]]]
+	    [have this update]
+	    [have execute_mutex unlock]]]]
 
 [deftypefunk isismon_project get overview_image_sequence []
   [get isis_world overview_image_sequence]]
@@ -734,11 +736,13 @@
 	[get [get isis_world initialize_events] leaves]]]
 
 [deftypefunk isismon_project execute close []
-  [have execute_mutex lock]
-  [terminal_format standard-terminal '\nIsisMon Project Closing.']
-  [have isis_world destroy]
-  [have execute_mutex unlock]
-  ]
+  [if initialized
+      [prog [have execute_mutex lock]
+	    [terminal_format standard-terminal '\nIsisMon Project Closing.']
+	    [have isis_world destroy]
+	    [= initialized nil]
+	    [have execute_mutex unlock]
+	    ]]]
 
 
 [deframe isismon [frame] [[initialize_mutex [new mutex]]

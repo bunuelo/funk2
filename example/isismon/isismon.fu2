@@ -865,8 +865,7 @@
 
 
 [defmetro isismon [:rest args]
-  [let [[isis_worlds                  nil]
-	[print_usage_message_and_exit nil]]
+  [let [[print_usage_message_and_exit nil]]
     [if args
 	[let [[iter args]]
 	  [while iter
@@ -887,8 +886,7 @@
 			 '\n'   'DESCRIPTION'
 			 '\n'   '       The isismon program provides dynamic real-time monitoring of a running isis_world experiment.'
 			 '\n'   '']
-      [let [[isis_world [first isis_worlds]]]
-	`[prog [new isismon]
-	       nil]]]]]
+      `[prog [new isismon]
+	     nil]]]]
 
 

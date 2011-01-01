@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 
-[deframe isis_world [physical_world] [initialize_events 
+[deframe isis_world [physical_world] [[initialize_events [new redblacktree [funk [event] [have event lookup `time]] &<]]
 				      [step_mutex [new traced_mutex]]
 				      client
 				      sense_agent_frame
@@ -26,16 +26,20 @@
   [new [client]
        [construct physical_world]
        [set this client client]
-       [= initialize_events [new redblacktree [funk [event] [have event lookup `time]] &<]]
-       [have initialize_events insert [frame time [time] event_type `reset         result [isis-call client meta_reset]]]
-       [have initialize_events insert [frame time [time] event_type `scenario_list result [isis-call client meta_list_scenarios]]]
-       [have initialize_events insert [frame time [time] event_type `load_scenario result [isis-call client meta_load_scenario scenario 'make_toast.py']]]
-       [have initialize_events insert [frame time [time] event_type `task_list     result [isis-call client meta_list_tasks]]]
-       [have initialize_events insert [frame time [time] event_type `load_task     result [isis-call client meta_load_task task 'task_toaster_in_view']]]
-       [have initialize_events insert [frame time [time] event_type `train         result [isis-call client meta_train]]]
-       [have initialize_events insert [frame time [time] event_type `pause         result [isis-call client meta_pause]]]
-       [have initialize_events insert [frame time [time] event_type `step          result [have this raw_step_simulation 1.0]]]
        ]]
+
+[deftypefunk isis_world execute initialize_simulation []
+  [terminal_format standard-terminal '\nisis_world: initializing simulation.']
+  [have initialize_events insert [frame time [time] event_type `reset         result [isis-call client meta_reset]]]
+  [have initialize_events insert [frame time [time] event_type `scenario_list result [isis-call client meta_list_scenarios]]]
+  [have initialize_events insert [frame time [time] event_type `load_scenario result [isis-call client meta_load_scenario scenario 'make_toast.py']]]
+  [have initialize_events insert [frame time [time] event_type `task_list     result [isis-call client meta_list_tasks]]]
+  [have initialize_events insert [frame time [time] event_type `load_task     result [isis-call client meta_load_task task 'task_toaster_in_view']]]
+  [have initialize_events insert [frame time [time] event_type `train         result [isis-call client meta_train]]]
+  [have initialize_events insert [frame time [time] event_type `pause         result [isis-call client meta_pause]]]
+  [have initialize_events insert [frame time [time] event_type `step          result [have this raw_step_simulation 1.0]]]
+  ]
+
 
 [deftypefunk isis_world execute print_initialize_events []
   [terminal_format standard-terminal '\nisis_world initialize_events:']
@@ -139,4 +143,8 @@
 [deftypefunk isis_world execute use_left_hand           [agent target action] [isis-call [get this client] use_left_hand           agent agent target target action action]]
 [deftypefunk isis_world execute say                     [agent message]       [isis-call [get this client] say                     agent agent message message]]
 [deftypefunk isis_world execute sense_retina_image      [agent]               [isis-call [get this client] sense_retina_image      agent agent max_x 320 max_y 240 x_offset 0 y_offset 0]]
+
+
+[deftypefunk isis_world get as-chunk []
+  [get [new lick nil] as-chunk]]
 

@@ -34,6 +34,8 @@
   [shelter [have isis_world destroy]]
   [let [[client [new isis_world_client hostname]]]
     [let [[isis_world [new isis_world client]]]
+      [have isis_world initialize_simulation]
+      
       [new ralph_body  isis_world]
       [new lauren_body isis_world]
       

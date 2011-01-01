@@ -503,6 +503,8 @@
 
 [deframe isismon_project [frame] [isismon
 				  
+				  execute_mutex
+				  
 				  isis_world
 				  
 				  vbox
@@ -527,6 +529,9 @@
 				  ]
   [new [initial-isismon]
        [= isismon initial-isismon]
+       
+       [= execute_mutex [new traced_mutex]]
+       [have execute_mutex lock]
        
        [let [[isis_world_server_hostname [get [get isismon preferences] isis_world_server_hostname]]]
 	 [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]]
@@ -612,15 +617,19 @@
        [have this add_agent [get isis_world agent_body `Ralph]]
        [have this add_agent [get isis_world agent_body `Lauren]]
        
+       [have execute_mutex unlock]
        ]]
 
 [deftypefunk isismon_project get widget []
   vbox]
 
 [deftypefunk isismon_project execute add_agent [agent]
+  [have execute_mutex lock]
   [let [[isismon_agent [new isismon_agent this agent]]]
     [have agent_frame add [get isismon_agent name] isismon_agent]
-    [have agent_hbox pack_start isismon_agent t t 0]]]
+    [have agent_hbox pack_start isismon_agent t t 0]]
+  [have execute_mutex unlock]]
+
 
 [deftypefunk isismon_project execute update_agents []
   [mapc [funk [agent]
@@ -628,15 +637,18 @@
 	[get agent_frame values]]]
 
 [deftypefunk isismon_project execute update []
+  [have execute_mutex lock]
   [let [[movie_length [get this movie_length]]]
     [if [> movie_length 1]
 	[set scale range 0.0 [- movie_length 1]]]
     [let [[image_index [get [get scale value] as-integer]]]
       [if [< image_index movie_length]
 	  [set movie_gtk_image image [get this movie_image image_index]]]]]
-  [have this update_agents]]
+  [have this update_agents]
+  [have execute_mutex lock]]
 
 [deftypefunk isismon_project execute cycle []
+  [have execute_mutex lock]
   [if [and simulation_playing [or [null last_stepped_simulation_time]
 				  [> [/ [- [get [time] nanoseconds_since_1970] [get last_stepped_simulation_time nanoseconds_since_1970]] 1000000000.0] 5]]]
       [let [[step_size [have [get step_size_entry text] read]]]
@@ -659,7 +671,8 @@
 								     [find_nonexistent_filename]]
 							     filename]]]]
 			     [have this export_movie [find_nonexistent_filename]]]]
-		  [= last_stepped_simulation_time [time]]]]]]]]
+		  [= last_stepped_simulation_time [time]]]]]]]
+  [have execute_mutex unlock]]
 
 [deftypefunk isismon_project get overview_image_sequence []
   [get isis_world overview_image_sequence]]
@@ -724,8 +737,10 @@
 	[get [get isis_world initialize_events] leaves]]]
 
 [deftypefunk isismon_project execute close []
+  [have execute_mutex lock]
   [terminal_format standard-terminal '\nIsisMon Project Closing.']
   [have isis_world destroy]
+  [have execute_mutex unlock]
   ]
 
 

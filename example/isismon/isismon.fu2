@@ -860,7 +860,7 @@
 			     [= isismon_project nil]
 			     [have this close_project]
 			     
-			     [set window default_size [+ 640 320] [* 240 2]]
+			     [set window default_size [+ 640 320] [+ [* 240 2] 128]]
 			     
 			     [have window connect_hide_on_delete]
 			     [have window show_all]

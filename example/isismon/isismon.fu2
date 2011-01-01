@@ -397,7 +397,7 @@
        
        [= isis_world_server_hostname [get [get isismon preferences] isis_world_server_hostname]]
        [= isis_world_server_hostname__hbox [gtk-hbox-new 0]]
-       [= isis_world_server_hostname__title_label   [gtk-label-new             'Project Directory: ']]
+       [= isis_world_server_hostname__title_label   [gtk-label-new             'IsisWorld Server Hostname: ']]
        [= isis_world_server_hostname__select_button [gtk-button-new_with_label '...']]
        [= isis_world_server_hostname__data_label    [gtk-label-new             isis_world_server_hostname]]
        [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__title_label   nil nil 0]
@@ -723,10 +723,18 @@
 	  [have movie_context destroy]
 	  new_movie]]]]]
 
+[deftypefunk isismon_project execute initialize_simulation []
+  [terminal_format standard-terminal '\nIsisMon: Running simulation initialization sequence.']
+  [have isis_world initialize_simulation]]
+
+[deftypefunk isismon_project execute view_initialization_events []
+  [terminal_format standard-terminal '\nIsisMon ' `isis_world-initialize ' events in temporal order:']
+  [mapc [funk [event]
+	      [terminal_format standard-terminal '\n  ' event]]
+	[get [get isis_world initialize_events] leaves]]]
 
 
-[deframe isismon [frame] [isis_world
-			  [initialize_mutex [new mutex]]
+[deframe isismon [frame] [[initialize_mutex [new mutex]]
 			  [done             nil]
 			  fiber
 			  
@@ -834,16 +842,12 @@
 			     
 			     [have simulation_run_initialization_sequence_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\nIsisMon: Running simulation initialization sequence.']
-					 [have isis_world initialize_simulation]]
+					 [have isismon_project initialize_simulation]]
 				   nil]
 			     
 			     [have simulation_view_initialization_events_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\nIsisMon ' `isis_world-initialize ' events in temporal order:']
-					 [mapc [funk [event]
-						     [terminal_format standard-terminal '\n  ' event]]
-					       [get [get isis_world initialize_events] leaves]]]
+					 [have isismon_project view_initiazation_events]]
 				   nil]
 			     
 			     

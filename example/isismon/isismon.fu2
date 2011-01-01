@@ -367,11 +367,9 @@
 					    file_menu
 					    file_exit_menu_item
 					    
-					    isis_world_server_hostname
 					    isis_world_server_hostname__hbox
 					    isis_world_server_hostname__title_label
-					    isis_world_server_hostname__select_button
-					    isis_world_server_hostname__data_label
+					    isis_world_server_hostname__data_entry
 					    
 					    project_directory
 					    project_directory__hbox
@@ -392,34 +390,18 @@
        [= isismon initial-isismon]
        
        [= window [gtk-window-new]]
+       [have window connect_hide_on_delete]
        [set window title 'IsisMon - Edit Preferences']
        [= vbox [gtk-vbox-new 0]]
        
-       [= isis_world_server_hostname [get [get isismon preferences] isis_world_server_hostname]]
-       [= isis_world_server_hostname__hbox [gtk-hbox-new 0]]
-       [= isis_world_server_hostname__title_label   [gtk-label-new             'IsisWorld Server Hostname: ']]
-       [= isis_world_server_hostname__select_button [gtk-button-new_with_label '...']]
-       [= isis_world_server_hostname__data_label    [gtk-label-new             isis_world_server_hostname]]
-       [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__title_label   nil nil 0]
-       [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__select_button nil nil 0]
-       [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__data_label    nil nil 0]
-       [have vbox pack_start isis_world_server_hostname__hbox nil nil 0]
-       
-       [have isis_world_server_hostname__select_button signal_connect 'clicked'
-	     [funk []
-		   [let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select window]]]
-		     [have select_dialog response_event-signal_connect
-			   [funk [event_frame]
-				 [let [[response_id [have event_frame lookup `response_id]]]
-				   [if [eq response_id GTK_RESPONSE_ACCEPT]
-				       [prog [= isis_world_server_hostname [get select_dialog filename]]
-					     [set isis_world_server_hostname__data_label text isis_world_server_hostname]
-					     ]]]
-				 [have select_dialog destroy]]
-			   nil]
-		     [have select_dialog show_all]
-		     ]]
-	     nil]
+       [let [[isis_world_server_hostname [get [get isismon preferences] isis_world_server_hostname]]]
+	 [= isis_world_server_hostname__hbox [gtk-hbox-new 0]]
+	 [= isis_world_server_hostname__title_label [gtk-label-new 'IsisWorld Server Hostname: ']]
+	 [= isis_world_server_hostname__data_entry  [gtk-entry-new]]
+	 [set isis_world_server_hostname__data_entry text isis_world_server_hostname]
+	 [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__title_label   nil nil 0]
+	 [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__data_entry    nil nil 0]
+	 [have vbox pack_start isis_world_server_hostname__hbox nil nil 0]]
        
        [= project_directory [get [get isismon preferences] project_directory]]
        [= project_directory__hbox [gtk-hbox-new 0]]
@@ -488,7 +470,7 @@
        [have ok_button signal_connect 'clicked'
 	     [funk []
 		   [let [[preferences [new isismon_preferences]]]
-		     [set preferences isis_world_server_hostname isis_world_server_hostname]
+		     [set preferences isis_world_server_hostname [get isis_world_server_hostname__data_entry text]]
 		     [set preferences project_directory          project_directory]
 		     [set preferences movie_export_directory     movie_export_directory]
 		     [set isismon preferences preferences]
@@ -780,6 +762,7 @@
 			     [have this load_preferences]
 			     
 			     [=    window          [gtk-window-new]]
+			     [have window connect_hide_on_delete]
 			     [set  window title    [format nil 'IsisMon']]
 			     [=    vbox            [gtk-vbox-new 0]]
 			     [have window add vbox]
@@ -878,7 +861,6 @@
 			     
 			     [set window default_size [+ 640 320] [+ [* 240 2] 128]]
 			     
-			     [have window connect_hide_on_delete]
 			     [have window show_all]
 			     
 			     [have initialize_mutex unlock]

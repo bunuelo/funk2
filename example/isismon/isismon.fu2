@@ -856,8 +856,8 @@
 			     [have vbox pack_start project_vbox nil nil 0]
 			     
 			     [= isismon_project nil]
-			     [let [[no_project_widget [gtk-label-new 'Welcome to IsisMon'] t t 0]]
-			       [have project_vbox pack_start no_project_widget]
+			     [let [[no_project_widget [gtk-label-new 'Welcome to IsisMon']]]
+			       [have project_vbox pack_start no_project_widget t t 0]
 			       [= project_vbox__contained_widget no_project_widget]]
 			     
 			     [have window connect_hide_on_delete]

@@ -528,7 +528,7 @@
   [new [initial-isismon]
        [= isismon initial-isismon]
        
-       [= isis_world [new isis_world [get [get isismon preferences] isis_world_server_hostname]]]
+       [= isis_world [new isis_world [new isis_world_client [get [get isismon preferences] isis_world_server_hostname]]]]
        
        [with-new-cause [new ralph_body  isis_world]
 		       [new lauren_body isis_world]

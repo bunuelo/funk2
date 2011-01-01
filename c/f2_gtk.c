@@ -743,7 +743,7 @@ void funk2_gtk__widget__modify_bg(funk2_gtk_t* this, GtkWidget* widget, GtkState
   }
 }
 
-void funk2_gtk__widget__set_sensitive(funk2_gtk_t* this, GtkWidget widget, boolean_t sensitive) {
+void funk2_gtk__widget__set_sensitive(funk2_gtk_t* this, GtkWidget* widget, boolean_t sensitive) {
   {
     gdk_threads_enter();
     gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive ? TRUE : FALSE);

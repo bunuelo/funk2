@@ -848,16 +848,17 @@
 			     
 			     [have simulation_view_initialization_events_menu_item signal_connect 'activate'
 				   [funk []
-					 [have isismon_project view_initiazation_events]]
+					 [have isismon_project view_initialization_events]]
 				   nil]
 			     
 			     
 			     [= project_vbox [gtk-vbox-new 0]]
 			     [have vbox pack_start project_vbox nil nil 0]
 			     
-			     [= isismon_project [new isismon_project this]]
-			     [have project_vbox add [get isismon_project widget]]
-			     [= project_vbox__contained_widget [get isismon_project widget]]
+			     [= isismon_project nil]
+			     [let [[no_project_widget [gtk-label-new 'Welcome to IsisMon'] t t 0]]
+			       [have project_vbox pack_start no_project_widget]
+			       [= project_vbox__contained_widget no_project_widget]]
 			     
 			     [have window connect_hide_on_delete]
 			     [have window show_all]
@@ -910,7 +911,7 @@
   [terminal_format standard-terminal '\nIsisMon New Project']
   [= isismon_project [new isismon_project this]]
   [have project_vbox remove project_vbox__contained_widget]
-  [have project_vbox add [get isismon_project widget]]
+  [have project_vbox pack_start [get isismon_project widget] nil nil 0]
   [= project_vbox__contained_widget [get isismon_project widget]]
   ]
 

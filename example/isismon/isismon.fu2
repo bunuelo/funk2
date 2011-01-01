@@ -637,15 +637,13 @@
 	[get agent_frame values]]]
 
 [deftypefunk isismon_project execute update []
-  [have execute_mutex lock]
   [let [[movie_length [get this movie_length]]]
     [if [> movie_length 1]
 	[set scale range 0.0 [- movie_length 1]]]
     [let [[image_index [get [get scale value] as-integer]]]
       [if [< image_index movie_length]
 	  [set movie_gtk_image image [get this movie_image image_index]]]]]
-  [have this update_agents]
-  [have execute_mutex lock]]
+  [have this update_agents]]
 
 [deftypefunk isismon_project execute cycle []
   [have execute_mutex lock]
@@ -672,6 +670,7 @@
 							     filename]]]]
 			     [have this export_movie [find_nonexistent_filename]]]]
 		  [= last_stepped_simulation_time [time]]]]]]]
+  [have this update]
   [have execute_mutex unlock]]
 
 [deftypefunk isismon_project get overview_image_sequence []
@@ -894,8 +893,7 @@
   [if [not [get window visible]]
       [= done t]]
   [if isismon_project
-      [prog [have isismon_project cycle]
-	    [have isismon_project update]]]
+      [prog [have isismon_project cycle]]]
   [millisleep 100]]
 
 [deftypefunk isismon execute load_preferences []

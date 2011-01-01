@@ -661,16 +661,6 @@
 			     [have this export_movie [find_nonexistent_filename]]]]
 		  [= last_stepped_simulation_time [time]]]]]]]]
 
-[deftypefunk isismon_project execute step []
-  [have isis_world normal_step]
-  [let [[movie_length [get this movie_length]]]
-    [if [> movie_length 1]
-	[set scale range 0.0 [- movie_length 1]]]
-    [let [[scale_value [get scale value]]]
-      [if [== scale_value [- movie_length 2]]
-	  [set scale value [- movie_length 1]]]]]
-  [have this update]]
-
 [deftypefunk isismon_project get overview_image_sequence []
   [get isis_world overview_image_sequence]]
 
@@ -875,8 +865,9 @@
 [deftypefunk isismon execute cycle []
   [if [not [get window visible]]
       [= done t]]
-  [have isismon_project cycle]
-  [have isismon_project update]
+  [if isismon_project
+      [prog [have isismon_project cycle]
+	    [have isismon_project update]]]
   [millisleep 100]]
 
 [deftypefunk isismon execute load_preferences []
@@ -898,9 +889,6 @@
 	[terminal_format standard-terminal '\nIsisMon Warning: Could not save preferences because HOME is not a defined environment variable.']
       [let [[preferences_filename [pathname-concat home_dir '.isismon']]]
 	[have preferences save preferences_filename]]]]]
-
-[deftypefunk isismon execute step []
-  [have isismon_project step]]
 
 [deftypefunk isismon execute export_movie [filename]
   [terminal_format standard-terminal '\nIsisMon Export Movie: Saving MPEG to file: ' filename]

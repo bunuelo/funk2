@@ -345,7 +345,7 @@
        [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data']]]
        [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]]
        [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]
-       [= isis_world_server_hostname '127.0.0.1']
+       [= isis_world_server_hostname 'psuche']
        [= project_directory          [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]
        [= movie_export_directory     [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]]
 
@@ -528,7 +528,8 @@
   [new [initial-isismon]
        [= isismon initial-isismon]
        
-       [= isis_world [new isis_world [new isis_world_client [get [get isismon preferences] isis_world_server_hostname]]]]
+       [let [[isis_world_server_hostname [get [get isismon preferences] isis_world_server_hostname]]]
+	 [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]]
        
        [with-new-cause [new ralph_body  isis_world]
 		       [new lauren_body isis_world]

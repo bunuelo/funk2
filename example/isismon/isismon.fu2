@@ -338,14 +338,16 @@
        [have open_dialog show_all]]]
 
 
-[deframe isismon_preferences [frame] [project_directory
+[deframe isismon_preferences [frame] [isis_world_server_hostname
+				      project_directory
 				      movie_export_directory]
   [new []
        [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data']]]
        [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]]
        [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]
-       [= project_directory      [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]
-       [= movie_export_directory [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]]
+       [= isis_world_server_hostname '127.0.0.1']
+       [= project_directory          [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]
+       [= movie_export_directory     [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]]
 
 [deftypefunk isismon_preferences execute save [filename]
   [lick-to-file this filename]]
@@ -364,6 +366,12 @@
 					    file_menu_item
 					    file_menu
 					    file_exit_menu_item
+					    
+					    isis_world_server_hostname
+					    isis_world_server_hostname__hbox
+					    isis_world_server_hostname__title_label
+					    isis_world_server_hostname__select_button
+					    isis_world_server_hostname__data_label
 					    
 					    project_directory
 					    project_directory__hbox
@@ -386,6 +394,32 @@
        [= window [gtk-window-new]]
        [set window title 'IsisMon - Edit Preferences']
        [= vbox [gtk-vbox-new 0]]
+       
+       [= isis_world_server_hostname [get [get isismon preferences] isis_world_server_hostname]]
+       [= isis_world_server_hostname__hbox [gtk-hbox-new 0]]
+       [= isis_world_server_hostname__title_label   [gtk-label-new             'Project Directory: ']]
+       [= isis_world_server_hostname__select_button [gtk-button-new_with_label '...']]
+       [= isis_world_server_hostname__data_label    [gtk-label-new             isis_world_server_hostname]]
+       [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__title_label   nil nil 0]
+       [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__select_button nil nil 0]
+       [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__data_label    nil nil 0]
+       [have vbox pack_start isis_world_server_hostname__hbox nil nil 0]
+       
+       [have isis_world_server_hostname__select_button signal_connect 'clicked'
+	     [funk []
+		   [let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select window]]]
+		     [have select_dialog response_event-signal_connect
+			   [funk [event_frame]
+				 [let [[response_id [have event_frame lookup `response_id]]]
+				   [if [eq response_id GTK_RESPONSE_ACCEPT]
+				       [prog [= isis_world_server_hostname [get select_dialog filename]]
+					     [set isis_world_server_hostname__data_label text isis_world_server_hostname]
+					     ]]]
+				 [have select_dialog destroy]]
+			   nil]
+		     [have select_dialog show_all]
+		     ]]
+	     nil]
        
        [= project_directory [get [get isismon preferences] project_directory]]
        [= project_directory__hbox [gtk-hbox-new 0]]
@@ -454,8 +488,9 @@
        [have ok_button signal_connect 'clicked'
 	     [funk []
 		   [let [[preferences [new isismon_preferences]]]
-		     [set preferences project_directory      project_directory]
-		     [set preferences movie_export_directory movie_export_directory]
+		     [set preferences isis_world_server_hostname isis_world_server_hostname]
+		     [set preferences project_directory          project_directory]
+		     [set preferences movie_export_directory     movie_export_directory]
 		     [set isismon preferences preferences]
 		     [have isismon save_preferences]]
 		   [have window destroy]]
@@ -486,9 +521,10 @@
 			  edit_menu_item
 			  edit_menu
 			  edit_preferences_menu_item
-			  view_menu_item
-			  view_menu
-			  view_initialization_events_menu_item
+			  simulation_menu_item
+			  simulation_menu
+			  simulation_run_initialization_sequence_menu_item
+			  simulation_view_initialization_events_menu_item
 			  
 			  controller_frame
 			  controller_vbox
@@ -511,12 +547,11 @@
 			  [simulation_playing           nil]
 			  [last_stepped_simulation_time nil]
 			  ]
-  [new [isis_world_object isis_world_object_description]
-       [= isis_world isis_world_object]
+  [new []
        [have initialize_mutex lock]
        [= fiber [fiber [funk []
 			     [=    window          [gtk-window-new]]
-			     [set  window title    [format nil 'isismon - ' isis_world_object_description]]
+			     [set  window title    [format nil 'IsisMon']]
 			     [=    vbox            [gtk-vbox-new 2]]
 			     [have window add vbox]
 			     
@@ -579,14 +614,22 @@
 					 [new isismon_preference_editor this]]
 				   nil]
 			     
-			     [= view_menu_item                       [gtk-menu_item-new 'View']]
-			     [= view_menu                            [gtk-menu-new]]
-			     [= view_initialization_events_menu_item [gtk-menu_item-new 'Initialization Events']]
-			     [have menu_bar       append             view_menu_item]
-			     [set  view_menu_item submenu            view_menu]
-			     [have view_menu      append             view_initialization_events_menu_item]
+			     [= simulation_menu_item                             [gtk-menu_item-new 'Simulation']]
+			     [= simulation_menu                                  [gtk-menu-new]]
+			     [= simulation_run_initialization_sequence_menu_item [gtk-menu_item-new 'Run Initialization Sequence']]
+			     [= simulation_view_initialization_events_menu_item  [gtk-menu_item-new 'View Initialization Events']]
+			     [have menu_bar             append  simulation_menu_item]
+			     [set  simulation_menu_item submenu simulation_menu]
+			     [have simulation_menu      append  run_initialization_sequence_menu_item]
+			     [have simulation_menu      append  simulation_view_initialization_events_menu_item]
 			     
-			     [have view_initialization_events_menu_item signal_connect 'activate'
+			     [have simulation_run_initialization_sequence_menu_item signal_connect 'activate'
+				   [funk []
+					 [terminal_format standard-terminal '\nIsisMon: Running simulation initialization sequence.']
+					 [have isis_world initialize_simulation]]
+				   nil]
+			     
+			     [have simulation_view_initialization_events_menu_item signal_connect 'activate'
 				   [funk []
 					 [terminal_format standard-terminal '\nIsisMon ' `isis_world-initialize ' events in temporal order:']
 					 [mapc [funk [event]
@@ -665,6 +708,8 @@
 			     [have window show_all]
 			     
 			     [have this load_preferences]
+			     
+			     [= isis_world [new isis_world [get preferences isis_world_server_hostname]]]
 			     
 			     [have initialize_mutex unlock]
 			     
@@ -828,16 +873,9 @@
 	    [let [[arg [first iter]]]
 	      [cond [[or [eq arg `-h]
 			 [eq arg `help]] [prog [= print_usage_message_and_exit t]]]
-		    [t                   [prog [terminal_format standard-terminal '\nisismon: compiling isis_world command line argument, ' arg '.']
-					       [= isis_worlds [cons arg isis_worlds]]]]]]
+		    [t                   [prog [terminal_format standard-terminal '\nisismon: unknown command line argument, ' arg '.\n']
+					       [= print_usage_message_and_exit t]]]]]
 	    [= iter [next iter]]]]]
-    [if [not print_usage_message_and_exit]
-	[cond [[> [simple_length isis_worlds] 1]
-	       [prog [terminal_format standard-terminal 'isismon fatal: isismon can only monitor exactly one isis_world at a time, user supplied ' [simple_length isis_worlds] ': ' isis_worlds '.\n']
-		     [= print_usage_message_and_exit t]]]
-	      [[== [simple_length isis_worlds] 0]
-	       [prog [terminal_format standard-terminal 'isismon fatal: isismon can only monitor exactly one isis_world at a time, user supplied none.\n']
-		     [= print_usage_message_and_exit t]]]]]
     [if print_usage_message_and_exit
 	[terminal_format standard-terminal 'ISISMON(1)'
 			 '\n'   'NAME'
@@ -850,7 +888,7 @@
 			 '\n'   '       The isismon program provides dynamic real-time monitoring of a running isis_world experiment.'
 			 '\n'   '']
       [let [[isis_world [first isis_worlds]]]
-	`[prog [new isismon ,isis_world [quote ,isis_world]]
+	`[prog [new isismon]
 	       nil]]]]]
 
 

@@ -530,6 +530,18 @@
        
        [= isis_world [new isis_world [get [get isismon preferences] isis_world_server_hostname]]]
        
+       [with-new-cause [new ralph_body  isis_world]
+		       [new lauren_body isis_world]
+		       
+		       [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
+		       [cause-define cause-time_step [get isis_world time_step]]
+		       
+		       [mind-activate [get isis_world agent_mind `Lauren] builtin_reactive sensory     continuous_sensing]
+		       [mind-activate [get isis_world agent_mind `Lauren] builtin_reactive neural_plug activate_resource]
+		       
+		       [mind-activate [get isis_world agent_mind `Ralph] builtin_reactive sensory     continuous_sensing]
+		       [mind-activate [get isis_world agent_mind `Ralph] builtin_reactive neural_plug activate_resource]]
+       
        'main isismon_project widget'
        [= vbox [gtk-vbox-new 0]]
        
@@ -842,8 +854,6 @@
 			     
 			     [have window connect_hide_on_delete]
 			     [have window show_all]
-			     
-			     [= isis_world [new isis_world [get preferences isis_world_server_hostname]]]
 			     
 			     [have initialize_mutex unlock]
 			     

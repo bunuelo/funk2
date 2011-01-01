@@ -501,6 +501,216 @@
        [have window show_all]]]
 
 
+[deframe isismon_project [frame] [isismon
+				  
+				  isis_world
+				  
+				  vbox
+				  controller_frame
+				  controller_vbox
+				  controller_button_hbox
+				  step_size_hbox
+				  step_size_label
+				  step_size_entry
+				  play_button
+				  stop_button
+				  step_button
+				  
+				  movie_gtk_image
+				  scale
+				  agent_hbox
+				  
+				  [agent_frame [frame]]
+				  
+				  [simulation_playing           nil]
+				  [last_stepped_simulation_time nil]
+				  ]
+  [new [initial-isismon]
+       [= isismon initial-isismon]
+       
+       [= isis_world [new isis_world [get [get isismon preferences] isis_world_server_hostname]]]
+       
+       'main isismon_project widget'
+       [= vbox [gtk-vbox-new 0]]
+       
+       'simulator controller'
+       
+       [= controller_frame [gtk-frame-new [format nil 'isis_world']]]
+       [= controller_vbox  [gtk-vbox-new 2]]
+       
+       [= controller_button_hbox [gtk-hbox-new 2]]
+       [= play_button [gtk-button-new_with_label 'Play']]
+       [= stop_button [gtk-button-new_with_label 'Stop']]
+       [= step_button [gtk-button-new_with_label 'Step']]
+       [have controller_button_hbox pack_start play_button nil nil 0]
+       [have controller_button_hbox pack_start stop_button nil nil 0]
+       [have controller_button_hbox pack_start step_button nil nil 0]
+       [have controller_vbox pack_start controller_button_hbox nil nil 0]
+       
+       [have play_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\nIsisMon: Playing.']
+		   [= simulation_playing t]]
+	     nil]
+       [have stop_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\nIsisMon: Stopped.']
+		   [= simulation_playing nil]]
+	     nil]
+       [have step_button signal_connect 'clicked'
+	     [funk []
+		   [let [[seconds 1.0]]
+		     [terminal_format standard-terminal '\nIsisMon: Stepping ' seconds ' seconds.']
+		     [have isis_world raw_step_simulation seconds]]]
+	     nil]
+       
+       [= step_size_hbox  [gtk-hbox-new 2]]
+       [= step_size_label [gtk-label-new 'Step Size: ']]
+       [= step_size_entry [gtk-entry-new]]
+       [have step_size_hbox pack_start step_size_label nil nil 0]
+       [have step_size_hbox pack_start step_size_entry t t 0]
+       [set step_size_entry text '0.03']
+       [have controller_vbox pack_start step_size_hbox nil nil 0]
+       
+       [have controller_frame add controller_vbox nil nil 0]
+       
+       [have vbox pack_start controller_frame nil nil 0]
+       
+       
+       'movie image'
+       
+       [= movie_gtk_image [gtk-image-new_from_image [new image [+ 640 320] 480 nil]]]
+       [have vbox pack_start movie_gtk_image nil nil 0]
+       
+       [= scale [gtk-scale-new_with_range `horizontal 0.0 1.0 1.0]]
+       [set scale digits 0]
+       [have vbox pack_start scale t t 0]
+       [let [[movie_length [get this movie_length]]]
+	 [if [> movie_length 1]
+	     [prog [set scale range 0.0 [- movie_length 1]]
+		   [set scale value [- movie_length 1]]]]]
+       
+       
+       'agents'
+       
+       [= agent_hbox [gtk-hbox-new 2]]
+       [have vbox pack_start agent_hbox nil nil 0]
+       
+       [have this add_agent [get isis_world agent_body `Ralph]]
+       [have this add_agent [get isis_world agent_body `Lauren]]
+       
+       ]]
+
+[deftypefunk isismon_project get widget []
+  vbox]
+
+[deftypefunk isismon_project execute add_agent [agent]
+  [let [[isismon_agent [new isismon_agent this agent]]]
+    [have agent_frame add [get isismon_agent name] isismon_agent]
+    [have agent_hbox pack_start isismon_agent t t 0]]]
+
+[deftypefunk isismon_project execute update_agents []
+  [mapc [funk [agent]
+	      [have agent update]]
+	[get agent_frame values]]]
+
+[deftypefunk isismon_project execute update []
+  [let [[movie_length [get this movie_length]]]
+    [if [> movie_length 1]
+	[set scale range 0.0 [- movie_length 1]]]
+    [let [[image_index [get [get scale value] as-integer]]]
+      [if [< image_index movie_length]
+	  [set movie_gtk_image image [get this movie_image image_index]]]]]
+  [have this update_agents]]
+
+[deftypefunk isismon_project execute cycle []
+  [if [and simulation_playing [or [null last_stepped_simulation_time]
+				  [> [/ [- [get [time] nanoseconds_since_1970] [get last_stepped_simulation_time nanoseconds_since_1970]] 1000000000.0] 5]]]
+      [let [[step_size [have [get step_size_entry text] read]]]
+	[let [[as_double_funk [get [lookup_type [type step_size]] type_var_value `get `as-double nil]]]
+	  [if [null as_double_funk]
+	      [prog [terminal_format standard-terminal '\nStep size, \'' [get step_size_entry text] '\', cannot be recognized as a number.  Pausing IsisMon and ignoring step command.']
+		    [= simulation_playing nil]]
+	    [prog [terminal_format standard-terminal '\nStepping simulation by ' [get step_size as-double] ' seconds.']
+		  [have isis_world step_simulation [get step_size as-double]]
+		  [have this update]
+		  [let [[movie_length [get this movie_length]]]
+		    [if [> movie_length 1]
+			[set scale value [- movie_length 1]]]]
+		  'Don\'t export movies every frame because this takes too long for now.'
+		  `[let [[file_index 0]]
+		     [labels [[find_nonexistent_filename []
+							 [let [[filename [format nil 'isismon_movie-' file_index '.mpeg']]]
+							   [if [pathname-exists filename]
+							       [prog [= file_index [+ file_index 1]]
+								     [find_nonexistent_filename]]
+							     filename]]]]
+			     [have this export_movie [find_nonexistent_filename]]]]
+		  [= last_stepped_simulation_time [time]]]]]]]]
+
+[deftypefunk isismon_project execute step []
+  [have isis_world normal_step]
+  [let [[movie_length [get this movie_length]]]
+    [if [> movie_length 1]
+	[set scale range 0.0 [- movie_length 1]]]
+    [let [[scale_value [get scale value]]]
+      [if [== scale_value [- movie_length 2]]
+	  [set scale value [- movie_length 1]]]]]
+  [have this update]]
+
+[deftypefunk isismon_project get overview_image_sequence []
+  [get isis_world overview_image_sequence]]
+
+[deftypefunk isismon_project get movie_length []
+  [let [[overview_image_sequence [get this overview_image_sequence]]]
+    [get overview_image_sequence length]]]
+
+[deftypefunk isismon_project get movie_image [index]
+  [let [[agent_names    [get agent_frame keys]]
+	[image_sequence [new image_sequence nil]]]
+    [let [[agent_count [if [null agent_names]
+			   0
+			 [length agent_names]]]]
+      [let [[image_width [+ 1 640 1 [if agent_names
+					320
+				      0] 1]]
+	    [image_height [+ 1 [if [> [* agent_count [+ 240 1]] [+ 480 1]]
+				   [* agent_count [+ 240 1]]
+				 [+ 480 1]]]]]
+	[if [!= [* [/ image_width 2] 2]
+		image_width]
+	    [= image_width [+ image_width 1]]]
+	[if [!= [* [/ image_height 2] 2]
+		image_height]
+	    [= image_height [+ image_height 1]]]
+	[let [[image [new image image_width image_height nil]]]
+	  [have image clear 0 0 0 255]
+	  [let [[overview_image_sequence [get this overview_image_sequence]]]
+	    [let [[overview_image [get overview_image_sequence elt index]]]
+	      [have overview_image copy_rectangle_to 0 0 image 1 1 640 480]]]
+	  [let [[agent_index 0]]
+	    [mapc [funk [agent_name]
+			[let [[isismon_agent [have agent_frame lookup agent_name]]]
+			  [let [[retina_image_sequence [get isismon_agent retina_image_sequence]]]
+			    [let [[retina_image [get retina_image_sequence elt index]]]
+			      [have retina_image copy_rectangle_to 0 0 image [+ 1 640 1] [+ 1 [* agent_index [+ 240 1]]] 320 240]]]]
+			[= agent_index [+ agent_index 1]]]
+		  agent_names]]
+	  image]]]]]
+
+[deftypefunk isismon_project get new_movie []
+  [let [[movie_length   [get this movie_length]]
+	[image_sequence [new image_sequence nil]]]
+    [dotimes [index movie_length]
+      [have image_sequence add_image_to_end [get this movie_image index]]]
+    [let [[bit_rate   5000000]
+	  [frame_rate 25]]
+      [let [[movie_context [new movie_context [get image_sequence width] [get image_sequence height] bit_rate frame_rate]]]
+	[let [[new_movie [movie-new_from_image_sequence movie_context [get image_sequence new_by_time_stretch 3.0]]]]
+	  [have movie_context destroy]
+	  new_movie]]]]]
+
+
 
 [deframe isismon [frame] [isis_world
 			  [initialize_mutex [new mutex]]
@@ -526,33 +736,19 @@
 			  simulation_run_initialization_sequence_menu_item
 			  simulation_view_initialization_events_menu_item
 			  
-			  controller_frame
-			  controller_vbox
-			  controller_button_hbox
-			  step_size_hbox
-			  step_size_label
-			  step_size_entry
-			  play_button
-			  stop_button
-			  step_button
-			  
-			  movie_gtk_image
-			  scale
-			  agent_hbox
-			  
-			  [agent_frame [frame]]
+			  project_vbox
+			  isismon_project
 			  
 			  preferences
-			  
-			  [simulation_playing           nil]
-			  [last_stepped_simulation_time nil]
 			  ]
   [new []
        [have initialize_mutex lock]
        [= fiber [fiber [funk []
+			     [have this load_preferences]
+			     
 			     [=    window          [gtk-window-new]]
 			     [set  window title    [format nil 'IsisMon']]
-			     [=    vbox            [gtk-vbox-new 2]]
+			     [=    vbox            [gtk-vbox-new 0]]
 			     [have window add vbox]
 			     
 			     
@@ -638,76 +834,14 @@
 				   nil]
 			     
 			     
-			     'simulator controller'
+			     [= project_vbox [gtk-vbox-new 0]]
+			     [have vbox pack_start project_vbox nil nil 0]
 			     
-			     [= controller_frame [gtk-frame-new [format nil 'isis_world']]]
-			     [= controller_vbox  [gtk-vbox-new 2]]
-			     
-			     [= controller_button_hbox [gtk-hbox-new 2]]
-			     [= play_button [gtk-button-new_with_label 'Play']]
-			     [= stop_button [gtk-button-new_with_label 'Stop']]
-			     [= step_button [gtk-button-new_with_label 'Step']]
-			     [have controller_button_hbox pack_start play_button nil nil 0]
-			     [have controller_button_hbox pack_start stop_button nil nil 0]
-			     [have controller_button_hbox pack_start step_button nil nil 0]
-			     [have controller_vbox pack_start controller_button_hbox nil nil 0]
-			     
-			     [have play_button signal_connect 'clicked'
-				   [funk []
-					 [terminal_format standard-terminal '\nIsisMon: Playing.']
-					 [= simulation_playing t]]
-				   nil]
-			     [have stop_button signal_connect 'clicked'
-				   [funk []
-					 [terminal_format standard-terminal '\nIsisMon: Stopped.']
-					 [= simulation_playing nil]]
-				   nil]
-			     [have step_button signal_connect 'clicked'
-				   [funk []
-					 [let [[seconds 1.0]]
-					   [terminal_format standard-terminal '\nIsisMon: Stepping ' seconds ' seconds.']
-					   [have isis_world raw_step_simulation seconds]]]
-				   nil]
-			     
-			     [= step_size_hbox  [gtk-hbox-new 2]]
-			     [= step_size_label [gtk-label-new 'Step Size: ']]
-			     [= step_size_entry [gtk-entry-new]]
-			     [have step_size_hbox pack_start step_size_label nil nil 0]
-			     [have step_size_hbox pack_start step_size_entry t t 0]
-			     [set step_size_entry text '0.03']
-			     [have controller_vbox pack_start step_size_hbox nil nil 0]
-			     
-			     [have controller_frame add controller_vbox nil nil 0]
-			     
-			     [have vbox pack_start controller_frame nil nil 0]
-			     
-			     
-			     'movie image'
-			     
-			     [= movie_gtk_image [gtk-image-new_from_image [new image [+ 640 320] 480 nil]]]
-			     [have vbox pack_start movie_gtk_image nil nil 0]
-			     
-			     [= scale [gtk-scale-new_with_range `horizontal 0.0 1.0 1.0]]
-			     [set scale digits 0]
-			     [have vbox pack_start scale t t 0]
-			     [let [[movie_length [get this movie_length]]]
-			       [if [> movie_length 1]
-				   [prog [set scale range 0.0 [- movie_length 1]]
-					 [set scale value [- movie_length 1]]]]]
-			     
-			     
-			     'agents'
-			     
-			     [= agent_hbox [gtk-hbox-new 2]]
-			     [have vbox pack_start agent_hbox nil nil 0]
-			     
-			     [have this add_agent [get isis_world agent_body `Ralph]]
-			     [have this add_agent [get isis_world agent_body `Lauren]]
+			     [= isismon_project [new isismon_project this]]
+			     [have project_vbox add [get isismon_project widget]]
 			     
 			     [have window connect_hide_on_delete]
 			     [have window show_all]
-			     
-			     [have this load_preferences]
 			     
 			     [= isis_world [new isis_world [get preferences isis_world_server_hostname]]]
 			     
@@ -723,30 +857,8 @@
 [deftypefunk isismon execute cycle []
   [if [not [get window visible]]
       [= done t]]
-  [if [and simulation_playing [or [null last_stepped_simulation_time]
-				  [> [/ [- [get [time] nanoseconds_since_1970] [get last_stepped_simulation_time nanoseconds_since_1970]] 1000000000.0] 5]]]
-      [let [[step_size [have [get step_size_entry text] read]]]
-	[let [[as_double_funk [get [lookup_type [type step_size]] type_var_value `get `as-double nil]]]
-	  [if [null as_double_funk]
-	      [prog [terminal_format standard-terminal '\nStep size, \'' [get step_size_entry text] '\', cannot be recognized as a number.  Pausing IsisMon and ignoring step command.']
-		    [= simulation_playing nil]]
-	    [prog [terminal_format standard-terminal '\nStepping simulation by ' [get step_size as-double] ' seconds.']
-		  [have isis_world step_simulation [get step_size as-double]]
-		  [have this update]
-		  [let [[movie_length [get this movie_length]]]
-		    [if [> movie_length 1]
-			[set scale value [- movie_length 1]]]]
-		  'Don\'t export movies every frame because this takes too long for now.'
-		  `[let [[file_index 0]]
-		     [labels [[find_nonexistent_filename []
-							 [let [[filename [format nil 'isismon_movie-' file_index '.mpeg']]]
-							   [if [pathname-exists filename]
-							       [prog [= file_index [+ file_index 1]]
-								     [find_nonexistent_filename]]
-							     filename]]]]
-			     [have this export_movie [find_nonexistent_filename]]]]
-		  [= last_stepped_simulation_time [time]]]]]]]
-  [have this update]
+  [have isismon_project cycle]
+  [have isismon_project update]
   [millisleep 100]]
 
 [deftypefunk isismon execute load_preferences []
@@ -769,93 +881,12 @@
       [let [[preferences_filename [pathname-concat home_dir '.isismon']]]
 	[have preferences save preferences_filename]]]]]
 
-[deftypefunk isismon execute add_agent [agent]
-  [let [[isismon_agent [new isismon_agent this agent]]]
-    [have agent_frame add [get isismon_agent name] isismon_agent]
-    [have agent_hbox pack_start isismon_agent t t 0]]]
-
-[deftypefunk isismon execute update_agents []
-  [mapc [funk [agent]
-	      [have agent update]]
-	[get agent_frame values]]]
-
-[deftypefunk isismon execute update []
-  [let [[movie_length [get this movie_length]]]
-    [if [> movie_length 1]
-	[set scale range 0.0 [- movie_length 1]]]
-    [let [[image_index [get [get scale value] as-integer]]]
-      [if [< image_index movie_length]
-	  [set movie_gtk_image image [get this movie_image image_index]]]]]
-  [have this update_agents]]
-
 [deftypefunk isismon execute step []
-  [have isis_world normal_step]
-  [let [[movie_length [get this movie_length]]]
-    [if [> movie_length 1]
-	[set scale range 0.0 [- movie_length 1]]]
-    [let [[scale_value [get scale value]]]
-      [if [== scale_value [- movie_length 2]]
-	  [set scale value [- movie_length 1]]]]]
-  [have this update]]
-
-[deftypefunk isismon get overview_image_sequence []
-  [if isis_world
-      [get isis_world overview_image_sequence]]]
-
-[deftypefunk isismon get movie_length []
-  [let [[overview_image_sequence [get this overview_image_sequence]]]
-    [if overview_image_sequence
-	[get overview_image_sequence length]
-      0]]]
-
-[deftypefunk isismon get movie_image [index]
-  [let [[agent_names    [get agent_frame keys]]
-	[image_sequence [new image_sequence nil]]]
-    [let [[agent_count [if [null agent_names]
-			   0
-			 [length agent_names]]]]
-      [let [[image_width [+ 1 640 1 [if agent_names
-					320
-				      0] 1]]
-	    [image_height [+ 1 [if [> [* agent_count [+ 240 1]] [+ 480 1]]
-				   [* agent_count [+ 240 1]]
-				 [+ 480 1]]]]]
-	[if [!= [* [/ image_width 2] 2]
-		image_width]
-	    [= image_width [+ image_width 1]]]
-	[if [!= [* [/ image_height 2] 2]
-		image_height]
-	    [= image_height [+ image_height 1]]]
-	[let [[image [new image image_width image_height nil]]]
-	  [have image clear 0 0 0 255]
-	  [let [[overview_image_sequence [get this overview_image_sequence]]]
-	    [let [[overview_image [get overview_image_sequence elt index]]]
-	      [have overview_image copy_rectangle_to 0 0 image 1 1 640 480]]]
-	  [let [[agent_index 0]]
-	    [mapc [funk [agent_name]
-			[let [[isismon_agent [have agent_frame lookup agent_name]]]
-			  [let [[retina_image_sequence [get isismon_agent retina_image_sequence]]]
-			    [let [[retina_image [get retina_image_sequence elt index]]]
-			      [have retina_image copy_rectangle_to 0 0 image [+ 1 640 1] [+ 1 [* agent_index [+ 240 1]]] 320 240]]]]
-			[= agent_index [+ agent_index 1]]]
-		  agent_names]]
-	  image]]]]]
-
-[deftypefunk isismon get new_movie []
-  [let [[movie_length   [get this movie_length]]
-	[image_sequence [new image_sequence nil]]]
-    [dotimes [index movie_length]
-      [have image_sequence add_image_to_end [get this movie_image index]]]
-    [let [[bit_rate   5000000]
-	  [frame_rate 25]]
-      [let [[movie_context [new movie_context [get image_sequence width] [get image_sequence height] bit_rate frame_rate]]]
-	[let [[new_movie [movie-new_from_image_sequence movie_context [get image_sequence new_by_time_stretch 3.0]]]]
-	  [have movie_context destroy]
-	  new_movie]]]]]
+  [have isismon_project step]]
 
 [deftypefunk isismon execute export_movie [filename]
   [terminal_format standard-terminal '\nIsisMon Export Movie: Saving MPEG to file: ' filename]
-  [have [get this new_movie] save filename]
+  [have [get isismon_project new_movie] save filename]
   [terminal_format standard-terminal '\nIsisMon Export Movie: Completed saving MPEG to file: ' filename]]
 
 [deftypefunk isismon execute save_project [filename]

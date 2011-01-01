@@ -723,6 +723,10 @@
 	      [terminal_format standard-terminal '\n  ' event]]
 	[get [get isis_world initialize_events] leaves]]]
 
+[deftypefunk isismon_project execute close []
+  [terminal_format standard-terminal '\nIsisMon Project Closing.']
+  ]
+
 
 [deframe isismon [frame] [[initialize_mutex [new mutex]]
 			  [done             nil]
@@ -736,6 +740,7 @@
 			  file_menu
 			  file_new_project_menu_item
 			  file_open_project_menu_item
+			  file_close_project_menu_item
 			  file_save_project_menu_item
 			  file_export_movie_menu_item
 			  file_exit_menu_item
@@ -769,20 +774,22 @@
 			     [=    menu_bar        [gtk-menu_bar-new]]
 			     [have vbox pack_start menu_bar nil nil 0]
 			     
-			     [=    file_menu_item              [gtk-menu_item-new 'File']]
-			     [=    file_menu                   [gtk-menu-new]]
-			     [=    file_new_project_menu_item  [gtk-menu_item-new 'New Project']]
-			     [=    file_open_project_menu_item [gtk-menu_item-new 'Open Project...']]
-			     [=    file_save_project_menu_item [gtk-menu_item-new 'Save Project...']]
-			     [=    file_export_movie_menu_item [gtk-menu_item-new 'Export Movie...']]
-			     [=    file_exit_menu_item         [gtk-menu_item-new 'Exit']]
-			     [have menu_bar       append       file_menu_item]
-			     [set  file_menu_item submenu      file_menu]
-			     [have file_menu      append       file_new_project_menu_item]
-			     [have file_menu      append       file_open_project_menu_item]
-			     [have file_menu      append       file_save_project_menu_item]
-			     [have file_menu      append       file_export_movie_menu_item]
-			     [have file_menu      append       file_exit_menu_item]
+			     [=    file_menu_item               [gtk-menu_item-new 'File']]
+			     [=    file_menu                    [gtk-menu-new]]
+			     [=    file_new_project_menu_item   [gtk-menu_item-new 'New Project']]
+			     [=    file_open_project_menu_item  [gtk-menu_item-new 'Open Project...']]
+			     [=    file_close_project_menu_item [gtk-menu_item-new 'Close Project']]
+			     [=    file_save_project_menu_item  [gtk-menu_item-new 'Save Project...']]
+			     [=    file_export_movie_menu_item  [gtk-menu_item-new 'Export Movie...']]
+			     [=    file_exit_menu_item          [gtk-menu_item-new 'Exit']]
+			     [have menu_bar       append        file_menu_item]
+			     [set  file_menu_item submenu       file_menu]
+			     [have file_menu      append        file_new_project_menu_item]
+			     [have file_menu      append        file_open_project_menu_item]
+			     [have file_menu      append        file_close_project_menu_item]
+			     [have file_menu      append        file_save_project_menu_item]
+			     [have file_menu      append        file_export_movie_menu_item]
+			     [have file_menu      append        file_exit_menu_item]
 			     
 			     [have file_new_project_menu_item signal_connect 'activate'
 				   [funk []
@@ -792,6 +799,11 @@
 			     [have file_open_project_menu_item signal_connect 'activate'
 				   [funk []
 					 [new isismon_open_project_dialog this]]
+				   nil]
+			     
+			     [have file_close_project_menu_item signal_connect 'activate'
+				   [funk []
+					 [have this close_project]]
 				   nil]
 			     
 			     [have file_save_project_menu_item signal_connect 'activate'
@@ -846,9 +858,7 @@
 			     [have vbox pack_start project_vbox nil nil 0]
 			     
 			     [= isismon_project nil]
-			     [let [[no_project_widget [gtk-label-new 'Welcome to IsisMon']]]
-			       [have project_vbox pack_start no_project_widget t t 0]
-			       [= project_vbox__contained_widget no_project_widget]]
+			     [have this close_project]
 			     
 			     [set window default_size [+ 640 320] [* 240 2]]
 			     
@@ -908,6 +918,19 @@
 
 [deftypefunk isismon execute open_project [filename]
   [terminal_format standard-terminal '\nIsisMon Open Project: ' filename]
+  ]
+
+[deftypefunk isismon execute close_project []
+  [terminal_format standard-terminal '\nIsisMon Close Project']
+  [if project_vbox__contained_widget
+      [have project_vbox remove project_vbox__contained_widget]]
+  [let [[no_project_widget [gtk-label-new 'Welcome to IsisMon']]]
+    [have project_vbox pack_start no_project_widget t t 0]
+    [= project_vbox__contained_widget no_project_widget]
+    [have no_project_widget show_all]]
+  [if isismon_project
+      [prog [have isismon_project close]
+	    [= isismon_project nil]]]
   ]
 
 [deftypefunk isismon execute save_project [filename]

@@ -620,7 +620,7 @@
 			     [= simulation_view_initialization_events_menu_item  [gtk-menu_item-new 'View Initialization Events']]
 			     [have menu_bar             append  simulation_menu_item]
 			     [set  simulation_menu_item submenu simulation_menu]
-			     [have simulation_menu      append  run_initialization_sequence_menu_item]
+			     [have simulation_menu      append  simulation_run_initialization_sequence_menu_item]
 			     [have simulation_menu      append  simulation_view_initialization_events_menu_item]
 			     
 			     [have simulation_run_initialization_sequence_menu_item signal_connect 'activate'

@@ -936,7 +936,11 @@
   [terminal_format standard-terminal '\nIsisMon Open Project: ' filename]
   [let [[new_isismon_project [isismon_project-new_from_file this filename]]]
     [if new_isismon_project
-	[prog [= isismon_project new_isismon_project]
+	[prog [have project_vbox remove project_vbox__contained_widget]
+	      [have project_vbox pack_start [get new_isismon_project widget] nil nil 0]
+	      [have [get new_isismon_project widget] show_all]
+	      [= project_vbox__contained_widget [get new_isismon_project widget]]
+	      [= isismon_project new_isismon_project]
 	      [have this enable_project_commands]]
       [terminal_format standard-terminal '\nIsisMon Failed to Open Project: ' filename]]]]
 

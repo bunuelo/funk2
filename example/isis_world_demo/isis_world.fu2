@@ -149,6 +149,9 @@
 [deftypefunk isis_world get as-chunk []
   [let [[chunk_frame [frame client                  client
 			    overview_image_sequence overview_image_sequence
+			    agent_body_chunks       [mapcar [funk [agent_body]
+								  [get [get this agent_bodies] as-chunk]]
+							    [get this agent_bodies]]
 			    ]]]
     [get [new lick chunk_frame] as-chunk]]]
 
@@ -156,5 +159,8 @@
   [let [[chunk_frame [have [get chunk as-lick] unlick]]]
     [let [[this [new isis_world [have chunk_frame lookup `client]]]]
       [set this overview_image_sequence [have chunk_frame lookup `overview_image_sequence]]
+      [mapc [funk [agent_body_chunk]
+		  [have this add_agent_body [isis_agent_body-new_from_chunk this agent_body_chunk]]]
+	    [have chunk_frame lookup `agent_body_chunks]]
       this]]]
 

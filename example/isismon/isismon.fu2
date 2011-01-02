@@ -606,10 +606,11 @@
     [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]]]
 
 [defunk isismon_project-new_from_file [isismon filename]
+  [= isis_world [have [get [chunk-load filename] as-lick] unlick]]
   nil]
 
 [deftypefunk isismon_project execute save [filename]
-  nil]
+  [have [get isis_world as-chunk] save filename]]
 
 [deftypefunk isismon_project get widget []
   vbox]
@@ -734,6 +735,7 @@
 	    [have isis_world destroy]
 	    [= initialized nil]]]
   [have execute_mutex unlock]]
+
 
 
 [deframe isismon [frame] [[initialize_mutex [new mutex]]

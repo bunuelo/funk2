@@ -147,5 +147,14 @@
 
 
 [deftypefunk isis_world get as-chunk []
-  [get [new lick nil] as-chunk]]
+  [let [[chunk_frame [frame client                  client
+			    overview_image_sequence overview_image_sequence
+			    ]]]
+    [get [new lick chunk_frame] as-chunk]]]
+
+[defunk isis_world-new_from_chunk [chunk]
+  [let [[chunk_frame [have [get chunk as-lick] unlick]]]
+    [let [[this [new isis_world [have chunk_frame lookup `client]]]]
+      [set this overview_image_sequence [have chunk_frame lookup `overview_image_sequence]]
+      this]]]
 

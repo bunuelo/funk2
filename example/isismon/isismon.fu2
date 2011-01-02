@@ -885,7 +885,7 @@
   [if [not [get window visible]]
       [= done t]]
   [if isismon_project
-      [prog [have isismon_project cycle]]]
+      [have isismon_project cycle]]
   [millisleep 100]]
 
 [deftypefunk isismon execute load_preferences []
@@ -915,12 +915,13 @@
 
 [deftypefunk isismon execute start_new_project []
   [terminal_format standard-terminal '\nIsisMon New Project']
-  [= isismon_project [new isismon_project this]]
-  [have isismon_project create_new_isis_world]
-  [have project_vbox remove project_vbox__contained_widget]
-  [have project_vbox pack_start [get isismon_project widget] nil nil 0]
-  [have [get isismon_project widget] show_all]
-  [= project_vbox__contained_widget [get isismon_project widget]]
+  [let [[new_isismon_project [new isismon_project this]]]
+    [have new_isismon_project create_new_isis_world]
+    [have project_vbox remove project_vbox__contained_widget]
+    [have project_vbox pack_start [get new_isismon_project widget] nil nil 0]
+    [have [get new_isismon_project widget] show_all]
+    [= project_vbox__contained_widget [get new_isismon_project widget]]
+    [= isismon_project new_isismon_project]]
   [have this enable_project_commands]
   ]
 

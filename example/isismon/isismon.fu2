@@ -601,6 +601,7 @@
        ]]
 
 [deftypefunk isismon_project execute create_new_isis_world []
+  [terminal_format standard-terminal '\nIsisMon Project creating new IsisWorld.']
   [let [[isis_world_server_hostname [get [get isismon preferences] isis_world_server_hostname]]]
     [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]]
   

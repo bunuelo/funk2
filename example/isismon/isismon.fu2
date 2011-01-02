@@ -52,7 +52,7 @@
        [= isismon_project initial_isismon_project]
        [= isis_agent_name initial_isis_agent_name]
        
-       [= isis_agent [new isis_agent_body [get isismon_project isis_world] agent_name]]
+       [= isis_agent [new isis_agent_body [get isismon_project isis_world] isis_agent_name]]
        [with-new-cause [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
 		       [cause-define cause-time_step [get [get isismon_project isis_world] time_step]]
 		       

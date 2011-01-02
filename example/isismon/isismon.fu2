@@ -606,8 +606,10 @@
     [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]]]
 
 [defunk isismon_project-new_from_file [isismon filename]
-  [= isis_world [have [get [chunk-load filename] as-lick] unlick]]
-  nil]
+  [let [[isis_world [have [get [chunk-load filename] as-lick] unlick]]]
+    [let [[this [new isismon_project isismon]]]
+      [set this isis_world isis_world]
+      this]]]
 
 [deftypefunk isismon_project execute save [filename]
   [have [get isis_world as-chunk] save filename]]

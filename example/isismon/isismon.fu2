@@ -606,8 +606,7 @@
     [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]]
   
   [have this add_agent `Ralph]
-  [have this add_agent `Steve]
-  [have this add_agent `Lauren]]
+  `[have this add_agent `Lauren]]
 
 [defunk isismon_project-new_from_file [isismon filename]
   nil]

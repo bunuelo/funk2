@@ -603,10 +603,7 @@
 [deftypefunk isismon_project execute create_new_isis_world []
   [terminal_format standard-terminal '\nIsisMon Project creating new IsisWorld.']
   [let [[isis_world_server_hostname [get [get isismon preferences] isis_world_server_hostname]]]
-    [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]]
-  
-  [have this add_agent `Ralph]
-  `[have this add_agent `Lauren]]
+    [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]]]
 
 [defunk isismon_project-new_from_file [isismon filename]
   nil]
@@ -921,6 +918,8 @@
   [terminal_format standard-terminal '\nIsisMon New Project']
   [let [[new_isismon_project [new isismon_project this]]]
     [have new_isismon_project create_new_isis_world]
+    [have new_isismon_project add_agent `Ralph]
+    [have new_isismon_project add_agent `Lauren]
     [have project_vbox remove project_vbox__contained_widget]
     [have project_vbox pack_start [get new_isismon_project widget] nil nil 0]
     [have [get new_isismon_project widget] show_all]

@@ -666,11 +666,14 @@
   [have execute_mutex unlock]]
 
 [deftypefunk isismon_project get overview_image_sequence []
-  [get isis_world overview_image_sequence]]
+  [if isis_world
+      [get isis_world overview_image_sequence]]]
 
 [deftypefunk isismon_project get movie_length []
   [let [[overview_image_sequence [get this overview_image_sequence]]]
-    [get overview_image_sequence length]]]
+    [if overview_image_sequence
+	[get overview_image_sequence length]
+      0]]]
 
 [deftypefunk isismon_project get movie_image [index]
   [let [[agent_names    [get agent_frame keys]]

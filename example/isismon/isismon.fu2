@@ -18,12 +18,14 @@
  rights to redistribute these changes.'
 
 
-[deframe isismon_agent [frame] [isis_agent
-				isismon
+[deframe isismon_agent [frame] [isis_agent_name
+				isis_agent
+				
+				isismon_project
 				
 				frame
 				vbox
-
+				
 				menu_bar
 				tools_menu
 				tools_menu_item
@@ -46,9 +48,17 @@
 				label
 				entry
 				]
-  [new [initial_isismon initial_isis_agent]
-       [= isismon    initial_isismon]
-       [= isis_agent initial_isis_agent]
+  [new [initial_isismon_project initial_isis_agent_name]
+       [= isismon_project initial_isismon_project]
+       [= isis_agent_name initial_isis_agent_name]
+       
+       [= isis_agent [new isis_agent_body isis_world agent_name]]
+       [with-new-cause [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
+		       [cause-define cause-time_step [get isis_world time_step]]
+		       
+		       [mind-activate [get isis_agent mind] builtin_reactive sensory     continuous_sensing]
+		       [mind-activate [get isis_agent mind] builtin_reactive neural_plug activate_resource]]
+       
        [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
        [= vbox  [gtk-vbox-new 2]]
        
@@ -518,20 +528,7 @@
        [= execute_mutex [new traced_mutex]]
        [have execute_mutex lock]
        
-       [let [[isis_world_server_hostname [get [get isismon preferences] isis_world_server_hostname]]]
-	 [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]]
-       
-       [with-new-cause [new ralph_body  isis_world]
-		       [new lauren_body isis_world]
-		       
-		       [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
-		       [cause-define cause-time_step [get isis_world time_step]]
-		       
-		       [mind-activate [get isis_world agent_mind `Lauren] builtin_reactive sensory     continuous_sensing]
-		       [mind-activate [get isis_world agent_mind `Lauren] builtin_reactive neural_plug activate_resource]
-		       
-		       [mind-activate [get isis_world agent_mind `Ralph] builtin_reactive sensory     continuous_sensing]
-		       [mind-activate [get isis_world agent_mind `Ralph] builtin_reactive neural_plug activate_resource]]
+       [= isis_world nil]
        
        'main isismon_project widget'
        [= vbox [gtk-vbox-new 0]]
@@ -599,19 +596,29 @@
        [= agent_hbox [gtk-hbox-new 2]]
        [have vbox pack_start agent_hbox nil nil 0]
        
-       [have this add_agent [get isis_world agent_body `Ralph]]
-       [have this add_agent [get isis_world agent_body `Lauren]]
-       
        [= initialized t]
        [have execute_mutex unlock]
        ]]
 
+[deftypefunk isismon_project execute create_new_isis_world []
+  [let [[isis_world_server_hostname [get [get isismon preferences] isis_world_server_hostname]]]
+    [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]]
+  
+  [have this add_agent `Ralph]
+  [have this add_agent `Lauren]]
+
+[defunk isismon_project-new_from_file [isismon filename]
+  nil]
+
+[deftypefunk isismon_project execute save [filename]
+  nil]
+
 [deftypefunk isismon_project get widget []
   vbox]
 
-[deftypefunk isismon_project execute add_agent [agent]
-  [let [[isismon_agent [new isismon_agent this agent]]]
-    [have agent_frame add [get isismon_agent name] isismon_agent]
+[deftypefunk isismon_project execute add_agent [agent_name]
+  [let [[isismon_agent [new isismon_agent this agent_name]]]
+    [have agent_frame add agent_name isismon_agent]
     [have agent_hbox pack_start isismon_agent t t 0]]]]
 
 [deftypefunk isismon_project execute update_agents []
@@ -909,6 +916,7 @@
 [deftypefunk isismon execute start_new_project []
   [terminal_format standard-terminal '\nIsisMon New Project']
   [= isismon_project [new isismon_project this]]
+  [have isismon_project create_new_isis_world]
   [have project_vbox remove project_vbox__contained_widget]
   [have project_vbox pack_start [get isismon_project widget] nil nil 0]
   [have [get isismon_project widget] show_all]
@@ -918,9 +926,11 @@
 
 [deftypefunk isismon execute open_project [filename]
   [terminal_format standard-terminal '\nIsisMon Open Project: ' filename]
-  [if nil
-      [have this enable_project_commands]]
-  ]
+  [let [[new_isismon_project [isismon_project-new_from_file this filename]]]
+    [if new_isismon_project
+	[prog [= isismon_project new_isismon_project]
+	      [have this enable_project_commands]]
+      [terminal_format standard-terminal '\nIsisMon Failed to Open Project: ' filename]]]]
 
 [deftypefunk isismon execute enable_project_commands []
   [set file_close_project_menu_item                     sensitive t]
@@ -952,7 +962,7 @@
 
 [deftypefunk isismon execute save_project [filename]
   [terminal_format standard-terminal '\nIsisMon Save Project: ' filename]
-  ]
+  [have isismon_project save filename]]
 
 
 [defmetro isismon [:rest args]

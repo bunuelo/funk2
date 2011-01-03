@@ -109,11 +109,7 @@ boolean_t zlib__deflate_length(u8* src_data, u64 src_length, u64* dest_length) {
   return zlib__deflate(NULL, dest_length, src_data, src_length);
 }
 
-f2ptr f2__string__deflate(f2ptr cause, f2ptr this) {
-  if (! raw__string__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  
+f2ptr raw__string__deflate(f2ptr cause, f2ptr this) {
   u64 src_length = raw__string__length(cause, this);
   u8* src_data   = (u8*)from_ptr(f2__malloc(src_length));
   raw__string__str_copy(cause, this, src_data);
@@ -136,7 +132,48 @@ f2ptr f2__string__deflate(f2ptr cause, f2ptr this) {
   f2__free(to_ptr(temp_data));
   return new_string;
 }
+
+f2ptr f2__string__deflate(f2ptr cause, f2ptr this) {
+  if (! raw__string__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__string__deflate(cause, this);
+}
 def_pcfunk1(string__deflate, this, return f2__string__deflate(this_cause, this));
+
+
+f2ptr raw__chunk__deflate(f2ptr cause, f2ptr this) {
+  u64 src_length = raw__chunk__length(cause, this);
+  u8* src_data   = (u8*)from_ptr(f2__malloc(src_length));
+  raw__chunk__str_copy(cause, this, src_data);
+  
+  u64 dest_length = 0;
+  if (zlib__deflate_length(src_data, src_length, &dest_length)) {
+    f2__free(to_ptr(src_data));
+    return nil;
+  }
+  
+  u8* temp_data = (u8*)from_ptr(f2__malloc(dest_length));
+  if (zlib__deflate(temp_data, &dest_length, src_data, src_length)) {
+    f2__free(to_ptr(src_data));
+    f2__free(to_ptr(temp_data));
+    return nil;
+  }
+  f2__free(to_ptr(src_data));
+  
+  f2ptr new_chunk = f2chunk__new(cause, dest_length, temp_data);
+  f2__free(to_ptr(temp_data));
+  return new_chunk;
+}
+
+f2ptr f2__chunk__deflate(f2ptr cause, f2ptr this) {
+  if (! raw__chunk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__chunk__deflate(cause, this);
+}
+def_pcfunk1(chunk__deflate, this, return f2__chunk__deflate(this_cause, this));
+
 
 boolean_t zlib__inflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_length) {
   s64      zlib_result;
@@ -222,11 +259,8 @@ boolean_t zlib__inflate_length(u8* src_data, u64 src_length, u64* dest_length) {
   return zlib__inflate(NULL, dest_length, src_data, src_length);
 }
 
-f2ptr f2__string__inflate(f2ptr cause, f2ptr this) {
-  if (! raw__string__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  
+
+f2ptr raw__string__inflate(f2ptr cause, f2ptr this) {
   u64 src_length = raw__string__length(cause, this);
   u8* src_data   = (u8*)from_ptr(f2__malloc(src_length));
   raw__string__str_copy(cause, this, src_data);
@@ -249,7 +283,48 @@ f2ptr f2__string__inflate(f2ptr cause, f2ptr this) {
   f2__free(to_ptr(temp_data));
   return new_string;
 }
+
+f2ptr f2__string__inflate(f2ptr cause, f2ptr this) {
+  if (! raw__string__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__string__inflate(cause, this);
+}
 def_pcfunk1(string__inflate, this, return f2__string__inflate(this_cause, this));
+
+
+f2ptr raw__chunk__inflate(f2ptr cause, f2ptr this) {
+  u64 src_length = raw__chunk__length(cause, this);
+  u8* src_data   = (u8*)from_ptr(f2__malloc(src_length));
+  raw__chunk__str_copy(cause, this, src_data);
+  
+  u64 dest_length = 0;
+  if (zlib__inflate_length(src_data, src_length, &dest_length)) {
+    f2__free(to_ptr(src_data));
+    return nil;
+  }
+  
+  u8* temp_data = (u8*)from_ptr(f2__malloc(dest_length));
+  if (zlib__inflate(temp_data, &dest_length, src_data, src_length)) {
+    f2__free(to_ptr(src_data));
+    f2__free(to_ptr(temp_data));
+    return nil;
+  }
+  f2__free(to_ptr(src_data));
+  
+  f2ptr new_chunk = f2chunk__new(cause, dest_length, temp_data);
+  f2__free(to_ptr(temp_data));
+  return new_chunk;
+}
+
+f2ptr f2__chunk__inflate(f2ptr cause, f2ptr this) {
+  if (! raw__chunk__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__chunk__inflate(cause, this);
+}
+def_pcfunk1(chunk__inflate, this, return f2__chunk__inflate(this_cause, this));
+
 
 // **
 
@@ -262,6 +337,8 @@ void f2__zlib__initialize() {
   f2__zlib__reinitialize_globalvars();
   
   f2__primcfunk__init__1(string__deflate, this, "cfunk defined in f2_zlib.c");
+  f2__primcfunk__init__1(chunk__deflate,  this, "cfunk defined in f2_zlib.c");
   f2__primcfunk__init__1(string__inflate, this, "cfunk defined in f2_zlib.c");
+  f2__primcfunk__init__1(chunk__inflate,  this, "cfunk defined in f2_zlib.c");
 }
 

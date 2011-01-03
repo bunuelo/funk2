@@ -608,7 +608,7 @@
 
 [defunk isismon_project-new_from_file [isismon filename]
   [terminal_format standard-terminal '\nIsisMon Project: Loading ' filename '.']
-  [let [[isis_world [isis_world-new_from_chunk [chunk-load filename]]]]
+  [let [[isis_world [isis_world-new_from_chunk [get [chunk-load filename] inflated]]]]
     [let [[this [new isismon_project isismon]]]
       [have [get this execute_mutex] lock]
       [set this isis_world isis_world]
@@ -621,7 +621,7 @@
       this]]]
 
 [deftypefunk isismon_project execute save [filename]
-  [have [get isis_world as-chunk] save filename]]
+  [have [get [get isis_world as-chunk] deflated] save filename]]
 
 [deftypefunk isismon_project get widget []
   vbox]

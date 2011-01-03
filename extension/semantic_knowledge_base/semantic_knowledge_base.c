@@ -24,6 +24,7 @@
 #include "../equals_hash/equals_hash.h"
 #include "../meta_semantic_knowledge_base/meta_semantic_knowledge_base.h"
 #include "../event_stream/event_stream.h"
+#include "../lick/lick.h"
 
 
 // object-semantic-add, object-semantic-add-apply
@@ -2324,9 +2325,6 @@ export_cefunk1(semantic_knowledge_base__as__digraph_dot_code, this, 0, "Compile 
 
 
 // semantic_knowledge_base lick funks
-
-//f2ptr raw__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm, f2ptr semantic_frame_set, f2ptr trace_event_stream, f2ptr trace_add_semantic_frame, f2ptr trace_remove_semantic_frame) {
-
 
 f2ptr raw__semantic_knowledge_base__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr chunk                       = raw__chunk__new(cause, 8 * 3);

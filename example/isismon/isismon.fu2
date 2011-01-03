@@ -621,7 +621,9 @@
       this]]]
 
 [deftypefunk isismon_project execute save [filename]
-  [have [get [get isis_world as-chunk] deflated] save filename]]
+  [terminal_format standard-terminal '\nIsisMon Project: Saving ' filename '.']
+  [have [get [get isis_world as-chunk] deflated] save filename]
+  [terminal_format standard-terminal '\nIsisMon Project: Save project complete.']]
 
 [deftypefunk isismon_project get widget []
   vbox]

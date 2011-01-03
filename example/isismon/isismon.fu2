@@ -606,14 +606,17 @@
     [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]]]
 
 [defunk isismon_project-new_from_file [isismon filename]
+  [terminal_format standard-terminal '\nIsisMon Project: Loading ' filename '.']
   [let [[isis_world [isis_world-new_from_chunk [chunk-load filename]]]]
     [let [[this [new isismon_project isismon]]]
       [have [get this execute_mutex] lock]
       [mapc [funk [agent_name]
+		  [terminal_format standard-terminal '\n                 Initializing agent, ' agent_name '.']
 		  [have this add_agent agent_name]]
 	    [get isis_world agent_names]]
       [set this isis_world isis_world]
       [have [get this execute_mutex] unlock]
+      [terminal_format standard-terminal '\n                 Load project complete.']
       this]]]
 
 [deftypefunk isismon_project execute save [filename]

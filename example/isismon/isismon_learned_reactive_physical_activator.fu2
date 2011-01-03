@@ -254,7 +254,7 @@
        
        
        [= look_carefully_for_resource__hbox [gtk-hbox-new 2]]
-       [= look_carefully_for_resource__button [gtk-button-new_with_label 'Look for vertically']]
+       [= look_carefully_for_resource__button [gtk-button-new_with_label 'Look carefully for']]
        [= look_carefully_for_resource__target__label [gtk-label-new 'Target: ']]
        [= look_carefully_for_resource__target__entry [gtk-entry-new]]
        [have look_carefully_for_resource__hbox pack_start look_carefully_for_resource__button nil nil 0]
@@ -312,8 +312,8 @@
 	     nil]
          
        [= track_mother_resource__hbox [gtk-hbox-new 2]]
-       [= track_mother_resource__button [gtk-button-new_with_label 'Hold with Left Hand']]
-       [= track_mother_resource__target__label [gtk-label-new 'Target: ']]
+       [= track_mother_resource__button [gtk-button-new_with_label 'Track Mother']]
+       [= track_mother_resource__target__label [gtk-label-new 'Attention: ']]
        [= track_mother_resource__target__entry [gtk-entry-new]]
        [have track_mother_resource__hbox pack_start track_mother_resource__button nil nil 0]
        [have track_mother_resource__hbox pack_start track_mother_resource__target__label nil nil 0]

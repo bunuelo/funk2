@@ -608,10 +608,12 @@
 [defunk isismon_project-new_from_file [isismon filename]
   [let [[isis_world [isis_world-new_from_chunk [chunk-load filename]]]]
     [let [[this [new isismon_project isismon]]]
-      [set this isis_world isis_world]
+      [have [get this execute_mutex] lock]
       [mapc [funk [agent_name]
 		  [have this add_agent agent_name]]
 	    [get isis_world agent_names]]
+      [set this isis_world isis_world]
+      [have [get this execute_mutex] unlock]
       this]]]
 
 [deftypefunk isismon_project execute save [filename]

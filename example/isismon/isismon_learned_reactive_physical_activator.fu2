@@ -61,11 +61,21 @@
 									     empty_right_hand_resource__button
 									     empty_left_hand_resource__hbox
 									     empty_left_hand_resource__button
-									     
+
+									     search_for_resource__hbox
+									     search_for_resource__button
+									     search_for_resource__target__label
+									     search_for_resource__target__entry
+
 									     look_for_resource__hbox
 									     look_for_resource__button
 									     look_for_resource__target__label
 									     look_for_resource__target__entry
+
+									     look_carefully_for_resource__hbox
+									     look_carefully_for_resource__button
+									     look_carefully_for_resource__target__label
+									     look_carefully_for_resource__target__entry
 									     
 									     look_for_vertically_resource__hbox
 									     look_for_vertically_resource__button
@@ -81,6 +91,14 @@
 									     hold_with_left_hand_resource__button
 									     hold_with_left_hand_resource__target__label
 									     hold_with_left_hand_resource__target__entry
+									     
+									     
+									     
+									     
+									     track_mother_resource__hbox
+									     track_mother_resource__button
+									     track_mother_resource__target__label
+									     track_mother_resource__target__entry
 									     
 									     demo_hold__hbox
 									     demo_hold__button
@@ -207,6 +225,20 @@
 		   [have this activate_resource `learned_reactive `physical `empty_left_hand]]
 	     nil]
 
+       [= search_for_resource__hbox [gtk-hbox-new 2]]
+       [= search_for_resource__button [gtk-button-new_with_label 'search_for']]
+       [= search_for_resource__target__label [gtk-label-new 'Target: ']]
+       [= search_for_resource__target__entry [gtk-entry-new]]
+       [have search_for_resource__hbox pack_start search_for_resource__button nil nil 0]
+       [have search_for_resource__hbox pack_start search_for_resource__target__label nil nil 0]
+       [have search_for_resource__hbox pack_start search_for_resource__target__entry t t 0]
+       [have vbox pack_start search_for_resource__hbox nil nil 0]
+       [have search_for_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `learned_reactive `physical `search_for [get [get  search_for_resource__target__entry text] as-symbol]]]
+	     nil]
+       
+
        [= look_for_resource__hbox [gtk-hbox-new 2]]
        [= look_for_resource__button [gtk-button-new_with_label 'look_for']]
        [= look_for_resource__target__label [gtk-label-new 'Target: ']]
@@ -221,6 +253,22 @@
 	     nil]
        
        
+       [= look_carefully_for_resource__hbox [gtk-hbox-new 2]]
+       [= look_carefully_for_resource__button [gtk-button-new_with_label 'Look for vertically']]
+       [= look_carefully_for_resource__target__label [gtk-label-new 'Target: ']]
+       [= look_carefully_for_resource__target__entry [gtk-entry-new]]
+       [have look_carefully_for_resource__hbox pack_start look_carefully_for_resource__button nil nil 0]
+       [have look_carefully_for_resource__hbox pack_start look_carefully_for_resource__target__label nil nil 0]
+       [have look_carefully_for_resource__hbox pack_start look_carefully_for_resource__target__entry t t 0]
+       [have vbox pack_start look_carefully_for_resource__hbox nil nil 0]
+       [have look_carefully_for_resource__button signal_connect 'clicked'
+	     [funk []
+		   [print [get [get  look_carefully_for_resource__target__entry text] as-symbol]]
+		   [print [type [get [get  look_carefully_for_resource__target__entry text] as-symbol]]]
+		   [have this activate_resource `learned_reactive `physical `look_carefully_for [get [get  look_for_vertically_resource__target__entry text] as-symbol]]]
+	     nil]
+
+       
        [= look_for_vertically_resource__hbox [gtk-hbox-new 2]]
        [= look_for_vertically_resource__button [gtk-button-new_with_label 'Look for vertically']]
        [= look_for_vertically_resource__target__label [gtk-label-new 'Target: ']]
@@ -233,7 +281,7 @@
 	     [funk []
 		   [print [get [get  look_for_vertically_resource__target__entry text] as-symbol]]
 		   [print [type [get [get  look_for_vertically_resource__target__entry text] as-symbol]]]
-		   [have this activate_resource `learned_reactive `physical `look_for_vertically [get [get  look_for_vertically_resource__target__entry text] as-symbol]]]
+		   [have this activate_resource `learned_reactive `physical `look_for_vertically [get [get look_for_vertically_resource__target__entry text] as-symbol]]]
 	     nil]
        
        [= hold_with_right_hand_resource__hbox [gtk-hbox-new 2]]
@@ -261,6 +309,19 @@
        [have hold_with_left_hand_resource__button signal_connect 'clicked'
 	     [funk []
 		   [have this activate_resource `learned_reactive `physical `hold_with_left_hand [get [get hold_with_left_hand_resource__target__entry text] as-symbol]]]
+	     nil]
+         
+       [= track_mother_resource__hbox [gtk-hbox-new 2]]
+       [= track_mother_resource__button [gtk-button-new_with_label 'Hold with Left Hand']]
+       [= track_mother_resource__target__label [gtk-label-new 'Target: ']]
+       [= track_mother_resource__target__entry [gtk-entry-new]]
+       [have track_mother_resource__hbox pack_start track_mother_resource__button nil nil 0]
+       [have track_mother_resource__hbox pack_start track_mother_resource__target__label nil nil 0]
+       [have track_mother_resource__hbox pack_start track_mother_resource__target__entry t t 0]
+       [have vbox pack_start track_mother_resource__hbox nil nil 0]
+       [have track_mother_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `learned_reactive `physical `track_mother [have [get track_mother_resource__target__entry text] read]]]
 	     nil]
        
 

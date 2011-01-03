@@ -53,7 +53,7 @@
 
 [defunk moral_compass-new_from_chunk [chunk]
   [let [[chunk_frame [have [get chunk as-lick] unlick]]]
-    [let [[this [new moral_compass physical_world [have chunk_frame lookup `name]]]]
+    [let [[this [new moral_compass]]]
       [set this semantic_realm [have chunk_frame lookup `semantic_realm]]
       [have this connect_knowledge_reflection]
       this]]]

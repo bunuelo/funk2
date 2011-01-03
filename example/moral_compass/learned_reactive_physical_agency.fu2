@@ -789,7 +789,7 @@ dont think drop from right hand works
        [have this add_resource [new look_for_resource]]
        [have this add_resource [new look_for_vertically_resource]]
        [have this add_resource [new level_pitch_resource]]
-       [have this add_resource [new track_mother_resource]]
+       `[have this add_resource [new track_mother_resource]]
        this]]
 
 [defmetro JJ-init []

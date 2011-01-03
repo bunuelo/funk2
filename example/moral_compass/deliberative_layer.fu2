@@ -27,6 +27,9 @@
        [have this add_agency [new deliberative_execution_agency]]
        this]]
 
-[deftypefunk deliberative_layer execute setup_knowledge []
+[deftypefunk deliberative_layer execute create_knowledge []
   [new meta_semantic_knowledge_base `deliberative_knowledge [get [get this mind] semantic_realm]]]
+
+[deftypefunk deliberative_layer execute connect_knowledge_reflection []
+  nil]
 

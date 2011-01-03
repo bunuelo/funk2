@@ -245,7 +245,7 @@
        nil]]
 
 [defunk isismon_agent-new_from_name [isismon_project name]
-  [let [[this [new isis_agent_body [get isismon_project isis_world] name]]]
+  [let [[this [new isis_agent_body [get isismon_project isis_world] [new moral_compass] name]]]
     [with-new-cause [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
 		    [cause-define cause-time_step [get [get isismon_project isis_world] time_step]]
 		    

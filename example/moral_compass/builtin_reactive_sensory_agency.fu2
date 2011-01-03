@@ -54,8 +54,11 @@
 			  [have this update_visual_knowledge_from_visual_objects visual_objects]]]]
        nil]]
 
-[deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute setup_knowledge []
+[deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute create_knowledge []
   [new semantic_knowledge_base `visual_knowledge [get [get this mind] semantic_realm]]]
+
+[deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute connect_knowledge_reflection []
+  nil]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute update_visual_knowledge_from_visual_objects [visual_objects]
   [have [get [get this mind] visual_knowledge] remove_all]
@@ -96,8 +99,11 @@
        
        this]]
 
-[deftypefunk builtin_reactive_sensory_agency execute setup_knowledge []
-  [have [get this resource `propogate_visual_objects_to_visual_knowledge] setup_knowledge]]
+[deftypefunk builtin_reactive_sensory_agency execute create_knowledge []
+  [have [get this resource `propogate_visual_objects_to_visual_knowledge] create_knowledge]]
+
+[deftypefunk builtin_reactive_sensory_agency execute connect_knowledge_reflection []
+  [have [get this resource `propogate_visual_objects_to_visual_knowledge] connect_knowledge_reflection]]
 
 [deftypefunk builtin_reactive_sensory_agency get perception []
   [get [get this resource `continuous_sensing] perception]]

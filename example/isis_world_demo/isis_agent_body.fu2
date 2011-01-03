@@ -62,17 +62,19 @@
       [image-new_from_rgb_data width height rgb_data]]]]
 
 [deftypefunk isis_agent_body get as-chunk []
-  [let [[chunk_frame [frame name                  name
-			    says                  says
-			    arm_length            arm_length
-			    sense_frame           sense_frame
-			    retina_image_sequence retina_image_sequence
-			    ]]]
-    [get [new lick chunk_frame] as-chunk]]]
+  [let [[moral_compass_chunk [get mind as-chunk]]]
+    [let [[chunk_frame [frame name                  name
+			      says                  says
+			      arm_length            arm_length
+			      sense_frame           sense_frame
+			      retina_image_sequence retina_image_sequence
+			      moral_compass_chunk   moral_compass_chunk
+			      ]]]
+      [get [new lick chunk_frame] as-chunk]]]]
 
 [defunk isis_agent_body-new_from_chunk [physical_world chunk]
   [let [[chunk_frame [have [get chunk as-lick] unlick]]]
-    [let [[moral_compass_chunk [have chunk_frame lookup `moral_compass]]]
+    [let [[moral_compass_chunk [have chunk_frame lookup `moral_compass_chunk]]]
       [let [[moral_compass [moral_compass-new_from_chunk moral_compass_chunk]]]
 	[let [[this [new isis_agent_body physical_world moral_compass [have chunk_frame lookup `name]]]]
 	  [set this says                  [have chunk_frame lookup `says]]

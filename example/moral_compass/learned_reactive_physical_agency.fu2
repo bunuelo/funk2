@@ -827,12 +827,8 @@ dont think drop from right hand works
        [have this add_resource [new look_for_resource]]
        [have this add_resource [new look_for_vertically_resource]]
        [have this add_resource [new level_pitch_resource]]
-<<<<<<< HEAD
        [have this add_resource [new track_mother_resource]]
        [have this add_resource [new look_carefully_for_resource]]
-=======
-       `[have this add_resource [new track_mother_resource]]
->>>>>>> 2e5bee69ff74b717beda5de0db7e477f953a4f97
        this]]
 
 

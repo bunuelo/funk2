@@ -58,15 +58,21 @@ use object
 does empty right hand need argument target??!?!?!?!?!?!?!? fghjkl
 
 [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
-	command `builtin_reactive `physical `drop_from_right_hand]
+	command `builtin_reactive `physical `look_down_resource 3]
 dont think drop from right hand works
 [isis-call [get isis_world client] drop_from_right_hand agent `Ralph]
 '
 
+'*********visual objects helper funktions**************'
+
+[defunk globalize_isis_world []
+  [globalize isis_world [get [get isismon isismon_project] isis_world]]]
 
 [defunk get_visual_objects [mind]
   [if [get mind perception]
       [get [get mind perception] visual_objects]]]
+
+
 
 [defunk get_left_hand_object_name [mind]
    [if [get mind perception]
@@ -80,7 +86,35 @@ dont think drop from right hand works
   [if [get mind perception]
       [have [have [have [get [get mind perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `pitch]]]
 							   
+[defunk list-contains_substring [sequence subexp]
+  [let [[match nil]]
+    [mapc [funk [exp]
+		[if [string-contains [get exp as-string] [get subexp as-string]]
+		    [= match exp]]]
+	  sequence]
+    match]]
 
+[defunk visual_objects_contain_object_type [visual_objects object_type] 
+  [let [[list_of_object_names
+	 [mapcar      [funk [object]
+			    [have object lookup `phenomenal_name]]
+		      visual_objects]]]
+    
+    
+    [list-contains_substring list_of_object_names object_type]
+    ]]
+
+[defunk lookup_visual_object [visual_objects object_name]
+  [let [[ match nil]]
+    [mapc [funk [object]
+		[if [eq [have object lookup `phenomenal_name] object_name]
+		    [= match object]]]
+		visual_objects]
+  match]]
+
+
+
+'***********demo funktions************'
 
 [defunk demo_pick_up_loaf_and_butter []
   [print 1]
@@ -125,31 +159,7 @@ dont think drop from right hand works
 
 
 
-[defunk list-contains_substring [sequence subexp]
-  [let [[match nil]]
-    [mapc [funk [exp]
-		[if [string-contains [get exp as-string] [get subexp as-string]]
-		    [= match exp]]]
-	  sequence]
-    match]]
 
-[defunk visual_objects_contain_object_type [visual_objects object_type] 
-  [let [[list_of_object_names
-	 [mapcar      [funk [object]
-			    [have object lookup `phenomenal_name]]
-		      visual_objects]]]
-    
-    
-    [list-contains_substring list_of_object_names object_type]
-    ]]
-
-[defunk lookup_visual_object [visual_objects object_name]
-  [let [[ match nil]]
-    [mapc [funk [object]
-		[if [eq [have object lookup `phenomenal_name] object_name]
-		    [= match object]]]
-		visual_objects]
-  match]]
 
 
 
@@ -224,9 +234,9 @@ dont think drop from right hand works
 			  [= slightly_looking_down 'somevalue']
 
 			  [have this-resource think_to_self 'Leveling pitch is starting.']
-			  [while [ > [[get_neck_pitch mind] - level_neck_pitch] slightly_looking_up]
+			  [while [ > [- [get_neck_pitch mind] level_neck_pitch] slightly_looking_up]
 			    [mind-wait_to_activate mind learned_reactive physical look_down 1]]
-			  [while [ < [[get_neck_pitch mind] - level_neck_pitch] slightly_looking_down]
+			  [while [ < [- [get_neck_pitch mind] level_neck_pitch] slightly_looking_down]
 			    [mind-wait_to_activate mind learned_reactive physical look_up 1]]
 			  [have this-resource think_to_self 'I am looking forward']]]]]]
 
@@ -514,7 +524,30 @@ dont think drop from right hand works
        
        nil]]
 
-
+`[deframe track_mother_resource [resource] []
+  [new []
+       [construct resource `track_mother 
+		  [funk [mom attention]
+			[let* [[body [get this body]]
+			       [mind  [get body mind]]
+			       [name  [get body name]]
+			       ]
+			    [have this-resource think_to_self ' tracking mom activated!']
+			    [while  [> 0 attention]
+			      [have this-resource think_to_self 'still has attention']
+			      [if [get_visual_objects mind]
+				  [if [lookup_visual_object [get_visual_objects mind] mom]
+				      [prog [have this-resource think_to_self 'yes agent, activating center on']
+					     [mind-wait_to_activate mind learned_reactive physical center_body_on mom]]
+				    [prog [have this-resource think_to_self 'dont see mom, activating search']
+					  [mind-wait_to_activate mind learned_reactive physical search_for mom]
+					  ]]  
+				[prog [have this-resource think_to_self 'dont see any objects, activating search']
+				      [mind-wait_to_activate mind learned_reactive physical search_for mom]
+				      ]]]
+			    [have this-resource think_to_self 'attention ran out']]]]
+       
+       nil]]
 
 
 
@@ -625,7 +658,7 @@ dont think drop from right hand works
 						      ]
 					      [prog [= patience 0]
 						    [= my_current_object [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type] ]
-						    [have this-resource think_to_self 'found'my_current_object ]
+						    [have this-resource think_to_self 'found' my_current_object ]
 						    ]]]]]
 				[prog [while [< [get_neck_pitch mind] looking_at_ceiling]	 
 					[have this-resource think_to_self 'I still have patience, and im searching downward']
@@ -642,7 +675,7 @@ dont think drop from right hand works
 						    ]
 					    [prog [= patience 0]
 						  [= my_current_object [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type] ]
-						  [have this-resource think_to_self 'found'my_current_object ]
+						  [have this-resource think_to_self 'found' my_current_object ]
 						  ]]]]]]]
 			    [have this-resource think_to_self 'finished searching vertically']]]]]
        nil]]
@@ -756,6 +789,7 @@ dont think drop from right hand works
        [have this add_resource [new look_for_resource]]
        [have this add_resource [new look_for_vertically_resource]]
        [have this add_resource [new level_pitch_resource]]
+       [have this add_resource [new track_mother_resource]]
        this]]
 
 [defmetro JJ-init []

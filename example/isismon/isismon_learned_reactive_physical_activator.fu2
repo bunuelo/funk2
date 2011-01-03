@@ -16,7 +16,7 @@
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
-
+'pass in arguments without quotes'
 
 [deframe isismon_agent_learned_reactive_physical_resource_activator [frame] [isismon_agent
 						   

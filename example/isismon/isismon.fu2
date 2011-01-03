@@ -610,11 +610,11 @@
   [let [[isis_world [isis_world-new_from_chunk [chunk-load filename]]]]
     [let [[this [new isismon_project isismon]]]
       [have [get this execute_mutex] lock]
+      [set this isis_world isis_world]
       [mapc [funk [agent_name]
 		  [terminal_format standard-terminal '\n                 Initializing agent, ' agent_name '.']
 		  [have this add_agent agent_name]]
 	    [get isis_world agent_names]]
-      [set this isis_world isis_world]
       [have [get this execute_mutex] unlock]
       [terminal_format standard-terminal '\n                 Load project complete.']
       this]]]
@@ -626,7 +626,7 @@
   vbox]
 
 [deftypefunk isismon_project execute add_agent [agent_name]
-  [let [[isismon_agent [new isismon_agent this agent_name]]]
+  [let [[isismon_agent [new isismon_agent [get this isis_world] agent_name]]]
     [have agent_frame add agent_name isismon_agent]
     [have agent_hbox pack_start isismon_agent t t 0]]]
 

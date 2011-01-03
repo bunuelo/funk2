@@ -19,15 +19,12 @@
  rights to redistribute these changes.
 '
 
-[deftypefunk string execute deflate []
-  [string-deflate this]]
-
-[deftypefunk string get deflated []
-  [string-deflate this]]
-
-[deftypefunk string execute inflate []
-  [string-inflate this]]
-
-[deftypefunk string get inflated []
-  [string-inflate this]]
+[deftypefunk string execute deflate  [] [string-deflate this]]
+[deftypefunk string get     deflated [] [string-deflate this]]
+[deftypefunk chunk  execute deflate  [] [chunk-deflate  this]]
+[deftypefunk chunk  get     deflated [] [chunk-deflate  this]]
+[deftypefunk string execute inflate  [] [string-inflate this]]
+[deftypefunk string get     inflated [] [string-inflate this]]
+[deftypefunk chunk  execute inflate  [] [chunk-inflate  this]]
+[deftypefunk chunk  get     inflated [] [chunk-inflate  this]]
 

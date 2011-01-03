@@ -26,6 +26,10 @@
        [have this add_agency [new self_conscious_imprimer_agency]]
        this]]
 
-[deftypefunk self_conscious_layer execute setup_knowledge []
+[deftypefunk self_conscious_layer execute create_knowledge []
   [new meta_semantic_knowledge_base `self_conscious_knowledge [get [get this mind] semantic_realm]]]
+
+[deftypefunk self_conscious_layer execute connect_knowledge_reflection []
+  nil]
+
 

@@ -41,6 +41,9 @@
       [= global_semantic_realm [new semantic_realm]]]
   global_semantic_realm]
 
+[deftypefunk mind set semantic_realm [semantic_realm]
+  [= global_semantic_realm semantic_realm]]
+
 [deftypefunk mind execute add_layer [layer]
   [if [get layer mind]
       [error bug_type `layer_is_already_part_of_a_mind layer layer mind this]]

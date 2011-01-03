@@ -22,8 +22,8 @@
 					     [arm_length 3.5]
 					     sense_frame
 					     [retina_image_sequence [new image_sequence nil]]]
-  [new [physical_world name]
-       [construct moral_agent_body physical_world name]
+  [new [physical_world moral_compass name]
+       [construct moral_agent_body physical_world moral_compass name]
        this]]
 
 [deftypefunk isis_agent_body execute user_activate [layer_name agency_name resource_name :rest args]
@@ -62,22 +62,26 @@
       [image-new_from_rgb_data width height rgb_data]]]]
 
 [deftypefunk isis_agent_body get as-chunk []
-  [let [[chunk_frame [frame name                  name
-			    says                  says
-			    arm_length            arm_length
-			    sense_frame           sense_frame
-			    retina_image_sequence retina_image_sequence
-			    ]]]
-    [get [new lick chunk_frame] as-chunk]]]
+  [let [[moral_compass_chunk [get mind as-chunk]]]
+    [let [[chunk_frame [frame name                  name
+			      says                  says
+			      arm_length            arm_length
+			      sense_frame           sense_frame
+			      retina_image_sequence retina_image_sequence
+			      moral_compass_chunk   moral_compass_chunk
+			      ]]]
+      [get [new lick chunk_frame] as-chunk]]]]
 
 [defunk isis_agent_body-new_from_chunk [physical_world chunk]
   [let [[chunk_frame [have [get chunk as-lick] unlick]]]
-    [let [[this [new isis_agent_body physical_world [have chunk_frame lookup `name]]]]
-      [set this says                  [have chunk_frame lookup `says]]
-      [set this arm_length            [have chunk_frame lookup `arm_length]]
-      [set this sense_frame           [have chunk_frame lookup `sense_frame]]
-      [set this retina_image_sequence [have chunk_frame lookup `retina_image_sequence]]
-      this]]]
+    [let [[moral_compass_chunk [have chunk_frame lookup `moral_compass_chunk]]]
+      [let [[moral_compass [moral_compass-new_from_chunk moral_compass_chunk]]]
+	[let [[this [new isis_agent_body physical_world moral_compass [have chunk_frame lookup `name]]]]
+	  [set this says                  [have chunk_frame lookup `says]]
+	  [set this arm_length            [have chunk_frame lookup `arm_length]]
+	  [set this sense_frame           [have chunk_frame lookup `sense_frame]]
+	  [set this retina_image_sequence [have chunk_frame lookup `retina_image_sequence]]
+	  this]]]]]
 
 [deftypefunk isis_agent_body execute sense_world []
   sense_frame]

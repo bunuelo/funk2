@@ -37,9 +37,14 @@
   [have initialize_events insert [frame time [time] event_type `load_task     result [isis-call client meta_load_task task 'task_toaster_in_view']]]
   [have initialize_events insert [frame time [time] event_type `train         result [isis-call client meta_train]]]
   [have initialize_events insert [frame time [time] event_type `pause         result [isis-call client meta_pause]]]
-  [have initialize_events insert [frame time [time] event_type `list_agents   result [isis-call client meta_list_agents]]]
-  [have initialize_events insert [frame time [time] event_type `step          result [have this raw_step_simulation 1.0]]]
-  ]
+  [let [[agent_names [isis-call client meta_list_agents]]]
+    [have initialize_events insert [frame time [time] event_type `list_agents   result agent_names]]
+    [have initialize_events insert [frame time [time] event_type `step          result [have this raw_step_simulation 1.0]]]
+    [if [is-type `array agent_names]
+	[mapc [funk [agent_name]
+		    [have initialize_events insert [frame time [time] event_type `agent_say result [isis-call client say agent agent_name message '']]]]
+	      [get agent_names as-conslist]]]
+    ]]
 
 
 [deftypefunk isis_world execute print_initialize_events []

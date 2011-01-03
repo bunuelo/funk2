@@ -18,8 +18,7 @@
  rights to redistribute these changes.'
 
 
-[deframe isismon_agent [frame] [isis_agent_name
-				isis_agent
+[deframe isismon_agent [frame] [isis_agent
 				
 				isismon_project
 				
@@ -48,16 +47,9 @@
 				label
 				entry
 				]
-  [new [initial_isismon_project initial_isis_agent_name]
+  [new [initial_isismon_project initial_isis_agent]
        [= isismon_project initial_isismon_project]
-       [= isis_agent_name initial_isis_agent_name]
-       
-       [= isis_agent [new isis_agent_body [get isismon_project isis_world] isis_agent_name]]
-       [with-new-cause [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
-		       [cause-define cause-time_step [get [get isismon_project isis_world] time_step]]
-		       
-		       [mind-activate [get isis_agent mind] builtin_reactive sensory     continuous_sensing]
-		       [mind-activate [get isis_agent mind] builtin_reactive neural_plug activate_resource]]
+       [= isis_agent      initial_isis_agent]
        
        [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
        [= vbox  [gtk-vbox-new 2]]
@@ -251,6 +243,15 @@
        
        [have frame add vbox]
        nil]]
+
+[defunk isismon_agent-new_from_name [isismon_project name]
+  [let [[this [new isis_agent_body [get isismon_project isis_world] [new moral_compass] name]]]
+    [with-new-cause [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
+		    [cause-define cause-time_step [get [get isismon_project isis_world] time_step]]
+		    
+		    [mind-activate [get this mind] builtin_reactive sensory     continuous_sensing]
+		    [mind-activate [get this mind] builtin_reactive neural_plug activate_resource]]
+    this]]
 
 [deftypefunk isismon_agent get name []
   [get isis_agent name]]
@@ -607,27 +608,29 @@
 
 [defunk isismon_project-new_from_file [isismon filename]
   [terminal_format standard-terminal '\nIsisMon Project: Loading ' filename '.']
-  [let [[isis_world [isis_world-new_from_chunk [chunk-load filename]]]]
+  [let [[isis_world [isis_world-new_from_chunk [get [chunk-load filename] inflated]]]]
     [let [[this [new isismon_project isismon]]]
       [have [get this execute_mutex] lock]
       [set this isis_world isis_world]
-      [mapc [funk [agent_name]
-		  [terminal_format standard-terminal '\n                 Initializing agent, ' agent_name '.']
-		  [have this add_agent agent_name]]
-	    [get isis_world agent_names]]
+      [mapc [funk [agent_body]
+		  [terminal_format standard-terminal '\n                 Initializing agent, ' [get agent_body name] '.']
+		  [have this add_agent [new isismon_agent this agent_body]]]
+	    [get isis_world agent_bodies]]
       [have [get this execute_mutex] unlock]
       [terminal_format standard-terminal '\n                 Load project complete.']
       this]]]
 
 [deftypefunk isismon_project execute save [filename]
-  [have [get isis_world as-chunk] save filename]]
+  [terminal_format standard-terminal '\nIsisMon Project: Saving ' filename '.']
+  [have [get [get isis_world as-chunk] deflated] save filename]
+  [terminal_format standard-terminal '\nIsisMon Project: Save project complete.']]
 
 [deftypefunk isismon_project get widget []
   vbox]
 
-[deftypefunk isismon_project execute add_agent [agent_name]
-  [let [[isismon_agent [new isismon_agent this agent_name]]]
-    [have agent_frame add agent_name isismon_agent]
+[deftypefunk isismon_project execute add_agent [agent]
+  [let [[isismon_agent [new isismon_agent this agent]]]
+    [have agent_frame add [get agent name] isismon_agent]
     [have agent_hbox pack_start isismon_agent t t 0]]]
 
 [deftypefunk isismon_project execute update_agents []
@@ -922,8 +925,8 @@
   [terminal_format standard-terminal '\nIsisMon New Project']
   [let [[new_isismon_project [new isismon_project this]]]
     [have new_isismon_project create_new_isis_world]
-    [have new_isismon_project add_agent `Ralph]
-    [have new_isismon_project add_agent `Lauren]
+    [have new_isismon_project add_agent [isismon_agent-new_from_name new_isismon_project `Ralph]]
+    [have new_isismon_project add_agent [isismon_agent-new_from_name new_isismon_project `Lauren]]
     [have project_vbox remove project_vbox__contained_widget]
     [have project_vbox pack_start [get new_isismon_project widget] nil nil 0]
     [have [get new_isismon_project widget] show_all]

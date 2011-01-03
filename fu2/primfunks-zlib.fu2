@@ -20,5 +20,7 @@
 '
 
 [globalize-funk string-deflate &primfunk:string__deflate]
+[globalize-funk chunk-deflate  &primfunk:chunk__deflate]
 [globalize-funk string-inflate &primfunk:string__inflate]
+[globalize-funk chunk-inflate  &primfunk:chunk__inflate]
 

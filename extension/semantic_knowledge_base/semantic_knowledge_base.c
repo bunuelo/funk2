@@ -2327,7 +2327,7 @@ export_cefunk1(semantic_knowledge_base__as__digraph_dot_code, this, 0, "Compile 
 // semantic_knowledge_base lick funks
 
 f2ptr raw__semantic_knowledge_base__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
-  f2ptr chunk                       = raw__chunk__new(cause, 8 * 3);
+  f2ptr chunk                       = raw__chunk__new(cause, 8 * 6);
   f2ptr name                        = raw__semantic_knowledge_base__name(cause, this);
   f2ptr semantic_realm              = raw__semantic_knowledge_base__semantic_realm(cause, this);
   f2ptr semantic_frame_set          = raw__semantic_knowledge_base__semantic_frame_set(cause, this);
@@ -2377,6 +2377,9 @@ f2ptr raw__semantic_knowledge_base__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr
     raw__chunk__bit64__elt__set(cause, chunk, chunk_index, (s64)data__lick_note__i);
     chunk_index += 8;
   }
+  if (chunk_index != (8 * 6)) {
+    return f2larva__new(cause, 23551, nil);
+  }
   f2ptr lick_note = f2integer__new(cause, (s64)this);
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);
 }
@@ -2405,13 +2408,13 @@ f2ptr raw__semantic_knowledge_base__lick_chunk__unlick_with_notes(f2ptr cause, f
   f2ptr trace_event_stream__lick_note          = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 24));
   f2ptr trace_add_semantic_frame__lick_note    = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 32));
   f2ptr trace_remove_semantic_frame__lick_note = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 40));
-  f2ptr semantic_knowledge_base  = raw__semantic_knowledge_base__new(cause,
-								     name__lick_note,
-								     semantic_realm__lick_note,
-								     semantic_frame_set__lick_note,
-								     trace_event_stream__lick_note,
-								     trace_add_semantic_frame__lick_note,
-								     trace_remove_semantic_frame__lick_note);
+  f2ptr semantic_knowledge_base = raw__semantic_knowledge_base__new(cause,
+								    name__lick_note,
+								    semantic_realm__lick_note,
+								    semantic_frame_set__lick_note,
+								    trace_event_stream__lick_note,
+								    trace_add_semantic_frame__lick_note,
+								    trace_remove_semantic_frame__lick_note);
   return semantic_knowledge_base;
 }
 

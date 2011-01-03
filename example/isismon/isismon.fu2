@@ -609,6 +609,9 @@
   [let [[isis_world [isis_world-new_from_chunk [chunk-load filename]]]]
     [let [[this [new isismon_project isismon]]]
       [set this isis_world isis_world]
+      [mapc [funk [agent_name]
+		  [have this add_agent agent_name]]
+	    [get isis_world agent_names]]
       this]]]
 
 [deftypefunk isismon_project execute save [filename]

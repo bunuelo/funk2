@@ -150,7 +150,7 @@
   [let [[chunk_frame [frame client                  client
 			    overview_image_sequence overview_image_sequence
 			    agent_body_chunks       [mapcar [funk [agent_body]
-								  [get [get this agent_bodies] as-chunk]]
+								  [get agent_body as-chunk]]
 							    [get this agent_bodies]]
 			    ]]]
     [get [new lick chunk_frame] as-chunk]]]

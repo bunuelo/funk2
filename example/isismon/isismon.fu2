@@ -628,10 +628,9 @@
 [deftypefunk isismon_project get widget []
   vbox]
 
-[deftypefunk isismon_project execute add_agent [agent]
-  [let [[isismon_agent [new isismon_agent this agent]]]
-    [have agent_frame add [get agent name] isismon_agent]
-    [have agent_hbox pack_start isismon_agent t t 0]]]
+[deftypefunk isismon_project execute add_agent [isismon_agent]
+  [have agent_frame add [get isismon_agent name] isismon_agent]
+  [have agent_hbox pack_start isismon_agent t t 0]]
 
 [deftypefunk isismon_project execute update_agents []
   [mapc [funk [agent]

@@ -1653,7 +1653,7 @@ f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_r
     trace_add_semantic_frame    = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_knowledge_base-trace_add_semantic_frame"));
     trace_remove_semantic_frame = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_knowledge_base-trace_remove_semantic_frame"));
   }
-  f2ptr semantic_frame_set          = f2__set__new(cause);
+  f2ptr semantic_frame_set = f2__set__new(cause);
   f2ptr this = raw__semantic_knowledge_base__new(cause, name, semantic_realm, semantic_frame_set, trace_event_stream, trace_add_semantic_frame, trace_remove_semantic_frame);
   f2__semantic_realm__add_semantic_knowledge_base(cause, semantic_realm, this);
   return this;
@@ -2330,11 +2330,11 @@ export_cefunk1(semantic_knowledge_base__as__digraph_dot_code, this, 0, "Compile 
 
 f2ptr raw__semantic_knowledge_base__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr chunk                       = raw__chunk__new(cause, 8 * 6);
-  f2ptr name                        = raw__semantic_knowledge_base__name(cause, this);
-  f2ptr semantic_realm              = raw__semantic_knowledge_base__semantic_realm(cause, this);
-  f2ptr semantic_frame_set          = raw__semantic_knowledge_base__semantic_frame_set(cause, this);
-  f2ptr trace_event_stream          = raw__semantic_knowledge_base__trace_event_stream(cause, this);
-  f2ptr trace_add_semantic_frame    = raw__semantic_knowledge_base__trace_add_semantic_frame(cause, this);
+  f2ptr name                        = raw__semantic_knowledge_base__name(                       cause, this);
+  f2ptr semantic_realm              = raw__semantic_knowledge_base__semantic_realm(             cause, this);
+  f2ptr semantic_frame_set          = raw__semantic_knowledge_base__semantic_frame_set(         cause, this);
+  f2ptr trace_event_stream          = raw__semantic_knowledge_base__trace_event_stream(         cause, this);
+  f2ptr trace_add_semantic_frame    = raw__semantic_knowledge_base__trace_add_semantic_frame(   cause, this);
   f2ptr trace_remove_semantic_frame = raw__semantic_knowledge_base__trace_remove_semantic_frame(cause, this);
   s64 chunk_index = 0;
   {

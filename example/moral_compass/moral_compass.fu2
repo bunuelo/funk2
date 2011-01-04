@@ -19,6 +19,7 @@
 
 [deframe moral_compass [mind] []
   [new []
+       [terminal_format standard-terminal '\nmoral_compass: creating new mind.']
        [construct mind]
        [have this add_layer [new builtin_reactive_layer]]
        [have this add_layer [new learned_reactive_layer]]
@@ -31,6 +32,7 @@
        this]]
 
 [deftypefunk moral_compass execute create_knowledge []
+  [terminal_format standard-terminal '\nmoral_compass: creating knowledge.']
   [have [get this layer `builtin_reactive] create_knowledge]
   [have [get this layer `learned_reactive] create_knowledge]
   [have [get this layer `deliberative]     create_knowledge]
@@ -39,6 +41,7 @@
   [have [get this layer `self_conscious]   create_knowledge]]
 
 [deftypefunk moral_compass execute connect_knowledge_reflection []
+  [terminal_format standard-terminal '\nmoral_compass: connecting knowledge reflection.']
   [have [get this layer `builtin_reactive] connect_knowledge_reflection]
   [have [get this layer `learned_reactive] connect_knowledge_reflection]
   [have [get this layer `deliberative]     connect_knowledge_reflection]

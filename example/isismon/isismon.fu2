@@ -245,13 +245,13 @@
        nil]]
 
 [defunk isismon_agent-new_from_name [isismon_project name]
-  [let [[this [new isis_agent_body [get isismon_project isis_world] [new moral_compass] name]]]
+  [let [[isis_agent [new isis_agent_body [get isismon_project isis_world] [new moral_compass] name]]]
     [with-new-cause [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
 		    [cause-define cause-time_step [get [get isismon_project isis_world] time_step]]
 		    
 		    [mind-activate [get isis_agent mind] builtin_reactive sensory     continuous_sensing]
 		    [mind-activate [get isis_agent mind] builtin_reactive neural_plug activate_resource]]
-    this]]
+    [new isismon_agent isismon_project isis_agent]]]
 
 [deftypefunk isismon_agent get name []
   [get isis_agent name]]
@@ -922,6 +922,7 @@
   [terminal_format standard-terminal '\nIsisMon Export Movie: Completed saving MPEG to file: ' filename]]
 
 [deftypefunk isismon execute start_new_project []
+  [have this close_project]
   [terminal_format standard-terminal '\nIsisMon New Project']
   [let [[new_isismon_project [new isismon_project this]]]
     [have new_isismon_project create_new_isis_world]

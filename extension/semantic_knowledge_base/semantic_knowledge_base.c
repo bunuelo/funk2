@@ -2433,34 +2433,34 @@ export_cefunk2(semantic_knowledge_base__lick_chunk__unlick_with_notes, lick_chun
 
 f2ptr raw__semantic_knowledge_base__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr lick_chunk, f2ptr object_note_hash) {
   {
-    f2ptr data__lick_note = f2__semantic_knowledge_base__name(cause, this);
+    f2ptr data__lick_note = raw__semantic_knowledge_base__name(cause, this);
     f2ptr data__object    = raw__ptypehash__lookup(cause, object_note_hash, data__lick_note);
-    f2__semantic_knowledge_base__name__set(cause, this, data__object);
+    raw__semantic_knowledge_base__name__set(cause, this, data__object);
   }
   {
-    f2ptr data__lick_note = f2__semantic_knowledge_base__semantic_realm(cause, this);
+    f2ptr data__lick_note = raw__semantic_knowledge_base__semantic_realm(cause, this);
     f2ptr data__object    = raw__ptypehash__lookup(cause, object_note_hash, data__lick_note);
-    f2__semantic_knowledge_base__semantic_realm__set(cause, this, data__object);
+    raw__semantic_knowledge_base__semantic_realm__set(cause, this, data__object);
   }
   {
-    f2ptr data__lick_note = f2__semantic_knowledge_base__semantic_frame_set(cause, this);
+    f2ptr data__lick_note = raw__semantic_knowledge_base__semantic_frame_set(cause, this);
     f2ptr data__object    = raw__ptypehash__lookup(cause, object_note_hash, data__lick_note);
-    f2__semantic_knowledge_base__semantic_frame_set__set(cause, this, data__object);
+    raw__semantic_knowledge_base__semantic_frame_set__set(cause, this, data__object);
   }
   {
-    f2ptr data__lick_note = f2__semantic_knowledge_base__trace_event_stream(cause, this);
+    f2ptr data__lick_note = raw__semantic_knowledge_base__trace_event_stream(cause, this);
     f2ptr data__object    = raw__ptypehash__lookup(cause, object_note_hash, data__lick_note);
-    f2__semantic_knowledge_base__trace_event_stream__set(cause, this, data__object);
+    raw__semantic_knowledge_base__trace_event_stream__set(cause, this, data__object);
   }
   {
-    f2ptr data__lick_note = f2__semantic_knowledge_base__trace_add_semantic_frame(cause, this);
+    f2ptr data__lick_note = raw__semantic_knowledge_base__trace_add_semantic_frame(cause, this);
     f2ptr data__object    = raw__ptypehash__lookup(cause, object_note_hash, data__lick_note);
-    f2__semantic_knowledge_base__trace_add_semantic_frame__set(cause, this, data__object);
+    raw__semantic_knowledge_base__trace_add_semantic_frame__set(cause, this, data__object);
   }
   {
-    f2ptr data__lick_note = f2__semantic_knowledge_base__trace_remove_semantic_frame(cause, this);
+    f2ptr data__lick_note = raw__semantic_knowledge_base__trace_remove_semantic_frame(cause, this);
     f2ptr data__object    = raw__ptypehash__lookup(cause, object_note_hash, data__lick_note);
-    f2__semantic_knowledge_base__trace_remove_semantic_frame__set(cause, this, data__object);
+    raw__semantic_knowledge_base__trace_remove_semantic_frame__set(cause, this, data__object);
   }
   return nil;
 }

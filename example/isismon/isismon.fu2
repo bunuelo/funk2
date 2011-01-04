@@ -964,16 +964,16 @@
   [set simulation_view_initialization_events_menu_item  sensitive nil]]
 
 [deftypefunk isismon execute close_project []
+  [have this disable_project_commands]
+  [if isismon_project
+      [prog [have isismon_project close]
+	    [= isismon_project nil]]]
   [if project_vbox__contained_widget
       [have project_vbox remove project_vbox__contained_widget]]
   [let [[no_project_widget [gtk-label-new 'Welcome to IsisMon']]]
     [have project_vbox pack_start no_project_widget t t 0]
     [= project_vbox__contained_widget no_project_widget]
     [have no_project_widget show_all]]
-  [have this disable_project_commands]
-  [if isismon_project
-      [prog [have isismon_project close]
-	    [= isismon_project nil]]]
   ]
 
 [deftypefunk isismon execute save_project [filename]

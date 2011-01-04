@@ -1630,9 +1630,6 @@ f2ptr f2__semantic_knowledge_base_event_type__new(f2ptr cause) {
 // semantic_knowledge_base
 
 f2ptr raw__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm, f2ptr semantic_frame_set, f2ptr trace_event_stream, f2ptr trace_add_semantic_frame, f2ptr trace_remove_semantic_frame) {
-  if (cause != nil) {
-    trace_add_semantic_frame = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_knowledge_base-trace_add_semantic_frame"));
-  }
   f2ptr this = f2__frame__new(cause, f2list16__new(cause,
 						   new__symbol(cause, "type"),                        new__symbol(cause, "semantic_knowledge_base"),
 						   new__symbol(cause, "name"),                        name,
@@ -1642,7 +1639,6 @@ f2ptr raw__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_
 						   new__symbol(cause, "trace_add_semantic_frame"),    trace_add_semantic_frame,
 						   new__symbol(cause, "trace_remove_semantic_frame"), trace_remove_semantic_frame,
 						   new__symbol(cause, "trace_callback_funks_frame"),  f2__frame__new(cause, nil)));
-  f2__semantic_realm__add_semantic_knowledge_base(cause, semantic_realm, this);
   return this;
 }
 
@@ -1653,8 +1649,14 @@ f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_r
   f2ptr trace_event_stream          = nil;
   f2ptr trace_add_semantic_frame    = nil;
   f2ptr trace_remove_semantic_frame = nil;
+  if (cause != nil) {
+    trace_add_semantic_frame    = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_knowledge_base-trace_add_semantic_frame"));
+    trace_remove_semantic_frame = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_knowledge_base-trace_remove_semantic_frame"));
+  }
   f2ptr semantic_frame_set          = f2__set__new(cause);
-  return raw__semantic_knowledge_base__new(cause, name, semantic_realm, semantic_frame_set, trace_event_stream, trace_add_semantic_frame, trace_remove_semantic_frame);
+  f2ptr this = raw__semantic_knowledge_base__new(cause, name, semantic_realm, semantic_frame_set, trace_event_stream, trace_add_semantic_frame, trace_remove_semantic_frame);
+  f2__semantic_realm__add_semantic_knowledge_base(cause, semantic_realm, this);
+  return this;
 }
 export_cefunk2(semantic_knowledge_base__new, name, semantic_realm, 0, "Takes a name nad a semantic_realm and returns a new semantic_knowledge_base object.");
 

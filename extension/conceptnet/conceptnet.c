@@ -58,6 +58,11 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
 	    printf("\nleft_concept.....: "); f2__print(cause, left_concept);
 	    printf("\nright_concept....: "); f2__print(cause, right_concept);
 	    printf("\nedge_label_string: "); f2__print(cause, edge_label_string);
+	    {
+	      f2ptr edge_label_string_1 = f2__string__replace_all(cause, edge_label_string,   new__string(cause, "{"), new__string(cause, ""));
+	      f2ptr edge_label_string_2 = f2__string__replace_all(cause, edge_label_string_1, new__string(cause, "}"), new__string(cause, ""));
+	      printf("\nedge_label_string_2: "); f2__print(cause, edge_label_string_2);
+	    }
 	    fflush(stdout);
 	  }
 	  if (tab_iter != nil) {

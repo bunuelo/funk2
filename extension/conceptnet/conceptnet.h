@@ -23,7 +23,7 @@
 #define F2__EXTENSION__CONCEPTNET__H
 
 f2ptr raw__conceptnet__new(f2ptr cause, f2ptr width);
-f2ptr  f2__conceptnet__new(f2ptr cause, f2ptr width);
+f2ptr  f2__conceptnet__new(f2ptr cause);
 
 f2ptr f2__conceptnet_type__new(f2ptr cause);
 

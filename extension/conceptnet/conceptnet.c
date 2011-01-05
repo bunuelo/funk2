@@ -23,19 +23,17 @@
 #include "conceptnet.h"
 
 
-def_ceframe1(conceptnet, conceptnet, width);
+def_ceframe1(conceptnet, conceptnet, graph);
 
-f2ptr raw__conceptnet__new(f2ptr cause, f2ptr width) {
-  return f2conceptnet__new(cause, width);
+f2ptr raw__conceptnet__new(f2ptr cause, f2ptr graph) {
+  return f2conceptnet__new(cause, graph);
 }
 
-f2ptr f2__conceptnet__new(f2ptr cause, f2ptr width) {
-  if (! raw__integer__is_type(cause, width)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__conceptnet__new(cause, width);
+f2ptr f2__conceptnet__new(f2ptr cause) {
+  f2ptr graph = f2__graph__new(cause);
+  return raw__conceptnet__new(cause, graph);
 }
-export_cefunk1(conceptnet__new, width, 0, "Returns a new conceptnet object.");
+export_cefunk1(conceptnet__new, graph, 0, "Returns a new conceptnet object.");
 
 
 // **

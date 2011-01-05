@@ -72,7 +72,7 @@
        [have this add_resource [new use_right_hand_resource]]
        [have this add_resource [new use_left_hand_resource]]
        [have this add_resource [new say_resource]]
-       [have this add_resource [new open_fridge]]
+       [have this add_resource [new open_fridge_resource]]
        
        this]]
 

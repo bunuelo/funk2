@@ -370,14 +370,14 @@ add rel orientation
        nil]]
 
 '*********************fancy resources*******************'
-[deframe open_fridge_resource [resource] []
+[deframe learned_open_fridge_resource [resource] []
   [new []
-       [construct resource `open_fridge
+       [construct resource `learned_open_fridge
 		  [funk []
-			[have this-resource open_fridge]]]
+			[have this-resource learned_open_fridge]]]
        nil]]
 
-[deftypefunk open_fridge_resource execute open_fridge []
+[deftypefunk learned_open_fridge_resource execute learned_open_fridge []
   
 			[let* [[body [get this body]]
 			       [mind  [get body mind]] 
@@ -912,7 +912,7 @@ add rel orientation
        [have this add_resource [new empty_right_hand_resource]]
        [have this add_resource [new hold_with_right_hand_resource]]
        [have this add_resource [new hold_with_left_hand_resource]]
-       [have this add_resource [new open_fridge_resource]]
+       [have this add_resource [new learned_open_fridge_resource]]
        [have this add_resource [new slice_toast_resource]]
        [have this add_resource [new center_body_on_resource]]
        [have this add_resource [new walk_towards_resource]]

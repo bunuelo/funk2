@@ -105,7 +105,7 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
 			    if (right_graph_node == nil) {
 			      right_graph_node = f2__graph_node__new(cause, right_concept_symbol);
 			    }
-			    f2__graph__add_new_edge(cause, graph, left_graph_node, right_graph_node);
+			    f2__graph__add_new_edge(cause, graph, edge_symbol, left_graph_node, right_graph_node);
 			  }
 			}
 		      }

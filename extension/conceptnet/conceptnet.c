@@ -72,15 +72,20 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
 		    f2ptr edge_label_pair = f2__string__split(cause, edge_label_pair_string, new__string(cause, ": "));
 		    {
 		      f2ptr edge_label_pair_iter = edge_label_pair;
-		      f2ptr edge_key   = f2__cons__car(cause, edge_label_pair_iter); edge_label_pair_iter = f2__cons__cdr(cause, edge_label_pair_iter);
-		      f2ptr edge_value = f2__cons__car(cause, edge_label_pair_iter); edge_label_pair_iter = f2__cons__cdr(cause, edge_label_pair_iter);
+		      f2ptr edge_key_string   = f2__cons__car(cause, edge_label_pair_iter); edge_label_pair_iter = f2__cons__cdr(cause, edge_label_pair_iter);
+		      f2ptr edge_value_string = f2__cons__car(cause, edge_label_pair_iter); edge_label_pair_iter = f2__cons__cdr(cause, edge_label_pair_iter);
 		      if (edge_label_pair_iter != nil) {
 			printf("\nconceptnet-new_from_graph_file warning: edge_label_pair_iter != nil."); fflush(stdout);
 		      }
-		      printf("\nedge_key: ");   f2__print(cause, edge_key);
-		      printf("\nedge_value: "); f2__print(cause, edge_value);
+		      printf("\nedge_key_string: ");   f2__print(cause, edge_key_string);
+		      printf("\nedge_value_string: "); f2__print(cause, edge_value_string);
+		      f2ptr edge_key_string_without_quotes   = f2__string__remove_all(cause, f2__string__remove_all(cause, edge_key_string, new__string(cause, "\'")),
+										      new__string(cause, "u\'"));
+		      f2ptr edge_value_string_without_quotes = f2__string__remove_all(cause, f2__string__remove_all(cause, edge_value_string, new__string(cause, "\'")),
+										      new__string(cause, "u\'"));
+		      printf("\nedge_key_string_without_quotes: ");   f2__print(cause, edge_key_string_without_quotes);
+		      printf("\nedge_value_string_without_quotes: "); f2__print(cause, edge_value_string_without_quotes);
 		    }
-		  }
 		  edge_label_iter = f2__cons__cdr(cause, edge_label_iter);
 		}
 	      }

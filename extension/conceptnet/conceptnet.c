@@ -59,9 +59,20 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
 	    printf("\nright_concept....: "); f2__print(cause, right_concept);
 	    printf("\nedge_label_string: "); f2__print(cause, edge_label_string);
 	    {
-	      f2ptr edge_label_string_1 = f2__string__replace_all(cause, edge_label_string,   new__string(cause, "{"), new__string(cause, ""));
-	      f2ptr edge_label_string_2 = f2__string__replace_all(cause, edge_label_string_1, new__string(cause, "}"), new__string(cause, ""));
-	      printf("\nedge_label_string_2: "); f2__print(cause, edge_label_string_2);
+	      f2ptr edge_label_string_without_left_squiglies = f2__string__replace_all(cause, edge_label_string,                        new__string(cause, "{"), new__string(cause, ""));
+	      f2ptr edge_label_string_without_squiglies      = f2__string__replace_all(cause, edge_label_string_without_left_squiglies, new__string(cause, "}"), new__string(cause, ""));
+	      printf("\nedge_label_string_without_squiglies: "); f2__print(cause, edge_label_string_without_squiglies);
+	      f2ptr edge_label_strings = f2__string__split(cause, edge_label_string_without_squiglies, new__string(cause, ", "));
+	      {
+		f2ptr edge_label_iter = edge_label_strings;
+		while (edge_label_iter != nil) {
+		  f2ptr edge_label_pair_string = f2__cons__car(cause, edge_label_iter);
+		  {
+		    printf("\nedge_label_pair_string: "); f2__print(cause, edge_label_pair_string);
+		  }
+		  edge_label_iter = f2__cons__cdr(cause, edge_label_iter);
+		}
+	      }
 	    }
 	    fflush(stdout);
 	  }

@@ -36,7 +36,7 @@ f2ptr f2__conceptnet__new(f2ptr cause) {
 export_cefunk0(conceptnet__new, 0, "Returns a new conceptnet object.");
 
 
-f2ptr f2__concepetnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
+f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
   f2ptr graph_file_string = f2__string__load(cause, filename);
   if (raw__larva__is_type(cause, graph_file_string)) {
     return f2larva__new(cause, 1, nil);

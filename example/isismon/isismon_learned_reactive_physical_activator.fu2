@@ -103,6 +103,15 @@
 									     demo_hold__hbox
 									     demo_hold__button
 
+
+									     pick_up_loaf_and_butter__hbox
+									     pick_up_loaf_and_butter__button
+
+									     make_toast__hbox
+									     make_toast__button
+
+									     
+
 									     ]
   [new [initial-isismon_agent]
        [= isismon_agent initial-isismon_agent]
@@ -333,8 +342,28 @@
 	     [funk []
 		   [demo_hold `knife]]
 	     nil]
+
+
+
+       [= pick_up_loaf_and_butter__hbox [gtk-hbox-new 2]]
+       [= pick_up_loaf_and_butter__button [gtk-button-new_with_label 'pick up loaf and butter']]
+       [have pick_up_loaf_and_butter__hbox  pack_start pick_up_loaf_and_butter__button nil nil 0]
+       [have vbox pack_start pick_up_loaf_and_butter__hbox nil nil 0]
+       [have pick_up_loaf_and_butter__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `learned_reactive `physical `pick_up_loaf_and_butter ]]
+	     nil]  
        
-      
+
+       [= make_toast__hbox [gtk-hbox-new 2]]
+       [= make_toast__button [gtk-button-new_with_label 'make toast']]
+       [have make_toast__hbox  pack_start make_toast__button nil nil 0]
+       [have vbox pack_start make_toast__hbox nil nil 0]
+       [have make_toast__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `learned_reactive `physical `make_toast ]]	
+     nil]  
+             
        [have window add vbox]
        
        [have window show_all]]]

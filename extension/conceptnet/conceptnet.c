@@ -36,8 +36,13 @@ f2ptr f2__conceptnet__new(f2ptr cause) {
 export_cefunk0(conceptnet__new, 0, "Returns a new conceptnet object.");
 
 
-f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
+f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename, f2ptr max_edges_to_load) {
+  if ((! raw__string__is_type(cause, filename)) ||
+      (! raw__integer__is_type(cause, max_edges_to_load))) {
+    return f2larva__new(cause, 1, nil);
+  }
   f2ptr graph_file_string = f2__string__load(cause, filename);
+  s64 max_edges_to_load__i = f2integer__i(max_edges_to_load, cause);
   if (raw__larva__is_type(cause, graph_file_string)) {
     return f2larva__new(cause, 1, nil);
   }
@@ -60,7 +65,7 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
       f2ptr iter = graph_file_line_strings;
       while (iter != nil) {
 	f2ptr graph_file_line_string = f2__cons__car(cause, iter);
-	{
+	if (line_index < max_edges_to_load__i) {
 	  f2ptr graph_file_line_tab_strings = f2__string__split(cause, graph_file_line_string, tab_string);
 	  f2ptr tab_iter = graph_file_line_tab_strings;
 	  {
@@ -136,9 +141,10 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
       //printf("\nconceptnet lines counted: " s64__fstr, line_index); fflush(stdout);
     }
   }
+  printf("\n"); fflush(stdout);
   return this;
 }
-export_cefunk1(conceptnet__new_from_graph_file, filename, 0, "Loads a conceptnet graph file.");
+export_cefunk2(conceptnet__new_from_graph_file, filename, max_edges_to_load, 0, "Loads a conceptnet graph file.");
 
 
 // **

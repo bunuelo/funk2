@@ -85,6 +85,12 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
 										       new__string(cause, "\'"), new__string(cause, ""));
 		      printf("\nedge_key_string_without_quotes: ");   f2__print(cause, edge_key_string_without_quotes);
 		      printf("\nedge_value_string_without_quotes: "); f2__print(cause, edge_value_string_without_quotes);
+		      
+		      f2ptr edge_key = f2__string__as__symbol(cause, edge_key_string);
+		      if (raw__eq(cause, edge_key, new__symbol(cause, "rel"))) {
+			f2ptr edge_value = f2__string__as__symbol(cause, edge_value_string);
+			printf("\nedge_value: "); f2__print(cause, edge_value);
+		      }
 		    }
 		  }
 		  edge_label_iter = f2__cons__cdr(cause, edge_label_iter);

@@ -56,9 +56,14 @@
 									     move_backward_resource__button
 									     move_backward_resource__target__label
 									     move_backward_resource__target__entry
-									     
+									    
+
+									     level_pitch_resource__hbox
+									     level_pitch_resource__button
+ 
 									     empty_right_hand_resource__hbox
 									     empty_right_hand_resource__button
+
 									     empty_left_hand_resource__hbox
 									     empty_left_hand_resource__button
 
@@ -93,6 +98,10 @@
 									     hold_with_left_hand_resource__target__entry
 									     
 									     
+									     walk_directly_towards_resource__hbox
+									     walk_directly_towards_resource__button
+									     walk_directly_towards_resource__target__label
+									     walk_directly_towards_resource__target__entry
 									     
 									     
 									     track_mother_resource__hbox
@@ -111,7 +120,6 @@
 									     make_toast__button
 
 									     
-
 									     ]
   [new [initial-isismon_agent]
        [= isismon_agent initial-isismon_agent]
@@ -214,7 +222,14 @@
 		   [have this activate_resource `learned_reactive `physical `move_backward [have [get move_backward_resource__target__entry text] read]]]
 	     nil]
        
-      
+       [= level_pitch_resource__hbox [gtk-hbox-new 2]]
+       [= level_pitch_resource__button [gtk-button-new_with_label 'Level Pitch']]
+       [have level_pitch_resource__hbox pack_start level_pitch_resource__button nil nil 0]
+       [have vbox pack_start level_pitch_resource__hbox nil nil 0]
+       [have level_pitch_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `learned_reactive `physical `level_pitch]]
+	     nil]
 
        [= empty_right_hand_resource__hbox [gtk-hbox-new 2]]
        [= empty_right_hand_resource__button [gtk-button-new_with_label 'Empty Right Hand']]
@@ -318,6 +333,20 @@
        [have hold_with_left_hand_resource__button signal_connect 'clicked'
 	     [funk []
 		   [have this activate_resource `learned_reactive `physical `hold_with_left_hand [get [get hold_with_left_hand_resource__target__entry text] as-symbol]]]
+	     nil]
+         
+
+       [= walk_directly_towards_resource__hbox [gtk-hbox-new 2]]
+       [= walk_directly_towards_resource__button [gtk-button-new_with_label 'Walk directly towards']]
+       [= walk_directly_towards_resource__target__label [gtk-label-new 'Target: ']]
+       [= walk_directly_towards_resource__target__entry [gtk-entry-new]]
+       [have walk_directly_towards_resource__hbox pack_start walk_directly_towards_resource__button nil nil 0]
+       [have walk_directly_towards_resource__hbox pack_start walk_directly_towards_resource__target__label nil nil 0]
+       [have walk_directly_towards_resource__hbox pack_start walk_directly_towards_resource__target__entry t t 0]
+       [have vbox pack_start walk_directly_towards_resource__hbox nil nil 0]
+       [have walk_directly_towards_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `learned_reactive `physical `walk_directly_towards [get [get walk_directly_towards_resource__target__entry text] as-symbol]]]
 	     nil]
          
        [= track_mother_resource__hbox [gtk-hbox-new 2]]

@@ -22,6 +22,10 @@
 [deframe turn_right_stop_resource         [resource] [] [new [] [construct resource `turn_right_stop         [funk []               [have [get this body] turn_right-stop]]]]]
 [deframe turn_left_start_resource         [resource] [] [new [] [construct resource `turn_left_start         [funk []               [have [get this body] turn_left-start]]]]]
 [deframe turn_left_stop_resource          [resource] [] [new [] [construct resource `turn_left_stop          [funk []               [have [get this body] turn_left-stop]]]]]
+[deframe look_left_start_resource         [resource] [] [new [] [construct resource `look_left_start         [funk []               [have [get this body] look_left-start]]]]]
+[deframe look_left_stop_resource          [resource] [] [new [] [construct resource `look_left_stop          [funk []               [have [get this body] look_left-stop]]]]]
+[deframe look_right_start_resource        [resource] [] [new [] [construct resource `look_right_start        [funk []               [have [get this body] look_right-start]]]]]
+[deframe look_right_stop_resource         [resource] [] [new [] [construct resource `look_right_stop         [funk []               [have [get this body] look_right-stop]]]]]
 [deframe look_up_start_resource           [resource] [] [new [] [construct resource `look_up_start           [funk []               [have [get this body] look_up-start]]]]]
 [deframe look_up_stop_resource            [resource] [] [new [] [construct resource `look_up_stop            [funk []               [have [get this body] look_up-stop]]]]]
 [deframe look_down_start_resource         [resource] [] [new [] [construct resource `look_down_start         [funk []               [have [get this body] look_down-start]]]]]
@@ -36,6 +40,7 @@
 [deframe pick_up_with_left_hand_resource  [resource] [] [new [] [construct resource `pick_up_with_left_hand  [funk [target]         [have [get this body] pick_up_with_left_hand  target]]]]]
 [deframe use_right_hand_resource          [resource] [] [new [] [construct resource `use_right_hand          [funk [target action]  [have [get this body] use_right_hand          target action]]]]]
 [deframe use_left_hand_resource           [resource] [] [new [] [construct resource `use_left_hand           [funk [target action]  [have [get this body] use_left_hand           target action]]]]]
+[deframe open_fridge_resource             [resource] [] [new [] [construct resource `open_fridge             [funk []               [have [get this body] open_fridge                          ]]]]]
 [deframe say_resource                     [resource] [] [new [] [construct resource `say                     [funk [message]             [have [get this body] say                     message]]]]]
 
 
@@ -52,6 +57,10 @@
        [have this add_resource [new look_up_stop_resource]]
        [have this add_resource [new look_down_start_resource]]
        [have this add_resource [new look_down_stop_resource]]
+       [have this add_resource [new look_right_start_resource]]
+       [have this add_resource [new look_right_stop_resource]]
+       [have this add_resource [new look_left_start_resource]]
+       [have this add_resource [new look_left_stop_resource]]
        [have this add_resource [new move_forward_start_resource]]
        [have this add_resource [new move_forward_stop_resource]]
        [have this add_resource [new move_backward_start_resource]]
@@ -63,6 +72,7 @@
        [have this add_resource [new use_right_hand_resource]]
        [have this add_resource [new use_left_hand_resource]]
        [have this add_resource [new say_resource]]
+       [have this add_resource [new open_fridge]]
        
        this]]
 

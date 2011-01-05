@@ -42,6 +42,10 @@
 [deftypefunk isis_agent_body execute look_up-stop            []              [have [get this physical_world] look_up-stop            [get this name]]]
 [deftypefunk isis_agent_body execute look_down-start         []              [have [get this physical_world] look_down-start         [get this name]]]
 [deftypefunk isis_agent_body execute look_down-stop          []              [have [get this physical_world] look_down-stop          [get this name]]]
+[deftypefunk isis_agent_body execute look_left-start           []              [have [get this physical_world] look_left-start           [get this name]]]
+[deftypefunk isis_agent_body execute look_left-stop            []              [have [get this physical_world] look_left-stop            [get this name]]]
+[deftypefunk isis_agent_body execute look_right-start           []              [have [get this physical_world] look_right-start           [get this name]]]
+[deftypefunk isis_agent_body execute look_right-stop            []              [have [get this physical_world] look_right-stop            [get this name]]]
 [deftypefunk isis_agent_body execute move_forward-start      []              [have [get this physical_world] move_forward-start      [get this name]]]
 [deftypefunk isis_agent_body execute move_forward-stop       []              [have [get this physical_world] move_forward-stop       [get this name]]]
 [deftypefunk isis_agent_body execute move_backward-start     []              [have [get this physical_world] move_backward-start     [get this name]]]
@@ -52,6 +56,7 @@
 [deftypefunk isis_agent_body execute pick_up_with_right_hand [target]        [have [get this physical_world] pick_up_with_right_hand [get this name] target]]
 [deftypefunk isis_agent_body execute use_right_hand          [target action] [have [get this physical_world] use_right_hand          [get this name] target action]]
 [deftypefunk isis_agent_body execute use_left_hand           [target action] [have [get this physical_world] use_left_hand           [get this name] target action]]
+[deftypefunk isis_agent_body execute open_fridge             []              [have [get this physical_world] open_fridge             [get this name]]]
 [deftypefunk isis_agent_body execute say                     [message]       [have [get this physical_world] say                     [get this name] message]]
 
 [deftypefunk isis_agent_body execute sense_funk2_retina_image []

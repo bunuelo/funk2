@@ -779,7 +779,7 @@ add rel orientation
 		  [funk []
 			[have this-resource think_to_self 'Pick up loaf and butter is starting.']
 			[have this-resource pick_up_loaf_and_butter]]]
-   nil]]
+       nil]]
 
 [deftypefunk pick_up_loaf_and_butter_resource execute pick_up_loaf_and_butter []
   [let* [[body  [get this body]]
@@ -805,8 +805,8 @@ add rel orientation
   [new []
        [construct resource `make_toast
 		  [funk []
-			[have this-resource make_toast]]]]
-  nil]
+			[have this-resource make_toast]]]
+       nil]]
 
 [deftypefunk make_toast_resource execute make_toast []
   [let* [[body  [get this body]]

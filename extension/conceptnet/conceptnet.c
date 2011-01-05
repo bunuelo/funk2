@@ -36,6 +36,31 @@ f2ptr f2__conceptnet__new(f2ptr cause) {
 export_cefunk0(conceptnet__new, 0, "Returns a new conceptnet object.");
 
 
+f2ptr f2__concepetnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
+  f2ptr graph_file_string = f2__string__load(cause, filename);
+  if (raw__larva__is_type(cause, graph_file_string)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  f2ptr graph_file_line_strings = f2__string__split(cause, graph_file_string, new__string(cause, "\n"));
+  {
+    s64 index = 0;
+    f2ptr iter = graph_file_line_strings;
+    while (iter != nil) {
+      f2ptr graph_file_line_string = f2__cons__car(cause, iter);
+      {
+	index ++;
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+    printf("conceptnet lines counted: " s64__fstr, index);
+  }
+  f2ptr conceptnet = f2__conceptnet__new(cause);
+  
+  return conceptnet;
+}
+export_cefunk1(conceptnet__new_from_graph_file, filename, 0, "Loads a conceptnet graph file.");
+
+
 // **
 
 f2ptr f2__conceptnet__core_extension_ping(f2ptr cause) {

@@ -33,7 +33,7 @@ f2ptr f2__conceptnet__new(f2ptr cause) {
   f2ptr graph = f2__graph__new(cause);
   return raw__conceptnet__new(cause, graph);
 }
-export_cefunk1(conceptnet__new, graph, 0, "Returns a new conceptnet object.");
+export_cefunk0(conceptnet__new, 0, "Returns a new conceptnet object.");
 
 
 // **

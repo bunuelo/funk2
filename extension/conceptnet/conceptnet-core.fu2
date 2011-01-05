@@ -17,6 +17,10 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage conceptnet
-  :sources ['conceptnet.fu2']]
+[defcore conceptnet 'extension/conceptnet/.libs/libf2e_conceptnet.so']
 
+[defcorefunk conceptnet-new_from_rgb_data         conceptnet conceptnet__new_from_rgb_data]
+[defcorefunk conceptnet-core_extension_ping       conceptnet conceptnet__core_extension_ping]
+[defcorefunk conceptnet-core_extension_initialize conceptnet conceptnet__core_extension_initialize]
+
+[conceptnet-core_extension_ping]

@@ -207,6 +207,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/causality/libf2e_causality.la \
+                  extension/conceptnet/libf2e_conceptnet.la \
                   extension/event_stream/libf2e_event_stream.la \
                   extension/equals_hash/libf2e_equals_hash.la \
                   extension/fibermon/libf2e_fibermon.la \
@@ -359,6 +360,7 @@ lib_libfunk2_la_SOURCES = \
   config_bit_num.h
 
 extension_causality_libf2e_causality_la_SOURCES                                       = extension/causality/causality.c
+extension_conceptnet_libf2e_conceptnet_la_SOURCES                                     = extension/conceptnet/conceptnet.c
 extension_event_stream_libf2e_event_stream_la_SOURCES                                 = extension/event_stream/event_stream.c
 extension_equals_hash_libf2e_equals_hash_la_SOURCES                                   = extension/equals_hash/equals_hash.c
 extension_fibermon_libf2e_fibermon_la_SOURCES                                         = extension/fibermon/fibermon.c
@@ -419,6 +421,9 @@ extension_image_sequence_libf2e_image_sequence_la_CFLAGS  = $(lib_libfunk2_la_CF
 
 extension_movie_libf2e_movie_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_movie_libf2e_movie_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_conceptnet_libf2e_conceptnet_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_conceptnet_libf2e_conceptnet_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_event_stream_libf2e_event_stream_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_event_stream_libf2e_event_stream_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

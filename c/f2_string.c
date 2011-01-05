@@ -420,30 +420,27 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
       (! raw__string__is_type(cause, token))) {
     return f2larva__new(cause, 1, nil);
   }
-  u64 token__length = f2string__length(token, cause);
-  u64 this__length  = f2string__length(this,  cause);
+  s64 token__length = f2string__length(token, cause);
+  s64 this__length  = f2string__length(this,  cause);
   if (token__length == 0) {
     return f2larva__new(cause, 93, nil);
   }
-  if (token__length > this__length) {
-    return f2larva__new(cause, 94, nil);
-  }
-  u8* token__str    = (u8*)malloc(token__length);
+  u8* token__str = (u8*)malloc(token__length);
   f2string__str_copy(token, cause, token__str);
   
   u8* this__str = (u8*)malloc(this__length);
   f2string__str_copy(this, cause, this__str);
   
-  f2ptr new_seq = nil;
-  f2ptr iter    = nil;
-  u64 last_match_index = 0;
-  u64 index            = 0;
-  u64 sup_index        = this__length - token__length + 1;
-  while(index <= sup_index) {
-    if (index == sup_index || memcmp(this__str + index, token__str, token__length) == 0) {
-      u64 substr__length = index - last_match_index;
-      f2ptr new_substr = f2string__new(cause, substr__length, this__str + last_match_index);
-      f2ptr new_cons = f2cons__new(cause, new_substr, nil);
+  f2ptr new_seq                 = nil;
+  f2ptr iter                    = nil;
+  s64   end_of_last_match_index = 0;
+  s64   index                   = 0;
+  s64   sup_index               = this__length - token__length + 1;
+  while(index < sup_index) {
+    if (memcmp(this__str + index, token__str, token__length) == 0) {
+      s64   substr__length = index - end_of_last_match_index;
+      f2ptr new_substr     = f2string__new(cause, substr__length, this__str + end_of_last_match_index);
+      f2ptr new_cons       = f2cons__new(cause, new_substr, nil);
       if (iter == nil) {
 	new_seq = new_cons;
       } else {
@@ -451,9 +448,19 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
       }
       iter = new_cons;
       index += token__length;
-      last_match_index = index;
+      end_of_last_match_index = index;
     } else {
       index ++;
+    }
+  }
+  {
+    s64   substr__length = this__length - end_of_last_match_index;
+    f2ptr new_substr     = f2string__new(cause, substr__length, this__str + end_of_last_match_index);
+    f2ptr new_cons       = f2cons__new(cause, new_substr, nil);
+    if (iter == nil) {
+      new_seq = new_cons;
+    } else {
+      f2cons__cdr__set(iter, cause, new_cons);
     }
   }
   return new_seq;

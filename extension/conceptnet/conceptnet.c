@@ -43,16 +43,32 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
   }
   f2ptr graph_file_line_strings = f2__string__split(cause, graph_file_string, new__string(cause, "\n"));
   {
-    s64 index = 0;
+    s64 line_index = 0;
     f2ptr iter = graph_file_line_strings;
     while (iter != nil) {
       f2ptr graph_file_line_string = f2__cons__car(cause, iter);
       {
-	index ++;
+	if (line_index == 0) {
+	  f2ptr graph_file_line_tab_strings = f2__string__split(cause, graph_file_line_string, new__string(cause, "\t"));
+	  f2ptr tab_iter = graph_file_line_tab_strings;
+	  {
+	    f2ptr left_concept      = f2__cons__car(cause, tab_iter); tab_iter = f2__cons__cdr(cause, tab_iter);
+	    f2ptr right_concept     = f2__cons__car(cause, tab_iter); tab_iter = f2__cons__cdr(cause, tab_iter);
+	    f2ptr edge_label_string = f2__cons__car(cause, tab_iter); tab_iter = f2__cons__cdr(cause, tab_iter);
+	    printf("\nleft_concept.....: "); f2__print(cause, left_concept);
+	    printf("\nright_concept....: "); f2__print(cause, right_concept);
+	    printf("\nedge_label_string: "); f2__print(cause, edge_label_string);
+	    fflush(stdout);
+	  }
+	  if (tab_iter != nil) {
+	    printf("\nconceptnet-new_from_graph_file warning: tab_iter != nil."); fflush(stdout);
+	  }
+	}
+	line_index ++;
       }
       iter = f2__cons__cdr(cause, iter);
     }
-    printf("\nconceptnet lines counted: " s64__fstr, index); fflush(stdout);
+    printf("\nconceptnet lines counted: " s64__fstr, line_index); fflush(stdout);
   }
   f2ptr conceptnet = f2__conceptnet__new(cause);
   

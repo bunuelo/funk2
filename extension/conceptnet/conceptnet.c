@@ -79,10 +79,10 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
 		      }
 		      printf("\nedge_key_string: ");   f2__print(cause, edge_key_string);
 		      printf("\nedge_value_string: "); f2__print(cause, edge_value_string);
-		      f2ptr edge_key_string_without_quotes   = f2__string__remove_all(cause, f2__string__remove_all(cause, edge_key_string, new__string(cause, "\'")),
-										      new__string(cause, "u\'"));
-		      f2ptr edge_value_string_without_quotes = f2__string__remove_all(cause, f2__string__remove_all(cause, edge_value_string, new__string(cause, "\'")),
-										      new__string(cause, "u\'"));
+		      f2ptr edge_key_string_without_quotes   = f2__string__replace_all(cause, f2__string__remove_all(cause, edge_key_string, new__string(cause, "\'"), new__string(cause, "")),
+										       new__string(cause, "u\'"), new__string(cause, ""));
+		      f2ptr edge_value_string_without_quotes = f2__string__replace_all(cause, f2__string__remove_all(cause, edge_value_string, new__string(cause, "\'"), new__string(cause, "")),
+										       new__string(cause, "u\'"), new__string(cause, ""));
 		      printf("\nedge_key_string_without_quotes: ");   f2__print(cause, edge_key_string_without_quotes);
 		      printf("\nedge_value_string_without_quotes: "); f2__print(cause, edge_value_string_without_quotes);
 		    }

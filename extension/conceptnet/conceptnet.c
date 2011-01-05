@@ -52,7 +52,7 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
       }
       iter = f2__cons__cdr(cause, iter);
     }
-    printf("conceptnet lines counted: " s64__fstr, index);
+    printf("\nconceptnet lines counted: " s64__fstr, index); fflush(stdout);
   }
   f2ptr conceptnet = f2__conceptnet__new(cause);
   

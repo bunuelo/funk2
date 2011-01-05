@@ -764,7 +764,9 @@
 			  edit_preferences_menu_item
 			  project_menu_item
 			  project_menu
-			  project_new_agent_menu_item
+			  project_new_ralph_agent_menu_item
+			  project_new_lauren_agent_menu_item
+			  project_new_macy_agent_menu_item
 			  simulation_menu_item
 			  simulation_menu
 			  simulation_run_initialization_sequence_menu_item
@@ -853,17 +855,33 @@
 					 [new isismon_preference_editor this]]
 				   nil]
 			     
-			     [= project_menu_item           [gtk-menu_item-new 'Project']]
-			     [= project_menu                [gtk-menu-new]]
-			     [= project_new_agent_menu_item [gtk-menu_item-new 'New Agent']]
+			     [= project_menu_item                  [gtk-menu_item-new 'Project']]
+			     [= project_menu                       [gtk-menu-new]]
+			     [= project_new_ralph_agent_menu_item  [gtk-menu_item-new 'New Ralph Agent']]
+			     [= project_new_lauren_agent_menu_item [gtk-menu_item-new 'New Lauren Agent']]
+			     [= project_new_macy_agent_menu_item   [gtk-menu_item-new 'New Macy Agent']]
 			     [have menu_bar          append  project_menu_item]
 			     [set  project_menu_item submenu project_menu]
-			     [have project_menu      append  project_new_agent_menu_item]
+			     [have project_menu      append  project_new_ralph_agent_menu_item]
+			     [have project_menu      append  project_new_lauren_agent_menu_item]
+			     [have project_menu      append  project_new_macy_agent_menu_item]
 			     
-			     [have project_new_agent_menu_item signal_connect 'activate'
+			     [have project_new_ralph_agent_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\nIsisMon: project new agent.']
-					 ]
+					 [terminal_format standard-terminal '\nIsisMon: project new Ralph agent.']
+					 [have isismon_project add_agent [isismon_agent-new_from_name isismon_project `Ralph]]]
+				   nil]
+			     
+			     [have project_new_lauren_agent_menu_item signal_connect 'activate'
+				   [funk []
+					 [terminal_format standard-terminal '\nIsisMon: project new Lauren agent.']
+					 [have isismon_project add_agent [isismon_agent-new_from_name isismon_project `Lauren]]]
+				   nil]
+			     
+			     [have project_new_macy_agent_menu_item signal_connect 'activate'
+				   [funk []
+					 [terminal_format standard-terminal '\nIsisMon: project new Macy agent.']
+					 [have isismon_project add_agent [isismon_agent-new_from_name isismon_project `Macy]]]
 				   nil]
 			     
 			     [= simulation_menu_item                             [gtk-menu_item-new 'Simulation']]
@@ -942,8 +960,6 @@
   [terminal_format standard-terminal '\nIsisMon New Project']
   [let [[new_isismon_project [new isismon_project this]]]
     [have new_isismon_project create_new_isis_world]
-    [have new_isismon_project add_agent [isismon_agent-new_from_name new_isismon_project `Ralph]]
-    [have new_isismon_project add_agent [isismon_agent-new_from_name new_isismon_project `Lauren]]
     [have project_vbox remove project_vbox__contained_widget]
     [have project_vbox pack_start [get new_isismon_project widget] nil nil 0]
     [have [get new_isismon_project widget] show_all]
@@ -970,14 +986,20 @@
   [set file_save_project_menu_item                      sensitive t]
   [set file_export_movie_menu_item                      sensitive t]
   [set simulation_run_initialization_sequence_menu_item sensitive t]
-  [set simulation_view_initialization_events_menu_item  sensitive t]]
+  [set simulation_view_initialization_events_menu_item  sensitive t]
+  [set project_new_ralph_agent_menu_item                sensitive t]
+  [set project_new_lauren_agent_menu_item               sensitive t]
+  [set project_new_macy_agent_menu_item                 sensitive t]]
 
 [deftypefunk isismon execute disable_project_commands []
   [set file_close_project_menu_item                     sensitive nil]
   [set file_save_project_menu_item                      sensitive nil]
   [set file_export_movie_menu_item                      sensitive nil]
   [set simulation_run_initialization_sequence_menu_item sensitive nil]
-  [set simulation_view_initialization_events_menu_item  sensitive nil]]
+  [set simulation_view_initialization_events_menu_item  sensitive nil]
+  [set project_new_ralph_agent_menu_item                sensitive nil]
+  [set project_new_lauren_agent_menu_item               sensitive nil]
+  [set project_new_macy_agent_menu_item                 sensitive nil]]
 
 [deftypefunk isismon execute close_project []
   [have this disable_project_commands]

@@ -26,7 +26,7 @@
 def_ceframe1(conceptnet, conceptnet, width);
 
 f2ptr raw__conceptnet__new(f2ptr cause, f2ptr width) {
-  return f2conceptnew__new(cause, width);
+  return f2conceptnet__new(cause, width);
 }
 
 f2ptr f2__conceptnet__new(f2ptr cause, f2ptr width) {

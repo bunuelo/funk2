@@ -41,77 +41,93 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
   if (raw__larva__is_type(cause, graph_file_string)) {
     return f2larva__new(cause, 1, nil);
   }
-  f2ptr graph_file_line_strings = f2__string__split(cause, graph_file_string, new__string(cause, "\n"));
+  f2ptr this           = f2__conceptnet__new(cause);
+  f2ptr graph          = f2__conceptnet__graph(cause, this);
+  f2ptr node_ptypehash = f2__ptypehash__new(cause);
   {
-    s64 line_index = 0;
-    f2ptr iter = graph_file_line_strings;
-    while (iter != nil) {
-      f2ptr graph_file_line_string = f2__cons__car(cause, iter);
-      {
-	if (line_index == 0) {
-	  f2ptr graph_file_line_tab_strings = f2__string__split(cause, graph_file_line_string, new__string(cause, "\t"));
-	  f2ptr tab_iter = graph_file_line_tab_strings;
-	  {
-	    f2ptr left_concept      = f2__cons__car(cause, tab_iter); tab_iter = f2__cons__cdr(cause, tab_iter);
-	    f2ptr right_concept     = f2__cons__car(cause, tab_iter); tab_iter = f2__cons__cdr(cause, tab_iter);
-	    f2ptr edge_label_string = f2__cons__car(cause, tab_iter); tab_iter = f2__cons__cdr(cause, tab_iter);
-	    printf("\nleft_concept.....: "); f2__print(cause, left_concept);
-	    printf("\nright_concept....: "); f2__print(cause, right_concept);
-	    printf("\nedge_label_string: "); f2__print(cause, edge_label_string);
+    f2ptr graph_file_line_strings = f2__string__split(cause, graph_file_string, new__string(cause, "\n"));
+    {
+      s64 line_index = 0;
+      f2ptr iter = graph_file_line_strings;
+      while (iter != nil) {
+	f2ptr graph_file_line_string = f2__cons__car(cause, iter);
+	{
+	  if (line_index < 10) {
+	    f2ptr graph_file_line_tab_strings = f2__string__split(cause, graph_file_line_string, new__string(cause, "\t"));
+	    f2ptr tab_iter = graph_file_line_tab_strings;
 	    {
-	      f2ptr edge_label_string_without_left_squiglies = f2__string__replace_all(cause, edge_label_string,                        new__string(cause, "{"), new__string(cause, ""));
-	      f2ptr edge_label_string_without_squiglies      = f2__string__replace_all(cause, edge_label_string_without_left_squiglies, new__string(cause, "}"), new__string(cause, ""));
-	      printf("\nedge_label_string_without_squiglies: "); f2__print(cause, edge_label_string_without_squiglies);
-	      f2ptr edge_label_strings = f2__string__split(cause, edge_label_string_without_squiglies, new__string(cause, ", "));
+	      f2ptr left_concept      = f2__cons__car(cause, tab_iter); tab_iter = f2__cons__cdr(cause, tab_iter);
+	      f2ptr right_concept     = f2__cons__car(cause, tab_iter); tab_iter = f2__cons__cdr(cause, tab_iter);
+	      f2ptr edge_label_string = f2__cons__car(cause, tab_iter); tab_iter = f2__cons__cdr(cause, tab_iter);
+	      printf("\nleft_concept.....: "); f2__print(cause, left_concept);
+	      printf("\nright_concept....: "); f2__print(cause, right_concept);
+	      printf("\nedge_label_string: "); f2__print(cause, edge_label_string);
 	      {
-		f2ptr edge_label_iter = edge_label_strings;
-		while (edge_label_iter != nil) {
-		  f2ptr edge_label_pair_string = f2__cons__car(cause, edge_label_iter);
-		  {
-		    printf("\nedge_label_pair_string: "); f2__print(cause, edge_label_pair_string);
-		    f2ptr edge_label_pair = f2__string__split(cause, edge_label_pair_string, new__string(cause, ": "));
+		f2ptr edge_label_string_without_left_squiglies = f2__string__replace_all(cause, edge_label_string,                        new__string(cause, "{"), new__string(cause, ""));
+		f2ptr edge_label_string_without_squiglies      = f2__string__replace_all(cause, edge_label_string_without_left_squiglies, new__string(cause, "}"), new__string(cause, ""));
+		printf("\nedge_label_string_without_squiglies: "); f2__print(cause, edge_label_string_without_squiglies);
+		f2ptr edge_label_strings = f2__string__split(cause, edge_label_string_without_squiglies, new__string(cause, ", "));
+		{
+		  f2ptr edge_label_iter = edge_label_strings;
+		  while (edge_label_iter != nil) {
+		    f2ptr edge_label_pair_string = f2__cons__car(cause, edge_label_iter);
 		    {
-		      f2ptr edge_label_pair_iter = edge_label_pair;
-		      f2ptr edge_key_string   = f2__cons__car(cause, edge_label_pair_iter); edge_label_pair_iter = f2__cons__cdr(cause, edge_label_pair_iter);
-		      f2ptr edge_value_string = f2__cons__car(cause, edge_label_pair_iter); edge_label_pair_iter = f2__cons__cdr(cause, edge_label_pair_iter);
-		      if (edge_label_pair_iter != nil) {
-			printf("\nconceptnet-new_from_graph_file warning: edge_label_pair_iter != nil."); fflush(stdout);
-		      }
-		      printf("\nedge_key_string: ");   f2__print(cause, edge_key_string);
-		      printf("\nedge_value_string: "); f2__print(cause, edge_value_string);
-		      f2ptr edge_key_string_without_quotes   = f2__string__replace_all(cause, f2__string__replace_all(cause, edge_key_string, new__string(cause, "u\'"), new__string(cause, "")),
-										       new__string(cause, "\'"), new__string(cause, ""));
-		      f2ptr edge_value_string_without_quotes = f2__string__replace_all(cause, f2__string__replace_all(cause, edge_value_string, new__string(cause, "u\'"), new__string(cause, "")),
-										       new__string(cause, "\'"), new__string(cause, ""));
-		      printf("\nedge_key_string_without_quotes: ");   f2__print(cause, edge_key_string_without_quotes);
-		      printf("\nedge_value_string_without_quotes: "); f2__print(cause, edge_value_string_without_quotes);
-		      
-		      f2ptr edge_key = f2__string__as__symbol(cause, edge_key_string_without_quotes);
-		      if (raw__eq(cause, edge_key, new__symbol(cause, "rel"))) {
-			f2ptr edge_value = f2__string__as__symbol(cause, edge_value_string_without_quotes);
-			printf("\nedge_value: "); f2__print(cause, edge_value);
+		      printf("\nedge_label_pair_string: "); f2__print(cause, edge_label_pair_string);
+		      f2ptr edge_label_pair = f2__string__split(cause, edge_label_pair_string, new__string(cause, ": "));
+		      {
+			f2ptr edge_label_pair_iter = edge_label_pair;
+			f2ptr edge_key_string   = f2__cons__car(cause, edge_label_pair_iter); edge_label_pair_iter = f2__cons__cdr(cause, edge_label_pair_iter);
+			f2ptr edge_value_string = f2__cons__car(cause, edge_label_pair_iter); edge_label_pair_iter = f2__cons__cdr(cause, edge_label_pair_iter);
+			if (edge_label_pair_iter != nil) {
+			  printf("\nconceptnet-new_from_graph_file warning: edge_label_pair_iter != nil."); fflush(stdout);
+			}
+			printf("\nedge_key_string: ");   f2__print(cause, edge_key_string);
+			printf("\nedge_value_string: "); f2__print(cause, edge_value_string);
+			f2ptr edge_key_string_without_quotes   = f2__string__replace_all(cause, f2__string__replace_all(cause, edge_key_string, new__string(cause, "u\'"), new__string(cause, "")),
+											 new__string(cause, "\'"), new__string(cause, ""));
+			f2ptr edge_value_string_without_quotes = f2__string__replace_all(cause, f2__string__replace_all(cause, edge_value_string, new__string(cause, "u\'"), new__string(cause, "")),
+											 new__string(cause, "\'"), new__string(cause, ""));
+			printf("\nedge_key_string_without_quotes: ");   f2__print(cause, edge_key_string_without_quotes);
+			printf("\nedge_value_string_without_quotes: "); f2__print(cause, edge_value_string_without_quotes);
+			
+			f2ptr edge_key = f2__string__as__symbol(cause, edge_key_string_without_quotes);
+			if (raw__eq(cause, edge_key, new__symbol(cause, "rel"))) {
+			  f2ptr edge_symbol          = f2__string__as__symbol(cause, edge_value_string_without_quotes);
+			  f2ptr left_concept_symbol  = f2__string__as__symbol(cause, left_concept);
+			  f2ptr right_concept_symbol = f2__string__as__symbol(cause, right_concept);
+			  printf("\nedge: "); f2__print(cause, f2list3__new(cause, edge_symbol, left_concept_symbol, right_concept_symbol));
+			  {
+			    f2ptr left_graph_node  = raw__ptypehash__lookup(cause, node_ptypehash, left_concept_symbol);
+			    if (left_graph_node == nil) {
+			      left_graph_node = f2__graph_node__new(cause, left_concept_symbol);
+			    }
+			    f2ptr right_graph_node = raw__ptypehash__lookup(cause, node_ptypehash, right_concept_symbol);
+			    if (right_graph_node == nil) {
+			      right_graph_node = f2__graph_node__new(cause, right_concept_symbol);
+			    }
+			    f2__graph__add_new_edge(cause, graph, left_graph_node, right_graph_node);
+			  }
+			}
 		      }
 		    }
+		    edge_label_iter = f2__cons__cdr(cause, edge_label_iter);
 		  }
-		  edge_label_iter = f2__cons__cdr(cause, edge_label_iter);
 		}
 	      }
+	      fflush(stdout);
 	    }
-	    fflush(stdout);
+	    if (tab_iter != nil) {
+	      printf("\nconceptnet-new_from_graph_file warning: tab_iter != nil."); fflush(stdout);
+	    }
 	  }
-	  if (tab_iter != nil) {
-	    printf("\nconceptnet-new_from_graph_file warning: tab_iter != nil."); fflush(stdout);
-	  }
+	  line_index ++;
 	}
-	line_index ++;
+	iter = f2__cons__cdr(cause, iter);
       }
-      iter = f2__cons__cdr(cause, iter);
+      printf("\nconceptnet lines counted: " s64__fstr, line_index); fflush(stdout);
     }
-    printf("\nconceptnet lines counted: " s64__fstr, line_index); fflush(stdout);
   }
-  f2ptr conceptnet = f2__conceptnet__new(cause);
-  
-  return conceptnet;
+  return this;
 }
 export_cefunk1(conceptnet__new_from_graph_file, filename, 0, "Loads a conceptnet graph file.");
 

@@ -127,7 +127,7 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
 	    printf("\nconceptnet-new_from_graph_file warning: tab_iter != nil."); fflush(stdout);
 	  }
 	  line_index ++;
-	  if ((line_index % 10000) == 0) {
+	  if ((line_index % 100) == 0) {
 	    printf("."); fflush(stdout);
 	  }
 	}

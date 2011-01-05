@@ -44,15 +44,24 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
   f2ptr this           = f2__conceptnet__new(cause);
   f2ptr graph          = f2__conceptnet__graph(cause, this);
   f2ptr node_ptypehash = f2__ptypehash__new(cause);
+  f2ptr empty_string         = new__string(cause, "");
+  f2ptr newline_string       = new__string(cause, "\n");
+  f2ptr tab_string           = new__string(cause, "\t");
+  f2ptr begin_squigly_string = new__string(cause, "{");
+  f2ptr end_squigly_string   = new__string(cause, "}");
+  f2ptr comma_space_string   = new__string(cause, ", ");
+  f2ptr colon_space_string   = new__string(cause, ": ");
+  f2ptr quote_string         = new__string(cause, "\'");
+  f2ptr u_quote_string       = new__string(cause, "u\'");
   {
-    f2ptr graph_file_line_strings = f2__string__split(cause, graph_file_string, new__string(cause, "\n"));
+    f2ptr graph_file_line_strings = f2__string__split(cause, graph_file_string, newline_string);
     {
       s64 line_index = 0;
       f2ptr iter = graph_file_line_strings;
       while (iter != nil) {
 	f2ptr graph_file_line_string = f2__cons__car(cause, iter);
 	{
-	  f2ptr graph_file_line_tab_strings = f2__string__split(cause, graph_file_line_string, new__string(cause, "\t"));
+	  f2ptr graph_file_line_tab_strings = f2__string__split(cause, graph_file_line_string, tab_string);
 	  f2ptr tab_iter = graph_file_line_tab_strings;
 	  {
 	    f2ptr left_concept      = f2__cons__car(cause, tab_iter); tab_iter = f2__cons__cdr(cause, tab_iter);
@@ -62,17 +71,17 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
 	    //printf("\nright_concept....: "); f2__print(cause, right_concept);
 	    //printf("\nedge_label_string: "); f2__print(cause, edge_label_string);
 	    {
-	      f2ptr edge_label_string_without_left_squiglies = f2__string__replace_all(cause, edge_label_string,                        new__string(cause, "{"), new__string(cause, ""));
-	      f2ptr edge_label_string_without_squiglies      = f2__string__replace_all(cause, edge_label_string_without_left_squiglies, new__string(cause, "}"), new__string(cause, ""));
+	      f2ptr edge_label_string_without_left_squiglies = f2__string__replace_all(cause, edge_label_string,                        begin_squigly_string, empty_string);
+	      f2ptr edge_label_string_without_squiglies      = f2__string__replace_all(cause, edge_label_string_without_left_squiglies, end_squigly_string,   empty_string);
 	      //printf("\nedge_label_string_without_squiglies: "); f2__print(cause, edge_label_string_without_squiglies);
-	      f2ptr edge_label_strings = f2__string__split(cause, edge_label_string_without_squiglies, new__string(cause, ", "));
+	      f2ptr edge_label_strings = f2__string__split(cause, edge_label_string_without_squiglies, comma_space_string);
 	      {
 		f2ptr edge_label_iter = edge_label_strings;
 		while (edge_label_iter != nil) {
 		  f2ptr edge_label_pair_string = f2__cons__car(cause, edge_label_iter);
 		  {
 		    //printf("\nedge_label_pair_string: "); f2__print(cause, edge_label_pair_string);
-		    f2ptr edge_label_pair = f2__string__split(cause, edge_label_pair_string, new__string(cause, ": "));
+		    f2ptr edge_label_pair = f2__string__split(cause, edge_label_pair_string, colon_space_string);
 		    {
 		      f2ptr edge_label_pair_iter = edge_label_pair;
 		      f2ptr edge_key_string   = f2__cons__car(cause, edge_label_pair_iter); edge_label_pair_iter = f2__cons__cdr(cause, edge_label_pair_iter);
@@ -82,10 +91,10 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename) {
 		      }
 		      //printf("\nedge_key_string: ");   f2__print(cause, edge_key_string);
 		      //printf("\nedge_value_string: "); f2__print(cause, edge_value_string);
-		      f2ptr edge_key_string_without_quotes   = f2__string__replace_all(cause, f2__string__replace_all(cause, edge_key_string, new__string(cause, "u\'"), new__string(cause, "")),
-										       new__string(cause, "\'"), new__string(cause, ""));
-		      f2ptr edge_value_string_without_quotes = f2__string__replace_all(cause, f2__string__replace_all(cause, edge_value_string, new__string(cause, "u\'"), new__string(cause, "")),
-										       new__string(cause, "\'"), new__string(cause, ""));
+		      f2ptr edge_key_string_without_quotes   = f2__string__replace_all(cause, f2__string__replace_all(cause, edge_key_string, u_quote_string, empty_string),
+										       quote_string, empty_string);
+		      f2ptr edge_value_string_without_quotes = f2__string__replace_all(cause, f2__string__replace_all(cause, edge_value_string, u_quote_string, empty_string),
+										       quote_string, empty_string);
 		      //printf("\nedge_key_string_without_quotes: ");   f2__print(cause, edge_key_string_without_quotes);
 		      //printf("\nedge_value_string_without_quotes: "); f2__print(cause, edge_value_string_without_quotes);
 		      

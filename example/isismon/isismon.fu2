@@ -630,6 +630,7 @@
 
 [deftypefunk isismon_project execute add_agent [isismon_agent]
   [have agent_frame add [get isismon_agent name] isismon_agent]
+  [have isismon_agent show_all]
   [have agent_hbox pack_start isismon_agent t t 0]]
 
 [deftypefunk isismon_project execute update_agents []

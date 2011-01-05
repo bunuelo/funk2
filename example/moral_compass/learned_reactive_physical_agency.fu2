@@ -805,10 +805,10 @@ add rel orientation
   [new []
        [construct resource `make_toast
 		  [funk []
-			[have this-resource make_toast]]] 
-   nil]]
+			[have this-resource make_toast]]]]
+  nil]
 
- [deftypefunk make_toast_resource execute make_toast []
+[deftypefunk make_toast_resource execute make_toast []
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]]
@@ -817,13 +817,12 @@ add rel orientation
 		      [string-contains [get_right_hand_object_name mind] 'loaf']]]
       [sleep 3]]
     [mind-wait_to_activate mind learned_reactive physical level_pitch]
-    [
     [mind-wait_to_activate mind learned_reactive physical look_for `knife]
     [mind-wait_to_activate mind learned_reactive physical drop_from_left_hand]
     [mind-wait_to_activate mind learned_reactive physical hold_with_left_hand `knife]
     [mind-wait_to_activate mind learned_reactive physical hold_with_left_hand `slice_toast]
     [mind-wait_to_activate mind learned_reactive physical walk_directly_towards `oven]]]
-    
+
 '************************************unused resources**********************************************'
 
 [deframe walk_towards_resource [resource] []
@@ -901,7 +900,7 @@ add rel orientation
 [deframe learned_reactive_physical_agency [agency] []
   [new []
        [construct agency `physical]
-
+       
        [have this add_resource [new look_up_resource]]
        [have this add_resource [new look_down_resource]]
        [have this add_resource [new turn_right_resource]]

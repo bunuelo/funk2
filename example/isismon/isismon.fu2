@@ -762,6 +762,9 @@
 			  edit_menu_item
 			  edit_menu
 			  edit_preferences_menu_item
+			  project_menu_item
+			  project_menu
+			  project_new_agent_menu_item
 			  simulation_menu_item
 			  simulation_menu
 			  simulation_run_initialization_sequence_menu_item
@@ -848,6 +851,19 @@
 				   [funk []
 					 [terminal_format standard-terminal '\nIsisMon: edit preferences.']
 					 [new isismon_preference_editor this]]
+				   nil]
+			     
+			     [= project_menu_item           [gtk-menu_item-new 'Project']]
+			     [= project_menu                [gtk-menu-new]]
+			     [= project_new_agent_menu_item [gtk-menu_item-new 'New Agent']]
+			     [have menu_bar          append  project_menu_item]
+			     [set  project_menu_item submenu project_menu]
+			     [have project_menu      append  project_new_agent_menu_item]
+			     
+			     [have project_new_agent_menu_item signal_connect 'activate'
+				   [funk []
+					 [terminal_format standard-terminal '\nIsisMon: project new agent.']
+					 ]
 				   nil]
 			     
 			     [= simulation_menu_item                             [gtk-menu_item-new 'Simulation']]

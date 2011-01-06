@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 [defpackage graphviz
-  :packages [math]
+  :packages [math image gtk]
    :sources ['graphviz-primfunks.fu2'
 	     'graphviz.fu2']]
 

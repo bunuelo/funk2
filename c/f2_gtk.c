@@ -2174,7 +2174,7 @@ f2ptr raw__gtk__pixbuf__new_from_file(f2ptr cause, f2ptr filename) {
       this = f2__gdk_pixbuf__new(cause, f2pointer__new(cause, to_ptr(pixbuf)));
     } else {
       if (g_error == NULL) {
-	this = f2larva__new(cause, 2135, f2__bug__new(cause, f2__frame__new(cause, f2list8__new(cause,
+	this = f2larva__new(cause, 2135, f2__bug__new(cause, f2__frame__new(cause, f2list4__new(cause,
 												new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_load_pixbuf_from_file-no_specific_gtk_error"),
 												new__symbol(cause, "filename"), filename))));
       } else {

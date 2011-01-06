@@ -5124,6 +5124,7 @@ void f2__gtk__initialize() {
   
   f2__primcfunk__init__3(gtk__pixbuf__new_from_rgb_data,            width, height, rgb_data,                               "Returns a new gdk_pixbuf object.");
   f2__primcfunk__init__3(gtk__pixbuf__new_from_rgba_data,           width, height, rgba_data,                              "Returns a new gdk_pixbuf object.");
+  f2__primcfunk__init__1(gtk__pixbuf__new_from_file,                filename,                                              "Loads the given file, and returns a new gdk_pixbuf object.");
   f2__primcfunk__init__1(gtk__pixbuf__get_width,                    this,                                                  "Returns the width of this gdk_pixbuf.");
   f2__primcfunk__init__1(gtk__pixbuf__get_height,                   this,                                                  "Returns the height of this gdk_pixbuf.");
   f2__primcfunk__init__1(gtk__pixbuf__get_rgba_pixel_data,          this,                                                  "Returns a chunk containing the rgba data of this gdk_pixbuf.");

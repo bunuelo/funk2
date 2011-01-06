@@ -989,31 +989,46 @@ boolean_t funk2_gtk__pixbuf__copy_rgba_pixel_data(funk2_gtk_t* this, GdkPixbuf* 
       if (! (gdk_pixbuf_get_bits_per_sample(pixbuf) == 8)) {
 	success = boolean__false;
       } else {
-	if (! (gdk_pixbuf_get_has_alpha(pixbuf))) {
+	boolean_t has_alpha  = gdk_pixbuf_get_has_alpha(pixbuf);
+	int       n_channels = gdk_pixbuf_get_n_channels(pixbuf);
+	if (! ((n_channels == 4) || (n_channels == 3))) {
+	  printf("\nfunk2_gtk__pixbuf__copy_rgb_pixel_data error: pixbuf channel number is not 3 or 4.\n"); fflush(stdout);
 	  success = boolean__false;
 	} else {
-	  int n_channels = gdk_pixbuf_get_n_channels(pixbuf);
-	  if (! (n_channels == 4)) {
-	    success = boolean__false;
-	  } else {
-	    int     width          = gdk_pixbuf_get_width(pixbuf);
-	    int     width_in_bytes = width << 2;
-	    int     height         = gdk_pixbuf_get_height(pixbuf);
-	    int     rowstride      = gdk_pixbuf_get_rowstride(pixbuf);
-	    s64     dest_rowstride = width << 2;
-	    guchar* pixels         = gdk_pixbuf_get_pixels(pixbuf);
-	    {
-	      guchar* row      = pixels;
-	      u8*     dest_row = rgba_pixel_data;
-	      s64     y;
-	      for (y = 0; y < height; y ++) {
-		memcpy(dest_row, row, width_in_bytes);
-		row      += rowstride;
-		dest_row += dest_rowstride;
+	  int     width          = gdk_pixbuf_get_width(pixbuf);
+	  int     height         = gdk_pixbuf_get_height(pixbuf);
+	  int     rowstride      = gdk_pixbuf_get_rowstride(pixbuf);
+	  s64     dest_rowstride = width * 4;
+	  guchar* pixels         = gdk_pixbuf_get_pixels(pixbuf);
+	  {
+	    guchar* row      = pixels;
+	    u8*     dest_row = rgb_pixel_data;
+	    s64     y;
+	    for (y = 0; y < height; y ++) {
+	      {
+		guchar* pixel      = row;
+		u8*     dest_pixel = dest_row;
+		s64 x;
+		for (x = 0; x < width; x ++) {
+		  {
+		    dest_pixel[0] = pixel[0];
+		    dest_pixel[1] = pixel[1];
+		    dest_pixel[2] = pixel[2];
+		    if (has_alpha) {
+		      dest_pixel[3] = pixel[3];
+		    } else {
+		      dest_pixel[3] = 0;
+		    }
+		  }
+		  pixel      += n_channels;
+		  dest_pixel += 4;
+		}
 	      }
+	      row      += rowstride;
+	      dest_row += dest_rowstride;
 	    }
-	    success = boolean__true;
 	  }
+	  success = boolean__true;
 	}
       }
     }

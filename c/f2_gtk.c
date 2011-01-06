@@ -1002,7 +1002,7 @@ boolean_t funk2_gtk__pixbuf__copy_rgba_pixel_data(funk2_gtk_t* this, GdkPixbuf* 
 	  guchar* pixels         = gdk_pixbuf_get_pixels(pixbuf);
 	  {
 	    guchar* row      = pixels;
-	    u8*     dest_row = rgb_pixel_data;
+	    u8*     dest_row = rgba_pixel_data;
 	    s64     y;
 	    for (y = 0; y < height; y ++) {
 	      {

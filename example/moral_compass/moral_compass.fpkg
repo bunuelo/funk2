@@ -67,13 +67,13 @@
 	     learned_reactive_physical_agency
 	     learned_reactive_sensory_agency
 	     learned_reactive_language_agency
+	     learned_reactive_physical_knowledge_agency
 	     english_language]
    :sources ['learned_reactive_layer.fu2']]
 
 [defpackage learned_reactive_physical_agency
   :packages [mind]
    :sources ['learned_reactive_physical_agency.fu2']]
-
 
 [defpackage moral_compass_proprioceptual_object
   :packages [mind]
@@ -95,10 +95,13 @@
   :packages [mind moral_compass_perception]
    :sources ['learned_reactive_sensory_agency.fu2']]
 
-
 [defpackage learned_reactive_language_agency
   :packages [mind]
    :sources ['learned_reactive_language_agency.fu2']]
+
+[defpackage learned_reactive_physical_knowledge_agency
+  :packages [mind]
+   :sources ['learned_reactive_physical_knowledge_agency.fu2']]
 
 
 

@@ -27,6 +27,7 @@
        [have this add_agency [new learned_reactive_sensory_agency]]
        [have this add_agency [new learned_reactive_physical_agency]]
        [have this add_agency [new learned_reactive_language_agency]]
+       [have this add_agency [new learned_reactive_physical_knowledge_agency]]
        [= natural_language_command_frame [new natural_language_command_frame]]
        [have natural_language_command_frame add_command `[pick up] `[direct_object] nil
 	     [funk [direct_object]

@@ -41,7 +41,7 @@
 
 [defunk dot_code-as-image [this width height]
   [have this save 'graphviz-temp.dot']
-  [safe-system [format nil 'dot -Gsize=' width ',' height ' -Tpng graphviz-temp.dot -ographviz-temp.png']]
+  [safe-system [format nil 'dot -Gdpi=2048 -Gsize=' [/ width 2048.0] ',' [/ height 2048.0] ' -Tpng graphviz-temp.dot -ographviz-temp.png']]
   [image-new_from_file 'graphviz-temp.png']]
 
 

@@ -48,6 +48,7 @@
 				label
 				entry
 				
+				visual_knowledge_image
 				]
   [new [initial_isismon_project initial_isis_agent]
        [= isismon_project initial_isismon_project]
@@ -104,6 +105,11 @@
        [= view_visual_knowledge_menu_item [gtk-menu_item-new 'Visual Knowledge']]
        [have view_visual_knowledge_menu_item signal_connect 'activate'
 	     [funk []
+		   [set visual_knowledge_image image [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
+															     [get knowledge_base as-digraph_dot_code]]
+														       [conslist [get [get isis_agent mind] visual_knowledge]]]
+													       '\n']]]]
+						       [dot_code-as-image dot_code]]]
 		   [let [[visual_knowledge_base [get [get isis_agent mind] visual_knowledge]]]
 		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s visual semantic knowledge.']
 		     [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
@@ -242,6 +248,9 @@
        
        [have vbox pack_start label t t 0]
        [have vbox pack_start entry nil nil 0]
+       
+       [= visual_knowledge_image [gtk-image-new_from_image [image-new_from_rgb_data 11 11 [new chunk [* 11 11 3]]]]]
+       [have vbox pack_start visual_knowledge_image nil nil 0]
        
        [have frame add vbox]
        nil]]

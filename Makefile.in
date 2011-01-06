@@ -114,6 +114,15 @@ extension_causality_libf2e_causality_la_LINK = $(LIBTOOL) $(AM_V_lt) \
 	$(CCLD) $(extension_causality_libf2e_causality_la_CFLAGS) \
 	$(CFLAGS) $(extension_causality_libf2e_causality_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
+extension_conceptnet_libf2e_conceptnet_la_LIBADD =
+am_extension_conceptnet_libf2e_conceptnet_la_OBJECTS = extension/conceptnet/extension_conceptnet_libf2e_conceptnet_la-conceptnet.lo
+extension_conceptnet_libf2e_conceptnet_la_OBJECTS =  \
+	$(am_extension_conceptnet_libf2e_conceptnet_la_OBJECTS)
+extension_conceptnet_libf2e_conceptnet_la_LINK = $(LIBTOOL) $(AM_V_lt) \
+	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
+	$(CCLD) $(extension_conceptnet_libf2e_conceptnet_la_CFLAGS) \
+	$(CFLAGS) $(extension_conceptnet_libf2e_conceptnet_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 extension_equals_hash_libf2e_equals_hash_la_LIBADD =
 am_extension_equals_hash_libf2e_equals_hash_la_OBJECTS = extension/equals_hash/extension_equals_hash_libf2e_equals_hash_la-equals_hash.lo
 extension_equals_hash_libf2e_equals_hash_la_OBJECTS =  \
@@ -451,6 +460,7 @@ AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(extension_causality_libf2e_causality_la_SOURCES) \
+	$(extension_conceptnet_libf2e_conceptnet_la_SOURCES) \
 	$(extension_equals_hash_libf2e_equals_hash_la_SOURCES) \
 	$(extension_event_stream_libf2e_event_stream_la_SOURCES) \
 	$(extension_fibermon_libf2e_fibermon_la_SOURCES) \
@@ -473,6 +483,7 @@ SOURCES = $(extension_causality_libf2e_causality_la_SOURCES) \
 	$(extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES) \
 	$(lib_libfunk2_la_SOURCES)
 DIST_SOURCES = $(extension_causality_libf2e_causality_la_SOURCES) \
+	$(extension_conceptnet_libf2e_conceptnet_la_SOURCES) \
 	$(extension_equals_hash_libf2e_equals_hash_la_SOURCES) \
 	$(extension_event_stream_libf2e_event_stream_la_SOURCES) \
 	$(extension_fibermon_libf2e_fibermon_la_SOURCES) \
@@ -764,6 +775,7 @@ cc_flags = $(release__cc_flags)
 ACLOCAL_AMFLAGS = -I m4
 lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/causality/libf2e_causality.la \
+                  extension/conceptnet/libf2e_conceptnet.la \
                   extension/event_stream/libf2e_event_stream.la \
                   extension/equals_hash/libf2e_equals_hash.la \
                   extension/fibermon/libf2e_fibermon.la \
@@ -916,6 +928,7 @@ lib_libfunk2_la_SOURCES = \
   config_bit_num.h
 
 extension_causality_libf2e_causality_la_SOURCES = extension/causality/causality.c
+extension_conceptnet_libf2e_conceptnet_la_SOURCES = extension/conceptnet/conceptnet.c
 extension_event_stream_libf2e_event_stream_la_SOURCES = extension/event_stream/event_stream.c
 extension_equals_hash_libf2e_equals_hash_la_SOURCES = extension/equals_hash/equals_hash.c
 extension_fibermon_libf2e_fibermon_la_SOURCES = extension/fibermon/fibermon.c
@@ -967,6 +980,8 @@ extension_image_sequence_libf2e_image_sequence_la_LDFLAGS = $(lib_libfunk2_la_LD
 extension_image_sequence_libf2e_image_sequence_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_movie_libf2e_movie_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_movie_libf2e_movie_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_conceptnet_libf2e_conceptnet_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_conceptnet_libf2e_conceptnet_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_event_stream_libf2e_event_stream_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_event_stream_libf2e_event_stream_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_forward_planner_libf2e_forward_planner_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
@@ -1100,6 +1115,17 @@ extension/causality/extension_causality_libf2e_causality_la-causality.lo:  \
 	extension/causality/$(DEPDIR)/$(am__dirstamp)
 extension/causality/libf2e_causality.la: $(extension_causality_libf2e_causality_la_OBJECTS) $(extension_causality_libf2e_causality_la_DEPENDENCIES) extension/causality/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_causality_libf2e_causality_la_LINK) -rpath $(libdir) $(extension_causality_libf2e_causality_la_OBJECTS) $(extension_causality_libf2e_causality_la_LIBADD) $(LIBS)
+extension/conceptnet/$(am__dirstamp):
+	@$(MKDIR_P) extension/conceptnet
+	@: > extension/conceptnet/$(am__dirstamp)
+extension/conceptnet/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/conceptnet/$(DEPDIR)
+	@: > extension/conceptnet/$(DEPDIR)/$(am__dirstamp)
+extension/conceptnet/extension_conceptnet_libf2e_conceptnet_la-conceptnet.lo:  \
+	extension/conceptnet/$(am__dirstamp) \
+	extension/conceptnet/$(DEPDIR)/$(am__dirstamp)
+extension/conceptnet/libf2e_conceptnet.la: $(extension_conceptnet_libf2e_conceptnet_la_OBJECTS) $(extension_conceptnet_libf2e_conceptnet_la_DEPENDENCIES) extension/conceptnet/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_conceptnet_libf2e_conceptnet_la_LINK) -rpath $(libdir) $(extension_conceptnet_libf2e_conceptnet_la_OBJECTS) $(extension_conceptnet_libf2e_conceptnet_la_LIBADD) $(LIBS)
 extension/equals_hash/$(am__dirstamp):
 	@$(MKDIR_P) extension/equals_hash
 	@: > extension/equals_hash/$(am__dirstamp)
@@ -1836,6 +1862,8 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-funk2.lo
 	-rm -f extension/causality/extension_causality_libf2e_causality_la-causality.$(OBJEXT)
 	-rm -f extension/causality/extension_causality_libf2e_causality_la-causality.lo
+	-rm -f extension/conceptnet/extension_conceptnet_libf2e_conceptnet_la-conceptnet.$(OBJEXT)
+	-rm -f extension/conceptnet/extension_conceptnet_libf2e_conceptnet_la-conceptnet.lo
 	-rm -f extension/equals_hash/extension_equals_hash_libf2e_equals_hash_la-equals_hash.$(OBJEXT)
 	-rm -f extension/equals_hash/extension_equals_hash_libf2e_equals_hash_la-equals_hash.lo
 	-rm -f extension/event_stream/extension_event_stream_libf2e_event_stream_la-event_stream.$(OBJEXT)
@@ -2006,6 +2034,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_zlib.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-funk2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/causality/$(DEPDIR)/extension_causality_libf2e_causality_la-causality.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/conceptnet/$(DEPDIR)/extension_conceptnet_libf2e_conceptnet_la-conceptnet.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/equals_hash/$(DEPDIR)/extension_equals_hash_libf2e_equals_hash_la-equals_hash.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/event_stream/$(DEPDIR)/extension_event_stream_libf2e_event_stream_la-event_stream.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/fibermon/$(DEPDIR)/extension_fibermon_libf2e_fibermon_la-fibermon.Plo@am__quote@
@@ -2061,6 +2090,14 @@ extension/causality/extension_causality_libf2e_causality_la-causality.lo: extens
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/causality/causality.c' object='extension/causality/extension_causality_libf2e_causality_la-causality.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_causality_libf2e_causality_la_CFLAGS) $(CFLAGS) -c -o extension/causality/extension_causality_libf2e_causality_la-causality.lo `test -f 'extension/causality/causality.c' || echo '$(srcdir)/'`extension/causality/causality.c
+
+extension/conceptnet/extension_conceptnet_libf2e_conceptnet_la-conceptnet.lo: extension/conceptnet/conceptnet.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_conceptnet_libf2e_conceptnet_la_CFLAGS) $(CFLAGS) -MT extension/conceptnet/extension_conceptnet_libf2e_conceptnet_la-conceptnet.lo -MD -MP -MF extension/conceptnet/$(DEPDIR)/extension_conceptnet_libf2e_conceptnet_la-conceptnet.Tpo -c -o extension/conceptnet/extension_conceptnet_libf2e_conceptnet_la-conceptnet.lo `test -f 'extension/conceptnet/conceptnet.c' || echo '$(srcdir)/'`extension/conceptnet/conceptnet.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/conceptnet/$(DEPDIR)/extension_conceptnet_libf2e_conceptnet_la-conceptnet.Tpo extension/conceptnet/$(DEPDIR)/extension_conceptnet_libf2e_conceptnet_la-conceptnet.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/conceptnet/conceptnet.c' object='extension/conceptnet/extension_conceptnet_libf2e_conceptnet_la-conceptnet.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_conceptnet_libf2e_conceptnet_la_CFLAGS) $(CFLAGS) -c -o extension/conceptnet/extension_conceptnet_libf2e_conceptnet_la-conceptnet.lo `test -f 'extension/conceptnet/conceptnet.c' || echo '$(srcdir)/'`extension/conceptnet/conceptnet.c
 
 extension/equals_hash/extension_equals_hash_libf2e_equals_hash_la-equals_hash.lo: extension/equals_hash/equals_hash.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_equals_hash_libf2e_equals_hash_la_CFLAGS) $(CFLAGS) -MT extension/equals_hash/extension_equals_hash_libf2e_equals_hash_la-equals_hash.lo -MD -MP -MF extension/equals_hash/$(DEPDIR)/extension_equals_hash_libf2e_equals_hash_la-equals_hash.Tpo -c -o extension/equals_hash/extension_equals_hash_libf2e_equals_hash_la-equals_hash.lo `test -f 'extension/equals_hash/equals_hash.c' || echo '$(srcdir)/'`extension/equals_hash/equals_hash.c
@@ -3229,6 +3266,7 @@ clean-libtool:
 	-rm -rf .libs _libs
 	-rm -rf c/.libs c/_libs
 	-rm -rf extension/causality/.libs extension/causality/_libs
+	-rm -rf extension/conceptnet/.libs extension/conceptnet/_libs
 	-rm -rf extension/equals_hash/.libs extension/equals_hash/_libs
 	-rm -rf extension/event_stream/.libs extension/event_stream/_libs
 	-rm -rf extension/fibermon/.libs extension/fibermon/_libs
@@ -3483,6 +3521,8 @@ distclean-generic:
 	-rm -f c/$(am__dirstamp)
 	-rm -f extension/causality/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/causality/$(am__dirstamp)
+	-rm -f extension/conceptnet/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/conceptnet/$(am__dirstamp)
 	-rm -f extension/equals_hash/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/equals_hash/$(am__dirstamp)
 	-rm -f extension/event_stream/$(DEPDIR)/$(am__dirstamp)
@@ -3533,7 +3573,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -3581,7 +3621,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

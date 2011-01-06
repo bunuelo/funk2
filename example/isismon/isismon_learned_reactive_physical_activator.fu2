@@ -97,6 +97,22 @@
 									     hold_with_left_hand_resource__target__label
 									     hold_with_left_hand_resource__target__entry
 									     
+
+									     use_right_hand_resource__hbox
+									     use_right_hand_resource__button
+									     use_right_hand_resource__target__label
+									     use_right_hand_resource__target__entry
+									     use_right_hand_resource__target__label2
+									     use_right_hand_resource__target__entry2
+									     
+
+									     use_left_hand_resource__hbox
+									     use_left_hand_resource__button
+									     use_left_hand_resource__target__label
+									     use_left_hand_resource__target__entry
+									     use_left_hand_resource__target__label2
+									     use_left_hand_resource__target__entry2
+									     
 									     
 									     walk_directly_towards_resource__hbox
 									     walk_directly_towards_resource__button
@@ -333,6 +349,41 @@
        [have hold_with_left_hand_resource__button signal_connect 'clicked'
 	     [funk []
 		   [have this activate_resource `learned_reactive `physical `hold_with_left_hand [get [get hold_with_left_hand_resource__target__entry text] as-symbol]]]
+	     nil]
+  
+       [= use_right_hand_resource__hbox [gtk-hbox-new 2]]
+       [= use_right_hand_resource__button [gtk-button-new_with_label 'Use  Right Hand']]
+       [= use_right_hand_resource__target__label [gtk-label-new 'Action: ']]
+       [= use_right_hand_resource__target__entry [gtk-entry-new]]
+       [= use_right_hand_resource__target__label2 [gtk-label-new 'Target: ']]
+       [= use_right_hand_resource__target__entry2 [gtk-entry-new]]
+       [have use_right_hand_resource__hbox pack_start use_right_hand_resource__button nil nil 0]
+       [have use_right_hand_resource__hbox pack_start use_right_hand_resource__target__label nil nil 0]
+       [have use_right_hand_resource__hbox pack_start use_right_hand_resource__target__entry t t 0]
+       [have use_right_hand_resource__hbox pack_start use_right_hand_resource__target__label2 nil nil 0]
+       [have use_right_hand_resource__hbox pack_start use_right_hand_resource__target__entry2 t t 0]
+       [have vbox pack_start use_right_hand_resource__hbox nil nil 0]
+       [have use_right_hand_resource__button signal_connect 'clicked'
+	     [funk []
+		   [print [get [get  use_right_hand_resource__target__entry text] as-symbol]]
+		   [have this activate_resource `learned_reactive `physical `use_right_hand [get [get use_right_hand_resource__target__entry text] as-symbol] [get [get use_right_hand_resource__target__entry2 text] as-symbol]]]
+	     nil]
+       
+       [= use_left_hand_resource__hbox [gtk-hbox-new 2]]
+       [= use_left_hand_resource__button [gtk-button-new_with_label 'Use Left Hand']]
+       [= use_left_hand_resource__target__label [gtk-label-new 'Action: ']]
+       [= use_left_hand_resource__target__entry [gtk-entry-new]]
+       [= use_left_hand_resource__target__label2 [gtk-label-new 'Target: ']]
+       [= use_left_hand_resource__target__entry2 [gtk-entry-new]]
+       [have use_left_hand_resource__hbox pack_start use_left_hand_resource__button nil nil 0]
+       [have use_left_hand_resource__hbox pack_start use_left_hand_resource__target__label nil nil 0]
+       [have use_left_hand_resource__hbox pack_start use_left_hand_resource__target__entry t t 0]
+       [have use_left_hand_resource__hbox pack_start use_left_hand_resource__target__label2 nil nil 0]
+       [have use_left_hand_resource__hbox pack_start use_left_hand_resource__target__entry2 t t 0]
+       [have vbox pack_start use_left_hand_resource__hbox nil nil 0]
+       [have use_left_hand_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `learned_reactive `physical `use_left_hand [get [get use_left_hand_resource__target__entry text] as-symbol] [get [get use_left_hand_resource__target__entry2 text] as-symbol]]]
 	     nil]
          
 

@@ -126,9 +126,9 @@
       [gtk-pixbuf-unref pixbuf]
       gtk_image]]]
 
-[defunk image-new_from_file [filename]
+[defunk gtk-image-new_from_file [filename]
   [let [[pixbuf [gtk-pixbuf-new_from_file filename]]]
-    [let [[this [image-new_from_pixbuf pixbuf]]]
+    [let [[this [gtk-image-new_from_pixbuf pixbuf]]]
       [have pixbuf unref]
       this]]]
 

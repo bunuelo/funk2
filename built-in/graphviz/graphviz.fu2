@@ -41,9 +41,8 @@
 
 [defunk dot_code-as-image [this width height]
   [have this save 'graphviz-temp.dot']
-  [safe-system 'dot -Gsize=640,480 -Tpng graphviz-temp.dot -ographviz-temp.png']
-  [safe-system 'pngtopnm graphviz-temp.png > graphviz-temp.pnm']
-  `[image-new_from_pnm_file 'graphviz-temp.pnm']]
+  [safe-system [format nil 'dot -Gsize=' width ',' height ' -Tpng graphviz-temp.dot -ographviz-temp.png']]
+  [image-new_from_file 'graphviz-temp.png']]
 
 
 [deftypefunk simple_graph execute gview []
@@ -52,8 +51,12 @@
 [deftypefunk graph execute gview []
   [dot_code-gview [get this as-dot_code]]]
 
+[deftypefunk graph get as-image [width height]
+  [dot_code-as-image [get this as-dot_code] width height]]
+
 [deftypefunk frame execute gview       [] [have [get this as-graph] gview]]
 [deftypefunk frame get     as-dot_code [] [get  [get this as-graph] as-dot_code]]
+
 
 [defunk simple_graph-test_gview []
   [let [[this [new simple_graph]]]

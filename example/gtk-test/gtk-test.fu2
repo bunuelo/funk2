@@ -38,6 +38,7 @@
 	[insensitive_button [gtk-button-new_with_label 'Insensitive']]
 	[swindow            [gtk-scrolled_window-new]]
 	[notebook           [gtk-notebook-new]]
+	[logo_image         [gtk-image-new_from_file 'icons/funk2.png']]
 	[drawing_area       [gtk-drawing_area-new]]
 	[text_view          [gtk-text_view-new]]
 	[table_hbox         [gtk-hbox-new 2]]
@@ -68,6 +69,7 @@
     [have table_hbox pack_start table t t 0]
     
     [have notebook     append_page  table_hbox [gtk-label-new 'Table']]
+    [have notebook     append_page  logo_image [gtk-label-new 'Logo']]
     
     [have vpaned       pack2        notebook t t]
     

@@ -126,6 +126,13 @@
       [gtk-pixbuf-unref pixbuf]
       gtk_image]]]
 
+[defunk image-new_from_file [filename]
+  [let [[pixbuf [gtk-pixbuf-new_from_file filename]]]
+    [let [[this [image-new_from_pixbuf pixbuf]]]
+      [have pixbuf unref]
+      this]]]
+
+
 'GtkTable'
 
 [deftypefunk gtk_widget execute attach [child left_attach right_attach top_attach bottom_attach xpadding ypadding] [gtk-table-attach [get this widget] [get child widget] left_attach right_attach top_attach bottom_attach xpadding ypadding]]

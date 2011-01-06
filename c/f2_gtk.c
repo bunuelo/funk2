@@ -963,7 +963,7 @@ s64 funk2_gtk__pixbuf__get_width(funk2_gtk_t* this, GdkPixbuf* pixbuf) {
   s64 width;
   {
     gdk_threads_enter();
-    width = gdk_pixbuf_get_width((char*)filename, pixbuf);
+    width = gdk_pixbuf_get_width(pixbuf);
     gdk_threads_leave();
   }
   return width;
@@ -973,7 +973,7 @@ s64 funk2_gtk__pixbuf__get_height(funk2_gtk_t* this, GdkPixbuf* pixbuf) {
   s64 height;
   {
     gdk_threads_enter();
-    height = gdk_pixbuf_get_height((char*)filename, pixbuf);
+    height = gdk_pixbuf_get_height(pixbuf);
     gdk_threads_leave();
   }
   return height;

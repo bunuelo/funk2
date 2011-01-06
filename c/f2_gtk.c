@@ -2168,7 +2168,7 @@ f2ptr raw__gtk__pixbuf__new_from_file(f2ptr cause, f2ptr filename) {
     raw__string__str_copy(cause, filename, filename__str);
     filename__str[filename__length] = 0;
     GError*    g_error = NULL;
-    GdkPixbuf* pixbuf  = funk2_gtk__pixbuf__new(&(__funk2.gtk), filename__str, &g_error);
+    GdkPixbuf* pixbuf  = funk2_gtk__pixbuf__new_from_file(&(__funk2.gtk), filename__str, &g_error);
     f2ptr      this    = nil;
     if (pixbuf != NULL) {
       this = f2__gdk_pixbuf__new(cause, f2pointer__new(cause, to_ptr(pixbuf)));

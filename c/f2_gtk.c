@@ -1051,8 +1051,8 @@ boolean_t funk2_gtk__pixbuf__copy_rgb_pixel_data(funk2_gtk_t* this, GdkPixbuf* p
 	      s64     y;
 	      for (y = 0; y < height; y ++) {
 		{
-		  uchar* pixel      = row;
-		  u8*    dest_pixel = dest_row;
+		  guchar* pixel      = row;
+		  u8*     dest_pixel = dest_row;
 		  s64 x;
 		  for (x = 0; x < width; x ++) {
 		    {

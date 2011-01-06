@@ -105,11 +105,7 @@
        [= view_visual_knowledge_menu_item [gtk-menu_item-new 'Visual Knowledge']]
        [have view_visual_knowledge_menu_item signal_connect 'activate'
 	     [funk []
-		   [set visual_knowledge_image image [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
-															     [get knowledge_base as-digraph_dot_code]]
-														       [conslist [get [get isis_agent mind] visual_knowledge]]]
-													       '\n']]]]
-						       [dot_code-as-image dot_code 320 240]]]
+		   [have this update_visual_knowledge_image]
 		   [let [[visual_knowledge_base [get [get isis_agent mind] visual_knowledge]]]
 		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s visual semantic knowledge.']
 		     [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
@@ -269,6 +265,13 @@
 
 [deftypefunk isismon_agent get widget []
   frame]
+
+[deftypefunk isismon_agent execute update_visual_knowledge_image []
+  [set visual_knowledge_image image [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
+													    [get knowledge_base as-digraph_dot_code]]
+												      [conslist [get [get isis_agent mind] visual_knowledge]]]
+											      '\n']]]]
+				      [dot_code-as-image dot_code 320 240]]]]
 
 [deftypefunk isismon_agent execute update_entry []
   [let [[look_for_resource [get [get isis_agent mind] resource `learned_reactive `physical `look_for]]]

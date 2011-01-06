@@ -181,10 +181,10 @@
   [gtk-pixbuf-new_from_rgba_data [get image width] [get image height] [get image rgba_data]]]
 
 [defunk image-new_from_file [filename]
-  [let [[pixbuf [gdk_pixbuf-new_from_file filename]]]
+  [let [[pixbuf [gtk-pixbuf-new_from_file filename]]]
     [let [[width    [get pixbuf width]]
 	  [height   [get pixbuf height]]
-	  [rgb_data [get pixbuf rgb_data]]]
+	  [rgb_data [get pixbuf rgb_pixel_data]]]
       [let [[this [image-new_from_rgb_data width height rgb_data]]]
 	[have pixbuf unref]
 	this]]]]

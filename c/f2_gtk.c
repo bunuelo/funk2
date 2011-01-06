@@ -1027,16 +1027,20 @@ boolean_t funk2_gtk__pixbuf__copy_rgb_pixel_data(funk2_gtk_t* this, GdkPixbuf* p
   {
     gdk_threads_enter();
     if (! (gdk_pixbuf_get_colorspace(pixbuf) == GDK_COLORSPACE_RGB)) {
+      printf("\nfunk2_gtk__pixbuf__copy_rgb_pixel_data error: pixbuf colorspace is not RGB.\n"); fflush(stdout);
       success = boolean__false;
     } else {
       if (! (gdk_pixbuf_get_bits_per_sample(pixbuf) == 8)) {
+	printf("\nfunk2_gtk__pixbuf__copy_rgb_pixel_data error: pixbuf bits per sample is not 8.\n"); fflush(stdout);
 	success = boolean__false;
       } else {
 	if (! (gdk_pixbuf_get_has_alpha(pixbuf))) {
+	  printf("\nfunk2_gtk__pixbuf__copy_rgb_pixel_data error: pixbuf does not have alpha.\n"); fflush(stdout);
 	  success = boolean__false;
 	} else {
 	  int n_channels = gdk_pixbuf_get_n_channels(pixbuf);
 	  if (! (n_channels == 4)) {
+	    printf("\nfunk2_gtk__pixbuf__copy_rgb_pixel_data error: pixbuf channel number is not 4.\n"); fflush(stdout);
 	    success = boolean__false;
 	  } else {
 	    int     width          = gdk_pixbuf_get_width(pixbuf);

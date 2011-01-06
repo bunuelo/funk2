@@ -21,9 +21,17 @@
 [deframe learned_reactive_physical_knowledge_agency [agency] []
   [new []
        [construct agency `physical_knowledge]
-       
+       [have this add_resource [new translate_visual_knowledge_to_physical_knowledge_resource]]
        this]]
 
+
+[deframe translate_visual_knowledge_to_physical_knowledge_resource [resource] []
+  [new []
+       [construct resource `translate_visual_knowledge_to_physical_knowledge
+		  [funk []
+			[terminal_format standard-terminal '\ntranslating visual knowledge to physical knowledge.']
+			]]
+       nil]]
 
 
 

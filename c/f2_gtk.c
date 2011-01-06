@@ -1034,45 +1034,40 @@ boolean_t funk2_gtk__pixbuf__copy_rgb_pixel_data(funk2_gtk_t* this, GdkPixbuf* p
 	printf("\nfunk2_gtk__pixbuf__copy_rgb_pixel_data error: pixbuf bits per sample is not 8.\n"); fflush(stdout);
 	success = boolean__false;
       } else {
-	if (! (gdk_pixbuf_get_has_alpha(pixbuf))) {
-	  printf("\nfunk2_gtk__pixbuf__copy_rgb_pixel_data error: pixbuf does not have alpha.\n"); fflush(stdout);
+	int n_channels = gdk_pixbuf_get_n_channels(pixbuf);
+	if (! ((n_channels == 4) || (n_channels == 3))) {
+	  printf("\nfunk2_gtk__pixbuf__copy_rgb_pixel_data error: pixbuf channel number is not 3 or 4.\n"); fflush(stdout);
 	  success = boolean__false;
 	} else {
-	  int n_channels = gdk_pixbuf_get_n_channels(pixbuf);
-	  if (! (n_channels == 4)) {
-	    printf("\nfunk2_gtk__pixbuf__copy_rgb_pixel_data error: pixbuf channel number is not 4.\n"); fflush(stdout);
-	    success = boolean__false;
-	  } else {
-	    int     width          = gdk_pixbuf_get_width(pixbuf);
-	    int     height         = gdk_pixbuf_get_height(pixbuf);
-	    int     rowstride      = gdk_pixbuf_get_rowstride(pixbuf);
-	    s64     dest_rowstride = width * 3;
-	    guchar* pixels         = gdk_pixbuf_get_pixels(pixbuf);
-	    {
-	      guchar* row      = pixels;
-	      u8*     dest_row = rgb_pixel_data;
-	      s64     y;
-	      for (y = 0; y < height; y ++) {
-		{
-		  guchar* pixel      = row;
-		  u8*     dest_pixel = dest_row;
-		  s64 x;
-		  for (x = 0; x < width; x ++) {
-		    {
-		      dest_pixel[0] = pixel[0];
-		      dest_pixel[1] = pixel[1];
-		      dest_pixel[2] = pixel[2];
-		    }
-		    pixel      += 4;
-		    dest_pixel += 3;
+	  int     width          = gdk_pixbuf_get_width(pixbuf);
+	  int     height         = gdk_pixbuf_get_height(pixbuf);
+	  int     rowstride      = gdk_pixbuf_get_rowstride(pixbuf);
+	  s64     dest_rowstride = width * 3;
+	  guchar* pixels         = gdk_pixbuf_get_pixels(pixbuf);
+	  {
+	    guchar* row      = pixels;
+	    u8*     dest_row = rgb_pixel_data;
+	    s64     y;
+	    for (y = 0; y < height; y ++) {
+	      {
+		guchar* pixel      = row;
+		u8*     dest_pixel = dest_row;
+		s64 x;
+		for (x = 0; x < width; x ++) {
+		  {
+		    dest_pixel[0] = pixel[0];
+		    dest_pixel[1] = pixel[1];
+		    dest_pixel[2] = pixel[2];
 		  }
+		  pixel      += n_channels;
+		  dest_pixel += 3;
 		}
-		row      += rowstride;
-		dest_row += dest_rowstride;
 	      }
+	      row      += rowstride;
+	      dest_row += dest_rowstride;
 	    }
-	    success = boolean__true;
 	  }
+	  success = boolean__true;
 	}
       }
     }

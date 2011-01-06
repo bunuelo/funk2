@@ -1040,7 +1040,6 @@ boolean_t funk2_gtk__pixbuf__copy_rgb_pixel_data(funk2_gtk_t* this, GdkPixbuf* p
 	    success = boolean__false;
 	  } else {
 	    int     width          = gdk_pixbuf_get_width(pixbuf);
-	    int     width_in_bytes = width << 2;
 	    int     height         = gdk_pixbuf_get_height(pixbuf);
 	    int     rowstride      = gdk_pixbuf_get_rowstride(pixbuf);
 	    s64     dest_rowstride = width * 3;

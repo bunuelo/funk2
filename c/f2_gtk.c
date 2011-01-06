@@ -925,15 +925,15 @@ GtkTextBuffer* funk2_gtk__text_view__get_buffer(funk2_gtk_t* this, GtkWidget* te
 
 // gdk_pixbuf
 
-//GdkPixbuf*  gdk_pixbuf_new_from_data(const guchar *data,
-//                                     GdkColorspace colorspace,
-//                                     gboolean has_alpha,
-//                                     int bits_per_sample,
-//                                     int width,
-//                                     int height,
-//                                     int rowstride,
-//                                     GdkPixbufDestroyNotify destroy_fn,
-//                                     gpointer destroy_fn_data);
+//GdkPixbuf* gdk_pixbuf_new_from_data(const guchar *data,
+//                                    GdkColorspace colorspace,
+//                                    gboolean has_alpha,
+//                                    int bits_per_sample,
+//                                    int width,
+//                                    int height,
+//                                    int rowstride,
+//                                    GdkPixbufDestroyNotify destroy_fn,
+//                                    gpointer destroy_fn_data);
 
 void funk2_gtk__pixbuf__destroy_notify_function(guchar *pixels, gpointer data) {
   f2__free(to_ptr(pixels));
@@ -949,6 +949,134 @@ GdkPixbuf* funk2_gtk__pixbuf__new(funk2_gtk_t* this, u64 width, u64 height, u8* 
   return pixbuf;
 }
 
+GdkPixbuf* funk2_gtk__pixbuf__new_from_file(funk2_gtk_t* this, u8* filename, GError** g_error) {
+  GdkPixbuf* pixbuf;
+  {
+    gdk_threads_enter();
+    pixbuf = gdk_pixbuf_new_from_file((char*)filename, g_error);
+    gdk_threads_leave();
+  }
+  return pixbuf;
+}
+
+s64 funk2_gtk__pixbuf__get_width(funk2_gtk_t* this, GdkPixbuf* pixbuf) {
+  s64 width;
+  {
+    gdk_threads_enter();
+    width = gdk_pixbuf_get_width((char*)filename, pixbuf);
+    gdk_threads_leave();
+  }
+  return width;
+}
+
+s64 funk2_gtk__pixbuf__get_height(funk2_gtk_t* this, GdkPixbuf* pixbuf) {
+  s64 height;
+  {
+    gdk_threads_enter();
+    height = gdk_pixbuf_get_height((char*)filename, pixbuf);
+    gdk_threads_leave();
+  }
+  return height;
+}
+
+boolean_t funk2_gtk__pixbuf__copy_rgba_pixel_data(funk2_gtk_t* this, GdkPixbuf* pixbuf, u8* rgba_pixel_data) {
+  boolean_t success;
+  {
+    gdk_threads_enter();
+    if (! (gdk_pixbuf_get_colorspace(pixbuf) == GDK_COLORSPACE_RGB)) {
+      success = boolean__false;
+    } else {
+      if (! (gdk_pixbuf_get_bits_per_sample(pixbuf) == 8)) {
+	success = boolean__false;
+      } else {
+	if (! (gdk_pixbuf_get_has_alpha(pixbuf))) {
+	  success = boolean__false;
+	} else {
+	  int n_channels = gdk_pixbuf_get_n_channels(pixbuf);
+	  if (! (n_channels == 4)) {
+	    success = boolean__false;
+	  } else {
+	    int     width          = gdk_pixbuf_get_width(pixbuf);
+	    int     width_in_bytes = width << 2;
+	    int     height         = gdk_pixbuf_get_height(pixbuf);
+	    int     rowstride      = gdk_pixbuf_get_rowstride(pixbuf);
+	    s64     dest_rowstride = width << 2;
+	    guchar* pixels         = gdk_pixbuf_get_pixels(pixbuf);
+	    {
+	      guchar* row      = pixels;
+	      u8*     dest_row = rgba_pixel_data;
+	      s64     y;
+	      for (y = 0; y < height; y ++) {
+		memcpy(dest_row, row, width_in_bytes);
+		row      += rowstride;
+		dest_row += dest_rowstride;
+	      }
+	    }
+	    success = boolean__true;
+	  }
+	}
+      }
+    }
+    gdk_threads_leave();
+  }
+  return success;
+}
+
+boolean_t funk2_gtk__pixbuf__copy_rgb_pixel_data(funk2_gtk_t* this, GdkPixbuf* pixbuf, u8* rgb_pixel_data) {
+  boolean_t success;
+  {
+    gdk_threads_enter();
+    if (! (gdk_pixbuf_get_colorspace(pixbuf) == GDK_COLORSPACE_RGB)) {
+      success = boolean__false;
+    } else {
+      if (! (gdk_pixbuf_get_bits_per_sample(pixbuf) == 8)) {
+	success = boolean__false;
+      } else {
+	if (! (gdk_pixbuf_get_has_alpha(pixbuf))) {
+	  success = boolean__false;
+	} else {
+	  int n_channels = gdk_pixbuf_get_n_channels(pixbuf);
+	  if (! (n_channels == 4)) {
+	    success = boolean__false;
+	  } else {
+	    int     width          = gdk_pixbuf_get_width(pixbuf);
+	    int     width_in_bytes = width << 2;
+	    int     height         = gdk_pixbuf_get_height(pixbuf);
+	    int     rowstride      = gdk_pixbuf_get_rowstride(pixbuf);
+	    s64     dest_rowstride = width * 3;
+	    guchar* pixels         = gdk_pixbuf_get_pixels(pixbuf);
+	    {
+	      guchar* row      = pixels;
+	      u8*     dest_row = rgb_pixel_data;
+	      s64     y;
+	      for (y = 0; y < height; y ++) {
+		{
+		  uchar* pixel      = row;
+		  u8*    dest_pixel = dest_row;
+		  s64 x;
+		  for (x = 0; x < width; x ++) {
+		    {
+		      dest_pixel[0] = pixel[0];
+		      dest_pixel[1] = pixel[1];
+		      dest_pixel[2] = pixel[2];
+		    }
+		    pixel      += 4;
+		    dest_pixel += 3;
+		  }
+		}
+		row      += rowstride;
+		dest_row += dest_rowstride;
+	      }
+	    }
+	    success = boolean__true;
+	  }
+	}
+      }
+    }
+    gdk_threads_leave();
+  }
+  return success;
+}
 
 // container
 
@@ -2031,6 +2159,158 @@ f2ptr f2__gtk__pixbuf__new_from_rgba_data(f2ptr cause, f2ptr width, f2ptr height
   return raw__gtk__pixbuf__new_from_rgba_data(cause, width, height, rgba_data);
 }
 def_pcfunk3(gtk__pixbuf__new_from_rgba_data, width, height, rgba_data, return f2__gtk__pixbuf__new_from_rgba_data(this_cause, width, height, rgba_data));
+
+
+f2ptr raw__gtk__pixbuf__new_from_file(f2ptr cause, f2ptr filename) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    s64 filename__length = raw__string__length(cause, filename);
+    u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
+    raw__string__str_copy(cause, filename, filename__str);
+    filename__str[filename__length] = 0;
+    GError*    g_error = NULL;
+    GdkPixbuf* pixbuf  = funk2_gtk__pixbuf__new(&(__funk2.gtk), filename__str, &g_error);
+    f2ptr      this    = nil;
+    if (pixbuf != NULL) {
+      this = f2__gdk_pixbuf__new(cause, f2pointer__new(cause, to_ptr(pixbuf)));
+    } else {
+      if (g_error == NULL) {
+	this = f2larva__new(cause, 2135, f2__bug__new(cause, f2__frame__new(cause, f2list8__new(cause,
+												new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_load_pixbuf_from_file-no_specific_gtk_error"),
+												new__symbol(cause, "filename"), filename))));
+      } else {
+	this = f2larva__new(cause, 2135, f2__bug__new(cause, f2__frame__new(cause, f2list8__new(cause,
+												new__symbol(cause, "bug_type"),          new__symbol(cause, "could_not_load_pixbuf_from_file"),
+												new__symbol(cause, "filename"),          filename,
+												new__symbol(cause, "gtk-error-code"),    f2integer__new(cause, g_error->code),
+												new__symbol(cause, "gtk-error-message"), new__string(cause, g_error->message)))));
+      }
+    }
+    f2__free(to_ptr(filename__str));
+    return this;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__pixbuf__new_from_file(f2ptr cause, f2ptr filename) {
+  if (! raw__string__is_type(cause, width)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__pixbuf__new_from_file(cause, filename);
+}
+def_pcfunk1(gtk__pixbuf__new_from_file, filename, return f2__gtk__pixbuf__new_from_file(this_cause, filename));
+
+
+f2ptr raw__gtk__pixbuf__get_width(f2ptr cause, f2ptr pixbuf) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, pixbuf);
+    s64        width      = funk2_gtk__pixbuf__get_width(&(__funk2.gtk), gdk_pixbuf);
+    return f2integer__new(cause, width);
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__pixbuf__get_width(f2ptr cause, f2ptr pixbuf) {
+  if (! raw__gdk_pixbuf__is_type(cause, pixbuf)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__pixbuf__get_width(cause, pixbuf);
+}
+def_pcfunk1(gtk__pixbuf__get_width, pixbuf, return f2__gtk__pixbuf__get_width(this_cause, pixbuf));
+
+
+f2ptr raw__gtk__pixbuf__get_height(f2ptr cause, f2ptr pixbuf) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, pixbuf);
+    s64        height     = funk2_gtk__pixbuf__get_height(&(__funk2.gtk), gdk_pixbuf);
+    return f2integer__new(cause, height);
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__pixbuf__get_height(f2ptr cause, f2ptr pixbuf) {
+  if (! raw__gdk_pixbuf__is_type(cause, pixbuf)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__pixbuf__get_height(cause, pixbuf);
+}
+def_pcfunk1(gtk__pixbuf__get_height, pixbuf, return f2__gtk__pixbuf__get_height(this_cause, pixbuf));
+
+
+f2ptr raw__gtk__pixbuf__get_rgba_pixel_data(f2ptr cause, f2ptr pixbuf) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, pixbuf);
+    s64        width      = funk2_gtk__pixbuf__get_width(&(__funk2.gtk), gdk_pixbuf);
+    s64        height     = funk2_gtk__pixbuf__get_height(&(__funk2.gtk), gdk_pixbuf);
+    u8*        rgba_data  = (u8*)from_ptr(f2__malloc(width * height * 4));
+    boolean_t  success    = funk2_gtk__pixbuf__copy_rgba_pixel_data(&(__funk2.gtk), gdk_pixbuf, rgba_data);
+    if (! success) {
+      return f2larva__new(cause, 13451, nil);
+    }
+    f2ptr this = f2chunk__new(cause, width * height * 4, rgba_data);
+    f2__free(to_ptr(rgba_data));
+    return this;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__pixbuf__get_rgba_pixel_data(f2ptr cause, f2ptr pixbuf) {
+  if (! raw__gdk_pixbuf__is_type(cause, pixbuf)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__pixbuf__get_rgba_pixel_data(cause, pixbuf);
+}
+def_pcfunk1(gtk__pixbuf__get_rgba_pixel_data, pixbuf, return f2__gtk__pixbuf__get_rgba_pixel_data(this_cause, pixbuf));
+
+
+f2ptr raw__gtk__pixbuf__get_rgb_pixel_data(f2ptr cause, f2ptr pixbuf) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, pixbuf);
+    s64        width      = funk2_gtk__pixbuf__get_width(&(__funk2.gtk), gdk_pixbuf);
+    s64        height     = funk2_gtk__pixbuf__get_height(&(__funk2.gtk), gdk_pixbuf);
+    u8*        rgb_data   = (u8*)from_ptr(f2__malloc(width * height * 3));
+    boolean_t  success    = funk2_gtk__pixbuf__copy_rgb_pixel_data(&(__funk2.gtk), gdk_pixbuf, rgb_data);
+    if (! success) {
+      return f2larva__new(cause, 13452, nil);
+    }
+    f2ptr this = f2chunk__new(cause, width * height * 3, rgb_data);
+    f2__free(to_ptr(rgb_data));
+    return this;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__pixbuf__get_rgb_pixel_data(f2ptr cause, f2ptr pixbuf) {
+  if (! raw__gdk_pixbuf__is_type(cause, pixbuf)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__pixbuf__get_rgb_pixel_data(cause, pixbuf);
+}
+def_pcfunk1(gtk__pixbuf__get_rgb_pixel_data, pixbuf, return f2__gtk__pixbuf__get_rgb_pixel_data(this_cause, pixbuf));
 
 
 f2ptr raw__gtk__pixbuf__unref(f2ptr cause, f2ptr this) {
@@ -4845,6 +5125,10 @@ void f2__gtk__initialize() {
   
   f2__primcfunk__init__3(gtk__pixbuf__new_from_rgb_data,            width, height, rgb_data,                               "Returns a new gdk_pixbuf object.");
   f2__primcfunk__init__3(gtk__pixbuf__new_from_rgba_data,           width, height, rgba_data,                              "Returns a new gdk_pixbuf object.");
+  f2__primcfunk__init__1(gtk__pixbuf__get_width,                    this,                                                  "Returns the width of this gdk_pixbuf.");
+  f2__primcfunk__init__1(gtk__pixbuf__get_height,                   this,                                                  "Returns the height of this gdk_pixbuf.");
+  f2__primcfunk__init__1(gtk__pixbuf__get_rgba_pixel_data,          this,                                                  "Returns a chunk containing the rgba data of this gdk_pixbuf.");
+  f2__primcfunk__init__1(gtk__pixbuf__get_rgb_pixel_data,           this,                                                  "Returns a chunk containing the rgb data of this gdk_pixbuf.");
   f2__primcfunk__init__1(gtk__pixbuf__unref,                        this,                                                  "Removes one reference to a pixbuf.  Use this if you don't need a funk2 reference to a GdkPixbuf anymore.");
   
   // container

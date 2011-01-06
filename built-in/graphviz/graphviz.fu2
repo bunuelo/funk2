@@ -19,8 +19,12 @@
 
 [deftypefunk simple_graph get as-dot_code [] [simple_graph-as-dot_code this]]
 
-[defunk system-dot [dot_filename ps_filename]
-  [let [[command [string-concat 'dot -Tps -o' ps_filename ' ' dot_filename]]]
+[defunk safe-system [command]
+  [if [!= 0 [system command]]
+      [error `system [frame command command]]]]
+
+[defunk system-dot [output_format output_width output_height dot_filename ps_filename]
+  [let [[command [string-concat 'dot -Gsize=' [exp-as-string output_width] ',' [exp-as-string output_height] ' -T' output_format ' -o' ps_filename ' ' dot_filename]]]
     [if [!= 0 [system command]]
 	[error `runtime `[dot-command: ,command]]]]]
 
@@ -32,8 +36,15 @@
 
 [defunk dot_code-gview [this]
   [have this save 'graphviz-temp.dot']
-  [system-dot 'graphviz-temp.dot' 'graphviz-temp.ps']
+  [system-dot 'ps' 6 4 'graphviz-temp.dot' 'graphviz-temp.ps']
   [system-gv 'graphviz-temp.ps']]
+
+[defunk dot_code-as-image [this width height]
+  [have this save 'graphviz-temp.dot']
+  [safe-system 'dot -Gsize=640,480 -Tpng graphviz-temp.dot -ographviz-temp.png']
+  [safe-system 'pngtopnm graphviz-temp.png > graphviz-temp.pnm']
+  `[image-new_from_pnm_file 'graphviz-temp.pnm']]
+
 
 [deftypefunk simple_graph execute gview []
   [dot_code-gview [get this as-dot_code]]]

@@ -171,10 +171,23 @@
 
 'GtkPixbuf'
 
-[deftypefunk gdk_pixbuf execute unref [] [gtk-pixbuf-unref this]]
+[deftypefunk gdk_pixbuf get     width           [] [gtk-pixbuf-get_width           this]]
+[deftypefunk gdk_pixbuf get     height          [] [gtk-pixbuf-get_height          this]]
+[deftypefunk gdk_pixbuf get     rgba_pixel_data [] [gtk-pixbuf-get_rgba_pixel_data this]]
+[deftypefunk gdk_pixbuf get     rgb_pixel_data  [] [gtk-pixbuf-get_rgb_pixel_data  this]]
+[deftypefunk gdk_pixbuf execute unref           [] [gtk-pixbuf-unref               this]]
 
 [defunk gtk-pixbuf-new_from_image [image]
   [gtk-pixbuf-new_from_rgba_data [get image width] [get image height] [get image rgba_data]]]
+
+[defunk image-new_from_file [filename]
+  [let [[pixbuf [gdk_pixbuf-new_from_file filename]]]
+    [let [[width    [get pixbuf width]]
+	  [height   [get pixbuf height]]
+	  [rgb_data [get pixbuf rgb_data]]]
+      [let [[this [image-new_from_rgb_data width height rgb_data]]]
+	[have pixbuf unref]
+	this]]]]
 
 [defunk gtk-globalize_responses []
   [print `[gtk-globalize_responses]]

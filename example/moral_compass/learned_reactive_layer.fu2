@@ -93,6 +93,7 @@
 
 [deftypefunk learned_reactive_layer execute create_knowledge []
   [new meta_semantic_knowledge_base `learned_reactive_knowledge [get [get this mind] semantic_realm]]
+  [new meta_semantic_knowledge_base `physical_knowledge         [get [get this mind] semantic_realm]]
   ]
 
 [deftypefunk learned_reactive_layer execute connect_knowledge_reflection []

@@ -279,6 +279,7 @@
     ]]
 
 [deftypefunk isismon_agent execute update []
+  [have this update_visual_knowledge_image]
   nil]
 
 [deftypefunk isismon_agent get retina_image_sequence []

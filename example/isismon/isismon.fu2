@@ -869,20 +869,17 @@
 			     
 			     [have project_new_ralph_agent_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\nIsisMon: project new Ralph agent.']
-					 [have isismon_project add_agent [isismon_agent-new_from_name isismon_project `Ralph]]]
+					 [have this create_new_agent `Ralph]]
 				   nil]
 			     
 			     [have project_new_lauren_agent_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\nIsisMon: project new Lauren agent.']
-					 [have isismon_project add_agent [isismon_agent-new_from_name isismon_project `Lauren]]]
+					 [have this create_new_agent `Lauren]]
 				   nil]
 			     
 			     [have project_new_macy_agent_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\nIsisMon: project new Macy agent.']
-					 [have isismon_project add_agent [isismon_agent-new_from_name isismon_project `Macy]]]
+					 [have this create_new_agent `Macy]]
 				   nil]
 			     
 			     [= simulation_menu_item                             [gtk-menu_item-new 'Simulation']]
@@ -950,6 +947,11 @@
 	[terminal_format standard-terminal '\nIsisMon Warning: Could not save preferences because HOME is not a defined environment variable.']
       [let [[preferences_filename [pathname-concat home_dir '.isismon']]]
 	[have preferences save preferences_filename]]]]]
+
+[deftypefunk isismon execute create_new_agent [name]
+  [terminal_format standard-terminal '\nIsisMon: project new Ralph agent.']
+  [have isismon_project add_agent [isismon_agent-new_from_name isismon_project name]]
+  [terminal_format standard-terminal '\nIsisMon: new Ralph agent created successfully.']]
 
 [deftypefunk isismon execute export_movie [filename]
   [terminal_format standard-terminal '\nIsisMon Export Movie: Saving MPEG to file: ' filename]

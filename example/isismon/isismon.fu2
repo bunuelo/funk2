@@ -109,7 +109,7 @@
 															     [get knowledge_base as-digraph_dot_code]]
 														       [conslist [get [get isis_agent mind] visual_knowledge]]]
 													       '\n']]]]
-						       [dot_code-as-image dot_code]]]
+						       [dot_code-as-image dot_code 320 240]]]
 		   [let [[visual_knowledge_base [get [get isis_agent mind] visual_knowledge]]]
 		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s visual semantic knowledge.']
 		     [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]

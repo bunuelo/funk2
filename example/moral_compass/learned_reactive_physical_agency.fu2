@@ -820,8 +820,8 @@ add rel orientation
     [mind-wait_to_activate mind learned_reactive physical move_backward 8]
     [mind-wait_to_activate mind learned_reactive physical look_for `knife]
     [if [string-contains [get [have [get [get [get mind layer `learned_reactive] agency `physical] 
-			    resource `look_for] lookup `my_current_object]as-string] 'knife']
-	[mind-wait_to_activate mind learned_reactive physical walk_directly_towards  
+					 resource `look_for] lookup `my_current_object] as-string] 'knife']
+	[mind-wait_to_activate mind learned_reactive physical walk_directly_towards
 			       [have [get [get [get mind layer `learned_reactive] agency `physical] 
 					  resource `look_for] lookup `my_current_object]]
       [have this-resource think_to_self 'not doing anything because cannot find knife']]
@@ -829,7 +829,7 @@ add rel orientation
     [mind-wait_to_activate mind learned_reactive physical use_left_hand `put_on [have [get [get [get mind layer `learned_reactive] agency `physical] resource `look_for] lookup `my_current_object]]
     [mind-wait_to_activate mind learned_reactive physical hold_with_left_hand `knife]
     [mind-wait_to_activate mind learned_reactive physical slice_toast]
-   
+    ]]
 
 '************************************unused resources**********************************************'
 

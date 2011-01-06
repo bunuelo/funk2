@@ -2196,7 +2196,7 @@ f2ptr raw__gtk__pixbuf__new_from_file(f2ptr cause, f2ptr filename) {
 }
 
 f2ptr f2__gtk__pixbuf__new_from_file(f2ptr cause, f2ptr filename) {
-  if (! raw__string__is_type(cause, width)) {
+  if (! raw__string__is_type(cause, filename)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__gtk__pixbuf__new_from_file(cause, filename);

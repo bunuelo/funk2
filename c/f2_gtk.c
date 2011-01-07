@@ -828,6 +828,14 @@ void funk2_gtk__window__set_default_size(funk2_gtk_t* this, GtkWidget* window, s
   }
 }
 
+void funk2_gtk__window__resize(funk2_gtk_t* this, GtkWidget* window, s64 width, s64 height) {
+  {
+    gdk_threads_enter();
+    gtk_window_resize(GTK_WINDOW(window), width, height);
+    gdk_threads_leave();
+  }
+}
+
 
 // vbox
 
@@ -1883,6 +1891,35 @@ f2ptr f2__gtk__window__set_default_size(f2ptr cause, f2ptr window, f2ptr width, 
 }
 def_pcfunk3(gtk__window__set_default_size, window, width, height, return f2__gtk__window__set_default_size(this_cause, window, width, height));
 
+
+f2ptr raw__gtk__window__resize(f2ptr cause, f2ptr window, f2ptr width, f2ptr height) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_window = raw__gtk_widget__as__GtkWidget(cause, window);
+    s64        width__i   = f2integer__i(width,  cause);
+    s64        height__i  = f2integer__i(height, cause);
+    funk2_gtk__window__resize(&(__funk2.gtk), gtk_window, width__i, height__i);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__window__resize(f2ptr cause, f2ptr window, f2ptr width, f2ptr height) {
+  if ((! raw__gtk_widget__is_type(cause, window)) ||
+      (! raw__integer__is_type(cause, width)) ||
+      (! raw__integer__is_type(cause, height))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__window__resize(cause, window, width, height);
+}
+def_pcfunk3(gtk__window__resize, window, width, height, return f2__gtk__window__resize(this_cause, window, width, height));
+
+
+// vbox
 
 f2ptr raw__gtk__vbox__new(f2ptr cause, f2ptr spacing) {
 #if defined(F2__GTK__SUPPORTED)
@@ -5121,6 +5158,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__0(gtk__window__new,                                                                               "Returns a new window widget.");
   f2__primcfunk__init__2(gtk__window__set_title,                    window, title,                                         "Sets the title of this gtk_window.");
   f2__primcfunk__init__3(gtk__window__set_default_size,             window, width, height,                                 "Sets the default width and height of this gtk_window.");
+  f2__primcfunk__init__3(gtk__window__resize,                       window, width, height,                                 "Resizes the gtk_window.");
   
   f2__primcfunk__init__1(gtk__vbox__new,                            spacing,                                               "Returns a new vbox widget with spacing.");
   f2__primcfunk__init__1(gtk__hbox__new,                            spacing,                                               "Returns a new hbox widget with spacing.");

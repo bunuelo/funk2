@@ -288,7 +288,7 @@
        [have physical_knowledge_button_label_hbox pack_start physical_knowledge_expansion_button nil nil 0]
        
        [= physical_knowledge_label [gtk-label-new 'Physical Knowledge']]
-       [have physical_knowledge_button_label_hbox pack_start physical_knowledge_label nil nil 0]
+       [have physical_knowledge_button_label_hbox pack_start physical_knowledge_label t t 0]
        
        [= physical_knowledge_gview_button [gtk-button-new_with_label 'GView']]
        [have physical_knowledge_button_label_hbox pack_start physical_knowledge_gview_button nil nil 0]
@@ -751,7 +751,8 @@
     [let [[image_index [get [get scale value] as-integer]]]
       [if [< image_index movie_length]
 	  [set movie_gtk_image image [get this movie_image image_index]]]]]
-  [have this update_agents]]
+  [have this update_agents]
+  [have isismon shrink_window]]
 
 [deftypefunk isismon_project execute cycle []
   [have execute_mutex lock]
@@ -1033,6 +1034,9 @@
   [if isismon_project
       [have isismon_project cycle]]
   [millisleep 100]]
+
+[deftypefunk isismon execute shrink_window []
+  [set window size 0 0]]
 
 [deftypefunk isismon execute load_preferences []
   [let [[home_dir [getenv 'HOME']]]

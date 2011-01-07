@@ -44,6 +44,7 @@ f2ptr raw__event_stream_event__compare_value(f2ptr cause, f2ptr fiber, f2ptr env
   }
 }
 
+
 def_ceframe1(event_stream, event_stream_event, time);
 
 f2ptr raw__event_stream_event__new(f2ptr cause, f2ptr time) {
@@ -237,6 +238,55 @@ f2ptr f2__event_stream_type__new_aux(f2ptr cause) {
 
 
 
+// event_stream_iterator
+
+def_ceframe2(event_stream, event_stream_iterator, event_stream, index_time);
+
+f2ptr raw__event_stream_iterator__new(f2ptr cause, f2ptr event_stream, f2ptr index_time) {
+  return f2event_stream_iterator__new(cause, event_stream, index_time);
+}
+
+f2ptr f2__event_stream_iterator__new(f2ptr cause, f2ptr event_stream, f2ptr index_time) {
+  if ((! raw__event_stream__is_type(cause, event_stream)) ||
+      (! raw__index_time__is_type(cause, index_time))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__event_stream_iterator__new(cause, event_stream, index_time);
+}
+export_cefunk2(event_stream_iterator__new, event_stream, index_time, 0, "Returns a new event_stream_iterator object.");
+
+
+f2ptr raw__event_stream_iterator__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, nil);
+    raw__frame__copy(cause, frame, this);
+    raw__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"), f2__object__type(cause, this));
+    raw__frame__add_var_value(cause, frame, new__symbol(cause, "event_stream"),      raw__event_stream_iterator__event_stream(cause, this));
+    raw__frame__add_var_value(cause, frame, new__symbol(cause, "index_time"),        raw__event_stream_iterator__index_time(cause, this));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__event_stream_iterator__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if (! raw__event_stream_iterator__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__event_stream_iterator__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+export_cefunk2(event_stream_iterator__terminal_print_with_frame, this, terminal_print_frame, 0, "");
+
+
+f2ptr f2__event_stream_iterator_type__new_aux(f2ptr cause) {
+  f2ptr this = f2__event_stream_iterator_type__new(cause);
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_iterator__terminal_print_with_frame")));}
+  return this;
+}
+
+
+
 // **
 
 f2ptr f2__event_stream__core_extension_ping(f2ptr cause) {
@@ -251,8 +301,9 @@ f2ptr f2__event_stream__core_extension_initialize(f2ptr cause) {
       return result;
     }
   }
-  f2__add_type(cause, new__symbol(cause, "event_stream_event"), f2__event_stream_event_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "event_stream"),       f2__event_stream_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "event_stream_event"),    f2__event_stream_event_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "event_stream"),          f2__event_stream_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "event_stream_iterator"), f2__event_stream_iterator_type__new_aux(cause));
   status("event_stream initialized.");
   return nil;
 }

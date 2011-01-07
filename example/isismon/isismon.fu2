@@ -60,6 +60,7 @@
 				physical_knowledge_button_label_hbox
 				physical_knowledge_expansion_button
 				physical_knowledge_label
+				physical_knowledge_gview_button
 				physical_knowledge_image
 				
 				]

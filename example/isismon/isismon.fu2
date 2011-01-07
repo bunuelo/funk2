@@ -45,17 +45,22 @@
 				view_self_conscious_knowledge_menu_item
 				view_all_knowledge_menu_item
 				
-				label
 				entry
 				
+				visual_knowledge_vbox
+				visual_knowledge_label
 				visual_knowledge_image
+				
+				physical_knowledge_vbox
+				physical_knowledge_label
+				physical_knowledge_image
 				]
   [new [initial_isismon_project initial_isis_agent]
        [= isismon_project initial_isismon_project]
        [= isis_agent      initial_isis_agent]
        
        [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
-       [= vbox  [gtk-vbox-new 2]]
+       [= vbox  [gtk-vbox-new 0]]
        
        [= menu_bar        [gtk-menu_bar-new]]
        [have vbox pack_start menu_bar nil nil 0]
@@ -218,7 +223,6 @@
        [have view_menu append view_all_knowledge_menu_item]
        
        
-       [= label [gtk-label-new '']]
        [= entry [gtk-entry-new]]
        
        [have entry key_press_event-signal_connect
@@ -242,11 +246,27 @@
 				   ]]]]]]]]
 	     nil]
        
-       [have vbox pack_start label t t 0]
        [have vbox pack_start entry nil nil 0]
        
+       [= visual_knowledge_vbox [gtk-vbox-new 0]]
+       [have vbox pack_start visual_knowledge_vbox nil nil 0]
+       
+       [= visual_knowledge_label [gtk-label-new 'Visual Knowledge']]
+       [have visual_knowledge_vbox pack_start visual_knowledge_label nil nil 0]
+       
        [= visual_knowledge_image [gtk-image-new_from_image [image-new_from_rgb_data 11 11 [new chunk [* 11 11 3]]]]]
-       [have vbox pack_start visual_knowledge_image nil nil 0]
+       [have visual_knowledge_vbox pack_start visual_knowledge_image nil nil 0]
+       
+       
+       [= physical_knowledge_vbox [gtk-vbox-new 0]]
+       [have vbox pack_start physical_knowledge_vbox nil nil 0]
+       
+       [= physical_knowledge_label [gtk-label-new 'Physical Knowledge']]
+       [have physical_knowledge_vbox pack_start physical_knowledge_label nil nil 0]
+       
+       [= physical_knowledge_image [gtk-image-new_from_image [image-new_from_rgb_data 11 11 [new chunk [* 11 11 3]]]]]
+       [have physical_knowledge_vbox pack_start physical_knowledge_image nil nil 0]
+       
        
        [have frame add vbox]
        nil]]
@@ -272,6 +292,13 @@
 												      [conslist [get [get isis_agent mind] visual_knowledge]]]
 											      '\n']]]]
 				      [dot_code-as-image dot_code 320 240]]]]
+
+[deftypefunk isismon_agent execute update_physical_knowledge_image []
+  [set physical_knowledge_image image [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
+													      [get knowledge_base as-digraph_dot_code]]
+													[conslist [get [get isis_agent mind] physical_knowledge]]]
+												'\n']]]]
+					[dot_code-as-image dot_code 320 240]]]]
 
 [deftypefunk isismon_agent execute update_entry []
   [let [[look_for_resource [get [get isis_agent mind] resource `learned_reactive `physical `look_for]]]

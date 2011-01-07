@@ -521,7 +521,7 @@ add rel orientation
 			    [have this-resource think_to_self ' tracking Lauren activated!']
 			    [while  [< 0 attention]
 			      [= attention [- attention 1]]
-			      [have this-resource think_to_self 'still has attention']
+			      [have this-resource think_to_self 'still has ' attention 'attention']
 			      [if [get_visual_objects mind]
 				  [if [lookup_visual_object [get_visual_objects mind] `Lauren]
 				      [prog [have this-resource think_to_self 'yes agent, activating center on']
@@ -543,17 +543,16 @@ add rel orientation
   [new []
        [construct resource `look_for
 		  [funk [desired_object_type]
-			[print 'look for']
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]
 			       [name  [get body name]]
 			       
 			       ]
 			  [let [[patience 35]]
-			    [have this-resource think_to_self 'look_for activated']
+			    [have this-resource think_to_self 'look_for activated' desired_object_type]
 			    [while 
 				[> patience 0]
-			      [have this-resource think_to_self 'I still have patience']
+			      [have this-resource think_to_self 'I still have' patience ' patience']
 			      [print 'here']
 
 			      [if [null [get_visual_objects mind]]
@@ -585,13 +584,12 @@ add rel orientation
 	       nil]]
 
 [deftypefunk look_carefully_for_resource execute look_carefully_for [desired_object_type]
-  [print 'look carefully for']
   [let* [[body [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]
 	 ]
     [let [[patience 15]]
-      [have this think_to_self 'look_carefully_for activated']
+      [have this think_to_self 'look_carefully_for activated' desired_object_type]
       [while [> patience 0]
 	[have this think_to_self 'I still have patience']
 	[mind-wait_to_activate mind learned_reactive physical level_pitch]
@@ -656,7 +654,7 @@ add rel orientation
 					]
 				  [prog [= patience 0]
 					[= my_current_object [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type] ]
-					[have this-resource think_to_self 'found'my_current_object ]
+					[have this-resource think_to_self 'found' my_current_object ]
 					]]]]
 			    
 			    [have this-resource think_to_self 'finished searching']]]
@@ -673,7 +671,7 @@ add rel orientation
 
 
 [deftypefunk look_for_vertically_resource execute look_for_vertically [desired_object_type]
-  [print 'look for']
+
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]
@@ -682,7 +680,7 @@ add rel orientation
 	 [already_searched_down nil]
 	 ]
     [let [[patience 50]]
-      [have this-resource think_to_self 'look_for_vertically activated']
+      [have this-resource think_to_self 'look_for_vertically activated' desired_object_type]
       [while [> patience 0]
 	[if [null already_searched_down]
 	    [prog 
@@ -785,20 +783,24 @@ add rel orientation
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]]
-    [mind-wait_to_activate mind learned_reactive physical look_for_vertically `loaf]
-    [while [null [have [get [get [get mind layer `learned_reactive] agency `physical] 
-			    resource `look_for_vertically] lookup `my_current_object]]
-      [sleep 3]]
-    [mind-wait_to_activate mind learned_reactive physical hold_with_right_hand  
-			   [have [get [get [get mind layer `learned_reactive] agency `physical] 
+    [if [null  [string-contains [get [get_right_hand_object_name mind] as-string] 'loaf']]
+	[prog 
+	      [mind-wait_to_activate mind learned_reactive physical look_for_vertically `loaf]
+	      [while [null [have [get [get [get mind layer `learned_reactive] agency `physical] 
 				      resource `look_for_vertically] lookup `my_current_object]]
-    [mind-wait_to_activate mind learned_reactive physical look_for_vertically `butter]
-    [while [null [string-contains [get [have [get [get [get mind layer `learned_reactive] agency `physical] 
-			    resource `look_for_vertically] lookup `my_current_object]as-string] 'butter']]
-      [sleep 3]]
-    [mind-wait_to_activate mind learned_reactive physical hold_with_left_hand 
-	[have [get [get [get mind layer `learned_reactive] agency `physical] 
-		   resource `look_for_vertically] lookup `my_current_object]]]]
+		[sleep 3]]
+	      [mind-wait_to_activate mind learned_reactive physical hold_with_right_hand  
+				     [have [get [get [get mind layer `learned_reactive] agency `physical] 
+						resource `look_for_vertically] lookup `my_current_object]]]]
+
+    [if [null [string-contains [get [get_left_hand_object_name mind] as-string] 'butter']]
+	[prog [mind-wait_to_activate mind learned_reactive physical look_for_vertically `butter]
+	      [while [null [string-contains [get [have [get [get [get mind layer `learned_reactive] agency `physical] 
+							    resource `look_for_vertically] lookup `my_current_object]as-string] 'butter']]
+		[sleep 3]]
+	      [mind-wait_to_activate mind learned_reactive physical hold_with_left_hand 
+				     [have [get [get [get mind layer `learned_reactive] agency `physical] 
+						resource `look_for_vertically] lookup `my_current_object]]]]]]
 
 
 [deframe make_toast_resource [resource] []
@@ -812,20 +814,24 @@ add rel orientation
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]]
-    [mind-wait_to_activate mind learned_reactive physical pick_up_loaf_and_butter]
-    [while [null [and [string-contains [get_left_hand_object_name mind] 'butter']
-		      [string-contains [get_right_hand_object_name mind] 'loaf']]]
+    [if [null [and [string-contains [get [get_left_hand_object_name mind] as-string]'butter']
+		      [string-contains [get [get_right_hand_object_name mind] as-string] 'loaf']]]
+	[mind-wait_to_activate mind learned_reactive physical pick_up_loaf_and_butter]]
+    [while [null [and [string-contains [get [get_left_hand_object_name mind] as-string]'butter']
+		      [string-contains [get [get_right_hand_object_name mind]as-string] 'loaf']]]
       [sleep 3]]
     [mind-wait_to_activate mind learned_reactive physical level_pitch]
     [mind-wait_to_activate mind learned_reactive physical move_backward 8]
+    [mind-wait_to_activate mind learned_reactive physical look_for `table]
     [mind-wait_to_activate mind learned_reactive physical look_for `knife]
+    [mind-wait_to_activate mind learned_reactive physical use_left_hand `put_on [have [get [get [get mind layer `learned_reactive] agency `physical] resource `look_for] lookup `my_current_object]]
     [if [string-contains [get [have [get [get [get mind layer `learned_reactive] agency `physical] 
-					 resource `look_for] lookup `my_current_object] as-string] 'knife']
-	[mind-wait_to_activate mind learned_reactive physical walk_directly_towards
+					 resource `look_for] lookup `my_current_object]as-string] 'knife']
+	[mind-wait_to_activate mind learned_reactive physical walk_directly_towards  
 			       [have [get [get [get mind layer `learned_reactive] agency `physical] 
 					  resource `look_for] lookup `my_current_object]]
       [have this-resource think_to_self 'not doing anything because cannot find knife']]
-    [mind-wait_to_activate mind learned_reactive physical look_for `table]
+    
     [mind-wait_to_activate mind learned_reactive physical use_left_hand `put_on [have [get [get [get mind layer `learned_reactive] agency `physical] resource `look_for] lookup `my_current_object]]
     [mind-wait_to_activate mind learned_reactive physical hold_with_left_hand `knife]
     [mind-wait_to_activate mind learned_reactive physical slice_toast]

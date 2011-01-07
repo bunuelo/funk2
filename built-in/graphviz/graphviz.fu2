@@ -42,7 +42,19 @@
 [defunk dot_code-as-image [this width height]
   [have this save 'graphviz-temp.dot']
   [safe-system [format nil 'dot -Gdpi=2048 -Gsize=' [/ width 2048.0] ',' [/ height 2048.0] ' -Tpng graphviz-temp.dot -ographviz-temp.png']]
-  [image-new_from_file 'graphviz-temp.png']]
+  [let [[temp_image [image-new_from_file 'graphviz-temp.png']]]
+    [let [[temp_width  [get temp_image width]]
+	  [temp_height [get temp_image height]]]
+      [if [and [== temp_width  width]
+	       [== temp_height height]]
+	  temp_image
+	[if [and [<= temp_width  width]
+		 [<= temp_height height]]
+	    [let [[image [image-new_from_rgb_data width height [new chunk [* width height 3]]]]]
+	      [have image clear 255 255 255 255]
+	      [have temp_image copy_rectangle_to 0 0 image [/ [- width temp_width] 2] [/ [- height temp_height] 2] temp_width temp_height]
+	      image]
+	  temp_image]]]]]
 
 
 [deftypefunk simple_graph execute gview []

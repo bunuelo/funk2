@@ -37,12 +37,12 @@
   f2ptr  f2__##name##__new(f2ptr cause);
 
 #define def_header_ceframe__new1(name, slot1)				\
-  f2ptr raw__##name##__new(def_header_ceframe__new__args1(name, slot1)); \
-  f2ptr  f2__##name##__new(def_header_ceframe__new__args1(name, slot1));
+  f2ptr raw__##name##__new(def_header_ceframe__new__args1(slot1)); \
+  f2ptr  f2__##name##__new(def_header_ceframe__new__args1(slot1));
 
 #define def_header_ceframe__new2(name, slot1, slot2)			\
-  f2ptr raw__##name##__new(def_header_ceframe__new__args2(name, slot1, slot2)); \
-  f2ptr  f2__##name##__new(def_header_ceframe__new__args2(name, slot1, slot2));
+  f2ptr raw__##name##__new(def_header_ceframe__new__args2(slot1, slot2)); \
+  f2ptr  f2__##name##__new(def_header_ceframe__new__args2(slot1, slot2));
 
 
 

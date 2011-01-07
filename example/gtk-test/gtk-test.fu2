@@ -36,6 +36,7 @@
 	[select_button      [gtk-button-new_with_label 'Select']]
 	[save_button        [gtk-button-new_with_label 'Save']]
 	[insensitive_button [gtk-button-new_with_label 'Insensitive']]
+	[shrink_button      [gtk-button-new_with_label 'Shrink']]
 	[swindow            [gtk-scrolled_window-new]]
 	[notebook           [gtk-notebook-new]]
 	[logo_image         [gtk-image-new_from_file 'icons/funk2.png']]
@@ -53,6 +54,7 @@
     [have hbox         pack_start   select_button nil nil 0]
     [have hbox         pack_start   save_button nil nil 0]
     [have hbox         pack_start   insensitive_button nil nil 0]
+    [have hbox         pack_start   shrink_button nil nil 0]
     [have vpaned       pack1        hbox nil nil]
     
     [have swindow      add          text_view]
@@ -183,6 +185,11 @@
     [have insensitive_button signal_connect 'clicked'
 	  [funk []
 		[set insensitive_button sensitive nil]]
+	  nil]
+    
+    [have shrink_button signal_connect 'clicked'
+	  [funk []
+		[set window size 0 0]]
 	  nil]
     
     [have drawing_area expose_event-signal_connect

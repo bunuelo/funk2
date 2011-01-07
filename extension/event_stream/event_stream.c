@@ -186,8 +186,13 @@ export_cefunk1(event_stream__last, this, 0, "Returns the last event in the event
 
 f2ptr raw__event_stream__new__iterator(f2ptr cause, f2ptr this) {
   f2ptr first_event       = raw__event_stream__first(cause, this);
-  f2ptr first_event__time = raw__event_stream_event__time(cause, first_event);
-  f2ptr iterator          = f2__event_stream_iterator__new(cause, this, first_event__time);
+  f2ptr first_event__time;
+  if (first_event != nil) {
+    first_event__time = raw__event_stream_event__time(cause, first_event);
+  } else {
+    first_event__time = nil;
+  }
+  f2ptr iterator = f2__event_stream_iterator__new(cause, this, first_event__time);
   return iterator;
 }
 
@@ -297,7 +302,7 @@ f2ptr raw__event_stream_iterator__new(f2ptr cause, f2ptr event_stream, f2ptr ind
 
 f2ptr f2__event_stream_iterator__new(f2ptr cause, f2ptr event_stream, f2ptr index_time) {
   if ((! raw__event_stream__is_type(cause, event_stream)) ||
-      (! raw__time__is_type(cause, index_time))) {
+      ((index_time != nil) && (! raw__time__is_type(cause, index_time)))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__event_stream_iterator__new(cause, event_stream, index_time);

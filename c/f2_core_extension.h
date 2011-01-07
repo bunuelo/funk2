@@ -59,12 +59,15 @@ struct funk2_object_type__core_extension_handler__slot_s {
 
 #include "f2_primfunks.h"
 
-#define def_ceframe__new__common(name, slot_defs)	\
+
+// def_ceframe
+
+#define def_ceframe__new__common(name, slot_defs)			\
   f2ptr this = f2__frame__new(cause, nil);				\
   f2__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, #name)); \
   slot_defs;								\
   return this;								\
-
+  
 #define def_ceframe__new__arg(slot)					\
   f2__frame__add_var_value(cause, this, new__symbol(cause, #slot), slot)
 
@@ -500,6 +503,74 @@ struct funk2_object_type__core_extension_handler__slot_s {
   def_ceframe__type(name);						\
   def_ceframe__slot_funk13(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12, slot13) \
   def_ceframe13__primobject_type__new(extension_name, name, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12, slot13)
+
+
+
+// def_header_ceframe
+
+#define def_header_ceframe__cause_args1(slot1)	\
+  f2ptr cause, f2ptr slot1
+
+#define def_header_ceframe__cause_args2(slot1, slot2)	\
+  def_header_ceframe__new__args1(slot1), f2ptr slot2
+
+
+#define def_header_ceframe__new0(name)		\
+  f2ptr f2##name##__new(f2ptr cause);
+
+#define def_header_ceframe__new1(name, slot1)				\
+  f2ptr f2##name##__new(def_header_ceframe__cause_args1(slot1));
+
+#define def_header_ceframe__new2(name, slot1, slot2)			\
+  f2ptr f2##name##__new(def_header_ceframe__cause_args2(slot1, slot2));
+
+
+
+#define def_header_ceframe__common(name)				\
+  boolean_t raw__##name##__is_type(f2ptr cause, f2ptr thing);		\
+  f2ptr      f2__##name##__is_type(f2ptr cause, f2ptr thing);		\
+  f2ptr     raw__##name##__type   (f2ptr cause, f2ptr this);		\
+  f2ptr      f2__##name##__type   (f2ptr cause, f2ptr this);		\
+  									\
+  f2ptr f2__##name##_type__new(f2ptr cause);
+
+
+#define def_header_ceframe__slot(name, slot)				\
+  f2ptr raw__##name##__##slot       (f2ptr cause, f2ptr this);		\
+  f2ptr  f2__##name##__##slot       (f2ptr cause, f2ptr this);		\
+  f2ptr raw__##name##__##slot##__set(f2ptr cause, f2ptr this, f2ptr slot); \
+  f2ptr  f2__##name##__##slot##__set(f2ptr cause, f2ptr this, f2ptr slot);
+
+
+#define def_header_ceframe__slot0(name)
+
+#define def_header_ceframe__slot1(name, slot1)	\
+  def_header_ceframe__slot0(name)		\
+  def_header_ceframe__slot(name, slot1)
+
+#define def_header_ceframe__slot2(name, slot1, slot2)		\
+  def_header_ceframe__slot1(name, slot1)			\
+  def_header_ceframe__slot(name, slot2)
+
+
+#define def_header_ceframe0(name)		\
+  def_header_ceframe__new0(name)		\
+  def_header_ceframe__common(name)		\
+  def_header_ceframe__slot0(name)
+
+#define def_header_ceframe1(name, slot1)	\
+  def_header_ceframe__new1(name, slot1)		\
+  def_header_ceframe__common(name)		\
+  def_header_ceframe__slot1(name, slot1)
+
+#define def_header_ceframe2(name, slot1, slot2)	\
+  def_header_ceframe__new2(name, slot1, slot2)	\
+  def_header_ceframe__common(name)		\
+  def_header_ceframe__slot2(name, slot1, slot2)
+
+
+
+
 
 
 // core_extension

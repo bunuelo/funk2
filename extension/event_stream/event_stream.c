@@ -154,6 +154,52 @@ f2ptr f2__event_stream__size(f2ptr cause, f2ptr this) {
 export_cefunk1(event_stream__size, this, 0, "Returns the number of events in the event_stream.");
 
 
+f2ptr raw__event_stream__first(f2ptr cause, f2ptr this) {
+  f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
+  f2ptr event                   = raw__redblacktree__minimum(cause, event_time_redblacktree);
+  return event;
+}
+
+f2ptr f2__event_stream__first(f2ptr cause, f2ptr this) {
+  if (! raw__event_stream__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__event_stream__first(cause, this);
+}
+export_cefunk1(event_stream__first, this, 0, "Returns the first event in the event_stream.");
+
+
+f2ptr raw__event_stream__last(f2ptr cause, f2ptr this) {
+  f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
+  f2ptr event                   = raw__redblacktree__maximum(cause, event_time_redblacktree);
+  return event;
+}
+
+f2ptr f2__event_stream__last(f2ptr cause, f2ptr this) {
+  if (! raw__event_stream__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__event_stream__last(cause, this);
+}
+export_cefunk1(event_stream__last, this, 0, "Returns the last event in the event_stream.");
+
+
+f2ptr raw__event_stream__new__iterator(f2ptr cause, f2ptr this) {
+  f2ptr first_event       = raw__event_stream__first(cause, this);
+  f2ptr first_event__time = raw__event_stream_event__time(cause, first_event);
+  f2ptr iterator          = f2__event_stream_iterator__new(cause, this, first_event__time);
+  return iterator;
+}
+
+f2ptr f2__event_stream__new__iterator(f2ptr cause, f2ptr this) {
+  if (! raw__event_stream__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__event_stream__new__iterator(cause, this);
+}
+export_cefunk1(event_stream__new__iterator, this, 0, "Returns a new event_stream_iterator set to point to the first event in the stream.");
+
+
 
 // event_stream lick funks
 
@@ -230,6 +276,9 @@ f2ptr f2__event_stream_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add"),                                          f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__add")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remove"),                                       f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__remove")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "size"),                                         f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__size")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "first"),                                        f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__first")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "last"),                                         f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__last")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "new-iterator"),                                 f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__new__iterator")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lick_to_chunk"),                                f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__lick_to_chunk")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lick_chunk-unlick_with_notes"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__lick_chunk__unlick_with_notes")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lick_chunk-unlick_replace_notes_with_objects"), f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__lick_chunk__unlick_replace_notes_with_objects")));}

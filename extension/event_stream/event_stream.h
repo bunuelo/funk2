@@ -25,67 +25,6 @@
 #include "../../c/funk2.h"
 
 
-#define def_header_ceframe__cause_args1(slot1)	\
-  f2ptr cause, f2ptr slot1
-
-#define def_header_ceframe__cause_args2(slot1, slot2)	\
-  def_header_ceframe__new__args1(slot1), f2ptr slot2
-
-
-#define def_header_ceframe__new0(name)		\
-  f2ptr f2##name##__new(f2ptr cause);
-
-#define def_header_ceframe__new1(name, slot1)				\
-  f2ptr f2##name##__new(def_header_ceframe__cause_args1(slot1));
-
-#define def_header_ceframe__new2(name, slot1, slot2)			\
-  f2ptr f2##name##__new(def_header_ceframe__cause_args2(slot1, slot2));
-
-
-
-#define def_header_ceframe__common(name)				\
-  boolean_t raw__##name##__is_type(f2ptr cause, f2ptr thing);		\
-  f2ptr      f2__##name##__is_type(f2ptr cause, f2ptr thing);		\
-  f2ptr     raw__##name##__type   (f2ptr cause, f2ptr this);		\
-  f2ptr      f2__##name##__type   (f2ptr cause, f2ptr this);		\
-  									\
-  f2ptr f2__##name##_type__new(f2ptr cause);
-
-
-#define def_header_ceframe__slot(name, slot)				\
-  f2ptr raw__##name##__##slot       (f2ptr cause, f2ptr this);		\
-  f2ptr  f2__##name##__##slot       (f2ptr cause, f2ptr this);		\
-  f2ptr raw__##name##__##slot##__set(f2ptr cause, f2ptr this, f2ptr slot); \
-  f2ptr  f2__##name##__##slot##__set(f2ptr cause, f2ptr this, f2ptr slot);
-
-
-#define def_header_ceframe__slot0(name)
-
-#define def_header_ceframe__slot1(name, slot1)	\
-  def_header_ceframe__slot0(name)		\
-  def_header_ceframe__slot(name, slot1)
-
-#define def_header_ceframe__slot2(name, slot1, slot2)		\
-  def_header_ceframe__slot1(name, slot1)			\
-  def_header_ceframe__slot(name, slot2)
-
-
-#define def_header_ceframe0(name)		\
-  def_header_ceframe__new0(name)		\
-  def_header_ceframe__common(name)		\
-  def_header_ceframe__slot0(name)
-
-#define def_header_ceframe1(name, slot1)	\
-  def_header_ceframe__new1(name, slot1)		\
-  def_header_ceframe__common(name)		\
-  def_header_ceframe__slot1(name, slot1)
-
-#define def_header_ceframe2(name, slot1, slot2)	\
-  def_header_ceframe__new2(name, slot1, slot2)	\
-  def_header_ceframe__common(name)		\
-  def_header_ceframe__slot2(name, slot1, slot2)
-
-
 // event_stream_event
 
 def_header_ceframe1(event_stream_event, time);
@@ -93,49 +32,21 @@ def_header_ceframe1(event_stream_event, time);
 f2ptr raw__event_stream_event__time_value   (f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
 f2ptr raw__event_stream_event__compare_value(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
 
-f2ptr     raw__event_stream_event__new       (f2ptr cause, f2ptr time);
-f2ptr      f2__event_stream_event__new       (f2ptr cause, f2ptr time);
-
-/*
-
-boolean_t raw__event_stream_event__is_type   (f2ptr cause, f2ptr thing);
-f2ptr      f2__event_stream_event__is_type   (f2ptr cause, f2ptr thing);
-f2ptr     raw__event_stream_event__type      (f2ptr cause, f2ptr this);
-f2ptr      f2__event_stream_event__type      (f2ptr cause, f2ptr this);
-f2ptr     raw__event_stream_event__time      (f2ptr cause, f2ptr this);
-f2ptr      f2__event_stream_event__time      (f2ptr cause, f2ptr this);
-f2ptr     raw__event_stream_event__time__set (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__event_stream_event__time__set (f2ptr cause, f2ptr this, f2ptr value);
-
-f2ptr f2__event_stream_event_type__new(f2ptr cause);
-*/
+f2ptr raw__event_stream_event__new(f2ptr cause, f2ptr time);
+f2ptr  f2__event_stream_event__new(f2ptr cause, f2ptr time);
 
 // event_stream
 
 def_header_ceframe1(event_stream, event_time_redblacktree);
 
-f2ptr     raw__event_stream__new                         (f2ptr cause);
-f2ptr      f2__event_stream__new                         (f2ptr cause);
-
-/*
-boolean_t raw__event_stream__is_type                     (f2ptr cause, f2ptr thing);
-f2ptr      f2__event_stream__is_type                     (f2ptr cause, f2ptr thing);
-f2ptr     raw__event_stream__type                        (f2ptr cause, f2ptr this);
-f2ptr      f2__event_stream__type                        (f2ptr cause, f2ptr this);
-f2ptr     raw__event_stream__event_time_redblacktree     (f2ptr cause, f2ptr this);
-f2ptr      f2__event_stream__event_time_redblacktree     (f2ptr cause, f2ptr this);
-f2ptr     raw__event_stream__event_time_redblacktree__set(f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__event_stream__event_time_redblacktree__set(f2ptr cause, f2ptr this, f2ptr value);
-
-f2ptr f2__event_stream_type__new(f2ptr cause);
-*/
-
-f2ptr     raw__event_stream__add                         (f2ptr cause, f2ptr this, f2ptr event_stream_event);
-f2ptr      f2__event_stream__add                         (f2ptr cause, f2ptr this, f2ptr event_stream_event);
-f2ptr     raw__event_stream__remove                      (f2ptr cause, f2ptr this, f2ptr event_stream_event);
-f2ptr      f2__event_stream__remove                      (f2ptr cause, f2ptr this, f2ptr event_stream_event);
-f2ptr     raw__event_stream__size                        (f2ptr cause, f2ptr this);
-f2ptr      f2__event_stream__size                        (f2ptr cause, f2ptr this);
+f2ptr raw__event_stream__new   (f2ptr cause);
+f2ptr  f2__event_stream__new   (f2ptr cause);
+f2ptr raw__event_stream__add   (f2ptr cause, f2ptr this, f2ptr event_stream_event);
+f2ptr  f2__event_stream__add   (f2ptr cause, f2ptr this, f2ptr event_stream_event);
+f2ptr raw__event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event);
+f2ptr  f2__event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event);
+f2ptr raw__event_stream__size  (f2ptr cause, f2ptr this);
+f2ptr  f2__event_stream__size  (f2ptr cause, f2ptr this);
 
 
 #define event_stream__iteration(cause, this, event, code) {		\

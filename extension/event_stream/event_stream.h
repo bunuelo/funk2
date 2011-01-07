@@ -53,6 +53,12 @@ f2ptr  f2__event_stream__size  (f2ptr cause, f2ptr this);
     redblacktree__iteration(cause, f2__event_stream__event_time_redblacktree(cause, this), event, code); \
   }
 
+// event_stream_iterator
+
+def_header_ceframe2(event_stream_iterator, event_stream, index_time);
+
+f2ptr raw__event_stream_iterator__new(f2ptr cause, f2ptr event_stream, f2ptr index_time);
+f2ptr  f2__event_stream_iterator__new(f2ptr cause, f2ptr event_stream, f2ptr index_time);
 
 // **
 

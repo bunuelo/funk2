@@ -111,26 +111,34 @@ declare_primobject_3_slot(redblacktree, head, value_funk, value_comparison_funk)
 					   }				\
 					   )
 
-f2ptr     raw__redblacktree__new(                f2ptr cause, f2ptr head, f2ptr value_funk, f2ptr value_comparison_funk);
-f2ptr      f2__redblacktree__new(                f2ptr cause, f2ptr value_funk, f2ptr value_comparison_funk);
-f2ptr     raw__redblacktree__insert(             f2ptr cause, f2ptr this, f2ptr key);
-f2ptr      f2__redblacktree__insert(             f2ptr cause, f2ptr this, f2ptr key);
-f2ptr     raw__redblacktree__remove(             f2ptr cause, f2ptr this, f2ptr key);
-f2ptr      f2__redblacktree__remove(             f2ptr cause, f2ptr this, f2ptr key);
-f2ptr     raw__redblacktree__minimum_node(       f2ptr cause, f2ptr this);
-f2ptr     raw__redblacktree__minimum(            f2ptr cause, f2ptr this);
-f2ptr      f2__redblacktree__minimum(            f2ptr cause, f2ptr this);
-f2ptr     raw__redblacktree__maximum_node(       f2ptr cause, f2ptr this);
-f2ptr     raw__redblacktree__maximum(            f2ptr cause, f2ptr this);
-f2ptr      f2__redblacktree__maximum(            f2ptr cause, f2ptr this);
-f2ptr     raw__redblacktree__leaves(             f2ptr cause, f2ptr this);
-f2ptr      f2__redblacktree__leaves(             f2ptr cause, f2ptr this);
-u64       raw__redblacktree__size(               f2ptr cause, f2ptr this);
-f2ptr      f2__redblacktree__size(               f2ptr cause, f2ptr this);
-boolean_t raw__redblacktree__empty(              f2ptr cause, f2ptr this);
-f2ptr      f2__redblacktree__empty(              f2ptr cause, f2ptr this);
-f2ptr     raw__redblacktree__leaves_within_range(f2ptr cause, f2ptr this, f2ptr minimum, f2ptr maximum);
-f2ptr      f2__redblacktree__leaves_within_range(f2ptr cause, f2ptr this, f2ptr minimum, f2ptr maximum);
+f2ptr     raw__redblacktree__new                                       (f2ptr cause, f2ptr head, f2ptr value_funk, f2ptr value_comparison_funk);
+f2ptr      f2__redblacktree__new                                       (f2ptr cause, f2ptr value_funk, f2ptr value_comparison_funk);
+f2ptr     raw__redblacktree__insert                                    (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr      f2__redblacktree__insert                                    (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr     raw__redblacktree__remove                                    (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr      f2__redblacktree__remove                                    (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr     raw__redblacktree__minimum_node                              (f2ptr cause, f2ptr this);
+f2ptr     raw__redblacktree__minimum                                   (f2ptr cause, f2ptr this);
+f2ptr      f2__redblacktree__minimum                                   (f2ptr cause, f2ptr this);
+f2ptr     raw__redblacktree__maximum_node                              (f2ptr cause, f2ptr this);
+f2ptr     raw__redblacktree__maximum                                   (f2ptr cause, f2ptr this);
+f2ptr      f2__redblacktree__maximum                                   (f2ptr cause, f2ptr this);
+f2ptr     raw__redblacktree__minimum_not_less_than__node               (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__redblacktree__minimum_not_less_than__node               (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__redblacktree__minimum_not_less_than                     (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__redblacktree__minimum_not_less_than                     (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__redblacktree__maximum_not_greater_than_or_equal_to__node(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__redblacktree__maximum_not_greater_than_or_equal_to__node(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__redblacktree__maximum_not_greater_than_or_equal_to      (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__redblacktree__maximum_not_greater_than_or_equal_to      (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__redblacktree__leaves                                    (f2ptr cause, f2ptr this);
+f2ptr      f2__redblacktree__leaves                                    (f2ptr cause, f2ptr this);
+u64       raw__redblacktree__size                                      (f2ptr cause, f2ptr this);
+f2ptr      f2__redblacktree__size                                      (f2ptr cause, f2ptr this);
+boolean_t raw__redblacktree__empty                                     (f2ptr cause, f2ptr this);
+f2ptr      f2__redblacktree__empty                                     (f2ptr cause, f2ptr this);
+f2ptr     raw__redblacktree__leaves_within_range                       (f2ptr cause, f2ptr this, f2ptr minimum, f2ptr maximum);
+f2ptr      f2__redblacktree__leaves_within_range                       (f2ptr cause, f2ptr this, f2ptr minimum, f2ptr maximum);
 
 f2ptr f2redblacktree__primobject_type__new_aux(f2ptr cause);
 

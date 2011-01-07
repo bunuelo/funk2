@@ -393,7 +393,6 @@ f2ptr raw__redblacktree_node__maximum_not_greater_than_or_equal_to__node(f2ptr c
 }
 
 
-
 boolean_t raw__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
   if (this == nil) {
     return boolean__false;

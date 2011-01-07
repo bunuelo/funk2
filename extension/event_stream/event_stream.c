@@ -248,7 +248,7 @@ f2ptr raw__event_stream_iterator__new(f2ptr cause, f2ptr event_stream, f2ptr ind
 
 f2ptr f2__event_stream_iterator__new(f2ptr cause, f2ptr event_stream, f2ptr index_time) {
   if ((! raw__event_stream__is_type(cause, event_stream)) ||
-      (! raw__index_time__is_type(cause, index_time))) {
+      (! raw__time__is_type(cause, index_time))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__event_stream_iterator__new(cause, event_stream, index_time);

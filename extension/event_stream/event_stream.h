@@ -25,24 +25,21 @@
 #include "../../c/funk2.h"
 
 
-#define def_header_ceframe__new__args1(slot1)	\
+#define def_header_ceframe__cause_args1(slot1)	\
   f2ptr cause, f2ptr slot1
 
-#define def_header_ceframe__new__args2(slot1, slot2)	\
+#define def_header_ceframe__cause_args2(slot1, slot2)	\
   def_header_ceframe__new__args1(slot1), f2ptr slot2
 
 
-#define def_header_ceframe__new0(name)					\
-  f2ptr raw__##name##__new(f2ptr cause);				\
-  f2ptr  f2__##name##__new(f2ptr cause);
+#define def_header_ceframe__new0(name)		\
+  f2ptr f2##name##__new(f2ptr cause);
 
 #define def_header_ceframe__new1(name, slot1)				\
-  f2ptr raw__##name##__new(def_header_ceframe__new__args1(slot1)); \
-  f2ptr  f2__##name##__new(def_header_ceframe__new__args1(slot1));
+  f2ptr f2##name##__new(def_header_ceframe__cause_args1(slot1));
 
 #define def_header_ceframe__new2(name, slot1, slot2)			\
-  f2ptr raw__##name##__new(def_header_ceframe__new__args2(slot1, slot2)); \
-  f2ptr  f2__##name##__new(def_header_ceframe__new__args2(slot1, slot2));
+  f2ptr f2##name##__new(def_header_ceframe__cause_args2(slot1, slot2));
 
 
 
@@ -93,13 +90,14 @@
 
 def_header_ceframe1(event_stream_event, time);
 
-/*
-
 f2ptr raw__event_stream_event__time_value   (f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
 f2ptr raw__event_stream_event__compare_value(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
 
 f2ptr     raw__event_stream_event__new       (f2ptr cause, f2ptr time);
 f2ptr      f2__event_stream_event__new       (f2ptr cause, f2ptr time);
+
+/*
+
 boolean_t raw__event_stream_event__is_type   (f2ptr cause, f2ptr thing);
 f2ptr      f2__event_stream_event__is_type   (f2ptr cause, f2ptr thing);
 f2ptr     raw__event_stream_event__type      (f2ptr cause, f2ptr this);
@@ -116,9 +114,10 @@ f2ptr f2__event_stream_event_type__new(f2ptr cause);
 
 def_header_ceframe1(event_stream, event_time_redblacktree);
 
-/*
 f2ptr     raw__event_stream__new                         (f2ptr cause);
 f2ptr      f2__event_stream__new                         (f2ptr cause);
+
+/*
 boolean_t raw__event_stream__is_type                     (f2ptr cause, f2ptr thing);
 f2ptr      f2__event_stream__is_type                     (f2ptr cause, f2ptr thing);
 f2ptr     raw__event_stream__type                        (f2ptr cause, f2ptr this);

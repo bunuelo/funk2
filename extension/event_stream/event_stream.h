@@ -25,19 +25,16 @@
 #include "../../c/funk2.h"
 
 
-#define def_header_ceframe__new__args0(name) \
-  f2ptr cause
+#define def_header_ceframe__new__args1(slot1)	\
+  f2ptr cause, f2ptr slot1
 
-#define def_header_ceframe__new__args1(name, slot1)	\
-  def_header_ceframe__new__args0(name), f2ptr slot1
-
-#define def_header_ceframe__new__args2(name, slot1, slot2)	\
-  def_header_ceframe__new__args1(name, slot1), f2ptr slot2
+#define def_header_ceframe__new__args2(slot1, slot2)	\
+  def_header_ceframe__new__args1(slot1), f2ptr slot2
 
 
 #define def_header_ceframe__new0(name)					\
-  f2ptr raw__##name##__new(def_header_ceframe__new__args0(name));	\
-  f2ptr  f2__##name##__new(def_header_ceframe__new__args0(name));
+  f2ptr raw__##name##__new(f2ptr cause);				\
+  f2ptr  f2__##name##__new(f2ptr cause);
 
 #define def_header_ceframe__new1(name, slot1)				\
   f2ptr raw__##name##__new(def_header_ceframe__new__args1(name, slot1)); \

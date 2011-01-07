@@ -189,7 +189,7 @@
     
     [have shrink_button signal_connect 'clicked'
 	  [funk []
-		[set win size 0 0]]
+		[set win size 1 1]]
 	  nil]
     
     [have drawing_area expose_event-signal_connect

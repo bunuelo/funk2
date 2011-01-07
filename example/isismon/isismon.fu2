@@ -1036,7 +1036,7 @@
   [millisleep 100]]
 
 [deftypefunk isismon execute shrink_window []
-  [set window size 0 0]]
+  [set window size 1 1]]
 
 [deftypefunk isismon execute load_preferences []
   [let [[home_dir [getenv 'HOME']]]

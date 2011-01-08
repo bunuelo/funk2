@@ -75,7 +75,7 @@
   [simple_length [get this layer_names]]]
 
 
-[deftypefunk mind execute create_knowledge_event_stream_iterator [knowledge_event_stream_iterator_name knowledge_base_name]
+[deftypefunk mind execute create_knowledge_event_stream_iterator [knowledge_base_name knowledge_event_stream_iterator_name]
   [let [[knowledge_base [have [get this semantic_realm] lookup_semantic_knowledge_base knowledge_base_name]]]
     [if [null knowledge_base]
 	[error `run-time [frame bug_type                             `tried_to_create_knowledge_event_stream_iterator_for_nonexistent_knowledge_base

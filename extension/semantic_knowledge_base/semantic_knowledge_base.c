@@ -436,23 +436,24 @@ f2ptr f2__semantic_realm_type__new_aux(f2ptr cause) {
 
 // semantic_frame_event
 
-f2ptr raw__semantic_frame_event__new(f2ptr cause, f2ptr time, f2ptr event_type, f2ptr key_type, f2ptr key, f2ptr value) {
+f2ptr raw__semantic_frame_event__new(f2ptr cause, f2ptr time, f2ptr event_type, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
   f2ptr this = f2__event_stream_event__new(cause, time);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"),       new__symbol(cause, "semantic_frame_event"));
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "event_type"), event_type);
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "key_type"),   key_type);
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "key"),        key);
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "value"),      value);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"),           new__symbol(cause, "semantic_frame_event"));
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "event_type"),     event_type);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "semantic_frame"), semantic_frame);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "key_type"),       key_type);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "key"),            key);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "value"),          value);
   return this;
 }
 
-f2ptr f2__semantic_frame_event__new(f2ptr cause, f2ptr time, f2ptr event_type, f2ptr key_type, f2ptr key, f2ptr value) {
-  return raw__semantic_frame_event__new(cause, time, event_type, key_type, key, value);
+f2ptr f2__semantic_frame_event__new(f2ptr cause, f2ptr time, f2ptr event_type, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
+  return raw__semantic_frame_event__new(cause, time, event_type, semantic_frame, key_type, key, value);
 }
-export_cefunk5(semantic_frame_event__new, time, event_type, key_type, key, value, 0, "Returns a new semantic_frame_event object.");
+export_cefunk6(semantic_frame_event__new, time, event_type, semantic_frame, key_type, key, value, 0, "Returns a new semantic_frame_event object.");
 
 
 boolean_t raw__semantic_frame_event__is_type(f2ptr cause, f2ptr thing) {
@@ -653,7 +654,7 @@ f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr ke
   if (raw__semantic_frame__trace_add(cause, this) != nil) {
     raw__semantic_frame__initialize_tracing(cause, this);
     f2ptr trace_event_stream = raw__semantic_frame__trace_event_stream(cause, this);
-    semantic_frame_event = raw__semantic_frame_event__new(cause, f2__time(cause), new__symbol(cause, "add"), key_type, key, value);
+    semantic_frame_event = raw__semantic_frame_event__new(cause, f2__time(cause), new__symbol(cause, "add"), this, key_type, key, value);
     raw__event_stream__add(cause, trace_event_stream, semantic_frame_event);
   }
   f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
@@ -701,7 +702,7 @@ f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
   if (raw__semantic_frame__trace_remove(cause, this) != nil) {
     raw__semantic_frame__initialize_tracing(cause, this);
     f2ptr trace_event_stream = raw__semantic_frame__trace_event_stream(cause, this);
-    semantic_frame_event = raw__semantic_frame_event__new(cause, f2__time(cause), new__symbol(cause, "remove"), key_type, key, value);
+    semantic_frame_event = raw__semantic_frame_event__new(cause, f2__time(cause), new__symbol(cause, "remove"), this, key_type, key, value);
     raw__event_stream__add(cause, trace_event_stream, semantic_frame_event);
   }
   f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);

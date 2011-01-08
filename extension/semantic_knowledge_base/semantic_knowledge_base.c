@@ -102,158 +102,16 @@ export_cefunk3(object__semantic__remove__apply, this, slot, args, 0, "");
 
 // semantic_relationship_key
 
+def_ceframe4(semantic_knowledge_base, semantic_relationship_key, source, key_type, key, target);
+
 f2ptr raw__semantic_relationship_key__new(f2ptr cause, f2ptr source, f2ptr key_type, f2ptr key, f2ptr target) {
-  return f2__frame__new(cause, f2list10__new(cause,
-					     new__symbol(cause, "type"),     new__symbol(cause, "semantic_relationship_key"),
-					     new__symbol(cause, "source"),   source,
-					     new__symbol(cause, "key_type"), key_type,
-					     new__symbol(cause, "key"),      key,
-					     new__symbol(cause, "target"),   target));
+  return f2semantic_relationship_key__new(cause, source, key_type, key, target);
 }
 
 f2ptr f2__semantic_relationship_key__new(f2ptr cause, f2ptr source, f2ptr key_type, f2ptr key, f2ptr target) {
   return raw__semantic_relationship_key__new(cause, source, key_type, key, target);
 }
 export_cefunk4(semantic_relationship_key__new, source, key_type, key, target, 0, "Returns a new semantic_relationship_key object.");
-
-
-boolean_t raw__semantic_relationship_key__is_type(f2ptr cause, f2ptr thing) {
-  if (! raw__frame__is_type(cause, thing)) {
-    return boolean__false;
-  }
-  f2ptr this_type_name_symbol = new__symbol(cause, "semantic_relationship_key");
-  f2ptr thing_type_name       = f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil);
-  if (raw__eq(cause, this_type_name_symbol, thing_type_name)) {
-    return boolean__true;
-  }
-  f2ptr thing_type = f2__lookup_type(cause, thing_type_name);
-  if (raw__primobject_type__has_parent_type(cause, thing_type, this_type_name_symbol)) {
-    return boolean__true;
-  }
-  return boolean__false;
-}
-
-f2ptr f2__semantic_relationship_key__is_type(f2ptr cause, f2ptr thing) {
-  return f2bool__new(raw__semantic_relationship_key__is_type(cause, thing));
-}
-export_cefunk1(semantic_relationship_key__is_type, thing, 0, "Returns whether or not thing is of type semantic_relationship_key.");
-
-
-f2ptr raw__semantic_relationship_key__type(f2ptr cause, f2ptr this) {
-  return f2__object__type(cause, this);
-}
-
-f2ptr f2__semantic_relationship_key__type(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_relationship_key__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_relationship_key__type(cause, this);
-}
-export_cefunk1(semantic_relationship_key__type, thing, 0, "Returns the specific type of object that this semantic_relationship_key is.");
-
-
-f2ptr raw__semantic_relationship_key__source(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "source"), nil);
-}
-
-f2ptr f2__semantic_relationship_key__source(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_relationship_key__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_relationship_key__source(cause, this);
-}
-export_cefunk1(semantic_relationship_key__source, thing, 0, "Returns the source of the semantic_relationship_key.");
-
-
-f2ptr raw__semantic_relationship_key__source__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "source"), value);
-}
-
-f2ptr f2__semantic_relationship_key__source__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__semantic_relationship_key__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_relationship_key__source__set(cause, this, value);
-}
-export_cefunk2(semantic_relationship_key__source__set, thing, value, 0, "Sets the source of the semantic_relationship_key.");
-
-
-f2ptr raw__semantic_relationship_key__key_type(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "key_type"), nil);
-}
-
-f2ptr f2__semantic_relationship_key__key_type(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_relationship_key__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_relationship_key__key_type(cause, this);
-}
-export_cefunk1(semantic_relationship_key__key_type, thing, 0, "Returns the key_type of the semantic_relationship_key.");
-
-
-f2ptr raw__semantic_relationship_key__key_type__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "key_type"), value);
-}
-
-f2ptr f2__semantic_relationship_key__key_type__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__semantic_relationship_key__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_relationship_key__key_type__set(cause, this, value);
-}
-export_cefunk2(semantic_relationship_key__key_type__set, thing, value, 0, "Sets the key_type of the semantic_relationship_key.");
-
-
-f2ptr raw__semantic_relationship_key__key(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "key"), nil);
-}
-
-f2ptr f2__semantic_relationship_key__key(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_relationship_key__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_relationship_key__key(cause, this);
-}
-export_cefunk1(semantic_relationship_key__key, thing, 0, "Returns the key of the semantic_relationship_key.");
-
-
-f2ptr raw__semantic_relationship_key__key__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "key"), value);
-}
-
-f2ptr f2__semantic_relationship_key__key__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__semantic_relationship_key__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_relationship_key__key__set(cause, this, value);
-}
-export_cefunk2(semantic_relationship_key__key__set, thing, value, 0, "Sets the key of the semantic_relationship_key.");
-
-
-f2ptr raw__semantic_relationship_key__target(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "target"), nil);
-}
-
-f2ptr f2__semantic_relationship_key__target(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_relationship_key__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_relationship_key__target(cause, this);
-}
-export_cefunk1(semantic_relationship_key__target, thing, 0, "Returns the target of the semantic_relationship_key.");
-
-
-f2ptr raw__semantic_relationship_key__target__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "target"), value);
-}
-
-f2ptr f2__semantic_relationship_key__target__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__semantic_relationship_key__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_relationship_key__target__set(cause, this, value);
-}
-export_cefunk2(semantic_relationship_key__target__set, thing, value, 0, "Sets the target of the semantic_relationship_key.");
 
 
 u64 raw__semantic_relationship_key__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
@@ -372,19 +230,8 @@ f2ptr f2__semantic_relationship_key__terminal_print_with_frame(f2ptr cause, f2pt
 export_cefunk2(semantic_relationship_key__terminal_print_with_frame, this, terminal_print_frame, 0, "");
 
 
-f2ptr f2__semantic_relationship_key_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),                        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "source"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__source")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "source"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__source__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "key_type"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__key_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "key_type"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__key_type__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "key"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__key")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "key"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__key__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "target"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__target")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, "target"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__target__set")));}
+f2ptr f2__semantic_relationship_key_type__new_aux(f2ptr cause) {
+  f2ptr this = f2__semantic_relationship_key_type__new(cause);
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "equals_hash_value-loop_free"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__equals_hash_value__loop_free")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "equals_hash_value"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__equals_hash_value")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "equals"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__equals")));}
@@ -2540,7 +2387,7 @@ f2ptr f2__semantic_knowledge_base__core_extension_initialize(f2ptr cause) {
       return result;
     }
   }
-  f2__add_type(cause, new__symbol(cause, "semantic_relationship_key"),     f2__semantic_relationship_key_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "semantic_relationship_key"),     f2__semantic_relationship_key_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "semantic_realm"),                f2__semantic_realm_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "semantic_frame_event"),          f2__semantic_frame_event_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "semantic_frame"),                f2__semantic_frame_type__new(cause));

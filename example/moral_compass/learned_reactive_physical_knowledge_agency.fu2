@@ -25,6 +25,14 @@
        this]]
 
 
+[deftypefunk learned_reactive_physical_knowledge_agency execute create_knowledge []
+  [new meta_semantic_knowledge_base `physical_knowledge [get [get this mind] semantic_realm]]]
+
+[deftypefunk learned_reactive_layer execute connect_knowledge_reflection []
+  
+  ]
+
+
 [deframe translate_visual_knowledge_to_physical_knowledge_resource [resource] []
   [new []
        [construct resource `translate_visual_knowledge_to_physical_knowledge

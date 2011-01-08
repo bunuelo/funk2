@@ -22,12 +22,14 @@
 
 [deframe mind [frame] [body
 		       layer_frame
+		       knowledge_event_stream_iterator_frame
 		       global_semantic_realm]
   [new []
        [cause-define semantic_frame-trace_add                         t]
        [cause-define semantic_frame-trace_remove                      t]
        [cause-define semantic_knowledge_base-trace_add_semantic_frame t]
-       [= layer_frame [frame]]
+       [= layer_frame                           [frame]]
+       [= knowledge_event_stream_iterator_frame [frame]]
        this]]
 
 [deftypefunk mind get name []
@@ -71,6 +73,20 @@
 
 [deftypefunk mind get layer_count []
   [simple_length [get this layer_names]]]
+
+
+'
+[deftypefunk mind execute create_knowledge_event_stream_iterator [knowledge_event_stream_iterator_name knowledge_base_name]
+  [let [[knowledge_base [have [get this semantic_realm] lookup_semantic_knowledge_base knowledge_base_name]]]
+    [if [null knowledge_base]
+	[error `run-time [frame bug_type                             `tried_to_create_knowledge_event_stream_iterator_for_nonexistent_knowledge_base
+				knowledge_base_name                  knowledge_base_name
+				knowledge_event_stream_iterator_name knowledge_event_stream_iterator_name]]
+      [have knowledge_event_stream_iterator_frame add knowledge_event_stream_iterator_name ]]
+
+[deftypefunk mind get knowledge_event_stream_iterator [knowledge_event_stream_iterator_name]
+  [have knowledge_event_stream_iterator_frame lookup knowledge_event_stream_iterator_name]]
+'
 
 [deftypefunk mind execute add_agency [layer_name agency]
   [have [get this layer layer_name] add_agency agency]]

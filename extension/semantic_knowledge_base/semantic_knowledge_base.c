@@ -1406,7 +1406,7 @@ f2ptr f2__semantic_knowledge_base__add_trace_event(f2ptr cause, f2ptr this, f2pt
   raw__semantic_knowledge_base__add_trace_event(cause, this, event);
   return nil;
 }
-export_cefunk5(semantic_knowledge_base__add_trace_event, this, event, 0, "Usually called by a semantic_frame that belongs to this knowledge base when a value is added to the frame.");
+export_cefunk2(semantic_knowledge_base__add_trace_event, this, event, 0, "Usually called by a semantic_frame that belongs to this knowledge base when a value is added to the frame.");
 
 
 f2ptr raw__semantic_knowledge_base__know_of_semantic_frame_value_addition(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {

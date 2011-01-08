@@ -31,3 +31,7 @@
 [defpackage natural_language
   :packages [natural_language_command]]
 
+[defpackage skb-test
+  :packages [natural_language_command]
+   :sources ['skb-test.fu2']]
+

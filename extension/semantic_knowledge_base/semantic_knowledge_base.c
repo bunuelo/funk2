@@ -649,10 +649,11 @@ void raw__semantic_frame__initialize_tracing(f2ptr cause, f2ptr this) {
 
 
 f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  f2ptr semantic_frame_event = nil;
   if (raw__semantic_frame__trace_add(cause, this) != nil) {
     raw__semantic_frame__initialize_tracing(cause, this);
     f2ptr trace_event_stream = raw__semantic_frame__trace_event_stream(cause, this);
-    f2ptr semantic_frame_event = raw__semantic_frame_event__new(cause, f2__time(cause), new__symbol(cause, "add"), key_type, key, value);
+    semantic_frame_event = raw__semantic_frame_event__new(cause, f2__time(cause), new__symbol(cause, "add"), key_type, key, value);
     raw__event_stream__add(cause, trace_event_stream, semantic_frame_event);
   }
   f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
@@ -678,6 +679,9 @@ f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr ke
 		   if (raw__larva__is_type(cause, result)) {
 		     return result;
 		   }
+		   if (semantic_frame_event != nil) {
+		     raw__semantic_knowledge_base__add_trace_event(cause, semantic_knowledge_base, semantic_frame_event);
+		   }
 		   );
   }
   return nil;
@@ -693,10 +697,11 @@ export_cefunk4(semantic_frame__add, this, key_type, key, value, 0, "Adds the val
 
 
 f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  f2ptr semantic_frame_event = nil;
   if (raw__semantic_frame__trace_remove(cause, this) != nil) {
     raw__semantic_frame__initialize_tracing(cause, this);
     f2ptr trace_event_stream = raw__semantic_frame__trace_event_stream(cause, this);
-    f2ptr semantic_frame_event = raw__semantic_frame_event__new(cause, f2__time(cause), new__symbol(cause, "remove"), key_type, key, value);
+    semantic_frame_event = raw__semantic_frame_event__new(cause, f2__time(cause), new__symbol(cause, "remove"), key_type, key, value);
     raw__event_stream__add(cause, trace_event_stream, semantic_frame_event);
   }
   f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
@@ -722,6 +727,9 @@ f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
 		   f2ptr result = raw__semantic_knowledge_base__know_of_semantic_frame_value_removal(cause, semantic_knowledge_base, this, key_type, key, value);
 		   if (raw__larva__is_type(cause, result)) {
 		     return result;
+		   }
+		   if (semantic_frame_event != nil) {
+		     raw__semantic_knowledge_base__add_trace_event(cause, semantic_knowledge_base, semantic_frame_event);
 		   }
 		   );
   }
@@ -1274,7 +1282,7 @@ f2ptr raw__semantic_knowledge_base__remove_semantic_frame(f2ptr cause, f2ptr thi
 															 new__symbol(cause, "semantic_frame"), semantic_frame,
 															 new__symbol(cause, "this"),           this))));
   }
-  // tell the semantic frame that it belongs to this semantic_knowledge_base (so we can receive change events)
+  // tell the semantic frame that it does not belong to this semantic_knowledge_base anymore (so we can do not continue to receive change events)
   raw__semantic_frame__know_of_removal_from_semantic_knowledge_base(cause, semantic_frame, this);
   // remove the semantic frame from this knowledge base
   raw__set__remove(cause, semantic_frame_set, semantic_frame);
@@ -1383,8 +1391,26 @@ f2ptr f2__semantic_knowledge_base__add_trace_callback_funk(f2ptr cause, f2ptr th
 export_cefunk3(semantic_knowledge_base__add_trace_callback_funk, this, trace_callback_name, trace_callback_funk, 0, "Adds the trace_callback_funk to the trace_callback_funks_frame under the appropriate trace_callback_name.");
 
 
+f2ptr raw__semantic_knowledge_base__add_trace_event(f2ptr cause, f2ptr this, f2ptr event) {
+  raw__semantic_knowledge_base__initialize_tracing(cause, this);
+  f2ptr trace_event_stream = raw__semantic_knowledge_base__trace_event_stream(cause, this);
+  raw__event_stream__add(cause, trace_event_stream, event);
+  return nil;
+}
+
+f2ptr f2__semantic_knowledge_base__add_trace_event(f2ptr cause, f2ptr this, f2ptr event) {
+  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
+      (! raw__event_stream_event__is_type(cause, event))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__semantic_knowledge_base__add_trace_event(cause, this, event);
+  return nil;
+}
+export_cefunk5(semantic_knowledge_base__add_trace_event, this, event, 0, "Usually called by a semantic_frame that belongs to this knowledge base when a value is added to the frame.");
+
+
 f2ptr raw__semantic_knowledge_base__know_of_semantic_frame_value_addition(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
-  f2ptr trace_callback_funks_frame   = raw__semantic_knowledge_base__trace_callback_funks_frame(cause, this);
+  f2ptr trace_callback_funks_frame         = raw__semantic_knowledge_base__trace_callback_funks_frame(cause, this);
   f2ptr add_semantic_frame_value_callbacks = f2__frame__lookup_var_value(cause, trace_callback_funks_frame, new__symbol(cause, "add_semantic_frame_value"), nil);
   {
     f2ptr iter = add_semantic_frame_value_callbacks;
@@ -1414,7 +1440,7 @@ export_cefunk5(semantic_knowledge_base__know_of_semantic_frame_value_addition, t
 
 
 f2ptr raw__semantic_knowledge_base__know_of_semantic_frame_value_removal(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
-  f2ptr trace_callback_funks_frame   = raw__semantic_knowledge_base__trace_callback_funks_frame(cause, this);
+  f2ptr trace_callback_funks_frame            = raw__semantic_knowledge_base__trace_callback_funks_frame(cause, this);
   f2ptr remove_semantic_frame_value_callbacks = f2__frame__lookup_var_value(cause, trace_callback_funks_frame, new__symbol(cause, "remove_semantic_frame_value"), nil);
   {
     f2ptr iter = remove_semantic_frame_value_callbacks;
@@ -1787,21 +1813,22 @@ export_cefunk3(semantic_knowledge_base__lick_chunk__unlick_replace_notes_with_ob
 
 f2ptr f2__semantic_knowledge_base_type__new_aux(f2ptr cause) {
   f2ptr this = f2__semantic_knowledge_base_type__new(cause);
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-graph"),                                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__as__graph")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_semantic_frame"),                           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__add_semantic_frame")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remove_semantic_frame"),                        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__remove_semantic_frame")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remove_all"),                                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__remove_all")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_semantic_knowledge_base"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__add_semantic_knowledge_base")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_trace_callback_funk"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__add_trace_callback_funk")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "know_of_semantic_frame_value_addition"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__know_of_semantic_frame_value_addition")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "know_of_semantic_frame_value_removal"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__know_of_semantic_frame_value_removal")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "recursively_add_semantic_frames_to_set"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__recursively_add_semantic_frames_to_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_to_graph_with_node_ptypehash"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__add_to_graph_with_node_ptypehash")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-digraph_dot_code"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__as__digraph_dot_code")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "new-event_stream_iterator"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__new__event_stream_iterator")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lick_to_chunk"),                                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__lick_to_chunk")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lick_chunk-unlick_with_notes"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__lick_chunk__unlick_with_notes")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lick_chunk-unlick_replace_notes_with_objects"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__lick_chunk__unlick_replace_notes_with_objects")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "as-graph"),                                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__as__graph")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_semantic_frame"),                           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__add_semantic_frame")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove_semantic_frame"),                        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__remove_semantic_frame")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove_all"),                                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__remove_all")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_semantic_knowledge_base"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__add_semantic_knowledge_base")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_trace_callback_funk"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__add_trace_callback_funk")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_trace_event"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__add_trace_event")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "know_of_semantic_frame_value_addition"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__know_of_semantic_frame_value_addition")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "know_of_semantic_frame_value_removal"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__know_of_semantic_frame_value_removal")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "recursively_add_semantic_frames_to_set"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__recursively_add_semantic_frames_to_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_to_graph_with_node_ptypehash"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__add_to_graph_with_node_ptypehash")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "as-digraph_dot_code"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__as__digraph_dot_code")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "new-event_stream_iterator"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__new__event_stream_iterator")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"),                                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__lick_to_chunk")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-unlick_with_notes"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__lick_chunk__unlick_with_notes")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-unlick_replace_notes_with_objects"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__lick_chunk__unlick_replace_notes_with_objects")));}
   return this;
 }
 

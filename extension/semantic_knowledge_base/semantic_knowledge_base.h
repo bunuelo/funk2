@@ -57,8 +57,8 @@ f2ptr f2__semantic_realm_type__new(f2ptr cause);
 
 // semantic_frame_event
 
-f2ptr     raw__semantic_frame_event__new(f2ptr cause, f2ptr time, f2ptr event_type, f2ptr key_type, f2ptr key, f2ptr value);
-f2ptr      f2__semantic_frame_event__new(f2ptr cause, f2ptr time, f2ptr event_type, f2ptr key_type, f2ptr key, f2ptr value);
+f2ptr     raw__semantic_frame_event__new(f2ptr cause, f2ptr time, f2ptr event_type, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value);
+f2ptr      f2__semantic_frame_event__new(f2ptr cause, f2ptr time, f2ptr event_type, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value);
 boolean_t raw__semantic_frame_event__is_type(f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_frame_event__is_type(f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_frame_event__type(f2ptr cause, f2ptr this);

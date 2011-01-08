@@ -39,14 +39,24 @@ f2ptr  f2__event_stream_event__new(f2ptr cause, f2ptr time);
 
 def_header_ceframe1(event_stream, event_time_redblacktree);
 
-f2ptr raw__event_stream__new   (f2ptr cause);
-f2ptr  f2__event_stream__new   (f2ptr cause);
-f2ptr raw__event_stream__add   (f2ptr cause, f2ptr this, f2ptr event_stream_event);
-f2ptr  f2__event_stream__add   (f2ptr cause, f2ptr this, f2ptr event_stream_event);
-f2ptr raw__event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event);
-f2ptr  f2__event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event);
-f2ptr raw__event_stream__size  (f2ptr cause, f2ptr this);
-f2ptr  f2__event_stream__size  (f2ptr cause, f2ptr this);
+f2ptr raw__event_stream__new                 (f2ptr cause);
+f2ptr  f2__event_stream__new                 (f2ptr cause);
+f2ptr raw__event_stream__add                 (f2ptr cause, f2ptr this, f2ptr event_stream_event);
+f2ptr  f2__event_stream__add                 (f2ptr cause, f2ptr this, f2ptr event_stream_event);
+f2ptr raw__event_stream__remove              (f2ptr cause, f2ptr this, f2ptr event_stream_event);
+f2ptr  f2__event_stream__remove              (f2ptr cause, f2ptr this, f2ptr event_stream_event);
+f2ptr raw__event_stream__size                (f2ptr cause, f2ptr this);
+f2ptr  f2__event_stream__size                (f2ptr cause, f2ptr this);
+f2ptr raw__event_stream__first               (f2ptr cause, f2ptr this);
+f2ptr  f2__event_stream__first               (f2ptr cause, f2ptr this);
+f2ptr raw__event_stream__last                (f2ptr cause, f2ptr this);
+f2ptr  f2__event_stream__last                (f2ptr cause, f2ptr this);
+f2ptr raw__event_stream__first_not_before    (f2ptr cause, f2ptr this, f2ptr time);
+f2ptr  f2__event_stream__first_not_before    (f2ptr cause, f2ptr this, f2ptr time);
+f2ptr raw__event_stream__last_not_after_or_at(f2ptr cause, f2ptr this, f2ptr time);
+f2ptr  f2__event_stream__last_not_after_or_at(f2ptr cause, f2ptr this, f2ptr time);
+f2ptr raw__event_stream__new__iterator       (f2ptr cause, f2ptr this);
+f2ptr  f2__event_stream__new__iterator       (f2ptr cause, f2ptr this);
 
 
 #define event_stream__iteration(cause, this, event, code) {		\

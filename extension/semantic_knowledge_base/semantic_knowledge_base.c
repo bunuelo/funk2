@@ -421,8 +421,8 @@ export_cefunk2(semantic_realm__terminal_print_with_frame, this, terminal_print_f
 
 
 
-f2ptr f2__semantic_realm_type__new(f2ptr cause) {
-  f2ptr this = f2__semantic_realm_type__neww(cause);
+f2ptr f2__semantic_realm_type__new_aux(f2ptr cause) {
+  f2ptr this = f2__semantic_realm_type__new(cause);
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lookup_object_key"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__lookup_object_key")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_object_key"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__add_object_key")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "object_key"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__object_key")));}

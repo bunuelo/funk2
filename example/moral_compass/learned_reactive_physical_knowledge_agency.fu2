@@ -37,7 +37,10 @@
        [construct resource `translate_visual_knowledge_to_physical_knowledge
 		  [funk []
 			[terminal_format standard-terminal '\ntranslating visual knowledge to physical knowledge.']
-			]]
+			[let [[visual_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `visual_knowledge->physical_knowledge]]]
+			  [while [prog [terminal_format standard-terminal '\n  translate visual->physical visual event: ' [get visual_knowledge_iterator current]]
+				       [have visual_knowledge_iterator increment]]]
+			  ]]]
        nil]]
 
 

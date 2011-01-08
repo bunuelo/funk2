@@ -359,6 +359,44 @@ f2ptr f2__event_stream_iterator__current(f2ptr cause, f2ptr this) {
 export_cefunk1(event_stream_iterator__current, event_stream, 0, "Returns the current event referenced by the event_stream_iterator.");
 
 
+f2ptr raw__event_stream_iterator__next(f2ptr cause, f2ptr this) {
+  f2ptr event_stream              = raw__event_stream_iterator__event_stream(cause, this);
+  f2ptr index_time                = raw__event_stream_iterator__index_time(cause, this);
+  f2ptr nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, index_time);
+  f2ptr nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
+  f2ptr slightly_greater_time     = f2__time__new(cause, f2integer__new(cause, nanoseconds_since_1970__i + 1));
+  f2ptr next_event                = raw__event_stream__first_not_before(cause, event_stream, slightly_greater_time);
+  return next_event;
+}
+
+f2ptr f2__event_stream_iterator__next(f2ptr cause, f2ptr this) {
+  if (! raw__event_stream_iterator__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__event_stream_iterator__next(cause, this);
+}
+export_cefunk1(event_stream_iterator__next, event_stream, 0, "Returns the next event from this event_stream_iterator if one exists, nil otherwise.");
+
+
+f2ptr raw__event_stream_iterator__has__next(f2ptr cause, f2ptr this) {
+  f2ptr event_stream              = raw__event_stream_iterator__event_stream(cause, this);
+  f2ptr index_time                = raw__event_stream_iterator__index_time(cause, this);
+  f2ptr nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, index_time);
+  f2ptr nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
+  f2ptr slightly_greater_time     = f2__time__new(cause, f2integer__new(cause, nanoseconds_since_1970__i + 1));
+  f2ptr next_event                = raw__event_stream__first_not_before(cause, event_stream, slightly_greater_time);
+  return f2bool__new(next_event != nil);
+}
+
+f2ptr f2__event_stream_iterator__has__next(f2ptr cause, f2ptr this) {
+  if (! raw__event_stream_iterator__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__event_stream_iterator__has__next(cause, this);
+}
+export_cefunk1(event_stream_iterator__has__next, event_stream, 0, "Returns true if this event_stream_iterator has a next event, false otherwise.");
+
+
 f2ptr raw__event_stream_iterator__increment(f2ptr cause, f2ptr this) {
   f2ptr event_stream              = raw__event_stream_iterator__event_stream(cause, this);
   f2ptr index_time                = raw__event_stream_iterator__index_time(cause, this);
@@ -410,6 +448,8 @@ f2ptr f2__event_stream_iterator_type__new_aux(f2ptr cause) {
   f2ptr this = f2__event_stream_iterator_type__new(cause);
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "current"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_iterator__current")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "increment"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_iterator__increment")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "next"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_iterator__next")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "has-next"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_iterator__has__next")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream_iterator__terminal_print_with_frame")));}
   return this;
 }

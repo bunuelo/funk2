@@ -75,18 +75,17 @@
   [simple_length [get this layer_names]]]
 
 
-'
 [deftypefunk mind execute create_knowledge_event_stream_iterator [knowledge_event_stream_iterator_name knowledge_base_name]
   [let [[knowledge_base [have [get this semantic_realm] lookup_semantic_knowledge_base knowledge_base_name]]]
     [if [null knowledge_base]
 	[error `run-time [frame bug_type                             `tried_to_create_knowledge_event_stream_iterator_for_nonexistent_knowledge_base
 				knowledge_base_name                  knowledge_base_name
 				knowledge_event_stream_iterator_name knowledge_event_stream_iterator_name]]
-      [have knowledge_event_stream_iterator_frame add knowledge_event_stream_iterator_name ]]
+      [have knowledge_event_stream_iterator_frame add knowledge_event_stream_iterator_name [get knowledge_base new-event_stream_iterator]]]]]
 
 [deftypefunk mind get knowledge_event_stream_iterator [knowledge_event_stream_iterator_name]
   [have knowledge_event_stream_iterator_frame lookup knowledge_event_stream_iterator_name]]
-'
+
 
 [deftypefunk mind execute add_agency [layer_name agency]
   [have [get this layer layer_name] add_agency agency]]
@@ -140,11 +139,8 @@
 [defmetro mind-wait_to_activate [mind layer_name agency_name resource_name :rest args]
   `[have ,mind wait_to_activate [quote ,layer_name] [quote ,agency_name] [quote ,resource_name] @args]]
 
-[deftypefunk mind get knowledge [layer_name agency_name]
-  [get [get this agency layer_name agency_name] knowledge]]
-
-[defmetro mind-knowledge [mind layer_name agency_name]
-  `[get ,mind knowledge [quote ,layer_name] [quote ,agency_name]]]
+[deftypefunk mind get semantic_knowledge_base [name]
+  [have [get [get this mind] semantic_realm] lookup_semantic_knowledge_base name]]
 
 [deftypefunk mind get resource [layer_name agency_name resource_name]
   [get [get this layer layer_name] resource agency_name resource_name]]

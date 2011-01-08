@@ -627,7 +627,7 @@ f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr semantic_realm) {
     trace_add    = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_add"));
     trace_remove = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_remove"));
   }
-  return f2semantic_knowledge_base__new(cause, semantic_realm, trace_add, trace_remove, trace_event_stream, semantic_knowledge_base_set, frame);
+  return f2semantic_frame__new(cause, semantic_realm, trace_add, trace_remove, trace_event_stream, semantic_knowledge_base_set, frame);
 }
 
 

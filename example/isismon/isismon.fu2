@@ -310,13 +310,10 @@
        nil]]
 
 [defunk isismon_agent-new_from_name [isismon_project name]
-  [let [[isis_agent [new isis_agent_body [get isismon_project isis_world] [new moral_compass] name]]]
-    [with-new-cause [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
-		    [cause-define cause-time_step [get [get isismon_project isis_world] time_step]]
-		    
-		    [mind-activate [get isis_agent mind] builtin_reactive sensory     continuous_sensing]
-		    [mind-activate [get isis_agent mind] builtin_reactive neural_plug activate_resource]]
-    [new isismon_agent isismon_project isis_agent]]]
+  [let [[moral_compass [new moral_compass]]]
+    [let [[isis_agent [new isis_agent_body [get isismon_project isis_world] moral_compass name]]]
+      [have moral_compass activate_vital_resources]
+      [new isismon_agent isismon_project isis_agent]]]]
 
 [deftypefunk isismon_agent get name []
   [get isis_agent name]]
@@ -720,6 +717,8 @@
       [set this isis_world isis_world]
       [mapc [funk [agent_body]
 		  [terminal_format standard-terminal '\n                 Initializing agent, ' [get agent_body name] '.']
+		  [let [[moral_compass [get agent_body mind]]]
+		    [have moral_compass activate_vital_resources]]
 		  [have this add_agent [new isismon_agent this agent_body]]]
 	    [get isis_world agent_bodies]]
       [have [get this execute_mutex] unlock]
@@ -1078,8 +1077,7 @@
     [have [get new_isismon_project widget] show_all]
     [= project_vbox__contained_widget [get new_isismon_project widget]]
     [= isismon_project new_isismon_project]]
-  [have this enable_project_commands]
-  ]
+  [have this enable_project_commands]]
 
 [deftypefunk isismon execute open_project [filename]
   [have this close_project]

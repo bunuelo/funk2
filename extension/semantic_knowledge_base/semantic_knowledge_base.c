@@ -1620,6 +1620,20 @@ f2ptr f2__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this)
 export_cefunk1(semantic_knowledge_base__as__digraph_dot_code, this, 0, "Compile this semantic_knowledge base as digraph dot code (needs a digraph dot wrapper to be fully compiled).");
 
 
+f2ptr raw__semantic_knowledge_base__new__event_stream_iterator(f2ptr cause, f2ptr this) {
+  raw__semantic_knowledge_base__initialize_tracing(cause, this);
+  f2ptr trace_event_stream = raw__semantic_knowledge_base__trace_event_stream(cause, this);
+  return raw__event_stream__new__iterator(cause, trace_event_stream);
+}
+
+f2ptr f2__semantic_knowledge_base__new__event_stream_iterator(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_knowledge_base__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_knowledge_base__new__event_stream_iterator(cause, this);
+}
+export_cefunk1(semantic_knowledge_base__new__event_stream_iterator, this, 0, "Returns a new event_stream_iterator for this semantic_knowledge_base's trace_event_stream.");
+
 
 // semantic_knowledge_base lick funks
 
@@ -1784,6 +1798,7 @@ f2ptr f2__semantic_knowledge_base_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "recursively_add_semantic_frames_to_set"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__recursively_add_semantic_frames_to_set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_to_graph_with_node_ptypehash"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__add_to_graph_with_node_ptypehash")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-digraph_dot_code"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__as__digraph_dot_code")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "new-event_stream_iterator"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__new__event_stream_iterator")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lick_to_chunk"),                                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__lick_to_chunk")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lick_chunk-unlick_with_notes"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__lick_chunk__unlick_with_notes")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lick_chunk-unlick_replace_notes_with_objects"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__lick_chunk__unlick_replace_notes_with_objects")));}

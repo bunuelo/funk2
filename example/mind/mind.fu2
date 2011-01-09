@@ -140,7 +140,7 @@
   `[have ,mind wait_to_activate [quote ,layer_name] [quote ,agency_name] [quote ,resource_name] @args]]
 
 [deftypefunk mind get semantic_knowledge_base [name]
-  [have [get [get this mind] semantic_realm] lookup_semantic_knowledge_base name]]
+  [have [get this semantic_realm] lookup_semantic_knowledge_base name]]
 
 [deftypefunk mind get resource [layer_name agency_name resource_name]
   [get [get this layer layer_name] resource agency_name resource_name]]

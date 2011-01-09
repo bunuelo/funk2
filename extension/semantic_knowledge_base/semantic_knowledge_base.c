@@ -242,13 +242,14 @@ f2ptr f2__semantic_relationship_key_type__new_aux(f2ptr cause) {
 
 // semantic_realm
 
-def_ceframe3(semantic_knowledge_base, semantic_realm, semantic_hash, meta_relationship_hash, semantic_knowledge_base_frame);
+def_ceframe4(semantic_knowledge_base, semantic_realm, semantic_hash, meta_relationship_hash, semantic_knowledge_base_frame, semantic_frame_phenomenon_hash);
 
 f2ptr raw__semantic_realm__new(f2ptr cause) {
-  f2ptr semantic_hash                 = f2__equals_hash__new(cause);
-  f2ptr meta_relationship_hash        = f2__equals_hash__new(cause);
-  f2ptr semantic_knowledge_base_frame = f2__frame__new(cause, nil);
-  return f2semantic_realm__new(cause, semantic_hash, meta_relationship_hash, semantic_knowledge_base_frame);
+  f2ptr semantic_hash                  = f2__equals_hash__new(cause);
+  f2ptr meta_relationship_hash         = f2__equals_hash__new(cause);
+  f2ptr semantic_knowledge_base_frame  = f2__frame__new(cause, nil);
+  f2ptr semantic_frame_phenomenon_hash = f2__equals_hash__new(cause);
+  return f2semantic_realm__new(cause, semantic_hash, meta_relationship_hash, semantic_knowledge_base_frame, semantic_frame_phenomenon_hash);
 }
 
 f2ptr f2__semantic_realm__new(f2ptr cause) {
@@ -398,6 +399,20 @@ f2ptr f2__semantic_realm__lookup_semantic_knowledge_base(f2ptr cause, f2ptr this
 export_cefunk2(semantic_realm__lookup_semantic_knowledge_base, this, name, 0, "Given a name, looks up a semantic knowledge base from this mental realm.");
 
 
+f2ptr raw__semantic_realm__lookup_phenomenon_semantic_frame(f2ptr cause, f2ptr this, f2ptr phenomenon) {
+  f2ptr semantic_frame_phenomenon_hash = raw__semantic_realm__semantic_frame_phenomenon_hash(cause, this);
+  return raw__hash__lookup(cause, semantic_frame_phenomenon_hash, phenomenon);
+}
+
+f2ptr f2__semantic_realm__lookup_phenomenon_semantic_frame(f2ptr cause, f2ptr this, f2ptr phenomenon) {
+  if (! raw__semantic_realm__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_realm__lookup_phenomenon_semantic_frame(cause, this, phenomenon);
+}
+export_cefunk2(semantic_realm__lookup_phenomenon_semantic_frame, this, phenomenon, 0, "Looks up a phenomenon's semantic_frame from this semantic realm.");
+
+
 f2ptr raw__semantic_realm__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -429,6 +444,8 @@ f2ptr f2__semantic_realm_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "key_count"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__key_count")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lookup_or_create_meta_relationship"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__lookup_or_create_meta_relationship")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lookup_semantic_knowledge_base"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__lookup_semantic_knowledge_base")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_phenomenon_semantic_frame"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__add_phenomenon_semantic_frame")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lookup_phenomenon_semantic_frame"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__lookup_phenomenon_semantic_frame")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_realm__terminal_print_with_frame")));}
   return this;
 }
@@ -797,6 +814,23 @@ f2ptr f2__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr 
 export_cefunk3(semantic_frame__lookup, this, key_type, key, 0, "Returns the values associated with the key_type and key.");
 
 
+boolean_t raw__semantic_frame__lookup_contains(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  f2ptr set = raw__semantic_frame__lookup(cause, this, key_type, key);
+  if (set == nil) {
+    return f2bool__new(boolean__false);
+  }
+  return raw__set__contains(cause, set, value);
+}
+
+f2ptr f2__semantic_frame__lookup_contains(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  if (! raw__semantic_frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame__lookup_contains(cause, this, key_type, key, value);
+}
+export_cefunk4(semantic_frame__lookup_contains, this, key_type, key, value, 0, "Returns the values associated with the key_type and key.");
+
+
 f2ptr raw__semantic_frame__lookup_single_value(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
   f2ptr source_set = raw__semantic_frame__lookup(cause, this, key_type, key);
   if (source_set == nil) {
@@ -1013,6 +1047,19 @@ f2ptr f2__semantic_frame__as__graphviz_label(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_frame__as__graphviz_label, this, 0, "Simply returns the string 'semantic_frame' for rendering semantic frames in graphviz.");
 
 
+boolean_t raw__semantic_frame__is_semantic_type(f2ptr cause, f2ptr this, f2ptr type_name) {
+  return raw__semantic_frame__lookup_contains(cause, this, new__symbol(cause, "type"), new__symbol(cause, "name"), type_name);
+}
+
+f2ptr f2__semantic_frame__is_semantic_type(f2ptr cause, f2ptr this, f2ptr type_name) {
+  if (! raw__semantic_frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_frame__is_semantic_type(cause, this, type_name);
+}
+export_cefunk2(semantic_frame__is_semantic_type, this, type_name, 0, "Returns true if this semantic_frame is of the given semantic type, false otherwise.");
+
+
 
 f2ptr raw__semantic_frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
@@ -1046,6 +1093,7 @@ f2ptr f2__semantic_frame_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add"),                                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__add")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remove"),                                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__remove")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lookup"),                                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__lookup")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "lookup_contains"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__lookup_contains")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lookup_single_value"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__lookup_single_value")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remove_all"),                                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__remove_all")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "replace_all"),                                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__replace_all")));}
@@ -1054,6 +1102,7 @@ f2ptr f2__semantic_frame_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "recursively_add_to_set"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__recursively_add_to_set")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_to_graph_with_node_ptypehash"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__add_to_graph_with_node_ptypehash")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-graphviz_label"),                            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__as__graphviz_label")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "is_semantic_type"),                             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__is_semantic_type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_frame__terminal_print_with_frame")));}
   return this;
 }

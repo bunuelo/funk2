@@ -399,9 +399,23 @@ f2ptr f2__semantic_realm__lookup_semantic_knowledge_base(f2ptr cause, f2ptr this
 export_cefunk2(semantic_realm__lookup_semantic_knowledge_base, this, name, 0, "Given a name, looks up a semantic knowledge base from this mental realm.");
 
 
+f2ptr raw__semantic_realm__add_phenomenon_semantic_frame(f2ptr cause, f2ptr this, f2ptr phenomenon, f2ptr semantic_frame) {
+  f2ptr semantic_frame_phenomenon_hash = raw__semantic_realm__semantic_frame_phenomenon_hash(cause, this);
+  return raw__equals_hash__add(cause, semantic_frame_phenomenon_hash, phenomenon, semantic_frame);
+}
+
+f2ptr f2__semantic_realm__add_phenomenon_semantic_frame(f2ptr cause, f2ptr this, f2ptr phenomenon, f2ptr semantic_frame) {
+  if (! raw__semantic_realm__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_realm__add_phenomenon_semantic_frame(cause, this, phenomenon, semantic_frame);
+}
+export_cefunk3(semantic_realm__add_phenomenon_semantic_frame, this, phenomenon, semantic_frame, 0, "Adds a phenomenon semantic_frame mapping to this semantic realm.");
+
+
 f2ptr raw__semantic_realm__lookup_phenomenon_semantic_frame(f2ptr cause, f2ptr this, f2ptr phenomenon) {
   f2ptr semantic_frame_phenomenon_hash = raw__semantic_realm__semantic_frame_phenomenon_hash(cause, this);
-  return raw__hash__lookup(cause, semantic_frame_phenomenon_hash, phenomenon);
+  return raw__equals_hash__lookup(cause, semantic_frame_phenomenon_hash, phenomenon);
 }
 
 f2ptr f2__semantic_realm__lookup_phenomenon_semantic_frame(f2ptr cause, f2ptr this, f2ptr phenomenon) {

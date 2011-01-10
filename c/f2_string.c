@@ -415,28 +415,29 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
 }
 def_pcfunk1(string__load, filename, return f2__string__load(this_cause, filename));
 
+
 f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
   if ((! raw__string__is_type(cause, this)) ||
       (! raw__string__is_type(cause, token))) {
     return f2larva__new(cause, 1, nil);
   }
-  s64 token__length = f2string__length(token, cause);
-  s64 this__length  = f2string__length(this,  cause);
+  s64 token__length = raw__string__length(cause, token);
+  s64 this__length  = raw__string__length(cause, this);
   if (token__length == 0) {
     return f2larva__new(cause, 93, nil);
   }
-  u8* token__str = (u8*)malloc(token__length);
-  f2string__str_copy(token, cause, token__str);
+  u8* token__str = (u8*)from_ptr(f2__malloc(token__length));
+  raw__string__str_copy(cause, token, token__str);
   
-  u8* this__str = (u8*)malloc(this__length);
-  f2string__str_copy(this, cause, this__str);
+  u8* this__str = (u8*)from_ptr(f2__malloc(this__length));
+  raw__string__str_copy(cause, this, this__str);
   
   f2ptr new_seq                 = nil;
   f2ptr iter                    = nil;
   s64   end_of_last_match_index = 0;
   s64   index                   = 0;
   s64   sup_index               = this__length - token__length + 1;
-  while(index < sup_index) {
+  while (index < sup_index) {
     if (memcmp(this__str + index, token__str, token__length) == 0) {
       s64   substr__length = index - end_of_last_match_index;
       f2ptr new_substr     = f2string__new(cause, substr__length, this__str + end_of_last_match_index);
@@ -463,6 +464,9 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
       f2cons__cdr__set(iter, cause, new_cons);
     }
   }
+  
+  f2__free(from_ptr(this__str));
+  f2__free(from_ptr(token__str));
   return new_seq;
 }
 def_pcfunk2(string__split, this, token, return f2__string__split(this_cause, this, token));

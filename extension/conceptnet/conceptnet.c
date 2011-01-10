@@ -141,7 +141,7 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename, f2ptr max
       //printf("\nconceptnet lines counted: " s64__fstr, line_index); fflush(stdout);
     }
   }
-  printf("\n"); fflush(stdout);
+  //printf("\n"); fflush(stdout);
   return this;
 }
 export_cefunk2(conceptnet__new_from_graph_file, filename, max_edges_to_load, 0, "Loads a conceptnet graph file.");

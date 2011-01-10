@@ -438,8 +438,14 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
   s64   index                   = 0;
   s64   sup_index               = this__length - token__length + 1;
   while (index < sup_index) {
+    if ((index < 0) || ((index + token_length) > this__length)) {
+      error(nil, "\nstring-split assert failed.\n");
+    }
     if (memcmp(this__str + index, token__str, token__length) == 0) {
       s64   substr__length = index - end_of_last_match_index;
+      if ((end_of_last_match_index + substr__length) > this__length) {
+	error(nil, "\nstring-split assert failed.\n");
+      }
       f2ptr new_substr     = f2string__new(cause, substr__length, this__str + end_of_last_match_index);
       f2ptr new_cons       = f2cons__new(cause, new_substr, nil);
       if (iter == nil) {
@@ -456,6 +462,9 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
   }
   {
     s64   substr__length = this__length - end_of_last_match_index;
+    if ((end_of_last_match_index + substr__length) > this__length) {
+      error(nil, "\nstring-split assert failed.\n");
+    }
     f2ptr new_substr     = f2string__new(cause, substr__length, this__str + end_of_last_match_index);
     f2ptr new_cons       = f2cons__new(cause, new_substr, nil);
     if (iter == nil) {

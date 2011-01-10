@@ -34,7 +34,7 @@ f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
       iter = f2cons__cdr(iter, cause);
     }
   }
-  u8* temp_str = (u8*)malloc(total_length + 1);
+  u8* temp_str = (u8*)from_ptr(f2__malloc(total_length + 1));
   u64 index = 0;
   {
     f2ptr iter = this;
@@ -47,7 +47,7 @@ f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
     }
   }
   f2ptr new_string = f2string__new(cause, total_length, temp_str);
-  free(temp_str);
+  f2__free(to_ptr(temp_str));
   return new_string;
 }
 
@@ -61,8 +61,8 @@ f2ptr f2__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_str
     return f2larva__new(cause, 1, nil);
   }
   u64 intersperse_string__length = f2string__length(intersperse_string, cause);
-  u8* intersperse_string__str    = malloc(intersperse_string__length + 1);
-  f2string__str_copy(intersperse_string, cause, intersperse_string__str);
+  u8* intersperse_string__str    = (u8*)from_ptr(f2__malloc(intersperse_string__length + 1));
+  raw__string__str_copy(cause, intersperse_string, intersperse_string__str);
   u64 total_length = 0;
   {
     f2ptr iter = this;
@@ -78,7 +78,7 @@ f2ptr f2__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_str
       }
     }
   }
-  u8* temp_str = (u8*)malloc(total_length + 1);
+  u8* temp_str = (u8*)from_ptr(f2__malloc(total_length + 1));
   u64 index = 0;
   {
     f2ptr iter = this;
@@ -95,8 +95,8 @@ f2ptr f2__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_str
     }
   }
   f2ptr new_string = f2string__new(cause, total_length, temp_str);
-  free(temp_str);
-  free(intersperse_string__str);
+  f2__free(to_ptr(temp_str));
+  f2__free(to_ptr(intersperse_string__str));
   return new_string;
 }
 def_pcfunk2(stringlist__intersperse, this, intersperse_string, return f2__stringlist__intersperse(this_cause, this, intersperse_string));
@@ -393,11 +393,11 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
   }
   u64 file__length = lseek(fd, 0, SEEK_END);
   lseek(fd, 0, SEEK_SET);
-  u8* file__str = (u8*)malloc(file__length);
+  u8* file__str = (u8*)from_ptr(f2__malloc(file__length));
   u64 read_length = read(fd, file__str, file__length);
   if (read_length != file__length) {
     printf("\nread_length=" u64__fstr ", file__length=" u64__fstr "\n", read_length, file__length);
-    free(file__str);
+    f2__free(to_ptr(file__str));
     {
       f2ptr bug_frame = f2__frame__new(cause, nil);
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),    new__symbol(cause, "could_not_read_complete_file"));
@@ -409,7 +409,7 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
     }
   }
   f2ptr new_string = f2string__new(cause, file__length, file__str);
-  free(file__str);
+  f2__free(to_ptr(file__str));
   close(fd);
   return new_string;
 }
@@ -421,8 +421,8 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
       (! raw__string__is_type(cause, token))) {
     return f2larva__new(cause, 1, nil);
   }
-  s64 token__length = raw__string__length(cause, token);
   s64 this__length  = raw__string__length(cause, this);
+  s64 token__length = raw__string__length(cause, token);
   if (token__length == 0) {
     return f2larva__new(cause, 93, nil);
   }
@@ -480,20 +480,27 @@ boolean_t raw__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
   if (substring__length > this__length) {
     return boolean__false;
   }
-  u8* substring__str = (u8*)malloc(substring__length);
-  f2string__str_copy(substring, cause, substring__str);
+  u8* substring__str = (u8*)from_ptr(f2__malloc(substring__length));
+  raw__string__str_copy(substring, cause, substring__str);
   
-  u8* this__str = (u8*)malloc(this__length);
-  f2string__str_copy(this, cause, this__str);
+  u8* this__str = (u8*)from_ptr(f2__malloc(this__length));
+  raw__string__str_copy(this, cause, this__str);
   
-  u64 index;
-  u64 sup_index = this__length - substring__length + 1;
-  for (index = 0; index <= sup_index; index ++) {
-    if (memcmp(this__str + index, substring__str, substring__length) == 0) {
-      return boolean__true;
+  boolean_t found_substring = boolean__false;
+  {
+    u64 index;
+    u64 sup_index = this__length - substring__length + 1;
+    for (index = 0; index <= sup_index; index ++) {
+      if (memcmp(this__str + index, substring__str, substring__length) == 0) {
+	found_substring = boolean__true;
+	break;
+      }
     }
   }
-  return boolean__false;
+  
+  f2__free(to_ptr(substring__str));
+  f2__free(to_ptr(this__str));
+  return found_substring;
 }
 
 f2ptr f2__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {

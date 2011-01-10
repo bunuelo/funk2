@@ -445,7 +445,7 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
       if (iter == nil) {
 	new_seq = new_cons;
       } else {
-	f2cons__cdr__set(iter, cause, new_cons);
+	f2__cons__cdr__set(cause, iter, new_cons);
       }
       iter = new_cons;
       index += token__length;
@@ -461,7 +461,7 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
     if (iter == nil) {
       new_seq = new_cons;
     } else {
-      f2cons__cdr__set(iter, cause, new_cons);
+      f2__cons__cdr__set(cause, iter, new_cons);
     }
   }
   

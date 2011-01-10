@@ -465,8 +465,8 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
     }
   }
   
-  f2__free(from_ptr(this__str));
-  f2__free(from_ptr(token__str));
+  f2__free(to_ptr(this__str));
+  f2__free(to_ptr(token__str));
   return new_seq;
 }
 def_pcfunk2(string__split, this, token, return f2__string__split(this_cause, this, token));

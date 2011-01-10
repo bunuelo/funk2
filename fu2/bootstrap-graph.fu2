@@ -30,6 +30,7 @@
 [deftypefunk graph get     contains                        [graph]                      [graph-contains                        this graph]]
 [deftypefunk graph get     random_nonempty_strict_subgraph []                           [graph-random_nonempty_strict_subgraph this]]
 [deftypefunk graph get     minus                           [that]                       [graph-minus                           this that]]
+[deftypefunk graph get     copy                            []                           [graph-copy                            this]]
 [deftypefunk graph get     node_isomorphisms               [node]                       [graph-node_isomorphisms               this node]]
 [deftypefunk graph get     edges_with_label_between_nodes  [label left_node right_node] [graph-edges_with_label_between_nodes  this label left_node right_node]]
 [deftypefunk graph get     as-dot_code                     []                           [graph-as-dot_code                     this]]

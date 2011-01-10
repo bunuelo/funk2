@@ -458,6 +458,35 @@ f2ptr f2__graph__minus(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(graph__minus, this, that, return f2__graph__minus(this_cause, this, that));
 
+
+f2ptr raw__graph__copy(f2ptr cause, f2ptr this) {
+  f2ptr graph = f2__graph__new(cause);
+  {
+    f2ptr this__node_set = f2__graph__node_set(cause, this);
+    set__iteration(cause, this__node_set, node,
+		   f2__graph__add_node(cause, graph, node);
+		   );
+  }
+  {
+    f2ptr this__edge_set = f2__graph__edge_set(cause, this);
+    set__iteration(cause, this__edge_set, edge,
+		   f2ptr left_node  = f2__graph_edge__left_node(cause, edge);
+		   f2ptr right_node = f2__graph_edge__right_node(cause, edge);
+		   f2__graph__add_edge(cause, graph, edge);
+		   );
+  }
+  return graph;
+}
+
+f2ptr f2__graph__copy(f2ptr cause, f2ptr this) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__copy(cause, this);
+}
+def_pcfunk1(graph__copy, this, return f2__graph__copy(this_cause, this));
+
+
 f2ptr raw__graph__node_isomorphisms(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr isomorphisms = nil;
   {
@@ -1314,6 +1343,7 @@ void f2__graph__initialize() {
   f2__primcfunk__init__2(graph__contains,                        this, graph,                        "Returns true if this graph contains a graph as a subgraph.");
   f2__primcfunk__init__1(graph__random_nonempty_strict_subgraph, this,                               "When this graph contains N nodes, returns a random subgraph with N/2 nodes.  This graph must have at least 2 nodes.");
   f2__primcfunk__init__2(graph__minus,                           this, that,                         "Returns a subgraph of this graph without the nodes in that graph.");
+  f2__primcfunk__init__1(graph__copy,                            this,                               "Returns a new graph that is a copy of this graph.");
   f2__primcfunk__init__2(graph__node_isomorphisms,               this, node,                         "Returns all single node isomorphisms between this graph and a graph_node.");
   f2__primcfunk__init__4(graph__edges_with_label_between_nodes,  this, label, left_node, right_node, "Returns edges directed from the left_node to the right_node that have the label in this graph.");
   f2__primcfunk__init__3(graph__edges_between_nodes,             this, left_node, right_node,        "Returns edges directed from the left_node to the right_node.");

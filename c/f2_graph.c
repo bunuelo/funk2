@@ -486,8 +486,6 @@ f2ptr raw__graph__copy(f2ptr cause, f2ptr this) {
   {
     f2ptr this__edge_set = f2__graph__edge_set(cause, this);
     set__iteration(cause, this__edge_set, edge,
-		   f2ptr left_node  = f2__graph_edge__left_node(cause, edge);
-		   f2ptr right_node = f2__graph_edge__right_node(cause, edge);
 		   f2__graph__add_edge(cause, graph, edge);
 		   );
   }

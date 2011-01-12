@@ -169,7 +169,6 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
     }
   }
   if (string == nil) {
-    /*
     if (raw__integer__is_type(cause, exp)) {
       u64  exp__i = f2integer__i(exp, cause);
       char name_str[128];
@@ -196,10 +195,10 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
       snprintf(name_str, 127, "double_" u64__fstr, (u64)u.uid);
       string = new__string(cause, name_str);
     } else {
-    */
-    char name_str[128];
-    snprintf(name_str, 127, "ptr_" u64__fstr, (u64)exp);
-    string = new__string(cause, name_str);
+      char name_str[128];
+      snprintf(name_str, 127, "ptr_" u64__fstr, (u64)exp);
+      string = new__string(cause, name_str);
+    }
   }
   return string;
   /*

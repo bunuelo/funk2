@@ -527,6 +527,7 @@ f2ptr f2__graph__node_isomorphisms(f2ptr cause, f2ptr this, f2ptr node) {
 }
 def_pcfunk2(graph__node_isomorphisms, this, node, return f2__graph__node_isomorphisms(this_cause, this, node));
 
+
 f2ptr raw__graph__edges_with_label_between_nodes(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
   f2ptr edges_label_hash_right_node_hash_left_node_hash = f2__graph__edges_label_hash_right_node_hash_left_node_hash(cause, this);
   f2ptr edges_label_hash_right_node_hash                = f2__ptypehash__lookup(cause, edges_label_hash_right_node_hash_left_node_hash, left_node);

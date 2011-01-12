@@ -481,8 +481,8 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
 def_pcfunk2(string__split, this, token, return f2__string__split(this_cause, this, token));
 
 boolean_t raw__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
-  u64 substring__length = f2string__length(substring, cause);
-  u64 this__length      = f2string__length(this,      cause);
+  u64 substring__length = raw__string__length(cause, substring);
+  u64 this__length      = raw__string__length(cause, this);
   if (substring__length == 0) {
     return boolean__true;
   }
@@ -490,10 +490,10 @@ boolean_t raw__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
     return boolean__false;
   }
   u8* substring__str = (u8*)from_ptr(f2__malloc(substring__length));
-  raw__string__str_copy(substring, cause, substring__str);
+  raw__string__str_copy(cause, substring, substring__str);
   
   u8* this__str = (u8*)from_ptr(f2__malloc(this__length));
-  raw__string__str_copy(this, cause, this__str);
+  raw__string__str_copy(cause, this, this__str);
   
   boolean_t found_substring = boolean__false;
   {

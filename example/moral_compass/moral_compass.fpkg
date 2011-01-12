@@ -51,7 +51,9 @@
    :sources ['builtin_reactive_neural_plug_agency.fu2']]
 
 [defpackage builtin_reactive_sensory_agency
-  :packages [mind semantic_visual_object]
+  :packages [mind
+	     semantic_visual_object
+	     semantic_event]
    :sources ['builtin_reactive_sensory_agency.fu2']]
 
 [defpackage builtin_reactive_physical_agency

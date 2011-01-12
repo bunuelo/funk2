@@ -94,7 +94,7 @@
 					  [action_name    [get action action_name]]
 					  [argument_frame [get action argument_frame]]
 					  [result         [get action result]]]
-				      [let [[action_semantic_frame [new semantic_frame [get [get this mind] semantic_realm]]]]
+				      [let [[action_semantic_frame [new semantic_event [get [get this mind] semantic_realm]]]]
 					[have [get [get this mind] visual_knowledge] add_semantic_frame action_semantic_frame]
 					[semantic-add action_semantic_frame property-start_time  start_time]
 					[semantic-add action_semantic_frame property-action_name action_name]

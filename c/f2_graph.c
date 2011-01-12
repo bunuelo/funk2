@@ -365,6 +365,22 @@ f2ptr f2__graph__contains(f2ptr cause, f2ptr this, f2ptr graph) {
 }
 def_pcfunk2(graph__contains, this, graph, return f2__graph__contains(this_cause, this, graph));
 
+
+f2ptr raw__graph__lookup_nodes_with_label(f2ptr cause, f2ptr this, f2ptr node_label) {
+  f2ptr nodes_label_hash = f2__graph__nodes_label_hash(cause, this);
+  return raw__ptypehash__lookup(cause, nodes_label_hash, node_label);
+}
+
+f2ptr f2__graph__lookup_nodes_with_label(f2ptr cause, f2ptr this, f2ptr node_label) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__lookup_nodes_with_label(cause, this, node_label);
+}
+def_pcfunk2(graph__lookup_nodes_with_label, this, node_label, return f2__graph__lookup_nodes_with_label(this_cause, this, node_label));
+
+
+
 // assumes this is graph and has at least 2 nodes.
 f2ptr raw__graph__random_nonempty_strict_subgraph(f2ptr cause, f2ptr this) {
   f2ptr  graph      = f2__graph__new(cause);
@@ -1341,6 +1357,7 @@ void f2__graph__initialize() {
   f2__primcfunk__init__2(graph__contains_node,                   this, node,                         "Returns true if this graph contains a graph_node.");
   f2__primcfunk__init__2(graph__contains_edge,                   this, edge,                         "Returns true if this graph contains a graph_edge.");
   f2__primcfunk__init__2(graph__contains,                        this, graph,                        "Returns true if this graph contains a graph as a subgraph.");
+  f2__primcfunk__init__2(graph__lookup_nodes_with_label,         this, node_label,                   "Returns the list of all nodes with the given label in this graph.");
   f2__primcfunk__init__1(graph__random_nonempty_strict_subgraph, this,                               "When this graph contains N nodes, returns a random subgraph with N/2 nodes.  This graph must have at least 2 nodes.");
   f2__primcfunk__init__2(graph__minus,                           this, that,                         "Returns a subgraph of this graph without the nodes in that graph.");
   f2__primcfunk__init__1(graph__copy,                            this,                               "Returns a new graph that is a copy of this graph.");

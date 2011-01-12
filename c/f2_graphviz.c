@@ -179,7 +179,8 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
 	float f;
 	u64   uid;
       } u;
-      u.f = f2float__f(exp, cause);
+      u.uid = 0;
+      u.f   = f2float__f(exp, cause);
       char   name_str[128];
       snprintf(name_str, 127, "float_" u64__fstr, (u64)u.uid);
       string = new__string(cause, name_str);
@@ -188,7 +189,8 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
 	double d;
 	u64    uid;
       } u;
-      u.d = f2double__d(exp, cause);
+      u.uid = 0;
+      u.d   = f2double__d(exp, cause);
       char   name_str[128];
       snprintf(name_str, 127, "double_" u64__fstr, (u64)u.uid);
       string = new__string(cause, name_str);

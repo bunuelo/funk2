@@ -84,7 +84,7 @@ f2ptr raw__semantic_event__property__start_time__add(f2ptr cause, f2ptr this, f2
 
 f2ptr f2__semantic_event__property__start_time__add(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__semantic_event__is_type(cause, this)) ||
-      (! raw__semantic_event__is_type(cause, that))) {
+      (! raw__time__is_type(cause, that))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_event__property__start_time__add(cause, this, that);
@@ -98,7 +98,7 @@ f2ptr raw__semantic_event__property__start_time__remove(f2ptr cause, f2ptr this,
 
 f2ptr f2__semantic_event__property__start_time__remove(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__semantic_event__is_type(cause, this)) ||
-      (! raw__semantic_event__is_type(cause, that))) {
+      (! raw__time__is_type(cause, that))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_event__property__start_time__remove(cause, this, that);
@@ -111,8 +111,7 @@ f2ptr raw__semantic_event__property__action_name__add(f2ptr cause, f2ptr this, f
 }
 
 f2ptr f2__semantic_event__property__action_name__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_event__is_type(cause, this)) ||
-      (! raw__semantic_event__is_type(cause, that))) {
+  if (! raw__semantic_event__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_event__property__action_name__add(cause, this, that);
@@ -125,8 +124,7 @@ f2ptr raw__semantic_event__property__action_name__remove(f2ptr cause, f2ptr this
 }
 
 f2ptr f2__semantic_event__property__action_name__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_event__is_type(cause, this)) ||
-      (! raw__semantic_event__is_type(cause, that))) {
+  if (! raw__semantic_event__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_event__property__action_name__remove(cause, this, that);
@@ -139,8 +137,7 @@ f2ptr raw__semantic_event__property__result__add(f2ptr cause, f2ptr this, f2ptr 
 }
 
 f2ptr f2__semantic_event__property__result__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_event__is_type(cause, this)) ||
-      (! raw__semantic_event__is_type(cause, that))) {
+  if (! raw__semantic_event__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_event__property__result__add(cause, this, that);
@@ -153,8 +150,7 @@ f2ptr raw__semantic_event__property__result__remove(f2ptr cause, f2ptr this, f2p
 }
 
 f2ptr f2__semantic_event__property__result__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_event__is_type(cause, this)) ||
-      (! raw__semantic_event__is_type(cause, that))) {
+  if (! raw__semantic_event__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_event__property__result__remove(cause, this, that);

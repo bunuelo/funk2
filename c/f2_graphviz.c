@@ -181,7 +181,7 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
       } u;
       u.uid = 0;
       u.f   = f2float__f(exp, cause);
-      char   name_str[128];
+      char name_str[128];
       snprintf(name_str, 127, "float_" u64__fstr, (u64)u.uid);
       string = new__string(cause, name_str);
     } else if (raw__double__is_type(cause, exp)) {
@@ -191,7 +191,7 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
       } u;
       u.uid = 0;
       u.d   = f2double__d(exp, cause);
-      char   name_str[128];
+      char name_str[128];
       snprintf(name_str, 127, "double_" u64__fstr, (u64)u.uid);
       string = new__string(cause, name_str);
     } else {

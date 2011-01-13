@@ -31,31 +31,44 @@
 									     turn_right_resource__button
 									     turn_right_resource__target__label
 									     turn_right_resource__target__entry
+									     turn_right_resource__target__label2
+									     turn_right_resource__target__entry2
 
 									     turn_left_resource__hbox
 									     turn_left_resource__button
 									     turn_left_resource__target__label
 									     turn_left_resource__target__entry
+									     turn_left_resource__target__label2
+									     turn_left_resource__target__entry2
+
 
 									     look_up_resource__hbox
 									     look_up_resource__button
 									     look_up_resource__target__label
 									     look_up_resource__target__entry
+									     look_up_resource__target__label2
+									     look_up_resource__target__entry2
 
 									     look_down_resource__hbox
 									     look_down_resource__button
 									     look_down_resource__target__label
 									     look_down_resource__target__entry
+									     look_down_resource__target__label2
+									     look_down_resource__target__entry2
 
 									     move_forward_resource__hbox
 									     move_forward_resource__button
 									     move_forward_resource__target__label
 									     move_forward_resource__target__entry
+									     move_forward_resource__target__label2
+									     move_forward_resource__target__entry2
 	
 									     move_backward_resource__hbox
 									     move_backward_resource__button
 									     move_backward_resource__target__label
 									     move_backward_resource__target__entry
+									     move_backward_resource__target__label2
+									     move_backward_resource__target__entry2
 									    
 
 									     level_pitch_resource__hbox
@@ -161,13 +174,19 @@
        [= turn_right_resource__button [gtk-button-new_with_label 'Turn Right - ']]
        [= turn_right_resource__target__label [gtk-label-new 'Step: ']]
        [= turn_right_resource__target__entry [gtk-entry-new]]
+       [= turn_right_resource__target__label2 [gtk-label-new 'Speed: ']]
+       [= turn_right_resource__target__entry2 [gtk-entry-new]]
        [have turn_right_resource__hbox pack_start turn_right_resource__button nil nil 0]
        [have turn_right_resource__hbox pack_start turn_right_resource__target__label nil nil 0]
        [have turn_right_resource__hbox pack_start turn_right_resource__target__entry t t 0]
+       [have turn_right_resource__hbox pack_start turn_right_resource__target__label2 nil nil 0]
+       [have turn_right_resource__hbox pack_start turn_right_resource__target__entry2 t t 0]
        [have vbox pack_start turn_right_resource__hbox nil nil 0]
        [have turn_right_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `turn_right [have [get turn_right_resource__target__entry text] read]]]
+		   [if [get turn_right_resource__target__entry2 text]
+		       [have this activate_resource `learned_reactive `physical `turn_right [have [get turn_right_resource__target__entry text] read] [have [get turn_right_resource__target__entry2 text] read]]
+		     [have this activate_resource `learned_reactive `physical `turn_right [have [get turn_right_resource__target__entry text] read]]]]
 	     nil]
        
        
@@ -175,69 +194,99 @@
        [= turn_left_resource__button [gtk-button-new_with_label 'Turn Left - ']]
        [= turn_left_resource__target__label [gtk-label-new 'Step: ']]
        [= turn_left_resource__target__entry [gtk-entry-new]]
+       [= turn_left_resource__target__label2 [gtk-label-new 'Speed: ']]
+       [= turn_left_resource__target__entry2 [gtk-entry-new]]
        [have turn_left_resource__hbox pack_start turn_left_resource__button nil nil 0]
        [have turn_left_resource__hbox pack_start turn_left_resource__target__label nil nil 0]
        [have turn_left_resource__hbox pack_start turn_left_resource__target__entry t t 0]
+       [have turn_left_resource__hbox pack_start turn_left_resource__target__label2 nil nil 0]
+       [have turn_left_resource__hbox pack_start turn_left_resource__target__entry2 t t 0]
        [have vbox pack_start turn_left_resource__hbox nil nil 0]
        [have turn_left_resource__button signal_connect 'clicked'
-	     [funk []
-		   [have this activate_resource `learned_reactive `physical `turn_left [have [get turn_left_resource__target__entry text]  read]]]
+	    [funk []
+		   [if [get turn_left_resource__target__entry2 text]
+		       [have this activate_resource `learned_reactive `physical `turn_left [have [get turn_left_resource__target__entry text] read] [have [get turn_left_resource__target__entry2 text] read]]
+		     [have this activate_resource `learned_reactive `physical `turn_left [have [get turn_left_resource__target__entry text] read]]]] 
 	     nil]
        
        [= look_up_resource__hbox [gtk-hbox-new 2]]
        [= look_up_resource__button [gtk-button-new_with_label 'Look Up - ']]
        [= look_up_resource__target__label [gtk-label-new 'Step: ']]
        [= look_up_resource__target__entry [gtk-entry-new]]
+       [= look_up_resource__target__label2 [gtk-label-new 'Speed: ']]
+       [= look_up_resource__target__entry2 [gtk-entry-new]]
        [have look_up_resource__hbox pack_start look_up_resource__button nil nil 0]
        [have look_up_resource__hbox pack_start look_up_resource__target__label nil nil 0]
        [have look_up_resource__hbox pack_start look_up_resource__target__entry t t 0]
+       [have look_up_resource__hbox pack_start look_up_resource__target__label2 nil nil 0]
+       [have look_up_resource__hbox pack_start look_up_resource__target__entry2 t t 0]
        [have vbox pack_start look_up_resource__hbox nil nil 0]
        [have look_up_resource__button signal_connect 'clicked'
 	     [funk []
-		   [print [have [get look_up_resource__target__entry text] read]]
-		   [have this activate_resource `learned_reactive `physical `look_up [have [get look_up_resource__target__entry text] read] ]]
+		   [if [get look_up_resource__target__entry2 text]
+		       [have this activate_resource `learned_reactive `physical `look_up [have [get look_up_resource__target__entry text] read] [have [get look_up_resource__target__entry2 text] read]]
+		     [have this activate_resource `learned_reactive `physical `look_up [have [get look_up_resource__target__entry text] read]]]]
 	     nil]
-       
+   
        [= look_down_resource__hbox [gtk-hbox-new 2]]
-       [= look_down_resource__button [gtk-button-new_with_label 'Look Down - ']]
+       [= look_down_resource__button [gtk-button-new_with_label 'Look down - ']]
        [= look_down_resource__target__label [gtk-label-new 'Step: ']]
        [= look_down_resource__target__entry [gtk-entry-new]]
+       [= look_down_resource__target__label2 [gtk-label-new 'Speed: ']]
+       [= look_down_resource__target__entry2 [gtk-entry-new]]
        [have look_down_resource__hbox pack_start look_down_resource__button nil nil 0]
        [have look_down_resource__hbox pack_start look_down_resource__target__label nil nil 0]
        [have look_down_resource__hbox pack_start look_down_resource__target__entry t t 0]
+       [have look_down_resource__hbox pack_start look_down_resource__target__label2 nil nil 0]
+       [have look_down_resource__hbox pack_start look_down_resource__target__entry2 t t 0]
        [have vbox pack_start look_down_resource__hbox nil nil 0]
        [have look_down_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `look_down [have  [get look_down_resource__target__entry text] read]]]
+		   [if [get look_down_resource__target__entry2 text]
+		       [have this activate_resource `learned_reactive `physical `look_down [have [get look_down_resource__target__entry text] read] [have [get look_down_resource__target__entry2 text] read]]
+		     [have this activate_resource `learned_reactive `physical `look_down [have [get look_down_resource__target__entry text] read]]]]
 	     nil]
        
-       
+          
        [= move_forward_resource__hbox [gtk-hbox-new 2]]
-       [= move_forward_resource__button [gtk-button-new_with_label 'Move Forward - ']]
+       [= move_forward_resource__button [gtk-button-new_with_label 'Move forward - ']]
        [= move_forward_resource__target__label [gtk-label-new 'Step: ']]
        [= move_forward_resource__target__entry [gtk-entry-new]]
+       [= move_forward_resource__target__label2 [gtk-label-new 'Speed: ']]
+       [= move_forward_resource__target__entry2 [gtk-entry-new]]
        [have move_forward_resource__hbox pack_start move_forward_resource__button nil nil 0]
        [have move_forward_resource__hbox pack_start move_forward_resource__target__label nil nil 0]
        [have move_forward_resource__hbox pack_start move_forward_resource__target__entry t t 0]
+       [have move_forward_resource__hbox pack_start move_forward_resource__target__label2 nil nil 0]
+       [have move_forward_resource__hbox pack_start move_forward_resource__target__entry2 t t 0]
        [have vbox pack_start move_forward_resource__hbox nil nil 0]
        [have move_forward_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `move_forward [have [get move_forward_resource__target__entry text]read]]]
+		   [if [get move_forward_resource__target__entry2 text]
+		       [have this activate_resource `learned_reactive `physical `move_forward [have [get move_forward_resource__target__entry text] read] [have [get move_forward_resource__target__entry2 text] read]]
+		     [have this activate_resource `learned_reactive `physical `move_forward [have [get move_forward_resource__target__entry text] read]]]]
 	     nil]
-           
+              
        [= move_backward_resource__hbox [gtk-hbox-new 2]]
-       [= move_backward_resource__button [gtk-button-new_with_label 'Move Backward - ']]
+       [= move_backward_resource__button [gtk-button-new_with_label 'move backward - ']]
        [= move_backward_resource__target__label [gtk-label-new 'Step: ']]
        [= move_backward_resource__target__entry [gtk-entry-new]]
+       [= move_backward_resource__target__label2 [gtk-label-new 'Speed: ']]
+       [= move_backward_resource__target__entry2 [gtk-entry-new]]
        [have move_backward_resource__hbox pack_start move_backward_resource__button nil nil 0]
        [have move_backward_resource__hbox pack_start move_backward_resource__target__label nil nil 0]
        [have move_backward_resource__hbox pack_start move_backward_resource__target__entry t t 0]
+       [have move_backward_resource__hbox pack_start move_backward_resource__target__label2 nil nil 0]
+       [have move_backward_resource__hbox pack_start move_backward_resource__target__entry2 t t 0]
        [have vbox pack_start move_backward_resource__hbox nil nil 0]
        [have move_backward_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `move_backward [have [get move_backward_resource__target__entry text] read]]]
+		   [if [get move_backward_resource__target__entry2 text]
+		       [have this activate_resource `learned_reactive `physical `move_backward [have [get move_backward_resource__target__entry text] read] [have [get move_backward_resource__target__entry2 text] read]]
+		     [have this activate_resource `learned_reactive `physical `move_backward [have [get move_backward_resource__target__entry text] read]]]]
 	     nil]
        
+           
        [= level_pitch_resource__hbox [gtk-hbox-new 2]]
        [= level_pitch_resource__button [gtk-button-new_with_label 'Level Pitch']]
        [have level_pitch_resource__hbox pack_start level_pitch_resource__button nil nil 0]
@@ -307,7 +356,7 @@
 		   [print [type [get [get  look_carefully_for_resource__target__entry text] as-symbol]]]
 		   [have this activate_resource `learned_reactive `physical `look_carefully_for [get [get  look_for_vertically_resource__target__entry text] as-symbol]]]
 	     nil]
-
+       
        
        [= look_for_vertically_resource__hbox [gtk-hbox-new 2]]
        [= look_for_vertically_resource__button [gtk-button-new_with_label 'Look for vertically']]

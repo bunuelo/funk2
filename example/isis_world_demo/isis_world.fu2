@@ -130,21 +130,23 @@
 
 'isis_world agent specific control functions'
 
-[deftypefunk isis_world execute turn_right-start        [agent]               [isis-call [get this client] turn_right-start        agent agent]]
-[deftypefunk isis_world execute turn_right-stop         [agent]               [isis-call [get this client] turn_right-stop         agent agent]]
-[deftypefunk isis_world execute turn_left-start         [agent]               [isis-call [get this client] turn_left-start         agent agent]]
+[deftypefunk isis_world execute turn_right-start        [agent speed]    [isis-call [get this client] turn_right-start             agent agent speed speed]]
+[deftypefunk isis_world execute turn_right-stop         [agent]               [isis-call [get this client] turn_right-stop         agent agent ]]
+[deftypefunk isis_world execute turn_left-start         [agent  speed]   [isis-call [get this client] turn_left-start              agent agent speed speed]]
 [deftypefunk isis_world execute turn_left-stop          [agent]               [isis-call [get this client] turn_left-stop          agent agent]]
-[deftypefunk isis_world execute look_right-start        [agent]               [isis-call [get this client] look_right-start        agent agent]]
+
+[deftypefunk isis_world execute look_right-start        [agent speed]    [isis-call [get this client] look_right-start             agent agent speed speed]]
 [deftypefunk isis_world execute look_right-stop         [agent]               [isis-call [get this client] look_right-stop         agent agent]]
-[deftypefunk isis_world execute look_left-start         [agent]               [isis-call [get this client] look_left-start         agent agent]]
+[deftypefunk isis_world execute look_left-start         [agent speed]    [isis-call [get this client] look_left-start              agent agent speed speed]]
 [deftypefunk isis_world execute look_left-stop          [agent]               [isis-call [get this client] look_left-stop          agent agent]]
-[deftypefunk isis_world execute look_up-start           [agent]               [isis-call [get this client] look_up-start           agent agent]]
+[deftypefunk isis_world execute look_up-start           [agent speed]    [isis-call [get this client] look_up-start                agent agent speed speed]]
+
 [deftypefunk isis_world execute look_up-stop            [agent]               [isis-call [get this client] look_up-stop            agent agent]]
-[deftypefunk isis_world execute look_down-start         [agent]               [isis-call [get this client] look_down-start         agent agent]]
+[deftypefunk isis_world execute look_down-start         [agent speed]    [isis-call [get this client] look_down-start              agent agent speed speed]]
 [deftypefunk isis_world execute look_down-stop          [agent]               [isis-call [get this client] look_down-stop          agent agent]]
-[deftypefunk isis_world execute move_forward-start      [agent]               [isis-call [get this client] move_forward-start      agent agent]]
+[deftypefunk isis_world execute move_forward-start      [agent speed]    [isis-call [get this client] move_forward-start           agent agent speed speed]]
 [deftypefunk isis_world execute move_forward-stop       [agent]               [isis-call [get this client] move_forward-stop       agent agent]]
-[deftypefunk isis_world execute move_backward-start     [agent]               [isis-call [get this client] move_backward-start     agent agent]]
+[deftypefunk isis_world execute move_backward-start     [agent speed]    [isis-call [get this client] move_backward-start          agent agent speed speed]]
 [deftypefunk isis_world execute move_backward-stop      [agent]               [isis-call [get this client] move_backward-stop      agent agent]]
 [deftypefunk isis_world execute drop_from_right_hand    [agent]               [isis-call [get this client] drop_from_right_hand    agent agent]]
 [deftypefunk isis_world execute drop_from_left_hand     [agent]               [isis-call [get this client] drop_from_left_hand     agent agent]]

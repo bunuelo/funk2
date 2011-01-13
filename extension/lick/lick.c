@@ -249,15 +249,10 @@ f2ptr raw__lick__new(f2ptr cause, f2ptr root_note, f2ptr chunk_note_hash, f2ptr 
 }
 
 f2ptr raw__lick__new_from_object(f2ptr cause, f2ptr root_object, f2ptr max_size) {
-  f2ptr chunk_note_hash  = f2__ptypehash__new(cause);
-  f2ptr current_size     = f2integer__new(cause, 0);
-  f2ptr root_note        = f2integer__new(cause, (s64)root_object);
-  f2ptr this             = raw__lick__new(cause, root_note, chunk_note_hash, current_size);
-  f2ptr note_object_hash = f2__ptypehash__new(cause);
-  f2ptr result           = raw__lick__object__gather_lick_notes(cause, this, root_object, note_object_hash, max_size);
-  if (raw__larva__is_type(cause, result)) {
-    return result;
-  }
+  f2ptr chunk_note_hash = f2__ptypehash__new(cause);
+  f2ptr current_size    = f2integer__new(cause, 0);
+  f2ptr root_note       = f2integer__new(cause, (s64)root_object);
+  f2ptr this            = raw__lick__new(cause, root_note, chunk_note_hash, current_size);
   return this;
 }
 
@@ -400,12 +395,10 @@ f2ptr raw__lick__object__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr object
   if (lick_note == nil) {
     lick_note = f2integer__new(cause, (s64)object);
     raw__ptypehash__add(cause, note_object_hash, object, lick_note);
-    f2ptr chunk = f2__object__execute(cause, object, new__symbol(cause, "gather_lick_notes"), f2list3__new(cause, this, note_object_hash, max_size));
-    if (raw__larva__is_type(cause, chunk)) {
-      return chunk;
+    f2ptr result = f2__object__execute(cause, object, new__symbol(cause, "gather_lick_notes"), f2list3__new(cause, this, note_object_hash, max_size));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
     }
-    f2ptr chunk_note_hash = raw__lick__chunk_note_hash(cause, this);
-    raw__ptypehash__add(cause, chunk_note_hash, lick_note, chunk);
   }
   return lick_note;
 }

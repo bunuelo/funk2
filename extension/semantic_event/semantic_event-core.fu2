@@ -17,22 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defcore semantic_event 'extension/semantic_event/.libs/libf2e_semantic_event.so']
 
-'deliberative_layer'
-
-[deframe deliberative_layer [mental_layer] []
-  [new []
-       [construct mental_layer 2 `deliberative]
-       [have this add_agency [new deliberative_meta_physical_knowledge_agency]]
-       [have this add_agency [new deliberative_execution_agency]]
-       this]]
-
-[deftypefunk deliberative_layer execute create_knowledge []
-  [new meta_semantic_knowledge_base `deliberative_knowledge [get [get this mind] semantic_realm]]
-  [have [get this agency `meta_physical_knowledge] create_knowledge]]
-
-[deftypefunk deliberative_layer execute connect_knowledge_reflection []
-  [have [get this agency `meta_physical_knowledge] connect_knowledge_reflection]]
+[defcorefunk semantic_event-core_extension_ping       semantic_event semantic_event__core_extension_ping]
+[defcorefunk semantic_event-core_extension_initialize semantic_event semantic_event__core_extension_initialize]
 
 
+[semantic_event-core_extension_ping]
 

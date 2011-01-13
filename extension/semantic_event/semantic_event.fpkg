@@ -17,21 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe recall_most_similar_story_with_goal_state [resource] []
-  [new []
-       [construct resource [type this]
-		  [funk [goal_state]
-			[have this-resource think_to_self 'Recalling most similar story to goal.']
-			nil]]
-       nil]]
-
-
-[deframe deliberative_imagination_agency [agency] []
-  [new []
-       [construct agency `imagination]
-       
-       [have this add_resource [new recall_most_similar_story_with_goal_state]]
-       
-       this]]
-
+[defpackage semantic_event
+  :documentation 'Basic knowledge for dealing with events in time.'
+   :packages [semantic_object]
+    :sources ['semantic_event-core.fu2']]
 

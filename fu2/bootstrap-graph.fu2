@@ -28,6 +28,7 @@
 [deftypefunk graph get     contains_node                   [node]                       [graph-contains_node                   this node]]
 [deftypefunk graph get     contains_edge                   [edge]                       [graph-contains_edge                   this edge]]
 [deftypefunk graph get     contains                        [graph]                      [graph-contains                        this graph]]
+[deftypefunk graph get     lookup_nodes_with_label         [node_label]                 [graph-lookup_nodes_with_label         this node_label]]
 [deftypefunk graph get     random_nonempty_strict_subgraph []                           [graph-random_nonempty_strict_subgraph this]]
 [deftypefunk graph get     minus                           [that]                       [graph-minus                           this that]]
 [deftypefunk graph get     copy                            []                           [graph-copy                            this]]

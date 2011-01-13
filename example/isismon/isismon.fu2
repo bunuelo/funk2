@@ -18,6 +18,79 @@
  rights to redistribute these changes.'
 
 
+[deframe isismon_knowledge [frame] [knowledge_name
+				    
+				    isismon_agent
+				    
+				    knowledge_expanded
+				    
+				    knowledge_vbox
+				    knowledge_button_label_hbox
+				    knowledge_expansion_button
+				    knowledge_label
+				    knowledge_gview_button
+				    knowledge_image
+				    ]
+  [new [initial-isismon_agent
+	initial-knowledge_name]
+       [= isismon_agent  initial-isismon_agent]
+       [= knowledge_name initial-knowledge_name]
+       
+       
+       [= knowledge_vbox [gtk-vbox-new 0]]
+       
+       [= knowledge_button_label_hbox [gtk-hbox-new 0]]
+       [have knowledge_vbox pack_start knowledge_button_label_hbox nil nil 0]
+       
+       [= knowledge_expansion_button [gtk-button-new_with_label '*']]
+       [have knowledge_button_label_hbox pack_start knowledge_expansion_button nil nil 0]
+       
+       [= knowledge_label [gtk-label-new [format nil knowledge_name]]]
+       [have knowledge_button_label_hbox pack_start knowledge_label t t 0]
+       
+       [= knowledge_gview_button [gtk-button-new_with_label 'GView']]
+       [have knowledge_button_label_hbox pack_start knowledge_gview_button nil nil 0]
+       [have knowledge_gview_button signal_connect 'clicked'
+	     [funk []
+		   [have this gview_knowledge]]
+	     nil]
+       
+       [= knowledge_image [gtk-image-new_from_image [image-new_from_rgb_data 11 11 [new chunk [* 11 11 3]]]]]
+       [have knowledge_vbox pack_start knowledge_image nil nil 0]
+       
+       [have knowledge_expansion_button signal_connect 'clicked'
+	     [funk []
+		   [= knowledge_expanded [not knowledge_expanded]]]
+	     nil]
+       
+       ]]
+
+[deftypefunk isismon_knowledge get widget []
+  knowledge_vbox]
+
+[deftypefunk isismon_knowledge execute update_knowledge_image []
+  [if knowledge_expanded
+      [prog [set knowledge_image image [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
+													       [get knowledge_base as-digraph_dot_code]]
+													 [conslist [get [get [get isismon_agent isis_agent] mind] semantic_knowledge_base knowledge_name]]]
+												 '\n']]]]
+					 [dot_code-as-image dot_code 320 240]]]
+	    [have knowledge_image show_all]]
+    [have knowledge_image hide_all]]]
+
+[deftypefunk isismon_knowledge execute gview_knowledge []
+  [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get isismon_agent name] '\'s ' knowledge_name ' semantic knowledge.']
+  [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
+									  [get knowledge_base as-digraph_dot_code]]
+								    [conslist [get [get [get isismon_agent isis_agent] mind] semantic_knowledge_base knowledge_name]]]
+							    '\n']]]]
+    [fiber [funk [] [dot_code-gview dot_code]] nil]]]
+
+
+
+       
+				
+				
 
 [deframe isismon_agent [frame] [isis_agent
 				
@@ -47,21 +120,9 @@
 				
 				entry
 				
-				visual_knowledge_expanded
-				visual_knowledge_vbox
-				visual_knowledge_button_label_hbox
-				visual_knowledge_expansion_button
-				visual_knowledge_label
-				visual_knowledge_gview_button
-				visual_knowledge_image
-				
-				physical_knowledge_expanded
-				physical_knowledge_vbox
-				physical_knowledge_button_label_hbox
-				physical_knowledge_expansion_button
-				physical_knowledge_label
-				physical_knowledge_gview_button
-				physical_knowledge_image
+				meta_physical_isismon_knowledge
+				physical_isismon_knowledge
+				visual_isismon_knowledge
 				
 				]
   [new [initial_isismon_project initial_isis_agent]
@@ -250,61 +311,15 @@
        
        [have vbox pack_start entry nil nil 0]
        
-       [= visual_knowledge_vbox [gtk-vbox-new 0]]
-       [have vbox pack_start visual_knowledge_vbox nil nil 0]
        
-       [= visual_knowledge_button_label_hbox [gtk-hbox-new 0]]
-       [have visual_knowledge_vbox pack_start visual_knowledge_button_label_hbox nil nil 0]
+       [= meta_physical_isismon_knowledge [new isismon_knowledge this `meta_physical_knowledge]]
+       [have vbox pack_start [get meta_physical_isismon_knowledge widget] nil nil 0]
        
-       [= visual_knowledge_expansion_button [gtk-button-new_with_label '*']]
-       [have visual_knowledge_button_label_hbox pack_start visual_knowledge_expansion_button nil nil 0]
-       [have visual_knowledge_expansion_button signal_connect 'clicked'
-	     [funk []
-		   [= visual_knowledge_expanded [not visual_knowledge_expanded]]]
-	     nil]
+       [= physical_isismon_knowledge [new isismon_knowledge this `physical_knowledge]]
+       [have vbox pack_start [get physical_isismon_knowledge widget] nil nil 0]
        
-       [= visual_knowledge_label [gtk-label-new 'Visual Knowledge']]
-       [have visual_knowledge_button_label_hbox pack_start visual_knowledge_label t t 0]
-       
-       [= visual_knowledge_gview_button [gtk-button-new_with_label 'GView']]
-       [have visual_knowledge_button_label_hbox pack_start visual_knowledge_gview_button nil nil 0]
-       [have visual_knowledge_gview_button signal_connect 'clicked'
-	     [funk []
-		   [have this gview_visual_knowledge]]
-	     nil]
-       
-       [= visual_knowledge_image [gtk-image-new_from_image [image-new_from_rgb_data 11 11 [new chunk [* 11 11 3]]]]]
-       [have visual_knowledge_vbox pack_start visual_knowledge_image nil nil 0]
-       
-       
-       
-       [= physical_knowledge_vbox [gtk-vbox-new 0]]
-       [have vbox pack_start physical_knowledge_vbox nil nil 0]
-       
-       [= physical_knowledge_button_label_hbox [gtk-hbox-new 0]]
-       [have physical_knowledge_vbox pack_start physical_knowledge_button_label_hbox nil nil 0]
-       
-       [= physical_knowledge_expansion_button [gtk-button-new_with_label '*']]
-       [have physical_knowledge_button_label_hbox pack_start physical_knowledge_expansion_button nil nil 0]
-       
-       [= physical_knowledge_label [gtk-label-new 'Physical Knowledge']]
-       [have physical_knowledge_button_label_hbox pack_start physical_knowledge_label t t 0]
-       
-       [= physical_knowledge_gview_button [gtk-button-new_with_label 'GView']]
-       [have physical_knowledge_button_label_hbox pack_start physical_knowledge_gview_button nil nil 0]
-       [have physical_knowledge_gview_button signal_connect 'clicked'
-	     [funk []
-		   [have this gview_physical_knowledge]]
-	     nil]
-       
-       [= physical_knowledge_image [gtk-image-new_from_image [image-new_from_rgb_data 11 11 [new chunk [* 11 11 3]]]]]
-       [have physical_knowledge_vbox pack_start physical_knowledge_image nil nil 0]
-       
-       [have physical_knowledge_expansion_button signal_connect 'clicked'
-	     [funk []
-		   [= physical_knowledge_expanded [not physical_knowledge_expanded]]]
-	     nil]
-       
+       [= visual_isismon_knowledge [new isismon_knowledge this `visual_knowledge]]
+       [have vbox pack_start [get visual_isismon_knowledge widget] nil nil 0]
        
        [have frame add vbox]
        nil]]
@@ -321,44 +336,6 @@
 [deftypefunk isismon_agent get widget []
   frame]
 
-[deftypefunk isismon_agent execute update_visual_knowledge_image []
-  [if visual_knowledge_expanded
-      [prog [set visual_knowledge_image image [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
-														      [get knowledge_base as-digraph_dot_code]]
-														[conslist [get [get isis_agent mind] visual_knowledge]]]
-													'\n']]]]
-						[dot_code-as-image dot_code 320 240]]]
-	    [have visual_knowledge_image show_all]]
-    [have visual_knowledge_image hide_all]]]
-
-
-[deftypefunk isismon_agent execute update_physical_knowledge_image []
-  [if physical_knowledge_expanded
-      [prog [set physical_knowledge_image image [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
-															[get knowledge_base as-digraph_dot_code]]
-														  [conslist [get [get isis_agent mind] physical_knowledge]]]
-													  '\n']]]]
-						  [dot_code-as-image dot_code 320 240]]]
-	    [have physical_knowledge_image show_all]]
-    [have physical_knowledge_image hide_all]]]
-
-[deftypefunk isismon_agent execute gview_visual_knowledge []
-  [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s visual semantic knowledge.']
-  [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
-									  [get knowledge_base as-digraph_dot_code]]
-								    [conslist [get [get isis_agent mind] visual_knowledge]]]
-							    '\n']]]]
-    [fiber [funk [] [dot_code-gview dot_code]] nil]]]
-
-
-[deftypefunk isismon_agent execute gview_physical_knowledge []
-  [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s physical semantic knowledge.']
-  [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
-									  [get knowledge_base as-digraph_dot_code]]
-								    [conslist [get [get isis_agent mind] physical_knowledge]]]
-							    '\n']]]]
-    [fiber [funk [] [dot_code-gview dot_code]] nil]]]
-
 
 [deftypefunk isismon_agent execute update_entry []
   [let [[look_for_resource [get [get isis_agent mind] resource `learned_reactive `physical `look_for]]]
@@ -366,8 +343,9 @@
     ]]
 
 [deftypefunk isismon_agent execute update []
-  [have this update_visual_knowledge_image]
-  [have this update_physical_knowledge_image]
+  [have meta_physical_isismon_knowledge update_knowledge_image]
+  [have physical_isismon_knowledge      update_knowledge_image]
+  [have visual_isismon_knowledge        update_knowledge_image]
   nil]
 
 [deftypefunk isismon_agent get retina_image_sequence []

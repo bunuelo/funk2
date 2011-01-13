@@ -155,7 +155,7 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
 def_pcfunk1(graphviz__exp__as__label, exp, return f2__graphviz__exp__as__label(this_cause, exp));
 
 f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
-  f2ptr string = exp;
+  f2ptr string = nil;
   {
     f2ptr as_graphviz_name_funk = f2__object__slot__type_funk(cause, exp, new__symbol(cause, "get"), new__symbol(cause, "as-graphviz_name"));
     if (raw__funkable__is_type(cause, as_graphviz_name_funk)) {
@@ -163,12 +163,42 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
       if (raw__larva__is_type(cause, string)) {
 	return string;
       }
+      if (! raw__string__is_type(cause, string)) {
+	return f2larva__new(cause, 24521, nil);
+      }
     }
   }
-  if (! raw__string__is_type(cause, string)) {
-    char name_str[128];
-    snprintf(name_str, 127, "ptr_" u64__fstr, (u64)string);
-    string = new__string(cause, name_str);
+  if (string == nil) {
+    if (raw__integer__is_type(cause, exp)) {
+      u64  exp__i = f2integer__i(exp, cause);
+      char name_str[128];
+      snprintf(name_str, 127, "integer_" u64__fstr, (u64)exp__i);
+      string = new__string(cause, name_str);
+    } else if (raw__float__is_type(cause, exp)) {
+      union {
+	float f;
+	u64   uid;
+      } u;
+      u.uid = 0;
+      u.f   = f2float__f(exp, cause);
+      char name_str[128];
+      snprintf(name_str, 127, "float_" u64__fstr, (u64)u.uid);
+      string = new__string(cause, name_str);
+    } else if (raw__double__is_type(cause, exp)) {
+      union {
+	double d;
+	u64    uid;
+      } u;
+      u.uid = 0;
+      u.d   = f2double__d(exp, cause);
+      char name_str[128];
+      snprintf(name_str, 127, "double_" u64__fstr, (u64)u.uid);
+      string = new__string(cause, name_str);
+    } else {
+      char name_str[128];
+      snprintf(name_str, 127, "ptr_" u64__fstr, (u64)exp);
+      string = new__string(cause, name_str);
+    }
   }
   return string;
   /*

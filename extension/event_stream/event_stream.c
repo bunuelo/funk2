@@ -398,17 +398,15 @@ export_cefunk1(event_stream_iterator__has__next, event_stream, 0, "Returns true 
 
 
 f2ptr raw__event_stream_iterator__increment(f2ptr cause, f2ptr this) {
-  f2ptr event_stream              = raw__event_stream_iterator__event_stream(cause, this);
-  f2ptr index_time                = raw__event_stream_iterator__index_time(cause, this);
-  f2ptr nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, index_time);
-  f2ptr nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
-  f2ptr slightly_greater_time     = f2__time__new(cause, f2integer__new(cause, nanoseconds_since_1970__i + 1));
-  f2ptr next_event                = raw__event_stream__first_not_before(cause, event_stream, slightly_greater_time);
-  if (next_event == nil) {
+  f2ptr current_event = raw__event_stream_iterator__current(cause, this);
+  if (current_event == nil) {
     return f2bool__new(boolean__false);
   }
-  f2ptr next_event__time = raw__event_stream_event__time(cause, next_event);
-  raw__event_stream_iterator__index_time__set(cause, this, next_event__time);
+  f2ptr time                      = raw__event_stream_event__time(cause, current_event);
+  f2ptr nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, time);
+  f2ptr nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
+  f2ptr slightly_greater_time     = f2__time__new(cause, f2integer__new(cause, nanoseconds_since_1970__i + 1));
+  raw__event_stream_iterator__index_time__set(cause, this, slightly_greater_time);
   return f2bool__new(boolean__true);
 }
 

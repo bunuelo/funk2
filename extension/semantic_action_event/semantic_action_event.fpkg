@@ -17,22 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-
-'deliberative_layer'
-
-[deframe deliberative_layer [mental_layer] []
-  [new []
-       [construct mental_layer 2 `deliberative]
-       [have this add_agency [new deliberative_meta_physical_knowledge_agency]]
-       [have this add_agency [new deliberative_execution_agency]]
-       this]]
-
-[deftypefunk deliberative_layer execute create_knowledge []
-  [new meta_semantic_knowledge_base `deliberative_knowledge [get [get this mind] semantic_realm]]
-  [have [get this agency `meta_physical_knowledge] create_knowledge]]
-
-[deftypefunk deliberative_layer execute connect_knowledge_reflection []
-  [have [get this agency `meta_physical_knowledge] connect_knowledge_reflection]]
-
-
+[defpackage semantic_action_event
+  :documentation 'Basic knowledge for dealing with agent actions as events.'
+   :packages [semantic_object]
+    :sources ['semantic_action_event-core.fu2']]
 

@@ -113,10 +113,12 @@ f2ptr f2__conceptnet__new_from_graph_file(f2ptr cause, f2ptr filename, f2ptr max
 			  f2ptr left_graph_node  = raw__ptypehash__lookup(cause, node_ptypehash, left_concept_symbol);
 			  if (left_graph_node == nil) {
 			    left_graph_node = f2__graph_node__new(cause, left_concept_symbol);
+			    raw__ptypehash__add(cause, node_ptypehash, left_concept_symbol, left_graph_node);
 			  }
 			  f2ptr right_graph_node = raw__ptypehash__lookup(cause, node_ptypehash, right_concept_symbol);
 			  if (right_graph_node == nil) {
 			    right_graph_node = f2__graph_node__new(cause, right_concept_symbol);
+			    raw__ptypehash__add(cause, node_ptypehash, right_concept_symbol, right_graph_node);
 			  }
 			  f2__graph__add_new_edge(cause, graph, edge_symbol, left_graph_node, right_graph_node);
 			}

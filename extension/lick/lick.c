@@ -250,7 +250,7 @@ f2ptr raw__lick__new(f2ptr cause, f2ptr root_note, f2ptr chunk_note_hash, f2ptr 
 					    new__symbol(cause, "current_size"),    current_size));
 }
 
-f2ptr raw__lick__new_from_object(f2ptr cause, f2ptr root_object, f2ptr max_size) {
+f2ptr raw__lick__new_from_object(f2ptr cause, f2ptr root_object) {
   f2ptr chunk_note_hash = f2__ptypehash__new(cause);
   f2ptr current_size    = f2integer__new(cause, 0);
   f2ptr root_note       = f2integer__new(cause, (s64)root_object);
@@ -258,18 +258,14 @@ f2ptr raw__lick__new_from_object(f2ptr cause, f2ptr root_object, f2ptr max_size)
   return this;
 }
 
-f2ptr f2__lick__new_from_object(f2ptr cause, f2ptr root_object, f2ptr max_size) {
-  if (! raw__integer__is_type(cause, max_size)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__lick__new_from_object(cause, root_object, max_size);
+f2ptr f2__lick__new_from_object(f2ptr cause, f2ptr root_object) {
+  return raw__lick__new_from_object(cause, root_object);
 }
 
 f2ptr f2__lick__new(f2ptr cause, f2ptr root_object) {
-  f2ptr max_size = f2integer__new(cause, 100000);
-  return f2__lick__new_from_object(cause, root_object, max_size);
+  return f2__lick__new_from_object(cause, root_object);
 }
-export_cefunk1(lick__new, chunk_note_hash, 0, "Returns a new lick object.");
+export_cefunk1(lick__new, root_object, 0, "Returns a new lick object.");
 
 
 boolean_t raw__lick__is_type(f2ptr cause, f2ptr thing) {

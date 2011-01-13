@@ -37,7 +37,7 @@
     this]]
 
 [defunk lick-to-file [object filename]
-  [have [get [new lick object] as-chunk] save filename]]
+  [have [get [lick-new_from_object object] as-chunk] save filename]]
 
 [defunk unlick-from-file [filename]
   [have [get [chunk-load filename] as-lick] unlick]]

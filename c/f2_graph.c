@@ -495,7 +495,7 @@ f2ptr raw__graph__copy(f2ptr cause, f2ptr this) {
 		     f2ptr old_left_node  = f2__graph_edge__left_node( cause, old_edge);
 		     f2ptr old_right_node = f2__graph_edge__right_node(cause, old_edge);
 		     f2ptr new_left_node  = raw__ptypehash__lookup(cause, new_node_old_node_ptypehash, old_left_node);
-		     f2ptr new_right_node = raw__ptypehash__lookup(cause, new_node_old_node_ptypehash, old_left_node);
+		     f2ptr new_right_node = raw__ptypehash__lookup(cause, new_node_old_node_ptypehash, old_right_node);
 		     f2ptr new_edge       = f2__graph_edge__new(cause, edge_label, new_left_node, new_right_node);
 		     f2__graph__add_edge(cause, graph, new_edge);
 		     );

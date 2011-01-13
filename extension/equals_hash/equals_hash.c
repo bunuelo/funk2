@@ -205,6 +205,44 @@ export_cefunk2(equals_hash__terminal_print_with_frame, this, terminal_print_fram
 
 // equals_hash lick funks
 
+f2ptr raw__equals_hash__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
+  f2ptr hash  = raw__equals_hash__hash(cause, this);
+  {
+    f2ptr key_count = f2__hash__key_count(cause, hash);
+    f2ptr result    = raw__lick__object__gather_lick_notes(cause, lick, key_count, note_object_hash, max_size);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr bin_num_power = f2__hash__bin_num_power(cause, hash);
+    f2ptr result        = raw__lick__object__gather_lick_notes(cause, lick, bin_num_power, note_object_hash, max_size);
+    if (! raw__larva__is_type(cause, result)) {
+      return f2larva__new(cause, 1, nil);
+    }
+  }
+  {
+    f2ptr bin_array = f2__hash__bin_array(cause, hash);
+    f2ptr result    = raw__lick__object__gather_lick_notes(cause, lick, bin_array, note_object_hash, max_size);
+    if (! raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  return nil;
+}
+
+f2ptr f2__equals_hash__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
+  if ((! raw__equals_hash__is_type(cause, this)) ||
+      (! raw__lick__is_type(cause, lick)) ||
+      (! raw__ptypehash__is_type(cause, note_object_hash)) ||
+      (! raw__integer__is_type(cause, max_size))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__equals_hash__gather_lick_notes(cause, this, lick, note_object_hash, max_size);
+}
+export_cefunk4(equals_hash__gather_lick_notes, this, lick, note_object_hash, max_size, 0, "Licks this equals_hash.");
+
+
 f2ptr raw__equals_hash__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr chunk = raw__chunk__new(cause, 8 * 3);
   f2ptr hash  = raw__equals_hash__hash(cause, this);

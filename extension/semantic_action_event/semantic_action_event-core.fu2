@@ -17,8 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage semantic_event
-  :documentation 'Basic knowledge for dealing with events in time.'
-   :packages [semantic_object]
-    :sources ['semantic_event-core.fu2']]
+[defcore semantic_action_event 'extension/semantic_action_event/.libs/libf2e_semantic_action_event.so']
+
+[defcorefunk semantic_action_event-core_extension_ping       semantic_action_event semantic_action_event__core_extension_ping]
+[defcorefunk semantic_action_event-core_extension_initialize semantic_action_event semantic_action_event__core_extension_initialize]
+
+
+[semantic_action_event-core_extension_ping]
 

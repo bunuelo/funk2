@@ -17,8 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage semantic_event
-  :documentation 'Basic knowledge for dealing with events in time.'
+[defpackage semantic_action_event
+  :documentation 'Basic knowledge for dealing with agent actions as events.'
    :packages [semantic_object]
-    :sources ['semantic_event-core.fu2']]
+    :sources ['semantic_action_event-core.fu2']]
 

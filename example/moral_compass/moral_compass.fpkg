@@ -53,7 +53,8 @@
 [defpackage builtin_reactive_sensory_agency
   :packages [mind
 	     semantic_visual_object
-	     semantic_event]
+	     semantic_event
+	     semantic_action_event]
    :sources ['builtin_reactive_sensory_agency.fu2']]
 
 [defpackage builtin_reactive_physical_agency

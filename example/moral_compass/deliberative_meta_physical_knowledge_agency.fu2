@@ -17,21 +17,46 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe recall_most_similar_story_with_goal_state [resource] []
-  [new []
-       [construct resource [type this]
-		  [funk [goal_state]
-			[have this-resource think_to_self 'Recalling most similar story to goal.']
-			nil]]
-       nil]]
-
-
 [deframe deliberative_meta_physical_knowledge_agency [agency] []
   [new []
        [construct agency `meta_physical_knowledge]
        
-       [have this add_resource [new recall_most_similar_story_with_goal_state]]
+       [have this add_resource [new translate_physical_knowledge_to_meta_physical_knowledge_resource]]
        
        this]]
+
+
+[deftypefunk deliberative_meta_physical_knowledge_agency execute create_knowledge []
+  [new meta_semantic_knowledge_base `meta_physical_knowledge [get [get this mind] semantic_realm]]]
+
+[deftypefunk deliberative_meta_physical_knowledge_agency execute connect_knowledge_reflection []
+  [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->meta_physical_knowledge]]
+
+
+[deframe translate_physical_knowledge_to_meta_physical_knowledge_resource [resource] []
+  [new []
+       [construct resource `translate_physical_knowledge_to_meta_physical_knowledge
+		  [funk []
+			[have this execute_resource_raw_funk]
+			]]
+       nil]]
+
+[deftypefunk translate_physical_knowledge_to_meta_physical_knowledge_resource execute execute_resource_raw_funk []
+  [terminal_format standard-terminal '\ntranslating physical knowledge to meta physical knowledge.']
+  [let [[visual_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->meta_physical_knowledge]]]
+    [let [[done nil]]
+      [while [let [[event [get physical_knowledge_iterator current]]]
+	       [if [not [null event]]
+		   [prog `[terminal_format standard-terminal '\n  translate physical->meta_physical event: ' event]
+			 [let [[event_type [get event event_type]]]
+			   [cond [[and [is-type `semantic_knowledge_base_event event]
+				       [eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
+											]]
+				 [[and [is-type `semantic_frame_event event]
+				       [eq event_type `add]]                          [let [[key_type       [get event key_type]]
+											    [key            [get event key]]]
+											]]
+				 ]]]]
+	       [have physical_knowledge_iterator increment]]]]]]
 
 

@@ -55,26 +55,26 @@ f2ptr f2__lick_chunk_type__new(f2ptr cause);
 
 // lick
 
-f2ptr     raw__lick__new                  (f2ptr cause, f2ptr root_note, f2ptr chunk_note_hash, f2ptr current_size);
-f2ptr      f2__lick__new                  (f2ptr cause, f2ptr object);
-boolean_t raw__lick__is_type              (f2ptr cause, f2ptr thing);
-f2ptr      f2__lick__is_type              (f2ptr cause, f2ptr thing);
-f2ptr     raw__lick__type                 (f2ptr cause, f2ptr this);
-f2ptr      f2__lick__type                 (f2ptr cause, f2ptr this);
-f2ptr     raw__lick__root_note            (f2ptr cause, f2ptr this);
-f2ptr      f2__lick__root_note            (f2ptr cause, f2ptr this);
-f2ptr     raw__lick__root_note__set       (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__lick__root_note__set       (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__lick__note_object_hash     (f2ptr cause, f2ptr this);
-f2ptr      f2__lick__note_object_hash     (f2ptr cause, f2ptr this);
-f2ptr     raw__lick__note_object_hash__set(f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__lick__note_object_hash__set(f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__lick__chunk_note_hash      (f2ptr cause, f2ptr this);
-f2ptr      f2__lick__chunk_note_hash      (f2ptr cause, f2ptr this);
-f2ptr     raw__lick__chunk_note_hash__set (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__lick__chunk_note_hash__set (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__lick__object__as__note     (f2ptr cause, f2ptr this, f2ptr object, f2ptr note_object_hash, f2ptr max_size);
-f2ptr      f2__lick__object__as__note     (f2ptr cause, f2ptr this, f2ptr object, f2ptr note_object_hash, f2ptr max_size);
+f2ptr     raw__lick__new                      (f2ptr cause, f2ptr root_note, f2ptr chunk_note_hash, f2ptr current_size);
+f2ptr      f2__lick__new                      (f2ptr cause, f2ptr object);
+boolean_t raw__lick__is_type                  (f2ptr cause, f2ptr thing);
+f2ptr      f2__lick__is_type                  (f2ptr cause, f2ptr thing);
+f2ptr     raw__lick__type                     (f2ptr cause, f2ptr this);
+f2ptr      f2__lick__type                     (f2ptr cause, f2ptr this);
+f2ptr     raw__lick__root_note                (f2ptr cause, f2ptr this);
+f2ptr      f2__lick__root_note                (f2ptr cause, f2ptr this);
+f2ptr     raw__lick__root_note__set           (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__lick__root_note__set           (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__lick__note_object_hash         (f2ptr cause, f2ptr this);
+f2ptr      f2__lick__note_object_hash         (f2ptr cause, f2ptr this);
+f2ptr     raw__lick__note_object_hash__set    (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__lick__note_object_hash__set    (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__lick__chunk_note_hash          (f2ptr cause, f2ptr this);
+f2ptr      f2__lick__chunk_note_hash          (f2ptr cause, f2ptr this);
+f2ptr     raw__lick__chunk_note_hash__set     (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__lick__chunk_note_hash__set     (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__lick__object__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr object, f2ptr note_object_hash, f2ptr max_size);
+f2ptr      f2__lick__object__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr object, f2ptr note_object_hash, f2ptr max_size);
 
 
 

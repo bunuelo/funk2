@@ -247,22 +247,16 @@ f2ptr raw__equals_hash__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr
   f2ptr chunk = raw__chunk__new(cause, 8 * 3);
   f2ptr hash  = raw__equals_hash__hash(cause, this);
   {
-    f2ptr key_count               = f2__hash__key_count(cause, hash);
-    f2ptr key_count__lick_note    = raw__lick__object__as__note(cause, lick, key_count, note_object_hash, max_size);
-    s64   key_count__lick_note__i = f2integer__i(key_count__lick_note, cause);
-    raw__chunk__bit64__elt__set(cause, chunk, 0, (s64)key_count__lick_note__i);
+    f2ptr key_count = f2__hash__key_count(cause, hash);
+    raw__chunk__bit64__elt__set(cause, chunk, 0, (s64)key_count);
   }
   {
-    f2ptr bin_num_power               = f2__hash__bin_num_power(cause, hash);
-    f2ptr bin_num_power__lick_note    = raw__lick__object__as__note(cause, lick, bin_num_power, note_object_hash, max_size);
-    f2ptr bin_num_power__lick_note__i = f2integer__i(bin_num_power__lick_note, cause);
-    raw__chunk__bit64__elt__set(cause, chunk, 8, (s64)bin_num_power__lick_note__i);
+    f2ptr bin_num_power = f2__hash__bin_num_power(cause, hash);
+    raw__chunk__bit64__elt__set(cause, chunk, 8, (s64)bin_num_power);
   }
   {
-    f2ptr bin_array               = f2__hash__bin_array(cause, hash);
-    f2ptr bin_array__lick_note    = raw__lick__object__as__note(cause, lick, bin_array, note_object_hash, max_size);
-    f2ptr bin_array__lick_note__i = f2integer__i(bin_array__lick_note, cause);
-    raw__chunk__bit64__elt__set(cause, chunk, 16, (s64)bin_array__lick_note__i);
+    f2ptr bin_array = f2__hash__bin_array(cause, hash);
+    raw__chunk__bit64__elt__set(cause, chunk, 16, (s64)bin_array);
   }
   f2ptr lick_note = f2integer__new(cause, (s64)this);
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);

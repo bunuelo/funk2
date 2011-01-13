@@ -251,10 +251,13 @@ f2ptr raw__lick__new(f2ptr cause, f2ptr root_note, f2ptr chunk_note_hash, f2ptr 
 f2ptr raw__lick__new_from_object(f2ptr cause, f2ptr root_object, f2ptr max_size) {
   f2ptr chunk_note_hash  = f2__ptypehash__new(cause);
   f2ptr current_size     = f2integer__new(cause, 0);
-  f2ptr this             = raw__lick__new(cause, nil, chunk_note_hash, current_size);
-  f2ptr note_object_hash = f2__ptypehash__new(cause);
   f2ptr root_note        = f2integer__new(cause, (s64)root_object);
-  raw__lick__root_note__set(cause, this, root_note);
+  f2ptr this             = raw__lick__new(cause, root_note, chunk_note_hash, current_size);
+  f2ptr note_object_hash = f2__ptypehash__new(cause);
+  f2ptr result           = raw__lick__object__gather_lick_notes(cause, this, root_object, note_object_hash, max_size);
+  if (raw__larva__is_type(cause, result)) {
+    return result;
+  }
   return this;
 }
 

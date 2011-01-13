@@ -47,14 +47,6 @@
 				
 				entry
 				
-				visual_knowledge_expanded
-				visual_knowledge_vbox
-				visual_knowledge_button_label_hbox
-				visual_knowledge_expansion_button
-				visual_knowledge_label
-				visual_knowledge_gview_button
-				visual_knowledge_image
-				
 				physical_knowledge_expanded
 				physical_knowledge_vbox
 				physical_knowledge_button_label_hbox
@@ -62,6 +54,14 @@
 				physical_knowledge_label
 				physical_knowledge_gview_button
 				physical_knowledge_image
+				
+				visual_knowledge_expanded
+				visual_knowledge_vbox
+				visual_knowledge_button_label_hbox
+				visual_knowledge_expansion_button
+				visual_knowledge_label
+				visual_knowledge_gview_button
+				visual_knowledge_image
 				
 				]
   [new [initial_isismon_project initial_isis_agent]
@@ -250,33 +250,9 @@
        
        [have vbox pack_start entry nil nil 0]
        
-       [= visual_knowledge_vbox [gtk-vbox-new 0]]
-       [have vbox pack_start visual_knowledge_vbox nil nil 0]
-       
-       [= visual_knowledge_button_label_hbox [gtk-hbox-new 0]]
-       [have visual_knowledge_vbox pack_start visual_knowledge_button_label_hbox nil nil 0]
-       
-       [= visual_knowledge_expansion_button [gtk-button-new_with_label '*']]
-       [have visual_knowledge_button_label_hbox pack_start visual_knowledge_expansion_button nil nil 0]
-       [have visual_knowledge_expansion_button signal_connect 'clicked'
-	     [funk []
-		   [= visual_knowledge_expanded [not visual_knowledge_expanded]]]
-	     nil]
-       
-       [= visual_knowledge_label [gtk-label-new 'Visual Knowledge']]
-       [have visual_knowledge_button_label_hbox pack_start visual_knowledge_label t t 0]
-       
-       [= visual_knowledge_gview_button [gtk-button-new_with_label 'GView']]
-       [have visual_knowledge_button_label_hbox pack_start visual_knowledge_gview_button nil nil 0]
-       [have visual_knowledge_gview_button signal_connect 'clicked'
-	     [funk []
-		   [have this gview_visual_knowledge]]
-	     nil]
-       
-       [= visual_knowledge_image [gtk-image-new_from_image [image-new_from_rgb_data 11 11 [new chunk [* 11 11 3]]]]]
-       [have visual_knowledge_vbox pack_start visual_knowledge_image nil nil 0]
        
        
+       'physical_knowledge'
        
        [= physical_knowledge_vbox [gtk-vbox-new 0]]
        [have vbox pack_start physical_knowledge_vbox nil nil 0]
@@ -304,6 +280,36 @@
 	     [funk []
 		   [= physical_knowledge_expanded [not physical_knowledge_expanded]]]
 	     nil]
+       
+       
+       'visual_knowledge'
+       
+       [= visual_knowledge_vbox [gtk-vbox-new 0]]
+       [have vbox pack_start visual_knowledge_vbox nil nil 0]
+       
+       [= visual_knowledge_button_label_hbox [gtk-hbox-new 0]]
+       [have visual_knowledge_vbox pack_start visual_knowledge_button_label_hbox nil nil 0]
+       
+       [= visual_knowledge_expansion_button [gtk-button-new_with_label '*']]
+       [have visual_knowledge_button_label_hbox pack_start visual_knowledge_expansion_button nil nil 0]
+       [have visual_knowledge_expansion_button signal_connect 'clicked'
+	     [funk []
+		   [= visual_knowledge_expanded [not visual_knowledge_expanded]]]
+	     nil]
+       
+       [= visual_knowledge_label [gtk-label-new 'Visual Knowledge']]
+       [have visual_knowledge_button_label_hbox pack_start visual_knowledge_label t t 0]
+       
+       [= visual_knowledge_gview_button [gtk-button-new_with_label 'GView']]
+       [have visual_knowledge_button_label_hbox pack_start visual_knowledge_gview_button nil nil 0]
+       [have visual_knowledge_gview_button signal_connect 'clicked'
+	     [funk []
+		   [have this gview_visual_knowledge]]
+	     nil]
+       
+       [= visual_knowledge_image [gtk-image-new_from_image [image-new_from_rgb_data 11 11 [new chunk [* 11 11 3]]]]]
+       [have visual_knowledge_vbox pack_start visual_knowledge_image nil nil 0]
+       
        
        
        [have frame add vbox]

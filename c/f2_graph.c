@@ -478,16 +478,28 @@ def_pcfunk2(graph__minus, this, that, return f2__graph__minus(this_cause, this, 
 f2ptr raw__graph__copy(f2ptr cause, f2ptr this) {
   f2ptr graph = f2__graph__new(cause);
   {
-    f2ptr this__node_set = f2__graph__node_set(cause, this);
-    set__iteration(cause, this__node_set, node,
-		   f2__graph__add_node(cause, graph, node);
-		   );
-  }
-  {
-    f2ptr this__edge_set = f2__graph__edge_set(cause, this);
-    set__iteration(cause, this__edge_set, edge,
-		   f2__graph__add_edge(cause, graph, edge);
-		   );
+    f2ptr new_node_old_node_ptypehash = f2__ptypehash__new(cause);
+    {
+      f2ptr this__node_set = f2__graph__node_set(cause, this);
+      set__iteration(cause, this__node_set, old_node,
+		     f2ptr node_label = f2__graph_node__label(cause, old_node);
+		     f2ptr new_node   = f2__graph_node__new(cause, node_label);
+		     raw__ptypehash__add(cause, new_node_old_node_ptypehash, old_node, new_node);
+		     f2__graph__add_node(cause, graph, new_node);
+		     );
+    }
+    {
+      f2ptr this__edge_set = f2__graph__edge_set(cause, this);
+      set__iteration(cause, this__edge_set, old_edge,
+		     f2ptr edge_label     = f2__graph_edge__label(     cause, old_edge);
+		     f2ptr old_left_node  = f2__graph_edge__left_node( cause, old_edge);
+		     f2ptr old_right_node = f2__graph_edge__right_node(cause, old_edge);
+		     f2ptr new_left_node  = raw__ptypehash__lookup(cause, new_node_old_node_ptypehash, old_left_node);
+		     f2ptr new_right_node = raw__ptypehash__lookup(cause, new_node_old_node_ptypehash, old_left_node);
+		     f2ptr new_edge       = f2__graph_edge__new(cause, edge_label, new_left_node, new_right_node);
+		     f2__graph__add_edge(cause, graph, new_edge);
+		     );
+    }
   }
   return graph;
 }

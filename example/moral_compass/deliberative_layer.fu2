@@ -28,8 +28,11 @@
        this]]
 
 [deftypefunk deliberative_layer execute create_knowledge []
-  [new meta_semantic_knowledge_base `deliberative_knowledge [get [get this mind] semantic_realm]]]
+  [new meta_semantic_knowledge_base `deliberative_knowledge [get [get this mind] semantic_realm]]
+  [have [get this agency `meta_physical_knowledge] create_knowledge]]
 
 [deftypefunk deliberative_layer execute connect_knowledge_reflection []
-  nil]
+  [have [get this agency `meta_physical_knowledge] connect_knowledge_reflection]]
+
+
 

@@ -240,16 +240,33 @@ export_cefunk1(event_stream__new__iterator, this, 0, "Returns a new event_stream
 
 // event_stream lick funks
 
+f2ptr raw__event_stream__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
+  f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
+  f2ptr head                    = f2__redblacktree__head(cause, event_time_redblacktree);
+  f2ptr result                  = raw__lick__object__gather_lick_notes(cause, lick, head, note_object_hash, max_size);
+  if (raw__larva__is_type(cause, result)) {
+    return result;
+  }
+  return nil;
+}
+
+f2ptr f2__event_stream__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
+  if ((! raw__event_stream__is_type(cause, this)) ||
+      (! raw__lick__is_type(cause, lick)) ||
+      (! raw__ptypehash__is_type(cause, note_object_hash)) ||
+      (! raw__integer__is_type(cause, max_size))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__event_stream__gather_lick_notes(cause, this, lick, note_object_hash, max_size);
+}
+export_cefunk4(event_stream__gather_lick_notes, this, lick, note_object_hash, max_size, 0, "Licks this event_stream.");
+
+
 f2ptr raw__event_stream__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
   f2ptr head                    = f2__redblacktree__head(cause, event_time_redblacktree);
   f2ptr chunk                   = raw__chunk__new(cause, 8);
-  f2ptr head__note              = raw__lick__object__as__note(cause, lick, head, note_object_hash, max_size);
-  if (raw__larva__is_type(cause, head__note)) {
-    return head__note;
-  }
-  s64 head__note__i = f2integer__i(head__note, cause);
-  raw__chunk__bit64__elt__set(cause, chunk, 0, (s64)(head__note__i));
+  raw__chunk__bit64__elt__set(cause, chunk, 0, (s64)head);
   f2ptr lick_note = f2integer__new(cause, (s64)this);
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);
 }

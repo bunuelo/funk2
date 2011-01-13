@@ -23,7 +23,7 @@
 [deframe deliberative_layer [mental_layer] []
   [new []
        [construct mental_layer 2 `deliberative]
-       [have this add_agency [new deliberative_imagination_agency]]
+       [have this add_agency [new deliberative_meta_physical_knowledge_agency]]
        [have this add_agency [new deliberative_execution_agency]]
        this]]
 

@@ -26,9 +26,9 @@
        nil]]
 
 
-[deframe deliberative_imagination_agency [agency] []
+[deframe deliberative_meta_physical_knowledge_agency [agency] []
   [new []
-       [construct agency `imagination]
+       [construct agency `meta_physical_knowledge]
        
        [have this add_resource [new recall_most_similar_story_with_goal_state]]
        

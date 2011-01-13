@@ -112,14 +112,14 @@
 
 [defpackage deliberative_layer
   :packages [mind
-	     deliberative_imagination_agency
+	     deliberative_meta_physical_knowledge_agency
 	     deliberative_execution_agency
 	     english_language]
    :sources ['deliberative_layer.fu2']]
 
-[defpackage deliberative_imagination_agency
+[defpackage deliberative_meta_physical_knowledge_agency
   :packages [mind]
-   :sources ['deliberative_imagination_agency.fu2']]
+   :sources ['deliberative_meta_physical_knowledge_agency.fu2']]
 
 [defpackage deliberative_execution_agency
   :packages [mind]

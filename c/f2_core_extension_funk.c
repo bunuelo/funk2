@@ -161,9 +161,9 @@ f2ptr raw__core_extension_funk__cfunk(f2ptr cause, f2ptr this) {
       f2ptr documentation = f2__core_extension_funk__documentation(cause, this);
       cfunk = f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);
     }
-    f2ptr cfunk__cached = f2__core_extension_funk__cfunk__cached(cause, this);
-    f2__core_extension_funk__cfunk__cached__set(cause, this, cfunk__cached);
+    f2ptr cfunk__cached       = cfunk;
     cfunk__cached__time_stamp = core_extension__initialized_time_stamp;
+    f2__core_extension_funk__cfunk__cached__set(            cause, this, cfunk__cached);
     f2__core_extension_funk__cfunk__cached__time_stamp__set(cause, this, cfunk__cached__time_stamp);
   }
   return cfunk;

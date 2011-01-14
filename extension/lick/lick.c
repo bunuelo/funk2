@@ -383,6 +383,9 @@ export_cefunk2(lick__current_size__set, thing, value, 0, "Sets the current_size 
 
 f2ptr raw__lick__object__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr object, f2ptr note_object_hash, f2ptr max_size) {
   if (raw__eq(cause, object, global_environment())) {
+    printf("\nlick__object__gather_lick_notes larva for finding global_environment type: ");
+    f2__print(cause, f2__object__type(cause, object));
+    fflush(stdout);
     return f2larva__new(cause, 234411, nil);
   }
   f2ptr current_size    = raw__lick__current_size(cause, this);
@@ -398,6 +401,9 @@ f2ptr raw__lick__object__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr object
     raw__ptypehash__add(cause, note_object_hash, object, lick_note);
     f2ptr result = f2__object__execute(cause, object, new__symbol(cause, "gather_lick_notes"), f2list3__new(cause, this, note_object_hash, max_size));
     if (raw__larva__is_type(cause, result)) {
+      printf("\nlick__object__gather_lick_notes larva in stack for object type: ");
+      f2__print(cause, f2__object__type(cause, object));
+      fflush(stdout);
       return result;
     }
   }

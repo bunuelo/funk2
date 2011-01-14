@@ -264,10 +264,12 @@ export_cefunk4(event_stream__gather_lick_notes, this, lick, note_object_hash, ma
 
 f2ptr raw__event_stream__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
-  f2ptr head                    = f2__redblacktree__head(cause, event_time_redblacktree);
   f2ptr chunk                   = raw__chunk__new(cause, 8);
-  raw__chunk__bit64__elt__set(cause, chunk, 0, (s64)head);
-  f2ptr lick_note = f2integer__new(cause, (s64)this);
+  f2ptr head                    = f2__redblacktree__head(cause, event_time_redblacktree);
+  f2ptr head__note              = raw__ptypehash__lookup(cause, note_object_hash, head);
+  s64   head__note__i           = f2integer__i(head__note, cause);
+  raw__chunk__bit64__elt__set(cause, chunk, 0, (s64)head__note__i);
+  f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);
 }
 

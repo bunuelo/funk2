@@ -1844,39 +1844,51 @@ f2ptr raw__semantic_knowledge_base__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr
   f2ptr trace_remove_semantic_frame = raw__semantic_knowledge_base__trace_remove_semantic_frame(cause, this);
   s64 chunk_index = 0;
   {
-    f2ptr data = name;
-    raw__chunk__bit64__elt__set(cause, chunk, chunk_index, (s64)data);
+    f2ptr data          = name;
+    f2ptr data__note    = raw__ptypehash__lookup(cause, note_object_hash, data);
+    s64   data__note__i = f2integer__i(data__note, cause);
+    raw__chunk__bit64__elt__set(cause, chunk, chunk_index, (s64)data__note__i);
     chunk_index += 8;
   }
   {
-    f2ptr data = semantic_realm;
-    raw__chunk__bit64__elt__set(cause, chunk, chunk_index, (s64)data);
+    f2ptr data          = semantic_realm;
+    f2ptr data__note    = raw__ptypehash__lookup(cause, note_object_hash, data);
+    s64   data__note__i = f2integer__i(data__note, cause);
+    raw__chunk__bit64__elt__set(cause, chunk, chunk_index, (s64)data__note__i);
     chunk_index += 8;
   }
   {
-    f2ptr data = semantic_frame_set;
-    raw__chunk__bit64__elt__set(cause, chunk, chunk_index, (s64)data);
+    f2ptr data          = semantic_frame_set;
+    f2ptr data__note    = raw__ptypehash__lookup(cause, note_object_hash, data);
+    s64   data__note__i = f2integer__i(data__note, cause);
+    raw__chunk__bit64__elt__set(cause, chunk, chunk_index, (s64)data__note__i);
     chunk_index += 8;
   }
   {
-    f2ptr data = trace_event_stream;
-    raw__chunk__bit64__elt__set(cause, chunk, chunk_index, (s64)data);
+    f2ptr data          = trace_event_stream;
+    f2ptr data__note    = raw__ptypehash__lookup(cause, note_object_hash, data);
+    s64   data__note__i = f2integer__i(data__note, cause);
+    raw__chunk__bit64__elt__set(cause, chunk, chunk_index, (s64)data__note__i);
     chunk_index += 8;
   }
   {
-    f2ptr data = trace_add_semantic_frame;
-    raw__chunk__bit64__elt__set(cause, chunk, chunk_index, (s64)data);
+    f2ptr data          = trace_add_semantic_frame;
+    f2ptr data__note    = raw__ptypehash__lookup(cause, note_object_hash, data);
+    s64   data__note__i = f2integer__i(data__note, cause);
+    raw__chunk__bit64__elt__set(cause, chunk, chunk_index, (s64)data__note__i);
     chunk_index += 8;
   }
   {
-    f2ptr data = trace_remove_semantic_frame;
-    raw__chunk__bit64__elt__set(cause, chunk, chunk_index, (s64)data);
+    f2ptr data          = trace_remove_semantic_frame;
+    f2ptr data__note    = raw__ptypehash__lookup(cause, note_object_hash, data);
+    s64   data__note__i = f2integer__i(data__note, cause);
+    raw__chunk__bit64__elt__set(cause, chunk, chunk_index, (s64)data__note__i);
     chunk_index += 8;
   }
   if (chunk_index != (8 * 6)) {
     return f2larva__new(cause, 23551, nil);
   }
-  f2ptr lick_note = f2integer__new(cause, (s64)this);
+  f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);
 }
 

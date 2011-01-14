@@ -416,6 +416,9 @@ f2ptr raw__lick__unlick(f2ptr cause, f2ptr this) {
   f2ptr object_note_hash = f2__ptypehash__new(cause);
   ptypehash__iteration(cause, chunk_note_hash, note, lick_chunk,
 		       f2ptr object = raw__lick_chunk__unlick_with_notes(cause, lick_chunk, object_note_hash);
+		       if (raw__larva__is_type(cause, object)) {
+			 return object;
+		       }
 		       raw__ptypehash__add(cause, object_note_hash, note, object);
 		       );
   ptypehash__value__iteration(cause, chunk_note_hash, lick_chunk,
@@ -660,7 +663,7 @@ export_cefunk4(nil__gather_lick_notes, this, lick, note_object_hash, max_size, 0
 
 f2ptr raw__nil__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr chunk = raw__chunk__new(cause, 0);
-  f2ptr lick_note = f2integer__new(cause, (s64)this);
+  f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   return raw__lick_chunk__new(cause, nil, lick_note, chunk);
 }
 
@@ -727,7 +730,7 @@ f2ptr raw__integer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr not
   f2ptr chunk   = raw__chunk__new(cause, 8);
   s64   this__i = f2integer__i(this, cause);
   raw__chunk__bit64__elt__set(cause, chunk, 0, this__i);
-  f2ptr lick_note = f2integer__new(cause, (s64)this);
+  f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   return raw__lick_chunk__new(cause, new__symbol(cause, "integer"), lick_note, chunk);
 }
 
@@ -797,7 +800,7 @@ f2ptr raw__float__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_
   float this__f = f2float__f(this, cause);
   u32*  data    = (u32*)(&this__f);
   raw__chunk__bit32__elt__set(cause, chunk, 0, *data);
-  f2ptr lick_note = f2integer__new(cause, (s64)this);
+  f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   return raw__lick_chunk__new(cause, new__symbol(cause, "float"), lick_note, chunk);
 }
 
@@ -869,7 +872,7 @@ f2ptr raw__double__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note
   u64    data;
   memcpy(&data, &this__d, sizeof(u64));
   raw__chunk__bit64__elt__set(cause, chunk, 0, data);
-  f2ptr lick_note = f2integer__new(cause, (s64)this);
+  f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   return raw__lick_chunk__new(cause, new__symbol(cause, "double"), lick_note, chunk);
 }
 
@@ -939,7 +942,7 @@ f2ptr raw__pointer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr not
   f2ptr chunk   = raw__chunk__new(cause, 8);
   u64   this__p = f2pointer__p(this, cause);
   raw__chunk__bit64__elt__set(cause, chunk, 0, this__p);
-  f2ptr lick_note = f2integer__new(cause, (s64)this);
+  f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   return raw__lick_chunk__new(cause, new__symbol(cause, "pointer"), lick_note, chunk);
 }
 
@@ -1008,7 +1011,7 @@ f2ptr raw__mutex__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_
   f2ptr     chunk           = raw__chunk__new(cause, 1);
   boolean_t this__is_locked = raw__mutex__is_locked(cause, this);
   raw__chunk__bit8__elt__set(cause, chunk, 0, this__is_locked ? 0x01 : 0x00);
-  f2ptr lick_note = f2integer__new(cause, (s64)this);
+  f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   return raw__lick_chunk__new(cause, new__symbol(cause, "mutex"), lick_note, chunk);
 }
 
@@ -1081,7 +1084,7 @@ f2ptr raw__char__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_o
   f2ptr chunk    = raw__chunk__new(cause, 8);
   u64   this__ch = raw__char__ch(cause, this);
   raw__chunk__bit64__elt__set(cause, chunk, 0, this__ch);
-  f2ptr lick_note = f2integer__new(cause, (s64)this);
+  f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   return raw__lick_chunk__new(cause, new__symbol(cause, "char"), lick_note, chunk);
 }
 
@@ -1159,7 +1162,7 @@ f2ptr raw__string__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note
     }
   }
   f2__free(to_ptr(this__str));
-  f2ptr lick_note = f2integer__new(cause, (s64)this);
+  f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   return raw__lick_chunk__new(cause, new__symbol(cause, "string"), lick_note, chunk);
 }
 
@@ -1245,7 +1248,7 @@ f2ptr raw__symbol__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note
     }
   }
   f2__free(to_ptr(this__str));
-  f2ptr lick_note = f2integer__new(cause, (s64)this);
+  f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   return raw__lick_chunk__new(cause, new__symbol(cause, "symbol"), lick_note, chunk);
 }
 
@@ -1331,7 +1334,7 @@ f2ptr raw__chunk__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_
     }
   }
   f2__free(to_ptr(this__str));
-  f2ptr lick_note = f2integer__new(cause, (s64)this);
+  f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   return raw__lick_chunk__new(cause, new__symbol(cause, "chunk"), lick_note, chunk);
 }
 
@@ -1422,11 +1425,13 @@ f2ptr raw__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_
   {
     s64 index;
     for (index = 0; index < this__length; index ++) {
-      f2ptr element = raw__array__elt(cause, this, index);
-      raw__chunk__bit64__elt__set(cause, chunk, index * 8, (s64)element);
+      f2ptr element          = raw__array__elt(cause, this, index);
+      f2ptr element__note    = raw__ptypehash__lookup(cause, note_object_hash, element);
+      s64   element__note__i = f2integer__i(element__note, cause);
+      raw__chunk__bit64__elt__set(cause, chunk, index * 8, (s64)element__note__i);
     }
   }
-  f2ptr lick_note = f2integer__new(cause, (s64)this);
+  f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);
 }
 
@@ -1536,18 +1541,24 @@ export_cefunk4(ptypehash__gather_lick_notes, this, lick, note_object_hash, max_s
 f2ptr raw__ptypehash__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   f2ptr chunk = raw__chunk__new(cause, 8 * 3);
   {
-    f2ptr key_count = f2__ptypehash__key_count(cause, this);
-    raw__chunk__bit64__elt__set(cause, chunk, 0, (s64)key_count);
+    f2ptr key_count          = f2__ptypehash__key_count(cause, this);
+    f2ptr key_count__note    = raw__ptypehash__lookup(cause, note_object_hash, key_count);
+    s64   key_count__note__i = f2integer__i(key_count__note, cause);
+    raw__chunk__bit64__elt__set(cause, chunk, 0, (s64)key_count__note__i);
   }
   {
-    f2ptr bin_num_power = f2__ptypehash__bin_num_power(cause, this);
-    raw__chunk__bit64__elt__set(cause, chunk, 8, (s64)bin_num_power);
+    f2ptr bin_num_power          = f2__ptypehash__bin_num_power(cause, this);
+    f2ptr bin_num_power__note    = raw__ptypehash__lookup(cause, note_object_hash, bin_num_power);
+    s64   bin_num_power__note__i = f2integer__i(bin_num_power__note, cause);
+    raw__chunk__bit64__elt__set(cause, chunk, 8, (s64)bin_num_power__note__i);
   }
   {
-    f2ptr bin_array = f2__ptypehash__bin_array(cause, this);
-    raw__chunk__bit64__elt__set(cause, chunk, 16, (s64)bin_array);
+    f2ptr bin_array          = f2__ptypehash__bin_array(cause, this);
+    f2ptr bin_array__note    = raw__ptypehash__lookup(cause, note_object_hash, bin_array);
+    s64   bin_array__note__i = f2integer__i(bin_array__note, cause);
+    raw__chunk__bit64__elt__set(cause, chunk, 16, (s64)bin_array__note__i);
   }
-  f2ptr lick_note = f2integer__new(cause, (s64)this);
+  f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);
 }
 

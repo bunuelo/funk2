@@ -382,6 +382,9 @@ export_cefunk2(lick__current_size__set, thing, value, 0, "Sets the current_size 
 
 
 f2ptr raw__lick__object__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr object, f2ptr note_object_hash, f2ptr max_size) {
+  if (raw__eq(cause, object, global_environment())) {
+    return f2larva__new(cause, 234411, nil);
+  }
   f2ptr current_size    = raw__lick__current_size(cause, this);
   s64   current_size__i = f2integer__i(current_size, cause);
   s64   max_size__i     = f2integer__i(max_size,     cause);

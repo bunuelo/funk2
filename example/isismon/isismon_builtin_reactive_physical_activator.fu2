@@ -29,26 +29,38 @@
 									     
 									     turn_right_start_resource__hbox
 									     turn_right_start_resource__button
+									     turn_right_start_resource__degrees_per_second__label
+									     turn_right_start_resource__degrees_per_second__entry
 									     turn_right_stop_resource__hbox
 									     turn_right_stop_resource__button
 									     turn_left_start_resource__hbox
 									     turn_left_start_resource__button
+									     turn_left_start_resource__degrees_per_second__label
+									     turn_left_start_resource__degrees_per_second__entry
 									     turn_left_stop_resource__hbox
 									     turn_left_stop_resource__button
 									     look_up_start_resource__hbox
 									     look_up_start_resource__button
+									     look_up_start_resource__degrees_per_second__label
+									     look_up_start_resource__degrees_per_second__entry
 									     look_up_stop_resource__hbox
 									     look_up_stop_resource__button
 									     look_down_start_resource__hbox
 									     look_down_start_resource__button
+									     look_down_start_resource__degrees_per_second__label
+									     look_down_start_resource__degrees_per_second__entry
 									     look_down_stop_resource__hbox
 									     look_down_stop_resource__button
 									     move_forward_start_resource__hbox
 									     move_forward_start_resource__button
+									     move_forward_start_resource__meters_per_second__label
+									     move_forward_start_resource__meters_per_second__entry
 									     move_forward_stop_resource__hbox
 									     move_forward_stop_resource__button
 									     move_backward_start_resource__hbox
 									     move_backward_start_resource__button
+									     move_backward_start_resource__meters_per_second__label
+									     move_backward_start_resource__meters_per_second__entry
 									     move_backward_stop_resource__hbox
 									     move_backward_stop_resource__button
 									     drop_from_right_hand_resource__hbox
@@ -102,7 +114,11 @@
        
        [= turn_right_start_resource__hbox [gtk-hbox-new 2]]
        [= turn_right_start_resource__button [gtk-button-new_with_label 'Turn Right - Start']]
+       [= turn_right_start_resource__degrees_per_second__label [gtk-label-new 'deg/s: ']]
+       [= turn_right_start_resource__degrees_per_second__entry [gtk-entry-new]]
        [have turn_right_start_resource__hbox pack_start turn_right_start_resource__button nil nil 0]
+       [have turn_right_start_resource__hbox pack_start turn_right_start_resource__degrees_per_second__label nil nil 0]
+       [have turn_right_start_resource__hbox pack_start turn_right_start_resource__degrees_per_second__entry t t 0]
        [have vbox pack_start turn_right_start_resource__hbox nil nil 0]
        [have turn_right_start_resource__button signal_connect 'clicked'
 	     [funk []
@@ -120,7 +136,11 @@
        
        [= turn_left_start_resource__hbox [gtk-hbox-new 2]]
        [= turn_left_start_resource__button [gtk-button-new_with_label 'Turn Left - Start']]
+       [= turn_left_start_resource__degrees_per_second__label [gtk-label-new 'deg/s: ']]
+       [= turn_left_start_resource__degrees_per_second__entry [gtk-entry-new]]
        [have turn_left_start_resource__hbox pack_start turn_left_start_resource__button nil nil 0]
+       [have turn_left_start_resource__hbox pack_start turn_left_start_resource__degrees_per_second__label nil nil 0]
+       [have turn_left_start_resource__hbox pack_start turn_left_start_resource__degrees_per_second__entry t t 0]
        [have vbox pack_start turn_left_start_resource__hbox nil nil 0]
        [have turn_left_start_resource__button signal_connect 'clicked'
 	     [funk []
@@ -138,7 +158,11 @@
        
        [= look_up_start_resource__hbox [gtk-hbox-new 2]]
        [= look_up_start_resource__button [gtk-button-new_with_label 'Look Up - Start']]
+       [= look_up_start_resource__degrees_per_second__label [gtk-label-new 'deg/s: ']]
+       [= look_up_start_resource__degrees_per_second__entry [gtk-entry-new]]
        [have look_up_start_resource__hbox pack_start look_up_start_resource__button nil nil 0]
+       [have look_up_start_resource__hbox pack_start look_up_start_resource__degrees_per_second__label nil nil 0]
+       [have look_up_start_resource__hbox pack_start look_up_start_resource__degrees_per_second__entry t t 0]
        [have vbox pack_start look_up_start_resource__hbox nil nil 0]
        [have look_up_start_resource__button signal_connect 'clicked'
 	     [funk []
@@ -156,7 +180,11 @@
        
        [= look_down_start_resource__hbox [gtk-hbox-new 2]]
        [= look_down_start_resource__button [gtk-button-new_with_label 'Look Down - Start']]
+       [= look_down_start_resource__degrees_per_second__label [gtk-label-new 'deg/s: ']]
+       [= look_down_start_resource__degrees_per_second__entry [gtk-entry-new]]
        [have look_down_start_resource__hbox pack_start look_down_start_resource__button nil nil 0]
+       [have look_down_start_resource__hbox pack_start look_down_start_resource__degrees_per_second__label nil nil 0]
+       [have look_down_start_resource__hbox pack_start look_down_start_resource__degrees_per_second__entry t t 0]
        [have vbox pack_start look_down_start_resource__hbox nil nil 0]
        [have look_down_start_resource__button signal_connect 'clicked'
 	     [funk []
@@ -174,11 +202,15 @@
        
        [= move_forward_start_resource__hbox [gtk-hbox-new 2]]
        [= move_forward_start_resource__button [gtk-button-new_with_label 'Move Forward - Start']]
+       [= move_forward_start_resource__meters_per_second__label [gtk-label-new 'm/s: ']]
+       [= move_forward_start_resource__meters_per_second__entry [gtk-entry-new]]
        [have move_forward_start_resource__hbox pack_start move_forward_start_resource__button nil nil 0]
+       [have move_forward_start_resource__hbox pack_start move_forward_start_resource__meters_per_second__label nil nil 0]
+       [have move_forward_start_resource__hbox pack_start move_forward_start_resource__meters_per_second__entry t t 0]
        [have vbox pack_start move_forward_start_resource__hbox nil nil 0]
        [have move_forward_start_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `builtin_reactive `physical `move_forward_start 1.0]]
+		   [have this activate_resource `builtin_reactive `physical `move_forward_start 20.0]]
 	     nil]
        
        [= move_forward_stop_resource__hbox [gtk-hbox-new 2]]
@@ -192,11 +224,15 @@
        
        [= move_backward_start_resource__hbox [gtk-hbox-new 2]]
        [= move_backward_start_resource__button [gtk-button-new_with_label 'Move Backward - Start']]
+       [= move_backward_start_resource__degrees_per_second__label [gtk-label-new 'm/s: ']]
+       [= move_backward_start_resource__degrees_per_second__entry [gtk-entry-new]]
        [have move_backward_start_resource__hbox pack_start move_backward_start_resource__button nil nil 0]
+       [have move_backward_start_resource__hbox pack_start move_backward_start_resource__meters_per_second__label nil nil 0]
+       [have move_backward_start_resource__hbox pack_start move_backward_start_resource__meters_per_second__entry t t 0]
        [have vbox pack_start move_backward_start_resource__hbox nil nil 0]
        [have move_backward_start_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `builtin_reactive `physical `move_backward_start 1.0]]
+		   [have this activate_resource `builtin_reactive `physical `move_backward_start 20.0]]
 	     nil]
        
        [= move_backward_stop_resource__hbox [gtk-hbox-new 2]]

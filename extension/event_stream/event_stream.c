@@ -267,9 +267,15 @@ f2ptr raw__event_stream__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2pt
   f2ptr chunk                   = raw__chunk__new(cause, 8);
   f2ptr head                    = f2__redblacktree__head(cause, event_time_redblacktree);
   f2ptr head__note              = raw__ptypehash__lookup(cause, note_object_hash, head);
+  if (head__note == nil) {
+    return f2larva__new(cause, 13579, nil);
+  }
   s64   head__note__i           = f2integer__i(head__note, cause);
   raw__chunk__bit64__elt__set(cause, chunk, 0, (s64)head__note__i);
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
+  if (lick_note == nil) {
+    return f2larva__new(cause, 13579, nil);
+  }
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);
 }
 

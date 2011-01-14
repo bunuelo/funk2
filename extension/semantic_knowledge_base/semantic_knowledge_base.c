@@ -1834,7 +1834,7 @@ f2ptr f2__semantic_knowledge_base__gather_lick_notes(f2ptr cause, f2ptr this, f2
 export_cefunk4(semantic_knowledge_base__gather_lick_notes, this, lick, note_object_hash, max_size, 0, "Licks this semantic_knowledge_base.");
 
 
-f2ptr raw__semantic_knowledge_base__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
+f2ptr raw__semantic_knowledge_base__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash) {
   f2ptr chunk                       = raw__chunk__new(cause, 8 * 6);
   f2ptr name                        = raw__semantic_knowledge_base__name(                       cause, this);
   f2ptr semantic_realm              = raw__semantic_knowledge_base__semantic_realm(             cause, this);
@@ -1892,16 +1892,14 @@ f2ptr raw__semantic_knowledge_base__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);
 }
 
-f2ptr f2__semantic_knowledge_base__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
+f2ptr f2__semantic_knowledge_base__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash) {
   if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
-      (! raw__lick__is_type(cause, lick)) ||
-      (! raw__ptypehash__is_type(cause, note_object_hash)) ||
-      (! raw__integer__is_type(cause, max_size))) {
+      (! raw__ptypehash__is_type(cause, note_object_hash))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_knowledge_base__lick_to_chunk(cause, this, lick, note_object_hash, max_size);
+  return raw__semantic_knowledge_base__lick_to_chunk(cause, this, note_object_hash);
 }
-export_cefunk4(semantic_knowledge_base__lick_to_chunk, this, lick, note_object_hash, max_size, 0, "Licks this semantic_knowledge_base.");
+export_cefunk2(semantic_knowledge_base__lick_to_chunk, this, note_object_hash, 0, "Licks this semantic_knowledge_base.");
 
 
 f2ptr raw__semantic_knowledge_base__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {

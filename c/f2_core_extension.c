@@ -24,11 +24,11 @@
 
 // core_extension
 
-def_frame_object__global__3_slot(core_extension, name, filename, initialized);
+def_frame_object__global__3_slot(core_extension, name, filename, initialized_time_stamp);
 
 f2ptr raw__core_extension__new(f2ptr cause, f2ptr name, f2ptr filename) {
-  f2ptr initialized = nil;
-  return f2core_extension__new(cause, name, filename, initialized);
+  f2ptr initialized_time_stamp = nil;
+  return f2core_extension__new(cause, name, filename, initialized_time_stamp);
 }
 
 f2ptr f2__core_extension__new(f2ptr cause, f2ptr name, f2ptr filename) {
@@ -41,7 +41,7 @@ def_pcfunk2(core_extension__new, name, filename, return f2__core_extension__new(
 
 
 f2ptr raw__core_extension__initialize(f2ptr cause, f2ptr this) {
-  if (f2__core_extension__initialized(cause, this) != nil) {
+  if (f2__core_extension__initialized_time_stamp(cause, this) != nil) {
     return f2larva__new(cause, 124352, nil);
   }
   f2ptr name                 = f2__core_extension__name(    cause, this);
@@ -55,7 +55,7 @@ f2ptr raw__core_extension__initialize(f2ptr cause, f2ptr this) {
 															 new__symbol(cause, "this"),     this,
 															 new__symbol(cause, "result"),   result))));
   }
-  f2__core_extension__initialized__set(cause, this, f2bool__new(boolean__true));
+  f2__core_extension__initialized_time_stamp__set(cause, this, f2__time(cause));
   return nil;
 }
 
@@ -69,7 +69,7 @@ def_pcfunk1(core_extension__initialize, this, return f2__core_extension__initial
 
 
 f2ptr raw__core_extension__destroy(f2ptr cause, f2ptr this) {
-  if (f2__core_extension__initialized(cause, this) == nil) {
+  if (f2__core_extension__initialized_time_stamp(cause, this) == nil) {
     return f2larva__new(cause, 124351, nil);
   }
   f2ptr name              = f2__core_extension__name(    cause, this);
@@ -83,7 +83,7 @@ f2ptr raw__core_extension__destroy(f2ptr cause, f2ptr this) {
 															 new__symbol(cause, "this"),     this,
 															 new__symbol(cause, "result"),   result))));
   }
-  f2__core_extension__initialized__set(cause, this, f2bool__new(boolean__false));
+  f2__core_extension__initialized_time_stamp__set(cause, this, nil);
   return nil;
 }
 
@@ -97,7 +97,7 @@ def_pcfunk1(core_extension__destroy, this, return f2__core_extension__destroy(th
 
 
 f2ptr raw__core_extension__assure_initialized(f2ptr cause, f2ptr this) {
-  if (f2__core_extension__initialized(cause, this) != nil) {
+  if (f2__core_extension__initialized_time_stamp(cause, this) != nil) {
     return nil;
   }
   f2ptr result = f2__core_extension__initialize(cause, this);
@@ -117,7 +117,7 @@ def_pcfunk1(core_extension__assure_initialized, this, return f2__core_extension_
 
 
 f2ptr raw__core_extension__assure_destroyed(f2ptr cause, f2ptr this) {
-  if (f2__core_extension__initialized(cause, this) == nil) {
+  if (f2__core_extension__initialized_time_stamp(cause, this) == nil) {
     return nil;
   }
   f2ptr result = f2__core_extension__destroy(cause, this);
@@ -262,7 +262,7 @@ def_pcfunk1(core_extension_handler__unload_changed, this, return f2__core_extens
 f2ptr raw__core_extension_handler__reset_to_boot_state(f2ptr cause, f2ptr this) {
   f2ptr core_extension_name_hash = f2__core_extension_handler__core_extension_name_hash(cause, this);
   ptypehash__value__iteration(cause, core_extension_name_hash, core_extension,
-			      f2__core_extension__initialized__set(cause, core_extension, f2bool__new(boolean__false));
+			      f2__core_extension__initialized_time_stamp__set(cause, core_extension, nil);
 			      );
   return nil;
 }
@@ -357,7 +357,7 @@ void f2__core_extension__initialize_module() {
   
   // core_extension
   
-  init_frame_object__3_slot(core_extension, name, filename, initialized);
+  init_frame_object__3_slot(core_extension, name, filename, initialized_time_stamp);
   
   f2__primcfunk__init__2(core_extension__new, name, filename, "");
   

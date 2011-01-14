@@ -579,7 +579,15 @@ struct funk2_object_type__core_extension_funk__slot_s {
   export_cefunk_without_args(name, is_funktional, documentation_string)
 
 
-declare_frame_object_6_slot(core_extension_funk, core_extension_name, name, cname, args_cname, is_funktional_cname, documentation_cname);
+declare_frame_object_8_slot(core_extension_funk,
+			    core_extension_name,
+			    name,
+			    cname,
+			    cfunk__cached,
+			    cfunk__cached__time_stamp,
+			    args_cname,
+			    is_funktional_cname,
+			    documentation_cname);
 
 f2ptr raw__core_extension_funk__new(                       f2ptr cause, f2ptr filename, f2ptr name);
 f2ptr  f2__core_extension_funk__new(                       f2ptr cause, f2ptr filename, f2ptr name);

@@ -106,7 +106,7 @@
        [have vbox pack_start turn_right_start_resource__hbox nil nil 0]
        [have turn_right_start_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `builtin_reactive `physical `turn_right_start 1.0]]
+		   [have this activate_resource `builtin_reactive `physical `turn_right_start 100.0]]
 	     nil]
        
        [= turn_right_stop_resource__hbox [gtk-hbox-new 2]]
@@ -124,7 +124,7 @@
        [have vbox pack_start turn_left_start_resource__hbox nil nil 0]
        [have turn_left_start_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `builtin_reactive `physical `turn_left_start 1.0]]
+		   [have this activate_resource `builtin_reactive `physical `turn_left_start 100.0]]
 	     nil]
        
        [= turn_left_stop_resource__hbox [gtk-hbox-new 2]]
@@ -142,7 +142,7 @@
        [have vbox pack_start look_up_start_resource__hbox nil nil 0]
        [have look_up_start_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `builtin_reactive `physical `look_up_start 1.0]]
+		   [have this activate_resource `builtin_reactive `physical `look_up_start 100.0]]
 	     nil]
        
        [= look_up_stop_resource__hbox [gtk-hbox-new 2]]
@@ -160,7 +160,7 @@
        [have vbox pack_start look_down_start_resource__hbox nil nil 0]
        [have look_down_start_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `builtin_reactive `physical `look_down_start 1.0]]
+		   [have this activate_resource `builtin_reactive `physical `look_down_start 100.0]]
 	     nil]
        
        [= look_down_stop_resource__hbox [gtk-hbox-new 2]]

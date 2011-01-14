@@ -31,7 +31,7 @@
 	[have this object-gather_lick_notes root_object note_object_hash 5000000]
 	[let [[objects [get note_object_hash keys]]]
 	  [mapc [funk [object]
-		      [let [[lick_chunk [have object lick_to_chunk this note_object_hash 5000000]]]
+		      [let [[lick_chunk [have object lick_to_chunk note_object_hash]]]
 			[have chunk_note_hash add [get lick_chunk lick_note] lick_chunk]]]
 		objects]]]]
     this]]

@@ -70,7 +70,6 @@
     [let [[this [new moral_compass]]]
       [set this semantic_realm                        [have chunk_frame lookup `semantic_realm]]
       [set this knowledge_event_stream_iterator_frame [have chunk_frame lookup `knowledge_event_stream_iterator_frame]]
-      [terminal_format standard-terminal '\nmoral_compass semantic_realm: ' [get this semantic_realm]]
       [have this connect_knowledge_reflection]
       this]]]
 

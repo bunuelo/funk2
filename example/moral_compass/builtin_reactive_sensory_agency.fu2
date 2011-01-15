@@ -32,7 +32,7 @@
 			      [let [[time_step [get body time_step]]]
 				[if [eq last_time_step time_step]
 				    [millisleep 1000]
-				  [prog `[have this-resource think_to_self 'My body senses visual objects from the world.']
+				  [prog [have this-resource think_to_self 'starting sensory activations.']
 					[= visual_objects         [have body sense_visual_objects]]
 					[= retina_image           [get  body retina_image]]
 					[= left_hand_object_name  [have body sense_left_hand_object_name]]
@@ -42,6 +42,7 @@
 					[mind-wait_to_activate [get this mind] builtin_reactive sensory                 propogate_visual_objects_to_visual_knowledge]
 					[mind-wait_to_activate [get this mind] learned_reactive physical_knowledge      translate_visual_knowledge_to_physical_knowledge]
 					[mind-wait_to_activate [get this mind] deliberative     meta_physical_knowledge translate_physical_knowledge_to_meta_physical_knowledge]
+					[have this-resource think_to_self 'finished sensory activations.']
 					]]]
 			      ]]]]]
        nil]]
@@ -63,6 +64,7 @@
   nil]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute update_visual_knowledge_from_visual_objects [visual_objects]
+  [have this-resource think_to_self 'starting.']
   [have [get [get this mind] visual_knowledge] remove_all]
   [let [[semantic_realm        [get [get this mind] semantic_realm]]
 	[semantic_object_frame [frame]]]
@@ -104,6 +106,7 @@
 			      actions]
 			]]]]
 	  visual_objects]]
+  [have this-resource think_to_self 'finished.']
   nil]
 
 

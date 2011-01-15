@@ -83,7 +83,7 @@
             '("!=" "<=" ">=" "==" ">>" "<<" "+" "-" "*" "/" "=" "<" ">"
 	      "action" "actor" "act" "and"
 	      "cause-define" "cause-define-funk" "cause-defunk" "cause-lookup" "cause-lookup-funk" "cond" "construct"
-              "defunk" "define-funk" "defunk-local" "define" "defmetro" "deftypefunk" "deframe" "deftypeconstruct" "dotimes"
+              "defunk" "define-funk" "defunk-local" "define" "defmetro" "deftypefunk" "deframe" "deftypeconstruct" "defcore" "defcorefunk" "dotimes"
 	      "elt" "error" "execute"
 	      "frame" "funk" "funk-new_with_name" "funkall"
               "get" "get-apply" "globalize" "globalize-funk"
@@ -95,7 +95,7 @@
 	      "or"
 	      "parc" "parcar" "parlet" "parog" "partimes" "prog" "put"
 	      "quote"
-	      "set" "set-apply" "shelter"
+	      "set" "set-apply" "shelter" "semantic-add" "semantic-remove"
 	      "while" "with" "with-new-cause"
 	      "yield"
 	      )

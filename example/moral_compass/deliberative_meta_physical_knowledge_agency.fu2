@@ -56,6 +56,8 @@
 											  [key            [get event key]]]
 										      ]]
 			       ]]]]
-	     [have physical_knowledge_iterator increment]]]]]
+	     [have physical_knowledge_iterator increment]]]]
+  [have this-resource think_to_self 'finished.']]
+
 
 

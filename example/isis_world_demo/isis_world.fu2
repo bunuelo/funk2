@@ -164,7 +164,7 @@
 								  [get agent_body as-chunk]]
 							    [get this agent_bodies]]
 			    ]]]
-    [get [new lick chunk_frame] as-chunk]]]
+    [get [lick-new_from_object chunk_frame] as-chunk]]]
 
 [defunk isis_world-new_from_chunk [chunk]
   [let [[chunk_frame [have [get chunk as-lick] unlick]]]

@@ -77,7 +77,7 @@
 			      retina_image_sequence retina_image_sequence
 			      moral_compass_chunk   moral_compass_chunk
 			      ]]]
-      [get [new lick chunk_frame] as-chunk]]]]
+      [get [lick-new_from_object chunk_frame] as-chunk]]]]
 
 [defunk isis_agent_body-new_from_chunk [physical_world chunk]
   [let [[chunk_frame [have [get chunk as-lick] unlick]]]

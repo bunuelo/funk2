@@ -63,11 +63,16 @@
 
 [defunk string_parse-test [exp]
   [if [not [equals exp [string-read [exp-as-string exp]]]]
-      [error `compile-time `[string_parse-test ,exp]]]]
+      [error error_type `compile-time
+	     error_name `string_parse-test
+	     exp        exp]]]
 
 [defunk string-split_intersperse_test [this token]
   [if [not [equals exp [stringlist-intersperse [string-split this token] token]]]
-      [error `compile-time `[string-split_intersperse_test ,this ,token]]]]
+      [error error_type `compile-time
+	     error_name `string-split_intersperse_test
+	     this       this
+	     token      token]]]
 
 [defunk string-test []
   [string_parse-test []]
@@ -76,7 +81,7 @@
   [string_parse-test #x1234]
   [string_parse-test 'string']
   [string_parse-test `symbol]
-  [string-split_intersperse_test 'this is a test' 's']
+  [string-split_intersperse_test 'this is a test' 'is']
   ]
 
 

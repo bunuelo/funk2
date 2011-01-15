@@ -63,7 +63,8 @@
   [let [[chunk_frame [frame semantic_realm                        [get this semantic_realm]
 			    knowledge_event_stream_iterator_frame [get this knowledge_event_stream_iterator_frame]
 			    ]]]
-    [get [lick-new_from_object chunk_frame] as-chunk]]]
+    [terminal_format standard-terminal '\nmoral_compass-get-as-chunk chunk_frame: ' chunk_frame]
+    [print [get [lick-new_from_object chunk_frame] as-chunk]]]]
 
 [defunk moral_compass-new_from_chunk [chunk]
   [let [[chunk_frame [have [get chunk as-lick] unlick]]]

@@ -37,7 +37,13 @@
   [string-to_symbol [exp-as-string exp]]]
 
 [defunk string-read [this]
-  [stream-try_read [string_stream-new [string-concat this ' '] 0]]]
+  [let [[read_exp [stream-try_read [string_stream-new [string-concat this ' '] 0]]]]
+    [if [is-type `exception read_exp]
+	[let [[tag [object-get read_exp `tag]]]
+	  [if [eq tag `reader:end_of_file-exception]
+	      [error error_type  `run_time
+		     description `reached_end_of_string_stream_while_reading]]]
+      read_exp]]]
 
 [defunk string-format [:rest exps]
   [stringlist-concat [mapcar [funk [exp]
@@ -49,9 +55,9 @@
 `[defunk string-replace_all [this token replacement]
    [stringlist-intersperse [string-split this token] replacement]]
 
-[deftypefunk string execute replace_all [token replacement] [       string-replace_all this token replacement]]
-[deftypefunk string execute read        []                  [       string-read        this]]
-[deftypefunk string get     plus        [:rest strings]     [apply &string-concat      [cons this strings]]]
+[deftypefunk string execute replace_all [token replacement] [string-replace_all this token replacement]]
+[deftypefunk string execute read        []                  [string-read        this]]
+[deftypefunk string get     plus        [:rest strings]     [apply &string-concat [cons this strings]]]
 
 'tests'
 

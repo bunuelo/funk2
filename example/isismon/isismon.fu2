@@ -1028,9 +1028,9 @@
 	[have preferences save preferences_filename]]]]]
 
 [deftypefunk isismon execute create_new_agent [name]
-  [terminal_format standard-terminal '\nIsisMon: project new Ralph agent.']
+  [terminal_format standard-terminal '\nIsisMon: project new ' name ' agent.']
   [have isismon_project add_agent [isismon_agent-new_from_name isismon_project name]]
-  [terminal_format standard-terminal '\nIsisMon: new Ralph agent created successfully.']]
+  [terminal_format standard-terminal '\nIsisMon: new ' name ' agent created successfully.']]
 
 [deftypefunk isismon execute export_movie [filename]
   [terminal_format standard-terminal '\nIsisMon Export Movie: Saving MPEG to file: ' filename]

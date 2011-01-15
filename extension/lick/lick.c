@@ -674,7 +674,9 @@ f2ptr raw__nil__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash) {
   f2ptr chunk = raw__chunk__new(cause, 0);
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   if (lick_note == nil) {
-    return f2larva__new(cause, 13579, nil);
+    return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list4__new(cause,
+															   new__symbol(cause, "bug_type"), new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															   new__symbol(cause, "this"),     this))));
   }
   return raw__lick_chunk__new(cause, nil, lick_note, chunk);
 }
@@ -742,7 +744,9 @@ f2ptr raw__integer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_has
   raw__chunk__bit64__elt__set(cause, chunk, 0, this__i);
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   if (lick_note == nil) {
-    return f2larva__new(cause, 13579, nil);
+    return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list4__new(cause,
+															   new__symbol(cause, "bug_type"), new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															   new__symbol(cause, "this"),     this))));
   }
   return raw__lick_chunk__new(cause, new__symbol(cause, "integer"), lick_note, chunk);
 }
@@ -813,7 +817,9 @@ f2ptr raw__float__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash)
   raw__chunk__bit32__elt__set(cause, chunk, 0, *data);
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   if (lick_note == nil) {
-    return f2larva__new(cause, 13579, nil);
+    return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list4__new(cause,
+															   new__symbol(cause, "bug_type"), new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															   new__symbol(cause, "this"),     this))));
   }
   return raw__lick_chunk__new(cause, new__symbol(cause, "float"), lick_note, chunk);
 }
@@ -886,7 +892,9 @@ f2ptr raw__double__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash
   raw__chunk__bit64__elt__set(cause, chunk, 0, data);
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   if (lick_note == nil) {
-    return f2larva__new(cause, 13579, nil);
+    return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list4__new(cause,
+															   new__symbol(cause, "bug_type"), new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															   new__symbol(cause, "this"),     this))));
   }
   return raw__lick_chunk__new(cause, new__symbol(cause, "double"), lick_note, chunk);
 }
@@ -957,7 +965,9 @@ f2ptr raw__pointer__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_has
   raw__chunk__bit64__elt__set(cause, chunk, 0, this__p);
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   if (lick_note == nil) {
-    return f2larva__new(cause, 13579, nil);
+    return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list4__new(cause,
+															   new__symbol(cause, "bug_type"), new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															   new__symbol(cause, "this"),     this))));
   }
   return raw__lick_chunk__new(cause, new__symbol(cause, "pointer"), lick_note, chunk);
 }
@@ -1027,7 +1037,9 @@ f2ptr raw__mutex__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash)
   raw__chunk__bit8__elt__set(cause, chunk, 0, this__is_locked ? 0x01 : 0x00);
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   if (lick_note == nil) {
-    return f2larva__new(cause, 13579, nil);
+    return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list4__new(cause,
+															   new__symbol(cause, "bug_type"), new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															   new__symbol(cause, "this"),     this))));
   }
   return raw__lick_chunk__new(cause, new__symbol(cause, "mutex"), lick_note, chunk);
 }
@@ -1101,7 +1113,9 @@ f2ptr raw__char__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash) 
   raw__chunk__bit64__elt__set(cause, chunk, 0, this__ch);
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   if (lick_note == nil) {
-    return f2larva__new(cause, 13579, nil);
+    return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list4__new(cause,
+															   new__symbol(cause, "bug_type"), new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															   new__symbol(cause, "this"),     this))));
   }
   return raw__lick_chunk__new(cause, new__symbol(cause, "char"), lick_note, chunk);
 }
@@ -1180,7 +1194,9 @@ f2ptr raw__string__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash
   f2__free(to_ptr(this__str));
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   if (lick_note == nil) {
-    return f2larva__new(cause, 13579, nil);
+    return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list4__new(cause,
+															   new__symbol(cause, "bug_type"), new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															   new__symbol(cause, "this"),     this))));
   }
   return raw__lick_chunk__new(cause, new__symbol(cause, "string"), lick_note, chunk);
 }
@@ -1267,7 +1283,9 @@ f2ptr raw__symbol__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash
   f2__free(to_ptr(this__str));
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   if (lick_note == nil) {
-    return f2larva__new(cause, 13579, nil);
+    return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list4__new(cause,
+															   new__symbol(cause, "bug_type"), new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															   new__symbol(cause, "this"),     this))));
   }
   return raw__lick_chunk__new(cause, new__symbol(cause, "symbol"), lick_note, chunk);
 }
@@ -1354,7 +1372,9 @@ f2ptr raw__chunk__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash)
   f2__free(to_ptr(this__str));
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   if (lick_note == nil) {
-    return f2larva__new(cause, 13579, nil);
+    return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list4__new(cause,
+															   new__symbol(cause, "bug_type"), new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															   new__symbol(cause, "this"),     this))));
   }
   return raw__lick_chunk__new(cause, new__symbol(cause, "chunk"), lick_note, chunk);
 }
@@ -1447,7 +1467,10 @@ f2ptr raw__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash)
       f2ptr element       = raw__array__elt(cause, this, index);
       f2ptr element__note = raw__ptypehash__lookup(cause, note_object_hash, element);
       if (element__note == nil) {
-	return f2larva__new(cause, 13579, nil);
+	return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list6__new(cause,
+															       new__symbol(cause, "bug_type"), new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															       new__symbol(cause, "element"),  element,
+															       new__symbol(cause, "this"),     this))));
       }
       s64 element__note__i = f2integer__i(element__note, cause);
       raw__chunk__bit64__elt__set(cause, chunk, index * 8, (s64)element__note__i);
@@ -1455,7 +1478,9 @@ f2ptr raw__array__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash)
   }
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   if (lick_note == nil) {
-    return f2larva__new(cause, 13579, nil);
+    return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list4__new(cause,
+															   new__symbol(cause, "bug_type"), new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															   new__symbol(cause, "this"),     this))));
   }
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);
 }
@@ -1567,7 +1592,10 @@ f2ptr raw__ptypehash__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_h
     f2ptr key_count          = f2__ptypehash__key_count(cause, this);
     f2ptr key_count__note    = raw__ptypehash__lookup(cause, note_object_hash, key_count);
     if (key_count__note == nil) {
-      return f2larva__new(cause, 13579, nil);
+      return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list6__new(cause,
+															     new__symbol(cause, "bug_type"),  new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															     new__symbol(cause, "key_count"), key_count,
+															     new__symbol(cause, "this"),      this))));
     }
     s64   key_count__note__i = f2integer__i(key_count__note, cause);
     raw__chunk__bit64__elt__set(cause, chunk, 0, (s64)key_count__note__i);
@@ -1576,7 +1604,10 @@ f2ptr raw__ptypehash__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_h
     f2ptr bin_num_power          = f2__ptypehash__bin_num_power(cause, this);
     f2ptr bin_num_power__note    = raw__ptypehash__lookup(cause, note_object_hash, bin_num_power);
     if (bin_num_power__note == nil) {
-      return f2larva__new(cause, 13579, nil);
+      return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list6__new(cause,
+															     new__symbol(cause, "bug_type"),      new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															     new__symbol(cause, "bin_num_power"), bin_num_power,
+															     new__symbol(cause, "this"),          this))));
     }
     s64   bin_num_power__note__i = f2integer__i(bin_num_power__note, cause);
     raw__chunk__bit64__elt__set(cause, chunk, 8, (s64)bin_num_power__note__i);
@@ -1585,14 +1616,19 @@ f2ptr raw__ptypehash__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_h
     f2ptr bin_array          = f2__ptypehash__bin_array(cause, this);
     f2ptr bin_array__note    = raw__ptypehash__lookup(cause, note_object_hash, bin_array);
     if (bin_array__note == nil) {
-      return f2larva__new(cause, 13579, nil);
+      return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list6__new(cause,
+															     new__symbol(cause, "bug_type"),  new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															     new__symbol(cause, "bin_array"), bin_array,
+															     new__symbol(cause, "this"),      this))));
     }
     s64   bin_array__note__i = f2integer__i(bin_array__note, cause);
     raw__chunk__bit64__elt__set(cause, chunk, 16, (s64)bin_array__note__i);
   }
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   if (lick_note == nil) {
-    return f2larva__new(cause, 13579, nil);
+    return f2larva__new(cause, 13579, f2__bug__new(cause, f2integer__new(cause, 13579), f2__frame__new(cause, f2list4__new(cause,
+															   new__symbol(cause, "bug_type"), new__symbol(cause, "note_changed_while_licking_to_chunk"),
+															   new__symbol(cause, "this"),     this))));
   }
   return raw__lick_chunk__new(cause, f2__object__type(cause, this), lick_note, chunk);
 }

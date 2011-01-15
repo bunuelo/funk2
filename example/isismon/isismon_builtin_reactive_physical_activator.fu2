@@ -228,7 +228,7 @@
 		   [have this activate_resource `builtin_reactive `physical `look_down_stop]]
 	     nil]
        
-       [let [[default_meters_per_second_text '20.0']]
+       [let [[default_meters_per_second_text '4.0']]
 	 [=    move_forward_start_resource__hbox [gtk-hbox-new 2]]
 	 [=    move_forward_start_resource__button [gtk-button-new_with_label 'Move Forward - Start']]
 	 [=    move_forward_start_resource__meters_per_second__label [gtk-label-new 'm/s: ']]
@@ -257,7 +257,7 @@
 		   [have this activate_resource `builtin_reactive `physical `move_forward_stop]]
 	     nil]
        
-       [let [[default_meters_per_second_text '20.0']]
+       [let [[default_meters_per_second_text '4.0']]
 	 [=    move_backward_start_resource__hbox [gtk-hbox-new 2]]
 	 [=    move_backward_start_resource__button [gtk-button-new_with_label 'Move Backward - Start']]
 	 [=    move_backward_start_resource__meters_per_second__label [gtk-label-new 'm/s: ']]

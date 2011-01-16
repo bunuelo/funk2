@@ -195,6 +195,12 @@
   [have-apply this activate args]
   [have this finish]]
 
+[deftypefunk resource execute wait_to_call [:rest args]
+  [have this           add_new_trace_story_event [get cause-resource name] `call [frame direct_object `me]]
+  [have cause-resource add_new_trace_story_event `I                        `call [frame direct_object name]]
+  [have-apply this wait_to_activate args]
+  [have this finish]]
+
 [deftypefunk resource get stack_trace []
   [get fiber stack_trace]]
 

@@ -122,6 +122,13 @@
 [defmetro mind-call [mind layer_name agency_name resource_name :rest args]
   `[have ,mind call [quote ,layer_name] [quote ,agency_name] [quote ,resource_name] @args]]
 
+[deftypefunk mind execute wait_to_call [layer_name agency_name resource_name :rest args]
+  [let [[layer_frame [get this layer_frame]]]
+    [let [[layer [have layer_frame lookup layer_name]]]
+      [have-apply layer wait_to_call `[,agency_name ,resource_name @args]]]]]
+
+[defmetro mind-wait_to_call [mind layer_name agency_name resource_name :rest args]
+  `[have ,mind wait_to_call [quote ,layer_name] [quote ,agency_name] [quote ,resource_name] @args]]
 
 [deftypefunk mind execute activate [layer_name agency_name resource_name :rest args]
   [let [[layer_frame [get this layer_frame]]]

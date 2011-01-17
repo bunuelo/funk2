@@ -252,7 +252,7 @@ f2ptr raw__object_list__lick_first_n_to_chunks(f2ptr cause, f2ptr these, f2ptr n
     }
     f2ptr object = f2__cons__car(cause, iter);
     {
-      f2ptr lick_chunk = f2__object__execute(cause, object, new__symbol(cause, "lick_to_chunk"), f2list2__new(cause, this, note_object_hash));
+      f2ptr lick_chunk = f2__object__execute(cause, object, new__symbol(cause, "lick_to_chunk"), f2list2__new(cause, object, note_object_hash));
       if (raw__larva__is_type(cause, lick_chunk)) {
 	return lick_chunk;
       }

@@ -21,3 +21,9 @@
   :packages [equals_hash event_stream lick]
    :sources ['semantic_knowledge_base-core.fu2']]
 
+[defpackage semantic_frame
+  :packages [semantic_knowledge_base]]
+
+[defpackage semantic_realm
+  :packages [semantic_knowledge_base]]
+

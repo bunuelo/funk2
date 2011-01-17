@@ -17,9 +17,9 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe monitor_execution_of_current_plan [resource] []
+[deframe monitor_execution_of_current_plan [traced_resource] []
   [new []
-       [construct resource [type this]
+       [construct traced_resource [type this]
 		  [funk []
 			[have this-resource think_to_self 'Monitoring execution of current plan.']
 			nil]]

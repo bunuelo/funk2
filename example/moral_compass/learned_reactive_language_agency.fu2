@@ -17,18 +17,18 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe speak_language [resource] []
+[deframe speak_language [traced_resource] []
   [new []
-       [construct resource [type this]
+       [construct traced_resource [type this]
 		  [funk [speech]
 			[have this-resource think_to_self 'I am saying ' speech '.']
 			[let [[body [get this body]]]
 			  [have body say [get speech as-string]]]]]
        nil]]
 
-[deframe hear_language_from_agent [resource] []
+[deframe hear_language_from_agent [traced_resource] []
   [new []
-       [construct resource [type this]
+       [construct traced_resource [type this]
 		  [funk [agent_description agent_speech]
 			[have this-resource think_to_self 'I hear from ' agent_description ', ' agent_speech '.']
 			[let [[hear_language_frame [new semantic_frame [get [get this mind] semantic_realm]]]]

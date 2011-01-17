@@ -136,9 +136,9 @@ add rel orientation
 
 
 '**********basic resources*************'
-[deframe use_left_hand_resource [resource] []
+[deframe use_left_hand_resource [traced_resource] []
   [new []
-       [construct resource `use_left_hand
+       [construct traced_resource `use_left_hand
 		  [funk [target action]
 			[have this-resource use_left_hand target action]]]
        nil]]
@@ -150,9 +150,9 @@ add rel orientation
 	 ]
     [mind-wait_to_activate mind builtin_reactive physical use_left_hand target action]]]
 
-[deframe use_right_hand_resource [resource] []
+[deframe use_right_hand_resource [traced_resource] []
   [new []
-       [construct resource `use_right_hand
+       [construct traced_resource `use_right_hand
 		  [funk [target action]
 			[have this-resource use_right_hand target action]]]
        nil]]
@@ -167,9 +167,9 @@ add rel orientation
 
 		  
 'turning'
-[deframe look_right_resource [resource] []
+[deframe look_right_resource [traced_resource] []
   [new []
-       [construct resource `look_right
+       [construct traced_resource `look_right
 		  [funk [steps :rest args]
 			[let* [[body  [get this body]]
 			       [mind  [get body mind]]
@@ -182,9 +182,9 @@ add rel orientation
 			    [mind-wait_to_activate mind builtin_reactive physical look_right_stop]]]]]
        nil]]
 
-[deframe look_left_resource [resource] []
+[deframe look_left_resource [traced_resource] []
   [new []
-       [construct resource `look_left
+       [construct traced_resource `look_left
 		  [funk [steps :rest args]
 			[let* [[body  [get this body]]
 			       [mind  [get body mind]]
@@ -198,9 +198,9 @@ add rel orientation
 			    [mind-wait_to_activate mind builtin_reactive physical look_left_stop]]]]]
        nil]]
 
-[deframe turn_right_resource [resource] []
+[deframe turn_right_resource [traced_resource] []
   [new []
-       [construct resource `turn_right
+       [construct traced_resource `turn_right
 		  [funk [steps :rest args]
 			[let* [[body  [get this body]]
 			       [mind  [get body mind]]
@@ -213,9 +213,9 @@ add rel orientation
 			    [mind-wait_to_activate mind builtin_reactive physical turn_right_stop]]]]]
        nil]]
 
-[deframe turn_left_resource [resource] []
+[deframe turn_left_resource [traced_resource] []
   [new []
-       [construct resource `turn_left
+       [construct traced_resource `turn_left
 		  [funk [steps :rest args]
 			[let* [[body  [get this body]]
 			       [mind  [get body mind]]
@@ -234,9 +234,9 @@ add rel orientation
   [eval `[test2 @args]]]
 
 'looking'
-[deframe look_down_resource [resource] []
+[deframe look_down_resource [traced_resource] []
   [new []
-       [construct resource `look_down
+       [construct traced_resource `look_down
 		  [funk [steps :rest args]
 			[let* [[body  [get this body]]
 			       [mind  [get body mind]]
@@ -249,9 +249,9 @@ add rel orientation
 			    [mind-wait_to_activate mind builtin_reactive physical look_down_stop]]]]]
        nil]]
 
-[deframe look_up_resource [resource] []
+[deframe look_up_resource [traced_resource] []
   [new []
-       [construct resource `look_up
+       [construct traced_resource `look_up
 		  [funk [steps :rest args]
 			[let* [[body  [get this body]]
 			       [mind  [get body mind]]
@@ -265,9 +265,9 @@ add rel orientation
        nil]]
 
 'leveling'
-[deframe level_pitch_resource [resource] []
+[deframe level_pitch_resource [traced_resource] []
   [new []
-       [construct resource `level_pitch
+       [construct traced_resource `level_pitch
 		  [funk []
 			[have this-resource level_pitch]]]
        nil]]
@@ -286,9 +286,9 @@ add rel orientation
 	[mind-wait_to_activate mind learned_reactive physical look_up 1 [/ [- 0 [get_neck_pitch mind]] 2] ]]
       [have this-resource think_to_self 'I am looking forward']]]]
 
-`[deframe align_body_with_neck_resource [resource] []
+`[deframe align_body_with_neck_resource [traced_resource] []
   [new []
-       [construct resource `align_body_with_neck
+       [construct traced_resource `align_body_with_neck
 		  [funk []
 			[have this-resource align_body_with_neck]]]
        nil]]
@@ -310,9 +310,9 @@ add rel orientation
       [have this-resource think_to_self 'I am looking forward']]]]]]
 
 'moving'
-[deframe move_forward_resource [resource] []
+[deframe move_forward_resource [traced_resource] []
   [new []
-       [construct resource `move_forward
+       [construct traced_resource `move_forward
 		  [funk [steps :rest args]
 			
 			[print 'move_forward resource']
@@ -329,9 +329,9 @@ add rel orientation
 			
        nil]]
 
-[deframe move_backward_resource [resource] []
+[deframe move_backward_resource [traced_resource] []
   [new []
-       [construct resource `move_backward
+       [construct traced_resource `move_backward
 		  [funk [steps :rest args]
 			[print 'reached move_backward']
 			[let* [[body [get this body]]
@@ -345,9 +345,9 @@ add rel orientation
 			    [mind-wait_to_activate mind builtin_reactive physical move_backward_stop]]]]]
        nil]]
 'emptying'
-[deframe empty_left_hand_resource [resource] []
+[deframe empty_left_hand_resource [traced_resource] []
   [new []
-       [construct resource `empty_left_hand
+       [construct traced_resource `empty_left_hand
 		  [funk []
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]
@@ -357,9 +357,9 @@ add rel orientation
        
        nil]]
 
-[deframe empty_right_hand_resource [resource] []
+[deframe empty_right_hand_resource [traced_resource] []
   [new []
-       [construct resource `empty_right_hand
+       [construct traced_resource `empty_right_hand
 		  [funk []
 			[have this-resource empty_right_hand]]]
        nil]]
@@ -371,10 +371,11 @@ add rel orientation
 	 ]
     [have this-resource think_to_self 'Emptying right hand is starting.']
     [mind-wait_to_activate mind builtin_reactive physical drop_from_right_hand]]]
+
 'holding'
-[deframe hold_with_right_hand_resource [resource] []
+[deframe hold_with_right_hand_resource [traced_resource] []
   [new []
-       [construct resource `hold_with_right_hand
+       [construct traced_resource `hold_with_right_hand
 		  [funk [target]
 			[let* [[body  [get this body]]
 			       [mind  [get body mind]]
@@ -406,9 +407,9 @@ add rel orientation
        nil]]
 
 
-[deframe hold_with_left_hand_resource [resource] []
+[deframe hold_with_left_hand_resource [traced_resource] []
   [new []
-       [construct resource `hold_with_left_hand
+       [construct traced_resource `hold_with_left_hand
 		  [funk [target]
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]
@@ -436,9 +437,9 @@ add rel orientation
        nil]]
 
 '*********************fancy resources*******************'
-[deframe learned_open_fridge_resource [resource] []
+[deframe learned_open_fridge_resource [traced_resource] []
   [new []
-       [construct resource `learned_open_fridge
+       [construct traced_resource `learned_open_fridge
 		  [funk []
 			[have this-resource learned_open_fridge]]]
        nil]]
@@ -468,9 +469,9 @@ add rel orientation
 			       [mind-wait_to_activate mind builtin_reactive physical open_fridge]]]
 			    ]]]
 
-[deframe slice_toast_resource [resource] []
+[deframe slice_toast_resource [traced_resource] []
   [new []
-       [construct resource `slice_toast
+       [construct traced_resource `slice_toast
 		  [funk []
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]
@@ -491,9 +492,9 @@ add rel orientation
 
 '**************************centering*****************************************************'
 
-[deframe center_body_on_resource [resource] []
+[deframe center_body_on_resource [traced_resource] []
   [new []
-       [construct resource `center_body_on
+       [construct traced_resource `center_body_on
 		  [funk [desired_object]
 			[let* [[body [get this body]]
 			       [mind  [get body mind]] 
@@ -529,9 +530,9 @@ add rel orientation
        
        nil]]
 
-[deframe center_head_on_resource [resource] []
+[deframe center_head_on_resource [traced_resource] []
   [new []
-       [construct resource `center_head_on
+       [construct traced_resource `center_head_on
 		  [funk [desired_object]
 			[let* [[body [get this body]]
 			       [mind  [get body mind]] 
@@ -568,9 +569,9 @@ add rel orientation
        nil]]
 
 'walking'
-[deframe walk_directly_towards_resource [resource] []
+[deframe walk_directly_towards_resource [traced_resource] []
   [new []
-       [construct resource `walk_directly_towards
+       [construct traced_resource `walk_directly_towards
 		  [funk [desired_object]
 			[have this-resource walk_directly_towards desired_object]]]
        
@@ -614,9 +615,9 @@ add rel orientation
 
 
 
-[deframe track_mother_resource [resource] []
+[deframe track_mother_resource [traced_resource] []
   [new []
-       [construct resource `track_mother 
+       [construct traced_resource `track_mother 
 		  [funk [attention]
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]
@@ -643,9 +644,9 @@ add rel orientation
 
 
 
-[deframe look_for_resource [resource] [[my_current_object nil]]
+[deframe look_for_resource [traced_resource] [[my_current_object nil]]
   [new []
-       [construct resource `look_for
+       [construct traced_resource `look_for
 		  [funk [desired_object_type]
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]
@@ -681,9 +682,9 @@ add rel orientation
 
 
 
-`[deframe stand_in_front_of_resource [resource] []
+`[deframe stand_in_front_of_resource [traced_resource] []
   [new []
-       [construct resource `stand_in_front_of
+       [construct traced_resource `stand_in_front_of
 		  [funk [object]
 			[have this-resource stand_in_front_of object]]]
        nil]]
@@ -737,9 +738,9 @@ add rel orientation
       ]]]]
 
 '****************************************************************************************'
-[deframe look_carefully_for_resource [resource] [[my_current_object nil]]
+[deframe look_carefully_for_resource [traced_resource] [[my_current_object nil]]
   [new []
-       [construct resource `look_carefully_for
+       [construct traced_resource `look_carefully_for
 		  [funk [desired_object_type]
 			[have this-resource look_carefully_for desired_object_type]]]
 	       nil]]
@@ -785,9 +786,9 @@ add rel orientation
 
 '****************************************************************************************'
 
-`[deframe look_for_vertically_resource [resource] [[my_current_object nil]]
+`[deframe look_for_vertically_resource [traced_resource] [[my_current_object nil]]
   [new []
-       [construct resource `look_for_vertically
+       [construct traced_resource `look_for_vertically
 		  [funk [desired_object_type]
 			[print 'look for_vertically']
 			[let* [[body [get this body]]
@@ -822,9 +823,9 @@ add rel orientation
 			'success']]
        nil]]
 
-[deframe look_for_vertically_resource [resource] [[my_current_object nil]]
+[deframe look_for_vertically_resource [traced_resource] [[my_current_object nil]]
   [new []
-       [construct resource `look_for_vertically
+       [construct traced_resource `look_for_vertically
 		  [funk [desired_object_type]
 			[have this-resource look_for_vertically desired_object_type]]]
 		
@@ -885,9 +886,9 @@ add rel orientation
       [have this-resource think_to_self 'finished searching vertically']]]]
 
 
-[deframe search_for_resource [resource] []
+[deframe search_for_resource [traced_resource] []
   [new []
-       [construct resource `search_for
+       [construct traced_resource `search_for
 		  [funk [desired_object]
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]
@@ -932,9 +933,9 @@ add rel orientation
 		   resource `look_for] lookup `my_current_object]]]
 
 
-[deframe pick_up_loaf_and_butter_resource [resource] []
+[deframe pick_up_loaf_and_butter_resource [traced_resource] []
   [new []
-       [construct resource `pick_up_loaf_and_butter
+       [construct traced_resource `pick_up_loaf_and_butter
 		  [funk []
 			[have this-resource think_to_self 'Pick up loaf and butter is starting.']
 			[have this-resource pick_up_loaf_and_butter]]]
@@ -964,9 +965,9 @@ add rel orientation
 						resource `look_for_vertically] lookup `my_current_object]]]]]]
 
 
-[deframe make_toast_resource [resource] []
+[deframe make_toast_resource [traced_resource] []
   [new []
-       [construct resource `make_toast
+       [construct traced_resource `make_toast
 		  [funk []
 			[have this-resource make_toast]]]
        nil]]
@@ -1004,9 +1005,9 @@ add rel orientation
 
 '************************************unused resources**********************************************'
 
-[deframe walk_towards_resource [resource] []
+[deframe walk_towards_resource [traced_resource] []
   [new []
-       [construct resource `walk_towards
+       [construct traced_resource `walk_towards
 		  [funk [desired_object]
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]
@@ -1030,9 +1031,9 @@ add rel orientation
        
        nil]]
 
-[deframe avoid_obstacle_resource [resource] []
+[deframe avoid_obstacle_resource [traced_resource] []
   [new []
-       [construct resource `avoid_obstacle
+       [construct traced_resource `avoid_obstacle
 		  [funk [desired_object obstacle]
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]

@@ -17,13 +17,13 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe continuous_sensing_resource [resource] [visual_objects
-						 retina_image
-						 left_hand_object_name
-						 right_hand_object_name
-						 perception]
+[deframe continuous_sensing_resource [traced_resource] [visual_objects
+							retina_image
+							left_hand_object_name
+							right_hand_object_name
+							perception]
   [new []
-       [construct resource `continuous_sensing
+       [construct traced_resource `continuous_sensing
 		  [funk []
 			[let [[body [get this body]]]
 			  `[have this-resource think_to_self 'Continuous sensing is starting.']
@@ -49,9 +49,9 @@
 
 
 
-[deframe propogate_visual_objects_to_visual_knowledge_resource [resource] []
+[deframe propogate_visual_objects_to_visual_knowledge_resource [traced_resource] []
   [new []
-       [construct resource `propogate_visual_objects_to_visual_knowledge
+       [construct traced_resource `propogate_visual_objects_to_visual_knowledge
 		  [funk []
 			[let [[visual_objects [get [get this mind] visual_objects]]]
 			  [have this update_visual_knowledge_from_visual_objects visual_objects]]]]

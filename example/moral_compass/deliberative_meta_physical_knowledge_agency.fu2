@@ -33,9 +33,9 @@
   [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->meta_physical_knowledge]]
 
 
-[deframe translate_physical_knowledge_to_meta_physical_knowledge_resource [resource] []
+[deframe translate_physical_knowledge_to_meta_physical_knowledge_resource [traced_resource] []
   [new []
-       [construct resource `translate_physical_knowledge_to_meta_physical_knowledge
+       [construct traced_resource `translate_physical_knowledge_to_meta_physical_knowledge
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]

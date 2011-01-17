@@ -65,6 +65,6 @@
    :sources ['mind.fu2']]
 
 [defpackage traced_mind
-  :packages [mind]
+  :packages [mind traced_resource]
    :sources ['traced_mind.fu2']]
 

@@ -21,11 +21,11 @@
 'moral_compass: a reflective, self-reflective, and self-conscious cognitive architecture'
 
 [defpackage moral_agent_body
-  :packages [mind moral_compass]
+  :packages [traced_mind moral_compass]
    :sources ['moral_agent_body.fu2']]
 
 [defpackage moral_compass
-  :packages [mind
+  :packages [traced_mind
 	     builtin_reactive_layer
 	     learned_reactive_layer
 	     deliberative_layer
@@ -40,25 +40,25 @@
 'builtin_reactive_layer'
 
 [defpackage builtin_reactive_layer
-  :packages [mind
+  :packages [traced_mind
 	     builtin_reactive_neural_plug_agency
 	     builtin_reactive_sensory_agency
 	     builtin_reactive_physical_agency]
    :sources ['builtin_reactive_layer.fu2']]
 
 [defpackage builtin_reactive_neural_plug_agency
-  :packages [mind]
+  :packages [traced_mind]
    :sources ['builtin_reactive_neural_plug_agency.fu2']]
 
 [defpackage builtin_reactive_sensory_agency
-  :packages [mind
+  :packages [traced_mind
 	     semantic_visual_object
 	     semantic_event
 	     semantic_action_event]
    :sources ['builtin_reactive_sensory_agency.fu2']]
 
 [defpackage builtin_reactive_physical_agency
-  :packages [mind]
+  :packages [traced_mind]
    :sources ['builtin_reactive_physical_agency.fu2']]
 
 
@@ -66,7 +66,7 @@
 'learned_reactive_layer'
 
 [defpackage learned_reactive_layer
-  :packages [mind
+  :packages [traced_mind
 	     learned_reactive_physical_agency
 	     learned_reactive_sensory_agency
 	     learned_reactive_language_agency
@@ -75,35 +75,35 @@
    :sources ['learned_reactive_layer.fu2']]
 
 [defpackage learned_reactive_physical_agency
-  :packages [mind]
+  :packages [traced_mind]
    :sources ['learned_reactive_physical_agency.fu2']]
 
 [defpackage moral_compass_proprioceptual_object
-  :packages [mind]
+  :packages [traced_mind]
    :sources ['moral_compass_proprioceptual_object.fu2']]
 
 [defpackage moral_compass_visual_object
-  :packages [mind]
+  :packages [traced_mind]
    :sources ['moral_compass_visual_object.fu2']]
 
 [defpackage moral_compass_visual_agent
-  :packages [mind moral_compass_visual_object]
+  :packages [traced_mind moral_compass_visual_object]
    :sources ['moral_compass_visual_agent.fu2']]
 
 [defpackage moral_compass_perception
-  :packages [mind moral_compass_proprioceptual_object moral_compass_visual_object moral_compass_visual_agent]
+  :packages [traced_mind moral_compass_proprioceptual_object moral_compass_visual_object moral_compass_visual_agent]
    :sources ['moral_compass_perception.fu2']]
 
 [defpackage learned_reactive_sensory_agency
-  :packages [mind moral_compass_perception]
+  :packages [traced_mind moral_compass_perception]
    :sources ['learned_reactive_sensory_agency.fu2']]
 
 [defpackage learned_reactive_language_agency
-  :packages [mind]
+  :packages [traced_mind]
    :sources ['learned_reactive_language_agency.fu2']]
 
 [defpackage learned_reactive_physical_knowledge_agency
-  :packages [mind]
+  :packages [traced_mind]
    :sources ['learned_reactive_physical_knowledge_agency.fu2']]
 
 
@@ -111,18 +111,18 @@
 'deliberative_layer'
 
 [defpackage deliberative_layer
-  :packages [mind
+  :packages [traced_mind
 	     deliberative_meta_physical_knowledge_agency
 	     deliberative_execution_agency
 	     english_language]
    :sources ['deliberative_layer.fu2']]
 
 [defpackage deliberative_meta_physical_knowledge_agency
-  :packages [mind]
+  :packages [traced_mind]
    :sources ['deliberative_meta_physical_knowledge_agency.fu2']]
 
 [defpackage deliberative_execution_agency
-  :packages [mind]
+  :packages [traced_mind]
    :sources ['deliberative_execution_agency.fu2']]
 
 
@@ -130,13 +130,13 @@
 'reflective_layer'
 
 [defpackage reflective_layer
-  :packages [mind
+  :packages [traced_mind
 	     reflective_credit_assignment_agency
 	     english_language]
    :sources ['reflective_layer.fu2']]
 
 [defpackage reflective_credit_assignment_agency
-  :packages [mind]
+  :packages [traced_mind]
    :sources ['reflective_credit_assignment_agency.fu2']]
 
 
@@ -144,13 +144,13 @@
 'self_reflective_layer'
 
 [defpackage self_reflective_layer
-  :packages [mind
+  :packages [traced_mind
 	     self_reflective_personality_agency
 	     english_language]
    :sources ['self_reflective_layer.fu2']]
 
 [defpackage self_reflective_personality_agency
-  :packages [mind]
+  :packages [traced_mind]
    :sources ['self_reflective_personality_agency.fu2']]
 
 
@@ -158,12 +158,12 @@
 'self_conscious_layer'
 
 [defpackage self_conscious_layer
-  :packages [mind
+  :packages [traced_mind
 	     self_conscious_imprimer_agency
 	     english_language]
    :sources ['self_conscious_layer.fu2']]
 
 [defpackage self_conscious_imprimer_agency
-  :packages [mind]
+  :packages [traced_mind]
    :sources ['self_conscious_imprimer_agency.fu2']]
 

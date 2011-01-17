@@ -1444,6 +1444,21 @@ f2ptr f2__semantic_knowledge_base__remove_semantic_frame(f2ptr cause, f2ptr this
 export_cefunk2(semantic_knowledge_base__remove_semantic_frame, this, semantic_frame, 0, "Removes a semantic_frame from this semantic_knowledge_base.");
 
 
+boolean_t raw__semantic_knowledge_base__contains_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
+  f2ptr semantic_frame_set = raw__semantic_knowledge_base__semantic_frame_set(cause, this);
+  return raw__set__contains(cause, semantic_frame_set, semantic_frame);
+}
+
+f2ptr f2__semantic_knowledge_base__contains_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
+  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
+      (! raw__semantic_frame__is_type(cause, semantic_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_knowledge_base__contains_semantic_frame(cause, this, semantic_frame);
+}
+export_cefunk2(semantic_knowledge_base__contains_semantic_frame, this, semantic_frame, 0, "Returns true if this semantic_knowledge_base contains the given semantic_frame.");
+
+
 void raw__semantic_knowledge_base__remove_all(f2ptr cause, f2ptr this) {
   f2ptr semantic_frame_set = raw__semantic_knowledge_base__semantic_frame_set(cause, this);
   f2ptr semantic_frames    = nil;
@@ -2026,6 +2041,7 @@ f2ptr f2__semantic_knowledge_base_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "as-graph"),                                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__as__graph")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_semantic_frame"),                           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__add_semantic_frame")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove_semantic_frame"),                        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__remove_semantic_frame")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "contains_semantic_frame"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__contains_semantic_frame")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove_all"),                                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__remove_all")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_semantic_knowledge_base"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__add_semantic_knowledge_base")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_trace_callback_funk"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__add_trace_callback_funk")));}

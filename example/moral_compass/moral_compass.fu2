@@ -50,7 +50,8 @@
   [have [get this layer `self_conscious]   connect_knowledge_reflection]]
 
 [deftypefunk moral_compass execute activate_vital_resources []
-  [with-new-cause [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
+  [with-new-cause 'We need to define this cause as having some kind of resource definitions.  This fake funk-user resource is not actually a part of the mind and is only used for activating the neural_plug resource below.'
+		  [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
 		  [cause-define cause-time_step [get [get [get this body] physical_world] time_step]]
 		  
 		  'First, we activate the only resource that does not get traced, the neural_plug.'
@@ -60,8 +61,6 @@
 		  [have [get this resource `builtin_reactive `neural_plug `activate_resource]
 			command `builtin_reactive `sensory `continuous_sensing]
 		  ]]
-
-
 
 [deftypefunk moral_compass get as-chunk []
   [let [[chunk_frame [frame semantic_realm                        [get this semantic_realm]

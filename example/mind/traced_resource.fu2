@@ -34,7 +34,6 @@
     resource_semantic_frame]]
 
 [deftypefunk traced_resource execute activate [:rest args]
-  [terminal_format standard-terminal '\ntraced_resource-activate']
   [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this mind] semantic_realm]]]]
     [have [get [get this mind] semantic_knowledge_base `mind_activity] add_semantic_frame semantic_resource_action_event]
     [semantic-add semantic_resource_action_event property-action_name `activate]
@@ -45,7 +44,6 @@
     ]]
 
 [deftypefunk traced_resource execute wait_to_activate [:rest args]
-  [terminal_format standard-terminal '\ntraced_resource-wait_to_activate']
   [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this mind] semantic_realm]]]]
     [have [get [get this mind] semantic_knowledge_base `mind_activity] add_semantic_frame semantic_resource_action_event]
     [semantic-add semantic_resource_action_event property-action_name `wait_to_activate]
@@ -56,7 +54,6 @@
     ]]
 
 [deftypefunk traced_resource execute wait_to_call [:rest args]
-  [terminal_format standard-terminal '\ntraced_resource-wait_to_call']
   [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this mind] semantic_realm]]]]
     [have [get [get this mind] semantic_knowledge_base `mind_activity] add_semantic_frame semantic_resource_action_event]
     [semantic-add semantic_resource_action_event property-action_name `wait_to_call]
@@ -67,7 +64,6 @@
     ]]
 
 [deftypefunk traced_resource execute call [:rest args]
-  [terminal_format standard-terminal '\ntraced_resource-call']
   [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this mind] semantic_realm]]]]
     [have [get [get this mind] semantic_knowledge_base `mind_activity] add_semantic_frame semantic_resource_action_event]
     [semantic-add semantic_resource_action_event property-action_name `call]
@@ -78,7 +74,6 @@
     ]]
 
 [deftypefunk traced_resource execute finish []
-  [terminal_format standard-terminal '\ntraced_resource-finish']
   [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this mind] semantic_realm]]]]
     [have [get [get this mind] semantic_knowledge_base `mind_activity] add_semantic_frame semantic_resource_action_event]
     [semantic-add semantic_resource_action_event property-action_name `finish]

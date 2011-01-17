@@ -41,7 +41,6 @@
        nil]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute execute_resource_raw_funk []
-  [terminal_format standard-terminal '\ntranslating visual knowledge to physical knowledge.']
   [let [[visual_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `visual_knowledge->physical_knowledge]]]
     [while [let [[event [get visual_knowledge_iterator current]]]
 	     [if [not [null event]]
@@ -78,8 +77,7 @@
 															      ]]
 											    ]]]
 			       ]]]]
-	     [have visual_knowledge_iterator increment]]]]
-  [have this-resource think_to_self 'finished.']]
+	     [have visual_knowledge_iterator increment]]]]]
 
 
 

@@ -106,7 +106,6 @@
 			      actions]
 			]]]]
 	  visual_objects]]
-  [have this-resource think_to_self 'finished.']
   nil]
 
 

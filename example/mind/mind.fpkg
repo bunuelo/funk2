@@ -29,11 +29,14 @@
    :sources ['story-graph.fu2']]
 
 [defpackage resource
-  :packages [story math]
+  :packages [math
+	     semantic_knowledge_base
+	     story]
    :sources ['resource.fu2']]
 
 [defpackage traced_resource
   :packages [resource
+	     semantic_knowledge_base
 	     semantic_resource
 	     semantic_resource_action_event]
    :sources ['traced_resource.fu2']]
@@ -67,6 +70,8 @@
    :sources ['mind.fu2']]
 
 [defpackage traced_mind
-  :packages [mind traced_resource]
+  :packages [mind
+	     semantic_knowledge_base
+	     traced_resource]
    :sources ['traced_mind.fu2']]
 

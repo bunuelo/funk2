@@ -22,6 +22,8 @@
 [defcorefunk lick-core_extension_ping       lick lick__core_extension_ping]
 [defcorefunk lick-core_extension_initialize lick lick__core_extension_initialize]
 
+[defcorefunk object_list-lick_first_n_chunks lick object_list__lick_first_n_chunks]
+
 [lick-core_extension_ping]
 
 [defunk lick-new_from_object [root_object]
@@ -31,14 +33,15 @@
 	[have this object-gather_lick_notes root_object note_object_hash 5000000]
 	[let [[objects [get note_object_hash keys]]]
 	  [terminal_format standard-terminal '\nlick-new_from_object type=' [type root_object] ' length=' [length objects] ' root_object=' root_object]
-	  [let [[index 0]]
-	    [mapc [funk [object]
-			[if [== [<< [>> index 10] 10] index]
-			    [terminal_format standard-terminal '\n                     index=' index]]
-			[let [[lick_chunk [have object lick_to_chunk note_object_hash]]]
-			  [have chunk_note_hash add [get lick_chunk lick_note] lick_chunk]]
-			[= index [+ index 1]]]
-		  objects]]]]]
+	  [let [[index              0]
+		[next_printed_index 1000]]
+	    [let [[iter objects]]
+	      [while iter
+		[if [>= index next_printed_index]
+		    [prog [terminal_format standard-terminal '\n                     index=' index]
+			  [= next_printed_index [+ next_printed_index 1000]]]]
+		[= iter [object_list-lick_first_n_chunks iter note_object_hash chunk_note_hash 1000]]
+		[= index [+ index 1000]]]]]]]]
     [terminal_format standard-terminal '\nlick-new_from_object this=' this]
     this]]
 

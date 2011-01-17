@@ -240,6 +240,44 @@ f2ptr f2__lick_chunk_type__new(f2ptr cause) {
 }
 
 
+// object_list
+
+f2ptr raw__object_list__lick_first_n_to_chunks(f2ptr cause, f2ptr these, f2ptr note_object_hash, f2ptr chunk_note_hash, f2ptr n) {
+  s64   n__i  = f2integer__i(n, cause);
+  s64   index = 0;
+  f2ptr iter  = these;
+  while ((iter != nil) && (index < n__i)) {
+    if (! raw__cons__is_type(cause, iter)) {
+      return f2larva__new(cause, 1, nil);
+    }
+    f2ptr object = f2__cons__car(cause, iter);
+    {
+      f2ptr lick_chunk = f2__object__execute(cause, object, new__symbol(cause, "lick_to_chunk"), f2list2__new(cause, this, note_object_hash));
+      if (raw__larva__is_type(cause, lick_chunk)) {
+	return lick_chunk;
+      }
+      f2ptr lick_chunk__note = f2__lick_chunk__lick_note(cause, lick_chunk);
+      if (raw__larva__is_type(cause, lick_chunk__note)) {
+	return lick_chunk__note;
+      }
+      raw__ptypehash__add(cause, chunk_note_hash, lick_chunk__note, lick_chunk);
+    }
+    iter = f2__cons__cdr(cause, iter);
+  }
+  return iter;
+}
+
+f2ptr f2__object_list__lick_first_n_chunks(f2ptr cause, f2ptr these, f2ptr note_object_hash, f2ptr chunk_note_hash, f2ptr n) {
+  if ((! raw__ptypehash__is_type(cause, note_object_hash)) ||
+      (! raw__ptypehash__is_type(cause, chunk_note_hash)) ||
+      (! raw__integer__is_type(cause, n))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__object_list__lick_first_n_chunks(cause, these, note_object_hash, chunk_note_hash, n);
+}
+export_cefunk4(object_list__lick_first_n_chunks, these, note_object_hash, chunk_note_hash, n, 0, "Helper funktion for quickly licking objects to lick_chunks.");
+
+
 // lick
 
 f2ptr raw__lick__new(f2ptr cause, f2ptr root_note, f2ptr chunk_note_hash, f2ptr current_size) {

@@ -62,20 +62,24 @@
 			command `builtin_reactive `sensory `continuous_sensing]
 		  ]]
 
+[deftypefunk moral_compass get as-lickable_frame []
+  [frame semantic_realm                        [get this semantic_realm]
+	 knowledge_event_stream_iterator_frame [get this knowledge_event_stream_iterator_frame]
+	 ]]
+
 [deftypefunk moral_compass get as-chunk []
-  [let [[chunk_frame [frame semantic_realm                        [get this semantic_realm]
-			    knowledge_event_stream_iterator_frame [get this knowledge_event_stream_iterator_frame]
-			    ]]]
-    [get [lick-new_from_object chunk_frame] as-chunk]]]
+  [get [lick-new_from_object [get this as-lickable_frame]] as-chunk]]
+
+[defunk moral_compass-new_from_lickable_frame [lickable_frame]
+  [let [[this [new moral_compass]]]
+    [set this semantic_realm                        [have lickable_frame lookup `semantic_realm]]
+    [set this knowledge_event_stream_iterator_frame [have lickable_frame lookup `knowledge_event_stream_iterator_frame]]
+    [have this connect_knowledge_reflection]
+    this]]
 
 [defunk moral_compass-new_from_chunk [chunk]
-  [let [[chunk_frame [have [get chunk as-lick] unlick]]]
-    [let [[this [new moral_compass]]]
-      [set this semantic_realm                        [have chunk_frame lookup `semantic_realm]]
-      [set this knowledge_event_stream_iterator_frame [have chunk_frame lookup `knowledge_event_stream_iterator_frame]]
-      [have this connect_knowledge_reflection]
-      this]]]
-
+  [let [[lickable_frame [have [get chunk as-lick] unlick]]]
+    [moral_compass-new_from_lickable_frame lickable_frame]]]
 
 'pre-knowledge perception functions'
 

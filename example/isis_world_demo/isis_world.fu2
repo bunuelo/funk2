@@ -157,21 +157,26 @@
 [deftypefunk isis_world execute sense_retina_image      [agent]                    [isis-call [get this client] sense_retina_image      agent agent max_x 320 max_y 240 x_offset 0 y_offset 0]]
 
 
+[deftypefunk isis_world get as-lickable_frame []
+  [frame client                     client
+	 overview_image_sequence    overview_image_sequence
+	 agent_body_lickable_frames [mapcar [funk [agent_body]
+						  [get agent_body as-lickable_frame]]
+					    [get this agent_bodies]]
+	 ]]
+
 [deftypefunk isis_world get as-chunk []
-  [let [[chunk_frame [frame client                  client
-			    overview_image_sequence overview_image_sequence
-			    agent_body_chunks       [mapcar [funk [agent_body]
-								  [get agent_body as-chunk]]
-							    [get this agent_bodies]]
-			    ]]]
-    [get [lick-new_from_object chunk_frame] as-chunk]]]
+  [get [lick-new_from_object [get this as-lickable_frame]] as-chunk]]
+
+[defunk isis_world-new_from_lickable_frame [lickable_frame]
+  [let [[this [new isis_world [have lickable_frame lookup `client]]]]
+    [set this overview_image_sequence [have lickable_frame lookup `overview_image_sequence]]
+    [mapc [funk [agent_body_lickable_frame]
+		[have this add_agent_body [isis_agent_body-new_from_lickable_frame this agent_body_lickable_frame]]]
+	  [have lickable_frame lookup `agent_body_lickable_frames]]
+    this]]
 
 [defunk isis_world-new_from_chunk [chunk]
-  [let [[chunk_frame [have [get chunk as-lick] unlick]]]
-    [let [[this [new isis_world [have chunk_frame lookup `client]]]]
-      [set this overview_image_sequence [have chunk_frame lookup `overview_image_sequence]]
-      [mapc [funk [agent_body_chunk]
-		  [have this add_agent_body [isis_agent_body-new_from_chunk this agent_body_chunk]]]
-	    [have chunk_frame lookup `agent_body_chunks]]
-      this]]]
+  [let [[lickable_frame [have [get chunk as-lick] unlick]]]
+    [isis_world-new_from_lickable_frame lickable_frame]]]
 

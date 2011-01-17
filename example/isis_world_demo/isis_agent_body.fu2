@@ -65,27 +65,31 @@
 	  [rgb_data [have retina_image_frame lookup `rgb_data]]]
       [image-new_from_rgb_data width height rgb_data]]]]
 
+[deftypefunk isis_agent_body get as-lickable_frame []
+  [frame name                         name
+	 says                         says
+	 arm_length                   arm_length
+	 sense_frame                  sense_frame
+	 retina_image_sequence        retina_image_sequence
+	 moral_compass_lickable_frame [get mind as-lickable_frame]
+	 ]]
+
 [deftypefunk isis_agent_body get as-chunk []
-  [let [[moral_compass_chunk [get mind as-chunk]]]
-    [let [[chunk_frame [frame name                  name
-			      says                  says
-			      arm_length            arm_length
-			      sense_frame           sense_frame
-			      retina_image_sequence retina_image_sequence
-			      moral_compass_chunk   moral_compass_chunk
-			      ]]]
-      [get [lick-new_from_object chunk_frame] as-chunk]]]]
+  [get [lick-new_from_object [get this as-lickable_frame]] as-chunk]]
+
+[defunk isis_agent_body-new_from_lickable_frame [physical_world lickable_frame]
+  [let [[moral_compass_lickable_frame [have lickable_frame lookup `moral_compass_lickable_frame]]]
+    [let [[moral_compass [moral_compass-new_from_lickable_frame moral_compass_lickable_frame]]]
+      [let [[this [new isis_agent_body physical_world moral_compass [have lickable_frame lookup `name]]]]
+	[set this says                  [have lickable_frame lookup `says]]
+	[set this arm_length            [have lickable_frame lookup `arm_length]]
+	[set this sense_frame           [have lickable_frame lookup `sense_frame]]
+	[set this retina_image_sequence [have lickable_frame lookup `retina_image_sequence]]
+	this]]]]
 
 [defunk isis_agent_body-new_from_chunk [physical_world chunk]
-  [let [[chunk_frame [have [get chunk as-lick] unlick]]]
-    [let [[moral_compass_chunk [have chunk_frame lookup `moral_compass_chunk]]]
-      [let [[moral_compass [moral_compass-new_from_chunk moral_compass_chunk]]]
-	[let [[this [new isis_agent_body physical_world moral_compass [have chunk_frame lookup `name]]]]
-	  [set this says                  [have chunk_frame lookup `says]]
-	  [set this arm_length            [have chunk_frame lookup `arm_length]]
-	  [set this sense_frame           [have chunk_frame lookup `sense_frame]]
-	  [set this retina_image_sequence [have chunk_frame lookup `retina_image_sequence]]
-	  this]]]]]
+  [let [[lickable_frame [have [get chunk as-lick] unlick]]]
+    [isis_agent-new_from_lickable_frame physical_world lickable_frame]]]
 
 [deftypefunk isis_agent_body execute sense_world []
   sense_frame]

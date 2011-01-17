@@ -17,15 +17,15 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe activate_resource [traced_resource] [[command_mutex         [new traced_mutex]]
-					      [command_ready         nil]
-					      [command_done          t]
-					      [command_layer_name    nil]
-					      [command_agency_name   nil]
-					      [command_resource_name nil]
-					      [command_args          nil]]
+[deframe activate_resource [resource] [[command_mutex         [new traced_mutex]]
+				       [command_ready         nil]
+				       [command_done          t]
+				       [command_layer_name    nil]
+				       [command_agency_name   nil]
+				       [command_resource_name nil]
+				       [command_args          nil]]
   [new []
-       [construct traced_resource [type this]
+       [construct resource [type this]
 		  [funk []
 			`[have this-resource think_to_self 'Neural plug activate_resource ready.']
 			[while t

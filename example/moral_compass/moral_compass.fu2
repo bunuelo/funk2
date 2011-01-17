@@ -53,8 +53,12 @@
   [with-new-cause [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
 		  [cause-define cause-time_step [get [get [get this body] physical_world] time_step]]
 		  
-		  [mind-activate this builtin_reactive sensory     continuous_sensing]
+		  'First, we activate the only resource that does not get traced, the neural_plug.'
 		  [mind-activate this builtin_reactive neural_plug activate_resource]
+		  
+		  'Then, we can use the neural plug resource to activate all other vital resources.'
+		  [have [get this resource `builtin_reactive `neural_plug `activate_resource]
+			command `builtin_reactive `sensory `continuous_sensing]
 		  ]]
 
 

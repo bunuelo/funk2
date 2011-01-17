@@ -17,10 +17,10 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe moral_compass [mind] []
+[deframe moral_compass [traced_mind] []
   [new []
        [terminal_format standard-terminal '\nmoral_compass: creating new mind.']
-       [construct mind]
+       [construct traced_mind]
        [have this add_layer [new builtin_reactive_layer]]
        [have this add_layer [new learned_reactive_layer]]
        [have this add_layer [new deliberative_layer]]

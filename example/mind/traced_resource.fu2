@@ -38,9 +38,11 @@
   [terminal_format standard-terminal '\ntraced_resource-activate']
   [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this mind] semantic_realm]]]]
     [have [get [get this mind] semantic_knowledge_base `mind_activity] add_semantic_frame semantic_resource_action_event]
-    [semantic-add semantic_resource_action_event relationship-agent  [get this-resource resource_semantic_frame]]
-    [semantic-add semantic_resource_action_event relationship-target [get this          resource_semantic_frame]]
+    [semantic-add semantic_resource_action_event property-action_name `activate]
+    [semantic-add semantic_resource_action_event relationship-agent   [get this-resource resource_semantic_frame]]
+    [semantic-add semantic_resource_action_event relationship-target  [get this          resource_semantic_frame]]
     [type-have-apply resource this activate args]
+    [have [get [get this mind] semantic_knowledge_base `mind_activity] remove_semantic_frame semantic_resource_action_event]
     ]]
 
 [deftypefunk traced_resource execute wait_to_activate [:rest args]

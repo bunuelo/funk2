@@ -115,9 +115,6 @@ f2ptr f2__semantic_resource_type__new(f2ptr cause) {
 }
 
 
-
-
-
 // **
 
 f2ptr f2__semantic_resource__core_extension_ping(f2ptr cause) {

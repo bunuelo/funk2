@@ -30,6 +30,7 @@
       [let [[chunk_note_hash [get this chunk_note_hash]]]
 	[have this object-gather_lick_notes root_object note_object_hash 5000000]
 	[let [[objects [get note_object_hash keys]]]
+	  [terminal_format standard-terminal '\nlick-new_from_object type=' [type root_object] ' length=' [length objects] ' root_object=' root_object]
 	  [mapc [funk [object]
 		      [let [[lick_chunk [have object lick_to_chunk note_object_hash]]]
 			[have chunk_note_hash add [get lick_chunk lick_note] lick_chunk]]]

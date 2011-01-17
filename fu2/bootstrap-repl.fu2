@@ -773,7 +773,7 @@
 
 [defmetro list [:rest elements] `[new list @elements]]
 
-[defmetro length [x] `[get ,x length]]
+[defmetro length [x] `[let [[x ,x]] [if [null x] 0 [get x length]]]]
 
 [defmetro = [var value] `[mutate ,var ,value]]
 

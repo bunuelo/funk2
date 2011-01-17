@@ -1975,7 +1975,7 @@ f2ptr f2__mutex__trylock(f2ptr cause, f2ptr this) {
 def_pcfunk1(mutex__trylock, this, return f2__mutex__trylock(this_cause, this));
 
 boolean_t raw__mutex__eq(f2ptr cause, f2ptr this, f2ptr that) {
-  return this == that;
+  return (this == that);
 }
 
 f2ptr f2__mutex__eq(f2ptr cause, f2ptr this, f2ptr that) {
@@ -1984,8 +1984,7 @@ f2ptr f2__mutex__eq(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(mutex__eq, this, that, return f2__mutex__eq(this_cause, this, that));
 
 u64 raw__mutex__eq_hash_value(f2ptr cause, f2ptr this) {
-  funk2_processor_mutex_t* m = __pure__f2mutex__m(this);
-  return funk2_processor_mutex__eq_hash_value(m);
+  return ((u64)this);
 }
 
 f2ptr f2__mutex__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__mutex__eq_hash_value(cause, this));}

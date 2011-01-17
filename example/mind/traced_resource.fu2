@@ -26,6 +26,7 @@
        
        ]]
 
+
 [deftypefunk traced_resource execute activate [:rest args]
   [terminal_format standard-terminal '\ntraced activate']
   [type-have-apply resource this activate args]

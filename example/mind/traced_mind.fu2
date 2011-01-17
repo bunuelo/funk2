@@ -24,7 +24,7 @@
   [new []
        [construct mind]
        
-       [new semantic_knowledge_base `mind_activity [get this semantic_realm]]
+       [new semantic_knowledge_base `mental_knowledge [get this semantic_realm]]
        
        ]]
 

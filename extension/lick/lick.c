@@ -262,6 +262,7 @@ f2ptr raw__object_list__lick_first_n_to_chunks(f2ptr cause, f2ptr these, f2ptr n
       }
       raw__ptypehash__add(cause, chunk_note_hash, lick_chunk__note, lick_chunk);
     }
+    index ++;
     iter = f2__cons__cdr(cause, iter);
   }
   return iter;

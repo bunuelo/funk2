@@ -137,6 +137,7 @@
    ]
 
 [deftypefunk resource execute activate [:rest args]
+  [terminal_format standard-terminal '\nresource-activate']
   [let [[successful_activation nil]]
     [prog [have active_mutex lock]
 	  [if [not active]
@@ -154,6 +155,7 @@
 	     error_type      `resource-is-already-activated]]]]
 
 [deftypefunk resource execute wait_to_activate [:rest args]
+  [terminal_format standard-terminal '\nresource-wait_to_activate']
   [let [[successful_activation nil]]
     [while [not successful_activation]
       [prog [have active_mutex lock]
@@ -170,6 +172,7 @@
 	[millisleep 100]]]]]
 
 [deftypefunk resource execute finish []
+  [terminal_format standard-terminal '\nresource-finish']
   [have this           add_new_trace_story_event [get cause-resource name] `finish [frame direct_object `me]]
   [have cause-resource add_new_trace_story_event `I                        `finish [frame direct_object name]]
   [while [not finished]
@@ -191,12 +194,14 @@
   [have fiber quit]]
 
 [deftypefunk resource execute call [:rest args]
+  [terminal_format standard-terminal '\nresource-call']
   [have this           add_new_trace_story_event [get cause-resource name] `call [frame direct_object `me]]
   [have cause-resource add_new_trace_story_event `I                        `call [frame direct_object name]]
   [type-have-apply resource this activate args]
   [type-have       resource this finish]]
 
 [deftypefunk resource execute wait_to_call [:rest args]
+  [terminal_format standard-terminal '\nresource-wait_to_call']
   [have this           add_new_trace_story_event [get cause-resource name] `call [frame direct_object `me]]
   [have cause-resource add_new_trace_story_event `I                        `call [frame direct_object name]]
   [type-have-apply resource this wait_to_activate args]

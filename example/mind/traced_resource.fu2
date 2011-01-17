@@ -28,27 +28,27 @@
 
 
 [deftypefunk traced_resource execute activate [:rest args]
-  [terminal_format standard-terminal '\ntraced activate']
+  [terminal_format standard-terminal '\ntraced_resource-activate']
   [type-have-apply resource this activate args]
   ]
 
 [deftypefunk traced_resource execute wait_to_activate [:rest args]
-  [terminal_format standard-terminal '\ntraced wait_to_activate']
+  [terminal_format standard-terminal '\ntraced_resource-wait_to_activate']
   [type-have-apply resource this wait_to_activate args]
   ]
 
 [deftypefunk traced_resource execute wait_to_call [:rest args]
-  [terminal_format standard-terminal '\ntraced wait_to_call']
+  [terminal_format standard-terminal '\ntraced_resource-wait_to_call']
   [type-have-apply resource this wait_to_call args]
   ]
 
 [deftypefunk traced_resource execute call [:rest args]
-  [terminal_format standard-terminal '\ntraced call']
+  [terminal_format standard-terminal '\ntraced_resource-call']
   [type-have-apply resource this call args]
   ]
 
 [deftypefunk traced_resource execute finish []
-  [terminal_format standard-terminal '\ntraced finish']
+  [terminal_format standard-terminal '\ntraced_resource-finish']
   [type-have resource this finish]
   ]
 

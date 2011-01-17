@@ -33,7 +33,7 @@
    :sources ['resource.fu2']]
 
 [defpackage traced_resource
-  :packages [resource]
+  :packages [resource semantic_resource]
    :sources ['traced_resource.fu2']]
 
 [defpackage self_model

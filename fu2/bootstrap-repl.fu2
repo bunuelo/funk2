@@ -238,6 +238,15 @@
 [defmetro object_type-set-funk     [name slot_name]                `[object_type-type-funk                              ,name  `set            ,slot_name]]
 [defmetro object_type-execute-funk [name slot_name]                `[object_type-type-funk                              ,name  `execute        ,slot_name]]
 
+[defmetro type-get-apply     [type_name this slot_name args] `[apply   [object_type-get-funk     [quote ,type_name] [quote ,slot_name]] ,this ,args]]
+[defmetro type-get           [type_name this slot_name args] `[funkall [object_type-get-funk     [quote ,type_name] [quote ,slot_name]] ,this ,args]]
+[defmetro type-set-apply     [type_name this slot_name args] `[apply   [object_type-set-funk     [quote ,type_name] [quote ,slot_name]] ,this ,args]]
+[defmetro type-set           [type_name this slot_name args] `[funkall [object_type-set-funk     [quote ,type_name] [quote ,slot_name]] ,this ,args]]
+[defmetro type-execute-apply [type_name this slot_name args] `[apply   [object_type-execute-funk [quote ,type_name] [quote ,slot_name]] ,this ,args]]
+[defmetro type-execute       [type_name this slot_name args] `[funkall [object_type-execute-funk [quote ,type_name] [quote ,slot_name]] ,this ,args]]
+[defmetro type-have-apply    [type_name this slot_name args] `[apply   [object_type-execute-funk [quote ,type_name] [quote ,slot_name]] ,this ,args]]
+[defmetro type-have          [type_name this slot_name args] `[funkall [object_type-execute-funk [quote ,type_name] [quote ,slot_name]] ,this ,args]]
+
 [defmetro object-get-funk [this slot_name]
   `[object-slot-type_funk ,this `get slot_name]]
 

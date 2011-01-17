@@ -80,10 +80,14 @@
             'words)
            'font-lock-function-name-face)
      (cons (regexp-opt
+            '("this")
+            'words)
+           'font-lock-keyword-face)
+     (cons (regexp-opt
             '("!=" "<=" ">=" "==" ">>" "<<" "+" "-" "*" "/" "=" "<" ">"
 	      "action" "actor" "act" "and"
 	      "cause-define" "cause-define-funk" "cause-defunk" "cause-lookup" "cause-lookup-funk" "cond" "construct"
-              "defunk" "define-funk" "defunk-local" "define" "defmetro" "deftypefunk" "deframe" "deftypeconstruct" "defcore" "defcorefunk" "dotimes"
+              "defunk" "define-funk" "defunk-local" "define" "defmetro" "deftypefunk" "deframe" "deftypeconstruct" "defpackage" "defcore" "defcorefunk" "dotimes"
 	      "elt" "error" "execute"
 	      "frame" "funk" "funk-new_with_name" "funkall"
               "get" "get-apply" "globalize" "globalize-funk"
@@ -96,6 +100,7 @@
 	      "parc" "parcar" "parlet" "parog" "partimes" "prog" "put"
 	      "quote"
 	      "set" "set-apply" "shelter" "semantic-add" "semantic-remove"
+	      "type-get" "type-set" "type-execute" "type-have" "type-get-apply" "type-set-apply" "type-execute-apply" "type-have-apply"
 	      "while" "with" "with-new-cause"
 	      "yield"
 	      )

@@ -19,6 +19,11 @@
 
 [defunk gtk-test []
   [let [[win                [gtk-window-new]]
+	[vbox               [gtk-vbox-new 0]]
+	[menu_bar           [gtk-menu_bar-new]]
+	[menu_item          [gtk-menu_item-new 'Menu']]
+	[menu               [gtk-menu-new]]
+	[check_menu_item    [gtk-check_menu_item-new 'check_menu_item']]
 	[vpaned             [gtk-vpaned-new]]
 	[hbox               [gtk-hbox-new 2]]
 	[search_image       [gtk-image-new_from_image [image-new_from_rgb_data 24 24 [let [[data [new chunk [* 3 24 24]]]]
@@ -45,6 +50,13 @@
 	[table_hbox         [gtk-hbox-new 2]]
 	[table_scale        [gtk-scale-new_with_range `vertical 0.0 100.0 1.0]]
 	[table              [gtk-table-new 10 4 t]]]
+    
+    [have vbox pack_start menu_bar nil nil 0]
+    [have vbox pack_start vpaned t t 0]
+    
+    [have menu_bar append menu_item]
+    [set  menu_item submenu menu]
+    [have menu append check_menu_item]
     
     [have hbox         pack_start   search_image nil nil 0]
     [have hbox         pack_start   search_entry t t 0]
@@ -75,7 +87,7 @@
     
     [have vpaned       pack2        notebook t t]
     
-    [have win          add          vpaned]
+    [have win          add          vbox]
     [set  win          title        'gtk-test']
     [set  win          default_size 128 64]
     

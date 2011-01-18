@@ -545,7 +545,7 @@ f2ptr f2__graph__copy_with_node_label(f2ptr cause, f2ptr this, f2ptr node_label)
   if (! raw__graph__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__graph__copy_with_node_label(cause, this, node_label, node_label);
+  return raw__graph__copy_with_node_label(cause, this, node_label);
 }
 def_pcfunk2(graph__copy_with_node_label, this, node_label, return f2__graph__copy_with_node_label(this_cause, this, node_label));
 

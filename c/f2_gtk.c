@@ -1636,7 +1636,7 @@ boolean_t funk2_gtk__check_menu_item__get_active(funk2_gtk_t* this, GtkWidget* w
   boolean_t active;
   {
     gdk_threads_enter();
-    active = gtk_check_menu_item_get_active(GTK_WIDGET(widget)) ? boolean__true : boolean__false;
+    active = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(widget)) ? boolean__true : boolean__false;
     gdk_threads_leave();
   }
   return active;
@@ -1645,7 +1645,7 @@ boolean_t funk2_gtk__check_menu_item__get_active(funk2_gtk_t* this, GtkWidget* w
 void funk2_gtk__check_menu_item__set_active(funk2_gtk_t* this, GtkWidget* widget, boolean_t active) {
   {
     gdk_threads_enter();
-    gtk_check_menu_item_set_active(GTK_WIDGET(widget), active ? TRUE : FALSE);
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget), active ? TRUE : FALSE);
     gdk_threads_leave();
   }
 }

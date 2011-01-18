@@ -79,6 +79,53 @@ add rel orientation
   [/  [/ angle 0.0258] 0.03]]
 
 
+[defunk factorial [n]
+  [defunk helper [n so-far]
+    [if [= n 1]
+	1
+      [helper [- n 1] [* so-far n]]]]
+  [helper n 1]]
+
+[defunk mod [x y]
+  [if [> y 0]
+      [while [>= x y]
+	[= x [- x y]]]
+    [= x 0]]
+  x]
+
+[defunk power [a b]
+  [let [[blah 0]]
+    [if [= b 1]
+	[= blah 1]
+      [if [= [mod b 2] 0]
+	  [= blah [* [power a [/ b 2]] [power a [/ b 2]]]]
+	[= blah [* [* [power a [/ [- b 1] 2]] [power a [/ [- b 1] 2]]] a]]]]
+    blah]]
+  
+[defunk degree_to_rad [x]
+  [*[/ x 180] 3.1415926]]
+
+[defunk sine [x]
+  [+ 
+   [- 
+    [+ 
+     [- x 
+	[/ [power x 3] [factorial 3]]] 
+     [/ [power x 5] [factorial 5]]] 
+    [/ [power x 7] [factorial 7]]]]]
+
+[defunk arcsin [x]
+  [+ 
+   [- 
+    [+ 
+     [- x 
+	[* 0.5 [/ [power x 3] 3]]]
+     [ * 0.385 [/ [power x 5] [factorial 5]]]] 
+    [* 0.3125 [/ [power x 7] [factorial 7]]]]]]
+
+
+
+
 
 
 [globalize level_neck_pitch 0]
@@ -105,7 +152,7 @@ add rel orientation
       [have [have [have [get [get mind perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `pitch]]]
 
 [defunk get_object_x_orientation [visual_objects object_name] 
-  [have [have visual_objects lookup object_name] orientation]]
+  [have [have visual_objects lookup object_name] lookup `orientation]]
 						   
 [defunk list-contains_substring [sequence subexp]
   [let [[match nil]]
@@ -693,12 +740,14 @@ add rel orientation
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]]
-    [labels [[get_orientation [object]
+    [labels [[get_orientation [object_name]
+			      [get_object_x_orientation [get mind perception] object_name]
 			      ]
 	     [get_distance    [object]
+			      [have [have [get mind perception] lookup object] lookup `distance]
 			      ]
 	     [find_init_angle [init_orientation init_distance]
-			      ]
+			      init_distance]
 	     [find_final_orientation [init_orientation init_distance]
 			      ]
 	     [find_final_distance [init_orientation init_distance]
@@ -715,6 +764,7 @@ add rel orientation
     [while [or [null [get_visual_objects mind]] [null [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type]]]
       [sleep 5]]
     [let* [[init_orientation [get_orientation object]]
+	   [init_orientation_difference [abs [- 180 init_orientation]]]
 	   [init_distance    [get_distance object]]
 	   [init_angle       [find_init_angle init_orientation init_distance]]
 	   [final_angle      [find_final_angle init_orientation init_distance]]

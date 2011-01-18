@@ -101,7 +101,7 @@
        [= isismon_agent_agency_menu initial-isismon_agent_agency_menu]
        [= resource                  initial-resource]
        
-       [= resource_menu_item [gtk-menu_item-new [format nil [get resource name]]]]
+       [= resource_menu_item [gtk-menu_item-new [format nil [get resource name] ' Resource']]]
        [= resource_menu      [gtk-menu-new]]
        [set resource_menu_item submenu resource_menu]
        
@@ -110,8 +110,7 @@
        
        [have debugging_mode_check_menu_item signal_connect 'toggled'
 	     [funk []
-		   [set resource debug [get debugging_mode_check_menu_item active]]
-		   [terminal_format standard-terminal '\n' [if [get resource debug] 'Enabling' 'Disabling'] ' debugging mode for ' [get [get resource mind] name] '\'s ' [get resource name] ' resource.']]
+		   [set this debug_all [get debugging_mode_check_menu_item active]]]
 	     nil]
        
        ]]
@@ -119,45 +118,99 @@
 [deftypefunk isismon_agent_resource_menu get widget []
   resource_menu_item]
 
+[deftypefunk isismon_agent_resource_menu set debug_all [debug]
+  [terminal_format standard-terminal '\n' [if debug 'Enabling' 'Disabling'] ' debugging mode for ' [get [get resource mind] name] '\'s ' [get resource name] ' resource.']
+  [set debugging_mode_check_menu_item active debug]
+  [set resource debug debug]]
+
+
 
 [deframe isismon_agent_agency_menu [frame] [isismon_agent_layer_menu
 					    agency
 					    
 					    agency_menu_item
-					    agency_menu]
+					    agency_menu
+					    
+					    enable_debugging_all_menu_item
+					    disable_debugging_all_menu_item
+					    
+					    isismon_resource_menus
+					    ]
   [new [initial-isismon_agent_layer_menu initial-agency]
        [= isismon_agent_layer_menu initial-isismon_agent_layer_menu]
        [= agency                   initial-agency]
        
-       [= agency_menu_item [gtk-menu_item-new [format nil [get agency name]]]]
+       [= agency_menu_item [gtk-menu_item-new [format nil [get agency name] ' Agency']]]
        [= agency_menu      [gtk-menu-new]]
        [set agency_menu_item submenu agency_menu]
        
+       [= enable_debugging_all_menu_item [gtk-menu_item-new 'Enable Debugging All']]
+       [have agency_menu append enable_debugging_all_menu_item]
+       [have enable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all t]]
+	     nil]
+       
+       [= disable_debugging_all_menu_item [gtk-menu_item-new 'Disable Debugging All']]
+       [have agency_menu append disable_debugging_all_menu_item]
+       [have disable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all nil]]
+	     nil]
+       
        [mapc [funk [resource]
 		   [let [[isismon_resource_menu [new isismon_agent_resource_menu this resource]]]
+		     [= isismon_resource_menus [cons isismon_resource_menu isismon_resource_menus]]
 		     [have agency_menu append isismon_resource_menu]]]
 	     [get agency resources]]
+       
        ]]
 
 [deftypefunk isismon_agent_agency_menu get widget []
   agency_menu_item]
+
+[deftypefunk isismon_agent_agency_menu set debug_all [debug]
+  [mapc [funk [isismon_resource_menu]
+	      [set isismon_resource_menu debug_all debug]]
+	isismon_resource_menus]]
 
 
 [deframe isismon_agent_layer_menu [frame] [isismon_agent_mind_menu
 					   layer
 					   
 					   layer_menu_item
-					   layer_menu]
+					   layer_menu
+					   
+					   enable_debugging_all_menu_item
+					   disable_debugging_all_menu_item
+					   
+					   isismon_agency_menus
+					   ]
   [new [initial-isismon_agent_mind_menu initial-layer]
        [= isismon_agent_mind_menu initial-isismon_agent_mind_menu]
        [= layer                   initial-layer]
        
-       [= layer_menu_item [gtk-menu_item-new [format nil [get layer name]]]]
+       [= layer_menu_item [gtk-menu_item-new [format nil [get layer name] ' Layer']]]
        [= layer_menu      [gtk-menu-new]]
        [set layer_menu_item submenu layer_menu]
        
+       [= enable_debugging_all_menu_item [gtk-menu_item-new 'Enable Debugging All']]
+       [have layer_menu append enable_debugging_all_menu_item]
+       [have enable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all t]]
+	     nil]
+       
+       [= disable_debugging_all_menu_item [gtk-menu_item-new 'Disable Debugging All']]
+       [have layer_menu append disable_debugging_all_menu_item]
+       [have disable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all nil]]
+	     nil]
+       
        [mapc [funk [agency]
 		   [let [[isismon_agency_menu [new isismon_agent_agency_menu this agency]]]
+		     [= isismon_agency_menus [cons isismon_agency_menu isismon_agency_menus]]
 		     [have layer_menu append isismon_agency_menu]]]
 	     [get layer agencies]]
        ]]
@@ -165,11 +218,22 @@
 [deftypefunk isismon_agent_layer_menu get widget []
   layer_menu_item]
 
+[deftypefunk isismon_agent_layer_menu set debug_all [debug]
+  [mapc [funk [isismon_agency_menu]
+	      [set isismon_agency_menu debug_all debug]]
+	isismon_agency_menus]]
+
 
 [deframe isismon_agent_mind_menu [frame] [isismon_agent
 					  
 					  mind_menu_item
-					  mind_menu]
+					  mind_menu
+					  
+					  enable_debugging_all_menu_item
+					  disable_debugging_all_menu_item
+					  
+					  isismon_layer_menus
+					  ]
   [new [initial-isismon_agent]
        [= isismon_agent initial-isismon_agent]
        
@@ -177,8 +241,23 @@
        [= mind_menu      [gtk-menu-new]]
        [set mind_menu_item submenu mind_menu]
        
+       [= enable_debugging_all_menu_item [gtk-menu_item-new 'Enable Debugging All']]
+       [have mind_menu append enable_debugging_all_menu_item]
+       [have enable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all t]]
+	     nil]
+       
+       [= disable_debugging_all_menu_item [gtk-menu_item-new 'Disable Debugging All']]
+       [have mind_menu append disable_debugging_all_menu_item]
+       [have disable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all nil]]
+	     nil]
+       
        [mapc [funk [layer]
 		   [let [[isismon_layer_menu [new isismon_agent_layer_menu this layer]]]
+		     [= isismon_layer_menus [cons isismon_layer_menu isismon_layer_menus]]
 		     [have mind_menu append isismon_layer_menu]]]
 	     [get [get [get isismon_agent isis_agent] mind] layers]]
        ]]
@@ -186,7 +265,12 @@
 [deftypefunk isismon_agent_mind_menu get widget []
   mind_menu_item]
 				
-				
+[deftypefunk isismon_agent_mind_menu set debug_all [debug]
+  [mapc [funk [isismon_layer_menu]
+	      [set isismon_layer_menu debug_all debug]]
+	isismon_layer_menus]]
+
+
 
 [deframe isismon_agent [frame] [isis_agent
 				

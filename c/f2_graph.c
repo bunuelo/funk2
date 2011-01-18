@@ -513,6 +513,43 @@ f2ptr f2__graph__copy(f2ptr cause, f2ptr this) {
 def_pcfunk1(graph__copy, this, return f2__graph__copy(this_cause, this));
 
 
+f2ptr raw__graph__copy_with_node_label(f2ptr cause, f2ptr this, f2ptr node_label) {
+  f2ptr graph = f2__graph__new(cause);
+  {
+    f2ptr new_node_old_node_ptypehash = f2__ptypehash__new(cause);
+    {
+      f2ptr this__node_set = f2__graph__node_set(cause, this);
+      set__iteration(cause, this__node_set, old_node,
+		     f2ptr new_node = f2__graph_node__new(cause, node_label);
+		     raw__ptypehash__add(cause, new_node_old_node_ptypehash, old_node, new_node);
+		     f2__graph__add_node(cause, graph, new_node);
+		     );
+    }
+    {
+      f2ptr this__edge_set = f2__graph__edge_set(cause, this);
+      set__iteration(cause, this__edge_set, old_edge,
+		     f2ptr edge_label     = f2__graph_edge__label(     cause, old_edge);
+		     f2ptr old_left_node  = f2__graph_edge__left_node( cause, old_edge);
+		     f2ptr old_right_node = f2__graph_edge__right_node(cause, old_edge);
+		     f2ptr new_left_node  = raw__ptypehash__lookup(cause, new_node_old_node_ptypehash, old_left_node);
+		     f2ptr new_right_node = raw__ptypehash__lookup(cause, new_node_old_node_ptypehash, old_right_node);
+		     f2ptr new_edge       = f2__graph_edge__new(cause, edge_label, new_left_node, new_right_node);
+		     f2__graph__add_edge(cause, graph, new_edge);
+		     );
+    }
+  }
+  return graph;
+}
+
+f2ptr f2__graph__copy_with_node_label(f2ptr cause, f2ptr this, f2ptr node_label) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__copy_with_node_label(cause, this, node_label, node_label);
+}
+def_pcfunk2(graph__copy_with_node_label, this, node_label, return f2__graph__copy_with_node_label(this_cause, this, node_label));
+
+
 f2ptr raw__graph__node_isomorphisms(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr isomorphisms = nil;
   {
@@ -1372,6 +1409,7 @@ void f2__graph__initialize() {
   f2__primcfunk__init__1(graph__random_nonempty_strict_subgraph, this,                               "When this graph contains N nodes, returns a random subgraph with N/2 nodes.  This graph must have at least 2 nodes.");
   f2__primcfunk__init__2(graph__minus,                           this, that,                         "Returns a subgraph of this graph without the nodes in that graph.");
   f2__primcfunk__init__1(graph__copy,                            this,                               "Returns a new graph that is a copy of this graph.");
+  f2__primcfunk__init__2(graph__copy_with_node_label,            this, node_label,                   "Returns a new graph that is a copy of this graph replacing node labels with given node_label.");
   f2__primcfunk__init__2(graph__node_isomorphisms,               this, node,                         "Returns all single node isomorphisms between this graph and a graph_node.");
   f2__primcfunk__init__4(graph__edges_with_label_between_nodes,  this, label, left_node, right_node, "Returns edges directed from the left_node to the right_node that have the label in this graph.");
   f2__primcfunk__init__3(graph__edges_between_nodes,             this, left_node, right_node,        "Returns edges directed from the left_node to the right_node.");

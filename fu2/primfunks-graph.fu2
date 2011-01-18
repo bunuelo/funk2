@@ -32,6 +32,7 @@
 [globalize-funk graph-random_nonempty_strict_subgraph &primfunk:graph__random_nonempty_strict_subgraph]
 [globalize-funk graph-minus                           &primfunk:graph__minus]
 [globalize-funk graph-copy                            &primfunk:graph__copy]
+[globalize-funk graph-copy_with_node_label            &primfunk:graph__copy_with_node_label]
 [globalize-funk graph-node_isomorphisms               &primfunk:graph__node_isomorphisms]
 [globalize-funk graph-edges_with_label_between_nodes  &primfunk:graph__edges_with_label_between_nodes]
 [globalize-funk graph-as-dot_code                     &primfunk:graph__as__dot_code]

@@ -1620,6 +1620,28 @@ void funk2_gtk__menu_item__set_submenu(funk2_gtk_t* this, GtkWidget* widget, Gtk
 
 
 
+// check_menu_item
+
+GtkWidget* funk2_gtk__check_menu_item__new(funk2_gtk_t* this, u8* label) {
+  GtkWidget* check_menu_item;
+  {
+    gdk_threads_enter();
+    check_menu_item = gtk_check_menu_item_new_with_label((char*)label);
+    gdk_threads_leave();
+  }
+  return check_menu_item;
+}
+
+void funk2_gtk__check_menu_item__set_submenu(funk2_gtk_t* this, GtkWidget* widget, GtkWidget* submenu) {
+  {
+    gdk_threads_enter();
+    gtk_check_menu_item_set_submenu(GTK_CHECK_MENU_ITEM(widget), GTK_WIDGET(submenu));
+    gdk_threads_leave();
+  }
+}
+
+
+
 // menu
 
 GtkMenu* funk2_gtk__menu__new(funk2_gtk_t* this) {
@@ -4384,6 +4406,37 @@ f2ptr f2__gtk__menu_item__set_submenu(f2ptr cause, f2ptr widget, f2ptr submenu) 
 def_pcfunk2(gtk__menu_item__set_submenu, widget, submenu, return f2__gtk__menu_item__set_submenu(this_cause, widget, submenu));
 
 
+// check_menu_item
+
+f2ptr raw__gtk__check_menu_item__new(f2ptr cause, f2ptr label) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    u64 label__length;
+    u8* label__str;
+    label__length = raw__string__length(cause, label);
+    label__str    = (u8*)alloca(label__length + 1);
+    raw__string__str_copy(cause, label, label__str);
+    label__str[label__length] = 0;
+    
+    GtkWidget* check_menu_item = funk2_gtk__check_menu_item__new(&(__funk2.gtk), label__str);
+    return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(check_menu_item)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__check_menu_item__new(f2ptr cause, f2ptr label) {
+  if (! raw__string__is_type(cause, label)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__check_menu_item__new(cause, label);
+}
+def_pcfunk1(gtk__check_menu_item__new, label, return f2__gtk__check_menu_item__new(this_cause, label));
+
+
 // menu
 
 f2ptr raw__gtk__menu__new(f2ptr cause) {
@@ -5304,6 +5357,10 @@ void f2__gtk__initialize() {
   
   f2__primcfunk__init__1(gtk__menu_item__new,         label,           "Returns a new GtkMenuItem with label.");
   f2__primcfunk__init__2(gtk__menu_item__set_submenu, widget, submenu, "Sets the submenu for a menu_item.");
+  
+  // check_menu_item
+  
+  f2__primcfunk__init__1(gtk__check_menu_item__new, label, "Returns a new GtkMenuItem with label.");
   
   // menu
   

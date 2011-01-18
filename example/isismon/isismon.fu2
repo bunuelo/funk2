@@ -93,7 +93,10 @@
 					      resource
 					      
 					      resource_menu_item
-					      resource_menu]
+					      resource_menu
+					      
+					      debugging_mode_check_menu_item
+					      ]
   [new [initial-isismon_agent_agency_menu initial-resource]
        [= isismon_agent_agency_menu initial-isismon_agent_agency_menu]
        [= resource                  initial-resource]
@@ -101,6 +104,13 @@
        [= resource_menu_item [gtk-menu_item-new [format nil [get resource name]]]]
        [= resource_menu      [gtk-menu-new]]
        [set resource_menu_item submenu resource_menu]
+       
+       [= debugging_mode_check_menu_item [gtk-check_menu_item-new 'Debugging Mode']]
+       [have debugging_mode_check_menu_item signal_connect 'toggled'
+	     [funk []
+		   [set resource debug [get debugging_mode_check_menu_item active]]
+		   [terminal_format standard-terminal '\n' [if [get resource debug] 'Enabling' 'Disabling'] ' debugging mode for ' [get [get resource mind] name] '\'s ' [get resource name] ' resource.']]
+	     nil]
        
        ]]
 

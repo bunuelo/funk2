@@ -119,6 +119,7 @@
 				
 				entry
 				
+				meta_mental_isismon_knowledge
 				mental_knowledge_isismon_knowledge
 				meta_physical_isismon_knowledge
 				physical_isismon_knowledge
@@ -305,6 +306,9 @@
        [have vbox pack_start entry nil nil 0]
        
        
+       [= meta_mental_isismon_knowledge [new isismon_knowledge this `meta_mental_knowledge]]
+       [have vbox pack_start [get meta_mental_isismon_knowledge widget] nil nil 0]
+       
        [= mental_knowledge_isismon_knowledge [new isismon_knowledge this `mental_knowledge]]
        [have vbox pack_start [get mental_knowledge_isismon_knowledge widget] nil nil 0]
        
@@ -339,6 +343,7 @@
     ]]
 
 [deftypefunk isismon_agent execute update []
+  [have meta_mental_isismon_knowledge      update_knowledge_image]
   [have mental_knowledge_isismon_knowledge update_knowledge_image]
   [have meta_physical_isismon_knowledge    update_knowledge_image]
   [have physical_isismon_knowledge         update_knowledge_image]

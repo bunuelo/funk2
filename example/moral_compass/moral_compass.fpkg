@@ -149,6 +149,10 @@
 	     english_language]
    :sources ['self_reflective_layer.fu2']]
 
+[defpackage self_reflective_meta_mental_knowledge_agency
+  :packages [traced_mind]
+   :sources ['self_reflective_meta_mental_knowledge_agency.fu2']]
+
 [defpackage self_reflective_personality_agency
   :packages [traced_mind]
    :sources ['self_reflective_personality_agency.fu2']]

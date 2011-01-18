@@ -58,6 +58,11 @@
     [set  menu_item submenu menu]
     [have menu append check_menu_item]
     
+    [have check_menu_item signal_connect 'toggled'
+	  [funk []
+		[terminal_format standard-terminal '\ntoggled check_menu_item active: ' [get check_menu_item active]]]
+	  nil]
+    
     [have hbox         pack_start   search_image nil nil 0]
     [have hbox         pack_start   search_entry t t 0]
     [have hbox         pack_start   search_button nil nil 0]

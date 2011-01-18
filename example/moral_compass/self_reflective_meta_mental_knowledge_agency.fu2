@@ -26,7 +26,6 @@
        
        this]]
 
-
 [deftypefunk self_reflective_meta_mental_knowledge_agency execute create_knowledge []
   [new meta_semantic_knowledge_base `meta_mental_knowledge [get [get this mind] semantic_realm]]]
 
@@ -42,11 +41,14 @@
 			]]
        nil]]
 
+[globalize translate_mental_knowledge_to_meta_mental_knowledge_resource-debug nil]
+
 [deftypefunk translate_mental_knowledge_to_meta_mental_knowledge_resource execute execute_resource_raw_funk []
   [let [[mental_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `mental_knowledge->meta_mental_knowledge]]]
     [while [let [[event [get mental_knowledge_iterator current]]]
 	     [if [not [null event]]
-		 [prog `[terminal_format standard-terminal '\n  translate mental->meta_mental event: ' event]
+		 [prog [if translate_mental_knowledge_to_meta_mental_knowledge_resource-debug
+			   [terminal_format standard-terminal '\n  translate mental->meta_mental event: ' event]]
 		       [let [[event_type [get event event_type]]]
 			 [cond [[and [is-type `semantic_knowledge_base_event event]
 				     [eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
@@ -54,6 +56,7 @@
 			       [[and [is-type `semantic_frame_event event]
 				     [eq event_type `add]]                          [let [[key_type       [get event key_type]]
 											  [key            [get event key]]]
+										      
 										      ]]
 			       ]]]]
 	     [have mental_knowledge_iterator increment]]]]]

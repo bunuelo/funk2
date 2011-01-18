@@ -29,8 +29,8 @@
 
 'subtraction'
 
-[defunk negative [x]
-  [get 0 minus x]]
+[defmetro negative [x]
+  `[get 0 minus ,x]]
 
 [defmetro - [x :rest rest]
   [if [null rest]
@@ -48,13 +48,20 @@
 
 'division'
 
-[defunk inverse [x]
-  [get 1 divided_by x]]
+[defmetro inverse [x]
+  `[get 1 divided_by ,x]]
 
 [defmetro / [x :rest rest]
   [if [null rest]
       `[inverse ,x]
     `[get ,x divided_by ,[apply &* rest]]]]
+
+
+'modulo'
+
+[defmetro % [x y]
+  `[get ,x modulo ,y]]
+
 
 'equals'
 

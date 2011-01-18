@@ -106,6 +106,8 @@
        [set resource_menu_item submenu resource_menu]
        
        [= debugging_mode_check_menu_item [gtk-check_menu_item-new 'Debugging Mode']]
+       [have resource_menu append debugging_mode_check_menu_item]
+       
        [have debugging_mode_check_menu_item signal_connect 'toggled'
 	     [funk []
 		   [set resource debug [get debugging_mode_check_menu_item active]]

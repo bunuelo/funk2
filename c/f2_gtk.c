@@ -4463,7 +4463,7 @@ f2ptr f2__gtk__check_menu_item__get_active(f2ptr cause, f2ptr widget) {
   if (! raw__gtk_widget__is_type(cause, widget)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__gtk__check_menu_item__get_active(cause, widget, active);
+  return raw__gtk__check_menu_item__get_active(cause, widget);
 }
 def_pcfunk1(gtk__check_menu_item__get_active, widget, return f2__gtk__check_menu_item__get_active(this_cause, check_menu_item));
 

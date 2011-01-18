@@ -42,6 +42,7 @@
 					[mind-wait_to_call [get this mind] builtin_reactive sensory                 propogate_visual_objects_to_visual_knowledge]
 					[mind-wait_to_call [get this mind] learned_reactive physical_knowledge      translate_visual_knowledge_to_physical_knowledge]
 					[mind-wait_to_call [get this mind] deliberative     meta_physical_knowledge translate_physical_knowledge_to_meta_physical_knowledge]
+					[mind-wait_to_call [get this mind] self_reflective  meta_mental_knowledge   translate_mental_knowledge_to_meta_mental_knowledge]
 					[have this-resource think_to_self 'finished sensory activations.']
 					]]]
 			      ]]]]]

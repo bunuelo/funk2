@@ -145,6 +145,7 @@
 
 [defpackage self_reflective_layer
   :packages [traced_mind
+	     self_reflective_meta_mental_knowledge_agency
 	     self_reflective_personality_agency
 	     english_language]
    :sources ['self_reflective_layer.fu2']]

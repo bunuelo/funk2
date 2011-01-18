@@ -148,6 +148,11 @@
 
 [deftypefunk gtk_widget set submenu [submenu] [gtk-menu_item-set_submenu [get this widget] [get submenu widget]]]
 
+'GtkCheckMenuItem'
+
+[deftypefunk gtk_widget get active []       [gtk-check_menu_item-get_active [get this widget]]]
+[deftypefunk gtk_widget set active [active] [gtk-check_menu_item-set_active [get this widget] active]]
+
 'GtkMenu'
 
 [deftypefunk gtk_menu get     widget []      this]

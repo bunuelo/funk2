@@ -1632,6 +1632,24 @@ GtkWidget* funk2_gtk__check_menu_item__new(funk2_gtk_t* this, u8* label) {
   return check_menu_item;
 }
 
+boolean_t funk2_gtk__check_menu_item__get_active(funk2_gtk_t* this, GtkWidget* widget) {
+  boolean_t active;
+  {
+    gdk_threads_enter();
+    active = gtk_check_menu_item_get_active(GTK_WIDGET(widget)) ? boolean__true : boolean__false;
+    gdk_threads_leave();
+  }
+  return active;
+}
+
+void funk2_gtk__check_menu_item__set_active(funk2_gtk_t* this, GtkWidget* widget, boolean_t active) {
+  {
+    gdk_threads_enter();
+    gtk_check_menu_item_set_active(GTK_WIDGET(widget), active ? TRUE : FALSE);
+    gdk_threads_leave();
+  }
+}
+
 
 // menu
 
@@ -4428,6 +4446,51 @@ f2ptr f2__gtk__check_menu_item__new(f2ptr cause, f2ptr label) {
 def_pcfunk1(gtk__check_menu_item__new, label, return f2__gtk__check_menu_item__new(this_cause, label));
 
 
+f2ptr raw__gtk__check_menu_item__get_active(f2ptr cause, f2ptr widget) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    return f2bool__new(funk2_gtk__check_menu_item__get_active(&(__funk2.gtk), gtk_widget));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__check_menu_item__get_active(f2ptr cause, f2ptr widget) {
+  if (! raw__gtk_widget__is_type(cause, widget)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__check_menu_item__get_active(cause, widget, active);
+}
+def_pcfunk1(gtk__check_menu_item__get_active, widget, return f2__gtk__check_menu_item__get_active(this_cause, check_menu_item));
+
+
+f2ptr raw__gtk__check_menu_item__set_active(f2ptr cause, f2ptr widget, f2ptr active) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    funk2_gtk__check_menu_item__set_active(&(__funk2.gtk), gtk_widget, (active != nil) ? boolean__true : boolean__false);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__check_menu_item__set_active(f2ptr cause, f2ptr widget, f2ptr active) {
+  if (! raw__gtk_widget__is_type(cause, widget)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__check_menu_item__set_active(cause, widget, active);
+}
+def_pcfunk2(gtk__check_menu_item__set_active, widget, active, return f2__gtk__check_menu_item__set_active(this_cause, widget, active));
+
+
 // menu
 
 f2ptr raw__gtk__menu__new(f2ptr cause) {
@@ -5351,7 +5414,9 @@ void f2__gtk__initialize() {
   
   // check_menu_item
   
-  f2__primcfunk__init__1(gtk__check_menu_item__new, label, "Returns a new GtkMenuItem with label.");
+  f2__primcfunk__init__1(gtk__check_menu_item__new,        label,        "Returns a new GtkCheckMenuItem with label.");
+  f2__primcfunk__init__1(gtk__check_menu_item__get_active, this,         "Returns true if this check_menu_item's check box is checked, false otherwise.");
+  f2__primcfunk__init__2(gtk__check_menu_item__set_active, this, active, "Sets this check_menu_item's check box as checked (active) depending on the given boolean active value.");
   
   // menu
   

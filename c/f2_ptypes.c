@@ -1025,7 +1025,7 @@ f2ptr f2__double__power(f2ptr cause, f2ptr this, f2ptr that) {
   }
   return raw__double__power(cause, this, that);
 }
-def_pcfunk2(double__power, this, that, return f2__double__modulo(this_cause, this, that));
+def_pcfunk2(double__power, this, that, return f2__double__power(this_cause, this, that));
 
 
 f2ptr raw__double__modulo(f2ptr cause, f2ptr this, f2ptr that) {

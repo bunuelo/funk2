@@ -41,14 +41,11 @@
 			]]
        nil]]
 
-[globalize translate_physical_knowledge_to_meta_physical_knowledge_resource-debug nil]
-
 [deftypefunk translate_physical_knowledge_to_meta_physical_knowledge_resource execute execute_resource_raw_funk []
   [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->meta_physical_knowledge]]]
     [while [let [[event [get physical_knowledge_iterator current]]]
 	     [if [not [null event]]
-		 [prog [if translate_physical_knowledge_to_meta_physical_knowledge_resource-debug
-			   [terminal_format standard-terminal '\n  translate physical->meta_physical event: ' event]]
+		 [prog [if [get this debug] [terminal_format standard-terminal '\n  translate physical->meta_physical event: ' event]]
 		       [let [[event_type [get event event_type]]]
 			 [cond [[and [is-type `semantic_knowledge_base_event event]
 				     [eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]

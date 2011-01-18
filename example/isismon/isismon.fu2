@@ -88,7 +88,91 @@
 
 
 
+
+[deframe isismon_agent_resource_menu [frame] [isismon_agent_agency_menu
+					      resource
+					      
+					      resource_menu_item
+					      resource_menu]
+  [new [initial-isismon_agent_agency_menu initial-resource]
+       [= isismon_agent_agency_menu initial-isismon_agent_agency_menu]
+       [= resource                  initial-resource]
        
+       [= resource_menu_item [gtk-menu_item-new [format nil [get resource name]]]]
+       [= resource_menu      [gtk-menu-new]]
+       [set resource_menu_item submenu resource_menu]
+       
+       ]]
+
+[deftypefunk isismon_agent_resource_menu get widget []
+  resource_menu_item]
+
+
+[deframe isismon_agent_agency_menu [frame] [isismon_agent_layer_menu
+					    agency
+					    
+					    agency_menu_item
+					    agency_menu]
+  [new [initial-isismon_agent_layer_menu initial-agency]
+       [= isismon_agent_layer_menu initial-isismon_agent_layer_menu]
+       [= agency                   initial-agency]
+       
+       [= agency_menu_item [gtk-menu_item-new [format nil [get agency name]]]]
+       [= agency_menu      [gtk-menu-new]]
+       [set agency_menu_item submenu agency_menu]
+       
+       [mapc [funk [resource]
+		   [let [[isismon_resource_menu [new isismon_agent_resource_menu this resource]]]
+		     [have agency_menu append isismon_resource_menu]]]
+	     [get agency resources]]
+       ]]
+
+[deftypefunk isismon_agent_agency_menu get widget []
+  agency_menu_item]
+
+
+[deframe isismon_agent_layer_menu [frame] [isismon_agent_mind_menu
+					   layer
+					   
+					   layer_menu_item
+					   layer_menu]
+  [new [initial-isismon_agent_mind_menu initial-layer]
+       [= isismon_agent_mind_menu initial-isismon_agent_mind_menu]
+       [= layer                   initial-layer]
+       
+       [= layer_menu_item [gtk-menu_item-new [format nil [get layer name]]]]
+       [= layer_menu      [gtk-menu-new]]
+       [set layer_menu_item submenu layer_menu]
+       
+       [mapc [funk [agency]
+		   [let [[isismon_agency_menu [new isismon_agent_agency_menu this agency]]]
+		     [have layer_menu append isismon_agency_menu]]]
+	     [get layer agencies]]
+       ]]
+
+[deftypefunk isismon_agent_layer_menu get widget []
+  layer_menu_item]
+
+
+[deframe isismon_agent_mind_menu [frame] [isismon_agent
+					  
+					  mind_menu_item
+					  mind_menu]
+  [new [initial-isismon_agent]
+       [= isismon_agent initial-isismon_agent]
+       
+       [= mind_menu_item [gtk-menu_item-new 'Mind']]
+       [= mind_menu      [gtk-menu-new]]
+       [set mind_menu_item submenu mind_menu]
+       
+       [mapc [funk [layer]
+		   [let [[isismon_layer_menu [new isismon_agent_layer_menu this layer]]]
+		     [have mind_menu append isismon_layer_menu]]]
+	     [get [get [get isismon_agent isis_agent] mind] layers]]
+       ]]
+
+[deftypefunk isismon_agent_mind_menu get widget []
+  mind_menu_item]
 				
 				
 
@@ -116,6 +200,7 @@
 				view_self_reflective_knowledge_menu_item
 				view_self_conscious_knowledge_menu_item
 				view_all_knowledge_menu_item
+				isismon_agent_mind_menu
 				
 				entry
 				
@@ -278,6 +363,9 @@
 		       [fiber [funk [] [dot_code-gview dot_code]] nil]]]]
 	     nil]
        [have view_menu append view_all_knowledge_menu_item]
+       
+       [= isismon_agent_mind_menu [new isismon_agent_mind_menu this]]
+       [have menu_bar append isismon_agent_mind_menu]
        
        
        [= entry [gtk-entry-new]]

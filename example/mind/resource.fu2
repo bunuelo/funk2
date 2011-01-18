@@ -33,7 +33,8 @@
 			   done
 			   trace_story
 			   think_story
-			   resource_initializing_mutex]
+			   resource_initializing_mutex
+			   debug]
   [new [initial-name initial-active_funk]
        [= resource_initializing_mutex [new traced_mutex]] [have resource_initializing_mutex lock]
        [= fiber_starting_mutex        [new traced_mutex]] [have fiber_starting_mutex        lock]

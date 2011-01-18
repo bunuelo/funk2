@@ -41,14 +41,11 @@
 			]]
        nil]]
 
-[globalize translate_mental_knowledge_to_meta_mental_knowledge_resource-debug nil]
-
 [deftypefunk translate_mental_knowledge_to_meta_mental_knowledge_resource execute execute_resource_raw_funk []
   [let [[mental_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `mental_knowledge->meta_mental_knowledge]]]
     [while [let [[event [get mental_knowledge_iterator current]]]
 	     [if [not [null event]]
-		 [prog [if translate_mental_knowledge_to_meta_mental_knowledge_resource-debug
-			   [terminal_format standard-terminal '\n  translate mental->meta_mental event: ' event]]
+		 [prog [if [get this debug] [terminal_format standard-terminal '\n  translate mental->meta_mental event: ' event]]
 		       [let [[event_type [get event event_type]]]
 			 [cond [[and [is-type `semantic_knowledge_base_event event]
 				     [eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]

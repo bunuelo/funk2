@@ -4465,7 +4465,7 @@ f2ptr f2__gtk__check_menu_item__get_active(f2ptr cause, f2ptr widget) {
   }
   return raw__gtk__check_menu_item__get_active(cause, widget);
 }
-def_pcfunk1(gtk__check_menu_item__get_active, widget, return f2__gtk__check_menu_item__get_active(this_cause, check_menu_item));
+def_pcfunk1(gtk__check_menu_item__get_active, widget, return f2__gtk__check_menu_item__get_active(this_cause, widget));
 
 
 f2ptr raw__gtk__check_menu_item__set_active(f2ptr cause, f2ptr widget, f2ptr active) {

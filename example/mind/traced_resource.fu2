@@ -22,9 +22,25 @@
 
 [deframe traced_resource [resource] []
   [new [initial-name initial-active_funk]
-       [construct resource initial-name initial-active_funk]
-       
-       ]]
+       [let [[wrapped_active_funk [get this wrapped_active_funk initial-active_funk]]]
+	 [construct resource initial-name wrapped_active_funk]
+	 
+	 ]]]
+
+[deftypefunk traced_resource get wrapped_active_funk [active_funk]
+  [let [[active_funk-args [get active_funk args]]]
+    [eval `[let [[this ,this]]
+	     [funk ,active_funk-args
+		    [let [[semantic_action_event [new semantic_action_event [get [get this mind] semantic_realm]]]]
+		      [semantic-add semantic_action_event property-action_name `active]
+		      [semantic-add semantic_action_event relationship-agent   [get this resource_semantic_frame]]
+		      [have [get [get this mind] semantic_knowledge_base `mental_knowledge] add_semantic_frame semantic_action_event]
+		      
+		      [let [[result [apply active_funk [conslist @active_funk-args]]]]
+			
+			[have [get [get this mind] semantic_knowledge_base `mental_knowledge] remove_semantic_frame semantic_action_event]
+			
+			result]]]]]]]
 
 [deftypefunk traced_resource get resource_semantic_frame []
   [let [[resource_semantic_frame [type-get resource this resource_semantic_frame]]]

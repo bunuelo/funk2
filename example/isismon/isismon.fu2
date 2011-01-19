@@ -259,7 +259,7 @@
 		   [let [[isismon_layer_menu [new isismon_agent_layer_menu this layer]]]
 		     [= isismon_layer_menus [cons isismon_layer_menu isismon_layer_menus]]
 		     [have mind_menu append isismon_layer_menu]]]
-	     [get [get [get isismon_agent isis_agent] mind] layers]]
+	     [have [get [get [get isismon_agent isis_agent] mind] layers] sort [funk [x y] [> [get x index] [get y index]]]]]
        ]]
 
 [deftypefunk isismon_agent_mind_menu get widget []
@@ -583,8 +583,10 @@
 
 [defunk isismon_agent-new_from_file [isismon_project filename]
   [terminal_format standard-terminal '\nIsisMon Agent: Loading ' filename '.']
-  [isis_agent-new_from_chunk [get isismon_project isis_world] [get [chunk-load filename] inflated]]
-  [terminal_format standard-terminal '\nIsisMon Agent: Load agent complete.']]
+  [let [[isis_agent_body [isis_agent_body-new_from_chunk [get isismon_project isis_world] [get [chunk-load filename] inflated]]]]
+    [let [[this [new isismon_agent isismon_project isis_agent_body]]]
+      [terminal_format standard-terminal '\nIsisMon Agent: Load agent complete.']
+      this]]]
 
 
 [deframe isismon_export_movie_dialog [frame] [isismon

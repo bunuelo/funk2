@@ -581,6 +581,11 @@
   [have [get [get isis_agent as-chunk] deflated] save filename]
   [terminal_format standard-terminal '\nIsisMon Agent: Save agent complete.']]
 
+[defunk isismon_agent-new_from_file [isismon_project filename]
+  [terminal_format standard-terminal '\nIsisMon Agent: Loading ' filename '.']
+  [isis_agent-new_from_chunk [get isismon_project isis_world] [get [chunk-load filename] inflated]]
+  [terminal_format standard-terminal '\nIsisMon Agent: Load agent complete.']]
+
 
 [deframe isismon_export_movie_dialog [frame] [isismon
 					      save_dialog]
@@ -646,6 +651,39 @@
 			 [let [[filename [get open_dialog filename]]]
 			   [have open_dialog destroy]
 			   [have isismon open_project filename]]
+		       [have open_dialog destroy]]]]
+	     nil]
+       
+       [have open_dialog update_preview_event-signal_connect
+	     [funk []
+		   [let [[preview_filename [get open_dialog preview_filename]]]
+		     [set preview_label text [stringlist-intersperse [have [format nil preview_filename] split '/'] '\n']]
+		     [set open_dialog preview_widget_active t]]]
+	     nil]
+       
+       [have open_dialog show_all]]]
+
+
+[deframe isismon_open_agent_dialog [frame] [isismon
+					    open_dialog
+					    preview_label]
+  [new [initial-isismon]
+       [= isismon initial-isismon]
+       [= open_dialog   [gtk-file_chooser_dialog-new_for_file_open [get isismon window]]]
+       [= preview_label [gtk-label-new '']]
+       
+       [have open_dialog add_file_filter_pattern 'IsisMon Agent Files (*.isis-agent)' '*.isis-agent']
+       [have open_dialog add_file_filter_pattern 'All Files (*.*)'                    '*.*']
+       [set  open_dialog current_folder [get [get isismon preferences] agent_directory]]
+       [set  open_dialog preview_widget preview_label]
+       
+       [have open_dialog response_event-signal_connect
+	     [funk [event_frame]
+		   [let [[response_id [have event_frame lookup `response_id]]]
+		     [if [eq response_id GTK_RESPONSE_ACCEPT]
+			 [let [[filename [get open_dialog filename]]]
+			   [have open_dialog destroy]
+			   [have isismon open_agent filename]]
 		       [have open_dialog destroy]]]]
 	     nil]
        
@@ -1124,6 +1162,7 @@
 			  project_new_ralph_agent_menu_item
 			  project_new_lauren_agent_menu_item
 			  project_new_macy_agent_menu_item
+			  project_open_agent_menu_item
 			  simulation_menu_item
 			  simulation_menu
 			  simulation_run_initialization_sequence_menu_item
@@ -1217,11 +1256,13 @@
 			     [= project_new_ralph_agent_menu_item  [gtk-menu_item-new 'New Ralph Agent']]
 			     [= project_new_lauren_agent_menu_item [gtk-menu_item-new 'New Lauren Agent']]
 			     [= project_new_macy_agent_menu_item   [gtk-menu_item-new 'New Macy Agent']]
+			     [= project_open_agent_menu_item       [gtk-menu_item-new 'Open Agent...']]
 			     [have menu_bar          append  project_menu_item]
 			     [set  project_menu_item submenu project_menu]
 			     [have project_menu      append  project_new_ralph_agent_menu_item]
 			     [have project_menu      append  project_new_lauren_agent_menu_item]
 			     [have project_menu      append  project_new_macy_agent_menu_item]
+			     [have project_menu      append  project_open_agent_menu_item]
 			     
 			     [have project_new_ralph_agent_menu_item signal_connect 'activate'
 				   [funk []
@@ -1236,6 +1277,11 @@
 			     [have project_new_macy_agent_menu_item signal_connect 'activate'
 				   [funk []
 					 [have this create_new_agent `Macy]]
+				   nil]
+			     
+			     [have file_open_agent_menu_item signal_connect 'activate'
+				   [funk []
+					 [new isismon_open_agent_dialog this]]
 				   nil]
 			     
 			     [= simulation_menu_item                             [gtk-menu_item-new 'Simulation']]
@@ -1350,7 +1396,8 @@
   [set simulation_view_initialization_events_menu_item  sensitive t]
   [set project_new_ralph_agent_menu_item                sensitive t]
   [set project_new_lauren_agent_menu_item               sensitive t]
-  [set project_new_macy_agent_menu_item                 sensitive t]]
+  [set project_new_macy_agent_menu_item                 sensitive t]
+  [set project_open_agent_menu_item                     sensitive t]]
 
 [deftypefunk isismon execute disable_project_commands []
   [set file_close_project_menu_item                     sensitive nil]
@@ -1360,7 +1407,8 @@
   [set simulation_view_initialization_events_menu_item  sensitive nil]
   [set project_new_ralph_agent_menu_item                sensitive nil]
   [set project_new_lauren_agent_menu_item               sensitive nil]
-  [set project_new_macy_agent_menu_item                 sensitive nil]]
+  [set project_new_macy_agent_menu_item                 sensitive nil]
+  [set project_open_agent_menu_item                     sensitive nil]]
 
 [deftypefunk isismon execute close_project []
   [have this disable_project_commands]
@@ -1378,6 +1426,14 @@
 [deftypefunk isismon execute save_project [filename]
   [terminal_format standard-terminal '\nIsisMon Save Project: ' filename]
   [have isismon_project save filename]]
+
+
+[deftypefunk isismon execute open_agent [filename]
+  [terminal_format standard-terminal '\nIsisMon Open Agent: ' filename]
+  [let [[new_isismon_agent [isismon_agent-new_from_file isismon_project filename]]]
+    [if new_isismon_agent
+	[have isismon_project add_agent new_isismon_agent]
+      [terminal_format standard-terminal '\nIsisMon Failed to Open Agent: ' filename]]]]
 
 
 [defmetro isismon [:rest args]

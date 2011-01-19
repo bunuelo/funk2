@@ -348,6 +348,7 @@
        [= file_menu_item            [gtk-menu_item-new 'File']]
        [= file_menu                 [gtk-menu-new]]
        [= file_save_agent_menu_item [gtk-menu_item-new 'Save Agent...']]
+       [have file_menu append file_save_agent_menu_item]
        [set file_menu_item submenu file_menu]
        [have menu_bar append file_menu_item]
        

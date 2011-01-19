@@ -281,7 +281,7 @@
        
        [= save_dialog [gtk-file_chooser_dialog-new_for_file_save [get isismon window]]]
        
-       [have save_dialog add_file_filter_pattern 'IsisMon Agent Files (*.isis_agent)' '*.isis-agent']
+       [have save_dialog add_file_filter_pattern 'IsisMon Agent Files (*.isis-agent)' '*.isis-agent']
        [have save_dialog add_file_filter_pattern 'All Files (*.*)'                    '*.*']
        [set  save_dialog current_name 'Untitled Agent.isis-agent']
        [set  save_dialog current_folder [get [get isismon preferences] agent_directory]]
@@ -291,7 +291,7 @@
 		     [if [eq response_id GTK_RESPONSE_ACCEPT]
 			 [let [[filename [get save_dialog filename]]]
 			   [have save_dialog destroy]
-			   [have isismon_agent save_agent filename]]
+			   [have isismon_agent save filename]]
 		       [have save_dialog destroy]]]]
 	     nil]
        [have save_dialog show_all]]]
@@ -560,7 +560,6 @@
 [deftypefunk isismon_agent get widget []
   frame]
 
-
 [deftypefunk isismon_agent execute update_entry []
   [let [[look_for_resource [get [get isis_agent mind] resource `learned_reactive `physical `look_for]]]
     [set entry text [format nil 'look_for-current_object: \t' [have look_for_resource lookup `my_current_object]]]
@@ -577,6 +576,10 @@
 [deftypefunk isismon_agent get retina_image_sequence []
   [get isis_agent retina_image_sequence]]
 
+[deftypefunk isismon_agent execute save [filename]
+  [terminal_format standard-terminal '\nIsisMon Agent: Saving ' filename '.']
+  [have [get [get isis_agent as-chunk] deflated] save filename]
+  [terminal_format standard-terminal '\nIsisMon Agent: Save agent complete.']]
 
 
 [deframe isismon_export_movie_dialog [frame] [isismon
@@ -661,14 +664,20 @@
 				      agent_directory
 				      movie_export_directory]
   [new []
-       [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data']]]
-       [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]]
-       [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Agents']]]
-       [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]
-       [= isis_world_server_hostname 'localhost']
-       [= project_directory          [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]
-       [= agent_directory            [pathname-concat [getenv 'HOME'] 'IsisMon Data/Agents']]
-       [= movie_export_directory     [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]]
+       [have this create_default_directories]
+       [have this fix_invalid_with_defaults]]]
+
+[deftypefunk isismon_preferences execute create_default_directories []
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data']]]
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]]
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Agents']]]
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]]
+
+[deftypefunk isismon_preferences execute fix_invalid_with_defaults []
+  [if [null [have this lookup `isis_world_server_hostname]] [have this add `isis_world_server_hostname 'localhost']]
+  [if [null [have this lookup `project_directory]]          [have this add `project_directory          [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]]
+  [if [null [have this lookup `agent_directory]]            [have this add `agent_directory            [pathname-concat [getenv 'HOME'] 'IsisMon Data/Agents']]]
+  [if [null [have this lookup `movie_export_directory]]     [have this add `movie_export_directory     [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]]
 
 [deftypefunk isismon_preferences execute save [filename]
   [lick-to-file this filename]]
@@ -677,7 +686,8 @@
   [let [[result [shelter [unlick-from-file filename]]]]
     [if [eq result `bug]
 	nil
-      result]]]
+      [prog [have result fix_invalid_with_defaults]
+	    result]]]]
 
 [deframe isismon_preference_editor [frame] [isismon
 					    

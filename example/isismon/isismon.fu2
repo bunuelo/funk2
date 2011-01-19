@@ -1279,7 +1279,7 @@
 					 [have this create_new_agent `Macy]]
 				   nil]
 			     
-			     [have file_open_agent_menu_item signal_connect 'activate'
+			     [have project_open_agent_menu_item signal_connect 'activate'
 				   [funk []
 					 [new isismon_open_agent_dialog this]]
 				   nil]

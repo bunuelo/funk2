@@ -49,7 +49,7 @@
 		       [let [[event_type [get event event_type]]]
 			 [cond [[and [is-type `semantic_knowledge_base_event event]
 				     [eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
-										      [cond [[is-type `semantic_resource_action_event semantic_frame] [terminal_format standard-terminal '\n  translate mental->meta_mental resource action event: ' semantic_frame]]
+										      [cond [[is-type `semantic_resource_action_event semantic_frame] [if [get this debug] [terminal_format standard-terminal '\n  translate mental->meta_mental resource action event: ' semantic_frame]]]
 											    ]
 										      ]]
 			       [[and [is-type `semantic_frame_event event]

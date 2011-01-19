@@ -272,6 +272,31 @@
 
 
 
+[deframe isismon_save_agent_dialog [frame] [isismon_agent
+					    isismon
+					    save_dialog]
+  [new [initial-isismon_agent]
+       [= isismon_agent initial-isismon_agent]
+       [= isismon       [get [get isismon_agent isismon_project] isismon]]
+       
+       [= save_dialog [gtk-file_chooser_dialog-new_for_file_save [get isismon window]]]
+       
+       [have save_dialog add_file_filter_pattern 'IsisMon Agent Files (*.isis_agent)' '*.isis-agent']
+       [have save_dialog add_file_filter_pattern 'All Files (*.*)'                    '*.*']
+       [set  save_dialog current_name 'Untitled Agent.isis-agent']
+       [set  save_dialog current_folder [get [get isismon preferences] agent_directory]]
+       [have save_dialog response_event-signal_connect
+	     [funk [event_frame]
+		   [let [[response_id [have event_frame lookup `response_id]]]
+		     [if [eq response_id GTK_RESPONSE_ACCEPT]
+			 [let [[filename [get save_dialog filename]]]
+			   [have save_dialog destroy]
+			   [have isismon_agent save_agent filename]]
+		       [have save_dialog destroy]]]]
+	     nil]
+       [have save_dialog show_all]]]
+
+
 [deframe isismon_agent [frame] [isis_agent
 				
 				isismon_project
@@ -280,6 +305,9 @@
 				vbox
 				
 				menu_bar
+				file_menu_item
+				file_menu
+				file_save_agent_menu_item
 				tools_menu
 				tools_menu_item
 				tools_mindmon_menu_item
@@ -316,6 +344,17 @@
        
        [= menu_bar        [gtk-menu_bar-new]]
        [have vbox pack_start menu_bar nil nil 0]
+       
+       [= file_menu_item            [gtk-menu_item-new 'File']]
+       [= file_menu                 [gtk-menu-new]]
+       [= file_save_agent_menu_item [gtk-menu_item-new 'Save Agent...']]
+       [set file_menu_item submenu file_menu]
+       [have menu_bar append file_menu_item]
+       
+       [have file_save_agent_menu_item signal_connect 'activate'
+	     [funk []
+		   [new isismon_save_agent_dialog this]]
+	     nil]
        
        [= tools_menu      [gtk-menu-new]]
        [= tools_menu_item [gtk-menu_item-new 'Tools']]
@@ -618,13 +657,16 @@
 
 [deframe isismon_preferences [frame] [isis_world_server_hostname
 				      project_directory
+				      agent_directory
 				      movie_export_directory]
   [new []
        [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data']]]
        [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]]
+       [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Agents']]]
        [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]
-       [= isis_world_server_hostname 'psuche']
+       [= isis_world_server_hostname 'localhost']
        [= project_directory          [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]
+       [= agent_directory            [pathname-concat [getenv 'HOME'] 'IsisMon Data/Agents']]
        [= movie_export_directory     [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]]
 
 [deftypefunk isismon_preferences execute save [filename]
@@ -654,6 +696,12 @@
 					    project_directory__title_label
 					    project_directory__select_button
 					    project_directory__data_label
+					    
+					    agent_directory
+					    agent_directory__hbox
+					    agent_directory__title_label
+					    agent_directory__select_button
+					    agent_directory__data_label
 					    
 					    movie_export_directory
 					    movie_export_directory__hbox
@@ -708,6 +756,33 @@
 		     ]]
 	     nil]
        
+       [= agent_directory [get [get isismon preferences] agent_directory]]
+       [= agent_directory__hbox [gtk-hbox-new 0]]
+       [= agent_directory__title_label   [gtk-label-new             'Agent Directory: ']]
+       [= agent_directory__select_button [gtk-button-new_with_label '...']]
+       [= agent_directory__data_label    [gtk-label-new             agent_directory]]
+       [have agent_directory__hbox pack_start agent_directory__title_label   nil nil 0]
+       [have agent_directory__hbox pack_start agent_directory__select_button nil nil 0]
+       [have agent_directory__hbox pack_start agent_directory__data_label    nil nil 0]
+       [have vbox pack_start agent_directory__hbox nil nil 0]
+       
+       [have agent_directory__select_button signal_connect 'clicked'
+	     [funk []
+		   [let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select window]]]
+		     [set select_dialog current_folder agent_directory]
+		     [have select_dialog response_event-signal_connect
+			   [funk [event_frame]
+				 [let [[response_id [have event_frame lookup `response_id]]]
+				   [if [eq response_id GTK_RESPONSE_ACCEPT]
+				       [prog [= agent_directory [get select_dialog filename]]
+					     [set agent_directory__data_label text agent_directory]
+					     ]]]
+				 [have select_dialog destroy]]
+			   nil]
+		     [have select_dialog show_all]
+		     ]]
+	     nil]
+       
        [= movie_export_directory [get [get isismon preferences] movie_export_directory]]
        [= movie_export_directory__hbox [gtk-hbox-new 0]]
        [= movie_export_directory__title_label   [gtk-label-new             'Movie Export Directory: ']]
@@ -752,6 +827,7 @@
 		   [let [[preferences [new isismon_preferences]]]
 		     [set preferences isis_world_server_hostname [get isis_world_server_hostname__data_entry text]]
 		     [set preferences project_directory          project_directory]
+		     [set preferences agent_directory            agent_directory]
 		     [set preferences movie_export_directory     movie_export_directory]
 		     [set isismon preferences preferences]
 		     [have isismon save_preferences]]
@@ -842,8 +918,7 @@
        
        [have controller_frame add controller_vbox nil nil 0]
        
-       [have vbox pack_start controller_frame nil nil 0]
-       
+       [have vbox pack_start controller_frame nil nil 0]       
        
        'movie image'
        

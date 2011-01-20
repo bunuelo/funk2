@@ -327,18 +327,18 @@
   nil]
 
 [defunk silent-fiber [funk args]
-  [fiber_parallel [funk-new_with_name silent-fiber []
-				      [cause]
-				      [apply funk args]]
-		  nil]]
-
-[defunk fiber [funk args]
-  [define fiber [silent-fiber [funk-new_with_name fiber []
-						  [cause-enable_reactive_critics [this-cause]]
-						  [apply funk args]]
-			      nil]]
+  [define fiber [fiber_parallel [funk-new_with_name silent-fiber []
+						    [cause]
+						    [apply funk args]]
+				nil]]
   [set fiber keep_undead nil]
   fiber]
+
+[defunk fiber [funk args]
+  [silent-fiber [funk-new_with_name fiber []
+				    [cause-enable_reactive_critics [this-cause]]
+				    [apply funk args]]
+		nil]]
 
 [defunk parseq [proc seq]
   [if [null seq]

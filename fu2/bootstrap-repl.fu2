@@ -333,12 +333,12 @@
 		  nil]]
 
 [defunk fiber [funk args]
-  [let [[fiber [silent-fiber [funk-new_with_name fiber []
-						      [cause-enable_reactive_critics [this-cause]]
-						      [apply funk args]]
-				  nil]]]
-    [set fiber keep_undead nil]
-    fiber]]
+  [define fiber [silent-fiber [funk-new_with_name fiber []
+						  [cause-enable_reactive_critics [this-cause]]
+						  [apply funk args]]
+			      nil]]
+  [set fiber keep_undead nil]
+  fiber]
 
 [defunk parseq [proc seq]
   [if [null seq]

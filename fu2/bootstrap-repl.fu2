@@ -861,6 +861,24 @@
 	     `bug]]]
      result]]
 
+[defmetro shelter-debug [:rest codes]
+  `[let* [[result `bug]
+	  [fiber  [silent-fiber [funk-new_with_name shelter []
+						    [set [this-cause] critics nil]
+						    [= result [prog @codes]]]
+				nil]]]
+     [while [and [not [get fiber is_complete]]
+		 [or [not [get fiber paused]] [not [is-type `bug [get fiber value]]]]]
+       [millisleep 100]]
+     [if [get fiber paused]
+	 [let [[bug [get fiber value]]]
+	   [if [not [is-type `bug bug]]
+	       [error bug_type    `shelter-fiber_paused_without_bug
+		      fiber_value bug
+		      stack_trace [get fiber stack_trace]]
+	     `bug]]]
+     result]]
+
 [defmetro error [:rest slot_value_pairs]
   `[error-new `source_filename   [quote ,[cause-lookup source-filename]]
 	      `source_expression [quote ,[cause-lookup source_expression]]

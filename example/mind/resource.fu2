@@ -132,10 +132,9 @@
 
 [deftypefunk resource execute think_to_self [:rest expressions]
   [have cause-resource add_new_think_story_event `I `think [frame direct_object expressions]]
-  [apply &terminal_format [cons standard-terminal `['\nThe ' ,[get this name] ' resource in the ' ,[get [get this agency] name] ' agency in the ' ,[get [get this layer] name] ' layer in ' ,[get [get this mind] name] '\'s mind thinks: ' @expressions]]]
-  `[have-apply [get this world] format `['\nAgent ' ,[get this name] ' Thinks: ' @expressions]]
-   nil
-   ]
+  [if debug
+      [apply &terminal_format [cons standard-terminal `['\nThe ' ,[get this name] ' resource in the ' ,[get [get this agency] name] ' agency in the ' ,[get [get this layer] name] ' layer in ' ,[get [get this mind] name] '\'s mind thinks: ' @expressions]]]]
+  nil]
 
 [deftypefunk resource execute activate [:rest args]
   [let [[successful_activation nil]]

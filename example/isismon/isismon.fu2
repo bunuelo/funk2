@@ -260,7 +260,7 @@
 		   [let [[isismon_layer_menu [new isismon_agent_layer_menu this layer]]]
 		     [= isismon_layer_menus [cons isismon_layer_menu isismon_layer_menus]]
 		     [have mind_menu append isismon_layer_menu]]]
-	     [have [get [get [get isismon_agent isis_agent] mind] layers] sort [funk [x y] [> [get x index] [get y index]]]]]
+	     [have [get [get [get isismon_agent isis_agent] mind] layers] sort [funk [x y] [< [get x index] [get y index]]]]]
        [terminal_format standard-terminal '\nfinished creating layers.']
        ]]
 

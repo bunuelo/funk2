@@ -17,14 +17,17 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defpackage traced_resource
+  :packages [resource
+	     semantic_knowledge_base
+	     semantic_resource
+	     semantic_resource_action_event
+	     semantic_action_sequence]
+   :sources ['traced_resource.fu2']]
 
-'traced_mind'
-
-[deframe traced_mind [mind] []
-  [new []
-       [construct mind]
-       
-       [new semantic_knowledge_base `mental_knowledge [get this semantic_realm]]
-       
-       ]]
+[defpackage traced_mind
+  :packages [mind
+	     semantic_knowledge_base
+	     traced_resource]
+   :sources ['traced_mind.fu2']]
 

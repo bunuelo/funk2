@@ -153,6 +153,7 @@
 				  'example/roboverse/'
 				  'example/socket-client/'
 				  'example/socket-server/'
+				  'example/traced_mind/'
 				  'example/xmlrpc-test/'
 				  ]]
 

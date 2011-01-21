@@ -19,6 +19,6 @@
 
 [defpackage semantic_action_sequence
   :documentation 'Basic knowledge for dealing with agent actions as sequences of agent_action_events.'
-   :packages [semantic_object]
+   :packages [semantic_action_event]
     :sources ['semantic_action_sequence-core.fu2']]
 

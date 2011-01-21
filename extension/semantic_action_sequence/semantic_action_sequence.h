@@ -22,7 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_ACTION_SEQUENCE__H
 #define F2__EXTENSION__SEMANTIC_ACTION_SEQUENCE__H
 
-#include "../../c/funk2.h"
+#include "../semantic_action_event/semantic_action_event.h"
 
 // **
 

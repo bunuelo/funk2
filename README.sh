@@ -10,5 +10,5 @@
 	(echo "")                                                                                 &&
 	(echo "--------------------------------------------------------------------------------") &&
 	(echo "")                                                                                 &&
-	(echo -n "Last Generated: " && date)                                                         ) | tee README) | less
+	(echo -n "README Last Generated: " && date)                                                  ) | tee README) | less
 

@@ -490,6 +490,7 @@
        [have vbox pack_start make_toast__hbox nil nil 0]
        [have make_toast__button signal_connect 'clicked'
 	     [funk []
+		   [print 'make toast']
 		   [have this activate_resource `learned_reactive `physical `make_toast ]]	
      nil]  
              

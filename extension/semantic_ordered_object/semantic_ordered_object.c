@@ -24,7 +24,7 @@
 
 // object-semantic-next-lookup, object-semantic-lookup-apply
 
-f2ptr f2__object__semantic__next__lookup(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+f2ptr f2__object__semantic__ordered__next__lookup(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
@@ -56,17 +56,17 @@ f2ptr f2__object__semantic__next__lookup(f2ptr cause, f2ptr this, f2ptr slot, f2
   f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
   return result;
 }
-export_cefunk2_and_rest(object__semantic__next__lookup, this, slot, args, 0, "");
+export_cefunk2_and_rest(object__semantic__ordered__next__lookup, this, slot, args, 0, "");
 
-f2ptr f2__object__semantic__next__lookup__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__semantic__next__lookup(cause, this, slot, args);
+f2ptr f2__object__semantic__ordered__next__lookup__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__ordered__next__lookup(cause, this, slot, args);
 }
-export_cefunk3(object__semantic__next__lookup__apply, this, slot, args, 0, "");
+export_cefunk3(object__semantic__ordered__next__lookup__apply, this, slot, args, 0, "");
 
 
 // object-semantic-next-add, object-semantic-add-apply
 
-f2ptr f2__object__semantic__next__add(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+f2ptr f2__object__semantic__ordered__next__add(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
@@ -98,17 +98,17 @@ f2ptr f2__object__semantic__next__add(f2ptr cause, f2ptr this, f2ptr slot, f2ptr
   f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
   return result;
 }
-export_cefunk2_and_rest(object__semantic__next__add, this, slot, args, 0, "");
+export_cefunk2_and_rest(object__semantic__ordered__next__add, this, slot, args, 0, "");
 
-f2ptr f2__object__semantic__next__add__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__semantic__next__add(cause, this, slot, args);
+f2ptr f2__object__semantic__ordered__next__add__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__ordered__next__add(cause, this, slot, args);
 }
-export_cefunk3(object__semantic__next__add__apply, this, slot, args, 0, "");
+export_cefunk3(object__semantic__ordered__next__add__apply, this, slot, args, 0, "");
 
 
 // object-semantic-next-remove, object-semantic-remove-apply
 
-f2ptr f2__object__semantic__next__remove(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+f2ptr f2__object__semantic__ordered__next__remove(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
@@ -140,18 +140,18 @@ f2ptr f2__object__semantic__next__remove(f2ptr cause, f2ptr this, f2ptr slot, f2
   f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
   return result;
 }
-export_cefunk2_and_rest(object__semantic__next__remove, this, slot, args, 0, "");
+export_cefunk2_and_rest(object__semantic__ordered__next__remove, this, slot, args, 0, "");
 
-f2ptr f2__object__semantic__next__remove__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__semantic__next__remove(cause, this, slot, args);
+f2ptr f2__object__semantic__ordered__next__remove__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__ordered__next__remove(cause, this, slot, args);
 }
-export_cefunk3(object__semantic__next__remove__apply, this, slot, args, 0, "");
+export_cefunk3(object__semantic__ordered__next__remove__apply, this, slot, args, 0, "");
 
 
 
 // object-semantic-previous-lookup, object-semantic-lookup-apply
 
-f2ptr f2__object__semantic__previous__lookup(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+f2ptr f2__object__semantic__ordered__previous__lookup(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
@@ -183,17 +183,17 @@ f2ptr f2__object__semantic__previous__lookup(f2ptr cause, f2ptr this, f2ptr slot
   f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
   return result;
 }
-export_cefunk2_and_rest(object__semantic__previous__lookup, this, slot, args, 0, "");
+export_cefunk2_and_rest(object__semantic__ordered__previous__lookup, this, slot, args, 0, "");
 
-f2ptr f2__object__semantic__previous__lookup__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__semantic__previous__lookup(cause, this, slot, args);
+f2ptr f2__object__semantic__ordered__previous__lookup__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__ordered__previous__lookup(cause, this, slot, args);
 }
-export_cefunk3(object__semantic__previous__lookup__apply, this, slot, args, 0, "");
+export_cefunk3(object__semantic__ordered__previous__lookup__apply, this, slot, args, 0, "");
 
 
 // object-semantic-previous-add, object-semantic-add-apply
 
-f2ptr f2__object__semantic__previous__add(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+f2ptr f2__object__semantic__ordered__previous__add(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
@@ -225,17 +225,17 @@ f2ptr f2__object__semantic__previous__add(f2ptr cause, f2ptr this, f2ptr slot, f
   f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
   return result;
 }
-export_cefunk2_and_rest(object__semantic__previous__add, this, slot, args, 0, "");
+export_cefunk2_and_rest(object__semantic__ordered__previous__add, this, slot, args, 0, "");
 
-f2ptr f2__object__semantic__previous__add__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__semantic__previous__add(cause, this, slot, args);
+f2ptr f2__object__semantic__ordered__previous__add__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__ordered__previous__add(cause, this, slot, args);
 }
-export_cefunk3(object__semantic__previous__add__apply, this, slot, args, 0, "");
+export_cefunk3(object__semantic__ordered__previous__add__apply, this, slot, args, 0, "");
 
 
 // object-semantic-previous-remove, object-semantic-remove-apply
 
-f2ptr f2__object__semantic__previous__remove(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+f2ptr f2__object__semantic__ordered__previous__remove(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
@@ -267,12 +267,12 @@ f2ptr f2__object__semantic__previous__remove(f2ptr cause, f2ptr this, f2ptr slot
   f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
   return result;
 }
-export_cefunk2_and_rest(object__semantic__previous__remove, this, slot, args, 0, "");
+export_cefunk2_and_rest(object__semantic__ordered__previous__remove, this, slot, args, 0, "");
 
-f2ptr f2__object__semantic__previous__remove__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__semantic__previous__remove(cause, this, slot, args);
+f2ptr f2__object__semantic__ordered__previous__remove__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__ordered__previous__remove(cause, this, slot, args);
 }
-export_cefunk3(object__semantic__previous__remove__apply, this, slot, args, 0, "");
+export_cefunk3(object__semantic__ordered__previous__remove__apply, this, slot, args, 0, "");
 
 
 

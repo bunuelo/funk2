@@ -29,8 +29,12 @@ f2ptr raw__semantic_action_sequence__new(f2ptr cause, f2ptr semantic_realm) {
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_action_sequence"));
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "type"), new__symbol(cause, "name"), new__symbol(cause, "semantic_action_sequence"));
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"),                    new__symbol(cause, "semantic_action_sequence"));
+  raw__semantic_frame__add( cause, this, new__symbol(cause, "type"),                    new__symbol(cause, "name"), new__symbol(cause, "semantic_action_sequence"));
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "start_time-event_stream"), f2__event_stream(cause));
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "end_time-event_stream"),   f2__event_stream(cause));
+  raw__semantic_frame__add( cause, this, new__symbol(cause, "relationship"),            new__symbol(cause, "first_event"), nil);
+  raw__semantic_frame__add( cause, this, new__symbol(cause, "relationship"),            new__symbol(cause, "last_event"),  nil);
   return this;
 }
 
@@ -78,41 +82,71 @@ f2ptr f2__semantic_action_sequence__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_action_sequence__type, thing, 0, "Returns the specific type of object that this semantic_action_sequence is.");
 
 
-f2ptr raw__semantic_action_sequence__relationship__agent__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "agent"), that);
+f2ptr raw__semantic_action_sequence__relationship__first_event__add(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "first_event"), that);
 }
 
-f2ptr f2__semantic_action_sequence__relationship__agent__add(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_action_sequence__relationship__first_event__add(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__semantic_action_sequence__is_type(cause, this)) ||
       (! raw__semantic_frame__is_type(cause, that))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_action_sequence__relationship__agent__add(cause, this, that);
+  return raw__semantic_action_sequence__relationship__first_event__add(cause, this, that);
 }
-export_cefunk2(semantic_action_sequence__relationship__agent__add, this, that, 0, "");
+export_cefunk2(semantic_action_sequence__relationship__first_event__add, this, that, 0, "");
 
 
-f2ptr raw__semantic_action_sequence__relationship__agent__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "agent"), that);
+f2ptr raw__semantic_action_sequence__relationship__first_event__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "first_event"), that);
 }
 
-f2ptr f2__semantic_action_sequence__relationship__agent__remove(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_action_sequence__relationship__first_event__remove(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__semantic_action_sequence__is_type(cause, this)) ||
       (! raw__semantic_frame__is_type(cause, that))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_action_sequence__relationship__agent__remove(cause, this, that);
+  return raw__semantic_action_sequence__relationship__first_event__remove(cause, this, that);
 }
-export_cefunk2(semantic_action_sequence__relationship__agent__remove, this, that, 0, "");
+export_cefunk2(semantic_action_sequence__relationship__first_event__remove, this, that, 0, "");
+
+
+f2ptr raw__semantic_action_sequence__relationship__last_event__add(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "last_event"), that);
+}
+
+f2ptr f2__semantic_action_sequence__relationship__last_event__add(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__semantic_action_sequence__is_type(cause, this)) ||
+      (! raw__semantic_frame__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_action_sequence__relationship__last_event__add(cause, this, that);
+}
+export_cefunk2(semantic_action_sequence__relationship__last_event__add, this, that, 0, "");
+
+
+f2ptr raw__semantic_action_sequence__relationship__last_event__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "last_event"), that);
+}
+
+f2ptr f2__semantic_action_sequence__relationship__last_event__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__semantic_action_sequence__is_type(cause, this)) ||
+      (! raw__semantic_frame__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_action_sequence__relationship__last_event__remove(cause, this, that);
+}
+export_cefunk2(semantic_action_sequence__relationship__last_event__remove, this, that, 0, "");
 
 
 f2ptr f2__semantic_action_sequence_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_action_event")));
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol,     new__symbol(cause, "new"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_sequence"), new__symbol(cause, "semantic_action_sequence__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol,     new__symbol(cause, "is_type"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_sequence"), new__symbol(cause, "semantic_action_sequence__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,         new__symbol(cause, "type"),               f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_sequence"), new__symbol(cause, "semantic_action_sequence__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "relationship-agent"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_sequence"), new__symbol(cause, "semantic_action_sequence__relationship__agent__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "relationship-agent"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_sequence"), new__symbol(cause, "semantic_action_sequence__relationship__agent__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol,     new__symbol(cause, "new"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_sequence"), new__symbol(cause, "semantic_action_sequence__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol,     new__symbol(cause, "is_type"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_sequence"), new__symbol(cause, "semantic_action_sequence__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,         new__symbol(cause, "type"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_sequence"), new__symbol(cause, "semantic_action_sequence__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "relationship-first_event"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_sequence"), new__symbol(cause, "semantic_action_sequence__relationship__first_event__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "relationship-first_event"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_sequence"), new__symbol(cause, "semantic_action_sequence__relationship__first_event__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "relationship-last_event"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_sequence"), new__symbol(cause, "semantic_action_sequence__relationship__last_event__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "relationship-last_event"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_sequence"), new__symbol(cause, "semantic_action_sequence__relationship__last_event__remove")));}
   return this;
 }
 

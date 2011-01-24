@@ -629,7 +629,20 @@ add rel orientation
 									       [have this-resource think_to_self 'i looked left']
 									       [look_left_and_right]]]
 									[t
+									 [have this-resource think_to_self 'centered']]]
+								  [cond [[>  retina_position_vertical 0.4]
+									 [prog [have this-resource think_to_self   'y too positive' retina_position_vertical]
+									       [mind-wait_to_activate mind learned_reactive physical look_down 1 retina_position_vertical]
+									       [have this-resource think_to_self   'i looked down']
+									       [turn_left_and_right]]]
+									[[< retina_position_vertical [- 0 0.4]]
+									 [prog [have this-resource think_to_self   'y too negative' retina_position_vertical]
+									       [mind-wait_to_activate mind learned_reactive physical look_up 1 retina_position_vertical] 
+									       [have this-resource think_to_self 'i looked up']
+									       [turn_left_and_right]]]
+									[t
 									 [have this-resource think_to_self 'centered']]]]
+							      
 							      [prog [have this-resource think_to_self   'no objects in view']
 								    [mind-wait_to_activate mind learned_reactive physical search_for desired_object]
 								    [look_left_and_right]]]
@@ -799,7 +812,10 @@ add rel orientation
 				  [if [< init_orientation 0]
 				      t
 				    nil]]
-	     [should_i_move_forward [turn_right current_neck_angle final_angle]
+	     [should_i_move_forward [current_neck_angle final_angle]
+				    [if [< current_neck_angle final_angle]
+					t
+				      nil]
 				    ]]
 
     [if [or [null [get_visual_objects mind]] [null [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type]]]
@@ -810,26 +826,31 @@ add rel orientation
 	   [init_orientation_difference [abs [- 180 init_orientation]]]
 	   [init_distance               [get_distance object]]
 	   [init_angle                  [find_init_angle init_orientation init_distance]]
+	   [init_speed                  [degree_to_rad [* 33 [init_angle]]]]
 	   [final_neck_angle            [+ [ init_orientation_difference init_angle]]]
 	   [final_distance              [find_final_distance init_orientation init_distance]]
 	   [init_turning_speed          [find_turning_speed init_angle]]
 	   [turn_right                  [should_i_turn_right init_orientation]]
 	   ]
+      [format stout init_orientation init_orientation_difference init_distance init_angle final_neck_angle]
 
       [if turn_right
-	  [prog [mind-wait_to_activate mind learned_reactive physical look_right 1 init_speed]
-		[mind-wait_to_activate mind learned_reactive physical turn_left 1 init_speed]]
-	[prog [mind-wait_to_activate mind learned_reactive physical look_left 1 init_speed]
-		   [mind-wait_to_activate mind learned_reactive physical turn_right 1 init_speed]]]
+	  [prog [mind-wait_to_activate mind learned_reactive physical turn_right 1 init_speed]
+		[mind-wait_to_activate mind learned_reactive physical look_left 1 init_speed]]
+	[prog [mind-wait_to_activate mind learned_reactive physical turn_left 1 init_speed]
+		   [mind-wait_to_activate mind learned_reactive physical look_right 1 init_speed]]]
       
-      [while [> [abs [-[get_neck_angle mind] final_angle]] 3]
-	[if [should_i_move_forward turn_right [get_orientation object] init_orientation]
-	    [mind-wait_to_activate mind learned_reactive physical move_forward 1 30]
-	       [mind-wait_to_activate mind learned_reactive physical move_back 1 30]]
+      [while [> [abs [-[get_neck_angle mind] final_angle]] 8]
+	[if [should_i_move_forward [get_orientation object] init_orientation]
+	    [prog [mind-wait_to_activate mind learned_reactive physical move_forward 1 30]
+		  [center_head_on object]]
+	  [prog [mind-wait_to_activate mind learned_reactive physical move_backward 1 30]
+		[center_head_on object]]]
+
 	[mind-wait_to_activate mind learned_reactive physical center_head_on object]
 	[mind-wait_to_activate mind learned_reactive physical align_body_with_neck]]      
       
-      ]]]]]]]
+      ]]]
 
 '****************************************************************************************'
 [deframe look_carefully_for_resource [traced_resource] [[my_current_object nil]]

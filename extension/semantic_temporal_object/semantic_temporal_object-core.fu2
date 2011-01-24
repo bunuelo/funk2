@@ -25,10 +25,16 @@
 
 [semantic_temporal_object-core_extension_ping]
 
-[defmetro semantic-temporal-next-lookup     [this :rest args] `[object-semantic-next-lookup     ,this `temporal @args]]
-[defmetro semantic-temporal-next-add        [this :rest args] `[object-semantic-next-add        ,this `temporal @args]]
-[defmetro semantic-temporal-next-remove     [this :rest args] `[object-semantic-next-remove     ,this `temporal @args]]
-[defmetro semantic-temporal-previous-lookup [this :rest args] `[object-semantic-previous-lookup ,this `temporal @args]]
-[defmetro semantic-temporal-previous-add    [this :rest args] `[object-semantic-previous-add    ,this `temporal @args]]
-[defmetro semantic-temporal-previous-remove [this :rest args] `[object-semantic-previous-remove ,this `temporal @args]]
+[defmetro semantic-temporal-next-lookup           [this :rest args] `[object-semantic-ordered-next-lookup           ,this `temporal @args]]
+[defmetro semantic-temporal-next-lookup-apply     [this       args] `[object-semantic-ordered-next-lookup-apply     ,this `temporal ,args]]
+[defmetro semantic-temporal-next-add              [this :rest args] `[object-semantic-ordered-next-add              ,this `temporal @args]]
+[defmetro semantic-temporal-next-add-apply        [this       args] `[object-semantic-ordered-next-add-apply        ,this `temporal ,args]]
+[defmetro semantic-temporal-next-remove           [this :rest args] `[object-semantic-ordered-next-remove           ,this `temporal @args]]
+[defmetro semantic-temporal-next-remove-apply     [this       args] `[object-semantic-ordered-next-remove-apply     ,this `temporal ,args]]
+[defmetro semantic-temporal-previous-lookup       [this :rest args] `[object-semantic-ordered-previous-lookup       ,this `temporal @args]]
+[defmetro semantic-temporal-previous-lookup-apply [this       args] `[object-semantic-ordered-previous-lookup-apply ,this `temporal ,args]]
+[defmetro semantic-temporal-previous-add          [this :rest args] `[object-semantic-ordered-previous-add          ,this `temporal @args]]
+[defmetro semantic-temporal-previous-add-apply    [this       args] `[object-semantic-ordered-previous-add-apply    ,this `temporal ,args]]
+[defmetro semantic-temporal-previous-remove       [this :rest args] `[object-semantic-ordered-previous-remove       ,this `temporal @args]]
+[defmetro semantic-temporal-previous-remove-apply [this       args] `[object-semantic-ordered-previous-remove-apply ,this `temporal ,args]]
 

@@ -20,7 +20,7 @@
 // 
 
 #include "semantic_temporal_object.h"
-
+#include "../semantic_ordered_object/semantic_ordered_object.h"
 
 // semantic_temporal_object
 

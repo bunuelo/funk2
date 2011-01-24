@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2010 Bo Morgan.
+// Copyright (c) 2007-2011 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -19,15 +19,17 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__EXTENSION__SEMANTIC_ACTION_SEQUENCE__H
-#define F2__EXTENSION__SEMANTIC_ACTION_SEQUENCE__H
+#ifndef F2__EXTENSION__SEMANTIC_ORDERED_OBJECT__H
+#define F2__EXTENSION__SEMANTIC_ORDERED_OBJECT__H
 
-#include "../semantic_action_event/semantic_action_event.h"
+#include "../semantic_object/semantic_object.h"
+
 
 // **
 
-f2ptr f2__semantic_action_sequence__core_extension_ping(f2ptr cause);
-f2ptr f2__semantic_action_sequence__core_extension_initialize(f2ptr cause);
-f2ptr f2__semantic_action_sequence__core_extension_destroy(f2ptr cause);
+f2ptr f2__semantic_ordered_object__core_extension_ping(f2ptr cause);
+f2ptr f2__semantic_ordered_object__core_extension_initialize(f2ptr cause);
+f2ptr f2__semantic_ordered_object__core_extension_destroy(f2ptr cause);
 
-#endif // F2__EXTENSION__SEMANTIC_ACTION_SEQUENCE__H
+#endif // F2__EXTENSION__SEMANTIC_ORDERED_OBJECT__H
+

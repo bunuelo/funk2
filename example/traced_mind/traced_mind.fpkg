@@ -22,7 +22,7 @@
 	     semantic_knowledge_base
 	     semantic_resource
 	     semantic_resource_action_event
-	     semantic_action_sequence]
+	     semantic_event_sequence]
    :sources ['traced_resource.fu2']]
 
 [defpackage traced_mind

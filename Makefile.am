@@ -1,5 +1,5 @@
 # 
-# Copyright (c) 2007-2010 Bo Morgan.
+# Copyright (c) 2007-2011 Bo Morgan.
 # All rights reserved.
 # 
 # Author: Bo Morgan
@@ -223,7 +223,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/mindmon/libf2e_mindmon.la \
                   extension/movie/libf2e_movie.la \
                   extension/semantic_action_event/libf2e_semantic_action_event.la \
-                  extension/semantic_action_sequence/libf2e_semantic_action_sequence.la \
+                  extension/semantic_event_sequence/libf2e_semantic_event_sequence.la \
                   extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.la \
                   extension/semantic_event/libf2e_semantic_event.la \
                   extension/semantic_frame_ball/libf2e_semantic_frame_ball.la \
@@ -382,7 +382,7 @@ extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SO
 extension_mindmon_libf2e_mindmon_la_SOURCES                                               = extension/mindmon/mindmon.c
 extension_movie_libf2e_movie_la_SOURCES                                                   = extension/movie/movie.c
 extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES                   = extension/semantic_action_event/semantic_action_event.c
-extension_semantic_action_sequence_libf2e_semantic_action_sequence_la_SOURCES             = extension/semantic_action_sequence/semantic_action_sequence.c
+extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES               = extension/semantic_event_sequence/semantic_event_sequence.c
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES = extension/semantic_directed_action_event/semantic_directed_action_event.c
 extension_semantic_event_libf2e_semantic_event_la_SOURCES                                 = extension/semantic_event/semantic_event.c
 extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_SOURCES                       = extension/semantic_frame_ball/semantic_frame_ball.c
@@ -452,8 +452,8 @@ extension_graph_isomorphism_libf2e_graph_isomorphism_la_CFLAGS  = $(lib_libfunk2
 extension_semantic_action_event_libf2e_semantic_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_action_event_libf2e_semantic_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_semantic_action_sequence_libf2e_semantic_action_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_semantic_action_sequence_libf2e_semantic_action_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

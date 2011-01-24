@@ -1,4 +1,4 @@
-'Copyright (c) 2007-2010 Bo Morgan.
+'Copyright (c) 2007-2011 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -17,8 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage semantic_action_sequence
-  :documentation 'Basic knowledge for dealing with agent actions as sequences of agent_action_events.'
-   :packages [semantic_action_event]
-    :sources ['semantic_action_sequence-core.fu2']]
+[defcore semantic_event_sequence 'extension/semantic_event_sequence/.libs/libf2e_semantic_event_sequence.so']
+
+[defcorefunk semantic_event_sequence-core_extension_ping       semantic_event_sequence semantic_event_sequence__core_extension_ping]
+[defcorefunk semantic_event_sequence-core_extension_initialize semantic_event_sequence semantic_event_sequence__core_extension_initialize]
+
+
+[semantic_event_sequence-core_extension_ping]
 

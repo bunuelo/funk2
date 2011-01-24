@@ -41,14 +41,14 @@ f2ptr f2__object__semantic__ordered__next__lookup(f2ptr cause, f2ptr this, f2ptr
     }
   }
   f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "ordered_relationship-next-lookup"), slot);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-ordered-next-lookup"), slot);
   if (raw__larva__is_type(cause, funk)) {
     return funk;
   }
   if (! raw__funkable__is_type(cause, funk)) {
     return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-next-lookup_funk"),
-															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-next-lookup"),
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-ordered-next-lookup_funk"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-ordered-next-lookup"),
 															  new__symbol(cause, "this"),     this,
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
@@ -83,14 +83,14 @@ f2ptr f2__object__semantic__ordered__next__add(f2ptr cause, f2ptr this, f2ptr sl
     }
   }
   f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "ordered_relationship-next-add"), slot);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-ordered-next-add"), slot);
   if (raw__larva__is_type(cause, funk)) {
     return funk;
   }
   if (! raw__funkable__is_type(cause, funk)) {
     return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-next-add_funk"),
-															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-next-add"),
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-ordered-next-add_funk"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-ordered-next-add"),
 															  new__symbol(cause, "this"),     this,
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
@@ -125,14 +125,14 @@ f2ptr f2__object__semantic__ordered__next__remove(f2ptr cause, f2ptr this, f2ptr
     }
   }
   f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "ordered_relationship-next-remove"), slot);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-ordered-next-remove"), slot);
   if (raw__larva__is_type(cause, funk)) {
     return funk;
   }
   if (! raw__funkable__is_type(cause, funk)) {
     return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-next-remove_funk"),
-															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-next-remove"),
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-ordered-next-remove_funk"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-ordered-next-remove"),
 															  new__symbol(cause, "this"),     this,
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
@@ -168,14 +168,14 @@ f2ptr f2__object__semantic__ordered__previous__lookup(f2ptr cause, f2ptr this, f
     }
   }
   f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "ordered_relationship-previous-lookup"), slot);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-ordered-previous-lookup"), slot);
   if (raw__larva__is_type(cause, funk)) {
     return funk;
   }
   if (! raw__funkable__is_type(cause, funk)) {
     return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-previous-lookup_funk"),
-															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-previous-lookup"),
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-ordered-previous-lookup_funk"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-ordered-previous-lookup"),
 															  new__symbol(cause, "this"),     this,
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
@@ -210,14 +210,14 @@ f2ptr f2__object__semantic__ordered__previous__add(f2ptr cause, f2ptr this, f2pt
     }
   }
   f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "ordered_relationship-previous-add"), slot);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-ordered-previous-add"), slot);
   if (raw__larva__is_type(cause, funk)) {
     return funk;
   }
   if (! raw__funkable__is_type(cause, funk)) {
     return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-previous-add_funk"),
-															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-previous-add"),
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-ordered-previous-add_funk"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-ordered-previous-add"),
 															  new__symbol(cause, "this"),     this,
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
@@ -252,14 +252,14 @@ f2ptr f2__object__semantic__ordered__previous__remove(f2ptr cause, f2ptr this, f
     }
   }
   f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "ordered_relationship-previous-remove"), slot);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-ordered-previous-remove"), slot);
   if (raw__larva__is_type(cause, funk)) {
     return funk;
   }
   if (! raw__funkable__is_type(cause, funk)) {
     return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-previous-remove_funk"),
-															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-previous-remove"),
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-ordered-previous-remove_funk"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-ordered-previous-remove"),
 															  new__symbol(cause, "this"),     this,
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));

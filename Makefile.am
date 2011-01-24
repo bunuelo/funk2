@@ -234,6 +234,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/semantic_physical_object/libf2e_semantic_physical_object.la \
                   extension/semantic_resource/libf2e_semantic_resource.la \
                   extension/semantic_resource_action_event/libf2e_semantic_resource_action_event.la \
+                  extension/semantic_temporal_object/libf2e_semantic_temporal_object.la \
                   extension/semantic_visual_object/libf2e_semantic_visual_object.la
 
 #bin_PROGRAMS    = bin/funk2-static
@@ -394,6 +395,7 @@ extension_semantic_object_libf2e_semantic_object_la_SOURCES                     
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_SOURCES             = extension/semantic_physical_object/semantic_physical_object.c
 extension_semantic_resource_libf2e_semantic_resource_la_SOURCES                           = extension/semantic_resource/semantic_resource.c
 extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_SOURCES = extension/semantic_resource_action_event/semantic_resource_action_event.c
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES             = extension/semantic_temporal_object/semantic_temporal_object.c
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES                 = extension/semantic_visual_object/semantic_visual_object.c
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
@@ -507,6 +509,9 @@ extension_semantic_resource_libf2e_semantic_resource_la_CFLAGS  = $(lib_libfunk2
 
 extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h

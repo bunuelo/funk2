@@ -30,12 +30,10 @@ f2ptr raw__semantic_event_sequence__new(f2ptr cause, f2ptr semantic_realm) {
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"),                    new__symbol(cause, "semantic_event_sequence"));
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "type"),                    new__symbol(cause, "name"), new__symbol(cause, "semantic_event_sequence"));
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "start_time-event_stream"), f2__event_stream__new(cause));
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "end_time-event_stream"),   f2__event_stream__new(cause));
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "relationship"),            new__symbol(cause, "first_event"), nil);
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "relationship"),            new__symbol(cause, "last_event"),  nil);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"),         new__symbol(cause, "semantic_event_sequence"));
+  raw__semantic_frame__add( cause, this, new__symbol(cause, "type"),         new__symbol(cause, "name"), new__symbol(cause, "semantic_event_sequence"));
+  raw__semantic_frame__add( cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "first_event"), nil);
+  raw__semantic_frame__add( cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "last_event"),  nil);
   return this;
 }
 
@@ -137,6 +135,11 @@ f2ptr f2__semantic_event_sequence__relationship__last_event__remove(f2ptr cause,
   return raw__semantic_event_sequence__relationship__last_event__remove(cause, this, that);
 }
 export_cefunk2(semantic_event_sequence__relationship__last_event__remove, this, that, 0, "");
+
+
+f2ptr raw__semantic_event_sequence__add_semantic_event_to_end(f2ptr cause, f2ptr this, f2ptr semantic_event) {
+  
+}
 
 
 f2ptr f2__semantic_event_sequence_type__new(f2ptr cause) {

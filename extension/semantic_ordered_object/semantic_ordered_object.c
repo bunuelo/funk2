@@ -92,7 +92,7 @@ export_cefunk2(semantic_ordered_object__ordered_relationship__lookup, this, orde
 
 
 f2ptr raw__semantic_ordered_object__ordered_relationship__add(f2ptr cause, f2ptr this, f2ptr ordered_relationship_name, f2ptr ordered_object) {
-  return raw__semantic_frame__add(causee, this, new__symbol(cause, "ordered_relationship"), ordered_relationship_name, ordered_object);
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "ordered_relationship"), ordered_relationship_name, ordered_object);
 }
 
 f2ptr f2__semantic_ordered_object__ordered_relationship__add(f2ptr cause, f2ptr this, f2ptr ordered_relationship_name, f2ptr ordered_object) {
@@ -106,7 +106,7 @@ export_cefunk3(semantic_ordered_object__ordered_relationship__add, this, ordered
 
 
 f2ptr raw__semantic_ordered_object__ordered_relationship__remove(f2ptr cause, f2ptr this, f2ptr ordered_relationship_name, f2ptr ordered_object) {
-  return raw__semantic_frame__remove(causee, this, new__symbol(cause, "ordered_relationship"), ordered_relationship_name, ordered_object);
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "ordered_relationship"), ordered_relationship_name, ordered_object);
 }
 
 f2ptr f2__semantic_ordered_object__ordered_relationship__remove(f2ptr cause, f2ptr this, f2ptr ordered_relationship_name, f2ptr ordered_object) {

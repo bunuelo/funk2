@@ -22,7 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_TEMPORAL_OBJECT__H
 #define F2__EXTENSION__SEMANTIC_TEMPORAL_OBJECT__H
 
-#include "../semantic_ordered_object/semantic_ordered_object.h"
+#include "../semantic_packable_object/semantic_packable_object.h"
 
 
 // **

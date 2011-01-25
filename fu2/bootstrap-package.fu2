@@ -134,6 +134,7 @@
 				  'extension/semantic_object_type/'
 				  'extension/semantic_object/'
 				  'extension/semantic_ordered_object/'
+				  'extension/semantic_packable_object/'
 				  'extension/semantic_physical_object/'
 				  'extension/semantic_resource/'
 				  'extension/semantic_resource_action_event/'

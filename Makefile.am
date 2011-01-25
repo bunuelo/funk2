@@ -232,6 +232,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/semantic_object_type/libf2e_semantic_object_type.la \
                   extension/semantic_ordered_object/libf2e_semantic_ordered_object.la \
                   extension/semantic_object/libf2e_semantic_object.la \
+                  extension/semantic_packable_object/libf2e_semantic_packable_object.la \
                   extension/semantic_physical_object/libf2e_semantic_physical_object.la \
                   extension/semantic_resource/libf2e_semantic_resource.la \
                   extension/semantic_resource_action_event/libf2e_semantic_resource_action_event.la \
@@ -394,6 +395,7 @@ extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES     
 extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_SOURCES               = extension/semantic_ordered_object/semantic_ordered_object.c
 extension_semantic_object_type_libf2e_semantic_object_type_la_SOURCES                     = extension/semantic_object_type/semantic_object_type.c
 extension_semantic_object_libf2e_semantic_object_la_SOURCES                               = extension/semantic_object/semantic_object.c
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES             = extension/semantic_packable_object/semantic_packable_object.c
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_SOURCES             = extension/semantic_physical_object/semantic_physical_object.c
 extension_semantic_resource_libf2e_semantic_resource_la_SOURCES                           = extension/semantic_resource/semantic_resource.c
 extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_SOURCES = extension/semantic_resource_action_event/semantic_resource_action_event.c
@@ -496,6 +498,9 @@ extension_semantic_object_type_libf2e_semantic_object_type_la_CFLAGS  = $(lib_li
 
 extension_semantic_object_libf2e_semantic_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_object_libf2e_semantic_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

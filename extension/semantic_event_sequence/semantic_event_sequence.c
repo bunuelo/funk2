@@ -165,6 +165,12 @@ export_cefunk2(semantic_event_sequence__relationship__last_event__remove, this, 
 
 f2ptr raw__semantic_event_sequence__add_to_end(f2ptr cause, f2ptr this, f2ptr semantic_event) {
   f2ptr last_event_set = raw__semantic_event_sequence__relationship__last_event__lookup(cause, this);
+  if (raw__larva__is_type(cause, last_event_set)) {
+    return last_event_set;
+  }
+  if (! raw__set__is_type(cause, last_event_set)) {
+    return f2larva__new(cause, 31, nil);
+  }
   if (raw__set__contains(cause, last_event_set, nil)) {
     raw__semantic_event_sequence__relationship__first_event__remove(cause, this, nil);
     raw__semantic_event_sequence__relationship__first_event__add(   cause, this, semantic_event);

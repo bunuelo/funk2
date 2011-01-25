@@ -224,6 +224,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/movie/libf2e_movie.la \
                   extension/semantic_action_event/libf2e_semantic_action_event.la \
                   extension/semantic_event_sequence/libf2e_semantic_event_sequence.la \
+                  extension/semantic_containment_object/libf2e_semantic_containment_object.la \
                   extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.la \
                   extension/semantic_event/libf2e_semantic_event.la \
                   extension/semantic_frame_ball/libf2e_semantic_frame_ball.la \
@@ -385,6 +386,7 @@ extension_mindmon_libf2e_mindmon_la_SOURCES                                     
 extension_movie_libf2e_movie_la_SOURCES                                                   = extension/movie/movie.c
 extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES                   = extension/semantic_action_event/semantic_action_event.c
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES               = extension/semantic_event_sequence/semantic_event_sequence.c
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES       = extension/semantic_containment_object/semantic_containment_object.c
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES = extension/semantic_directed_action_event/semantic_directed_action_event.c
 extension_semantic_event_libf2e_semantic_event_la_SOURCES                                 = extension/semantic_event/semantic_event.c
 extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_SOURCES                       = extension/semantic_frame_ball/semantic_frame_ball.c
@@ -458,6 +460,9 @@ extension_semantic_action_event_libf2e_semantic_action_event_la_CFLAGS  = $(lib_
 
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

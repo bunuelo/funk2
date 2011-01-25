@@ -165,7 +165,7 @@ export_cefunk2(semantic_temporal_object__temporal__previous__remove, this, tempo
 
 
 f2ptr raw__semantic_temporal_object__temporal__contains__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_containment_object__containment_relationship__contains__lookup(cause, this, new__symbol(cause, "temporal"));
+  return raw__semantic_containment_object__containment__contains__lookup(cause, this, new__symbol(cause, "temporal"));
 }
 
 f2ptr f2__semantic_temporal_object__temporal__contains__lookup(f2ptr cause, f2ptr this) {
@@ -178,7 +178,7 @@ export_cefunk1(semantic_temporal_object__temporal__contains__lookup, this, 0, "R
 
 
 f2ptr raw__semantic_temporal_object__temporal__contains__add(f2ptr cause, f2ptr this, f2ptr temporal_object) {
-  return raw__semantic_containment_object__containment_relationship__contains__add(cause, this, new__symbol(cause, "temporal"), temporal_object);
+  return raw__semantic_containment_object__containment__contains__add(cause, this, new__symbol(cause, "temporal"), temporal_object);
 }
 
 f2ptr f2__semantic_temporal_object__temporal__contains__add(f2ptr cause, f2ptr this, f2ptr temporal_object) {

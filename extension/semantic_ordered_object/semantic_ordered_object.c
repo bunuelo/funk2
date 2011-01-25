@@ -334,28 +334,28 @@ f2ptr f2__semantic_ordered_object__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_ordered_object__type, thing, 0, "Returns the specific type of object that this semantic_ordered_object is.");
 
 
-f2ptr raw__semantic_ordered_object__ordered_relationship__next__lookup(f2ptr cause, f2ptr this, f2ptr ordered_relationship__type_name) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "ordered_relationship-next"), ordered_relationship__type_name);
+f2ptr raw__semantic_ordered_object__ordered__next__lookup(f2ptr cause, f2ptr this, f2ptr ordered__type_name) {
+  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "ordered-next"), ordered__type_name);
 }
 
-f2ptr f2__semantic_ordered_object__ordered_relationship__next__lookup(f2ptr cause, f2ptr this, f2ptr ordered_relationship__type_name) {
+f2ptr f2__semantic_ordered_object__ordered__next__lookup(f2ptr cause, f2ptr this, f2ptr ordered__type_name) {
   if (! raw__semantic_ordered_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_ordered_object__ordered_relationship__next__lookup(cause, this, ordered_relationship__type_name);
+  return raw__semantic_ordered_object__ordered__next__lookup(cause, this, ordered__type_name);
 }
-export_cefunk2(semantic_ordered_object__ordered_relationship__next__lookup, this, ordered_relationship__type_name, 0, "Returns the set of ordered_objects that are related to this ordered_object in the given ordered_relationship__type_name-way, returns nil if no such set exists.");
+export_cefunk2(semantic_ordered_object__ordered__next__lookup, this, ordered__type_name, 0, "Returns the set of ordered_objects that are related to this ordered_object in the given ordered__type_name-way, returns nil if no such set exists.");
 
 
-f2ptr raw__semantic_ordered_object__ordered_relationship__next__add(f2ptr cause, f2ptr this, f2ptr ordered_relationship__type_name, f2ptr ordered_object) {
+f2ptr raw__semantic_ordered_object__ordered__next__add(f2ptr cause, f2ptr this, f2ptr ordered__type_name, f2ptr ordered_object) {
   {
-    f2ptr result = raw__semantic_frame__add(cause, this, new__symbol(cause, "ordered_relationship-next"), ordered_relationship__type_name, ordered_object);
+    f2ptr result = raw__semantic_frame__add(cause, this, new__symbol(cause, "ordered-next"), ordered__type_name, ordered_object);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
   {
-    f2ptr result = raw__semantic_frame__add(cause, ordered_object, new__symbol(cause, "ordered_relationship-previous"), ordered_relationship__type_name, this);
+    f2ptr result = raw__semantic_frame__add(cause, ordered_object, new__symbol(cause, "ordered-previous"), ordered__type_name, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -363,25 +363,25 @@ f2ptr raw__semantic_ordered_object__ordered_relationship__next__add(f2ptr cause,
   return nil;
 }
 
-f2ptr f2__semantic_ordered_object__ordered_relationship__next__add(f2ptr cause, f2ptr this, f2ptr ordered_relationship__type_name, f2ptr ordered_object) {
+f2ptr f2__semantic_ordered_object__ordered__next__add(f2ptr cause, f2ptr this, f2ptr ordered__type_name, f2ptr ordered_object) {
   if ((! raw__semantic_ordered_object__is_type(cause, this)) ||
       (! raw__semantic_ordered_object__is_type(cause, ordered_object))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_ordered_object__ordered_relationship__next__add(cause, this, ordered_relationship__type_name, ordered_object);
+  return raw__semantic_ordered_object__ordered__next__add(cause, this, ordered__type_name, ordered_object);
 }
-export_cefunk3(semantic_ordered_object__ordered_relationship__next__add, this, ordered_relationship__type_name, ordered_object, 0, "Adds the given ordered_object to relate to this ordered_object in the given ordered_relationship__type_name-way.");
+export_cefunk3(semantic_ordered_object__ordered__next__add, this, ordered__type_name, ordered_object, 0, "Adds the given ordered_object to relate to this ordered_object in the given ordered__type_name-way.");
 
 
-f2ptr raw__semantic_ordered_object__ordered_relationship__next__remove(f2ptr cause, f2ptr this, f2ptr ordered_relationship__type_name, f2ptr ordered_object) {
+f2ptr raw__semantic_ordered_object__ordered__next__remove(f2ptr cause, f2ptr this, f2ptr ordered__type_name, f2ptr ordered_object) {
   {
-    f2ptr result = raw__semantic_frame__remove(cause, this, new__symbol(cause, "ordered_relationship-next"), ordered_relationship__type_name, ordered_object);
+    f2ptr result = raw__semantic_frame__remove(cause, this, new__symbol(cause, "ordered-next"), ordered__type_name, ordered_object);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
   {
-    f2ptr result = raw__semantic_frame__remove(cause, ordered_object, new__symbol(cause, "ordered_relationship-previous"), ordered_relationship__type_name, this);
+    f2ptr result = raw__semantic_frame__remove(cause, ordered_object, new__symbol(cause, "ordered-previous"), ordered__type_name, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -389,70 +389,70 @@ f2ptr raw__semantic_ordered_object__ordered_relationship__next__remove(f2ptr cau
   return nil;
 }
 
-f2ptr f2__semantic_ordered_object__ordered_relationship__next__remove(f2ptr cause, f2ptr this, f2ptr ordered_relationship__type_name, f2ptr ordered_object) {
+f2ptr f2__semantic_ordered_object__ordered__next__remove(f2ptr cause, f2ptr this, f2ptr ordered__type_name, f2ptr ordered_object) {
   if ((! raw__semantic_ordered_object__is_type(cause, this)) ||
       (! raw__semantic_ordered_object__is_type(cause, ordered_object))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_ordered_object__ordered_relationship__next__remove(cause, this, ordered_relationship__type_name, ordered_object);
+  return raw__semantic_ordered_object__ordered__next__remove(cause, this, ordered__type_name, ordered_object);
 }
-export_cefunk3(semantic_ordered_object__ordered_relationship__next__remove, this, ordered_relationship__type_name, ordered_object, 0, "Removes the given ordered_object to no longer relate to this ordered_object in the given ordered_relationship__type_name-way.");
+export_cefunk3(semantic_ordered_object__ordered__next__remove, this, ordered__type_name, ordered_object, 0, "Removes the given ordered_object to no longer relate to this ordered_object in the given ordered__type_name-way.");
 
 
-f2ptr raw__semantic_ordered_object__ordered_relationship__previous__lookup(f2ptr cause, f2ptr this, f2ptr ordered_relationship__type_name) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "ordered_relationship-previous"), ordered_relationship__type_name);
+f2ptr raw__semantic_ordered_object__ordered__previous__lookup(f2ptr cause, f2ptr this, f2ptr ordered__type_name) {
+  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "ordered-previous"), ordered__type_name);
 }
 
-f2ptr f2__semantic_ordered_object__ordered_relationship__previous__lookup(f2ptr cause, f2ptr this, f2ptr ordered_relationship__type_name) {
+f2ptr f2__semantic_ordered_object__ordered__previous__lookup(f2ptr cause, f2ptr this, f2ptr ordered__type_name) {
   if (! raw__semantic_ordered_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_ordered_object__ordered_relationship__previous__lookup(cause, this, ordered_relationship__type_name);
+  return raw__semantic_ordered_object__ordered__previous__lookup(cause, this, ordered__type_name);
 }
-export_cefunk2(semantic_ordered_object__ordered_relationship__previous__lookup, this, ordered_relationship__type_name, 0, "Returns the set of ordered_objects that are related to this ordered_object in the given ordered_relationship-type_name-way, returns nil if no such set exists.");
+export_cefunk2(semantic_ordered_object__ordered__previous__lookup, this, ordered__type_name, 0, "Returns the set of ordered_objects that are related to this ordered_object in the given ordered-type_name-way, returns nil if no such set exists.");
 
 
-f2ptr raw__semantic_ordered_object__ordered_relationship__previous__add(f2ptr cause, f2ptr this, f2ptr ordered_relationship__type_name, f2ptr ordered_object) {
-  return raw__semantic_ordered_object__ordered_relationship__next__add(cause, ordered_object, ordered_relationship__type_name, this);
+f2ptr raw__semantic_ordered_object__ordered__previous__add(f2ptr cause, f2ptr this, f2ptr ordered__type_name, f2ptr ordered_object) {
+  return raw__semantic_ordered_object__ordered__next__add(cause, ordered_object, ordered__type_name, this);
 }
 
-f2ptr f2__semantic_ordered_object__ordered_relationship__previous__add(f2ptr cause, f2ptr this, f2ptr ordered_relationship__type_name, f2ptr ordered_object) {
+f2ptr f2__semantic_ordered_object__ordered__previous__add(f2ptr cause, f2ptr this, f2ptr ordered__type_name, f2ptr ordered_object) {
   if ((! raw__semantic_ordered_object__is_type(cause, this)) ||
       (! raw__semantic_ordered_object__is_type(cause, ordered_object))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_ordered_object__ordered_relationship__previous__add(cause, this, ordered_relationship__type_name, ordered_object);
+  return raw__semantic_ordered_object__ordered__previous__add(cause, this, ordered__type_name, ordered_object);
 }
-export_cefunk3(semantic_ordered_object__ordered_relationship__previous__add, this, ordered_relationship__type_name, ordered_object, 0, "Adds the given ordered_object to relate to this ordered_object in the given ordered_relationship-type_name-way.");
+export_cefunk3(semantic_ordered_object__ordered__previous__add, this, ordered__type_name, ordered_object, 0, "Adds the given ordered_object to relate to this ordered_object in the given ordered-type_name-way.");
 
 
-f2ptr raw__semantic_ordered_object__ordered_relationship__previous__remove(f2ptr cause, f2ptr this, f2ptr ordered_relationship__type_name, f2ptr ordered_object) {
-  return raw__semantic_ordered_object__ordered_relationship__next__remove(cause, ordered_object, ordered_relationship__type_name, this);
+f2ptr raw__semantic_ordered_object__ordered__previous__remove(f2ptr cause, f2ptr this, f2ptr ordered__type_name, f2ptr ordered_object) {
+  return raw__semantic_ordered_object__ordered__next__remove(cause, ordered_object, ordered__type_name, this);
 }
 
-f2ptr f2__semantic_ordered_object__ordered_relationship__previous__remove(f2ptr cause, f2ptr this, f2ptr ordered_relationship__type_name, f2ptr ordered_object) {
+f2ptr f2__semantic_ordered_object__ordered__previous__remove(f2ptr cause, f2ptr this, f2ptr ordered__type_name, f2ptr ordered_object) {
   if ((! raw__semantic_ordered_object__is_type(cause, this)) ||
       (! raw__semantic_ordered_object__is_type(cause, ordered_object))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_ordered_object__ordered_relationship__previous__remove(cause, this, ordered_relationship__type_name, ordered_object);
+  return raw__semantic_ordered_object__ordered__previous__remove(cause, this, ordered__type_name, ordered_object);
 }
-export_cefunk3(semantic_ordered_object__ordered_relationship__previous__remove, this, ordered_relationship__type_name, ordered_object, 0, "Removes the given ordered_object to no longer relate to this ordered_object in the given ordered_relationship__previous_name-way.");
+export_cefunk3(semantic_ordered_object__ordered__previous__remove, this, ordered__type_name, ordered_object, 0, "Removes the given ordered_object to no longer relate to this ordered_object in the given ordered__previous_name-way.");
 
 
 
 
 f2ptr f2__semantic_ordered_object_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "ordered_relationship-next-lookup"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__ordered_relationship__next__lookup")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "ordered_relationship-next-add"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__ordered_relationship__next__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "ordered_relationship-next-remove"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__ordered_relationship__next__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "ordered_relationship-previous-lookup"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__ordered_relationship__previous__lookup")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "ordered_relationship-previous-add"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__ordered_relationship__previous__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "ordered_relationship-previous-remove"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__ordered_relationship__previous__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "ordered-next-lookup"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__ordered__next__lookup")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "ordered-next-add"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__ordered__next__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "ordered-next-remove"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__ordered__next__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "ordered-previous-lookup"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__ordered__previous__lookup")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "ordered-previous-add"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__ordered__previous__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "ordered-previous-remove"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_ordered_object"), new__symbol(cause, "semantic_ordered_object__ordered__previous__remove")));}
   return this;
 }
 

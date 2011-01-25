@@ -23,7 +23,7 @@
 #define F2__EXTENSION__SEMANTIC_PACKABLE_OBJECT__H
 
 #include "../semantic_ordered_object/semantic_ordered_object.h"
-#include "../semantic_ordered_object/semantic_containment_object.h"
+#include "../semantic_containment_object/semantic_containment_object.h"
 
 
 // **

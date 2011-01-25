@@ -19,6 +19,7 @@
 
 [defpackage semantic_temporal_object
   :documentation 'Basic knowledge for dealing with transitive orderings of objects--useful for temporal and spatial thinking.'
-   :packages [semantic_ordered_object]
+   :packages [semantic_ordered_object
+	      semantic_containment_object]
     :sources ['semantic_temporal_object-core.fu2']]
 

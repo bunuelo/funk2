@@ -211,7 +211,7 @@ f2ptr raw__semantic_event_sequence__add_to_beginning(f2ptr cause, f2ptr this, f2
 	f2ptr first_event = f2__cons__car(cause, iter);
 	{
 	  raw__semantic_event_sequence__relationship__first_event__remove(cause, this,        first_event);
-	  raw__semantic_temporal_object__prev__add(                       cause, first_event, semantic_event);
+	  raw__semantic_temporal_object__previous__add(                   cause, first_event, semantic_event);
 	}
 	iter = f2__cons__cdr(cause, iter);
       }

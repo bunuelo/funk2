@@ -193,6 +193,7 @@ f2ptr f2__semantic_event_sequence__add_to_end(f2ptr cause, f2ptr this, f2ptr sem
       (! raw__semantic_event__is_type(cause, semantic_event))) {
     return f2larva__new(cause, 1, nil);
   }
+  return raw__semantic_event_sequence__add_to_end(cause, this, semantic_event);
 }
 export_cefunk2(semantic_event_sequence__add_to_end, this, semantic_event, 0, "");
 
@@ -227,6 +228,7 @@ f2ptr f2__semantic_event_sequence__add_to_beginning(f2ptr cause, f2ptr this, f2p
       (! raw__semantic_event__is_type(cause, semantic_event))) {
     return f2larva__new(cause, 1, nil);
   }
+  return raw__semantic_event_sequence__add_to_beginning(cause, this, semantic_event);
 }
 export_cefunk2(semantic_event_sequence__add_to_beginning, this, semantic_event, 0, "");
 

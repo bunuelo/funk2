@@ -81,13 +81,26 @@ f2ptr f2__semantic_event_sequence__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_event_sequence__type, thing, 0, "Returns the specific type of object that this semantic_event_sequence is.");
 
 
+f2ptr raw__semantic_event_sequence__relationship__first_event__lookup(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "first_event"));
+}
+
+f2ptr f2__semantic_event_sequence__relationship__first_event__lookup(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_event_sequence__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_event_sequence__relationship__first_event__lookup(cause, this);
+}
+export_cefunk2(semantic_event_sequence__relationship__first_event__lookup, this, 0, "");
+
+
 f2ptr raw__semantic_event_sequence__relationship__first_event__add(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "first_event"), that);
 }
 
 f2ptr f2__semantic_event_sequence__relationship__first_event__add(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__semantic_event_sequence__is_type(cause, this)) ||
-      (! raw__semantic_frame__is_type(cause, that))) {
+      (! raw__semantic_event__is_type(cause, that))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_event_sequence__relationship__first_event__add(cause, this, that);
@@ -101,12 +114,25 @@ f2ptr raw__semantic_event_sequence__relationship__first_event__remove(f2ptr caus
 
 f2ptr f2__semantic_event_sequence__relationship__first_event__remove(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__semantic_event_sequence__is_type(cause, this)) ||
-      (! raw__semantic_frame__is_type(cause, that))) {
+      (! raw__semantic_event__is_type(cause, that))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_event_sequence__relationship__first_event__remove(cause, this, that);
 }
 export_cefunk2(semantic_event_sequence__relationship__first_event__remove, this, that, 0, "");
+
+
+f2ptr raw__semantic_event_sequence__relationship__last_event__lookup(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "last_event"));
+}
+
+f2ptr f2__semantic_event_sequence__relationship__last_event__lookup(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_event_sequence__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_event_sequence__relationship__last_event__lookup(cause, this);
+}
+export_cefunk2(semantic_event_sequence__relationship__last_event__lookup, this, 0, "");
 
 
 f2ptr raw__semantic_event_sequence__relationship__last_event__add(f2ptr cause, f2ptr this, f2ptr that) {
@@ -115,7 +141,7 @@ f2ptr raw__semantic_event_sequence__relationship__last_event__add(f2ptr cause, f
 
 f2ptr f2__semantic_event_sequence__relationship__last_event__add(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__semantic_event_sequence__is_type(cause, this)) ||
-      (! raw__semantic_frame__is_type(cause, that))) {
+      (! raw__semantic_event__is_type(cause, that))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_event_sequence__relationship__last_event__add(cause, this, that);
@@ -129,7 +155,7 @@ f2ptr raw__semantic_event_sequence__relationship__last_event__remove(f2ptr cause
 
 f2ptr f2__semantic_event_sequence__relationship__last_event__remove(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__semantic_event_sequence__is_type(cause, this)) ||
-      (! raw__semantic_frame__is_type(cause, that))) {
+      (! raw__semantic_event__is_type(cause, that))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_event_sequence__relationship__last_event__remove(cause, this, that);
@@ -137,9 +163,9 @@ f2ptr f2__semantic_event_sequence__relationship__last_event__remove(f2ptr cause,
 export_cefunk2(semantic_event_sequence__relationship__last_event__remove, this, that, 0, "");
 
 
-f2ptr raw__semantic_event_sequence__add_semantic_event_to_end(f2ptr cause, f2ptr this, f2ptr semantic_event) {
+//f2ptr raw__semantic_event_sequence__add_to_end(f2ptr cause, f2ptr this, f2ptr semantic_event) {
   
-}
+//}
 
 
 f2ptr f2__semantic_event_sequence_type__new(f2ptr cause) {

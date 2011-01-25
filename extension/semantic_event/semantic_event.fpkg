@@ -19,6 +19,6 @@
 
 [defpackage semantic_event
   :documentation 'Basic knowledge for dealing with events in time.'
-   :packages [semantic_object]
+   :packages [semantic_temporal_object]
     :sources ['semantic_event-core.fu2']]
 

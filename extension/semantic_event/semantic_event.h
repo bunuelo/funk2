@@ -22,7 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_EVENT__H
 #define F2__EXTENSION__SEMANTIC_EVENT__H
 
-#include "../semantic_object/semantic_object.h"
+#include "../semantic_temporal_object/semantic_temporal_object.h"
 
 
 // **

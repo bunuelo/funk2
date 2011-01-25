@@ -91,7 +91,7 @@ f2ptr f2__semantic_event_sequence__relationship__first_event__lookup(f2ptr cause
   }
   return raw__semantic_event_sequence__relationship__first_event__lookup(cause, this);
 }
-export_cefunk2(semantic_event_sequence__relationship__first_event__lookup, this, 0, "");
+export_cefunk1(semantic_event_sequence__relationship__first_event__lookup, this, 0, "");
 
 
 f2ptr raw__semantic_event_sequence__relationship__first_event__add(f2ptr cause, f2ptr this, f2ptr that) {
@@ -132,7 +132,7 @@ f2ptr f2__semantic_event_sequence__relationship__last_event__lookup(f2ptr cause,
   }
   return raw__semantic_event_sequence__relationship__last_event__lookup(cause, this);
 }
-export_cefunk2(semantic_event_sequence__relationship__last_event__lookup, this, 0, "");
+export_cefunk1(semantic_event_sequence__relationship__last_event__lookup, this, 0, "");
 
 
 f2ptr raw__semantic_event_sequence__relationship__last_event__add(f2ptr cause, f2ptr this, f2ptr that) {

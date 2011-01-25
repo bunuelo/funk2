@@ -1,4 +1,4 @@
-'Copyright (c) 2007-2010 Bo Morgan.
+'Copyright (c) 2007-2011 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -19,6 +19,6 @@
 
 [defpackage semantic_event
   :documentation 'Basic knowledge for dealing with events in time.'
-   :packages [semantic_object]
+   :packages [semantic_temporal_object]
     :sources ['semantic_event-core.fu2']]
 

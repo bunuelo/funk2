@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2010 Bo Morgan.
+// Copyright (c) 2007-2011 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -22,7 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_ACTION_EVENT__H
 #define F2__EXTENSION__SEMANTIC_ACTION_EVENT__H
 
-#include "../semantic_object/semantic_object.h"
+#include "../semantic_event/semantic_event.h"
 
 
 // **

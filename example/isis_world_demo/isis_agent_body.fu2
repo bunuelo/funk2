@@ -1,4 +1,4 @@
-'Copyright (c) 2007-2010 Bo Morgan.
+'Copyright (c) 2007-2011 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -89,7 +89,7 @@
 
 [defunk isis_agent_body-new_from_chunk [physical_world chunk]
   [let [[lickable_frame [have [get chunk as-lick] unlick]]]
-    [isis_agent-new_from_lickable_frame physical_world lickable_frame]]]
+    [isis_agent_body-new_from_lickable_frame physical_world lickable_frame]]]
 
 [deftypefunk isis_agent_body execute sense_world []
   sense_frame]

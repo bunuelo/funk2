@@ -1,4 +1,4 @@
-'Copyright (c) 2007-2010 Bo Morgan.
+'Copyright (c) 2007-2011 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -21,6 +21,7 @@
 
 [load 'fu2/bootstrap-primobject.fu2']
 [load 'fu2/bootstrap-reader.fu2']
+[load 'fu2/bootstrap-ptypes.fu2']
 [load 'fu2/bootstrap-cons.fu2']
 [load 'fu2/bootstrap-array.fu2']
 [load 'fu2/bootstrap-frame.fu2']

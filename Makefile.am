@@ -1,5 +1,5 @@
 # 
-# Copyright (c) 2007-2010 Bo Morgan.
+# Copyright (c) 2007-2011 Bo Morgan.
 # All rights reserved.
 # 
 # Author: Bo Morgan
@@ -223,15 +223,20 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/mindmon/libf2e_mindmon.la \
                   extension/movie/libf2e_movie.la \
                   extension/semantic_action_event/libf2e_semantic_action_event.la \
+                  extension/semantic_event_sequence/libf2e_semantic_event_sequence.la \
+                  extension/semantic_containment_object/libf2e_semantic_containment_object.la \
                   extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.la \
                   extension/semantic_event/libf2e_semantic_event.la \
                   extension/semantic_frame_ball/libf2e_semantic_frame_ball.la \
                   extension/semantic_knowledge_base/libf2e_semantic_knowledge_base.la \
                   extension/semantic_object_type/libf2e_semantic_object_type.la \
+                  extension/semantic_ordered_object/libf2e_semantic_ordered_object.la \
                   extension/semantic_object/libf2e_semantic_object.la \
+                  extension/semantic_packable_object/libf2e_semantic_packable_object.la \
                   extension/semantic_physical_object/libf2e_semantic_physical_object.la \
                   extension/semantic_resource/libf2e_semantic_resource.la \
                   extension/semantic_resource_action_event/libf2e_semantic_resource_action_event.la \
+                  extension/semantic_temporal_object/libf2e_semantic_temporal_object.la \
                   extension/semantic_visual_object/libf2e_semantic_visual_object.la
 
 #bin_PROGRAMS    = bin/funk2-static
@@ -381,15 +386,20 @@ extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SO
 extension_mindmon_libf2e_mindmon_la_SOURCES                                               = extension/mindmon/mindmon.c
 extension_movie_libf2e_movie_la_SOURCES                                                   = extension/movie/movie.c
 extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES                   = extension/semantic_action_event/semantic_action_event.c
+extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES               = extension/semantic_event_sequence/semantic_event_sequence.c
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES       = extension/semantic_containment_object/semantic_containment_object.c
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES = extension/semantic_directed_action_event/semantic_directed_action_event.c
 extension_semantic_event_libf2e_semantic_event_la_SOURCES                                 = extension/semantic_event/semantic_event.c
 extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_SOURCES                       = extension/semantic_frame_ball/semantic_frame_ball.c
 extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES               = extension/semantic_knowledge_base/semantic_knowledge_base.c
+extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_SOURCES               = extension/semantic_ordered_object/semantic_ordered_object.c
 extension_semantic_object_type_libf2e_semantic_object_type_la_SOURCES                     = extension/semantic_object_type/semantic_object_type.c
 extension_semantic_object_libf2e_semantic_object_la_SOURCES                               = extension/semantic_object/semantic_object.c
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES             = extension/semantic_packable_object/semantic_packable_object.c
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_SOURCES             = extension/semantic_physical_object/semantic_physical_object.c
 extension_semantic_resource_libf2e_semantic_resource_la_SOURCES                           = extension/semantic_resource/semantic_resource.c
 extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_SOURCES = extension/semantic_resource_action_event/semantic_resource_action_event.c
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES             = extension/semantic_temporal_object/semantic_temporal_object.c
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES                 = extension/semantic_visual_object/semantic_visual_object.c
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
@@ -450,6 +460,12 @@ extension_graph_isomorphism_libf2e_graph_isomorphism_la_CFLAGS  = $(lib_libfunk2
 extension_semantic_action_event_libf2e_semantic_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_action_event_libf2e_semantic_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
+extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
@@ -474,11 +490,17 @@ extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_CFLAGS  = $(
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
+extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
 extension_semantic_object_type_libf2e_semantic_object_type_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_object_type_libf2e_semantic_object_type_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_object_libf2e_semantic_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_object_libf2e_semantic_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -497,6 +519,9 @@ extension_semantic_resource_libf2e_semantic_resource_la_CFLAGS  = $(lib_libfunk2
 
 extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h

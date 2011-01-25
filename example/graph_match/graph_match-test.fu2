@@ -106,24 +106,48 @@ subgraph has no more neighbors ---- infinite loop - problem?
 
 
 
+[defunk time_lattice_creation [n n1 n2 n3]
+  [let* [[time_a [time]]
+	 [the_graph [get [conceptnet-new_from_graph_file 'conceptnet_medium.graph' n] graph]]
+	 [time_b [time]]
+	 [the_lattice [create_lattice the_graph 2 n1 n2 n3]]
+	 [time_c [time]]]
+    [print 'time to load conceptnet graph:']
+    [print [time_difference time_a time_b]]
+    [print 'time to create lattice:']
+    [print [time_difference time_b time_c]]]]
+
+[defunk time_lattice_search [the_lattice]
+  [let* [[time_a [time]]
+	 [subgraph [make_random_n_conceptnet_graph 5 4]]
+	 [results [search_for_subgraph_in_lattice subgraph the_lattice]]
+	 [time_b [time]]]
+    [print 'time to search for subgraph:']
+    [print [time_difference time_a time_b]]]]
+
+[defunk search_for_subgraph_in_lattice [subgraph lattice]
+  [let* [[the_lattice lattice]
+	 [the_subgraph [get subgraph copy_with_node_label nil]]
+	 [the_isomorphisms [get the_lattice error_correcting_subgraph_isomorphisms the_subgraph nil]]
+	 [the_keys [get the_isomorphisms keys]]]
+    [mapc [funk [x] [if [eq [have the_isomorphisms lookup x] nil]
+			[have the_isomorphisms remove x]]]
+	  the_keys]
+    [let [[the_new_keys [get the_isomorphisms keys]]]
+      [have the_new_keys sort [funk [x y]
+				    [> [get [have the_isomorphisms lookup x] cost] [get [have the_isomorphisms lookup y] cost]]]]]]]
+
 [defunk search_for_subgraph_in_graph [subgraph graph]
-  [print 'starting search']
-  [print [time]]
   [let* [[the_lattice [create_lattice graph 2 1 1 5]]
 	 [the_subgraph [get subgraph copy_with_node_label nil]]
 	 [the_isomorphisms [get the_lattice error_correcting_subgraph_isomorphisms the_subgraph nil]]
 	 [the_keys [get the_isomorphisms keys]]]
-    [print 'isomorphisms']
-    [format stdout the_isomorphisms]
-    [print 'the keys']
-    [format stdout the_keys]
-    [print 'mapc']
     [mapc [funk [x] [if [eq [have the_isomorphisms lookup x] nil]
 			[have the_isomorphisms remove x]]]
 	  the_keys]
-    [print 'sort']
-    [have the_keys sort [funk [x y]
-			      [> [get [have the_isomorphisms lookup x] cost] [get [have the_isomorphisms lookup y] cost]]]]]]
+    [let [[the_new_keys [get the_isomorphisms keys]]]
+      [have the_new_keys sort [funk [x y]
+				    [> [get [have the_isomorphisms lookup x] cost] [get [have the_isomorphisms lookup y] cost]]]]]]]
 '
 	 [the_sorted_isomorphisms 
 	  [have the_keys sort 
@@ -137,11 +161,7 @@ subgraph has no more neighbors ---- infinite loop - problem?
 	 [the_lattice [new graph_decomposition_lattice]]
 	 [graph_mappings_otl [new ptypehash]]
 	 [graph_mappings_lto [new ptypehash]]]
-    [print 'starting lattice creation']
-    [print [time]]
     [decompose_single_nodes the_lattice graph graph_mappings_otl graph_mappings_lto]
-    [print 'single nodes decomposed']
-    [print [time]]
     [while [< index number_of_expansions]
       [let [[lattice_graphs [get [get [get the_lattice root_graph_set] elements] as-array]]]
 	[while [< index2 [get lattice_graphs length]]
@@ -156,7 +176,6 @@ subgraph has no more neighbors ---- infinite loop - problem?
 	  [= index2 [+ 1 index2]]]
 	[= index2 0]
 	[= index [+ 1 index]]]]
-    [print 'done']
     the_lattice]]
 
 [defunk decompose_single_nodes [lattice graph graph_mappings_otl graph_mappings_lto]
@@ -244,6 +263,37 @@ subgraph has no more neighbors ---- infinite loop - problem?
       [= index [+ 1 index]]]
     [set_subtract all_neighbors [get subgraph node_set]]
     all_neighbors]]
+
+
+
+[defunk make_random_n_conceptnet_graph [n e]
+  [let* [[index 0]
+	 [index2 0]
+	 [edge_labels [get [conslist `HasProperty `IsA `CapableOf `HasPRerequisite 
+				     `AtLocation `ConceptuallyRelatedTo `UsedFor 
+				     `CausesDesire `MotivatedByGoal `DefinedAs 
+				     `ReceivesAction `HasSubevent `MadeOf `PartOf 
+				     `HasA `Desires `Located] as-array]]
+	 [the_graph [new graph]]
+	 [the_nodes [new array n]]
+	 [nodel [new array n]]]
+    [while [< index n]
+      [set the_nodes elt index [new graph_node index]]
+      [have the_graph add_node [get the_nodes elt index]]
+      [= index [+ 1 index]]]
+    [= index 0]
+    [while [< index n]
+      [= index2 0]
+      [while [< index2 n]
+	[if [!= index index2]
+	    [let [[x [random e]]]
+	      [if [== x 1] 
+		  [have the_graph add_new_edge [get edge_labels elt [random 17]] [get the_nodes elt index] [get the_nodes elt index2]]]]]
+	[= index2 [+ 1 index2]]]
+      [= index [+ 1 index]]]
+    the_graph]]
+
+
 
 '
 [defunk make_random_lattice [size n m1 m2 e]
@@ -377,10 +427,10 @@ subgraph has no more neighbors ---- infinite loop - problem?
 '*********  Random Stuff  *********'
 '**********************************'
 
-'
+
 [defunk time_difference [time_a time_b]
   [/ [- [get time_b nanoseconds_since_1970] [get time_a nanoseconds_since_1970]] 1000000000.0]]
-
+'
 [defunk time_time [funk a b c d]
   [let [[time_a [time]]] 
     [print time_a] 

@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2010 Bo Morgan.
+// Copyright (c) 2007-2011 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -531,6 +531,23 @@ f2ptr f2__integer__square_root(f2ptr cause, f2ptr this) {
 def_pcfunk1(integer__square_root, this, return f2__integer__square_root(this_cause, this));
 
 
+f2ptr raw__integer__modulo(f2ptr cause, f2ptr this, f2ptr that) {
+  s64 this__i    = f2integer__i(this, cause);
+  s64 that__i    = f2integer__i(that, cause);
+  s64 result     = this__i % that__i;
+  return f2integer__new(cause, result);
+}
+
+f2ptr f2__integer__modulo(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__integer__is_type(cause, this)) ||
+      (! raw__integer__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__integer__modulo(cause, this, that);
+}
+def_pcfunk2(integer__modulo, this, that, return f2__integer__modulo(this_cause, this, that));
+
+
 f2ptr raw__integer__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   {
     f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
@@ -601,26 +618,27 @@ f2ptr f2__integer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2p
 
 f2ptr f2integer__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("ptype"), (u8*)"ptype"), nil));
-  {char* slot_name = "is_type";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.is_type__funk);}
-  {char* slot_name = "type";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.type__funk);}
-  {char* slot_name = "new";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.new__funk);}
-  {char* slot_name = "i";                            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.i__funk);}
-  {char* slot_name = "eq";                           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.eq__funk);}
-  {char* slot_name = "eq_hash_value";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.eq_hash_value__funk);}
-  {char* slot_name = "equals";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.equals__funk);}
+  {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.is_type__funk);}
+  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.type__funk);}
+  {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.new__funk);}
+  {char* slot_name = "i";                           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.i__funk);}
+  {char* slot_name = "eq";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.eq__funk);}
+  {char* slot_name = "eq_hash_value";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.eq_hash_value__funk);}
+  {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.equals__funk);}
   {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__loop_free__funk);}
-  {char* slot_name = "equals_hash_value";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__funk);}
-  {char* slot_name = "as-double";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.as__double__funk);}
-  {char* slot_name = "as-pointer";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.as__pointer__funk);}
-  {char* slot_name = "multiplied_by";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__funk);}
-  {char* slot_name = "divided_by";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.divided_by__funk);}
-  {char* slot_name = "plus";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.plus__funk);}
-  {char* slot_name = "minus";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.minus__funk);}
-  {char* slot_name = "is_greater_than";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.is_greater_than__funk);}
-  {char* slot_name = "is_less_than";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.is_less_than__funk);}
-  {char* slot_name = "is_numerically_equal_to";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.is_numerically_equal_to__funk);}
-  {char* slot_name = "square_root";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.square_root__funk);}
-  {char* slot_name = "terminal_print_with_frame";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.terminal_print_with_frame__funk);}
+  {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__funk);}
+  {char* slot_name = "as-double";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.as__double__funk);}
+  {char* slot_name = "as-pointer";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.as__pointer__funk);}
+  {char* slot_name = "multiplied_by";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__funk);}
+  {char* slot_name = "divided_by";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.divided_by__funk);}
+  {char* slot_name = "plus";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.plus__funk);}
+  {char* slot_name = "minus";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.minus__funk);}
+  {char* slot_name = "is_greater_than";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.is_greater_than__funk);}
+  {char* slot_name = "is_less_than";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.is_less_than__funk);}
+  {char* slot_name = "is_numerically_equal_to";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.is_numerically_equal_to__funk);}
+  {char* slot_name = "square_root";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.square_root__funk);}
+  {char* slot_name = "modulo";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.modulo__funk);}
+  {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -903,6 +921,131 @@ f2ptr f2__double__square_root(f2ptr cause, f2ptr this) {
 def_pcfunk1(double__square_root, this, return f2__double__square_root(this_cause, this));
 
 
+f2ptr raw__double__radian_sine(f2ptr cause, f2ptr this) {
+  double d      = f2double__d(this, cause);
+  double result = sin(d);
+  return f2double__new(cause, result);
+}
+
+f2ptr f2__double__radian_sine(f2ptr cause, f2ptr this) {
+  if (! raw__double__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__double__radian_sine(cause, this);
+}
+def_pcfunk1(double__radian_sine, this, return f2__double__radian_sine(this_cause, this));
+
+
+f2ptr raw__double__radian_arcsine(f2ptr cause, f2ptr this) {
+  double d      = f2double__d(this, cause);
+  double result = asin(d);
+  return f2double__new(cause, result);
+}
+
+f2ptr f2__double__radian_arcsine(f2ptr cause, f2ptr this) {
+  if (! raw__double__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__double__radian_arcsine(cause, this);
+}
+def_pcfunk1(double__radian_arcsine, this, return f2__double__radian_arcsine(this_cause, this));
+
+
+f2ptr raw__double__radian_cosine(f2ptr cause, f2ptr this) {
+  double d      = f2double__d(this, cause);
+  double result = cos(d);
+  return f2double__new(cause, result);
+}
+
+f2ptr f2__double__radian_cosine(f2ptr cause, f2ptr this) {
+  if (! raw__double__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__double__radian_cosine(cause, this);
+}
+def_pcfunk1(double__radian_cosine, this, return f2__double__radian_cosine(this_cause, this));
+
+
+f2ptr raw__double__radian_arccosine(f2ptr cause, f2ptr this) {
+  double d      = f2double__d(this, cause);
+  double result = acos(d);
+  return f2double__new(cause, result);
+}
+
+f2ptr f2__double__radian_arccosine(f2ptr cause, f2ptr this) {
+  if (! raw__double__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__double__radian_arccosine(cause, this);
+}
+def_pcfunk1(double__radian_arccosine, this, return f2__double__radian_arccosine(this_cause, this));
+
+
+f2ptr raw__double__radian_tangent(f2ptr cause, f2ptr this) {
+  double d      = f2double__d(this, cause);
+  double result = tan(d);
+  return f2double__new(cause, result);
+}
+
+f2ptr f2__double__radian_tangent(f2ptr cause, f2ptr this) {
+  if (! raw__double__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__double__radian_tangent(cause, this);
+}
+def_pcfunk1(double__radian_tangent, this, return f2__double__radian_tangent(this_cause, this));
+
+
+f2ptr raw__double__radian_arctangent(f2ptr cause, f2ptr this) {
+  double d      = f2double__d(this, cause);
+  double result = atan(d);
+  return f2double__new(cause, result);
+}
+
+f2ptr f2__double__radian_arctangent(f2ptr cause, f2ptr this) {
+  if (! raw__double__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__double__radian_arctangent(cause, this);
+}
+def_pcfunk1(double__radian_arctangent, this, return f2__double__radian_arctangent(this_cause, this));
+
+
+f2ptr raw__double__power(f2ptr cause, f2ptr this, f2ptr that) {
+  double this__d = f2double__d(this, cause);
+  double that__d = f2double__d(that, cause);
+  double result  = pow(this__d, that__d);
+  return f2double__new(cause, result);
+}
+
+f2ptr f2__double__power(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__double__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__double__power(cause, this, that);
+}
+def_pcfunk2(double__power, this, that, return f2__double__power(this_cause, this, that));
+
+
+f2ptr raw__double__modulo(f2ptr cause, f2ptr this, f2ptr that) {
+  double this__d    = f2double__d(this, cause);
+  double that__d    = f2double__d(that, cause);
+  double whole_part = (int)(this__d / that__d);
+  double result     = this__d - (that__d * whole_part);
+  return f2double__new(cause, result);
+}
+
+f2ptr f2__double__modulo(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__double__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__double__modulo(cause, this, that);
+}
+def_pcfunk2(double__modulo, this, that, return f2__double__modulo(this_cause, this, that));
+
+
 f2ptr raw__double__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   {
     f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
@@ -975,25 +1118,33 @@ f2ptr f2__double__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 f2ptr f2double__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("ptype"), (u8*)"ptype"), nil));
-  {char* slot_name = "is_type";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.is_type__funk);}
-  {char* slot_name = "type";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.type__funk);}
-  {char* slot_name = "new";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.new__funk);}
-  {char* slot_name = "d";                            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.d__funk);}
-  {char* slot_name = "eq";                           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.eq__funk);}
-  {char* slot_name = "eq_hash_value";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.eq_hash_value__funk);}
-  {char* slot_name = "equals";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.equals__funk);}
-  {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.equals_hash_value__loop_free__funk);}
-  {char* slot_name = "equals_hash_value";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.equals_hash_value__funk);}
-  {char* slot_name = "as-double";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.as__double__funk);}
-  {char* slot_name = "multiplied_by";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.multiplied_by__funk);}
-  {char* slot_name = "divided_by";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.divided_by__funk);}
-  {char* slot_name = "plus";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.plus__funk);}
-  {char* slot_name = "minus";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.minus__funk);}
-  {char* slot_name = "is_greater_than";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.is_greater_than__funk);}
-  {char* slot_name = "is_less_than";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.is_less_than__funk);}
-  {char* slot_name = "is_numerically_equal_to";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.is_numerically_equal_to__funk);}
-  {char* slot_name = "square_root";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.square_root__funk);}
-  {char* slot_name = "terminal_print_with_frame";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.terminal_print_with_frame__funk);}
+  {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.is_type__funk);}
+  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.type__funk);}
+  {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.new__funk);}
+  {char* slot_name = "d";                           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.d__funk);}
+  {char* slot_name = "eq";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.eq__funk);}
+  {char* slot_name = "eq_hash_value";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.eq_hash_value__funk);}
+  {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.equals__funk);}
+  {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.equals_hash_value__loop_free__funk);}
+  {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.equals_hash_value__funk);}
+  {char* slot_name = "as-double";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.as__double__funk);}
+  {char* slot_name = "multiplied_by";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.multiplied_by__funk);}
+  {char* slot_name = "divided_by";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.divided_by__funk);}
+  {char* slot_name = "plus";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.plus__funk);}
+  {char* slot_name = "minus";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.minus__funk);}
+  {char* slot_name = "is_greater_than";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.is_greater_than__funk);}
+  {char* slot_name = "is_less_than";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.is_less_than__funk);}
+  {char* slot_name = "is_numerically_equal_to";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.is_numerically_equal_to__funk);}
+  {char* slot_name = "square_root";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.square_root__funk);}
+  {char* slot_name = "radian_sine";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.radian_sine__funk);}
+  {char* slot_name = "radian_arcsine";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.radian_arcsine__funk);}
+  {char* slot_name = "radian_cosine";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.radian_cosine__funk);}
+  {char* slot_name = "radian_arccosine";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.radian_arccosine__funk);}
+  {char* slot_name = "radian_tangent";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.radian_tangent__funk);}
+  {char* slot_name = "radian_arctangent";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.radian_arctangent__funk);}
+  {char* slot_name = "power";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.power__funk);}
+  {char* slot_name = "modulo";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.modulo__funk);}
+  {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -2043,7 +2194,7 @@ f2ptr raw__mutex__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, mutex_string__length, mutex_string);
   }
   {
-    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__type__foreground);
     mutex_string__length = snprintf((char*)mutex_string, 128, "mutex ");
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, mutex_string__length, mutex_string);
   }
@@ -5116,6 +5267,8 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(integer__is_numerically_equal_to, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.is_numerically_equal_to__funk = never_gc(cfunk);}
   {char* str = "square_root"; __funk2.globalenv.object_type.ptype.ptype_integer.square_root__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__square_root, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.square_root__funk = never_gc(cfunk);}
+  {char* str = "modulo"; __funk2.globalenv.object_type.ptype.ptype_integer.modulo__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(integer__modulo, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.modulo__funk = never_gc(cfunk);}
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_integer.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(integer__terminal_print_with_frame, this, terminal_print_frame, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.terminal_print_with_frame__funk = never_gc(cfunk);}
   
@@ -5157,6 +5310,22 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(double__is_numerically_equal_to, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.is_numerically_equal_to__funk = never_gc(cfunk);}
   {char* str = "square_root"; __funk2.globalenv.object_type.ptype.ptype_double.square_root__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__square_root, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.square_root__funk = never_gc(cfunk);}
+  {char* str = "radian_sine"; __funk2.globalenv.object_type.ptype.ptype_double.radian_sine__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__radian_sine, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.radian_sine__funk = never_gc(cfunk);}
+  {char* str = "radian_arcsine"; __funk2.globalenv.object_type.ptype.ptype_double.radian_arcsine__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__radian_arcsine, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.radian_arcsine__funk = never_gc(cfunk);}
+  {char* str = "radian_cosine"; __funk2.globalenv.object_type.ptype.ptype_double.radian_cosine__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__radian_cosine, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.radian_cosine__funk = never_gc(cfunk);}
+  {char* str = "radian_arccosine"; __funk2.globalenv.object_type.ptype.ptype_double.radian_arccosine__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__radian_arccosine, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.radian_arccosine__funk = never_gc(cfunk);}
+  {char* str = "radian_tangent"; __funk2.globalenv.object_type.ptype.ptype_double.radian_tangent__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__radian_tangent, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.radian_tangent__funk = never_gc(cfunk);}
+  {char* str = "radian_arctangent"; __funk2.globalenv.object_type.ptype.ptype_double.radian_arctangent__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__radian_arctangent, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.radian_arctangent__funk = never_gc(cfunk);}
+  {char* str = "power"; __funk2.globalenv.object_type.ptype.ptype_double.power__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(double__power, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.power__funk = never_gc(cfunk);}
+  {char* str = "modulo"; __funk2.globalenv.object_type.ptype.ptype_double.modulo__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(double__modulo, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.modulo__funk = never_gc(cfunk);}
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_double.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(double__terminal_print_with_frame, this, terminal_print_frame, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.terminal_print_with_frame__funk = never_gc(cfunk);}
   

@@ -1,0 +1,39 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+'double'
+
+[deftypefunk double get degree_sine       [] [get [/ [* this                         pi]    180.0] radian_sine]]
+[deftypefunk double get degree_cosine     [] [get [/ [* this                         pi]    180.0] radian_cosine]]
+[deftypefunk double get degree_tangent    [] [get [/ [* this                         pi]    180.0] radian_tangent]]
+[deftypefunk double get degree_arcsine    []      [/ [* [get this radian_arcsine]    180.0] pi]]
+[deftypefunk double get degree_arccosine  []      [/ [* [get this radian_arccosine]  180.0] pi]]
+[deftypefunk double get degree_arctangent []      [/ [* [get this radian_arctangent] 180.0] pi]]
+
+
+'integer'
+
+[deftypefunk integer get degree_sine       []    [get [get this as-double] degree_sine]]
+[deftypefunk integer get degree_cosine     []    [get [get this as-double] degree_cosine]]
+[deftypefunk integer get degree_tangent    []    [get [get this as-double] degree_tangent]]
+[deftypefunk integer get degree_arcsine    []    [get [get this as-double] degree_arcsine]]
+[deftypefunk integer get degree_arccosine  []    [get [get this as-double] degree_arccosine]]
+[deftypefunk integer get degree_arctangent []    [get [get this as-double] degree_arctangent]]
+[deftypefunk integer get power             [exp] [get [get this as-double] power             [get exp as-double]]]
+

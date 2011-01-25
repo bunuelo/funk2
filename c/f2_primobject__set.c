@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2010 Bo Morgan.
+// Copyright (c) 2007-2011 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -235,11 +235,27 @@ f2ptr f2__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
 }
 def_pcfunk2(set__lookup, this, element, return f2__set__lookup(this_cause, this, element));
 
+
 boolean_t raw__set__contains(f2ptr cause, f2ptr this, f2ptr key) {
-  f2ptr set__key = f2__set__lookup(cause, this, key);
-  if (set__key) {
-    return boolean__true;
+  debug__assert(raw__set__valid(cause, this), nil, "f2__set__lookup assert failed: f2__set__valid(this)");
+  f2mutex__lock(f2set__write_mutex(this, cause), cause);
+  f2ptr bin_num_power      = f2set__bin_num_power(this, cause);
+  u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
+  f2ptr bin_array          = f2set__bin_array(this, cause);
+  u64   key__hash_value    = raw__eq_hash_value(cause, key);
+  u64   hash_value         = (key__hash_value * PRIME_NUMBER__16_BIT);
+  u64   hash_value_mask    = (0xffffffffffffffffll >> (64 - bin_num_power__i));
+  u64   index              = hash_value & hash_value_mask;
+  f2ptr key_iter           = raw__array__elt(cause, bin_array, index);
+  while(key_iter) {
+    f2ptr iter__key = f2cons__car(key_iter, cause);
+    if (raw__eq(cause, key, iter__key)) {
+      f2mutex__unlock(f2set__write_mutex(this, cause), cause);
+      return boolean__true;
+    }
+    key_iter = f2cons__cdr(key_iter, cause);
   }
+  f2mutex__unlock(f2set__write_mutex(this, cause), cause);
   return boolean__false;
 }
 

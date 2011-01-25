@@ -327,10 +327,12 @@
   nil]
 
 [defunk silent-fiber [funk args]
-  [fiber_parallel [funk-new_with_name silent-fiber []
-				      [cause]
-				      [apply funk args]]
-		  nil]]
+  [define fiber [fiber_parallel [funk-new_with_name silent-fiber []
+						    [cause]
+						    [apply funk args]]
+				nil]]
+  [set fiber keep_undead nil]
+  fiber]
 
 [defunk fiber [funk args]
   [silent-fiber [funk-new_with_name fiber []
@@ -858,6 +860,28 @@
 		      stack_trace [get fiber stack_trace]]
 	     `bug]]]
      result]]
+
+[defmetro shelter-debug [:rest codes]
+  `[let [[result             `bug]
+	 [found_bug_in_fiber nil]]
+     [let [[fiber [silent-fiber [funk-new_with_name shelter []
+						    [set [this-cause] critics
+							 [funk [fiber]
+							       [= found_bug_in_fiber fiber]]]
+						    [= result [prog @codes]]]
+				nil]]]
+       [millisleep 100]
+       [while [and [not [get fiber is_complete]]
+		   [not found_bug_in_fiber]]
+	 [millisleep 100]]
+       [if found_bug_in_fiber
+	   [let [[bug [get found_bug_in_fiber value]]]
+	     [if [not [is-type `bug bug]]
+		 [error bug_type    `shelter-fiber_paused_without_bug
+			fiber_value bug
+			stack_trace [get found_bug_in_fiber stack_trace]]
+	       `bug]]]
+       result]]]
 
 [defmetro error [:rest slot_value_pairs]
   `[error-new `source_filename   [quote ,[cause-lookup source-filename]]

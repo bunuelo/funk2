@@ -1,4 +1,4 @@
-'Copyright (c) 2007-2010 Bo Morgan.
+'Copyright (c) 2007-2011 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -101,15 +101,16 @@
        [= isismon_agent_agency_menu initial-isismon_agent_agency_menu]
        [= resource                  initial-resource]
        
-       [= resource_menu_item [gtk-menu_item-new [format nil [get resource name]]]]
+       [= resource_menu_item [gtk-menu_item-new [format nil [get resource name] ' Resource']]]
        [= resource_menu      [gtk-menu-new]]
        [set resource_menu_item submenu resource_menu]
        
        [= debugging_mode_check_menu_item [gtk-check_menu_item-new 'Debugging Mode']]
+       [have resource_menu append debugging_mode_check_menu_item]
+       
        [have debugging_mode_check_menu_item signal_connect 'toggled'
 	     [funk []
-		   [set resource debug [get debugging_mode_check_menu_item active]]
-		   [terminal_format standard-terminal '\n' [if [get resource debug] 'Enabling' 'Disabling'] ' debugging mode for ' [get [get resource mind] name] '\'s ' [get resource name] ' resource.']]
+		   [set this debug_all [get debugging_mode_check_menu_item active]]]
 	     nil]
        
        ]]
@@ -117,45 +118,99 @@
 [deftypefunk isismon_agent_resource_menu get widget []
   resource_menu_item]
 
+[deftypefunk isismon_agent_resource_menu set debug_all [debug]
+  [terminal_format standard-terminal '\n' [if debug 'Enabling' 'Disabling'] ' debugging mode for ' [get [get resource mind] name] '\'s ' [get resource name] ' resource.']
+  [set debugging_mode_check_menu_item active debug]
+  [set resource debug debug]]
+
+
 
 [deframe isismon_agent_agency_menu [frame] [isismon_agent_layer_menu
 					    agency
 					    
 					    agency_menu_item
-					    agency_menu]
+					    agency_menu
+					    
+					    enable_debugging_all_menu_item
+					    disable_debugging_all_menu_item
+					    
+					    isismon_resource_menus
+					    ]
   [new [initial-isismon_agent_layer_menu initial-agency]
        [= isismon_agent_layer_menu initial-isismon_agent_layer_menu]
        [= agency                   initial-agency]
        
-       [= agency_menu_item [gtk-menu_item-new [format nil [get agency name]]]]
+       [= agency_menu_item [gtk-menu_item-new [format nil [get agency name] ' Agency']]]
        [= agency_menu      [gtk-menu-new]]
        [set agency_menu_item submenu agency_menu]
        
+       [= enable_debugging_all_menu_item [gtk-menu_item-new 'Enable Debugging All']]
+       [have agency_menu append enable_debugging_all_menu_item]
+       [have enable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all t]]
+	     nil]
+       
+       [= disable_debugging_all_menu_item [gtk-menu_item-new 'Disable Debugging All']]
+       [have agency_menu append disable_debugging_all_menu_item]
+       [have disable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all nil]]
+	     nil]
+       
        [mapc [funk [resource]
 		   [let [[isismon_resource_menu [new isismon_agent_resource_menu this resource]]]
+		     [= isismon_resource_menus [cons isismon_resource_menu isismon_resource_menus]]
 		     [have agency_menu append isismon_resource_menu]]]
 	     [get agency resources]]
+       
        ]]
 
 [deftypefunk isismon_agent_agency_menu get widget []
   agency_menu_item]
+
+[deftypefunk isismon_agent_agency_menu set debug_all [debug]
+  [mapc [funk [isismon_resource_menu]
+	      [set isismon_resource_menu debug_all debug]]
+	isismon_resource_menus]]
 
 
 [deframe isismon_agent_layer_menu [frame] [isismon_agent_mind_menu
 					   layer
 					   
 					   layer_menu_item
-					   layer_menu]
+					   layer_menu
+					   
+					   enable_debugging_all_menu_item
+					   disable_debugging_all_menu_item
+					   
+					   isismon_agency_menus
+					   ]
   [new [initial-isismon_agent_mind_menu initial-layer]
        [= isismon_agent_mind_menu initial-isismon_agent_mind_menu]
        [= layer                   initial-layer]
        
-       [= layer_menu_item [gtk-menu_item-new [format nil [get layer name]]]]
+       [= layer_menu_item [gtk-menu_item-new [format nil [get layer name] ' Layer']]]
        [= layer_menu      [gtk-menu-new]]
        [set layer_menu_item submenu layer_menu]
        
+       [= enable_debugging_all_menu_item [gtk-menu_item-new 'Enable Debugging All']]
+       [have layer_menu append enable_debugging_all_menu_item]
+       [have enable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all t]]
+	     nil]
+       
+       [= disable_debugging_all_menu_item [gtk-menu_item-new 'Disable Debugging All']]
+       [have layer_menu append disable_debugging_all_menu_item]
+       [have disable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all nil]]
+	     nil]
+       
        [mapc [funk [agency]
 		   [let [[isismon_agency_menu [new isismon_agent_agency_menu this agency]]]
+		     [= isismon_agency_menus [cons isismon_agency_menu isismon_agency_menus]]
 		     [have layer_menu append isismon_agency_menu]]]
 	     [get layer agencies]]
        ]]
@@ -163,11 +218,22 @@
 [deftypefunk isismon_agent_layer_menu get widget []
   layer_menu_item]
 
+[deftypefunk isismon_agent_layer_menu set debug_all [debug]
+  [mapc [funk [isismon_agency_menu]
+	      [set isismon_agency_menu debug_all debug]]
+	isismon_agency_menus]]
+
 
 [deframe isismon_agent_mind_menu [frame] [isismon_agent
 					  
 					  mind_menu_item
-					  mind_menu]
+					  mind_menu
+					  
+					  enable_debugging_all_menu_item
+					  disable_debugging_all_menu_item
+					  
+					  isismon_layer_menus
+					  ]
   [new [initial-isismon_agent]
        [= isismon_agent initial-isismon_agent]
        
@@ -175,16 +241,61 @@
        [= mind_menu      [gtk-menu-new]]
        [set mind_menu_item submenu mind_menu]
        
+       [= enable_debugging_all_menu_item [gtk-menu_item-new 'Enable Debugging All']]
+       [have mind_menu append enable_debugging_all_menu_item]
+       [have enable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all t]]
+	     nil]
+       
+       [= disable_debugging_all_menu_item [gtk-menu_item-new 'Disable Debugging All']]
+       [have mind_menu append disable_debugging_all_menu_item]
+       [have disable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all nil]]
+	     nil]
+       
        [mapc [funk [layer]
 		   [let [[isismon_layer_menu [new isismon_agent_layer_menu this layer]]]
+		     [= isismon_layer_menus [cons isismon_layer_menu isismon_layer_menus]]
 		     [have mind_menu append isismon_layer_menu]]]
-	     [get [get [get isismon_agent isis_agent] mind] layers]]
+	     [have [get [get [get isismon_agent isis_agent] mind] layers] sort [funk [x y] [< [get x index] [get y index]]]]]
        ]]
 
 [deftypefunk isismon_agent_mind_menu get widget []
   mind_menu_item]
 				
-				
+[deftypefunk isismon_agent_mind_menu set debug_all [debug]
+  [mapc [funk [isismon_layer_menu]
+	      [set isismon_layer_menu debug_all debug]]
+	isismon_layer_menus]]
+
+
+
+[deframe isismon_save_agent_dialog [frame] [isismon_agent
+					    isismon
+					    save_dialog]
+  [new [initial-isismon_agent]
+       [= isismon_agent initial-isismon_agent]
+       [= isismon       [get [get isismon_agent isismon_project] isismon]]
+       
+       [= save_dialog [gtk-file_chooser_dialog-new_for_file_save [get isismon window]]]
+       
+       [have save_dialog add_file_filter_pattern 'IsisMon Agent Files (*.isis-agent)' '*.isis-agent']
+       [have save_dialog add_file_filter_pattern 'All Files (*.*)'                    '*.*']
+       [set  save_dialog current_name 'Untitled Agent.isis-agent']
+       [set  save_dialog current_folder [get [get isismon preferences] agent_directory]]
+       [have save_dialog response_event-signal_connect
+	     [funk [event_frame]
+		   [let [[response_id [have event_frame lookup `response_id]]]
+		     [if [eq response_id GTK_RESPONSE_ACCEPT]
+			 [let [[filename [get save_dialog filename]]]
+			   [have save_dialog destroy]
+			   [have isismon_agent save filename]]
+		       [have save_dialog destroy]]]]
+	     nil]
+       [have save_dialog show_all]]]
+
 
 [deframe isismon_agent [frame] [isis_agent
 				
@@ -194,6 +305,9 @@
 				vbox
 				
 				menu_bar
+				file_menu_item
+				file_menu
+				file_save_agent_menu_item
 				tools_menu
 				tools_menu_item
 				tools_mindmon_menu_item
@@ -230,6 +344,18 @@
        
        [= menu_bar        [gtk-menu_bar-new]]
        [have vbox pack_start menu_bar nil nil 0]
+       
+       [= file_menu_item            [gtk-menu_item-new 'File']]
+       [= file_menu                 [gtk-menu-new]]
+       [= file_save_agent_menu_item [gtk-menu_item-new 'Save Agent...']]
+       [have file_menu append file_save_agent_menu_item]
+       [set file_menu_item submenu file_menu]
+       [have menu_bar append file_menu_item]
+       
+       [have file_save_agent_menu_item signal_connect 'activate'
+	     [funk []
+		   [new isismon_save_agent_dialog this]]
+	     nil]
        
        [= tools_menu      [gtk-menu-new]]
        [= tools_menu_item [gtk-menu_item-new 'Tools']]
@@ -434,7 +560,6 @@
 [deftypefunk isismon_agent get widget []
   frame]
 
-
 [deftypefunk isismon_agent execute update_entry []
   [let [[look_for_resource [get [get isis_agent mind] resource `learned_reactive `physical `look_for]]]
     [set entry text [format nil 'look_for-current_object: \t' [have look_for_resource lookup `my_current_object]]]
@@ -451,6 +576,17 @@
 [deftypefunk isismon_agent get retina_image_sequence []
   [get isis_agent retina_image_sequence]]
 
+[deftypefunk isismon_agent execute save [filename]
+  [terminal_format standard-terminal '\nIsisMon Agent: Saving ' filename '.']
+  [have [get [get isis_agent as-chunk] deflated] save filename]
+  [terminal_format standard-terminal '\nIsisMon Agent: Save agent complete.']]
+
+[defunk isismon_agent-new_from_file [isismon_project filename]
+  [terminal_format standard-terminal '\nIsisMon Agent: Loading ' filename '.']
+  [let [[isis_agent_body [isis_agent_body-new_from_chunk [get isismon_project isis_world] [get [chunk-load filename] inflated]]]]
+    [let [[this [new isismon_agent isismon_project isis_agent_body]]]
+      [terminal_format standard-terminal '\nIsisMon Agent: Load agent complete.']
+      this]]]
 
 
 [deframe isismon_export_movie_dialog [frame] [isismon
@@ -530,16 +666,58 @@
        [have open_dialog show_all]]]
 
 
+[deframe isismon_open_agent_dialog [frame] [isismon
+					    open_dialog
+					    preview_label]
+  [new [initial-isismon]
+       [= isismon initial-isismon]
+       [= open_dialog   [gtk-file_chooser_dialog-new_for_file_open [get isismon window]]]
+       [= preview_label [gtk-label-new '']]
+       
+       [have open_dialog add_file_filter_pattern 'IsisMon Agent Files (*.isis-agent)' '*.isis-agent']
+       [have open_dialog add_file_filter_pattern 'All Files (*.*)'                    '*.*']
+       [set  open_dialog current_folder [get [get isismon preferences] agent_directory]]
+       [set  open_dialog preview_widget preview_label]
+       
+       [have open_dialog response_event-signal_connect
+	     [funk [event_frame]
+		   [let [[response_id [have event_frame lookup `response_id]]]
+		     [if [eq response_id GTK_RESPONSE_ACCEPT]
+			 [let [[filename [get open_dialog filename]]]
+			   [have open_dialog destroy]
+			   [have isismon open_agent filename]]
+		       [have open_dialog destroy]]]]
+	     nil]
+       
+       [have open_dialog update_preview_event-signal_connect
+	     [funk []
+		   [let [[preview_filename [get open_dialog preview_filename]]]
+		     [set preview_label text [stringlist-intersperse [have [format nil preview_filename] split '/'] '\n']]
+		     [set open_dialog preview_widget_active t]]]
+	     nil]
+       
+       [have open_dialog show_all]]]
+
+
 [deframe isismon_preferences [frame] [isis_world_server_hostname
 				      project_directory
+				      agent_directory
 				      movie_export_directory]
   [new []
-       [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data']]]
-       [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]]
-       [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]
-       [= isis_world_server_hostname 'psuche']
-       [= project_directory          [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]
-       [= movie_export_directory     [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]]
+       [have this create_default_directories]
+       [have this fix_invalid_with_defaults]]]
+
+[deftypefunk isismon_preferences execute create_default_directories []
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data']]]
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]]
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Agents']]]
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]]
+
+[deftypefunk isismon_preferences execute fix_invalid_with_defaults []
+  [if [null [have this lookup `isis_world_server_hostname]] [have this add `isis_world_server_hostname 'localhost']]
+  [if [null [have this lookup `project_directory]]          [have this add `project_directory          [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]]
+  [if [null [have this lookup `agent_directory]]            [have this add `agent_directory            [pathname-concat [getenv 'HOME'] 'IsisMon Data/Agents']]]
+  [if [null [have this lookup `movie_export_directory]]     [have this add `movie_export_directory     [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]]
 
 [deftypefunk isismon_preferences execute save [filename]
   [lick-to-file this filename]]
@@ -548,7 +726,8 @@
   [let [[result [shelter [unlick-from-file filename]]]]
     [if [eq result `bug]
 	nil
-      result]]]
+      [prog [have result fix_invalid_with_defaults]
+	    result]]]]
 
 [deframe isismon_preference_editor [frame] [isismon
 					    
@@ -568,6 +747,12 @@
 					    project_directory__title_label
 					    project_directory__select_button
 					    project_directory__data_label
+					    
+					    agent_directory
+					    agent_directory__hbox
+					    agent_directory__title_label
+					    agent_directory__select_button
+					    agent_directory__data_label
 					    
 					    movie_export_directory
 					    movie_export_directory__hbox
@@ -622,6 +807,33 @@
 		     ]]
 	     nil]
        
+       [= agent_directory [get [get isismon preferences] agent_directory]]
+       [= agent_directory__hbox [gtk-hbox-new 0]]
+       [= agent_directory__title_label   [gtk-label-new             'Agent Directory: ']]
+       [= agent_directory__select_button [gtk-button-new_with_label '...']]
+       [= agent_directory__data_label    [gtk-label-new             agent_directory]]
+       [have agent_directory__hbox pack_start agent_directory__title_label   nil nil 0]
+       [have agent_directory__hbox pack_start agent_directory__select_button nil nil 0]
+       [have agent_directory__hbox pack_start agent_directory__data_label    nil nil 0]
+       [have vbox pack_start agent_directory__hbox nil nil 0]
+       
+       [have agent_directory__select_button signal_connect 'clicked'
+	     [funk []
+		   [let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select window]]]
+		     [set select_dialog current_folder agent_directory]
+		     [have select_dialog response_event-signal_connect
+			   [funk [event_frame]
+				 [let [[response_id [have event_frame lookup `response_id]]]
+				   [if [eq response_id GTK_RESPONSE_ACCEPT]
+				       [prog [= agent_directory [get select_dialog filename]]
+					     [set agent_directory__data_label text agent_directory]
+					     ]]]
+				 [have select_dialog destroy]]
+			   nil]
+		     [have select_dialog show_all]
+		     ]]
+	     nil]
+       
        [= movie_export_directory [get [get isismon preferences] movie_export_directory]]
        [= movie_export_directory__hbox [gtk-hbox-new 0]]
        [= movie_export_directory__title_label   [gtk-label-new             'Movie Export Directory: ']]
@@ -666,6 +878,7 @@
 		   [let [[preferences [new isismon_preferences]]]
 		     [set preferences isis_world_server_hostname [get isis_world_server_hostname__data_entry text]]
 		     [set preferences project_directory          project_directory]
+		     [set preferences agent_directory            agent_directory]
 		     [set preferences movie_export_directory     movie_export_directory]
 		     [set isismon preferences preferences]
 		     [have isismon save_preferences]]
@@ -756,8 +969,7 @@
        
        [have controller_frame add controller_vbox nil nil 0]
        
-       [have vbox pack_start controller_frame nil nil 0]
-       
+       [have vbox pack_start controller_frame nil nil 0]       
        
        'movie image'
        
@@ -952,6 +1164,7 @@
 			  project_new_ralph_agent_menu_item
 			  project_new_lauren_agent_menu_item
 			  project_new_macy_agent_menu_item
+			  project_open_agent_menu_item
 			  simulation_menu_item
 			  simulation_menu
 			  simulation_run_initialization_sequence_menu_item
@@ -1045,11 +1258,13 @@
 			     [= project_new_ralph_agent_menu_item  [gtk-menu_item-new 'New Ralph Agent']]
 			     [= project_new_lauren_agent_menu_item [gtk-menu_item-new 'New Lauren Agent']]
 			     [= project_new_macy_agent_menu_item   [gtk-menu_item-new 'New Macy Agent']]
+			     [= project_open_agent_menu_item       [gtk-menu_item-new 'Open Agent...']]
 			     [have menu_bar          append  project_menu_item]
 			     [set  project_menu_item submenu project_menu]
 			     [have project_menu      append  project_new_ralph_agent_menu_item]
 			     [have project_menu      append  project_new_lauren_agent_menu_item]
 			     [have project_menu      append  project_new_macy_agent_menu_item]
+			     [have project_menu      append  project_open_agent_menu_item]
 			     
 			     [have project_new_ralph_agent_menu_item signal_connect 'activate'
 				   [funk []
@@ -1064,6 +1279,11 @@
 			     [have project_new_macy_agent_menu_item signal_connect 'activate'
 				   [funk []
 					 [have this create_new_agent `Macy]]
+				   nil]
+			     
+			     [have project_open_agent_menu_item signal_connect 'activate'
+				   [funk []
+					 [new isismon_open_agent_dialog this]]
 				   nil]
 			     
 			     [= simulation_menu_item                             [gtk-menu_item-new 'Simulation']]
@@ -1178,7 +1398,8 @@
   [set simulation_view_initialization_events_menu_item  sensitive t]
   [set project_new_ralph_agent_menu_item                sensitive t]
   [set project_new_lauren_agent_menu_item               sensitive t]
-  [set project_new_macy_agent_menu_item                 sensitive t]]
+  [set project_new_macy_agent_menu_item                 sensitive t]
+  [set project_open_agent_menu_item                     sensitive t]]
 
 [deftypefunk isismon execute disable_project_commands []
   [set file_close_project_menu_item                     sensitive nil]
@@ -1188,7 +1409,8 @@
   [set simulation_view_initialization_events_menu_item  sensitive nil]
   [set project_new_ralph_agent_menu_item                sensitive nil]
   [set project_new_lauren_agent_menu_item               sensitive nil]
-  [set project_new_macy_agent_menu_item                 sensitive nil]]
+  [set project_new_macy_agent_menu_item                 sensitive nil]
+  [set project_open_agent_menu_item                     sensitive nil]]
 
 [deftypefunk isismon execute close_project []
   [have this disable_project_commands]
@@ -1206,6 +1428,14 @@
 [deftypefunk isismon execute save_project [filename]
   [terminal_format standard-terminal '\nIsisMon Save Project: ' filename]
   [have isismon_project save filename]]
+
+
+[deftypefunk isismon execute open_agent [filename]
+  [terminal_format standard-terminal '\nIsisMon Open Agent: ' filename]
+  [let [[new_isismon_agent [isismon_agent-new_from_file isismon_project filename]]]
+    [if new_isismon_agent
+	[have isismon_project add_agent new_isismon_agent]
+      [terminal_format standard-terminal '\nIsisMon Failed to Open Agent: ' filename]]]]
 
 
 [defmetro isismon [:rest args]

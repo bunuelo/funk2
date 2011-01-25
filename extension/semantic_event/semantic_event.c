@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2010 Bo Morgan.
+// Copyright (c) 2007-2011 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -105,7 +105,7 @@ export_cefunk2(semantic_event__property__action_name__remove, this, that, 0, "")
 
 
 f2ptr f2__semantic_event_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_temporal_object")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol,     new__symbol(cause, "new"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__new")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol,     new__symbol(cause, "is_type"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,         new__symbol(cause, "type"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__type")));}
@@ -126,7 +126,7 @@ f2ptr f2__semantic_event__core_extension_ping(f2ptr cause) {
 export_cefunk0(semantic_event__core_extension_ping, 0, "");
 
 f2ptr f2__semantic_event__core_extension_initialize(f2ptr cause) {
-  f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object"), new__symbol(cause, "semantic_object__core_extension_ping")), nil);
+  f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__core_extension_ping")), nil);
   if (raw__larva__is_type(cause, result)) {
     return result;
   }

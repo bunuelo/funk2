@@ -176,7 +176,7 @@ f2ptr raw__semantic_event_sequence__add_to_end(f2ptr cause, f2ptr this, f2ptr se
       while (iter != nil) {
 	f2ptr last_event = f2__cons__car(cause, iter);
 	{
-	  raw__set__remove(cause, last_event_set, last_event);
+	  raw__semantic_event_sequence__relationship__last_event__remove(cause, this, last_event);
 	  raw__semantic_temporal_object__next__add(cause, last_event, semantic_event);
 	}
 	iter = f2__cons__cdr(cause, iter);

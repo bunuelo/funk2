@@ -24,6 +24,38 @@
 
 #include "../semantic_packable_object/semantic_packable_object.h"
 
+// semantic_temporal_object
+
+f2ptr     raw__semantic_temporal_object__new(                    f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_temporal_object__new(                    f2ptr cause, f2ptr semantic_realm);
+boolean_t raw__semantic_temporal_object__is_type(                f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_temporal_object__is_type(                f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_temporal_object__type(                   f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_temporal_object__type(                   f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_temporal_object__next__lookup(           f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_temporal_object__next__lookup(           f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_temporal_object__next__add(              f2ptr cause, f2ptr this, f2ptr temporal_object);
+f2ptr      f2__semantic_temporal_object__next__add(              f2ptr cause, f2ptr this, f2ptr temporal_object);
+f2ptr     raw__semantic_temporal_object__next__remove(           f2ptr cause, f2ptr this, f2ptr temporal_object);
+f2ptr      f2__semantic_temporal_object__next__remove(           f2ptr cause, f2ptr this, f2ptr temporal_object);
+f2ptr     raw__semantic_temporal_object__previous__lookup(       f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_temporal_object__previous__lookup(       f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_temporal_object__previous__add(          f2ptr cause, f2ptr this, f2ptr temporal_object);
+f2ptr      f2__semantic_temporal_object__previous__add(          f2ptr cause, f2ptr this, f2ptr temporal_object);
+f2ptr     raw__semantic_temporal_object__previous__remove(       f2ptr cause, f2ptr this, f2ptr temporal_object);
+f2ptr      f2__semantic_temporal_object__previous__remove(       f2ptr cause, f2ptr this, f2ptr temporal_object);
+f2ptr     raw__semantic_temporal_object__contains__lookup(       f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_temporal_object__contains__lookup(       f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_temporal_object__contains__add(          f2ptr cause, f2ptr this, f2ptr temporal_object);
+f2ptr      f2__semantic_temporal_object__contains__add(          f2ptr cause, f2ptr this, f2ptr temporal_object);
+f2ptr     raw__semantic_temporal_object__contains__remove(       f2ptr cause, f2ptr this, f2ptr temporal_object);
+f2ptr      f2__semantic_temporal_object__contains__remove(       f2ptr cause, f2ptr this, f2ptr temporal_object);
+f2ptr     raw__semantic_temporal_object__is_contained_by__lookup(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_temporal_object__is_contained_by__lookup(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_temporal_object__is_contained_by__add(   f2ptr cause, f2ptr this, f2ptr temporal_object);
+f2ptr      f2__semantic_temporal_object__is_contained_by__add(   f2ptr cause, f2ptr this, f2ptr temporal_object);
+f2ptr     raw__semantic_temporal_object__is_contained_by__remove(f2ptr cause, f2ptr this, f2ptr temporal_object);
+f2ptr      f2__semantic_temporal_object__is_contained_by__remove(f2ptr cause, f2ptr this, f2ptr temporal_object);
 
 // **
 

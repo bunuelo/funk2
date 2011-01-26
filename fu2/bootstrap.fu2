@@ -79,6 +79,8 @@
 [globalize funk2_release_names `[isismon debian]]
 [globalize funk2_release_name  `isismon]]
 
+[print 'debug -1']
+
 [cond [[eq funk2_release_name `debian]  [prog  [print 'debug 0']
 					       [load_minimal_core_packages]
 					       [terminal_format standard-terminal '\nDone compiling Debian Funk2 package binary release.']]]

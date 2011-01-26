@@ -73,18 +73,19 @@
   [require fibermon]
   [require isismon]]
 
-[defunk load-funk2-devrc []
+[defunk load_funk2-devrc []
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]
 
 [globalize funk2_release_names `[isismon debian]]
-[globalize funk2_release_name  `isismon]]
+[globalize funk2_release_name  `debian]]
 
 [cond [[eq funk2_release_name `debian]  [prog  [load_minimal_core_packages]
 					       [terminal_format standard-terminal '\nDone compiling Debian Funk2 package binary release.']]]
       [[eq funk2_release_name `isismon] [prog  [load_minimal_core_packages]
 					       [load_isismon_release_packages]
 					       [terminal_format standard-terminal '\nDone compiling IsisMon package binary release.']]]
-      [[eq funk2_release_name nil]      [prog  [load_all_core_packages]
+      [[eq funk2_release_name nil]      [prog  [load_minimal_core_packages]
+					       [load_funk2-devrc]
 					       [terminal_format standard-terminal
 								'\nDone compiling user\'s customized version of Funk2.'
 								'\n  Feel free to use ~/.funk2rc-dev to add commands to this compile process.']]]

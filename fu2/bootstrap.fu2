@@ -87,6 +87,7 @@
 [globalize funk2_release_name  `isismon]]
 
 [print 'debug -1']
+[print 'debug -0.5']
 
 [cond [[eq funk2_release_name `debian]  [prog  [print 'debug 0']
 					       [load_minimal_core_packages]

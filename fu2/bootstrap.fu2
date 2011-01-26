@@ -81,6 +81,9 @@
 [print 'debug -2']
 
 [globalize funk2_release_names `[isismon debian]]
+
+[print 'debug -1.5']
+
 [globalize funk2_release_name  `isismon]]
 
 [print 'debug -1']

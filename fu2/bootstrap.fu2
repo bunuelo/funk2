@@ -84,24 +84,24 @@
 
 [print 'debug -1.5']
 
-[globalize funk2_release_name  `isismon]]
+[globalize funk2_release_name  `isismon]
 
 [print 'debug -1']
 [print 'debug -0.5']
 
-[cond [[eq funk2_release_name `debian]  [prog  [print 'debug 0']
-					       [load_minimal_core_packages]
-					       [terminal_format standard-terminal '\nDone compiling Debian Funk2 package binary release.']]]
-      [[eq funk2_release_name `isismon] [prog  [print 'debug 1']
-					       [load_minimal_core_packages]
-					       [load_isismon_release_packages]
-					       [terminal_format standard-terminal '\nDone compiling IsisMon package binary release.']]]
-      [[eq funk2_release_name nil]      [prog  [print 'debug 2']
-					       [load_minimal_core_packages]
-					       [load_funk2-devrc]
-					       [terminal_format standard-terminal
-								'\nDone compiling user\'s customized version of Funk2.'
-								'\n  Feel free to use ~/.funk2rc-dev to add commands to this compile process.']]]
+[cond [[eq funk2_release_name `debian]  [prog [print 'debug 0']
+					      [load_minimal_core_packages]
+					      [terminal_format standard-terminal '\nDone compiling Debian Funk2 package binary release.']]]
+      [[eq funk2_release_name `isismon] [prog [print 'debug 1']
+					      [load_minimal_core_packages]
+					      [load_isismon_release_packages]
+					      [terminal_format standard-terminal '\nDone compiling IsisMon package binary release.']]]
+      [[eq funk2_release_name nil]      [prog [print 'debug 2']
+					      [load_minimal_core_packages]
+					      [load_funk2-devrc]
+					      [terminal_format standard-terminal
+							       '\nDone compiling user\'s customized version of Funk2.'
+							       '\n  Feel free to use ~/.funk2rc-dev to add commands to this compile process.']]]
       [t                                [error bug_type            `unknown-funk2_release_name-in-bootstrap.fu2
 					       funk2_release_name  funk2_release_name
 					       funk2_release_names funk2_release_names]]]

@@ -73,8 +73,12 @@
   [require fibermon]
   [require isismon]]
 
+[print 'debug -3']
+
 [defunk load_funk2-devrc []
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]
+
+[print 'debug -2']
 
 [globalize funk2_release_names `[isismon debian]]
 [globalize funk2_release_name  `isismon]]

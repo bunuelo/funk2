@@ -52,27 +52,27 @@
   [load 'fu2/bootstrap-core_extension.fu2']
   [load 'fu2/bootstrap-package.fu2']
   [reload_all_package_definitions]
-  [require number]
-  [require ansi]
-  
-  [defunk load_all_core_packages []
-    [load_minimal_core_packages]
-    
-    [require utilities]
-    [require number]
-    [require math]
-    [require graphviz]
-    [require xmlrpc]
-    [require graph_match_error_correcting]
-    [require graph_cluster]
-    [require gtk]
-    [require fibermon]
-    [require natural_language]]
-  
-  [defunk load_isismon_release_packages []
-    [require fibermon]
-    [require isismon]]
-  ]
+  [eval `[prog [require number]
+	       [require ansi]
+	       
+	       [defunk load_all_core_packages []
+		 [load_minimal_core_packages]
+		 
+		 [require utilities]
+		 [require number]
+		 [require math]
+		 [require graphviz]
+		 [require xmlrpc]
+		 [require graph_match_error_correcting]
+		 [require graph_cluster]
+		 [require gtk]
+		 [require fibermon]
+		 [require natural_language]]
+	       
+	       [defunk load_isismon_release_packages []
+		 [require fibermon]
+		 [require isismon]]
+	       ]]]
 
 
 [defunk load_funk2-devrc []

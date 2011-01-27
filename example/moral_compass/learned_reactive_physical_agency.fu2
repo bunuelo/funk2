@@ -861,7 +861,7 @@ add rel orientation
 	[mind-wait_to_activate mind learned_reactive physical center_head_on object]
 	[mind-wait_to_activate mind learned_reactive physical align_body_with_neck]]      
       
-      ]]]
+      ]]]]
 
 '****************************************************************************************'
 [deframe look_carefully_for_resource [traced_resource] [[my_current_object nil]]

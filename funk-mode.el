@@ -75,7 +75,7 @@
 	      "print"
               "range"
 	      "save_memory_image" "second" "set-car" "set-cdr" "simple_length" "sleep" "sleep_for_nanoseconds" "slots"
-              "t" "third" "thread-complete" "thread-value" "type"
+              "t" "third" "thread-complete" "thread-value" "type" "terminal_format"
 	      "quit")
             'words)
            'font-lock-function-name-face)
@@ -99,7 +99,7 @@
 	      "or"
 	      "parc" "parcar" "parlet" "parog" "partimes" "prog" "put"
 	      "quote"
-	      "set" "set-apply" "shelter" "semantic-add" "semantic-remove"
+	      "set" "set-apply" "shelter" "semantic-lookup" "semantic-add" "semantic-remove"
 	      "type-get" "type-set" "type-execute" "type-have" "type-get-apply" "type-set-apply" "type-execute-apply" "type-have-apply"
 	      "while" "with" "with-new-cause"
 	      "yield"

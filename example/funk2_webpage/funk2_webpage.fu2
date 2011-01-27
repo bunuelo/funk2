@@ -236,7 +236,7 @@
 	       '				<li>'
 	       '					<h2>Categories</h2>'
 	       '					<ul>'
-	       '						<li><a href="#">Artificial Intelligence</a></li>'
+	       '						<li><a href="http://www-formal.stanford.edu/jmc/whatisai/whatisai.html">Artificial Intelligence...</a></li>'
 	       '						<li><a href="#">Neuroscience</a></li>'
 	       '						<li><a href="#">Commonsense Reasoning</a></li>'
 	       '						<li><a href="#">Distributed Computation</a></li>'

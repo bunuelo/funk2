@@ -86,11 +86,11 @@
 					 
 					 ]]]]
 			       [[is-type `semantic_frame_event event]
-				[cond [[eq event_type `add]]
-				      [let [[key_type [get event key_type]]
-					    [key      [get event key]]]
-					
-					]]]
+				[cond [[eq event_type `add]
+				       [let [[key_type [get event key_type]]
+					     [key      [get event key]]]
+					 
+					 ]]]]
 			       ]]]]
 	     [have mental_knowledge_iterator increment]]]]]
 

@@ -427,6 +427,40 @@ lib_libfunk2_la_CFLAGS  = $(cc_flags)
 bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
+all_core_extensions = \
+  $(extension_equals_hash_libf2e_equals_hash_la) \
+  $(extension_fibermon_libf2e_fibermon_la) \
+  $(extension_image_libf2e_image_la) \
+  $(extension_image_sequence_libf2e_image_sequence_la) \
+  $(extension_movie_libf2e_movie_la) \
+  $(extension_conceptnet_libf2e_conceptnet_la) \
+  $(extension_event_stream_libf2e_event_stream_la) \
+  $(extension_forward_planner_libf2e_forward_planner_la) \
+  $(extension_frame_ball_libf2e_frame_ball_la) \
+  $(extension_graph_isomorphism_libf2e_graph_isomorphism_la) \
+  $(extension_semantic_action_event_libf2e_semantic_action_event_la) \
+  $(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la) \
+  $(extension_semantic_containment_object_libf2e_semantic_containment_object_la) \
+  $(extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la) \
+  $(extension_semantic_event_libf2e_semantic_event) \
+  $(extension_semantic_frame_ball_libf2e_semantic_frame_ball) \
+  $(extension_lick_libf2e_lick_la) \
+  $(extension_mentality_libf2e_mentality_la) \
+  $(extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la) \
+  $(extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la) \
+  $(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la) \
+  $(extension_semantic_ordered_object_libf2e_semantic_ordered_object_la) \
+  $(extension_semantic_object_type_libf2e_semantic_object_type_la) \
+  $(extension_semantic_object_libf2e_semantic_object_la) \
+  $(extension_semantic_packable_object_libf2e_semantic_packable_object_la) \
+  $(extension_semantic_physical_object_libf2e_semantic_physical_object_la) \
+  $(extension_semantic_visual_object_libf2e_semantic_visual_object_la) \
+  $(extension_mindmon_libf2e_mindmon_la) \
+  $(extension_causality_libf2e_causality_la) \
+  $(extension_semantic_resource_libf2e_semantic_resource_la) \
+  $(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la) \
+  $(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la)
+
 extension_equals_hash_libf2e_equals_hash_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_equals_hash_libf2e_equals_hash_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
@@ -560,7 +594,7 @@ make-install-sh:
 	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                >> install-sh
 	chmod a+x install-sh
 
-bin/funk2$(EXEEXT): lib/libfunk2.la
+bin/funk2$(EXEEXT): lib/libfunk2.la $(all_core_extensions)
 	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) -Llib/.libs -lfunk2
 
 install: install-am make-install-sh

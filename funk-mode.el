@@ -75,7 +75,7 @@
 	      "print"
               "range"
 	      "save_memory_image" "second" "set-car" "set-cdr" "simple_length" "sleep" "sleep_for_nanoseconds" "slots"
-              "t" "third" "thread-complete" "thread-value" "type"
+              "t" "third" "thread-complete" "thread-value" "type" "terminal_format"
 	      "quit")
             'words)
            'font-lock-function-name-face)

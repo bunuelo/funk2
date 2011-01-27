@@ -72,6 +72,7 @@
 	       [defunk load_isismon_release_packages []
 		 [require fibermon]
 		 [require isismon]]
+	       
 	       ]]]
 
 
@@ -79,7 +80,6 @@
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]
 
 [globalize funk2_release_names `[isismon debian]]
-
 [globalize funk2_release_name  `debian]
 
 [cond [[eq funk2_release_name `debian]  [prog [terminal_format standard-terminal '\nCompiling Debian Funk2 package binary release.']

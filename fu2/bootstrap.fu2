@@ -53,25 +53,27 @@
   [load 'fu2/bootstrap-package.fu2']
   [reload_all_package_definitions]
   [require number]
-  [require ansi]]
-
-[defunk load_all_core_packages []
-  [load_minimal_core_packages]
+  [require ansi]
   
-  [require utilities]
-  [require number]
-  [require math]
-  [require graphviz]
-  [require xmlrpc]
-  [require graph_match_error_correcting]
-  [require graph_cluster]
-  [require gtk]
-  [require fibermon]
-  [require natural_language]]
+  [defunk load_all_core_packages []
+    [load_minimal_core_packages]
+    
+    [require utilities]
+    [require number]
+    [require math]
+    [require graphviz]
+    [require xmlrpc]
+    [require graph_match_error_correcting]
+    [require graph_cluster]
+    [require gtk]
+    [require fibermon]
+    [require natural_language]]
+  
+  [defunk load_isismon_release_packages []
+    [require fibermon]
+    [require isismon]]
+  ]
 
-[defunk load_isismon_release_packages []
-  [require fibermon]
-  [require isismon]]
 
 [defunk load_funk2-devrc []
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]
@@ -98,8 +100,6 @@
       [t                                [error bug_type            `unknown-funk2_release_name-in-bootstrap.fu2
 					       funk2_release_name  funk2_release_name
 					       funk2_release_names funk2_release_names]]]
-
-[print 'debug 3']
 
 [terminal_format standard-terminal '\nsaving img/bootstrap.img.']
 [save_memory_image 'img/bootstrap.img']

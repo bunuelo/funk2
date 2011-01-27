@@ -22,6 +22,35 @@
 [defcorefunk semantic_ordered_object-core_extension_ping       semantic_ordered_object semantic_ordered_object__core_extension_ping]
 [defcorefunk semantic_ordered_object-core_extension_initialize semantic_ordered_object semantic_ordered_object__core_extension_initialize]
 
+[defcorefunk object-semantic-ordered-next-lookup       semantic_ordered_object object__semantic__ordered__next__lookup]
+[defcorefunk object-semantic-ordered-next-lookup-apply semantic_ordered_object object__semantic__ordered__next__lookup__apply]
+[defcorefunk object-semantic-ordered-next-add          semantic_ordered_object object__semantic__ordered__next__add]
+[defcorefunk object-semantic-ordered-next-add-apply    semantic_ordered_object object__semantic__ordered__next__add__apply]
+[defcorefunk object-semantic-ordered-next-remove       semantic_ordered_object object__semantic__ordered__next__remove]
+[defcorefunk object-semantic-ordered-next-remove-apply semantic_ordered_object object__semantic__ordered__next__remove__apply]
+
+[defcorefunk object-semantic-ordered-previous-lookup       semantic_ordered_object object__semantic__ordered__previous__lookup]
+[defcorefunk object-semantic-ordered-previous-lookup-apply semantic_ordered_object object__semantic__ordered__previous__lookup__apply]
+[defcorefunk object-semantic-ordered-previous-add          semantic_ordered_object object__semantic__ordered__previous__add]
+[defcorefunk object-semantic-ordered-previous-add-apply    semantic_ordered_object object__semantic__ordered__previous__add__apply]
+[defcorefunk object-semantic-ordered-previous-remove       semantic_ordered_object object__semantic__ordered__previous__remove]
+[defcorefunk object-semantic-ordered-previous-remove-apply semantic_ordered_object object__semantic__ordered__previous__remove__apply]
 
 [semantic_ordered_object-core_extension_ping]
+
+
+[defmetro semantic-ordered-next-lookup       [this slot_name :rest args] `[object-semantic-ordered-next-lookup       ,this [quote ,slot_name] @args]]
+[defmetro semantic-ordered-next-lookup-apply [this slot_name       args] `[object-semantic-ordered-next-lookup-apply ,this [quote ,slot_name] ,args]]
+[defmetro semantic-ordered-next-add          [this slot_name :rest args] `[object-semantic-ordered-next-add          ,this [quote ,slot_name] @args]]
+[defmetro semantic-ordered-next-add-apply    [this slot_name       args] `[object-semantic-ordered-next-add-apply    ,this [quote ,slot_name] ,args]]
+[defmetro semantic-ordered-next-remove       [this slot_name :rest args] `[object-semantic-ordered-next-remove       ,this [quote ,slot_name] @args]]
+[defmetro semantic-ordered-next-remove-apply [this slot_name       args] `[object-semantic-ordered-next-remove-apply ,this [quote ,slot_name] ,args]]
+
+[defmetro semantic-ordered-previous-lookup       [this slot_name :rest args] `[object-semantic-ordered-previous-lookup       ,this [quote ,slot_name] @args]]
+[defmetro semantic-ordered-previous-lookup-apply [this slot_name       args] `[object-semantic-ordered-previous-lookup-apply ,this [quote ,slot_name] ,args]]
+[defmetro semantic-ordered-previous-add          [this slot_name :rest args] `[object-semantic-ordered-previous-add          ,this [quote ,slot_name] @args]]
+[defmetro semantic-ordered-previous-add-apply    [this slot_name       args] `[object-semantic-ordered-previous-add-apply    ,this [quote ,slot_name] ,args]]
+[defmetro semantic-ordered-previous-remove       [this slot_name :rest args] `[object-semantic-ordered-previous-remove       ,this [quote ,slot_name] @args]]
+[defmetro semantic-ordered-previous-remove-apply [this slot_name       args] `[object-semantic-ordered-previous-remove-apply ,this [quote ,slot_name] ,args]]
+
 

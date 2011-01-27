@@ -19,16 +19,18 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__EXTENSION__SEMANTIC_ACTION_EVENT__H
-#define F2__EXTENSION__SEMANTIC_ACTION_EVENT__H
+#ifndef F2__EXTENSION__SEMANTIC_PACKABLE_OBJECT__H
+#define F2__EXTENSION__SEMANTIC_PACKABLE_OBJECT__H
 
-#include "../semantic_event/semantic_event.h"
+#include "../semantic_ordered_object/semantic_ordered_object.h"
+#include "../semantic_containment_object/semantic_containment_object.h"
 
 
 // **
 
-f2ptr f2__semantic_action_event__core_extension_ping(f2ptr cause);
-f2ptr f2__semantic_action_event__core_extension_initialize(f2ptr cause);
-f2ptr f2__semantic_action_event__core_extension_destroy(f2ptr cause);
+f2ptr f2__semantic_packable_object__core_extension_ping(f2ptr cause);
+f2ptr f2__semantic_packable_object__core_extension_initialize(f2ptr cause);
+f2ptr f2__semantic_packable_object__core_extension_destroy(f2ptr cause);
 
-#endif // F2__EXTENSION__SEMANTIC_ACTION_EVENT__H
+#endif // F2__EXTENSION__SEMANTIC_PACKABLE_OBJECT__H
+

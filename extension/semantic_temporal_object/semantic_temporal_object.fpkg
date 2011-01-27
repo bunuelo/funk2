@@ -17,8 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage semantic_event
-  :documentation 'Basic knowledge for dealing with events in time.'
-   :packages [semantic_temporal_object]
-    :sources ['semantic_event-core.fu2']]
+[defpackage semantic_temporal_object
+  :documentation 'Basic knowledge for dealing with transitive orderings of objects--useful for temporal and spatial thinking.'
+   :packages [semantic_packable_object]
+    :sources ['semantic_temporal_object-core.fu2']]
 

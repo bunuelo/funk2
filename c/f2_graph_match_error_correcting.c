@@ -494,7 +494,13 @@ f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f
   f2ptr answer = f2__ptypehash__new(cause);
   set__iteration(cause, root_graph_set, root_graph, 
                  f2ptr closed_operations_rbt = f2__ptypehash__lookup(cause, closed_operations_rbt_hash, root_graph);
-		 f2__ptypehash__add(cause, answer, root_graph, f2__redblacktree__minimum(cause, closed_operations_rbt));
+		 if (closed_operations_rbt != nil) {
+		   f2ptr best_match = f2__redblacktree__minimum(cause, closed_operations_rbt);
+		   if (raw__larva__is_type(cause, best_match)) {
+		     return best_match;
+		   }
+		   f2__ptypehash__add(cause, answer, root_graph, best_match);
+		 }
 		 );
   return answer;
 }

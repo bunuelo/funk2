@@ -1,0 +1,56 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[defcore semantic_containment_object 'extension/semantic_containment_object/.libs/libf2e_semantic_containment_object.so']
+
+[defcorefunk semantic_containment_object-core_extension_ping       semantic_containment_object semantic_containment_object__core_extension_ping]
+[defcorefunk semantic_containment_object-core_extension_initialize semantic_containment_object semantic_containment_object__core_extension_initialize]
+
+[defcorefunk object-semantic-containment-contains-lookup       semantic_containment_object object__semantic__containment__contains__lookup]
+[defcorefunk object-semantic-containment-contains-lookup-apply semantic_containment_object object__semantic__containment__contains__lookup__apply]
+[defcorefunk object-semantic-containment-contains-add          semantic_containment_object object__semantic__containment__contains__add]
+[defcorefunk object-semantic-containment-contains-add-apply    semantic_containment_object object__semantic__containment__contains__add__apply]
+[defcorefunk object-semantic-containment-contains-remove       semantic_containment_object object__semantic__containment__contains__remove]
+[defcorefunk object-semantic-containment-contains-remove-apply semantic_containment_object object__semantic__containment__contains__remove__apply]
+
+[defcorefunk object-semantic-containment-is_contained_by-lookup       semantic_containment_object object__semantic__containment__is_contained_by__lookup]
+[defcorefunk object-semantic-containment-is_contained_by-lookup-apply semantic_containment_object object__semantic__containment__is_contained_by__lookup__apply]
+[defcorefunk object-semantic-containment-is_contained_by-add          semantic_containment_object object__semantic__containment__is_contained_by__add]
+[defcorefunk object-semantic-containment-is_contained_by-add-apply    semantic_containment_object object__semantic__containment__is_contained_by__add__apply]
+[defcorefunk object-semantic-containment-is_contained_by-remove       semantic_containment_object object__semantic__containment__is_contained_by__remove]
+[defcorefunk object-semantic-containment-is_contained_by-remove-apply semantic_containment_object object__semantic__containment__is_contained_by__remove__apply]
+
+[semantic_containment_object-core_extension_ping]
+
+
+[defmetro semantic-containment-contains-lookup       [this slot_name :rest args] `[object-semantic-containment-contains-lookup       ,this [quote ,slot_name] @args]]
+[defmetro semantic-containment-contains-lookup-apply [this slot_name       args] `[object-semantic-containment-contains-lookup-apply ,this [quote ,slot_name] ,args]]
+[defmetro semantic-containment-contains-add          [this slot_name :rest args] `[object-semantic-containment-contains-add          ,this [quote ,slot_name] @args]]
+[defmetro semantic-containment-contains-add-apply    [this slot_name       args] `[object-semantic-containment-contains-add-apply    ,this [quote ,slot_name] ,args]]
+[defmetro semantic-containment-contains-remove       [this slot_name :rest args] `[object-semantic-containment-contains-remove       ,this [quote ,slot_name] @args]]
+[defmetro semantic-containment-contains-remove-apply [this slot_name       args] `[object-semantic-containment-contains-remove-apply ,this [quote ,slot_name] ,args]]
+
+[defmetro semantic-containment-is_contained_by-lookup       [this slot_name :rest args] `[object-semantic-containment-is_contained_by-lookup       ,this [quote ,slot_name] @args]]
+[defmetro semantic-containment-is_contained_by-lookup-apply [this slot_name       args] `[object-semantic-containment-is_contained_by-lookup-apply ,this [quote ,slot_name] ,args]]
+[defmetro semantic-containment-is_contained_by-add          [this slot_name :rest args] `[object-semantic-containment-is_contained_by-add          ,this [quote ,slot_name] @args]]
+[defmetro semantic-containment-is_contained_by-add-apply    [this slot_name       args] `[object-semantic-containment-is_contained_by-add-apply    ,this [quote ,slot_name] ,args]]
+[defmetro semantic-containment-is_contained_by-remove       [this slot_name :rest args] `[object-semantic-containment-is_contained_by-remove       ,this [quote ,slot_name] @args]]
+[defmetro semantic-containment-is_contained_by-remove-apply [this slot_name       args] `[object-semantic-containment-is_contained_by-remove-apply ,this [quote ,slot_name] ,args]]
+
+

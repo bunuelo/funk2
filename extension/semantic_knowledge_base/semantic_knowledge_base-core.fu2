@@ -30,18 +30,12 @@
 [semantic_knowledge_base-core_extension_ping]
 
 
-[defmetro semantic-add [this slot_name :rest args]
-  `[object-semantic-add ,this [quote ,slot_name] @args]]
-
-[defmetro semantic-add-apply [this slot_name args]
-  `[object-semantic-add-apply ,this [quote ,slot_name] ,args]]
-
-
-[defmetro semantic-remove [this slot_name :rest args]
-  `[object-semantic-remove ,this [quote ,slot_name] @args]]
-
-[defmetro semantic-remove-apply [this slot_name args]
-  `[object-semantic-remove-apply ,this [quote ,slot_name] ,args]]
+[defmetro semantic-lookup       [this slot_name :rest args] `[object-semantic-lookup       ,this [quote ,slot_name] @args]]
+[defmetro semantic-lookup-apply [this slot_name       args] `[object-semantic-lookup-apply ,this [quote ,slot_name] ,args]]
+[defmetro semantic-add          [this slot_name :rest args] `[object-semantic-add          ,this [quote ,slot_name] @args]]
+[defmetro semantic-add-apply    [this slot_name       args] `[object-semantic-add-apply    ,this [quote ,slot_name] ,args]]
+[defmetro semantic-remove       [this slot_name :rest args] `[object-semantic-remove       ,this [quote ,slot_name] @args]]
+[defmetro semantic-remove-apply [this slot_name       args] `[object-semantic-remove-apply ,this [quote ,slot_name] ,args]]
 
 
 [defmetro semantic-is-type [type_name object]

@@ -1,0 +1,762 @@
+'
+ - make random 5 node graph
+ - make random n node graph (max of m different types of edges)
+ - *modify algorithm for edges?*
+ - inserting 10, 100, 1000, etc. single nodes into lattice
+ - time - inserting 10, 100, 1000, etc.  5 node graphs into lattice
+ - time - searching for match of 5 node graph for 10, 100, 1000, etc. lattice
+ - given large graph, insert all single nodes into lattice
+ - given large graph and single node, expand
+
+
+expandable array?
+
+get neighbors(node)
+ - run through all edges checking for node?
+ - hash table?
+
+expand_subgraph(graph, subgraph, n)
+
+n is number of new nodes to add
+
+[a]
+1. pick random node in subgraph
+2. add random neighbor of that node that isnt already in subgraph, n times
+
+[b]
+1. create list of all neighbors of all nodes in subgraph
+2. pick n of them to add
+
+algorithm to write(graph, search)
+1. feed all single nodes of graph into lattice
+2. expand to five-node graphs, insert into lattice
+3. search for search with
+
+
+
+
+1. create lattice with a subgraph - current greatest isomorphism 0
+2. take another subgraph and compare it with current lattice, finding greatest isomorphism - save if larger than current greatest isomorphism
+3. decompose subgraph into lattice
+4. repeat 2 and 3
+
+
+how to use sets
+explain hashes
+
+
+rl_hash = [get graph edges_label_hash_right_node_hash_left_node_hash]
+node1_hash = [have rl_hash lookup node1]
+[have node1_hash lookup node2] = hash with edges between node 1 and node 2 (edge label to edge)
+[get [get [get node1_hash as-frame] keys] as-array] = array of graph_nodes connected to node1
+
+[get [get [get [have [get graph edges_label_hash_right_node_hash_left_node_hash] lookup node1] as-frame] keys] as-array]
+
+get as frame, get keys
+
+[have [have node1_hash lookup node2] lookup 1] = conslist of edges with label 1
+
+[get [get [get subgraph node_set] elements] as-array]
+
+
+graph
+
+	  [= some_node [get subgraph_nodes elt [random [get subgraph node_count]]]]
+	  [= neighbors_of_some_node [array_to_set [get_neighbors_array some_node graph]]]
+	  [= random_neighbor_node [get neighbors_of_some_node an_arbitrary_element]]
+	  [have subgraph add_node random_neighbor_node]
+	  [= edges [get graph edges_between_nodes some_node random_neighbor_node]]
+
+
+	[let* [[subgraph_nodes [get [get [get subgraph node_set] elements] as-array]]
+	       [some_node [get subgraph_nodes elt [random [get subgraph node_count]]]]
+	       [neighbors_of_some_node [get_neighbors_array some_node graph]]
+	       [random_neighbor_node [get neighbors_of_some_node elt [random [get neighbors_of_some_node length]]]]
+	       [edges [get graph edges_between_nodes some_node random_neighbor_node]]]
+
+
+
+
+     [[== method 1]
+      [while [< nodes_added n]
+	[let* [[some_node [get_random_node subgraph]]
+	       [random_neighbor_node [get_random_array_element [get_neighbors_array some_node graph]]]
+	       [edges [get graph edges_between_nodes some_node random_neighbor_node]]]
+	  [have subgraph add_node random_neighbor_node]
+	  [while edges
+	    [let [[this-edge [cdr [car edges]]]]
+	      [= edges [cdr edges]]
+	      [have subgraph add_edge this-edge]]]
+	  [= nodes_added [+ 1 nodes_added]]]]]
+
+
+
+check method 1, 2
+subgraph has no more neighbors ---- infinite loop - problem?
+
+'
+
+
+
+
+
+'*********************************'
+'********   Graph Stuff   ********'
+'*********************************'
+
+
+
+[defunk time_lattice_creation [n n1 n2 n3]
+  [let* [[time_a [time]]
+	 [the_graph [get [conceptnet-new_from_graph_file 'conceptnet_medium.graph' n] graph]]
+	 [time_b [time]]
+	 [the_lattice [create_lattice the_graph 2 n1 n2 n3]]
+	 [time_c [time]]]
+    [print 'time to load conceptnet graph:']
+    [print [time_difference time_a time_b]]
+    [print 'time to create lattice:']
+    [print [time_difference time_b time_c]]]]
+
+[defunk time_lattice_search [the_lattice]
+  [let* [[time_a [time]]
+	 [subgraph [make_random_n_conceptnet_graph 5 4]]
+	 [results [search_for_subgraph_in_lattice subgraph the_lattice]]
+	 [time_b [time]]]
+    [print 'time to search for subgraph:']
+    [print [time_difference time_a time_b]]]]
+
+[defunk search_for_subgraph_in_lattice [subgraph lattice]
+  [let* [[the_lattice lattice]
+	 [the_subgraph [get subgraph copy_with_node_label nil]]
+	 [the_isomorphisms [get the_lattice error_correcting_subgraph_isomorphisms the_subgraph nil]]
+	 [the_keys [get the_isomorphisms keys]]]
+    [mapc [funk [x] [if [eq [have the_isomorphisms lookup x] nil]
+			[have the_isomorphisms remove x]]]
+	  the_keys]
+    [let [[the_new_keys [get the_isomorphisms keys]]]
+      [have the_new_keys sort [funk [x y]
+				    [> [get [have the_isomorphisms lookup x] cost] [get [have the_isomorphisms lookup y] cost]]]]]]]
+
+[defunk search_for_subgraph_in_graph [subgraph graph]
+  [let* [[the_lattice [create_lattice graph 2 1 1 5]]
+	 [the_subgraph [get subgraph copy_with_node_label nil]]
+	 [the_isomorphisms [get the_lattice error_correcting_subgraph_isomorphisms the_subgraph nil]]
+	 [the_keys [get the_isomorphisms keys]]]
+    [mapc [funk [x] [if [eq [have the_isomorphisms lookup x] nil]
+			[have the_isomorphisms remove x]]]
+	  the_keys]
+    [let [[the_new_keys [get the_isomorphisms keys]]]
+      [have the_new_keys sort [funk [x y]
+				    [> [get [have the_isomorphisms lookup x] cost] [get [have the_isomorphisms lookup y] cost]]]]]]]
+'
+	 [the_sorted_isomorphisms 
+	  [have the_keys sort 
+		[funk [x y] [> [get [have the_isomorphisms lookup x] cost] [get [have the_isomorphisms lookup y] cost]]]]]]
+    the_sorted_isomorphisms]]]
+'
+[defunk create_lattice [graph method_of_expansion number_of_expansions expand_each_node expand_by]
+  [let* [[index 0]
+	 [index2 0]
+	 [index3 0]
+	 [the_lattice [new graph_decomposition_lattice]]
+	 [graph_mappings_otl [new ptypehash]]
+	 [graph_mappings_lto [new ptypehash]]]
+    [decompose_single_nodes the_lattice graph graph_mappings_otl graph_mappings_lto]
+    [while [< index number_of_expansions]
+      [let [[lattice_graphs [get [get [get the_lattice root_graph_set] elements] as-array]]]
+	[while [< index2 [get lattice_graphs length]]
+	  [while [< index3 expand_each_node]
+	    [let* [[graph_to_add [expand [have graph_mappings_lto lookup [get lattice_graphs elt index2]] graph expand_by method_of_expansion]]
+		   [graph_to_add_n [get graph_to_add copy_with_node_label nil]]]
+	      [have the_lattice decompose_graph graph_to_add_n]
+	      [have graph_mappings_otl add graph_to_add graph_to_add_n]
+	      [have graph_mappings_lto add graph_to_add_n graph_to_add]]
+	    [= index3 [+ 1 index3]]]
+	  [= index3 0]
+	  [= index2 [+ 1 index2]]]
+	[= index2 0]
+	[= index [+ 1 index]]]]
+    the_lattice]]
+
+[defunk decompose_single_nodes [lattice graph graph_mappings_otl graph_mappings_lto]
+  [let* [[index 0]
+	 [graph_nodes [get [get [get graph node_set] elements] as-array]]]
+    [while [< index [get graph_nodes length]]
+      [let [[a_graph [new graph]]]
+	[have a_graph add_node [get graph_nodes elt index]]
+	[let [[a_graph_n [get a_graph copy_with_node_label nil]]]
+	  [have lattice decompose_graph a_graph_n]
+	  [have graph_mappings_otl add a_graph a_graph_n]
+	  [have graph_mappings_lto add a_graph_n a_graph]]]
+      [= index [+ 1 index]]]]]
+
+
+
+[defunk expand [subgraph graph n method]
+  [let* [[index 0]
+	 [nodes_added 0]
+	 [subgraph_nodes [get [get [get subgraph node_set] elements] as-array]]]
+    [cond
+     [[== method 1]
+      [while [and [< nodes_added n] [not [get [get_subgraph_neighbors subgraph graph] is_empty]]]
+	[let* [[some_node [get_random_node subgraph]]
+	       [random_neighbor_node [get_random_array_element [get_neighbors_array some_node graph]]]]
+	  [if [not [eq [add_node_and_edges subgraph graph random_neighbor_node] nil]]
+	      [prog
+	       [= nodes_added [+ 1 nodes_added]]]]]]]
+     [[== method 2]
+      [while [< nodes_added n]
+	[let* [[all_neighbors [get_subgraph_neighbors subgraph graph]]]
+	  [if [get all_neighbors is_empty]
+	      [= nodes_added n]
+	    [while [and [not [get all_neighbors is_empty]] [< nodes_added n]]
+	      [let [[neighbor_to_add [get all_neighbors an_arbitrary_element]]]
+		[if [not [eq [add_node_and_edges subgraph graph neighbor_to_add] nil]]
+		    [= nodes_added [+ 1 nodes_added]]]
+		[have all_neighbors remove neighbor_to_add]]]]]]]
+     [[== method 3]
+      ]]
+    subgraph]]
+
+
+[defunk add_node_and_edges [graph1 graph node_to_add]
+  [if [not [eq node_to_add nil]]
+      [let* [[base_nodes [get [get [get graph1 node_set] elements] as-array]]
+	     [index 0]]
+	[have graph1 add_node node_to_add]
+	[while [< index [get base_nodes length]]
+	  [let [[edges [get graph edges_between_nodes [get base_nodes elt index] node_to_add]]]
+	    [while edges
+	      [let [[this-edge [cdr [car edges]]]]
+		[= edges [cdr edges]]
+		[have graph1 add_edge this-edge]]]
+	    [= index [+ 1 index]]]]
+	node_to_add]
+    nil]]
+
+
+
+[defunk get_neighbors_array [node graph]
+  [if [not [eq [have [get graph edges_label_hash_right_node_hash_left_node_hash] lookup node] nil]]
+      [get [get [get [have [get graph edges_label_hash_right_node_hash_left_node_hash] lookup node] as-frame] keys] as-array]
+    nil]]
+
+[defunk get_neighbors_set [node graph]
+  [array_to_set [get_neighbors_array node graph]]]
+
+[defunk get_random_array_element [an_array]
+  [if [not [eq an_array nil]]
+      [get an_array elt [random [get an_array length]]]
+    nil]]
+
+[defunk get_random_node [graph]
+  [let* [[graph_nodes [get [get [get graph node_set] elements] as-array]]
+	 [some_node [get graph_nodes elt [random [get graph node_count]]]]]
+    some_node]]
+
+[defunk get_subgraph_neighbors [subgraph graph]
+  [let* [[all_neighbors [new set]]
+	 [index 0]
+	 [subgraph_nodes [get [get [get subgraph node_set] elements] as-array]]]
+    [while [< index [get subgraph node_count]]
+      [set_union all_neighbors [get_neighbors_set [get subgraph_nodes elt index] graph]]
+      [= index [+ 1 index]]]
+    [set_subtract all_neighbors [get subgraph node_set]]
+    all_neighbors]]
+
+
+
+[defunk make_random_n_conceptnet_graph [n e]
+  [let* [[index 0]
+	 [index2 0]
+	 [edge_labels [get [conslist `HasProperty `IsA `CapableOf `HasPRerequisite 
+				     `AtLocation `ConceptuallyRelatedTo `UsedFor 
+				     `CausesDesire `MotivatedByGoal `DefinedAs 
+				     `ReceivesAction `HasSubevent `MadeOf `PartOf 
+				     `HasA `Desires `Located] as-array]]
+	 [the_graph [new graph]]
+	 [the_nodes [new array n]]
+	 [nodel [new array n]]]
+    [while [< index n]
+      [set the_nodes elt index [new graph_node index]]
+      [have the_graph add_node [get the_nodes elt index]]
+      [= index [+ 1 index]]]
+    [= index 0]
+    [while [< index n]
+      [= index2 0]
+      [while [< index2 n]
+	[if [!= index index2]
+	    [let [[x [random e]]]
+	      [if [== x 1] 
+		  [have the_graph add_new_edge [get edge_labels elt [random 17]] [get the_nodes elt index] [get the_nodes elt index2]]]]]
+	[= index2 [+ 1 index2]]]
+      [= index [+ 1 index]]]
+    the_graph]]
+
+
+
+'
+[defunk make_random_lattice [size n m1 m2 e]
+  [let* [[the_lattice [new graph_decomposition_lattice]]]
+    [decompose_graphs_in_list_into_lattice [make_list_of_random_n_graphs size n m1 m2 e t] the_lattice]
+    the_lattice]]
+
+
+[defunk decompose_graphs_in_list_into_lattice [listog lattice]
+  [let* [[index 0]]
+    [while [< index [get listog length]]
+      [have lattice decompose_graph [get listog elt index]]
+      [= index [+ 1 index]]]]]
+
+[defunk make_list_of_random_n_graphs [ln n m1 m2 e nil_edges]
+  [let* [[lo_graphs [new array ln]]
+	 [index 0]]
+    [while [< index ln]
+      [prog
+       [set lo_graphs elt index [make_random_n_graph n m1 m2 e nil_edges]]
+       [= index [+ 1 index]]]]
+    lo_graphs]]
+
+[defunk make_random_n_graph [n m1 m2 e nil_edges]
+  [let* [[index 0]
+	 [index2 0]
+	 [the_graph [new graph]]
+	 [the_nodes [new array n]]
+	 [nodel [new array [- m2 m1]]]]
+    [while [< index [- m2 m1]]
+      [prog
+       [set nodel elt index [+ m1 index]]
+       [= index [+ 1 index]]]]
+    [= index 0]
+    [while [< index n]
+      [prog
+       [let* [[y 0]
+	      [z 0]]
+	 [while [== y 0]
+	   [= z [random [- m2 m1]]]
+	   [= y [get nodel elt z]]]
+	 [set nodel elt z 0]
+	 [set the_nodes elt index [new graph_node y]]]
+       [have the_graph add_node [get the_nodes elt index]]
+       [= index [+ 1 index]]]]
+    [= index 0]
+    [while [< index n]
+      [prog
+       [= index2 0]
+       [while [< index2 n]
+	 [prog
+	  [if [!= index index2]
+	      [prog
+	       [let [[x [random e]]]
+		     [if [== x 1] 
+			 [if nil_edges
+			     [have the_graph add_new_edge nil [get the_nodes elt index] [get the_nodes elt index2]]
+			   [have the_graph add_new_edge [+ m1 [random [- m2 m1]]] [get the_nodes elt index] [get the_nodes elt index2]]]]]]]
+	  [= index2 [+ 1 index2]]]]
+       [= index [+ 1 index]]]]
+    the_graph]]
+'
+
+'**********************************'
+'*******  Helper Functions  *******'
+'**********************************'
+
+[defunk set_union [set_a set_b]
+  [if [not [get set_b is_empty]]
+      [let* [[set_b_elements [get [get set_b elements] as-array]]
+	     [index 0]]
+	[while [< index [get set_b_elements length]]
+	  [have set_a add [get set_b_elements elt index]]
+	  [= index [+ 1 index]]]]
+    set_a]]
+
+[defunk set_subtract [set_a set_b]
+  [if [not [get set_b is_sempty]]]
+      [let* [[set_b_elements [get [get set_b elements] as-array]]
+	     [index 0]]
+	[while [< index [get set_b_elements length]]
+	  [have set_a remove [get set_b_elements elt index]]
+	  [= index [+ 1 index]]]]
+    set_a]]
+
+[defunk array_to_set [the_array]
+  [if [not [eq the_array nil]]
+      [let* [[the_set [new set]]
+	     [index 0]]
+	[while [< index [get the_array length]]
+	  [prog
+	   [have the_set add [get the_array elt index]]
+	   [= index [+ 1 index]]]]
+	the_set]
+    [new set]]]
+
+'
+[defunk mapc_pairs [funk seq]
+  [while seq
+    [let [[x [car seq]]]
+      [= seq [cdr seq]]
+      [let [[y [car seq]]]
+	[funkall funk x y]]]
+    [= seq [cdr seq]]]]
+
+[defunk mapc_consec [funk seq]
+  [while seq
+    [let [[x [car seq]]]
+      [= seq [cdr seq]]
+      [let [[y [car seq]]]
+	[funkall funk x y]]]]]
+
+[defunk for [x n1 n2 funk]
+  [while [< n1 n2]
+    [prog
+     [let [[x n1]]
+     [funkall funk x]
+     [= n1 [+ 1 n1]]]]]]
+
+[defunk mod [x y]
+  [if [> y 0]
+      [prog
+       [while [>= x y]
+	 [= x [- x y]]]]
+    [= x 0]]
+  x]
+'
+
+
+'**********************************'
+'*********  Random Stuff  *********'
+'**********************************'
+
+
+[defunk time_difference [time_a time_b]
+  [/ [- [get time_b nanoseconds_since_1970] [get time_a nanoseconds_since_1970]] 1000000000.0]]
+'
+[defunk time_time [funk a b c d]
+  [let [[time_a [time]]] 
+    [print time_a] 
+    [funkall funk a b c d] 
+    [let [[time_b [time]]]
+      [print time_b]
+      [time_difference time_a time_b]]]]
+
+[defunk time_time2 [a b]
+  [let [[time_a [time]]]
+    [print time_a]
+    [let* [[graph [make_random_n_graph a 1 [* a 10] b t]]
+	   [index 0]
+	   [nodes [get [get [get graph node_set] elements] as-array]]
+	   [the_lattice [new graph_decomposition_lattice]]]
+      graph
+      [while [< index a]
+	[let [[g [new graph]]]
+	  [have g add_node [get nodes elt index]]
+	  [have the_lattice decompose_graph g]
+	  [= index [+ 1 index]]]]
+      [let [[time_b [time]]]
+	[print time_b]
+	[time_difference time_a time_b]]]]]
+
+[defunk string_to_graph [x] 
+  [let* [[string_length [get x length]]
+	 [position 0]
+	 [the_graph [new graph]]
+	 [the_nodes [new array string_length]]]
+    [while [> string_length position]
+      [prog
+       [set the_nodes elt position [new graph_node [get [get x substring position [+ 1 position]] as-symbol]]]
+       [have the_graph add_node [get the_nodes elt position]]
+       [= position [+ 1 position]]]]
+    [= position 0]
+    [while [> string_length [+ 1 position]]
+      [prog
+       [have the_graph add_new_edge `before [get the_nodes elt position] [get the_nodes elt [+ 1 position]]]
+       [= position [+ 1 position]]]]
+    the_graph]]
+
+[defunk add_factor_edges [the_graph x]
+  [let* [[index 1]]
+    [while [> x index]
+      [prog
+       [if [== [mod x index] 0]
+	   [prog
+	    [if [eq [get the_graph nodes_with_label index] nil]		 
+		[have the_graph add_new_node index]]
+	    [have the_graph add_new_edge `ifo [car [get the_graph nodes_with_label index]] [car [get the_graph nodes_with_label x]]]]]
+       [= index [+ 1 index]]]]]]
+    
+[defunk factors [x]
+  [let* [[index 1]
+	 [the_graph [new graph]]]
+    [have the_graph add_new_node x]
+    [while [> x index]
+      [prog
+       [if [== [mod x index] 0]
+	   [prog
+	    [if [eq [get the_graph nodes_with_label index] nil]
+		[prog
+		 [have the_graph add_new_node index]
+		 [add_factor_edges the_graph index]]]
+	    [have the_graph add_new_edge `ifo [car [get the_graph nodes_with_label index]] [car [get the_graph nodes_with_label x]]]]]
+       [= index [+ 1 index]]]]
+    the_graph]]
+
+[defunk create_lattice_from_list_of_strings [seq]
+  [let* [[lattice [new graph_decomposition_lattice]]]
+    [while seq
+      [let [[x [car seq]]]
+	[prog
+	 [have lattice decompose_graph [string_to_graph x]]
+	 [= seq [cdr seq]]]]]
+    lattice]]
+
+'
+
+
+
+
+
+
+'
+
+
+[defunk nillify_array_of_nodes [the_array]
+  [let* [[index 0]]
+    [while [< index [get the_array length]]
+      [set [get the_array elt index] label []]
+      [= index [+ index 1]]]]]
+
+[defunk nillify_graph [the_graph]
+  [nillify_array_of_nodes [get [get [get the_graph node_set] elements] as-array]]]
+
+[defunk search_for_subgraph_in_conceptnet_graph [subgraph graph]
+  [let* [[the_lattice [x_create_lattice graph 2 1 1 5]]
+	 [the_subgraph [get subgraph copy]]]
+    [nillify_graph the_subgraph]
+    [print ''find'']
+    [print [get the_lattice subgraph_isomorphisms the_subgraph]]
+    [get the_lattice subgraph_isomorphisms the_subgraph]]]
+
+
+[defunk x_create_lattice2 [graph method_of_expansion number_of_expansions expand_each_node expand_by]
+  [let* [[index 0]
+	 [index2 0]
+	 [index3 0]
+	 [the_lattice [new graph_decomposition_lattice]]
+	 [graph_mappings_otl [new ptypehash]]
+	 [graph_mappings_lto [new ptypehash]]]
+    [print ''started'']
+    [x_decompose_single2 the_lattice graph graph_mappings_otl graph_mappings_lto]
+    [while [< index number_of_expansions]
+      [let [[lattice_graphs [get [get [get the_lattice root_graph_set] elements] as-array]]]
+	[print ''lattice graphs:'']
+	[format stdout lattice_graphs]
+	[while [< index2 [get lattice_graphs length]]
+	  [while [< index3 expand_each_node]
+	    [let* [[graph_to_add [expand [have graph_mappings_lto lookup [get lattice_graphs elt index2]] graph expand_by method_of_expansion]]
+		   [graph_to_add_n [get graph_to_add copy_with_node_label nil]]]
+	      [have the_lattice decompose_graph graph_to_add_n]
+	      [have graph_mappings_otl add graph_to_add graph_to_add_n]
+	      [have graph_mappings_lto add graph_to_add_n graph_to_add]]
+	    [= index3 [+ 1 index3]]]
+	  [= index3 0]
+	  [= index2 [+ 1 index2]]]
+	[= index2 0]
+	[= index [+ 1 index]]]]
+    the_lattice]]
+	      
+
+
+[defunk x_decompose_single2 [lattice graph graph_mappings_otl graph_mappings_lto]
+  [let* [[index 0]
+	 [graph_nodes [get [get [get graph node_set] elements] as-array]]]
+    [while [< index [get graph_nodes length]]
+      [let [[a_graph [new graph]]]
+	[have a_graph add_node [get graph_nodes elt index]]
+	[let [[a_graph_n [get a_graph copy_with_node_label nil]]]
+	  [have lattice decompose_graph a_graph_n]
+	  [have graph_mappings_otl add a_graph a_graph_n]
+	  [have graph_mappings_lto add a_graph_n a_graph]]]
+      [= index [+ 1 index]]]]]
+
+
+
+[defunk x_create_lattice [graph method_of_expansion number_of_expansions expand_each_node expand_by]
+  [let* [[index 0]
+	 [index2 0]
+	 [index3 0]
+	 [the_lattice [new graph_decomposition_lattice]]
+	 [graph_mappings_otl [new ptypehash]]
+	 [graph_mappings_lto [new ptypehash]]]
+    [print ''started'']
+    [x_decompose_single the_lattice graph graph_mappings_otl graph_mappings_lto]
+    [while [< index number_of_expansions]
+      [let [[lattice_graphs [get [get [get the_lattice root_graph_set] elements] as-array]]]
+	[print ''lattice graphs:'']
+	[format stdout lattice_graphs]
+	[while [< index2 [get lattice_graphs length]]
+	  [while [< index3 expand_each_node]
+	    [let* [[graph_to_add [expand [have graph_mappings_lto lookup [get lattice_graphs elt index2]] graph expand_by method_of_expansion]]
+		   [graph_to_add_n [get graph_to_add copy]]]
+	      [print graph from lattice:]
+	      [format stdout [get lattice_graphs elt index2]]
+	      [print graph lto:]
+	      [format stdout [have graph_mappings_lto lookup [get lattice_graphs elt index2]]]
+	      [print graph otl:]
+	      [format stdout [have graph_mappings_otl lookup [get lattice_graphs elt index2]]]
+	      [print expanded 1:]
+	      [print graph_to_add]
+	      [print copy of graph to add:]
+	      [print [get graph_to_add copy]]]
+	      [nillify_graph graph_to_add_n]
+	      [print add graph:]
+	      [print graph_to_add_n]	      
+	      [have the_lattice decompose_graph graph_to_add_n]
+	      [have graph_mappings_otl add graph_to_add graph_to_add_n]
+	      [have graph_mappings_lto add graph_to_add_n graph_to_add]]
+	    [= index3 [+ 1 index3]]]
+	  [= index3 0]
+	  [= index2 [+ 1 index2]]]
+	[= index2 0]
+	[= index [+ 1 index]]]]
+    the_lattice]]
+	      
+
+
+[defunk x_decompose_single [lattice graph graph_mappings_otl graph_mappings_lto]
+  [let* [[index 0]
+	 [graph_nodes [get [get [get graph node_set] elements] as-array]]]
+    [while [< index [get graph_nodes length]]
+      [let [[a_graph [new graph]]]
+	[have a_graph add_node [get graph_nodes elt index]]
+	[let [[a_graph_n [nillify_graph [get a_graph copy]]]]
+	[let [[a_graph_n [get a_graph copy]]]
+	  [nillify_graph a_graph_n]
+	  [have lattice decompose_graph a_graph_n]
+	  [have graph_mappings_otl add a_graph a_graph_n]
+	  [have graph_mappings_lto add a_graph_n a_graph]]]
+      [= index [+ 1 index]]]]]
+
+
+
+[defunk create_lattice [graph nillify_tf method_of_expansion number_of_expansions expand_each_node expand_by]
+  [let* [[index 0]
+	 [index2 0]
+	 [index3 0]
+	 [the_lattice [new graph_decomposition_lattice]]]
+    [decompose_singles the_lattice graph nillify_tf]
+    [print ''singles done'']
+    [while [< index number_of_expansions]
+      [let [[lattice_graphs [get [get [get the_lattice root_graph_set] elements] as-array]]]
+	[while [< index2 [get lattice_graphs length]]
+	  [while [< index3 expand_each_node]
+	    [let [[graph_to_add [expand [get lattice_graphs elt index2] graph expand_by method_of_expansion]]]
+	      [if nillify_tf
+		  [nillify_graph graph_to_add]]
+	      [have the_lattice decompose_graph graph_to_add]]
+	    [= index3 [+ 1 index3]]]
+	  [= index3 0]
+	  [= index2 [+ 1 index2]]]
+	[= index2 0]
+	[= index [+ 1 index]]]]
+    the_lattice]]
+
+
+
+[defunk decompose_singles [lattice graph nillify_tf]
+  [let* [[index 0]
+	 [graph_nodes [get [get [get graph node_set] elements] as-array]]]
+    [if nillify_tf
+	[nillify_array_of_nodes graph_nodes]]
+    [while [< index [get graph_nodes length]]
+      [let [[a_graph [new graph]]]
+	[have a_graph add_node [get graph_nodes elt index]]
+	[have lattice decompose_graph a_graph]
+	[= index [+ 1 index]]]]]]	    
+
+[defunk x_expand [subgraph graph n method]
+  [let* [[index 0]
+	 [nodes_added 0]
+	 [subgraph_nodes [get [get [get subgraph node_set] elements] as-array]]]
+    [cond
+     [[== method 1]
+      [while [and [< nodes_added n] [not [get [get_subgraph_neighbors subgraph graph] is_empty]]]
+	[let* [[some_node [get_random_node subgraph]]
+	       [random_neighbor_node [get_random_array_element [get_neighbors_array some_node graph]]]]
+	  [if [not [eq [add_node_and_edges subgraph graph random_neighbor_node] nil]]
+
+[defunk expand [subgraph graph n method]
+  [print ''expanding subgraph:'']
+  [print subgraph]
+  [let* [[index 0]
+	 [nodes_added 0]
+	 [subgraph_nodes [get [get [get subgraph node_set] elements] as-array]]]
+    [cond
+     [[== method 1]
+      [while [and [< nodes_added n] [not [get [get_subgraph_neighbors subgraph graph] is_empty]]]
+	[let* [[some_node [get_random_node subgraph]]
+	       [random_neighbor_node [get_random_array_element [get_neighbors_array some_node graph]]]]
+	  [if [not [eq [add_node_and_edges subgraph graph random_neighbor_node] nil]]
+	      [prog
+	       [= nodes_added [+ 1 nodes_added]]]]]]]
+     [[== method 2]
+      [while [< nodes_added n]
+	[let* [[all_neighbors [get_subgraph_neighbors subgraph graph]]]
+	  [print ''subgraph neighbors:'']
+	  [format stdout all_neighbors]
+	  [if [get all_neighbors is_empty]
+	      [= nodes_added n]
+	    [while [and [not [get all_neighbors is_empty]] [< nodes_added n]]
+	      [let [[neighbor_to_add [get all_neighbors an_arbitrary_element]]]
+		[if [not [eq [add_node_and_edges subgraph graph neighbor_to_add] nil]]
+		    [= nodes_added [+ 1 nodes_added]]]
+		[have all_neighbors remove neighbor_to_add]]]]]]]
+     [[== method 3]
+      ]]
+    subgraph]]
+
+
+[defunk add_node_and_edges [graph1 graph node_to_add]
+  [if [not [eq node_to_add nil]]
+      [let* [[base_nodes [get [get [get graph1 node_set] elements] as-array]]
+	     [index 0]]
+	[have graph1 add_node node_to_add]
+	[while [< index [get base_nodes length]]
+	  [let [[edges [get graph edges_between_nodes [get base_nodes elt index] node_to_add]]]
+	    [while edges
+	      [let [[this-edge [cdr [car edges]]]]
+		[= edges [cdr edges]]
+		[have graph1 add_edge this-edge]]]
+	    [= index [+ 1 index]]]]
+	node_to_add]
+    nil]]
+
+
+
+[defunk get_neighbors_array [node graph]
+  [if [not [eq [have [get graph edges_label_hash_right_node_hash_left_node_hash] lookup node] nil]]
+      [get [get [get [have [get graph edges_label_hash_right_node_hash_left_node_hash] lookup node] as-frame] keys] as-array]
+    nil]]
+
+[defunk get_neighbors_set [node graph]
+  [array_to_set [get_neighbors_array node graph]]]
+
+[defunk get_random_array_element [an_array]
+  [if [not [eq an_array nil]]
+      [get an_array elt [random [get an_array length]]]
+    nil]]
+
+[defunk get_random_node [graph]
+  [let* [[graph_nodes [get [get [get graph node_set] elements] as-array]]
+	 [some_node [get graph_nodes elt [random [get graph node_count]]]]]
+    some_node]]
+
+[defunk get_subgraph_neighbors [subgraph graph]
+  [let* [[all_neighbors [new set]]
+	 [index 0]
+	 [subgraph_nodes [get [get [get subgraph node_set] elements] as-array]]]
+    [while [< index [get subgraph node_count]]
+      [set_union all_neighbors [get_neighbors_set [get subgraph_nodes elt index] graph]]
+      [= index [+ 1 index]]]
+    [set_subtract all_neighbors [get subgraph node_set]]
+    all_neighbors]]
+'

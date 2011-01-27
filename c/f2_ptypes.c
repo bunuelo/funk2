@@ -2194,7 +2194,7 @@ f2ptr raw__mutex__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, mutex_string__length, mutex_string);
   }
   {
-    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__type__foreground);
     mutex_string__length = snprintf((char*)mutex_string, 128, "mutex ");
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, mutex_string__length, mutex_string);
   }

@@ -547,6 +547,8 @@ add rel orientation
        [construct traced_resource `slice_toast
 		  [funk []
 			[have this-resource slice_toast []]]]nil]]
+
+
 [deftypefunk slice_toast_resource execute slice_toast []
   [let* [[body [get this body]]
 	 [mind  [get body mind]]
@@ -578,8 +580,9 @@ add rel orientation
       [mind-wait_to_activate mind learned_reactive physical use_right_hand table `put_on ]
       [mind-wait_to_activate mind learned_reactive physical use_left_hand loaf `divide]
       [mind-wait_to_activate mind learned_reactive physical look_for `toaster]
-      [let [[toaster [[have [get [get [get mind layer `learned_reactive] agency `physical] resource `look_for] lookup `my_current_object]]]]
-
+      [let 
+	  [[toaster   [have [get [get [get mind layer `learned_reactive] agency `physical] resource `look_for] lookup `my_current_object]]]
+	
 	[mind-wait_to_activate mind learned_reactive physical use_right_hand toaster `put_in ]
 	[mind-wait_to_activate mind learned_reactive physical use_right_hand toaster `turn_on]
 	[mind-wait_to_activate mind learned_reactive physical use_right_hand toaster `turn_off]]

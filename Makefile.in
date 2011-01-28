@@ -268,6 +268,16 @@ extension_semantic_action_event_libf2e_semantic_action_event_la_LINK =  \
 	$(CFLAGS) \
 	$(extension_semantic_action_event_libf2e_semantic_action_event_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_LIBADD =
+am_extension_semantic_containment_object_libf2e_semantic_containment_object_la_OBJECTS = extension/semantic_containment_object/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.lo
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_OBJECTS = $(am_extension_semantic_containment_object_libf2e_semantic_containment_object_la_OBJECTS)
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_LINK =  \
+	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(extension_semantic_containment_object_libf2e_semantic_containment_object_la_CFLAGS) \
+	$(CFLAGS) \
+	$(extension_semantic_containment_object_libf2e_semantic_containment_object_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_LIBADD =
 am_extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_OBJECTS = extension/semantic_directed_action_event/extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la-semantic_directed_action_event.lo
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_OBJECTS = $(am_extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_OBJECTS)
@@ -288,8 +298,6 @@ extension_semantic_event_libf2e_semantic_event_la_LINK = $(LIBTOOL) \
 	$(CFLAGS) \
 	$(extension_semantic_event_libf2e_semantic_event_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
-<<<<<<< HEAD
-=======
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_LIBADD =
 am_extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_OBJECTS = extension/semantic_event_sequence/extension_semantic_event_sequence_libf2e_semantic_event_sequence_la-semantic_event_sequence.lo
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_OBJECTS = $(am_extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_OBJECTS)
@@ -300,7 +308,6 @@ extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_LINK =  \
 	$(CFLAGS) \
 	$(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
->>>>>>> 6a0f205c4be16e285a98475c268c2da86df79370
 extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_LIBADD =
 am_extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_OBJECTS = extension/semantic_frame_ball/extension_semantic_frame_ball_libf2e_semantic_frame_ball_la-semantic_frame_ball.lo
 extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_OBJECTS = $(am_extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_OBJECTS)
@@ -351,6 +358,16 @@ extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_LINK =  \
 	$(CFLAGS) \
 	$(extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_LIBADD =
+am_extension_semantic_packable_object_libf2e_semantic_packable_object_la_OBJECTS = extension/semantic_packable_object/extension_semantic_packable_object_libf2e_semantic_packable_object_la-semantic_packable_object.lo
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_OBJECTS = $(am_extension_semantic_packable_object_libf2e_semantic_packable_object_la_OBJECTS)
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_LINK =  \
+	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(extension_semantic_packable_object_libf2e_semantic_packable_object_la_CFLAGS) \
+	$(CFLAGS) \
+	$(extension_semantic_packable_object_libf2e_semantic_packable_object_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_LIBADD =
 am_extension_semantic_physical_object_libf2e_semantic_physical_object_la_OBJECTS = extension/semantic_physical_object/extension_semantic_physical_object_libf2e_semantic_physical_object_la-semantic_physical_object.lo
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_OBJECTS = $(am_extension_semantic_physical_object_libf2e_semantic_physical_object_la_OBJECTS)
@@ -380,6 +397,16 @@ extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_l
 	$(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_CFLAGS) \
 	$(CFLAGS) \
 	$(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LIBADD =
+am_extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_OBJECTS = extension/semantic_temporal_object/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.lo
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_OBJECTS = $(am_extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_OBJECTS)
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LINK =  \
+	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_CFLAGS) \
+	$(CFLAGS) \
+	$(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_LIBADD =
 am_extension_semantic_visual_object_libf2e_semantic_visual_object_la_OBJECTS = extension/semantic_visual_object/extension_semantic_visual_object_libf2e_semantic_visual_object_la-semantic_visual_object.lo
@@ -549,20 +576,20 @@ SOURCES = $(extension_causality_libf2e_causality_la_SOURCES) \
 	$(extension_mindmon_libf2e_mindmon_la_SOURCES) \
 	$(extension_movie_libf2e_movie_la_SOURCES) \
 	$(extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES) \
+	$(extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES) \
 	$(extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES) \
 	$(extension_semantic_event_libf2e_semantic_event_la_SOURCES) \
-<<<<<<< HEAD
-=======
 	$(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES) \
->>>>>>> 6a0f205c4be16e285a98475c268c2da86df79370
 	$(extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_SOURCES) \
 	$(extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES) \
 	$(extension_semantic_object_libf2e_semantic_object_la_SOURCES) \
 	$(extension_semantic_object_type_libf2e_semantic_object_type_la_SOURCES) \
 	$(extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_SOURCES) \
+	$(extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES) \
 	$(extension_semantic_physical_object_libf2e_semantic_physical_object_la_SOURCES) \
 	$(extension_semantic_resource_libf2e_semantic_resource_la_SOURCES) \
 	$(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_SOURCES) \
+	$(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES) \
 	$(extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES) \
 	$(lib_libfunk2_la_SOURCES)
 DIST_SOURCES = $(extension_causality_libf2e_causality_la_SOURCES) \
@@ -582,20 +609,20 @@ DIST_SOURCES = $(extension_causality_libf2e_causality_la_SOURCES) \
 	$(extension_mindmon_libf2e_mindmon_la_SOURCES) \
 	$(extension_movie_libf2e_movie_la_SOURCES) \
 	$(extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES) \
+	$(extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES) \
 	$(extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES) \
 	$(extension_semantic_event_libf2e_semantic_event_la_SOURCES) \
-<<<<<<< HEAD
-=======
 	$(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES) \
->>>>>>> 6a0f205c4be16e285a98475c268c2da86df79370
 	$(extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_SOURCES) \
 	$(extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES) \
 	$(extension_semantic_object_libf2e_semantic_object_la_SOURCES) \
 	$(extension_semantic_object_type_libf2e_semantic_object_type_la_SOURCES) \
 	$(extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_SOURCES) \
+	$(extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES) \
 	$(extension_semantic_physical_object_libf2e_semantic_physical_object_la_SOURCES) \
 	$(extension_semantic_resource_libf2e_semantic_resource_la_SOURCES) \
 	$(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_SOURCES) \
+	$(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES) \
 	$(extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES) \
 	$(lib_libfunk2_la_SOURCES)
 ETAGS = etags
@@ -884,10 +911,8 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/mindmon/libf2e_mindmon.la \
                   extension/movie/libf2e_movie.la \
                   extension/semantic_action_event/libf2e_semantic_action_event.la \
-<<<<<<< HEAD
-=======
                   extension/semantic_event_sequence/libf2e_semantic_event_sequence.la \
->>>>>>> 6a0f205c4be16e285a98475c268c2da86df79370
+                  extension/semantic_containment_object/libf2e_semantic_containment_object.la \
                   extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.la \
                   extension/semantic_event/libf2e_semantic_event.la \
                   extension/semantic_frame_ball/libf2e_semantic_frame_ball.la \
@@ -895,9 +920,11 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/semantic_object_type/libf2e_semantic_object_type.la \
                   extension/semantic_ordered_object/libf2e_semantic_ordered_object.la \
                   extension/semantic_object/libf2e_semantic_object.la \
+                  extension/semantic_packable_object/libf2e_semantic_packable_object.la \
                   extension/semantic_physical_object/libf2e_semantic_physical_object.la \
                   extension/semantic_resource/libf2e_semantic_resource.la \
                   extension/semantic_resource_action_event/libf2e_semantic_resource_action_event.la \
+                  extension/semantic_temporal_object/libf2e_semantic_temporal_object.la \
                   extension/semantic_visual_object/libf2e_semantic_visual_object.la
 
 
@@ -1047,10 +1074,8 @@ extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SO
 extension_mindmon_libf2e_mindmon_la_SOURCES = extension/mindmon/mindmon.c
 extension_movie_libf2e_movie_la_SOURCES = extension/movie/movie.c
 extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES = extension/semantic_action_event/semantic_action_event.c
-<<<<<<< HEAD
-=======
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES = extension/semantic_event_sequence/semantic_event_sequence.c
->>>>>>> 6a0f205c4be16e285a98475c268c2da86df79370
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES = extension/semantic_containment_object/semantic_containment_object.c
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES = extension/semantic_directed_action_event/semantic_directed_action_event.c
 extension_semantic_event_libf2e_semantic_event_la_SOURCES = extension/semantic_event/semantic_event.c
 extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_SOURCES = extension/semantic_frame_ball/semantic_frame_ball.c
@@ -1058,9 +1083,11 @@ extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES = ex
 extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_SOURCES = extension/semantic_ordered_object/semantic_ordered_object.c
 extension_semantic_object_type_libf2e_semantic_object_type_la_SOURCES = extension/semantic_object_type/semantic_object_type.c
 extension_semantic_object_libf2e_semantic_object_la_SOURCES = extension/semantic_object/semantic_object.c
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES = extension/semantic_packable_object/semantic_packable_object.c
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_SOURCES = extension/semantic_physical_object/semantic_physical_object.c
 extension_semantic_resource_libf2e_semantic_resource_la_SOURCES = extension/semantic_resource/semantic_resource.c
 extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_SOURCES = extension/semantic_resource_action_event/semantic_resource_action_event.c
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES = extension/semantic_temporal_object/semantic_temporal_object.c
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES = extension/semantic_visual_object/semantic_visual_object.c
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
@@ -1105,11 +1132,10 @@ extension_graph_isomorphism_libf2e_graph_isomorphism_la_LDFLAGS = $(lib_libfunk2
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_action_event_libf2e_semantic_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_action_event_libf2e_semantic_action_event_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
-<<<<<<< HEAD
-=======
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
->>>>>>> 6a0f205c4be16e285a98475c268c2da86df79370
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_event_libf2e_semantic_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
@@ -1132,6 +1158,8 @@ extension_semantic_object_type_libf2e_semantic_object_type_la_LDFLAGS = $(lib_li
 extension_semantic_object_type_libf2e_semantic_object_type_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_object_libf2e_semantic_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_object_libf2e_semantic_object_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
@@ -1144,6 +1172,8 @@ extension_semantic_resource_libf2e_semantic_resource_la_LDFLAGS = $(lib_libfunk2
 extension_semantic_resource_libf2e_semantic_resource_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES = config_bit_num.h config_compile_time_id.h
 AM_MAKEFLAGS = img/bootstrap.img
@@ -1421,6 +1451,17 @@ extension/semantic_action_event/extension_semantic_action_event_libf2e_semantic_
 	extension/semantic_action_event/$(DEPDIR)/$(am__dirstamp)
 extension/semantic_action_event/libf2e_semantic_action_event.la: $(extension_semantic_action_event_libf2e_semantic_action_event_la_OBJECTS) $(extension_semantic_action_event_libf2e_semantic_action_event_la_DEPENDENCIES) extension/semantic_action_event/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_semantic_action_event_libf2e_semantic_action_event_la_LINK) -rpath $(libdir) $(extension_semantic_action_event_libf2e_semantic_action_event_la_OBJECTS) $(extension_semantic_action_event_libf2e_semantic_action_event_la_LIBADD) $(LIBS)
+extension/semantic_containment_object/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_containment_object
+	@: > extension/semantic_containment_object/$(am__dirstamp)
+extension/semantic_containment_object/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_containment_object/$(DEPDIR)
+	@: > extension/semantic_containment_object/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_containment_object/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.lo:  \
+	extension/semantic_containment_object/$(am__dirstamp) \
+	extension/semantic_containment_object/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_containment_object/libf2e_semantic_containment_object.la: $(extension_semantic_containment_object_libf2e_semantic_containment_object_la_OBJECTS) $(extension_semantic_containment_object_libf2e_semantic_containment_object_la_DEPENDENCIES) extension/semantic_containment_object/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_semantic_containment_object_libf2e_semantic_containment_object_la_LINK) -rpath $(libdir) $(extension_semantic_containment_object_libf2e_semantic_containment_object_la_OBJECTS) $(extension_semantic_containment_object_libf2e_semantic_containment_object_la_LIBADD) $(LIBS)
 extension/semantic_directed_action_event/$(am__dirstamp):
 	@$(MKDIR_P) extension/semantic_directed_action_event
 	@: > extension/semantic_directed_action_event/$(am__dirstamp)
@@ -1443,8 +1484,6 @@ extension/semantic_event/extension_semantic_event_libf2e_semantic_event_la-seman
 	extension/semantic_event/$(DEPDIR)/$(am__dirstamp)
 extension/semantic_event/libf2e_semantic_event.la: $(extension_semantic_event_libf2e_semantic_event_la_OBJECTS) $(extension_semantic_event_libf2e_semantic_event_la_DEPENDENCIES) extension/semantic_event/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_semantic_event_libf2e_semantic_event_la_LINK) -rpath $(libdir) $(extension_semantic_event_libf2e_semantic_event_la_OBJECTS) $(extension_semantic_event_libf2e_semantic_event_la_LIBADD) $(LIBS)
-<<<<<<< HEAD
-=======
 extension/semantic_event_sequence/$(am__dirstamp):
 	@$(MKDIR_P) extension/semantic_event_sequence
 	@: > extension/semantic_event_sequence/$(am__dirstamp)
@@ -1456,7 +1495,6 @@ extension/semantic_event_sequence/extension_semantic_event_sequence_libf2e_seman
 	extension/semantic_event_sequence/$(DEPDIR)/$(am__dirstamp)
 extension/semantic_event_sequence/libf2e_semantic_event_sequence.la: $(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_OBJECTS) $(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_DEPENDENCIES) extension/semantic_event_sequence/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_LINK) -rpath $(libdir) $(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_OBJECTS) $(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_LIBADD) $(LIBS)
->>>>>>> 6a0f205c4be16e285a98475c268c2da86df79370
 extension/semantic_frame_ball/$(am__dirstamp):
 	@$(MKDIR_P) extension/semantic_frame_ball
 	@: > extension/semantic_frame_ball/$(am__dirstamp)
@@ -1512,6 +1550,17 @@ extension/semantic_ordered_object/extension_semantic_ordered_object_libf2e_seman
 	extension/semantic_ordered_object/$(DEPDIR)/$(am__dirstamp)
 extension/semantic_ordered_object/libf2e_semantic_ordered_object.la: $(extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_OBJECTS) $(extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_DEPENDENCIES) extension/semantic_ordered_object/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_LINK) -rpath $(libdir) $(extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_OBJECTS) $(extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_LIBADD) $(LIBS)
+extension/semantic_packable_object/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_packable_object
+	@: > extension/semantic_packable_object/$(am__dirstamp)
+extension/semantic_packable_object/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_packable_object/$(DEPDIR)
+	@: > extension/semantic_packable_object/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_packable_object/extension_semantic_packable_object_libf2e_semantic_packable_object_la-semantic_packable_object.lo:  \
+	extension/semantic_packable_object/$(am__dirstamp) \
+	extension/semantic_packable_object/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_packable_object/libf2e_semantic_packable_object.la: $(extension_semantic_packable_object_libf2e_semantic_packable_object_la_OBJECTS) $(extension_semantic_packable_object_libf2e_semantic_packable_object_la_DEPENDENCIES) extension/semantic_packable_object/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_semantic_packable_object_libf2e_semantic_packable_object_la_LINK) -rpath $(libdir) $(extension_semantic_packable_object_libf2e_semantic_packable_object_la_OBJECTS) $(extension_semantic_packable_object_libf2e_semantic_packable_object_la_LIBADD) $(LIBS)
 extension/semantic_physical_object/$(am__dirstamp):
 	@$(MKDIR_P) extension/semantic_physical_object
 	@: > extension/semantic_physical_object/$(am__dirstamp)
@@ -1545,6 +1594,17 @@ extension/semantic_resource_action_event/extension_semantic_resource_action_even
 	extension/semantic_resource_action_event/$(DEPDIR)/$(am__dirstamp)
 extension/semantic_resource_action_event/libf2e_semantic_resource_action_event.la: $(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_OBJECTS) $(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_DEPENDENCIES) extension/semantic_resource_action_event/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_LINK) -rpath $(libdir) $(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_OBJECTS) $(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_LIBADD) $(LIBS)
+extension/semantic_temporal_object/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_temporal_object
+	@: > extension/semantic_temporal_object/$(am__dirstamp)
+extension/semantic_temporal_object/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_temporal_object/$(DEPDIR)
+	@: > extension/semantic_temporal_object/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_temporal_object/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.lo:  \
+	extension/semantic_temporal_object/$(am__dirstamp) \
+	extension/semantic_temporal_object/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_temporal_object/libf2e_semantic_temporal_object.la: $(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_OBJECTS) $(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_DEPENDENCIES) extension/semantic_temporal_object/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LINK) -rpath $(libdir) $(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_OBJECTS) $(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LIBADD) $(LIBS)
 extension/semantic_visual_object/$(am__dirstamp):
 	@$(MKDIR_P) extension/semantic_visual_object
 	@: > extension/semantic_visual_object/$(am__dirstamp)
@@ -2104,15 +2164,14 @@ mostlyclean-compile:
 	-rm -f extension/movie/extension_movie_libf2e_movie_la-movie.lo
 	-rm -f extension/semantic_action_event/extension_semantic_action_event_libf2e_semantic_action_event_la-semantic_action_event.$(OBJEXT)
 	-rm -f extension/semantic_action_event/extension_semantic_action_event_libf2e_semantic_action_event_la-semantic_action_event.lo
+	-rm -f extension/semantic_containment_object/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.$(OBJEXT)
+	-rm -f extension/semantic_containment_object/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.lo
 	-rm -f extension/semantic_directed_action_event/extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la-semantic_directed_action_event.$(OBJEXT)
 	-rm -f extension/semantic_directed_action_event/extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la-semantic_directed_action_event.lo
 	-rm -f extension/semantic_event/extension_semantic_event_libf2e_semantic_event_la-semantic_event.$(OBJEXT)
 	-rm -f extension/semantic_event/extension_semantic_event_libf2e_semantic_event_la-semantic_event.lo
-<<<<<<< HEAD
-=======
 	-rm -f extension/semantic_event_sequence/extension_semantic_event_sequence_libf2e_semantic_event_sequence_la-semantic_event_sequence.$(OBJEXT)
 	-rm -f extension/semantic_event_sequence/extension_semantic_event_sequence_libf2e_semantic_event_sequence_la-semantic_event_sequence.lo
->>>>>>> 6a0f205c4be16e285a98475c268c2da86df79370
 	-rm -f extension/semantic_frame_ball/extension_semantic_frame_ball_libf2e_semantic_frame_ball_la-semantic_frame_ball.$(OBJEXT)
 	-rm -f extension/semantic_frame_ball/extension_semantic_frame_ball_libf2e_semantic_frame_ball_la-semantic_frame_ball.lo
 	-rm -f extension/semantic_knowledge_base/extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la-semantic_knowledge_base.$(OBJEXT)
@@ -2123,12 +2182,16 @@ mostlyclean-compile:
 	-rm -f extension/semantic_object_type/extension_semantic_object_type_libf2e_semantic_object_type_la-semantic_object_type.lo
 	-rm -f extension/semantic_ordered_object/extension_semantic_ordered_object_libf2e_semantic_ordered_object_la-semantic_ordered_object.$(OBJEXT)
 	-rm -f extension/semantic_ordered_object/extension_semantic_ordered_object_libf2e_semantic_ordered_object_la-semantic_ordered_object.lo
+	-rm -f extension/semantic_packable_object/extension_semantic_packable_object_libf2e_semantic_packable_object_la-semantic_packable_object.$(OBJEXT)
+	-rm -f extension/semantic_packable_object/extension_semantic_packable_object_libf2e_semantic_packable_object_la-semantic_packable_object.lo
 	-rm -f extension/semantic_physical_object/extension_semantic_physical_object_libf2e_semantic_physical_object_la-semantic_physical_object.$(OBJEXT)
 	-rm -f extension/semantic_physical_object/extension_semantic_physical_object_libf2e_semantic_physical_object_la-semantic_physical_object.lo
 	-rm -f extension/semantic_resource/extension_semantic_resource_libf2e_semantic_resource_la-semantic_resource.$(OBJEXT)
 	-rm -f extension/semantic_resource/extension_semantic_resource_libf2e_semantic_resource_la-semantic_resource.lo
 	-rm -f extension/semantic_resource_action_event/extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la-semantic_resource_action_event.$(OBJEXT)
 	-rm -f extension/semantic_resource_action_event/extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la-semantic_resource_action_event.lo
+	-rm -f extension/semantic_temporal_object/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.$(OBJEXT)
+	-rm -f extension/semantic_temporal_object/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.lo
 	-rm -f extension/semantic_visual_object/extension_semantic_visual_object_libf2e_semantic_visual_object_la-semantic_visual_object.$(OBJEXT)
 	-rm -f extension/semantic_visual_object/extension_semantic_visual_object_libf2e_semantic_visual_object_la-semantic_visual_object.lo
 
@@ -2277,20 +2340,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@extension/mindmon/$(DEPDIR)/extension_mindmon_libf2e_mindmon_la-mindmon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/movie/$(DEPDIR)/extension_movie_libf2e_movie_la-movie.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_action_event/$(DEPDIR)/extension_semantic_action_event_libf2e_semantic_action_event_la-semantic_action_event.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_containment_object/$(DEPDIR)/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_directed_action_event/$(DEPDIR)/extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la-semantic_directed_action_event.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_event/$(DEPDIR)/extension_semantic_event_libf2e_semantic_event_la-semantic_event.Plo@am__quote@
-<<<<<<< HEAD
-=======
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_event_sequence/$(DEPDIR)/extension_semantic_event_sequence_libf2e_semantic_event_sequence_la-semantic_event_sequence.Plo@am__quote@
->>>>>>> 6a0f205c4be16e285a98475c268c2da86df79370
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_frame_ball/$(DEPDIR)/extension_semantic_frame_ball_libf2e_semantic_frame_ball_la-semantic_frame_ball.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_knowledge_base/$(DEPDIR)/extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la-semantic_knowledge_base.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_object/$(DEPDIR)/extension_semantic_object_libf2e_semantic_object_la-semantic_object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_object_type/$(DEPDIR)/extension_semantic_object_type_libf2e_semantic_object_type_la-semantic_object_type.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_ordered_object/$(DEPDIR)/extension_semantic_ordered_object_libf2e_semantic_ordered_object_la-semantic_ordered_object.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_packable_object/$(DEPDIR)/extension_semantic_packable_object_libf2e_semantic_packable_object_la-semantic_packable_object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_physical_object/$(DEPDIR)/extension_semantic_physical_object_libf2e_semantic_physical_object_la-semantic_physical_object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_resource/$(DEPDIR)/extension_semantic_resource_libf2e_semantic_resource_la-semantic_resource.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_resource_action_event/$(DEPDIR)/extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la-semantic_resource_action_event.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_temporal_object/$(DEPDIR)/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_visual_object/$(DEPDIR)/extension_semantic_visual_object_libf2e_semantic_visual_object_la-semantic_visual_object.Plo@am__quote@
 
 .c.o:
@@ -2456,6 +2519,14 @@ extension/semantic_action_event/extension_semantic_action_event_libf2e_semantic_
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_action_event_libf2e_semantic_action_event_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_action_event/extension_semantic_action_event_libf2e_semantic_action_event_la-semantic_action_event.lo `test -f 'extension/semantic_action_event/semantic_action_event.c' || echo '$(srcdir)/'`extension/semantic_action_event/semantic_action_event.c
 
+extension/semantic_containment_object/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.lo: extension/semantic_containment_object/semantic_containment_object.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_containment_object_libf2e_semantic_containment_object_la_CFLAGS) $(CFLAGS) -MT extension/semantic_containment_object/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.lo -MD -MP -MF extension/semantic_containment_object/$(DEPDIR)/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.Tpo -c -o extension/semantic_containment_object/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.lo `test -f 'extension/semantic_containment_object/semantic_containment_object.c' || echo '$(srcdir)/'`extension/semantic_containment_object/semantic_containment_object.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/semantic_containment_object/$(DEPDIR)/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.Tpo extension/semantic_containment_object/$(DEPDIR)/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/semantic_containment_object/semantic_containment_object.c' object='extension/semantic_containment_object/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_containment_object_libf2e_semantic_containment_object_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_containment_object/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.lo `test -f 'extension/semantic_containment_object/semantic_containment_object.c' || echo '$(srcdir)/'`extension/semantic_containment_object/semantic_containment_object.c
+
 extension/semantic_directed_action_event/extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la-semantic_directed_action_event.lo: extension/semantic_directed_action_event/semantic_directed_action_event.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_CFLAGS) $(CFLAGS) -MT extension/semantic_directed_action_event/extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la-semantic_directed_action_event.lo -MD -MP -MF extension/semantic_directed_action_event/$(DEPDIR)/extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la-semantic_directed_action_event.Tpo -c -o extension/semantic_directed_action_event/extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la-semantic_directed_action_event.lo `test -f 'extension/semantic_directed_action_event/semantic_directed_action_event.c' || echo '$(srcdir)/'`extension/semantic_directed_action_event/semantic_directed_action_event.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/semantic_directed_action_event/$(DEPDIR)/extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la-semantic_directed_action_event.Tpo extension/semantic_directed_action_event/$(DEPDIR)/extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la-semantic_directed_action_event.Plo
@@ -2472,8 +2543,6 @@ extension/semantic_event/extension_semantic_event_libf2e_semantic_event_la-seman
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_event_libf2e_semantic_event_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_event/extension_semantic_event_libf2e_semantic_event_la-semantic_event.lo `test -f 'extension/semantic_event/semantic_event.c' || echo '$(srcdir)/'`extension/semantic_event/semantic_event.c
 
-<<<<<<< HEAD
-=======
 extension/semantic_event_sequence/extension_semantic_event_sequence_libf2e_semantic_event_sequence_la-semantic_event_sequence.lo: extension/semantic_event_sequence/semantic_event_sequence.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_CFLAGS) $(CFLAGS) -MT extension/semantic_event_sequence/extension_semantic_event_sequence_libf2e_semantic_event_sequence_la-semantic_event_sequence.lo -MD -MP -MF extension/semantic_event_sequence/$(DEPDIR)/extension_semantic_event_sequence_libf2e_semantic_event_sequence_la-semantic_event_sequence.Tpo -c -o extension/semantic_event_sequence/extension_semantic_event_sequence_libf2e_semantic_event_sequence_la-semantic_event_sequence.lo `test -f 'extension/semantic_event_sequence/semantic_event_sequence.c' || echo '$(srcdir)/'`extension/semantic_event_sequence/semantic_event_sequence.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/semantic_event_sequence/$(DEPDIR)/extension_semantic_event_sequence_libf2e_semantic_event_sequence_la-semantic_event_sequence.Tpo extension/semantic_event_sequence/$(DEPDIR)/extension_semantic_event_sequence_libf2e_semantic_event_sequence_la-semantic_event_sequence.Plo
@@ -2482,7 +2551,6 @@ extension/semantic_event_sequence/extension_semantic_event_sequence_libf2e_seman
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_event_sequence/extension_semantic_event_sequence_libf2e_semantic_event_sequence_la-semantic_event_sequence.lo `test -f 'extension/semantic_event_sequence/semantic_event_sequence.c' || echo '$(srcdir)/'`extension/semantic_event_sequence/semantic_event_sequence.c
 
->>>>>>> 6a0f205c4be16e285a98475c268c2da86df79370
 extension/semantic_frame_ball/extension_semantic_frame_ball_libf2e_semantic_frame_ball_la-semantic_frame_ball.lo: extension/semantic_frame_ball/semantic_frame_ball.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_frame_ball_libf2e_semantic_frame_ball_la_CFLAGS) $(CFLAGS) -MT extension/semantic_frame_ball/extension_semantic_frame_ball_libf2e_semantic_frame_ball_la-semantic_frame_ball.lo -MD -MP -MF extension/semantic_frame_ball/$(DEPDIR)/extension_semantic_frame_ball_libf2e_semantic_frame_ball_la-semantic_frame_ball.Tpo -c -o extension/semantic_frame_ball/extension_semantic_frame_ball_libf2e_semantic_frame_ball_la-semantic_frame_ball.lo `test -f 'extension/semantic_frame_ball/semantic_frame_ball.c' || echo '$(srcdir)/'`extension/semantic_frame_ball/semantic_frame_ball.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/semantic_frame_ball/$(DEPDIR)/extension_semantic_frame_ball_libf2e_semantic_frame_ball_la-semantic_frame_ball.Tpo extension/semantic_frame_ball/$(DEPDIR)/extension_semantic_frame_ball_libf2e_semantic_frame_ball_la-semantic_frame_ball.Plo
@@ -2523,6 +2591,14 @@ extension/semantic_ordered_object/extension_semantic_ordered_object_libf2e_seman
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_ordered_object/extension_semantic_ordered_object_libf2e_semantic_ordered_object_la-semantic_ordered_object.lo `test -f 'extension/semantic_ordered_object/semantic_ordered_object.c' || echo '$(srcdir)/'`extension/semantic_ordered_object/semantic_ordered_object.c
 
+extension/semantic_packable_object/extension_semantic_packable_object_libf2e_semantic_packable_object_la-semantic_packable_object.lo: extension/semantic_packable_object/semantic_packable_object.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_packable_object_libf2e_semantic_packable_object_la_CFLAGS) $(CFLAGS) -MT extension/semantic_packable_object/extension_semantic_packable_object_libf2e_semantic_packable_object_la-semantic_packable_object.lo -MD -MP -MF extension/semantic_packable_object/$(DEPDIR)/extension_semantic_packable_object_libf2e_semantic_packable_object_la-semantic_packable_object.Tpo -c -o extension/semantic_packable_object/extension_semantic_packable_object_libf2e_semantic_packable_object_la-semantic_packable_object.lo `test -f 'extension/semantic_packable_object/semantic_packable_object.c' || echo '$(srcdir)/'`extension/semantic_packable_object/semantic_packable_object.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/semantic_packable_object/$(DEPDIR)/extension_semantic_packable_object_libf2e_semantic_packable_object_la-semantic_packable_object.Tpo extension/semantic_packable_object/$(DEPDIR)/extension_semantic_packable_object_libf2e_semantic_packable_object_la-semantic_packable_object.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/semantic_packable_object/semantic_packable_object.c' object='extension/semantic_packable_object/extension_semantic_packable_object_libf2e_semantic_packable_object_la-semantic_packable_object.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_packable_object_libf2e_semantic_packable_object_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_packable_object/extension_semantic_packable_object_libf2e_semantic_packable_object_la-semantic_packable_object.lo `test -f 'extension/semantic_packable_object/semantic_packable_object.c' || echo '$(srcdir)/'`extension/semantic_packable_object/semantic_packable_object.c
+
 extension/semantic_physical_object/extension_semantic_physical_object_libf2e_semantic_physical_object_la-semantic_physical_object.lo: extension/semantic_physical_object/semantic_physical_object.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_physical_object_libf2e_semantic_physical_object_la_CFLAGS) $(CFLAGS) -MT extension/semantic_physical_object/extension_semantic_physical_object_libf2e_semantic_physical_object_la-semantic_physical_object.lo -MD -MP -MF extension/semantic_physical_object/$(DEPDIR)/extension_semantic_physical_object_libf2e_semantic_physical_object_la-semantic_physical_object.Tpo -c -o extension/semantic_physical_object/extension_semantic_physical_object_libf2e_semantic_physical_object_la-semantic_physical_object.lo `test -f 'extension/semantic_physical_object/semantic_physical_object.c' || echo '$(srcdir)/'`extension/semantic_physical_object/semantic_physical_object.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/semantic_physical_object/$(DEPDIR)/extension_semantic_physical_object_libf2e_semantic_physical_object_la-semantic_physical_object.Tpo extension/semantic_physical_object/$(DEPDIR)/extension_semantic_physical_object_libf2e_semantic_physical_object_la-semantic_physical_object.Plo
@@ -2546,6 +2622,14 @@ extension/semantic_resource_action_event/extension_semantic_resource_action_even
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/semantic_resource_action_event/semantic_resource_action_event.c' object='extension/semantic_resource_action_event/extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la-semantic_resource_action_event.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_resource_action_event/extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la-semantic_resource_action_event.lo `test -f 'extension/semantic_resource_action_event/semantic_resource_action_event.c' || echo '$(srcdir)/'`extension/semantic_resource_action_event/semantic_resource_action_event.c
+
+extension/semantic_temporal_object/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.lo: extension/semantic_temporal_object/semantic_temporal_object.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_CFLAGS) $(CFLAGS) -MT extension/semantic_temporal_object/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.lo -MD -MP -MF extension/semantic_temporal_object/$(DEPDIR)/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.Tpo -c -o extension/semantic_temporal_object/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.lo `test -f 'extension/semantic_temporal_object/semantic_temporal_object.c' || echo '$(srcdir)/'`extension/semantic_temporal_object/semantic_temporal_object.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/semantic_temporal_object/$(DEPDIR)/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.Tpo extension/semantic_temporal_object/$(DEPDIR)/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/semantic_temporal_object/semantic_temporal_object.c' object='extension/semantic_temporal_object/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_temporal_object/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.lo `test -f 'extension/semantic_temporal_object/semantic_temporal_object.c' || echo '$(srcdir)/'`extension/semantic_temporal_object/semantic_temporal_object.c
 
 extension/semantic_visual_object/extension_semantic_visual_object_libf2e_semantic_visual_object_la-semantic_visual_object.lo: extension/semantic_visual_object/semantic_visual_object.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_visual_object_libf2e_semantic_visual_object_la_CFLAGS) $(CFLAGS) -MT extension/semantic_visual_object/extension_semantic_visual_object_libf2e_semantic_visual_object_la-semantic_visual_object.lo -MD -MP -MF extension/semantic_visual_object/$(DEPDIR)/extension_semantic_visual_object_libf2e_semantic_visual_object_la-semantic_visual_object.Tpo -c -o extension/semantic_visual_object/extension_semantic_visual_object_libf2e_semantic_visual_object_la-semantic_visual_object.lo `test -f 'extension/semantic_visual_object/semantic_visual_object.c' || echo '$(srcdir)/'`extension/semantic_visual_object/semantic_visual_object.c
@@ -3578,20 +3662,20 @@ clean-libtool:
 	-rm -rf extension/mindmon/.libs extension/mindmon/_libs
 	-rm -rf extension/movie/.libs extension/movie/_libs
 	-rm -rf extension/semantic_action_event/.libs extension/semantic_action_event/_libs
+	-rm -rf extension/semantic_containment_object/.libs extension/semantic_containment_object/_libs
 	-rm -rf extension/semantic_directed_action_event/.libs extension/semantic_directed_action_event/_libs
 	-rm -rf extension/semantic_event/.libs extension/semantic_event/_libs
-<<<<<<< HEAD
-=======
 	-rm -rf extension/semantic_event_sequence/.libs extension/semantic_event_sequence/_libs
->>>>>>> 6a0f205c4be16e285a98475c268c2da86df79370
 	-rm -rf extension/semantic_frame_ball/.libs extension/semantic_frame_ball/_libs
 	-rm -rf extension/semantic_knowledge_base/.libs extension/semantic_knowledge_base/_libs
 	-rm -rf extension/semantic_object/.libs extension/semantic_object/_libs
 	-rm -rf extension/semantic_object_type/.libs extension/semantic_object_type/_libs
 	-rm -rf extension/semantic_ordered_object/.libs extension/semantic_ordered_object/_libs
+	-rm -rf extension/semantic_packable_object/.libs extension/semantic_packable_object/_libs
 	-rm -rf extension/semantic_physical_object/.libs extension/semantic_physical_object/_libs
 	-rm -rf extension/semantic_resource/.libs extension/semantic_resource/_libs
 	-rm -rf extension/semantic_resource_action_event/.libs extension/semantic_resource_action_event/_libs
+	-rm -rf extension/semantic_temporal_object/.libs extension/semantic_temporal_object/_libs
 	-rm -rf extension/semantic_visual_object/.libs extension/semantic_visual_object/_libs
 	-rm -rf lib/.libs lib/_libs
 
@@ -3859,15 +3943,14 @@ distclean-generic:
 	-rm -f extension/movie/$(am__dirstamp)
 	-rm -f extension/semantic_action_event/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_action_event/$(am__dirstamp)
+	-rm -f extension/semantic_containment_object/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/semantic_containment_object/$(am__dirstamp)
 	-rm -f extension/semantic_directed_action_event/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_directed_action_event/$(am__dirstamp)
 	-rm -f extension/semantic_event/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_event/$(am__dirstamp)
-<<<<<<< HEAD
-=======
 	-rm -f extension/semantic_event_sequence/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_event_sequence/$(am__dirstamp)
->>>>>>> 6a0f205c4be16e285a98475c268c2da86df79370
 	-rm -f extension/semantic_frame_ball/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_frame_ball/$(am__dirstamp)
 	-rm -f extension/semantic_knowledge_base/$(DEPDIR)/$(am__dirstamp)
@@ -3878,12 +3961,16 @@ distclean-generic:
 	-rm -f extension/semantic_object_type/$(am__dirstamp)
 	-rm -f extension/semantic_ordered_object/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_ordered_object/$(am__dirstamp)
+	-rm -f extension/semantic_packable_object/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/semantic_packable_object/$(am__dirstamp)
 	-rm -f extension/semantic_physical_object/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_physical_object/$(am__dirstamp)
 	-rm -f extension/semantic_resource/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_resource/$(am__dirstamp)
 	-rm -f extension/semantic_resource_action_event/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_resource_action_event/$(am__dirstamp)
+	-rm -f extension/semantic_temporal_object/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/semantic_temporal_object/$(am__dirstamp)
 	-rm -f extension/semantic_visual_object/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_visual_object/$(am__dirstamp)
 	-rm -f lib/$(am__dirstamp)
@@ -3896,11 +3983,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-<<<<<<< HEAD
-	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR)
-=======
-	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR)
->>>>>>> 6a0f205c4be16e285a98475c268c2da86df79370
+	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -3948,11 +4031,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-<<<<<<< HEAD
-	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR)
-=======
-	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR)
->>>>>>> 6a0f205c4be16e285a98475c268c2da86df79370
+	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

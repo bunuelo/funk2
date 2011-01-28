@@ -98,6 +98,146 @@ subgraph has no more neighbors ---- infinite loop - problem?
 
 
 
+'[require graphviz] [require conceptnet] [require math] [require graph_match_error_correcting]'
+
+
+
+
+
+[defunk create_base_graphs []
+  [print 'globalizing 5-line conceptnet graph']  
+  [let [[time_a [time]]]
+    [globalize cng5 [get [conceptnet-new_from_graph_file 'conceptnet_medium.graph' 5] graph]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  [print 'globalizing 10-line conceptnet graph']  
+  [let [[time_a [time]]]
+    [globalize cng10 [get [conceptnet-new_from_graph_file 'conceptnet_medium.graph' 10] graph]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  [print 'globalizing 20-line conceptnet graph']  
+  [let [[time_a [time]]]
+    [globalize cng20 [get [conceptnet-new_from_graph_file 'conceptnet_medium.graph' 20] graph]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  [print 'globalizing 50-line conceptnet graph']  
+  [let [[time_a [time]]]
+    [globalize cng50 [get [conceptnet-new_from_graph_file 'conceptnet_medium.graph' 50] graph]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  [print 'globalizing 100-line conceptnet graph']  
+  [let [[time_a [time]]]
+    [globalize cng100 [get [conceptnet-new_from_graph_file 'conceptnet_medium.graph' 100] graph]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  [print 'globalizing 200-line conceptnet graph']  
+  [let [[time_a [time]]]
+    [globalize cng200 [get [conceptnet-new_from_graph_file 'conceptnet_medium.graph' 200] graph]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  [print 'globalizing 500-line conceptnet graph']  
+  [let [[time_a [time]]]
+    [globalize cng500 [get [conceptnet-new_from_graph_file 'conceptnet_medium.graph' 500] graph]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  [print 'globalizing 1000-line conceptnet graph']  
+  [let [[time_a [time]]]
+    [globalize cng1000 [get [conceptnet-new_from_graph_file 'conceptnet_medium.graph' 1000] graph]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  [print 'globalizing 2000-line conceptnet graph']  
+  [let [[time_a [time]]]
+    [globalize cng2000 [get [conceptnet-new_from_graph_file 'conceptnet_medium.graph' 2000] graph]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  [print 'globalizing 5000-line conceptnet graph']  
+  [let [[time_a [time]]]
+    [globalize cng5000 [get [conceptnet-new_from_graph_file 'conceptnet_medium.graph' 5000] graph]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]]
+
+
+
+[defunk create_small_base_lattices []
+  
+  [print 'globalizing 5-line conceptnet lattice']  
+  [let [[time_a [time]]]
+    [globalize cngl5 [create_lattice cng5 2 1 1 10]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  [print 'globalizing 10-line conceptnet lattice']  
+  [let [[time_a [time]]]
+    [globalize cngl10 [create_lattice cng10 2 1 1 10]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  [print 'globalizing 20-line conceptnet lattice']  
+  [let [[time_a [time]]]
+    [globalize cngl20 [create_lattice cng20 2 1 1 10]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  
+  [print 'globalizing 50-line conceptnet lattice']  
+  [let [[time_a [time]]]
+    [globalize cngl50 [create_lattice cng50 2 1 1 10]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  
+  [print 'globalizing 100-line conceptnet lattice']  
+  [let [[time_a [time]]]
+    [globalize cngl100 [create_lattice cng100 2 1 1 10]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  [print 'globalizing 200-line conceptnet lattice']  
+  [let [[time_a [time]]]
+    [globalize cngl200 [create_lattice cng200 2 1 1 10]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  [print 'globalizing 500-line conceptnet lattice']  
+  [let [[time_a [time]]]
+    [globalize cngl500 [create_lattice cng500 2 1 1 10]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]]
+
+
+
+
+
+[defunk create_large_base_lattices []
+  
+  [print 'globalizing 1000-line conceptnet lattice']  
+  [let [[time_a [time]]]
+    [globalize cngl1000 [create_lattice cng1000 2 1 1 10]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  [print 'globalizing 2000-line conceptnet lattice']  
+  [let [[time_a [time]]]
+    [globalize cngl2000 [create_lattice cng2000 2 1 1 10]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]
+  
+  [print 'globalizing 5000-line conceptnet lattice']  
+  [let [[time_a [time]]]
+    [globalize cngl5000 [create_lattice cng5000 2 1 1 10]]
+    [let [[time_b [time]]]
+      [print [time_difference time_a time_b]]]]]
+
+
 
 
 '*********************************'
@@ -123,9 +263,17 @@ subgraph has no more neighbors ---- infinite loop - problem?
 	 [results [search_for_subgraph_in_lattice subgraph the_lattice]]
 	 [time_b [time]]]
     [print 'time to search for subgraph:']
-    [print [time_difference time_a time_b]]]]
+    [print [time_difference time_a time_b]]
+    [print 'results:']
+    [print results]]]
 
 [defunk search_for_subgraph_in_lattice [subgraph lattice]
+  [let* [[the_lattice lattice]
+	 [the_subgraph [get subgraph copy_with_node_label nil]]
+	 [the_isomorphisms [get the_lattice subgraph_isomorphisms the_subgraph]]]
+    the_isomorphisms]]
+
+[defunk search_for_subgraph_in_lattice_error_correcting [subgraph lattice]
   [let* [[the_lattice lattice]
 	 [the_subgraph [get subgraph copy_with_node_label nil]]
 	 [the_isomorphisms [get the_lattice error_correcting_subgraph_isomorphisms the_subgraph nil]]
@@ -760,3 +908,24 @@ subgraph has no more neighbors ---- infinite loop - problem?
     [set_subtract all_neighbors [get subgraph node_set]]
     all_neighbors]]
 '
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

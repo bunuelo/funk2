@@ -943,7 +943,8 @@ f2ptr raw__graph_decomposition_lattice_node__new(f2ptr cause, f2ptr parent_graph
 		   f2__graph__add_edge(cause, between_graph, edge);
 		 }
 		 );
-  f2ptr root_graph_set = f2__ptypehash__new(cause);
+  //f2ptr root_graph_set = f2__ptypehash__new(cause);
+  f2ptr root_graph_set = f2__set__new(cause);
   return f2graph_decomposition_lattice_node__new(cause, parent_graph, left_child_graph, right_child_graph, between_graph, root_graph_set);
 }
 
@@ -1157,7 +1158,9 @@ void raw__graph_decomposition_lattice__decompose_graph_with_root_graph(f2ptr cau
   f2ptr decomposition_lattice_node = f2__graph_decomposition_lattice_node__new(cause, graph, maximum_isomorphic_graph, remainder_graph);
   {
     f2ptr root_graph_set = f2__graph_decomposition_lattice_node__root_graph_set(cause, decomposition_lattice_node);
+    //f2__print(cause, root_graph);
     f2__set__add(cause, root_graph_set, root_graph);
+    //f2__print(cause, root_graph_set);
   }
   raw__graph_decomposition_lattice__add_node(cause, this, decomposition_lattice_node);
 }
@@ -1263,12 +1266,16 @@ f2ptr raw__graph_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr
     }
   }
   f2ptr root_graph_isomorphisms_pairs = nil;
+  //f2__print(cause, root_graph_isomorphisms_pairs);
   set__iteration(cause, alive_graph_set, alive_graph,
 		 f2ptr isomorphisms = f2__ptypehash__lookup(cause, isomorphisms_graph_hash, alive_graph);
+		 //f2__print(cause, isomorphisms);
 		 if (isomorphisms != nil) {
 		   f2ptr lattice_node   = f2__ptypehash__lookup(cause, node_parent_hash, alive_graph);
+		   //f2__print(cause, lattice_node);
 		   if (lattice_node) {
 		     f2ptr root_graph_set = f2__graph_decomposition_lattice_node__root_graph_set(cause, lattice_node);
+		     //f2__print(cause, root_graph_set);
 		     set__iteration(cause, root_graph_set, root_graph,
 				    root_graph_isomorphisms_pairs = f2cons__new(cause, f2list2__new(cause, root_graph, isomorphisms), root_graph_isomorphisms_pairs);
 				    );

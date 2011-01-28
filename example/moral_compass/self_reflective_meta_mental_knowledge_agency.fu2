@@ -45,7 +45,7 @@
   'just for now.'
   [= debug t]
   ''
-  `[let [[mental_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `mental_knowledge->meta_mental_knowledge]]]
+  [let [[mental_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `mental_knowledge->meta_mental_knowledge]]]
     [while [let [[event [get mental_knowledge_iterator current]]]
 	     [if [not [null event]]
 		 [prog [have this-resource think_to_self '\n  translate mental->meta_mental event: ' event]

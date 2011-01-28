@@ -45,20 +45,27 @@
   'just for now.'
   [= debug t]
   ''
-  [let [[mental_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `mental_knowledge->meta_mental_knowledge]]]
+  `[let [[mental_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `mental_knowledge->meta_mental_knowledge]]]
     [while [let [[event [get mental_knowledge_iterator current]]]
 	     [if [not [null event]]
-		 [prog [if [get this debug] [have this-resource think_to_self '\n  translate mental->meta_mental event: ' event]]
+		 [prog [have this-resource think_to_self '\n  translate mental->meta_mental event: ' event]
 		       [let [[event_type [get event event_type]]]
 			 [cond [[is-type `semantic_knowledge_base_event event]
+				
 				[cond [[eq event_type `add_semantic_frame]
+				       
+				       [have this-resource think_to_self '\n  translate mental->meta_mental add_semantic_frame resource action event: ' semantic_frame]
 				       [let [[semantic_frame [get event semantic_frame]]]
 					 [cond [[is-type `semantic_resource_action_event semantic_frame]
+						
+						[have this-resource think_to_self '\n  translate mental->meta_mental add_semantic_frame semantic_resource_action_event: ' semantic_frame]
 						[let [[action_name_set [semantic-lookup semantic_frame action_name]]]
-						  [have this-resource think_to_self '\n  translate mental->meta_mental resource action event: ' semantic_frame]
-						  [cond [[get action_name_set contains `cause_being_active] [let [[resource_semantic_frame [get this resource_semantic_frame]]]
-													      [let [[current_action_sequence [new semantic_event_sequence [get [get this mind] semantic_realm]]]]
-														[semantic-add resource_semantic_frame current_action_sequence current_action_sequence]]]]
+						  [cond [[get action_name_set contains `cause_being_active]
+							 
+							 [let [[resource_semantic_frame [get this resource_semantic_frame]]]
+							   [let [[current_action_sequence [new semantic_event_sequence [get [get this mind] semantic_realm]]]]
+							     [have this-resource think_to_self '\n    translate mental->meta_mental add_semantic_frame cause_being_active resource action event: ' semantic_frame]
+							     [semantic-add resource_semantic_frame current_action_sequence current_action_sequence]]]]
 							'catch resource action events'
 							'  => add to current_action_sequence for the causal agent.'
 							'  => add to action_sequence_cause_frame for the affected agent.'
@@ -67,28 +74,36 @@
 					       ]
 					 ]]
 				      [[eq event_type `remove_semantic_frame]
+				       [have this-resource think_to_self '\n  translate mental->meta_mental remove_semantic_frame resource action event: ' semantic_frame]
 				       [let [[semantic_frame [get event semantic_frame]]]
 					 [cond [[is-type `semantic_resource_action_event semantic_frame]
+						
+						[have this-resource think_to_self '\n  translate mental->meta_mental remove_semantic_frame semantic_resource_action_event: ' semantic_frame]
 						[let [[action_name_set [semantic-lookup semantic_frame action_name]]]
-						  [have this-resource think_to_self '\n  translate mental->meta_mental resource action event: ' semantic_frame]
-						  [cond [[get action_name_set contains `cause_being_active] [let [[resource_semantic_frame [get this resource_semantic_frame]]]
-													      [let [[current_action_sequence_set [semantic-lookup resource_semantic_frame current_action_sequence]]]
-														[let [[current_action_sequences [if [null current_action_sequence_set]
-																		    nil
-																		  [get current_action_sequence_set elements]]]]
-														  [if [!= 1 [length current_action_sequences]]
-														      [error resource_name `translate_mental_knowledge_to_meta_mental_knowledge_resource
-															     bug_type      [if [== 0 [length current_action_sequences]]
-																	       `no_current_action_sequence_exists
-																	     `too_many_current_action_sequences_exist]]
-														    [let [[current_action_sequence [first current_action_sequences]]]
-														      [semantic-remove resource_semantic_frame current_action_sequence current_action_sequence]]]]]]]
+						  [cond [[get action_name_set contains `cause_being_active]
+							 
+							 [have this-resource think_to_self '\n  translate mental->meta_mental remove_semantic_frame semantic_resource_action_event cause_being_active: ' semantic_frame]
+							 [let [[resource_semantic_frame [get this resource_semantic_frame]]]
+							   [let [[current_action_sequence_set [semantic-lookup resource_semantic_frame current_action_sequence]]]
+							     [have this-resource think_to_self   '\n    translate mental->meta_mental remove_semantic_frame cause_being_active resource action event cause_being_active current_action_sequence_set: ' current_action_sequence_set]
+							     [let [[current_action_sequences [if [null current_action_sequence_set]
+												 nil
+											       [get current_action_sequence_set elements]]]]
+							       [have this-resource think_to_self   '\n    translate mental->meta_mental remove_semantic_frame cause_being_active resource action event cause_being_active current_action_sequences: ' current_action_sequences]
+							       [if [!= 1 [length current_action_sequences]]
+								   [error resource_name `translate_mental_knowledge_to_meta_mental_knowledge_resource
+									  bug_type      [if [== 0 [length current_action_sequences]]
+											    `no_current_action_sequence_exists
+											  `too_many_current_action_sequences_exist]]
+								 [let [[current_action_sequence [first current_action_sequences]]]
+								   [semantic-remove resource_semantic_frame current_action_sequence current_action_sequence]]]]]]]
 							]
 						  ]]
 					       ]
 					 
 					 ]]]]
 			       [[is-type `semantic_frame_event event]
+				
 				[cond [[eq event_type `add]
 				       [let [[key_type [get event key_type]]
 					     [key      [get event key]]]

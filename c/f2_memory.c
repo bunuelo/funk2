@@ -379,7 +379,8 @@ f2ptr funk2_memory__global_environment(funk2_memory_t* this) {
 }
 
 boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename) {
-  status("funk2_memory__save_image_to_file: saving memory image.");
+  printf("\nfunk2_memory__save_image_to_file: saving memory image."); fflush(stdout);
+  status("  funk2_memory__save_image_to_file: saving memory image.");
   funk2_memory__debug_memory_test(this, 0);
   funk2_memory__print_gc_stats(this);
   int pool_index;
@@ -397,17 +398,24 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   i = 0xfaded;             safe_write(fd, to_ptr(&i), sizeof(u64));
   i = F2__COMPILE_TIME_ID; safe_write(fd, to_ptr(&i), sizeof(u64));
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    status("funk2_memory__save_image_to_file: saving pool %d.", pool_index);
+    printf("\nfunk2_memory__save_image_to_file: saving pool %d.", pool_index); fflush(stdout);
+    status(  "funk2_memory__save_image_to_file: saving pool %d.", pool_index);
     funk2_memorypool__save_to_stream(&(this->pool[pool_index]), fd);
   }
   f2_i = this->global_environment_f2ptr; safe_write(fd, to_ptr(&f2_i), sizeof(f2ptr));
-  funk2_garbage_collector__save_to_stream(&(__funk2.garbage_collector), fd);
+  {
+    printf("\nfunk2_memory__save_image_to_file: saving garbage collector."); fflush(stdout);
+    status(  "funk2_memory__save_image_to_file: saving garbage collector.");
+    funk2_garbage_collector__save_to_stream(&(__funk2.garbage_collector), fd);
+  }
   close(fd);
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
   funk2_memory__debug_memory_test(this, 0);
   funk2_memory__print_gc_stats(this);
+  printf("\nfunk2_memory__save_image_to_file: save bootstrap memory image, %s, complete.", filename); fflush(stdout);
+  status(  "funk2_memory__save_image_to_file: save bootstrap memory image, %s, complete.", filename);
   return boolean__false;
 }
 

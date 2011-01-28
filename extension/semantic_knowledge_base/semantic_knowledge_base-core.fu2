@@ -22,6 +22,8 @@
 [defcorefunk semantic_knowledge_base-core_extension_ping       semantic_knowledge_base semantic_knowledge_base__core_extension_ping]
 [defcorefunk semantic_knowledge_base-core_extension_initialize semantic_knowledge_base semantic_knowledge_base__core_extension_initialize]
 
+[defcorefunk object-semantic-lookup       semantic_knowledge_base object__semantic__lookup]
+[defcorefunk object-semantic-lookup-apply semantic_knowledge_base object__semantic__lookup__apply]
 [defcorefunk object-semantic-add          semantic_knowledge_base object__semantic__add]
 [defcorefunk object-semantic-add-apply    semantic_knowledge_base object__semantic__add__apply]
 [defcorefunk object-semantic-remove       semantic_knowledge_base object__semantic__remove]

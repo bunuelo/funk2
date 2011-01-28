@@ -61,11 +61,17 @@
 						
 						[have this-resource think_to_self '\n  translate mental->meta_mental add_semantic_frame semantic_resource_action_event: ' event]
 						[let [[action_name_set [semantic-lookup semantic_frame action_name]]]
+						  [have this-resource think_to_self '\n  translate mental->meta_mental add_semantic_frame semantic_resource_action_event action_name_set: ' action_name_set]
+						  
 						  [cond [[get action_name_set contains `cause_being_active]
 							 
+							 [have this-resource think_to_self '\n  translate mental->meta_mental add_semantic_frame semantic_resource_action_event cause_being_active: ' event]
 							 [let [[resource_semantic_frame [get this resource_semantic_frame]]]
+							   [have this-resource think_to_self '\n  translate mental->meta_mental add_semantic_frame semantic_resource_action_event cause_being_active resource_semantic_frame: ' resource_semantic_frame]
+							   
 							   [let [[current_action_sequence [new semantic_event_sequence [get [get this mind] semantic_realm]]]]
 							     [have this-resource think_to_self '\n    translate mental->meta_mental add_semantic_frame cause_being_active resource action event: ' event]
+							     
 							     [semantic-add resource_semantic_frame current_action_sequence current_action_sequence]]]]
 							'catch resource action events'
 							'  => add to current_action_sequence for the causal agent.'

@@ -18,9 +18,10 @@
  rights to redistribute these changes.'
 
 [defunk skb-test [semantic_realm]
-  [cause-define semantic_frame-trace_add                         t]
-  [cause-define semantic_frame-trace_remove                      t]
-  [cause-define semantic_knowledge_base-trace_add_semantic_frame t]
+  [cause-define semantic_frame-trace_add                            t]
+  [cause-define semantic_frame-trace_remove                         t]
+  [cause-define semantic_knowledge_base-trace_add_semantic_frame    t]
+  [cause-define semantic_knowledge_base-trace_remove_semantic_frame t]
   [let [[semantic_knowledge_base      [new semantic_knowledge_base      `semantic_knowledge_base      semantic_realm]]
 	[meta_semantic_knowledge_base [new meta_semantic_knowledge_base `meta_semantic_knowledge_base semantic_realm]]]
     [let [[knife_physical_object        [new semantic_physical_object semantic_realm]]

@@ -27,20 +27,24 @@
 	 
 	 ]]]
 
+[deftypefunk traced_resource execute begin_wrapped_active_funk []
+  [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this mind] semantic_realm]]]]
+    [semantic-add semantic_resource_action_event action_name `cause_being_active]
+    [semantic-add semantic_resource_action_event relationship-agent   [get active_cause_resource resource_semantic_frame]]
+    [semantic-add semantic_resource_action_event relationship-target  [get this                  resource_semantic_frame]]
+    [have [get [get this mind] semantic_knowledge_base `mental_knowledge] add_semantic_frame semantic_resource_action_event]
+    semantic_resource_action_event]]
+
+[deftypefunk traced_resource execute finish_wrapped_active_funk [semantic_resource_action_event]
+  [have [get [get this mind] semantic_knowledge_base `mental_knowledge] remove_semantic_frame semantic_resource_action_event]]
+
 [deftypefunk traced_resource get wrapped_active_funk [active_funk]
   [let [[active_funk-args [get active_funk args]]]
     [eval `[let [[this_traced_resource ,this]]
 	     [funk ,active_funk-args
-		    [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this_traced_resource mind] semantic_realm]]]]
-		      [semantic-add semantic_resource_action_event action_name `cause_being_active]
-		      [semantic-add semantic_resource_action_event relationship-agent   [get active_cause_resource resource_semantic_frame]]
-		      [semantic-add semantic_resource_action_event relationship-target  [get this_traced_resource  resource_semantic_frame]]
-		      [have [get [get this_traced_resource mind] semantic_knowledge_base `mental_knowledge] add_semantic_frame semantic_resource_action_event]
-		      
+		    [let [[semantic_resource_action_event [have this_traced_resource begin_wrapped_active_funk]]]
 		      [let [[result [apply ,active_funk [conslist @active_funk-args]]]]
-			
-			[have [get [get this_traced_resource mind] semantic_knowledge_base `mental_knowledge] remove_semantic_frame semantic_resource_action_event]
-			
+			[have this_traced_resource finish_wrapped_active_funk semantic_resource_action_event]
 			result]]]]]]]
 
 [deftypefunk traced_resource get resource_semantic_frame []

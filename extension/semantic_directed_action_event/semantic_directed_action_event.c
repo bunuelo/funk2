@@ -78,6 +78,19 @@ f2ptr f2__semantic_directed_action_event__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_directed_action_event__type, thing, 0, "Returns the specific type of object that this semantic_directed_action_event is.");
 
 
+f2ptr raw__semantic_directed_action_event__relationship__target__lookup(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "target"));
+}
+
+f2ptr f2__semantic_directed_action_event__relationship__target__lookup(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_directed_action_event__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_directed_action_event__relationship__target__lookup(cause, this);
+}
+export_cefunk1(semantic_directed_action_event__relationship__target__lookup, this, 0, "");
+
+
 f2ptr raw__semantic_directed_action_event__relationship__target__add(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "target"), that);
 }
@@ -111,6 +124,7 @@ f2ptr f2__semantic_directed_action_event_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol,     new__symbol(cause, "new"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_directed_action_event"), new__symbol(cause, "semantic_directed_action_event__new")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol,     new__symbol(cause, "is_type"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_directed_action_event"), new__symbol(cause, "semantic_directed_action_event__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,         new__symbol(cause, "type"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_directed_action_event"), new__symbol(cause, "semantic_directed_action_event__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "relationship-target"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_directed_action_event"), new__symbol(cause, "semantic_directed_action_event__relationship__target__lookup")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "relationship-target"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_directed_action_event"), new__symbol(cause, "semantic_directed_action_event__relationship__target__add")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "relationship-target"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_directed_action_event"), new__symbol(cause, "semantic_directed_action_event__relationship__target__remove")));}
   return this;

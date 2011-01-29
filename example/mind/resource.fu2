@@ -26,6 +26,7 @@
 			   fiber
 			   active_mutex
 			   active
+			   active_cause_resource
 			   active_funk
 			   active_args
 			   result
@@ -142,6 +143,7 @@
     [prog [have active_mutex lock]
 	  [if [not active]
 	      [prog [=   active                t]
+		    [=   active_cause_resource cause-resource]
 		    [=   active_args           args]
 		    [set fiber paused          nil]
 		    [=   successful_activation t]]]
@@ -160,6 +162,7 @@
       [prog [have active_mutex lock]
 	    [if [not active]
 		[prog [=   active                t]
+		      [=   active_cause_resource cause-resource]
 		      [=   active_args           args]
 		      [set fiber paused          nil]
 		      [=   successful_activation t]]]
@@ -178,11 +181,12 @@
     [while keep_looping
       [have active_mutex lock]
       [if finished
-	  [prog [= active        nil]
-		[= active_args   nil]
-		[= result        nil]
-		[= finished      nil]
-		[= keep_looping  nil]
+	  [prog [= active                nil]
+		[= active_args           nil]
+		[= active_cause_resource nil]
+		[= result                nil]
+		[= finished              nil]
+		[= keep_looping          nil]
 		[= return_result result]
 		[have active_mutex unlock]]
 	[prog [have active_mutex unlock]

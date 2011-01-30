@@ -60,7 +60,7 @@
 						
 						[have this-resource think_to_self '\n  debug A3: translate mental->meta_mental add_semantic_frame semantic_resource_action_event: ' event]
 						[let [[action_name_set [semantic-lookup semantic_frame action_name]]
-						      [agent_set       [semantic-lookup semantic_frame relationship-agent]]]
+						      [agent_set       [semantic-lookup semantic_frame agent]]]
 						  [have this-resource think_to_self '\n  debug A4: translate mental->meta_mental add_semantic_frame semantic_resource_action_event action_name_set: ' action_name_set]
 						  
 						  [if [not [null action_name_set]]
@@ -96,7 +96,7 @@
 						
 						[have this-resource think_to_self '\n  debug R3: translate mental->meta_mental remove_semantic_frame semantic_resource_action_event: ' event]
 						[let [[action_name_set [semantic-lookup semantic_frame action_name]]
-						      [agent_set       [semantic-lookup semantic_frame relationship-agent]]]
+						      [agent_set       [semantic-lookup semantic_frame agent]]]
 						  [if [not [null action_name_set]]
 						      [cond [[get action_name_set contains `cause_being_active]
 							     

@@ -137,7 +137,7 @@ f2ptr raw__semantic_resource__current_action_sequence__add(f2ptr cause, f2ptr th
 
 f2ptr f2__semantic_resource__current_action_sequence__add(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__semantic_resource__is_type(cause, this)) ||
-      ((that != nil) && (! raw__semantic_action_sequence__is_type(cause, that)))) {
+      ((that != nil) && (! raw__semantic_event_sequence__is_type(cause, that)))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_resource__current_action_sequence__add(cause, this, that);
@@ -151,7 +151,7 @@ f2ptr raw__semantic_resource__current_action_sequence__remove(f2ptr cause, f2ptr
 
 f2ptr f2__semantic_resource__current_action_sequence__remove(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__semantic_resource__is_type(cause, this)) ||
-      ((that != nil) && (! raw__semantic_action_sequence__is_type(cause, that)))) {
+      ((that != nil) && (! raw__semantic_event_sequence__is_type(cause, that)))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_resource__current_action_sequence__remove(cause, this, that);

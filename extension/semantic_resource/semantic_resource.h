@@ -24,6 +24,28 @@
 
 #include "../semantic_object/semantic_object.h"
 
+// semantic_resource
+
+f2ptr     raw__semantic_resource__new                            (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_resource__new                            (f2ptr cause, f2ptr semantic_realm);
+boolean_t raw__semantic_resource__is_type                        (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_resource__is_type                        (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_resource__type                           (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_resource__type                           (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_resource__name__lookup                   (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_resource__name__lookup                   (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_resource__name__add                      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_resource__name__add                      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_resource__name__remove                   (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_resource__name__remove                   (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_resource__current_action_sequence__lookup(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_resource__current_action_sequence__lookup(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_resource__current_action_sequence__add   (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_resource__current_action_sequence__add   (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_resource__current_action_sequence__remove(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_resource__current_action_sequence__remove(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_resource_type__new                       (f2ptr cause);
+
 
 // **
 

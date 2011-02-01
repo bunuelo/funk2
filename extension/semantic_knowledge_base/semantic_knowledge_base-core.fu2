@@ -57,7 +57,7 @@
 [defmetro semantic-get [this slot_name :rest args] `[semantic-get-apply ,this ,slot_name [conslist @args]]]
 
 [defmetro semantic-set-apply [this slot_name args] `[let [[args ,args]]
-						      [let [[value_set [semantic-lookup-apply ,this ,slot_name]]]
+						      [let [[value_set [semantic-lookup ,this ,slot_name]]]
 							[if [null value_set]
 							    [error this      this
 								   slot_name [quote ,slot_name]

@@ -72,8 +72,8 @@
 								       funkname  `semantic-set
 								       bug_type  `too_many_values_in_value_set_defined_for_this_slot_name]
 							      [let [[value [first values]]]
-								[semantic-remove ,this ,slot_name value]
-								[semantic-add    ,this ,slot_name @args]
+								[semantic-remove    ,this ,slot_name value]
+								[semantic-add-apply ,this ,slot_name args]
 								nil]]]]]]]
 [defmetro semantic-set [this slot_name :rest args] `[semantic-set-apply ,this ,slot_name [conslist @args]]]
 

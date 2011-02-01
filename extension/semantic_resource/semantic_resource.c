@@ -31,6 +31,7 @@ f2ptr raw__semantic_resource__new(f2ptr cause, f2ptr semantic_realm) {
   }
   raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_resource"));
   raw__semantic_frame__add( cause, this, new__symbol(cause, "type"), new__symbol(cause, "name"), new__symbol(cause, "semantic_resource"));
+  raw__semantic_resource__current_action_sequence__add(cause, this, nil);
   return this;
 }
 
@@ -135,7 +136,8 @@ f2ptr raw__semantic_resource__current_action_sequence__add(f2ptr cause, f2ptr th
 }
 
 f2ptr f2__semantic_resource__current_action_sequence__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_resource__is_type(cause, this)) {
+  if ((! raw__semantic_resource__is_type(cause, this)) ||
+      ((that != nil) && (! raw__semantic_action_sequence__is_type(cause, that)))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_resource__current_action_sequence__add(cause, this, that);
@@ -148,7 +150,8 @@ f2ptr raw__semantic_resource__current_action_sequence__remove(f2ptr cause, f2ptr
 }
 
 f2ptr f2__semantic_resource__current_action_sequence__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_resource__is_type(cause, this)) {
+  if ((! raw__semantic_resource__is_type(cause, this)) ||
+      ((that != nil) && (! raw__semantic_action_sequence__is_type(cause, that)))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__semantic_resource__current_action_sequence__remove(cause, this, that);

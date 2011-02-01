@@ -39,7 +39,7 @@
 [defmetro semantic-remove       [this slot_name :rest args] `[object-semantic-remove       ,this [quote ,slot_name] @args]]
 [defmetro semantic-remove-apply [this slot_name       args] `[object-semantic-remove-apply ,this [quote ,slot_name] ,args]]
 
-[defmetro semantic-get-apply [this slot_name args] `[let [[value_set [semantic-lookup ,this ,slot_name @args]]]
+[defmetro semantic-get-apply [this slot_name args] `[let [[value_set [semantic-lookup-apply ,this ,slot_name ,args]]]
 						      [if [null value_set]
 							  [error this      this
 								 slot_name [quote ,slot_name]
@@ -56,7 +56,7 @@
 							    [first values]]]]]]
 [defmetro semantic-get [this slot_name :rest args] `[semantic-get-apply ,this ,slot_name [conslist @args]]]
 
-[defmetro semantic-set-apply [this slot_name args] `[let [[args [conslist @args]]]
+[defmetro semantic-set-apply [this slot_name args] `[let [[args ,args]]
 						      [let [[value_set [semantic-lookup-apply ,this ,slot_name]]]
 							[if [null value_set]
 							    [error this      this

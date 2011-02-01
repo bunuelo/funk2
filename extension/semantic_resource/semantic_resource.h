@@ -44,7 +44,8 @@ f2ptr     raw__semantic_resource__current_action_sequence__add   (f2ptr cause, f
 f2ptr      f2__semantic_resource__current_action_sequence__add   (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr     raw__semantic_resource__current_action_sequence__remove(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__semantic_resource__current_action_sequence__remove(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_resource_type__new                       (f2ptr cause);
+
+f2ptr f2__semantic_resource_type__new(f2ptr cause);
 
 
 // **

@@ -20,9 +20,7 @@
 
 [deframe self_reflective_other_agents_knowledge_agency [agency] []
   [new []					 
-       [construct agency `meta_mental_knowledge]
-
-       [have this add_resource [new translate_mental_knowledge_to_meta_mental_knowledge_resource]]
+       [construct agency `other_agents_knowledge]
        
        this]]
 

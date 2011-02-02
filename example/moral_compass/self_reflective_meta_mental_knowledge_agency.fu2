@@ -81,14 +81,16 @@
 							     [have this-resource think_to_self '\n  debug A8: translate mental->meta_mental add_semantic_frame semantic_resource_action_event *: ' event]
 							     
 							     [let [[agent_resource_semantic_frame agent]]
-							       [have this-resource think_to_self '\n  debug A6: translate mental->meta_mental add_semantic_frame semantic_resource_action_event cause_being_active agent_resource_semantic_frame: ' agent_resource_semantic_frame]
+							       [have this-resource think_to_self '\n  debug A9: translate mental->meta_mental add_semantic_frame semantic_resource_action_event cause_being_active agent_resource_semantic_frame: ' agent_resource_semantic_frame]
 							       
 							       [let [[current_action_sequence [semantic-get agent_resource_semantic_frame current_action_sequence]]]
 								 [if [null current_action_sequence]
-								     [error funkname `translate_mental_knowledge_to_meta_mental_knowledge_resource-execute_resource_raw_funk
-									    bug_type `current_action_sequence_is_nil
-									    event    event]
-								   [prog [have current_action_sequence add_to_end event]
+								     [prog [have this-resource think_to_self '\n  debug A10: current_action_sequence is nil, so not recording event:' event]
+									   `[error funkname `translate_mental_knowledge_to_meta_mental_knowledge_resource-execute_resource_raw_funk
+										   bug_type `current_action_sequence_is_nil
+										   event    event]]
+								   [prog [have this-resource think_to_self '\n   *** debug A11: adding event to end of sequence:' event]
+									 [have current_action_sequence add_to_end event]
 									 
 									 '  => add to action_sequence_cause_frame for the affected agent.']]]]]]
 						    ]]]

@@ -532,7 +532,7 @@
        
        
        [= other_agents_isismon_knowledge [new isismon_knowledge this `other_agents_knowledge]]
-       [have vbox pack_start [get other_agents_knowledge widget] nil nil 0]
+       [have vbox pack_start [get other_agents_isismon_knowledge widget] nil nil 0]
        
        [= meta_mental_sequence_isismon_knowledge [new isismon_knowledge this `meta_mental_sequence_knowledge]]
        [have vbox pack_start [get meta_mental_sequence_isismon_knowledge widget] nil nil 0]

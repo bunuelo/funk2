@@ -66,11 +66,13 @@
 								   bug_type  `no_value_set_defined_for_this_slot_name]
 							  [let [[values [get value_set elements]]]
 							    [if [!= 1 [length values]]
-								[error this      this
-								       slot_name [quote ,slot_name]
-								       args      [quote ,args]
-								       funkname  `semantic-set
-								       bug_type  `too_many_values_in_value_set_defined_for_this_slot_name]
+								[error this        this
+								       slot_name   [quote ,slot_name]
+								       args        [quote ,args]
+								       funkname    `semantic-set
+								       bug_type    `expected_exactly_one_value_in_value_set_defined_for_this_slot_name
+								       value_count [length values]
+								       ]
 							      [let [[value [first values]]]
 								[semantic-remove    ,this ,slot_name value]
 								[semantic-add-apply ,this ,slot_name args]

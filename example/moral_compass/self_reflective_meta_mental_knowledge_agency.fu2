@@ -100,7 +100,7 @@
 							       [let [[current_action_sequence [semantic-get agent_resource_semantic_frame current_action_sequence]]]
 								 [have this-resource think_to_self   '\n    *** debug R7: translate mental->meta_mental remove_semantic_frame cause_being_active resource action event cause_being_active current_action_sequence: ' current_action_sequence]
 								 
-								 [semantic-remove agent_resource_semantic_frame current_action_sequence current_action_sequence]]]]
+								 [semantic-set agent_resource_semantic_frame current_action_sequence nil]]]]
 							    ]
 						    ]]]
 					       ]

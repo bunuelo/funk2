@@ -23,14 +23,16 @@
 [deframe self_reflective_layer [mental_layer] []
   [new []
        [construct mental_layer 4 `self_reflective]
-       [have this add_agency [new self_reflective_personality_agency]]
        [have this add_agency [new self_reflective_meta_mental_knowledge_agency]]
+       [have this add_agency [new self_reflective_other_agents_knowledge_agency]]
        this]]
 
 [deftypefunk self_reflective_layer execute create_knowledge []
   [new meta_semantic_knowledge_base `self_reflective_knowledge [get [get this mind] semantic_realm]]
-  [have [get this agency `meta_mental_knowledge] create_knowledge]]
+  [have [get this agency `meta_mental_knowledge]  create_knowledge]
+  [have [get this agency `other_agents_knowledge] create_knowledge]]
 
 [deftypefunk self_reflective_layer execute connect_knowledge_reflection []
-  [have [get this agency `meta_mental_knowledge] connect_knowledge_reflection]]
+  [have [get this agency `meta_mental_knowledge]  connect_knowledge_reflection]
+  [have [get this agency `other_agents_knowledge] connect_knowledge_reflection]]
 

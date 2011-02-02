@@ -1046,7 +1046,7 @@
 [deftypefunk isismon_project execute cycle []
   [have execute_mutex lock]
   [if initialized
-      [let [[time_to_wait_for_thinking 4]]
+      [let [[time_to_wait_for_thinking 5]]
 	[if [and simulation_playing [or [null last_stepped_simulation_time]
 					[> [/ [- [get [time] nanoseconds_since_1970] [get last_stepped_simulation_time nanoseconds_since_1970]] 1000000000.0] time_to_wait_for_thinking]]]
 	    [let [[step_size [have [get step_size_entry text] read]]]

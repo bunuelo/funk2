@@ -73,6 +73,9 @@
 
 									     level_pitch_resource__hbox
 									     level_pitch_resource__button
+
+									     align_body_with_neck_resource__hbox
+									     align_body_with_neck_resource__button
  
 									     empty_right_hand_resource__hbox
 									     empty_right_hand_resource__button
@@ -299,6 +302,15 @@
        [have level_pitch_resource__button signal_connect 'clicked'
 	     [funk []
 		   [have this activate_resource `learned_reactive `physical `level_pitch]]
+	     nil]
+
+       [= align_body_with_neck_resource__hbox [gtk-hbox-new 2]]
+       [= align_body_with_neck_resource__button [gtk-button-new_with_label 'Align body with neck']]
+       [have align_body_with_neck_resource__hbox pack_start align_body_with_neck_resource__button nil nil 0]
+       [have vbox pack_start align_body_with_neck_resource__hbox nil nil 0]
+       [have align_body_with_neck_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `learned_reactive `physical `align_body_with_neck]]
 	     nil]
 
        [= empty_right_hand_resource__hbox [gtk-hbox-new 2]]

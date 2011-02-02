@@ -75,7 +75,7 @@
 								 [if [not [get meta_mental_sequence_knowledge contains_semantic_frame agent_resource_semantic_frame]]
 								     [have meta_mental_sequence_knowledge add_semantic_frame agent_resource_semantic_frame]]
 								 [have meta_mental_sequence_knowledge add_semantic_frame current_action_sequence]
-								 [semantic-add agent_resource_semantic_frame current_action_sequence action_sequence]
+								 [semantic-add agent_resource_semantic_frame action_sequence         current_action_sequence]
 								 [semantic-set agent_resource_semantic_frame current_action_sequence current_action_sequence]]]]
 							    [nil
 							     

@@ -27,20 +27,24 @@
 	 
 	 ]]]
 
+[deftypefunk traced_resource execute begin_wrapped_active_funk []
+  [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this mind] semantic_realm]]]]
+    [semantic-add semantic_resource_action_event action_name `cause_being_active]
+    [semantic-add semantic_resource_action_event agent       [get active_cause_resource resource_semantic_frame]]
+    [semantic-add semantic_resource_action_event target      [get this                  resource_semantic_frame]]
+    [have [get [get this mind] semantic_knowledge_base `mental_knowledge] add_semantic_frame semantic_resource_action_event]
+    semantic_resource_action_event]]
+
+[deftypefunk traced_resource execute finish_wrapped_active_funk [semantic_resource_action_event]
+  [have [get [get this mind] semantic_knowledge_base `mental_knowledge] remove_semantic_frame semantic_resource_action_event]]
+
 [deftypefunk traced_resource get wrapped_active_funk [active_funk]
   [let [[active_funk-args [get active_funk args]]]
     [eval `[let [[this_traced_resource ,this]]
 	     [funk ,active_funk-args
-		    [let [[semantic_directed_action_event [new semantic_directed_action_event [get [get this_traced_resource mind] semantic_realm]]]]
-		      [semantic-add semantic_directed_action_event property-action_name `cause_being_active]
-		      [semantic-add semantic_directed_action_event relationship-agent   [get cause-resource       resource_semantic_frame]]
-		      [semantic-add semantic_directed_action_event relationship-target  [get this_traced_resource resource_semantic_frame]]
-		      [have [get [get this_traced_resource mind] semantic_knowledge_base `mental_knowledge] add_semantic_frame semantic_directed_action_event]
-		      
+		    [let [[semantic_resource_action_event [have this_traced_resource begin_wrapped_active_funk]]]
 		      [let [[result [apply ,active_funk [conslist @active_funk-args]]]]
-			
-			[have [get [get this_traced_resource mind] semantic_knowledge_base `mental_knowledge] remove_semantic_frame semantic_directed_action_event]
-			
+			[have this_traced_resource finish_wrapped_active_funk semantic_resource_action_event]
 			result]]]]]]]
 
 [deftypefunk traced_resource get resource_semantic_frame []
@@ -52,9 +56,9 @@
 
 [deftypefunk traced_resource execute activate [:rest args]
   [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this mind] semantic_realm]]]]
-    [semantic-add semantic_resource_action_event property-action_name `activate]
-    [semantic-add semantic_resource_action_event relationship-agent   [get cause-resource resource_semantic_frame]]
-    [semantic-add semantic_resource_action_event relationship-target  [get this           resource_semantic_frame]]
+    [semantic-add semantic_resource_action_event action_name `activate]
+    [semantic-add semantic_resource_action_event agent       [get cause-resource resource_semantic_frame]]
+    [semantic-add semantic_resource_action_event target      [get this           resource_semantic_frame]]
     [have [get [get this mind] semantic_knowledge_base `mental_knowledge] add_semantic_frame semantic_resource_action_event]
     [type-have-apply resource this activate args]
     [have [get [get this mind] semantic_knowledge_base `mental_knowledge] remove_semantic_frame semantic_resource_action_event]
@@ -62,9 +66,9 @@
 
 [deftypefunk traced_resource execute wait_to_activate [:rest args]
   [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this mind] semantic_realm]]]]
-    [semantic-add semantic_resource_action_event property-action_name `wait_to_activate]
-    [semantic-add semantic_resource_action_event relationship-agent   [get cause-resource resource_semantic_frame]]
-    [semantic-add semantic_resource_action_event relationship-target  [get this           resource_semantic_frame]]
+    [semantic-add semantic_resource_action_event action_name `wait_to_activate]
+    [semantic-add semantic_resource_action_event agent       [get cause-resource resource_semantic_frame]]
+    [semantic-add semantic_resource_action_event target      [get this           resource_semantic_frame]]
     [have [get [get this mind] semantic_knowledge_base `mental_knowledge] add_semantic_frame semantic_resource_action_event]
     [type-have-apply resource this wait_to_activate args]
     [have [get [get this mind] semantic_knowledge_base `mental_knowledge] remove_semantic_frame semantic_resource_action_event]
@@ -72,9 +76,9 @@
 
 [deftypefunk traced_resource execute wait_to_call [:rest args]
   [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this mind] semantic_realm]]]]
-    [semantic-add semantic_resource_action_event property-action_name `wait_to_call]
-    [semantic-add semantic_resource_action_event relationship-agent   [get cause-resource resource_semantic_frame]]
-    [semantic-add semantic_resource_action_event relationship-target  [get this           resource_semantic_frame]]
+    [semantic-add semantic_resource_action_event action_name `wait_to_call]
+    [semantic-add semantic_resource_action_event agent       [get cause-resource resource_semantic_frame]]
+    [semantic-add semantic_resource_action_event target      [get this           resource_semantic_frame]]
     [have [get [get this mind] semantic_knowledge_base `mental_knowledge] add_semantic_frame semantic_resource_action_event]
     [type-have-apply resource this wait_to_call args]
     [have [get [get this mind] semantic_knowledge_base `mental_knowledge] remove_semantic_frame semantic_resource_action_event]
@@ -82,9 +86,9 @@
 
 [deftypefunk traced_resource execute call [:rest args]
   [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this mind] semantic_realm]]]]
-    [semantic-add semantic_resource_action_event property-action_name `call]
-    [semantic-add semantic_resource_action_event relationship-agent   [get cause-resource resource_semantic_frame]]
-    [semantic-add semantic_resource_action_event relationship-target  [get this           resource_semantic_frame]]
+    [semantic-add semantic_resource_action_event action_name `call]
+    [semantic-add semantic_resource_action_event agent       [get cause-resource resource_semantic_frame]]
+    [semantic-add semantic_resource_action_event target      [get this           resource_semantic_frame]]
     [have [get [get this mind] semantic_knowledge_base `mental_knowledge] add_semantic_frame semantic_resource_action_event]
     [type-have-apply resource this call args]
     [have [get [get this mind] semantic_knowledge_base `mental_knowledge] remove_semantic_frame semantic_resource_action_event]
@@ -92,9 +96,9 @@
 
 [deftypefunk traced_resource execute finish []
   [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this mind] semantic_realm]]]]
-    [semantic-add semantic_resource_action_event property-action_name `finish]
-    [semantic-add semantic_resource_action_event relationship-agent   [get cause-resource resource_semantic_frame]]
-    [semantic-add semantic_resource_action_event relationship-target  [get this           resource_semantic_frame]]
+    [semantic-add semantic_resource_action_event action_name `finish]
+    [semantic-add semantic_resource_action_event agent       [get cause-resource resource_semantic_frame]]
+    [semantic-add semantic_resource_action_event target      [get this           resource_semantic_frame]]
     [have [get [get this mind] semantic_knowledge_base `mental_knowledge] add_semantic_frame semantic_resource_action_event]
     [type-have resource this finish]
     [have [get [get this mind] semantic_knowledge_base `mental_knowledge] remove_semantic_frame semantic_resource_action_event]

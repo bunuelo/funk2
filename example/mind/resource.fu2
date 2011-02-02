@@ -26,6 +26,7 @@
 			   fiber
 			   active_mutex
 			   active
+			   active_cause_resource
 			   active_funk
 			   active_args
 			   result
@@ -42,9 +43,10 @@
 				     [cause-enable_reactive_critics [this-cause]]
 				     
 				     'Turn on appropriate causal tracing.'
-				     [cause-define semantic_frame-trace_add                         t]
-				     [cause-define semantic_frame-trace_remove                      t]
-				     [cause-define semantic_knowledge_base-trace_add_semantic_frame t]
+				     [cause-define semantic_frame-trace_add                            t]
+				     [cause-define semantic_frame-trace_remove                         t]
+				     [cause-define semantic_knowledge_base-trace_add_semantic_frame    t]
+				     [cause-define semantic_knowledge_base-trace_remove_semantic_frame t]
 				     
 				     [= name         initial-name]
 				     [= agency       nil]  'We set this when the resource is added to an agency.'
@@ -141,6 +143,7 @@
     [prog [have active_mutex lock]
 	  [if [not active]
 	      [prog [=   active                t]
+		    [=   active_cause_resource cause-resource]
 		    [=   active_args           args]
 		    [set fiber paused          nil]
 		    [=   successful_activation t]]]
@@ -159,6 +162,7 @@
       [prog [have active_mutex lock]
 	    [if [not active]
 		[prog [=   active                t]
+		      [=   active_cause_resource cause-resource]
 		      [=   active_args           args]
 		      [set fiber paused          nil]
 		      [=   successful_activation t]]]
@@ -177,11 +181,12 @@
     [while keep_looping
       [have active_mutex lock]
       [if finished
-	  [prog [= active        nil]
-		[= active_args   nil]
-		[= result        nil]
-		[= finished      nil]
-		[= keep_looping  nil]
+	  [prog [= active                nil]
+		[= active_args           nil]
+		[= active_cause_resource nil]
+		[= result                nil]
+		[= finished              nil]
+		[= keep_looping          nil]
 		[= return_result result]
 		[have active_mutex unlock]]
 	[prog [have active_mutex unlock]
@@ -218,7 +223,7 @@
     [if [null resource_semantic_frame]
 	[prog [= resource_semantic_frame [new semantic_resource [get [get this mind] semantic_realm]]]
 	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame `[resource ,[get this name]] resource_semantic_frame]
-	      [semantic-add resource_semantic_frame property-name [get this name]]]]
+	      [semantic-add resource_semantic_frame name [get this name]]]]
     resource_semantic_frame]]
 
 

@@ -99,7 +99,7 @@
 	      "or"
 	      "parc" "parcar" "parlet" "parog" "partimes" "prog" "put"
 	      "quote"
-	      "set" "set-apply" "shelter" "semantic-lookup" "semantic-add" "semantic-remove"
+	      "set" "set-apply" "shelter" "semantic-lookup" "semantic-lookup-apply" "semantic-add" "semantic-add-apply" "semantic-remove" "semantic-remove-apply" "semantic-get" "semantic-set"
 	      "type-get" "type-set" "type-execute" "type-have" "type-get-apply" "type-set-apply" "type-execute-apply" "type-have-apply"
 	      "while" "with" "with-new-cause"
 	      "yield"

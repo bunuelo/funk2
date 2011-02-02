@@ -416,6 +416,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   funk2_memory__print_gc_stats(this);
   printf("\nfunk2_memory__save_image_to_file: save bootstrap memory image, %s, complete.", filename); fflush(stdout);
   status(  "funk2_memory__save_image_to_file: save bootstrap memory image, %s, complete.", filename);
+  printf("\n\n"); fflush(stdout);
   return boolean__false;
 }
 

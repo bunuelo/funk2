@@ -77,11 +77,20 @@
 								 [have meta_mental_sequence_knowledge add_semantic_frame current_action_sequence]
 								 [semantic-add agent_resource_semantic_frame action_sequence         current_action_sequence]
 								 [semantic-set agent_resource_semantic_frame current_action_sequence current_action_sequence]]]]
-							    [nil
+							    [t
+							     [have this-resource think_to_self '\n  debug A8: translate mental->meta_mental add_semantic_frame semantic_resource_action_event *: ' event]
 							     
-							     'catch resource action events'
-							     '  => add to current_action_sequence for the causal agent.'
-							     '  => add to action_sequence_cause_frame for the affected agent.']]
+							     [let [[agent_resource_semantic_frame agent]]
+							       [have this-resource think_to_self '\n  debug A6: translate mental->meta_mental add_semantic_frame semantic_resource_action_event cause_being_active agent_resource_semantic_frame: ' agent_resource_semantic_frame]
+							       
+							       [let [[current_action_sequence [semantic-get agent_resource_semantic_frame current_action_sequence]]]
+								 [if [null current_action_sequence]
+								     [error funkname `translate_mental_knowledge_to_meta_mental_knowledge_resource-execute_resource_raw_funk
+									    bug_type `current_action_sequence_is_nil
+									    event    event]
+								   [prog [have current_action_sequence add_to_end event]
+									 
+									 '  => add to action_sequence_cause_frame for the affected agent.']]]]]]
 						    ]]]
 					       ]
 					 ]]

@@ -72,7 +72,10 @@
 							       
 							       [let [[current_action_sequence [new semantic_event_sequence [get [get this mind] semantic_realm]]]]
 								 [have this-resource think_to_self '\n    *** debug A7: translate mental->meta_mental add_semantic_frame cause_being_active resource_semantic_frame current_action_sequence: ' current_action_sequence]
+								 [if [not [get meta_mental_sequence_knowledge contains_semantic_frame agent_resource_semantic_frame]]
+								     [have meta_mental_sequence_knowledge add_semantic_frame agent_resource_semantic_frame]]
 								 [have meta_mental_sequence_knowledge add_semantic_frame current_action_sequence]
+								 [semantic-add agent_resource_semantic_frame current_action_sequence action_sequence]
 								 [semantic-set agent_resource_semantic_frame current_action_sequence current_action_sequence]]]]
 							    [nil
 							     

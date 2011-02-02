@@ -86,10 +86,11 @@
 									 `[error funkname `translate_mental_knowledge_to_meta_mental_knowledge_resource-execute_resource_raw_funk
 										 bug_type `current_action_sequence_is_nil
 										 event    event]]
-								 [prog [have this-resource think_to_self '\n   *** debug A11: adding event to end of sequence:' event]
-								       [have current_action_sequence add_to_end event]
-								       
-								       '  => add to action_sequence_cause_frame for the affected agent.']]]]]
+								 [let [[semantic_event [get event semantic_frame]]]
+								   [have this-resource think_to_self '\n   *** debug A11: adding event to end of sequence: ' semantic_event]
+								   [have current_action_sequence add_to_end semantic_event]
+								   
+								   '  => add to action_sequence_cause_frame for the affected agent.']]]]]
 						    ]]]
 					       ]
 					 ]]

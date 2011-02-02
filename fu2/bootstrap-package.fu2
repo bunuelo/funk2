@@ -128,6 +128,7 @@
 				  'extension/semantic_containment_object/'
 				  'extension/semantic_directed_action_event/'
 				  'extension/semantic_event/'
+				  'extension/semantic_agent/'
 				  'extension/semantic_event_sequence/'
 				  'extension/semantic_frame_ball/'
 				  'extension/semantic_knowledge_base/'

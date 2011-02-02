@@ -91,7 +91,7 @@
 			  [get preposition_frame keys]]]
 		  [if [is-type `moral_compass_visual_agent visual_object]
 		      [let [[actions [get visual_object actions]]]
-			`[terminal_format standard-terminal '\nagent ' [get visual_object phenomenal_name] ' actions: ' actions]
+			[terminal_format standard-terminal '\nagent ' [get visual_object phenomenal_name] ' actions: ' actions]
 			[mapc [funk [action]
 				    [let [[start_time     [get action start_time]]
 					  [action_name    [get action action_name]]

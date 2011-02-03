@@ -97,7 +97,6 @@
 				  [prog [= semantic_agent [new semantic_agent [get [get this mind] semantic_realm]]]
 					[have [get [get this mind] semantic_realm]                                  add_phenomenon_semantic_frame `[agent ,agent_name] semantic_agent]
 					[have [get [get this mind] semantic_knowledge_base `other_agents_knowledge] add_semantic_frame                                 semantic_agent]]]
-
 			      [let [[actions [get visual_object actions]]]
 				[terminal_format standard-terminal '\nagent ' [get visual_object phenomenal_name] ' actions: ' actions]
 				[mapc [funk [action]

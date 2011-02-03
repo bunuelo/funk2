@@ -106,6 +106,9 @@
   :packages [traced_mind]
    :sources ['learned_reactive_physical_knowledge_agency.fu2']]
 
+[defpackage learned_reactive_physical_agency_functions
+  :packages [learned_reactive_physical_agency]
+   :sources ['learned_reactive_physical_agency_functions.fu2']]
 
 
 'deliberative_layer'

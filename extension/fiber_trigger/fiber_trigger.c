@@ -22,6 +22,71 @@
 #include "fiber_trigger.h"
 
 
+// fiber_trigger_hash (a global ptypehash)
+
+f2ptr f2__fiber_trigger_hash(f2ptr cause) {
+  f2ptr fiber_trigger_hash = f2__environment__lookup_type_var_value(cause, global_environment(), new__symbol(cause, "variable"), new__symbol(cause, "fiber_trigger_hash"));
+  if (raw__larva__is_type(cause, fiber_trigger_hash)) {
+    fiber_trigger_hash = f2__ptypehash__new(cause);
+    f2ptr result = f2__environment__add_type_var_value(cause, global_environment(), new__symbol(cause, "variable"), new__symbol(cause, "fiber_trigger_hash"), fiber_trigger_hash);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  } else {
+    if (! raw__ptypehash__is_type(cause, fiber_trigger_hash)) {
+      return f2larva__new(cause, 1, nil);
+    }
+  }
+  return fiber_trigger_hash;
+}
+
+
+f2ptr raw__fiber_trigger_hash__add(f2ptr cause, f2ptr trigger, f2ptr fiber) {
+  f2ptr fiber_trigger_hash = f2__fiber_trigger_hash(cause);
+  if (raw__larva__is_type(cause, fiber_trigger_hash)) {
+    return fiber_trigger_hash;
+  }
+  f2ptr fiber_set = raw__ptypehash__lookup(cause, fiber_trigger_hash, trigger);
+  if (fiber_set == nil) {
+    fiber_set = f2__set__new(cause);
+    raw__ptypehash__add(cause, fiber_trigger_hash, trigger, fiber_set);
+  }
+  raw__set__add(cause, fiber_set, fiber);
+  return nil;
+}
+
+f2ptr f2__fiber_trigger_hash__add(f2ptr cause, f2ptr trigger, f2ptr fiber) {
+  if ((! raw__fiber_trigger__is_type(cause, trigger)) ||
+      (! raw__fiber__is_type(cause, fiber))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__fiber_trigger_hash__add(cause, trigger, fiber);
+}
+export_cefunk2(fiber_trigger_hash__add, trigger, fiber, 0, "Adds a fiber to a fiber_trigger's global activation set.");
+
+
+
+
+f2ptr raw__fiber_trigger_hash__unpause_trigger_fibers(f2ptr cause, f2ptr trigger) {
+  f2ptr fiber_trigger_hash = f2__fiber_trigger_hash(cause);
+  if (raw__larva__is_type(cause, fiber_trigger_hash)) {
+    return fiber_trigger_hash;
+  }
+  f2ptr fiber_set = raw__ptypehash__lookup(cause, fiber_trigger_hash, trigger);
+  if (fiber_set != nil) {
+    set__iteration(cause, fiber_set, fiber,
+		   if (! raw__fiber__is_type(cause, fiber)) {
+		     return f2larva__new(cause, 1, nil);
+		   }
+		   f2__fiber__paused__set(cause, fiber, nil);
+		   fibers = f2cons__new(cause, fiber, fibers));
+    raw__ptypehash__add(cause, fiber_trigger_hash, trigger, nil);
+  }
+  return nil;
+}
+
+
+
 // fiber_trigger
 
 def_ceframe0(fiber_trigger, fiber_trigger);
@@ -34,6 +99,19 @@ f2ptr f2__fiber_trigger__new(f2ptr cause) {
   return raw__fiber_trigger__new(cause);
 }
 export_cefunk0(fiber_trigger__new, 0, "Returns a new fiber_trigger object.");
+
+
+f2ptr raw__fiber_trigger__trigger(f2ptr cause, f2ptr this) {
+  return raw__fiber_trigger_hash__unpause_trigger_fibers(cause, this);
+}
+
+f2ptr f2__fiber_trigger__trigger(f2ptr cause, f2ptr this) {
+  if (! raw__fiber_trigger__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__fiber_trigger__trigger(cause, this);
+}
+export_cefunk1(fiber_trigger__new, this, 0, "Unpauses all fibers that are globally registered to respond to the triggering of this fiber_trigger object.");
 
 
 f2ptr raw__fiber_trigger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -58,9 +136,12 @@ export_cefunk2(fiber_trigger__terminal_print_with_frame, this, terminal_print_fr
 
 f2ptr f2__fiber_trigger_type__new_aux(f2ptr cause) {
   f2ptr this = f2__fiber_trigger_type__new(cause);
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "fiber_trigger"), new__symbol(cause, "fiber_trigger__terminal_print_with_frame")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "trigger"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "fiber_trigger"), new__symbol(cause, "fiber_trigger__trigger")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "fiber_trigger"), new__symbol(cause, "fiber_trigger__terminal_print_with_frame")));}
   return this;
 }
+
+
 
 
 // **
@@ -72,6 +153,12 @@ export_cefunk0(fiber_trigger__core_extension_ping, 0, "");
 
 f2ptr f2__fiber_trigger__core_extension_initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "fiber_trigger"), f2__fiber_trigger_type__new_aux(cause));
+  {
+    f2ptr result = f2__fiber_trigger_hash(cause);
+    if (! raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   status("fiber_trigger initialized.");
   return nil;
 }

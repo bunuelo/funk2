@@ -21,9 +21,10 @@
 
 #include "fiber_trigger.h"
 
+
 // fiber_trigger
 
-def_ceframe0(semantic_knowledge_base, fiber_trigger);
+def_ceframe0(fiber_trigger, fiber_trigger);
 
 f2ptr raw__fiber_trigger__new(f2ptr cause) {
   return f2fiber_trigger__new(cause);

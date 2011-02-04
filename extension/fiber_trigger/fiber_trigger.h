@@ -24,6 +24,15 @@
 
 #include "../../c/funk2.h"
 
+// fiber_trigger_hash (a global ptypehash)
+
+f2ptr  f2__fiber_trigger_hash                        (f2ptr cause);
+f2ptr raw__fiber_trigger_hash__add                   (f2ptr cause, f2ptr trigger, f2ptr fiber);
+f2ptr  f2__fiber_trigger_hash__add                   (f2ptr cause, f2ptr trigger, f2ptr fiber);
+f2ptr raw__fiber_trigger_hash__unpause_trigger_fibers(f2ptr cause, f2ptr trigger);
+
+
+
 // **
 
 f2ptr f2__fiber_trigger__core_extension_ping      (f2ptr cause);

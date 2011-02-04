@@ -46,7 +46,7 @@ f2ptr f2__fiber_trigger__trigger(f2ptr cause, f2ptr this) {
   }
   return raw__fiber_trigger__trigger(cause, this);
 }
-export_cefunk1(fiber_trigger__new, this, 0, "Unpauses all fibers that are globally registered to respond to the triggering of this fiber_trigger object.");
+export_cefunk1(fiber_trigger__trigger, this, 0, "Unpauses all fibers that are globally registered to respond to the triggering of this fiber_trigger object.");
 
 
 f2ptr raw__fiber_trigger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

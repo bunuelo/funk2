@@ -22,4 +22,7 @@
 [deftypefunk fiber get     stack_trace       [] [fiber-stack_trace       this]]
 [deftypefunk fiber execute print_stack_trace [] [fiber-print_stack_trace this]]
 
+[defunk pause []
+  [set [this-fiber] paused t]
+  [yield]]
 

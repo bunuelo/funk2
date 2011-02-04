@@ -22,5 +22,6 @@
 [defcorefunk fiber_trigger-core_extension_ping       fiber_trigger fiber_trigger__core_extension_ping]
 [defcorefunk fiber_trigger-core_extension_initialize fiber_trigger fiber_trigger__core_extension_initialize]
 
+
 [fiber_trigger-core_extension_ping]
 

@@ -35,7 +35,8 @@
 			   trace_story
 			   think_story
 			   resource_initializing_mutex
-			   debug
+			   [vital             nil]
+			   [debug             nil]
 			   [activated_trigger [new fiber_trigger]]
 			   [finished_trigger  [new fiber_trigger]]]
   [new [initial-name initial-active_funk]

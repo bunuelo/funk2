@@ -321,6 +321,7 @@
 				view_menu
 				view_menu_item
 				view_sense_menu_item
+				isismon_agent_mind_menu
 				
 				entry
 				
@@ -395,6 +396,7 @@
 				    '\n  ' [have isis_agent sense_world]]]
 	     nil]
        [have view_menu append view_sense_menu_item]
+       
        
        [= isismon_agent_mind_menu [new isismon_agent_mind_menu this]]
        [have menu_bar append isismon_agent_mind_menu]

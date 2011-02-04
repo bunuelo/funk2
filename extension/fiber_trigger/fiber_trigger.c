@@ -19,6 +19,7 @@
 // rights to redistribute these changes.
 // 
 
+#include "fiber_trigger.h"
 
 // fiber_trigger
 

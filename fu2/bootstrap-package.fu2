@@ -113,6 +113,7 @@
 				  'extension/conceptnet/'
 				  'extension/equals_hash/'
 				  'extension/event_stream/'
+				  'extension/fiber_trigger/'
 				  'extension/fibermon/'
 				  'extension/forward_planner/'
 				  'extension/frame_ball/'

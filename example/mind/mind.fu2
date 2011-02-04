@@ -22,6 +22,7 @@
 
 [deframe mind [frame] [body
 		       layer_frame
+		       resources_waiting_for_mental_trigger_event_frame
 		       knowledge_event_stream_iterator_frame
 		       global_semantic_realm]
   [new []

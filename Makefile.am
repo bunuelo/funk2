@@ -210,6 +210,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/conceptnet/libf2e_conceptnet.la \
                   extension/event_stream/libf2e_event_stream.la \
                   extension/equals_hash/libf2e_equals_hash.la \
+                  extension/fiber_trigger/libf2e_fiber_trigger.la \
                   extension/fibermon/libf2e_fibermon.la \
                   extension/forward_planner/libf2e_forward_planner.la \
                   extension/frame_ball/libf2e_frame_ball.la \
@@ -374,6 +375,7 @@ extension_causality_libf2e_causality_la_SOURCES                                 
 extension_conceptnet_libf2e_conceptnet_la_SOURCES                                         = extension/conceptnet/conceptnet.c
 extension_event_stream_libf2e_event_stream_la_SOURCES                                     = extension/event_stream/event_stream.c
 extension_equals_hash_libf2e_equals_hash_la_SOURCES                                       = extension/equals_hash/equals_hash.c
+extension_fiber_trigger_libf2e_fiber_trigger_la_SOURCES                                   = extension/fiber_trigger/fiber_trigger.c
 extension_fibermon_libf2e_fibermon_la_SOURCES                                             = extension/fibermon/fibermon.c
 extension_forward_planner_libf2e_forward_planner_la_SOURCES                               = extension/forward_planner/forward_planner.c
 extension_frame_ball_libf2e_frame_ball_la_SOURCES                                         = extension/frame_ball/frame_ball.c
@@ -431,6 +433,7 @@ bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 all_core_extensions = \
   $(extension_equals_hash_libf2e_equals_hash_la) \
+  $(extension_fiber_trigger_libf2e_fiber_trigger_la) \
   $(extension_fibermon_libf2e_fibermon_la) \
   $(extension_image_libf2e_image_la) \
   $(extension_image_sequence_libf2e_image_sequence_la) \
@@ -466,6 +469,9 @@ all_core_extensions = \
 
 extension_equals_hash_libf2e_equals_hash_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_equals_hash_libf2e_equals_hash_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_fiber_trigger_libf2e_fiber_trigger_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_fiber_trigger_libf2e_fiber_trigger_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_fibermon_libf2e_fibermon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_fibermon_libf2e_fibermon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

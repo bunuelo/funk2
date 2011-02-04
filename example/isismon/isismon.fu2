@@ -255,12 +255,16 @@
 		   [set this debug_all nil]]
 	     nil]
        
-       [mapc [funk [layer]
-		   [let [[isismon_layer_menu [new isismon_agent_layer_menu this layer]]]
-		     [= isismon_layer_menus [cons isismon_layer_menu isismon_layer_menus]]
-		     [have mind_menu append isismon_layer_menu]]]
-	     [have [get [get [get isismon_agent isis_agent] mind] layers] sort [funk [x y] [< [get x index] [get y index]]]]]
-       ]]
+       [fiber [funk []
+		    [mapc [funk [layer]
+				[let [[isismon_layer_menu [new isismon_agent_layer_menu this layer]]]
+				  [= isismon_layer_menus [cons isismon_layer_menu isismon_layer_menus]]
+				  [have mind_menu append isismon_layer_menu]]]
+			  [have [get [get [get isismon_agent isis_agent] mind] layers] sort [funk [x y] [< [get x index] [get y index]]]]]
+		    [have mind_menu_item show_all]]
+	      nil]
+       
+       nil]]
 
 [deftypefunk isismon_agent_mind_menu get widget []
   mind_menu_item]

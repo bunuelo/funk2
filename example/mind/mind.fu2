@@ -173,11 +173,11 @@
 [deftypefunk mind execute activate_vital_resources []
   [with-new-cause 'We need to define this cause as having some kind of resource definitions.  This fake funk-user resource is not actually a part of the mind and is only used for activating the neural_plug resource below.'
 		  [cause-define cause-resource  [resource funk-user [] [print 'Warning: Funk user resource should not be activated.']]]
-		  [cause-define cause-time_step [get [get [get this body] physical_world] time_step]]
+		  [cause-define cause-time_step [get this time_step]]
 		  
 		  [mapc [funk [resource]
 			      [if [get resource vital]
-				  [have resource activate]]]
+				  [have resource resource activate]]]
 			[get this resources]]]]
 
 [deftypefunk mind get self_model []

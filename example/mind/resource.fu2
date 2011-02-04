@@ -67,18 +67,22 @@
 						   [have resource_initializing_mutex lock]
 						   [have resource_initializing_mutex unlock]
 						   [have fiber_starting_mutex unlock]
+						   [let [[waiting_to_be_added_to_mind t]]
+						     [while waiting_to_be_added_to_mind
+						       [if [null mind-name]
+							   [if [get this body]
+							       [prog [cause-define agency-name [get agency name]]
+								     [if [null layer-name]
+									 [let [[mental_layer [get agency layer]]]
+									   [if mental_layer
+									       [prog [cause-define layer-name [get mental_layer name]]
+										     [let [[mind [get mental_layer mind]]]
+										       [if mind
+											   [prog [cause-define mind-name [get mind name]]
+												 [cause-define cause-name `[,mind-name ,layer-name ,agency-name ,resource-name resource]]
+												 [= waiting_to_be_added_to_mind nil]]]]]]]]]]]
+						       [sleep 1]]]
 						   [while [not done]
-						     [if [null mind-name]
-							 [if [get this body]
-							     [prog [cause-define agency-name [get agency name]]
-								   [if [null layer-name]
-								       [let [[mental_layer [get agency layer]]]
-									 [if mental_layer
-									     [prog [cause-define layer-name [get mental_layer name]]
-										   [let [[mind [get mental_layer mind]]]
-										     [if mind
-											 [prog [cause-define mind-name [get mind name]]
-											       [cause-define cause-name `[,mind-name ,layer-name ,agency-name ,resource-name resource]]]]]]]]]]]]
 						     [have active_mutex lock]
 						     [if [not active]
 							 [let [[we_have_been_paused_mutex [new traced_mutex]]]
@@ -116,17 +120,20 @@
 [deftypefunk resource get mind []
   [if agency
       [get agency mind]
-    nil]]
+    [error bug_type `attempted_to_get_mind_from_resource_that_is_not_part_of_an_agency
+	   this     this]]]
 
 [deftypefunk resource get layer []
   [if agency
       [get agency layer]
-    nil]]
+    [error bug_type `attempted_to_get_mind_from_resource_that_is_not_part_of_an_agency
+	   this     this]]]
 
 [deftypefunk resource get body []
   [if agency
       [get agency body]
-    nil]]
+    [error bug_type `attempted_to_get_mind_from_resource_that_is_not_part_of_an_agency
+	   this     this]]]
 
 [deftypefunk resource get world []
   [get [get this body] physical_world]]

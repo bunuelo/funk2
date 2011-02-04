@@ -75,7 +75,7 @@
 	      "print"
               "range"
 	      "save_memory_image" "second" "set-car" "set-cdr" "simple_length" "sleep" "sleep_for_nanoseconds" "slots"
-              "t" "third" "thread-complete" "thread-value" "type" "terminal_format"
+              "t" "third" "this-fiber" "thread-complete" "thread-value" "type" "terminal_format"
 	      "quit")
             'words)
            'font-lock-function-name-face)
@@ -97,11 +97,12 @@
 	      "metro" "mutate"
 	      "new" "new-apply" "nil"
 	      "or"
-	      "parc" "parcar" "parlet" "parog" "partimes" "prog" "put"
+	      "package" "parc" "parcar" "parlet" "parog" "partimes" "pause" "prog" "put"
 	      "quote"
+	      "require"
 	      "set" "set-apply" "shelter" "semantic-lookup" "semantic-lookup-apply" "semantic-add" "semantic-add-apply" "semantic-remove" "semantic-remove-apply" "semantic-get" "semantic-set"
 	      "type-get" "type-set" "type-execute" "type-have" "type-get-apply" "type-set-apply" "type-execute-apply" "type-have-apply"
-	      "while" "with" "with-new-cause"
+	      "wait_for_trigger" "while" "with" "with-new-cause"
 	      "yield"
 	      )
             'words)

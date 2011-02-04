@@ -26,30 +26,6 @@
 
 [defcorefunk fiber_trigger_hash-add fiber_trigger fiber_trigger_hash__add]
 
-[defunk pause []
-  [set [this-fiber] paused t]
-  [yield]]
-
-
-
-`[defunk wait_for_trigger [fiber_trigger]
-  [let [[this-fiber          [this-fiber]]
-	[start_pausing_mutex [new mutex]]
-	[paused_mutex        [new mutex]]]
-    [fiber_trigger_hash-add fiber_trigger this-fiber]
-    [have start_pausing_mutex lock]
-    [fiber [funk []
-		 [have paused_mutex        lock]
-		 [have start_pausing_mutex unlock]
-		 [set this-fiber paused t]
-		 [have paused_mutex        unlock]]
-	   nil]
-    [have start_pausing_mutex lock]
-    [have paused_mutex        lock]
-    [yield]
-    nil]]
-
-
 [defunk wait_for_trigger [fiber_trigger]
   [fiber_trigger_hash-add fiber_trigger [this-fiber]]
   [pause]]

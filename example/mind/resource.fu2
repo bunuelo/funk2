@@ -84,7 +84,7 @@
 							   [have we_have_been_paused_mutex lock]
 							   [fiber [funk []
 									[set fiber paused t]
-									[have active_mutex unlock]
+									[have active_mutex              unlock]
 									[have we_have_been_paused_mutex unlock]]
 								  nil]
 							   [have we_have_been_paused_mutex lock]

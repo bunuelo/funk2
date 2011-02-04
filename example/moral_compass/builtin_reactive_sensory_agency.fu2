@@ -36,7 +36,6 @@
 			      [= left_hand_object_name  [have body sense_left_hand_object_name]]
 			      [= right_hand_object_name [have body sense_right_hand_object_name]]    
 			      [= perception             [have body sense_perception]]
-			      [= last_time_step         time_step]
 			      [mind-wait_to_call [get this mind] builtin_reactive sensory                 propogate_visual_objects_to_visual_knowledge]
 			      [mind-wait_to_call [get this mind] learned_reactive physical_knowledge      translate_visual_knowledge_to_physical_knowledge]
 			      [mind-wait_to_call [get this mind] deliberative     meta_physical_knowledge translate_physical_knowledge_to_meta_physical_knowledge]

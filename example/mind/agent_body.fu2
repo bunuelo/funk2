@@ -38,7 +38,10 @@
   physical_world_reference]
 
 [deftypefunk agent_body get time_step []
-  [get [get this physical_world_reference] time_step]]
+  [get physical_world_reference time_step]]
+
+[deftypefunk agent_body get time_step_trigger []
+  [get physical_world_reference time_step_trigger]]
 
 
 

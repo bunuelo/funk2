@@ -33,7 +33,7 @@
 [defmetro on-trigger [trigger :rest body]
   `[let [[trigger ,trigger]]
      [fiber [funk []
-		  [wait_for_trigger trigger]
+		  [wait-for-trigger trigger]
 		  @body]
 	    nil]
      nil]]

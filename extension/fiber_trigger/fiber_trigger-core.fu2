@@ -26,11 +26,17 @@
 
 [defcorefunk fiber_trigger_hash-add fiber_trigger fiber_trigger_hash__add]
 
-[defunk wait_for_trigger [fiber_trigger]
+[defunk wait-for-trigger [fiber_trigger]
   [fiber_trigger_hash-add fiber_trigger [this-fiber]]
   [pause]]
 
+[defmetro on-trigger [trigger :rest body]
+  `[let [[trigger ,trigger]]
+     [fiber [funk []
+		  [wait_for_trigger trigger]
+		  @body]
+	    nil]
+     nil]]
 
 
-  
 

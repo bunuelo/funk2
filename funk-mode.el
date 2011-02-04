@@ -96,13 +96,13 @@
 	      "label" "labels" "length" "let" "let*"
 	      "metro" "mutate"
 	      "new" "new-apply" "nil"
-	      "or"
+	      "on-trigger" "or"
 	      "package" "parc" "parcar" "parlet" "parog" "partimes" "pause" "prog" "put"
 	      "quote"
 	      "require"
 	      "set" "set-apply" "shelter" "semantic-lookup" "semantic-lookup-apply" "semantic-add" "semantic-add-apply" "semantic-remove" "semantic-remove-apply" "semantic-get" "semantic-set"
 	      "type-get" "type-set" "type-execute" "type-have" "type-get-apply" "type-set-apply" "type-execute-apply" "type-have-apply"
-	      "wait_for_trigger" "while" "with" "with-new-cause"
+	      "wait-for-trigger" "while" "with" "with-new-cause"
 	      "yield"
 	      )
             'words)

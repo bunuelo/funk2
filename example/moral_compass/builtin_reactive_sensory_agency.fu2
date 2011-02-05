@@ -61,7 +61,7 @@
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute update_visual_knowledge_from_visual_objects []
   [while t
-    [wait-for-trigger [get [get [get this mind] resource `builtin_reactive `sensory `continuous_sensing_resource] perception_trigger]]
+    [wait-for-trigger [get [get [get this mind] resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
     
     [let [[visual_objects [get [get this mind] visual_objects]]]
       [have [get [get this mind] visual_knowledge] remove_all]

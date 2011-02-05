@@ -145,6 +145,17 @@ extension_event_stream_libf2e_event_stream_la_LINK = $(LIBTOOL) \
 	$(CFLAGS) \
 	$(extension_event_stream_libf2e_event_stream_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
+extension_fiber_trigger_libf2e_fiber_trigger_la_LIBADD =
+am_extension_fiber_trigger_libf2e_fiber_trigger_la_OBJECTS = extension/fiber_trigger/extension_fiber_trigger_libf2e_fiber_trigger_la-fiber_trigger.lo
+extension_fiber_trigger_libf2e_fiber_trigger_la_OBJECTS =  \
+	$(am_extension_fiber_trigger_libf2e_fiber_trigger_la_OBJECTS)
+extension_fiber_trigger_libf2e_fiber_trigger_la_LINK = $(LIBTOOL) \
+	$(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CCLD) \
+	$(extension_fiber_trigger_libf2e_fiber_trigger_la_CFLAGS) \
+	$(CFLAGS) \
+	$(extension_fiber_trigger_libf2e_fiber_trigger_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 extension_fibermon_libf2e_fibermon_la_LIBADD =
 am_extension_fibermon_libf2e_fibermon_la_OBJECTS = extension/fibermon/extension_fibermon_libf2e_fibermon_la-fibermon.lo
 extension_fibermon_libf2e_fibermon_la_OBJECTS =  \
@@ -267,6 +278,16 @@ extension_semantic_action_event_libf2e_semantic_action_event_la_LINK =  \
 	$(extension_semantic_action_event_libf2e_semantic_action_event_la_CFLAGS) \
 	$(CFLAGS) \
 	$(extension_semantic_action_event_libf2e_semantic_action_event_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
+extension_semantic_agent_libf2e_semantic_agent_la_LIBADD =
+am_extension_semantic_agent_libf2e_semantic_agent_la_OBJECTS = extension/semantic_agent/extension_semantic_agent_libf2e_semantic_agent_la-semantic_agent.lo
+extension_semantic_agent_libf2e_semantic_agent_la_OBJECTS = $(am_extension_semantic_agent_libf2e_semantic_agent_la_OBJECTS)
+extension_semantic_agent_libf2e_semantic_agent_la_LINK = $(LIBTOOL) \
+	$(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CCLD) \
+	$(extension_semantic_agent_libf2e_semantic_agent_la_CFLAGS) \
+	$(CFLAGS) \
+	$(extension_semantic_agent_libf2e_semantic_agent_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
 extension_semantic_containment_object_libf2e_semantic_containment_object_la_LIBADD =
 am_extension_semantic_containment_object_libf2e_semantic_containment_object_la_OBJECTS = extension/semantic_containment_object/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.lo
@@ -563,6 +584,7 @@ SOURCES = $(extension_causality_libf2e_causality_la_SOURCES) \
 	$(extension_conceptnet_libf2e_conceptnet_la_SOURCES) \
 	$(extension_equals_hash_libf2e_equals_hash_la_SOURCES) \
 	$(extension_event_stream_libf2e_event_stream_la_SOURCES) \
+	$(extension_fiber_trigger_libf2e_fiber_trigger_la_SOURCES) \
 	$(extension_fibermon_libf2e_fibermon_la_SOURCES) \
 	$(extension_forward_planner_libf2e_forward_planner_la_SOURCES) \
 	$(extension_frame_ball_libf2e_frame_ball_la_SOURCES) \
@@ -576,6 +598,7 @@ SOURCES = $(extension_causality_libf2e_causality_la_SOURCES) \
 	$(extension_mindmon_libf2e_mindmon_la_SOURCES) \
 	$(extension_movie_libf2e_movie_la_SOURCES) \
 	$(extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES) \
+	$(extension_semantic_agent_libf2e_semantic_agent_la_SOURCES) \
 	$(extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES) \
 	$(extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES) \
 	$(extension_semantic_event_libf2e_semantic_event_la_SOURCES) \
@@ -596,6 +619,7 @@ DIST_SOURCES = $(extension_causality_libf2e_causality_la_SOURCES) \
 	$(extension_conceptnet_libf2e_conceptnet_la_SOURCES) \
 	$(extension_equals_hash_libf2e_equals_hash_la_SOURCES) \
 	$(extension_event_stream_libf2e_event_stream_la_SOURCES) \
+	$(extension_fiber_trigger_libf2e_fiber_trigger_la_SOURCES) \
 	$(extension_fibermon_libf2e_fibermon_la_SOURCES) \
 	$(extension_forward_planner_libf2e_forward_planner_la_SOURCES) \
 	$(extension_frame_ball_libf2e_frame_ball_la_SOURCES) \
@@ -609,6 +633,7 @@ DIST_SOURCES = $(extension_causality_libf2e_causality_la_SOURCES) \
 	$(extension_mindmon_libf2e_mindmon_la_SOURCES) \
 	$(extension_movie_libf2e_movie_la_SOURCES) \
 	$(extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES) \
+	$(extension_semantic_agent_libf2e_semantic_agent_la_SOURCES) \
 	$(extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES) \
 	$(extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES) \
 	$(extension_semantic_event_libf2e_semantic_event_la_SOURCES) \
@@ -898,6 +923,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/conceptnet/libf2e_conceptnet.la \
                   extension/event_stream/libf2e_event_stream.la \
                   extension/equals_hash/libf2e_equals_hash.la \
+                  extension/fiber_trigger/libf2e_fiber_trigger.la \
                   extension/fibermon/libf2e_fibermon.la \
                   extension/forward_planner/libf2e_forward_planner.la \
                   extension/frame_ball/libf2e_frame_ball.la \
@@ -911,6 +937,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/mindmon/libf2e_mindmon.la \
                   extension/movie/libf2e_movie.la \
                   extension/semantic_action_event/libf2e_semantic_action_event.la \
+                  extension/semantic_agent/libf2e_semantic_agent.la \
                   extension/semantic_event_sequence/libf2e_semantic_event_sequence.la \
                   extension/semantic_containment_object/libf2e_semantic_containment_object.la \
                   extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.la \
@@ -1061,6 +1088,7 @@ extension_causality_libf2e_causality_la_SOURCES = extension/causality/causality.
 extension_conceptnet_libf2e_conceptnet_la_SOURCES = extension/conceptnet/conceptnet.c
 extension_event_stream_libf2e_event_stream_la_SOURCES = extension/event_stream/event_stream.c
 extension_equals_hash_libf2e_equals_hash_la_SOURCES = extension/equals_hash/equals_hash.c
+extension_fiber_trigger_libf2e_fiber_trigger_la_SOURCES = extension/fiber_trigger/fiber_trigger.c
 extension_fibermon_libf2e_fibermon_la_SOURCES = extension/fibermon/fibermon.c
 extension_forward_planner_libf2e_forward_planner_la_SOURCES = extension/forward_planner/forward_planner.c
 extension_frame_ball_libf2e_frame_ball_la_SOURCES = extension/frame_ball/frame_ball.c
@@ -1074,6 +1102,7 @@ extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SO
 extension_mindmon_libf2e_mindmon_la_SOURCES = extension/mindmon/mindmon.c
 extension_movie_libf2e_movie_la_SOURCES = extension/movie/movie.c
 extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES = extension/semantic_action_event/semantic_action_event.c
+extension_semantic_agent_libf2e_semantic_agent_la_SOURCES = extension/semantic_agent/semantic_agent.c
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES = extension/semantic_event_sequence/semantic_event_sequence.c
 extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES = extension/semantic_containment_object/semantic_containment_object.c
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES = extension/semantic_directed_action_event/semantic_directed_action_event.c
@@ -1112,6 +1141,7 @@ bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 bin_funk2_static_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 all_core_extensions = \
   $(extension_equals_hash_libf2e_equals_hash_la) \
+  $(extension_fiber_trigger_libf2e_fiber_trigger_la) \
   $(extension_fibermon_libf2e_fibermon_la) \
   $(extension_image_libf2e_image_la) \
   $(extension_image_sequence_libf2e_image_sequence_la) \
@@ -1122,6 +1152,7 @@ all_core_extensions = \
   $(extension_frame_ball_libf2e_frame_ball_la) \
   $(extension_graph_isomorphism_libf2e_graph_isomorphism_la) \
   $(extension_semantic_action_event_libf2e_semantic_action_event_la) \
+  $(extension_semantic_agent_libf2e_semantic_agent_la) \
   $(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la) \
   $(extension_semantic_containment_object_libf2e_semantic_containment_object_la) \
   $(extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la) \
@@ -1146,6 +1177,8 @@ all_core_extensions = \
 
 extension_equals_hash_libf2e_equals_hash_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_equals_hash_libf2e_equals_hash_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_fiber_trigger_libf2e_fiber_trigger_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_fiber_trigger_libf2e_fiber_trigger_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_fibermon_libf2e_fibermon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_fibermon_libf2e_fibermon_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_image_libf2e_image_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
@@ -1166,6 +1199,8 @@ extension_graph_isomorphism_libf2e_graph_isomorphism_la_LDFLAGS = $(lib_libfunk2
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_action_event_libf2e_semantic_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_action_event_libf2e_semantic_action_event_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_semantic_agent_libf2e_semantic_agent_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_agent_libf2e_semantic_agent_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_containment_object_libf2e_semantic_containment_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
@@ -1342,6 +1377,17 @@ extension/event_stream/extension_event_stream_libf2e_event_stream_la-event_strea
 	extension/event_stream/$(DEPDIR)/$(am__dirstamp)
 extension/event_stream/libf2e_event_stream.la: $(extension_event_stream_libf2e_event_stream_la_OBJECTS) $(extension_event_stream_libf2e_event_stream_la_DEPENDENCIES) extension/event_stream/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_event_stream_libf2e_event_stream_la_LINK) -rpath $(libdir) $(extension_event_stream_libf2e_event_stream_la_OBJECTS) $(extension_event_stream_libf2e_event_stream_la_LIBADD) $(LIBS)
+extension/fiber_trigger/$(am__dirstamp):
+	@$(MKDIR_P) extension/fiber_trigger
+	@: > extension/fiber_trigger/$(am__dirstamp)
+extension/fiber_trigger/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/fiber_trigger/$(DEPDIR)
+	@: > extension/fiber_trigger/$(DEPDIR)/$(am__dirstamp)
+extension/fiber_trigger/extension_fiber_trigger_libf2e_fiber_trigger_la-fiber_trigger.lo:  \
+	extension/fiber_trigger/$(am__dirstamp) \
+	extension/fiber_trigger/$(DEPDIR)/$(am__dirstamp)
+extension/fiber_trigger/libf2e_fiber_trigger.la: $(extension_fiber_trigger_libf2e_fiber_trigger_la_OBJECTS) $(extension_fiber_trigger_libf2e_fiber_trigger_la_DEPENDENCIES) extension/fiber_trigger/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_fiber_trigger_libf2e_fiber_trigger_la_LINK) -rpath $(libdir) $(extension_fiber_trigger_libf2e_fiber_trigger_la_OBJECTS) $(extension_fiber_trigger_libf2e_fiber_trigger_la_LIBADD) $(LIBS)
 extension/fibermon/$(am__dirstamp):
 	@$(MKDIR_P) extension/fibermon
 	@: > extension/fibermon/$(am__dirstamp)
@@ -1485,6 +1531,17 @@ extension/semantic_action_event/extension_semantic_action_event_libf2e_semantic_
 	extension/semantic_action_event/$(DEPDIR)/$(am__dirstamp)
 extension/semantic_action_event/libf2e_semantic_action_event.la: $(extension_semantic_action_event_libf2e_semantic_action_event_la_OBJECTS) $(extension_semantic_action_event_libf2e_semantic_action_event_la_DEPENDENCIES) extension/semantic_action_event/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_semantic_action_event_libf2e_semantic_action_event_la_LINK) -rpath $(libdir) $(extension_semantic_action_event_libf2e_semantic_action_event_la_OBJECTS) $(extension_semantic_action_event_libf2e_semantic_action_event_la_LIBADD) $(LIBS)
+extension/semantic_agent/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_agent
+	@: > extension/semantic_agent/$(am__dirstamp)
+extension/semantic_agent/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_agent/$(DEPDIR)
+	@: > extension/semantic_agent/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_agent/extension_semantic_agent_libf2e_semantic_agent_la-semantic_agent.lo:  \
+	extension/semantic_agent/$(am__dirstamp) \
+	extension/semantic_agent/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_agent/libf2e_semantic_agent.la: $(extension_semantic_agent_libf2e_semantic_agent_la_OBJECTS) $(extension_semantic_agent_libf2e_semantic_agent_la_DEPENDENCIES) extension/semantic_agent/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_semantic_agent_libf2e_semantic_agent_la_LINK) -rpath $(libdir) $(extension_semantic_agent_libf2e_semantic_agent_la_OBJECTS) $(extension_semantic_agent_libf2e_semantic_agent_la_LIBADD) $(LIBS)
 extension/semantic_containment_object/$(am__dirstamp):
 	@$(MKDIR_P) extension/semantic_containment_object
 	@: > extension/semantic_containment_object/$(am__dirstamp)
@@ -2172,6 +2229,8 @@ mostlyclean-compile:
 	-rm -f extension/equals_hash/extension_equals_hash_libf2e_equals_hash_la-equals_hash.lo
 	-rm -f extension/event_stream/extension_event_stream_libf2e_event_stream_la-event_stream.$(OBJEXT)
 	-rm -f extension/event_stream/extension_event_stream_libf2e_event_stream_la-event_stream.lo
+	-rm -f extension/fiber_trigger/extension_fiber_trigger_libf2e_fiber_trigger_la-fiber_trigger.$(OBJEXT)
+	-rm -f extension/fiber_trigger/extension_fiber_trigger_libf2e_fiber_trigger_la-fiber_trigger.lo
 	-rm -f extension/fibermon/extension_fibermon_libf2e_fibermon_la-fibermon.$(OBJEXT)
 	-rm -f extension/fibermon/extension_fibermon_libf2e_fibermon_la-fibermon.lo
 	-rm -f extension/forward_planner/extension_forward_planner_libf2e_forward_planner_la-forward_planner.$(OBJEXT)
@@ -2198,6 +2257,8 @@ mostlyclean-compile:
 	-rm -f extension/movie/extension_movie_libf2e_movie_la-movie.lo
 	-rm -f extension/semantic_action_event/extension_semantic_action_event_libf2e_semantic_action_event_la-semantic_action_event.$(OBJEXT)
 	-rm -f extension/semantic_action_event/extension_semantic_action_event_libf2e_semantic_action_event_la-semantic_action_event.lo
+	-rm -f extension/semantic_agent/extension_semantic_agent_libf2e_semantic_agent_la-semantic_agent.$(OBJEXT)
+	-rm -f extension/semantic_agent/extension_semantic_agent_libf2e_semantic_agent_la-semantic_agent.lo
 	-rm -f extension/semantic_containment_object/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.$(OBJEXT)
 	-rm -f extension/semantic_containment_object/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.lo
 	-rm -f extension/semantic_directed_action_event/extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la-semantic_directed_action_event.$(OBJEXT)
@@ -2361,6 +2422,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@extension/conceptnet/$(DEPDIR)/extension_conceptnet_libf2e_conceptnet_la-conceptnet.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/equals_hash/$(DEPDIR)/extension_equals_hash_libf2e_equals_hash_la-equals_hash.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/event_stream/$(DEPDIR)/extension_event_stream_libf2e_event_stream_la-event_stream.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/fiber_trigger/$(DEPDIR)/extension_fiber_trigger_libf2e_fiber_trigger_la-fiber_trigger.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/fibermon/$(DEPDIR)/extension_fibermon_libf2e_fibermon_la-fibermon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/forward_planner/$(DEPDIR)/extension_forward_planner_libf2e_forward_planner_la-forward_planner.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/frame_ball/$(DEPDIR)/extension_frame_ball_libf2e_frame_ball_la-frame_ball.Plo@am__quote@
@@ -2374,6 +2436,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@extension/mindmon/$(DEPDIR)/extension_mindmon_libf2e_mindmon_la-mindmon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/movie/$(DEPDIR)/extension_movie_libf2e_movie_la-movie.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_action_event/$(DEPDIR)/extension_semantic_action_event_libf2e_semantic_action_event_la-semantic_action_event.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_agent/$(DEPDIR)/extension_semantic_agent_libf2e_semantic_agent_la-semantic_agent.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_containment_object/$(DEPDIR)/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_directed_action_event/$(DEPDIR)/extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la-semantic_directed_action_event.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_event/$(DEPDIR)/extension_semantic_event_libf2e_semantic_event_la-semantic_event.Plo@am__quote@
@@ -2448,6 +2511,14 @@ extension/event_stream/extension_event_stream_libf2e_event_stream_la-event_strea
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/event_stream/event_stream.c' object='extension/event_stream/extension_event_stream_libf2e_event_stream_la-event_stream.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_event_stream_libf2e_event_stream_la_CFLAGS) $(CFLAGS) -c -o extension/event_stream/extension_event_stream_libf2e_event_stream_la-event_stream.lo `test -f 'extension/event_stream/event_stream.c' || echo '$(srcdir)/'`extension/event_stream/event_stream.c
+
+extension/fiber_trigger/extension_fiber_trigger_libf2e_fiber_trigger_la-fiber_trigger.lo: extension/fiber_trigger/fiber_trigger.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_fiber_trigger_libf2e_fiber_trigger_la_CFLAGS) $(CFLAGS) -MT extension/fiber_trigger/extension_fiber_trigger_libf2e_fiber_trigger_la-fiber_trigger.lo -MD -MP -MF extension/fiber_trigger/$(DEPDIR)/extension_fiber_trigger_libf2e_fiber_trigger_la-fiber_trigger.Tpo -c -o extension/fiber_trigger/extension_fiber_trigger_libf2e_fiber_trigger_la-fiber_trigger.lo `test -f 'extension/fiber_trigger/fiber_trigger.c' || echo '$(srcdir)/'`extension/fiber_trigger/fiber_trigger.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/fiber_trigger/$(DEPDIR)/extension_fiber_trigger_libf2e_fiber_trigger_la-fiber_trigger.Tpo extension/fiber_trigger/$(DEPDIR)/extension_fiber_trigger_libf2e_fiber_trigger_la-fiber_trigger.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/fiber_trigger/fiber_trigger.c' object='extension/fiber_trigger/extension_fiber_trigger_libf2e_fiber_trigger_la-fiber_trigger.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_fiber_trigger_libf2e_fiber_trigger_la_CFLAGS) $(CFLAGS) -c -o extension/fiber_trigger/extension_fiber_trigger_libf2e_fiber_trigger_la-fiber_trigger.lo `test -f 'extension/fiber_trigger/fiber_trigger.c' || echo '$(srcdir)/'`extension/fiber_trigger/fiber_trigger.c
 
 extension/fibermon/extension_fibermon_libf2e_fibermon_la-fibermon.lo: extension/fibermon/fibermon.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_fibermon_libf2e_fibermon_la_CFLAGS) $(CFLAGS) -MT extension/fibermon/extension_fibermon_libf2e_fibermon_la-fibermon.lo -MD -MP -MF extension/fibermon/$(DEPDIR)/extension_fibermon_libf2e_fibermon_la-fibermon.Tpo -c -o extension/fibermon/extension_fibermon_libf2e_fibermon_la-fibermon.lo `test -f 'extension/fibermon/fibermon.c' || echo '$(srcdir)/'`extension/fibermon/fibermon.c
@@ -2552,6 +2623,14 @@ extension/semantic_action_event/extension_semantic_action_event_libf2e_semantic_
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/semantic_action_event/semantic_action_event.c' object='extension/semantic_action_event/extension_semantic_action_event_libf2e_semantic_action_event_la-semantic_action_event.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_action_event_libf2e_semantic_action_event_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_action_event/extension_semantic_action_event_libf2e_semantic_action_event_la-semantic_action_event.lo `test -f 'extension/semantic_action_event/semantic_action_event.c' || echo '$(srcdir)/'`extension/semantic_action_event/semantic_action_event.c
+
+extension/semantic_agent/extension_semantic_agent_libf2e_semantic_agent_la-semantic_agent.lo: extension/semantic_agent/semantic_agent.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_agent_libf2e_semantic_agent_la_CFLAGS) $(CFLAGS) -MT extension/semantic_agent/extension_semantic_agent_libf2e_semantic_agent_la-semantic_agent.lo -MD -MP -MF extension/semantic_agent/$(DEPDIR)/extension_semantic_agent_libf2e_semantic_agent_la-semantic_agent.Tpo -c -o extension/semantic_agent/extension_semantic_agent_libf2e_semantic_agent_la-semantic_agent.lo `test -f 'extension/semantic_agent/semantic_agent.c' || echo '$(srcdir)/'`extension/semantic_agent/semantic_agent.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/semantic_agent/$(DEPDIR)/extension_semantic_agent_libf2e_semantic_agent_la-semantic_agent.Tpo extension/semantic_agent/$(DEPDIR)/extension_semantic_agent_libf2e_semantic_agent_la-semantic_agent.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/semantic_agent/semantic_agent.c' object='extension/semantic_agent/extension_semantic_agent_libf2e_semantic_agent_la-semantic_agent.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_agent_libf2e_semantic_agent_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_agent/extension_semantic_agent_libf2e_semantic_agent_la-semantic_agent.lo `test -f 'extension/semantic_agent/semantic_agent.c' || echo '$(srcdir)/'`extension/semantic_agent/semantic_agent.c
 
 extension/semantic_containment_object/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.lo: extension/semantic_containment_object/semantic_containment_object.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_containment_object_libf2e_semantic_containment_object_la_CFLAGS) $(CFLAGS) -MT extension/semantic_containment_object/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.lo -MD -MP -MF extension/semantic_containment_object/$(DEPDIR)/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.Tpo -c -o extension/semantic_containment_object/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.lo `test -f 'extension/semantic_containment_object/semantic_containment_object.c' || echo '$(srcdir)/'`extension/semantic_containment_object/semantic_containment_object.c
@@ -3683,6 +3762,7 @@ clean-libtool:
 	-rm -rf extension/conceptnet/.libs extension/conceptnet/_libs
 	-rm -rf extension/equals_hash/.libs extension/equals_hash/_libs
 	-rm -rf extension/event_stream/.libs extension/event_stream/_libs
+	-rm -rf extension/fiber_trigger/.libs extension/fiber_trigger/_libs
 	-rm -rf extension/fibermon/.libs extension/fibermon/_libs
 	-rm -rf extension/forward_planner/.libs extension/forward_planner/_libs
 	-rm -rf extension/frame_ball/.libs extension/frame_ball/_libs
@@ -3696,6 +3776,7 @@ clean-libtool:
 	-rm -rf extension/mindmon/.libs extension/mindmon/_libs
 	-rm -rf extension/movie/.libs extension/movie/_libs
 	-rm -rf extension/semantic_action_event/.libs extension/semantic_action_event/_libs
+	-rm -rf extension/semantic_agent/.libs extension/semantic_agent/_libs
 	-rm -rf extension/semantic_containment_object/.libs extension/semantic_containment_object/_libs
 	-rm -rf extension/semantic_directed_action_event/.libs extension/semantic_directed_action_event/_libs
 	-rm -rf extension/semantic_event/.libs extension/semantic_event/_libs
@@ -3951,6 +4032,8 @@ distclean-generic:
 	-rm -f extension/equals_hash/$(am__dirstamp)
 	-rm -f extension/event_stream/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/event_stream/$(am__dirstamp)
+	-rm -f extension/fiber_trigger/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/fiber_trigger/$(am__dirstamp)
 	-rm -f extension/fibermon/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/fibermon/$(am__dirstamp)
 	-rm -f extension/forward_planner/$(DEPDIR)/$(am__dirstamp)
@@ -3977,6 +4060,8 @@ distclean-generic:
 	-rm -f extension/movie/$(am__dirstamp)
 	-rm -f extension/semantic_action_event/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_action_event/$(am__dirstamp)
+	-rm -f extension/semantic_agent/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/semantic_agent/$(am__dirstamp)
 	-rm -f extension/semantic_containment_object/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_containment_object/$(am__dirstamp)
 	-rm -f extension/semantic_directed_action_event/$(DEPDIR)/$(am__dirstamp)
@@ -4017,7 +4102,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fiber_trigger/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -4065,7 +4150,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/causality/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fiber_trigger/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_frame_ball/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_frame_ball/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

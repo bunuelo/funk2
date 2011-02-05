@@ -69,6 +69,7 @@
 [defpackage learned_reactive_layer
   :packages [traced_mind
 	     learned_reactive_physical_agency
+	     learned_reactive_physical_agency_functions
 	     learned_reactive_sensory_agency
 	     learned_reactive_language_agency
 	     learned_reactive_physical_knowledge_agency

@@ -39,11 +39,12 @@
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]
+       [= vital t]
        nil]]
 
 [deftypefunk translate_physical_knowledge_to_meta_physical_knowledge_resource execute execute_resource_raw_funk []
   [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->meta_physical_knowledge]]]
-    [while [let [[event [get physical_knowledge_iterator current]]]
+    [while [let [[event [get physical_knowledge_iterator wait_for_current]]]
 	     [if [not [null event]]
 		 [prog [if [get this debug] [terminal_format standard-terminal '\n  translate physical->meta_physical event: ' event]]
 		       [let [[event_type [get event event_type]]]

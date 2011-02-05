@@ -38,11 +38,12 @@
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]
+       [= vital t]
        nil]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute execute_resource_raw_funk []
   [let [[visual_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `visual_knowledge->physical_knowledge]]]
-    [while [let [[event [get visual_knowledge_iterator current]]]
+    [while [let [[event [get visual_knowledge_iterator wait_for_current]]]
 	     [if [not [null event]]
 		 [prog `[terminal_format standard-terminal '\n  translate visual->physical visual event: ' event]
 		       [let [[event_type [get event event_type]]]

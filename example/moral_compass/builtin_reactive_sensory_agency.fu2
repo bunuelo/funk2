@@ -37,8 +37,8 @@
 			    [= left_hand_object_name  [have body sense_left_hand_object_name]]
 			    [= right_hand_object_name [have body sense_right_hand_object_name]]    
 			    [= perception             [have body sense_perception]]
-			    [have perception_trigger trigger]
 			    [have this think_to_self 'finished perception.']
+			    [have perception_trigger trigger]
 			    ]]]]
        [= vital t]
        nil]]
@@ -113,9 +113,9 @@
 				]]]]]]
 	      visual_objects]
 	
-	[mind-wait_to_call [get this mind] learned_reactive physical_knowledge      translate_visual_knowledge_to_physical_knowledge]
-	[mind-wait_to_call [get this mind] deliberative     meta_physical_knowledge translate_physical_knowledge_to_meta_physical_knowledge]
-	[mind-wait_to_call [get this mind] self_reflective  meta_mental_knowledge   translate_mental_knowledge_to_meta_mental_knowledge]
+	`[mind-wait_to_call [get this mind] learned_reactive physical_knowledge      translate_visual_knowledge_to_physical_knowledge]
+	`[mind-wait_to_call [get this mind] deliberative     meta_physical_knowledge translate_physical_knowledge_to_meta_physical_knowledge]
+	`[mind-wait_to_call [get this mind] self_reflective  meta_mental_knowledge   translate_mental_knowledge_to_meta_mental_knowledge]
 	]]]]
 
 

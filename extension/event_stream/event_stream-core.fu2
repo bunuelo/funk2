@@ -24,3 +24,10 @@
 
 [event_stream-core_extension_ping]
 
+[deftypefunk event_stream_iterator execute wait_for_current []
+  [let [[event [get this current]]]
+    [while [null event]
+      [wait-for-trigger [get [get this event_stream] add_trigger]]
+      [= event [get this current]]]
+    event]]
+

@@ -23,7 +23,7 @@
 #define F2__EXTENSION__EVENT_STREAM__H
 
 #include "../../c/funk2.h"
-
+#include "../fiber_trigger/fiber_trigger.h"
 
 // event_stream_event
 

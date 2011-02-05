@@ -37,7 +37,7 @@ f2ptr  f2__event_stream_event__new(f2ptr cause, f2ptr time);
 
 // event_stream
 
-def_header_ceframe1(event_stream, event_time_redblacktree);
+def_header_ceframe3(event_stream, event_time_redblacktree, add_trigger, remove_trigger);
 
 f2ptr raw__event_stream__new                 (f2ptr cause);
 f2ptr  f2__event_stream__new                 (f2ptr cause);

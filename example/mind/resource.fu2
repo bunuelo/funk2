@@ -71,7 +71,7 @@
 						   [let [[waiting_to_be_added_to_mind t]]
 						     [while waiting_to_be_added_to_mind
 						       [terminal_format standard-terminal '\nresource ' name ' waiting to be added to mind.']
-						       [sleep 1]
+						       [sleep 10]
 						       [if [null mind-name]
 							   [if agency
 							       [prog [cause-define agency-name [get agency name]]
@@ -85,6 +85,7 @@
 												 [cause-define cause-name `[,mind-name ,layer-name ,agency-name ,resource-name resource]]
 												 [= waiting_to_be_added_to_mind nil]]]]]]]]]]]]]
 						   [= initialized t]
+						   [terminal_format standard-terminal '\n*** resource ' name ' initialized! ***']
 						   [while [not done]
 						     [have active_mutex lock]
 						     [if [not active]

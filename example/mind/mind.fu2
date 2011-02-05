@@ -177,7 +177,10 @@
 		  
 		  [mapc [funk [resource]
 			      [if [get resource vital]
-				  [have resource resource activate]]]
+				  [prog [while [not [get resource initialized]]
+					  [terminal_format standard-terminal '\nmind-activate_vital_resources: waiting for ' [get resource name] ' resource to initialize.']
+					  [sleep 1]]
+					[have resource activate]]]]
 			[get this resources]]]]
 
 [deftypefunk mind get self_model []

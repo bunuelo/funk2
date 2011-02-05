@@ -70,20 +70,19 @@
 						   [have fiber_starting_mutex unlock]
 						   [let [[waiting_to_be_added_to_mind t]]
 						     [while waiting_to_be_added_to_mind
-						       [terminal_format standard-terminal '\nresource ' name ' waiting to be added to mind.']
+						       [terminal_format standard-terminal '\nresource ' name ' waiting to be added to mind (mind-name=' mind-name ' agent=' agency '.']
 						       [sleep 10]
 						       [if [null mind-name]
 							   [if agency
 							       [prog [cause-define agency-name [get agency name]]
-								     [if [null layer-name]
-									 [let [[mental_layer [get agency layer]]]
-									   [if mental_layer
-									       [prog [cause-define layer-name [get mental_layer name]]
-										     [let [[mind [get mental_layer mind]]]
-										       [if mind
-											   [prog [cause-define mind-name  [get mind name]]
-												 [cause-define cause-name `[,mind-name ,layer-name ,agency-name ,resource-name resource]]
-												 [= waiting_to_be_added_to_mind nil]]]]]]]]]]]]]
+								     [let [[mental_layer [get agency layer]]]
+								       [if mental_layer
+									   [prog [cause-define layer-name [get mental_layer name]]
+										 [let [[mind [get mental_layer mind]]]
+										   [if mind
+										       [prog [cause-define mind-name  [get mind name]]
+											     [cause-define cause-name `[,mind-name ,layer-name ,agency-name ,resource-name resource]]
+											     [= waiting_to_be_added_to_mind nil]]]]]]]]]]]]
 						   [= initialized t]
 						   [terminal_format standard-terminal '\n*** resource ' name ' initialized! ***']
 						   [while [not done]

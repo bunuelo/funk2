@@ -70,7 +70,7 @@
 						   [let [[waiting_to_be_added_to_mind t]]
 						     [while waiting_to_be_added_to_mind
 						       [if [null mind-name]
-							   [if [get this body]
+							   [if agency
 							       [prog [cause-define agency-name [get agency name]]
 								     [if [null layer-name]
 									 [let [[mental_layer [get agency layer]]]
@@ -126,13 +126,13 @@
 [deftypefunk resource get layer []
   [if agency
       [get agency layer]
-    [error bug_type `attempted_to_get_mind_from_resource_that_is_not_part_of_an_agency
+    [error bug_type `attempted_to_get_layer_from_resource_that_is_not_part_of_an_agency
 	   this     this]]]
 
 [deftypefunk resource get body []
   [if agency
       [get agency body]
-    [error bug_type `attempted_to_get_mind_from_resource_that_is_not_part_of_an_agency
+    [error bug_type `attempted_to_get_body_from_resource_that_is_not_part_of_an_agency
 	   this     this]]]
 
 [deftypefunk resource get world []

@@ -73,14 +73,17 @@
 						       [sleep 1]
 						       [if [null mind-name]
 							   [if agency
-							       [prog [cause-define agency-name [get agency name]]
+							       [prog [terminal_format standard-output '\nresource agency: ' agency]
+								     [cause-define agency-name [get agency name]]
 								     [if [null layer-name]
 									 [let [[mental_layer [get agency layer]]]
 									   [if mental_layer
-									       [prog [cause-define layer-name [get mental_layer name]]
+									       [prog [terminal_format standard-output '\nresource mental_layer: ' mental_layer]
+										     [cause-define layer-name [get mental_layer name]]
 										     [let [[mind [get mental_layer mind]]]
 										       [if mind
-											   [prog [cause-define mind-name [get mind name]]
+											   [prog [terminal_format standard-output '\nresource mind: ' mind]
+												 [cause-define mind-name [get mind name]]
 												 [cause-define cause-name `[,mind-name ,layer-name ,agency-name ,resource-name resource]]
 												 [= waiting_to_be_added_to_mind nil]]]]]]]]]]]]]
 						   [= initialized t]

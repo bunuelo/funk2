@@ -24,6 +24,20 @@
 
 #include "../../c/funk2.h"
 
+// fiber_trigger
+
+def_ceframe0(fiber_trigger, fiber_trigger);
+
+f2ptr raw__fiber_trigger__new                      (f2ptr cause);
+f2ptr  f2__fiber_trigger__new                      (f2ptr cause);
+f2ptr raw__fiber_trigger__trigger                  (f2ptr cause, f2ptr this);
+f2ptr  f2__fiber_trigger__trigger                  (f2ptr cause, f2ptr this);
+f2ptr raw__fiber_trigger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr  f2__fiber_trigger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+
+f2ptr f2__fiber_trigger_type__new_aux(f2ptr cause);
+
+
 // fiber_trigger_hash (a global ptypehash)
 
 f2ptr  f2__fiber_trigger_hash                        (f2ptr cause);

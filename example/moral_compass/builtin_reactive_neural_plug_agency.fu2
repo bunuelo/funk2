@@ -38,6 +38,7 @@
 				    [= command_ready nil]
 				    [= command_done  t]]]
 			  [have command_mutex unlock]]]]
+       [= vital t]
        nil]]
 
 [deftypefunk activate_resource execute command [layer_name agency_name resource_name :rest args]

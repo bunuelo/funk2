@@ -91,7 +91,7 @@ f2ptr f2__event_stream_event_type__new_aux(f2ptr cause) {
 
 // event_stream
 
-def_ceframe1(event_stream, event_stream, event_time_redblacktree);
+def_ceframe3(event_stream, event_stream, event_time_redblacktree, add_trigger, remove_trigger);
 
 f2ptr raw__event_stream__new(f2ptr cause) {
   f2ptr event_time_redblacktree__value_event_cfunk   = f2cfunk__new(cause, nil, 
@@ -101,7 +101,9 @@ f2ptr raw__event_stream__new(f2ptr cause) {
 								    f2list2__new(cause, new__symbol(cause, "this"), new__symbol(cause, "that")),
 								    f2pointer__new(cause, raw_executable__to__relative_ptr(raw__event_stream_event__compare_value)), global_environment(), nil, nil);
   f2ptr event_time_redblacktree = f2__redblacktree__new(cause, event_time_redblacktree__value_event_cfunk, event_time_redblacktree__compare_event_cfunk);
-  return f2event_stream__new(cause, event_time_redblacktree);
+  f2ptr add_trigger             = f2__fiber_trigger__new(cause);
+  f2ptr remove_trigger          = f2__fiber_trigger__new(cause);
+  return f2event_stream__new(cause, event_time_redblacktree, add_trigger, remove_trigger);
 }
 
 f2ptr f2__event_stream__new(f2ptr cause) {
@@ -112,7 +114,15 @@ export_cefunk0(event_stream__new, 0, "Returns a new event_stream object.");
 
 f2ptr raw__event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
   f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
-  return raw__redblacktree__insert(cause, event_time_redblacktree, event_stream_event);
+  f2ptr add_trigger             = raw__event_stream__add_trigger(            cause, this);
+  f2ptr result = raw__redblacktree__insert(cause, event_time_redblacktree, event_stream_event);
+  {
+    f2ptr trigger_result = f2__fiber_trigger__trigger(cause, add_trigger);
+    if (raw__larva__is_type(cause, trigger_result)) {
+      return trigger_result;
+    }
+  }
+  return result;
 }
 
 f2ptr f2__event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
@@ -127,7 +137,15 @@ export_cefunk2(event_stream__add, this, event_stream_event, 0, "Add an event_str
 
 f2ptr raw__event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
   f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
-  return raw__redblacktree__remove(cause, event_time_redblacktree, event_stream_event);
+  f2ptr remove_trigger          = raw__event_stream__remove_trigger(         cause, this);
+  f2ptr result = raw__redblacktree__remove(cause, event_time_redblacktree, event_stream_event);
+  {
+    f2ptr trigger_result = f2__fiber_trigger__trigger(cause, remove_trigger);
+    if (raw__larva__is_type(cause, trigger_result)) {
+      return trigger_result;
+    }
+  }
+  return result;
 }
 
 f2ptr f2__event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event) {

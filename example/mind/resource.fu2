@@ -70,6 +70,7 @@
 						   [have fiber_starting_mutex unlock]
 						   [let [[waiting_to_be_added_to_mind t]]
 						     [while waiting_to_be_added_to_mind
+						       [sleep 1]
 						       [if [null mind-name]
 							   [if agency
 							       [prog [cause-define agency-name [get agency name]]
@@ -81,8 +82,7 @@
 										       [if mind
 											   [prog [cause-define mind-name [get mind name]]
 												 [cause-define cause-name `[,mind-name ,layer-name ,agency-name ,resource-name resource]]
-												 [= waiting_to_be_added_to_mind nil]]]]]]]]]]]
-						       [sleep 1]]]
+												 [= waiting_to_be_added_to_mind nil]]]]]]]]]]]]]
 						   [= initialized t]
 						   [while [not done]
 						     [have active_mutex lock]

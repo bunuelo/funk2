@@ -26,7 +26,7 @@
 
 // fiber_trigger
 
-def_header_ceframe0(fiber_trigger, fiber_trigger);
+def_header_ceframe0(fiber_trigger);
 
 f2ptr raw__fiber_trigger__new                      (f2ptr cause);
 f2ptr  f2__fiber_trigger__new                      (f2ptr cause);

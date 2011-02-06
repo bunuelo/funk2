@@ -71,8 +71,9 @@
 							
 							[let [[current_action_sequence [new semantic_event_sequence [get [get this mind] semantic_realm]]]]
 							  [have this-resource think_to_self '\n    *** debug A7: translate mental->meta_mental add_semantic_frame cause_being_active resource_semantic_frame current_action_sequence: ' current_action_sequence]
-							  [if [not [get meta_mental_sequence_knowledge contains_semantic_frame agent]]
-							      [have meta_mental_sequence_knowledge add_semantic_frame agent]]
+							  [if agent
+							      [if [not [get meta_mental_sequence_knowledge contains_semantic_frame agent]]
+								  [have meta_mental_sequence_knowledge add_semantic_frame agent]]]
 							  [if [not [get meta_mental_sequence_knowledge contains_semantic_frame target]]
 							      [have meta_mental_sequence_knowledge add_semantic_frame target]]
 							  [have meta_mental_sequence_knowledge add_semantic_frame current_action_sequence]
@@ -81,17 +82,18 @@
 						       [t
 							[have this-resource think_to_self '\n  debug A8: translate mental->meta_mental add_semantic_frame semantic_resource_action_event *: ' event]
 							
-							[let [[current_action_sequence [semantic-get agent current_action_sequence]]]
-							  [if [null current_action_sequence]
-							      [prog [have this-resource think_to_self '\n  debug A10: current_action_sequence is nil, so not recording event:' event]
-								    `[error funkname `translate_mental_knowledge_to_meta_mental_knowledge_resource-execute_resource_raw_funk
-									    bug_type `current_action_sequence_is_nil
-									    event    event]]
-							    [let [[semantic_event [get event semantic_frame]]]
-							      [have this-resource think_to_self '\n   *** debug A11: adding event to end of sequence: ' semantic_event]
-							      [have current_action_sequence        add_to_end         semantic_event]
-							      [have meta_mental_sequence_knowledge add_semantic_frame semantic_event]
-							      '  => add to action_sequence_cause_frame for the affected agent.']]]]]
+							[if agent
+							    [let [[current_action_sequence [semantic-get agent current_action_sequence]]]
+							      [if [null current_action_sequence]
+								  [prog [have this-resource think_to_self '\n  debug A10: current_action_sequence is nil, so not recording event:' event]
+									`[error funkname `translate_mental_knowledge_to_meta_mental_knowledge_resource-execute_resource_raw_funk
+										bug_type `current_action_sequence_is_nil
+										event    event]]
+								[let [[semantic_event [get event semantic_frame]]]
+								  [have this-resource think_to_self '\n   *** debug A11: adding event to end of sequence: ' semantic_event]
+								  [have current_action_sequence        add_to_end         semantic_event]
+								  [have meta_mental_sequence_knowledge add_semantic_frame semantic_event]
+								  '  => add to action_sequence_cause_frame for the affected agent.']]]]]]
 					       ]]]
 					  ]
 				    ]]

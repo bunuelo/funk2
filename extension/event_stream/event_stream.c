@@ -534,13 +534,13 @@ f2ptr f2__event_stream__core_extension__initialize(f2ptr cause) {
   status("event_stream initialized.");
   return nil;
 }
-export_cefunk0(event_stream__core_extension_initialize, 0, "");
+export_cefunk0(event_stream__core_extension__initialize, 0, "");
 
 
-f2ptr f2__event_stream__core_extension_destroy(f2ptr cause) {
+f2ptr f2__event_stream__core_extension__destroy(f2ptr cause) {
   status("event_stream destroyed.");
   return nil;
 }
-export_cefunk0(event_stream__core_extension_destroy, 0, "");
+export_cefunk0(event_stream__core_extension__destroy, 0, "");
 
 

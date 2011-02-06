@@ -28,13 +28,14 @@
 	 ]]]
 
 [deftypefunk traced_resource execute begin_wrapped_active_funk []
-  [if active_cause_resource
-      [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this mind] semantic_realm]]]]
-	[semantic-add semantic_resource_action_event action_name `cause_being_active]
-	[semantic-add semantic_resource_action_event agent       [get active_cause_resource resource_semantic_frame]]
-	[semantic-add semantic_resource_action_event target      [get this                  resource_semantic_frame]]
-	[have [get [get this mind] semantic_knowledge_base `mental_knowledge] add_semantic_frame semantic_resource_action_event]
-	semantic_resource_action_event]]]
+  [let [[semantic_resource_action_event [new semantic_resource_action_event [get [get this mind] semantic_realm]]]]
+    [semantic-add semantic_resource_action_event action_name `cause_being_active]
+    [semantic-add semantic_resource_action_event agent       [if active_cause_resource
+								 [get active_cause_resource resource_semantic_frame]
+							       nil]]
+    [semantic-add semantic_resource_action_event target      [get this                  resource_semantic_frame]]
+    [have [get [get this mind] semantic_knowledge_base `mental_knowledge] add_semantic_frame semantic_resource_action_event]
+    semantic_resource_action_event]]
 
 [deftypefunk traced_resource execute finish_wrapped_active_funk [semantic_resource_action_event]
   [if active_cause_resource

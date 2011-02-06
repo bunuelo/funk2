@@ -19,10 +19,13 @@
 
 [defcore event_stream 'extension/event_stream/.libs/libf2e_event_stream.so']
 
-[defcorefunk event_stream-core_extension_ping       event_stream event_stream__core_extension_ping]
-[defcorefunk event_stream-core_extension_initialize event_stream event_stream__core_extension_initialize]
+[defcorefunk event_stream-core_extension_ping         event_stream event_stream__core_extension_ping]
+[defcorefunk event_stream-core_extension_define_types event_stream event_stream__core_extension_define_types]
+[defcorefunk event_stream-core_extension_initialize   event_stream event_stream__core_extension_initialize]
 
 [event_stream-core_extension_ping]
+
+[event_stream-core_extension_define_types]
 
 [deftypefunk event_stream_iterator execute wait_for_current []
   [let [[event [get this current]]]

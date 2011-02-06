@@ -62,14 +62,14 @@ f2ptr f2__causality__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr te
 export_cefunk2(causality__terminal_print_with_frame, this, terminal_print_frame, 0, "");
 
 
-f2ptr f2__causality__core_extension_initialize(f2ptr cause) {
+f2ptr f2__causality__core_extension__initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "causality"), f2__causality_type__new(cause));
   return nil;
 }
-export_cefunk0(causality__core_extension_initialize, 0, "");
+export_cefunk0(causality__core_extension__initialize, 0, "");
 
-f2ptr f2__causality__core_extension_destroy(f2ptr cause) {
+f2ptr f2__causality__core_extension__destroy(f2ptr cause) {
   return nil;
 }
-export_cefunk0(causality__core_extension_destroy, 0, "");
+export_cefunk0(causality__core_extension__destroy, 0, "");
 

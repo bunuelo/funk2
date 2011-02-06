@@ -19,8 +19,8 @@
 
 [defcore semantic_containment_object 'extension/semantic_containment_object/.libs/libf2e_semantic_containment_object.so']
 
-[defcorefunk semantic_containment_object-core_extension_ping       semantic_containment_object semantic_containment_object__core_extension_ping]
-[defcorefunk semantic_containment_object-core_extension_initialize semantic_containment_object semantic_containment_object__core_extension_initialize]
+[defcorefunk semantic_containment_object-core_extension-ping       semantic_containment_object semantic_containment_object__core_extension__ping]
+[defcorefunk semantic_containment_object-core_extension-initialize semantic_containment_object semantic_containment_object__core_extension__initialize]
 
 [defcorefunk object-semantic-containment-contains-lookup       semantic_containment_object object__semantic__containment__contains__lookup]
 [defcorefunk object-semantic-containment-contains-lookup-apply semantic_containment_object object__semantic__containment__contains__lookup__apply]
@@ -36,7 +36,7 @@
 [defcorefunk object-semantic-containment-is_contained_by-remove       semantic_containment_object object__semantic__containment__is_contained_by__remove]
 [defcorefunk object-semantic-containment-is_contained_by-remove-apply semantic_containment_object object__semantic__containment__is_contained_by__remove__apply]
 
-[semantic_containment_object-core_extension_ping]
+[semantic_containment_object-core_extension-ping]
 
 
 [defmetro semantic-containment-contains-lookup       [this slot_name :rest args] `[object-semantic-containment-contains-lookup       ,this [quote ,slot_name] @args]]

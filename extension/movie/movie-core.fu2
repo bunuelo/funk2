@@ -19,10 +19,10 @@
 
 [defcore movie 'extension/movie/.libs/libf2e_movie.so']
 
-[defcorefunk movie-core_extension_ping       movie movie__core_extension_ping]
-[defcorefunk movie-core_extension_initialize movie movie__core_extension_initialize]
+[defcorefunk movie-core_extension-ping       movie movie__core_extension__ping]
+[defcorefunk movie-core_extension-initialize movie movie__core_extension__initialize]
 
 [defcorefunk libavcodec-video_chunk-new_from_image_sequence movie libavcodec__video_chunk__new_from_image_sequence]
 [defcorefunk movie-new_from_image_sequence                  movie movie__new_from_image_sequence]
 
-[movie-core_extension_ping]
+[movie-core_extension-ping]

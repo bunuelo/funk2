@@ -56,8 +56,8 @@ f2ptr f2__semantic_event_sequence_type__new(f2ptr cause);
 
 // **
 
-f2ptr f2__semantic_event_sequence__core_extension_ping(f2ptr cause);
-f2ptr f2__semantic_event_sequence__core_extension_initialize(f2ptr cause);
-f2ptr f2__semantic_event_sequence__core_extension_destroy(f2ptr cause);
+f2ptr f2__semantic_event_sequence__core_extension__ping(f2ptr cause);
+f2ptr f2__semantic_event_sequence__core_extension__initialize(f2ptr cause);
+f2ptr f2__semantic_event_sequence__core_extension__destroy(f2ptr cause);
 
 #endif // F2__EXTENSION__SEMANTIC_EVENT_SEQUENCE__H

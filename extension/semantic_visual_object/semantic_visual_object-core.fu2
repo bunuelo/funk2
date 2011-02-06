@@ -19,9 +19,9 @@
 
 [defcore semantic_visual_object 'extension/semantic_visual_object/.libs/libf2e_semantic_visual_object.so']
 
-[defcorefunk semantic_visual_object-core_extension_ping       semantic_visual_object semantic_visual_object__core_extension_ping]
-[defcorefunk semantic_visual_object-core_extension_initialize semantic_visual_object semantic_visual_object__core_extension_initialize]
+[defcorefunk semantic_visual_object-core_extension-ping       semantic_visual_object semantic_visual_object__core_extension__ping]
+[defcorefunk semantic_visual_object-core_extension-initialize semantic_visual_object semantic_visual_object__core_extension__initialize]
 
 
 
-[semantic_visual_object-core_extension_ping]
+[semantic_visual_object-core_extension-ping]

@@ -20,7 +20,7 @@
 [defcore conceptnet 'extension/conceptnet/.libs/libf2e_conceptnet.so']
 
 [defcorefunk conceptnet-new_from_graph_file       conceptnet conceptnet__new_from_graph_file]
-[defcorefunk conceptnet-core_extension_ping       conceptnet conceptnet__core_extension_ping]
-[defcorefunk conceptnet-core_extension_initialize conceptnet conceptnet__core_extension_initialize]
+[defcorefunk conceptnet-core_extension-ping       conceptnet conceptnet__core_extension__ping]
+[defcorefunk conceptnet-core_extension-initialize conceptnet conceptnet__core_extension__initialize]
 
-[conceptnet-core_extension_ping]
+[conceptnet-core_extension-ping]

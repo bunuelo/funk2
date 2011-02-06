@@ -2138,26 +2138,26 @@ f2ptr f2__semantic_knowledge_base_type__new_aux(f2ptr cause) {
 
 // **
 
-f2ptr f2__semantic_knowledge_base__core_extension_ping(f2ptr cause) {
+f2ptr f2__semantic_knowledge_base__core_extension__ping(f2ptr cause) {
   return nil;
 }
-export_cefunk0(semantic_knowledge_base__core_extension_ping, 0, "");
+export_cefunk0(semantic_knowledge_base__core_extension__ping, 0, "");
 
-f2ptr f2__semantic_knowledge_base__core_extension_initialize(f2ptr cause) {
+f2ptr f2__semantic_knowledge_base__core_extension__initialize(f2ptr cause) {
   {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__core_extension_ping")), nil);
+    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__core_extension__ping")), nil);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
   {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__core_extension_ping")), nil);
+    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__core_extension__ping")), nil);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
   {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__core_extension_ping")), nil);
+    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__core_extension__ping")), nil);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -2171,12 +2171,12 @@ f2ptr f2__semantic_knowledge_base__core_extension_initialize(f2ptr cause) {
   status("semantic_knowledge_base initialized.");
   return nil;
 }
-export_cefunk0(semantic_knowledge_base__core_extension_initialize, 0, "");
+export_cefunk0(semantic_knowledge_base__core_extension__initialize, 0, "");
 
-f2ptr f2__semantic_knowledge_base__core_extension_destroy(f2ptr cause) {
+f2ptr f2__semantic_knowledge_base__core_extension__destroy(f2ptr cause) {
   status("semantic_knowledge_base destroyed.");
   return nil;
 }
-export_cefunk0(semantic_knowledge_base__core_extension_destroy, 0, "");
+export_cefunk0(semantic_knowledge_base__core_extension__destroy, 0, "");
 
 

@@ -220,22 +220,22 @@ f2ptr f2__frame_ball_type__new(f2ptr cause) {
 
 // **
 
-f2ptr f2__frame_ball__core_extension_ping(f2ptr cause) {
+f2ptr f2__frame_ball__core_extension__ping(f2ptr cause) {
   return nil;
 }
-export_cefunk0(frame_ball__core_extension_ping, 0, "");
+export_cefunk0(frame_ball__core_extension__ping, 0, "");
 
-f2ptr f2__frame_ball__core_extension_initialize(f2ptr cause) {
+f2ptr f2__frame_ball__core_extension__initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "frame_ball"), f2__frame_ball_type__new(cause));
   printf("\nframe_ball initialized."); fflush(stdout);
   return nil;
 }
-export_cefunk0(frame_ball__core_extension_initialize, 0, "");
+export_cefunk0(frame_ball__core_extension__initialize, 0, "");
 
-f2ptr f2__frame_ball__core_extension_destroy(f2ptr cause) {
+f2ptr f2__frame_ball__core_extension__destroy(f2ptr cause) {
   printf("\nframe_ball destroyed."); fflush(stdout);
   return nil;
 }
-export_cefunk0(frame_ball__core_extension_destroy, 0, "");
+export_cefunk0(frame_ball__core_extension__destroy, 0, "");
 
 

@@ -49,9 +49,9 @@ f2ptr raw__fiber_trigger_hash__unpause_trigger_fibers(f2ptr cause, f2ptr trigger
 
 // **
 
-f2ptr f2__fiber_trigger__core_extension_ping      (f2ptr cause);
-f2ptr f2__fiber_trigger__core_extension_initialize(f2ptr cause);
-f2ptr f2__fiber_trigger__core_extension_destroy   (f2ptr cause);
+f2ptr f2__fiber_trigger__core_extension__ping      (f2ptr cause);
+f2ptr f2__fiber_trigger__core_extension__initialize(f2ptr cause);
+f2ptr f2__fiber_trigger__core_extension__destroy   (f2ptr cause);
 
 #endif // F2__EXTENSION__FIBER_TRIGGER__H
 

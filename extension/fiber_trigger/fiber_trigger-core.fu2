@@ -19,10 +19,10 @@
 
 [defcore fiber_trigger 'extension/fiber_trigger/.libs/libf2e_fiber_trigger.so']
 
-[defcorefunk fiber_trigger-core_extension_ping       fiber_trigger fiber_trigger__core_extension_ping]
-[defcorefunk fiber_trigger-core_extension_initialize fiber_trigger fiber_trigger__core_extension_initialize]
+[defcorefunk fiber_trigger-core_extension-ping       fiber_trigger fiber_trigger__core_extension__ping]
+[defcorefunk fiber_trigger-core_extension-initialize fiber_trigger fiber_trigger__core_extension__initialize]
 
-[fiber_trigger-core_extension_ping]
+[fiber_trigger-core_extension-ping]
 
 [defcorefunk fiber_trigger_hash-add fiber_trigger fiber_trigger_hash__add]
 

@@ -513,6 +513,7 @@ f2ptr f2__event_stream__core_extension_define_types(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "event_stream_event"),    f2__event_stream_event_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "event_stream"),          f2__event_stream_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "event_stream_iterator"), f2__event_stream_iterator_type__new_aux(cause));
+  return nil;
 }
 export_cefunk0(event_stream__core_extension_define_types, 0, "");
 

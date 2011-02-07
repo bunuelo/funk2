@@ -353,7 +353,9 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index);
 	}
       } else { // (fiber__paused)
-	f2processor__newly_paused_fibers__set(cause, processor, f2cons__new(cause, fiber, f2processor__newly_paused_fibers(cause, processor)));
+	pause_gc();
+	f2processor__newly_paused_fibers__set(processor, cause, f2cons__new(cause, fiber, f2processor__newly_paused_fibers(processor, cause)));
+	resume_gc();
       }
       f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
     } else {

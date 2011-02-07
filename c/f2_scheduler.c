@@ -73,18 +73,6 @@ f2ptr funk2_operating_system__pop_current_fiber(funk2_operating_system_t* this, 
 }
 
 
-// global_scheduler
-
-f2ptr f2__global_scheduler__this_processor(f2ptr cause) {
-  if (__funk2.operating_system.scheduler == nil) {
-    error(nil, "f2__global_scheduler__this_processor error: __funk2.operating_system.scheduler == nil");
-  }
-  return raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), this_processor_thread__pool_index());
-}
-
-
-// processor
-
 // processor
 
 def_primobject_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc);
@@ -217,14 +205,6 @@ f2ptr f2__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr scheduler) 
 }
 
 
-// global_scheduler
-
-void f2__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
-  f2ptr processor = f2__global_scheduler__this_processor(cause);
-  f2__processor__add_active_fiber(cause, processor, fiber);
-}
-
-
 // scheduler
 
 void f2__scheduler__add_fiber_to_least_used_processor(f2ptr cause, f2ptr this, f2ptr fiber) {
@@ -232,16 +212,6 @@ void f2__scheduler__add_fiber_to_least_used_processor(f2ptr cause, f2ptr this, f
   //status("[adding fiber to least used processor " s64__fstr "]", f2integer__i(f2processor__pool_index(processor, cause), cause));
   f2__processor__add_active_fiber(cause, processor, fiber);
 }
-
-
-// global_scheduler
-
-void f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
-  f2__scheduler__add_fiber_to_least_used_processor(cause, __funk2.operating_system.scheduler, fiber);
-}
-
-
-// scheduler
 
 f2ptr f2__scheduler__processor_thread_current_fiber(int pool_index) {
   funk2_processor_mutex__lock(&(__funk2.operating_system.current_fiber_stack__mutex[pool_index]));
@@ -691,6 +661,28 @@ void f2__scheduler__stop_processors() {
 }
 
 #endif // F2__USE_VIRTUAL_PROCESSORS
+
+
+// global_scheduler
+
+f2ptr f2__global_scheduler__this_processor(f2ptr cause) {
+  if (__funk2.operating_system.scheduler == nil) {
+    error(nil, "f2__global_scheduler__this_processor error: __funk2.operating_system.scheduler == nil");
+  }
+  return raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), this_processor_thread__pool_index());
+}
+
+
+void f2__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
+  f2ptr processor = f2__global_scheduler__this_processor(cause);
+  f2__processor__add_active_fiber(cause, processor, fiber);
+}
+
+
+void f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
+  f2__scheduler__add_fiber_to_least_used_processor(cause, __funk2.operating_system.scheduler, fiber);
+}
+
 
 
 

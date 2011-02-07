@@ -350,6 +350,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index);
 	}
       } else { // (fiber__paused)
+	/*
 	int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
 	funk2_operating_system__push_current_fiber(&(__funk2.operating_system), pool_index, fiber);
 	
@@ -360,6 +361,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	}
 	f2fiber__processor_assignment_index__set(fiber, cause, nil);
 	funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index);
+	*/
       }
       f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
     } else {

@@ -47,8 +47,8 @@ typedef struct funk2_operating_system_s {
 } funk2_operating_system_t;
 
 
-//typedef struct funk2_object_type__processor__slot_s funk2_object_type__processor__slot_t;
-//typedef struct funk2_object_type__scheduler__slot_s funk2_object_type__scheduler__slot_t;
+typedef struct funk2_object_type__processor__slot_s funk2_object_type__processor__slot_t;
+typedef struct funk2_object_type__scheduler__slot_s funk2_object_type__scheduler__slot_t;
 
 // processor
 

@@ -29,6 +29,9 @@
 #include "f2_time.h"
 #include "f2_processor_mutex.h"
 
+
+// funk2_operating_system
+
 typedef struct funk2_operating_system_current_fiber_cons_s funk2_operating_system_current_fiber_cons_t;
 struct funk2_operating_system_current_fiber_cons_s {
   f2ptr                                               current_fiber;
@@ -43,19 +46,47 @@ typedef struct funk2_operating_system_s {
   funk2_operating_system_current_fiber_cons_t* current_fiber_stack[memory_pool_num];
 } funk2_operating_system_t;
 
-//extern f2ptr f2scheduler__new(f2ptr context, f2ptr processors, f2ptr fibers, f2ptr fiber_num);
-//extern f2ptr f2scheduler__processors(f2ptr this);
-//extern f2ptr f2scheduler__processors__set(f2ptr this, f2ptr value);
-//extern f2ptr f2scheduler__fibers(f2ptr this);
-//extern f2ptr f2scheduler__fibers__set(f2ptr this, f2ptr value);
-//extern f2ptr f2scheduler__fiber_num(f2ptr this);
-//extern f2ptr f2scheduler__fiber_num__set(f2ptr this, f2ptr value);
-//extern f2ptr f2scheduler__add_fiber(f2ptr context, f2ptr this, f2ptr fiber);
+
+// processor
+
+declare_object_type_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc,
+			    f2ptr terminal_print_with_frame__symbol;
+			    f2ptr terminal_print_with_frame__funk;
+			    );
+
+// scheduler
+
+declare_object_type_1_slot(scheduler, processors,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
+
+
+
+
+// processor
+
+declare_primobject_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc);
+
+f2ptr f2processor__primobject_type__new_aux(f2ptr cause);
+
+
+// scheduler
+
+declare_primobject_1_slot(scheduler, processors);
+
+f2ptr f2scheduler__primobject_type__new_aux(f2ptr cause);
+
+
+// funk2_operating_system
 
 void  funk2_operating_system__init(              funk2_operating_system_t* this);
 void  funk2_operating_system__destroy(           funk2_operating_system_t* this);
 void  funk2_operating_system__push_current_fiber(funk2_operating_system_t* this, u64 pool_index, f2ptr current_fiber);
 f2ptr funk2_operating_system__pop_current_fiber( funk2_operating_system_t* this, u64 pool_index);
+
+
+// global_scheduler
 
 f2ptr f2__global_scheduler__processors();
 f2ptr f2__global_scheduler__processors__set(f2ptr cause, f2ptr value);
@@ -69,27 +100,21 @@ void  f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber);
 f2ptr f2__scheduler__processor_thread_current_fiber(int pool_index);
 f2ptr f2__this__fiber(f2ptr cause); // returns current fiber.
 
+
+// processor
+
 f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause);
 
-f2ptr f2__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
 
-void f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber);
+// user functions
 
-void f2__print_fibers_stacks();
+f2ptr f2__add_fiber                (f2ptr cause, f2ptr this, f2ptr fiber);
+void  f2__scheduler__yield         (f2ptr cause);
+void  f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber);
+void  f2__print_fibers_stacks      ();
 
 
-#if defined(F2__USE_VIRTUAL_PROCESSORS)
-
-void f2__scheduler__yield(f2ptr cause);
-
-#else // not F2__USE_VIRTUAL_PROCESSORS
-
-void f2__scheduler__yield(f2ptr cause);
-void f2__scheduler__start_processors();
-void f2__scheduler__stop_processors();
-
-#endif // F2__USE_VIRTUAL_PROCESSORS
-
+// **
 
 void f2__scheduler__initialize();
 void f2__scheduler__destroy();

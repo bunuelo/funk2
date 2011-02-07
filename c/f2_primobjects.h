@@ -45,52 +45,52 @@ typedef struct funk2_object_type__bytecode_event__slot_s   funk2_object_type__by
 #define defarray_slot(           name, index)        int defarray_slot__index_var(name) = index
 #define defarray_slot__prototype(name)        extern int defarray_slot__index_var(name)
 
-#define array_slot__accessor__trace_depth(         this, name, cause, trace_depth)        raw__array__elt__trace_depth(                   cause, this, defarray_slot__index_var(name), trace_depth)
-#define array_slot__accessor(                      this, name, cause)                     raw__array__elt(                                cause, this, defarray_slot__index_var(name))
-#define array_slot__set__trace_depth(              this, name, cause, value, trace_depth) raw__array__elt__set__trace_depth(              cause, this, defarray_slot__index_var(name), value, trace_depth)
-#define array_slot__set(                           this, name, cause, value)              raw__array__elt__set(                           cause, this, defarray_slot__index_var(name), value)
-#define array_slot__tracing_on(                    this, name, cause)                     raw__array__elt__tracing_on(                    cause, this, defarray_slot__index_var(name))
-#define array_slot__trace(                         this, name, cause)                     raw__array__elt__trace(                         cause, this, defarray_slot__index_var(name))
-#define array_slot__imagination_frame(             this, name, cause)                     raw__array__elt__imagination_frame(             cause, this, defarray_slot__index_var(name))
+#define array_slot__accessor__trace_depth(this, name, cause, trace_depth)        raw__array__elt__trace_depth(      cause, this, defarray_slot__index_var(name), trace_depth)
+#define array_slot__accessor(             this, name, cause)                     raw__array__elt(                   cause, this, defarray_slot__index_var(name))
+#define array_slot__set__trace_depth(     this, name, cause, value, trace_depth) raw__array__elt__set__trace_depth( cause, this, defarray_slot__index_var(name), value, trace_depth)
+#define array_slot__set(                  this, name, cause, value)              raw__array__elt__set(              cause, this, defarray_slot__index_var(name), value)
+#define array_slot__tracing_on(           this, name, cause)                     raw__array__elt__tracing_on(       cause, this, defarray_slot__index_var(name))
+#define array_slot__trace(                this, name, cause)                     raw__array__elt__trace(            cause, this, defarray_slot__index_var(name))
+#define array_slot__imagination_frame(    this, name, cause)                     raw__array__elt__imagination_frame(cause, this, defarray_slot__index_var(name))
 
 #define primobject__header_size 3
 defarray_slot__prototype(primobject__primobject_label);
-#define f2primobject__primobject_label__trace_depth(                   this, cause, trace_depth)        array_slot__accessor__trace_depth(         this, primobject__primobject_label, cause, value, trace_depth)
-#define f2primobject__primobject_label(                                this, cause)                     array_slot__accessor(                      this, primobject__primobject_label, cause)
-#define f2primobject__primobject_label__set__trace_depth(              this, cause, value, trace_depth) array_slot__set__trace_depth(              this, primobject__primobject_label, cause, value, trace_depth)
-#define f2primobject__primobject_label__set(                           this, cause, value)              array_slot__set(                           this, primobject__primobject_label, cause, value)
-#define f2primobject__primobject_label__tracing_on(                    this, cause)                     array_slot__tracing_on(                    this, primobject__primobject_label, cause)
-#define f2primobject__primobject_label__trace(                         this, cause)                     array_slot__trace(                         this, primobject__primobject_label, cause)
-#define f2primobject__primobject_label__imagination_frame(             this, cause)                     array_slot__imagination_frame(             this, primobject__primobject_label, cause)
+#define f2primobject__primobject_label__trace_depth(      this, cause, trace_depth)        array_slot__accessor__trace_depth(this, primobject__primobject_label, cause, value, trace_depth)
+#define f2primobject__primobject_label(                   this, cause)                     array_slot__accessor(             this, primobject__primobject_label, cause)
+#define f2primobject__primobject_label__set__trace_depth( this, cause, value, trace_depth) array_slot__set__trace_depth(     this, primobject__primobject_label, cause, value, trace_depth)
+#define f2primobject__primobject_label__set(              this, cause, value)              array_slot__set(                  this, primobject__primobject_label, cause, value)
+#define f2primobject__primobject_label__tracing_on(       this, cause)                     array_slot__tracing_on(           this, primobject__primobject_label, cause)
+#define f2primobject__primobject_label__trace(            this, cause)                     array_slot__trace(                this, primobject__primobject_label, cause)
+#define f2primobject__primobject_label__imagination_frame(this, cause)                     array_slot__imagination_frame(    this, primobject__primobject_label, cause)
 
 defarray_slot__prototype(primobject__object_type);
-#define f2primobject__object_type__trace_depth(                   this, cause, trace_depth)        array_slot__accessor__trace_depth(         this, primobject__object_type, cause, trace_depth)
-#define f2primobject__object_type(                                this, cause)                     array_slot__accessor(                      this, primobject__object_type, cause)
-#define f2primobject__object_type__set__trace_depth(              this, cause, value, trace_depth) array_slot__set__trace_depth(              this, primobject__object_type, cause, value, trace_depth)
-#define f2primobject__object_type__set(                           this, cause, value)              array_slot__set(                           this, primobject__object_type, cause, value)
-#define f2primobject__object_type__tracing_on(                    this, cause)                     array_slot__tracing_on(                    this, primobject__object_type, cause)
-#define f2primobject__object_type__trace(                         this, cause)                     array_slot__trace(                         this, primobject__object_type, cause)
-#define f2primobject__object_type__imagination_frame(             this, cause)                     array_slot__imagination_frame(             this, primobject__object_type, cause)
+#define f2primobject__object_type__trace_depth(      this, cause, trace_depth)        array_slot__accessor__trace_depth(this, primobject__object_type, cause, trace_depth)
+#define f2primobject__object_type(                   this, cause)                     array_slot__accessor(             this, primobject__object_type, cause)
+#define f2primobject__object_type__set__trace_depth( this, cause, value, trace_depth) array_slot__set__trace_depth(     this, primobject__object_type, cause, value, trace_depth)
+#define f2primobject__object_type__set(              this, cause, value)              array_slot__set(                  this, primobject__object_type, cause, value)
+#define f2primobject__object_type__tracing_on(       this, cause)                     array_slot__tracing_on(           this, primobject__object_type, cause)
+#define f2primobject__object_type__trace(            this, cause)                     array_slot__trace(                this, primobject__object_type, cause)
+#define f2primobject__object_type__imagination_frame(this, cause)                     array_slot__imagination_frame(    this, primobject__object_type, cause)
 
 defarray_slot__prototype(primobject__dynamic_slots);
-#define f2primobject__dynamic_slots__trace_depth(                   this, cause, trace_depth)        array_slot__accessor__trace_depth(         this, primobject__dynamic_slots, cause, trace_depth)
-#define f2primobject__dynamic_slots(                                this, cause)                     array_slot__accessor(                      this, primobject__dynamic_slots, cause)
-#define f2primobject__dynamic_slots__set__trace_depth(              this, cause, value, trace_depth) array_slot__set__trace_depth(              this, primobject__dynamic_slots, cause, value, trace_depth)
-#define f2primobject__dynamic_slots__set(                           this, cause, value)              array_slot__set(                           this, primobject__dynamic_slots, cause, value)
-#define f2primobject__dynamic_slots__tracing_on(                    this, cause)                     array_slot__tracing_on(                    this, primobject__dynamic_slots, cause)
-#define f2primobject__dynamic_slots__trace(                         this, cause)                     array_slot__trace(                         this, primobject__dynamic_slots, cause)
-#define f2primobject__dynamic_slots__imagination_frame(             this, cause)                     array_slot__imagination_frame(             this, primobject__dynamic_slots, cause)
+#define f2primobject__dynamic_slots__trace_depth(      this, cause, trace_depth)        array_slot__accessor__trace_depth(this, primobject__dynamic_slots, cause, trace_depth)
+#define f2primobject__dynamic_slots(                   this, cause)                     array_slot__accessor(             this, primobject__dynamic_slots, cause)
+#define f2primobject__dynamic_slots__set__trace_depth( this, cause, value, trace_depth) array_slot__set__trace_depth(     this, primobject__dynamic_slots, cause, value, trace_depth)
+#define f2primobject__dynamic_slots__set(              this, cause, value)              array_slot__set(                  this, primobject__dynamic_slots, cause, value)
+#define f2primobject__dynamic_slots__tracing_on(       this, cause)                     array_slot__tracing_on(           this, primobject__dynamic_slots, cause)
+#define f2primobject__dynamic_slots__trace(            this, cause)                     array_slot__trace(                this, primobject__dynamic_slots, cause)
+#define f2primobject__dynamic_slots__imagination_frame(this, cause)                     array_slot__imagination_frame(    this, primobject__dynamic_slots, cause)
 
 #define defprimobject__static_slot(           name, index) defarray_slot(           name, primobject__header_size + index)
 #define defprimobject__static_slot__prototype(name)        defarray_slot__prototype(name)
 
-#define primobject__static_slot__accessor__trace_depth(         this, name, cause, trace_depth)        array_slot__accessor__trace_depth(         this, name, cause, trace_depth)
-#define primobject__static_slot__accessor(                      this, name, cause)                     array_slot__accessor(                      this, name, cause)
-#define primobject__static_slot__set__trace_depth(              this, name, cause, value, trace_depth) array_slot__set__trace_depth(              this, name, cause, value, trace_depth)
-#define primobject__static_slot__set(                           this, name, cause, value)              array_slot__set(                           this, name, cause, value)
-#define primobject__static_slot__tracing_on(                    this, name, cause)                     array_slot__tracing_on(                    this, name, cause)
-#define primobject__static_slot__trace(                         this, name, cause)                     array_slot__trace(                         this, name, cause)
-#define primobject__static_slot__imagination_frame(             this, name, cause)                     array_slot__imagination_frame(             this, name, cause)
+#define primobject__static_slot__accessor__trace_depth(this, name, cause, trace_depth)        array_slot__accessor__trace_depth(this, name, cause, trace_depth)
+#define primobject__static_slot__accessor(             this, name, cause)                     array_slot__accessor(             this, name, cause)
+#define primobject__static_slot__set__trace_depth(     this, name, cause, value, trace_depth) array_slot__set__trace_depth(     this, name, cause, value, trace_depth)
+#define primobject__static_slot__set(                  this, name, cause, value)              array_slot__set(                  this, name, cause, value)
+#define primobject__static_slot__tracing_on(           this, name, cause)                     array_slot__tracing_on(           this, name, cause)
+#define primobject__static_slot__trace(                this, name, cause)                     array_slot__trace(                this, name, cause)
+#define primobject__static_slot__imagination_frame(    this, name, cause)                     array_slot__imagination_frame(    this, name, cause)
 
 #define raw__primobject__is_type(cause, exp) (raw__array__is_type(cause, exp) && (raw__array__length(cause, exp) > defarray_slot__index_var(primobject__primobject_label)) && (raw__eq(cause, f2primobject__primobject_label(exp, cause), __primobject__symbol)))
 
@@ -105,14 +105,14 @@ defarray_slot__prototype(primobject__dynamic_slots);
 #include "f2_ptypes.h"
 #include "f2_malloc.h"
 
-boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y);                                                          // from f2_primfunks.h
-f2ptr raw__array__elt__trace_depth(f2ptr cause, f2ptr this, u64 index, int trace_depth);                   // from f2_primfunks.h
-f2ptr     raw__array__elt(f2ptr cause, f2ptr this, u64 index);                                             // from f2_primfunks.h
-f2ptr raw__array__elt__set(f2ptr cause, f2ptr this, u64 index, f2ptr value);                               // from f2_primfunks.h
-f2ptr raw__array__elt__set__trace_depth(f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth); // from f2_primfunks.h
-f2ptr raw__array__elt__tracing_on(f2ptr cause, f2ptr this, u64 index);                                     // from f2_primfunks.h
-f2ptr raw__array__elt__trace(f2ptr cause, f2ptr this, u64 index);                                          // from f2_primfunks.h
-f2ptr raw__array__elt__imagination_frame(f2ptr cause, f2ptr this, u64 index);                              // from f2_primfunks.h
+boolean_t raw__eq                           (f2ptr cause, f2ptr x, f2ptr y);                                    // from f2_primfunks.h
+f2ptr     raw__array__elt__trace_depth      (f2ptr cause, f2ptr this, u64 index, int trace_depth);              // from f2_primfunks.h
+f2ptr     raw__array__elt                   (f2ptr cause, f2ptr this, u64 index);                               // from f2_primfunks.h
+f2ptr     raw__array__elt__set              (f2ptr cause, f2ptr this, u64 index, f2ptr value);                  // from f2_primfunks.h
+f2ptr     raw__array__elt__set__trace_depth (f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth); // from f2_primfunks.h
+f2ptr     raw__array__elt__tracing_on       (f2ptr cause, f2ptr this, u64 index);                               // from f2_primfunks.h
+f2ptr     raw__array__elt__trace            (f2ptr cause, f2ptr this, u64 index);                               // from f2_primfunks.h
+f2ptr     raw__array__elt__imagination_frame(f2ptr cause, f2ptr this, u64 index);                               // from f2_primfunks.h
 
 // primobject
 
@@ -1276,20 +1276,6 @@ declare_primobject_4_slot(bytecode, command, arg0, arg1, arg2);
 f2ptr f2bytecode__primobject_type__new_aux(f2ptr cause);
 
 
-// processor
-
-declare_primobject_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc);
-
-f2ptr f2processor__primobject_type__new_aux(f2ptr cause);
-
-
-// scheduler
-
-declare_primobject_1_slot(scheduler, processors);
-
-f2ptr f2scheduler__primobject_type__new_aux(f2ptr cause);
-
-
 // transframe
 
 declare_primobject_2_slot(transframe, nanoseconds_since_1970, symbol_old_news);
@@ -1607,20 +1593,6 @@ declare_object_type_2_slot(exception, tag, value,
 // bytecode
 
 declare_object_type_4_slot(bytecode, command, arg0, arg1, arg2,
-			   f2ptr terminal_print_with_frame__symbol;
-			   f2ptr terminal_print_with_frame__funk;
-			   );
-
-// processor
-
-declare_object_type_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc,
-			    f2ptr terminal_print_with_frame__symbol;
-			    f2ptr terminal_print_with_frame__funk;
-			    );
-
-// scheduler
-
-declare_object_type_1_slot(scheduler, processors,
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );

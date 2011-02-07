@@ -46,6 +46,7 @@
 #include "f2_graph_match_error_correcting.h"
 #include "f2_gtk.h"
 #include "f2_nil.h"
+#include "f2_processor.h"
 #include "f2_scheduler.h"
 #include "f2_terminal_print.h"
 #include "f2_knowledge.h"

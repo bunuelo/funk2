@@ -80,6 +80,7 @@ void f2__initialize() {
   f2__primfunks__errno__initialize();
   f2__primfunks__fcntl__initialize();
   f2__primfunks__ioctl__initialize();
+  f2__processor__initialize();
   f2__scheduler__initialize();
   f2__funk2_node__initialize();
   f2__peer_command_server__initialize();
@@ -328,6 +329,8 @@ void f2__destroy() {
   
   status("funk2: destroying scheduler.");
   f2__scheduler__destroy();
+  status("funk2: destroying processor.");
+  f2__processor__destroy();
   status("funk2: destroying memory.");
   f2__memory__destroy();
   status("funk2: destroying peer command server.");

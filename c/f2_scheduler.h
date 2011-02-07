@@ -47,15 +47,7 @@ typedef struct funk2_operating_system_s {
 } funk2_operating_system_t;
 
 
-typedef struct funk2_object_type__processor__slot_s funk2_object_type__processor__slot_t;
 typedef struct funk2_object_type__scheduler__slot_s funk2_object_type__scheduler__slot_t;
-
-// processor
-
-declare_object_type_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc,
-			    f2ptr terminal_print_with_frame__symbol;
-			    f2ptr terminal_print_with_frame__funk;
-			    );
 
 // scheduler
 
@@ -70,13 +62,6 @@ declare_object_type_1_slot(scheduler, processors,
 
 #ifndef F2__SCHEDULER__H
 #define F2__SCHEDULER__H
-
-// processor
-
-declare_primobject_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc);
-
-f2ptr f2processor__primobject_type__new_aux(f2ptr cause);
-
 
 // scheduler
 
@@ -106,11 +91,6 @@ void  f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber);
 
 f2ptr f2__scheduler__processor_thread_current_fiber(int pool_index);
 f2ptr f2__this__fiber(f2ptr cause); // returns current fiber.
-
-
-// processor
-
-f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause);
 
 
 // user functions

@@ -43,6 +43,7 @@ typedef struct funk2_globalenv_s {
   f2ptr   f2_primobject_ptypehash_c__cause__symbol;
   f2ptr            f2_primobjects_c__cause__symbol;
   f2ptr                  f2_print_c__cause__symbol;
+  f2ptr              f2_processor_c__cause__symbol;
   f2ptr                f2_pthread_c__cause__symbol;
   f2ptr                 f2_ptypes_c__cause__symbol;
   f2ptr                 f2_reader_c__cause__symbol;
@@ -146,6 +147,7 @@ f2ptr       f2_primobject_frame_c__cause__new(f2ptr cause);
 f2ptr   f2_primobject_ptypehash_c__cause__new(f2ptr cause);
 f2ptr            f2_primobjects_c__cause__new(f2ptr cause);
 f2ptr                  f2_print_c__cause__new(f2ptr cause);
+f2ptr              f2_processor_c__cause__new(f2ptr cause);
 f2ptr                f2_pthread_c__cause__new(f2ptr cause);
 f2ptr                 f2_ptypes_c__cause__new(f2ptr cause);
 f2ptr                 f2_reader_c__cause__new(f2ptr cause);

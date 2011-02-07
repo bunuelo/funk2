@@ -112,6 +112,7 @@
 #include "f2_primobject_type_handler.h"
 #include "f2_primobjects.h"
 #include "f2_print.h"
+#include "f2_processor.h"
 #include "f2_processor_mutex.h"
 #include "f2_processor_thread.h"
 #include "f2_processor_thread_handler.h"

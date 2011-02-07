@@ -40,6 +40,7 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   symbol_str = "globalenv:f2_primobject_ptypehash.c";   this->f2_primobject_ptypehash_c__cause__symbol   = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   symbol_str = "globalenv:f2_primobjects.c";            this->f2_primobjects_c__cause__symbol            = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   symbol_str = "globalenv:f2_print.c";                  this->f2_print_c__cause__symbol                  = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "globalenv:f2_processor.c";              this->f2_processor_c__cause__symbol              = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   symbol_str = "globalenv:f2_pthread.c";                this->f2_pthread_c__cause__symbol                = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   symbol_str = "globalenv:f2_ptypes.c";                 this->f2_ptypes_c__cause__symbol                 = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   symbol_str = "globalenv:f2_reader.c";                 this->f2_reader_c__cause__symbol                 = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
@@ -163,6 +164,7 @@ f2ptr       f2_primobject_frame_c__cause__new(f2ptr cause) {return raw__c_source
 f2ptr   f2_primobject_ptypehash_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_primobject_ptypehash.c");}
 f2ptr            f2_primobjects_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_primobjects.c");}
 f2ptr                  f2_print_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_print.c");}
+f2ptr              f2_processor_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_processor.c");}
 f2ptr                f2_pthread_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_pthread.c");}
 f2ptr                 f2_ptypes_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_ptypes.c");}
 f2ptr                 f2_reader_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_reader.c");}

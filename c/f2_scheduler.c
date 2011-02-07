@@ -269,9 +269,6 @@ void f2__scheduler__initialize() {
 				       nil, // active_fibers_iter
 				       nil, // active_fibers_prev
 				       nil, // active_fibers_next
-				       nil, // newly_paused_fibers
-				       nil, // newly_paused_fibers_iter
-				       nil, // newly_paused_fibers_next
 				       f2mutex__new(cause),
 				       nil,
 				       f2integer__new(cause, i),

@@ -408,7 +408,7 @@ void f2__processor__initialize_global_symbolic_vars() {
 }
 
 void f2__processor__reinitialize_globalvars() {
-  f2ptr cause = f2_processor_c__cause__new(initial_cause());
+  //f2ptr cause = f2_processor_c__cause__new(initial_cause());
   
   f2__processor__initialize_global_symbolic_vars();
 }

@@ -358,7 +358,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	} else {
 	  f2cons__cdr__set(f2processor__active_fibers_prev(processor, cause), cause, f2processor__active_fibers_next(processor, cause));
 	}
-	
+	f2fiber__processor_assignment_index__set(fiber, cause, nil);
 	funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index);
       }
       f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);

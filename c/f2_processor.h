@@ -22,10 +22,7 @@
 #ifndef F2__PROCESSOR__TYPES__H
 #define F2__PROCESSOR__TYPES__H
 
-#include "f2_global.h"
-#include "f2_fiber.h"
-#include "f2_time.h"
-#include "f2_processor_mutex.h"
+#include "f2_primobjects.h"
 
 typedef struct funk2_object_type__processor__slot_s funk2_object_type__processor__slot_t;
 
@@ -63,12 +60,9 @@ f2ptr        f2processor__execute_next_bytecodes            (f2ptr processor, f2
 
 // **
 
-void f2__processor__initialize_global_symbolic_vars();
 void f2__processor__reinitialize_globalvars();
 void f2__processor__initialize();
 void f2__processor__destroy();
-
-
 
 #endif // F2__PROCESSOR__H
 

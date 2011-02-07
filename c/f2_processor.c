@@ -401,23 +401,18 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 
 // **
 
-void f2__processor__initialize_global_symbolic_vars() {
+void f2__processor__reinitialize_globalvars() {
   f2ptr cause = f2_processor_c__cause__new(initial_cause());
   
   __processor__symbol = new__symbol(cause, "processor");
 }
 
-void f2__processor__reinitialize_globalvars() {
-  //f2ptr cause = f2_processor_c__cause__new(initial_cause());
-  
-  f2__processor__initialize_global_symbolic_vars();
-}
-
 void f2__processor__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "processor", "", &f2__processor__reinitialize_globalvars);
+  f2__processor__reinitialize_globalvars();
   
   f2ptr cause = f2_processor_c__cause__new(initial_cause());
-  f2__processor__initialize_global_symbolic_vars();
+  
   
   // processor
   

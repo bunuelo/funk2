@@ -47,18 +47,28 @@ declare_object_type_11_slot(processor, scheduler, processor_thread, active_fiber
 
 declare_primobject_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc);
 
+f2ptr  f2__processor__new                      (f2ptr cause);
+f2ptr raw__processor__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr  f2__processor__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+
 f2ptr f2processor__primobject_type__new_aux(f2ptr cause);
 
-
-// processor
-
-f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause);
+void       f2__processor__add_active_fiber__thread_unsafe   (f2ptr cause, f2ptr this, f2ptr fiber);
+void       f2__processor__add_active_fiber                  (f2ptr cause, f2ptr this, f2ptr fiber);
+boolean_t  f2__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber);
+boolean_t  f2__processor__remove_active_fiber               (f2ptr cause, f2ptr this, f2ptr fiber);
+u64       raw__processor__active_fibers__length             (f2ptr cause, f2ptr processor);
+f2ptr        f2processor__execute_next_bytecodes            (f2ptr processor, f2ptr cause);
 
 
 // **
 
+void f2__processor__initialize_global_symbolic_vars();
+void f2__processor__reinitialize_globalvars();
 void f2__processor__initialize();
 void f2__processor__destroy();
+
+
 
 #endif // F2__PROCESSOR__H
 

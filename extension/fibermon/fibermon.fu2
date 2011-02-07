@@ -133,88 +133,92 @@
        
        [set this fiber fiber]
        
-       [have command_pause_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\n\nfibermon commanding fiber to pause.\n']
-		   [set fiber paused t]]
-	     nil]
-       [have command_continue_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\n\nfibermon commanding fiber to continue.\n']
-		   [set fiber paused nil]]
-	     nil]
-       [have command_keep_undead_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\n\nfibermon commanding fiber to keep undead.\n']
-		   [set fiber keep_undead t]]
-	     nil]
-       [have command_dont_keep_undead_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\n\nfibermon commanding fiber to not keep undead.\n']
-		   [set fiber keep_undead nil]]
-	     nil]
-       [have command_quit_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\n\nfibermon commanding fiber to quit.\n']
-		   [have fiber quit]]
-	     nil]
-       [have view_fiber_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\n\nfibermon printing fiber:\n']
-		   [print fiber]
-		   [terminal_format standard-terminal '\n\n']]
-	     nil]
-       [have view_cause_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\n\nfibermon printing fiber cause register:\n']
-		   [print [get fiber cause_reg]]
-		   [terminal_format standard-terminal '\n\n']]
-	     nil]
-       [have view_stack_trace_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\n\nfibermon printing fiber stack trace blocks:\n']
-		   [print [get [get fiber stack_trace] blocks]]
-		   [terminal_format standard-terminal '\n\n']]
-	     nil]
-       [have view_stack_trace_first_block_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\n\nfibermon printing fiber first block of stack trace:\n']
-		   [print [first [get [get fiber stack_trace] blocks]]]
-		   [terminal_format standard-terminal '\n\n']]
-	     nil]
-       
-       [have environment_define_fiber_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\n\nenvironment define fiber.\n']
-		   [new fibermon_define_object_dialog fiber `fiber]
-		   [terminal_format standard-terminal '\n\n']]
-	     nil]
-       
-       [have environment_define_cause_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\n\nenvironment define cause.\n']
-		   [new fibermon_define_object_dialog [get fiber cause_reg] `cause]
-		   [terminal_format standard-terminal '\n\n']]
-	     nil]
-       
-       [have environment_define_stack_trace_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\n\nenvironment define stack trace.\n']
-		   [new fibermon_define_object_dialog [get fiber stack_trace] `fiber_stack_trace]
-		   [terminal_format standard-terminal '\n\n']]
-	     nil]
-       
-       [have environment_define_stack_trace_first_block_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\n\nenvironment define first block of stack trace.\n']
-		   [let [[blocks [get [get fiber stack_trace] blocks]]]
-		     [if [== [length blocks] 0]
-			 [new fibermon_notice_dialog [format nil 'You have chosen to define the first block of this fiber\'s stack trace,\n'
-							     'but this fiber does not have any stack trace blocks,\n'
-							     'so there is no first block to define.']]
-		       [new fibermon_define_object_dialog [first blocks] `fiber_stack_trace_block]]]
-		   [terminal_format standard-terminal '\n\n']]
-	     nil]
+       [fiber [funk []
+		    [have command_pause_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nfibermon commanding fiber to pause.\n']
+				[set fiber paused t]]
+			  nil]
+		    [have command_continue_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nfibermon commanding fiber to continue.\n']
+				[set fiber paused nil]]
+			  nil]
+		    [have command_keep_undead_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nfibermon commanding fiber to keep undead.\n']
+				[set fiber keep_undead t]]
+			  nil]
+		    [have command_dont_keep_undead_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nfibermon commanding fiber to not keep undead.\n']
+				[set fiber keep_undead nil]]
+			  nil]
+		    [have command_quit_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nfibermon commanding fiber to quit.\n']
+				[have fiber quit]]
+			  nil]
+		    [have view_fiber_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nfibermon printing fiber:\n']
+				[print fiber]
+				[terminal_format standard-terminal '\n\n']]
+			  nil]
+		    [have view_cause_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nfibermon printing fiber cause register:\n']
+				[print [get fiber cause_reg]]
+				[terminal_format standard-terminal '\n\n']]
+			  nil]
+		    [have view_stack_trace_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nfibermon printing fiber stack trace blocks:\n']
+				[print [get [get fiber stack_trace] blocks]]
+				[terminal_format standard-terminal '\n\n']]
+			  nil]
+		    [have view_stack_trace_first_block_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nfibermon printing fiber first block of stack trace:\n']
+				[print [first [get [get fiber stack_trace] blocks]]]
+				[terminal_format standard-terminal '\n\n']]
+			  nil]
+		    
+		    [have environment_define_fiber_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nenvironment define fiber.\n']
+				[new fibermon_define_object_dialog fiber `fiber]
+				[terminal_format standard-terminal '\n\n']]
+			  nil]
+		    
+		    [have environment_define_cause_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nenvironment define cause.\n']
+				[new fibermon_define_object_dialog [get fiber cause_reg] `cause]
+				[terminal_format standard-terminal '\n\n']]
+			  nil]
+		    
+		    [have environment_define_stack_trace_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nenvironment define stack trace.\n']
+				[new fibermon_define_object_dialog [get fiber stack_trace] `fiber_stack_trace]
+				[terminal_format standard-terminal '\n\n']]
+			  nil]
+		    
+		    [have environment_define_stack_trace_first_block_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nenvironment define first block of stack trace.\n']
+				[let [[blocks [get [get fiber stack_trace] blocks]]]
+				  [if [== [length blocks] 0]
+				      [new fibermon_notice_dialog [format nil 'You have chosen to define the first block of this fiber\'s stack trace,\n'
+									  'but this fiber does not have any stack trace blocks,\n'
+									  'so there is no first block to define.']]
+				    [new fibermon_define_object_dialog [first blocks] `fiber_stack_trace_block]]]
+				[terminal_format standard-terminal '\n\n']]
+			  nil]
+		    
+		    ]
+	      nil]
        
        [have this recompute_statistics]
        [have this redraw]

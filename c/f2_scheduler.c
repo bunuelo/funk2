@@ -696,11 +696,17 @@ void f2__scheduler__stop_processors() {
 
 // **
 
-void f2__scheduler__reinitialize_globalvars() {
+void f2__scheduler__initialize_global_symbolic_vars() {
   f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
   
   __processor__symbol = new__symbol(cause, "processor");
   __scheduler__symbol = new__symbol(cause, "scheduler");
+}
+
+void f2__scheduler__reinitialize_globalvars() {
+  f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
+  
+  f2__scheduler__initialize_global_symbolic_vars();
   
   __funk2.operating_system.scheduler__symbol = f2symbol__new(cause, strlen("scheduler:global_scheduler"), (u8*)"scheduler:global_scheduler");
   __funk2.operating_system.scheduler         = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
@@ -710,6 +716,7 @@ void f2__scheduler__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "scheduler", "", &f2__scheduler__reinitialize_globalvars);
   
   f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
+  f2__scheduler__initialize_global_symbolic_vars();
   
   // processor
   

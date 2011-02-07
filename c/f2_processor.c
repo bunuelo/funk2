@@ -23,7 +23,7 @@
 
 // processor
 
-def_primobject_14_slot(processor,
+def_primobject_11_slot(processor,
 		       scheduler,
 		       processor_thread,
 		       active_fibers_mutex,

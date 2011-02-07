@@ -23,7 +23,7 @@
 
 // processor
 
-def_primobject_12_slot(processor,
+def_primobject_14_slot(processor,
 		       scheduler,
 		       processor_thread,
 		       active_fibers_mutex,
@@ -31,6 +31,9 @@ def_primobject_12_slot(processor,
 		       active_fibers_iter,
 		       active_fibers_prev,
 		       active_fibers_next,
+		       newly_paused_fibers,
+		       newly_paused_fibers_iter,
+		       newly_paused_fibers_next,
 		       sleeping_fibers_mutex,
 		       sleeping_fibers,
 		       pool_index,

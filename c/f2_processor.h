@@ -28,7 +28,22 @@ typedef struct funk2_object_type__processor__slot_s funk2_object_type__processor
 
 // processor
 
-declare_object_type_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc,
+declare_object_type_14_slot(processor,
+			    scheduler,
+			    processor_thread,
+			    active_fibers_mutex,
+			    active_fibers,
+			    active_fibers_iter,
+			    active_fibers_prev,
+			    active_fibers_next,
+			    newly_paused_fibers,
+			    newly_paused_fibers_iter,
+			    newly_paused_fibers_next,
+			    sleeping_fibers_mutex,
+			    sleeping_fibers,
+			    pool_index,
+			    desc,
+			    
 			    f2ptr terminal_print_with_frame__symbol;
 			    f2ptr terminal_print_with_frame__funk;
 			    );
@@ -42,7 +57,21 @@ declare_object_type_11_slot(processor, scheduler, processor_thread, active_fiber
 
 // processor
 
-declare_primobject_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc);
+declare_primobject_14_slot(processor,
+			   scheduler,
+			   processor_thread,
+			   active_fibers_mutex,
+			   active_fibers,
+			   active_fibers_iter,
+			   active_fibers_prev,
+			   active_fibers_next,
+			   newly_paused_fibers,
+			   newly_paused_fibers_iter,
+			   newly_paused_fibers_next,
+			   sleeping_fibers_mutex,
+			   sleeping_fibers,
+			   pool_index,
+			   desc);
 
 f2ptr  f2__processor__new                      (f2ptr cause);
 f2ptr raw__processor__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);

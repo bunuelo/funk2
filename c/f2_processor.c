@@ -23,7 +23,18 @@
 
 // processor
 
-def_primobject_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc);
+def_primobject_12_slot(processor,
+		       scheduler,
+		       processor_thread,
+		       active_fibers_mutex,
+		       active_fibers,
+		       active_fibers_iter,
+		       active_fibers_prev,
+		       active_fibers_next,
+		       sleeping_fibers_mutex,
+		       sleeping_fibers,
+		       pool_index,
+		       desc);
 
 f2ptr f2__processor__new(f2ptr cause) {
   return f2processor__new(cause, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil);
@@ -339,6 +350,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index);
 	}
       } else { // (fiber__paused)
+	f2processor__newly_paused_fibers__set(cause, processor, f2cons__new(cause, f2processor__newly_paused_fibers(cause, processor)));
       }
       f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
     } else {
@@ -388,6 +400,38 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     
     f2processor__active_fibers_iter__set(processor, cause, f2processor__active_fibers_next(processor, cause));
   }
+  
+  // remove newly paused fibers from active list.
+  {
+    f2processor__newly_paused_fibers_iter__set(processor, cause, f2processor__newly_paused_fibers(processor, cause));
+    while (f2processor__newly_paused_fibers_iter(processor, cause)) {
+      f2ptr newly_paused_fiber =                                   f2cons__car(f2processor__newly_paused_fibers_iter(processor, cause), cause);
+      f2processor__newly_paused_fibers_next__set(processor, cause, f2cons__cdr(f2processor__newly_paused_fibers_iter(processor, cause), cause));
+      {
+	f2processor__active_fibers_iter__set(processor, cause, f2processor__active_fibers(processor, cause));
+	f2processor__active_fibers_prev__set(processor, cause, nil);
+	
+	while (f2processor__active_fibers_iter(processor, cause)) {
+	  f2ptr active_fiber =                                   f2cons__car(f2processor__active_fibers_iter(processor, cause), cause);
+	  f2processor__active_fibers_next__set(processor, cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
+	  {
+	    if (raw__eq(cause, newly_paused_fiber, active_fiber)) {
+	      if (f2processor__active_fibers_prev(processor, cause) == nil) {
+		f2processor__active_fibers__set(processor, cause, f2processor__active_fibers_next(processor, cause));
+	      } else {
+		f2cons__cdr__set(f2processor__active_fibers_prev(processor, cause), cause, f2processor__active_fibers_next(processor, cause));
+	      }
+	    }
+	  }
+	  f2processor__active_fibers_prev__set(processor, cause, f2processor__active_fibers_iter(processor, cause));
+	  f2processor__active_fibers_iter__set(processor, cause, f2processor__active_fibers_next(processor, cause));
+	}
+      }
+      f2processor__newly_paused_fibers_iter__set(processor, cause, f2processor__newly_paused_fibers_next(processor, cause));
+    }
+    f2processor__newly_paused_fibers__set(processor, cause, nil);
+  }
+  
   //status("fiber_num = %d", fiber_num);
   //pool__resume_gc(this_processor_thread__pool_index());
   

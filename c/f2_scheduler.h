@@ -19,8 +19,8 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__SCHEDULER__H
-#define F2__SCHEDULER__H
+#ifndef F2__SCHEDULER__TYPES__H
+#define F2__SCHEDULER__TYPES__H
 
 #define global_scheduler() __global__scheduler
 
@@ -47,6 +47,9 @@ typedef struct funk2_operating_system_s {
 } funk2_operating_system_t;
 
 
+//typedef struct funk2_object_type__processor__slot_s funk2_object_type__processor__slot_t;
+//typedef struct funk2_object_type__scheduler__slot_s funk2_object_type__scheduler__slot_t;
+
 // processor
 
 declare_object_type_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc,
@@ -61,8 +64,12 @@ declare_object_type_1_slot(scheduler, processors,
 			   f2ptr terminal_print_with_frame__funk;
 			   );
 
+#endif // F2__SCHEDULER__TYPES__H
 
 
+
+#ifndef F2__SCHEDULER__H
+#define F2__SCHEDULER__H
 
 // processor
 

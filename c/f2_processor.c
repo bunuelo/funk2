@@ -350,6 +350,15 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index);
 	}
       } else { // (fiber__paused)
+	funk2_operating_system__push_current_fiber(&(__funk2.operating_system), pool_index, fiber);
+	
+	if (f2processor__active_fibers_prev(processor, cause) == nil) {
+	  f2processor__active_fibers__set(processfor, cause, f2processor__active_fibers_next(processor, cause));
+	} else {
+	  f2cons__cdr__set(f2processor__active_fibers_prev(processfor, cause), cause, f2processor__active_fibers_next(processor, cause));
+	}
+	
+	funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index);
       }
       f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
     } else {

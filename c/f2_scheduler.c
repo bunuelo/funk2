@@ -131,23 +131,8 @@ f2ptr f2__scheduler__active_fibers(f2ptr cause) {
 }
 def_pcfunk0(scheduler__active_fibers, return f2__scheduler__active_fibers(this_cause));
 
-void raw__scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
-  boolean_t complete = boolean__false;
-  do {
-    if(f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) {
-      if(f2fiber__is_complete(fiber, cause) ||
-	 (f2fiber__paused(fiber, cause) && raw__bug__is_type(cause, f2fiber__value(fiber, cause)))) {
-	complete = boolean__true;
-      }
-      f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
-    }
-    if (! complete) {
-      f2__scheduler__yield(cause);
-    }
-  } while (! complete);
-}
 
-void f2__scheduler__yield(f2ptr cause) {
+void f2__this__fiber__yield(f2ptr cause) {
   funk2_virtual_processor_handler__yield(&(__funk2.virtual_processor_handler));
 }
 
@@ -210,6 +195,31 @@ void raw__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
 void raw__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
   f2__scheduler__add_fiber_to_least_used_processor(cause, __funk2.operating_system.scheduler, fiber);
 }
+
+void raw__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
+  boolean_t complete = boolean__false;
+  do {
+    if(f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) {
+      if(f2fiber__is_complete(fiber, cause) ||
+	 (f2fiber__paused(fiber, cause) && raw__bug__is_type(cause, f2fiber__value(fiber, cause)))) {
+	complete = boolean__true;
+      }
+      f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
+    }
+    if (! complete) {
+      f2__scheduler__yield(cause);
+    }
+  } while (! complete);
+}
+
+f2ptr f2__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
+  if (! raw__fiber__is_type(cause, fiber)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__global_scheduler__complete_fiber(cause, fiber);
+  return nil;
+}
+
 
 
 // user functions

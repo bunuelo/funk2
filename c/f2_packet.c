@@ -253,14 +253,14 @@ void funk2_packet__send_to_socket(f2ptr cause, funk2_packet_t* packet, buffered_
   circular_buffer__write_result_t result = circular_buffer__write_result__success;
   do {
     if (result != circular_buffer__write_result__success) {
-      f2__global_scheduler__yield(cause);
+      f2__this__fiber__yield(cause);
     }
     result = buffered_socket__send(socket, packet, sizeof(funk2_packet_header_t) + packet->header.payload_length);
   } while(result == circular_buffer__write_result__not_enough_room);
   u8 end_packet_bytes[2] = {funk2_end_of_packet_byte0, funk2_end_of_packet_byte1};
   do {
     if (result != circular_buffer__write_result__success) {
-      f2__scheduler__yield(cause);
+      f2__this__fiber__yield(cause);
     }
     result = buffered_socket__send(socket, end_packet_bytes, 2);
   } while(result == circular_buffer__write_result__not_enough_room);

@@ -26,3 +26,6 @@
   [global_scheduler-remove_fiber [this-fiber]]
   [yield]]
 
+[defunk resume [fiber]
+  [global_scheduler-add_fiber fiber]]
+

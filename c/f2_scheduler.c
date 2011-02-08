@@ -191,10 +191,25 @@ void raw__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
   raw__processor__add_active_fiber(cause, processor, fiber);
 }
 
+f2ptr f2__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
+  if (! raw__fiber__is_type(cause, fiber)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__global_scheduler__add_fiber_serial(cause, fiber);
+}
+
 
 void raw__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
   f2__scheduler__add_fiber_to_least_used_processor(cause, __funk2.operating_system.scheduler, fiber);
 }
+
+f2ptr f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
+  if (! raw__fiber__is_type(cause, fiber)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__global_scheduler__add_fiber_parallel(cause, fiber);
+}
+
 
 void raw__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
   boolean_t complete = boolean__false;

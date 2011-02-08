@@ -85,7 +85,9 @@ f2ptr  f2__global_scheduler__fibers__set       (f2ptr cause, f2ptr value);
 f2ptr  f2__global_scheduler__fiber_num         ();
 f2ptr  f2__global_scheduler__fiber_num__set    (f2ptr cause, f2ptr value);
 void  raw__global_scheduler__add_fiber_serial  (f2ptr cause, f2ptr fiber);
+void   f2__global_scheduler__add_fiber_serial  (f2ptr cause, f2ptr fiber);
 void  raw__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber);
+void   f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber);
 void  raw__global_scheduler__complete_fiber    (f2ptr cause, f2ptr fiber);
 f2ptr  f2__global_scheduler__complete_fiber    (f2ptr cause, f2ptr fiber);
 

@@ -203,7 +203,7 @@ f2ptr f2__global_scheduler__this_processor(f2ptr cause) {
 
 void f2__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
   f2ptr processor = f2__global_scheduler__this_processor(cause);
-  f2__processor__add_active_fiber(cause, processor, fiber);
+  raw__processor__add_active_fiber(cause, processor, fiber);
 }
 
 

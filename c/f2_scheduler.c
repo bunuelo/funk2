@@ -242,7 +242,7 @@ f2ptr f2__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
 // user functions
 
 f2ptr f2__this__fiber(f2ptr cause) {
-  return f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+  return raw__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
 }
 
 

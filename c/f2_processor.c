@@ -77,7 +77,7 @@ f2ptr f2processor__primobject_type__new_aux(f2ptr cause) {
 }
 
 
-void f2__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber) {
+void raw__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber) {
   f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
   if (fiber_cause) {
     f2__cause__add_fiber(cause, fiber_cause, fiber);
@@ -88,17 +88,17 @@ void f2__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2p
   resume_gc();
 }
 
-void f2__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
+void raw__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   if (! raw__processor__is_type(cause, this)) {
     error(nil, "attempted to add fiber to object that is not a processor.");
   }
   f2ptr active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
   f2mutex__lock(active_fibers_mutex, cause);
-  f2__processor__add_active_fiber__thread_unsafe(cause, this, fiber);
+  raw__processor__add_active_fiber__thread_unsafe(cause, this, fiber);
   f2mutex__unlock(active_fibers_mutex, cause);
 }
 
-boolean_t f2__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber) {
+boolean_t raw__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber) {
   f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
   if (fiber_cause) {
     f2__cause__remove_fiber(cause, fiber_cause, fiber);
@@ -123,10 +123,10 @@ boolean_t f2__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr t
   return found_and_removed_fiber;
 }
 
-boolean_t f2__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
+boolean_t raw__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   f2ptr active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
   f2mutex__lock(active_fibers_mutex, cause);
-  boolean_t result = f2__processor__remove_active_fiber__thread_unsafe(cause, this, fiber);
+  boolean_t result = raw__processor__remove_active_fiber__thread_unsafe(cause, this, fiber);
   f2mutex__unlock(active_fibers_mutex, cause);
   return result;
 }

@@ -4314,7 +4314,7 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
     f2ptr read_funks = __pure__f2traced_array__elt__read_funks(this, index);
     if (read_funks) {
       f2ptr funkable_iter = read_funks;
-      f2ptr fiber         = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+      f2ptr fiber         = f2__this__fiber(cause);
       f2ptr args          = nil;
       while (funkable_iter) {
 	f2ptr funkable = f2cons__car(funkable_iter, cause);

@@ -201,7 +201,7 @@ f2ptr f2__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
 
 
 void raw__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
-  f2__scheduler__add_fiber_to_least_used_processor(cause, __funk2.operating_system.scheduler, fiber);
+  raw__scheduler__add_fiber_to_least_used_processor(cause, __funk2.operating_system.scheduler, fiber);
 }
 
 f2ptr f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {

@@ -224,9 +224,22 @@ f2ptr f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
 def_pcfunk1(global_scheduler__add_fiber_parallel, fiber, return f2__global_scheduler__add_fiber_parallel(this_cause, fiber));
 
 
-void raw__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
-  f2ptr processor = f2__global_scheduler__this_processor(cause);
-  raw__processor__remove_active_fiber(cause, processor, fiber);
+f2ptr raw__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
+  processor_assignment_index = f2fiber__processor_assignment_index(fiber, cause);
+  if (processor_assignment_index == nil) {
+    return f2larva__new(cause, 135, nil);
+  }
+  if (! raw__integer__is_type(cause, processor_assignment_index)) {
+    return f2larva__new(cause, 11, nil);
+  }
+  s64 processor_assignment_index__i = f2integer__i(processor_assignment_index, cause);
+  if ((processor_assignment_index__i < 0) ||
+      (processor_assignment_index__i >= memory_pool_num)) {
+    return f2larva__new(cause, 22, nil);
+  }
+  f2ptr     processor = raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), processor_assignment_index__i);
+  boolean_t success   = raw__processor__remove_active_fiber(cause, processor, fiber);
+  return f2bool__new(success);
 }
 
 f2ptr f2__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
@@ -236,6 +249,7 @@ f2ptr f2__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
   raw__global_scheduler__remove_fiber(cause, fiber);
   return nil;
 }
+def_pcfunk1(global_scheduler__remove_fiber, fiber, return f2__global_scheduler__remove_fiber(this_cause, fiber));
 
 
 
@@ -262,6 +276,7 @@ f2ptr f2__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
   raw__global_scheduler__complete_fiber(cause, fiber);
   return nil;
 }
+def_pcfunk1(global_scheduler__complete_fiber, fiber, return f2__global_scheduler__complete_fiber(this_cause, fiber));
 
 
 
@@ -341,7 +356,12 @@ void f2__scheduler__initialize() {
   
   f2__scheduler__reinitialize_globalvars();
   
-  f2__primcfunk__init__0(global_scheduler__active_fibers, "returns a new list of all currently active fibers.");
+  f2__primcfunk__init__0(global_scheduler__active_fibers,             "Returns a new list of all currently active fibers.");
+  f2__primcfunk__init__0(global_scheduler__this_processor,            "Returns the processor that is executing the current fiber.");
+  f2__primcfunk__init__1(global_scheduler__add_fiber_serial,   fiber, "Adds the given fiber to the current fiber's processor.");
+  f2__primcfunk__init__1(global_scheduler__add_fiber_parallel, fiber, "Adds the given fiber to the least used processor.");
+  f2__primcfunk__init__1(global_scheduler__remove_fiber,       fiber, "Removes the given fiber from it's assigned processor.");
+  f2__primcfunk__init__1(global_scheduler__complete_fiber,     fiber, "Yields until the given fiber is complete.");
   
 }
 

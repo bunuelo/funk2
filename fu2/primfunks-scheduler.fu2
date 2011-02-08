@@ -17,5 +17,10 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk global_scheduler-active_fibers &primfunk:global_scheduler__active_fibers]
+[globalize-funk global_scheduler-active_fibers      &primfunk:global_scheduler__active_fibers]
+[globalize-funk global_scheduler-this_processor     &primfunk:global_scheduler__this_processor]
+[globalize-funk global_scheduler-add_fiber_serial   &primfunk:global_scheduler__add_fiber_serial]
+[globalize-funk global_scheduler-add_fiber_parallel &primfunk:global_scheduler__add_fiber_parallel]
+[globalize-funk global_scheduler-remove_fiber       &primfunk:global_scheduler__remove_fiber]
+[globalize-funk global_scheduler-complete_fiber     &primfunk:global_scheduler__complete_fiber]
 

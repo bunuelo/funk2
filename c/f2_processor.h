@@ -73,12 +73,12 @@ f2ptr  f2__processor__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr t
 
 f2ptr f2processor__primobject_type__new_aux(f2ptr cause);
 
-void      raw__processor__add_active_fiber__thread_unsafe   (f2ptr cause, f2ptr this, f2ptr fiber);
-void      raw__processor__add_active_fiber                  (f2ptr cause, f2ptr this, f2ptr fiber);
-boolean_t raw__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber);
-boolean_t raw__processor__remove_active_fiber               (f2ptr cause, f2ptr this, f2ptr fiber);
-u64       raw__processor__active_fibers__length             (f2ptr cause, f2ptr processor);
-f2ptr        f2processor__execute_next_bytecodes            (f2ptr processor, f2ptr cause);
+f2ptr raw__processor__add_active_fiber__thread_unsafe   (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr raw__processor__add_active_fiber                  (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr raw__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr raw__processor__remove_active_fiber               (f2ptr cause, f2ptr this, f2ptr fiber);
+u64   raw__processor__active_fibers__length             (f2ptr cause, f2ptr processor);
+f2ptr    f2processor__execute_next_bytecodes            (f2ptr processor, f2ptr cause);
 
 
 // **

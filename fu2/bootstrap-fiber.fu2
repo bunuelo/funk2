@@ -23,6 +23,6 @@
 [deftypefunk fiber execute print_stack_trace [] [fiber-print_stack_trace this]]
 
 [defunk pause []
-  [set [this-fiber] paused t]
+  [global_scheduler-remove_fiber [this-fiber]]
   [yield]]
 

@@ -342,7 +342,7 @@ f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
   while (read_ch == nil) {
     read_ch = f2__stream__try_read_character(cause, stream);
     if (read_ch == nil) {
-      f2__scheduler__yield(cause);
+      f2__this__fiber__yield(cause);
       raw__spin_sleep_yield();
     }
   }

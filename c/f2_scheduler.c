@@ -131,7 +131,7 @@ f2ptr f2__scheduler__active_fibers(f2ptr cause) {
 }
 def_pcfunk0(scheduler__active_fibers, return f2__scheduler__active_fibers(this_cause));
 
-void f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
+void raw__scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
   boolean_t complete = boolean__false;
   do {
     if(f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) {
@@ -172,14 +172,14 @@ f2ptr f2__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr scheduler) 
 }
 
 
-void f2__scheduler__add_fiber_to_least_used_processor(f2ptr cause, f2ptr this, f2ptr fiber) {
+void raw__scheduler__add_fiber_to_least_used_processor(f2ptr cause, f2ptr this, f2ptr fiber) {
   f2ptr processor = f2__scheduler__processor_with_fewest_fibers(cause, this);
   //status("[adding fiber to least used processor " s64__fstr "]", f2integer__i(f2processor__pool_index(processor, cause), cause));
   raw__processor__add_active_fiber(cause, processor, fiber);
 }
 
 
-f2ptr f2__scheduler__processor_thread_current_fiber(int pool_index) {
+f2ptr raw__scheduler__processor_thread_current_fiber(int pool_index) {
   funk2_processor_mutex__lock(&(__funk2.operating_system.current_fiber_stack__mutex[pool_index]));
   funk2_operating_system_current_fiber_cons_t* cons  = __funk2.operating_system.current_fiber_stack[pool_index];
   if (cons == NULL) {
@@ -201,13 +201,13 @@ f2ptr f2__global_scheduler__this_processor(f2ptr cause) {
 }
 
 
-void f2__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
+void raw__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
   f2ptr processor = f2__global_scheduler__this_processor(cause);
   raw__processor__add_active_fiber(cause, processor, fiber);
 }
 
 
-void f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
+void raw__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
   f2__scheduler__add_fiber_to_least_used_processor(cause, __funk2.operating_system.scheduler, fiber);
 }
 

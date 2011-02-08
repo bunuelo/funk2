@@ -225,7 +225,7 @@ def_pcfunk1(global_scheduler__add_fiber_parallel, fiber, return f2__global_sched
 
 
 f2ptr raw__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
-  processor_assignment_index = f2fiber__processor_assignment_index(fiber, cause);
+  f2ptr processor_assignment_index = f2fiber__processor_assignment_index(fiber, cause);
   if (processor_assignment_index == nil) {
     return f2larva__new(cause, 135, nil);
   }

@@ -175,7 +175,7 @@ f2ptr f2__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr scheduler) 
 void f2__scheduler__add_fiber_to_least_used_processor(f2ptr cause, f2ptr this, f2ptr fiber) {
   f2ptr processor = f2__scheduler__processor_with_fewest_fibers(cause, this);
   //status("[adding fiber to least used processor " s64__fstr "]", f2integer__i(f2processor__pool_index(processor, cause), cause));
-  f2__processor__add_active_fiber(cause, processor, fiber);
+  raw__processor__add_active_fiber(cause, processor, fiber);
 }
 
 

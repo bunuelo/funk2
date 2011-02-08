@@ -124,6 +124,9 @@ f2ptr raw__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this
   if (processor_assignment_index == nil) {
     return f2larva__new(cause, 125112, nil);
   }
+  if (! raw__eq(cause, f2processor__index(this, cause), processor_assignment_index)) {
+    return f2larva__new(cause, 135222, nil);
+  }
   f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
   if (fiber_cause) {
     f2__cause__remove_fiber(cause, fiber_cause, fiber);

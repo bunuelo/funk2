@@ -225,7 +225,7 @@ void raw__global_scheduler__add_fiber(f2ptr cause, f2ptr fiber) {
   raw__global_scheduler__add_fiber_parallel(cause, fiber);
 }
 
-f2ptr f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
+f2ptr f2__global_scheduler__add_fiber(f2ptr cause, f2ptr fiber) {
   if (! raw__fiber__is_type(cause, fiber)) {
     return f2larva__new(cause, 1, nil);
   }

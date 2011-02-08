@@ -110,8 +110,8 @@ f2ptr f2scheduler__primobject_type__new_aux(f2ptr cause) {
 }
 
 
-f2ptr f2__scheduler__active_fibers(f2ptr cause) {
-  f2ptr processors         = f2scheduler__processors(__funk2.operating_system.scheduler, cause);
+f2ptr raw__scheduler__active_fibers(f2ptr cause, f2ptr this) {
+  f2ptr processors         = f2scheduler__processors(, cause);
   u64   processors__length = raw__array__length(cause, processors);
   f2ptr seq                = nil;
   u64   processors_index;
@@ -129,12 +129,14 @@ f2ptr f2__scheduler__active_fibers(f2ptr cause) {
   }
   return seq;
 }
-def_pcfunk0(scheduler__active_fibers, return f2__scheduler__active_fibers(this_cause));
 
-
-void f2__this__fiber__yield(f2ptr cause) {
-  funk2_virtual_processor_handler__yield(&(__funk2.virtual_processor_handler));
+f2ptr f2__scheduler__active_fibers(f2ptr cause, f2ptr this) {
+  if (! raw__scheduler__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__scheduler__active_fibers(cause, this);
 }
+
 
 f2ptr f2__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr scheduler) {
   f2ptr processors = f2scheduler__processors(scheduler, cause);
@@ -178,12 +180,19 @@ f2ptr raw__scheduler__processor_thread_current_fiber(int pool_index) {
 
 // global_scheduler
 
+f2ptr f2__global_scheduler__active_fibers(f2ptr cause) {
+  return raw__scheduler__active_fibers(cause, __funk2.operating_system.scheduler);
+}
+def_pcfunk0(global_scheduler__active_fibers, return f2__scheduler__active_fibers(this_cause));
+
+
 f2ptr f2__global_scheduler__this_processor(f2ptr cause) {
   if (__funk2.operating_system.scheduler == nil) {
     error(nil, "f2__global_scheduler__this_processor error: __funk2.operating_system.scheduler == nil");
   }
   return raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), this_processor_thread__pool_index());
 }
+def_pcfunk0(global_scheduler__this_processor, return f2__scheduler__this_processor(this_cause));
 
 
 void raw__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
@@ -198,6 +207,7 @@ f2ptr f2__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
   raw__global_scheduler__add_fiber_serial(cause, fiber);
   return nil;
 }
+def_pcfunk1(global_scheduler__add_fiber_serial, fiber, return f2__scheduler__add_fiber_serial(this_cause, fiber));
 
 
 void raw__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
@@ -211,6 +221,20 @@ f2ptr f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
   raw__global_scheduler__add_fiber_parallel(cause, fiber);
   return nil;
 }
+
+
+void raw__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
+  f2ptr processor = f2__global_scheduler__this_processor(cause);
+  raw__processor__remove_active_fiber(cause, processor, fiber);
+}
+
+f2ptr f2__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
+  if (! raw__fiber__is_type(cause, fiber)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__global_scheduler__remove_fiber(cause, fiber);
+}
+
 
 
 void raw__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
@@ -243,6 +267,10 @@ f2ptr f2__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
 
 f2ptr f2__this__fiber(f2ptr cause) {
   return raw__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+}
+
+void f2__this__fiber__yield(f2ptr cause) {
+  funk2_virtual_processor_handler__yield(&(__funk2.virtual_processor_handler));
 }
 
 
@@ -311,7 +339,8 @@ void f2__scheduler__initialize() {
   
   f2__scheduler__reinitialize_globalvars();
   
-  f2__primcfunk__init__0(scheduler__active_fibers, "returns a new list of all currently active fibers.");
+  f2__primcfunk__init__0(global_scheduler__active_fibers, "returns a new list of all currently active fibers.");
+  
 }
 
 void f2__scheduler__destroy() {

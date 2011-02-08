@@ -17,5 +17,5 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk scheduler-active_fibers &primfunk:scheduler__active_fibers]
+[globalize-funk global_scheduler-active_fibers &primfunk:global_scheduler__active_fibers]
 

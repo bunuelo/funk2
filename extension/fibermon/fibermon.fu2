@@ -369,7 +369,7 @@
 			      [have index_fiber_hash    add fiber current_index]
 			      [have fibermon_fiber_hash add fiber fibermon_fiber]
 			      [have [get processor_array elt current_index] add_fiber fibermon_fiber]]]]]]]
-	[scheduler-active_fibers]]
+	[global_scheduler-active_fibers]]
   nil]
 
 [deftypefunk fibermon execute redraw []

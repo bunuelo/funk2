@@ -88,16 +88,16 @@ void  raw__global_scheduler__add_fiber_serial  (f2ptr cause, f2ptr fiber);
 f2ptr  f2__global_scheduler__add_fiber_serial  (f2ptr cause, f2ptr fiber);
 void  raw__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber);
 f2ptr  f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber);
+void  raw__global_scheduler__remove_fiber      (f2ptr cause, f2ptr fiber);
+f2ptr  f2__global_scheduler__remove_fiber      (f2ptr cause, f2ptr fiber);
 void  raw__global_scheduler__complete_fiber    (f2ptr cause, f2ptr fiber);
 f2ptr  f2__global_scheduler__complete_fiber    (f2ptr cause, f2ptr fiber);
 
 
 // user functions
 
-f2ptr raw__add_fiber          (f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr  f2__this__fiber        (f2ptr cause); // returns current fiber.
-void   f2__this__fiber__yield (f2ptr cause);
-void   f2__print_fibers_stacks();
+f2ptr f2__this__fiber       (f2ptr cause); // returns current fiber.
+void  f2__this__fiber__yield(f2ptr cause);
 
 
 // **

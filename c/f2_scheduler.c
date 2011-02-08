@@ -111,7 +111,7 @@ f2ptr f2scheduler__primobject_type__new_aux(f2ptr cause) {
 
 
 f2ptr raw__scheduler__active_fibers(f2ptr cause, f2ptr this) {
-  f2ptr processors         = f2scheduler__processors(, cause);
+  f2ptr processors         = f2scheduler__processors(this, cause);
   u64   processors__length = raw__array__length(cause, processors);
   f2ptr seq                = nil;
   u64   processors_index;
@@ -221,6 +221,7 @@ f2ptr f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
   raw__global_scheduler__add_fiber_parallel(cause, fiber);
   return nil;
 }
+def_pcfunk1(global_scheduler__add_fiber_parallel, fiber, return f2__scheduler__add_fiber_parallelserial(this_cause, fiber));
 
 
 void raw__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {

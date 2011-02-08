@@ -183,7 +183,7 @@ f2ptr raw__scheduler__processor_thread_current_fiber(int pool_index) {
 f2ptr f2__global_scheduler__active_fibers(f2ptr cause) {
   return raw__scheduler__active_fibers(cause, __funk2.operating_system.scheduler);
 }
-def_pcfunk0(global_scheduler__active_fibers, return f2__scheduler__active_fibers(this_cause));
+def_pcfunk0(global_scheduler__active_fibers, return f2__global_scheduler__active_fibers(this_cause));
 
 
 f2ptr f2__global_scheduler__this_processor(f2ptr cause) {

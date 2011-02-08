@@ -89,7 +89,6 @@
 [globalize-funk fclose                                      &primfunk:fclose]
 
 [globalize-funk this-cause                                  &primfunk:this__cause]
-[globalize-funk this-fiber                                  &primfunk:this__fiber]
 [globalize-funk this-env                                    &primfunk:this__env]
 [globalize-funk this-args                                   &primfunk:this__args]
 

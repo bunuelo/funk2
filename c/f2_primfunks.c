@@ -1141,7 +1141,6 @@ f2ptr f2__demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp) {
 def_pcfunk1(demetropolize_full, exp, return f2__demetropolize_full(this_cause, simple_fiber, simple_env, exp));
 
 def_pcfunk0(this__cause,  return this_cause);
-def_pcfunk0(this__fiber,  return simple_fiber);
 def_pcfunk0(this__env,    return f2fiber__env(simple_fiber, this_cause));
 def_pcfunk0(this__args,   return simple_args);
 
@@ -1791,7 +1790,6 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(fclose, "");
   
   f2__primcfunk__init__0(this__cause, "");
-  f2__primcfunk__init__0(this__fiber, "");
   f2__primcfunk__init__0(this__env, "");
   f2__primcfunk__init__0(this__args, "");
   

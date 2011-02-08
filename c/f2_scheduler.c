@@ -293,6 +293,8 @@ def_pcfunk1(global_scheduler__complete_fiber, fiber, return f2__global_scheduler
 f2ptr f2__this__fiber(f2ptr cause) {
   return raw__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
 }
+def_pcfunk0(this__fiber, return f2__this__fiber(this_cause));
+
 
 void f2__this__fiber__yield(f2ptr cause) {
   funk2_virtual_processor_handler__yield(&(__funk2.virtual_processor_handler));
@@ -372,6 +374,7 @@ void f2__scheduler__initialize() {
   f2__primcfunk__init__1(global_scheduler__remove_fiber,       fiber, "Removes the given fiber from it's assigned processor.");
   f2__primcfunk__init__1(global_scheduler__complete_fiber,     fiber, "Yields until the given fiber is complete.");
   
+  f2__primcfunk__init__0(this__fiber, "Returns the currently executing fiber.");
 }
 
 void f2__scheduler__destroy() {

@@ -25,3 +25,5 @@
 [globalize-funk global_scheduler-remove_fiber       &primfunk:global_scheduler__remove_fiber]
 [globalize-funk global_scheduler-complete_fiber     &primfunk:global_scheduler__complete_fiber]
 
+[globalize-funk this-fiber &primfunk:this__fiber]
+

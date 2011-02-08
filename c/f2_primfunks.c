@@ -520,7 +520,7 @@ f2ptr f2__force_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args)
     return raw__core_extension_funk__apply(cause, funkable, args);
   } else if (raw__funkable__is_type(cause, funkable)) {
     f2ptr new_fiber = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), funkable, args);
-    f2__scheduler__complete_fiber(cause, new_fiber);
+    f2__global_scheduler__complete_fiber(cause, new_fiber);
     f2ptr value = f2fiber__value(new_fiber, cause);
     f2fiber__keep_undead__set(new_fiber, cause, nil);
     if ((f2__fiber__paused(cause, new_fiber) != nil) &&

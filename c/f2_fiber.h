@@ -49,6 +49,7 @@ declare_object_type_22_slot(fiber,
 			    processor_assignment_mutex,
 			    processor_assignment_index,
 			    should_quit,
+			    
 			    f2ptr do_sleep_until_time__symbol;   // execute
 			    f2ptr do_sleep_until_time__funk;
 			    f2ptr sleep_for_nanoseconds__symbol; // execute

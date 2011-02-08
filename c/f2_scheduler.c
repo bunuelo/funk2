@@ -224,7 +224,7 @@ void raw__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
       f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
     }
     if (! complete) {
-      f2__scheduler__yield(cause);
+      f2__this__fiber__yield(cause);
     }
   } while (! complete);
 }

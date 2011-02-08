@@ -134,7 +134,7 @@ f2ptr raw__fiber_trigger_hash__unpause_trigger_fibers(f2ptr cause, f2ptr trigger
 		   if (! raw__fiber__is_type(cause, fiber)) {
 		     return f2larva__new(cause, 1, nil);
 		   }
-		   f2__fiber__paused__set(cause, fiber, nil));
+		   f2__global_scheduler__add_fiber(cause, fiber));
     raw__ptypehash__add(cause, fiber_trigger_hash, trigger, nil);
   }
   return nil;

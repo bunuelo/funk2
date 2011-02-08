@@ -192,7 +192,7 @@ f2ptr f2__global_scheduler__this_processor(f2ptr cause) {
   }
   return raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), this_processor_thread__pool_index());
 }
-def_pcfunk0(global_scheduler__this_processor, return f2__scheduler__this_processor(this_cause));
+def_pcfunk0(global_scheduler__this_processor, return f2__global_scheduler__this_processor(this_cause));
 
 
 void raw__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {

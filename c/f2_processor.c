@@ -134,7 +134,7 @@ f2ptr raw__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this
   while (active_fibers_iter) {
     f2ptr active_fiber       = f2cons__car(active_fibers_iter, cause);
     f2ptr active_fibers_next = f2cons__cdr(active_fibers_iter, cause);
-    if (fiber == active_fiber) {
+    if (raw__eq(cause, fiber, active_fiber)) {
       if (active_fibers_prev) {
 	f2cons__cdr__set(active_fibers_prev, cause, active_fibers_next);
       } else {
@@ -142,6 +142,7 @@ f2ptr raw__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this
       }
       f2fiber__processor_assignment_index__set(fiber, cause, nil);
       found_and_removed_fiber = boolean__true;
+      break;
     }
     active_fibers_iter = active_fibers_next;
   }

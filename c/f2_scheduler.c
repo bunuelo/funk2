@@ -221,8 +221,8 @@ f2ptr f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
 def_pcfunk1(global_scheduler__add_fiber_parallel, fiber, return f2__global_scheduler__add_fiber_parallel(this_cause, fiber));
 
 
-void raw__global_scheduler__add_fiber(f2ptr cause, f2ptr fiber) {
-  raw__global_scheduler__add_fiber_parallel(cause, fiber);
+f2ptr raw__global_scheduler__add_fiber(f2ptr cause, f2ptr fiber) {
+  return raw__global_scheduler__add_fiber_parallel(cause, fiber);
 }
 
 f2ptr f2__global_scheduler__add_fiber(f2ptr cause, f2ptr fiber) {

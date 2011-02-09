@@ -41,6 +41,7 @@
 			   [activated_trigger [new fiber_trigger]]
 			   [finished_trigger  [new fiber_trigger]]]
   [new [initial-name initial-active_funk]
+       [= debug t]
        [= resource_initializing_mutex [new traced_mutex]] [have resource_initializing_mutex lock]
        [= fiber_starting_mutex        [new traced_mutex]] [have fiber_starting_mutex        lock]
        [= fiber                       [fiber [funk []

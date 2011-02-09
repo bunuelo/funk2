@@ -124,10 +124,7 @@ f2ptr raw__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this
     }
     active_fibers_iter = active_fibers_next;
   }
-  if (! found_and_removed_fiber) {
-    return f2larva__new(cause, 135111, nil);
-  }
-  return nil;
+  return f2bool__new(found_and_removed_fiber);
 }
 
 f2ptr raw__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {

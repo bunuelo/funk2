@@ -200,8 +200,8 @@ boolean_t raw__processor__active_fibers__contains(f2ptr cause, f2ptr this, f2ptr
 	iter = f2cons__cdr(iter, cause);
       }
     }
+    f2mutex__unlock(this__active_fibers_mutex, cause);
   }
-  f2mutex__unlock(this__active_fibers_mutex, cause);
   return contains_fiber;
 }
 

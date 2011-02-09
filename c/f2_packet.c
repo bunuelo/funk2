@@ -5560,7 +5560,7 @@ f2ptr f2larva__bug(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2larva__bug(this, cause);
   } else {
-    f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    f2ptr         fiber      = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2larva__bug(funk2_node, fiber, cause, this);
   }

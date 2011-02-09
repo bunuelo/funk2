@@ -314,7 +314,7 @@ f2ptr f2__global_scheduler__processor_thread_current_fiber(f2ptr cause, f2ptr po
   }
   return raw__global_scheduler__processor_thread_current_fiber(pool_index__i);
 }
-def_pcfunk2(global_scheduler__processor_thread_current_fiber, pool_index, return f2__global_scheduler__processor_thread_current_fiber(this_cause, pool_index));
+def_pcfunk1(global_scheduler__processor_thread_current_fiber, pool_index, return f2__global_scheduler__processor_thread_current_fiber(this_cause, pool_index));
 
 
 f2ptr raw__global_scheduler__current_fiber() {

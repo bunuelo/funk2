@@ -316,6 +316,12 @@ f2ptr f2__this__fiber(f2ptr cause) {
     return processor_assignment_index;
   }
   f2ptr     this__processor                          =  f2__global_scheduler__this_processor(cause);
+  if ((! raw__processor__is_type(cause, this__processor)) ||
+      (! raw__fiber__is_type(cause, this__fiber))) {
+    status(  "f2__this__fiber debug: discovered larva 11.");
+    printf("\nf2__this__fiber debug: discovered larva 11."); fflush(stdout);
+    return f2larva__new(cause, 11, nil);
+  }
   boolean_t this__processor___contains___this__fiber = raw__processor__active_fibers__contains__thread_unsafe(cause, this__processor, this__fiber);
   if (! this__processor___contains___this__fiber) {
     status(  "f2__this__fiber debug: discovered larva 122411.");

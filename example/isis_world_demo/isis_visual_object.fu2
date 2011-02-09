@@ -41,6 +41,8 @@
 	       [initial-distance                   [have isis_object_frame lookup `distance]]
 	       [initial-orientation                [have isis_object_frame lookup `orientation]]
 	       [initial-preposition_frame          [new frame]]] 
+	   [terminal_format stardard-terminal 'orientation' [have isis_object_frame lookup `orientation] initial-orientation]
+	   [terminal_format stardard-terminal 'preposition_frame' [have isis_object_frame lookup `preposition_frame] initial-preposition_frame]
 	   [isis_sensory_frame-add_prepositions_to_object_proposition_frame isis_sensory_frame isis_name initial-preposition_frame]
 	   [construct moral_compass_visual_object
 		      initial-object_type

@@ -325,8 +325,8 @@ f2ptr f2__this__fiber(f2ptr cause) {
 }
 def_pcfunk0(this__fiber,
 	    f2ptr this__fiber = f2__this__fiber(this_cause);
-	    if (! raw__eq(cause, simple_fiber, this__fiber)) {
-	      return f2larva__new(cause, 246115, nil);
+	    if (! raw__eq(this_cause, simple_fiber, this__fiber)) {
+	      return f2larva__new(this_cause, 246115, nil);
 	    }
 	    return this__fiber);
 

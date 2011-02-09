@@ -322,7 +322,7 @@ f2ptr f2__this__fiber(f2ptr cause) {
     printf("\nf2__this__fiber debug: discovered larva 11."); fflush(stdout);
     return f2larva__new(cause, 11, nil);
   }
-  boolean_t this__processor___contains___this__fiber = boolean__true; //raw__processor__active_fibers__contains__thread_unsafe(cause, this__processor, this__fiber);
+  boolean_t this__processor___contains___this__fiber = boolean__false; //raw__processor__active_fibers__contains__thread_unsafe(cause, this__processor, this__fiber);
   if (! this__processor___contains___this__fiber) {
     status(  "f2__this__fiber debug: discovered larva 122411.");
     printf("\nf2__this__fiber debug: discovered larva 122411."); fflush(stdout);

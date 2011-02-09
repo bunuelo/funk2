@@ -315,20 +315,13 @@ f2ptr f2__this__fiber(f2ptr cause) {
     printf("\nf2__this__fiber debug: got processor_assignment_index larva."); fflush(stdout);
     return processor_assignment_index;
   }
-  f2ptr this__processor                          = f2__global_scheduler__this_processor(cause);
-  /*
-  f2ptr this__processor___contains___this__fiber = f2__processor__active_fibers__contains(cause, this__processor, this__fiber);
-  if (raw__larva__is_type(cause, this__processor___contains___this__fiber)) {
-    status(  "f2__this__fiber debug: got this__processor___contains___this__fiber larva.");
-    printf("\nf2__this__fiber debug: got this__processor___contains___this__fiber larva."); fflush(stdout);
-    return this__processor___contains___this__fiber;
-  }
-  if (this__processor___contains___this__fiber == nil) {
+  f2ptr     this__processor                          =  f2__global_scheduler__this_processor(cause);
+  boolean_t this__processor___contains___this__fiber = raw__processor__active_fibers__contains__thread_unsafe(cause, this__processor, this__fiber);
+  if (! this__processor___contains___this__fiber) {
     status(  "f2__this__fiber debug: discovered larva 122411.");
     printf("\nf2__this__fiber debug: discovered larva 122411."); fflush(stdout);
     return f2larva__new(cause, 122411, nil);
   }
-  */
   return this__fiber;
 }
 def_pcfunk0(this__fiber,

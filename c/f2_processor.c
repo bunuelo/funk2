@@ -143,7 +143,7 @@ f2ptr raw__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) 
       both_locked = boolean__false;
       f2mutex__unlock(processor_assignment_mutex, cause);
     }
-    f2__this__fiber__yield();
+    f2__this__fiber__yield(cause);
   }
   f2ptr result = raw__processor__remove_active_fiber__thread_unsafe(cause, this, fiber);
   f2mutex__unlock(active_fibers_mutex,        cause);

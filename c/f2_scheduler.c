@@ -423,7 +423,7 @@ void f2__scheduler__initialize() {
   f2__primcfunk__init__1(global_scheduler__add_fiber,                      fiber,      "Adds the given fiber to the global scheduler.");
   f2__primcfunk__init__1(global_scheduler__remove_fiber,                   fiber,      "Removes the given fiber from it's assigned processor.");
   f2__primcfunk__init__1(global_scheduler__complete_fiber,                 fiber,      "Yields until the given fiber is complete.");
-  f2__primcfunk__init__2(global_scheduler__processor_thread_current_fiber, pool_index, "");
+  f2__primcfunk__init__1(global_scheduler__processor_thread_current_fiber, pool_index, "");
   f2__primcfunk__init__0(global_scheduler__current_fiber,                              "");
   
   f2__primcfunk__init__0(this__fiber, "Returns the currently executing fiber.");

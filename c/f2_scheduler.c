@@ -309,7 +309,6 @@ f2ptr raw__global_scheduler__processor_thread_current_fiber(int pool_index) {
 
 f2ptr f2__this__fiber(f2ptr cause) {
   f2ptr this__fiber                = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
-  /*
   f2ptr processor_assignment_index = f2__fiber__processor_assignment_index(cause, this__fiber);
   if (raw__larva__is_type(cause, processor_assignment_index)) {
     status(  "f2__this__fiber debug: got processor_assignment_index larva.");
@@ -317,6 +316,7 @@ f2ptr f2__this__fiber(f2ptr cause) {
     return processor_assignment_index;
   }
   f2ptr this__processor                          = f2__global_scheduler__this_processor(cause);
+  /*
   f2ptr this__processor___contains___this__fiber = f2__processor__active_fibers__contains(cause, this__processor, this__fiber);
   if (raw__larva__is_type(cause, this__processor___contains___this__fiber)) {
     status(  "f2__this__fiber debug: got this__processor___contains___this__fiber larva.");

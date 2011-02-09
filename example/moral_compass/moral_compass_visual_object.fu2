@@ -23,19 +23,23 @@
 					      retina_position_horizontal
 					      retina_position_vertical
 					      distance
+					      orientation
 					      preposition_frame]
   [new [initial-object_type
 	initial-phenomenal_name
 	initial-retina_position_horizontal
 	initial-retina_position_vertical
 	initial-distance
-	initial-preposition_frame]
+	initial-preposition_frame
+	initial-orientation]
        [= object_type                initial-object_type]
        [= phenomenal_name            initial-phenomenal_name]
        [= retina_position_horizontal initial-retina_position_horizontal]
        [= retina_position_vertical   initial-retina_position_vertical]
        [= distance                   initial-distance]
+       [= orientation                initial-orientation]
        [= preposition_frame          initial-preposition_frame]
+       
        ]]
 
 

@@ -39,7 +39,6 @@
 	       [initial-retina_position_horizontal [have isis_object_frame lookup `x_pos]]
 	       [initial-retina_position_vertical   [have isis_object_frame lookup `y_pos]]
 	       [initial-distance                   [have isis_object_frame lookup `distance]]
-	       [initial-orientation                [have isis_object_frame lookup `orientation]]
 	       [initial-preposition_frame          [new frame]]]
 	   [isis_sensory_frame-add_prepositions_to_object_proposition_frame isis_sensory_frame isis_name initial-preposition_frame]
 	   [construct moral_compass_visual_object
@@ -48,7 +47,6 @@
 		      initial-retina_position_horizontal
 		      initial-retina_position_vertical
 		      initial-distance
-		      initial-orientation
 		      initial-preposition_frame]
 	   ]]]]
 

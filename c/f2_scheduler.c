@@ -305,6 +305,7 @@ f2ptr raw__global_scheduler__processor_thread_current_fiber(int pool_index) {
 }
 
 
+
 // user functions
 
 f2ptr f2__this__fiber(f2ptr cause) {

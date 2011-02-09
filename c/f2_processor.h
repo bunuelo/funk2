@@ -41,6 +41,14 @@ declare_object_type_11_slot(processor,
 			    pool_index,
 			    desc,
 			    
+			    f2ptr add_active_fiber__symbol;
+			    f2ptr add_active_fiber__funk;
+			    f2ptr remove_active_fiber__symbol;
+			    f2ptr remove_active_fiber__funk;
+			    f2ptr active_fibers__length__symbol;
+			    f2ptr active_fibers__length__funk;
+			    f2ptr active_fibers__contains__symbol;
+			    f2ptr active_fibers__contains__funk;
 			    f2ptr terminal_print_with_frame__symbol;
 			    f2ptr terminal_print_with_frame__funk;
 			    );

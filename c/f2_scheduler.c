@@ -81,35 +81,6 @@ f2ptr f2__scheduler__new(f2ptr cause, f2ptr processors) {return f2scheduler__new
 def_pcfunk1(scheduler__new, processors, return f2__scheduler__new(this_cause, processors));
 
 
-f2ptr raw__scheduler__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
-  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
-  if (frame == nil) {
-    frame = f2__frame__new(cause, f2list4__new(cause,
-					       new__symbol(cause, "print_object_type"), new__symbol(cause, "scheduler"),
-					       new__symbol(cause, "processors"), f2__scheduler__processors(cause, this)));
-    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
-  }
-  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
-}
-
-f2ptr f2__scheduler__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((! raw__scheduler__is_type(cause, this)) &&
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__scheduler__terminal_print_with_frame(cause, this, terminal_print_frame);
-}
-def_pcfunk2(scheduler__terminal_print_with_frame, this, terminal_print_frame, return f2__scheduler__terminal_print_with_frame(this_cause, this, terminal_print_frame));
-
-
-f2ptr f2scheduler__primobject_type__new_aux(f2ptr cause) {
-  f2ptr this = f2scheduler__primobject_type__new(cause);
-  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__funk);}
-  return this;
-}
-
-
 f2ptr raw__scheduler__active_fibers(f2ptr cause, f2ptr this) {
   f2ptr processors         = f2scheduler__processors(this, cause);
   u64   processors__length = raw__array__length(cause, processors);
@@ -136,20 +107,19 @@ f2ptr f2__scheduler__active_fibers(f2ptr cause, f2ptr this) {
   }
   return raw__scheduler__active_fibers(cause, this);
 }
+def_pcfunk1(scheduler__active_fibers, this, return f2__scheduler__active_fibers(this_cause, this));
 
 
-f2ptr f2__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr scheduler) {
-  f2ptr processors = f2scheduler__processors(scheduler, cause);
+f2ptr raw__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr this) {
+  f2ptr processors = f2scheduler__processors(this, cause);
   u64 processors__length = raw__array__length(cause, processors);
   u64   min_length    = 0xffffffffffffffffull;
   f2ptr min_processor = nil;
   u64 i;
-  //status("processor fiber list:");
   for (i = 0; i < processors__length; i ++) {
     f2ptr processor = raw__array__elt(cause, processors, i);
     f2ptr active_fibers = f2processor__active_fibers(processor, cause);
     u64 fibers__length = raw__simple_length(cause, active_fibers);
-    //status("  processor pool_index=" s64__fstr " active_fiber_num=" u64__fstr ".", f2integer__i(f2processor__pool_index(processor, cause), cause), fibers__length);
     if (fibers__length < min_length) {
       min_length = fibers__length;
       min_processor = processor;
@@ -158,22 +128,59 @@ f2ptr f2__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr scheduler) 
   return min_processor;
 }
 
+f2ptr f2__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr this) {
+  if (! raw__scheduler__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__scheduler__processor_with_fewest_fibers(cause, this);
+}
+def_pcfunk1(scheduler__processor_with_fewest_fibers, this, return f2__scheduler__processor_with_fewest_fibers(this_cause, this));
+
 
 f2ptr raw__scheduler__add_fiber_to_least_used_processor(f2ptr cause, f2ptr this, f2ptr fiber) {
-  f2ptr processor = f2__scheduler__processor_with_fewest_fibers(cause, this);
+  f2ptr processor = raw__scheduler__processor_with_fewest_fibers(cause, this);
   return raw__processor__add_active_fiber(cause, processor, fiber);
 }
 
-
-f2ptr raw__scheduler__processor_thread_current_fiber(int pool_index) {
-  funk2_processor_mutex__lock(&(__funk2.operating_system.current_fiber_stack__mutex[pool_index]));
-  funk2_operating_system_current_fiber_cons_t* cons  = __funk2.operating_system.current_fiber_stack[pool_index];
-  if (cons == NULL) {
-    error(nil, "f2__scheduler__processor_thread_current_fiber: this->current_fiber_stack[pool_index]=NULL");
+f2ptr f2__scheduler__add_fiber_to_least_used_processor(f2ptr cause, f2ptr this, f2ptr fiber) {
+  if ((! raw__scheduler__is_type(cause, this)) ||
+      (! raw__fiber__is_type(cause, fiber))) {
+    return f2larva__new(cause, 1, nil);
   }
-  f2ptr current_fiber = cons->current_fiber;
-  funk2_processor_mutex__unlock(&(__funk2.operating_system.current_fiber_stack__mutex[pool_index]));
-  return current_fiber;
+  return raw__scheduler__add_fiber_to_least_used_processor(cause, this, fiber);
+}
+def_pcfunk2(scheduler__add_fiber_to_least_used_processor, this, fiber, return f2__scheduler__add_fiber_least_used_processor(this_cause, this, fiber));
+
+
+f2ptr raw__scheduler__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list4__new(cause,
+					       new__symbol(cause, "print_object_type"), new__symbol(cause, "scheduler"),
+					       new__symbol(cause, "processors"), f2__scheduler__processors(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__scheduler__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__scheduler__is_type(cause, this)) &&
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__scheduler__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(scheduler__terminal_print_with_frame, this, terminal_print_frame, return f2__scheduler__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr f2scheduler__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2scheduler__primobject_type__new(cause);
+  {char* slot_name = "active_fibers";                     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__funk);}
+  {char* slot_name = "processor_with_fewest_fibers";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processor_with_fewest_fibers__funk);}
+  {char* slot_name = "add_fiber_to_least_used_processor"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_scheduler.add_fiber_to_least_used_processor__funk);}
+  {char* slot_name = "terminal_print_with_frame";         f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__funk);}
+  return this;
 }
 
 
@@ -260,7 +267,6 @@ f2ptr f2__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
 def_pcfunk1(global_scheduler__remove_fiber, fiber, return f2__global_scheduler__remove_fiber(this_cause, fiber));
 
 
-
 void raw__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
   boolean_t complete = boolean__false;
   do {
@@ -286,6 +292,17 @@ f2ptr f2__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
 }
 def_pcfunk1(global_scheduler__complete_fiber, fiber, return f2__global_scheduler__complete_fiber(this_cause, fiber));
 
+
+f2ptr raw__global_scheduler__processor_thread_current_fiber(int pool_index) {
+  funk2_processor_mutex__lock(&(__funk2.operating_system.current_fiber_stack__mutex[pool_index]));
+  funk2_operating_system_current_fiber_cons_t* cons  = __funk2.operating_system.current_fiber_stack[pool_index];
+  if (cons == NULL) {
+    error(nil, "f2__scheduler__processor_thread_current_fiber: this->current_fiber_stack[pool_index]=NULL");
+  }
+  f2ptr current_fiber = cons->current_fiber;
+  funk2_processor_mutex__unlock(&(__funk2.operating_system.current_fiber_stack__mutex[pool_index]));
+  return current_fiber;
+}
 
 
 // user functions

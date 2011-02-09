@@ -308,7 +308,7 @@ f2ptr raw__global_scheduler__processor_thread_current_fiber(int pool_index) {
 // user functions
 
 f2ptr f2__this__fiber(f2ptr cause) {
-  return raw__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+  return raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
 }
 def_pcfunk0(this__fiber, return f2__this__fiber(this_cause));
 

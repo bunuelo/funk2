@@ -304,6 +304,28 @@ f2ptr raw__global_scheduler__processor_thread_current_fiber(int pool_index) {
   return current_fiber;
 }
 
+f2ptr f2__global_scheduler__processor_thread_current_fiber(f2ptr cause, f2ptr pool_index) {
+  if (! raw__integer__is_type(cause, pool_index)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  s64 pool_index__i = f2integer__i(pool_index, cause);
+  if ((pool_index__i < 0) || (pool_index >= memory_pool_num)) {
+    return f2larva__new(cause, 22, nil);
+  }
+  return raw__global_scheduler__processor_thread_current_fiber(pool_index__i);
+}
+def_pcfunk2(global_scheduler__processor_thread_current_fiber, pool_index, return f2__global_scheduler__processor_thread_current_fiber(this_cause, pool_index));
+
+
+f2ptr raw__global_scheduler__current_fiber() {
+  return raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+}
+
+f2ptr f2__global_scheduler__current_fiber(f2ptr cause) {
+  return raw__global_scheduler__current_fiber();
+}
+def_pcfunk0(global_scheduler__current_fiber, return f2__global_scheduler__current_fiber(this_cause));
+
 
 // user functions
 
@@ -394,13 +416,15 @@ void f2__scheduler__initialize() {
   
   f2__scheduler__reinitialize_globalvars();
   
-  f2__primcfunk__init__0(global_scheduler__active_fibers,             "Returns a new list of all currently active fibers.");
-  f2__primcfunk__init__0(global_scheduler__this_processor,            "Returns the processor that is executing the current fiber.");
-  f2__primcfunk__init__1(global_scheduler__add_fiber_serial,   fiber, "Adds the given fiber to the current fiber's processor.");
-  f2__primcfunk__init__1(global_scheduler__add_fiber_parallel, fiber, "Adds the given fiber to the least used processor.");
-  f2__primcfunk__init__1(global_scheduler__add_fiber,          fiber, "Adds the given fiber to the global scheduler.");
-  f2__primcfunk__init__1(global_scheduler__remove_fiber,       fiber, "Removes the given fiber from it's assigned processor.");
-  f2__primcfunk__init__1(global_scheduler__complete_fiber,     fiber, "Yields until the given fiber is complete.");
+  f2__primcfunk__init__0(global_scheduler__active_fibers,                              "Returns a new list of all currently active fibers.");
+  f2__primcfunk__init__0(global_scheduler__this_processor,                             "Returns the processor that is executing the current fiber.");
+  f2__primcfunk__init__1(global_scheduler__add_fiber_serial,               fiber,      "Adds the given fiber to the current fiber's processor.");
+  f2__primcfunk__init__1(global_scheduler__add_fiber_parallel,             fiber,      "Adds the given fiber to the least used processor.");
+  f2__primcfunk__init__1(global_scheduler__add_fiber,                      fiber,      "Adds the given fiber to the global scheduler.");
+  f2__primcfunk__init__1(global_scheduler__remove_fiber,                   fiber,      "Removes the given fiber from it's assigned processor.");
+  f2__primcfunk__init__1(global_scheduler__complete_fiber,                 fiber,      "Yields until the given fiber is complete.");
+  f2__primcfunk__init__2(global_scheduler__processor_thread_current_fiber, pool_index, "");
+  f2__primcfunk__init__0(global_scheduler__current_fiber,                              "");
   
   f2__primcfunk__init__0(this__fiber, "Returns the currently executing fiber.");
 }

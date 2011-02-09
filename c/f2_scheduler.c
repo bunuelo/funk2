@@ -308,9 +308,27 @@ f2ptr raw__global_scheduler__processor_thread_current_fiber(int pool_index) {
 // user functions
 
 f2ptr f2__this__fiber(f2ptr cause) {
-  return raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+  f2ptr this__fiber                = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+  f2ptr processor_assignment_index = f2__fiber__processor_assignment_index(cause, this__fiber);
+  if (raw__larva__is_type(cause, processor_assignment_index)) {
+    return processor_assignment_index;
+  }
+  f2ptr this__processor                          = f2__global_scheduler__this_processor(cause);
+  f2ptr this__processor___contains___this__fiber = f2__processor__active_fibers__contains(cause, this__processor, this__fiber);
+  if (raw__larva__is_type(cause, this__processor___contains___this__fiber)) {
+    return this__processor___contains___this__fiber;
+  }
+  if (this__processor___contains___this__fiber == nil) {
+    return f2larva__new(cause, 122411, nil);
+  }
+  return this__fiber;
 }
-def_pcfunk0(this__fiber, return f2__this__fiber(this_cause));
+def_pcfunk0(this__fiber,
+	    f2ptr this__fiber = f2__this__fiber(this_cause);
+	    if (! raw__eq(cause, simple_fiber, this__fiber)) {
+	      return f2larva__new(cause, 246115, nil);
+	    }
+	    return this__fiber);
 
 
 void f2__this__fiber__yield(f2ptr cause) {

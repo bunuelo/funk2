@@ -23,6 +23,12 @@
 [deftypefunk fiber execute print_stack_trace [] [fiber-print_stack_trace this]]
 
 [defunk pause []
+  [let [[global_scheduler-current_fiber [global_scheduler-current_fiber]]
+	[this-fiber                     [this-fiber]]]
+    [if [not [eq global_scheduler-current_fiber this-fiber]]
+	[error bug_type                       `pause-global_scheduler_current_fiber_is_not_me
+	       global_scheduler-current_fiber global_scheduler-current_fiber
+	       this-fiber                     this-fiber]]]
   [global_scheduler-remove_fiber [this-fiber]]
   [yield]]
 

@@ -183,11 +183,9 @@ f2ptr f2__processor__active_fibers__length(f2ptr cause, f2ptr this) {
 def_pcfunk1(processor__active_fibers__length, this, return f2__processor__active_fibers__length(this_cause, this));
 
 
-boolean_t raw__processor__active_fibers__contains(f2ptr cause, f2ptr this, f2ptr fiber) {
+boolean_t raw__processor__active_fibers__contains__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber) {
   boolean_t contains_fiber = boolean__false;
   {
-    f2ptr this__active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
-    f2mutex__lock(this__active_fibers_mutex, cause);
     f2ptr active_fibers = f2processor__active_fibers(this, cause);
     {
       f2ptr iter = active_fibers;
@@ -200,6 +198,16 @@ boolean_t raw__processor__active_fibers__contains(f2ptr cause, f2ptr this, f2ptr
 	iter = f2cons__cdr(iter, cause);
       }
     }
+  }
+  return contains_fiber;
+}
+
+boolean_t raw__processor__active_fibers__contains(f2ptr cause, f2ptr this, f2ptr fiber) {
+  boolean_t contains_fiber = boolean__false;
+  {
+    f2ptr this__active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
+    f2mutex__lock(this__active_fibers_mutex, cause);
+    contains_fiber = raw__processor__active_fibers__contains__thread_unsafe(cause, this, fiber);
     f2mutex__unlock(this__active_fibers_mutex, cause);
   }
   return contains_fiber;

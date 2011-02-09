@@ -308,26 +308,7 @@ f2ptr raw__global_scheduler__processor_thread_current_fiber(int pool_index) {
 // user functions
 
 f2ptr f2__this__fiber(f2ptr cause) {
-  f2ptr this__fiber                = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
-  f2ptr processor_assignment_index = f2__fiber__processor_assignment_index(cause, this__fiber);
-  if (raw__larva__is_type(cause, processor_assignment_index)) {
-    status(  "f2__this__fiber debug: got processor_assignment_index larva (not actually returned).");
-    printf("\nf2__this__fiber debug: got processor_assignment_index larva (not actually returned)."); fflush(stdout);
-  } else {
-    f2ptr     this__processor                          =  f2__global_scheduler__this_processor(cause);
-    if ((! raw__processor__is_type(cause, this__processor)) ||
-	(! raw__fiber__is_type(cause, this__fiber))) {
-      status(  "f2__this__fiber debug: discovered larva 11 (not actually returned).");
-      printf("\nf2__this__fiber debug: discovered larva 11 (not actually returned)."); fflush(stdout);
-    } else {
-      boolean_t this__processor___contains___this__fiber = raw__processor__active_fibers__contains__thread_unsafe(cause, this__processor, this__fiber);
-      if (! this__processor___contains___this__fiber) {
-	status(  "f2__this__fiber debug: discovered larva 122411 (not actually returned).");
-	printf("\nf2__this__fiber debug: discovered larva 122411 (not actually returned)."); fflush(stdout);
-      }
-    }
-  }
-  return this__fiber;
+  return raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
 }
 def_pcfunk0(this__fiber,
 	    f2ptr this__fiber = f2__this__fiber(this_cause);

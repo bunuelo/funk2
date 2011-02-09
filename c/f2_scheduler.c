@@ -149,7 +149,7 @@ f2ptr f2__scheduler__add_fiber_to_least_used_processor(f2ptr cause, f2ptr this, 
   }
   return raw__scheduler__add_fiber_to_least_used_processor(cause, this, fiber);
 }
-def_pcfunk2(scheduler__add_fiber_to_least_used_processor, this, fiber, return f2__scheduler__add_fiber_least_used_processor(this_cause, this, fiber));
+def_pcfunk2(scheduler__add_fiber_to_least_used_processor, this, fiber, return f2__scheduler__add_fiber_to_least_used_processor(this_cause, this, fiber));
 
 
 f2ptr raw__scheduler__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

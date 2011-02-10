@@ -42,10 +42,10 @@ f2ptr f2__processor__new(f2ptr cause) {
 def_pcfunk0(processor__new, return f2__processor__new(this_cause));
 
 
-f2ptr raw__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber) {
+boolean_t raw__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber) {
   f2ptr processor_assignment_index = f2fiber__processor_assignment_index(fiber, cause);
   if (processor_assignment_index != nil) {
-    return f2larva__new(cause, 125111, nil);
+    return boolean__false;
   }
   f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
   if (fiber_cause) {
@@ -55,7 +55,7 @@ f2ptr raw__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f
   f2processor__active_fibers__set(this, cause, f2cons__new(cause, fiber, f2processor__active_fibers(this, cause)));
   f2fiber__processor_assignment_index__set(fiber, cause, f2processor__pool_index(this, cause));
   resume_gc();
-  return nil;
+  return boolean__true;
 }
 
 f2ptr raw__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
@@ -84,10 +84,10 @@ f2ptr raw__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
       }
     }
   }
-  f2ptr result = raw__processor__add_active_fiber__thread_unsafe(cause, this, fiber);
+  boolean_t success = raw__processor__add_active_fiber__thread_unsafe(cause, this, fiber);
   f2mutex__unlock(active_fibers_mutex,        cause);
   f2mutex__unlock(processor_assignment_mutex, cause);
-  return result;
+  return f2bool__new(success);
 }
 
 f2ptr f2__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {

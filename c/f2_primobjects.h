@@ -1271,6 +1271,12 @@ f2ptr f2cons__primobject_type__new_aux(f2ptr cause);
 #define f2list26__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25) \
   f2cons__new(cause, elt0, f2list25__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25))
 
+#define f2list27__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26) \
+  f2cons__new(cause, elt0, f2list26__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26))
+
+#define f2list28__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27) \
+  f2cons__new(cause, elt0, f2list27__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27))
+
 
 
 #define f2list__elt_0(     this, cause)        f2cons__car(                                                     this, cause)

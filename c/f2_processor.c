@@ -430,8 +430,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      if (! f2fiber__keep_undead(fiber, cause)) {
 		f2ptr last_executed_time = f2fiber__last_executed_time(fiber, cause);
 		if (last_executed_time) {
-		  f2ptr nanoseconds_since_1970 = f2time__nanoseconds_since_1970(last_executed_time, cause);
-		  u64 nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
+		  f2ptr nanoseconds_since_1970    = f2time__nanoseconds_since_1970(last_executed_time, cause);
+		  u64   nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
 		  // This is a hack to avoid accidental fiber removal.  As one would expect, it doesn't really work.
 		  if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > nanoseconds_per_second) {
 		    

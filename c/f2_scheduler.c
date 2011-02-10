@@ -242,18 +242,20 @@ def_pcfunk1(global_scheduler__add_fiber, fiber, return f2__global_scheduler__add
 
 
 f2ptr raw__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
-  boolean_t success = boolean__false;
-  {
-    s64 pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      f2ptr processor = raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), pool_index);
-      success         = raw__processor__remove_active_fiber(cause, processor, fiber);
-      if (success) {
-	break;
-      }
-    }
+  f2ptr processor_assignment_index = f2fiber__processor_assignment_index(fiber, cause);
+  if (processor_assignment_index == nil) {
+    return f2larva__new(cause, 135, nil);
   }
-  return f2bool__new(success);
+  if (! raw__integer__is_type(cause, processor_assignment_index)) {
+    return f2larva__new(cause, 11, nil);
+  }
+  s64 processor_assignment_index__i = f2integer__i(processor_assignment_index, cause);
+  if ((processor_assignment_index__i < 0) ||
+      (processor_assignment_index__i >= memory_pool_num)) {
+    return f2larva__new(cause, 22, nil);
+  }
+  f2ptr processor = raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), processor_assignment_index__i);
+  return raw__processor__remove_active_fiber(cause, processor, fiber);
 }
 
 f2ptr f2__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {

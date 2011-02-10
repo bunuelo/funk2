@@ -158,7 +158,7 @@ f2ptr raw__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) 
   }
   f2ptr result      = raw__processor__remove_active_fiber__thread_unsafe(cause, this, fiber);
   f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
-  if (fiber_cause) {
+  if (fiber_cause != nil) {
     f2__cause__remove_fiber(cause, fiber_cause, fiber);
   }
   if (f2fiber__is_zombie(fiber, cause)) {

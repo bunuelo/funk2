@@ -30,7 +30,7 @@ f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-def_primobject_22_slot(fiber,
+def_primobject_23_slot(fiber,
 		       program_counter,
 		       stack,
 		       iter,
@@ -39,6 +39,7 @@ def_primobject_22_slot(fiber,
 		       return_reg,
 		       value,
 		       trace,
+		       cause_reg_mutex,
 		       cause_reg,
 		       keep_undead,
 		       is_zombie,
@@ -63,6 +64,7 @@ f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cf
   f2ptr return_reg                 = nil;
   f2ptr value                      = nil;
   f2ptr trace                      = nil;
+  f2ptr cause_reg_mutex            = f2__mutex__new(cause);
   f2ptr cause_reg                  = cause;
   f2ptr keep_undead                = __funk2.globalenv.true__symbol;
   f2ptr is_zombie                  = nil;
@@ -84,6 +86,7 @@ f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cf
 				 return_reg,
 				 value,
 				 trace,
+				 cause_reg_mutex,
 				 cause_reg,
 				 keep_undead,
 				 is_zombie,

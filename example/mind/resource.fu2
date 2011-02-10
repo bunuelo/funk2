@@ -93,6 +93,7 @@
 							 [let [[locked_mutex [new traced_mutex]]]
 							   [have locked_mutex lock]
 							   [fiber [funk []
+									[terminal_format standard-terminal '\nremoving initial-name=' initial-name ' fiber=' fiber]
 									[global_scheduler-remove_fiber fiber]
 									[have active_mutex unlock]
 									[have locked_mutex unlock]]

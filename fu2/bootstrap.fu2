@@ -50,14 +50,16 @@
   [load 'fu2/bootstrap-terminal_print.fu2']
   [load 'fu2/bootstrap-core_extension_funk.fu2']
   [load 'fu2/bootstrap-core_extension.fu2']
-  [load 'fu2/bootstrap-package.fu2']
+  [load 'fu2/bootstrap-package.fu2']]
+
+[defunk load_basic_extension_package_definitions []
   [reload_all_package_definitions]
   [eval `[prog [require number]
 	       [require ansi]
 	       
 	       [defunk load_all_core_packages []
 		 [load_minimal_core_packages]
-		 
+		 [load_basic_extension_package_definitions]
 		 [require utilities]
 		 [require number]
 		 [require math]
@@ -70,6 +72,8 @@
 		 [require natural_language]]
 	       
 	       [defunk load_isismon_release_packages []
+		 [load_minimal_core_packages]
+		 [load_basic_extension_package_definitions]
 		 [require fibermon]
 		 [require isismon]]
 	       
@@ -85,16 +89,17 @@
 [cond [[eq funk2_release_name nil]      [prog [terminal_format standard-terminal
 							       '\nCompiling user\'s customized version of Funk2.'
 							       '\n  Feel free to use ~/.funk2rc-dev to add commands to this compile process.']
+					      [load_minimal_core_packages]
 					      [load_funk2-devrc]
 					      [terminal_format standard-terminal
 							       '\nDone compiling user\'s customized version of Funk2.'
 							       '\n  Feel free to use ~/.funk2rc-dev to add commands to this compile process.']]]
       [[eq funk2_release_name `isismon] [prog [terminal_format standard-terminal '\nCompiling IsisMon package binary release.']
-					      [load_minimal_core_packages]
 					      [load_isismon_release_packages]
 					      [terminal_format standard-terminal '\nDone compiling IsisMon package binary release.']]]
       [[eq funk2_release_name `debian]  [prog [terminal_format standard-terminal '\nCompiling Debian Funk2 package binary release.']
 					      [load_minimal_core_packages]
+					      [load_basic_extension_package_definitions]
 					      [terminal_format standard-terminal '\nDone compiling Debian Funk2 package binary release.']]]
       [t                                [error bug_type            `unknown-funk2_release_name-in-bootstrap.fu2
 					       funk2_release_name  funk2_release_name

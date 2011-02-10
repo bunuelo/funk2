@@ -103,11 +103,8 @@ f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cf
 				 should_quit);
   f2fiber__keep_undead__set(new_fiber, cause, __funk2.globalenv.true__symbol);
   f2fiber__funk(new_fiber, cause, cfunkable, cfunkable_args);
-  {
-    f2ptr result = f2__cause__add_fiber(cause, cause, new_fiber);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
+  if (cause != nil) {
+    raw__cause__add_fiber(cause, cause, new_fiber);
   }
   return new_fiber;
 }

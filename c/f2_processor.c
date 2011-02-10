@@ -71,11 +71,17 @@ f2ptr raw__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
     boolean_t processor_assignment_mutex__failed_to_lock = f2mutex__trylock(processor_assignment_mutex, cause);
     if (active_fibers_mutex__failed_to_lock) {
       both_locked = boolean__false;
-      f2mutex__unlock(active_fibers_mutex, cause);
     }
     if (processor_assignment_mutex__failed_to_lock) {
       both_locked = boolean__false;
-      f2mutex__unlock(processor_assignment_mutex, cause);
+    }
+    if (! both_locked) {
+      if (! active_fibers_mutex__failed_to_lock) {
+	f2mutex__unlock(active_fibers_mutex, cause);
+      }
+      if (! processor_assignment_mutex__failed_to_lock) {
+	f2mutex__unlock(processor_assignment_mutex, cause);
+      }
     }
   }
   f2ptr result = raw__processor__add_active_fiber__thread_unsafe(cause, this, fiber);
@@ -137,13 +143,18 @@ f2ptr raw__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) 
     boolean_t processor_assignment_mutex__failed_to_lock = f2mutex__trylock(processor_assignment_mutex, cause);
     if (active_fibers_mutex__failed_to_lock) {
       both_locked = boolean__false;
-      f2mutex__unlock(active_fibers_mutex, cause);
     }
     if (processor_assignment_mutex__failed_to_lock) {
       both_locked = boolean__false;
-      f2mutex__unlock(processor_assignment_mutex, cause);
     }
-    f2__this__fiber__yield(cause);
+    if (! both_locked) {
+      if (! active_fibers_mutex__failed_to_lock) {
+	f2mutex__unlock(active_fibers_mutex, cause);
+      }
+      if (! processor_assignment_mutex__failed_to_lock) {
+	f2mutex__unlock(processor_assignment_mutex, cause);
+      }
+    }
   }
   f2ptr result = raw__processor__remove_active_fiber__thread_unsafe(cause, this, fiber);
   f2mutex__unlock(active_fibers_mutex,        cause);

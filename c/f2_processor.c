@@ -47,10 +47,6 @@ boolean_t raw__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr thi
   if (processor_assignment_index != nil) {
     return boolean__false;
   }
-  f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
-  if (fiber_cause) {
-    f2__cause__add_fiber(cause, fiber_cause, fiber);
-  }
   pause_gc();
   f2processor__active_fibers__set(this, cause, f2cons__new(cause, fiber, f2processor__active_fibers(this, cause)));
   f2fiber__processor_assignment_index__set(fiber, cause, f2processor__pool_index(this, cause));
@@ -107,10 +103,6 @@ f2ptr raw__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this
   }
   if (! raw__eq(cause, f2processor__pool_index(this, cause), processor_assignment_index)) {
     return f2larva__new(cause, 135222, nil);
-  }
-  f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
-  if (fiber_cause) {
-    f2__cause__remove_fiber(cause, fiber_cause, fiber);
   }
   boolean_t found_and_removed_fiber = boolean__false;
   f2ptr active_fibers_iter = f2processor__active_fibers(this, cause);

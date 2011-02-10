@@ -310,8 +310,9 @@ f2ptr raw__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list26__new(cause,
+    frame = f2__frame__new(cause, f2list28__new(cause,
 						new__symbol(cause, "print_object_type"),          new__symbol(cause, "fiber"),
+						new__symbol(cause, "cause_reg_mutex"),            f2__fiber__cause_reg_mutex(           cause, this),
 						new__symbol(cause, "cause_reg"),                  f2__fiber__cause_reg(                 cause, this),
 						new__symbol(cause, "keep_undead"),                f2__fiber__keep_undead(               cause, this),
 						new__symbol(cause, "is_zombie"),                  f2__fiber__is_zombie(                 cause, this),

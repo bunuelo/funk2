@@ -354,7 +354,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
   f2processor__active_fibers_prev__set(processor, cause, nil);
   
   int fiber_num = 0;
-  while (f2processor__active_fibers_iter(processor, cause)) {
+  while (f2processor__active_fibers_iter(processor, cause) != nil) {
     f2processor__active_fibers_next__set(processor, cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
     fiber_num ++;
     f2ptr fiber = f2cons__car(f2processor__active_fibers_iter(processor, cause), cause);
@@ -444,6 +444,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		      f2fiber__is_zombie__set(fiber, cause, nil);
 		    }
 		    
+		    raw__processor__remove_active_fiber(cause, processor, fiber);
+		    /*
 		    // bug: removing a fiber here seems to drop needed fibers sometimes.  (why?)
 		    {
 		      f2ptr processor_assignment_mutex = f2fiber__processor_assignment_mutex(fiber, cause);
@@ -464,7 +466,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 			    f2mutex__unlock(processor_assignment_mutex, cause);
 			  }
 			  if (! active_fibers_mutex__lock_failed) {
-			    f2mutex__unlock(active_fibers_mutex,        cause);
+			    f2mutex__unlock(active_fibers_mutex, cause);
 			  }
 			  raw__fast_spin_sleep_yield();
 			}
@@ -478,7 +480,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		      f2mutex__unlock(processor_assignment_mutex, cause);
 		      f2mutex__unlock(active_fibers_mutex,        cause);
 		    }
-		    
+		    */
 		    prev_fiber_iter__already_set = 1;
 		  }
 		}

@@ -76,8 +76,8 @@ declare_primobject_11_slot(processor,
 			   desc);
 
 f2ptr      f2__processor__new                                   (f2ptr cause);
-f2ptr     raw__processor__add_active_fiber__thread_unsafe       (f2ptr cause, f2ptr this, f2ptr fiber);
-boolean_t raw__processor__add_active_fiber                      (f2ptr cause, f2ptr this, f2ptr fiber);
+boolean_t raw__processor__add_active_fiber__thread_unsafe       (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr     raw__processor__add_active_fiber                      (f2ptr cause, f2ptr this, f2ptr fiber);
 f2ptr      f2__processor__add_active_fiber                      (f2ptr cause, f2ptr this, f2ptr fiber);
 f2ptr     raw__processor__remove_active_fiber__thread_unsafe    (f2ptr cause, f2ptr this, f2ptr fiber);
 f2ptr     raw__processor__remove_active_fiber                   (f2ptr cause, f2ptr this, f2ptr fiber);

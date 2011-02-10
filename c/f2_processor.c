@@ -450,26 +450,40 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		    if (f2fiber__is_zombie(fiber, cause)) {
 		      f2fiber__is_zombie__set(fiber, cause, nil);
 		    }
-		    f2fiber__processor_assignment_index__set(fiber, cause, nil);
+		    
 		    // bug: removing a fiber here seems to drop needed fibers sometimes.  (why?)
 		    {
-		      f2ptr processor__active_fibers_mutex;
+		      f2ptr processor_assignment_mutex = f2fiber__processor_assignment_mutex(fiber, cause);
+		      f2ptr active_fibers_mutex        = f2processor__active_fibers_mutex(processor, cause);
 		      int lock_failed;
 		      do {
-			//f2__global_scheduler__execute_mutex__lock(cause);
-			processor__active_fibers_mutex = f2processor__active_fibers_mutex(processor, cause);
-			lock_failed = f2mutex__trylock(processor__active_fibers_mutex, cause);
-			//f2__global_scheduler__execute_mutex__unlock(cause);
+			lock_failed = boolean__false;
+			boolean_t processor_assignment_mutex__lock_failed = f2mutex__trylock(processor_assignment_mutex, cause);
+			boolean_t active_fibers_mutex__lock_failed        = f2mutex__trylock(active_fibers_mutex,        cause);
+			if (processor_assignment_mutex__lock_failed) {
+			  lock_failed = boolean__true;
+			}
+			if (active_fibers_mutex__lock_failed) {
+			  lock_failed = boolean__true;
+			}
 			if (lock_failed) {
+			  if (! processor_assignment_mutex__lock_failed) {
+			    f2mutex__unlock(processor_assignment_mutex, cause);
+			  }
+			  if (! active_fibers_mutex__lock_failed) {
+			    f2mutex__unlock(active_fibers_mutex,        cause);
+			  }
 			  raw__fast_spin_sleep_yield();
 			}
 		      } while (lock_failed);
+		      f2fiber__processor_assignment_index__set(fiber, cause, nil);
 		      if (f2processor__active_fibers_prev(processor, cause)) {
 			f2cons__cdr__set(f2processor__active_fibers_prev(processor, cause), cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
 		      } else {
 			f2processor__active_fibers__set(processor, cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
 		      }
-		      f2mutex__unlock(processor__active_fibers_mutex, cause);
+		      f2mutex__unlock(processor_assignment_mutex, cause);
+		      f2mutex__unlock(active_fibers_mutex,        cause);
 		    }
 		    prev_fiber_iter__already_set = 1;
 		  }

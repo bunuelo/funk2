@@ -430,9 +430,17 @@ f2ptr f2__cause(f2ptr cause) {
       printf("\nf2__cause warning: cause is not the same as cause_reg."); fflush(stdout);
     }
     if (cause_reg != nil) {
-      f2__cause__remove_fiber(cause, cause_reg, fiber);
+      f2ptr result = f2__cause__remove_fiber(cause, cause_reg, fiber);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
     }
-    f2__cause__add_fiber(cause, new_cause, fiber);
+    {
+      f2ptr result = f2__cause__add_fiber(cause, new_cause, fiber);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
   }
   return new_cause;
 }

@@ -95,7 +95,9 @@
 									[have active_mutex unlock]
 									[have locked_mutex unlock]]
 								  nil]
+							   [have this think_to_self '\nResource waiting to be paused because inactive.']
 							   [have locked_mutex lock]
+							   [have this think_to_self '\nResource paused.']
 							   [yield]
 							   [have this think_to_self '\nResource continuing after being paused (activated?).']]
 						       [prog [if active_funk

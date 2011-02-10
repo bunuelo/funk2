@@ -65,7 +65,7 @@ f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cf
   f2ptr value                      = nil;
   f2ptr trace                      = nil;
   f2ptr cause_reg_mutex            = f2__mutex__new(cause);
-  f2ptr cause_reg                  = cause;
+  f2ptr cause_reg                  = nil;
   f2ptr keep_undead                = __funk2.globalenv.true__symbol;
   f2ptr is_zombie                  = nil;
   f2ptr execute_mutex              = f2mutex__new(cause);
@@ -103,9 +103,12 @@ f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cf
 				 should_quit);
   f2fiber__keep_undead__set(new_fiber, cause, __funk2.globalenv.true__symbol);
   f2fiber__funk(new_fiber, cause, cfunkable, cfunkable_args);
-  
-  //f2cause__fibers__set(cause, cause, f2cons__new(cause, new_fiber, f2cause__fibers(cause, cause)));
-  
+  {
+    f2ptr result = f2__cause__add_fiber(cause, cause, new_fiber);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return new_fiber;
 }
 def_pcfunk4(fiber__new, parent_fiber, parent_env, cfunkable, cfunkable_args, return f2__fiber__new(this_cause, parent_fiber, parent_env, cfunkable, cfunkable_args));
@@ -184,8 +187,6 @@ boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) 
   debug__assert(raw__fiber__is_type(nil, fiber), nil, "fiber type assertion failed.");
   debug__assert(raw__bytecode__is_type(nil, bytecode), nil, "bytecode type assertion failed.");
   debug__assert((! cause) || raw__cause__is_type(nil, cause), nil, "fiber type assertion failed.");
-  //f2ptr cause = f2fiber__execute_bytecode__cause__new(f2fiber__cause_reg(fiber), fiber, f2fiber__env(fiber), bytecode);
-  //f2fiber__cause_reg__set(fiber, cause, cause);
   f2ptr command = f2bytecode__command(bytecode, cause);
   if      (command == __funk2.bytecode.bytecode__lookup_type_var__symbol)            {f2__fiber__bytecode__lookup_type_var(           fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__block_pop__symbol)                  {f2__fiber__bytecode__block_pop(                 fiber, bytecode);}

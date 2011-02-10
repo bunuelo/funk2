@@ -80,12 +80,11 @@
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]
 
 [globalize funk2_release_names `[isismon debian]]
-[globalize funk2_release_name  `debian]
+[globalize funk2_release_name  nil]
 
 [cond [[eq funk2_release_name nil]      [prog [terminal_format standard-terminal
 							       '\nCompiling user\'s customized version of Funk2.'
 							       '\n  Feel free to use ~/.funk2rc-dev to add commands to this compile process.']
-					      [load_minimal_core_packages]
 					      [load_funk2-devrc]
 					      [terminal_format standard-terminal
 							       '\nDone compiling user\'s customized version of Funk2.'

@@ -246,7 +246,7 @@ f2ptr raw__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
   {
     s64 pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      f2ptr processor = raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), processor_assignment_index__i);
+      f2ptr processor = raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), pool_index);
       success         = raw__processor__remove_active_fiber(cause, processor, fiber);
       if (success) {
 	break;

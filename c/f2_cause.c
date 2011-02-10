@@ -209,10 +209,11 @@ f2ptr raw__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
       }
       if (! iter) {
 	printf("\nf2__cause__remove_fiber warning: could not find fiber to remove."); fflush(stdout);
+	result = f2larva__new(cause, 827153, nil);
       }
     }
   } else {
-    result = f2larva__new(cause, 827153, nil);
+    result = f2larva__new(cause, 827154, nil);
   }
   f2mutex__unlock(fibers_mutex,    cause);
   f2mutex__unlock(cause_reg_mutex, cause);

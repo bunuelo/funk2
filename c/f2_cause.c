@@ -145,8 +145,8 @@ f2ptr raw__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
     if (! both_locked) {
       if (! fibers_mutex__failed_lock)    {f2mutex__unlock(fibers_mutex,    cause);}
       if (! cause_reg_mutex__failed_lock) {f2mutex__unlock(cause_reg_mutex, cause);}
+      f2__this__fiber__yield(cause);
     }
-    f2__this__fiber__yield(cause);
   }
   f2ptr cause_reg = f2fiber__cause_reg(fiber, cause);
   f2ptr result    = nil;
@@ -183,8 +183,8 @@ f2ptr raw__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
     if (! both_locked) {
       if (! fibers_mutex__failed_lock)    {f2mutex__unlock(fibers_mutex,    cause);}
       if (! cause_reg_mutex__failed_lock) {f2mutex__unlock(cause_reg_mutex, cause);}
+      f2__this__fiber__yield(cause);
     }
-    f2__this__fiber__yield(cause);
   }
   f2ptr cause_reg = f2fiber__cause_reg(fiber, cause);
   f2ptr result    = nil;

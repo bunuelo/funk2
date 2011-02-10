@@ -28,8 +28,8 @@
     [if [not [eq global_scheduler-current_fiber this-fiber]]
 	[error bug_type                       `pause-global_scheduler_current_fiber_is_not_me
 	       global_scheduler-current_fiber global_scheduler-current_fiber
-	       this-fiber                     this-fiber]]]
-  [global_scheduler-remove_fiber this-fiber]
+	       this-fiber                     this-fiber]]
+    [global_scheduler-remove_fiber this-fiber]]
   [yield]]
 
 [defunk resume [fiber]

@@ -181,7 +181,7 @@ f2ptr f2__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   }
   f2ptr cause_reg = f2fiber__cause_reg(fiber, cause);
   f2ptr result    = nil;
-  if (cause != nil) {
+  if (cause_reg != nil) {
     f2ptr prev = nil;
     f2ptr iter = f2cause__fibers(this, cause);
     while (iter) {

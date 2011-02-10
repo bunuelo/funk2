@@ -456,6 +456,7 @@
 [defunk isismon_agent-new_from_name [isismon_project name]
   [let [[moral_compass [new moral_compass]]]
     [let [[isis_agent [new isis_agent_body [get isismon_project isis_world] moral_compass name]]]
+      [sleep 10]
       [have moral_compass activate_vital_resources]
       [new isismon_agent isismon_project isis_agent]]]]
 

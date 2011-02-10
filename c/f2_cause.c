@@ -425,8 +425,12 @@ f2ptr f2__cause(f2ptr cause) {
   f2ptr fiber     = f2__this__fiber(cause);
   f2ptr new_cause = f2__cause__new_with_inherited_properties(cause, cause);
   { // should be atomic
-    if (cause) {
-      f2__cause__remove_fiber(cause, cause, fiber);
+    f2ptr cause_reg = f2fiber__cause_reg(fiber, cause);
+    if (! raw__eq(cause, cause, cause_reg)) {
+      printf("\nf2__cause warning: cause is not the same as cause_reg."); fflush(stdout);
+    }
+    if (cause_reg != nil) {
+      f2__cause__remove_fiber(cause, cause_reg, fiber);
     }
     f2__cause__add_fiber(cause, new_cause, fiber);
   }

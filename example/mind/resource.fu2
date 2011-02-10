@@ -69,7 +69,7 @@
 						   [have resource_initializing_mutex lock]
 						   [have resource_initializing_mutex unlock]
 						   [have fiber_starting_mutex unlock]
-						   [have this think_to_self '\nResource waiting to be added to mind.']
+						   [terminal_format standard-terminal '\nResource ' initial-name ' waiting to be added to mind.']
 						   [let [[waiting_to_be_added_to_mind t]]
 						     [while waiting_to_be_added_to_mind
 						       [sleep 1]

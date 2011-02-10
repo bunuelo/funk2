@@ -156,7 +156,14 @@ f2ptr raw__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) 
       }
     }
   }
-  f2ptr result = raw__processor__remove_active_fiber__thread_unsafe(cause, this, fiber);
+  f2ptr result      = raw__processor__remove_active_fiber__thread_unsafe(cause, this, fiber);
+  f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
+  if (fiber_cause) {
+    f2__cause__remove_fiber(cause, fiber_cause, fiber);
+  }
+  if (f2fiber__is_zombie(fiber, cause)) {
+    f2fiber__is_zombie__set(fiber, cause, nil);
+  }
   f2mutex__unlock(active_fibers_mutex,        cause);
   f2mutex__unlock(processor_assignment_mutex, cause);
   return result;
@@ -443,14 +450,10 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		  // This is a hack to avoid accidental fiber removal.  As one would expect, it doesn't really work.
 		  if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > nanoseconds_per_second) {
 		    // anytime a fiber is removed from processor active fibers, it should be removed from it's cause so that it can be garbage collected.
-		    f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
-		    if (fiber_cause) {
-		      f2__cause__remove_fiber(cause, fiber_cause, fiber);
-		    }
-		    if (f2fiber__is_zombie(fiber, cause)) {
-		      f2fiber__is_zombie__set(fiber, cause, nil);
-		    }
 		    
+		    raw__processor__remove_active_fiber(cause, processor, fiber);
+		    
+		    /*
 		    // bug: removing a fiber here seems to drop needed fibers sometimes.  (why?)
 		    {
 		      f2ptr processor_assignment_mutex = f2fiber__processor_assignment_mutex(fiber, cause);
@@ -485,6 +488,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		      f2mutex__unlock(processor_assignment_mutex, cause);
 		      f2mutex__unlock(active_fibers_mutex,        cause);
 		    }
+		    */
 		    prev_fiber_iter__already_set = 1;
 		  }
 		}

@@ -159,6 +159,7 @@
     ;;(modify-syntax-entry ?\n ">" funk-mode-syntax-table)
     (modify-syntax-entry ?_ "w" funk-mode-syntax-table)
     (modify-syntax-entry ?` "'" funk-mode-syntax-table)
+    (modify-syntax-entry ?, "'" funk-mode-syntax-table)
     (modify-syntax-entry ?' "\"" funk-mode-syntax-table)
     (modify-syntax-entry ?+ "w" funk-mode-syntax-table)
     (modify-syntax-entry ?- "w" funk-mode-syntax-table)

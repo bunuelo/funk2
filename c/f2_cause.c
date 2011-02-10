@@ -132,38 +132,81 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
 			critics);
 }
 
-f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
-  f2ptr fibers_mutex = f2cause__fibers_mutex(this, cause);
-  f2mutex__lock(fibers_mutex, cause);
-  f2cause__fibers__set(this, cause, f2cons__new(cause, fiber, f2cause__fibers(this, cause)));
-  f2mutex__unlock(fibers_mutex, cause);
-  return nil;
+f2ptr raw__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
+  f2ptr     fibers_mutex                 = f2cause__fibers_mutex(   this,  cause);
+  f2ptr     cause_reg_mutex              = f2fiber__cause_reg_mutex(fiber, cause);
+  boolean_t both_locked                  = boolean__false;
+  while (! both_locked) {
+    both_locked = boolean__true;
+    boolean_t fibers_mutex__failed_lock    = f2mutex__trylock(fibers_mutex,    cause);
+    boolean_t cause_reg_mutex__failed_lock = f2mutex__trylock(cause_reg_mutex, cause);
+    if (fibers_mutex__failed_lock)    {both_locked = boolean__false;}
+    if (cause_reg_mutex__failed_lock) {both_locked = boolean__false;}
+    if (! both_locked) {
+      if (! fibers_mutex__failed_lock)    {f2mutex__unlock(fibers_mutex,    cause);}
+      if (! cause_reg_mutex__failed_lock) {f2mutex__unlock(cause_reg_mutex, cause);}
+    }
+    f2__this__fiber__yield(cause);
+  }
+  f2ptr cause_reg = f2fiber__cause_reg(fiber, cause);
+  f2ptr result    = nil;
+  if (cause_reg == nil) {
+    f2fiber__cause_reg__set(fiber, cause, this);
+    f2cause__fibers__set(   this,  cause, f2cons__new(cause, fiber, f2cause__fibers(this, cause)));
+  } else {
+    result = f2larva__new(cause, 827152, nil);
+  }
+  f2mutex__unlock(fibers_mutex,    cause);
+  f2mutex__unlock(cause_reg_mutex, cause);
+  return result;
 }
 
+
+
 f2ptr f2__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
-  f2ptr fibers_mutex = f2cause__fibers_mutex(this, cause);
-  f2mutex__lock(fibers_mutex, cause);
-  f2ptr prev = nil;
-  f2ptr iter = f2cause__fibers(this, cause);
-  while (iter) {
-    f2ptr next = f2cons__cdr(iter, cause);
-    f2ptr iter_fiber = f2cons__car(iter, cause);
-    if (iter_fiber == fiber) {
-      if (prev) {
-	f2cons__cdr__set(prev, cause, next);
-      } else {
-	f2cause__fibers__set(this, cause, next);
-      }
-      break;
+  f2ptr     fibers_mutex                 = f2cause__fibers_mutex(   this,  cause);
+  f2ptr     cause_reg_mutex              = f2fiber__cause_reg_mutex(fiber, cause);
+  boolean_t both_locked                  = boolean__false;
+  while (! both_locked) {
+    both_locked = boolean__true;
+    boolean_t fibers_mutex__failed_lock    = f2mutex__trylock(fibers_mutex,    cause);
+    boolean_t cause_reg_mutex__failed_lock = f2mutex__trylock(cause_reg_mutex, cause);
+    if (fibers_mutex__failed_lock)    {both_locked = boolean__false;}
+    if (cause_reg_mutex__failed_lock) {both_locked = boolean__false;}
+    if (! both_locked) {
+      if (! fibers_mutex__failed_lock)    {f2mutex__unlock(fibers_mutex,    cause);}
+      if (! cause_reg_mutex__failed_lock) {f2mutex__unlock(cause_reg_mutex, cause);}
     }
-    prev = iter;
-    iter = next;
+    f2__this__fiber__yield(cause);
   }
-  f2mutex__unlock(fibers_mutex, cause);
-  if (! iter) {
-    printf("\nf2__cause__remove_fiber warning: could not find fiber to remove."); fflush(stdout);
+  f2ptr cause_reg = f2fiber__cause_reg(fiber, cause);
+  f2ptr result    = nil;
+  if (cause != nil) {
+    f2ptr prev = nil;
+    f2ptr iter = f2cause__fibers(this, cause);
+    while (iter) {
+      f2ptr next = f2cons__cdr(iter, cause);
+      f2ptr iter_fiber = f2cons__car(iter, cause);
+      if (iter_fiber == fiber) {
+	if (prev) {
+	  f2cons__cdr__set(prev, cause, next);
+	} else {
+	  f2cause__fibers__set(this, cause, next);
+	}
+	break;
+      }
+      prev = iter;
+      iter = next;
+    }
+    if (! iter) {
+      printf("\nf2__cause__remove_fiber warning: could not find fiber to remove."); fflush(stdout);
+    }
+  } else {
+    result = f2larva__new(cause, 827153, nil);
   }
-  return nil;
+  f2mutex__unlock(fibers_mutex,    cause);
+  f2mutex__unlock(cause_reg_mutex, cause);
+  return result;
 }
 
 f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name) {
@@ -361,11 +404,10 @@ f2ptr f2__cause(f2ptr cause) {
   f2ptr fiber     = f2__this__fiber(cause);
   f2ptr new_cause = f2__cause__new_with_inherited_properties(cause, cause);
   { // should be atomic
-    f2__fiber__cause_reg__set(cause, fiber, new_cause);
-    f2__cause__add_fiber(cause, new_cause, fiber);
     if (cause) {
       f2__cause__remove_fiber(cause, cause, fiber);
     }
+    f2__cause__add_fiber(cause, new_cause, fiber);
   }
   return new_cause;
 }

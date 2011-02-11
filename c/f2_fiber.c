@@ -74,7 +74,7 @@ f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cf
   f2ptr sleep_until_time                     = nil;
   f2ptr execution_nanoseconds                = f2integer__new(cause, 0);
   f2ptr bytecode_count                       = f2integer__new(cause, 0);
-  f2ptr processor_assignment_scheduler_mutex = raw__scheduler_mutex__new(cause);
+  f2ptr processor_assignment_scheduler_mutex = f2scheduler_mutex__new(cause);
   f2ptr processor_assignment_index           = nil;
   f2ptr should_quit                          = nil;
   f2ptr new_fiber = f2fiber__new(cause,

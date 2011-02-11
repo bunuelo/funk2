@@ -244,14 +244,6 @@ int              pfunk2__f2scheduler_mutex__trylock(f2ptr this, f2ptr cause);
 f2ptr f2scheduler_mutex__primobject_type__new(f2ptr cause);
 
 f2ptr      f2__scheduler_mutex__new(f2ptr cause);
-boolean_t raw__scheduler_mutex__is_locked(f2ptr cause, f2ptr this);
-f2ptr      f2__scheduler_mutex__is_locked(f2ptr cause, f2ptr this);
-void      raw__scheduler_mutex__lock(f2ptr cause, f2ptr this);
-f2ptr      f2__scheduler_mutex__lock(f2ptr cause, f2ptr this);
-void      raw__scheduler_mutex__unlock(f2ptr cause, f2ptr this);
-f2ptr      f2__scheduler_mutex__unlock(f2ptr cause, f2ptr this);
-boolean_t raw__scheduler_mutex__trylock(f2ptr cause, f2ptr this);
-f2ptr      f2__scheduler_mutex__trylock(f2ptr cause, f2ptr this);
 
 boolean_t raw__scheduler_mutex__is_type(f2ptr cause, f2ptr exp);
 f2ptr      f2__scheduler_mutex__is_type(f2ptr cause, f2ptr exp);
@@ -806,14 +798,6 @@ typedef struct funk2_object_type__scheduler_mutex__slot_s {
   f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
-  f2ptr is_locked__symbol;
-  f2ptr is_locked__funk;
-  f2ptr lock__symbol;
-  f2ptr lock__funk;
-  f2ptr unlock__symbol;
-  f2ptr unlock__funk;
-  f2ptr trylock__symbol;
-  f2ptr trylock__funk;
   f2ptr eq__symbol;
   f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;

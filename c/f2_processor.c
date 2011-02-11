@@ -35,7 +35,7 @@ def_primobject_9_slot(processor,
 		      desc);
 
 f2ptr f2__processor__new(f2ptr cause) {
-  return f2processor__new(cause, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil);
+  return f2processor__new(cause, nil, nil, nil, nil, nil, nil, nil, nil, nil);
 }
 def_pcfunk0(processor__new, return f2__processor__new(this_cause));
 

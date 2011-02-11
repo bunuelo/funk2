@@ -480,7 +480,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
   
   int fiber_num = 0;
   {
-    f2ptr fiber;
     while (f2processor__active_fibers_iter(processor, cause) != nil) {
       f2processor__active_fibers_next__set(processor, cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
       fiber_num ++;

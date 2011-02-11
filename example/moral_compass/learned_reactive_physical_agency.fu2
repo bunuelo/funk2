@@ -17,58 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-'now when activating resource, have to set the slots in funk_user the resource. how to?'
-'so how does resource access the mind?  correct?
 
-[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
-command `builtin_reactive `physical `move_forward_start]
-
-[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] command 
-`builtin_reactive `physical `pick_up_with_left_hand `table+174518476]
-
-[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `physical] resources ] command `learned_reactive `physical `turn_left_resource 1]
-
-
-
-[have [get [get [get [get isis_world agent_mind `Ralph] layer `learned_reactive] agency `physical] resources] lookup `walk_directly_towards_resource]
-
-
-[fiber [funk []
-	     [cause-define cause-name `demo_hold]
-	     [demo_hold `knife]][]]
-
-ODD: =.= walk_directly_towards resource has "resource" in its name =.=
-
-nextstep: test pick up : now left hand call the walk_directly_towards_resource however it is named wrongly. 
-right hand calls name walk_directly_towards.
-
-builtin pick up resource acting funny
-learned pick up activated builtin pickup (needs to be verified)
-
-right now, changed [get mind objects] to [get mind isis_object_frame], which still deals with isis_world. Potentially, need to change to [get mind visual knowledge]
-[get body objects]==>
-[get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `sensory] visual_objects]
-
-
-hold objects, test ralph overshoot. make movies!
-use object
-[[
-[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
-	command `learned_reactive `physical `empty_right_hand `loaf+167743436]
-does empty right hand need argument target??!?!?!?!?!?!?!? fghjkl
-
-[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
-	command `learned_reactive `physical `turn_right 1 5.0]
-dont think drop from right hand works
-[isis-call [get isis_world client] drop_from_right_hand agent `Ralph]
-
-fix make toast
-look_left
-add rel orientation
-
-
-
-
+'
 [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
 	command `learned_reactive `physical `use_left_hand `loaf+183833060 `divide]
 

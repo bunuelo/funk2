@@ -30,8 +30,9 @@
 	initial-retina_position_horizontal
 	initial-retina_position_vertical
 	initial-distance
+	initial-orientation
 	initial-preposition_frame
-	initial-orientation]
+]
        [= object_type                initial-object_type]
        [= phenomenal_name            initial-phenomenal_name]
        [= retina_position_horizontal initial-retina_position_horizontal]

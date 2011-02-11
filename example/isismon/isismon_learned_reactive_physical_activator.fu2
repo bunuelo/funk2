@@ -545,7 +545,7 @@
 
          
        [= stand_in_front_of_resource__hbox [gtk-hbox-new 2]]
-       [= stand_in_front_of_resource__button [gtk-button-new_with_label 'Walk directly towards']]
+       [= stand_in_front_of_resource__button [gtk-button-new_with_label 'Stand in front of']]
        [= stand_in_front_of_resource__target__label [gtk-label-new 'Target: ']]
        [= stand_in_front_of_resource__target__entry [gtk-entry-new]]
        [have stand_in_front_of_resource__hbox pack_start stand_in_front_of_resource__button nil nil 0]

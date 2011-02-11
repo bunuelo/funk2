@@ -310,8 +310,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
       } break;
       case ptype_scheduler_mutex: {
-	int subexp_size[2];
-	
 	f2__write__ansi_color(cause, stream, print__ansi__scheduler_mutex__foreground, use_ansi_colors, use_html);
 	char temp_str[128];
 	f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);

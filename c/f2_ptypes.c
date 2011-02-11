@@ -2026,7 +2026,8 @@ void pfunk2__f2scheduler_mutex__lock(f2ptr this, f2ptr cause) {
   while (1) {
     trylock_result = funk2_processor_mutex__trylock(ptype_scheduler_mutex__m(this, cause));
     if (trylock_result == funk2_processor_mutex_trylock_result__failure) {
-      f2__this__fiber__yield(cause);
+      raw__fast_spin_sleep_yield();
+      // no user process yield, thus is safe for scheduler and cannot be used by user process.
     } else {
       break;
     }

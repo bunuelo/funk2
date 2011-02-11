@@ -23,18 +23,16 @@
 
 // processor
 
-def_primobject_11_slot(processor,
-		       scheduler,
-		       processor_thread,
-		       active_fibers_mutex,
-		       active_fibers,
-		       active_fibers_iter,
-		       active_fibers_prev,
-		       active_fibers_next,
-		       sleeping_fibers_mutex,
-		       sleeping_fibers,
-		       pool_index,
-		       desc);
+def_primobject_9_slot(processor,
+		      scheduler,
+		      processor_thread,
+		      active_fibers_scheduler_mutex,
+		      active_fibers,
+		      active_fibers_iter,
+		      active_fibers_prev,
+		      active_fibers_next,
+		      pool_index,
+		      desc);
 
 f2ptr f2__processor__new(f2ptr cause) {
   return f2processor__new(cause, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil);
@@ -351,14 +349,12 @@ f2ptr raw__processor__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr t
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list16__new(cause,
-						new__symbol(cause, "print_object_type"),     new__symbol(cause, "processor"),
-						new__symbol(cause, "processor_thread"),      f2__processor__processor_thread(     cause, this),
-						new__symbol(cause, "active_fibers_mutex"),   f2__processor__active_fibers_mutex(  cause, this),
-						new__symbol(cause, "active_fibers"),         f2__processor__active_fibers(        cause, this),
-						new__symbol(cause, "sleeping_fibers_mutex"), f2__processor__sleeping_fibers_mutex(cause, this),
-						new__symbol(cause, "sleeping_fibers"),       f2__processor__sleeping_fibers(      cause, this),
-						new__symbol(cause, "pool_index"),            f2__processor__pool_index(           cause, this),
-						new__symbol(cause, "desc"),                  f2__processor__desc(                 cause, this)));
+						new__symbol(cause, "print_object_type"),             new__symbol(cause, "processor"),
+						new__symbol(cause, "processor_thread"),              f2__processor__processor_thread(             cause, this),
+						new__symbol(cause, "active_fibers_scheduler_mutex"), f2__processor__active_fibers_scheduler_mutex(cause, this),
+						new__symbol(cause, "active_fibers"),                 f2__processor__active_fibers(                cause, this),
+						new__symbol(cause, "pool_index"),                    f2__processor__pool_index(                   cause, this),
+						new__symbol(cause, "desc"),                          f2__processor__desc(                         cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -708,7 +704,16 @@ void f2__processor__initialize() {
   
   // processor
   
-  initialize_primobject_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc);
+  initialize_primobject_9_slot(processor,
+			       scheduler,
+			       processor_thread,
+			       active_fibers_scheduler_mutex,
+			       active_fibers,
+			       active_fibers_iter,
+			       active_fibers_prev,
+			       active_fibers_next,
+			       pool_index,
+			       desc);
   
   {char* symbol_str = "add_active_fiber"; __funk2.globalenv.object_type.primobject.primobject_type_processor.add_active_fiber__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__add_active_fiber, this, fiber, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.add_active_fiber__funk = never_gc(cfunk);}

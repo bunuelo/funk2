@@ -28,36 +28,34 @@ typedef struct funk2_object_type__processor__slot_s funk2_object_type__processor
 
 // processor
 
-declare_object_type_11_slot(processor,
-			    scheduler,
-			    processor_thread,
-			    active_fibers_mutex,
-			    active_fibers,
-			    active_fibers_iter,
-			    active_fibers_prev,
-			    active_fibers_next,
-			    sleeping_fibers_mutex,
-			    sleeping_fibers,
-			    pool_index,
-			    desc,
-			    
-			    f2ptr add_active_fiber__symbol;
-			    f2ptr add_active_fiber__funk;
-			    f2ptr remove_active_fiber__symbol;
-			    f2ptr remove_active_fiber__funk;
-			    f2ptr current_active_fiber__symbol;
-			    f2ptr current_active_fiber__funk;
-			    f2ptr increment_current_active_fiber__symbol;
-			    f2ptr increment_current_active_fiber__funk;
-			    f2ptr reset_current_active_fiber__symbol;
-			    f2ptr reset_current_active_fiber__funk;
-			    f2ptr active_fibers__length__symbol;
-			    f2ptr active_fibers__length__funk;
-			    f2ptr active_fibers__contains__symbol;
-			    f2ptr active_fibers__contains__funk;
-			    f2ptr terminal_print_with_frame__symbol;
-			    f2ptr terminal_print_with_frame__funk;
-			    );
+declare_object_type_9_slot(processor,
+			   scheduler,
+			   processor_thread,
+			   active_fibers_scheduler_mutex,
+			   active_fibers,
+			   active_fibers_iter,
+			   active_fibers_prev,
+			   active_fibers_next,
+			   pool_index,
+			   desc,
+			   
+			   f2ptr add_active_fiber__symbol;
+			   f2ptr add_active_fiber__funk;
+			   f2ptr remove_active_fiber__symbol;
+			   f2ptr remove_active_fiber__funk;
+			   f2ptr current_active_fiber__symbol;
+			   f2ptr current_active_fiber__funk;
+			   f2ptr increment_current_active_fiber__symbol;
+			   f2ptr increment_current_active_fiber__funk;
+			   f2ptr reset_current_active_fiber__symbol;
+			   f2ptr reset_current_active_fiber__funk;
+			   f2ptr active_fibers__length__symbol;
+			   f2ptr active_fibers__length__funk;
+			   f2ptr active_fibers__contains__symbol;
+			   f2ptr active_fibers__contains__funk;
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 #endif // F2__PROCESSOR__TYPES__H
 
@@ -68,18 +66,16 @@ declare_object_type_11_slot(processor,
 
 // processor
 
-declare_primobject_11_slot(processor,
-			   scheduler,
-			   processor_thread,
-			   active_fibers_mutex,
-			   active_fibers,
-			   active_fibers_iter,
-			   active_fibers_prev,
-			   active_fibers_next,
-			   sleeping_fibers_mutex,
-			   sleeping_fibers,
-			   pool_index,
-			   desc);
+declare_primobject_9_slot(processor,
+			  scheduler,
+			  processor_thread,
+			  active_fibers_scheduler_mutex,
+			  active_fibers,
+			  active_fibers_iter,
+			  active_fibers_prev,
+			  active_fibers_next,
+			  pool_index,
+			  desc);
 
 f2ptr      f2__processor__new                                          (f2ptr cause);
 boolean_t raw__processor__add_active_fiber__thread_unsafe              (f2ptr cause, f2ptr this, f2ptr fiber);

@@ -166,11 +166,11 @@ def_pcfunk2(processor__remove_active_fiber, this, fiber, return f2__processor__r
 
 
 f2ptr raw__processor__current_active_fiber__thread_unsafe(f2ptr cause, f2ptr this) {
-  f2ptr active_fiber_iter = f2processor__active_fiber_iter(this, cause);
-  if (active_fiber_iter == nil) {
+  f2ptr active_fibers_iter = f2processor__active_fibers_iter(this, cause);
+  if (active_fibers_iter == nil) {
     return nil;
   }
-  return f2cons__car(active_fiber_iter, cause);
+  return f2cons__car(active_fibers_iter, cause);
 }
 
 f2ptr raw__processor__current_active_fiber(f2ptr cause, f2ptr this) {

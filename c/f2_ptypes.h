@@ -797,6 +797,37 @@ typedef struct funk2_object_type__gfunkptr__slot_s {
   f2ptr terminal_print_with_frame__funk;
 } funk2_object_type__gfunkptr__slot_t;
 
+// scheduler_mutex
+
+typedef struct funk2_object_type__scheduler_mutex__slot_s {
+  f2ptr is_type__symbol;
+  f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
+  f2ptr new__symbol;
+  f2ptr new__funk;
+  f2ptr is_locked__symbol;
+  f2ptr is_locked__funk;
+  f2ptr lock__symbol;
+  f2ptr lock__funk;
+  f2ptr unlock__symbol;
+  f2ptr unlock__funk;
+  f2ptr trylock__symbol;
+  f2ptr trylock__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__loop_free__symbol;
+  f2ptr equals_hash_value__loop_free__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
+  f2ptr terminal_print_with_frame__symbol;
+  f2ptr terminal_print_with_frame__funk;
+} funk2_object_type__scheduler_mutex__slot_t;
+
 // mutex
 
 typedef struct funk2_object_type__mutex__slot_s {
@@ -1097,19 +1128,20 @@ typedef struct funk2_ptype_object_types_s {
   f2ptr creation_nanoseconds_since_1970__funk;
   f2ptr creation_time__symbol;
   f2ptr creation_time__funk;
-  funk2_object_type__integer__slot_t      ptype_integer;
-  funk2_object_type__double__slot_t       ptype_double;
-  funk2_object_type__float__slot_t        ptype_float;
-  funk2_object_type__pointer__slot_t      ptype_pointer;
-  funk2_object_type__gfunkptr__slot_t     ptype_gfunkptr;
-  funk2_object_type__mutex__slot_t        ptype_mutex;
-  funk2_object_type__char__slot_t         ptype_char;
-  funk2_object_type__string__slot_t       ptype_string;
-  funk2_object_type__symbol__slot_t       ptype_symbol;
-  funk2_object_type__chunk__slot_t        ptype_chunk;
-  funk2_object_type__simple_array__slot_t ptype_simple_array;
-  funk2_object_type__traced_array__slot_t ptype_traced_array;
-  funk2_object_type__larva__slot_t        ptype_larva;
+  funk2_object_type__integer__slot_t         ptype_integer;
+  funk2_object_type__double__slot_t          ptype_double;
+  funk2_object_type__float__slot_t           ptype_float;
+  funk2_object_type__pointer__slot_t         ptype_pointer;
+  funk2_object_type__gfunkptr__slot_t        ptype_gfunkptr;
+  funk2_object_type__scheduler_mutex__slot_t ptype_scheduler_mutex;
+  funk2_object_type__mutex__slot_t           ptype_mutex;
+  funk2_object_type__char__slot_t            ptype_char;
+  funk2_object_type__string__slot_t          ptype_string;
+  funk2_object_type__symbol__slot_t          ptype_symbol;
+  funk2_object_type__chunk__slot_t           ptype_chunk;
+  funk2_object_type__simple_array__slot_t    ptype_simple_array;
+  funk2_object_type__traced_array__slot_t    ptype_traced_array;
+  funk2_object_type__larva__slot_t           ptype_larva;
 } funk2_ptype_object_types_t;
 
 

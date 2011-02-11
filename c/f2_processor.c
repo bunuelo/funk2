@@ -533,8 +533,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 			f2fiber__is_zombie__set(fiber, cause, nil);
 		      }
 		      
-		      //raw__processor__remove_active_fiber(cause, processor, fiber);
-		      
+		      raw__processor__remove_active_fiber(cause, processor, fiber);
+		      /*
 		      // bug: removing a fiber here seems to drop needed fibers sometimes.  (why?)
 		      {
 			f2ptr processor_assignment_scheduler_mutex = f2fiber__processor_assignment_scheduler_mutex(fiber,     cause);
@@ -569,7 +569,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 			f2scheduler_mutex__unlock(processor_assignment_scheduler_mutex, cause);
 			f2scheduler_mutex__unlock(active_fibers_scheduler_mutex,        cause);
 		      }
-		    
+		      */
 		      prev_fiber_iter__already_set = 1;
 		    }
 		  }

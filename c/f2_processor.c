@@ -192,14 +192,14 @@ def_pcfunk1(processor__current_active_fiber, this, return f2__processor__current
 
 
 boolean_t raw__processor__increment_current_active_fiber__thread_unsafe(f2ptr cause, f2ptr this) {
-  f2ptr active_fiber_iter = f2processor__active_fiber_iter(this, cause);
-  if (active_fiber_iter == nil) {
+  f2ptr active_fibers_iter = f2processor__active_fibers_iter(this, cause);
+  if (active_fibers_iter == nil) {
     return f2larva__new(cause, 213, nil);
   }
-  f2processor__active_fiber_prev__set(this, cause, active_fiber_iter);
-  active_fiber_iter = f2cons__cdr(active_fiber_iter, cause);
-  f2processor__active_fiber_iter__set(this, cause, active_fiber_iter);
-  boolean_t current_element_exists = (active_fiber_iter != nil);
+  f2processor__active_fibers_prev__set(this, cause, active_fibers_iter);
+  active_fibers_iter = f2cons__cdr(active_fibers_iter, cause);
+  f2processor__active_fibers_iter__set(this, cause, active_fibers_iter);
+  boolean_t current_element_exists = (active_fibers_iter != nil);
   return current_element_exists;
 }
 
@@ -223,8 +223,8 @@ def_pcfunk1(processor__increment_current_active_fiber, this, return f2__processo
 
 boolean_t raw__processor__reset_current_active_fiber__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr active_fibers = f2processor__active_fibers(this, cause);
-  f2processor__active_fiber_prev__set(this, cause, nil);
-  f2processor__active_fiber_iter__set(this, cause, active_fibers);
+  f2processor__active_fibers_prev__set(this, cause, nil);
+  f2processor__active_fibers_iter__set(this, cause, active_fibers);
   boolean_t current_element_exists = (active_fibers != nil);
   return current_element_exists;
 }

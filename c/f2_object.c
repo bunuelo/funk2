@@ -41,6 +41,8 @@ f2ptr f2__object__type(f2ptr cause, f2ptr this) {
     return f2symbol__new(cause, strlen("pointer"), (u8*)"pointer");
   case ptype_gfunkptr:
     return f2symbol__new(cause, strlen("gfunkptr"), (u8*)"gfunkptr");
+  case ptype_scheduler_mutex:
+    return f2symbol__new(cause, strlen("scheduler_mutex"), (u8*)"scheduler_mutex");
   case ptype_mutex:
     return f2symbol__new(cause, strlen("mutex"), (u8*)"mutex");
   case ptype_char:
@@ -195,6 +197,26 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
     if (! result) {
       f2ptr bug_frame = f2__frame__new(cause, nil);
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "gfunkptr_type_does_not_have_funktion"));
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
+      return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+    }
+    return result;
+  }
+  case ptype_scheduler_mutex: {
+    f2ptr result = f2__scheduler_mutex__slot__type_funk(cause, this, slot_type, slot_name);
+    if (! result) {
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("scheduler_mutex"), (u8*)"scheduler_mutex"));
+      result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+      if (! result) {
+	result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
+      }
+    }
+    if (! result) {
+      f2ptr bug_frame = f2__frame__new(cause, nil);
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "scheduler_mutex_type_does_not_have_funktion"));
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);

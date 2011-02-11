@@ -18,17 +18,18 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
   if (this->used) {
     ptype_block_t* block = (ptype_block_t*)this;
     switch(block->ptype) {
-    case ptype_free_memory:  error(nil, "block of type free_memory in garbage collector.");
-    case ptype_integer:      return boolean__false;
-    case ptype_double:       return boolean__false;
-    case ptype_float:        return boolean__false;
-    case ptype_pointer:      return boolean__false;
-    case ptype_gfunkptr:     return boolean__false;
-    case ptype_mutex:        return boolean__false;
-    case ptype_char:         return boolean__false;
-    case ptype_string:       return boolean__false;
-    case ptype_symbol:       return boolean__false;
-    case ptype_chunk:        return boolean__false;
+    case ptype_free_memory:     error(nil, "block of type free_memory in garbage collector.");
+    case ptype_integer:         return boolean__false;
+    case ptype_double:          return boolean__false;
+    case ptype_float:           return boolean__false;
+    case ptype_pointer:         return boolean__false;
+    case ptype_gfunkptr:        return boolean__false;
+    case ptype_scheduler_mutex: return boolean__false;
+    case ptype_mutex:           return boolean__false;
+    case ptype_char:            return boolean__false;
+    case ptype_string:          return boolean__false;
+    case ptype_symbol:          return boolean__false;
+    case ptype_chunk:           return boolean__false;
     case ptype_simple_array: {
       boolean_t found_invalid = boolean__false;
       s64 i;
@@ -80,6 +81,7 @@ boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
     case ptype_float:
     case ptype_pointer:
     case ptype_gfunkptr:
+    case ptype_scheduler_mutex:
     case ptype_mutex:
     case ptype_char:
     case ptype_string:

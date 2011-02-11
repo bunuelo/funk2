@@ -144,6 +144,11 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
   } break;
   case ptype_gfunkptr:
     return f2string__new(cause, strlen("<gfunkptr>"), (u8*)"<gfunkptr>");
+  case ptype_scheduler_mutex: {
+    char temp_str[1024];
+    snprintf(temp_str, 1024, "<scheduler_mutex " pointer__fstr ">", to_ptr(exp));
+    return f2string__new(cause, strlen(temp_str), (u8*)temp_str);
+  }
   case ptype_mutex: {
     char temp_str[1024];
     snprintf(temp_str, 1024, "<mutex " pointer__fstr ">", to_ptr(exp));

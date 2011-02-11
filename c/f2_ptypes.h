@@ -232,6 +232,40 @@ f2ptr  f2__gfunkptr__eq_hash_value(f2ptr cause, f2ptr this);
 boolean_t raw__gfunkptr__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__gfunkptr__equals(f2ptr cause, f2ptr this, f2ptr that);
 
+
+// scheduler_mutex
+
+f2ptr            pfunk2__f2scheduler_mutex__new(f2ptr cause);
+boolean_t        pfunk2__f2scheduler_mutex__is_locked(f2ptr this, f2ptr cause);
+void             pfunk2__f2scheduler_mutex__lock(f2ptr this, f2ptr cause);
+void             pfunk2__f2scheduler_mutex__unlock(f2ptr this, f2ptr cause);
+int              pfunk2__f2scheduler_mutex__trylock(f2ptr this, f2ptr cause);
+
+f2ptr f2scheduler_mutex__primobject_type__new(f2ptr cause);
+
+f2ptr      f2__scheduler_mutex__new(f2ptr cause);
+boolean_t raw__scheduler_mutex__is_locked(f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_mutex__is_locked(f2ptr cause, f2ptr this);
+void      raw__scheduler_mutex__lock(f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_mutex__lock(f2ptr cause, f2ptr this);
+void      raw__scheduler_mutex__unlock(f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_mutex__unlock(f2ptr cause, f2ptr this);
+boolean_t raw__scheduler_mutex__trylock(f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_mutex__trylock(f2ptr cause, f2ptr this);
+
+boolean_t raw__scheduler_mutex__is_type(f2ptr cause, f2ptr exp);
+f2ptr      f2__scheduler_mutex__is_type(f2ptr cause, f2ptr exp);
+
+boolean_t raw__scheduler_mutex__eq(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__scheduler_mutex__eq(f2ptr cause, f2ptr this, f2ptr that);
+
+u64   raw__scheduler_mutex__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__scheduler_mutex__eq_hash_value(f2ptr cause, f2ptr this);
+
+boolean_t raw__scheduler_mutex__equals(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__scheduler_mutex__equals(f2ptr cause, f2ptr this, f2ptr that);
+
+
 // mutex
 
 f2ptr            pfunk2__f2mutex__new(f2ptr cause);
@@ -263,6 +297,7 @@ f2ptr  f2__mutex__eq_hash_value(f2ptr cause, f2ptr this);
 
 boolean_t raw__mutex__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__mutex__equals(f2ptr cause, f2ptr this, f2ptr that);
+
 
 // char
 

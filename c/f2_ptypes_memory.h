@@ -128,6 +128,24 @@ ptype_gfunkptr_block_t* ptype_gfunkptr_block__new(int pool_index, f2ptr cause, c
 #define __pure__f2gfunkptr__pool_address(this)                                                        __f2ptr__pool_address(__pure__f2gfunkptr__gfunkptr(this))
 
 
+// scheduler_mutex
+
+struct ptype_scheduler_mutex_block_s {
+  ptype_block_t                     ptype;
+  boolean_t                         locked_state; // this state is persistent between boots.
+  funk2_processor_scheduler_mutex_t m[1];         // this state is reinitialized at each boot.
+} __attribute__((__packed__));
+typedef struct ptype_scheduler_mutex_block_s ptype_scheduler_mutex_block_t;
+
+ptype_scheduler_mutex_block_t*     ptype_scheduler_mutex_block__new(int pool_index, f2ptr cause);
+funk2_processor_scheduler_mutex_t* ptype_scheduler_mutex__m(f2ptr this, f2ptr cause);
+
+#define __pure__f2scheduler_mutex__new(pool_index, cause)         ptype_scheduler_mutex__new(pool_index, cause)
+#define __pure__f2scheduler_mutex__locked_state(this)             (((ptype_scheduler_mutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state)
+#define __pure__f2scheduler_mutex__locked_state__set(this, value) (((ptype_scheduler_mutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state = (value))
+#define __pure__f2scheduler_mutex__m(this)                        (((ptype_scheduler_mutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)
+
+
 // mutex
 
 struct ptype_mutex_block_s {

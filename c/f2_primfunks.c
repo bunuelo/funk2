@@ -1007,6 +1007,8 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
     return boolean__false;
   case ptype_gfunkptr:
     return (f2gfunkptr__gfunkptr(x, cause) == f2gfunkptr__gfunkptr(y, cause));
+  case ptype_scheduler_mutex:
+    return boolean__false;
   case ptype_mutex:
     return boolean__false;
   case ptype_larva:
@@ -1539,16 +1541,17 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   }
   ptype_t ptype = f2ptype__raw(exp, cause);
   switch(ptype) {
-  case ptype_integer:      return raw__integer__eq_hash_value(     cause, exp);
-  case ptype_double:       return raw__double__eq_hash_value(      cause, exp);
-  case ptype_float:        return raw__float__eq_hash_value(       cause, exp);
-  case ptype_pointer:      return raw__pointer__eq_hash_value(     cause, exp);
-  case ptype_gfunkptr:     return raw__gfunkptr__eq_hash_value(    cause, exp);
-  case ptype_mutex:        return raw__mutex__eq_hash_value(       cause, exp);
-  case ptype_char:         return raw__char__eq_hash_value(        cause, exp);
-  case ptype_string:       return raw__string__eq_hash_value(      cause, exp);
-  case ptype_symbol:       return raw__symbol__eq_hash_value(      cause, exp);
-  case ptype_chunk:        return raw__chunk__eq_hash_value(       cause, exp);
+  case ptype_integer:         return raw__integer__eq_hash_value(        cause, exp);
+  case ptype_double:          return raw__double__eq_hash_value(         cause, exp);
+  case ptype_float:           return raw__float__eq_hash_value(          cause, exp);
+  case ptype_pointer:         return raw__pointer__eq_hash_value(        cause, exp);
+  case ptype_gfunkptr:        return raw__gfunkptr__eq_hash_value(       cause, exp);
+  case ptype_scheduler_mutex: return raw__scheduler_mutex__eq_hash_value(cause, exp);
+  case ptype_mutex:           return raw__mutex__eq_hash_value(          cause, exp);
+  case ptype_char:            return raw__char__eq_hash_value(           cause, exp);
+  case ptype_string:          return raw__string__eq_hash_value(         cause, exp);
+  case ptype_symbol:          return raw__symbol__eq_hash_value(         cause, exp);
+  case ptype_chunk:           return raw__chunk__eq_hash_value(          cause, exp);
   case ptype_simple_array:
   case ptype_traced_array: {
     if (raw__primobject__is_type(cause, exp) &&
@@ -1590,20 +1593,21 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
     return boolean__false;
   }
   switch(x_ptype) {
-  case ptype_integer:      return raw__integer__equals( cause, x, y);
-  case ptype_double:       return raw__double__equals(  cause, x, y);
-  case ptype_float:        return raw__float__equals(   cause, x, y);
-  case ptype_pointer:      return raw__pointer__equals( cause, x, y);
-  case ptype_gfunkptr:     return raw__gfunkptr__equals(cause, x, y);
-  case ptype_mutex:        return raw__mutex__equals(   cause, x, y);
-  case ptype_char:         return raw__char__equals(    cause, x, y);
-  case ptype_string:       return raw__string__equals(  cause, x, y);
-  case ptype_symbol:       return raw__symbol__equals(  cause, x, y);
-  case ptype_chunk:        return raw__chunk__equals(   cause, x, y);
+  case ptype_integer:         return raw__integer__equals(        cause, x, y);
+  case ptype_double:          return raw__double__equals(         cause, x, y);
+  case ptype_float:           return raw__float__equals(          cause, x, y);
+  case ptype_pointer:         return raw__pointer__equals(        cause, x, y);
+  case ptype_gfunkptr:        return raw__gfunkptr__equals(       cause, x, y);
+  case ptype_scheduler_mutex: return raw__scheduler_mutex__equals(cause, x, y);
+  case ptype_mutex:           return raw__mutex__equals(          cause, x, y);
+  case ptype_char:            return raw__char__equals(           cause, x, y);
+  case ptype_string:          return raw__string__equals(         cause, x, y);
+  case ptype_symbol:          return raw__symbol__equals(         cause, x, y);
+  case ptype_chunk:           return raw__chunk__equals(          cause, x, y);
   case ptype_simple_array:
-  case ptype_traced_array: return f2__object__equals(   cause, x, y);
-  case ptype_larva:        return raw__larva__equals(   cause, x, y);
-  default:                 return boolean__false;
+  case ptype_traced_array:    return f2__object__equals(          cause, x, y);
+  case ptype_larva:           return raw__larva__equals(          cause, x, y);
+  default:                    return boolean__false;
   }
 }
 

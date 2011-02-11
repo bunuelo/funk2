@@ -165,6 +165,88 @@ def_pcfunk2(processor__remove_active_fiber, this, fiber, return f2__processor__r
 
 
 
+f2ptr raw__processor__current_active_fiber__thread_unsafe(f2ptr cause, f2ptr this) {
+  f2ptr active_fiber_iter = f2processor__active_fiber_iter(this, cause);
+  if (active_fiber_iter == nil) {
+    return nil;
+  }
+  return f2cons__car(active_fiber_iter, cause);
+}
+
+f2ptr raw__processor__current_active_fiber(f2ptr cause, f2ptr this) {
+  f2ptr active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
+  f2mutex__lock(active_fibers_mutex, cause);
+  f2ptr current_active_fiber = raw__processor__current_active_fiber__thread_unsafe(cause, this);
+  f2mutex__unlock(active_fibers_mutex, cause);
+  return current_active_fiber;
+}
+
+f2ptr f2__processor__current_active_fiber(f2ptr cause, f2ptr this) {
+  if (! raw__processor__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__processor__current_active_fiber(cause, this);
+}
+def_pcfunk1(processor__current_active_fiber, this, return f2__processor__current_active_fiber(this_cause, this));
+
+
+
+boolean_t raw__processor__increment_current_active_fiber__thread_unsafe(f2ptr cause, f2ptr this) {
+  f2ptr active_fiber_iter = f2processor__active_fiber_iter(this, cause);
+  if (active_fiber_iter == nil) {
+    return f2larva__new(cause, 213, nil);
+  }
+  f2processor__active_fiber_prev__set(this, cause, active_fiber_iter);
+  active_fiber_iter = f2cons__cdr(active_fiber_iter, cause);
+  f2processor__active_fiber_iter__set(this, cause, active_fiber_iter);
+  boolean_t current_element_exists = (active_fiber_iter != nil);
+  return current_element_exists;
+}
+
+boolean_t raw__processor__increment_current_active_fiber(f2ptr cause, f2ptr this) {
+  f2ptr active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
+  f2mutex__lock(active_fibers_mutex, cause);
+  boolean_t current_element_exists = raw__processor__increment_current_active_fiber__thread_unsafe(cause, this);
+  f2mutex__unlock(active_fibers_mutex, cause);
+  return current_element_exists;
+}
+
+f2ptr f2__processor__increment_current_active_fiber(f2ptr cause, f2ptr this) {
+  if (! raw__processor__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__processor__increment_current_active_fiber(cause, this);
+}
+def_pcfunk1(processor__increment_current_active_fiber, this, return f2__processor__increment_current_active_fiber(this_cause, this));
+
+
+
+boolean_t raw__processor__reset_current_active_fiber__thread_unsafe(f2ptr cause, f2ptr this) {
+  f2ptr active_fibers = f2processor__active_fibers(this, cause);
+  f2processor__active_fiber_prev__set(this, cause, nil);
+  f2processor__active_fiber_iter__set(this, cause, active_fibers);
+  boolean_t current_element_exists = (active_fibers != nil);
+  return current_element_exists;
+}
+
+boolean_t raw__processor__reset_current_active_fiber(f2ptr cause, f2ptr this) {
+  f2ptr active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
+  f2mutex__lock(active_fibers_mutex, cause);
+  boolean_t current_element_exists = raw__processor__reset_current_active_fiber__thread_unsafe(cause, this);
+  f2mutex__unlock(active_fibers_mutex, cause);
+  return current_element_exists;
+}
+
+f2ptr f2__processor__reset_current_active_fiber(f2ptr cause, f2ptr this) {
+  if (! raw__processor__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__processor__reset_current_active_fiber(cause, this);
+}
+def_pcfunk1(processor__reset_current_active_fiber, this, return f2__processor__reset_current_active_fiber(this_cause, this));
+
+
+
 u64 raw__processor__active_fibers__length(f2ptr cause, f2ptr this) {
   f2ptr this__active_fibers_mutex;
   this__active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
@@ -254,11 +336,14 @@ def_pcfunk2(processor__terminal_print_with_frame, this, terminal_print_frame, re
 
 f2ptr f2processor__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2processor__primobject_type__new(cause);
-  {char* slot_name = "add_active_fiber";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_processor.add_active_fiber__funk);}
-  {char* slot_name = "remove_active_fiber";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_processor.remove_active_fiber__funk);}
-  {char* slot_name = "active_fibers-length";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__length__funk);}
-  {char* slot_name = "active_fibers-contains";    f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__contains__funk);}
-  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_processor.terminal_print_with_frame__funk);}
+  {char* slot_name = "add_active_fiber";               f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_processor.add_active_fiber__funk);}
+  {char* slot_name = "remove_active_fiber";            f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_processor.remove_active_fiber__funk);}
+  {char* slot_name = "current_active_fiber";           f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_processor.current_active_fiber__funk);}
+  {char* slot_name = "increment_current_active_fiber"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_processor.increment_current_active_fiber__funk);}
+  {char* slot_name = "reset_current_active_fiber";     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_processor.reset_current_active_fiber__funk);}
+  {char* slot_name = "active_fibers-length";           f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__length__funk);}
+  {char* slot_name = "active_fibers-contains";         f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__contains__funk);}
+  {char* slot_name = "terminal_print_with_frame";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_processor.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -587,6 +672,12 @@ void f2__processor__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__add_active_fiber, this, fiber, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.add_active_fiber__funk = never_gc(cfunk);}
   {char* symbol_str = "remove_active_fiber"; __funk2.globalenv.object_type.primobject.primobject_type_processor.remove_active_fiber__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__remove_active_fiber, this, fiber, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.remove_active_fiber__funk = never_gc(cfunk);}
+  {char* symbol_str = "current_active_fiber"; __funk2.globalenv.object_type.primobject.primobject_type_processor.current_active_fiber__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__current_active_fiber, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.current_active_fiber__funk = never_gc(cfunk);}
+  {char* symbol_str = "increment_current_active_fiber"; __funk2.globalenv.object_type.primobject.primobject_type_processor.increment_current_active_fiber__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__increment_current_active_fiber, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.increment_current_active_fiber__funk = never_gc(cfunk);}
+  {char* symbol_str = "reset_current_active_fiber"; __funk2.globalenv.object_type.primobject.primobject_type_processor.reset_current_active_fiber__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__reset_current_active_fiber, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.reset_current_active_fiber__funk = never_gc(cfunk);}
   {char* symbol_str = "active_fibers-length"; __funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__length__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__active_fibers__length, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__length__funk = never_gc(cfunk);}
   {char* symbol_str = "active_fibers-contains"; __funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__contains__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

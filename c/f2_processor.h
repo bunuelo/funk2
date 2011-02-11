@@ -45,6 +45,12 @@ declare_object_type_11_slot(processor,
 			    f2ptr add_active_fiber__funk;
 			    f2ptr remove_active_fiber__symbol;
 			    f2ptr remove_active_fiber__funk;
+			    f2ptr current_active_fiber__symbol;
+			    f2ptr current_active_fiber__funk;
+			    f2ptr increment_current_active_fiber__symbol;
+			    f2ptr increment_current_active_fiber__funk;
+			    f2ptr reset_current_active_fiber__symbol;
+			    f2ptr reset_current_active_fiber__funk;
 			    f2ptr active_fibers__length__symbol;
 			    f2ptr active_fibers__length__funk;
 			    f2ptr active_fibers__contains__symbol;
@@ -75,20 +81,29 @@ declare_primobject_11_slot(processor,
 			   pool_index,
 			   desc);
 
-f2ptr      f2__processor__new                                   (f2ptr cause);
-boolean_t raw__processor__add_active_fiber__thread_unsafe       (f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr     raw__processor__add_active_fiber                      (f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr      f2__processor__add_active_fiber                      (f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr     raw__processor__remove_active_fiber__thread_unsafe    (f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr     raw__processor__remove_active_fiber                   (f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr      f2__processor__remove_active_fiber                   (f2ptr cause, f2ptr this, f2ptr fiber);
-u64       raw__processor__active_fibers__length                 (f2ptr cause, f2ptr this);
-f2ptr      f2__processor__active_fibers__length                 (f2ptr cause, f2ptr this);
-boolean_t raw__processor__active_fibers__contains__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber);
-boolean_t raw__processor__active_fibers__contains               (f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr      f2__processor__active_fibers__contains               (f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr     raw__processor__terminal_print_with_frame             (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
-f2ptr      f2__processor__terminal_print_with_frame             (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__processor__new                                          (f2ptr cause);
+boolean_t raw__processor__add_active_fiber__thread_unsafe              (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr     raw__processor__add_active_fiber                             (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr      f2__processor__add_active_fiber                             (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr     raw__processor__remove_active_fiber__thread_unsafe           (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr     raw__processor__remove_active_fiber                          (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr      f2__processor__remove_active_fiber                          (f2ptr cause, f2ptr this, f2ptr fiber);
+u64       raw__processor__active_fibers__length                        (f2ptr cause, f2ptr this);
+f2ptr      f2__processor__active_fibers__length                        (f2ptr cause, f2ptr this);
+boolean_t raw__processor__active_fibers__contains__thread_unsafe       (f2ptr cause, f2ptr this, f2ptr fiber);
+boolean_t raw__processor__active_fibers__contains                      (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr      f2__processor__active_fibers__contains                      (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr     raw__processor__current_active_fiber__thread_unsafe          (f2ptr cause, f2ptr this);
+f2ptr     raw__processor__current_active_fiber                         (f2ptr cause, f2ptr this);
+f2ptr      f2__processor__current_active_fiber                         (f2ptr cause, f2ptr this);
+boolean_t raw__processor__increment_current_active_fiber__thread_unsafe(f2ptr cause, f2ptr this);
+boolean_t raw__processor__increment_current_active_fiber               (f2ptr cause, f2ptr this);
+f2ptr      f2__processor__increment_current_active_fiber               (f2ptr cause, f2ptr this);
+boolean_t raw__processor__reset_current_active_fiber__thread_unsafe    (f2ptr cause, f2ptr this);
+boolean_t raw__processor__reset_current_active_fiber                   (f2ptr cause, f2ptr this);
+f2ptr      f2__processor__reset_current_active_fiber                   (f2ptr cause, f2ptr this);
+f2ptr     raw__processor__terminal_print_with_frame                    (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__processor__terminal_print_with_frame                    (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 
 f2ptr f2processor__primobject_type__new_aux(f2ptr cause);
 

@@ -47,7 +47,7 @@ declare_object_type_23_slot(fiber,
 			    sleep_until_time,
 			    execution_nanoseconds,
 			    bytecode_count,
-			    processor_assignment_mutex,
+			    processor_assignment_scheduler_mutex,
 			    processor_assignment_index,
 			    should_quit,
 			    
@@ -165,7 +165,7 @@ declare_primobject_23_slot(fiber,
 			   sleep_until_time,
 			   execution_nanoseconds,
 			   bytecode_count,
-			   processor_assignment_mutex,
+			   processor_assignment_scheduer_mutex,
 			   processor_assignment_index,
 			   should_quit);
 

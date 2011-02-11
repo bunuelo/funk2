@@ -51,32 +51,32 @@ def_primobject_23_slot(fiber,
 		       sleep_until_time,
 		       execution_nanoseconds,
 		       bytecode_count,
-		       processor_assignment_mutex,
+		       processor_assignment_scheduler_mutex,
 		       processor_assignment_index,
 		       should_quit);
 
 f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args) {
-  f2ptr program_counter            = nil;
-  f2ptr stack                      = nil;
-  f2ptr iter                       = nil;
-  f2ptr env                        = parent_env;
-  f2ptr args                       = nil;
-  f2ptr return_reg                 = nil;
-  f2ptr value                      = nil;
-  f2ptr trace                      = nil;
-  f2ptr cause_reg_mutex            = f2__mutex__new(cause);
-  f2ptr cause_reg                  = nil;
-  f2ptr keep_undead                = __funk2.globalenv.true__symbol;
-  f2ptr is_zombie                  = nil;
-  f2ptr execute_mutex              = f2mutex__new(cause);
-  f2ptr paused                     = nil;
-  f2ptr last_executed_time         = nil;
-  f2ptr sleep_until_time           = nil;
-  f2ptr execution_nanoseconds      = f2integer__new(cause, 0);
-  f2ptr bytecode_count             = f2integer__new(cause, 0);
-  f2ptr processor_assignment_mutex = f2__mutex__new(cause);
-  f2ptr processor_assignment_index = nil;
-  f2ptr should_quit                = nil;
+  f2ptr program_counter                      = nil;
+  f2ptr stack                                = nil;
+  f2ptr iter                                 = nil;
+  f2ptr env                                  = parent_env;
+  f2ptr args                                 = nil;
+  f2ptr return_reg                           = nil;
+  f2ptr value                                = nil;
+  f2ptr trace                                = nil;
+  f2ptr cause_reg_mutex                      = f2__mutex__new(cause);
+  f2ptr cause_reg                            = nil;
+  f2ptr keep_undead                          = __funk2.globalenv.true__symbol;
+  f2ptr is_zombie                            = nil;
+  f2ptr execute_mutex                        = f2mutex__new(cause);
+  f2ptr paused                               = nil;
+  f2ptr last_executed_time                   = nil;
+  f2ptr sleep_until_time                     = nil;
+  f2ptr execution_nanoseconds                = f2integer__new(cause, 0);
+  f2ptr bytecode_count                       = f2integer__new(cause, 0);
+  f2ptr processor_assignment_scheduler_mutex = raw__scheduler_mutex__new(cause);
+  f2ptr processor_assignment_index           = nil;
+  f2ptr should_quit                          = nil;
   f2ptr new_fiber = f2fiber__new(cause,
 				 program_counter,
 				 stack,
@@ -98,7 +98,7 @@ f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cf
 				 sleep_until_time,
 				 execution_nanoseconds,
 				 bytecode_count,
-				 processor_assignment_mutex,
+				 processor_assignment_scheduler_mutex,
 				 processor_assignment_index,
 				 should_quit);
   f2fiber__keep_undead__set(new_fiber, cause, __funk2.globalenv.true__symbol);

@@ -56,32 +56,32 @@ f2ptr raw__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   if (! raw__processor__is_type(cause, this)) {
     error(nil, "attempted to add fiber to object that is not a processor.");
   }
-  f2ptr active_fibers_mutex        = f2processor__active_fibers_mutex(   this,  cause);
-  f2ptr processor_assignment_mutex = f2fiber__processor_assignment_mutex(fiber, cause);
-  boolean_t both_locked            = boolean__false;
+  f2ptr active_fibers_scheduler_mutex        = f2processor__active_fibers_scheduler_mutex(   this,  cause);
+  f2ptr processor_assignment_scheduler_mutex = f2fiber__processor_assignment_scheduler_mutex(fiber, cause);
+  boolean_t both_locked               = boolean__false;
   while (! both_locked) {
-    both_locked                                          = boolean__true;
-    boolean_t active_fibers_mutex__failed_to_lock        = f2mutex__trylock(active_fibers_mutex,        cause);
-    boolean_t processor_assignment_mutex__failed_to_lock = f2mutex__trylock(processor_assignment_mutex, cause);
-    if (active_fibers_mutex__failed_to_lock) {
+    both_locked                                                    = boolean__true;
+    boolean_t active_fibers_scheduler_mutex__failed_to_lock        = f2scheduler_mutex__trylock(active_fibers_scheduler_mutex,        cause);
+    boolean_t processor_assignment_scheduler_mutex__failed_to_lock = f2scheduler_mutex__trylock(processor_assignment_scheduler_mutex, cause);
+    if (active_fibers_scheduler_mutex__failed_to_lock) {
       both_locked = boolean__false;
     }
-    if (processor_assignment_mutex__failed_to_lock) {
+    if (processor_assignment_scheduler_mutex__failed_to_lock) {
       both_locked = boolean__false;
     }
     if (! both_locked) {
-      if (! active_fibers_mutex__failed_to_lock) {
-	f2mutex__unlock(active_fibers_mutex, cause);
+      if (! active_fibers_scheduler_mutex__failed_to_lock) {
+	f2scheduler_mutex__unlock(active_fibers_scheduler_mutex, cause);
       }
-      if (! processor_assignment_mutex__failed_to_lock) {
-	f2mutex__unlock(processor_assignment_mutex, cause);
+      if (! processor_assignment_scheduler_mutex__failed_to_lock) {
+	f2mutex__unlock(processor_assignment_scheduler_mutex, cause);
       }
       raw__fast_spin_sleep_yield();
     }
   }
   boolean_t success = raw__processor__add_active_fiber__thread_unsafe(cause, this, fiber);
-  f2mutex__unlock(active_fibers_mutex,        cause);
-  f2mutex__unlock(processor_assignment_mutex, cause);
+  f2scheduler_mutex__unlock(active_fibers_scheduler_mutex,        cause);
+  f2scheduler_mutex__unlock(processor_assignment_scheduler_mutex, cause);
   return f2bool__new(success);
 }
 
@@ -125,72 +125,36 @@ f2ptr raw__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this
 }
 
 f2ptr raw__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
-  f2ptr active_fibers_mutex        = f2processor__active_fibers_mutex(   this,  cause);
-  f2ptr processor_assignment_mutex = f2fiber__processor_assignment_mutex(fiber, cause);
+  f2ptr active_fibers_scheduler_mutex        = f2processor__active_fibers_scheduler_mutex(   this,  cause);
+  f2ptr processor_assignment_scheduler_mutex = f2fiber__processor_assignment_scheduler_mutex(fiber, cause);
   {
     boolean_t both_locked = boolean__false;
     while (! both_locked) {
-      both_locked                                          = boolean__true;
-      boolean_t active_fibers_mutex__failed_to_lock        = f2mutex__trylock(active_fibers_mutex,        cause);
-      boolean_t processor_assignment_mutex__failed_to_lock = f2mutex__trylock(processor_assignment_mutex, cause);
-      if (active_fibers_mutex__failed_to_lock) {
+      both_locked                                                    = boolean__true;
+      boolean_t active_fibers_scheduler_mutex__failed_to_lock        = f2scheduler_mutex__trylock(active_fibers_scheduler_mutex,        cause);
+      boolean_t processor_assignment_scheduler_mutex__failed_to_lock = f2scheduler_mutex__trylock(processor_assignment_scheduler_mutex, cause);
+      if (active_fibers_scheduler_mutex__failed_to_lock) {
 	both_locked = boolean__false;
       }
-      if (processor_assignment_mutex__failed_to_lock) {
+      if (processor_assignment_scheduler_mutex__failed_to_lock) {
 	both_locked = boolean__false;
       }
       if (! both_locked) {
-	if (! active_fibers_mutex__failed_to_lock) {
-	  f2mutex__unlock(active_fibers_mutex, cause);
+	if (! active_fibers_scheduler_mutex__failed_to_lock) {
+	  f2scheduler_mutex__unlock(active_fibers_scheduler_mutex, cause);
 	}
-	if (! processor_assignment_mutex__failed_to_lock) {
-	  f2mutex__unlock(processor_assignment_mutex, cause);
+	if (! processor_assignment_scheduler_mutex__failed_to_lock) {
+	  f2scheduler_mutex__unlock(processor_assignment_scheduler_mutex, cause);
 	}
 	raw__fast_spin_sleep_yield();
       }
     }
   }
   f2ptr result = raw__processor__remove_active_fiber__thread_unsafe(cause, this, fiber);
-  f2mutex__unlock(active_fibers_mutex,        cause);
-  f2mutex__unlock(processor_assignment_mutex, cause);
+  f2scheduler_mutex__unlock(active_fibers_scheduler_mutex,        cause);
+  f2scheduler_mutex__unlock(processor_assignment_scheduler_mutex, cause);
   return result;
 }
-
-/*
-		    {
-		      f2ptr processor_assignment_mutex = f2fiber__processor_assignment_mutex(fiber, cause);
-		      f2ptr active_fibers_mutex        = f2processor__active_fibers_mutex(processor, cause);
-		      int lock_failed;
-		      do {
-			lock_failed = boolean__false;
-			boolean_t processor_assignment_mutex__lock_failed = f2mutex__trylock(processor_assignment_mutex, cause);
-			boolean_t active_fibers_mutex__lock_failed        = f2mutex__trylock(active_fibers_mutex,        cause);
-			if (processor_assignment_mutex__lock_failed) {
-			  lock_failed = boolean__true;
-			}
-			if (active_fibers_mutex__lock_failed) {
-			  lock_failed = boolean__true;
-			}
-			if (lock_failed) {
-			  if (! processor_assignment_mutex__lock_failed) {
-			    f2mutex__unlock(processor_assignment_mutex, cause);
-			  }
-			  if (! active_fibers_mutex__lock_failed) {
-			    f2mutex__unlock(active_fibers_mutex, cause);
-			  }
-			  raw__fast_spin_sleep_yield();
-			}
-		      } while (lock_failed);
-		      f2fiber__processor_assignment_index__set(fiber, cause, nil);
-		      if (f2processor__active_fibers_prev(processor, cause)) {
-			f2cons__cdr__set(f2processor__active_fibers_prev(processor, cause), cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
-		      } else {
-			f2processor__active_fibers__set(processor, cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
-		      }
-		      f2mutex__unlock(processor_assignment_mutex, cause);
-		      f2mutex__unlock(active_fibers_mutex,        cause);
-		    }
-*/
 
 f2ptr f2__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   if ((! raw__processor__is_type(cause, this)) ||
@@ -212,10 +176,10 @@ f2ptr raw__processor__current_active_fiber__thread_unsafe(f2ptr cause, f2ptr thi
 }
 
 f2ptr raw__processor__current_active_fiber(f2ptr cause, f2ptr this) {
-  f2ptr active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
-  f2mutex__lock(active_fibers_mutex, cause);
+  f2ptr active_fibers_scheduler_mutex = f2processor__active_fibers_scheduler_mutex(this, cause);
+  f2scheduler_mutex__lock(active_fibers_scheduler_mutex, cause);
   f2ptr current_active_fiber = raw__processor__current_active_fiber__thread_unsafe(cause, this);
-  f2mutex__unlock(active_fibers_mutex, cause);
+  f2scheduler_mutex__unlock(active_fibers_scheduler_mutex, cause);
   return current_active_fiber;
 }
 
@@ -242,10 +206,10 @@ boolean_t raw__processor__increment_current_active_fiber__thread_unsafe(f2ptr ca
 }
 
 boolean_t raw__processor__increment_current_active_fiber(f2ptr cause, f2ptr this) {
-  f2ptr active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
-  f2mutex__lock(active_fibers_mutex, cause);
+  f2ptr active_fibers_scheduler_mutex = f2processor__active_fibers_scheduler_mutex(this, cause);
+  f2scheduler_mutex__lock(active_fibers_scheduler_mutex, cause);
   boolean_t current_element_exists = raw__processor__increment_current_active_fiber__thread_unsafe(cause, this);
-  f2mutex__unlock(active_fibers_mutex, cause);
+  f2scheduler_mutex__unlock(active_fibers_scheduler_mutex, cause);
   return current_element_exists;
 }
 
@@ -268,10 +232,10 @@ boolean_t raw__processor__reset_current_active_fiber__thread_unsafe(f2ptr cause,
 }
 
 boolean_t raw__processor__reset_current_active_fiber(f2ptr cause, f2ptr this) {
-  f2ptr active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
-  f2mutex__lock(active_fibers_mutex, cause);
+  f2ptr active_fibers_scheduler_mutex = f2processor__active_fibers_scheduler_mutex(this, cause);
+  f2scheduler_mutex__lock(active_fibers_scheduler_mutex, cause);
   boolean_t current_element_exists = raw__processor__reset_current_active_fiber__thread_unsafe(cause, this);
-  f2mutex__unlock(active_fibers_mutex, cause);
+  f2scheduler_mutex__unlock(active_fibers_scheduler_mutex, cause);
   return current_element_exists;
 }
 
@@ -286,12 +250,12 @@ def_pcfunk1(processor__reset_current_active_fiber, this, return f2__processor__r
 
 
 u64 raw__processor__active_fibers__length(f2ptr cause, f2ptr this) {
-  f2ptr this__active_fibers_mutex;
-  this__active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
-  f2mutex__lock(this__active_fibers_mutex, cause);
+  f2ptr this__active_fibers_scheduler_mutex;
+  this__active_fibers_scheduler_mutex = f2processor__active_fibers_scheduler_mutex(this, cause);
+  f2scheduler_mutex__lock(this__active_fibers_scheduler_mutex, cause);
   f2ptr active_fibers = f2processor__active_fibers(this, cause);
   u64 fiber_num = raw__simple_length(cause, active_fibers);
-  f2mutex__unlock(this__active_fibers_mutex, cause);
+  f2scheduler_mutex__unlock(this__active_fibers_scheduler_mutex, cause);
   return fiber_num;
 }
 
@@ -326,10 +290,10 @@ boolean_t raw__processor__active_fibers__contains__thread_unsafe(f2ptr cause, f2
 boolean_t raw__processor__active_fibers__contains(f2ptr cause, f2ptr this, f2ptr fiber) {
   boolean_t contains_fiber = boolean__false;
   {
-    f2ptr this__active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
-    f2mutex__lock(this__active_fibers_mutex, cause);
+    f2ptr this__active_fibers_scheduler_mutex = f2processor__active_fibers_scheduler_mutex(this, cause);
+    f2scheduler_mutex__lock(this__active_fibers_scheduler_mutex, cause);
     contains_fiber = raw__processor__active_fibers__contains__thread_unsafe(cause, this, fiber);
-    f2mutex__unlock(this__active_fibers_mutex, cause);
+    f2scheduler_mutex__unlock(this__active_fibers_scheduler_mutex, cause);
   }
   return contains_fiber;
 }
@@ -570,25 +534,25 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		      
 		      // bug: removing a fiber here seems to drop needed fibers sometimes.  (why?)
 		      {
-			f2ptr processor_assignment_mutex = f2fiber__processor_assignment_mutex(fiber, cause);
-			f2ptr active_fibers_mutex        = f2processor__active_fibers_mutex(processor, cause);
+			f2ptr processor_assignment_scheduler_mutex = f2fiber__processor_assignment_scheduler_mutex(fiber,     cause);
+			f2ptr active_fibers_scheduler_mutex        = f2processor__active_fibers_scheduler_mutex(   processor, cause);
 			int lock_failed;
 			do {
 			  lock_failed = boolean__false;
-			  boolean_t processor_assignment_mutex__lock_failed = f2mutex__trylock(processor_assignment_mutex, cause);
-			  boolean_t active_fibers_mutex__lock_failed        = f2mutex__trylock(active_fibers_mutex,        cause);
-			  if (processor_assignment_mutex__lock_failed) {
+			  boolean_t processor_assignment_scheduler_mutex__lock_failed = f2scheduler_mutex__trylock(processor_assignment_scheduler_mutex, cause);
+			  boolean_t active_fibers_scheduler_mutex__lock_failed        = f2schduler_mutex__trylock( active_fibers_scheduler_mutex,        cause);
+			  if (processor_assignment_scheduler_mutex__lock_failed) {
 			    lock_failed = boolean__true;
 			  }
-			  if (active_fibers_mutex__lock_failed) {
+			  if (active_fibers_scheduler_mutex__lock_failed) {
 			    lock_failed = boolean__true;
 			  }
 			  if (lock_failed) {
-			    if (! processor_assignment_mutex__lock_failed) {
-			      f2mutex__unlock(processor_assignment_mutex, cause);
+			    if (! processor_assignment_scheduler_mutex__lock_failed) {
+			      f2scheduler_mutex__unlock(processor_assignment_scheduler_mutex, cause);
 			    }
-			    if (! active_fibers_mutex__lock_failed) {
-			      f2mutex__unlock(active_fibers_mutex, cause);
+			    if (! active_fibers_scheduler_mutex__lock_failed) {
+			      f2scheduler_mutex__unlock(active_fibers_scheduler_mutex, cause);
 			    }
 			    raw__fast_spin_sleep_yield();
 			  }
@@ -599,8 +563,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 			} else {
 			  f2processor__active_fibers__set(processor, cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
 			}
-			f2mutex__unlock(processor_assignment_mutex, cause);
-			f2mutex__unlock(active_fibers_mutex,        cause);
+			f2scheduler_mutex__unlock(processor_assignment_scheduler_mutex, cause);
+			f2scheduler_mutex__unlock(active_fibers_scheduler_mutex,        cause);
 		      }
 		    
 		      prev_fiber_iter__already_set = 1;
@@ -646,11 +610,11 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  f2ptr new_fiber = f2__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, cause), critics, f2cons__new(cause, fiber, nil));
 	  resume_gc();
 	  {
-	    f2ptr processor__active_fibers_mutex;
+	    f2ptr processor__active_fibers_scheduler_mutex;
 	    int lock_failed;
 	    do {
-	      processor__active_fibers_mutex = f2processor__active_fibers_mutex(processor, cause);
-	      lock_failed = f2mutex__trylock(processor__active_fibers_mutex, cause);
+	      processor__active_fibers_scheduler_mutex = f2processor__active_fibers_scheduler_mutex(processor, cause);
+	      lock_failed = f2scheduler_mutex__trylock(processor__active_fibers_scheduler_mutex, cause);
 	      if (lock_failed) {
 		raw__fast_spin_sleep_yield();
 	      }
@@ -658,7 +622,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	    pause_gc();
 	    f2processor__active_fibers__set(processor, cause, f2cons__new(cause, new_fiber, f2processor__active_fibers(processor, cause)));
 	    resume_gc();
-	    f2mutex__unlock(processor__active_fibers_mutex, cause);
+	    f2scheduler_mutex__unlock(processor__active_fibers_scheduler_mutex, cause);
 	  }	
 	  //printf("\n  processor="); f2__print(cause, processor); fflush(stdout);
 	} else {

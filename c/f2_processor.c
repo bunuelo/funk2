@@ -540,7 +540,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 			do {
 			  lock_failed = boolean__false;
 			  boolean_t processor_assignment_scheduler_mutex__lock_failed = f2scheduler_mutex__trylock(processor_assignment_scheduler_mutex, cause);
-			  boolean_t active_fibers_scheduler_mutex__lock_failed        = f2schduler_mutex__trylock( active_fibers_scheduler_mutex,        cause);
+			  boolean_t active_fibers_scheduler_mutex__lock_failed        = f2scheduler_mutex__trylock(active_fibers_scheduler_mutex,        cause);
 			  if (processor_assignment_scheduler_mutex__lock_failed) {
 			    lock_failed = boolean__true;
 			  }

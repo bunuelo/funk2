@@ -78,6 +78,7 @@ f2ptr raw__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
       if (! processor_assignment_mutex__failed_to_lock) {
 	f2mutex__unlock(processor_assignment_mutex, cause);
       }
+      raw__fast_spin_sleep_yield();
     }
   }
   boolean_t success = raw__processor__add_active_fiber__thread_unsafe(cause, this, fiber);
@@ -128,23 +129,26 @@ f2ptr raw__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this
 f2ptr raw__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   f2ptr active_fibers_mutex        = f2processor__active_fibers_mutex(   this,  cause);
   f2ptr processor_assignment_mutex = f2fiber__processor_assignment_mutex(fiber, cause);
-  boolean_t both_locked            = boolean__false;
-  while (! both_locked) {
-    both_locked                                          = boolean__true;
-    boolean_t active_fibers_mutex__failed_to_lock        = f2mutex__trylock(active_fibers_mutex,        cause);
-    boolean_t processor_assignment_mutex__failed_to_lock = f2mutex__trylock(processor_assignment_mutex, cause);
-    if (active_fibers_mutex__failed_to_lock) {
-      both_locked = boolean__false;
-    }
-    if (processor_assignment_mutex__failed_to_lock) {
-      both_locked = boolean__false;
-    }
-    if (! both_locked) {
-      if (! active_fibers_mutex__failed_to_lock) {
-	f2mutex__unlock(active_fibers_mutex, cause);
+  {
+    boolean_t both_locked = boolean__false;
+    while (! both_locked) {
+      both_locked                                          = boolean__true;
+      boolean_t active_fibers_mutex__failed_to_lock        = f2mutex__trylock(active_fibers_mutex,        cause);
+      boolean_t processor_assignment_mutex__failed_to_lock = f2mutex__trylock(processor_assignment_mutex, cause);
+      if (active_fibers_mutex__failed_to_lock) {
+	both_locked = boolean__false;
       }
-      if (! processor_assignment_mutex__failed_to_lock) {
-	f2mutex__unlock(processor_assignment_mutex, cause);
+      if (processor_assignment_mutex__failed_to_lock) {
+	both_locked = boolean__false;
+      }
+      if (! both_locked) {
+	if (! active_fibers_mutex__failed_to_lock) {
+	  f2mutex__unlock(active_fibers_mutex, cause);
+	}
+	if (! processor_assignment_mutex__failed_to_lock) {
+	  f2mutex__unlock(processor_assignment_mutex, cause);
+	}
+	raw__fast_spin_sleep_yield();
       }
     }
   }
@@ -153,6 +157,42 @@ f2ptr raw__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) 
   f2mutex__unlock(processor_assignment_mutex, cause);
   return result;
 }
+
+/*
+		    {
+		      f2ptr processor_assignment_mutex = f2fiber__processor_assignment_mutex(fiber, cause);
+		      f2ptr active_fibers_mutex        = f2processor__active_fibers_mutex(processor, cause);
+		      int lock_failed;
+		      do {
+			lock_failed = boolean__false;
+			boolean_t processor_assignment_mutex__lock_failed = f2mutex__trylock(processor_assignment_mutex, cause);
+			boolean_t active_fibers_mutex__lock_failed        = f2mutex__trylock(active_fibers_mutex,        cause);
+			if (processor_assignment_mutex__lock_failed) {
+			  lock_failed = boolean__true;
+			}
+			if (active_fibers_mutex__lock_failed) {
+			  lock_failed = boolean__true;
+			}
+			if (lock_failed) {
+			  if (! processor_assignment_mutex__lock_failed) {
+			    f2mutex__unlock(processor_assignment_mutex, cause);
+			  }
+			  if (! active_fibers_mutex__lock_failed) {
+			    f2mutex__unlock(active_fibers_mutex, cause);
+			  }
+			  raw__fast_spin_sleep_yield();
+			}
+		      } while (lock_failed);
+		      f2fiber__processor_assignment_index__set(fiber, cause, nil);
+		      if (f2processor__active_fibers_prev(processor, cause)) {
+			f2cons__cdr__set(f2processor__active_fibers_prev(processor, cause), cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
+		      } else {
+			f2processor__active_fibers__set(processor, cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
+		      }
+		      f2mutex__unlock(processor_assignment_mutex, cause);
+		      f2mutex__unlock(active_fibers_mutex,        cause);
+		    }
+*/
 
 f2ptr f2__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   if ((! raw__processor__is_type(cause, this)) ||
@@ -529,8 +569,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		      f2fiber__is_zombie__set(fiber, cause, nil);
 		    }
 		    
-		    //raw__processor__remove_active_fiber(cause, processor, fiber);
-		    
+		    raw__processor__remove_active_fiber(cause, processor, fiber);
+		    /*
 		    // bug: removing a fiber here seems to drop needed fibers sometimes.  (why?)
 		    {
 		      f2ptr processor_assignment_mutex = f2fiber__processor_assignment_mutex(fiber, cause);
@@ -565,7 +605,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		      f2mutex__unlock(processor_assignment_mutex, cause);
 		      f2mutex__unlock(active_fibers_mutex,        cause);
 		    }
-		    
+		    */
 		    prev_fiber_iter__already_set = 1;
 		  }
 		}

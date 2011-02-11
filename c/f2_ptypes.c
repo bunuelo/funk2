@@ -1985,7 +1985,7 @@ f2ptr ptype_scheduler_mutex__new(int pool_index, f2ptr cause) {
   scheduler_mutex_block->ptype.ptype  = ptype_scheduler_mutex;
   scheduler_mutex_block->ptype.cause  = cause;
   scheduler_mutex_block->locked_state = boolean__false;
-  funk2_processor_scheduler_mutex__init(scheduler_mutex_block->m);
+  funk2_processor_mutex__init(scheduler_mutex_block->m);
   return scheduler_mutex_f2ptr;
 }
 
@@ -1996,10 +1996,10 @@ f2ptr pfunk2__f2scheduler_mutex__new(f2ptr cause) {
   return retval;
 }
 
-funk2_processor_scheduler_mutex_t* ptype_scheduler_mutex__m(f2ptr this, f2ptr cause) {
+funk2_processor_mutex_t* ptype_scheduler_mutex__m(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
-  funk2_processor_scheduler_mutex_t* m = __pure__f2scheduler_mutex__m(this);
+  funk2_processor_mutex_t* m = __pure__f2scheduler_mutex__m(this);
   return m;
 }
 
@@ -2011,7 +2011,7 @@ boolean_t pfunk2__f2scheduler_mutex__is_locked(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   //int pool_index = this_processor_thread__pool_index();
-  boolean_t is_locked = funk2_processor_scheduler_mutex__is_locked(ptype_scheduler_mutex__m(this, cause));
+  boolean_t is_locked = funk2_processor_mutex__is_locked(ptype_scheduler_mutex__m(this, cause));
   return is_locked;
 }
 
@@ -2022,10 +2022,10 @@ void pfunk2__f2scheduler_mutex__lock(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_scheduler_mutex__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  funk2_processor_scheduler_mutex_trylock_result_t trylock_result = funk2_processor_scheduler_mutex_trylock_result__failure;
+  funk2_processor_mutex_trylock_result_t trylock_result = funk2_processor_mutex_trylock_result__failure;
   while (1) {
-    trylock_result = funk2_processor_scheduler_mutex__trylock(ptype_scheduler_mutex__m(this, cause));
-    if (trylock_result == funk2_processor_scheduler_mutex_trylock_result__failure) {
+    trylock_result = funk2_processor_mutex__trylock(ptype_scheduler_mutex__m(this, cause));
+    if (trylock_result == funk2_processor_mutex_trylock_result__failure) {
       f2__this__fiber__yield(cause);
     } else {
       break;
@@ -2044,7 +2044,7 @@ void pfunk2__f2scheduler_mutex__unlock(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   // note that this assumes the scheduler_mutex is locked.
   __pure__f2scheduler_mutex__locked_state__set(this, boolean__false);
-  funk2_processor_scheduler_mutex__unlock(ptype_scheduler_mutex__m(this, cause));
+  funk2_processor_mutex__unlock(ptype_scheduler_mutex__m(this, cause));
 }
 
 int pfunk2__f2scheduler_mutex__trylock(f2ptr this, f2ptr cause) {
@@ -2055,7 +2055,7 @@ int pfunk2__f2scheduler_mutex__trylock(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_scheduler_mutex__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  int return_value = funk2_processor_scheduler_mutex__trylock(ptype_scheduler_mutex__m(this, cause));
+  int return_value = funk2_processor_mutex__trylock(ptype_scheduler_mutex__m(this, cause));
   if (return_value == 0) {
     __pure__f2scheduler_mutex__locked_state__set(this, boolean__true);
   }
@@ -2153,8 +2153,8 @@ def_pcfunk2(scheduler_mutex__equals, this, that, return f2__scheduler_mutex__equ
 
 
 u64 raw__scheduler_mutex__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
-  funk2_processor_scheduler_mutex_t* m = __pure__f2scheduler_mutex__m(this);
-  return funk2_processor_scheduler_mutex__equals_hash_value(m);
+  funk2_processor_mutex_t* m = __pure__f2scheduler_mutex__m(this);
+  return funk2_processor_mutex__equals_hash_value(m);
 }
 
 f2ptr f2__scheduler_mutex__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
@@ -2167,8 +2167,8 @@ def_pcfunk2(scheduler_mutex__equals_hash_value__loop_free, this, node_ptypehash,
 
 
 u64 raw__scheduler_mutex__equals_hash_value(f2ptr cause, f2ptr this) {
-  funk2_processor_scheduler_mutex_t* m = __pure__f2scheduler_mutex__m(this);
-  return funk2_processor_scheduler_mutex__equals_hash_value(m);
+  funk2_processor_mutex_t* m = __pure__f2scheduler_mutex__m(this);
+  return funk2_processor_mutex__equals_hash_value(m);
 }
 
 f2ptr f2__scheduler_mutex__equals_hash_value(f2ptr cause, f2ptr this) {

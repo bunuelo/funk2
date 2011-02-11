@@ -80,8 +80,8 @@ void raw__serialize_to_chunk_index(f2ptr cause, f2ptr chunk, int index, int *new
       printf("\nserialize scheduler_mutex"); fflush(stdout);
       u8 temp_buffer[128];
       memset(temp_buffer, 0, 128);
-      funk2_processor_scheduler_mutex_t* scheduler_mutex = ptype_scheduler_mutex__m(exp, cause);
-      memcpy(temp_buffer, scheduler_mutex, sizeof(funk2_processor_scheduler_mutex_t));
+      funk2_processor_mutex_t* scheduler_mutex = ptype_scheduler_mutex__m(exp, cause);
+      memcpy(temp_buffer, scheduler_mutex, sizeof(funk2_processor_mutex_t));
       u64 i;
       for (i = 0; i < 128; i++) {
       	if (chunk) {f2chunk__bit8__elt__set(chunk, index, cause, temp_buffer[i]);} index ++;
@@ -209,8 +209,8 @@ f2ptr raw__deserialize_from_chunk_index(f2ptr cause, f2ptr chunk, int index, int
       temp_buffer[i] = f2chunk__bit8__elt(chunk, index, cause); index ++;
     }
     exp = f2scheduler_mutex__new(cause);
-    funk2_processor_scheduler_mutex_t* scheduler_mutex = ptype_scheduler_mutex__m(exp, cause);
-    memcpy(scheduler_mutex, temp_buffer, sizeof(funk2_processor_scheduler_mutex_t));
+    funk2_processor_mutex_t* scheduler_mutex = ptype_scheduler_mutex__m(exp, cause);
+    memcpy(scheduler_mutex, temp_buffer, sizeof(funk2_processor_mutex_t));
   } break;
   case ptype_mutex: {
     u8 temp_buffer[128];

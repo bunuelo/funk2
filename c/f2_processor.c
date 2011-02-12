@@ -435,7 +435,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
   {
     f2ptr fiber;
     while ((fiber = raw__processor__current_active_fiber(cause, processor)) != nil) {
-      f2processor__active_fibers_next__set(processor, cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
       fiber_num ++;
       int       prev_fiber_iter__already_set = 0;
       boolean_t need_to_launch_larva_handling_critic_fiber = 0;

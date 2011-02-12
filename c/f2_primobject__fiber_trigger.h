@@ -26,6 +26,8 @@
 
 typedef struct funk2_object_type__fiber_trigger__slot_s funk2_object_type__fiber_trigger__slot_t;
 declare_object_type_1_slot(fiber_trigger, test,
+			   f2ptr trigger__symbol;
+			   f2ptr trigger__funk;
 			   );
 
 #endif // F2__PRIMOBJECT__FIBER_TRIGGER__TYPES__H
@@ -39,9 +41,10 @@ declare_object_type_1_slot(fiber_trigger, test,
 
 declare_primobject_1_slot(fiber_trigger, test);
 
-f2ptr raw__fiber_trigger__new(f2ptr cause);
-f2ptr  f2__fiber_trigger__new(f2ptr cause);
-
+f2ptr raw__fiber_trigger__new    (f2ptr cause);
+f2ptr  f2__fiber_trigger__new    (f2ptr cause);
+f2ptr raw__fiber_trigger__trigger(f2ptr cause, f2ptr this);
+f2ptr  f2__fiber_trigger__trigger(f2ptr cause, f2ptr this);
 
 f2ptr f2fiber_trigger__primobject_type__new_aux(f2ptr cause);
 

@@ -436,7 +436,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     f2ptr fiber;
     while ((fiber = raw__processor__current_active_fiber(cause, processor)) != nil) {
       fiber_num ++;
-      int       prev_fiber_iter__already_set = 0;
       boolean_t need_to_launch_larva_handling_critic_fiber = 0;
       //status("trying to lock execute mutex for thread.");
       if (f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) { // successful lock

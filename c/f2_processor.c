@@ -525,10 +525,10 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		    if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > nanoseconds_per_second) {
 		      
 		      // anytime a fiber is removed from processor active fibers, it should be removed from it's cause so that it can be garbage collected.
-		      f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
-		      if (fiber_cause != nil) {
-			raw__cause__remove_fiber(cause, fiber_cause, fiber);
-		      }
+		      //f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
+		      //if (fiber_cause != nil) {
+		      //	raw__cause__remove_fiber(cause, fiber_cause, fiber);
+		      //}
 		      if (f2fiber__is_zombie(fiber, cause)) {
 			f2fiber__is_zombie__set(fiber, cause, nil);
 		      }

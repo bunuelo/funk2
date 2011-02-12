@@ -710,6 +710,21 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   def_primobject_add_slot(name, slot_23);
 
 
+#define def_primobject_0_slot(name) \
+  def_primobject_static_0_slot(name); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 0, nil, trace_depth); \
+      def_primobject__0_slot__set__trace_depth(name); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause) { \
+      return f2##name##__new__trace_depth(cause, 1); \
+    }, \
+    def_primobject_add_0_slot(name));
+
 #define def_primobject_1_slot(name, slot_1) \
   def_primobject_static_1_slot(name, slot_1); \
    \

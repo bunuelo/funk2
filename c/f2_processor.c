@@ -58,7 +58,7 @@ f2ptr raw__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   }
   f2ptr active_fibers_scheduler_mutex        = f2processor__active_fibers_scheduler_mutex(   this,  cause);
   f2ptr processor_assignment_scheduler_mutex = f2fiber__processor_assignment_scheduler_mutex(fiber, cause);
-  boolean_t both_locked               = boolean__false;
+  boolean_t both_locked                      = boolean__false;
   while (! both_locked) {
     both_locked                                                    = boolean__true;
     boolean_t active_fibers_scheduler_mutex__failed_to_lock        = f2scheduler_mutex__trylock(active_fibers_scheduler_mutex,        cause);
@@ -110,7 +110,7 @@ f2ptr raw__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this
     f2ptr active_fiber       = f2cons__car(active_fibers_iter, cause);
     f2ptr active_fibers_next = f2cons__cdr(active_fibers_iter, cause);
     if (raw__eq(cause, fiber, active_fiber)) {
-      if (active_fibers_prev) {
+      if (active_fibers_prev != nil) {
 	f2cons__cdr__set(active_fibers_prev, cause, active_fibers_next);
       } else {
 	f2processor__active_fibers__set(this, cause, active_fibers_next);
@@ -119,6 +119,7 @@ f2ptr raw__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this
       found_and_removed_fiber = boolean__true;
       break;
     }
+    active_fibers_prev = active_fibers_iter;
     active_fibers_iter = active_fibers_next;
   }
   return f2bool__new(found_and_removed_fiber);

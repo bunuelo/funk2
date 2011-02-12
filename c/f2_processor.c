@@ -646,7 +646,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	f2processor__active_fibers_prev__set(processor, cause, f2processor__active_fibers_iter(processor, cause));
       }
       
-      f2processor__active_fibers_iter__set(processor, cause, f2processor__active_fibers_next(processor, cause));
+      raw__processor__increment_current_active_fiber(cause, processor);
+      //f2processor__active_fibers_iter__set(processor, cause, f2processor__active_fibers_next(processor, cause));
     } // end of fiber while
   }
   

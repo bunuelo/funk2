@@ -311,6 +311,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_primobject__doublelinklist.c \
   c/f2_primobject__dynamic_library.c \
   c/f2_primobject__environment.c \
+  c/f2_primobject__fiber_trigger.c \
   c/f2_primobject__frame.c \
   c/f2_primobject__hash.c \
   c/f2_primobject__list.c \

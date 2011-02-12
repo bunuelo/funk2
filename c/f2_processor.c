@@ -437,9 +437,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     while ((fiber = raw__processor__current_active_fiber(cause, processor)) != nil) {
       fiber_num ++;
       boolean_t need_to_launch_larva_handling_critic_fiber = 0;
-      //status("trying to lock execute mutex for thread.");
       if (f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) { // successful lock
-	//status("successfully locked execute mutex for thread.");
 	if (! f2fiber__paused(fiber, cause)) {
 	  f2ptr sleep_until_time = f2fiber__sleep_until_time(fiber, cause);
 	  boolean_t fiber_needs_sleep = boolean__false;
@@ -541,7 +539,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
       } else {
 	//printf("\nfiber locked couldn't execute...");
       }
-    
+      
       if (need_to_launch_larva_handling_critic_fiber) {
 	f2ptr cause_reg = f2fiber__cause_reg(fiber, cause);
 	f2ptr critics   = cause_reg ? f2cause__critics(cause_reg, cause) : nil;
@@ -583,12 +581,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     } // end of fiber while
   }
   
-  //status("fiber_num = %d", fiber_num);
-  //pool__resume_gc(this_processor_thread__pool_index());
-  
-  //if (did_something) {
-  //printf("\nprocessor__execute_next_bytecodes: processor %d (%d) fiber_num = %d", this_processor_thread__pool_index(), processor, fiber_num);
-  //}
   return did_something;
 }
 

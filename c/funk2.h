@@ -95,6 +95,7 @@
 #include "f2_primobject__circular_buffer.h"
 #include "f2_primobject__dynamic_library.h"
 #include "f2_primobject__environment.h"
+#include "f2_primobject__fiber_trigger.h"
 #include "f2_primobject__frame.h"
 #include "f2_primobject__hash.h"
 #include "f2_primobject__largeinteger.h"

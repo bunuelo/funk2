@@ -24,6 +24,7 @@
 
 #include "f2_primobjects.h"
 #include "f2_fiber.h"
+#include "f2_primobject__fiber_trigger.h"
 #include "f2_primobject__stream.h"
 #include "f2_primobject__ptypehash.h"
 #include "f2_primobject__set.h"
@@ -114,6 +115,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__bytecode_event__slot_t                   primobject_type_bytecode_event;
   funk2_object_type__stream__slot_t                           primobject_type_stream;
   funk2_object_type__ptypehash__slot_t                        primobject_type_ptypehash;
+  funk2_object_type__fiber_trigger__slot_t                    primobject_type_fiber_trigger;
   funk2_object_type__frame__slot_t                            primobject_type_frame;
   funk2_object_type__environment__slot_t                      primobject_type_environment;
   funk2_object_type__set__slot_t                              primobject_type_set;

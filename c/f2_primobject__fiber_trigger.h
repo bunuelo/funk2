@@ -25,7 +25,7 @@
 // fiber_trigger
 
 typedef struct funk2_object_type__fiber_trigger__slot_s funk2_object_type__fiber_trigger__slot_t;
-declare_object_type_0_slot(fiber_trigger,
+declare_object_type_1_slot(fiber_trigger, test,
 			   );
 
 #endif // F2__PRIMOBJECT__FIBER_TRIGGER__TYPES__H
@@ -37,7 +37,7 @@ declare_object_type_0_slot(fiber_trigger,
 
 // fiber_trigger
 
-declare_primobject_0_slot(fiber_trigger);
+declare_primobject_1_slot(fiber_trigger, test);
 
 f2ptr raw__fiber_trigger__new(f2ptr cause);
 f2ptr  f2__fiber_trigger__new(f2ptr cause);

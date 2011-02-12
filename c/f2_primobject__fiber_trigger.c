@@ -96,7 +96,8 @@ f2ptr f2__fiber_trigger_hash__add(f2ptr cause, f2ptr trigger, f2ptr fiber) {
   }
   return raw__fiber_trigger_hash__add(cause, trigger, fiber);
 }
-export_cefunk2(fiber_trigger_hash__add, trigger, fiber, 0, "Adds a fiber to a fiber_trigger's global activation set.");
+def_pcfunk2(fiber_trigger_hash__add, trigger, fiber, return f2__fiber_trigger_hash__add(this_cause, trigger, fiber));
+
 
 f2ptr raw__fiber_trigger_hash__unpause_trigger_fibers(f2ptr cause, f2ptr trigger) {
   f2ptr fiber_trigger_hash = f2__fiber_trigger_hash(cause);

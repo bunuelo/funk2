@@ -238,6 +238,12 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   declare_primobject_slot(name, slot_23);
 
 
+#define declare_primobject_0_slot(name) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause); \
+  declare_primobject_inline_0_slot(name);
+
 #define declare_primobject_1_slot(name, slot_1) \
   extern f2ptr __##name##__symbol; \
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, int trace_depth); \
@@ -1513,6 +1519,10 @@ extern void f2__primobjects__initialize();
   declare_object_type_vars_22_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22) \
   declare_object_type_slot(slot_23);
 
+
+#define declare_object_type_0_slot(name, body) \
+  declare_object_type_common(name,	       \
+			     body)
 
 #define declare_object_type_1_slot(name, slot_1, body) \
   declare_object_type_common(name,		       \

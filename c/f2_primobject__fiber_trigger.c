@@ -26,7 +26,7 @@
 def_primobject_1_slot(fiber_trigger, test);
 
 f2ptr raw__fiber_trigger__new(f2ptr cause) {
-  return f2fiber_trigger__new(cause);
+  return f2fiber_trigger__new(cause, nil);
 }
 
 f2ptr f2__fiber_trigger__new(f2ptr cause) {

@@ -399,8 +399,6 @@ void f2__scheduler__initialize() {
 				       f2scheduler_mutex__new(cause),
 				       nil, // active_fibers
 				       nil, // active_fibers_iter
-				       nil, // active_fibers_prev
-				       nil, // active_fibers_next
 				       f2integer__new(cause, i),
 				       f2integer__new(cause, i));
     raw__array__elt__set(cause, processors, i, processor);

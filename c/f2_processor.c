@@ -533,7 +533,11 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 			f2fiber__is_zombie__set(fiber, cause, nil);
 		      }
 		      
-		      raw__processor__remove_active_fiber(cause, processor, fiber);
+		      f2ptr result = raw__processor__remove_active_fiber(cause, processor, fiber);
+		      if (raw__larva__is_type(cause, result)) {
+			printf("\nerror removing active fiber at completion."); fflush(stdout);
+			status(  "error removing active fiber at completion.");
+		      }
 		      
 		      /*
 		      // bug: removing a fiber here seems to drop needed fibers sometimes.  (why?)

@@ -57,11 +57,13 @@ f2ptr f2fiber_trigger__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__primobject_fiber_trigger__reinitialize_globalvars() {
+void f2__primobject__fiber_trigger__reinitialize_globalvars() {
   __fiber_trigger__symbol = f2symbol__new(initial_cause(), strlen("fiber_trigger"), (u8*)"fiber_trigger");
 }
 
-void f2__primobject_fiber_trigger__initialize() {
+void f2__primobject__fiber_trigger__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-fiber_trigger", "", &f2__primobject__fiber_trigger__reinitialize_globalvars);
+  
   f2__primobject_fiber_trigger__reinitialize_globalvars();
   
   environment__add_var_value(initial_cause(), global_environment(), __fiber_trigger__symbol, nil);

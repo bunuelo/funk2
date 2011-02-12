@@ -71,8 +71,8 @@
 						   [let [[waiting_count               0]
 							 [waiting_to_be_added_to_mind t]]
 						     [while waiting_to_be_added_to_mind
-						       [terminal_format standard-terminal '\nResource ' initial-name ' waiting to be added to mind (count=' waiting_count ').'] [= waiting_count [+ waiting_count 1]]
-						       [sleep 10]
+						       `[terminal_format standard-terminal '\nResource ' initial-name ' waiting to be added to mind (count=' waiting_count ').'] [= waiting_count [+ waiting_count 1]]
+						       [sleep 1]
 						       [if [null mind-name]
 							   [if agency
 							       [prog [cause-define agency-name [get agency name]]

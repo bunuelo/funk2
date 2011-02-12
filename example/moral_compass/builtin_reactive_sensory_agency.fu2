@@ -55,7 +55,8 @@
   [while t
     [wait-for-trigger [get [get [get this mind] resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
     
-    [let [[visual_objects [get [get this mind] visual_objects]]]
+    [let* [[perception     [get [get this mind] perception]]
+	   [visual_objects [get perception visual_objects]]]
       [have [get [get this mind] visual_knowledge] remove_all]
       [let [[semantic_realm        [get [get this mind] semantic_realm]]
 	    [semantic_object_frame [frame]]]

@@ -792,6 +792,25 @@
 			      label_definitions]]
 	  body]]
 
+[defunk pause []
+  [global_scheduler-remove_fiber [this-fiber]]
+  [yield]]
+
+[defunk resume [fiber]
+  [global_scheduler-add_fiber fiber]]
+
+[defunk wait-for-trigger [fiber_trigger]
+  [fiber_trigger_hash-add fiber_trigger [this-fiber]]
+  [pause]]
+
+[defmetro on-trigger [trigger :rest body]
+  `[let [[trigger ,trigger]]
+     [fiber [funk []
+		  [wait-for-trigger trigger]
+		  @body]
+	    nil]
+     nil]]
+
 [defmetro with-new-cause [:rest codes]
   `[let* [[result `bug]
 	  [fiber  [fiber [funk-new_with_name with-new-cause []

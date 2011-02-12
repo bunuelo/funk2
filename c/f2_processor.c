@@ -100,20 +100,17 @@ f2ptr raw__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this
   if (processor_assignment_index == nil) {
     return f2larva__new(cause, 125112, nil);
   }
-  if (! raw__eq(cause, f2processor__pool_index(this, cause), processor_assignment_index)) {
-    return f2larva__new(cause, 135222, nil);
-  }
   boolean_t found_and_removed_fiber = boolean__false;
   f2ptr active_fibers_iter = f2processor__active_fibers(this, cause);
   f2ptr active_fibers_prev = nil;
   while (active_fibers_iter) {
     f2ptr active_fiber       = f2cons__car(active_fibers_iter, cause);
     f2ptr active_fibers_next = f2cons__cdr(active_fibers_iter, cause);
-    if (raw__eq(cause, fiber, active_fiber)) {
-      if (active_fibers_prev != nil) {
-	f2cons__cdr__set(active_fibers_prev, cause, active_fibers_next);
-      } else {
+    if (fiber == active_fiber) {
+      if (active_fibers_prev == nil) {
 	f2processor__active_fibers__set(this, cause, active_fibers_next);
+      } else {
+	f2cons__cdr__set(active_fibers_prev, cause, active_fibers_next);
       }
       f2fiber__processor_assignment_index__set(fiber, cause, nil);
       found_and_removed_fiber = boolean__true;
@@ -277,7 +274,7 @@ boolean_t raw__processor__active_fibers__contains__thread_unsafe(f2ptr cause, f2
       f2ptr iter = active_fibers;
       while (iter != nil) {
 	f2ptr active_fiber = f2cons__car(iter, cause);
-	if (raw__eq(cause, fiber, active_fiber)) {
+	if (fiber == active_fiber) {
 	  contains_fiber = boolean__true;
 	  break;
 	}

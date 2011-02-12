@@ -49,6 +49,13 @@ f2ptr  f2__fiber_trigger__trigger(f2ptr cause, f2ptr this);
 f2ptr f2fiber_trigger__primobject_type__new_aux(f2ptr cause);
 
 
+// fiber_trigger_hash (a global ptypehash)
+
+f2ptr  f2__fiber_trigger_hash                        (f2ptr cause);
+f2ptr raw__fiber_trigger_hash__add                   (f2ptr cause, f2ptr trigger, f2ptr fiber);
+f2ptr  f2__fiber_trigger_hash__add                   (f2ptr cause, f2ptr trigger, f2ptr fiber);
+f2ptr raw__fiber_trigger_hash__unpause_trigger_fibers(f2ptr cause, f2ptr trigger);
+
 // **
 
 void f2__primobject__fiber_trigger__reinitialize_globalvars();

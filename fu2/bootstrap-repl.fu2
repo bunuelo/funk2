@@ -65,6 +65,7 @@
 [primfunk:load 'fu2/primfunks-errno.fu2']
 [primfunk:load 'fu2/primfunks-fcntl.fu2']
 [primfunk:load 'fu2/primfunks-fiber.fu2']
+[primfunk:load 'fu2/primfunks-fiber_trigger.fu2']
 [primfunk:load 'fu2/primfunks-frame.fu2']
 [primfunk:load 'fu2/primfunks-gmodule.fu2']
 [primfunk:load 'fu2/primfunks-hash.fu2']

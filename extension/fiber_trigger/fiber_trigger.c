@@ -154,7 +154,7 @@ f2ptr f2__fiber_trigger__core_extension__initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "fiber_trigger"), f2__fiber_trigger_type__new_aux(cause));
   {
     f2ptr result = f2__fiber_trigger_hash(cause);
-    if (! raw__larva__is_type(cause, result)) {
+    if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }

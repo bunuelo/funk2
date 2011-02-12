@@ -409,7 +409,7 @@
        [have view_menu append view_proprioceptual_frame_menu_item]
 
        [= view_visual_objects_menu_item [gtk-menu_item-new 'visual_objects']]
-       [have view_proprioceptual_frame_menu_item signal_connect 'activate'
+       [have view_visual_objects_frame_menu_item signal_connect 'activate'
 	     [funk []
 		   [terminal_format standard-terminal '\n' [get this name] '\'s visual objects:'
 				    '\n  ' [have [get [get isis_agent mind] perception] lookup `visual_objects]]]

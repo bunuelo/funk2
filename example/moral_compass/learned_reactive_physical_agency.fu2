@@ -25,8 +25,8 @@
 [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
 	command `learned_reactive `physical `level_pitch]
 
-[have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
-	command `learned_reactive `physical `stand_in_front_of `fridge+176294404]
+[have [get [get [get [get isis_world agent_mind `Lauren] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
+	command `learned_reactive `physical `center_body_on `knife+166631700]
 
 
 [have [get [get [get [get isis_world agent_mind `Ralph] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
@@ -638,6 +638,7 @@
        [have this add_resource [new learned_open_fridge_resource]]
        [have this add_resource [new slice_toast_resource]]
        [have this add_resource [new center_body_on_resource]]
+       [have this add_resource [new center_head_on_resource]]
       `[have this add_resource [new walk_towards_resource]]
        [have this add_resource [new walk_directly_towards_resource]]
        [have this add_resource [new search_for_resource]]

@@ -30,7 +30,6 @@
 
 [defpackage resource
   :packages [math
-	     fiber_trigger
 	     semantic_knowledge_base
 	     story]
    :sources ['resource.fu2']]

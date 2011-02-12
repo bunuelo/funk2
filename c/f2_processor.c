@@ -23,14 +23,12 @@
 
 // processor
 
-def_primobject_9_slot(processor,
+def_primobject_7_slot(processor,
 		      scheduler,
 		      processor_thread,
 		      active_fibers_scheduler_mutex,
 		      active_fibers,
 		      active_fibers_iter,
-		      active_fibers_prev,
-		      active_fibers_next,
 		      pool_index,
 		      desc);
 
@@ -196,7 +194,6 @@ boolean_t raw__processor__increment_current_active_fiber__thread_unsafe(f2ptr ca
   if (active_fibers_iter == nil) {
     return f2larva__new(cause, 213, nil);
   }
-  f2processor__active_fibers_prev__set(this, cause, active_fibers_iter);
   active_fibers_iter = f2cons__cdr(active_fibers_iter, cause);
   f2processor__active_fibers_iter__set(this, cause, active_fibers_iter);
   boolean_t current_element_exists = (active_fibers_iter != nil);
@@ -223,7 +220,6 @@ def_pcfunk1(processor__increment_current_active_fiber, this, return f2__processo
 
 boolean_t raw__processor__reset_current_active_fiber__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr active_fibers = f2processor__active_fibers(this, cause);
-  f2processor__active_fibers_prev__set(this, cause, nil);
   f2processor__active_fibers_iter__set(this, cause, active_fibers);
   boolean_t current_element_exists = (active_fibers != nil);
   return current_element_exists;
@@ -434,17 +430,13 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
   f2ptr did_something = nil;
   
   raw__processor__reset_current_active_fiber(cause, processor);
-  //f2processor__active_fibers_iter__set(processor, cause, f2processor__active_fibers(processor, cause));
-  //f2processor__active_fibers_prev__set(processor, cause, nil);
   
   int fiber_num = 0;
   {
     f2ptr fiber;
     while ((fiber = raw__processor__current_active_fiber(cause, processor)) != nil) {
-      //while (f2processor__active_fibers_iter(processor, cause) != nil) {
       f2processor__active_fibers_next__set(processor, cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
       fiber_num ++;
-      //f2ptr fiber = f2cons__car(f2processor__active_fibers_iter(processor, cause), cause);
       int       prev_fiber_iter__already_set = 0;
       boolean_t need_to_launch_larva_handling_critic_fiber = 0;
       //status("trying to lock execute mutex for thread.");
@@ -537,44 +529,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 			printf("\nerror removing active fiber at completion."); fflush(stdout);
 			status(  "error removing active fiber at completion.");
 		      }
-		      
-		      /*
-		      // bug: removing a fiber here seems to drop needed fibers sometimes.  (why?)
-		      {
-			f2ptr processor_assignment_scheduler_mutex = f2fiber__processor_assignment_scheduler_mutex(fiber,     cause);
-			f2ptr active_fibers_scheduler_mutex        = f2processor__active_fibers_scheduler_mutex(   processor, cause);
-			int lock_failed;
-			do {
-			  lock_failed = boolean__false;
-			  boolean_t processor_assignment_scheduler_mutex__lock_failed = f2scheduler_mutex__trylock(processor_assignment_scheduler_mutex, cause);
-			  boolean_t active_fibers_scheduler_mutex__lock_failed        = f2scheduler_mutex__trylock(active_fibers_scheduler_mutex,        cause);
-			  if (processor_assignment_scheduler_mutex__lock_failed) {
-			    lock_failed = boolean__true;
-			  }
-			  if (active_fibers_scheduler_mutex__lock_failed) {
-			    lock_failed = boolean__true;
-			  }
-			  if (lock_failed) {
-			    if (! processor_assignment_scheduler_mutex__lock_failed) {
-			      f2scheduler_mutex__unlock(processor_assignment_scheduler_mutex, cause);
-			    }
-			    if (! active_fibers_scheduler_mutex__lock_failed) {
-			      f2scheduler_mutex__unlock(active_fibers_scheduler_mutex, cause);
-			    }
-			    raw__fast_spin_sleep_yield();
-			  }
-			} while (lock_failed);
-			f2fiber__processor_assignment_index__set(fiber, cause, nil);
-			if (f2processor__active_fibers_prev(processor, cause)) {
-			  f2cons__cdr__set(f2processor__active_fibers_prev(processor, cause), cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
-			} else {
-			  f2processor__active_fibers__set(processor, cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
-			}
-			f2scheduler_mutex__unlock(processor_assignment_scheduler_mutex, cause);
-			f2scheduler_mutex__unlock(active_fibers_scheduler_mutex,        cause);
-		      }
-		      */
-		      prev_fiber_iter__already_set = 1;
 		    }
 		  }
 		}
@@ -584,18 +538,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	    funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index);
 	  }
 	} else { // (fiber__paused)
-	  /*
-	    int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
-	    funk2_operating_system__push_current_fiber(&(__funk2.operating_system), pool_index, fiber);
-	
-	    if (f2processor__active_fibers_prev(processor, cause) == nil) {
-	    f2processor__active_fibers__set(processor, cause, f2processor__active_fibers_next(processor, cause));
-	    } else {
-	    f2cons__cdr__set(f2processor__active_fibers_prev(processor, cause), cause, f2processor__active_fibers_next(processor, cause));
-	    }
-	    f2fiber__processor_assignment_index__set(fiber, cause, nil);
-	    funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index);
-	  */
 	}
 	f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
       } else {
@@ -639,12 +581,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	}
       }
     
-      if (! prev_fiber_iter__already_set) {
-	f2processor__active_fibers_prev__set(processor, cause, f2processor__active_fibers_iter(processor, cause));
-      }
-      
       raw__processor__increment_current_active_fiber(cause, processor);
-      //f2processor__active_fibers_iter__set(processor, cause, f2processor__active_fibers_next(processor, cause));
     } // end of fiber while
   }
   
@@ -676,14 +613,12 @@ void f2__processor__initialize() {
   
   // processor
   
-  initialize_primobject_9_slot(processor,
+  initialize_primobject_7_slot(processor,
 			       scheduler,
 			       processor_thread,
 			       active_fibers_scheduler_mutex,
 			       active_fibers,
 			       active_fibers_iter,
-			       active_fibers_prev,
-			       active_fibers_next,
 			       pool_index,
 			       desc);
   

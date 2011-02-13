@@ -376,6 +376,7 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
     }
     resume_gc();
   }
+  f2__fiber_trigger__trigger(cause, f2fiber__bug_trigger(fiber, cause));
 }
 
 typedef enum scheduler_fast_loop_exit_reason_e {
@@ -494,7 +495,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		  resume_gc();
 		  
 		  if(exit_reason == exit_reason__found_larva) {
-		    f2__fiber_trigger__trigger(cause, f2fiber__bug_trigger(fiber, cause));
 		    need_to_launch_larva_handling_critic_fiber = 1;
 		  }
 		}

@@ -815,6 +815,8 @@
   `[let* [[result      `bug]
 	  [fiber-mutex [let [[this [new mutex]]] [have this lock] this]]
 	  [fiber       [fiber [funk-new_with_name with-new-cause []
+						  [have fiber-mutex unlock]
+						  [print 'hi']
 						  [set [this-cause] critics nil]
 						  [= result [prog @codes]]]
 			      nil]]]

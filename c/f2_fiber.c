@@ -192,12 +192,12 @@ boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) 
   debug__assert((! cause) || raw__cause__is_type(nil, cause), nil, "fiber type assertion failed.");
   f2ptr command = f2bytecode__command(bytecode, cause);
   if      (command == __funk2.bytecode.bytecode__lookup_type_var__symbol)            {f2__fiber__bytecode__lookup_type_var(           fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__block_eval_args_next__symbol)       {f2__fiber__bytecode__block_eval_args_next(      fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__block_pop__symbol)                  {f2__fiber__bytecode__block_pop(                 fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__block_eval_args_begin__symbol)      {f2__fiber__bytecode__block_eval_args_begin(     fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__block_eval_args_end__symbol)        {f2__fiber__bytecode__block_eval_args_end(       fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__funk__symbol)                       {f2__fiber__bytecode__funk(                      fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__block_push__symbol)                 {f2__fiber__bytecode__block_push(                fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__block_eval_args_next__symbol)       {f2__fiber__bytecode__block_eval_args_next(      fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__copy__symbol)                       {f2__fiber__bytecode__copy(                      fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__block_enter__symbol)                {f2__fiber__bytecode__block_enter(               fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__block_define_last_argument__symbol) {f2__fiber__bytecode__block_define_last_argument(fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
@@ -346,12 +346,12 @@ def_pcfunk2(fiber__terminal_print_with_frame, this, terminal_print_frame, return
 
 f2ptr f2fiber__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2fiber__primobject_type__new(cause);
-  {char* slot_name = "do_sleep_until_time";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk);}
-  {char* slot_name = "sleep_for_nanoseconds";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__funk);}
-  {char* slot_name = "is_complete";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_complete__funk);}
-  {char* slot_name = "quit";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.quit__funk);}
-  {char* slot_name = "stack_trace";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.stack_trace__funk);}
-  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.terminal_print_with_frame__funk);}
+  {char* slot_name = "do_sleep_until_time";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk);}
+  {char* slot_name = "sleep_for_nanoseconds";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__funk);}
+  {char* slot_name = "is_complete";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_complete__funk);}
+  {char* slot_name = "quit";                                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.quit__funk);}
+  {char* slot_name = "stack_trace";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.stack_trace__funk);}
+  {char* slot_name = "terminal_print_with_frame";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.terminal_print_with_frame__funk);}
   return this;
 }
 

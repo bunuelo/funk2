@@ -828,6 +828,7 @@
 		   [= bug [get with_new_cause-fiber value]]
 		   [have done_trigger trigger]]
        [have with_new_cause-started_mutex lock]
+       [resume with_new_cause-fiber]
        [wait-for-trigger done_trigger]
        [if [is-type `bug bug]
 	   [let [[bug_frame [get bug frame]]]
@@ -855,6 +856,7 @@
 		   [= bug [get shelter-fiber value]]
 		   [have done_trigger trigger]]
        [have shelter-started_mutex lock]
+       [resume shelter-fiber]
        [wait-for-trigger done_trigger]
        [if bug
 	   nil

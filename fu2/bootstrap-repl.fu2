@@ -822,6 +822,7 @@
 			      nil]]]
      [have fiber-mutex lock]
      [while [global_scheduler-contains_active_fiber fiber]
+       [print 'sleeping']
        [millisleep 100]]
      [resume fiber]
      'This is a bad hack to deal with noisy values in [get fiber is_complete] or [get fiber paused].'

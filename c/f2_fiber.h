@@ -173,7 +173,7 @@ declare_primobject_25_slot(fiber,
 			   bug_trigger,
 			   complete_trigger);
 
-f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args);
+f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args);
 
 #define __pure__f2fiber__is_complete(this, cause)  (!f2fiber__program_counter(this, cause))
 #define f2fiber__is_complete(this, cause)          __pure__f2fiber__is_complete(this, cause)

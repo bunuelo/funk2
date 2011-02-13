@@ -321,6 +321,7 @@
 				view_menu
 				view_menu_item
 				view_sense_menu_item
+				view_visual_objects_menu_item
 				view_proprioceptual_frame_menu_item
 				view_visual_objects_menu_item
 				isismon_agent_mind_menu
@@ -407,8 +408,8 @@
 				    '\n  ' [have [get [get isis_agent mind] perception] lookup `proprioceptual_frame]]]
 	     nil]
        [have view_menu append view_proprioceptual_frame_menu_item]
-
-       [= view_visual_objects_menu_item [gtk-menu_item-new 'visual_objects']]
+       
+       [= view_visual_objects_menu_item [gtk-menu_item-new 'Visual Objects']]
        [have view_visual_objects_frame_menu_item signal_connect 'activate'
 	     [funk []
 		   [terminal_format standard-terminal '\n' [get this name] '\'s visual objects:'

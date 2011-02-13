@@ -344,7 +344,7 @@ f2ptr f2__global_scheduler__contains_active_fiber(f2ptr cause, f2ptr fiber) {
   }
   return f2bool__new(raw__global_scheduler__contains_active_fiber(cause, fiber));
 }
-def_pcfunk1(global_scheduler__contains_active_fiber, return f2__global_scheduler__contains_active_fiber(this_cause, fiber));
+def_pcfunk1(global_scheduler__contains_active_fiber, fiber, return f2__global_scheduler__contains_active_fiber(this_cause, fiber));
 
 
 // user functions

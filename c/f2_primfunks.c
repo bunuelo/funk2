@@ -616,8 +616,13 @@ void f2fiber__funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   }
 }
 
+f2ptr f2__simple_paused_fiber(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
+  return raw__fiber__new(cause, parent_fiber, parent_env, cfunkable, args);
+}
+def_pcfunk2(simple_paused_fiber, funk, args, return f2__simple_paused_fiber(this_cause, this_cause, simple_fiber, simple_env, funk, args));
+
 f2ptr f2__fiber_parallel(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
-  f2ptr new_fiber = f2__fiber__new(cause, parent_fiber, parent_env, cfunkable, args);
+  f2ptr new_fiber = f2__simple_paused_fiber(cause, execution_cause, parent_fiber, parent_env, cfunkable, args);
   f2__global_scheduler__add_fiber_parallel(cause, new_fiber);
   f2fiber__keep_undead__set(new_fiber, cause, nil);
   return new_fiber;
@@ -625,7 +630,7 @@ f2ptr f2__fiber_parallel(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber,
 def_pcfunk2(fiber_parallel, funk, args, return f2__fiber_parallel(this_cause, this_cause, simple_fiber, simple_env, funk, args));
 
 f2ptr f2__fiber_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
-  f2ptr new_fiber = f2__fiber__new(cause, parent_fiber, parent_env, cfunkable, args);
+  f2ptr new_fiber = f2__simple_paused_fiber(cause, execution_cause, parent_fiber, parent_env, cfunkable, args);
   f2__global_scheduler__add_fiber_serial(cause, new_fiber);
   return new_fiber;
 }
@@ -1744,6 +1749,7 @@ void f2__primcfunks__initialize() {
   
   // other complex functions
   
+  f2__primcfunk__init(simple_paused_fiber, "Creates a fiber.  Does not branch cause.");
   f2__primcfunk__init(fiber_parallel, "Starts a fiber that executes in parallel with the current fiber.  Does not branch cause.");
   f2__primcfunk__init(fiber__imagine, "");
   f2__primcfunk__init(test_imagine, "");

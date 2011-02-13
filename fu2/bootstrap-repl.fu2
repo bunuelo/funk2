@@ -341,6 +341,12 @@
 				    [apply funk args]]
 		nil]]
 
+[defunk paused_fiber [funk args]
+  [simple_paused_fiber [funk-new_with_name fiber []
+					   [cause-enable_reactive_critics [this-cause]]
+					   [apply funk args]]
+		       nil]]
+
 [defunk parseq [proc seq]
   [if [null seq]
       nil
@@ -383,8 +389,7 @@
 [defmetro cadr [seq]
   `[car [cdr ,seq]]]
 
-[defmetro caddr [seq]
-  `[car [cdr [cdr ,seq]]]]
+[defmetro caddr [seq]  `[car [cdr [cdr ,seq]]]]
 
 [defmetro cadddr [seq]
   `[car [cdr [cdr [cdr ,seq]]]]]

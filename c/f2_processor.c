@@ -556,7 +556,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  }
 	  //status("\n  critic="); f2__fiber__print(cause, nil, critics); fflush(stdout);
 	  pause_gc();
-	  f2ptr new_fiber = f2__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, cause), critics, f2cons__new(cause, fiber, nil));
+	  f2ptr new_fiber = raw__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, cause), critics, f2cons__new(cause, fiber, nil));
 	  resume_gc();
 	  {
 	    f2ptr processor__active_fibers_scheduler_mutex;

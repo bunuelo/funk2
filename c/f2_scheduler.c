@@ -327,6 +327,26 @@ f2ptr f2__global_scheduler__current_fiber(f2ptr cause) {
 def_pcfunk0(global_scheduler__current_fiber, return f2__global_scheduler__current_fiber(this_cause));
 
 
+boolean_t raw__global_scheduler__contains_active_fiber(f2ptr cause, f2ptr fiber) {
+  s64 pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    f2ptr processor = raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), pool_index);
+    if (raw__processor__active_fibers__contains(cause, processor, fiber)) {
+      return boolean__true;
+    }
+  }
+  return boolean__false;
+}
+
+f2ptr f2__global_scheduler__contains_active_fiber(f2ptr cause, f2ptr fiber) {
+  if (raw__fiber__is_type(cause, fiber)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2bool__new(raw__global_scheduler__contains_active_fiber(cause, fiber));
+}
+def_pcfunk1(global_scheduler__contains_active_fiber, return f2__global_scheduler__contains_active_fiber(this_cause, fiber));
+
+
 // user functions
 
 f2ptr f2__this__fiber(f2ptr cause) {
@@ -421,6 +441,7 @@ void f2__scheduler__initialize() {
   f2__primcfunk__init__1(global_scheduler__complete_fiber,                 fiber,      "Yields until the given fiber is complete.");
   f2__primcfunk__init__1(global_scheduler__processor_thread_current_fiber, pool_index, "");
   f2__primcfunk__init__0(global_scheduler__current_fiber,                              "");
+  f2__primcfunk__init__0(global_scheduler__contains_active_fiber,          fiber,      "");
   
   f2__primcfunk__init__0(this__fiber, "Returns the currently executing fiber.");
 }

@@ -339,7 +339,7 @@ boolean_t raw__global_scheduler__contains_active_fiber(f2ptr cause, f2ptr fiber)
 }
 
 f2ptr f2__global_scheduler__contains_active_fiber(f2ptr cause, f2ptr fiber) {
-  if (raw__fiber__is_type(cause, fiber)) {
+  if (! raw__fiber__is_type(cause, fiber)) {
     return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__global_scheduler__contains_active_fiber(cause, fiber));

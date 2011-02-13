@@ -27,7 +27,7 @@
 	  [if [eq object_name [get relation_object_two as-symbol]]
 	      [cond [[equals relation_type 'in'] [have preposition_frame add `in [cons [get relation_object_one as-symbol] [have preposition_frame lookup `in]]]]
 		    [[equals relation_type 'on'] [have preposition_frame add `on [cons [get relation_object_one as-symbol] [have preposition_frame lookup `on]]]]
-		    [t                           [terminal_format stardard-terminal '\nisis_visual_object warning: unrecognized relation type, \'' relation_type '\'.']]]]]]]]]
+		    [t                           [terminal_format standard-terminal '\nisis_visual_object warning: unrecognized relation type, \'' relation_type '\'.']]]]]]]]]
 
 [deframe isis_visual_object [moral_compass_visual_object] []
   [new [isis_name isis_sensory_frame isis_object_frame]
@@ -39,7 +39,10 @@
 	       [initial-retina_position_horizontal [have isis_object_frame lookup `x_pos]]
 	       [initial-retina_position_vertical   [have isis_object_frame lookup `y_pos]]
 	       [initial-distance                   [have isis_object_frame lookup `distance]]
-	       [initial-preposition_frame          [new frame]]]
+	       [initial-orientation                [have isis_object_frame lookup `orientation]]
+	       [initial-preposition_frame          [new frame]]] 
+	   
+	   
 	   [isis_sensory_frame-add_prepositions_to_object_proposition_frame isis_sensory_frame isis_name initial-preposition_frame]
 	   [construct moral_compass_visual_object
 		      initial-object_type
@@ -47,6 +50,7 @@
 		      initial-retina_position_horizontal
 		      initial-retina_position_vertical
 		      initial-distance
+		      initial-orientation
 		      initial-preposition_frame]
 	   ]]]]
 

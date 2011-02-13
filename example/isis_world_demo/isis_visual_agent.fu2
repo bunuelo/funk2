@@ -40,6 +40,7 @@
 	       [initial-retina_position_horizontal [have isis_agent_frame lookup `x_pos]]
 	       [initial-retina_position_vertical   [have isis_agent_frame lookup `y_pos]]
 	       [initial-distance                   [have isis_agent_frame lookup `distance]]
+	       [initial-orientation                [have isis_agent_frame lookup `orientation]]
 	       [initial-preposition_frame          [new frame]]
 	       [initial-actions                    [if isis_agent_action_frames
 						       [mapcar [funk [isis_agent_action_frame]
@@ -52,6 +53,7 @@
 		      initial-retina_position_horizontal
 		      initial-retina_position_vertical
 		      initial-distance
+		      initial-orientation
 		      initial-preposition_frame
 		      initial-actions]
 	   ]]]]

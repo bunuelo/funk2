@@ -19,12 +19,12 @@
 
 'double'
 
-[deftypefunk double get degree_sine       [] [get [/ [* this                         pi]    180.0] radian_sine]]
-[deftypefunk double get degree_cosine     [] [get [/ [* this                         pi]    180.0] radian_cosine]]
-[deftypefunk double get degree_tangent    [] [get [/ [* this                         pi]    180.0] radian_tangent]]
-[deftypefunk double get degree_arcsine    []      [/ [* [get this radian_arcsine]    180.0] pi]]
-[deftypefunk double get degree_arccosine  []      [/ [* [get this radian_arccosine]  180.0] pi]]
-[deftypefunk double get degree_arctangent []      [/ [* [get this radian_arctangent] 180.0] pi]]
+[deftypefunk double get degree_sine       [] [get [get  [get  this   multiplied_by   pi]  divided_by  180.0] radian_sine]]
+[deftypefunk double get degree_cosine     [] [get [get  [get  this   multiplied_by   pi]  divided_by  180.0] radian_cosine]]
+[deftypefunk double get degree_tangent    [] [get [get  [get  this   multiplied_by   pi]  divided_by  180.0] radian_tangent]]
+[deftypefunk double get degree_arcsine    []      [get  [get [get this radian_arcsine]    multiplied_by 180.0] divided_by pi]]
+[deftypefunk double get degree_arccosine  []      [get  [get [get this radian_arccosine]  multiplied_by 180.0] divided_by pi]]
+[deftypefunk double get degree_arctangent []      [get  [get [get this radian_arctangent] multiplied_by 180.0] divided_by pi]]
 
 
 'integer'

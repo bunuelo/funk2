@@ -74,7 +74,8 @@
   [get [get this layer `builtin_reactive] perception]]
 
 [deftypefunk moral_compass get visual_objects []
-  [get [get this layer `builtin_reactive] visual_objects]]
+  [print 'moral_compass-visual_objects deprecated (use moral_compass-perception instead)']
+  [get [get this perception] visual_objects]]
 
 'knowledge and meta-knowledge functions'
 

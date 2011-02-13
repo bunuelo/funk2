@@ -23,7 +23,7 @@
        
        [have this add_resource [new translate_physical_knowledge_to_meta_physical_knowledge_resource]]
        
-       this]]
+       nil]]
 
 
 [deftypefunk deliberative_meta_physical_knowledge_agency execute create_knowledge []

@@ -48,6 +48,12 @@ typedef struct funk2_object_type__scheduler__slot_s funk2_object_type__scheduler
 // scheduler
 
 declare_object_type_1_slot(scheduler, processors,
+			   f2ptr active_fibers__symbol;
+			   f2ptr active_fibers__funk;
+			   f2ptr processor_with_fewest_fibers__symbol;
+			   f2ptr processor_with_fewest_fibers__funk;
+			   f2ptr add_fiber_to_least_used_processor__symbol;
+			   f2ptr add_fiber_to_least_used_processor__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -73,25 +79,25 @@ declare_primobject_1_slot(scheduler, processors);
 
 f2ptr f2scheduler__primobject_type__new_aux(f2ptr cause);
 
-f2ptr raw__scheduler__processor_thread_current_fiber(int pool_index);
-
-
 // global_scheduler
 
-f2ptr  f2__global_scheduler__processors        ();
-f2ptr  f2__global_scheduler__processors__set   (f2ptr cause, f2ptr value);
-f2ptr  f2__global_scheduler__fibers            ();
-f2ptr  f2__global_scheduler__fibers__set       (f2ptr cause, f2ptr value);
-f2ptr  f2__global_scheduler__fiber_num         ();
-f2ptr  f2__global_scheduler__fiber_num__set    (f2ptr cause, f2ptr value);
-void  raw__global_scheduler__add_fiber_serial  (f2ptr cause, f2ptr fiber);
-f2ptr  f2__global_scheduler__add_fiber_serial  (f2ptr cause, f2ptr fiber);
-void  raw__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber);
-f2ptr  f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber);
-void  raw__global_scheduler__remove_fiber      (f2ptr cause, f2ptr fiber);
-f2ptr  f2__global_scheduler__remove_fiber      (f2ptr cause, f2ptr fiber);
-void  raw__global_scheduler__complete_fiber    (f2ptr cause, f2ptr fiber);
-f2ptr  f2__global_scheduler__complete_fiber    (f2ptr cause, f2ptr fiber);
+f2ptr  f2__global_scheduler__processors                    ();
+f2ptr  f2__global_scheduler__processors__set               (f2ptr cause, f2ptr value);
+f2ptr  f2__global_scheduler__fibers                        ();
+f2ptr  f2__global_scheduler__fibers__set                   (f2ptr cause, f2ptr value);
+f2ptr  f2__global_scheduler__fiber_num                     ();
+f2ptr  f2__global_scheduler__fiber_num__set                (f2ptr cause, f2ptr value);
+f2ptr raw__global_scheduler__add_fiber_serial              (f2ptr cause, f2ptr fiber);
+f2ptr  f2__global_scheduler__add_fiber_serial              (f2ptr cause, f2ptr fiber);
+f2ptr raw__global_scheduler__add_fiber_parallel            (f2ptr cause, f2ptr fiber);
+f2ptr  f2__global_scheduler__add_fiber_parallel            (f2ptr cause, f2ptr fiber);
+f2ptr raw__global_scheduler__add_fiber                     (f2ptr cause, f2ptr fiber);
+f2ptr  f2__global_scheduler__add_fiber                     (f2ptr cause, f2ptr fiber);
+f2ptr raw__global_scheduler__remove_fiber                  (f2ptr cause, f2ptr fiber);
+f2ptr  f2__global_scheduler__remove_fiber                  (f2ptr cause, f2ptr fiber);
+void  raw__global_scheduler__complete_fiber                (f2ptr cause, f2ptr fiber);
+f2ptr  f2__global_scheduler__complete_fiber                (f2ptr cause, f2ptr fiber);
+f2ptr raw__global_scheduler__processor_thread_current_fiber(int pool_index);
 
 
 // user functions

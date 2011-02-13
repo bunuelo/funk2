@@ -17,7 +17,5 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage fiber_trigger
-  :packages []
-   :sources ['fiber_trigger-core.fu2']]
+[globalize-funk fiber_trigger_hash-add &primfunk:fiber_trigger_hash__add]
 

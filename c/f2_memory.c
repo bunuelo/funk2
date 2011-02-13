@@ -492,6 +492,13 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
 	  f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(this, to_ptr(block));
 	  funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
 	} break;
+	case ptype_scheduler_mutex: {
+	  ptype_scheduler_mutex_block_t* scheduler_mutex_block = (ptype_scheduler_mutex_block_t*)block;
+	  funk2_processor_mutex__init(scheduler_mutex_block->m);
+	  if (scheduler_mutex_block->locked_state) {
+	    funk2_processor_mutex__lock(scheduler_mutex_block->m);
+	  }
+	} break;
 	case ptype_mutex: {
 	  ptype_mutex_block_t* mutex_block = (ptype_mutex_block_t*)block;
 	  funk2_processor_mutex__init(mutex_block->m);

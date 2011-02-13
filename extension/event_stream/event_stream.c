@@ -520,12 +520,6 @@ export_cefunk0(event_stream__core_extension__define_types, 0, "");
 
 f2ptr f2__event_stream__core_extension__initialize(f2ptr cause) {
   {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "fiber_trigger"), new__symbol(cause, "fiber_trigger__core_extension__ping")), nil);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
-  {
     f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__core_extension__ping")), nil);
     if (raw__larva__is_type(cause, result)) {
       return result;

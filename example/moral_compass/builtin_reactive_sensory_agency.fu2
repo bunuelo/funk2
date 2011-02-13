@@ -17,11 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe continuous_sensing_resource [traced_resource] [visual_objects
-							retina_image
-							left_hand_object_name
-							right_hand_object_name
-							perception
+[deframe continuous_sensing_resource [traced_resource] [perception
 							[perception_trigger [new fiber_trigger]]]
   [new []
        [construct traced_resource `continuous_sensing
@@ -32,12 +28,7 @@
 			  [while t
 			    [wait-for-trigger time_step_trigger]
 			    [have this think_to_self 'starting perception.']
-			    [= perception             [have body sense_perception]]
-			    [= visual_objects         [have perception lookup `visual_objects]]
-			    [= retina_image           [get  body retina_image]]
-			    [= left_hand_object_name  [have body sense_left_hand_object_name]]
-			    [= right_hand_object_name [have body sense_right_hand_object_name]]    
-			    
+			    [= perception [have body sense_perception]]
 			    [have this think_to_self 'finished perception.']
 			    [have perception_trigger trigger]
 			    ]]]]
@@ -64,7 +55,8 @@
   [while t
     [wait-for-trigger [get [get [get this mind] resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
     
-    [let [[visual_objects [get [get this mind] visual_objects]]]
+    [let* [[perception     [get [get this mind] perception]]
+	   [visual_objects [get perception visual_objects]]]
       [have [get [get this mind] visual_knowledge] remove_all]
       [let [[semantic_realm        [get [get this mind] semantic_realm]]
 	    [semantic_object_frame [frame]]]

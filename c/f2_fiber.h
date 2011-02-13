@@ -26,7 +26,7 @@
 
 typedef struct funk2_object_type__fiber__slot_s funk2_object_type__fiber__slot_t;
 
-declare_object_type_21_slot(fiber,
+declare_object_type_23_slot(fiber,
 			    program_counter,
 			    stack,
 			    iter,
@@ -35,6 +35,7 @@ declare_object_type_21_slot(fiber,
 			    return_reg,
 			    value,
 			    trace,
+			    cause_reg_mutex,
 			    cause_reg,
 			    keep_undead,
 			    is_zombie,
@@ -46,8 +47,10 @@ declare_object_type_21_slot(fiber,
 			    sleep_until_time,
 			    execution_nanoseconds,
 			    bytecode_count,
+			    processor_assignment_scheduler_mutex,
 			    processor_assignment_index,
 			    should_quit,
+			    
 			    f2ptr do_sleep_until_time__symbol;   // execute
 			    f2ptr do_sleep_until_time__funk;
 			    f2ptr sleep_for_nanoseconds__symbol; // execute
@@ -141,7 +144,7 @@ extern f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-declare_primobject_21_slot(fiber,
+declare_primobject_23_slot(fiber,
 			   program_counter,
 			   stack,
 			   iter,
@@ -150,6 +153,7 @@ declare_primobject_21_slot(fiber,
 			   return_reg,
 			   value,
 			   trace,
+			   cause_reg_mutex,
 			   cause_reg,
 			   keep_undead,
 			   is_zombie,
@@ -161,6 +165,7 @@ declare_primobject_21_slot(fiber,
 			   sleep_until_time,
 			   execution_nanoseconds,
 			   bytecode_count,
+			   processor_assignment_scheduler_mutex,
 			   processor_assignment_index,
 			   should_quit);
 

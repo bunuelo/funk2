@@ -232,6 +232,32 @@ f2ptr  f2__gfunkptr__eq_hash_value(f2ptr cause, f2ptr this);
 boolean_t raw__gfunkptr__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__gfunkptr__equals(f2ptr cause, f2ptr this, f2ptr that);
 
+
+// scheduler_mutex
+
+f2ptr            pfunk2__f2scheduler_mutex__new(f2ptr cause);
+boolean_t        pfunk2__f2scheduler_mutex__is_locked(f2ptr this, f2ptr cause);
+void             pfunk2__f2scheduler_mutex__lock(f2ptr this, f2ptr cause);
+void             pfunk2__f2scheduler_mutex__unlock(f2ptr this, f2ptr cause);
+int              pfunk2__f2scheduler_mutex__trylock(f2ptr this, f2ptr cause);
+
+f2ptr f2scheduler_mutex__primobject_type__new(f2ptr cause);
+
+f2ptr      f2__scheduler_mutex__new(f2ptr cause);
+
+boolean_t raw__scheduler_mutex__is_type(f2ptr cause, f2ptr exp);
+f2ptr      f2__scheduler_mutex__is_type(f2ptr cause, f2ptr exp);
+
+boolean_t raw__scheduler_mutex__eq(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__scheduler_mutex__eq(f2ptr cause, f2ptr this, f2ptr that);
+
+u64   raw__scheduler_mutex__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__scheduler_mutex__eq_hash_value(f2ptr cause, f2ptr this);
+
+boolean_t raw__scheduler_mutex__equals(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__scheduler_mutex__equals(f2ptr cause, f2ptr this, f2ptr that);
+
+
 // mutex
 
 f2ptr            pfunk2__f2mutex__new(f2ptr cause);
@@ -263,6 +289,7 @@ f2ptr  f2__mutex__eq_hash_value(f2ptr cause, f2ptr this);
 
 boolean_t raw__mutex__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__mutex__equals(f2ptr cause, f2ptr this, f2ptr that);
+
 
 // char
 
@@ -520,6 +547,7 @@ f2ptr f2__double__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 f2ptr f2__float__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__pointer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__gfunkptr__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+f2ptr f2__scheduler_mutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__mutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__char__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__string__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
@@ -760,6 +788,29 @@ typedef struct funk2_object_type__gfunkptr__slot_s {
   f2ptr terminal_print_with_frame__symbol;
   f2ptr terminal_print_with_frame__funk;
 } funk2_object_type__gfunkptr__slot_t;
+
+// scheduler_mutex
+
+typedef struct funk2_object_type__scheduler_mutex__slot_s {
+  f2ptr is_type__symbol;
+  f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
+  f2ptr new__symbol;
+  f2ptr new__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__loop_free__symbol;
+  f2ptr equals_hash_value__loop_free__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
+  f2ptr terminal_print_with_frame__symbol;
+  f2ptr terminal_print_with_frame__funk;
+} funk2_object_type__scheduler_mutex__slot_t;
 
 // mutex
 
@@ -1061,19 +1112,20 @@ typedef struct funk2_ptype_object_types_s {
   f2ptr creation_nanoseconds_since_1970__funk;
   f2ptr creation_time__symbol;
   f2ptr creation_time__funk;
-  funk2_object_type__integer__slot_t      ptype_integer;
-  funk2_object_type__double__slot_t       ptype_double;
-  funk2_object_type__float__slot_t        ptype_float;
-  funk2_object_type__pointer__slot_t      ptype_pointer;
-  funk2_object_type__gfunkptr__slot_t     ptype_gfunkptr;
-  funk2_object_type__mutex__slot_t        ptype_mutex;
-  funk2_object_type__char__slot_t         ptype_char;
-  funk2_object_type__string__slot_t       ptype_string;
-  funk2_object_type__symbol__slot_t       ptype_symbol;
-  funk2_object_type__chunk__slot_t        ptype_chunk;
-  funk2_object_type__simple_array__slot_t ptype_simple_array;
-  funk2_object_type__traced_array__slot_t ptype_traced_array;
-  funk2_object_type__larva__slot_t        ptype_larva;
+  funk2_object_type__integer__slot_t         ptype_integer;
+  funk2_object_type__double__slot_t          ptype_double;
+  funk2_object_type__float__slot_t           ptype_float;
+  funk2_object_type__pointer__slot_t         ptype_pointer;
+  funk2_object_type__gfunkptr__slot_t        ptype_gfunkptr;
+  funk2_object_type__scheduler_mutex__slot_t ptype_scheduler_mutex;
+  funk2_object_type__mutex__slot_t           ptype_mutex;
+  funk2_object_type__char__slot_t            ptype_char;
+  funk2_object_type__string__slot_t          ptype_string;
+  funk2_object_type__symbol__slot_t          ptype_symbol;
+  funk2_object_type__chunk__slot_t           ptype_chunk;
+  funk2_object_type__simple_array__slot_t    ptype_simple_array;
+  funk2_object_type__traced_array__slot_t    ptype_traced_array;
+  funk2_object_type__larva__slot_t           ptype_larva;
 } funk2_ptype_object_types_t;
 
 

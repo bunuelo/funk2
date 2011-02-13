@@ -56,8 +56,6 @@
 	       [require ansi]
 	       
 	       [defunk load_all_core_packages []
-		 [load_minimal_core_packages]
-		 
 		 [require utilities]
 		 [require number]
 		 [require math]

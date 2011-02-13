@@ -30,7 +30,7 @@ f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-def_primobject_23_slot(fiber,
+def_primobject_25_slot(fiber,
 		       program_counter,
 		       stack,
 		       iter,
@@ -53,7 +53,9 @@ def_primobject_23_slot(fiber,
 		       bytecode_count,
 		       processor_assignment_scheduler_mutex,
 		       processor_assignment_index,
-		       should_quit);
+		       should_quit,
+		       bug_trigger,
+		       complete_trigger);
 
 f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args) {
   f2ptr program_counter                      = nil;
@@ -77,6 +79,8 @@ f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cf
   f2ptr processor_assignment_scheduler_mutex = f2scheduler_mutex__new(cause);
   f2ptr processor_assignment_index           = nil;
   f2ptr should_quit                          = nil;
+  f2ptr bug_trigger                          = f2__fiber_trigger__new(cause);
+  f2ptr complete_trigger                     = f2__fiber_trigger__new(cause);
   f2ptr new_fiber = f2fiber__new(cause,
 				 program_counter,
 				 stack,
@@ -100,7 +104,9 @@ f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cf
 				 bytecode_count,
 				 processor_assignment_scheduler_mutex,
 				 processor_assignment_index,
-				 should_quit);
+				 should_quit,
+				 bug_trigger,
+				 complete_trigger);
   f2fiber__keep_undead__set(new_fiber, cause, __funk2.globalenv.true__symbol);
   f2fiber__funk(new_fiber, cause, cfunkable, cfunkable_args);
   if (cause != nil) {

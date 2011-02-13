@@ -480,6 +480,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		  
 		  u64 begin_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
 		  
+		  // fast inner loop
 		  scheduler_fast_loop_exit_reason_t exit_reason = execute_next_bytecodes__helper__fast_loop(cause, fiber);
 		  
 		  u64 end_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
@@ -493,6 +494,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		  resume_gc();
 		  
 		  if(exit_reason == exit_reason__found_larva) {
+		    f2__fiber_trigger__trigger(cause, f2fiber__bug_trigger(fiber, cause));
 		    need_to_launch_larva_handling_critic_fiber = 1;
 		  }
 		}
@@ -525,6 +527,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 			printf("\nerror removing active fiber at completion."); fflush(stdout);
 			status(  "error removing active fiber at completion.");
 		      }
+		      
+		      f2__fiber_trigger__trigger(cause, f2fiber__complete_trigger(fiber, cause));
 		    }
 		  }
 		}

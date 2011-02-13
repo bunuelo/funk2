@@ -774,7 +774,7 @@ void f2__fiber__initialize() {
 
   // fiber
   
-  initialize_primobject_21_slot(fiber,
+  initialize_primobject_25_slot(fiber,
 				program_counter,
 				stack,
 				iter,
@@ -783,6 +783,7 @@ void f2__fiber__initialize() {
 				return_reg,
 				value,
 				trace,
+				cause_reg_mutex,
 				cause_reg,
 				keep_undead,
 				is_zombie,
@@ -794,8 +795,11 @@ void f2__fiber__initialize() {
 				sleep_until_time,
 				execution_nanoseconds,
 				bytecode_count,
+				processor_assignment_scheduler_mutex,
 				processor_assignment_index,
-				should_quit);
+				should_quit,
+				bug_trigger,
+				complete_trigger);
   
   {char* symbol_str = "do_sleep_until_time"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__do_sleep_until_time, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk = never_gc(cfunk);}

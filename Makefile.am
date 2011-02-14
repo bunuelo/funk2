@@ -147,8 +147,8 @@ debug_flags    = -g -pg -fstack-check -DDEBUG -DDEBUG_MEMORY=1 -DF2__PROCESSOR_M
 
 optimize_flags = 
 
-debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(debug_flags)
-release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(optimize_flags)
+debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(debug_flags)
+release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(optimize_flags)
 athena__cc_flags  = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
 #cc_flags = $(debug__cc_flags)
@@ -427,7 +427,7 @@ FUNK2_LIBRARY_VERSION=0:0:0
 #              |           set to zero if current is incremented
 #              +- increment if interfaces have been added, removed or changed
 
-lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS) $(LIBAVCODEC_LIBS) $(LIBSWSCALE_LIBS) 
+lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS) $(LIBAVCODEC_LIBS) $(LIBSWSCALE_LIBS) $(CAIRO_LIBS) 
 lib_libfunk2_la_CFLAGS  = $(cc_flags)
 
 bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
@@ -609,7 +609,7 @@ make-install-sh:
 	chmod a+x install-sh
 
 bin/funk2$(EXEEXT): lib/libfunk2.la $(all_core_extensions)
-	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) -Llib/.libs -lfunk2
+	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) -Llib/.libs -lfunk2
 
 install: install-am make-install-sh
 	./install-sh

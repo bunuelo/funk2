@@ -24,8 +24,8 @@
 
 #include "../../c/funk2.h"
 
-f2ptr     raw__cairo__new(               f2ptr cause);
-f2ptr      f2__cairo__new(               f2ptr cause);
+f2ptr     raw__cairo__new(               f2ptr cause, f2ptr format, f2ptr width, f2ptr height);
+f2ptr      f2__cairo__new(               f2ptr cause, f2ptr format, f2ptr width, f2ptr height);
 boolean_t raw__cairo__is_type(           f2ptr cause, f2ptr thing);
 f2ptr      f2__cairo__is_type(           f2ptr cause, f2ptr thing);
 f2ptr     raw__cairo__type(              f2ptr cause, f2ptr this);

@@ -304,7 +304,7 @@ export_cefunk1(cairo_image_surface__destroy, this, 0, "Destroys the cairo_image_
 f2ptr raw__cairo_image_surface__format(f2ptr cause, f2ptr this) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_surface_t* cairo_surface = raw__cairo_image_surface__as__cairo_surface_t(cause, this);
-  cairo_format_t   cairo_format  = cauro_image_surface_get_format(cairo_surface);
+  cairo_format_t   cairo_format  = cairo_image_surface_get_format(cairo_surface);
   return raw__cairo_format_t__as__cairo_format(cause, cairo_format);
 #else
   return f2__cairo_not_supported_larva__new(cause);

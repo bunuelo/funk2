@@ -163,15 +163,15 @@ f2ptr raw__cairo_image_surface__new(f2ptr cause, f2ptr format, f2ptr width, f2pt
   if (status != CAIRO_STATUS_SUCCESS) {
     f2ptr cairo_status = nil;
     switch(status) {
-    case CAIRO_STATUS_NULL_POINTER:    cauro_status = new__symbol(cause, "CAIRO_STATUS_NULL_POINTER");    break;
-    case CAIRO_STATUS_NO_MEMORY:       cauro_status = new__symbol(cause, "CAIRO_STATUS_NO_MEMORY");       break;
-    case CAIRO_STATUS_READ_ERROR:      cauro_status = new__symbol(cause, "CAIRO_STATUS_READ_ERROR");      break;
-    case CAIRO_STATUS_INVALID_CONTENT: cauro_status = new__symbol(cause, "CAIRO_STATUS_INVALID_CONTENT"); break;
-    case CAIRO_STATUS_INVALID_FORMAT:  cauro_status = new__symbol(cause, "CAIRO_STATUS_INVALID_FORMAT");  break;
-    case CAIRO_STATUS_INVALID_VISUAL:  cauro_status = new__symbol(cause, "CAIRO_STATUS_INVALID_VISUAL");  break;
-    default:                           cauro_status = new__symbol(cause, "unknown");                      break;
+    case CAIRO_STATUS_NULL_POINTER:    cairo_status = new__symbol(cause, "CAIRO_STATUS_NULL_POINTER");    break;
+    case CAIRO_STATUS_NO_MEMORY:       cairo_status = new__symbol(cause, "CAIRO_STATUS_NO_MEMORY");       break;
+    case CAIRO_STATUS_READ_ERROR:      cairo_status = new__symbol(cause, "CAIRO_STATUS_READ_ERROR");      break;
+    case CAIRO_STATUS_INVALID_CONTENT: cairo_status = new__symbol(cause, "CAIRO_STATUS_INVALID_CONTENT"); break;
+    case CAIRO_STATUS_INVALID_FORMAT:  cairo_status = new__symbol(cause, "CAIRO_STATUS_INVALID_FORMAT");  break;
+    case CAIRO_STATUS_INVALID_VISUAL:  cairo_status = new__symbol(cause, "CAIRO_STATUS_INVALID_VISUAL");  break;
+    default:                           cairo_status = new__symbol(cause, "unknown");                      break;
     }
-    cauro_surface_destroy(cairo_surface);
+    cairo_surface_destroy(cairo_surface);
     return f2larva__new(cause, 44321, f2__bug__new(cause, f2integer__new(cause, 44321), f2__frame__new(cause, f2list10__new(cause,
 															    new__symbol(cause, "bug_type"),     new__symbol(cause, "failure_to_create_cairo_surface"),
 															    new__symbol(cause, "cairo_status"), cairo_status,

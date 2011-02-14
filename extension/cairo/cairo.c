@@ -128,15 +128,15 @@ boolean_t raw__cairo_format__is_type(f2ptr cause, f2ptr object) {
 }
 
 cairo_format_t raw__cairo_format__as__cairo_format_t(f2ptr cause, f2ptr this) {
-  if (raw__eq(cause, object, new__symbol(cause, "ARGB32"))) {
+  if        (raw__eq(cause, this, new__symbol(cause, "ARGB32"))) {
     return CAIRO_FORMAT_ARGB32;
-  } else if (raw__eq(cause, object, new__symbol(cause, "RGB24"))) {
+  } else if (raw__eq(cause, this, new__symbol(cause, "RGB24"))) {
     return CAIRO_FORMAT_RGB24;
-  } else if (raw__eq(cause, object, new__symbol(cause, "A8"))) {
+  } else if (raw__eq(cause, this, new__symbol(cause, "A8"))) {
     return CAIRO_FORMAT_A8;
-  } else if (raw__eq(cause, object, new__symbol(cause, "A1"))) {
+  } else if (raw__eq(cause, this, new__symbol(cause, "A1"))) {
     return CAIRO_FORMAT_A1;
-  } else if (raw__eq(cause, object, new__symbol(cause, "RGB16_565"))) {
+  } else if (raw__eq(cause, this, new__symbol(cause, "RGB16_565"))) {
     return CAIRO_FORMAT_RGB16_565;
   }
   return CAIRO_FORMAT_INVALID;

@@ -180,7 +180,7 @@ f2ptr raw__cairo_image_surface__new(f2ptr cause, f2ptr format, f2ptr width, f2pt
 															    new__symbol(cause, "height"),       height))));
   }
   f2ptr cairo_image_surface_pointer = f2pointer__new(cause, to_ptr(cairo_surface));
-  return raw__cairo_image_surface__new(cause, cairo_image_surface_pointer);
+  return f2cairo_image_surface__new(cause, cairo_image_surface_pointer);
 #else
   return f2__cairo_not_supported_larva__new(cause);
 #endif // F2__CAIRO_SUPPORTED

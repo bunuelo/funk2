@@ -353,7 +353,7 @@ f2ptr raw__cairo_image_surface__as__image(f2ptr cause, f2ptr this) {
       }
     }
   }
-  return raw__image__new_from_rgba_data(cause, f2integer__new(cause, width), f2integer__new(cause, height), rgba_data);
+  return raw__image__new(cause, f2integer__new(cause, width), f2integer__new(cause, height), rgba_data);
 }
 
 f2ptr f2__cairo_image_surface__as__image(f2ptr cause, f2ptr this) {

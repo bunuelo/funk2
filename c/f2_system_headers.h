@@ -168,5 +168,9 @@
 #  include <libswscale/swscale.h>
 #endif // F2__LIBSWSCALE_SUPPORTED
 
+#ifdef F2__CAIRO_SUPPORTED
+#  include <cairo.h>
+#endif // F2__CAIRO_SUPPORTED
+
 #endif // F2__SYSTEM_HEADERS__H
 

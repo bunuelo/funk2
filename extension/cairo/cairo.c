@@ -139,7 +139,7 @@ cairo_format_t raw__cairo_format__as__cairo_format_t(f2ptr cause, f2ptr this) {
   } else if (raw__eq(cause, this, new__symbol(cause, "RGB16_565"))) {
     return CAIRO_FORMAT_RGB16_565;
   }
-  return CAIRO_FORMAT_INVALID;
+  error(nil, "raw__cairo_format__as__cairo_format_t used incorrectly.");
 }
 #endif // F2__CAIRO_SUPPORTED
 

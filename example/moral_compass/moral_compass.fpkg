@@ -53,6 +53,7 @@
 [defpackage builtin_reactive_sensory_agency
   :packages [traced_mind
 	     semantic_visual_object
+	     semantic_agent
 	     semantic_event
 	     semantic_action_event]
    :sources ['builtin_reactive_sensory_agency.fu2']]
@@ -68,6 +69,7 @@
 [defpackage learned_reactive_layer
   :packages [traced_mind
 	     learned_reactive_physical_agency
+	     learned_reactive_physical_agency_functions
 	     learned_reactive_sensory_agency
 	     learned_reactive_language_agency
 	     learned_reactive_physical_knowledge_agency
@@ -106,6 +108,9 @@
   :packages [traced_mind]
    :sources ['learned_reactive_physical_knowledge_agency.fu2']]
 
+[defpackage learned_reactive_physical_agency_functions
+  :packages [learned_reactive_physical_agency]
+   :sources ['learned_reactive_physical_agency_functions.fu2']]
 
 
 'deliberative_layer'
@@ -146,7 +151,7 @@
 [defpackage self_reflective_layer
   :packages [traced_mind
 	     self_reflective_meta_mental_knowledge_agency
-	     self_reflective_personality_agency
+	     self_reflective_other_agents_knowledge_agency
 	     english_language]
    :sources ['self_reflective_layer.fu2']]
 
@@ -154,9 +159,9 @@
   :packages [traced_mind]
    :sources ['self_reflective_meta_mental_knowledge_agency.fu2']]
 
-[defpackage self_reflective_personality_agency
+[defpackage self_reflective_other_agents_knowledge_agency
   :packages [traced_mind]
-   :sources ['self_reflective_personality_agency.fu2']]
+   :sources ['self_reflective_other_agents_knowledge_agency.fu2']]
 
 
 

@@ -17,10 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore event_stream 'extension/event_stream/.libs/libf2e_event_stream.so']
+[defcore semantic_agent 'extension/semantic_agent/.libs/libf2e_semantic_agent.so']
 
-[defcorefunk event_stream-core_extension_ping       event_stream event_stream__core_extension_ping]
-[defcorefunk event_stream-core_extension_initialize event_stream event_stream__core_extension_initialize]
+[defcorefunk semantic_agent-core_extension_ping       semantic_agent semantic_agent__core_extension_ping]
+[defcorefunk semantic_agent-core_extension_initialize semantic_agent semantic_agent__core_extension_initialize]
 
-[event_stream-core_extension_ping]
 
+
+[semantic_agent-core_extension_ping]

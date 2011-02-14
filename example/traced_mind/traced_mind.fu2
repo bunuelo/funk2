@@ -24,8 +24,8 @@
   [new []
        [construct mind]
        
-       [new semantic_knowledge_base      `mental_knowledge                      [get this semantic_realm]]
-       [new meta_semantic_knowledge_base `action_sequence-meta_mental_knowledge [get this semantic_realm]]
+       [new semantic_knowledge_base      `mental_knowledge               [get this semantic_realm]]
+       [new meta_semantic_knowledge_base `meta_mental_sequence_knowledge [get this semantic_realm]]
        
        `[have this add_layer [new mental_knowledge_layer]]
        

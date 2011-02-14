@@ -26,6 +26,7 @@
 			   fiber
 			   active_mutex
 			   active
+			   active_cause_resource
 			   active_funk
 			   active_args
 			   result
@@ -34,67 +35,79 @@
 			   trace_story
 			   think_story
 			   resource_initializing_mutex
-			   debug]
+			   [initialized       nil]
+			   [vital             nil]
+			   [debug             nil]
+			   [activated_trigger [new fiber_trigger]]
+			   [finished_trigger  [new fiber_trigger]]]
   [new [initial-name initial-active_funk]
        [= resource_initializing_mutex [new traced_mutex]] [have resource_initializing_mutex lock]
        [= fiber_starting_mutex        [new traced_mutex]] [have fiber_starting_mutex        lock]
-       [= fiber         [fiber [funk []
-				     [cause-enable_reactive_critics [this-cause]]
-				     
-				     'Turn on appropriate causal tracing.'
-				     [cause-define semantic_frame-trace_add                         t]
-				     [cause-define semantic_frame-trace_remove                      t]
-				     [cause-define semantic_knowledge_base-trace_add_semantic_frame t]
-				     
-				     [= name         initial-name]
-				     [= agency       nil]  'We set this when the resource is added to an agency.'
-				     [= active_funk  initial-active_funk]
-				     [= active_mutex [new traced_mutex]]
-				     [= trace_story  [new story]]
-				     [= think_story  [new story]]
-				     [cause-define cause-name     `resource]
-				     [cause-define resource-name  name]
-				     [cause-define agency-name    nil]
-				     [cause-define layer-name     nil]
-				     [cause-define mind-name      nil]
-				     [cause-define cause-resource this]
-				     [cause-define this-resource  this]
-				     [have resource_initializing_mutex lock]
-				     [have resource_initializing_mutex unlock]
-				     [have fiber_starting_mutex unlock]
-				     [while [not done]
-				       [if [null mind-name]
-					   [if [get this body]
-					       [prog [cause-define agency-name [get agency name]]
-						     [if [null layer-name]
-							 [let [[mental_layer [get agency layer]]]
-							   [if mental_layer
-							       [prog [cause-define layer-name [get mental_layer name]]
-								     [let [[mind [get mental_layer mind]]]
-								       [if mind
-									   [prog [cause-define mind-name [get mind name]]
-										 [cause-define cause-name `[,mind-name ,layer-name ,agency-name ,resource-name resource]]]]]]]]]]]]
-				       [have active_mutex lock]
-				       [if [not active]
-					   [let [[we_have_been_paused_mutex [new traced_mutex]]]
-					     [have we_have_been_paused_mutex lock]
-					     [fiber [funk []
-							  [set fiber paused t]
-							  [have active_mutex unlock]
-							  [have we_have_been_paused_mutex unlock]]
-						    nil]
-					     [have we_have_been_paused_mutex lock]
-					     [have we_have_been_paused_mutex unlock]
-					     [yield]]
-					 [prog [if active_funk
-						   [prog [= result [apply active_funk active_args]]]
-						 [format stdout '\nresource warning: active_funk is nil (name = ' name ').\n']]
-					       [= active   nil]
-					       [= finished t]
-					       [have active_mutex unlock]]]
-				       ]
-				     [format stdout '\nresource status: done.  (name = ' name ').\n']]
-			       nil]]
+       [= fiber                       [fiber [funk []
+						   [cause-enable_reactive_critics [this-cause]]
+						   
+						   'Turn on appropriate causal tracing.'
+						   [cause-define semantic_frame-trace_add                            t]
+						   [cause-define semantic_frame-trace_remove                         t]
+						   [cause-define semantic_knowledge_base-trace_add_semantic_frame    t]
+						   [cause-define semantic_knowledge_base-trace_remove_semantic_frame t]
+						   
+						   [= name         initial-name]
+						   [= agency       nil]  'We set this when the resource is added to an agency.'
+						   [= active_funk  initial-active_funk]
+						   [= active_mutex [new traced_mutex]]
+						   [= trace_story  [new story]]
+						   [= think_story  [new story]]
+						   [cause-define cause-name     `resource]
+						   [cause-define resource-name  name]
+						   [cause-define agency-name    nil]
+						   [cause-define layer-name     nil]
+						   [cause-define mind-name      nil]
+						   [cause-define cause-resource this]
+						   [cause-define this-resource  this]
+						   [have resource_initializing_mutex lock]
+						   [have resource_initializing_mutex unlock]
+						   [have fiber_starting_mutex unlock]
+						   [let [[waiting_to_be_added_to_mind t]]
+						     [while waiting_to_be_added_to_mind
+						       [sleep 1]
+						       [if [null mind-name]
+							   [if agency
+							       [prog [cause-define agency-name [get agency name]]
+								     [let [[mental_layer [get agency layer]]]
+								       [if mental_layer
+									   [prog [cause-define layer-name [get mental_layer name]]
+										 [let [[mind [get mental_layer mind]]]
+										   [if mind
+										       [prog [cause-define mind-name  [get mind name]]
+											     [cause-define cause-name `[,mind-name ,layer-name ,agency-name ,resource-name resource]]
+											     [= waiting_to_be_added_to_mind nil]]]]]]]]]]]]
+						   [= initialized t]
+						   [have this think_to_self '\nResource Initialized.']
+						   [while [not done]
+						     [have active_mutex lock]
+						     [if [not active]
+							 [let [[we_have_been_paused_mutex [new traced_mutex]]]
+							   [have we_have_been_paused_mutex lock]
+							   [fiber [funk []
+									[set fiber paused t]
+									[have active_mutex              unlock]
+									[have we_have_been_paused_mutex unlock]]
+								  nil]
+							   [have we_have_been_paused_mutex lock]
+							   [have we_have_been_paused_mutex unlock]
+							   [yield]]
+						       [prog [if active_funk
+								 [prog [have activated_trigger trigger]
+								       [= result [apply active_funk active_args]]
+								       [have finished_trigger trigger]]
+							       [format stdout '\nresource warning: active_funk is nil (name = ' name ').\n']]
+							     [= active   nil]
+							     [= finished t]
+							     [have active_mutex unlock]]]
+						     ]
+						   [have this think_to_self '\nResource Done.\n']]
+					     nil]]
        [have resource_initializing_mutex unlock]
        [have fiber_starting_mutex lock]
        [have fiber_starting_mutex unlock]
@@ -109,17 +122,20 @@
 [deftypefunk resource get mind []
   [if agency
       [get agency mind]
-    nil]]
+    [error bug_type `attempted_to_get_mind_from_resource_that_is_not_part_of_an_agency
+	   this     this]]]
 
 [deftypefunk resource get layer []
   [if agency
       [get agency layer]
-    nil]]
+    [error bug_type `attempted_to_get_layer_from_resource_that_is_not_part_of_an_agency
+	   this     this]]]
 
 [deftypefunk resource get body []
   [if agency
       [get agency body]
-    nil]]
+    [error bug_type `attempted_to_get_body_from_resource_that_is_not_part_of_an_agency
+	   this     this]]]
 
 [deftypefunk resource get world []
   [get [get this body] physical_world]]
@@ -131,7 +147,8 @@
   [have think_story add_new_event [get this local_time] character_name action_name prepositional_frame]]
 
 [deftypefunk resource execute think_to_self [:rest expressions]
-  [have cause-resource add_new_think_story_event `I `think [frame direct_object expressions]]
+  [if [cause-lookup cause-resource]
+      [have cause-resource add_new_think_story_event `I `think [frame direct_object expressions]]]
   [if debug
       [apply &terminal_format [cons standard-terminal `['\nThe ' ,[get this name] ' resource in the ' ,[get [get this agency] name] ' agency in the ' ,[get [get this layer] name] ' layer in ' ,[get [get this mind] name] '\'s mind thinks: ' @expressions]]]]
   nil]
@@ -141,13 +158,15 @@
     [prog [have active_mutex lock]
 	  [if [not active]
 	      [prog [=   active                t]
+		    [=   active_cause_resource [cause-lookup cause-resource]]
 		    [=   active_args           args]
 		    [set fiber paused          nil]
 		    [=   successful_activation t]]]
 	  [have active_mutex unlock]]
     [if successful_activation
-	[prog [have this           add_new_trace_story_event [get cause-resource name] `activate [frame direct_object `me]]
-	      [have cause-resource add_new_trace_story_event `I                        `activate [frame direct_object name]]
+	[prog [if [cause-lookup cause-resource]
+		  [prog [have this           add_new_trace_story_event [get cause-resource name] `activate [frame direct_object `me]]
+			[have cause-resource add_new_trace_story_event `I                        `activate [frame direct_object name]]]]
 	      nil]
       [error object_type     `resource
 	     object_typefunk `activate
@@ -159,29 +178,33 @@
       [prog [have active_mutex lock]
 	    [if [not active]
 		[prog [=   active                t]
+		      [=   active_cause_resource [cause-lookup cause-resource]]
 		      [=   active_args           args]
 		      [set fiber paused          nil]
 		      [=   successful_activation t]]]
 	    [have active_mutex unlock]]
       [if successful_activation
-	  [prog [have this           add_new_trace_story_event [get cause-resource name] `activate [frame direct_object `me]]
-		[have cause-resource add_new_trace_story_event `I                        `activate [frame direct_object [get this name]]]
+	  [prog [if [cause-lookup cause-resource]
+		    [prog [have this           add_new_trace_story_event [get cause-resource name] `activate [frame direct_object `me]]
+			  [have cause-resource add_new_trace_story_event `I                        `activate [frame direct_object [get this name]]]]]
 		nil]
 	[millisleep 100]]]]]
 
 [deftypefunk resource execute finish []
-  [have this           add_new_trace_story_event [get cause-resource name] `finish [frame direct_object `me]]
-  [have cause-resource add_new_trace_story_event `I                        `finish [frame direct_object name]]
+  [if [cause-lookup cause-resource]
+      [prog [have this           add_new_trace_story_event [get cause-resource name] `finish [frame direct_object `me]]
+	    [have cause-resource add_new_trace_story_event `I                        `finish [frame direct_object name]]]]
   [let [[keep_looping  t]
 	[return_result nil]]
     [while keep_looping
       [have active_mutex lock]
       [if finished
-	  [prog [= active        nil]
-		[= active_args   nil]
-		[= result        nil]
-		[= finished      nil]
-		[= keep_looping  nil]
+	  [prog [= active                nil]
+		[= active_args           nil]
+		[= active_cause_resource nil]
+		[= result                nil]
+		[= finished              nil]
+		[= keep_looping          nil]
 		[= return_result result]
 		[have active_mutex unlock]]
 	[prog [have active_mutex unlock]
@@ -195,14 +218,16 @@
   [have fiber quit]]
 
 [deftypefunk resource execute call [:rest args]
-  [have this           add_new_trace_story_event [get cause-resource name] `call [frame direct_object `me]]
-  [have cause-resource add_new_trace_story_event `I                        `call [frame direct_object name]]
+  [if [cause-lookup cause-resource]
+      [prog [have this           add_new_trace_story_event [get cause-resource name] `call [frame direct_object `me]]
+	    [have cause-resource add_new_trace_story_event `I                        `call [frame direct_object name]]]]
   [type-have-apply resource this activate args]
   [type-have       resource this finish]]
 
 [deftypefunk resource execute wait_to_call [:rest args]
-  [have this           add_new_trace_story_event [get cause-resource name] `call [frame direct_object `me]]
-  [have cause-resource add_new_trace_story_event `I                        `call [frame direct_object name]]
+  [if [cause-lookup cause-resource]
+      [prog [have this           add_new_trace_story_event [get cause-resource name] `call [frame direct_object `me]]
+	    [have cause-resource add_new_trace_story_event `I                        `call [frame direct_object name]]]]
   [type-have-apply resource this wait_to_activate args]
   [type-have       resource this finish]]
 
@@ -218,7 +243,7 @@
     [if [null resource_semantic_frame]
 	[prog [= resource_semantic_frame [new semantic_resource [get [get this mind] semantic_realm]]]
 	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame `[resource ,[get this name]] resource_semantic_frame]
-	      [semantic-add resource_semantic_frame property-name [get this name]]]]
+	      [semantic-add resource_semantic_frame name [get this name]]]]
     resource_semantic_frame]]
 
 

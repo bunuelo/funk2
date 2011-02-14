@@ -18,6 +18,7 @@
  rights to redistribute these changes.'
 
 [defpackage event_stream
-  :packages [lick]
+  :packages [fiber_trigger
+	     lick]
    :sources ['event_stream-core.fu2']]
 

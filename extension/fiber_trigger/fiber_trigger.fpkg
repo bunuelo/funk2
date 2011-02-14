@@ -17,10 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore event_stream 'extension/event_stream/.libs/libf2e_event_stream.so']
-
-[defcorefunk event_stream-core_extension_ping       event_stream event_stream__core_extension_ping]
-[defcorefunk event_stream-core_extension_initialize event_stream event_stream__core_extension_initialize]
-
-[event_stream-core_extension_ping]
+[defpackage fiber_trigger
+  :packages []
+   :sources ['fiber_trigger-core.fu2']]
 

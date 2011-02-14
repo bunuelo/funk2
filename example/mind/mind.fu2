@@ -22,18 +22,22 @@
 
 [deframe mind [frame] [body
 		       layer_frame
+		       resources_waiting_for_mental_trigger_event_frame
 		       knowledge_event_stream_iterator_frame
 		       global_semantic_realm]
   [new []
-       [cause-define semantic_frame-trace_add                         t]
-       [cause-define semantic_frame-trace_remove                      t]
-       [cause-define semantic_knowledge_base-trace_add_semantic_frame t]
+       [cause-define semantic_frame-trace_add                            t]
+       [cause-define semantic_frame-trace_remove                         t]
+       [cause-define semantic_knowledge_base-trace_add_semantic_frame    t]
+       [cause-define semantic_knowledge_base-trace_remove_semantic_frame t]
        [= layer_frame                           [frame]]
        [= knowledge_event_stream_iterator_frame [frame]]
        this]]
 
 [deftypefunk mind get name []
-  [get [get this body] name]]
+  [if [not [null body]]
+      [get body name]
+    nil]]
 
 [deftypefunk mind get layers []
   [get [get this layer_frame] values]]
@@ -74,6 +78,11 @@
 [deftypefunk mind get layer_count []
   [simple_length [get this layer_names]]]
 
+[deftypefunk mind get time_step []
+  [get body time_step]]
+
+[deftypefunk mind get time_step_trigger []
+  [get body time_step_trigger]]
 
 [deftypefunk mind execute create_knowledge_event_stream_iterator [knowledge_base_name knowledge_event_stream_iterator_name]
   [let [[knowledge_base [have [get this semantic_realm] lookup_semantic_knowledge_base knowledge_base_name]]]
@@ -162,6 +171,15 @@
 		      [get layer agencies]]]
 	  [get this layers]]
     resources]]
+
+[deftypefunk mind execute activate_vital_resources []
+  [mapc [funk [resource]
+	      [if [get resource vital]
+		  [prog [while [not [get resource initialized]]
+			  [terminal_format standard-terminal '\nmind-activate_vital_resources: waiting for ' [get resource name] ' resource to initialize.']
+			  [sleep 1]]
+			[have resource activate]]]]
+	[get this resources]]]
 
 [deftypefunk mind get self_model []
   [let [[self_model [new self_model]]]

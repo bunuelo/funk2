@@ -237,7 +237,7 @@ def_pcfunk2(set__lookup, this, element, return f2__set__lookup(this_cause, this,
 
 
 boolean_t raw__set__contains(f2ptr cause, f2ptr this, f2ptr key) {
-  debug__assert(raw__set__valid(cause, this), nil, "f2__set__lookup assert failed: f2__set__valid(this)");
+  debug__assert(raw__set__valid(cause, this), nil, "f2__set__contains assert failed: f2__set__valid(this)");
   f2mutex__lock(f2set__write_mutex(this, cause), cause);
   f2ptr bin_num_power      = f2set__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
@@ -266,6 +266,7 @@ f2ptr f2__set__contains(f2ptr cause, f2ptr this, f2ptr key) {
   return f2bool__new(raw__set__contains(cause, this, key));
 }
 def_pcfunk2(set__contains, this, key, return f2__set__contains(this_cause, this, key));
+
 
 f2ptr raw__set__elements(f2ptr cause, f2ptr this) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__elements assert failed: f2__set__valid(this)");

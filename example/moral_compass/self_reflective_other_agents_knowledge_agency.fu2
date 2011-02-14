@@ -18,8 +18,16 @@
  rights to redistribute these changes.'
 
 
-[deframe self_reflective_personality_agency [agency] []
-  [new []
-       [construct agency `personality]
+[deframe self_reflective_other_agents_knowledge_agency [agency] []
+  [new []					 
+       [construct agency `other_agents_knowledge]
+       
        this]]
+
+[deftypefunk self_reflective_other_agents_knowledge_agency execute create_knowledge []
+  [new meta_semantic_knowledge_base `other_agents_knowledge [get [get this mind] semantic_realm]]]
+
+[deftypefunk self_reflective_other_agents_knowledge_agency execute connect_knowledge_reflection []
+  [have [get this mind] create_knowledge_event_stream_iterator `other_agents_knowledge `other_agents_knowledge->meta_other_agents_knowledge]]
+
 

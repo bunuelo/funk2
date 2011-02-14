@@ -17,10 +17,26 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore event_stream 'extension/event_stream/.libs/libf2e_event_stream.so']
+[defcore fiber_trigger 'extension/fiber_trigger/.libs/libf2e_fiber_trigger.so']
 
-[defcorefunk event_stream-core_extension_ping       event_stream event_stream__core_extension_ping]
-[defcorefunk event_stream-core_extension_initialize event_stream event_stream__core_extension_initialize]
+[defcorefunk fiber_trigger-core_extension_ping       fiber_trigger fiber_trigger__core_extension_ping]
+[defcorefunk fiber_trigger-core_extension_initialize fiber_trigger fiber_trigger__core_extension_initialize]
 
-[event_stream-core_extension_ping]
+[fiber_trigger-core_extension_ping]
+
+[defcorefunk fiber_trigger_hash-add fiber_trigger fiber_trigger_hash__add]
+
+[defunk wait-for-trigger [fiber_trigger]
+  [fiber_trigger_hash-add fiber_trigger [this-fiber]]
+  [pause]]
+
+[defmetro on-trigger [trigger :rest body]
+  `[let [[trigger ,trigger]]
+     [fiber [funk []
+		  [wait-for-trigger trigger]
+		  @body]
+	    nil]
+     nil]]
+
+
 

@@ -255,12 +255,17 @@
 		   [set this debug_all nil]]
 	     nil]
        
-       [mapc [funk [layer]
-		   [let [[isismon_layer_menu [new isismon_agent_layer_menu this layer]]]
-		     [= isismon_layer_menus [cons isismon_layer_menu isismon_layer_menus]]
-		     [have mind_menu append isismon_layer_menu]]]
-	     [have [get [get [get isismon_agent isis_agent] mind] layers] sort [funk [x y] [< [get x index] [get y index]]]]]
-       ]]
+       [fiber [funk []
+		    [mapc [funk [layer]
+				[let [[isismon_layer_menu [new isismon_agent_layer_menu this layer]]]
+				  [= isismon_layer_menus [cons isismon_layer_menu isismon_layer_menus]]
+				  [have [get isismon_layer_menu widget] show_all]
+				  [have mind_menu append isismon_layer_menu]]]
+			  [have [get [get [get isismon_agent isis_agent] mind] layers] sort [funk [x y] [< [get x index] [get y index]]]]]
+		    [have mind_menu_item show_all]]
+	      nil]
+       
+       nil]]
 
 [deftypefunk isismon_agent_mind_menu get widget []
   mind_menu_item]
@@ -316,19 +321,12 @@
 				view_menu
 				view_menu_item
 				view_sense_menu_item
-				view_perception_menu_item
-				view_builtin_reactive_knowledge_menu_item
-				view_learned_reactive_knowledge_menu_item
-				view_deliberative_knowledge_menu_item
-				view_reflective_knowledge_menu_item
-				view_self_reflective_knowledge_menu_item
-				view_self_conscious_knowledge_menu_item
-				view_all_knowledge_menu_item
 				isismon_agent_mind_menu
 				
 				entry
 				
-				meta_mental_isismon_knowledge
+				other_agents_isismon_knowledge
+				meta_mental_sequence_isismon_knowledge
 				mental_knowledge_isismon_knowledge
 				meta_physical_isismon_knowledge
 				physical_isismon_knowledge
@@ -399,106 +397,6 @@
 	     nil]
        [have view_menu append view_sense_menu_item]
        
-       [= view_builtin_reactive_knowledge_menu_item [gtk-menu_item-new 'Builtin-Reactive Knowledge']]
-       [have view_builtin_reactive_knowledge_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[builtin_reactive_knowledge_base [get [get isis_agent mind] builtin_reactive_knowledge]]]
-		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s builtin-reactive semantic knowledge.']
-		     [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
-											     [get knowledge_base as-digraph_dot_code]]
-										       [conslist builtin_reactive_knowledge_base]]
-									       '\n']]]]
-		       [fiber [funk [] [dot_code-gview dot_code]] nil]]]]
-	     nil]
-       [have view_menu append view_builtin_reactive_knowledge_menu_item]
-       
-       [= view_learned_reactive_knowledge_menu_item [gtk-menu_item-new 'Learned-Reactive Knowledge']]
-       [have view_learned_reactive_knowledge_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[learned_reactive_knowledge_base [get [get isis_agent mind] learned_reactive_knowledge]]]
-		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s learned-reactive semantic knowledge.']
-		     [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
-											     [get knowledge_base as-digraph_dot_code]]
-										       [conslist learned_reactive_knowledge_base]]
-									       '\n']]]]
-		       [fiber [funk [] [dot_code-gview dot_code]] nil]]]]
-	     nil]
-       [have view_menu append view_learned_reactive_knowledge_menu_item]
-       
-       [= view_deliberative_knowledge_menu_item [gtk-menu_item-new 'Deliberative Knowledge']]
-       [have view_deliberative_knowledge_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[deliberative_knowledge_base [get [get isis_agent mind] deliberative_knowledge]]]
-		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s deliberative semantic knowledge.']
-		     [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
-											     [get knowledge_base as-digraph_dot_code]]
-										       [conslist deliberative_knowledge_base]]
-									       '\n']]]]
-		       [fiber [funk [] [dot_code-gview dot_code]] nil]]]]
-	     nil]
-       [have view_menu append view_deliberative_knowledge_menu_item]
-       
-       [= view_reflective_knowledge_menu_item [gtk-menu_item-new 'Reflective Knowledge']]
-       [have view_reflective_knowledge_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[reflective_knowledge_base [get [get isis_agent mind] reflective_knowledge]]]
-		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s reflective semantic knowledge.']
-		     [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
-											     [get knowledge_base as-digraph_dot_code]]
-										       [conslist reflective_knowledge_base]]
-									       '\n']]]]
-		       [fiber [funk [] [dot_code-gview dot_code]] nil]]]]
-	     nil]
-       [have view_menu append view_reflective_knowledge_menu_item]
-       
-       [= view_self_reflective_knowledge_menu_item [gtk-menu_item-new 'Self-Reflective Knowledge']]
-       [have view_self_reflective_knowledge_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[self_reflective_knowledge_base [get [get isis_agent mind] self_reflective_knowledge]]]
-		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s self-reflective semantic knowledge.']
-		     [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
-											     [get knowledge_base as-digraph_dot_code]]
-										       [conslist self_reflective_knowledge_base]]
-									       '\n']]]]
-		       [fiber [funk [] [dot_code-gview dot_code]] nil]]]]
-	     nil]
-       [have view_menu append view_self_reflective_knowledge_menu_item]
-       
-       [= view_self_conscious_knowledge_menu_item [gtk-menu_item-new 'Self-Conscious Knowledge']]
-       [have view_self_conscious_knowledge_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[self_conscious_knowledge_base [get [get isis_agent mind] self_conscious_knowledge]]]
-		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get this name] '\'s self-conscious semantic knowledge.']
-		     [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
-											     [get knowledge_base as-digraph_dot_code]]
-										       [conslist self_conscious_knowledge_base]]
-									       '\n']]]]
-		       [fiber [funk [] [dot_code-gview dot_code]] nil]]]]
-	     nil]
-       [have view_menu append view_self_conscious_knowledge_menu_item]
-       
-       [= view_all_knowledge_menu_item [gtk-menu_item-new 'All Knowledge']]
-       [have view_all_knowledge_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[builtin_reactive_knowledge_base [get [get isis_agent mind] builtin_reactive_knowledge]]
-			 [learned_reactive_knowledge_base [get [get isis_agent mind] learned_reactive_knowledge]]
-			 [deliberative_knowledge_base     [get [get isis_agent mind] deliberative_knowledge]]
-			 [reflective_knowledge_base       [get [get isis_agent mind] reflective_knowledge]]
-			 [self_reflective_knowledge_base  [get [get isis_agent mind] self_reflective_knowledge]]
-			 [self_conscious_knowledge_base   [get [get isis_agent mind] self_conscious_knowledge]]]
-		     [terminal_format standard-terminal '\nIsisMon generating and displaying graph of all of ' [get this name] '\'s semantic knowledge.']
-		     [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
-											     [get knowledge_base as-digraph_dot_code]]
-										       [conslist builtin_reactive_knowledge_base
-												 learned_reactive_knowledge_base
-												 deliberative_knowledge_base
-												 reflective_knowledge_base
-												 self_reflective_knowledge_base
-												 self_conscious_knowledge_base]]
-									       '\n']]]]
-		       [fiber [funk [] [dot_code-gview dot_code]] nil]]]]
-	     nil]
-       [have view_menu append view_all_knowledge_menu_item]
        
        [= isismon_agent_mind_menu [new isismon_agent_mind_menu this]]
        [have menu_bar append isismon_agent_mind_menu]
@@ -529,21 +427,28 @@
        
        [have vbox pack_start entry nil nil 0]
        
-       
-       [= meta_mental_isismon_knowledge [new isismon_knowledge this `meta_mental_knowledge]]
-       [have vbox pack_start [get meta_mental_isismon_knowledge widget] nil nil 0]
-       
-       [= mental_knowledge_isismon_knowledge [new isismon_knowledge this `mental_knowledge]]
-       [have vbox pack_start [get mental_knowledge_isismon_knowledge widget] nil nil 0]
-       
-       [= meta_physical_isismon_knowledge [new isismon_knowledge this `meta_physical_knowledge]]
-       [have vbox pack_start [get meta_physical_isismon_knowledge widget] nil nil 0]
-       
-       [= physical_isismon_knowledge [new isismon_knowledge this `physical_knowledge]]
-       [have vbox pack_start [get physical_isismon_knowledge widget] nil nil 0]
-       
-       [= visual_isismon_knowledge [new isismon_knowledge this `visual_knowledge]]
-       [have vbox pack_start [get visual_isismon_knowledge widget] nil nil 0]
+       [fiber [funk []
+		    [= other_agents_isismon_knowledge [new isismon_knowledge this `other_agents_knowledge]]
+		    [have vbox pack_start [get other_agents_isismon_knowledge widget] nil nil 0]
+		    
+		    [= meta_mental_sequence_isismon_knowledge [new isismon_knowledge this `meta_mental_sequence_knowledge]]
+		    [have vbox pack_start [get meta_mental_sequence_isismon_knowledge widget] nil nil 0]
+		    
+		    [= mental_knowledge_isismon_knowledge [new isismon_knowledge this `mental_knowledge]]
+		    [have vbox pack_start [get mental_knowledge_isismon_knowledge widget] nil nil 0]
+		    
+		    [= meta_physical_isismon_knowledge [new isismon_knowledge this `meta_physical_knowledge]]
+		    [have vbox pack_start [get meta_physical_isismon_knowledge widget] nil nil 0]
+		    
+		    [= physical_isismon_knowledge [new isismon_knowledge this `physical_knowledge]]
+		    [have vbox pack_start [get physical_isismon_knowledge widget] nil nil 0]
+		    
+		    [= visual_isismon_knowledge [new isismon_knowledge this `visual_knowledge]]
+		    [have vbox pack_start [get visual_isismon_knowledge widget] nil nil 0]
+		    
+		    [have [get this widget] show_all]
+		    ]
+	      nil]
        
        [have frame add vbox]
        nil]]
@@ -566,11 +471,12 @@
     ]]
 
 [deftypefunk isismon_agent execute update []
-  [have meta_mental_isismon_knowledge      update_knowledge_image]
-  [have mental_knowledge_isismon_knowledge update_knowledge_image]
-  [have meta_physical_isismon_knowledge    update_knowledge_image]
-  [have physical_isismon_knowledge         update_knowledge_image]
-  [have visual_isismon_knowledge           update_knowledge_image]
+  [if other_agents_isismon_knowledge         [have other_agents_isismon_knowledge         update_knowledge_image]]
+  [if meta_mental_sequence_isismon_knowledge [have meta_mental_sequence_isismon_knowledge update_knowledge_image]]
+  [if mental_knowledge_isismon_knowledge     [have mental_knowledge_isismon_knowledge     update_knowledge_image]]
+  [if meta_physical_isismon_knowledge        [have meta_physical_isismon_knowledge        update_knowledge_image]]
+  [if physical_isismon_knowledge             [have physical_isismon_knowledge             update_knowledge_image]]
+  [if visual_isismon_knowledge               [have visual_isismon_knowledge               update_knowledge_image]]
   nil]
 
 [deftypefunk isismon_agent get retina_image_sequence []
@@ -1046,7 +952,7 @@
 [deftypefunk isismon_project execute cycle []
   [have execute_mutex lock]
   [if initialized
-      [let [[time_to_wait_for_thinking 0]]
+      [let [[time_to_wait_for_thinking 5]]
 	[if [and simulation_playing [or [null last_stepped_simulation_time]
 					[> [/ [- [get [time] nanoseconds_since_1970] [get last_stepped_simulation_time nanoseconds_since_1970]] 1000000000.0] time_to_wait_for_thinking]]]
 	    [let [[step_size [have [get step_size_entry text] read]]]

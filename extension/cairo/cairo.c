@@ -325,7 +325,35 @@ f2ptr raw__cairo_image_surface__as__image(f2ptr cause, f2ptr this) {
   if (! raw__eq(cause, format, new__symbol(cause, "ARGB32"))) {
     return f2larva__new(cause, 2132, nil);
   }
-  return nil;
+  cairo_surface_t* cairo_surface = raw__cairo_image_surface__as__cairo_surface_t(cause, this);
+  unsigned char*   data          = cairo_image_surface_get_data(  cairo_surface);
+  s64              width         = cairo_image_surface_get_width( cairo_surface);
+  s64              height        = cairo_image_surface_get_height(cairo_surface);
+  f2ptr            rgba_data     = raw__chunk__new(cause, 4 * width * height);
+  s64              stride        = cairo_image_surface_get_stride(cairo_surface);
+  {
+    s64 y;
+    for (y = 0; y < height; y ++) {
+      s64 cairo_y_index = (y * stride);
+      s64 y_index       = (y * width);
+      s64 x;
+      for (x = 0; x < width; x ++) {
+	s64 cairo_pixel_index = (cairo_y_index + x) << 2;
+	u8  alpha             = *(data + cairo_pixel_index + 0);
+	u8  red               = *(data + cairo_pixel_index + 1);
+	u8  green             = *(data + cairo_pixel_index + 2);
+	u8  blue              = *(data + cairo_pixel_index + 3);
+	{
+	  s64 pixel_index = (y_index + x) << 2;
+	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 0, red);
+	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 1, green);
+	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 2, blue);
+	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 3, alpha);
+	}
+      }
+    }
+  }
+  return raw__image__new_from_rgba_data(cause, f2integer__new(cause, width), f2integer__new(cause, height), rgba_data);
 }
 
 f2ptr f2__cairo_image_surface__as__image(f2ptr cause, f2ptr this) {
@@ -362,6 +390,12 @@ export_cefunk0(cairo__core_extension__ping, 0, "");
 f2ptr f2__cairo__core_extension__initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "cairo"),               f2__cairo_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "cairo_image_surface"), f2__cairo_image_surface_type__new(cause));
+  {
+    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__core_extension__ping")), nil);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   status("cairo initialized.");
   return nil;
 }

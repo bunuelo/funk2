@@ -23,6 +23,7 @@
 #define F2__EXTENSION__CAIRO__H
 
 #include "../../c/funk2.h"
+#include "../image/image.h"
 
 f2ptr     raw__cairo__new(               f2ptr cause, f2ptr cairo_pointer);
 f2ptr      f2__cairo__new(               f2ptr cause);

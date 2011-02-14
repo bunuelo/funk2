@@ -332,7 +332,7 @@ f2ptr f2__cairo_image_surface__as__image(f2ptr cause, f2ptr this) {
   if (! raw__cairo_image_surface__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo_image_surface__as__image_cause, this);
+  return raw__cairo_image_surface__as__image(cause, this);
 }
 export_cefunk1(cairo_image_surface__as__image, this, 0, "Returns a new image representation of this cairo_image_surface.");
 

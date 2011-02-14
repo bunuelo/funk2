@@ -68,10 +68,8 @@
 						   [have resource_initializing_mutex lock]
 						   [have resource_initializing_mutex unlock]
 						   [have fiber_starting_mutex unlock]
-						   [let [[waiting_count               0]
-							 [waiting_to_be_added_to_mind t]]
+						   [let [[waiting_to_be_added_to_mind t]]
 						     [while waiting_to_be_added_to_mind
-						       `[terminal_format standard-terminal '\nResource ' initial-name ' waiting to be added to mind (count=' waiting_count ').'] [= waiting_count [+ waiting_count 1]]
 						       [sleep 1]
 						       [if [null mind-name]
 							   [if agency

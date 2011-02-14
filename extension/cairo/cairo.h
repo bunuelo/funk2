@@ -22,28 +22,16 @@
 #ifndef F2__EXTENSION__CAIRO__H
 #define F2__EXTENSION__CAIRO__H
 
-f2ptr     raw__cairo__new(                       f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data);
-f2ptr      f2__cairo__new(                       f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data);
-f2ptr     raw__cairo__new_from_rgb_data(         f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data);
-f2ptr      f2__cairo__new_from_rgb_data(         f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data);
-boolean_t raw__cairo__is_type(                   f2ptr cause, f2ptr thing);
-f2ptr      f2__cairo__is_type(                   f2ptr cause, f2ptr thing);
-f2ptr     raw__cairo__type(                      f2ptr cause, f2ptr this);
-f2ptr      f2__cairo__type(                      f2ptr cause, f2ptr this);
-f2ptr     raw__cairo__width(                     f2ptr cause, f2ptr this);
-f2ptr      f2__cairo__width(                     f2ptr cause, f2ptr this);
-f2ptr     raw__cairo__width__set(                f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__cairo__width__set(                f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__cairo__height(                    f2ptr cause, f2ptr this);
-f2ptr      f2__cairo__height(                    f2ptr cause, f2ptr this);
-f2ptr     raw__cairo__height__set(               f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__cairo__height__set(               f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__cairo__rgba_data(                 f2ptr cause, f2ptr this);
-f2ptr      f2__cairo__rgba_data(                 f2ptr cause, f2ptr this);
-f2ptr     raw__cairo__rgba_data__set(            f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__cairo__rgba_data__set(            f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__cairo__write_reduction_cairo_part(f2ptr cause, f2ptr this, f2ptr reduced_cairo, f2ptr reduction_factor, f2ptr x_offset, f2ptr y_offset);
-f2ptr      f2__cairo__write_reduction_cairo_part(f2ptr cause, f2ptr this, f2ptr reduced_cairo, f2ptr reduction_factor, f2ptr x_offset, f2ptr y_offset);
+f2ptr     raw__cairo__new(               f2ptr cause);
+f2ptr      f2__cairo__new(               f2ptr cause);
+boolean_t raw__cairo__is_type(           f2ptr cause, f2ptr thing);
+f2ptr      f2__cairo__is_type(           f2ptr cause, f2ptr thing);
+f2ptr     raw__cairo__type(              f2ptr cause, f2ptr this);
+f2ptr      f2__cairo__type(              f2ptr cause, f2ptr this);
+f2ptr     raw__cairo__cairo_pointer(     f2ptr cause, f2ptr this);
+f2ptr      f2__cairo__cairo_pointer(     f2ptr cause, f2ptr this);
+f2ptr     raw__cairo__cairo_pointer__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__cairo__cairo_pointer__set(f2ptr cause, f2ptr this, f2ptr value);
 
 f2ptr f2__cairo_type__new(f2ptr cause);
 

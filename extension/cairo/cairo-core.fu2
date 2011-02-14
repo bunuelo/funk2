@@ -19,7 +19,6 @@
 
 [defcore cairo 'extension/cairo/.libs/libf2e_cairo.so']
 
-[defcorefunk cairo-new_from_rgb_data         cairo cairo__new_from_rgb_data]
 [defcorefunk cairo-core_extension-ping       cairo cairo__core_extension__ping]
 [defcorefunk cairo-core_extension-initialize cairo cairo__core_extension__initialize]
 

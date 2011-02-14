@@ -207,6 +207,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/causality/libf2e_causality.la \
+                  extension/cairo/libf2e_cairo.la \
                   extension/conceptnet/libf2e_conceptnet.la \
                   extension/event_stream/libf2e_event_stream.la \
                   extension/equals_hash/libf2e_equals_hash.la \
@@ -373,6 +374,7 @@ lib_libfunk2_la_SOURCES = \
   config_bit_num.h
 
 extension_causality_libf2e_causality_la_SOURCES                                           = extension/causality/causality.c
+extension_cairo_libf2e_cairo_la_SOURCES                                                   = extension/cairo/cairo.c
 extension_conceptnet_libf2e_conceptnet_la_SOURCES                                         = extension/conceptnet/conceptnet.c
 extension_event_stream_libf2e_event_stream_la_SOURCES                                     = extension/event_stream/event_stream.c
 extension_equals_hash_libf2e_equals_hash_la_SOURCES                                       = extension/equals_hash/equals_hash.c
@@ -437,6 +439,7 @@ all_core_extensions = \
   $(extension_image_libf2e_image_la) \
   $(extension_image_sequence_libf2e_image_sequence_la) \
   $(extension_movie_libf2e_movie_la) \
+  $(extension_cairo_libf2e_cairo_la) \
   $(extension_conceptnet_libf2e_conceptnet_la) \
   $(extension_event_stream_libf2e_event_stream_la) \
   $(extension_forward_planner_libf2e_forward_planner_la) \
@@ -480,6 +483,9 @@ extension_image_sequence_libf2e_image_sequence_la_CFLAGS  = $(lib_libfunk2_la_CF
 
 extension_movie_libf2e_movie_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_movie_libf2e_movie_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_cairo_libf2e_cairo_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_cairo_libf2e_cairo_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_conceptnet_libf2e_conceptnet_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_conceptnet_libf2e_conceptnet_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

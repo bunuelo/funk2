@@ -95,7 +95,7 @@
 								  [have current_action_sequence        add_to_end         semantic_event]
 								  [have meta_mental_sequence_knowledge add_semantic_frame semantic_event]
 								  '  => add to action_sequence_cause_frame for the affected agent.']]]
-							  [prog [have this-resource think_to_self '\n   no agent defined, cannot add event to agent sequence: ' semantic_event]
+							  [prog [have this-resource think_to_self '\n   debug A12: no agent defined, cannot add event to agent sequence: ' event]
 								]]]]
 					       ]]]
 					  ]

@@ -110,6 +110,7 @@
 				  'built-in/gtk/'
 				  'built-in/natural_language/'
 				  'built-in/simple_graph/'
+				  'extension/cairo/'
 				  'extension/conceptnet/'
 				  'extension/equals_hash/'
 				  'extension/event_stream/'

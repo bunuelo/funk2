@@ -24,7 +24,7 @@
 
 f2ptr raw__cairo__new(f2ptr cause) {
   f2ptr cairo_pointer = nil;
-  return f2__frame__new(cause, f2list8__new(cause,
+  return f2__frame__new(cause, f2list4__new(cause,
 					    new__symbol(cause, "type"),          new__symbol(cause, "cairo"),
 					    new__symbol(cause, "cairo_pointer"), cairo_pointer));
 }

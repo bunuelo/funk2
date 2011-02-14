@@ -22,6 +22,8 @@
 #ifndef F2__EXTENSION__CAIRO__H
 #define F2__EXTENSION__CAIRO__H
 
+#include "../../c/funk2.h"
+
 f2ptr     raw__cairo__new(               f2ptr cause);
 f2ptr      f2__cairo__new(               f2ptr cause);
 boolean_t raw__cairo__is_type(           f2ptr cause, f2ptr thing);

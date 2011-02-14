@@ -169,6 +169,7 @@ f2ptr raw__cairo_image_surface__new(f2ptr cause, f2ptr format, f2ptr width, f2pt
     case CAIRO_STATUS_INVALID_CONTENT: cauro_status = new__symbol(cause, "CAIRO_STATUS_INVALID_CONTENT"); break;
     case CAIRO_STATUS_INVALID_FORMAT:  cauro_status = new__symbol(cause, "CAIRO_STATUS_INVALID_FORMAT");  break;
     case CAIRO_STATUS_INVALID_VISUAL:  cauro_status = new__symbol(cause, "CAIRO_STATUS_INVALID_VISUAL");  break;
+    default:                           cauro_status = new__symbol(cause, "unknown");                      break;
     }
     cauro_surface_destroy(cairo_surface);
     return f2larva__new(cause, 44321, f2__bug__new(cause, f2integer__new(cause, 44321), f2__frame__new(cause, f2list10__new(cause,

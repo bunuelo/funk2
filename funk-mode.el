@@ -99,7 +99,7 @@
 	      "on-trigger" "or"
 	      "package" "parc" "parcar" "parlet" "parog" "partimes" "pause" "prog" "put"
 	      "quote"
-	      "require"
+	      "require" "resume"
 	      "set" "set-apply" "shelter" "semantic-lookup" "semantic-lookup-apply" "semantic-add" "semantic-add-apply" "semantic-remove" "semantic-remove-apply" "semantic-get" "semantic-set"
 	      "type-get" "type-set" "type-execute" "type-have" "type-get-apply" "type-set-apply" "type-execute-apply" "type-have-apply"
 	      "wait-for-trigger" "while" "with" "with-new-cause"
@@ -159,6 +159,7 @@
     ;;(modify-syntax-entry ?\n ">" funk-mode-syntax-table)
     (modify-syntax-entry ?_ "w" funk-mode-syntax-table)
     (modify-syntax-entry ?` "'" funk-mode-syntax-table)
+    (modify-syntax-entry ?, "'" funk-mode-syntax-table)
     (modify-syntax-entry ?' "\"" funk-mode-syntax-table)
     (modify-syntax-entry ?+ "w" funk-mode-syntax-table)
     (modify-syntax-entry ?- "w" funk-mode-syntax-table)

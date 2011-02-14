@@ -1956,20 +1956,262 @@ f2ptr f2__gfunkptr__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2
 
 f2ptr f2gfunkptr__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("ptype"), (u8*)"ptype"), nil));
-  {char* slot_name = "is_type";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.is_type__funk);}
-  {char* slot_name = "type";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.type__funk);}
-  {char* slot_name = "new";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new__funk);}
-  {char* slot_name = "new_from_f2ptr";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new_from_f2ptr__funk);}
-  {char* slot_name = "gfunkptr";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.gfunkptr__funk);}
-  {char* slot_name = "computer_id";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.computer_id__funk);}
-  {char* slot_name = "pool_index";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_index__funk);}
-  {char* slot_name = "pool_address";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_address__funk);}
-  {char* slot_name = "eq";                           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq__funk);}
-  {char* slot_name = "eq_hash_value";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq_hash_value__funk);}
-  {char* slot_name = "equals";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals__funk);}
+  {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.is_type__funk);}
+  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.type__funk);}
+  {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new__funk);}
+  {char* slot_name = "new_from_f2ptr";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new_from_f2ptr__funk);}
+  {char* slot_name = "gfunkptr";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.gfunkptr__funk);}
+  {char* slot_name = "computer_id";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.computer_id__funk);}
+  {char* slot_name = "pool_index";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_index__funk);}
+  {char* slot_name = "pool_address";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_address__funk);}
+  {char* slot_name = "eq";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq__funk);}
+  {char* slot_name = "eq_hash_value";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq_hash_value__funk);}
+  {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals__funk);}
   {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals_hash_value__loop_free__funk);}
-  {char* slot_name = "equals_hash_value";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals_hash_value__funk);}
-  {char* slot_name = "terminal_print_with_frame";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.terminal_print_with_frame__funk);}
+  {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals_hash_value__funk);}
+  {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.terminal_print_with_frame__funk);}
+  return this;
+}
+
+
+
+// scheduler_mutex
+
+f2ptr ptype_scheduler_mutex__new(int pool_index, f2ptr cause) {
+  f2ptr scheduler_mutex_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_scheduler_mutex_block_t));
+  ptype_scheduler_mutex_block_t* scheduler_mutex_block = (ptype_scheduler_mutex_block_t*)from_ptr(raw__f2ptr_to_ptr(scheduler_mutex_f2ptr));
+  debug__assert(scheduler_mutex_block, nil, "block is nil.");
+  if (cause) {raw__exp__increment_reference_count(cause);}
+  scheduler_mutex_block->ptype.ptype  = ptype_scheduler_mutex;
+  scheduler_mutex_block->ptype.cause  = cause;
+  scheduler_mutex_block->locked_state = boolean__false;
+  funk2_processor_mutex__init(scheduler_mutex_block->m);
+  return scheduler_mutex_f2ptr;
+}
+
+f2ptr pfunk2__f2scheduler_mutex__new(f2ptr cause) {
+  check_wait_politely();
+  int pool_index = this_processor_thread__pool_index();
+  f2ptr retval = __pure__f2scheduler_mutex__new(pool_index, cause);
+  return retval;
+}
+
+funk2_processor_mutex_t* ptype_scheduler_mutex__m(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+  funk2_processor_mutex_t* m = __pure__f2scheduler_mutex__m(this);
+  return m;
+}
+
+boolean_t pfunk2__f2scheduler_mutex__is_locked(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_scheduler_mutex) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_scheduler_mutex__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  //int pool_index = this_processor_thread__pool_index();
+  boolean_t is_locked = funk2_processor_mutex__is_locked(ptype_scheduler_mutex__m(this, cause));
+  return is_locked;
+}
+
+void pfunk2__f2scheduler_mutex__lock(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_scheduler_mutex) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_scheduler_mutex__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  funk2_processor_mutex_trylock_result_t trylock_result = funk2_processor_mutex_trylock_result__failure;
+  while (1) {
+    trylock_result = funk2_processor_mutex__trylock(ptype_scheduler_mutex__m(this, cause));
+    if (trylock_result == funk2_processor_mutex_trylock_result__failure) {
+      raw__fast_spin_sleep_yield();
+      // no user process yield, thus is safe for scheduler and cannot be used by user process.
+    } else {
+      break;
+    }
+  }
+  __pure__f2scheduler_mutex__locked_state__set(this, boolean__true);
+}
+
+void pfunk2__f2scheduler_mutex__unlock(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_scheduler_mutex) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_scheduler_mutex__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  // note that this assumes the scheduler_mutex is locked.
+  __pure__f2scheduler_mutex__locked_state__set(this, boolean__false);
+  funk2_processor_mutex__unlock(ptype_scheduler_mutex__m(this, cause));
+}
+
+int pfunk2__f2scheduler_mutex__trylock(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_scheduler_mutex) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_scheduler_mutex__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  int return_value = funk2_processor_mutex__trylock(ptype_scheduler_mutex__m(this, cause));
+  if (return_value == 0) {
+    __pure__f2scheduler_mutex__locked_state__set(this, boolean__true);
+  }
+  return return_value;
+}
+
+boolean_t raw__scheduler_mutex__is_type(f2ptr cause, f2ptr x) {
+  check_wait_politely();
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+#endif // F2__PTYPE__TYPE_CHECK
+  return (x && f2ptype__raw(x, cause) == ptype_scheduler_mutex);
+}
+f2ptr f2__scheduler_mutex__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__scheduler_mutex__is_type(cause, x));}
+def_pcfunk1(scheduler_mutex__is_type, x, return f2__scheduler_mutex__is_type(this_cause, x));
+
+f2ptr f2__scheduler_mutex__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen("scheduler_mutex"), (u8*)"scheduler_mutex");}
+def_pcfunk1(scheduler_mutex__type, x, return f2__scheduler_mutex__type(this_cause, x));
+
+f2ptr f2__scheduler_mutex__new(f2ptr cause) {return f2scheduler_mutex__new(cause);}
+def_pcfunk0(scheduler_mutex__new, return f2__scheduler_mutex__new(this_cause));
+
+
+boolean_t raw__scheduler_mutex__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return (this == that);
+}
+
+f2ptr f2__scheduler_mutex__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__scheduler_mutex__eq(cause, this, that));
+}
+def_pcfunk2(scheduler_mutex__eq, this, that, return f2__scheduler_mutex__eq(this_cause, this, that));
+
+
+u64 raw__scheduler_mutex__eq_hash_value(f2ptr cause, f2ptr this) {
+  return ((u64)this);
+}
+
+f2ptr f2__scheduler_mutex__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__scheduler_mutex__eq_hash_value(cause, this));}
+def_pcfunk1(scheduler_mutex__eq_hash_value, this, return f2__scheduler_mutex__eq_hash_value(this_cause, this));
+
+
+boolean_t raw__scheduler_mutex__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__scheduler_mutex__eq(cause, this, that);
+}
+
+f2ptr f2__scheduler_mutex__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__scheduler_mutex__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2bool__new(raw__scheduler_mutex__equals(cause, this, that));
+}
+def_pcfunk2(scheduler_mutex__equals, this, that, return f2__scheduler_mutex__equals(this_cause, this, that));
+
+
+u64 raw__scheduler_mutex__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
+  funk2_processor_mutex_t* m = __pure__f2scheduler_mutex__m(this);
+  return funk2_processor_mutex__equals_hash_value(m);
+}
+
+f2ptr f2__scheduler_mutex__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
+  if (! raw__scheduler_mutex__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2integer__new(cause, raw__scheduler_mutex__equals_hash_value__loop_free(cause, this, node_ptypehash));
+}
+def_pcfunk2(scheduler_mutex__equals_hash_value__loop_free, this, node_ptypehash, return f2__scheduler_mutex__equals_hash_value__loop_free(this_cause, this, node_ptypehash));
+
+
+u64 raw__scheduler_mutex__equals_hash_value(f2ptr cause, f2ptr this) {
+  funk2_processor_mutex_t* m = __pure__f2scheduler_mutex__m(this);
+  return funk2_processor_mutex__equals_hash_value(m);
+}
+
+f2ptr f2__scheduler_mutex__equals_hash_value(f2ptr cause, f2ptr this) {
+  if (! raw__scheduler_mutex__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2integer__new(cause, raw__scheduler_mutex__equals_hash_value(cause, this));
+}
+def_pcfunk1(scheduler_mutex__equals_hash_value, this, return f2__scheduler_mutex__equals_hash_value(this_cause, this));
+
+
+f2ptr raw__scheduler_mutex__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  {
+    f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
+    u64   size__i = f2integer__i(size, cause);
+    size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
+  }
+  u8  scheduler_mutex_string[128];
+  u64 scheduler_mutex_string__length;
+  {
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__scheduler_mutex__foreground);
+    scheduler_mutex_string__length = snprintf((char*)scheduler_mutex_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, scheduler_mutex_string__length, scheduler_mutex_string);
+  }
+  {
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__type__foreground);
+    scheduler_mutex_string__length = snprintf((char*)scheduler_mutex_string, 128, "scheduler_mutex");
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, scheduler_mutex_string__length, scheduler_mutex_string);
+  }
+  if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
+    return nil;
+  }
+  {
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__scheduler_mutex__foreground);
+    scheduler_mutex_string__length = snprintf((char*)scheduler_mutex_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__right_paren, cause));
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, scheduler_mutex_string__length, scheduler_mutex_string);
+  }
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
+  return nil;
+}
+
+f2ptr f2__scheduler_mutex__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__scheduler_mutex__is_type(cause, this)) ||
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__scheduler_mutex__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(scheduler_mutex__terminal_print_with_frame, this, terminal_print_frame, return f2__scheduler_mutex__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr f2__scheduler_mutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
+  if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
+    if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.eq__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.eq_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.equals__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.equals_hash_value__loop_free__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.equals_hash_value__loop_free__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.equals_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.equals_hash_value__funk;
+    }
+  } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
+  } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
+    if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.new__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.new__funk;
+    }
+  }
+  return nil;
+}
+
+f2ptr f2scheduler_mutex__primobject_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("ptype"), (u8*)"ptype"), nil));
+  {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.is_type__funk);}
+  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.type__funk);}
+  {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.new__funk);}
+  {char* slot_name = "eq";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.eq__funk);}
+  {char* slot_name = "eq_hash_value";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.eq_hash_value__funk);}
+  {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.equals__funk);}
+  {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.equals_hash_value__loop_free__funk);}
+  {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.equals_hash_value__funk);}
+  {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -2026,7 +2268,7 @@ void pfunk2__f2mutex__lock(f2ptr this, f2ptr cause) {
   while (1) {
     trylock_result = funk2_processor_mutex__trylock(ptype_mutex__m(this, cause));
     if (trylock_result == funk2_processor_mutex_trylock_result__failure) {
-      f2__scheduler__yield(cause);
+      f2__this__fiber__yield(cause);
     } else {
       break;
     }
@@ -4314,7 +4556,7 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
     f2ptr read_funks = __pure__f2traced_array__elt__read_funks(this, index);
     if (read_funks) {
       f2ptr funkable_iter = read_funks;
-      f2ptr fiber         = f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+      f2ptr fiber         = f2__this__fiber(cause);
       f2ptr args          = nil;
       while (funkable_iter) {
 	f2ptr funkable = f2cons__car(funkable_iter, cause);
@@ -4419,7 +4661,7 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
     f2ptr mutate_funks = __pure__f2traced_array__elt__mutate_funks(this, index);
     if (mutate_funks) {
       f2ptr funkable_iter = mutate_funks;
-      f2ptr fiber         = f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+      f2ptr fiber         = f2__this__fiber(cause);
       f2ptr args          = nil;
       while (funkable_iter) {
 	f2ptr funkable = f2cons__car(funkable_iter, cause);
@@ -5432,6 +5674,27 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(gfunkptr__terminal_print_with_frame, this, terminal_print_frame, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.terminal_print_with_frame__funk = never_gc(cfunk);}
   
+  // scheduler_mutex
+  
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_mutex__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.is_type__funk = never_gc(cfunk);}
+  {char* str = "type"; __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_mutex__type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.type__funk = never_gc(cfunk);}
+  {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_mutex__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.new__funk = never_gc(cfunk);}
+  {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_mutex__eq, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.eq__funk = never_gc(cfunk);}
+  {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_mutex__eq_hash_value, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.eq_hash_value__funk = never_gc(cfunk);}
+  {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.equals__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_mutex__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.equals__funk = never_gc(cfunk);}
+  {char* str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.equals_hash_value__loop_free__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_mutex__equals_hash_value__loop_free, this, node_ptypehash, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.equals_hash_value__loop_free__funk = never_gc(cfunk);}
+  {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_mutex__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.equals_hash_value__funk = never_gc(cfunk);}
+  {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_mutex__terminal_print_with_frame, this, terminal_print_frame, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_scheduler_mutex.terminal_print_with_frame__funk = never_gc(cfunk);}
+  
   // mutex
   
   {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_mutex.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
@@ -5440,8 +5703,6 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.type__funk = never_gc(cfunk);}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_mutex.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.new__funk = never_gc(cfunk);}
-  {char* str = "is_locked"; __funk2.globalenv.object_type.ptype.ptype_mutex.is_locked__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__is_locked, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.is_locked__funk = never_gc(cfunk);}
   {char* str = "lock"; __funk2.globalenv.object_type.ptype.ptype_mutex.lock__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__lock, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.lock__funk = never_gc(cfunk);}
   {char* str = "unlock"; __funk2.globalenv.object_type.ptype.ptype_mutex.unlock__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}

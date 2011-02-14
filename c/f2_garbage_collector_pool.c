@@ -451,16 +451,17 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
   }
   switch(block->ptype) {
   case ptype_free_memory: error(nil, "block of type free_memory in garbage collector.");
-  case ptype_integer:  return;
-  case ptype_double:   return;
-  case ptype_float:    return;
-  case ptype_pointer:  return;
-  case ptype_gfunkptr: return;
-  case ptype_mutex:    return;
-  case ptype_char:     return;
-  case ptype_string:   return;
-  case ptype_symbol:   return;
-  case ptype_chunk:    return;
+  case ptype_integer:         return;
+  case ptype_double:          return;
+  case ptype_float:           return;
+  case ptype_pointer:         return;
+  case ptype_gfunkptr:        return;
+  case ptype_scheduler_mutex: return;
+  case ptype_mutex:           return;
+  case ptype_char:            return;
+  case ptype_string:          return;
+  case ptype_symbol:          return;
+  case ptype_chunk:           return;
   case ptype_simple_array: {
     s64 i;
     f2ptr* iter = (f2ptr*)((ptype_simple_array_block_t*)block)->f2ptr_data;

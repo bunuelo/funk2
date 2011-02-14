@@ -32,6 +32,7 @@
 	initial-retina_position_horizontal
 	initial-retina_position_vertical
 	initial-distance
+	initial-orientation
 	initial-preposition_frame
 	initial-actions]
        [construct moral_compass_visual_object
@@ -40,6 +41,7 @@
 		  initial-retina_position_horizontal
 		  initial-retina_position_vertical
 		  initial-distance
+		  initial-orientation
 		  initial-preposition_frame]
        [= actions initial-actions]
        ]]

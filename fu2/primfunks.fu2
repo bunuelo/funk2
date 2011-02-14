@@ -39,6 +39,7 @@
 [globalize-funk time                                        &primfunk:time]
 [globalize-funk sleep_for_nanoseconds_without_yield         &primfunk:sleep_for_nanoseconds_without_yield]
 
+[globalize-funk simple_paused_fiber                         &primfunk:simple_paused_fiber]
 [globalize-funk fiber_parallel                              &primfunk:fiber_parallel]
 [globalize-funk fiber-imagine                               &primfunk:fiber__imagine]
 
@@ -89,7 +90,6 @@
 [globalize-funk fclose                                      &primfunk:fclose]
 
 [globalize-funk this-cause                                  &primfunk:this__cause]
-[globalize-funk this-fiber                                  &primfunk:this__fiber]
 [globalize-funk this-env                                    &primfunk:this__env]
 [globalize-funk this-args                                   &primfunk:this__args]
 

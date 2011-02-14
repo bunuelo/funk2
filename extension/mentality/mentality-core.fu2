@@ -19,10 +19,10 @@
 
 [defcore mentality 'extension/mentality/.libs/libf2e_mentality.so']
 
-[defcorefunk mentality-core_extension_ping       mentality mentality__core_extension_ping]
-[defcorefunk mentality-core_extension_initialize mentality mentality__core_extension_initialize]
+[defcorefunk mentality-core_extension-ping       mentality mentality__core_extension__ping]
+[defcorefunk mentality-core_extension-initialize mentality mentality__core_extension__initialize]
 
-[mentality-core_extension_ping]
+[mentality-core_extension-ping]
 
 [defmetro mentality [:rest args]
   [let [[isis_worlds                  nil]

@@ -19,9 +19,9 @@
 
 [defcore semantic_object_type 'extension/semantic_object_type/.libs/libf2e_semantic_object_type.so']
 
-[defcorefunk semantic_object_type-core_extension_ping       semantic_object_type semantic_object_type__core_extension_ping]
-[defcorefunk semantic_object_type-core_extension_initialize semantic_object_type semantic_object_type__core_extension_initialize]
+[defcorefunk semantic_object_type-core_extension-ping       semantic_object_type semantic_object_type__core_extension__ping]
+[defcorefunk semantic_object_type-core_extension-initialize semantic_object_type semantic_object_type__core_extension__initialize]
 
 
 
-[semantic_object_type-core_extension_ping]
+[semantic_object_type-core_extension-ping]

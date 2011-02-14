@@ -36,9 +36,9 @@ f2ptr f2__mentality_type__new(f2ptr cause);
 
 // **
 
-f2ptr f2__mentality__core_extension_ping(f2ptr cause);
-f2ptr f2__mentality__core_extension_initialize(f2ptr cause);
-f2ptr f2__mentality__core_extension_destroy(f2ptr cause);
+f2ptr f2__mentality__core_extension__ping      (f2ptr cause);
+f2ptr f2__mentality__core_extension__initialize(f2ptr cause);
+f2ptr f2__mentality__core_extension__destroy   (f2ptr cause);
 
 #endif // F2__EXTENSION__MENTALITY__H
 

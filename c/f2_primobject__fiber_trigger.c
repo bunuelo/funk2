@@ -19,12 +19,11 @@
 // rights to redistribute these changes.
 // 
 
-#include "fiber_trigger.h"
-
+#include "funk2.h"
 
 // fiber_trigger
 
-def_ceframe0(fiber_trigger, fiber_trigger);
+def_primobject_0_slot(fiber_trigger);
 
 f2ptr raw__fiber_trigger__new(f2ptr cause) {
   return f2fiber_trigger__new(cause);
@@ -33,7 +32,7 @@ f2ptr raw__fiber_trigger__new(f2ptr cause) {
 f2ptr f2__fiber_trigger__new(f2ptr cause) {
   return raw__fiber_trigger__new(cause);
 }
-export_cefunk0(fiber_trigger__new, 0, "Returns a new fiber_trigger object.");
+def_pcfunk0(fiber_trigger__new, return f2__fiber_trigger__new(this_cause));
 
 
 f2ptr raw__fiber_trigger__trigger(f2ptr cause, f2ptr this) {
@@ -46,33 +45,12 @@ f2ptr f2__fiber_trigger__trigger(f2ptr cause, f2ptr this) {
   }
   return raw__fiber_trigger__trigger(cause, this);
 }
-export_cefunk1(fiber_trigger__trigger, this, 0, "Unpauses all fibers that are globally registered to respond to the triggering of this fiber_trigger object.");
+def_pcfunk1(fiber_trigger__trigger, this, return f2__fiber_trigger__trigger(this_cause, this));
 
 
-f2ptr raw__fiber_trigger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
-  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
-  if (frame == nil) {
-    frame = f2__frame__new(cause, f2list2__new(cause,
-					       new__symbol(cause, "print_object_type"), new__symbol(cause, "fiber_trigger")));
-    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
-  }
-  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
-}
-
-f2ptr f2__fiber_trigger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if (! raw__fiber_trigger__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__fiber_trigger__terminal_print_with_frame(cause, this, terminal_print_frame);
-}
-export_cefunk2(fiber_trigger__terminal_print_with_frame, this, terminal_print_frame, 0, "");
-
-
-f2ptr f2__fiber_trigger_type__new_aux(f2ptr cause) {
-  f2ptr this = f2__fiber_trigger_type__new(cause);
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "trigger"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "fiber_trigger"), new__symbol(cause, "fiber_trigger__trigger")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "fiber_trigger"), new__symbol(cause, "fiber_trigger__terminal_print_with_frame")));}
+f2ptr f2fiber_trigger__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2fiber_trigger__primobject_type__new(cause);
+  {char* slot_name = "trigger"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trigger__funk);}
   return this;
 }
 
@@ -118,9 +96,7 @@ f2ptr f2__fiber_trigger_hash__add(f2ptr cause, f2ptr trigger, f2ptr fiber) {
   }
   return raw__fiber_trigger_hash__add(cause, trigger, fiber);
 }
-export_cefunk2(fiber_trigger_hash__add, trigger, fiber, 0, "Adds a fiber to a fiber_trigger's global activation set.");
-
-
+def_pcfunk2(fiber_trigger_hash__add, trigger, fiber, return f2__fiber_trigger_hash__add(this_cause, trigger, fiber));
 
 
 f2ptr raw__fiber_trigger_hash__unpause_trigger_fibers(f2ptr cause, f2ptr trigger) {
@@ -134,39 +110,46 @@ f2ptr raw__fiber_trigger_hash__unpause_trigger_fibers(f2ptr cause, f2ptr trigger
 		   if (! raw__fiber__is_type(cause, fiber)) {
 		     return f2larva__new(cause, 1, nil);
 		   }
-		   f2__fiber__paused__set(cause, fiber, nil));
+		   f2__global_scheduler__add_fiber(cause, fiber));
     raw__ptypehash__add(cause, fiber_trigger_hash, trigger, nil);
   }
   return nil;
 }
 
 
-
-
 // **
 
-f2ptr f2__fiber_trigger__core_extension_ping(f2ptr cause) {
-  return nil;
+void f2__primobject__fiber_trigger__reinitialize_globalvars() {
+  __fiber_trigger__symbol = f2symbol__new(initial_cause(), strlen("fiber_trigger"), (u8*)"fiber_trigger");
 }
-export_cefunk0(fiber_trigger__core_extension_ping, 0, "");
 
-f2ptr f2__fiber_trigger__core_extension_initialize(f2ptr cause) {
-  f2__add_type(cause, new__symbol(cause, "fiber_trigger"), f2__fiber_trigger_type__new_aux(cause));
+void f2__primobject__fiber_trigger__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-fiber_trigger", "", &f2__primobject__fiber_trigger__reinitialize_globalvars);
+  
+  f2__primobject__fiber_trigger__reinitialize_globalvars();
+  
+  environment__add_var_value(initial_cause(), global_environment(), __fiber_trigger__symbol, nil);
+  
+  f2ptr cause = initial_cause();
+  
+  // fiber_trigger
+  
+  initialize_primobject_0_slot(fiber_trigger);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__0_arg(fiber_trigger__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.new__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "trigger"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trigger__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber_trigger__trigger, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trigger__funk = never_gc(cfunk);}
+  
   {
     f2ptr result = f2__fiber_trigger_hash(cause);
-    if (! raw__larva__is_type(cause, result)) {
-      return result;
+    if (raw__larva__is_type(cause, result)) {
+      error(nil, "f2__primobject__fiber_trigger__initialize error: initializing fiber_trigger_hash.");
     }
   }
-  status("fiber_trigger initialized.");
-  return nil;
+  
+  f2__primcfunk__init__2(fiber_trigger_hash__add, trigger, fiber, "Adds a fiber to a fiber_trigger's global activation set.");
+  
 }
-export_cefunk0(fiber_trigger__core_extension_initialize, 0, "");
-
-f2ptr f2__fiber_trigger__core_extension_destroy(f2ptr cause) {
-  status("fiber_trigger destroyed.");
-  return nil;
-}
-export_cefunk0(fiber_trigger__core_extension_destroy, 0, "");
-
 

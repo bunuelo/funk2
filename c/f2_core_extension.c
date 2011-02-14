@@ -45,7 +45,7 @@ f2ptr raw__core_extension__initialize(f2ptr cause, f2ptr this) {
     return f2larva__new(cause, 124352, nil);
   }
   f2ptr name                 = f2__core_extension__name(    cause, this);
-  f2ptr initialize_funk_name = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, name), new__string(cause, "__core_extension_initialize"))));
+  f2ptr initialize_funk_name = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, name), new__string(cause, "__core_extension__initialize"))));
   f2ptr initialize_funk      = f2__core_extension_funk__new(cause, name, initialize_funk_name);
   f2ptr result = f2__core_extension_funk__apply_without_initializing(cause, initialize_funk, nil);
   if (raw__larva__is_type(cause, result)) {
@@ -73,7 +73,7 @@ f2ptr raw__core_extension__destroy(f2ptr cause, f2ptr this) {
     return f2larva__new(cause, 124351, nil);
   }
   f2ptr name              = f2__core_extension__name(    cause, this);
-  f2ptr destroy_funk_name = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, name), new__string(cause, "__core_extension_destroy"))));
+  f2ptr destroy_funk_name = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, name), new__string(cause, "__core_extension__destroy"))));
   f2ptr destroy_funk      = f2__core_extension_funk__new(cause, name, destroy_funk_name);
   f2ptr result = f2__core_extension_funk__apply(cause, destroy_funk, nil);
   if (raw__larva__is_type(cause, result)) {

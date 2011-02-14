@@ -582,22 +582,22 @@ export_cefunk3(graph__isomorphism, this, that, beam_width, 0, "A* breadth-first 
 
 // **
 
-f2ptr f2__graph_isomorphism__core_extension_ping(f2ptr cause) {
+f2ptr f2__graph_isomorphism__core_extension__ping(f2ptr cause) {
   return nil;
 }
-export_cefunk0(graph_isomorphism__core_extension_ping, 0, "");
+export_cefunk0(graph_isomorphism__core_extension__ping, 0, "");
 
-f2ptr f2__graph_isomorphism__core_extension_initialize(f2ptr cause) {
+f2ptr f2__graph_isomorphism__core_extension__initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "error_correcting_graph_isomorphism"), f2__error_correcting_graph_isomorphism_type__new(cause));
   printf("\ngraph_isomorphism initialized."); fflush(stdout);
   return nil;
 }
-export_cefunk0(graph_isomorphism__core_extension_initialize, 0, "");
+export_cefunk0(graph_isomorphism__core_extension__initialize, 0, "");
 
-f2ptr f2__graph_isomorphism__core_extension_destroy(f2ptr cause) {
+f2ptr f2__graph_isomorphism__core_extension__destroy(f2ptr cause) {
   printf("\ngraph_isomorphism destroyed."); fflush(stdout);
   return nil;
 }
-export_cefunk0(graph_isomorphism__core_extension_destroy, 0, "");
+export_cefunk0(graph_isomorphism__core_extension__destroy, 0, "");
 
 

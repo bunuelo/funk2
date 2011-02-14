@@ -43,11 +43,7 @@ funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thre
   funk2_processor_thread_list_t* new_processor_thread_node = (funk2_processor_thread_list_t*)from_ptr(f2__malloc(sizeof(funk2_processor_thread_list_t)));
   funk2_processor_thread_t*      processor_thread          = &(new_processor_thread_node->processor_thread);
   
-#if defined(F2__USE_VIRTUAL_PROCESSORS)
   funk2_processor_thread__init(processor_thread, -1, start_function, args);
-#else // not F2__USE_VIRTUAL_PROCESSORS
-  funk2_processor_thread__init(processor_thread, this->processor_thread_next_index, start_function, args);
-#endif // F2__USE_VIRTUAL_PROCESSORS
   
   this->processor_thread_next_index ++;
   funk2_processor_mutex__lock(&(this->access_mutex));
@@ -92,23 +88,7 @@ void funk2_processor_thread_handler__remove_pthread(funk2_processor_thread_handl
   funk2_processor_mutex__unlock(&(this->access_mutex));
 }
 
-#if defined(F2__USE_VIRTUAL_PROCESSORS)
-
 u64 this_processor_thread__pool_index() {
   return funk2_virtual_processor_handler__my_virtual_processor_index(&(__funk2.virtual_processor_handler));
 }
-
-#else // not F2__USE_VIRTUAL_PROCESSORS
-  
-u64 this_processor_thread__pool_index() {
-  funk2_processor_thread_t* this_processor_thread = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
-  if (this_processor_thread == NULL) {
-    //printf("\nthis_processor_thread__pool_index warning: don't know of thread, returning zero.\n"); fflush(stdout);
-    return 0;
-  }
-  //printf("\npool_index=" u64__fstr "\n", this_processor_thread->index); fflush(stdout);
-  return this_processor_thread->index;
-}
-
-#endif // F2__USE_VIRTUAL_PROCESSORS
 

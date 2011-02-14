@@ -520,7 +520,7 @@ f2ptr f2__force_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args)
     return raw__core_extension_funk__apply(cause, funkable, args);
   } else if (raw__funkable__is_type(cause, funkable)) {
     f2ptr new_fiber = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), funkable, args);
-    f2__scheduler__complete_fiber(cause, new_fiber);
+    f2__global_scheduler__complete_fiber(cause, new_fiber);
     f2ptr value = f2fiber__value(new_fiber, cause);
     f2fiber__keep_undead__set(new_fiber, cause, nil);
     if ((f2__fiber__paused(cause, new_fiber) != nil) &&
@@ -616,8 +616,13 @@ void f2fiber__funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   }
 }
 
+f2ptr f2__simple_paused_fiber(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
+  return raw__fiber__new(cause, parent_fiber, parent_env, cfunkable, args);
+}
+def_pcfunk2(simple_paused_fiber, funk, args, return f2__simple_paused_fiber(this_cause, this_cause, simple_fiber, simple_env, funk, args));
+
 f2ptr f2__fiber_parallel(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
-  f2ptr new_fiber = f2__fiber__new(cause, parent_fiber, parent_env, cfunkable, args);
+  f2ptr new_fiber = f2__simple_paused_fiber(cause, execution_cause, parent_fiber, parent_env, cfunkable, args);
   f2__global_scheduler__add_fiber_parallel(cause, new_fiber);
   f2fiber__keep_undead__set(new_fiber, cause, nil);
   return new_fiber;
@@ -625,7 +630,7 @@ f2ptr f2__fiber_parallel(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber,
 def_pcfunk2(fiber_parallel, funk, args, return f2__fiber_parallel(this_cause, this_cause, simple_fiber, simple_env, funk, args));
 
 f2ptr f2__fiber_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
-  f2ptr new_fiber = f2__fiber__new(cause, parent_fiber, parent_env, cfunkable, args);
+  f2ptr new_fiber = f2__simple_paused_fiber(cause, execution_cause, parent_fiber, parent_env, cfunkable, args);
   f2__global_scheduler__add_fiber_serial(cause, new_fiber);
   return new_fiber;
 }
@@ -1007,6 +1012,8 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
     return boolean__false;
   case ptype_gfunkptr:
     return (f2gfunkptr__gfunkptr(x, cause) == f2gfunkptr__gfunkptr(y, cause));
+  case ptype_scheduler_mutex:
+    return boolean__false;
   case ptype_mutex:
     return boolean__false;
   case ptype_larva:
@@ -1141,7 +1148,6 @@ f2ptr f2__demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp) {
 def_pcfunk1(demetropolize_full, exp, return f2__demetropolize_full(this_cause, simple_fiber, simple_env, exp));
 
 def_pcfunk0(this__cause,  return this_cause);
-def_pcfunk0(this__fiber,  return simple_fiber);
 def_pcfunk0(this__env,    return f2fiber__env(simple_fiber, this_cause));
 def_pcfunk0(this__args,   return simple_args);
 
@@ -1540,16 +1546,17 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   }
   ptype_t ptype = f2ptype__raw(exp, cause);
   switch(ptype) {
-  case ptype_integer:      return raw__integer__eq_hash_value(     cause, exp);
-  case ptype_double:       return raw__double__eq_hash_value(      cause, exp);
-  case ptype_float:        return raw__float__eq_hash_value(       cause, exp);
-  case ptype_pointer:      return raw__pointer__eq_hash_value(     cause, exp);
-  case ptype_gfunkptr:     return raw__gfunkptr__eq_hash_value(    cause, exp);
-  case ptype_mutex:        return raw__mutex__eq_hash_value(       cause, exp);
-  case ptype_char:         return raw__char__eq_hash_value(        cause, exp);
-  case ptype_string:       return raw__string__eq_hash_value(      cause, exp);
-  case ptype_symbol:       return raw__symbol__eq_hash_value(      cause, exp);
-  case ptype_chunk:        return raw__chunk__eq_hash_value(       cause, exp);
+  case ptype_integer:         return raw__integer__eq_hash_value(        cause, exp);
+  case ptype_double:          return raw__double__eq_hash_value(         cause, exp);
+  case ptype_float:           return raw__float__eq_hash_value(          cause, exp);
+  case ptype_pointer:         return raw__pointer__eq_hash_value(        cause, exp);
+  case ptype_gfunkptr:        return raw__gfunkptr__eq_hash_value(       cause, exp);
+  case ptype_scheduler_mutex: return raw__scheduler_mutex__eq_hash_value(cause, exp);
+  case ptype_mutex:           return raw__mutex__eq_hash_value(          cause, exp);
+  case ptype_char:            return raw__char__eq_hash_value(           cause, exp);
+  case ptype_string:          return raw__string__eq_hash_value(         cause, exp);
+  case ptype_symbol:          return raw__symbol__eq_hash_value(         cause, exp);
+  case ptype_chunk:           return raw__chunk__eq_hash_value(          cause, exp);
   case ptype_simple_array:
   case ptype_traced_array: {
     if (raw__primobject__is_type(cause, exp) &&
@@ -1591,20 +1598,21 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
     return boolean__false;
   }
   switch(x_ptype) {
-  case ptype_integer:      return raw__integer__equals( cause, x, y);
-  case ptype_double:       return raw__double__equals(  cause, x, y);
-  case ptype_float:        return raw__float__equals(   cause, x, y);
-  case ptype_pointer:      return raw__pointer__equals( cause, x, y);
-  case ptype_gfunkptr:     return raw__gfunkptr__equals(cause, x, y);
-  case ptype_mutex:        return raw__mutex__equals(   cause, x, y);
-  case ptype_char:         return raw__char__equals(    cause, x, y);
-  case ptype_string:       return raw__string__equals(  cause, x, y);
-  case ptype_symbol:       return raw__symbol__equals(  cause, x, y);
-  case ptype_chunk:        return raw__chunk__equals(   cause, x, y);
+  case ptype_integer:         return raw__integer__equals(        cause, x, y);
+  case ptype_double:          return raw__double__equals(         cause, x, y);
+  case ptype_float:           return raw__float__equals(          cause, x, y);
+  case ptype_pointer:         return raw__pointer__equals(        cause, x, y);
+  case ptype_gfunkptr:        return raw__gfunkptr__equals(       cause, x, y);
+  case ptype_scheduler_mutex: return raw__scheduler_mutex__equals(cause, x, y);
+  case ptype_mutex:           return raw__mutex__equals(          cause, x, y);
+  case ptype_char:            return raw__char__equals(           cause, x, y);
+  case ptype_string:          return raw__string__equals(         cause, x, y);
+  case ptype_symbol:          return raw__symbol__equals(         cause, x, y);
+  case ptype_chunk:           return raw__chunk__equals(          cause, x, y);
   case ptype_simple_array:
-  case ptype_traced_array: return f2__object__equals(   cause, x, y);
-  case ptype_larva:        return raw__larva__equals(   cause, x, y);
-  default:                 return boolean__false;
+  case ptype_traced_array:    return f2__object__equals(          cause, x, y);
+  case ptype_larva:           return raw__larva__equals(          cause, x, y);
+  default:                    return boolean__false;
   }
 }
 
@@ -1741,6 +1749,7 @@ void f2__primcfunks__initialize() {
   
   // other complex functions
   
+  f2__primcfunk__init(simple_paused_fiber, "Creates a fiber.  Does not branch cause.");
   f2__primcfunk__init(fiber_parallel, "Starts a fiber that executes in parallel with the current fiber.  Does not branch cause.");
   f2__primcfunk__init(fiber__imagine, "");
   f2__primcfunk__init(test_imagine, "");
@@ -1791,7 +1800,6 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(fclose, "");
   
   f2__primcfunk__init__0(this__cause, "");
-  f2__primcfunk__init__0(this__fiber, "");
   f2__primcfunk__init__0(this__env, "");
   f2__primcfunk__init__0(this__args, "");
   

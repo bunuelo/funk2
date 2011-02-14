@@ -44,7 +44,7 @@ int f2__simple_repl(f2ptr cause, f2ptr fiber) {
 	f2fiber__force_funk(repl_fiber, cause, repl_funk, nil);
       }
       
-      f2__scheduler__complete_fiber(cause, repl_fiber);
+      f2__global_scheduler__complete_fiber(cause, repl_fiber);
       
       f2ptr eval_exp = f2fiber__value(repl_fiber, cause);
       printf ("\nF-Out> "); f2__write(cause, fiber, eval_exp); fflush(stdout);

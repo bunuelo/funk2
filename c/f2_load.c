@@ -89,7 +89,7 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
 	}
 	
 	
-	f2__scheduler__complete_fiber(cause, load_fiber);
+	f2__global_scheduler__complete_fiber(cause, load_fiber);
 	
 	//printf("\nload_fiber stack size = %d", raw__simple_length(f2fiber__stack(load_fiber))); fflush(stdout);
 	f2ptr eval_exp = f2fiber__value(load_fiber, cause);

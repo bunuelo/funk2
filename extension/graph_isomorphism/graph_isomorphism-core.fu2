@@ -21,7 +21,7 @@
 
 [defcorefunk graph-isomorphism graph_isomorphism graph__isomorphism]
 
-[defcorefunk graph_isomorphism-core_extension_ping       graph_isomorphism graph_isomorphism__core_extension_ping]
-[defcorefunk graph_isomorphism-core_extension_initialize graph_isomorphism graph_isomorphism__core_extension_initialize]
+[defcorefunk graph_isomorphism-core_extension-ping       graph_isomorphism graph_isomorphism__core_extension__ping]
+[defcorefunk graph_isomorphism-core_extension-initialize graph_isomorphism graph_isomorphism__core_extension__initialize]
 
-[graph_isomorphism-core_extension_ping]
+[graph_isomorphism-core_extension-ping]

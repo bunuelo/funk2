@@ -23,7 +23,7 @@
 #define F2__EXTENSION__EVENT_STREAM__H
 
 #include "../../c/funk2.h"
-#include "../fiber_trigger/fiber_trigger.h"
+//#include "../fiber_trigger/fiber_trigger.h"
 
 // event_stream_event
 
@@ -72,9 +72,9 @@ f2ptr  f2__event_stream_iterator__new(f2ptr cause, f2ptr event_stream, f2ptr ind
 
 // **
 
-f2ptr f2__event_stream__core_extension_ping(f2ptr cause);
-f2ptr f2__event_stream__core_extension_initialize(f2ptr cause);
-f2ptr f2__event_stream__core_extension_destroy(f2ptr cause);
+f2ptr f2__event_stream__core_extension__ping(f2ptr cause);
+f2ptr f2__event_stream__core_extension__initialize(f2ptr cause);
+f2ptr f2__event_stream__core_extension__destroy(f2ptr cause);
 
 #endif // F2__EXTENSION__EVENT_STREAM__H
 

@@ -723,15 +723,15 @@ f2ptr f2__movie_type__new(f2ptr cause) {
 
 // **
 
-f2ptr f2__movie__core_extension_ping(f2ptr cause) {
+f2ptr f2__movie__core_extension__ping(f2ptr cause) {
   return nil;
 }
-export_cefunk0(movie__core_extension_ping, 0, "");
+export_cefunk0(movie__core_extension__ping, 0, "");
 
-f2ptr f2__movie__core_extension_initialize(f2ptr cause) {
+f2ptr f2__movie__core_extension__initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "movie_context"), f2__movie_context_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "movie"),         f2__movie_type__new(cause));
-  f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__core_extension_ping")), nil);
+  f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "image_sequence"), new__symbol(cause, "image_sequence__core_extension__ping")), nil);
 #ifdef F2__LIBAVCODEC_SUPPORTED
   libavcodec__initialize();
   status("movie initialized.");
@@ -740,12 +740,12 @@ f2ptr f2__movie__core_extension_initialize(f2ptr cause) {
 #endif // F2__LIBAVCODEC_SUPPORTED
   return nil;
 }
-export_cefunk0(movie__core_extension_initialize, 0, "");
+export_cefunk0(movie__core_extension__initialize, 0, "");
 
-f2ptr f2__movie__core_extension_destroy(f2ptr cause) {
+f2ptr f2__movie__core_extension__destroy(f2ptr cause) {
   status("movie destroyed.");
   return nil;
 }
-export_cefunk0(movie__core_extension_destroy, 0, "");
+export_cefunk0(movie__core_extension__destroy, 0, "");
 
 

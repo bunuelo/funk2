@@ -928,7 +928,7 @@ f2ptr raw__apply_metro(f2ptr simple_cause, f2ptr fiber, f2ptr metro, f2ptr args)
   
   //f2fiber__keep_undead__set(new_fiber, cause, __true__symbol);
   //printf ("\nCompile fiber created: 0x%X", (uint)new_fiber); fflush(stdout);
-  f2__scheduler__complete_fiber(cause, new_fiber);
+  f2__global_scheduler__complete_fiber(cause, new_fiber);
   
   f2ptr value = f2fiber__value(new_fiber, cause);
   f2fiber__keep_undead__set(new_fiber, cause, nil);
@@ -964,7 +964,7 @@ f2ptr raw__apply_funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk, f2ptr args) {
   
   //f2fiber__keep_undead__set(new_fiber, cause, __true__symbol);
   //printf ("\nCompile fiber created: 0x%X", (uint)new_fiber); fflush(stdout);
-  f2__scheduler__complete_fiber(cause, new_fiber);
+  f2__global_scheduler__complete_fiber(cause, new_fiber);
   
   f2ptr value = f2fiber__value(new_fiber, cause);
   f2fiber__keep_undead__set(new_fiber, cause, nil);

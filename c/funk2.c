@@ -64,6 +64,7 @@ void f2__initialize() {
   f2__primobject__stream__initialize();
   f2__primobject__text_buffer__initialize();
   f2__primobject__traced_mutex__initialize();
+  f2__primobject__fiber_trigger__initialize();
   f2__primcfunks__initialize();
   f2__array__initialize();
   f2__reader__initialize();
@@ -80,6 +81,7 @@ void f2__initialize() {
   f2__primfunks__errno__initialize();
   f2__primfunks__fcntl__initialize();
   f2__primfunks__ioctl__initialize();
+  f2__processor__initialize();
   f2__scheduler__initialize();
   f2__funk2_node__initialize();
   f2__peer_command_server__initialize();
@@ -315,18 +317,9 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     
   }
   
-#if defined(F2__USE_VIRTUAL_PROCESSORS)
-  
   pause_gc();
   funk2_virtual_processor_handler__start_virtual_processors(&(this->virtual_processor_handler));
   resume_gc();
-  
-#else // not F2__USE_VIRTUAL_PROCESSORS
-  
-  // start pthreads for each processor (starts user repl once bootstrapping is done   this->memory.bootstrapping_mode = boolean__false;)
-  f2__scheduler__start_processors();
-  
-#endif // F2__USE_VIRTUAL_PROCESSORS
   
   status("bootstrapping complete.");
   this->memory.bootstrapping_mode = boolean__false;
@@ -337,6 +330,8 @@ void f2__destroy() {
   
   status("funk2: destroying scheduler.");
   f2__scheduler__destroy();
+  status("funk2: destroying processor.");
+  f2__processor__destroy();
   status("funk2: destroying memory.");
   f2__memory__destroy();
   status("funk2: destroying peer command server.");
@@ -367,9 +362,7 @@ void funk2__destroy(funk2_t* this) {
     this->user_thread_controller.please_wait = boolean__false;
   }
   
-#if defined(F2__USE_VIRTUAL_PROCESSORS)
   funk2_virtual_processor_handler__destroy(&(this->virtual_processor_handler));
-#endif // F2__USE_VIRTUAL_PROCESSORS
   
   funk2_memory__print_gc_stats(&(this->memory));
   

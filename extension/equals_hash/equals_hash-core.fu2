@@ -19,7 +19,7 @@
 
 [defcore equals_hash 'extension/equals_hash/.libs/libf2e_equals_hash.so']
 
-[defcorefunk equals_hash-core_extension_ping       equals_hash equals_hash__core_extension_ping]
-[defcorefunk equals_hash-core_extension_initialize equals_hash equals_hash__core_extension_initialize]
+[defcorefunk equals_hash-core_extension-ping       equals_hash equals_hash__core_extension__ping]
+[defcorefunk equals_hash-core_extension-initialize equals_hash equals_hash__core_extension__initialize]
 
-[equals_hash-core_extension_ping]
+[equals_hash-core_extension-ping]

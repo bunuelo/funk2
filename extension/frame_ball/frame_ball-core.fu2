@@ -19,9 +19,9 @@
 
 [defcore frame_ball 'extension/frame_ball/.libs/libf2e_frame_ball.so']
 
-[defcorefunk frame_ball-core_extension_ping       frame_ball frame_ball__core_extension_ping]
-[defcorefunk frame_ball-core_extension_initialize frame_ball frame_ball__core_extension_initialize]
+[defcorefunk frame_ball-core_extension-ping       frame_ball frame_ball__core_extension__ping]
+[defcorefunk frame_ball-core_extension-initialize frame_ball frame_ball__core_extension__initialize]
 
 
 
-[frame_ball-core_extension_ping]
+[frame_ball-core_extension-ping]

@@ -19,12 +19,12 @@
 
 [defcore lick 'extension/lick/.libs/libf2e_lick.so']
 
-[defcorefunk lick-core_extension_ping       lick lick__core_extension_ping]
-[defcorefunk lick-core_extension_initialize lick lick__core_extension_initialize]
+[defcorefunk lick-core_extension-ping       lick lick__core_extension__ping]
+[defcorefunk lick-core_extension-initialize lick lick__core_extension__initialize]
 
 [defcorefunk object_list-lick_first_n_to_chunks lick object_list__lick_first_n_to_chunks]
 
-[lick-core_extension_ping]
+[lick-core_extension-ping]
 
 [defunk lick-new_from_object [root_object]
   [let [[this [new lick root_object]]]

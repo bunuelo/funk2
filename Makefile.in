@@ -521,6 +521,7 @@ am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_agent.lo \
 	c/lib_libfunk2_la-f2_primfunks__fcntl.lo \
 	c/lib_libfunk2_la-f2_primfunks__ioctl.lo \
 	c/lib_libfunk2_la-f2_primfunks__locale.lo \
+	c/lib_libfunk2_la-f2_processor.lo \
 	c/lib_libfunk2_la-f2_processor_mutex.lo \
 	c/lib_libfunk2_la-f2_processor_thread.lo \
 	c/lib_libfunk2_la-f2_processor_thread_handler.lo \
@@ -1058,6 +1059,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_primfunks__fcntl.c \
   c/f2_primfunks__ioctl.c \
   c/f2_primfunks__locale.c \
+  c/f2_processor.c \
   c/f2_processor_mutex.c \
   c/f2_processor_thread.c \
   c/f2_processor_thread_handler.c \
@@ -1912,6 +1914,8 @@ c/lib_libfunk2_la-f2_primfunks__ioctl.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_primfunks__locale.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/lib_libfunk2_la-f2_processor.lo: c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_processor_mutex.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_processor_thread.lo: c/$(am__dirstamp) \
@@ -2170,6 +2174,8 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_primobjects.lo
 	-rm -f c/lib_libfunk2_la-f2_print.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_print.lo
+	-rm -f c/lib_libfunk2_la-f2_processor.$(OBJEXT)
+	-rm -f c/lib_libfunk2_la-f2_processor.lo
 	-rm -f c/lib_libfunk2_la-f2_processor_mutex.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_processor_mutex.lo
 	-rm -f c/lib_libfunk2_la-f2_processor_thread.$(OBJEXT)
@@ -2406,6 +2412,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_primobject_type_handler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_primobjects.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_print.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_processor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_processor_mutex.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_processor_thread.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_processor_thread_handler.Plo@am__quote@
@@ -3493,6 +3500,14 @@ c/lib_libfunk2_la-f2_primfunks__locale.lo: c/f2_primfunks__locale.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_primfunks__locale.c' object='c/lib_libfunk2_la-f2_primfunks__locale.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_primfunks__locale.lo `test -f 'c/f2_primfunks__locale.c' || echo '$(srcdir)/'`c/f2_primfunks__locale.c
+
+c/lib_libfunk2_la-f2_processor.lo: c/f2_processor.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_processor.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_processor.Tpo -c -o c/lib_libfunk2_la-f2_processor.lo `test -f 'c/f2_processor.c' || echo '$(srcdir)/'`c/f2_processor.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_processor.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_processor.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_processor.c' object='c/lib_libfunk2_la-f2_processor.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_processor.lo `test -f 'c/f2_processor.c' || echo '$(srcdir)/'`c/f2_processor.c
 
 c/lib_libfunk2_la-f2_processor_mutex.lo: c/f2_processor_mutex.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_processor_mutex.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_processor_mutex.Tpo -c -o c/lib_libfunk2_la-f2_processor_mutex.lo `test -f 'c/f2_processor_mutex.c' || echo '$(srcdir)/'`c/f2_processor_mutex.c

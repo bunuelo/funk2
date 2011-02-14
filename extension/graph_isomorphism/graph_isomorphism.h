@@ -25,9 +25,9 @@
 
 // **
 
-f2ptr f2__graph_isomorphism__core_extension_ping(f2ptr cause);
-f2ptr f2__graph_isomorphism__core_extension_initialize(f2ptr cause);
-f2ptr f2__graph_isomorphism__core_extension_destroy(f2ptr cause);
+f2ptr f2__graph_isomorphism__core_extension__ping(f2ptr cause);
+f2ptr f2__graph_isomorphism__core_extension__initialize(f2ptr cause);
+f2ptr f2__graph_isomorphism__core_extension__destroy(f2ptr cause);
 
 #endif // F2__EXTENSION__GRAPH_ISOMORPHISM__H
 

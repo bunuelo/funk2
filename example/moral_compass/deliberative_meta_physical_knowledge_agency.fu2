@@ -23,7 +23,7 @@
        
        [have this add_resource [new translate_physical_knowledge_to_meta_physical_knowledge_resource]]
        
-       this]]
+       nil]]
 
 
 [deftypefunk deliberative_meta_physical_knowledge_agency execute create_knowledge []
@@ -39,23 +39,25 @@
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]
+       [= vital t]
        nil]]
 
 [deftypefunk translate_physical_knowledge_to_meta_physical_knowledge_resource execute execute_resource_raw_funk []
   [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->meta_physical_knowledge]]]
-    [while [let [[event [get physical_knowledge_iterator current]]]
-	     [if [not [null event]]
-		 [prog [if [get this debug] [terminal_format standard-terminal '\n  translate physical->meta_physical event: ' event]]
-		       [let [[event_type [get event event_type]]]
-			 [cond [[and [is-type `semantic_knowledge_base_event event]
-				     [eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
-										      ]]
-			       [[and [is-type `semantic_frame_event event]
-				     [eq event_type `add]]                          [let [[key_type       [get event key_type]]
-											  [key            [get event key]]]
-										      ]]
-			       ]]]]
-	     [have physical_knowledge_iterator increment]]]]]
+    [while t
+      [let [[event [have physical_knowledge_iterator wait_for_current]]]
+	[if [not [null event]]
+	    [prog [if [get this debug] [terminal_format standard-terminal '\n  translate physical->meta_physical event: ' event]]
+		  [let [[event_type [get event event_type]]]
+		    [cond [[and [is-type `semantic_knowledge_base_event event]
+				[eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
+										 ]]
+			  [[and [is-type `semantic_frame_event event]
+				[eq event_type `add]]                          [let [[key_type       [get event key_type]]
+										     [key            [get event key]]]
+										 ]]
+			  ]]]]
+	[have physical_knowledge_iterator increment]]]]]
 
 
 

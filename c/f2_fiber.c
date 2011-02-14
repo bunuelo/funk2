@@ -30,7 +30,7 @@ f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-def_primobject_21_slot(fiber,
+def_primobject_25_slot(fiber,
 		       program_counter,
 		       stack,
 		       iter,
@@ -39,6 +39,7 @@ def_primobject_21_slot(fiber,
 		       return_reg,
 		       value,
 		       trace,
+		       cause_reg_mutex,
 		       cause_reg,
 		       keep_undead,
 		       is_zombie,
@@ -50,29 +51,36 @@ def_primobject_21_slot(fiber,
 		       sleep_until_time,
 		       execution_nanoseconds,
 		       bytecode_count,
+		       processor_assignment_scheduler_mutex,
 		       processor_assignment_index,
-		       should_quit);
+		       should_quit,
+		       bug_trigger,
+		       complete_trigger);
 
-f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args) {
-  f2ptr program_counter            = nil;
-  f2ptr stack                      = nil;
-  f2ptr iter                       = nil;
-  f2ptr env                        = parent_env;
-  f2ptr args                       = nil;
-  f2ptr return_reg                 = nil;
-  f2ptr value                      = nil;
-  f2ptr trace                      = nil;
-  f2ptr cause_reg                  = cause;
-  f2ptr keep_undead                = __funk2.globalenv.true__symbol;
-  f2ptr is_zombie                  = nil;
-  f2ptr execute_mutex              = f2mutex__new(cause);
-  f2ptr paused                     = nil;
-  f2ptr last_executed_time         = nil;
-  f2ptr sleep_until_time           = nil;
-  f2ptr execution_nanoseconds      = f2integer__new(cause, 0);
-  f2ptr bytecode_count             = f2integer__new(cause, 0);
-  f2ptr processor_assignment_index = nil;
-  f2ptr should_quit                = nil;
+f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args) {
+  f2ptr program_counter                      = nil;
+  f2ptr stack                                = nil;
+  f2ptr iter                                 = nil;
+  f2ptr env                                  = parent_env;
+  f2ptr args                                 = nil;
+  f2ptr return_reg                           = nil;
+  f2ptr value                                = nil;
+  f2ptr trace                                = nil;
+  f2ptr cause_reg_mutex                      = f2__mutex__new(cause);
+  f2ptr cause_reg                            = nil;
+  f2ptr keep_undead                          = __funk2.globalenv.true__symbol;
+  f2ptr is_zombie                            = nil;
+  f2ptr execute_mutex                        = f2mutex__new(cause);
+  f2ptr paused                               = nil;
+  f2ptr last_executed_time                   = nil;
+  f2ptr sleep_until_time                     = nil;
+  f2ptr execution_nanoseconds                = f2integer__new(cause, 0);
+  f2ptr bytecode_count                       = f2integer__new(cause, 0);
+  f2ptr processor_assignment_scheduler_mutex = f2scheduler_mutex__new(cause);
+  f2ptr processor_assignment_index           = nil;
+  f2ptr should_quit                          = nil;
+  f2ptr bug_trigger                          = f2__fiber_trigger__new(cause);
+  f2ptr complete_trigger                     = f2__fiber_trigger__new(cause);
   f2ptr new_fiber = f2fiber__new(cause,
 				 program_counter,
 				 stack,
@@ -82,6 +90,7 @@ f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cf
 				 return_reg,
 				 value,
 				 trace,
+				 cause_reg_mutex,
 				 cause_reg,
 				 keep_undead,
 				 is_zombie,
@@ -93,16 +102,20 @@ f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cf
 				 sleep_until_time,
 				 execution_nanoseconds,
 				 bytecode_count,
+				 processor_assignment_scheduler_mutex,
 				 processor_assignment_index,
-				 should_quit);
+				 should_quit,
+				 bug_trigger,
+				 complete_trigger);
   f2fiber__keep_undead__set(new_fiber, cause, __funk2.globalenv.true__symbol);
   f2fiber__funk(new_fiber, cause, cfunkable, cfunkable_args);
-  
-  //f2cause__fibers__set(cause, cause, f2cons__new(cause, new_fiber, f2cause__fibers(cause, cause)));
-  
+  if (cause != nil) {
+    raw__cause__add_fiber(cause, cause, new_fiber);
+  }
   return new_fiber;
 }
-def_pcfunk4(fiber__new, parent_fiber, parent_env, cfunkable, cfunkable_args, return f2__fiber__new(this_cause, parent_fiber, parent_env, cfunkable, cfunkable_args));
+
+def_pcfunk4(fiber__new, parent_fiber, parent_env, cfunkable, cfunkable_args, return raw__fiber__new(this_cause, parent_fiber, parent_env, cfunkable, cfunkable_args));
 
 f2ptr f2__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time) {
   if (! raw__time__is_type(cause, until_time)) {
@@ -178,16 +191,14 @@ boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) 
   debug__assert(raw__fiber__is_type(nil, fiber), nil, "fiber type assertion failed.");
   debug__assert(raw__bytecode__is_type(nil, bytecode), nil, "bytecode type assertion failed.");
   debug__assert((! cause) || raw__cause__is_type(nil, cause), nil, "fiber type assertion failed.");
-  //f2ptr cause = f2fiber__execute_bytecode__cause__new(f2fiber__cause_reg(fiber), fiber, f2fiber__env(fiber), bytecode);
-  //f2fiber__cause_reg__set(fiber, cause, cause);
   f2ptr command = f2bytecode__command(bytecode, cause);
   if      (command == __funk2.bytecode.bytecode__lookup_type_var__symbol)            {f2__fiber__bytecode__lookup_type_var(           fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__block_eval_args_next__symbol)       {f2__fiber__bytecode__block_eval_args_next(      fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__block_pop__symbol)                  {f2__fiber__bytecode__block_pop(                 fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__block_eval_args_begin__symbol)      {f2__fiber__bytecode__block_eval_args_begin(     fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__block_eval_args_end__symbol)        {f2__fiber__bytecode__block_eval_args_end(       fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__funk__symbol)                       {f2__fiber__bytecode__funk(                      fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__block_push__symbol)                 {f2__fiber__bytecode__block_push(                fiber, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__block_eval_args_next__symbol)       {f2__fiber__bytecode__block_eval_args_next(      fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__copy__symbol)                       {f2__fiber__bytecode__copy(                      fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__block_enter__symbol)                {f2__fiber__bytecode__block_enter(               fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__block_define_last_argument__symbol) {f2__fiber__bytecode__block_define_last_argument(fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
@@ -304,8 +315,9 @@ f2ptr raw__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list26__new(cause,
+    frame = f2__frame__new(cause, f2list28__new(cause,
 						new__symbol(cause, "print_object_type"),          new__symbol(cause, "fiber"),
+						new__symbol(cause, "cause_reg_mutex"),            f2__fiber__cause_reg_mutex(           cause, this),
 						new__symbol(cause, "cause_reg"),                  f2__fiber__cause_reg(                 cause, this),
 						new__symbol(cause, "keep_undead"),                f2__fiber__keep_undead(               cause, this),
 						new__symbol(cause, "is_zombie"),                  f2__fiber__is_zombie(                 cause, this),
@@ -335,12 +347,12 @@ def_pcfunk2(fiber__terminal_print_with_frame, this, terminal_print_frame, return
 
 f2ptr f2fiber__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2fiber__primobject_type__new(cause);
-  {char* slot_name = "do_sleep_until_time";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk);}
-  {char* slot_name = "sleep_for_nanoseconds";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__funk);}
-  {char* slot_name = "is_complete";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_complete__funk);}
-  {char* slot_name = "quit";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.quit__funk);}
-  {char* slot_name = "stack_trace";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.stack_trace__funk);}
-  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.terminal_print_with_frame__funk);}
+  {char* slot_name = "do_sleep_until_time";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk);}
+  {char* slot_name = "sleep_for_nanoseconds";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__funk);}
+  {char* slot_name = "is_complete";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_complete__funk);}
+  {char* slot_name = "quit";                                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.quit__funk);}
+  {char* slot_name = "stack_trace";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.stack_trace__funk);}
+  {char* slot_name = "terminal_print_with_frame";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -763,7 +775,7 @@ void f2__fiber__initialize() {
 
   // fiber
   
-  initialize_primobject_21_slot(fiber,
+  initialize_primobject_25_slot(fiber,
 				program_counter,
 				stack,
 				iter,
@@ -772,6 +784,7 @@ void f2__fiber__initialize() {
 				return_reg,
 				value,
 				trace,
+				cause_reg_mutex,
 				cause_reg,
 				keep_undead,
 				is_zombie,
@@ -783,8 +796,11 @@ void f2__fiber__initialize() {
 				sleep_until_time,
 				execution_nanoseconds,
 				bytecode_count,
+				processor_assignment_scheduler_mutex,
 				processor_assignment_index,
-				should_quit);
+				should_quit,
+				bug_trigger,
+				complete_trigger);
   
   {char* symbol_str = "do_sleep_until_time"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__do_sleep_until_time, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk = never_gc(cfunk);}

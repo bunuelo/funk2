@@ -503,36 +503,38 @@ f2ptr f2__event_stream_iterator_type__new_aux(f2ptr cause) {
 
 // **
 
-f2ptr f2__event_stream__core_extension_ping(f2ptr cause) {
+f2ptr f2__event_stream__core_extension__ping(f2ptr cause) {
   return nil;
 }
-export_cefunk0(event_stream__core_extension_ping, 0, "");
+export_cefunk0(event_stream__core_extension__ping, 0, "");
 
-f2ptr f2__event_stream__core_extension_initialize(f2ptr cause) {
-  {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "fiber_trigger"), new__symbol(cause, "fiber_trigger__core_extension_ping")), nil);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
-  {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__core_extension_ping")), nil);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+
+f2ptr f2__event_stream__core_extension__define_types(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "event_stream_event"),    f2__event_stream_event_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "event_stream"),          f2__event_stream_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "event_stream_iterator"), f2__event_stream_iterator_type__new_aux(cause));
+  return nil;
+}
+export_cefunk0(event_stream__core_extension__define_types, 0, "");
+
+
+f2ptr f2__event_stream__core_extension__initialize(f2ptr cause) {
+  {
+    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__core_extension__ping")), nil);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   status("event_stream initialized.");
   return nil;
 }
-export_cefunk0(event_stream__core_extension_initialize, 0, "");
+export_cefunk0(event_stream__core_extension__initialize, 0, "");
 
-f2ptr f2__event_stream__core_extension_destroy(f2ptr cause) {
+
+f2ptr f2__event_stream__core_extension__destroy(f2ptr cause) {
   status("event_stream destroyed.");
   return nil;
 }
-export_cefunk0(event_stream__core_extension_destroy, 0, "");
+export_cefunk0(event_stream__core_extension__destroy, 0, "");
 
 

@@ -19,23 +19,34 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__EXTENSION__FIBER_TRIGGER__H
-#define F2__EXTENSION__FIBER_TRIGGER__H
-
-#include "../../c/funk2.h"
+#ifndef F2__PRIMOBJECT__FIBER_TRIGGER__TYPES__H
+#define F2__PRIMOBJECT__FIBER_TRIGGER__TYPES__H
 
 // fiber_trigger
 
-def_header_ceframe0(fiber_trigger);
+typedef struct funk2_object_type__fiber_trigger__slot_s funk2_object_type__fiber_trigger__slot_t;
+declare_object_type_0_slot(fiber_trigger,
+			   f2ptr trigger__symbol;
+			   f2ptr trigger__funk;
+			   );
 
-f2ptr raw__fiber_trigger__new                      (f2ptr cause);
-f2ptr  f2__fiber_trigger__new                      (f2ptr cause);
-f2ptr raw__fiber_trigger__trigger                  (f2ptr cause, f2ptr this);
-f2ptr  f2__fiber_trigger__trigger                  (f2ptr cause, f2ptr this);
-f2ptr raw__fiber_trigger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
-f2ptr  f2__fiber_trigger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+#endif // F2__PRIMOBJECT__FIBER_TRIGGER__TYPES__H
 
-f2ptr f2__fiber_trigger_type__new_aux(f2ptr cause);
+#ifndef F2__PRIMOBJECT__FIBER_TRIGGER__H
+#define F2__PRIMOBJECT__FIBER_TRIGGER__H
+
+#include "f2_primobjects.h"
+
+// fiber_trigger
+
+declare_primobject_0_slot(fiber_trigger);
+
+f2ptr raw__fiber_trigger__new    (f2ptr cause);
+f2ptr  f2__fiber_trigger__new    (f2ptr cause);
+f2ptr raw__fiber_trigger__trigger(f2ptr cause, f2ptr this);
+f2ptr  f2__fiber_trigger__trigger(f2ptr cause, f2ptr this);
+
+f2ptr f2fiber_trigger__primobject_type__new_aux(f2ptr cause);
 
 
 // fiber_trigger_hash (a global ptypehash)
@@ -45,13 +56,10 @@ f2ptr raw__fiber_trigger_hash__add                   (f2ptr cause, f2ptr trigger
 f2ptr  f2__fiber_trigger_hash__add                   (f2ptr cause, f2ptr trigger, f2ptr fiber);
 f2ptr raw__fiber_trigger_hash__unpause_trigger_fibers(f2ptr cause, f2ptr trigger);
 
-
-
 // **
 
-f2ptr f2__fiber_trigger__core_extension_ping      (f2ptr cause);
-f2ptr f2__fiber_trigger__core_extension_initialize(f2ptr cause);
-f2ptr f2__fiber_trigger__core_extension_destroy   (f2ptr cause);
+void f2__primobject__fiber_trigger__reinitialize_globalvars();
+void f2__primobject__fiber_trigger__initialize();
 
-#endif // F2__EXTENSION__FIBER_TRIGGER__H
+#endif // F2__PRIMOBJECT__FIBER_TRIGGER__H
 

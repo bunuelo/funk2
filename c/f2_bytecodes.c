@@ -123,12 +123,12 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
 void funk2_bytecode__destroy(funk2_bytecode_t* this) {
   status("bytecode execution counts follow:");
   status("  bytecode__lookup_type_var__execution_count            = " u64__fstr, this->bytecode__lookup_type_var__execution_count);
+  status("  bytecode__block_eval_args_next__execution_count       = " u64__fstr, this->bytecode__block_eval_args_next__execution_count);
   status("  bytecode__block_pop__execution_count                  = " u64__fstr, this->bytecode__block_pop__execution_count);
   status("  bytecode__block_eval_args_begin__execution_count      = " u64__fstr, this->bytecode__block_eval_args_begin__execution_count);
   status("  bytecode__block_eval_args_end__execution_count        = " u64__fstr, this->bytecode__block_eval_args_end__execution_count);
   status("  bytecode__funk__execution_count                       = " u64__fstr, this->bytecode__funk__execution_count);
   status("  bytecode__block_push__execution_count                 = " u64__fstr, this->bytecode__block_push__execution_count);
-  status("  bytecode__block_eval_args_next__execution_count       = " u64__fstr, this->bytecode__block_eval_args_next__execution_count);
   status("  bytecode__copy__execution_count                       = " u64__fstr, this->bytecode__copy__execution_count);
   status("  bytecode__block_enter__execution_count                = " u64__fstr, this->bytecode__block_enter__execution_count);
   status("  bytecode__block_define_last_argument__execution_count = " u64__fstr, this->bytecode__block_define_last_argument__execution_count);

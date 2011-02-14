@@ -19,9 +19,9 @@
 
 [defcore image_sequence 'extension/image_sequence/.libs/libf2e_image_sequence.so']
 
-[defcorefunk image_sequence-core_extension_ping       image_sequence image_sequence__core_extension_ping]
-[defcorefunk image_sequence-core_extension_initialize image_sequence image_sequence__core_extension_initialize]
+[defcorefunk image_sequence-core_extension-ping       image_sequence image_sequence__core_extension__ping]
+[defcorefunk image_sequence-core_extension-initialize image_sequence image_sequence__core_extension__initialize]
 
 [defcorefunk image_sequence-new_by_time_stretch image_sequence image_sequence__new_by_time_stretch]
 
-[image_sequence-core_extension_ping]
+[image_sequence-core_extension-ping]

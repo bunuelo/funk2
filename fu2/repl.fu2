@@ -106,7 +106,7 @@
 	      [stream_repl-html]]]]]
 
 [globalize terminal_repl-prompt_color     9]
-[globalize terminal_repl-user_input_color 7]
+[globalize terminal_repl-user_input_color 15]
 
 [defunk terminal_repl-io [input-stream output-terminal]
   [if output-terminal

@@ -107,7 +107,7 @@
 
 [defunk terminal_repl-io [input-stream output-terminal]
   [if output-terminal
-      [prog [ansi-stream-foreground [get output-terminal stream] 10] [terminal_format output-terminal '\nin--> '] [ansi-stream-foreground [get output-terminal stream] 15]]]
+      [prog [ansi-stream-foreground [get output-terminal stream] 9] [terminal_format output-terminal '\nin--> '] [ansi-stream-reset [get output-terminal stream]]]]
   [let [[read_successful   nil]
 	[read-exp          nil]]
     [while [not read_successful]

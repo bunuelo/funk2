@@ -1034,7 +1034,6 @@ f2ptr f2__cairo_ps_surface_type__new(f2ptr cause) {
 }
 
 
-
 // **
 
 f2ptr f2__cairo__core_extension__ping(f2ptr cause) {

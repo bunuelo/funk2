@@ -142,6 +142,7 @@
 				  'extension/semantic_resource_action_event/'
 				  'extension/semantic_temporal_object/'
 				  'extension/semantic_visual_object/'
+				  'extension/timeline/'
 				  'example/divisi2/'
 				  'example/english_language/'
 				  'example/funk2_webpage/'

@@ -32,7 +32,7 @@ f2ptr f2__cairo_not_supported_larva__new(f2ptr cause) {
 
 f2ptr f2cairo_object__new(f2ptr cause, f2ptr cairo_object_pointer) {
   return f2__frame__new(cause, f2list4__new(cause,
-					    new__symbol(cause, "type"),          new__symbol(cause, "cairo_object"),
+					    new__symbol(cause, "type"),                 new__symbol(cause, "cairo_object"),
 					    new__symbol(cause, "cairo_object_pointer"), cairo_object_pointer));
 }
 
@@ -298,9 +298,9 @@ f2ptr raw__cairo_format_t__as__cairo_format(f2ptr cause, cairo_format_t cairo_fo
 // cairo_surface
 
 f2ptr f2cairo_surface__new(f2ptr cause, f2ptr cairo_surface_pointer) {
-  return f2__frame__new(cause, f2list4__new(cause,
-					    new__symbol(cause, "type"),          new__symbol(cause, "cairo_surface"),
-					    new__symbol(cause, "cairo_surface_pointer"), cairo_surface_pointer));
+  f2ptr this = f2cairo_object__new(cause, cairo_surface_pointer);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "cairo_surface"));
+  return this;
 }
 
 boolean_t raw__cairo_surface__is_type(f2ptr cause, f2ptr thing) {

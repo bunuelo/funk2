@@ -196,6 +196,15 @@ f2ptr f2__cairo__cairo_pointer(f2ptr cause, f2ptr this) {
 export_cefunk1(cairo__cairo_pointer, thing, 0, "Returns the cairo_pointer of the cairo.");
 
 
+#if defined(F2__CAIRO_SUPPORTED)
+cairo_t* raw__cairo__as__cairo_t(f2ptr cause, f2ptr this) {
+  f2ptr    cairo_pointer = raw__cairo__cairo_pointer(cause, this);
+  cairo_t* cairo         = from_ptr(f2pointer__p(cairo_pointer, cause));
+  return cairo;
+}
+#endif // F2__CAIRO_SUPPORTED
+
+
 f2ptr raw__cairo__cairo_pointer__set(f2ptr cause, f2ptr this, f2ptr value) {
   return raw__cairo_object__cairo_object_pointer__set(cause, this, value);
 }

@@ -615,7 +615,7 @@ f2ptr raw__cairo_svg_surface__new(f2ptr cause, f2ptr filename, f2ptr width, f2pt
     filename__str[filename__length] = 0;
     double width__d  = f2double__d(width,  cause);
     double height__d = f2double__d(height, cause);
-    cairo_surface = cairo_svg_surface_create(filename__str,
+    cairo_surface = cairo_svg_surface_create((char*)filename__str,
 					     width__d,
 					     height__d);
     f2__free(to_ptr(filename__str));

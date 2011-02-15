@@ -30,17 +30,34 @@ f2ptr f2__cairo_not_supported_larva__new(f2ptr cause) {
 
 // cairo
 
-f2ptr raw__cairo__new(f2ptr cause, f2ptr cairo_pointer) {
+f2ptr f2cairo__new(f2ptr cause, f2ptr cairo_pointer) {
   return f2__frame__new(cause, f2list4__new(cause,
 					    new__symbol(cause, "type"),          new__symbol(cause, "cairo"),
 					    new__symbol(cause, "cairo_pointer"), cairo_pointer));
 }
 
-f2ptr f2__cairo__new(f2ptr cause) {
-  f2ptr cairo_pointer = nil;
-  return raw__cairo__new(cause, cairo_pointer);
+f2ptr raw__cairo__new(f2ptr cause, f2ptr target) {
+#if defined(f2__CAIRO_SUPPORTED)
+  cairo_surface_t* cairo_surface = raw__cairo_surface__as__cairo_surface_t(cause, target);
+  cairo_t*         cairo         = cairo_create(cairo_surface);
+  cairo_status_t   status        = cairo_status(cairo);
+  if (status == CAIRO_STATUS_NO_MEMORY) {
+    cairo_destroy(cairo);
+    return f2larva__new(cause, 2351, nil);
+  }
+  return f2cairo__new(cause, f2pointer__new(cause, to_ptr(cairo)));
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // f2__CAIRO_SUPPORTED
 }
-export_cefunk0(cairo__new, 0, "Returns a new cairo object.");
+
+f2ptr f2__cairo__new(f2ptr cause, f2ptr target) {
+  if (! raw__cairo_surface__is_type(cause, target)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo__new(cause, target);
+}
+export_cefunk1(cairo__new, target, 0, "Returns a new cairo object for drawing to the given target cairo_surface.");
 
 
 boolean_t raw__cairo__is_type(f2ptr cause, f2ptr thing) {

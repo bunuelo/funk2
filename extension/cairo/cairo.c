@@ -442,7 +442,7 @@ f2ptr f2__cairo_context__move_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
   }
   return raw__cairo_context__move_to(cause, this, x, y);
 }
-export_cefunk2(cairo_context__move_to, this, x, y, 0,
+export_cefunk3(cairo_context__move_to, this, x, y, 0,
 	       "Begin a new sub-path. After this call the current point will be (x, y).\n"
 	       "\n"
 	       "cr : 	a cairo context\n"
@@ -470,7 +470,7 @@ f2ptr f2__cairo_context__line_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
   }
   return raw__cairo_context__line_to(cause, this, x, y);
 }
-export_cefunk2(cairo_context__line_to, this, x, y, 0,
+export_cefunk3(cairo_context__line_to, this, x, y, 0,
 	       "Adds a line to the path from the current point to position (x, y) in user-space coordinates. After this call the current point will be (x, y).\n"
 	       "\n"
 	       "If there is no current point before the call to cairo_line_to() this function will behave as cairo_move_to (cr, x, y).\n"
@@ -500,7 +500,7 @@ f2ptr f2__cairo_context__rel_move_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) 
   }
   return raw__cairo_context__rel_move_to(cause, this, x, y);
 }
-export_cefunk2(cairo_context__rel_move_to, this, x, y, 0,
+export_cefunk3(cairo_context__rel_move_to, this, x, y, 0,
 	       "Begin a new sub-path. After this call the current point will offset by (x, y).\n"
 	       "\n"
 	       "Given a current point of (x, y), cairo_rel_move_to(cr, dx, dy) is logically equivalent to cairo_move_to (cr, x + dx, y + dy).\n"
@@ -532,7 +532,7 @@ f2ptr f2__cairo_context__rel_line_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) 
   }
   return raw__cairo_context__rel_line_to(cause, this, x, y);
 }
-export_cefunk2(cairo_context__rel_line_to, this, x, y, 0,
+export_cefunk3(cairo_context__rel_line_to, this, x, y, 0,
 	       "Relative-coordinate version of cairo_line_to(). Adds a line to the path from the current point to a point that is offset from the current point by (dx, dy) in user space. After this call the current point will be offset by (dx, dy).\n"
 	       "\n"
 	       "Given a current point of (x, y), cairo_rel_line_to(cr, dx, dy) is logically equivalent to cairo_line_to (cr, x + dx, y + dy).\n"

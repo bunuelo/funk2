@@ -339,6 +339,42 @@ export_cefunk6(cairo_context__arc, this, xc, yc, radius, angle1, angle2, 0,
 
 
 
+f2ptr raw__cairo_context__set_source_rgba(f2ptr cause, f2ptr this, f2ptr red, f2ptr green, f2ptr blue, f2ptr alpha) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  double   red__d        = f2double__d(red,   cause);
+  double   green__d      = f2double__d(green, cause);
+  double   blue__d       = f2double__d(blue,  cause);
+  double   alpha__d      = f2double__d(alpha, cause);
+  cairo_set_source_rgba(cairo_context, red__d, green__d, blue__d, alpha__d);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__set_source_rgba(f2ptr cause, f2ptr this, f2ptr red, f2ptr green, f2ptr blue, f2ptr alpha) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, red)) ||
+      (! raw__double__is_type(cause, green)) ||
+      (! raw__double__is_type(cause, blue)) ||
+      (! raw__double__is_type(cause, alpha))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_context__set_source_rgba(cause, this, red, green, blue, alpha);
+}
+export_cefunk5(cairo_context__set_source_rgba, this, red, green, blue, alpha, 0,
+	       "Sets the source pattern within cr to a translucent color. This color will then be used for any subsequent drawing operation until a new source pattern is set.\n"
+	       "\n"
+	       "The color and alpha components are floating point numbers in the range 0 to 1. If the values passed in are outside that range, they will be clamped.\n"
+	       "\n"
+	       "cr : 	a cairo context\n"
+	       "red : 	red component of color\n"
+	       "green : 	green component of color\n"
+	       "blue : 	blue component of color\n"
+	       "alpha : 	alpha component of color\n");
+
+
 f2ptr f2__cairo_context_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "cairo_object")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__new")));}
@@ -350,6 +386,7 @@ f2ptr f2__cairo_context_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new_path"),              f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__new_path")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "close_path"),            f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__close_path")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "arc"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__arc")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "set_source_rgba"),       f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__set_source_rgba")));}
   return this;
 }
 

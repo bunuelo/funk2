@@ -28,7 +28,7 @@
   [have context stroke]
   [have context move_to 36.0 9.0]
   [have context text_path 'Hello World!']
-  [have context stroke]
+  [have context fill]
   ]
 
 [defunk cairo-test []

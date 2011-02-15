@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 [defunk cairo-test:cairo_context-render [context]
-  [have context arc 0.0 0.0 10.0 0.0 [/ [* 45.0 pi] 180.0]]
+  [have context arc 36.0 36.0 36.0 0.0 [/ [* 45.0 pi] 180.0]]
   ]
 
 [defunk cairo-test []

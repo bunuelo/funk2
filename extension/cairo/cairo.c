@@ -413,7 +413,7 @@ f2ptr raw__cairo_image_surface__new(f2ptr cause, f2ptr format, f2ptr width, f2pt
     }
     cairo_surface_destroy(cairo_surface);
     return f2larva__new(cause, 44321, f2__bug__new(cause, f2integer__new(cause, 44321), f2__frame__new(cause, f2list10__new(cause,
-															    new__symbol(cause, "bug_type"),     new__symbol(cause, "failure_to_create_cairo_surface"),
+															    new__symbol(cause, "bug_type"),     new__symbol(cause, "failure_to_create_cairo_image_surface"),
 															    new__symbol(cause, "cairo_status"), cairo_status,
 															    new__symbol(cause, "format"),       format,
 															    new__symbol(cause, "width"),        width,
@@ -634,7 +634,7 @@ f2ptr raw__cairo_svg_surface__new(f2ptr cause, f2ptr filename, f2ptr width, f2pt
     }
     cairo_surface_destroy(cairo_surface);
     return f2larva__new(cause, 44321, f2__bug__new(cause, f2integer__new(cause, 44321), f2__frame__new(cause, f2list10__new(cause,
-															    new__symbol(cause, "bug_type"),     new__symbol(cause, "failure_to_create_svg_cairo_surface"),
+															    new__symbol(cause, "bug_type"),     new__symbol(cause, "failure_to_create_cairo_svg_surface"),
 															    new__symbol(cause, "cairo_status"), cairo_status,
 															    new__symbol(cause, "filename"),     filename,
 															    new__symbol(cause, "width"),        width,
@@ -647,15 +647,15 @@ f2ptr raw__cairo_svg_surface__new(f2ptr cause, f2ptr filename, f2ptr width, f2pt
 #endif // F2__CAIRO_SUPPORTED
 }
 
-f2ptr f2__cairo_svg_surface__new(f2ptr cause, f2ptr format, f2ptr width, f2ptr height) {
-  if ((! raw__cairo_format__is_type(cause, format)) ||
+f2ptr f2__cairo_svg_surface__new(f2ptr cause, f2ptr filename, f2ptr width, f2ptr height) {
+  if ((! raw__string__is_type(cause, filename)) ||
       (! raw__double__is_type(cause, width)) ||
       (! raw__double__is_type(cause, height))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo_svg_surface__new(cause, format, width, height);
+  return raw__cairo_svg_surface__new(cause, filename, width, height);
 }
-export_cefunk3(cairo_svg_surface__new, format, width, height, 0, "Returns a new cairo_svg_surface object.  Given format must be one of the following symbols: ARGB32, RGB24, A8, A1, RGB16_565.");
+export_cefunk3(cairo_svg_surface__new, filename, width, height, 0, "Returns a new cairo_svg_surface object.");
 
 
 boolean_t raw__cairo_svg_surface__is_type(f2ptr cause, f2ptr thing) {

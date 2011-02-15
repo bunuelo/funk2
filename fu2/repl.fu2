@@ -105,9 +105,12 @@
 			   '\n            restarting repl.\n']
 	      [stream_repl-html]]]]]
 
+[globalize terminal_repl-prompt_color     9]
+[globalize terminal_repl-user_input_color 7]
+
 [defunk terminal_repl-io [input-stream output-terminal]
   [if output-terminal
-      [prog [ansi-stream-foreground [get output-terminal stream] 9] [terminal_format output-terminal '\nin--> '] [ansi-stream-reset [get output-terminal stream]]]]
+      [prog [ansi-stream-foreground [get output-terminal stream] terminal_repl-prompt_color] [terminal_format output-terminal '\nin--> '] [ansi-stream-foreground [get output-terminal stream] terminal_repl-user_input_color]]]
   [let [[read_successful   nil]
 	[read-exp          nil]]
     [while [not read_successful]
@@ -134,7 +137,7 @@
 								  t]]
 		    [t                                      [prog [if output-terminal [terminal_format output-terminal [list 'error stream_repl-io: unexpected exception ' eval-exp]]]
 								  eval-exp]]]]
-	  [prog [if output-terminal [prog [ansi-stream-foreground [get output-terminal stream] 10] [terminal_format output-terminal '\nout-> '] [ansi-stream-foreground [get output-terminal stream] 15]
+	  [prog [if output-terminal [prog [ansi-stream-foreground [get output-terminal stream] terminal_repl-prompt_color] [terminal_format output-terminal '\nout-> '] [ansi-stream-reset]
 					  [terminal_write output-terminal eval-exp]]]
 		[terminal_repl-io input-stream output-terminal]]]]]]]
 

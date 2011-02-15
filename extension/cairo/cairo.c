@@ -274,13 +274,14 @@ f2ptr f2__cairo_context__close_path(f2ptr cause, f2ptr this) {
   }
   return raw__cairo_context__close_path(cause, this);
 }
-export_cefunk1(cairo_context__close_path, this, 0, "Adds a line segment to the path from the current point to the beginning of the current sub-path, (the most recent point passed to cairo_move_to()), and closes this sub-path. After this call the current point will be at the joined endpoint of the sub-path.
-
-The behavior of cairo_close_path() is distinct from simply calling cairo_line_to() with the equivalent coordinate in the case of stroking. When a closed sub-path is stroked, there are no caps on the ends of the sub-path. Instead, there is a line join connecting the final and initial segments of the sub-path.
-
-If there is no current point before the call to cairo_close_path, this function will have no effect.
-
-Note: As of cairo version 1.2.4 any call to cairo_close_path will place an explicit MOVE_TO element into the path immediately after the CLOSE_PATH element, (which can be seen in cairo_copy_path() for example). This can simplify path processing in some cases as it may not be necessary to save the \"last move_to point\" during processing as the MOVE_TO immediately after the CLOSE_PATH will provide that point.");
+export_cefunk1(cairo_context__close_path, this, 0,
+	       "Adds a line segment to the path from the current point to the beginning of the current sub-path, (the most recent point passed to cairo_move_to()), and closes this sub-path. After this call the current point will be at the joined endpoint of the sub-path.\n"
+	       "\n"
+	       "The behavior of cairo_close_path() is distinct from simply calling cairo_line_to() with the equivalent coordinate in the case of stroking. When a closed sub-path is stroked, there are no caps on the ends of the sub-path. Instead, there is a line join connecting the final and initial segments of the sub-path.\n"
+	       "\n"
+	       "If there is no current point before the call to cairo_close_path, this function will have no effect.\n"
+	       "\n"
+	       "Note: As of cairo version 1.2.4 any call to cairo_close_path will place an explicit MOVE_TO element into the path immediately after the CLOSE_PATH element, (which can be seen in cairo_copy_path() for example). This can simplify path processing in some cases as it may not be necessary to save the \"last move_to point\" during processing as the MOVE_TO immediately after the CLOSE_PATH will provide that point.");
 
 
 
@@ -310,30 +311,31 @@ f2ptr f2__cairo_context__arc(f2ptr cause, f2ptr this, f2ptr xc, f2ptr yc, f2ptr 
   }
   return raw__cairo_context__arc(cause, this, xc, yc, radius, angle1, angle2);
 }
-export_cefunk6(cairo_context__arc, this, xc, yc, radius, angle1, angle2, 0, "Adds a circular arc of the given radius to the current path. The arc is centered at (xc, yc), begins at angle1 and proceeds in the direction of increasing angles to end at angle2. If angle2 is less than angle1 it will be progressively increased by 2*M_PI until it is greater than angle1.
-
-If there is a current point, an initial line segment will be added to the path to connect the current point to the beginning of the arc.
-
-Angles are measured in radians. An angle of 0.0 is in the direction of the positive X axis (in user space). An angle of M_PI/2.0 radians (90 degrees) is in the direction of the positive Y axis (in user space). Angles increase in the direction from the positive X axis toward the positive Y axis. So with the default transformation matrix, angles increase in a clockwise direction.
-
-(To convert from degrees to radians, use degrees * (M_PI / 180.).)
-
-This function gives the arc in the direction of increasing angles; see cairo_arc_negative() to get the arc in the direction of decreasing angles.
-
-The arc is circular in user space. To achieve an elliptical arc, you can scale the current transformation matrix by different amounts in the X and Y directions. For example, to draw an ellipse in the box given by x, y, width, height:
-
-cairo_save (cr);
-cairo_translate (cr, x + width / 2., y + height / 2.);
-cairo_scale (cr, width / 2., height / 2.);
-cairo_arc (cr, 0., 0., 1., 0., 2 * M_PI);
-cairo_restore (cr);
-
-cr : 	a cairo context
-xc : 	X position of the center of the arc
-yc : 	Y position of the center of the arc
-radius : 	the radius of the arc
-angle1 : 	the start angle, in radians
-angle2 : 	the end angle, in radians");
+export_cefunk6(cairo_context__arc, this, xc, yc, radius, angle1, angle2, 0,
+	       "Adds a circular arc of the given radius to the current path. The arc is centered at (xc, yc), begins at angle1 and proceeds in the direction of increasing angles to end at angle2. If angle2 is less than angle1 it will be progressively increased by 2*M_PI until it is greater than angle1.\n"
+	       "\n"
+	       "If there is a current point, an initial line segment will be added to the path to connect the current point to the beginning of the arc.\n"
+	       "\n"
+	       "Angles are measured in radians. An angle of 0.0 is in the direction of the positive X axis (in user space). An angle of M_PI/2.0 radians (90 degrees) is in the direction of the positive Y axis (in user space). Angles increase in the direction from the positive X axis toward the positive Y axis. So with the default transformation matrix, angles increase in a clockwise direction.\n"
+	       "\n"
+	       "(To convert from degrees to radians, use degrees * (M_PI / 180.).)\n"
+	       "\n"
+	       "This function gives the arc in the direction of increasing angles; see cairo_arc_negative() to get the arc in the direction of decreasing angles.\n"
+	       "\n"
+	       "The arc is circular in user space. To achieve an elliptical arc, you can scale the current transformation matrix by different amounts in the X and Y directions. For example, to draw an ellipse in the box given by x, y, width, height:\n"
+	       "\n"
+	       "cairo_save (cr);\n"
+	       "cairo_translate (cr, x + width / 2., y + height / 2.);\n"
+	       "cairo_scale (cr, width / 2., height / 2.);\n"
+	       "cairo_arc (cr, 0., 0., 1., 0., 2 * M_PI);\n"
+	       "cairo_restore (cr);\n"
+	       "\n"
+	       "cr : 	a cairo context\n"
+	       "xc : 	X position of the center of the arc\n"
+	       "yc : 	Y position of the center of the arc\n"
+	       "radius : 	the radius of the arc\n"
+	       "angle1 : 	the start angle, in radians\n"
+	       "angle2 : 	the end angle, in radians");
 
 
 

@@ -238,6 +238,53 @@ export_cefunk1(cairo_context__destroy, this, 0, "Destroys the cairo_context.");
 
 
 
+f2ptr raw__cairo_context__save(f2ptr cause, f2ptr this) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  cairo_save(cairo_context);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__save(f2ptr cause, f2ptr this) {
+  if (! raw__cairo_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_context__save(cause, this);
+}
+export_cefunk1(cairo_context__save, this, 0,
+	       "Makes a copy of the current state of cr and saves it on an internal stack of saved states for cr. When cairo_restore() is called, cr will be restored to the saved state. Multiple calls to cairo_save() and cairo_restore() can be nested; each call to cairo_restore() restores the state from the matching paired cairo_save().\n"
+	       "\n"
+	       "It isn't necessary to clear all saved states before a cairo_t is freed. If the reference count of a cairo_t drops to zero in response to a call to cairo_destroy(), any saved states will be freed along with the cairo_t.\n"
+	       "\n"
+	       "cr : 	a cairo_t");
+
+
+
+f2ptr raw__cairo_context__restore(f2ptr cause, f2ptr this) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  cairo_restore(cairo_context);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__restore(f2ptr cause, f2ptr this) {
+  if (! raw__cairo_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_context__restore(cause, this);
+}
+export_cefunk1(cairo_context__restore, this, 0,
+	       "Restores cr to the state saved by a preceding call to cairo_save() and removes that state from the stack of saved states.\n"
+	       "\n"
+	       "cr : 	a cairo_t\n");
+
+
 f2ptr raw__cairo_context__new_path(f2ptr cause, f2ptr this) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
@@ -375,6 +422,128 @@ export_cefunk5(cairo_context__set_source_rgba, this, red, green, blue, alpha, 0,
 	       "alpha : 	alpha component of color\n");
 
 
+f2ptr raw__cairo_context__move_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  double   x__d          = f2double__d(x, cause);
+  double   y__d          = f2double__d(y, cause);
+  cairo_move_to(cairo_context, x__d, y__d);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__move_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, x)) ||
+      (! raw__double__is_type(cause, y))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_context__move_to(cause, this, x, y);
+}
+export_cefunk2(cairo_context__move_to, this, x, y, 0,
+	       "Begin a new sub-path. After this call the current point will be (x, y).\n"
+	       "\n"
+	       "cr : 	a cairo context\n"
+	       "x : 	the X coordinate of the new position\n"
+	       "y : 	the Y coordinate of the new position\n");
+
+
+f2ptr raw__cairo_context__line_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  double   x__d          = f2double__d(x, cause);
+  double   y__d          = f2double__d(y, cause);
+  cairo_line_to(cairo_context, x__d, y__d);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__line_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, x)) ||
+      (! raw__double__is_type(cause, y))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_context__line_to(cause, this, x, y);
+}
+export_cefunk2(cairo_context__line_to, this, x, y, 0,
+	       "Adds a line to the path from the current point to position (x, y) in user-space coordinates. After this call the current point will be (x, y).\n"
+	       "\n"
+	       "If there is no current point before the call to cairo_line_to() this function will behave as cairo_move_to (cr, x, y).\n"
+	       "\n"
+	       "cr : 	a cairo context\n"
+	       "x : 	the X coordinate of the end of the new line\n"
+	       "y : 	the Y coordinate of the end of the new line");
+
+
+f2ptr raw__cairo_context__rel_move_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  double   x__d          = f2double__d(x, cause);
+  double   y__d          = f2double__d(y, cause);
+  cairo_rel_move_to(cairo_context, x__d, y__d);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__rel_move_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, x)) ||
+      (! raw__double__is_type(cause, y))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_context__rel_move_to(cause, this, x, y);
+}
+export_cefunk2(cairo_context__rel_move_to, this, x, y, 0,
+	       "Begin a new sub-path. After this call the current point will offset by (x, y).\n"
+	       "\n"
+	       "Given a current point of (x, y), cairo_rel_move_to(cr, dx, dy) is logically equivalent to cairo_move_to (cr, x + dx, y + dy).\n"
+	       "\n"
+	       "It is an error to call this function with no current point. Doing so will cause cr to shutdown with a status of CAIRO_STATUS_NO_CURRENT_POINT.\n"
+	       "\n"
+	       "cr : 	a cairo context\n"
+	       "dx : 	the X offset\n"
+	       "dy : 	the Y offset");
+
+
+f2ptr raw__cairo_context__rel_line_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  double   x__d          = f2double__d(x, cause);
+  double   y__d          = f2double__d(y, cause);
+  cairo_rel_line_to(cairo_context, x__d, y__d);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__rel_line_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, x)) ||
+      (! raw__double__is_type(cause, y))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_context__rel_line_to(cause, this, x, y);
+}
+export_cefunk2(cairo_context__rel_line_to, this, x, y, 0,
+	       "Relative-coordinate version of cairo_line_to(). Adds a line to the path from the current point to a point that is offset from the current point by (dx, dy) in user space. After this call the current point will be offset by (dx, dy).\n"
+	       "\n"
+	       "Given a current point of (x, y), cairo_rel_line_to(cr, dx, dy) is logically equivalent to cairo_line_to (cr, x + dx, y + dy).\n"
+	       "\n"
+	       "It is an error to call this function with no current point. Doing so will cause cr to shutdown with a status of CAIRO_STATUS_NO_CURRENT_POINT.\n"
+	       "\n"
+	       "cr : 	a cairo context\n"
+	       "dx : 	the X offset to the end of the new line\n"
+	       "dy : 	the Y offset to the end of the new line");
+
+
 f2ptr raw__cairo_context__fill(f2ptr cause, f2ptr this) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
@@ -505,10 +674,16 @@ f2ptr f2__cairo_context_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "cairo_context_pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__cairo_context_pointer")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "cairo_context_pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__cairo_context_pointer__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "destroy"),               f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__destroy")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "save"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__save")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "restore"),               f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__restore")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new_path"),              f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__new_path")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "close_path"),            f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__close_path")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "arc"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__arc")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "set_source_rgba"),       f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__set_source_rgba")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "move_to"),               f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__move_to")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "line_to"),               f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__line_to")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "rel_move_to"),           f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__rel_move_to")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "rel_line_to"),           f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__rel_line_to")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "fill"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__fill")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "fill_preserve"),         f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__fill_preserve")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "paint"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__paint")));}

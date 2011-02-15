@@ -397,7 +397,7 @@ f2ptr raw__cairo_surface__write_to_png(f2ptr cause, f2ptr this, f2ptr filename) 
   raw__string__str_copy(cause, filename, filename__str);
   filename__str[filename__length] = 0;
   cairo_surface_t* cairo_surface = raw__cairo_surface__as__cairo_surface_t(cause, this);
-  cairo_surface_write_to_png(cairo_surface, filename__str);
+  cairo_surface_write_to_png(cairo_surface, (char*)filename__str);
   cairo_status_t status = cairo_surface_status(cairo_surface);
   f2__free(to_ptr(filename__str));
   if (status != CAIRO_STATUS_SUCCESS) {

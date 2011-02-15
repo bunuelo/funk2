@@ -34,7 +34,7 @@
       [cairo-test:cairo_context-render svg_context]
       [cairo-test:cairo_context-render ps_context]
       [cairo-test:cairo_context-render image_context]
-      [have cairo_image_surface write_to_png 'cairo-test.png']
+      [have image_surface write_to_png 'cairo-test.png']
       [have pdf_surface   destroy]
       [have svg_surface   destroy]
       [have ps_surface    destroy]

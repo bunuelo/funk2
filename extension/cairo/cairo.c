@@ -116,43 +116,43 @@ f2ptr f2__cairo_object_type__new(f2ptr cause) {
 
 
 
-// cairo
+// cairo_context
 
-f2ptr f2cairo__new(f2ptr cause, f2ptr cairo_pointer) {
-  f2ptr this = f2cairo_object__new(cause, cairo_pointer);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "cairo"));
+f2ptr f2cairo_context__new(f2ptr cause, f2ptr cairo_context_pointer) {
+  f2ptr this = f2cairo_object__new(cause, cairo_context_pointer);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "cairo_context"));
   return this;
 }
 
-f2ptr raw__cairo__new(f2ptr cause, f2ptr target) {
+f2ptr raw__cairo_context__new(f2ptr cause, f2ptr target) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_surface_t* cairo_surface = raw__cairo_surface__as__cairo_surface_t(cause, target);
-  cairo_t*         cairo         = cairo_create(cairo_surface);
-  cairo_status_t   status        = cairo_status(cairo);
+  cairo_t*         cairo_context         = cairo_create(cairo_surface);
+  cairo_status_t   status        = cairo_status(cairo_context);
   if (status == CAIRO_STATUS_NO_MEMORY) {
-    cairo_destroy(cairo);
+    cairo_destroy(cairo_context);
     return f2larva__new(cause, 2351, nil);
   }
-  return f2cairo__new(cause, f2pointer__new(cause, to_ptr(cairo)));
+  return f2cairo_context__new(cause, f2pointer__new(cause, to_ptr(cairo_context)));
 #else
   return f2__cairo_not_supported_larva__new(cause);
 #endif // f2__CAIRO_SUPPORTED
 }
 
-f2ptr f2__cairo__new(f2ptr cause, f2ptr target) {
+f2ptr f2__cairo_context__new(f2ptr cause, f2ptr target) {
   if (! raw__cairo_surface__is_type(cause, target)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo__new(cause, target);
+  return raw__cairo_context__new(cause, target);
 }
-export_cefunk1(cairo__new, target, 0, "Returns a new cairo object for drawing to the given target cairo_surface.");
+export_cefunk1(cairo_context__new, target, 0, "Returns a new cairo_context object for drawing to the given target cairo_surface.");
 
 
-boolean_t raw__cairo__is_type(f2ptr cause, f2ptr thing) {
+boolean_t raw__cairo_context__is_type(f2ptr cause, f2ptr thing) {
   if (! raw__frame__is_type(cause, thing)) {
     return boolean__false;
   }
-  f2ptr this_type_name_symbol = new__symbol(cause, "cairo");
+  f2ptr this_type_name_symbol = new__symbol(cause, "cairo_context");
   f2ptr thing_type_name       = f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil);
   if (raw__eq(cause, this_type_name_symbol, thing_type_name)) {
     return boolean__true;
@@ -164,88 +164,88 @@ boolean_t raw__cairo__is_type(f2ptr cause, f2ptr thing) {
   return boolean__false;
 }
 
-f2ptr f2__cairo__is_type(f2ptr cause, f2ptr thing) {
-  return f2bool__new(raw__cairo__is_type(cause, thing));
+f2ptr f2__cairo_context__is_type(f2ptr cause, f2ptr thing) {
+  return f2bool__new(raw__cairo_context__is_type(cause, thing));
 }
-export_cefunk1(cairo__is_type, thing, 0, "Returns whether or not thing is of type cairo.");
+export_cefunk1(cairo_context__is_type, thing, 0, "Returns whether or not thing is of type cairo_context.");
 
 
-f2ptr raw__cairo__type(f2ptr cause, f2ptr this) {
+f2ptr raw__cairo_context__type(f2ptr cause, f2ptr this) {
   return f2__object__type(cause, this);
 }
 
-f2ptr f2__cairo__type(f2ptr cause, f2ptr this) {
-  if (! raw__cairo__is_type(cause, this)) {
+f2ptr f2__cairo_context__type(f2ptr cause, f2ptr this) {
+  if (! raw__cairo_context__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo__type(cause, this);
+  return raw__cairo_context__type(cause, this);
 }
-export_cefunk1(cairo__type, thing, 0, "Returns the specific type of object that this cairo is.");
+export_cefunk1(cairo_context__type, thing, 0, "Returns the specific type of object that this cairo_context is.");
 
 
-f2ptr raw__cairo__cairo_pointer(f2ptr cause, f2ptr this) {
-  return raw__cairo_object__cairo_object_pointer(cause, this);
+f2ptr raw__cairo_context__cairo_context_pointer(f2ptr cause, f2ptr this) {
+  return raw__cairo_context_object__cairo_object_pointer(cause, this);
 }
 
-f2ptr f2__cairo__cairo_pointer(f2ptr cause, f2ptr this) {
-  if (! raw__cairo__is_type(cause, this)) {
+f2ptr f2__cairo_context__cairo_context_pointer(f2ptr cause, f2ptr this) {
+  if (! raw__cairo_context__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo__cairo_pointer(cause, this);
+  return raw__cairo_context__cairo_context_pointer(cause, this);
 }
-export_cefunk1(cairo__cairo_pointer, thing, 0, "Returns the cairo_pointer of the cairo.");
+export_cefunk1(cairo_context__cairo_context_pointer, thing, 0, "Returns the cairo_context_pointer of the cairo_context.");
 
 
 #if defined(F2__CAIRO_SUPPORTED)
-cairo_t* raw__cairo__as__cairo_t(f2ptr cause, f2ptr this) {
-  f2ptr    cairo_pointer = raw__cairo__cairo_pointer(cause, this);
-  cairo_t* cairo         = from_ptr(f2pointer__p(cairo_pointer, cause));
-  return cairo;
+cairo_t* raw__cairo_context__as__cairo_t(f2ptr cause, f2ptr this) {
+  f2ptr    cairo_context_pointer = raw__cairo_context__cairo_context_pointer(cause, this);
+  cairo_t* cairo_context         = from_ptr(f2pointer__p(cairo_context_pointer, cause));
+  return cairo_context;
 }
 #endif // F2__CAIRO_SUPPORTED
 
 
-f2ptr raw__cairo__cairo_pointer__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return raw__cairo_object__cairo_object_pointer__set(cause, this, value);
+f2ptr raw__cairo_context__cairo_context_pointer__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return raw__cairo_context_object__cairo_object_pointer__set(cause, this, value);
 }
 
-f2ptr f2__cairo__cairo_pointer__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__cairo__is_type(cause, this)) {
+f2ptr f2__cairo_context__cairo_context_pointer__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__cairo_context__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo__cairo_pointer__set(cause, this, value);
+  return raw__cairo_context__cairo_context_pointer__set(cause, this, value);
 }
-export_cefunk2(cairo__cairo_pointer__set, thing, value, 0, "Sets the cairo_pointer of the cairo.");
+export_cefunk2(cairo_context__cairo_context_pointer__set, thing, value, 0, "Sets the cairo_context_pointer of the cairo_context.");
 
 
-f2ptr raw__cairo__destroy(f2ptr cause, f2ptr this) {
+f2ptr raw__cairo_context__destroy(f2ptr cause, f2ptr this) {
 #if defined(F2__CAIRO_SUPPORTED)
-  cairo_t* cairo = raw__cairo__as__cairo_t(cause, this);
-  cairo_destroy(cairo);
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  cairo_destroy(cairo_context);
   return nil;
 #else
   return f2__cairo_not_supported_larva__new(cause);
 #endif // F2__CAIRO_SUPPORTED
 }
 
-f2ptr f2__cairo__destroy(f2ptr cause, f2ptr this) {
-  if (! raw__cairo__is_type(cause, this)) {
+f2ptr f2__cairo_context__destroy(f2ptr cause, f2ptr this) {
+  if (! raw__cairo_context__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo__destroy(cause, this);
+  return raw__cairo_context__destroy(cause, this);
 }
-export_cefunk1(cairo__destroy, this, 0, "Destroys the cairo.");
+export_cefunk1(cairo_context__destroy, this, 0, "Destroys the cairo_context.");
 
 
 
-f2ptr f2__cairo_type__new(f2ptr cause) {
+f2ptr f2__cairo_context_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "cairo_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),           f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),       f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),          f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "cairo_pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo__cairo_pointer")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "cairo_pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo__cairo_pointer__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "destroy"),       f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo__destroy")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),               f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "cairo_context_pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__cairo_context_pointer")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "cairo_context_pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__cairo_context_pointer__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "destroy"),               f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__destroy")));}
   return this;
 }
 
@@ -761,7 +761,7 @@ export_cefunk0(cairo__core_extension__ping, 0, "");
 
 f2ptr f2__cairo__core_extension__initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "cairo_object"),        f2__cairo_object_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "cairo"),               f2__cairo_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "cairo_context"),       f2__cairo_context_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "cairo_surface"),       f2__cairo_surface_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "cairo_image_surface"), f2__cairo_image_surface_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "cairo_svg_surface"),   f2__cairo_svg_surface_type__new(cause));

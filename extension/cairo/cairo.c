@@ -500,7 +500,7 @@ export_cefunk2(cairo_image_surface__cairo_image_surface_pointer__set, thing, val
 
 f2ptr raw__cairo_image_surface__format(f2ptr cause, f2ptr this) {
 #if defined(F2__CAIRO_SUPPORTED)
-  cairo_surface_t* cairo_surface = raw__cairo_image_surface__as__cairo_surface_t(cause, this);
+  cairo_surface_t* cairo_surface = raw__cairo_surface__as__cairo_surface_t(cause, this);
   cairo_format_t   cairo_format  = cairo_image_surface_get_format(cairo_surface);
   return raw__cairo_format_t__as__cairo_format(cause, cairo_format);
 #else

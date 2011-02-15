@@ -238,6 +238,107 @@ export_cefunk1(cairo_context__destroy, this, 0, "Destroys the cairo_context.");
 
 
 
+f2ptr raw__cairo_context__new_path(f2ptr cause, f2ptr this) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  cairo_new_path(cairo_context);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__new_path(f2ptr cause, f2ptr this) {
+  if (! raw__cairo_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_context__new_path(cause, this);
+}
+export_cefunk1(cairo_context__new_path, this, 0, "Clears the current path.  After this call there will be no path and no current point.");
+
+
+
+f2ptr raw__cairo_context__close_path(f2ptr cause, f2ptr this) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  cairo_close_path(cairo_context);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__close_path(f2ptr cause, f2ptr this) {
+  if (! raw__cairo_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_context__close_path(cause, this);
+}
+export_cefunk1(cairo_context__close_path, this, 0, "Adds a line segment to the path from the current point to the beginning of the current sub-path, (the most recent point passed to cairo_move_to()), and closes this sub-path. After this call the current point will be at the joined endpoint of the sub-path.
+
+The behavior of cairo_close_path() is distinct from simply calling cairo_line_to() with the equivalent coordinate in the case of stroking. When a closed sub-path is stroked, there are no caps on the ends of the sub-path. Instead, there is a line join connecting the final and initial segments of the sub-path.
+
+If there is no current point before the call to cairo_close_path, this function will have no effect.
+
+Note: As of cairo version 1.2.4 any call to cairo_close_path will place an explicit MOVE_TO element into the path immediately after the CLOSE_PATH element, (which can be seen in cairo_copy_path() for example). This can simplify path processing in some cases as it may not be necessary to save the \"last move_to point\" during processing as the MOVE_TO immediately after the CLOSE_PATH will provide that point.");
+
+
+
+f2ptr raw__cairo_context__arc(f2ptr cause, f2ptr this, f2ptr cr, f2ptr xc, f2ptr yc, f2ptr radius, f2ptr angle1, f2ptr angle2) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  double   cr__d         = f2double__d(cr, cause);
+  double   xc__d         = f2double__d(xc, cause);
+  double   yc__d         = f2double__d(yc, cause);
+  double   radius__d     = f2double__d(radius, cause);
+  double   angle1__d     = f2double__d(angle1, cause);
+  double   angle2__d     = f2double__d(angle2, cause);
+  cairo_arc(cairo_context, cr__d, xc__d, yc__d, radius__d, angle1__d, angle2__d);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__arc(f2ptr cause, f2ptr this, f2ptr cr, f2ptr xc, f2ptr yc, f2ptr radius, f2ptr angle1, f2ptr angle2) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, cr)) ||
+      (! raw__double__is_type(cause, xc)) ||
+      (! raw__double__is_type(cause, yc)) ||
+      (! raw__double__is_type(cause, radius)) ||
+      (! raw__double__is_type(cause, angle1)) ||
+      (! raw__double__is_type(cause, angle2))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_context__arc(cause, this, cr, xc, yc, radius, angle1, angle2);
+}
+export_cefunk7(cairo_context__arc, this, cr, xc, yc, radius, angle1, angle2, 0, "Adds a circular arc of the given radius to the current path. The arc is centered at (xc, yc), begins at angle1 and proceeds in the direction of increasing angles to end at angle2. If angle2 is less than angle1 it will be progressively increased by 2*M_PI until it is greater than angle1.
+
+If there is a current point, an initial line segment will be added to the path to connect the current point to the beginning of the arc.
+
+Angles are measured in radians. An angle of 0.0 is in the direction of the positive X axis (in user space). An angle of M_PI/2.0 radians (90 degrees) is in the direction of the positive Y axis (in user space). Angles increase in the direction from the positive X axis toward the positive Y axis. So with the default transformation matrix, angles increase in a clockwise direction.
+
+(To convert from degrees to radians, use degrees * (M_PI / 180.).)
+
+This function gives the arc in the direction of increasing angles; see cairo_arc_negative() to get the arc in the direction of decreasing angles.
+
+The arc is circular in user space. To achieve an elliptical arc, you can scale the current transformation matrix by different amounts in the X and Y directions. For example, to draw an ellipse in the box given by x, y, width, height:
+
+cairo_save (cr);
+cairo_translate (cr, x + width / 2., y + height / 2.);
+cairo_scale (cr, width / 2., height / 2.);
+cairo_arc (cr, 0., 0., 1., 0., 2 * M_PI);
+cairo_restore (cr);
+
+cr : 	a cairo context
+xc : 	X position of the center of the arc
+yc : 	Y position of the center of the arc
+radius : 	the radius of the arc
+angle1 : 	the start angle, in radians
+angle2 : 	the end angle, in radians");
+
+
+
 f2ptr f2__cairo_context_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "cairo_object")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__new")));}
@@ -246,6 +347,9 @@ f2ptr f2__cairo_context_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "cairo_context_pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__cairo_context_pointer")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "cairo_context_pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__cairo_context_pointer__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "destroy"),               f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__destroy")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new_path"),              f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__new_path")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "close_path"),            f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__close_path")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "arc"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__arc")));}
   return this;
 }
 

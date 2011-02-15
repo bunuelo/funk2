@@ -544,7 +544,7 @@ export_cefunk3(cairo_context__rel_line_to, this, x, y, 0,
 	       "dy : 	the Y offset to the end of the new line");
 
 
-f2ptr raw__cairo_context__text_path(f2ptr cause, f2ptr this) {
+f2ptr raw__cairo_context__text_path(f2ptr cause, f2ptr this, f2ptr text) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
   s64      text__length = raw__string__length(cause, text);

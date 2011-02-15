@@ -853,26 +853,6 @@ f2ptr f2__cairo_pdf_surface__cairo_pdf_surface_pointer__set(f2ptr cause, f2ptr t
 export_cefunk2(cairo_pdf_surface__cairo_pdf_surface_pointer__set, thing, value, 0, "Sets the cairo_pdf_surface_pointer of the cairo_pdf_surface.");
 
 
-f2ptr raw__cairo_pdf_surface__destroy(f2ptr cause, f2ptr this) {
-#if defined(F2__CAIRO_PDF_SURFACE_SUPPORTED)
-  cairo_pdf_surface_t* cairo_pdf_surface = raw__cairo_pdf_surface__as__cairo_pdf_surface_t(cause, this);
-  cairo_pdf_surface_destroy(cairo_pdf_surface);
-  return nil;
-#else
-  return f2__cairo_not_supported_larva__new(cause);
-#endif // F2__CAIRO_PDF_SURFACE_SUPPORTED
-}
-
-f2ptr f2__cairo_pdf_surface__destroy(f2ptr cause, f2ptr this) {
-  if (! raw__cairo_pdf_surface__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__cairo_pdf_surface__destroy(cause, this);
-}
-export_cefunk1(cairo_pdf_surface__destroy, this, 0, "Destroys the cairo_pdf_surface.");
-
-
-
 f2ptr f2__cairo_pdf_surface_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "cairo_surface")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_pdf_surface__new")));}
@@ -880,7 +860,140 @@ f2ptr f2__cairo_pdf_surface_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_pdf_surface__type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "cairo_pdf_surface_pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_pdf_surface__cairo_pdf_surface_pointer")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "cairo_pdf_surface_pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_pdf_surface__cairo_pdf_surface_pointer__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "destroy"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_pdf_surface__destroy")));}
+  return this;
+}
+
+
+
+// cairo_ps_surface
+
+f2ptr f2cairo_ps_surface__new(f2ptr cause, f2ptr cairo_ps_surface_pointer) {
+  f2ptr this = f2cairo_surface__new(cause, cairo_ps_surface_pointer);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "cairo_ps_surface"));
+  return this;
+}
+
+f2ptr raw__cairo_ps_surface__new(f2ptr cause, f2ptr filename, f2ptr width, f2ptr height) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_surface_t* cairo_surface;
+  {
+    s64 filename__length = raw__string__length(cause, filename);
+    u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
+    raw__string__str_copy(cause, filename, filename__str);
+    filename__str[filename__length] = 0;
+    double width__d  = f2double__d(width,  cause);
+    double height__d = f2double__d(height, cause);
+    cairo_surface = cairo_ps_surface_create((char*)filename__str,
+					     width__d,
+					     height__d);
+    f2__free(to_ptr(filename__str));
+  }
+  cairo_status_t status = cairo_surface_status(cairo_surface);
+  if (status != CAIRO_STATUS_SUCCESS) {
+    f2ptr cairo_status = nil;
+    switch(status) {
+    case CAIRO_STATUS_NULL_POINTER:    cairo_status = new__symbol(cause, "CAIRO_STATUS_NULL_POINTER");    break;
+    case CAIRO_STATUS_NO_MEMORY:       cairo_status = new__symbol(cause, "CAIRO_STATUS_NO_MEMORY");       break;
+    case CAIRO_STATUS_READ_ERROR:      cairo_status = new__symbol(cause, "CAIRO_STATUS_READ_ERROR");      break;
+    case CAIRO_STATUS_INVALID_CONTENT: cairo_status = new__symbol(cause, "CAIRO_STATUS_INVALID_CONTENT"); break;
+    case CAIRO_STATUS_INVALID_FORMAT:  cairo_status = new__symbol(cause, "CAIRO_STATUS_INVALID_FORMAT");  break;
+    case CAIRO_STATUS_INVALID_VISUAL:  cairo_status = new__symbol(cause, "CAIRO_STATUS_INVALID_VISUAL");  break;
+    default:                           cairo_status = new__symbol(cause, "unknown");                      break;
+    }
+    cairo_surface_destroy(cairo_surface);
+    return f2larva__new(cause, 44321, f2__bug__new(cause, f2integer__new(cause, 44321), f2__frame__new(cause, f2list10__new(cause,
+															    new__symbol(cause, "bug_type"),     new__symbol(cause, "failure_to_create_cairo_ps_surface"),
+															    new__symbol(cause, "cairo_status"), cairo_status,
+															    new__symbol(cause, "filename"),     filename,
+															    new__symbol(cause, "width"),        width,
+															    new__symbol(cause, "height"),       height))));
+  }
+  f2ptr cairo_ps_surface_pointer = f2pointer__new(cause, to_ptr(cairo_surface));
+  return f2cairo_ps_surface__new(cause, cairo_ps_surface_pointer);
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_ps_surface__new(f2ptr cause, f2ptr filename, f2ptr width, f2ptr height) {
+  if ((! raw__string__is_type(cause, filename)) ||
+      (! raw__double__is_type(cause, width)) ||
+      (! raw__double__is_type(cause, height))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_ps_surface__new(cause, filename, width, height);
+}
+export_cefunk3(cairo_ps_surface__new, filename, width, height, 0, "Returns a new cairo_ps_surface object.");
+
+
+boolean_t raw__cairo_ps_surface__is_type(f2ptr cause, f2ptr thing) {
+  if (! raw__frame__is_type(cause, thing)) {
+    return boolean__false;
+  }
+  f2ptr this_type_name_symbol = new__symbol(cause, "cairo_ps_surface");
+  f2ptr thing_type_name       = f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil);
+  if (raw__eq(cause, this_type_name_symbol, thing_type_name)) {
+    return boolean__true;
+  }
+  f2ptr thing_type = f2__lookup_type(cause, thing_type_name);
+  if (raw__primobject_type__has_parent_type(cause, thing_type, this_type_name_symbol)) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
+f2ptr f2__cairo_ps_surface__is_type(f2ptr cause, f2ptr thing) {
+  return f2bool__new(raw__cairo_ps_surface__is_type(cause, thing));
+}
+export_cefunk1(cairo_ps_surface__is_type, thing, 0, "Returns whether or not thing is of type cairo_ps_surface.");
+
+
+f2ptr raw__cairo_ps_surface__type(f2ptr cause, f2ptr this) {
+  return f2__object__type(cause, this);
+}
+
+f2ptr f2__cairo_ps_surface__type(f2ptr cause, f2ptr this) {
+  if (! raw__cairo_ps_surface__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_ps_surface__type(cause, this);
+}
+export_cefunk1(cairo_ps_surface__type, thing, 0, "Returns the specific type of object that this cairo_ps_surface is.");
+
+
+f2ptr raw__cairo_ps_surface__cairo_ps_surface_pointer(f2ptr cause, f2ptr this) {
+  return raw__cairo_surface__cairo_surface_pointer(cause, this);
+}
+
+f2ptr f2__cairo_ps_surface__cairo_ps_surface_pointer(f2ptr cause, f2ptr this) {
+  if (! raw__cairo_ps_surface__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_ps_surface__cairo_ps_surface_pointer(cause, this);
+}
+export_cefunk1(cairo_ps_surface__cairo_ps_surface_pointer, thing, 0, "Returns the cairo_ps_surface_pointer of the cairo_ps_surface.");
+
+
+f2ptr raw__cairo_ps_surface__cairo_ps_surface_pointer__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return raw__cairo_surface__cairo_surface_pointer__set(cause, this, value);
+}
+
+f2ptr f2__cairo_ps_surface__cairo_ps_surface_pointer__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__cairo_ps_surface__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_ps_surface__cairo_ps_surface_pointer__set(cause, this, value);
+}
+export_cefunk2(cairo_ps_surface__cairo_ps_surface_pointer__set, thing, value, 0, "Sets the cairo_ps_surface_pointer of the cairo_ps_surface.");
+
+
+f2ptr f2__cairo_ps_surface_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "cairo_surface")));
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_ps_surface__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_ps_surface__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_ps_surface__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "cairo_ps_surface_pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_ps_surface__cairo_ps_surface_pointer")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "cairo_ps_surface_pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_ps_surface__cairo_ps_surface_pointer__set")));}
   return this;
 }
 
@@ -900,6 +1013,7 @@ f2ptr f2__cairo__core_extension__initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "cairo_image_surface"), f2__cairo_image_surface_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "cairo_svg_surface"),   f2__cairo_svg_surface_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "cairo_pdf_surface"),   f2__cairo_pdf_surface_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "cairo_ps_surface"),    f2__cairo_ps_surface_type__new(cause));
   {
     f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__core_extension__ping")), nil);
     if (raw__larva__is_type(cause, result)) {

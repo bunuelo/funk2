@@ -576,7 +576,7 @@ f2ptr raw__cairo_image_surface__destroy(f2ptr cause, f2ptr this) {
   cairo_image_surface_destroy(cairo_image_surface);
   return nil;
 #else
-  return f2__cairo_image_surface_not_supported_larva__new(cause);
+  return f2__cairo_not_supported_larva__new(cause);
 #endif // F2__CAIRO_IMAGE_SURFACE_SUPPORTED
 }
 

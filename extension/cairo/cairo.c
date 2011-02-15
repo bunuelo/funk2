@@ -206,7 +206,7 @@ cairo_t* raw__cairo_context__as__cairo_t(f2ptr cause, f2ptr this) {
 
 
 f2ptr raw__cairo_context__cairo_context_pointer__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return raw__cairo_context_object__cairo_object_pointer__set(cause, this, value);
+  return raw__cairo_object__cairo_object_pointer__set(cause, this, value);
 }
 
 f2ptr f2__cairo_context__cairo_context_pointer__set(f2ptr cause, f2ptr this, f2ptr value) {

@@ -636,7 +636,7 @@ f2ptr raw__cairo_svg_surface__new(f2ptr cause, f2ptr filename, f2ptr width, f2pt
     return f2larva__new(cause, 44321, f2__bug__new(cause, f2integer__new(cause, 44321), f2__frame__new(cause, f2list10__new(cause,
 															    new__symbol(cause, "bug_type"),     new__symbol(cause, "failure_to_create_svg_cairo_surface"),
 															    new__symbol(cause, "cairo_status"), cairo_status,
-															    new__symbol(cause, "format"),       format,
+															    new__symbol(cause, "filename"),     filename,
 															    new__symbol(cause, "width"),        width,
 															    new__symbol(cause, "height"),       height))));
   }

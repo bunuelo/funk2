@@ -522,7 +522,7 @@ f2ptr raw__cairo_image_surface__as__image(f2ptr cause, f2ptr this) {
   if (! raw__eq(cause, format, new__symbol(cause, "ARGB32"))) {
     return f2larva__new(cause, 2132, nil);
   }
-  cairo_surface_t* cairo_surface = raw__cairo_image_surface__as__cairo_surface_t(cause, this);
+  cairo_surface_t* cairo_surface = raw__cairo_surface__as__cairo_surface_t(cause, this);
   unsigned char*   data          = cairo_image_surface_get_data(  cairo_surface);
   s64              width         = cairo_image_surface_get_width( cairo_surface);
   s64              height        = cairo_image_surface_get_height(cairo_surface);

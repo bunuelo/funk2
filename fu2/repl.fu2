@@ -137,7 +137,7 @@
 								  t]]
 		    [t                                      [prog [if output-terminal [terminal_format output-terminal [list 'error stream_repl-io: unexpected exception ' eval-exp]]]
 								  eval-exp]]]]
-	  [prog [if output-terminal [prog [ansi-stream-foreground [get output-terminal stream] terminal_repl-prompt_color] [terminal_format output-terminal '\nout-> '] [ansi-stream-reset]
+	  [prog [if output-terminal [prog [ansi-stream-foreground [get output-terminal stream] terminal_repl-prompt_color] [terminal_format output-terminal '\nout-> '] [ansi-stream-reset [get output-terminal stream]]
 					  [terminal_write output-terminal eval-exp]]]
 		[terminal_repl-io input-stream output-terminal]]]]]]]
 

@@ -578,6 +578,51 @@ export_cefunk2(cairo_context__text_path, this, text, 0,
 	       "cr : 	a cairo context"
 	       "utf8 : 	a string of text encoded in UTF-8 ");
 
+#if defined(F2__CAIRO_SUPPORTED)
+boolean_t raw__cairo_line_cap__is_type(f2ptr cause, f2ptr object) {
+  return (raw__eq(cause, object, new__symbol(cause, "butt")) ||
+	  raw__eq(cause, object, new__symbol(cause, "round")) ||
+	  raw__eq(cause, object, new__symbol(cause, "square")));
+}
+
+cairo_line_cap_t raw__cairo_line_cap__as__cairo_line_cap_t(f2ptr cause, f2ptr this) {
+  if (raw__eq(cause, object, new__symbol(cause, "butt"))) {
+    return CAIRO_LINE_CAP_BUTT;
+  } else if (raw__eq(cause, object, new__symbol(cause, "round"))) {
+    return CAIRO_LINE_CAP_ROUND;
+  } else if (raw__eq(cause, object, new__symbol(cause, "square"))) {
+    return CAIRO_LINE_CAP_SQUARE;
+  }
+  error(nil, "raw__cairo_line_cap__as__cairo_line_cap_t error: incorrect type.");
+}
+#endif // F2__CAIRO_SUPPORTED
+
+
+f2ptr raw__cairo_context__set_line_cap(f2ptr cause, f2ptr this, f2ptr line_cap) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t*         cairo_context  = raw__cairo_context__as__cairo_t(cause, this);
+  cairo_line_cap_t cairo_line_cap = raw__cairo_line_cap__as__cairo_line_cap_t(cause, line_cap);
+  cairo_set_line_cap(cairo_context, cairo_line_cap);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__set_line_cap(f2ptr cause, f2ptr this, f2ptr line_cap) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__cairo_line_cap__is_type(cause, line_cap))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_context__set_line_cap(cause, this, line_cap);
+}
+export_cefunk2(cairo_context__set_line_cap, this, line_cap, 0,
+	       "Sets the current line cap style within the cairo context. See cairo_line_cap_t for details about how the available line cap styles are drawn.\n"
+	       "\n"
+	       "As with the other stroke parameters, the current line cap style is examined by cairo_stroke(), cairo_stroke_extents(), and cairo_stroke_to_path(), but does not have any effect during path construction.\n"
+	       "\n"
+	       "cr : 	a cairo context\n"
+	       "line_cap : 	a line cap style [butt, round, or square]");
 
 f2ptr raw__cairo_context__fill(f2ptr cause, f2ptr this) {
 #if defined(F2__CAIRO_SUPPORTED)
@@ -720,6 +765,7 @@ f2ptr f2__cairo_context_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "rel_move_to"),           f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__rel_move_to")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "rel_line_to"),           f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__rel_line_to")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "text_path"),             f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__text_path")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "set_line_cap"),          f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__set_line_cap")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "fill"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__fill")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "fill_preserve"),         f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__fill_preserve")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "paint"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__paint")));}

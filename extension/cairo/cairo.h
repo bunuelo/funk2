@@ -25,19 +25,22 @@
 #include "../../c/funk2.h"
 #include "../image/image.h"
 
-f2ptr        f2cairo__new(               f2ptr cause, f2ptr cairo_pointer);
-f2ptr     raw__cairo__new(               f2ptr cause, f2ptr target);
-f2ptr      f2__cairo__new(               f2ptr cause, f2ptr target);
-boolean_t raw__cairo__is_type(           f2ptr cause, f2ptr thing);
-f2ptr      f2__cairo__is_type(           f2ptr cause, f2ptr thing);
-f2ptr     raw__cairo__type(              f2ptr cause, f2ptr this);
-f2ptr      f2__cairo__type(              f2ptr cause, f2ptr this);
-f2ptr     raw__cairo__cairo_pointer(     f2ptr cause, f2ptr this);
-f2ptr      f2__cairo__cairo_pointer(     f2ptr cause, f2ptr this);
-f2ptr     raw__cairo__cairo_pointer__set(f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__cairo__cairo_pointer__set(f2ptr cause, f2ptr this, f2ptr value);
 
-f2ptr f2__cairo_type__new(f2ptr cause);
+// cairo_context
+
+f2ptr        f2cairo_context__new(                       f2ptr cause, f2ptr cairo_context_pointer);
+f2ptr     raw__cairo_context__new(                       f2ptr cause, f2ptr target);
+f2ptr      f2__cairo_context__new(                       f2ptr cause, f2ptr target);
+boolean_t raw__cairo_context__is_type(                   f2ptr cause, f2ptr thing);
+f2ptr      f2__cairo_context__is_type(                   f2ptr cause, f2ptr thing);
+f2ptr     raw__cairo_context__type(                      f2ptr cause, f2ptr this);
+f2ptr      f2__cairo_context__type(                      f2ptr cause, f2ptr this);
+f2ptr     raw__cairo_context__cairo_context_pointer(     f2ptr cause, f2ptr this);
+f2ptr      f2__cairo_context__cairo_context_pointer(     f2ptr cause, f2ptr this);
+f2ptr     raw__cairo_context__cairo_context_pointer__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__cairo_context__cairo_context_pointer__set(f2ptr cause, f2ptr this, f2ptr value);
+
+f2ptr f2__cairo_context_type__new(f2ptr cause);
 
 
 // cairo_surface

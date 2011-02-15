@@ -37,7 +37,7 @@ f2ptr f2cairo__new(f2ptr cause, f2ptr cairo_pointer) {
 }
 
 f2ptr raw__cairo__new(f2ptr cause, f2ptr target) {
-#if defined(f2__CAIRO_SUPPORTED)
+#if defined(F2__CAIRO_SUPPORTED)
   cairo_surface_t* cairo_surface = raw__cairo_surface__as__cairo_surface_t(cause, target);
   cairo_t*         cairo         = cairo_create(cairo_surface);
   cairo_status_t   status        = cairo_status(cairo);

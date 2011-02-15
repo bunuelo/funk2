@@ -544,6 +544,41 @@ export_cefunk3(cairo_context__rel_line_to, this, x, y, 0,
 	       "dy : 	the Y offset to the end of the new line");
 
 
+f2ptr raw__cairo_context__text_path(f2ptr cause, f2ptr this) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  s64      text__length = raw__string__length(cause, text);
+  u8*      text__str    = (u8*)from_ptr(f2__malloc(text__length + 1));
+  raw__string__str_copy(cause, text, text__str);
+  text__str[text__length] = 0;
+  cairo_text_path(cairo_context, text__str);
+  f2__free(to_ptr(text__str));
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__text_path(f2ptr cause, f2ptr this, f2ptr text) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__string__is_type(cause, text))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_context__text_path(cause, this, text);
+}
+export_cefunk2(cairo_context__text_path, this, text, 0,
+	       "Adds closed paths for text to the current path. The generated path if filled, achieves an effect similar to that of cairo_show_text()."
+	       ""
+	       "Text conversion and positioning is done similar to cairo_show_text()."
+	       ""
+	       "Like cairo_show_text(), After this call the current point is moved to the origin of where the next glyph would be placed in this same progression. That is, the current point will be at the origin of the final glyph offset by its advance values. This allows for chaining multiple calls to to cairo_text_path() without having to set current point in between."
+	       ""
+	       "NOTE: The cairo_text_path() function call is part of what the cairo designers call the \"toy\" text API. It is convenient for short demos and simple programs, but it is not expected to be adequate for serious text-using applications. See cairo_glyph_path() for the \"real\" text path API in cairo."
+	       ""
+	       "cr : 	a cairo context"
+	       "utf8 : 	a string of text encoded in UTF-8 ");
+
+
 f2ptr raw__cairo_context__fill(f2ptr cause, f2ptr this) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
@@ -684,6 +719,7 @@ f2ptr f2__cairo_context_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "line_to"),               f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__line_to")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "rel_move_to"),           f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__rel_move_to")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "rel_line_to"),           f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__rel_line_to")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "text_path"),             f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__text_path")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "fill"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__fill")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "fill_preserve"),         f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__fill_preserve")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "paint"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__paint")));}

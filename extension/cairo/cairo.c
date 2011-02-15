@@ -184,7 +184,7 @@ export_cefunk1(cairo_context__type, thing, 0, "Returns the specific type of obje
 
 
 f2ptr raw__cairo_context__cairo_context_pointer(f2ptr cause, f2ptr this) {
-  return raw__cairo_context_object__cairo_object_pointer(cause, this);
+  return raw__cairo_object__cairo_object_pointer(cause, this);
 }
 
 f2ptr f2__cairo_context__cairo_context_pointer(f2ptr cause, f2ptr this) {

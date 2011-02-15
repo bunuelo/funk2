@@ -391,6 +391,40 @@ f2ptr f2__cairo_surface__destroy(f2ptr cause, f2ptr this) {
 export_cefunk1(cairo_surface__destroy, this, 0, "Destroys the cairo_surface.");
 
 
+f2ptr raw__cairo_surface__write_to_png(f2ptr cause, f2ptr this, f2ptr filename) {
+  s64 filename__length = raw__string__length(cause, filename);
+  u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
+  raw__string__str_copy(cause, filename, filename__str);
+  filename__str[filename__length] = 0;
+  cairo_surface_t* cairo_surface = raw__cairo_surface__as__cairo_surface_t(cause, this);
+  cairo_surface_write_to_png(cairo_surface, filename__str);
+  cairo_status_t status = cairo_surface_status(cairo_surface);
+  f2__free(to_ptr(filename__str));
+  if (status != CAIRO_STATUS_SUCCESS) {
+    f2ptr cairo_status;
+    switch(status) {
+    case CAIRO_STATUS_NO_MEMORY:             cairo_status = new__symbol(cause, "CAIRO_STATUS_NO_MEMORY");             break;
+    case CAIRO_STATUS_SURFACE_TYPE_MISMATCH: cairo_status = new__symbol(cause, "CAIRO_STATUS_SURFACE_TYPE_MISMATCH"); break;
+    case CAIRO_STATUS_WRITE_ERROR:           cairo_status = new__symbol(cause, "CAIRO_STATUS_WRITE_ERROR");           break;
+    }
+    return f2larva__new(cause, 1351, f2__bug__new(cause, f2integer__new(cause, 1351), f2__frame__new(cause, f2list8__new(cause,
+															 new__symbol(cause, "bug_type"),     new__symbol(cause, "error_writing_cairo_surface_to_png_file"),
+															 new__symbol(cause, "cairo_status"), cairo_status,
+															 new__symbol(cause, "this"),         this,
+															 new__symbol(cause, "filename"),     filename))));
+  }
+  return nil;
+}
+
+f2ptr f2__cairo_surface__write_to_png(f2ptr cause, f2ptr this, f2ptr filename) {
+  if ((! raw__cairo_surface__is_type(cause, this)) ||
+      (! raw__string__is_type(cause, filename))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_surface__write_to_png(cause, this, filename);
+}
+export_cefunk2(cairo_surface__write_to_png, this, filename, 0, "Writes this cairo_surface to the given filename as a png file.");
+
 
 f2ptr f2__cairo_surface_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "cairo_object")));
@@ -399,6 +433,7 @@ f2ptr f2__cairo_surface_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "cairo_surface_pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_surface__cairo_surface_pointer")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "cairo_surface_pointer"), f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_surface__cairo_surface_pointer__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "destroy"),               f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_surface__destroy")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "write_to_png"),          f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_surface__write_to_png")));}
   return this;
 }
 

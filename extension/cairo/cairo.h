@@ -40,6 +40,23 @@ f2ptr      f2__cairo__cairo_pointer__set(f2ptr cause, f2ptr this, f2ptr value);
 f2ptr f2__cairo_type__new(f2ptr cause);
 
 
+// cairo_surface
+
+f2ptr        f2cairo_surface__new                       (f2ptr cause, f2ptr cairo_surface_pointer);
+boolean_t raw__cairo_surface__is_type                   (f2ptr cause, f2ptr thing);
+f2ptr      f2__cairo_surface__is_type                   (f2ptr cause, f2ptr thing);
+f2ptr     raw__cairo_surface__type                      (f2ptr cause, f2ptr this);
+f2ptr      f2__cairo_surface__type                      (f2ptr cause, f2ptr this);
+f2ptr     raw__cairo_surface__cairo_surface_pointer     (f2ptr cause, f2ptr this);
+f2ptr      f2__cairo_surface__cairo_surface_pointer     (f2ptr cause, f2ptr this);
+f2ptr     raw__cairo_surface__cairo_surface_pointer__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__cairo_surface__cairo_surface_pointer__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr     raw__cairo_surface__destroy                   (f2ptr cause, f2ptr this);
+f2ptr      f2__cairo_surface__destroy                   (f2ptr cause, f2ptr this);
+
+f2ptr f2__cairo_surface_type__new(f2ptr cause);
+
+
 // cairo_image_surface
 
 f2ptr        f2cairo_image_surface__new                             (f2ptr cause, f2ptr cairo_image_surface_pointer);

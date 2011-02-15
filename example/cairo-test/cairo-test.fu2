@@ -19,6 +19,8 @@
 
 [defunk cairo-test:cairo_context-render [context]
   [have context set_source_rgba 0.0 0.0 0.0 1.0]
+  [have context paint]
+  [have context set_source_rgba 1.0 1.0 1.0 1.0]
   [have context arc 36.0 36.0 36.0 0.0 [/ [* 45.0 pi] 180.0]]
   [have context stroke]
   ]

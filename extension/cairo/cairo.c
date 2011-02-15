@@ -485,16 +485,8 @@ f2ptr f2__cairo_image_surface__cairo_image_surface_pointer(f2ptr cause, f2ptr th
 export_cefunk1(cairo_image_surface__cairo_image_surface_pointer, thing, 0, "Returns the cairo_image_surface_pointer of the cairo_image_surface.");
 
 
-#if defined(F2__CAIRO_SUPPORTED)
-cairo_surface_t* raw__cairo_image_surface__as__cairo_surface_t(f2ptr cause, f2ptr this) {
-  f2ptr            cairo_image_surface_pointer = raw__cairo_image_surface__cairo_image_surface_pointer(cause, this);
-  cairo_surface_t* cairo_surface               = from_ptr(f2pointer__p(cairo_image_surface_pointer, cause));
-  return cairo_surface;
-}
-#endif // F2__CAIRO_SUPPORTED
-
 f2ptr raw__cairo_image_surface__cairo_image_surface_pointer__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "cairo_image_surface_pointer"), value);
+  return raw__cairo_surface__cairo_surface_pointer__set(cause, this, value);
 }
 
 f2ptr f2__cairo_image_surface__cairo_image_surface_pointer__set(f2ptr cause, f2ptr this, f2ptr value) {

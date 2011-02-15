@@ -586,11 +586,11 @@ boolean_t raw__cairo_line_cap__is_type(f2ptr cause, f2ptr object) {
 }
 
 cairo_line_cap_t raw__cairo_line_cap__as__cairo_line_cap_t(f2ptr cause, f2ptr this) {
-  if (raw__eq(cause, object, new__symbol(cause, "butt"))) {
+  if        (raw__eq(cause, this, new__symbol(cause, "butt"))) {
     return CAIRO_LINE_CAP_BUTT;
-  } else if (raw__eq(cause, object, new__symbol(cause, "round"))) {
+  } else if (raw__eq(cause, this, new__symbol(cause, "round"))) {
     return CAIRO_LINE_CAP_ROUND;
-  } else if (raw__eq(cause, object, new__symbol(cause, "square"))) {
+  } else if (raw__eq(cause, this, new__symbol(cause, "square"))) {
     return CAIRO_LINE_CAP_SQUARE;
   }
   error(nil, "raw__cairo_line_cap__as__cairo_line_cap_t error: incorrect type.");

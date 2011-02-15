@@ -284,25 +284,23 @@ Note: As of cairo version 1.2.4 any call to cairo_close_path will place an expli
 
 
 
-f2ptr raw__cairo_context__arc(f2ptr cause, f2ptr this, f2ptr cr, f2ptr xc, f2ptr yc, f2ptr radius, f2ptr angle1, f2ptr angle2) {
+f2ptr raw__cairo_context__arc(f2ptr cause, f2ptr this, f2ptr xc, f2ptr yc, f2ptr radius, f2ptr angle1, f2ptr angle2) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
-  double   cr__d         = f2double__d(cr, cause);
   double   xc__d         = f2double__d(xc, cause);
   double   yc__d         = f2double__d(yc, cause);
   double   radius__d     = f2double__d(radius, cause);
   double   angle1__d     = f2double__d(angle1, cause);
   double   angle2__d     = f2double__d(angle2, cause);
-  cairo_arc(cairo_context, cr__d, xc__d, yc__d, radius__d, angle1__d, angle2__d);
+  cairo_arc(cairo_context, xc__d, yc__d, radius__d, angle1__d, angle2__d);
   return nil;
 #else
   return f2__cairo_not_supported_larva__new(cause);
 #endif // F2__CAIRO_SUPPORTED
 }
 
-f2ptr f2__cairo_context__arc(f2ptr cause, f2ptr this, f2ptr cr, f2ptr xc, f2ptr yc, f2ptr radius, f2ptr angle1, f2ptr angle2) {
+f2ptr f2__cairo_context__arc(f2ptr cause, f2ptr this, f2ptr xc, f2ptr yc, f2ptr radius, f2ptr angle1, f2ptr angle2) {
   if ((! raw__cairo_context__is_type(cause, this)) ||
-      (! raw__double__is_type(cause, cr)) ||
       (! raw__double__is_type(cause, xc)) ||
       (! raw__double__is_type(cause, yc)) ||
       (! raw__double__is_type(cause, radius)) ||
@@ -310,9 +308,9 @@ f2ptr f2__cairo_context__arc(f2ptr cause, f2ptr this, f2ptr cr, f2ptr xc, f2ptr 
       (! raw__double__is_type(cause, angle2))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo_context__arc(cause, this, cr, xc, yc, radius, angle1, angle2);
+  return raw__cairo_context__arc(cause, this, xc, yc, radius, angle1, angle2);
 }
-export_cefunk7(cairo_context__arc, this, cr, xc, yc, radius, angle1, angle2, 0, "Adds a circular arc of the given radius to the current path. The arc is centered at (xc, yc), begins at angle1 and proceeds in the direction of increasing angles to end at angle2. If angle2 is less than angle1 it will be progressively increased by 2*M_PI until it is greater than angle1.
+export_cefunk6(cairo_context__arc, this, xc, yc, radius, angle1, angle2, 0, "Adds a circular arc of the given radius to the current path. The arc is centered at (xc, yc), begins at angle1 and proceeds in the direction of increasing angles to end at angle2. If angle2 is less than angle1 it will be progressively increased by 2*M_PI until it is greater than angle1.
 
 If there is a current point, an initial line segment will be added to the path to connect the current point to the beginning of the arc.
 

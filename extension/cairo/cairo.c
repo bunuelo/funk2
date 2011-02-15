@@ -549,9 +549,9 @@ f2ptr raw__cairo_context__text_path(f2ptr cause, f2ptr this, f2ptr text) {
   cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
   s64      text__length = raw__string__length(cause, text);
   u8*      text__str    = (u8*)from_ptr(f2__malloc(text__length + 1));
-  raw__string__str_copy(cause, text, (char*)text__str);
+  raw__string__str_copy(cause, text, text__str);
   text__str[text__length] = 0;
-  cairo_text_path(cairo_context, text__str);
+  cairo_text_path(cairo_context, (char*)text__str);
   f2__free(to_ptr(text__str));
   return nil;
 #else

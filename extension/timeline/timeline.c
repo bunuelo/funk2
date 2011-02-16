@@ -29,9 +29,7 @@ def_ceframe1(timeline, timeline, width);
 
 
 f2ptr raw__timeline__new(f2ptr cause, f2ptr timeline_events) {
-  return f2__frame__new(cause, f2list4__new(cause,
-					    new__symbol(cause, "type"),  new__symbol(cause, "timeline"),
-					    new__symbol(cause, "width"), width));
+  return f2timeline__new(cause, width);
 }
 
 f2ptr f2__timeline__new(f2ptr cause, f2ptr width) {

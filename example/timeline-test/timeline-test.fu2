@@ -1,0 +1,61 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[defunk cairo-test:cairo_context-render [context]
+  [have context set_source_rgba 0.0 0.0 0.0 1.0]
+  [have context paint]
+  [have context set_source_rgba 1.0 1.0 1.0 1.0]
+  [have context arc 36.0 36.0 35.0 0.0 [/ [* 360.0 pi] 180.0]]
+  [have context stroke]
+  [have context set_line_cap `square]
+  [have context move_to 36.0 36.0]
+  [have context set_line_cap `round]
+  [have context rel_line_to 34.0 0.0]
+  [have context stroke]
+  [have context move_to 36.0 35.0]
+  [have context select_font_face 'Courier' `normal `normal]
+  [have context set_font_size 1.0]
+  [have context text_path 'cairo funk']
+  [have context fill]
+  ]
+
+[defunk cairo-test []
+  [let [[pdf_surface   [new cairo_pdf_surface   'cairo-test.pdf' 72.0 72.0]]
+	[svg_surface   [new cairo_svg_surface   'cairo-test.svg' 72.0 72.0]]
+	[ps_surface    [new cairo_ps_surface    'cairo-test.ps'  72.0 72.0]]
+	[image_surface [new cairo_image_surface `ARGB32          72   72]]]
+    [let [[pdf_context   [new cairo_context pdf_surface]]
+	  [svg_context   [new cairo_context svg_surface]]
+	  [ps_context    [new cairo_context ps_surface]]
+	  [image_context [new cairo_context image_surface]]]
+      [cairo-test:cairo_context-render pdf_context]
+      [cairo-test:cairo_context-render svg_context]
+      [cairo-test:cairo_context-render ps_context]
+      [cairo-test:cairo_context-render image_context]
+      [have image_surface write_to_png 'cairo-test.png']
+      [have pdf_surface   destroy]
+      [have svg_surface   destroy]
+      [have ps_surface    destroy]
+      [have image_surface destroy]
+      [have pdf_context   destroy]
+      [have svg_context   destroy]
+      [have ps_context    destroy]
+      [have image_context destroy]
+      nil]]]
+

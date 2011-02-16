@@ -161,6 +161,7 @@
 				  'example/roboverse/'
 				  'example/socket-client/'
 				  'example/socket-server/'
+				  'example/timeline-test/'
 				  'example/traced_mind/'
 				  'example/xmlrpc-test/'
 				  ]]

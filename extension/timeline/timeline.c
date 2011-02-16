@@ -28,7 +28,7 @@ def_ceframe1(timeline, timeline, semantic_knowledge_base);
 
 
 f2ptr raw__timeline__new(f2ptr cause, f2ptr semantic_realm) {
-  f2ptr this = f2__semantic_knowledge_base__new(cause, semantic_realm);
+  f2ptr this = f2__semantic_knowledge_base__new(cause, nil, semantic_realm);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "timeline"));
   return this;
 }

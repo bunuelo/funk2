@@ -38,7 +38,7 @@ f2ptr f2__timeline_event__new(f2ptr cause, f2ptr semantic_realm) {
   }
   return raw__timeline_event__new(cause, semantic_realm);
 }
-export_cefunk2(timeline_event__new, semantic_realm, 0, "Returns a new timeline_event object.");
+export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_event object.");
 
 
 f2ptr raw__timeline_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

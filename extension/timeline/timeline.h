@@ -28,7 +28,7 @@
 
 // timeline
 
-def_header_ceframe1(timeline, width);
+def_header_ceframe0(timeline);
 
 
 

@@ -21,25 +21,29 @@
 
 #include "timeline.h"
 
+// timeline_event
+
+
+
 
 // timeline
 
-def_ceframe1(timeline, timeline, semantic_knowledge_base);
+def_ceframe0(timeline, timeline);
 
 
-f2ptr raw__timeline__new(f2ptr cause, f2ptr semantic_realm) {
-  f2ptr this = f2__semantic_knowledge_base__new(cause, nil, semantic_realm);
+f2ptr raw__timeline__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
+  f2ptr this = f2__semantic_knowledge_base__new(cause, name, semantic_realm);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "timeline"));
   return this;
 }
 
-f2ptr f2__timeline__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr f2__timeline__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
   if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__timeline__new(cause, semantic_realm);
+  return raw__timeline__new(cause, name, semantic_realm);
 }
-export_cefunk1(timeline__new, semantic_realm, 0, "Returns a new timeline object.");
+export_cefunk2(timeline__new, name, semantic_realm, 0, "Returns a new timeline object.");
 
 
 f2ptr raw__timeline__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

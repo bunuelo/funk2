@@ -178,7 +178,7 @@ f2ptr raw__timeline__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr te
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list2__new(cause,
+    frame = f2__frame__new(cause, f2list4__new(cause,
 					       new__symbol(cause, "print_object_type"),  new__symbol(cause, "timeline"),
 					       new__symbol(cause, "timeline_events"),    raw__timeline__timeline_events(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);

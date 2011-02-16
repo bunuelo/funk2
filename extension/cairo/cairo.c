@@ -834,6 +834,31 @@ export_cefunk4(cairo_context__select_font_face, this, family, slant, weight, 0,
 	       "weight : 	the weight for the font\n");
 
 
+f2ptr raw__cairo_context__set_font_size(f2ptr cause, f2ptr this, f2ptr size) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  double   size__d       = f2double__d(size, cause);
+  cairo_set_font_size(cairo_context, size__d);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__set_font_size(f2ptr cause, f2ptr this, f2ptr size) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, size))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_context__set_font_size(cause, this, size);
+}
+export_cefunk2(cairo_context__set_font_size, this, size, 0,
+	       "Sets the current font matrix to a scale by a factor of size, replacing any font matrix previously set with cairo_set_font_size() or cairo_set_font_matrix(). This results in a font size of size user space units. (More precisely, this matrix will result in the font's em-square being a size by size square in user space.)"
+	       ""
+	       "cr : 	a cairo_t"
+	       "size : 	the new font size, in user space units ");
+
+
 f2ptr f2__cairo_context_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "cairo_object")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__new")));}
@@ -860,6 +885,7 @@ f2ptr f2__cairo_context_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "stroke"),                f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__stroke")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "stroke_preserve"),       f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__stroke_preserve")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "select_font_face"),      f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__select_font_face")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "set_font_size"),         f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__set_font_size")));}
   return this;
 }
 

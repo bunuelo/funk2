@@ -18,6 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage timeline
-  :packages [cairo]
+  :packages [semantic_knowledge_base cairo]
    :sources ['timeline-core.fu2']]
 

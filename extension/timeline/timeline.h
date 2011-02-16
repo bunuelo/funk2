@@ -22,6 +22,10 @@
 #ifndef F2__EXTENSION__TIMELINE__H
 #define F2__EXTENSION__TIMELINE__H
 
+#include "../../c/funk2.h"
+#include "../semantic_knowledge_base/semantic_knowledge_base.h"
+#include "../cairo/cairo.h"
+
 // timeline
 
 def_header_ceframe1(timeline, width);

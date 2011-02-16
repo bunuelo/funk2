@@ -176,9 +176,12 @@ export_cefunk1(timeline__timeline_events, this, 0, "Returns a new list of the ti
 f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   //f2ptr timeline_event_set = raw__timeline__timeline_event_set(cause, this);
   raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
-  raw__cairo_context__move_to(        cause, cairo_context, 0, 0);
   raw__cairo_context__set_line_width( cause, cairo_context, 0.001);
-  raw__cairo_context__rel_line_to(    cause, cairo_context, 1, 1);
+  //raw__cairo_context__move_to(        cause, cairo_context, 0, 0);
+  raw__cairo_context__rel_line_to(    cause, cairo_context,  1,  0);
+  raw__cairo_context__rel_line_to(    cause, cairo_context,  0,  1);
+  raw__cairo_context__rel_line_to(    cause, cairo_context, -1,  0);
+  raw__cairo_context__rel_line_to(    cause, cairo_context,  0, -1);
   raw__cairo_context__stroke(         cause, cairo_context);
   return nil;
 }

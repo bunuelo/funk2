@@ -18,6 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage timeline-test
-  :packages [timeline math]
+  :packages [timeline math gtk]
    :sources ['timeline-test.fu2']]
 

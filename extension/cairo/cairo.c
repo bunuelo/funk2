@@ -753,6 +753,87 @@ export_cefunk1(cairo_context__stroke_preserve, this, 0,
 	       "cr : 	a cairo context");
 
 
+// cairo_font_slant
+
+boolean_t raw__cairo_font_slant__is_type(f2ptr cause, f2ptr object) {
+  return (raw__eq(cause, object, new__symbol(cause, "normal")) ||
+	  raw__eq(cause, object, new__symbol(cause, "italic")) ||
+	  raw__eq(cause, object, new__symbol(cause, "oblique")));
+}
+
+#if defined(F2__CAIRO_SUPPORTED)
+cairo_font_slant_t raw__cairo_font_slant__as__cairo_font_slant_t(f2ptr cause, f2ptr this) {
+  if        (raw__eq(cause, this, new__symbol(cause, "normal"))) {
+    return CAIRO_FONT_SLANT_NORMAL;
+  } else if (raw__eq(cause, this, new__symbol(cause, "italic"))) {
+    return CAIRO_FONT_SLANT_ITALIC;
+  } else if (raw__eq(cause, this, new__symbol(cause, "oblique"))) {
+    return CAIRO_FONT_SLANT_OBLIQUE;
+  }
+  error(nil, "raw__cairo_font_slant__as__cairo_font_slant_t error: invalid type.");
+}
+#endif // F2__CAIRO_SUPPORTED
+
+
+// cairo_font_weight
+
+boolean_t raw__cairo_font_weight__is_type(f2ptr cause, f2ptr object) {
+  return (raw__eq(cause, object, new__symbol(cause, "normal")) ||
+	  raw__eq(cause, object, new__symbol(cause, "bold")));
+}
+
+#if defined(F2__CAIRO_SUPPORTED)
+cairo_font_weight_t raw__cairo_font_weight__as__cairo_font_weight_t(f2ptr cause, f2ptr this) {
+  if        (raw__eq(cause, this, new__symbol(cause, "normal"))) {
+    return CAIRO_FONT_WEIGHT_NORMAL;
+  } else if (raw__eq(cause, this, new__symbol(cause, "bold"))) {
+    return CAIRO_FONT_WEIGHT_BOLD;
+  }
+  error(nil, "raw__cairo_font_weight__as__cairo_font_weight_t error: invalid type.");
+}
+#endif // F2__CAIRO_SUPPORTED
+
+
+f2ptr raw__cairo_context__select_font_face(f2ptr cause, f2ptr this, f2ptr family, f2ptr slant, f2ptr weight) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  s64 family__length = raw__string__length(cause, family);
+  u8* family__str    = (u8*)from_ptr(f2__malloc(family__length));
+  raw__string__str_copy(cause, family, family__str);
+  family__str[family__length] = 0;
+  cairo_font_slant_t  cairo_font_slant  = raw__cairo_font_slant__as__cairo_font_slant_t(  cause, slant);
+  cairo_font_weight_t cairo_font_weight = raw__cairo_font_weight__as__cairo_font_weight_t(cause, slant);
+  cairo_select_font_face(cairo_context, family__str, cairo_font_slant, cairo_font_weight);
+  f2__free(to_ptr(family__str));
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__select_font_face(f2ptr cause, f2ptr this, f2ptr family, f2ptr slant, f2ptr weight) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__string__is_type(cause, family)) ||
+      (! raw__cairo_font_slant__is_type(cause, slant)) ||
+      (! raw__cairo_font_weight__is_type(cause, weight))) {
+    return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), f2__frame__new(cause, f2list4__new(cause,
+														   new__symbol(cause, "bug_type"), new__symbol(cause, "wrong_type"),
+														   new__symbol(cause, "help"),     new__string(cause,
+																			       "\nfamily : 	a font family name, encoded in a UTF-8 string."
+																			       "\nslant : 	the slant for the font, one of the symbols, `normal, `italic, or `oblique."
+																			       "\nweight : 	the weight for the font, one of the symbol, `normal or `bold.")))));
+  }
+  return raw__cairo_context__select_font_face(cause, this, family, slant, weight);
+}
+export_cefunk4(cairo_context__select_font_face, this, family, slant, weight, 0,
+	       "Selects a family and style of font from a simplified description as a family name, slant and weight. This function is meant to be used only for applications with simple font needs: Cairo doesn't provide for operations such as listing all available fonts on the system, and it is expected that most applications will need to use a more comprehensive font handling and text layout library in addition to cairo.\n"
+	       "\n"
+	       "cr : 	a cairo_t\n"
+	       "family : 	a font family name, encoded in UTF-8\n"
+	       "slant : 	the slant for the font\n"
+	       "weight : 	the weight for the font\n");
+
+
 f2ptr f2__cairo_context_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "cairo_object")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__new")));}
@@ -778,6 +859,7 @@ f2ptr f2__cairo_context_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "paint"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__paint")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "stroke"),                f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__stroke")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "stroke_preserve"),       f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__stroke_preserve")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "select_font_face"),      f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__select_font_face")));}
   return this;
 }
 

@@ -25,6 +25,8 @@
     [let [[timeline       [new timeline `test semantic_realm]]
 	  [timeline_event [new timeline_event semantic_realm]]]
       
+      [have timeline add_timeline_event timeline_event]
+      
       [terminal_format standard-terminal '\ntimeline      : ' timeline]
       [terminal_format standard-terminal '\ntimeline_event: ' timeline_event]
       

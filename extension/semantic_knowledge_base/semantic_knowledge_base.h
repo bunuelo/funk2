@@ -193,6 +193,12 @@ f2ptr     raw__semantic_knowledge_base__add_semantic_frame                    (f
 f2ptr      f2__semantic_knowledge_base__add_semantic_frame                    (f2ptr cause, f2ptr this, f2ptr semantic_frame);
 f2ptr     raw__semantic_knowledge_base__add_trace_event                       (f2ptr cause, f2ptr this, f2ptr event);
 f2ptr      f2__semantic_knowledge_base__add_trace_event                       (f2ptr cause, f2ptr this, f2ptr event);
+f2ptr     raw__semantic_knowledge_base__remove_semantic_frame                 (f2ptr cause, f2ptr this, f2ptr semantic_frame);
+f2ptr      f2__semantic_knowledge_base__remove_semantic_frame                 (f2ptr cause, f2ptr this, f2ptr semantic_frame);
+boolean_t raw__semantic_knowledge_base__contains_semantic_frame               (f2ptr cause, f2ptr this, f2ptr semantic_frame);
+f2ptr      f2__semantic_knowledge_base__contains_semantic_frame               (f2ptr cause, f2ptr this, f2ptr semantic_frame);
+void      raw__semantic_knowledge_base__remove_all                            (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_knowledge_base__remove_all                            (f2ptr cause, f2ptr this);
 f2ptr     raw__semantic_knowledge_base__know_of_semantic_frame_value_addition (f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value);
 f2ptr      f2__semantic_knowledge_base__know_of_semantic_frame_value_addition (f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value);
 f2ptr     raw__semantic_knowledge_base__know_of_semantic_frame_value_removal  (f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value);

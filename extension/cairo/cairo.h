@@ -91,19 +91,19 @@ f2ptr     raw__cairo_context__new_path                  (f2ptr cause, f2ptr this
 f2ptr      f2__cairo_context__new_path                  (f2ptr cause, f2ptr this);
 f2ptr     raw__cairo_context__close_path                (f2ptr cause, f2ptr this);
 f2ptr      f2__cairo_context__close_path                (f2ptr cause, f2ptr this);
-f2ptr     raw__cairo_context__arc                       (f2ptr cause, f2ptr this, f2ptr xc, f2ptr yc, f2ptr radius, f2ptr angle1, f2ptr angle2);
+f2ptr     raw__cairo_context__arc                       (f2ptr cause, f2ptr this, double xc, double yc, double radius, double angle1, double angle2);
 f2ptr      f2__cairo_context__arc                       (f2ptr cause, f2ptr this, f2ptr xc, f2ptr yc, f2ptr radius, f2ptr angle1, f2ptr angle2);
-f2ptr     raw__cairo_context__set_source_rgba           (f2ptr cause, f2ptr this, f2ptr red, f2ptr green, f2ptr blue, f2ptr alpha);
+f2ptr     raw__cairo_context__set_source_rgba           (f2ptr cause, f2ptr this, double red, double green, double blue, double alpha);
 f2ptr      f2__cairo_context__set_source_rgba           (f2ptr cause, f2ptr this, f2ptr red, f2ptr green, f2ptr blue, f2ptr alpha);
-f2ptr     raw__cairo_context__move_to                   (f2ptr cause, f2ptr this, f2ptr x, f2ptr y);
+f2ptr     raw__cairo_context__move_to                   (f2ptr cause, f2ptr this, double x, double y);
 f2ptr      f2__cairo_context__move_to                   (f2ptr cause, f2ptr this, f2ptr x, f2ptr y);
-f2ptr     raw__cairo_context__line_to                   (f2ptr cause, f2ptr this, f2ptr x, f2ptr y);
+f2ptr     raw__cairo_context__line_to                   (f2ptr cause, f2ptr this, double x, double y);
 f2ptr      f2__cairo_context__line_to                   (f2ptr cause, f2ptr this, f2ptr x, f2ptr y);
-f2ptr     raw__cairo_context__rel_move_to               (f2ptr cause, f2ptr this, f2ptr x, f2ptr y);
+f2ptr     raw__cairo_context__rel_move_to               (f2ptr cause, f2ptr this, double x, double y);
 f2ptr      f2__cairo_context__rel_move_to               (f2ptr cause, f2ptr this, f2ptr x, f2ptr y);
-f2ptr     raw__cairo_context__rel_line_to               (f2ptr cause, f2ptr this, f2ptr x, f2ptr y);
+f2ptr     raw__cairo_context__rel_line_to               (f2ptr cause, f2ptr this, double x, double y);
 f2ptr      f2__cairo_context__rel_line_to               (f2ptr cause, f2ptr this, f2ptr x, f2ptr y);
-f2ptr     raw__cairo_context__text_path                 (f2ptr cause, f2ptr this, f2ptr text);
+f2ptr     raw__cairo_context__text_path                 (f2ptr cause, f2ptr this, char* text);
 f2ptr      f2__cairo_context__text_path                 (f2ptr cause, f2ptr this, f2ptr text);
 f2ptr     raw__cairo_context__set_line_cap              (f2ptr cause, f2ptr this, f2ptr line_cap);
 f2ptr      f2__cairo_context__set_line_cap              (f2ptr cause, f2ptr this, f2ptr line_cap);
@@ -117,10 +117,12 @@ f2ptr     raw__cairo_context__stroke                    (f2ptr cause, f2ptr this
 f2ptr      f2__cairo_context__stroke                    (f2ptr cause, f2ptr this);
 f2ptr     raw__cairo_context__stroke_preserve           (f2ptr cause, f2ptr this);
 f2ptr      f2__cairo_context__stroke_preserve           (f2ptr cause, f2ptr this);
-f2ptr     raw__cairo_context__select_font_face          (f2ptr cause, f2ptr this, f2ptr family, f2ptr slant, f2ptr weight);
+f2ptr     raw__cairo_context__select_font_face          (f2ptr cause, f2ptr this, char* family, f2ptr slant, f2ptr weight);
 f2ptr      f2__cairo_context__select_font_face          (f2ptr cause, f2ptr this, f2ptr family, f2ptr slant, f2ptr weight);
-f2ptr     raw__cairo_context__set_font_size             (f2ptr cause, f2ptr this, f2ptr size);
+f2ptr     raw__cairo_context__set_font_size             (f2ptr cause, f2ptr this, double size);
 f2ptr      f2__cairo_context__set_font_size             (f2ptr cause, f2ptr this, f2ptr size);
+f2ptr     raw__cairo_context__set_line_width            (f2ptr cause, f2ptr this, double size);
+f2ptr      f2__cairo_context__set_line_width            (f2ptr cause, f2ptr this, f2ptr size);
 
 f2ptr f2__cairo_context_type__new(f2ptr cause);
 

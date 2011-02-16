@@ -397,15 +397,10 @@ export_cefunk1(cairo_context__close_path, this, 0,
 
 
 
-f2ptr raw__cairo_context__arc(f2ptr cause, f2ptr this, f2ptr xc, f2ptr yc, f2ptr radius, f2ptr angle1, f2ptr angle2) {
+f2ptr raw__cairo_context__arc(f2ptr cause, f2ptr this, double xc, double yc, double radius, double angle1, double angle2) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
-  double   xc__d         = f2double__d(xc, cause);
-  double   yc__d         = f2double__d(yc, cause);
-  double   radius__d     = f2double__d(radius, cause);
-  double   angle1__d     = f2double__d(angle1, cause);
-  double   angle2__d     = f2double__d(angle2, cause);
-  cairo_arc(cairo_context, xc__d, yc__d, radius__d, angle1__d, angle2__d);
+  cairo_arc(cairo_context, xc, yc, radius, angle1, angle2);
   return nil;
 #else
   return f2__cairo_not_supported_larva__new(cause);
@@ -421,7 +416,12 @@ f2ptr f2__cairo_context__arc(f2ptr cause, f2ptr this, f2ptr xc, f2ptr yc, f2ptr 
       (! raw__double__is_type(cause, angle2))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo_context__arc(cause, this, xc, yc, radius, angle1, angle2);
+  double xc__d     = f2double__d(xc, cause);
+  double yc__d     = f2double__d(yc, cause);
+  double radius__d = f2double__d(radius, cause);
+  double angle1__d = f2double__d(angle1, cause);
+  double angle2__d = f2double__d(angle2, cause);
+  return raw__cairo_context__arc(cause, this, xc__d, yc__d, radius__d, angle1__d, angle2__d);
 }
 export_cefunk6(cairo_context__arc, this, xc, yc, radius, angle1, angle2, 0,
 	       "Adds a circular arc of the given radius to the current path. The arc is centered at (xc, yc), begins at angle1 and proceeds in the direction of increasing angles to end at angle2. If angle2 is less than angle1 it will be progressively increased by 2*M_PI until it is greater than angle1.\n"
@@ -451,14 +451,10 @@ export_cefunk6(cairo_context__arc, this, xc, yc, radius, angle1, angle2, 0,
 
 
 
-f2ptr raw__cairo_context__set_source_rgba(f2ptr cause, f2ptr this, f2ptr red, f2ptr green, f2ptr blue, f2ptr alpha) {
+f2ptr raw__cairo_context__set_source_rgba(f2ptr cause, f2ptr this, double red, double green, double blue, double alpha) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
-  double   red__d        = f2double__d(red,   cause);
-  double   green__d      = f2double__d(green, cause);
-  double   blue__d       = f2double__d(blue,  cause);
-  double   alpha__d      = f2double__d(alpha, cause);
-  cairo_set_source_rgba(cairo_context, red__d, green__d, blue__d, alpha__d);
+  cairo_set_source_rgba(cairo_context, red, green, blue, alpha);
   return nil;
 #else
   return f2__cairo_not_supported_larva__new(cause);
@@ -473,7 +469,11 @@ f2ptr f2__cairo_context__set_source_rgba(f2ptr cause, f2ptr this, f2ptr red, f2p
       (! raw__double__is_type(cause, alpha))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo_context__set_source_rgba(cause, this, red, green, blue, alpha);
+  double red__d   = f2double__d(red,   cause);
+  double green__d = f2double__d(green, cause);
+  double blue__d  = f2double__d(blue,  cause);
+  double alpha__d = f2double__d(alpha, cause);
+  return raw__cairo_context__set_source_rgba(cause, this, red__d, green__d, blue__d, alpha__d);
 }
 export_cefunk5(cairo_context__set_source_rgba, this, red, green, blue, alpha, 0,
 	       "Sets the source pattern within cr to a translucent color. This color will then be used for any subsequent drawing operation until a new source pattern is set.\n"
@@ -487,12 +487,10 @@ export_cefunk5(cairo_context__set_source_rgba, this, red, green, blue, alpha, 0,
 	       "alpha : 	alpha component of color\n");
 
 
-f2ptr raw__cairo_context__move_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+f2ptr raw__cairo_context__move_to(f2ptr cause, f2ptr this, double x, double y) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
-  double   x__d          = f2double__d(x, cause);
-  double   y__d          = f2double__d(y, cause);
-  cairo_move_to(cairo_context, x__d, y__d);
+  cairo_move_to(cairo_context, x, y);
   return nil;
 #else
   return f2__cairo_not_supported_larva__new(cause);
@@ -505,7 +503,9 @@ f2ptr f2__cairo_context__move_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
       (! raw__double__is_type(cause, y))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo_context__move_to(cause, this, x, y);
+  double x__d = f2double__d(x, cause);
+  double y__d = f2double__d(y, cause);
+  return raw__cairo_context__move_to(cause, this, x__d, y__d);
 }
 export_cefunk3(cairo_context__move_to, this, x, y, 0,
 	       "Begin a new sub-path. After this call the current point will be (x, y).\n"
@@ -515,12 +515,10 @@ export_cefunk3(cairo_context__move_to, this, x, y, 0,
 	       "y : 	the Y coordinate of the new position\n");
 
 
-f2ptr raw__cairo_context__line_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+f2ptr raw__cairo_context__line_to(f2ptr cause, f2ptr this, double x, double y) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
-  double   x__d          = f2double__d(x, cause);
-  double   y__d          = f2double__d(y, cause);
-  cairo_line_to(cairo_context, x__d, y__d);
+  cairo_line_to(cairo_context, x, y);
   return nil;
 #else
   return f2__cairo_not_supported_larva__new(cause);
@@ -533,7 +531,9 @@ f2ptr f2__cairo_context__line_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
       (! raw__double__is_type(cause, y))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo_context__line_to(cause, this, x, y);
+  double x__d = f2double__d(x, cause);
+  double y__d = f2double__d(y, cause);
+  return raw__cairo_context__line_to(cause, this, x__d, y__d);
 }
 export_cefunk3(cairo_context__line_to, this, x, y, 0,
 	       "Adds a line to the path from the current point to position (x, y) in user-space coordinates. After this call the current point will be (x, y).\n"
@@ -545,12 +545,10 @@ export_cefunk3(cairo_context__line_to, this, x, y, 0,
 	       "y : 	the Y coordinate of the end of the new line");
 
 
-f2ptr raw__cairo_context__rel_move_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+f2ptr raw__cairo_context__rel_move_to(f2ptr cause, f2ptr this, double x, double y) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
-  double   x__d          = f2double__d(x, cause);
-  double   y__d          = f2double__d(y, cause);
-  cairo_rel_move_to(cairo_context, x__d, y__d);
+  cairo_rel_move_to(cairo_context, x, y);
   return nil;
 #else
   return f2__cairo_not_supported_larva__new(cause);
@@ -563,7 +561,9 @@ f2ptr f2__cairo_context__rel_move_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) 
       (! raw__double__is_type(cause, y))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo_context__rel_move_to(cause, this, x, y);
+  double x__d = f2double__d(x, cause);
+  double y__d = f2double__d(y, cause);
+  return raw__cairo_context__rel_move_to(cause, this, x__d, y__d);
 }
 export_cefunk3(cairo_context__rel_move_to, this, x, y, 0,
 	       "Begin a new sub-path. After this call the current point will offset by (x, y).\n"
@@ -577,12 +577,10 @@ export_cefunk3(cairo_context__rel_move_to, this, x, y, 0,
 	       "dy : 	the Y offset");
 
 
-f2ptr raw__cairo_context__rel_line_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+f2ptr raw__cairo_context__rel_line_to(f2ptr cause, f2ptr this, double x, double y) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
-  double   x__d          = f2double__d(x, cause);
-  double   y__d          = f2double__d(y, cause);
-  cairo_rel_line_to(cairo_context, x__d, y__d);
+  cairo_rel_line_to(cairo_context, x, y);
   return nil;
 #else
   return f2__cairo_not_supported_larva__new(cause);
@@ -595,7 +593,9 @@ f2ptr f2__cairo_context__rel_line_to(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) 
       (! raw__double__is_type(cause, y))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo_context__rel_line_to(cause, this, x, y);
+  double x__d = f2double__d(x, cause);
+  double y__d = f2double__d(y, cause);
+  return raw__cairo_context__rel_line_to(cause, this, x__d, y__d);
 }
 export_cefunk3(cairo_context__rel_line_to, this, x, y, 0,
 	       "Relative-coordinate version of cairo_line_to(). Adds a line to the path from the current point to a point that is offset from the current point by (dx, dy) in user space. After this call the current point will be offset by (dx, dy).\n"
@@ -609,15 +609,10 @@ export_cefunk3(cairo_context__rel_line_to, this, x, y, 0,
 	       "dy : 	the Y offset to the end of the new line");
 
 
-f2ptr raw__cairo_context__text_path(f2ptr cause, f2ptr this, f2ptr text) {
+f2ptr raw__cairo_context__text_path(f2ptr cause, f2ptr this, char* text) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
-  s64      text__length = raw__string__length(cause, text);
-  u8*      text__str    = (u8*)from_ptr(f2__malloc(text__length + 1));
-  raw__string__str_copy(cause, text, text__str);
-  text__str[text__length] = 0;
-  cairo_text_path(cairo_context, (char*)text__str);
-  f2__free(to_ptr(text__str));
+  cairo_text_path(cairo_context, text);
   return nil;
 #else
   return f2__cairo_not_supported_larva__new(cause);
@@ -629,7 +624,13 @@ f2ptr f2__cairo_context__text_path(f2ptr cause, f2ptr this, f2ptr text) {
       (! raw__string__is_type(cause, text))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo_context__text_path(cause, this, text);
+  s64 text__length = raw__string__length(cause, text);
+  u8* text__str    = (u8*)from_ptr(f2__malloc(text__length + 1));
+  raw__string__str_copy(cause, text, text__str);
+  text__str[text__length] = 0;
+  f2ptr result = raw__cairo_context__text_path(cause, this, (char*)text__str);
+  f2__free(to_ptr(text__str));
+  return result;
 }
 export_cefunk2(cairo_context__text_path, this, text, 0,
 	       "Adds closed paths for text to the current path. The generated path if filled, achieves an effect similar to that of cairo_show_text()."
@@ -795,17 +796,12 @@ export_cefunk1(cairo_context__stroke_preserve, this, 0,
 	       "cr : 	a cairo context");
 
 
-f2ptr raw__cairo_context__select_font_face(f2ptr cause, f2ptr this, f2ptr family, f2ptr slant, f2ptr weight) {
+f2ptr raw__cairo_context__select_font_face(f2ptr cause, f2ptr this, char* family, f2ptr slant, f2ptr weight) {
 #if defined(F2__CAIRO_SUPPORTED)
-  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
-  s64 family__length = raw__string__length(cause, family);
-  u8* family__str    = (u8*)from_ptr(f2__malloc(family__length));
-  raw__string__str_copy(cause, family, family__str);
-  family__str[family__length] = 0;
+  cairo_t*            cairo_context     = raw__cairo_context__as__cairo_t(                cause, this);
   cairo_font_slant_t  cairo_font_slant  = raw__cairo_font_slant__as__cairo_font_slant_t(  cause, slant);
   cairo_font_weight_t cairo_font_weight = raw__cairo_font_weight__as__cairo_font_weight_t(cause, slant);
-  cairo_select_font_face(cairo_context, (char*)family__str, cairo_font_slant, cairo_font_weight);
-  f2__free(to_ptr(family__str));
+  cairo_select_font_face(cairo_context, family, cairo_font_slant, cairo_font_weight);
   return nil;
 #else
   return f2__cairo_not_supported_larva__new(cause);
@@ -824,7 +820,13 @@ f2ptr f2__cairo_context__select_font_face(f2ptr cause, f2ptr this, f2ptr family,
 																			       "\nslant : 	the slant for the font, one of the symbols, `normal, `italic, or `oblique."
 																			       "\nweight : 	the weight for the font, one of the symbol, `normal or `bold.")))));
   }
-  return raw__cairo_context__select_font_face(cause, this, family, slant, weight);
+  s64 family__length = raw__string__length(cause, family);
+  u8* family__str    = (u8*)from_ptr(f2__malloc(family__length));
+  raw__string__str_copy(cause, family, family__str);
+  family__str[family__length] = 0;
+  f2ptr result = raw__cairo_context__select_font_face(cause, this, (char*)family__str, slant, weight);
+  f2__free(to_ptr(family__str));
+  return result;
 }
 export_cefunk4(cairo_context__select_font_face, this, family, slant, weight, 0,
 	       "Selects a family and style of font from a simplified description as a family name, slant and weight. This function is meant to be used only for applications with simple font needs: Cairo doesn't provide for operations such as listing all available fonts on the system, and it is expected that most applications will need to use a more comprehensive font handling and text layout library in addition to cairo.\n"
@@ -835,11 +837,10 @@ export_cefunk4(cairo_context__select_font_face, this, family, slant, weight, 0,
 	       "weight : 	the weight for the font\n");
 
 
-f2ptr raw__cairo_context__set_font_size(f2ptr cause, f2ptr this, f2ptr size) {
+f2ptr raw__cairo_context__set_font_size(f2ptr cause, f2ptr this, double size) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
-  double   size__d       = f2double__d(size, cause);
-  cairo_set_font_size(cairo_context, size__d);
+  cairo_set_font_size(cairo_context, size);
   return nil;
 #else
   return f2__cairo_not_supported_larva__new(cause);
@@ -851,13 +852,45 @@ f2ptr f2__cairo_context__set_font_size(f2ptr cause, f2ptr this, f2ptr size) {
       (! raw__double__is_type(cause, size))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__cairo_context__set_font_size(cause, this, size);
+  double size__d = f2double__d(size, cause);
+  return raw__cairo_context__set_font_size(cause, this, size__d);
 }
 export_cefunk2(cairo_context__set_font_size, this, size, 0,
 	       "Sets the current font matrix to a scale by a factor of size, replacing any font matrix previously set with cairo_set_font_size() or cairo_set_font_matrix(). This results in a font size of size user space units. (More precisely, this matrix will result in the font's em-square being a size by size square in user space.)"
 	       ""
 	       "cr : 	a cairo_t"
 	       "size : 	the new font size, in user space units ");
+
+
+f2ptr raw__cairo_context__set_line_width(f2ptr cause, f2ptr this, double size) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  cairo_set_line_width(cairo_context, size);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__set_line_width(f2ptr cause, f2ptr this, f2ptr size) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, size))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  double size__d = f2double__d(size, cause);
+  return raw__cairo_context__set_line_width(cause, this, size__d);
+}
+export_cefunk2(cairo_context__set_line_width, this, size, 0,
+	       "Sets the current line width within the cairo context. The line width value specifies the diameter of a pen that is circular in user space, (though device-space pen may be an ellipse in general due to scaling/shear/rotation of the CTM).\n"
+	       "\n"
+	       "Note: When the description above refers to user space and CTM it refers to the user space and CTM in effect at the time of the stroking operation, not the user space and CTM in effect at the time of the call to cairo_set_line_width(). The simplest usage makes both of these spaces identical. That is, if there is no change to the CTM between a call to cairo_set_line_with() and the stroking operation, then one can just pass user-space values to cairo_set_line_width() and ignore this note.\n"
+	       "\n"
+	       "As with the other stroke parameters, the current line width is examined by cairo_stroke(), cairo_stroke_extents(), and cairo_stroke_to_path(), but does not have any effect during path construction.\n"
+	       "\n"
+	       "The default line width value is 2.0.\n"
+	       "\n"
+	       "cr : 	a cairo_t\n"
+	       "width : 	a line width");
 
 
 f2ptr f2__cairo_context_type__new(f2ptr cause) {
@@ -887,6 +920,7 @@ f2ptr f2__cairo_context_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "stroke_preserve"),       f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__stroke_preserve")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "select_font_face"),      f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__select_font_face")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "set_font_size"),         f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__set_font_size")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "set_line_width"),        f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__set_line_width")));}
   return this;
 }
 

@@ -987,7 +987,7 @@ f2ptr f2__cairo_context__rotate(f2ptr cause, f2ptr this, f2ptr angle) {
     return f2larva__new(cause, 1, nil);
   }
   double angle__d = f2double__d(angle, cause);
-  return raw__cairo_context__rotate(cause, this, andle__d);
+  return raw__cairo_context__rotate(cause, this, angle__d);
 }
 export_cefunk2(cairo_context__rotate, this, angle, 0,
 	       "Modifies the current transformation matrix (CTM) by rotating the user-space axes by angle radians. The rotation of the axes takes places after any existing transformation of user space. The rotation direction for positive angles is from the positive X axis toward the positive Y axis.\n"

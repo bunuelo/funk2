@@ -803,7 +803,7 @@ f2ptr raw__cairo_context__select_font_face(f2ptr cause, f2ptr this, f2ptr family
   family__str[family__length] = 0;
   cairo_font_slant_t  cairo_font_slant  = raw__cairo_font_slant__as__cairo_font_slant_t(  cause, slant);
   cairo_font_weight_t cairo_font_weight = raw__cairo_font_weight__as__cairo_font_weight_t(cause, slant);
-  cairo_select_font_face(cairo_context, family__str, cairo_font_slant, cairo_font_weight);
+  cairo_select_font_face(cairo_context, (char*)family__str, cairo_font_slant, cairo_font_weight);
   f2__free(to_ptr(family__str));
   return nil;
 #else

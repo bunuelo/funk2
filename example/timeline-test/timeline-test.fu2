@@ -18,8 +18,6 @@
  rights to redistribute these changes.'
 
 
-
-
 [defunk timeline-test []
   [let [[semantic_realm [new semantic_realm]]]
     [let [[timeline       [new timeline `test semantic_realm]]
@@ -29,6 +27,8 @@
       
       [terminal_format standard-terminal '\ntimeline      : ' timeline]
       [terminal_format standard-terminal '\ntimeline_event: ' timeline_event]
+      
+      `[get timeline as-image]
       
       nil]]]
 

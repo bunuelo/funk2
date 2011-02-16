@@ -116,6 +116,71 @@ f2ptr f2__cairo_object_type__new(f2ptr cause) {
 
 
 
+// cairo_line_cap
+
+boolean_t raw__cairo_line_cap__is_type(f2ptr cause, f2ptr object) {
+  return (raw__eq(cause, object, new__symbol(cause, "butt")) ||
+	  raw__eq(cause, object, new__symbol(cause, "round")) ||
+	  raw__eq(cause, object, new__symbol(cause, "square")));
+}
+
+#if defined(F2__CAIRO_SUPPORTED)
+cairo_line_cap_t raw__cairo_line_cap__as__cairo_line_cap_t(f2ptr cause, f2ptr this) {
+  if        (raw__eq(cause, this, new__symbol(cause, "butt"))) {
+    return CAIRO_LINE_CAP_BUTT;
+  } else if (raw__eq(cause, this, new__symbol(cause, "round"))) {
+    return CAIRO_LINE_CAP_ROUND;
+  } else if (raw__eq(cause, this, new__symbol(cause, "square"))) {
+    return CAIRO_LINE_CAP_SQUARE;
+  }
+  error(nil, "raw__cairo_line_cap__as__cairo_line_cap_t error: incorrect type.");
+}
+#endif // F2__CAIRO_SUPPORTED
+
+
+
+
+// cairo_font_slant
+
+boolean_t raw__cairo_font_slant__is_type(f2ptr cause, f2ptr object) {
+  return (raw__eq(cause, object, new__symbol(cause, "normal")) ||
+	  raw__eq(cause, object, new__symbol(cause, "italic")) ||
+	  raw__eq(cause, object, new__symbol(cause, "oblique")));
+}
+
+#if defined(F2__CAIRO_SUPPORTED)
+cairo_font_slant_t raw__cairo_font_slant__as__cairo_font_slant_t(f2ptr cause, f2ptr this) {
+  if        (raw__eq(cause, this, new__symbol(cause, "normal"))) {
+    return CAIRO_FONT_SLANT_NORMAL;
+  } else if (raw__eq(cause, this, new__symbol(cause, "italic"))) {
+    return CAIRO_FONT_SLANT_ITALIC;
+  } else if (raw__eq(cause, this, new__symbol(cause, "oblique"))) {
+    return CAIRO_FONT_SLANT_OBLIQUE;
+  }
+  error(nil, "raw__cairo_font_slant__as__cairo_font_slant_t error: invalid type.");
+}
+#endif // F2__CAIRO_SUPPORTED
+
+
+// cairo_font_weight
+
+boolean_t raw__cairo_font_weight__is_type(f2ptr cause, f2ptr object) {
+  return (raw__eq(cause, object, new__symbol(cause, "normal")) ||
+	  raw__eq(cause, object, new__symbol(cause, "bold")));
+}
+
+#if defined(F2__CAIRO_SUPPORTED)
+cairo_font_weight_t raw__cairo_font_weight__as__cairo_font_weight_t(f2ptr cause, f2ptr this) {
+  if        (raw__eq(cause, this, new__symbol(cause, "normal"))) {
+    return CAIRO_FONT_WEIGHT_NORMAL;
+  } else if (raw__eq(cause, this, new__symbol(cause, "bold"))) {
+    return CAIRO_FONT_WEIGHT_BOLD;
+  }
+  error(nil, "raw__cairo_font_weight__as__cairo_font_weight_t error: invalid type.");
+}
+#endif // F2__CAIRO_SUPPORTED
+
+
 // cairo_context
 
 f2ptr f2cairo_context__new(f2ptr cause, f2ptr cairo_context_pointer) {
@@ -580,29 +645,6 @@ export_cefunk2(cairo_context__text_path, this, text, 0,
 
 
 
-// cairo_line_cap
-
-boolean_t raw__cairo_line_cap__is_type(f2ptr cause, f2ptr object) {
-  return (raw__eq(cause, object, new__symbol(cause, "butt")) ||
-	  raw__eq(cause, object, new__symbol(cause, "round")) ||
-	  raw__eq(cause, object, new__symbol(cause, "square")));
-}
-
-#if defined(F2__CAIRO_SUPPORTED)
-cairo_line_cap_t raw__cairo_line_cap__as__cairo_line_cap_t(f2ptr cause, f2ptr this) {
-  if        (raw__eq(cause, this, new__symbol(cause, "butt"))) {
-    return CAIRO_LINE_CAP_BUTT;
-  } else if (raw__eq(cause, this, new__symbol(cause, "round"))) {
-    return CAIRO_LINE_CAP_ROUND;
-  } else if (raw__eq(cause, this, new__symbol(cause, "square"))) {
-    return CAIRO_LINE_CAP_SQUARE;
-  }
-  error(nil, "raw__cairo_line_cap__as__cairo_line_cap_t error: incorrect type.");
-}
-#endif // F2__CAIRO_SUPPORTED
-
-
-
 f2ptr raw__cairo_context__set_line_cap(f2ptr cause, f2ptr this, f2ptr line_cap) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t*         cairo_context  = raw__cairo_context__as__cairo_t(cause, this);
@@ -751,47 +793,6 @@ export_cefunk1(cairo_context__stroke_preserve, this, 0,
 	       "See cairo_set_line_width(), cairo_set_line_join(), cairo_set_line_cap(), cairo_set_dash(), and cairo_stroke_preserve().\n"
 	       "\n"
 	       "cr : 	a cairo context");
-
-
-// cairo_font_slant
-
-boolean_t raw__cairo_font_slant__is_type(f2ptr cause, f2ptr object) {
-  return (raw__eq(cause, object, new__symbol(cause, "normal")) ||
-	  raw__eq(cause, object, new__symbol(cause, "italic")) ||
-	  raw__eq(cause, object, new__symbol(cause, "oblique")));
-}
-
-#if defined(F2__CAIRO_SUPPORTED)
-cairo_font_slant_t raw__cairo_font_slant__as__cairo_font_slant_t(f2ptr cause, f2ptr this) {
-  if        (raw__eq(cause, this, new__symbol(cause, "normal"))) {
-    return CAIRO_FONT_SLANT_NORMAL;
-  } else if (raw__eq(cause, this, new__symbol(cause, "italic"))) {
-    return CAIRO_FONT_SLANT_ITALIC;
-  } else if (raw__eq(cause, this, new__symbol(cause, "oblique"))) {
-    return CAIRO_FONT_SLANT_OBLIQUE;
-  }
-  error(nil, "raw__cairo_font_slant__as__cairo_font_slant_t error: invalid type.");
-}
-#endif // F2__CAIRO_SUPPORTED
-
-
-// cairo_font_weight
-
-boolean_t raw__cairo_font_weight__is_type(f2ptr cause, f2ptr object) {
-  return (raw__eq(cause, object, new__symbol(cause, "normal")) ||
-	  raw__eq(cause, object, new__symbol(cause, "bold")));
-}
-
-#if defined(F2__CAIRO_SUPPORTED)
-cairo_font_weight_t raw__cairo_font_weight__as__cairo_font_weight_t(f2ptr cause, f2ptr this) {
-  if        (raw__eq(cause, this, new__symbol(cause, "normal"))) {
-    return CAIRO_FONT_WEIGHT_NORMAL;
-  } else if (raw__eq(cause, this, new__symbol(cause, "bold"))) {
-    return CAIRO_FONT_WEIGHT_BOLD;
-  }
-  error(nil, "raw__cairo_font_weight__as__cairo_font_weight_t error: invalid type.");
-}
-#endif // F2__CAIRO_SUPPORTED
 
 
 f2ptr raw__cairo_context__select_font_face(f2ptr cause, f2ptr this, f2ptr family, f2ptr slant, f2ptr weight) {

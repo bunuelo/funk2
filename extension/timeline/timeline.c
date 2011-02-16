@@ -34,7 +34,7 @@ f2ptr raw__timeline__new(f2ptr cause, f2ptr semantic_realm) {
 }
 
 f2ptr f2__timeline__new(f2ptr cause, f2ptr semantic_realm) {
-  if (! raw__integer__is_type(cause, semantic_realm)) {
+  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__timeline__new(cause, semantic_realm);

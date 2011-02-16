@@ -578,13 +578,17 @@ export_cefunk2(cairo_context__text_path, this, text, 0,
 	       "cr : 	a cairo context"
 	       "utf8 : 	a string of text encoded in UTF-8 ");
 
-#if defined(F2__CAIRO_SUPPORTED)
+
+
+// cairo_line_cap
+
 boolean_t raw__cairo_line_cap__is_type(f2ptr cause, f2ptr object) {
   return (raw__eq(cause, object, new__symbol(cause, "butt")) ||
 	  raw__eq(cause, object, new__symbol(cause, "round")) ||
 	  raw__eq(cause, object, new__symbol(cause, "square")));
 }
 
+#if defined(F2__CAIRO_SUPPORTED)
 cairo_line_cap_t raw__cairo_line_cap__as__cairo_line_cap_t(f2ptr cause, f2ptr this) {
   if        (raw__eq(cause, this, new__symbol(cause, "butt"))) {
     return CAIRO_LINE_CAP_BUTT;
@@ -596,6 +600,7 @@ cairo_line_cap_t raw__cairo_line_cap__as__cairo_line_cap_t(f2ptr cause, f2ptr th
   error(nil, "raw__cairo_line_cap__as__cairo_line_cap_t error: incorrect type.");
 }
 #endif // F2__CAIRO_SUPPORTED
+
 
 
 f2ptr raw__cairo_context__set_line_cap(f2ptr cause, f2ptr this, f2ptr line_cap) {
@@ -623,6 +628,8 @@ export_cefunk2(cairo_context__set_line_cap, this, line_cap, 0,
 	       "\n"
 	       "cr : 	a cairo context\n"
 	       "line_cap : 	a line cap style [butt, round, or square]");
+
+
 
 f2ptr raw__cairo_context__fill(f2ptr cause, f2ptr this) {
 #if defined(F2__CAIRO_SUPPORTED)

@@ -893,6 +893,109 @@ export_cefunk2(cairo_context__set_line_width, this, size, 0,
 	       "width : 	a line width");
 
 
+f2ptr raw__cairo_context__identity_matrix(f2ptr cause, f2ptr this) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  cairo_identity_matrix(cairo_context);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__identity_matrix(f2ptr cause, f2ptr this) {
+  if (! raw__cairo_context__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__cairo_context__identity_matrix(cause, this);
+}
+export_cefunk1(cairo_context__identity_matrix, this, 0,
+	       "Resets the current transformation matrix (CTM) by setting it equal to the identity matrix. That is, the user-space and device-space axes will be aligned and one user-space unit will transform to one device-space unit.\n"
+	       "\n"
+	       "cr : 	a cairo context");
+
+
+f2ptr raw__cairo_context__translate(f2ptr cause, f2ptr this, double x, double y) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  cairo_translate(cairo_context, x, y);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__translate(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, x)) ||
+      (! raw__double__is_type(cause, y))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  double x__d = f2double__d(x, cause);
+  double y__d = f2double__d(y, cause);
+  return raw__cairo_context__translate(cause, this, x__d, y__d);
+}
+export_cefunk3(cairo_context__translate, this, x, y, 0,
+	       "Modifies the current transformation matrix (CTM) by translating the user-space origin by (tx, ty). This offset is interpreted as a user-space coordinate according to the CTM in place before the new call to cairo_translate. In other words, the translation of the user-space origin takes place after any existing transformation.\n"
+	       "\n"
+	       "cr : 	a cairo context\n"
+	       "tx : 	amount to translate in the X direction\n"
+	       "ty : 	amount to translate in the Y direction");
+
+
+f2ptr raw__cairo_context__scale(f2ptr cause, f2ptr this, double x, double y) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  cairo_scale(cairo_context, x, y);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__scale(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, x)) ||
+      (! raw__double__is_type(cause, y))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  double x__d = f2double__d(x, cause);
+  double y__d = f2double__d(y, cause);
+  return raw__cairo_context__scale(cause, this, x__d, y__d);
+}
+export_cefunk3(cairo_context__scale, this, x, y, 0,
+	       "Modifies the current transformation matrix (CTM) by scaling the X and Y user-space axes by sx and sy respectively. The scaling of the axes takes place after any existing transformation of user space.\n"
+	       "\n"
+	       "cr : 	a cairo context\n"
+	       "sx : 	scale factor for the X dimension\n"
+	       "sy : 	scale factor for the Y dimension");
+
+
+f2ptr raw__cairo_context__rotate(f2ptr cause, f2ptr this, double angle) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  cairo_rotate(cairo_context, angle);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__rotate(f2ptr cause, f2ptr this, f2ptr angle) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, angle))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  double angle__d = f2double__d(angle, cause);
+  return raw__cairo_context__rotate(cause, this, andle__d);
+}
+export_cefunk2(cairo_context__rotate, this, angle, 0,
+	       "Modifies the current transformation matrix (CTM) by rotating the user-space axes by angle radians. The rotation of the axes takes places after any existing transformation of user space. The rotation direction for positive angles is from the positive X axis toward the positive Y axis.\n"
+	       "\n"
+	       "cr : 	a cairo context\n"
+	       "angle : 	angle (in radians) by which the user-space axes will be rotated");
+
+
 f2ptr f2__cairo_context_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "cairo_object")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__new")));}
@@ -921,6 +1024,8 @@ f2ptr f2__cairo_context_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "select_font_face"),      f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__select_font_face")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "set_font_size"),         f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__set_font_size")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "set_line_width"),        f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__set_line_width")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "identity_matrix"),       f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__identity_matrix")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "translate"),             f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__translate")));}
   return this;
 }
 

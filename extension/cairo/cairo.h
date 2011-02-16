@@ -123,6 +123,14 @@ f2ptr     raw__cairo_context__set_font_size             (f2ptr cause, f2ptr this
 f2ptr      f2__cairo_context__set_font_size             (f2ptr cause, f2ptr this, f2ptr size);
 f2ptr     raw__cairo_context__set_line_width            (f2ptr cause, f2ptr this, double size);
 f2ptr      f2__cairo_context__set_line_width            (f2ptr cause, f2ptr this, f2ptr size);
+f2ptr     raw__cairo_context__identity_matrix           (f2ptr cause, f2ptr this);
+f2ptr      f2__cairo_context__identity_matrix           (f2ptr cause, f2ptr this);
+f2ptr     raw__cairo_context__translate                 (f2ptr cause, f2ptr this, double x, double y);
+f2ptr      f2__cairo_context__translate                 (f2ptr cause, f2ptr this, f2ptr x, f2ptr y);
+f2ptr     raw__cairo_context__scale                     (f2ptr cause, f2ptr this, double x, double y);
+f2ptr      f2__cairo_context__scale                     (f2ptr cause, f2ptr this, f2ptr x, f2ptr y);
+f2ptr     raw__cairo_context__rotate                    (f2ptr cause, f2ptr this, double angle);
+f2ptr      f2__cairo_context__rotate                    (f2ptr cause, f2ptr this, f2ptr angle);
 
 f2ptr f2__cairo_context_type__new(f2ptr cause);
 

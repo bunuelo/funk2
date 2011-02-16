@@ -22,18 +22,11 @@
 #ifndef F2__EXTENSION__TIMELINE__H
 #define F2__EXTENSION__TIMELINE__H
 
-f2ptr     raw__timeline__new(       f2ptr cause, f2ptr width);
-f2ptr      f2__timeline__new(       f2ptr cause, f2ptr width);
-boolean_t raw__timeline__is_type(   f2ptr cause, f2ptr thing);
-f2ptr      f2__timeline__is_type(   f2ptr cause, f2ptr thing);
-f2ptr     raw__timeline__type(      f2ptr cause, f2ptr this);
-f2ptr      f2__timeline__type(      f2ptr cause, f2ptr this);
-f2ptr     raw__timeline__width(     f2ptr cause, f2ptr this);
-f2ptr      f2__timeline__width(     f2ptr cause, f2ptr this);
-f2ptr     raw__timeline__width__set(f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__timeline__width__set(f2ptr cause, f2ptr this, f2ptr value);
+// timeline
 
-f2ptr f2__timeline_type__new(f2ptr cause);
+def_header_ceframe1(timeline, width);
+
+
 
 // **
 

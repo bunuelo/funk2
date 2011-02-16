@@ -27,9 +27,14 @@
 #include "../semantic_event/semantic_event.h"
 #include "../cairo/cairo.h"
 
+// timeline_event
+
+def_header_ceframe0(timeline_event);
+
+
 // timeline
 
-def_header_ceframe0(timeline);
+def_header_ceframe1(timeline, timeline_event_set);
 
 
 

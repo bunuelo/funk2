@@ -22,28 +22,16 @@
 #ifndef F2__EXTENSION__TIMELINE__H
 #define F2__EXTENSION__TIMELINE__H
 
-f2ptr     raw__timeline__new(                       f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data);
-f2ptr      f2__timeline__new(                       f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data);
-f2ptr     raw__timeline__new_from_rgb_data(         f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data);
-f2ptr      f2__timeline__new_from_rgb_data(         f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data);
-boolean_t raw__timeline__is_type(                   f2ptr cause, f2ptr thing);
-f2ptr      f2__timeline__is_type(                   f2ptr cause, f2ptr thing);
-f2ptr     raw__timeline__type(                      f2ptr cause, f2ptr this);
-f2ptr      f2__timeline__type(                      f2ptr cause, f2ptr this);
-f2ptr     raw__timeline__width(                     f2ptr cause, f2ptr this);
-f2ptr      f2__timeline__width(                     f2ptr cause, f2ptr this);
-f2ptr     raw__timeline__width__set(                f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__timeline__width__set(                f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__timeline__height(                    f2ptr cause, f2ptr this);
-f2ptr      f2__timeline__height(                    f2ptr cause, f2ptr this);
-f2ptr     raw__timeline__height__set(               f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__timeline__height__set(               f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__timeline__rgba_data(                 f2ptr cause, f2ptr this);
-f2ptr      f2__timeline__rgba_data(                 f2ptr cause, f2ptr this);
-f2ptr     raw__timeline__rgba_data__set(            f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__timeline__rgba_data__set(            f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__timeline__write_reduction_timeline_part(f2ptr cause, f2ptr this, f2ptr reduced_timeline, f2ptr reduction_factor, f2ptr x_offset, f2ptr y_offset);
-f2ptr      f2__timeline__write_reduction_timeline_part(f2ptr cause, f2ptr this, f2ptr reduced_timeline, f2ptr reduction_factor, f2ptr x_offset, f2ptr y_offset);
+f2ptr     raw__timeline__new(       f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data);
+f2ptr      f2__timeline__new(       f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data);
+boolean_t raw__timeline__is_type(   f2ptr cause, f2ptr thing);
+f2ptr      f2__timeline__is_type(   f2ptr cause, f2ptr thing);
+f2ptr     raw__timeline__type(      f2ptr cause, f2ptr this);
+f2ptr      f2__timeline__type(      f2ptr cause, f2ptr this);
+f2ptr     raw__timeline__width(     f2ptr cause, f2ptr this);
+f2ptr      f2__timeline__width(     f2ptr cause, f2ptr this);
+f2ptr     raw__timeline__width__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__timeline__width__set(f2ptr cause, f2ptr this, f2ptr value);
 
 f2ptr f2__timeline_type__new(f2ptr cause);
 

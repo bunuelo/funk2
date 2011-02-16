@@ -42,9 +42,30 @@ f2ptr f2__timeline__new(f2ptr cause, f2ptr semantic_realm) {
 export_cefunk1(timeline__new, semantic_realm, 0, "Returns a new timeline object.");
 
 
+f2ptr raw__timeline__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list2__new(cause,
+					       new__symbol(cause, "print_object_type"), new__symbol(cause, "timeline")));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__timeline__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if (! raw__timeline__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__timeline__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+export_cefunk2(timeline__terminal_print_with_frame, this, terminal_print_frame, 0, "");
+
+
 f2ptr f2__timeline_type__new_aux(f2ptr cause) {
   f2ptr this = f2__timeline_type__new(cause);
   f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "semantic_knowledge_base"), f2__primobject_type__parents(cause, this)));
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline__terminal_print_with_frame")));}
   return this;
 }
 

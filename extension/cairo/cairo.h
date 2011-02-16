@@ -43,17 +43,26 @@ f2ptr f2__cairo_object_type__new(f2ptr cause);
 
 // cairo_line_cap
 
-boolean_t raw__cairo_line_cap__is_type(f2ptr cause, f2ptr object);
+boolean_t        raw__cairo_line_cap__is_type             (f2ptr cause, f2ptr object);
+#if defined(F2__CAIRO_SUPPORTED)
+cairo_line_cap_t raw__cairo_line_cap__as__cairo_line_cap_t(f2ptr cause, f2ptr this);
+#endif // F2__CAIRO_SUPPORTED
 
 
 // cairo_font_slant
 
-boolean_t raw__cairo_font_slant__is_type(f2ptr cause, f2ptr object);
+boolean_t          raw__cairo_font_slant__is_type               (f2ptr cause, f2ptr object);
+#if defined(F2__CAIRO_SUPPORTED)
+cairo_font_slant_t raw__cairo_font_slant__as__cairo_font_slant_t(f2ptr cause, f2ptr this);
+#endif // F2__CAIRO_SUPPORTED
 
 
 // cairo_font_weight
 
-boolean_t raw__cairo_font_weight__is_type(f2ptr cause, f2ptr object);
+boolean_t           raw__cairo_font_weight__is_type                (f2ptr cause, f2ptr object);
+#if defined(F2__CAIRO_SUPPORTED)
+cairo_font_weight_t raw__cairo_font_weight__as__cairo_font_weight_t(f2ptr cause, f2ptr this);
+#endif // F2__CAIRO_SUPPORTED
 
 
 // cairo_context
@@ -69,6 +78,9 @@ f2ptr     raw__cairo_context__cairo_context_pointer     (f2ptr cause, f2ptr this
 f2ptr      f2__cairo_context__cairo_context_pointer     (f2ptr cause, f2ptr this);
 f2ptr     raw__cairo_context__cairo_context_pointer__set(f2ptr cause, f2ptr this, f2ptr value);
 f2ptr      f2__cairo_context__cairo_context_pointer__set(f2ptr cause, f2ptr this, f2ptr value);
+#if defined(F2__CAIRO_SUPPORTED)
+cairo_t*  raw__cairo_context__as__cairo_t               (f2ptr cause, f2ptr this);
+#endif // F2__CAIRO_SUPPORTED
 f2ptr     raw__cairo_context__destroy                   (f2ptr cause, f2ptr this);
 f2ptr      f2__cairo_context__destroy                   (f2ptr cause, f2ptr this);
 f2ptr     raw__cairo_context__save                      (f2ptr cause, f2ptr this);

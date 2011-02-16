@@ -18,6 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage timeline
-  :packages []
+  :packages [cairo]
    :sources ['timeline-core.fu2']]
 

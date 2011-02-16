@@ -30,8 +30,8 @@
   [have context stroke]
   [have context move_to 36.0 35.0]
   [have context select_font_face 'Courier' `normal `normal]
-  [have context set_font_size 6.0]
-  [have context text_path 'cairo <3 funk']
+  [have context set_font_size 1.0]
+  [have context text_path 'cairo funk']
   [have context fill]
   ]
 

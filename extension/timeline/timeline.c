@@ -119,7 +119,7 @@ f2ptr raw__cairo_context__render_centered_outlined_text(f2ptr cause, f2ptr this,
   if (raw__larva__is_type(cause, text_extents)) {
     return text_extents;
   }
-  f2ptr  text_extents__width     = raw__cairo_text_extents__width(cause, text_extents);
+  f2ptr  text_extents__width     = raw__cairo_text_extents__width(cause, text, text_extents);
   double text_extents__width__d  = f2double__d(text_extents__width, cause);
   double x0 = cx - (cairo_text_extents__width__d / 2);
   double y0 = cy - (size / 2);

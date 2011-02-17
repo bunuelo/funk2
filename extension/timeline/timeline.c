@@ -340,9 +340,9 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 	while (iter != nil) {
 	  f2ptr event = f2cons__car(iter, cause);
 	  f2ptr connected_set = raw__ptypehash__lookup(cause, connected_set_event_hash, event);
-	  connected_sets = f2cons__new(cause, connected_set, connected_sets);
 	  if (connected_set == nil) {
-	    connected_set = f2__set__new(cause);
+	    connected_set  = f2__set__new(cause);
+	    connected_sets = f2cons__new(cause, connected_set, connected_sets);
 	    f2ptr expansion_event_set = f2__set__new(cause);
 	    while (! raw__set__is_empty(cause, expansion_event_set)) {
 	      f2ptr expand_event = raw__set__an_arbitrary_element(cause, expansion_event_set);

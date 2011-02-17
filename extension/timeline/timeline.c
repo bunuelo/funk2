@@ -348,6 +348,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 	    while (! raw__set__is_empty(cause, expansion_event_set)) {
 	      f2ptr expand_event = raw__set__an_arbitrary_element(cause, expansion_event_set);
 	      raw__ptypehash__add(cause, connected_set_event_hash, expand_event, connected_set);
+	      raw__set__add(      cause, connected_set,            expand_event);
 	      {
 		f2ptr next_set = raw__semantic_temporal_object__next__lookup(cause, expand_event);
 		if (next_set != nil) {

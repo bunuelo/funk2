@@ -121,7 +121,7 @@ f2ptr raw__cairo_context__render_centered_outlined_text(f2ptr cause, f2ptr this,
   }
   f2ptr  text_extents__width     = raw__cairo_text_extents__width(cause, text_extents);
   double text_extents__width__d  = f2double__d(text_extents__width, cause);
-  double x0 = cx - (cairo_text_extents__width__d / 2);
+  double x0 = cx - (text_extents__width__d / 2);
   double y0 = cy - (size / 2);
   raw__cairo_context__render_outlined_text(cause, this, x0, y0, size, text, outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
   return nil;

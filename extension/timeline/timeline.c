@@ -115,6 +115,7 @@ void raw__cairo_context__render_outlined_text(f2ptr cause, f2ptr this, double x0
 }
 
 f2ptr raw__cairo_context__render_centered_outlined_text(f2ptr cause, f2ptr this, double cx, double cy, double font_size, char* text, double outline_width, double red, double green, double blue, double alpha, double outline_red, double outline_green, double outline_blue, double outline_alpha) {
+  raw__cairo_context__set_font_size(cause, this, font_size);
   f2ptr text_extents = raw__cairo_context__text_extents(cause, this, text);
   if (raw__larva__is_type(cause, text_extents)) {
     return text_extents;

@@ -61,12 +61,6 @@ void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_cont
       }
     }
   }
-  {
-    f2ptr timeline_event_set = raw__timeline__timeline_event_set(cause, this);
-    set__iteration(cause, timeline_event_set, timeline_event,
-		   raw__timeline_event__cairo_render(cause, timeline_event, cairo_context);
-		   );
-  }
   raw__cairo_context__restore(cause, cairo_context);
 }
 
@@ -238,11 +232,11 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
     s64   timeline_event_index = 0;
     f2ptr timeline_event_set   = raw__timeline__timeline_event_set(cause, this);
     set__iteration(cause, timeline_event_set, timeline_event,
-		   raw__cairo_context__save(cause, cairo_context);
-		   raw__cairo_context__scale(cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));
-		   raw__cairo_context__translate(cause, cairo_context, 4 + timeline_event_index, 4 + timeline_event_index);
+		   raw__cairo_context__save(         cause, cairo_context);
+		   raw__cairo_context__scale(        cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));
+		   raw__cairo_context__translate(    cause, cairo_context, 4 + timeline_event_index, 4 + timeline_event_index);
 		   raw__timeline_event__cairo_render(cause, timeline_event, cairo_context);
-		   raw__cairo_context__restore(cause, cairo_context);
+		   raw__cairo_context__restore(      cause, cairo_context);
 		   timeline_event_index ++;
 		   );
   }

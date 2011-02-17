@@ -1011,15 +1011,15 @@ export_cefunk2(cairo_context__rotate, this, angle, 0,
 f2ptr raw__cairo_context__text_extents(f2ptr cause, f2ptr this, char* text) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t*             cairo_context = raw__cairo_context__as__cairo_t(cause, this);
-  cairo_font_extents_t cairo_text_extents;
-  cairo_text_extents(cairo_context, text, &cairo_text_entents);
+  cairo_text_extents_t text_extents;
+  cairo_text_extents(cairo_context, text, &text_entents);
   return f2cairo_text_extents__new(cause,
-				   f2double__new(cause, cairo_text_extents.x_bearing),
-				   f2double__new(cause, cairo_text_extents.y_bearing),
-				   f2double__new(cause, cairo_text_extents.width),
-				   f2double__new(cause, cairo_text_extents.height),
-				   f2double__new(cause, cairo_text_extents.x_advance),
-				   f2double__new(cause, cairo_text_extents.y_advance));
+				   f2double__new(cause, text_extents.x_bearing),
+				   f2double__new(cause, text_extents.y_bearing),
+				   f2double__new(cause, text_extents.width),
+				   f2double__new(cause, text_extents.height),
+				   f2double__new(cause, text_extents.x_advance),
+				   f2double__new(cause, text_extents.y_advance));
 #else
   return f2__cairo_not_supported_larva__new(cause);
 #endif // F2__CAIRO_SUPPORTED

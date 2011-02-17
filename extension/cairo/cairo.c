@@ -1039,7 +1039,7 @@ f2ptr f2__cairo_context__text_extents(f2ptr cause, f2ptr this, f2ptr text) {
   return result;
 }
 export_cefunk2(cairo_context__text_extents, this, text, 0,
-	       "Gets the extents for a string of text. The extents describe a user-space rectangle that encloses the "inked" portion of the text, (as it would be drawn by cairo_show_text()). Additionally, the x_advance and y_advance values indicate the amount by which the current point would be advanced by cairo_show_text().\n"
+	       "Gets the extents for a string of text. The extents describe a user-space rectangle that encloses the \"inked\" portion of the text, (as it would be drawn by cairo_show_text()). Additionally, the x_advance and y_advance values indicate the amount by which the current point would be advanced by cairo_show_text().\n"
 	       "\n"
 	       "Note that whitespace characters do not directly contribute to the size of the rectangle (extents.width and extents.height). They do contribute indirectly by changing the position of non-whitespace characters. In particular, trailing whitespace characters are likely to not affect the size of the rectangle, though they will affect the x_advance and y_advance values.\n"
 	       "\n"

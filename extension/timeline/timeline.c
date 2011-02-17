@@ -350,19 +350,27 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 	      raw__ptypehash__add(cause, connected_set_event_hash, expand_event, connected_set);
 	      {
 		f2ptr next_set = raw__semantic_temporal_object__next__lookup(cause, expand_event);
-		set__iteration(cause, next_set, expansion_event, raw__set__add(cause, expansion_event_set, expansion_event));
+		if (next_set != nil) {
+		  set__iteration(cause, next_set, expansion_event, raw__set__add(cause, expansion_event_set, expansion_event));
+		}
 	      }
 	      {
 		f2ptr previous_set = raw__semantic_temporal_object__previous__lookup(cause, expand_event);
-		set__iteration(cause, previous_set, expansion_event, raw__set__add(cause, expansion_event_set, expansion_event));
+		if (previous_set != nil) {
+		  set__iteration(cause, previous_set, expansion_event, raw__set__add(cause, expansion_event_set, expansion_event));
+		}
 	      }
 	      {
 		f2ptr contains_set = raw__semantic_temporal_object__contains__lookup(cause, expand_event);
-		set__iteration(cause, contains_set, expansion_event, raw__set__add(cause, expansion_event_set, expansion_event));
+		if (contains_set != nil) {
+		  set__iteration(cause, contains_set, expansion_event, raw__set__add(cause, expansion_event_set, expansion_event));
+		}
 	      }
 	      {
 		f2ptr is_contained_by_set = raw__semantic_temporal_object__is_contained_by__lookup(cause, expand_event);
-		set__iteration(cause, is_contained_by_set, expansion_event, raw__set__add(cause, expansion_event_set, expansion_event));
+		if (is_contained_by_set != nil) {
+		  set__iteration(cause, is_contained_by_set, expansion_event, raw__set__add(cause, expansion_event_set, expansion_event));
+		}
 	      }
 	    }
 	  }

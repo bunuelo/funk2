@@ -382,11 +382,11 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
     }
   }
   {
+    s64 index = 0;
     f2ptr connected_set_iter = connected_sets;
     while (connected_set_iter != nil) {
       f2ptr connected_set = f2cons__car(connected_set_iter, cause);
       {
-	s64 index = 0;
 	set__iteration(cause, connected_set, event,
 		       raw__cairo_context__save(         cause, cairo_context);
 		       raw__cairo_context__scale(        cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));
@@ -395,6 +395,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 		       raw__cairo_context__restore(      cause, cairo_context);
 		       index ++;
 		       );
+	index ++;
       }
       connected_set_iter = f2cons__cdr(connected_set_iter, cause);
     }

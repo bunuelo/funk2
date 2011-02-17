@@ -48,9 +48,9 @@ void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_cont
   // box
   raw__cairo_context__set_source_rgba(cause, cairo_context, 0.75, 0.75, 0.75, 1);
   raw__cairo_context__move_to(        cause, cairo_context,  0,  0);
-  raw__cairo_context__rel_line_to(    cause, cairo_context,  1,  0);
+  raw__cairo_context__rel_line_to(    cause, cairo_context,  3,  0);
   raw__cairo_context__rel_line_to(    cause, cairo_context,  0,  1);
-  raw__cairo_context__rel_line_to(    cause, cairo_context, -1,  0);
+  raw__cairo_context__rel_line_to(    cause, cairo_context, -3,  0);
   raw__cairo_context__rel_line_to(    cause, cairo_context,  0, -1);
   raw__cairo_context__fill_preserve(  cause, cairo_context);
   raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);

@@ -20,10 +20,14 @@
 
 [defunk timeline-test []
   [let [[semantic_realm [new semantic_realm]]]
-    [let [[timeline       [new timeline `test semantic_realm]]
-	  [timeline_event [new timeline_event semantic_realm]]]
+    [let [[timeline         [new timeline `test semantic_realm]]
+	  [timeline_event_a [new timeline_event semantic_realm]]
+	  [timeline_event_b [new timeline_event semantic_realm]]
+	  [timeline_event_c [new timeline_event semantic_realm]]]
       
-      [have timeline add_timeline_event timeline_event]
+      [have timeline add_timeline_event timeline_event_a]
+      [have timeline add_timeline_event timeline_event_b]
+      [have timeline add_timeline_event timeline_event_c]
       
       [terminal_format standard-terminal '\ntimeline      : ' timeline]
       [terminal_format standard-terminal '\ntimeline_event: ' timeline_event]

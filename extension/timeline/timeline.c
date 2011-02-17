@@ -41,6 +41,46 @@ f2ptr f2__timeline_event__new(f2ptr cause, f2ptr semantic_realm) {
 export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_event object.");
 
 
+void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+  raw__cairo_context__save(cause);
+  raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
+  raw__cairo_context__set_line_width(cause, cairo_context, 0.001);
+  // box
+  raw__cairo_context__rel_line_to(cause, cairo_context,  1,  0);
+  raw__cairo_context__rel_line_to(cause, cairo_context,  0,  1);
+  raw__cairo_context__rel_line_to(cause, cairo_context, -1,  0);
+  raw__cairo_context__rel_line_to(cause, cairo_context,  0, -1);
+  raw__cairo_context__stroke(cause, cairo_context);
+  {
+    s64 y;
+    for (y = 0; y < (64 - 1); y ++) {
+      s64 x;
+      for (x = 0; x < (64 - 1); x ++) {
+	raw__cairo_context__arc(cause, cairo_context, (x + 1.0) / 64.0, (y + 1.0) / 64.0, 0.001, 0, 2 * cairo_pi);
+	raw__cairo_context__fill(cause, cairo_context);
+      }
+    }
+  }
+  {
+    f2ptr timeline_event_set = raw__timeline__timeline_event_set(cause, this);
+    set__iteration(cause, timeline_event_set, timeline_event,
+		   raw__timeline_event__cairo_render(cause, timeline_event, cairo_context);
+		   );
+  }
+  raw__cairo_context__restore(cause);
+}
+
+f2ptr f2__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+  if ((! raw__timeline_event__is_type(cause, this)) ||
+      (! raw__cairo_context__is_type(cause, cairo_context))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__timeline_event__cairo_render(cause, this, cairo_context);
+  return nil;
+}
+export_cefunk2(timeline_event__cairo_render, this, cairo_context, 0, "Renders this timeline_event in the given cairo_context.");
+
+
 f2ptr raw__timeline_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -64,6 +104,7 @@ export_cefunk2(timeline_event__terminal_print_with_frame, this, terminal_print_f
 f2ptr f2__timeline_event_type__new_aux(f2ptr cause) {
   f2ptr this = f2__timeline_event_type__new(cause);
   f2__primobject_type__parents__set(cause, this, f2list1__new(cause, new__symbol(cause, "semantic_knowledge_base")));
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "cairo_render"),              f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__cairo_render")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__terminal_print_with_frame")));}
   return this;
 }
@@ -173,27 +214,39 @@ f2ptr f2__timeline__timeline_events(f2ptr cause, f2ptr this) {
 export_cefunk1(timeline__timeline_events, this, 0, "Returns a new list of the timeline_events contained within this timeline.");
 
 
-f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
-  //f2ptr timeline_event_set = raw__timeline__timeline_event_set(cause, this);
+void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+  raw__cairo_context__save(cause);
   raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
-  raw__cairo_context__set_line_width( cause, cairo_context, 0.001);
+  raw__cairo_context__set_line_width(cause, cairo_context, 0.001);
   // box
-  raw__cairo_context__rel_line_to(    cause, cairo_context,  1,   0);
-  raw__cairo_context__rel_line_to(    cause, cairo_context,  0,   1);
-  raw__cairo_context__rel_line_to(    cause, cairo_context, -1,   0);
-  raw__cairo_context__rel_line_to(    cause, cairo_context,  0,  -1);
-  raw__cairo_context__stroke(         cause, cairo_context);
+  raw__cairo_context__rel_line_to(cause, cairo_context,  1,  0);
+  raw__cairo_context__rel_line_to(cause, cairo_context,  0,  1);
+  raw__cairo_context__rel_line_to(cause, cairo_context, -1,  0);
+  raw__cairo_context__rel_line_to(cause, cairo_context,  0, -1);
+  raw__cairo_context__stroke(cause, cairo_context);
   {
     s64 y;
     for (y = 0; y < (64 - 1); y ++) {
       s64 x;
       for (x = 0; x < (64 - 1); x ++) {
-	raw__cairo_context__arc( cause, cairo_context, (x + 1.0) / 64.0, (y + 1.0) / 64.0, 0.001, 0, 2 * cairo_pi);
+	raw__cairo_context__arc(cause, cairo_context, (x + 1.0) / 64.0, (y + 1.0) / 64.0, 0.001, 0, 2 * cairo_pi);
 	raw__cairo_context__fill(cause, cairo_context);
       }
     }
   }
-  return nil;
+  {
+    s64   timeline_event_index = 0;
+    f2ptr timeline_event_set   = raw__timeline__timeline_event_set(cause, this);
+    set__iteration(cause, timeline_event_set, timeline_event,
+		   cairo_context__save(cause, cairo_context);
+		   raw__cairo_context__scale(cause, cairo_context, 1.0 / 64.0);
+		   raw__cairo_context__translate(cause, cairo_context, 4 + timeline_event_index, 4 + timeline_event_index);
+		   raw__timeline_event__cairo_render(cause, timeline_event, cairo_context);
+		   cairo_context__restore(cause, cairo_context);
+		   cairo_event_index ++;
+		   );
+  }
+  raw__cairo_context__restore(cause);
 }
 
 f2ptr f2__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
@@ -201,7 +254,8 @@ f2ptr f2__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
       (! raw__cairo_context__is_type(cause, cairo_context))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__timeline__cairo_render(cause, this, cairo_context);
+  raw__timeline__cairo_render(cause, this, cairo_context);
+  return nil;
 }
 export_cefunk2(timeline__cairo_render, this, cairo_context, 0, "Renders this timeline within the given cairo_context.");
 

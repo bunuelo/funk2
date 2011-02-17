@@ -183,9 +183,16 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
   raw__cairo_context__rel_line_to(    cause, cairo_context, -1,   0);
   raw__cairo_context__rel_line_to(    cause, cairo_context,  0,  -1);
   raw__cairo_context__stroke(         cause, cairo_context);
-  //raw__cairo_context__rel_move_to(    cause, cairo_context,  0.5, 0.5);
-  raw__cairo_context__arc(            cause, cairo_context,  0.5, 0.5, 0.001, 0, cairo_pi);
-  raw__cairo_context__stroke(         cause, cairo_context);
+  {
+    s64 y;
+    for (y = 0; y < 64; y ++) {
+      s64 x;
+      for (x = 0; x < 64; x ++) {
+	raw__cairo_context__arc(   cause, cairo_context, (x + 0.5) / 64.0, (y + 0.5) / 64.0, 0.001, 0, cairo_pi);
+	raw__cairo_context__stroke(cause, cairo_context);
+      }
+    }
+  }
   return nil;
 }
 

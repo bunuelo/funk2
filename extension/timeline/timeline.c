@@ -114,14 +114,27 @@ void raw__cairo_context__render_outlined_text(f2ptr cause, f2ptr this, double x0
   raw__cairo_context__fill(           cause, this);
 }
 
+f2ptr raw__cairo_context__render_centered_outlined_text(f2ptr cause, f2ptr this, double cx, double cy, double size, char* text, double outline_width, double red, double green, double blue, double alpha, double outline_red, double outline_green, double outline_blue, double outline_alpha) {
+  f2ptr cairo_text_extents         = raw__cairo_context__text_extents(cause, text);
+  if (raw__larva__is_type(cause, cairo_text_extents)) {
+    return cairo_text_extents;
+  }
+  f2ptr  cairo_text_extents__width     = raw__cairo_text_extents__width( cause, cairo_text_extents);
+  double cairo_text_extents__width__d  = f2double__d(cairo_text_extents__width,  cause);
+  double x0 = cx - (cairo_text_extents__width__d / 2);
+  double y0 = cy - (size / 2);
+  raw__cairo_context__render_outlined_text(cause, this, x0, y0, size, text, outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
+  return nil;
+}
+
 void raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this, double x0, double y0, double dx, double dy, double font_size, char* text,
 						 double maximum_corner_radius,
 						 double background_red, double background_green, double background_blue, double background_alpha,
 						 double outline_width,
 						 double text_red, double text_green, double text_blue, double text_alpha,
 						 double outline_red, double outline_green, double outline_blue, double outline_alpha) {
-  raw__cairo_context__render_outlined_rounded_box(cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width,  outline_red, outline_green, outline_blue, outline_alpha,  background_red, background_green, background_blue, background_alpha);
-  raw__cairo_context__render_outlined_text(       cause, this, x0 + (3 * dy / 8), y0 + (dy / 2) - (font_size / 2), font_size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  outline_red, outline_green, outline_blue, outline_alpha);
+  raw__cairo_context__render_outlined_rounded_box(  cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width,  outline_red, outline_green, outline_blue, outline_alpha,  background_red, background_green, background_blue, background_alpha);
+  raw__cairo_context__render_centered_outlined_text(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  outline_red, outline_green, outline_blue, outline_alpha);
 }
 
 void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
@@ -136,12 +149,6 @@ void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_cont
 						0.1,                                     // outline width
 						1, 1, 1, 1,                              // text rgba
 						0, 0, 0, 1);                             // outline rgba
-    
-    // box
-    //raw__cairo_context__render_outlined_rounded_box(cause, cairo_context, 0, 0,  4, 1.5,  0.5, 0.1,  0, 0, 0, 1,  );
-    
-    // text
-    //raw__cairo_context__render_outlined_text(cause, cairo_context, "Event", 0.5, 0.25, 1, 0.1,  1, 1, 1, 1,  0, 0, 0, 1);
   }
   raw__cairo_context__restore(cause, cairo_context);
 }

@@ -27,7 +27,6 @@
 
 #define cairo_pi ((double)3.1415926535459)
 
-
 // cairo_object
 
 f2ptr        f2cairo_object__new                      (f2ptr cause, f2ptr cairo_object_pointer);
@@ -65,6 +64,17 @@ boolean_t           raw__cairo_font_weight__is_type                (f2ptr cause,
 #if defined(F2__CAIRO_SUPPORTED)
 cairo_font_weight_t raw__cairo_font_weight__as__cairo_font_weight_t(f2ptr cause, f2ptr this);
 #endif // F2__CAIRO_SUPPORTED
+
+
+// cairo_text_extents
+
+def_header_ceframe6(cairo_text_extents,
+		    x_bearing,
+		    y_bearing,
+		    width,
+		    height,
+		    x_advance,
+		    y_advance);
 
 
 // cairo_context
@@ -133,6 +143,8 @@ f2ptr     raw__cairo_context__scale                     (f2ptr cause, f2ptr this
 f2ptr      f2__cairo_context__scale                     (f2ptr cause, f2ptr this, f2ptr x, f2ptr y);
 f2ptr     raw__cairo_context__rotate                    (f2ptr cause, f2ptr this, double angle);
 f2ptr      f2__cairo_context__rotate                    (f2ptr cause, f2ptr this, f2ptr angle);
+f2ptr     raw__cairo_context__text_extents              (f2ptr cause, f2ptr this, char* text);
+f2ptr      f2__cairo_context__text_extents              (f2ptr cause, f2ptr this, f2ptr text);
 
 f2ptr f2__cairo_context_type__new(f2ptr cause);
 

@@ -181,6 +181,18 @@ cairo_font_weight_t raw__cairo_font_weight__as__cairo_font_weight_t(f2ptr cause,
 #endif // F2__CAIRO_SUPPORTED
 
 
+// cairo_text_extents
+
+def_ceframe6(cairo, cairo_text_extents,
+	     x_bearing,
+	     y_bearing,
+	     width,
+	     height,
+	     x_advance,
+	     y_advance);
+
+
+
 // cairo_context
 
 f2ptr f2cairo_context__new(f2ptr cause, f2ptr cairo_context_pointer) {
@@ -996,6 +1008,46 @@ export_cefunk2(cairo_context__rotate, this, angle, 0,
 	       "angle : 	angle (in radians) by which the user-space axes will be rotated");
 
 
+f2ptr raw__cairo_context__text_extents(f2ptr cause, f2ptr this, char* text) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t*             cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  cairo_font_extents_t cairo_text_extents;
+  cairo_text_extents(cairo_context, text, &cairo_text_entents);
+  return f2cairo_text_extents__new(cause,
+				   f2double__new(cause, cairo_text_extents.x_bearing),
+				   f2double__new(cause, cairo_text_extents.y_bearing),
+				   f2double__new(cause, cairo_text_extents.width),
+				   f2double__new(cause, cairo_text_extents.height),
+				   f2double__new(cause, cairo_text_extents.x_advance),
+				   f2double__new(cause, cairo_text_extents.y_advance));
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__text_extents(f2ptr cause, f2ptr this, f2ptr text) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__string__is_type(cause, text))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  s64 text__length = raw__string__length(cause, text);
+  u8* text__str    = (u8*)from_ptr(f2__malloc(text__length));
+  raw__string__str_copy(cause, text, text__str);
+  text__str[text__length] = 0;
+  f2ptr result = raw__cairo_context__text_extents(cause, this, text__str);
+  f2__free(to_ptr(text__str));
+  return result;
+}
+export_cefunk2(cairo_context__text_extents, this, text, 0,
+	       "Gets the extents for a string of text. The extents describe a user-space rectangle that encloses the "inked" portion of the text, (as it would be drawn by cairo_show_text()). Additionally, the x_advance and y_advance values indicate the amount by which the current point would be advanced by cairo_show_text().\n"
+	       "\n"
+	       "Note that whitespace characters do not directly contribute to the size of the rectangle (extents.width and extents.height). They do contribute indirectly by changing the position of non-whitespace characters. In particular, trailing whitespace characters are likely to not affect the size of the rectangle, though they will affect the x_advance and y_advance values.\n"
+	       "\n"
+	       "cr : 	a cairo_t\n"
+	       "utf8 : 	a string of text, encoded in UTF-8\n"
+	       "extents : 	a cairo_text_extents_t object into which the results will be stored ");
+
+
 f2ptr f2__cairo_context_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "cairo_object")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__new")));}
@@ -1028,6 +1080,7 @@ f2ptr f2__cairo_context_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "translate"),             f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__translate")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "scale"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__scale")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "rotate"),                f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__rotate")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "text_extents"),          f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__text_extents")));}
   return this;
 }
 

@@ -152,7 +152,7 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
   {
     f2ptr result = raw__cairo_context__render_rounded_text_box(cause, cairo_context,
 							       0, 0,                                    // x0, y0
-							       4, 1.5,                                  // dx, dy
+							       8, 1.5,                                  // dx, dy
 							       1,                                       // font size
 							       "Event",                                 // text
 							       0.5,                                     // maximum corner radius

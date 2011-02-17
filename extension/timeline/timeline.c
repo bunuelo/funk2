@@ -344,10 +344,10 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 	    connected_set  = f2__set__new(cause);
 	    connected_sets = f2cons__new(cause, connected_set, connected_sets);
 	    f2ptr expansion_event_set = f2__set__new(cause);
+	    raw__set__add(cause, expansion_event_set, event);
 	    while (! raw__set__is_empty(cause, expansion_event_set)) {
 	      f2ptr expand_event = raw__set__an_arbitrary_element(cause, expansion_event_set);
 	      raw__ptypehash__add(cause, connected_set_event_hash, expand_event, connected_set);
-	      raw__set__add(cause, expansion_event_set, expand_event);
 	      {
 		f2ptr next_set = raw__semantic_temporal_object__next__lookup(cause, expand_event);
 		set__iteration(cause, next_set, expansion_event, raw__set__add(cause, expansion_event_set, expansion_event));

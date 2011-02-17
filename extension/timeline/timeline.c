@@ -56,24 +56,24 @@ void raw__cairo_context__render_outlined_box(f2ptr cause,
 					     double background_green,
 					     double background_blue,
 					     double background_alpha) {
-  raw__cairo_context__set_line_width( cause, this, outline_width);
-  raw__cairo_context__set_source_rgba(cause, this, background_red, background_green, background_blue, background_alpha);
   raw__cairo_context__move_to(        cause, this,  x0,  y0);
   raw__cairo_context__rel_line_to(    cause, this,  dx,   0);
   raw__cairo_context__rel_line_to(    cause, this,   0,  dy);
   raw__cairo_context__rel_line_to(    cause, this, -dx,   0);
   raw__cairo_context__rel_line_to(    cause, this,   0, -dy);
-  raw__cairo_context__fill_preserve(  cause, this);
+  raw__cairo_context__set_line_width( cause, this, outline_width);
   raw__cairo_context__set_source_rgba(cause, this, foreground_red, foreground_green, foreground_blue, foreground_alpha);
-  raw__cairo_context__stroke(         cause, this);
+  raw__cairo_context__stroke_preserve(cause, this);
+  raw__cairo_context__set_source_rgba(cause, this, background_red, background_green, background_blue, background_alpha);
+  raw__cairo_context__fill(           cause, this);
 }
 
 void raw__cairo_context__render_outlined_text(f2ptr cause, f2ptr this, char* text, double x0, double y0, double size, double outline_width, double red, double green, double blue, double alpha, double outline_red, double outline_green, double outline_blue, double outline_alpha) {
-  raw__cairo_context__set_line_width( cause, this, outline_width);
-  raw__cairo_context__set_source_rgba(cause, this, outline_red, outline_green, outline_blue, outline_alpha);
   raw__cairo_context__move_to(        cause, this, x0, y0 + (size * 0.75));
   raw__cairo_context__set_font_size(  cause, this, size);
   raw__cairo_context__text_path(      cause, this, text);
+  raw__cairo_context__set_source_rgba(cause, this, outline_red, outline_green, outline_blue, outline_alpha);
+  raw__cairo_context__set_line_width( cause, this, outline_width);
   raw__cairo_context__stroke_preserve(cause, this);
   raw__cairo_context__set_source_rgba(cause, this, red, green, blue, alpha);
   raw__cairo_context__fill(           cause, this);

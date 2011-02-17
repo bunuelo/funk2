@@ -1034,7 +1034,7 @@ f2ptr f2__cairo_context__text_extents(f2ptr cause, f2ptr this, f2ptr text) {
   u8* text__str    = (u8*)from_ptr(f2__malloc(text__length));
   raw__string__str_copy(cause, text, text__str);
   text__str[text__length] = 0;
-  f2ptr result = raw__cairo_context__text_extents(cause, this, text__str);
+  f2ptr result = raw__cairo_context__text_extents(cause, this, (char*)text__str);
   f2__free(to_ptr(text__str));
   return result;
 }

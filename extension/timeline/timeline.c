@@ -43,26 +43,18 @@ export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_e
 
 void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   raw__cairo_context__save(cause, cairo_context);
-  raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
   raw__cairo_context__set_line_width(cause, cairo_context, 0.001);
   // box
-  raw__cairo_context__move_to(    cause, cairo_context,  0,  0);
-  raw__cairo_context__rel_line_to(cause, cairo_context,  1,  0);
-  raw__cairo_context__rel_line_to(cause, cairo_context,  0,  1);
-  raw__cairo_context__rel_line_to(cause, cairo_context, -1,  0);
-  raw__cairo_context__rel_line_to(cause, cairo_context,  0, -1);
-  raw__cairo_context__stroke(cause, cairo_context);
-  {
-    s64 y;
-    for (y = 0; y < (64 - 1); y ++) {
-      s64 x;
-      for (x = 0; x < (64 - 1); x ++) {
-	raw__cairo_context__arc(cause, cairo_context, (x + 1.0) / 64.0, (y + 1.0) / 64.0, 0.001, 0, 2 * cairo_pi);
-	raw__cairo_context__fill(cause, cairo_context);
-      }
-    }
-  }
-  raw__cairo_context__restore(cause, cairo_context);
+  raw__cairo_context__set_source_rgba(cause, cairo_context, 0.75, 0.75, 0.75, 1);
+  raw__cairo_context__move_to(        cause, cairo_context,  0,  0);
+  raw__cairo_context__rel_line_to(    cause, cairo_context,  1,  0);
+  raw__cairo_context__rel_line_to(    cause, cairo_context,  0,  1);
+  raw__cairo_context__rel_line_to(    cause, cairo_context, -1,  0);
+  raw__cairo_context__rel_line_to(    cause, cairo_context,  0, -1);
+  raw__cairo_context__fill_preserve(  cause, cairo_context);
+  raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
+  raw__cairo_context__stroke(         cause, cairo_context);
+  raw__cairo_context__restore(        cause, cairo_context);
 }
 
 f2ptr f2__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {

@@ -68,6 +68,41 @@ void raw__cairo_context__render_outlined_box(f2ptr cause,
   raw__cairo_context__fill(           cause, this);
 }
 
+void raw__cairo_context__render_outlined_rounded_box(f2ptr cause,
+						     f2ptr this,
+						     double x0,
+						     double y0,
+						     double dx,
+						     double dy,
+						     double maximum_corner_radius,
+						     double outline_width,
+						     double foreground_red,
+						     double foreground_green,
+						     double foreground_blue,
+						     double foreground_alpha,
+						     double background_red,
+						     double background_green,
+						     double background_blue,
+						     double background_alpha) {
+  double corner_radius = maximum_corner_radius;
+  raw__cairo_context__move_to(        cause, this, x0 + corner_radius, y0);
+  raw__cairo_context__arc(            cause, this, x0 + corner_radius, y0 + corner_radius, corner_radius, M_PI, 3 * M_PI / 2);
+  raw__cairo_context__rel_line_to(    cause, this, dx - (corner_radius * 2), 0);
+  raw__cairo_context__arc(            cause, this, x0 + dx - corner_radius, y0 + dy + corner_radius, corner_radius, 3 * M_PI / 2, 2 * M_PI);
+  raw__cairo_context__rel_line_to(    cause, this, 0, dy - (corner_radius * 2));
+  raw__cairo_context__arc(            cause, this, x0 + dx - corner_radius, y0 + dy - corner_radius, corner_radius, 0, M_PI / 2);
+  raw__cairo_context__rel_line_to(    cause, this, -(dx - (corner_radius * 2)), 0);
+  raw__cairo_context__arc(            cause, this, x0 + corner_radius, y0 + dy - corner_radius, corner_radius, M_PI / 2, M_PI);
+  raw__cairo_context__rel_line_to(    cause, this, 0, -(dy - (corner_radius * 2)));
+  raw__cairo_context__close_path(     cause, this);
+  
+  raw__cairo_context__set_line_width( cause, this, outline_width);
+  raw__cairo_context__set_source_rgba(cause, this, foreground_red, foreground_green, foreground_blue, foreground_alpha);
+  raw__cairo_context__stroke_preserve(cause, this);
+  raw__cairo_context__set_source_rgba(cause, this, background_red, background_green, background_blue, background_alpha);
+  raw__cairo_context__fill(           cause, this);
+}
+
 void raw__cairo_context__render_outlined_text(f2ptr cause, f2ptr this, char* text, double x0, double y0, double size, double outline_width, double red, double green, double blue, double alpha, double outline_red, double outline_green, double outline_blue, double outline_alpha) {
   raw__cairo_context__move_to(        cause, this, x0, y0 + (size * 0.75));
   raw__cairo_context__set_font_size(  cause, this, size);
@@ -83,7 +118,7 @@ void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_cont
   raw__cairo_context__save(cause, cairo_context);
   {
     // box
-    raw__cairo_context__render_outlined_box(cause, cairo_context, 0, 0,  4, 2, 0.1,  0, 0, 0, 1,  30 / 255.0, 144 / 255.0, 255 / 255.0, 1);
+    raw__cairo_context__render_outlined_rounded_box(cause, cairo_context, 0, 0,  4, 2, 0.5, 0.1,  0, 0, 0, 1,  30 / 255.0, 144 / 255.0, 255 / 255.0, 1);
     
     // text
     raw__cairo_context__render_outlined_text(cause, cairo_context, "Event", 0.5, 0.5, 1, 0.1,  1, 1, 1, 1,  0, 0, 0, 1);

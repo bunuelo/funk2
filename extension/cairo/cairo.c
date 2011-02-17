@@ -1012,7 +1012,7 @@ f2ptr raw__cairo_context__text_extents(f2ptr cause, f2ptr this, char* text) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t*             cairo_context = raw__cairo_context__as__cairo_t(cause, this);
   cairo_text_extents_t text_extents;
-  cairo_text_extents(cairo_context, text, &text_entents);
+  cairo_text_extents(cairo_context, text, &text_extents);
   return f2cairo_text_extents__new(cause,
 				   f2double__new(cause, text_extents.x_bearing),
 				   f2double__new(cause, text_extents.y_bearing),

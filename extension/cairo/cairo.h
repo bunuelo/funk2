@@ -25,6 +25,8 @@
 #include "../../c/funk2.h"
 #include "../image/image.h"
 
+#define cairo_pi ((double)3.1415926535459)
+
 
 // cairo_object
 

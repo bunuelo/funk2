@@ -42,7 +42,7 @@ export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_e
 
 
 void raw__cairo_context__render_box(f2ptr cause,
-				    f2ptr cairo_context,
+				    f2ptr this,
 				    double x0,
 				    double y0,
 				    double dx,
@@ -55,34 +55,38 @@ void raw__cairo_context__render_box(f2ptr cause,
 				    double background_green,
 				    double background_blue,
 				    double background_alpha) {
-  raw__cairo_context__set_source_rgba(cause, cairo_context, background_red, background_green, background_blue, background_alpha);
-  raw__cairo_context__move_to(        cause, cairo_context,  x0,  y0);
-  raw__cairo_context__rel_line_to(    cause, cairo_context,  dx,   0);
-  raw__cairo_context__rel_line_to(    cause, cairo_context,   0,  dy);
-  raw__cairo_context__rel_line_to(    cause, cairo_context, -dx,   0);
-  raw__cairo_context__rel_line_to(    cause, cairo_context,   0, -dy);
-  raw__cairo_context__fill_preserve(  cause, cairo_context);
-  raw__cairo_context__set_source_rgba(cause, cairo_context, foreground_red, foreground_green, foreground_blue, foreground_alpha);
-  raw__cairo_context__stroke(         cause, cairo_context);
+  raw__cairo_context__set_source_rgba(cause, this, background_red, background_green, background_blue, background_alpha);
+  raw__cairo_context__move_to(        cause, this,  x0,  y0);
+  raw__cairo_context__rel_line_to(    cause, this,  dx,   0);
+  raw__cairo_context__rel_line_to(    cause, this,   0,  dy);
+  raw__cairo_context__rel_line_to(    cause, this, -dx,   0);
+  raw__cairo_context__rel_line_to(    cause, this,   0, -dy);
+  raw__cairo_context__fill_preserve(  cause, this);
+  raw__cairo_context__set_source_rgba(cause, this, foreground_red, foreground_green, foreground_blue, foreground_alpha);
+  raw__cairo_context__stroke(         cause, this);
+}
+
+void raw__cairo_context__render_outlined_text(f2ptr cause, f2ptr this, char* text, double x0, double y0, double size, double outline_width, double red, double green, double blue, double alpha, double outline_red, double outline_green, double outline_blue, double outline_alpha) {
+  raw__cairo_context__set_line_width( cause, this, outline_width);
+  raw__cairo_context__set_source_rgba(cause, this, outline_red, outline_green, outline_blue, outline_alpha);
+  raw__cairo_context__move_to(        cause, this, x0, y0 + (size * 0.75));
+  raw__cairo_context__set_font_size(  cause, this, size);
+  raw__cairo_context__text_path(      cause, this, text);
+  raw__cairo_context__stroke_preserve(cause, this);
+  raw__cairo_context__set_source_rgba(cause, this, red, green, blue, alpha);
+  raw__cairo_context__fill(           cause, this);
 }
 
 void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   raw__cairo_context__save(cause, cairo_context);
-  raw__cairo_context__set_line_width(cause, cairo_context, 0.002);
-  
-  // box
-  raw__cairo_context__render_box(     cause, cairo_context, 0, 0,  4, 2,  0, 0, 0, 1,  30 / 255.0, 144 / 255.0, 255 / 255.0, 1);
-  
-  // text
-  raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
-  raw__cairo_context__move_to(        cause, cairo_context, 0.5, 0.5 + 0.75);
-  raw__cairo_context__set_font_size(  cause, cairo_context, 1.0);
-  raw__cairo_context__text_path(      cause, cairo_context, "Event");
-  raw__cairo_context__stroke_preserve(cause, cairo_context);
-  raw__cairo_context__set_source_rgba(cause, cairo_context, 1, 1, 1, 1);
-  raw__cairo_context__fill(           cause, cairo_context);
-  
-  raw__cairo_context__restore(        cause, cairo_context);
+  {
+    // box
+    raw__cairo_context__render_box(cause, cairo_context, 0, 0,  4, 2,  0, 0, 0, 1,  30 / 255.0, 144 / 255.0, 255 / 255.0, 1);
+    
+    // text
+    raw__cairo_context__render_outlined_text(cause, cairo_context, cairo_context, "Event", 0.5, 0.5, 1, 0.1,  1, 1, 1, 1,  0, 0, 0, 1);
+  }
+  raw__cairo_context__restore(cause, cairo_context);
 }
 
 f2ptr f2__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {

@@ -121,7 +121,7 @@ void raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this, double
 						 double text_red, double text_green, double text_blue, double text_alpha,
 						 double outline_red, double outline_green, double outline_blue, double outline_alpha) {
   raw__cairo_context__render_outlined_rounded_box(cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width,  outline_red, outline_green, outline_blue, outline_alpha,  background_red, background_green, background_blue, background_alpha);
-  raw__cairo_context__render_outlined_text(       cause, this, x0 + (dy / 4), y0 + (dy / 2) - (font_size / 2), font_size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  outline_red, outline_green, outline_blue, outline_alpha);
+  raw__cairo_context__render_outlined_text(       cause, this, x0 + (dy / 2), y0 + (dy / 2) - (font_size / 2), font_size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  outline_red, outline_green, outline_blue, outline_alpha);
 }
 
 void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {

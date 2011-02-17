@@ -243,7 +243,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 		   raw__cairo_context__translate(cause, cairo_context, 4 + timeline_event_index, 4 + timeline_event_index);
 		   raw__timeline_event__cairo_render(cause, timeline_event, cairo_context);
 		   raw__cairo_context__restore(cause, cairo_context);
-		   cairo_event_index ++;
+		   timeline_event_index ++;
 		   );
   }
   raw__cairo_context__restore(cause, cairo_context);

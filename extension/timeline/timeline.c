@@ -41,20 +41,36 @@ f2ptr f2__timeline_event__new(f2ptr cause, f2ptr semantic_realm) {
 export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_event object.");
 
 
+void raw__cairo_context__render_box(f2ptr cause,
+				    double x0,
+				    double y0,
+				    double dx,
+				    double dy,
+				    double foreground_red,
+				    double foreground_green,
+				    double foreground_blue,
+				    double foreground_alpha,
+				    double background_red,
+				    double background_green,
+				    double background_blue,
+				    double background_alpha) {
+  raw__cairo_context__set_source_rgba(cause, cairo_context, background_red, background_green, background_blue, background_alpha);
+  raw__cairo_context__move_to(        cause, cairo_context,  x0,  y0);
+  raw__cairo_context__rel_line_to(    cause, cairo_context,  dx,   0);
+  raw__cairo_context__rel_line_to(    cause, cairo_context,   0,  dy);
+  raw__cairo_context__rel_line_to(    cause, cairo_context, -dx,   0);
+  raw__cairo_context__rel_line_to(    cause, cairo_context,   0, -dy);
+  raw__cairo_context__fill_preserve(  cause, cairo_context);
+  raw__cairo_context__set_source_rgba(cause, cairo_context, foreground_red, foreground_green, foreground_blue, foreground_alpha);
+  raw__cairo_context__stroke(         cause, cairo_context);
+}
+
 void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   raw__cairo_context__save(cause, cairo_context);
   raw__cairo_context__set_line_width(cause, cairo_context, 0.001);
   
   // box
-  raw__cairo_context__set_source_rgba(cause, cairo_context, 0.75, 0.75, 0.75, 1);
-  raw__cairo_context__move_to(        cause, cairo_context,  0,  0);
-  raw__cairo_context__rel_line_to(    cause, cairo_context,  4,  0);
-  raw__cairo_context__rel_line_to(    cause, cairo_context,  0,  2);
-  raw__cairo_context__rel_line_to(    cause, cairo_context, -4,  0);
-  raw__cairo_context__rel_line_to(    cause, cairo_context,  0, -2);
-  raw__cairo_context__fill_preserve(  cause, cairo_context);
-  raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
-  raw__cairo_context__stroke(         cause, cairo_context);
+  raw__cairo_context__render_box(     cause, cairo_context, 0, 0,  4, 2,  0, 0, 0, 1,  0.75, 0.75, 0.75, 1);
   
   // text
   raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);

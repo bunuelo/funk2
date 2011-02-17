@@ -329,17 +329,65 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
     }
   }
   raw__cairo_context__move_to(cause, cairo_context, 0, 0);
+  f2ptr connected_sets = nil;
   {
-    s64   timeline_event_index = 0;
     f2ptr timeline_event_set   = raw__timeline__timeline_event_set(cause, this);
-    set__iteration(cause, timeline_event_set, timeline_event,
-		   raw__cairo_context__save(         cause, cairo_context);
-		   raw__cairo_context__scale(        cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));
-		   raw__cairo_context__translate(    cause, cairo_context, 4 + timeline_event_index, 4 + timeline_event_index);
-		   raw__timeline_event__cairo_render(cause, timeline_event, cairo_context);
-		   raw__cairo_context__restore(      cause, cairo_context);
-		   timeline_event_index ++;
-		   );
+    f2ptr connected_set_event_hash = f2__ptypehash__new(cause);
+    {
+      f2ptr event_set_elements = raw__set__elements(cause, timeline_event_set);
+      {
+	f2ptr iter = event_set_elements;
+	while (iter != nil) {
+	  f2ptr event = f2cons__car(iter, cause);
+	  f2ptr connected_set = raw__ptypehash__lookup(cause, connected_set_event_hash, event);
+	  connected_sets = f2cons__new(cause, connected_set, connected_sets);
+	  if (connected_set == nil) {
+	    connected_set = f2__set__new(cause);
+	    f2ptr expansion_event_set = f2__set__new(cause);
+	    while (! raw__set__is_empty(cause, expansion_event_set)) {
+	      f2ptr expand_event = raw__set__an_arbitrary_element(cause, expansion_event_set);
+	      raw__ptypehash__add(cause, connected_set_event_hash, expand_event, connected_set);
+	      raw__set__add(cause, expansion_event_set, expand_event);
+	      {
+		f2ptr next_set = raw__semantic_temporal_object__next__lookup(cause, expand_event);
+		set__iteration(cause, next_set, expansion_event, raw__set__add(cause, expansion_event_set, expansion_event));
+	      }
+	      {
+		f2ptr previous_set = raw__semantic_temporal_object__previous__lookup(cause, expand_event);
+		set__iteration(cause, previous_set, expansion_event, raw__set__add(cause, expansion_event_set, expansion_event));
+	      }
+	      {
+		f2ptr contains_set = raw__semantic_temporal_object__contains__lookup(cause, expand_event);
+		set__iteration(cause, contains_set, expansion_event, raw__set__add(cause, expansion_event_set, expansion_event));
+	      }
+	      {
+		f2ptr is_contained_by_set = raw__semantic_temporal_object__is_contained_by__lookup(cause, expand_event);
+		set__iteration(cause, is_contained_by_set, expansion_event, raw__set__add(cause, expansion_event_set, expansion_event));
+	      }
+	    }
+	  }
+	  iter = f2cons__cdr(iter, cause);
+	}
+      }
+    }
+  }
+  {
+    f2ptr connected_set_iter = connected_sets;
+    while (connected_set_iter != nil) {
+      f2ptr connected_set = f2cons__car(connected_set_iter, cause);
+      {
+	s64 index = 0;
+	set__iteration(cause, connected_set, event,
+		       raw__cairo_context__save(         cause, cairo_context);
+		       raw__cairo_context__scale(        cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));
+		       raw__cairo_context__translate(    cause, cairo_context, 4, 4 + index);
+		       raw__timeline_event__cairo_render(cause, event, cairo_context);
+		       raw__cairo_context__restore(      cause, cairo_context);
+		       index ++;
+		       );
+      }
+      connected_set_iter = f2cons__cdr(connected_set_iter, cause);
+    }
   }
   raw__cairo_context__restore(cause, cairo_context);
 }

@@ -42,6 +42,7 @@ export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_e
 
 
 void raw__cairo_context__render_box(f2ptr cause,
+				    f2ptr cairo_context,
 				    double x0,
 				    double y0,
 				    double dx,

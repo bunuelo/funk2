@@ -115,12 +115,12 @@ void raw__cairo_context__render_outlined_text(f2ptr cause, f2ptr this, double x0
 }
 
 f2ptr raw__cairo_context__render_centered_outlined_text(f2ptr cause, f2ptr this, double cx, double cy, double size, char* text, double outline_width, double red, double green, double blue, double alpha, double outline_red, double outline_green, double outline_blue, double outline_alpha) {
-  f2ptr cairo_text_extents         = raw__cairo_context__text_extents(cause, text);
-  if (raw__larva__is_type(cause, cairo_text_extents)) {
-    return cairo_text_extents;
+  f2ptr text_extents = raw__cairo_context__text_extents(cause, text);
+  if (raw__larva__is_type(cause, text_extents)) {
+    return text_extents;
   }
-  f2ptr  cairo_text_extents__width     = raw__cairo_text_extents__width( cause, cairo_text_extents);
-  double cairo_text_extents__width__d  = f2double__d(cairo_text_extents__width,  cause);
+  f2ptr  text_extents__width     = raw__cairo_text_extents__width(cause, text_extents);
+  double text_extents__width__d  = f2double__d(text_extents__width, cause);
   double x0 = cx - (cairo_text_extents__width__d / 2);
   double y0 = cy - (size / 2);
   raw__cairo_context__render_outlined_text(cause, this, x0, y0, size, text, outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);

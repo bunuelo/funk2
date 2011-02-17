@@ -41,20 +41,22 @@ f2ptr f2__timeline_event__new(f2ptr cause, f2ptr semantic_realm) {
 export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_event object.");
 
 
-void raw__cairo_context__render_box(f2ptr cause,
-				    f2ptr this,
-				    double x0,
-				    double y0,
-				    double dx,
-				    double dy,
-				    double foreground_red,
-				    double foreground_green,
-				    double foreground_blue,
-				    double foreground_alpha,
-				    double background_red,
-				    double background_green,
-				    double background_blue,
-				    double background_alpha) {
+void raw__cairo_context__render_outlined_box(f2ptr cause,
+					     f2ptr this,
+					     double x0,
+					     double y0,
+					     double dx,
+					     double dy,
+					     double outline_width,
+					     double foreground_red,
+					     double foreground_green,
+					     double foreground_blue,
+					     double foreground_alpha,
+					     double background_red,
+					     double background_green,
+					     double background_blue,
+					     double background_alpha) {
+  raw__cairo_context__set_line_width( cause, this, outline_width);
   raw__cairo_context__set_source_rgba(cause, this, background_red, background_green, background_blue, background_alpha);
   raw__cairo_context__move_to(        cause, this,  x0,  y0);
   raw__cairo_context__rel_line_to(    cause, this,  dx,   0);
@@ -81,7 +83,7 @@ void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_cont
   raw__cairo_context__save(cause, cairo_context);
   {
     // box
-    raw__cairo_context__render_box(cause, cairo_context, 0, 0,  4, 2,  0, 0, 0, 1,  30 / 255.0, 144 / 255.0, 255 / 255.0, 1);
+    raw__cairo_context__render_outlined_box(cause, cairo_context, 0, 0,  4, 2, 0.1,  0, 0, 0, 1,  30 / 255.0, 144 / 255.0, 255 / 255.0, 1);
     
     // text
     raw__cairo_context__render_outlined_text(cause, cairo_context, "Event", 0.5, 0.5, 1, 0.1,  1, 1, 1, 1,  0, 0, 0, 1);

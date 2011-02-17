@@ -119,38 +119,48 @@ f2ptr raw__cairo_context__render_centered_outlined_text(f2ptr cause, f2ptr this,
   if (raw__larva__is_type(cause, text_extents)) {
     return text_extents;
   }
-  f2ptr  text_extents__width     = raw__cairo_text_extents__width(cause, text_extents);
-  double text_extents__width__d  = f2double__d(text_extents__width, cause);
+  f2ptr  text_extents__width    = raw__cairo_text_extents__width(cause, text_extents);
+  double text_extents__width__d = f2double__d(text_extents__width, cause);
   double x0 = cx - (text_extents__width__d / 2);
   double y0 = cy - (size / 2);
   raw__cairo_context__render_outlined_text(cause, this, x0, y0, size, text, outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
   return nil;
 }
 
-void raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this, double x0, double y0, double dx, double dy, double font_size, char* text,
+f2ptr raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this, double x0, double y0, double dx, double dy, double font_size, char* text,
 						 double maximum_corner_radius,
 						 double background_red, double background_green, double background_blue, double background_alpha,
 						 double outline_width,
 						 double text_red, double text_green, double text_blue, double text_alpha,
 						 double outline_red, double outline_green, double outline_blue, double outline_alpha) {
-  raw__cairo_context__render_outlined_rounded_box(  cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width,  outline_red, outline_green, outline_blue, outline_alpha,  background_red, background_green, background_blue, background_alpha);
-  raw__cairo_context__render_centered_outlined_text(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  outline_red, outline_green, outline_blue, outline_alpha);
+  raw__cairo_context__render_outlined_rounded_box(cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width,  outline_red, outline_green, outline_blue, outline_alpha,  background_red, background_green, background_blue, background_alpha);
+  {
+    f2ptr result = raw__cairo_context__render_centered_outlined_text(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  outline_red, outline_green, outline_blue, outline_alpha);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  return nil;
 }
 
-void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   raw__cairo_context__save(cause, cairo_context);
   {
-    raw__cairo_context__render_rounded_text_box(cause, cairo_context, 0, 0,              // x0, y0
-						4, 1.5,                                  // dx, dy
-						1,                                       // font size
-						"Event",                                 // text
-						0.5,                                     // maximum corner radius
-						30 / 255.0, 144 / 255.0, 255 / 255.0, 1, // background rgba
-						0.1,                                     // outline width
-						1, 1, 1, 1,                              // text rgba
-						0, 0, 0, 1);                             // outline rgba
+    f2ptr result = raw__cairo_context__render_rounded_text_box(cause, cairo_context, 0, 0,              // x0, y0
+							       4, 1.5,                                  // dx, dy
+							       1,                                       // font size
+							       "Event",                                 // text
+							       0.5,                                     // maximum corner radius
+							       30 / 255.0, 144 / 255.0, 255 / 255.0, 1, // background rgba
+							       0.1,                                     // outline width
+							       1, 1, 1, 1,                              // text rgba
+							       0, 0, 0, 1);                             // outline rgba
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
   }
   raw__cairo_context__restore(cause, cairo_context);
+  return nil;
 }
 
 f2ptr f2__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
@@ -158,8 +168,7 @@ f2ptr f2__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_cont
       (! raw__cairo_context__is_type(cause, cairo_context))) {
     return f2larva__new(cause, 1, nil);
   }
-  raw__timeline_event__cairo_render(cause, this, cairo_context);
-  return nil;
+  return raw__timeline_event__cairo_render(cause, this, cairo_context);
 }
 export_cefunk2(timeline_event__cairo_render, this, cairo_context, 0, "Renders this timeline_event in the given cairo_context.");
 

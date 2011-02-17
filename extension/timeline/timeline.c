@@ -84,7 +84,7 @@ void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_cont
     raw__cairo_context__render_box(cause, cairo_context, 0, 0,  4, 2,  0, 0, 0, 1,  30 / 255.0, 144 / 255.0, 255 / 255.0, 1);
     
     // text
-    raw__cairo_context__render_outlined_text(cause, cairo_context, cairo_context, "Event", 0.5, 0.5, 1, 0.1,  1, 1, 1, 1,  0, 0, 0, 1);
+    raw__cairo_context__render_outlined_text(cause, cairo_context, "Event", 0.5, 0.5, 1, 0.1,  1, 1, 1, 1,  0, 0, 0, 1);
   }
   raw__cairo_context__restore(cause, cairo_context);
 }

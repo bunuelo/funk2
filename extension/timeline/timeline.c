@@ -372,6 +372,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 		  set__iteration(cause, is_contained_by_set, expansion_event, raw__set__add(cause, expansion_event_set, expansion_event));
 		}
 	      }
+	      raw__set__remove(cause, expansion_event_set, expand_event);
 	    }
 	  }
 	  iter = f2cons__cdr(iter, cause);

@@ -38,5 +38,9 @@
       
       nil]]]
 
+[defunk timeline-retry []
+  [global_core_extension_handler-unload_changed]
+  [require timeline-test]
+  [timeline-test]]
 
 

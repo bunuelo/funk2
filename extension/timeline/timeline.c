@@ -124,9 +124,6 @@ f2ptr raw__cairo_context__render_centered_outlined_text(f2ptr cause, f2ptr this,
   double text_extents__width__d = f2double__d(text_extents__width, cause);
   double x0 = cx - (text_extents__width__d / 2);
   double y0 = cy - (font_size              / 2);
-  printf("\ntext_extents__width__d=%f", text_extents__width__d); fflush(stdout);
-  printf("\nx0=%f", x0); fflush(stdout);
-  printf("\ny0=%f", y0); fflush(stdout);
   raw__cairo_context__render_outlined_text(cause, this, x0, y0, font_size, text, outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
   return nil;
 }
@@ -152,7 +149,7 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
   {
     f2ptr result = raw__cairo_context__render_rounded_text_box(cause, cairo_context,
 							       0, 0,                                    // x0, y0
-							       8, 3,                                  // dx, dy
+							       4, 1.5,                                  // dx, dy
 							       1,                                       // font size
 							       "Event",                                 // text
 							       0.5,                                     // maximum corner radius

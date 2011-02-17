@@ -29,9 +29,6 @@
       [have timeline add_timeline_event timeline_event_b]
       [have timeline add_timeline_event timeline_event_c]
       
-      [terminal_format standard-terminal '\ntimeline      : ' timeline]
-      [terminal_format standard-terminal '\ntimeline_event: ' timeline_event]
-      
       [let* [[cairo_surface [new cairo_pdf_surface 'timeline-test.pdf' 72.0 72.0]]
 	     [cairo_context [new cairo_context cairo_surface]]]
 	[have cairo_context scale 72.0 72.0]

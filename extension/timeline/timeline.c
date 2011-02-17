@@ -42,7 +42,7 @@ export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_e
 
 
 void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
-  raw__cairo_context__save(cause);
+  raw__cairo_context__save(cause, cairo_context);
   raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
   raw__cairo_context__set_line_width(cause, cairo_context, 0.001);
   // box
@@ -67,7 +67,7 @@ void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_cont
 		   raw__timeline_event__cairo_render(cause, timeline_event, cairo_context);
 		   );
   }
-  raw__cairo_context__restore(cause);
+  raw__cairo_context__restore(cause, cairo_context);
 }
 
 f2ptr f2__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
@@ -215,7 +215,7 @@ export_cefunk1(timeline__timeline_events, this, 0, "Returns a new list of the ti
 
 
 void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
-  raw__cairo_context__save(cause);
+  raw__cairo_context__save(cause, cairo_context);
   raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
   raw__cairo_context__set_line_width(cause, cairo_context, 0.001);
   // box
@@ -246,7 +246,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 		   cairo_event_index ++;
 		   );
   }
-  raw__cairo_context__restore(cause);
+  raw__cairo_context__restore(cause, cairo_context);
 }
 
 f2ptr f2__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {

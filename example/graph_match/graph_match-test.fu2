@@ -47,13 +47,14 @@
 			nil]]
 		  nil]]
 	  results]
+    [print 'yay']
 'bug here? car doesnt have get - not car of x?'
     [let* [[the_keys [get graph_to_isomorphism_length_hash keys]]
 	   [original_graph_to_isomorphism_length_hash [new ptypehash]]
 	   [the_sorted_keys [have the_keys sort [funk [x y]
 						      [<
-						       [have graph_to_isomorphism_length_hash lookup [car x]]
-						       [have graph_to_isomorphism_length_hash lookup [car y]]]]]]]
+						       [car [have graph_to_isomorphism_length_hash lookup x]]
+						       [car [have graph_to_isomorphism_length_hash lookup y]]]]]]]
       [print 'keys sorted']
       [let* [[top_graph_and_length [cons [have graph_mappings_lto lookup [car the_sorted_keys]] 
 					 [have graph_to_isomorphism_length_hash lookup [car the_sorted_keys]]]]
@@ -276,7 +277,7 @@
 [defunk make_random_n_conceptnet_graph [n e]
   [let* [[index 0]
 	 [index2 0]
-	 [edge_labels [get [conslist `HasProperty `IsA `CapableOf `HasPRerequisite 
+	 [edge_labels [get [conslist `HasProperty `IsA `CapableOf `HasPrerequisite 
 				     `AtLocation `ConceptuallyRelatedTo `UsedFor 
 				     `CausesDesire `MotivatedByGoal `DefinedAs 
 				     `ReceivesAction `HasSubevent `MadeOf `PartOf 

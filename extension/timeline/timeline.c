@@ -71,7 +71,7 @@ void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_cont
   raw__cairo_context__set_line_width(cause, cairo_context, 0.001);
   
   // box
-  raw__cairo_context__render_box(     cause, cairo_context, 0, 0,  4, 2,  0, 0, 0, 1,  0.0, 0.75, 1.0, 1);
+  raw__cairo_context__render_box(     cause, cairo_context, 0, 0,  4, 2,  0, 0, 0, 1,  0.5, 0.875, 1.0, 1);
   
   // text
   raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);

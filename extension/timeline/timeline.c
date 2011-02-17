@@ -228,6 +228,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
       }
     }
   }
+  raw__cairo_context__move_to(cause, cairo_context, 0, 0);
   {
     s64   timeline_event_index = 0;
     f2ptr timeline_event_set   = raw__timeline__timeline_event_set(cause, this);

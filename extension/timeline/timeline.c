@@ -58,7 +58,7 @@ void raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_cont
   
   // text
   raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
-  raw__cairo_context__move_to(        cause, cairo_context, 0, 1 - 0.33);
+  raw__cairo_context__move_to(        cause, cairo_context, 0, 1 - 0.25);
   raw__cairo_context__set_font_size(  cause, cairo_context, 1.0);
   raw__cairo_context__text_path(      cause, cairo_context, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789`-=[]\;',./~!@#$%^&*()_+{}|:\"<>?");
   raw__cairo_context__fill(           cause, cairo_context);

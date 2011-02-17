@@ -118,7 +118,7 @@ void raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this, double
 						 double maximum_corner_radius,
 						 double background_red, double background_green, double background_blue, double background_alpha,
 						 double outline_width,
-						 double text__red, double text__green, double text__blue, double text__alpha,
+						 double text_red, double text_green, double text_blue, double text_alpha,
 						 double outline_red, double outline_green, double outline_blue, double outline_alpha) {
   raw__cairo_context__render_outlined_rounded_box(cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width,  outline_red, outline_green, outline_blue, outline_alpha,  background_red, background_green, background_blue, background_alpha);
   raw__cairo_context__render_outlined_text(       cause, this, x0 + (dy / 4), y0 + (dy / 2) + (size / 2), size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  outline_red, outline_green, outline_blue, outline_alpha);

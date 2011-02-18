@@ -556,7 +556,6 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 		       );
 	f2ptr expansion_set  = connected_set;
 	f2ptr starting_event = raw__set__an_arbitrary_element(cause, connected_set);
-	raw__set__add(cause, expansion_set, starting_event);
 	while (! raw__set__is_empty(cause, expansion_set)) {
 	  f2ptr next_set = f2__set__new(cause);
 	  set__iteration(cause, expansion_set, event,

@@ -140,6 +140,37 @@ f2ptr f2__propogator_relation__new(f2ptr cause) {
 export_cefunk0(propogator_relation__new, 0, "Returns a new propogator_relation object.");
 
 
+void raw__propogator_relation__add_cell_port(f2ptr cause, f2ptr this, f2ptr name, f2ptr cell) {
+  f2ptr cell_port_frame = raw__propogator_relation__cell_port_frame(cause, this);
+  raw__frame__add_var_value(cause, cell_port_frame, name, cell);
+}
+
+f2ptr f2__propogator_relation__add_cell_port(f2ptr cause, f2ptr this, f2ptr name, f2ptr cell) {
+  if ((! raw__propogator_relation__is_type(cause, this)) ||
+      (! raw__propogator_cell__is_type(cause, cell))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__propogator_relation__add_cell_port(cause, this, name, cell);
+}
+export_cefunk3(propogator_relation__add_cell_port, this, name, cell, 0, "Adds a named propogator_cell object to this propogator_relation.");
+
+
+
+void raw__propogator_relation__remove_cell_port(f2ptr cause, f2ptr this, f2ptr name) {
+  f2ptr cell_port_frame = raw__propogator_relation__cell_port_frame(cause, this);
+  raw__frame__remove_var_value(cause, cell_port_frame, name);
+}
+
+f2ptr f2__propogator_relation__remove_cell_port(f2ptr cause, f2ptr this, f2ptr name) {
+  if (! raw__propogator_relation__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__propogator_relation__remove_cell_port(cause, this, name);
+}
+export_cefunk2(propogator_relation__remove_cell_port, this, name, 0, "Removes a named propogator_cell object from this propogator_relation.");
+
+
+
 void raw__propogator_relation__add_process(f2ptr cause, f2ptr this, f2ptr process) {
   f2ptr process_set = raw__propogator_relation__process_set(cause, this);
   raw__set__add(cause, process_set, process);
@@ -174,8 +205,10 @@ export_cefunk2(propogator_relation__remove_process, this, process, 0, "Adds a pr
 
 f2ptr f2__propogator_relation_type__new_aux(f2ptr cause) {
   f2ptr this = f2__propogator_relation_type__new(cause);
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_process"),    f2__core_extension_funk__new(cause, new__symbol(cause, "propogator"), new__symbol(cause, "propogator_relation__add_process")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove_process"), f2__core_extension_funk__new(cause, new__symbol(cause, "propogator"), new__symbol(cause, "propogator_relation__remove_process")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_cell_port"),    f2__core_extension_funk__new(cause, new__symbol(cause, "propogator"), new__symbol(cause, "propogator_relation__add_cell_port")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove_cell_port"), f2__core_extension_funk__new(cause, new__symbol(cause, "propogator"), new__symbol(cause, "propogator_relation__remove_cell_port")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_process"),      f2__core_extension_funk__new(cause, new__symbol(cause, "propogator"), new__symbol(cause, "propogator_relation__add_process")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove_process"),   f2__core_extension_funk__new(cause, new__symbol(cause, "propogator"), new__symbol(cause, "propogator_relation__remove_process")));}
   return this;
 }
 

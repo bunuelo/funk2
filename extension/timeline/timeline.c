@@ -158,7 +158,7 @@ export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_e
 
 
 double raw__timeline_event__cairo_width(f2ptr cause, f2ptr this, f2ptr cairo_context) {
-  double text_width = raw__cairo_context__text_width(cause, cairo_context, font_size, (char*)action_name__str);
+  double text_width = raw__cairo_context__text_width(cause, cairo_context, 1, (char*)action_name__str);
   return (double)((int)(text_width + 1.5));
 }
 

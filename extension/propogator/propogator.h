@@ -22,9 +22,40 @@
 
 #include "../../c/funk2.h"
 
-def_header_ceframe1(propogator_cell, value);
+// propogator
+
+def_header_ceframe1(propogator, cell_set);
+
+f2ptr raw__propogator__new        (f2ptr cause);
+f2ptr  f2__propogator__new        (f2ptr cause);
+void  raw__propogator__add_cell   (f2ptr cause, f2ptr this, f2ptr cell);
+f2ptr  f2__propogator__add_cell   (f2ptr cause, f2ptr this, f2ptr cell);
+void  raw__propogator__remove_cell(f2ptr cause, f2ptr this, f2ptr cell);
+f2ptr  f2__propogator__remove_cell(f2ptr cause, f2ptr this, f2ptr cell);
 
 
+// propogator_cell
+
+def_header_ceframe2(propogator_cell, propogator, value);
+
+f2ptr raw__propogator_cell__new(f2ptr cause, f2ptr propogator);
+f2ptr  f2__propogator_cell__new(f2ptr cause, f2ptr propogator);
+
+
+// propogator_process
+
+def_header_ceframe1(propogator_process, input_ports, output_ports, execute_funk);
+
+f2ptr raw__propogator_process__new(f2ptr cause, f2ptr execute_funk);
+f2ptr  f2__propogator_process__new(f2ptr cause, f2ptr execute_funk);
+
+
+// propogator_relation
+
+def_header_ceframe1(propogator_relation, cell_port_frame);
+
+f2ptr raw__propogator_relation__new(f2ptr cause);
+f2ptr  f2__propogator_relation__new(f2ptr cause);
 
 
 

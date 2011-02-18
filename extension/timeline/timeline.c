@@ -330,6 +330,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   }
   raw__cairo_context__move_to(cause, cairo_context, 0, 0);
   f2ptr connected_sets = nil;
+  // find connected sets of timeline_events
   {
     f2ptr timeline_event_set   = raw__timeline__timeline_event_set(cause, this);
     f2ptr connected_set_event_hash = f2__ptypehash__new(cause);

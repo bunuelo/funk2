@@ -28,6 +28,9 @@
       [have timeline add_timeline_event timeline_event_a]
       [have timeline add_timeline_event timeline_event_b]
       [have timeline add_timeline_event timeline_event_c]
+      [semantic-add timeline_event_a contains timeline_event_b]
+      [semantic-add timeline_event_a contains timeline_event_c]
+      [semantic-add timeline_event_b next     timeline_event_c]
       
       [let* [[cairo_surface [new cairo_pdf_surface 'timeline-test.pdf' 72.0 72.0]]
 	     [cairo_context [new cairo_context cairo_surface]]]

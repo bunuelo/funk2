@@ -52,7 +52,7 @@ f2ptr  f2__propogator_process__new(f2ptr cause, f2ptr execute_funk);
 
 // propogator_relation
 
-def_header_ceframe1(propogator_relation, cell_port_frame);
+def_header_ceframe2(propogator_relation, cell_port_frame, process_set);
 
 f2ptr raw__propogator_relation__new(f2ptr cause);
 f2ptr  f2__propogator_relation__new(f2ptr cause);

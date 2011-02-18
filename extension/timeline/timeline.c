@@ -403,7 +403,7 @@ f2ptr raw__timeline_event_extents__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr widt
 }
 
 f2ptr raw__timeline_event_extents__x(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"), nil);
 }
 
 f2ptr raw__timeline_event_extents__x__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -411,7 +411,7 @@ f2ptr raw__timeline_event_extents__x__set(f2ptr cause, f2ptr this, f2ptr value) 
 }
 
 f2ptr raw__timeline_event_extents__y(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y"), nil);
 }
 
 f2ptr raw__timeline_event_extents__y__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -419,7 +419,7 @@ f2ptr raw__timeline_event_extents__y__set(f2ptr cause, f2ptr this, f2ptr value) 
 }
 
 f2ptr raw__timeline_event_extents__width(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"), nil);
 }
 
 f2ptr raw__timeline_event_extents__width__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -427,7 +427,7 @@ f2ptr raw__timeline_event_extents__width__set(f2ptr cause, f2ptr this, f2ptr val
 }
 
 f2ptr raw__timeline_event_extents__height(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "height"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "height"), nil);
 }
 
 f2ptr raw__timeline_event_extents__height__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -435,7 +435,7 @@ f2ptr raw__timeline_event_extents__height__set(f2ptr cause, f2ptr this, f2ptr va
 }
 
 f2ptr raw__timeline_event_extents__minimum_width(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "minimum_width"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "minimum_width"), nil);
 }
 
 f2ptr raw__timeline_event_extents__minimum_width__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -443,7 +443,7 @@ f2ptr raw__timeline_event_extents__minimum_width__set(f2ptr cause, f2ptr this, f
 }
 
 f2ptr raw__timeline_event_extents__minimum_height(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "minimum_height"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "minimum_height"), nil);
 }
 
 f2ptr raw__timeline_event_extents__minimum_height__set(f2ptr cause, f2ptr this, f2ptr value) {

@@ -114,9 +114,6 @@ f2ptr raw__propogator_relation__new(f2ptr cause) {
 }
 
 f2ptr f2__propogator_relation__new(f2ptr cause) {
-  if (! raw__propogator__is_type(cause, )) {
-    return f2larva__new(cause, 1, nil);
-  }
   return raw__propogator_relation__new(cause);
 }
 export_cefunk0(propogator_relation__new, 0, "Returns a new propogator_relation object.");

@@ -196,7 +196,7 @@ f2ptr raw__timeline_event__cairo_action_name(f2ptr cause, f2ptr this) {
     memcpy(action_name__str, default_name, action_name__length);
     action_name__str[action_name__length] = 0;
   }
-  f2ptr action_name = new__string(cause, action_name__str);
+  f2ptr action_name = new__string(cause, (char*)action_name__str);
   f2__free(to_ptr(action_name__str));
   return action_name;
 }

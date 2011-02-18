@@ -583,7 +583,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 			 if (not_enough_information) {
 			   raw__set__add(cause, next_set, event);
 			 } else {
-			   f2ptr  extents           = raw__ptypehash__lookup(cause, extents_event_hash, contains_event);
+			   f2ptr  extents           = raw__ptypehash__lookup(cause, extents_event_hash, event);
 			   f2ptr  minimum_width     = raw__timeline_event_extents__minimum_width( cause, extents);
 			   f2ptr  minimum_height    = raw__timeline_event_extents__minimum_height(cause, extents);
 			   double minimum_width__d  = f2double__d(minimum_width,  cause);

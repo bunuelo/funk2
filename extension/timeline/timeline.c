@@ -157,11 +157,6 @@ f2ptr f2__timeline_event__new(f2ptr cause, f2ptr semantic_realm) {
 export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_event object.");
 
 
-double raw__timeline_event__cairo_width(f2ptr cause, f2ptr this, f2ptr cairo_context) {
-  double text_width = raw__cairo_context__text_width(cause, cairo_context, 1, (char*)action_name__str);
-  return (double)((int)(text_width + 1.5));
-}
-
 f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   f2ptr action_name_set = raw__semantic_event__action_name__lookup(cause, this);
   s64   action_name__length;
@@ -203,7 +198,8 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
   }
   raw__cairo_context__save(cause, cairo_context);
   {
-    double event_width = raw__timeline_event__cairo_width(cause, this, cairo_context);
+    double text_width  = raw__cairo_context__text_width(cause, cairo_context, 1, (char*)action_name__str);
+    double event_width = (double)((int)(text_width + 1.5));
     f2ptr  result      = raw__cairo_context__render_rounded_text_box(cause, cairo_context,
 								     0, 0,                                    // x0, y0
 								     event_width, 1.5,                        // dx, dy

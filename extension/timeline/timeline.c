@@ -547,6 +547,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
       f2ptr connected_set = f2cons__car(connected_set_iter, cause);
       {
 	f2ptr extents_event_hash = f2__ptypehash__new(cause);
+	// initialize extents for each event
 	set__iteration(cause, connected_set, event,
 		       double minimum_width__d  = raw__timeline_event__cairo_minimum_width( cause, event, cairo_context);
 		       double minimum_height__d = raw__timeline_event__cairo_minimum_height(cause, event, cairo_context);
@@ -554,6 +555,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 													      f2double__new(cause, minimum_width__d),
 													      f2double__new(cause, minimum_height__d)));
 		       );
+	/*
 	// calculate width and height
 	{
 	  f2ptr expansion_set = connected_set;
@@ -629,6 +631,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 	    expansion_set = next_expansion_set;
 	  }
 	}
+	*/
 	set__iteration(cause, connected_set, event,
 		       f2ptr extents = raw__ptypehash__lookup(cause, extents_event_hash, event);
 		       raw__cairo_context__save(         cause, cairo_context);

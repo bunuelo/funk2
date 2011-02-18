@@ -634,6 +634,10 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     size__i       ++;
     size          =  f2integer__new(cause, size__i);
     raw__terminal_print_frame__size__set(cause, terminal_print_frame, size);
+    if (size__i > max_size__i) {
+      raw__terminal_print_frame__failed_max_size_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
+      return nil;
+    }
   }
   s64       slot_index                     = 0;
   u8*       type_slot_name_string          = (u8*)from_ptr(f2__malloc(type_slot_name__max_length + 1));

@@ -150,7 +150,8 @@ f2ptr f2__propogator_relation__add_cell_port(f2ptr cause, f2ptr this, f2ptr name
       (! raw__propogator_cell__is_type(cause, cell))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__propogator_relation__add_cell_port(cause, this, name, cell);
+  raw__propogator_relation__add_cell_port(cause, this, name, cell);
+  return nil;
 }
 export_cefunk3(propogator_relation__add_cell_port, this, name, cell, 0, "Adds a named propogator_cell object to this propogator_relation.");
 
@@ -165,7 +166,8 @@ f2ptr f2__propogator_relation__remove_cell_port(f2ptr cause, f2ptr this, f2ptr n
   if (! raw__propogator_relation__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__propogator_relation__remove_cell_port(cause, this, name);
+  raw__propogator_relation__remove_cell_port(cause, this, name);
+  return nil;
 }
 export_cefunk2(propogator_relation__remove_cell_port, this, name, 0, "Removes a named propogator_cell object from this propogator_relation.");
 

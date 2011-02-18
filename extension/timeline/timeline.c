@@ -147,13 +147,48 @@ export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_e
 
 
 f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+  f2ptr action_name_set = raw__semantic_event__action_name__lookup(cause, this);
+  s64   action_name__length;
+  u8*   action_name__str;
+  if (action_name_set != nil) {
+    action_name__length = 0;
+    f2ptr action_name_as_strings = nil;
+    set__iteration(cause, action_name_set, action_name,
+		   f2ptr action_name_as_string = raw__exp__as__string(cause, action_name);
+		   action_name__length += raw__string__length(cause, action_name_as_string);
+		   action_name__length += 2;
+		   action_name_as_strings = f2cons__new(cause, action_name_as_string, action_name_as_strings));
+    action_name__length -= 2;
+    action_name__str = (u8*)from_ptr(f2__malloc(action_name__length + 1));
+    {
+      s64   action_name__index = 0;
+      f2ptr iter               = action_name_as_strings;
+      while (iter != nil) {
+	f2ptr action_name_as_string = f2cons__car(iter, cause);
+	{
+	  raw__string__str_copy(cause, action_name_as_string, action_name__str + action_name__index);
+	  action_name__index += raw__string__length(cause, action_name_as_string);
+	  memcpy(action_name__str + action_name__index, ", ", 2);
+	  action_name__index += 2;
+	}
+	iter = f2cons__cdr(iter, cause);
+      }
+    }    
+    action_name__str[action_name__length] = 0;
+  } else {
+    char* default_name = "Event";
+    action_name__length = strlen(default_name);
+    action_name__str = (u8*)from_ptr(f2__malloc(action_name__length + 1));
+    memcpy(action_name__str, default_name, action_name__length);
+    action_name__str[action_name__length] = 0;
+  }
   raw__cairo_context__save(cause, cairo_context);
   {
     f2ptr result = raw__cairo_context__render_rounded_text_box(cause, cairo_context,
 							       0, 0,                                    // x0, y0
 							       4, 1.5,                                  // dx, dy
 							       1,                                       // font size
-							       "Event",                                 // text
+							       action_name__str,                        // text
 							       0.5,                                     // maximum corner radius
 							       30 / 255.0, 144 / 255.0, 255 / 255.0, 1, // background rgba
 							       0.1,                                     // outline width
@@ -163,6 +198,7 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
       return result;
     }
   }
+  f2__free(to_ptr(action_name__str));
   raw__cairo_context__restore(cause, cairo_context);
   return nil;
 }

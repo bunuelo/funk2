@@ -28,6 +28,13 @@
 	  [timeline_event_e [new timeline_event semantic_realm]]
 	  [timeline_event_f [new timeline_event semantic_realm]]]
       
+      [semantic-add timeline_event_a action_name `timeline_event_a]
+      [semantic-add timeline_event_b action_name `timeline_event_b]
+      [semantic-add timeline_event_c action_name `timeline_event_c]
+      [semantic-add timeline_event_d action_name `timeline_event_d]
+      [semantic-add timeline_event_e action_name `timeline_event_e]
+      [semantic-add timeline_event_f action_name `timeline_event_f]
+      
       [have timeline add_timeline_event timeline_event_a]
       [have timeline add_timeline_event timeline_event_b]
       [have timeline add_timeline_event timeline_event_c]

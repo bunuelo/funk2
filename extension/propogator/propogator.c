@@ -85,6 +85,36 @@ f2ptr f2__propogator_cell__new(f2ptr cause, f2ptr propogator) {
 export_cefunk1(propogator_cell__new, propogator, 0, "Returns a new propogator_cell object.");
 
 
+f2ptr raw__propogator_cell__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list4__new(cause,
+					       new__symbol(cause, "print_object_type"), f2__object__type(cause, this),
+					       new__symbol(cause, "value"),             raw__propogator_cell__value(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__propogator_cell__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  if ((! raw__propogator_cell__is_type(cause, this)) ||
+      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__propogator_cell__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+export_cefunk2(propogator_cell__terminal_print_with_frame, this, terminal_print_frame, 0, "");
+
+
+f2ptr f2__propogator_cell_type__new_aux(f2ptr cause) {
+  f2ptr this = f2__propogator_cell_type__new(cause);
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "propogator"), new__symbol(cause, "propogator_cell__terminal_print_with_frame")));}
+  return this;
+}
+
+
+
 // propogator_process
 
 def_ceframe3(propogator, propogator_process, input_ports, output_ports, execute_funk);
@@ -131,7 +161,7 @@ export_cefunk0(propogator__core_extension__ping, 0, "");
 
 f2ptr f2__propogator__core_extension__initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "propogator"),          f2__propogator_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "propogator_cell"),     f2__propogator_cell_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "propogator_cell"),     f2__propogator_cell_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "propogator_process"),  f2__propogator_process_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "propogator_relation"), f2__propogator_relation_type__new(cause));
   status("propogator initialized.");

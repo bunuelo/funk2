@@ -21,26 +21,6 @@
 
 #include "timeline.h"
 
-// timeline_event
-
-def_ceframe0(timeline, timeline_event);
-
-
-f2ptr raw__timeline_event__new(f2ptr cause, f2ptr semantic_realm) {
-  f2ptr this = f2__semantic_event__new(cause, semantic_realm);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "timeline_event"));
-  return this;
-}
-
-f2ptr f2__timeline_event__new(f2ptr cause, f2ptr semantic_realm) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__timeline_event__new(cause, semantic_realm);
-}
-export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_event object.");
-
-
 void raw__cairo_context__render_outlined_box(f2ptr cause,
 					     f2ptr this,
 					     double x0,
@@ -144,6 +124,28 @@ f2ptr raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this, doubl
   return nil;
 }
 
+
+
+// timeline_event
+
+def_ceframe0(timeline, timeline_event);
+
+
+f2ptr raw__timeline_event__new(f2ptr cause, f2ptr semantic_realm) {
+  f2ptr this = f2__semantic_event__new(cause, semantic_realm);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "timeline_event"));
+  return this;
+}
+
+f2ptr f2__timeline_event__new(f2ptr cause, f2ptr semantic_realm) {
+  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__timeline_event__new(cause, semantic_realm);
+}
+export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_event object.");
+
+
 f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   raw__cairo_context__save(cause, cairo_context);
   {
@@ -197,7 +199,7 @@ export_cefunk2(timeline_event__terminal_print_with_frame, this, terminal_print_f
 
 f2ptr f2__timeline_event_type__new_aux(f2ptr cause) {
   f2ptr this = f2__timeline_event_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2list1__new(cause, new__symbol(cause, "semantic_knowledge_base")));
+  f2__primobject_type__parents__set(cause, this, f2list1__new(cause, new__symbol(cause, "semantic_event")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "cairo_render"),              f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__cairo_render")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__terminal_print_with_frame")));}
   return this;

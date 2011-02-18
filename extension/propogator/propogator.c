@@ -126,7 +126,7 @@ f2ptr f2__propogator_cell_type__new_aux(f2ptr cause) {
 
 // propogator_relation
 
-def_ceframe1(propogator, propogator_relation, cell_port_frame, process_set);
+def_ceframe2(propogator, propogator_relation, cell_port_frame, process_set);
 
 f2ptr raw__propogator_relation__new(f2ptr cause) {
   f2ptr cell_port_frame = f2__frame__new(cause, nil);

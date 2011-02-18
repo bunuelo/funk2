@@ -147,7 +147,7 @@ void raw__propogator_relation__add_process(f2ptr cause, f2ptr this, f2ptr proces
 
 f2ptr f2__propogator_relation__add_process(f2ptr cause, f2ptr this, f2ptr process) {
   if ((! raw__propogator_relation__is_type(cause, this)) ||
-      (! raw__propogator_processs__is_type(cause, process))) {
+      (! raw__propogator_process__is_type(cause, process))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__propogator_relation__add_process(cause, this, process);
@@ -162,7 +162,7 @@ void raw__propogator_relation__remove_process(f2ptr cause, f2ptr this, f2ptr pro
 
 f2ptr f2__propogator_relation__remove_process(f2ptr cause, f2ptr this, f2ptr process) {
   if ((! raw__propogator_relation__is_type(cause, this)) ||
-      (! raw__propogator_processs__is_type(cause, process))) {
+      (! raw__propogator_process__is_type(cause, process))) {
     return f2larva__new(cause, 1, nil);
   }
   return raw__propogator_relation__remove_process(cause, this, process);

@@ -94,6 +94,17 @@ void raw__cairo_context__render_outlined_text(f2ptr cause, f2ptr this, double x0
   raw__cairo_context__fill(           cause, this);
 }
 
+double raw__cairo_context__text_width(f2ptr cause, f2ptr this, double font_size, char* text) {
+  raw__cairo_context__set_font_size(cause, this, font_size);
+  f2ptr text_extents = raw__cairo_context__text_extents(cause, this, text);
+  if (raw__larva__is_type(cause, text_extents)) {
+    return 0.0;
+  }
+  f2ptr text_extents__width     = raw__cairo_text_extents__width(cause, text_extents);
+  double text_extents__width__d = f2double__d(text_extents__width, cause);
+  return text_extents__width__d;
+}
+
 f2ptr raw__cairo_context__render_centered_outlined_text(f2ptr cause, f2ptr this, double cx, double cy, double font_size, char* text, double outline_width, double red, double green, double blue, double alpha, double outline_red, double outline_green, double outline_blue, double outline_alpha) {
   raw__cairo_context__set_font_size(cause, this, font_size);
   f2ptr text_extents = raw__cairo_context__text_extents(cause, this, text);
@@ -146,6 +157,11 @@ f2ptr f2__timeline_event__new(f2ptr cause, f2ptr semantic_realm) {
 export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_event object.");
 
 
+double raw__timeline_event__cairo_width(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+  double text_width = raw__cairo_context__text_width(cause, cairo_context, font_size, (char*)action_name__str);
+  return (double)((int)(text_width + 1.5));
+}
+
 f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   f2ptr action_name_set = raw__semantic_event__action_name__lookup(cause, this);
   s64   action_name__length;
@@ -187,16 +203,17 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
   }
   raw__cairo_context__save(cause, cairo_context);
   {
-    f2ptr result = raw__cairo_context__render_rounded_text_box(cause, cairo_context,
-							       0, 0,                                    // x0, y0
-							       4, 1.5,                                  // dx, dy
-							       1,                                       // font size
-							       (char*)action_name__str,                 // text
-							       0.5,                                     // maximum corner radius
-							       30 / 255.0, 144 / 255.0, 255 / 255.0, 1, // background rgba
-							       0.1,                                     // outline width
-							       1, 1, 1, 1,                              // text rgba
-							       0, 0, 0, 1);                             // outline rgba
+    double event_width = raw__timeline_event__cairo_width(cause, this, cairo_context);
+    f2ptr  result      = raw__cairo_context__render_rounded_text_box(cause, cairo_context,
+								     0, 0,                                    // x0, y0
+								     event_width, 1.5,                        // dx, dy
+								     1,                                       // font size
+								     (char*)action_name__str,                 // text
+								     0.5,                                     // maximum corner radius
+								     30 / 255.0, 144 / 255.0, 255 / 255.0, 1, // background rgba
+								     0.1,                                     // outline width
+								     1, 1, 1, 1,                              // text rgba
+								     0, 0, 0, 1);                             // outline rgba
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

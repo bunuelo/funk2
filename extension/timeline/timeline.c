@@ -560,7 +560,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 	while (! raw__set__is_empty(cause, expansion_set)) {
 	  f2ptr next_set = f2__set__new(cause);
 	  set__iteration(cause, expansion_set, event,
-			 f2ptr     contains_set           = raw__semantic_temporal_event__contains__lookup(cause, event);
+			 f2ptr     contains_set           = raw__semantic_temporal_object__contains__lookup(cause, event);
 			 boolean_t not_enough_information = boolean__false;
 			 double    width__d  = 0;
 			 double    height__d = 0;

@@ -28,7 +28,7 @@ f2ptr raw__propogator_cell__new(f2ptr cause) {
 f2ptr f2__propogator_cell__new(f2ptr cause) {
   return raw__propogator_cell__new(cause);
 }
-def_cefunk0(propogator_cell__new, 0, "Returns a new propogator_cell object.");
+export_cefunk0(propogator_cell__new, 0, "Returns a new propogator_cell object.");
 
 
 // **

@@ -361,6 +361,11 @@ def_pcfunk0(this__fiber,
 	    return this__fiber);
 
 
+f2ptr f2__this__environment(f2ptr cause) {
+  f2ptr this__fiber = f2__this__fiber(cause);
+  return f2fiber__env(this__fiber, cause);
+}
+
 void f2__this__fiber__yield(f2ptr cause) {
   funk2_virtual_processor_handler__yield(&(__funk2.virtual_processor_handler));
 }

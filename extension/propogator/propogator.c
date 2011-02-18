@@ -206,7 +206,7 @@ f2ptr raw__propogator_process__terminal_print_with_frame(f2ptr cause, f2ptr this
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list4__new(cause,
+    frame = f2__frame__new(cause, f2list8__new(cause,
 					       new__symbol(cause, "print_object_type"), f2__object__type(cause, this),
 					       new__symbol(cause, "input_ports"),       raw__propogator_process__input_ports(cause, this),
 					       new__symbol(cause, "output_ports"),      raw__propogator_process__output_ports(cause, this),

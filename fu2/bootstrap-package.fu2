@@ -125,6 +125,7 @@
 				  'extension/meta_semantic_frame_ball/'
 				  'extension/meta_semantic_knowledge_base/'
 				  'extension/movie/'
+				  'extension/propogator/'
 				  'extension/semantic_action_event/'
 				  'extension/semantic_containment_object/'
 				  'extension/semantic_directed_action_event/'

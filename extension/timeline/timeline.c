@@ -558,13 +558,40 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 	{
 	  f2ptr expansion_set = connected_set;
 	  while (! raw__set__is_empty(cause, expansion_set)) {
-	    f2ptr next_set = f2__set__new(cause);
+	    f2ptr next_expansion_set = f2__set__new(cause);
 	    set__iteration(cause, expansion_set, event,
 			   f2ptr     contains_set           = raw__semantic_temporal_object__contains__lookup(cause, event);
 			   boolean_t not_enough_information = boolean__false;
 			   double    width__d  = 0;
 			   double    height__d = 0;
 			   if (contains_set != nil) {
+			     double maximum_path_width = 0;
+			     {
+			       f2ptr search_forward_path_event_hash  = f2__ptypehash__new(cause);
+			       f2ptr search_backward_path_event_hash = f2__ptypehash__new(cause);
+			       set__iteration(cause, contains_set, contains_event,
+					      f2ptr search_forward_set = f2__set__new(cause);
+					      raw__set__add(cause, search_forward_set, contains_event);
+					      while (! raw__set__is_empty(cause, search_forward_set)) {
+						f2ptr search_forward_event = raw__set__an_arbitrary_element(cause, search_forward_set);
+						{
+						  f2ptr search_forward_event__extents = raw__ptypehash__lookup(cause, extents_event_hash, search_forward_event);
+						  f2ptr search_forward_event__width   = raw__timeline_event_extents__width( cause, search_forward_event__extents);
+						  if (search_forward_event__width  != nil) {
+						    double search_forward_event__width__d  = f2double__d(search_forward_event__width,  cause);
+						    path__width__d += search_forward_event__width__d;
+						    f2ptr next_set = raw__semantic_temporal_object__next__lookup(cause, contains_event);
+						    
+						  } else {
+						    not_enough_information = boolean__true;
+						    // could break iteration to run faster
+						  }
+						  
+						}
+						raw__set__remove(cause, search_forward_set, next_event);
+					      }
+					      );
+			     }
 			     set__iteration(cause, contains_set, contains_event,
 					    f2ptr contains_event__extents = raw__ptypehash__lookup(cause, extents_event_hash, contains_event);
 					    f2ptr contains_event__width   = raw__timeline_event_extents__width( cause, contains_event__extents);
@@ -577,11 +604,12 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 					      height__d += contains_event__height__d;
 					    } else {
 					      not_enough_information = boolean__true;
+					      // could break iteration to run faster
 					    }
 					    );
 			   }
 			   if (not_enough_information) {
-			     raw__set__add(cause, next_set, event);
+			     raw__set__add(cause, next_expansion_set, event);
 			   } else {
 			     f2ptr  extents           = raw__ptypehash__lookup(cause, extents_event_hash, event);
 			     f2ptr  minimum_width     = raw__timeline_event_extents__minimum_width( cause, extents);
@@ -598,7 +626,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 			     f2ptr height = f2double__new(cause, height__d); raw__timeline_event_extents__height__set(cause, extents, height);
 			   }
 			   );
-	    expansion_set = next_set;
+	    expansion_set = next_expansion_set;
 	  }
 	}
 	set__iteration(cause, connected_set, event,

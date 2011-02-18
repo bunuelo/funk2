@@ -223,6 +223,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la \
                   extension/mindmon/libf2e_mindmon.la \
                   extension/movie/libf2e_movie.la \
+                  extension/propogator/libf2e_propogator.la \
                   extension/semantic_action_event/libf2e_semantic_action_event.la \
                   extension/semantic_agent/libf2e_semantic_agent.la \
                   extension/semantic_event_sequence/libf2e_semantic_event_sequence.la \
@@ -391,6 +392,7 @@ extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_SOURCES   
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES     = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
 extension_mindmon_libf2e_mindmon_la_SOURCES                                               = extension/mindmon/mindmon.c
 extension_movie_libf2e_movie_la_SOURCES                                                   = extension/movie/movie.c
+extension_propogator_libf2e_propogator_la_SOURCES                                         = extension/propogator/propogator.c
 extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES                   = extension/semantic_action_event/semantic_action_event.c
 extension_semantic_agent_libf2e_semantic_agent_la_SOURCES                                 = extension/semantic_agent/semantic_agent.c
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES               = extension/semantic_event_sequence/semantic_event_sequence.c
@@ -453,6 +455,7 @@ all_core_extensions = \
   $(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la) \
   $(extension_mindmon_libf2e_mindmon_la) \
   $(extension_movie_libf2e_movie_la) \
+  $(extension_propogator_libf2e_propogator_la) \
   $(extension_semantic_action_event_libf2e_semantic_action_event_la) \
   $(extension_semantic_agent_libf2e_semantic_agent_la) \
   $(extension_semantic_containment_object_libf2e_semantic_containment_object_la) \
@@ -508,6 +511,9 @@ extension_frame_ball_libf2e_frame_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_propogator_libf2e_propogator_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_propogator_libf2e_propogator_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_action_event_libf2e_semantic_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_action_event_libf2e_semantic_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

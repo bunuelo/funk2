@@ -38,12 +38,14 @@ f2ptr f2__propogator__core_extension__ping(f2ptr cause) {
 }
 export_cefunk0(propogator__core_extension__ping, 0, "");
 
+
 f2ptr f2__propogator__core_extension__initialize(f2ptr cause) {
-  f2__add_type(cause, new__symbol(cause, "propogator"), f2__propogator_cell_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "propogator_cell"), f2__propogator_cell_type__new(cause));
   status("propogator initialized.");
   return nil;
 }
 export_cefunk0(propogator__core_extension__initialize, 0, "");
+
 
 f2ptr f2__propogator__core_extension__destroy(f2ptr cause) {
   status("propogator destroyed.");

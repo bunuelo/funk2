@@ -157,7 +157,7 @@ f2ptr f2__timeline_event__new(f2ptr cause, f2ptr semantic_realm) {
 export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_event object.");
 
 
-f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+f2ptr raw__timeline_event__cairo_action_name(f2ptr cause, f2ptr this) {
   f2ptr action_name_set = raw__semantic_event__action_name__lookup(cause, this);
   s64   action_name__length;
   u8*   action_name__str;
@@ -187,7 +187,7 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
 	}
 	iter = f2cons__cdr(iter, cause);
       }
-    }    
+    }
     action_name__str[action_name__length] = 0;
   } else {
     char* default_name = "Event";
@@ -196,6 +196,17 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
     memcpy(action_name__str, default_name, action_name__length);
     action_name__str[action_name__length] = 0;
   }
+  f2ptr action_name = new__string(cause, action_name__str);
+  f2__free(to_ptr(action_name__str));
+  return action_name;
+}
+
+f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+  f2ptr action_name         = raw__timeline_event__cairo_action_name(cause, this);
+  s64   action_name__length = raw__string__length(cause, action_name);
+  u8*   action_name__str    = (u8*)from_ptr(f2__malloc(action_name__length));
+  raw__string__str_copy(cause, action_name, action_name__str);
+  action_name__str[action_name__length] = 0;
   raw__cairo_context__save(cause, cairo_context);
   {
     double text_width  = raw__cairo_context__text_width(cause, cairo_context, 1, (char*)action_name__str);

@@ -182,7 +182,7 @@ f2ptr f2__propogator_relation_type__new_aux(f2ptr cause) {
 
 // propogator_process
 
-def_ceframe3(propogator, propogator_process, relation, input_ports, output_ports, execute_funk);
+def_ceframe4(propogator, propogator_process, relation, input_ports, output_ports, execute_funk);
 
 f2ptr raw__propogator_process__new(f2ptr cause, f2ptr relation, f2ptr input_ports, f2ptr output_ports, f2ptr execute_funk) {
   f2ptr this = f2propogator_process__new(cause, relation, input_ports, output_ports, execute_funk);

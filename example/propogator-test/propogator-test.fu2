@@ -19,9 +19,9 @@
 
 [defunk propogator-test []
   [let [[propogator [new propogator]]]
-    [let [[f [new propogator_cell f]]
-	  [m [new propogator_cell m]]
-	  [a [new propogator_cell a]]]
+    [let [[f [new propogator_cell propogator]]
+	  [m [new propogator_cell propogator]]
+	  [a [new propogator_cell propogator]]]
       [let [[r [new propogator_relation]]]
 	[have r add_cell `f f]
 	[have r add_cell `m m]

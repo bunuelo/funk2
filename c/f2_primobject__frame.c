@@ -628,6 +628,13 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
       raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, (u8*)" ");
     }
   }
+  {
+    f2ptr size    =  raw__terminal_print_frame__size(cause, terminal_print_frame);
+    s64   size__i =  f2integer__i(size, cause);
+    size__i       ++;
+    size          =  f2integer__new(cause, size__i);
+    raw__terminal_print_frame__size__set(cause, terminal_print_frame, size);
+  }
   s64       slot_index                     = 0;
   u8*       type_slot_name_string          = (u8*)from_ptr(f2__malloc(type_slot_name__max_length + 1));
   s64       type_slot_name_string__length;

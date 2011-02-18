@@ -240,6 +240,25 @@ f2ptr f2__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_cont
 export_cefunk2(timeline_event__cairo_render, this, cairo_context, 0, "Renders this timeline_event in the given cairo_context.");
 
 
+double raw__timeline_event__cairo_minimum_width(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+  f2ptr action_name         = raw__timeline_event__cairo_action_name(cause, this);
+  s64   action_name__length = raw__string__length(cause, action_name);
+  u8*   action_name__str    = (u8*)from_ptr(f2__malloc(action_name__length));
+  raw__string__str_copy(cause, action_name, action_name__str);
+  action_name__str[action_name__length] = 0;
+  raw__cairo_context__save(cause, cairo_context);
+  double text_width  = raw__cairo_context__text_width(cause, cairo_context, 1, (char*)action_name__str);
+  double event_width = (double)((int)(text_width + 1.5));
+  f2__free(to_ptr(action_name__str));
+  return event_width;
+}
+
+
+double raw__timeline_event__cairo_minimum_height(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+  return 1.5;
+}
+
+
 f2ptr raw__timeline_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -373,6 +392,64 @@ f2ptr f2__timeline__timeline_events(f2ptr cause, f2ptr this) {
 export_cefunk1(timeline__timeline_events, this, 0, "Returns a new list of the timeline_events contained within this timeline.");
 
 
+f2ptr raw__timeline_event_extents__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr width, f2ptr height, f2ptr minimum_width, f2ptr minimum_height) {
+  return f2__frame__new(cause, f2list4__new(cause,
+					    new__symbol(cause, "x"),              x,
+					    new__symbol(cause, "y"),              y,
+					    new__symbol(cause, "width"),          width,
+					    new__symbol(cause, "height"),         height,
+					    new__symbol(cause, "minimum_width"),  minimum_width,
+					    new__symbol(cause, "minimum_height"), minimum_height));
+}
+
+f2ptr raw__timeline_event_extents__x(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"));
+}
+
+f2ptr raw__timeline_event_extents__x__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "x"), value);
+}
+
+f2ptr raw__timeline_event_extents__y(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y"));
+}
+
+f2ptr raw__timeline_event_extents__y__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "y"), value);
+}
+
+f2ptr raw__timeline_event_extents__width(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"));
+}
+
+f2ptr raw__timeline_event_extents__width__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "width"), value);
+}
+
+f2ptr raw__timeline_event_extents__height(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "height"));
+}
+
+f2ptr raw__timeline_event_extents__height__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "height"), value);
+}
+
+f2ptr raw__timeline_event_extents__minimum_width(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "minimum_width"));
+}
+
+f2ptr raw__timeline_event_extents__minimum_width__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "minimum_width"), value);
+}
+
+f2ptr raw__timeline_event_extents__minimum_height(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "minimum_height"));
+}
+
+f2ptr raw__timeline_event_extents__minimum_height__set(f2ptr cause, f2ptr this, f2ptr value) {
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "minimum_height"), value);
+}
+
 void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   raw__cairo_context__save(cause, cairo_context);
   raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
@@ -469,6 +546,60 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
     while (connected_set_iter != nil) {
       f2ptr connected_set = f2cons__car(connected_set_iter, cause);
       {
+	f2ptr extents_event_hash = f2__ptypehash__new(cause);
+	set__iteration(cause, connected_set, event,
+		       double minimum_width__d  = raw__timeline_event__cairo_minimum_width( cause, event);
+		       double minimum_height__d = raw__timeline_event__cairo_minimum_height(cause, event);
+		       raw__ptypehash__add(cause, extents_event_hash, event, raw__timeline_event_extents__new(cause, nil, nil, nil, nil,
+													      f2double__new(cause, minimum_width__d),
+													      f2double__new(cause, minimum_height__d)));
+		       );
+	f2ptr expansion_set  = connected_set;
+	f2ptr starting_event = raw__set__an_arbitrary_element(cause, connected_set);
+	raw__set__add(cause, expansion_set, starting_event);
+	while (! raw__set__is_empty(cause, expansion_set)) {
+	  f2ptr next_set = f2__set__new(cause);
+	  set__iteration(cause, expansion_set, event,
+			 f2ptr     contains_set           = raw__semantic_event__contains__lookup(cause, event);
+			 boolean_t not_enough_information = boolean__false;
+			 double    width__d  = 0;
+			 double    height__d = 0;
+			 if (contains_set != nil) {
+			   set__iteration(cause, contains_set, contains_event,
+					  f2ptr contains_event__extents = raw__ptypehash__lookup(cause, extents_event_hash, contains_event);
+					  f2ptr contains_event__width   = raw__timeline_event_extents__width( cause, contains_event__extents);
+					  f2ptr contains_event__height  = raw__timeline_event_extents__height(cause, contains_event__extents);
+					  if ((contains_event__width  != nil) &&
+					      (contains_event__height != nil)) {
+					    double contains_event__width__d  = f2double__d(contains_event__width,  cause);
+					    double contains_event__height__d = f2double__d(contains_event__height, cause);
+					    width__d  += contains_event__width__d;
+					    height__d += contains_event__height__d;
+					  } else {
+					    not_enough_information = boolean__true;
+					  }
+					  );
+			 }
+			 if (not_enough_information) {
+			   raw__set__add(cause, next_set, event);
+			 } else {
+			   f2ptr  extents           = raw__ptypehash__lookup(cause, extents_event_hash, contains_event);
+			   f2ptr  minimum_width     = raw__timeline_event_extents__minimum_width( cause, extents);
+			   f2ptr  minimum_height    = raw__timeline_event_extents__minimum_height(cause, extents);
+			   double minimum_width__d  = f2double__d(minimum_width,  cause);
+			   double minimum_height__d = f2double__d(minimum_height, cause);
+			   if (width__d < minimum_width__d) {
+			     width__d = minimum_width__d;
+			   }
+			   if (height__d < minimum_height__d) {
+			     height__d = minimum_height__d;
+			   }
+			   f2ptr width  = f2double__new(cause, width__d);  raw__timeline_event_extents__width__set( cause, extents, width);
+			   f2ptr height = f2double__new(cause, height__d); raw__timeline_event_extents__height__set(cause, extents, height);
+			 }
+			 );
+	  expansion_set = next_set;
+	}
 	set__iteration(cause, connected_set, event,
 		       raw__cairo_context__save(         cause, cairo_context);
 		       raw__cairo_context__scale(        cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));

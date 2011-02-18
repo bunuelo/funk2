@@ -85,7 +85,7 @@ export_cefunk1(propogator_cell__new, propogator, 0, "Returns a new propogator_ce
 
 // propogator_process
 
-def_ceframe1(propogator, propogator_process, input_ports, output_ports, execute_funk);
+def_ceframe3(propogator, propogator_process, input_ports, output_ports, execute_funk);
 
 f2ptr raw__propogator_process__new(f2ptr cause, f2ptr execute_funk) {
   f2ptr input_ports  = nil;

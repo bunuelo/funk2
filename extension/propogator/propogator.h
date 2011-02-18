@@ -44,7 +44,7 @@ f2ptr  f2__propogator_cell__new(f2ptr cause, f2ptr propogator);
 
 // propogator_process
 
-def_header_ceframe1(propogator_process, input_ports, output_ports, execute_funk);
+def_header_ceframe3(propogator_process, input_ports, output_ports, execute_funk);
 
 f2ptr raw__propogator_process__new(f2ptr cause, f2ptr execute_funk);
 f2ptr  f2__propogator_process__new(f2ptr cause, f2ptr execute_funk);

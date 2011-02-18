@@ -199,7 +199,7 @@ f2ptr f2__propogator_process__new(f2ptr cause, f2ptr relation, f2ptr input_ports
   }
   return raw__propogator_process__new(cause, relation, input_ports, output_ports, execute_funk);
 }
-export_cefunk2(propogator_process__new, relation, input_ports, output_ports, execute_funk, 0, "Returns a new propogator_process object.");
+export_cefunk4(propogator_process__new, relation, input_ports, output_ports, execute_funk, 0, "Returns a new propogator_process object.");
 
 
 f2ptr raw__propogator_process__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

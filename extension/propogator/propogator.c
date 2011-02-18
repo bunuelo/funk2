@@ -150,7 +150,8 @@ f2ptr f2__propogator_relation__add_process(f2ptr cause, f2ptr this, f2ptr proces
       (! raw__propogator_process__is_type(cause, process))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__propogator_relation__add_process(cause, this, process);
+  raw__propogator_relation__add_process(cause, this, process);
+  return nil;
 }
 export_cefunk2(propogator_relation__add_process, this, process, 0, "Adds a propogator_process to this propogator_relation.");
 
@@ -165,7 +166,8 @@ f2ptr f2__propogator_relation__remove_process(f2ptr cause, f2ptr this, f2ptr pro
       (! raw__propogator_process__is_type(cause, process))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__propogator_relation__remove_process(cause, this, process);
+  raw__propogator_relation__remove_process(cause, this, process);
+  return nil;
 }
 export_cefunk2(propogator_relation__remove_process, this, process, 0, "Adds a propogator_process to this propogator_relation.");
 

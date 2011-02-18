@@ -99,9 +99,9 @@ f2ptr f2__propogator_process__new(f2ptr cause, f2ptr execute_funk) {
   if (! raw__funkable__is_type(cause, execute_funk)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__propogator_process__new(cause);
+  return raw__propogator_process__new(cause, execute_funk);
 }
-export_cefunk0(propogator_process__new, 0, "Returns a new propogator_process object.");
+export_cefunk1(propogator_process__new, execute_funk, 0, "Returns a new propogator_process object.");
 
 
 // propogator_relation

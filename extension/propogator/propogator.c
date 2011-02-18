@@ -44,7 +44,8 @@ f2ptr f2__propogator__add_cell(f2ptr cause, f2ptr this, f2ptr cell) {
       (! raw__propogator_cell__is_type(cause, cell))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__propogator__add_cell(cause, this, cell);
+  raw__propogator__add_cell(cause, this, cell);
+  return nil;
 }
 export_cefunk2(propogator__add_cell, this, cell, 0, "Adds a propogator_cell object to this propogator object.");
 
@@ -59,7 +60,8 @@ f2ptr f2__propogator__remove_cell(f2ptr cause, f2ptr this, f2ptr cell) {
       (! raw__propogator_cell__is_type(cause, cell))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__propogator__remove_cell(cause, this, cell);
+  raw__propogator__remove_cell(cause, this, cell);
+  return nil;
 }
 export_cefunk2(propogator__remove_cell, this, cell, 0, "Adds a propogator_cell object to this propogator object.");
 

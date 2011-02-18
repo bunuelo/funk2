@@ -633,7 +633,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 	}
 	*/
 	set__iteration(cause, connected_set, event,
-		       f2ptr extents = raw__ptypehash__lookup(cause, extents_event_hash, event);
+		       //f2ptr extents = raw__ptypehash__lookup(cause, extents_event_hash, event);
 		       raw__cairo_context__save(         cause, cairo_context);
 		       raw__cairo_context__scale(        cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));
 		       raw__cairo_context__translate(    cause, cairo_context, 4, 4 + y_position);

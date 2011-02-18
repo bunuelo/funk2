@@ -46,8 +46,11 @@ f2ptr  f2__propogator_cell__new(f2ptr cause, f2ptr propogator);
 
 def_header_ceframe4(propogator_process, relation, input_ports, output_ports, execute_funk);
 
-f2ptr raw__propogator_process__new(f2ptr cause, f2ptr execute_funk);
-f2ptr  f2__propogator_process__new(f2ptr cause, f2ptr execute_funk);
+f2ptr raw__propogator_process__new                      (f2ptr cause, f2ptr relation, f2ptr input_ports, f2ptr output_ports, f2ptr execute_funk);
+f2ptr  f2__propogator_process__new                      (f2ptr cause, f2ptr relation, f2ptr input_ports, f2ptr output_ports, f2ptr execute_funk);
+f2ptr raw__propogator_process__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr  f2__propogator_process__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr  f2__propogator_process_type__new_aux             (f2ptr cause);
 
 
 // propogator_relation

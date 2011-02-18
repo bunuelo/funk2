@@ -154,7 +154,10 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
     action_name__length = 0;
     f2ptr action_name_as_strings = nil;
     set__iteration(cause, action_name_set, action_name,
-		   f2ptr action_name_as_string = raw__exp__as__string(cause, action_name);
+		   f2ptr action_name_as_string = f2__exp__as__string(cause, action_name);
+		   if (raw__larva__is_type(cause, action_name_as_string)) {
+		     return action_name_as_string;
+		   }
 		   action_name__length += raw__string__length(cause, action_name_as_string);
 		   action_name__length += 2;
 		   action_name_as_strings = f2cons__new(cause, action_name_as_string, action_name_as_strings));

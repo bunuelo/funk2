@@ -26,9 +26,9 @@
 	[have r add_cell_port `f f]
 	[have r add_cell_port `m m]
 	[have r add_cell_port `a a]
-	[new propogator_process r `[m a] `[f] [funk [] [= f [* m a]]]]
-	[new propogator_process r `[f m] `[a] [funk [] [= a [/ f m]]]]
-	[new propogator_process r `[f a] `[m] [funk [] [= m [/ f a]]]]
+	[new propogator_process r `[m a] `[f] [funk [] [with [get r cell_port_frame] [= f [* m a]]]]]
+	[new propogator_process r `[f m] `[a] [funk [] [with [get r cell_port_frame] [= a [/ f m]]]]]
+	[new propogator_process r `[f a] `[m] [funk [] [with [get r cell_port_frame] [= m [/ f a]]]]]
 	
 	
 	r]]]]

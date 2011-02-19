@@ -1009,6 +1009,13 @@
 
 [defunk generate_all_examples []
   [list [let [[this [new funk2_example]]]
+	  [set this name   'cairo-test']
+	  [set this title  'Cairo Test']
+	  [set this date   'February 19th, 2011']
+	  [set this author 'Bo Morgan']
+	  [set this entry  [string-load 'example/cairo-test/cairo-test.fu2']]
+	  this]
+	[let [[this [new funk2_example]]]
 	  [set this name   'GTK_GUI']
 	  [set this title  'GTK graphical user interface']
 	  [set this date   'October 14th, 2010']

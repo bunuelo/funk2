@@ -629,7 +629,7 @@
 	      [funk2_documentation-content root_dir posts examples]]]
 
 [defunk compile_funk2_documentation [root_dir posts examples]
-  `[funk2_documentation-all_packages-require]
+  [funk2_documentation-all_packages-require]
   [let [[documentation [funk2_documentation root_dir posts examples]]]
     [shelter [mkdir [string-concat root_dir 'documentation']]]
     [have documentation save [string-concat root_dir 'documentation/index.html']]

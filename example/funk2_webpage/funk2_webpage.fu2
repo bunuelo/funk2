@@ -757,6 +757,15 @@
     nil]]
 
 
+[defunk funk2_code_section [code]
+  [string-prog '<tt>'
+	       [have [have [have [have code replace_all '\n' '<br>\n']
+				 replace_all '-' '&#x2011;']
+			   replace_all '\t' '        ']
+		     replace_all ' ' '&nbsp;']
+	       '</tt>']]
+
+
 [defunk funk2_example [posts examples example]
   [let [[content [string-prog '<!-- start content -->'
 			      '<div id="content">'
@@ -764,12 +773,9 @@
 			      [stringlist-concat `['<h1 class="title">' ,[get example title] '</h1>']]
 			      [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get example date] ' by ' ,[get example author] '</small></p>']]
 			      '    <div class="entry">'
-			      '      <p><tt>'
-			      [have [have [have [have [get example entry] replace_all '\n' '<br>\n']
-						replace_all '-' '&#x2011;']
-					  replace_all '\t' '        ']
-				    replace_all ' ' '&nbsp;']
-			      '      </tt></p>'
+			      '      <p>'
+			      [funk2_code_section [get example entry]]
+			      '      </p>'
 			      [string-concat '<p class="links"><a href="/example/' [get example name] '.fu2" class="more">Download</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>']
 			      '    </div>'
 			      '  </div>'
@@ -812,11 +818,50 @@
 [defunk generate_all_posts []
   [list [let [[this [new funk2_post]]]
 	  [set this title  'Welcome to the official Funk2 Website!']
-	  [set this date   'October 14th, 2010']
+	  [set this date   'February 19th, 2011']
 	  [set this author '<a href="#">Bo Morgan</a>']
 	  [set this entry  [string-prog '<p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  '
 					'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
-					'The Funk2 project is currently supported as a core research effort of the <a href=http://mmp.mit.edu>Mind Machine Project</a>.</p>']]
+					'Funk2 is primary meant as a novel artificial intelligence research tool for developing massive heterogeneous AI systems.'
+					'We expect our novel ways of reflectively controlling massive parallel systems to be useful to many diverse fields of computational application and theoretical modelling.']]
+	  this]
+	[let [[this [new funk2_post]]]
+	  [set this title  'Fiber triggers added as additional process control']
+	  [set this date   'February 19th, 2011']
+	  [set this author '<a href="#">Bo Morgan</a>']
+	  [set this entry  [string-prog '<p>Process triggers are a new Funk2 core object that allows for allowing multiple parallel processes to wait for a specific trigger signal object to be triggered by a controlling process.'
+					'The following is a simple example that defines a global trigger named <tt>my-trigger</tt>.'
+					'Next, we enter a <tt>dotimes</tt> loop that loops ten times and creates ten parallel <tt>fiber</tt>s (funk2 processes).'
+					'Each of these parallel <tt>fiber</tt>s enters an infinite loop that simply waits for our <tt>trigger</tt>, <tt>my-trigger</tt>, to be triggered.'
+					'The last line triggers our <tt>trigger</tt> object, which allows all of our waiting processes to start running and they each end up printing a number from zero to nine.'
+					'</p>'
+					'<p>'
+					[funk2_code_section [string-prog '[globalize my-trigger [new fiber_trigger]]'
+									 ''
+									 '[dotimes [i 10]'
+									 '  [fiber [funk []'
+									 '           [let [[j i]]'
+									 '             [while t'
+									 '               [wait-for-trigger my-trigger]'
+									 '               [print j]]]]'
+									 '         nil]]'
+									 ''
+									 '[have my-trigger trigger]'
+									 ]]
+					'</p>'
+					'<p>'
+					'While a <tt>fiber</tt> process is waiting for a trigger, it is paused, which means that it takes no system CPU resources.'
+					'This allows us to easily allocate thousands of different parallel processes that are efficiently controlled in this way.'
+					'</p>']]
+	  this]
+	[let [[this [new funk2_post]]]
+	  [set this title  'Cairo support added for vector graphics rendering']
+	  [set this date   'February 19th, 2011']
+	  [set this author '<a href="#">Bo Morgan</a>']
+	  [set this entry  [string-prog '<p>You can now export screen renderings to PDF, SVG, postscript (PS) or PNG files from within the Funk2 programming language by includinig the Cairo package (i.e. <tt>[require cairo]</tt>).'
+					'An example Cairo application can be seen in the <tt>cairo-test</tt> directory included in the <tt>example</tt> directory in the source code.'
+					'The cairo test example can be included and run by typing, <tt>[require cairo]</tt>, followed by, <tt>[cairo-test]</tt>, which should output a test file for each available file format.'
+					'</p>']]
 	  this]
 	[let [[this [new funk2_post]]]
 	  [set this title  'Natural language processing']

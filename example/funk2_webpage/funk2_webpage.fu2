@@ -567,8 +567,9 @@
 
 [defunk funk2_documentation-all_packages-require []
   [mapc [funk [package_name]
-	      [print [format nil 'requiring ' package_name '.']]
-	      [require-package package_name]]
+	      [if [not [get [lookup-package package_name] loaded_all_dependencies_time]]
+		  [prog [print [format nil 'requiring ' package_name '.']]
+			[require-package package_name]]]]
 	[package_names]]]
 
 [defunk funk2_documentation-all_packages-save [root_dir posts examples]

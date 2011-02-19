@@ -186,7 +186,7 @@
 	       '  </thead>'
 	       '  <tfoot>'
 	       '    <tr>'
-	       '      <td abbr="December" colspan="3" id="prev"><a href="#" title="View posts for November 2010">&laquo; Nov</a></td>'
+	       '      <td abbr="February" colspan="3" id="prev"><a href="#" title="View posts for January 2011">&laquo; Jan</a></td>'
 	       '      <td class="pad">&nbsp;</td>'
 	       '      <td colspan="3" id="next">&nbsp;</td>'
 	       '    </tr>'

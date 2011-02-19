@@ -823,7 +823,7 @@
 					'We expect our novel ways of reflectively controlling massive parallel systems to be useful to many diverse fields of computational application and theoretical modelling.']]
 	  this]
 	[let [[this [new funk2_post]]]
-	  [set this title  'Fiber triggers added as additional process control']
+	  [set this title  'Fiber triggers added as efficient process control']
 	  [set this date   'February 19th, 2011']
 	  [set this author '<a href="#">Bo Morgan</a>']
 	  [set this entry  [string-prog '<p>Process triggers are a new Funk2 core object that allows for allowing multiple parallel processes to wait for a specific trigger signal object to be triggered by a controlling process.'

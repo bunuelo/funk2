@@ -44,7 +44,7 @@
       [have timeline_event_d add_contains timeline_event_f]
       [have timeline_event_e add_next     timeline_event_f]
       
-      [let* [[cairo_surface [new cairo_image_surface `ARGB32 72 72]]
+      [let* [[cairo_surface [new cairo_image_surface `ARGB32 512 512]]
 	     [cairo_context [new cairo_context cairo_surface]]]
 	[have cairo_context scale 72.0 72.0]
 	[have cairo_context move_to 0.0 0.0]

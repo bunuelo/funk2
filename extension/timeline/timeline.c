@@ -155,6 +155,13 @@ f2ptr f2__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr e
       (! raw__time__is_type(cause, end_time))) {
     return f2larva__new(cause, 1, nil);
   }
+  f2ptr is_less_than = f2__is_less_than(cause, start_time, end_time);
+  if (raw__larva__is_type(cause, is_less_than)) {
+    return is_less_than;
+  }
+  if (is_less_than == nil) {
+    return f2larva__new(cause, 1351, nil);
+  }
   return raw__timeline_event__new(cause, name, start_time, end_time);
 }
 export_cefunk3(timeline_event__new, name, start_time, end_time, 0, "Returns a new timeline_event object.");
@@ -178,10 +185,24 @@ f2ptr raw__timeline_event__cairo_action_name(f2ptr cause, f2ptr this) {
   return name_as_string;
 }
 
-f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
-  f2ptr action_name         = raw__timeline_event__cairo_action_name(cause, this);
-  s64   action_name__length = raw__string__length(cause, action_name);
-  u8*   action_name__str    = (u8*)from_ptr(f2__malloc(action_name__length));
+f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context, f2ptr timeline) {
+  f2ptr  minimum_time                            = raw__timeline__minimum_time(cause, timeline);
+  f2ptr  maximum_time                            = raw__timeline__maximum_time(cause, timeline);
+  f2ptr  minimum_time__nanoseconds_since_1970    = raw__time__nanoseconds_since_1970(cause, minimum_time);
+  f2ptr  maximum_time__nanoseconds_since_1970    = raw__time__nanoseconds_since_1970(cause, maximum_time);
+  s64    minimum_time__nanoseconds_since_1970__i = f2integer__i(minimum_time__nanoseconds_since_1970, cause);
+  s64    maximum_time__nanoseconds_since_1970__i = f2integer__i(maximum_time__nanoseconds_since_1970, cause);
+  f2ptr  start_time                              = raw__timeline_event__start_time(cause, this);
+  f2ptr  end_time                                = raw__timeline_event__end_time(cause, this);
+  f2ptr  start_time__nanoseconds_since_1970      = raw__time__nanoseconds_since_1970(cause, start_time);
+  f2ptr  end_time__nanoseconds_since_1970        = raw__time__nanoseconds_since_1970(cause, end_time);
+  s64    start_time__nanoseconds_since_1970__i   = f2integer__i(start_time__nanoseconds_since_1970, cause);
+  s64    end_time__nanoseconds_since_1970__i     = f2integer__i(end_time__nanoseconds_since_1970, cause);
+  double start_position                          = ((double)(start_time__nanoseconds_since_1970__i - minimum_time__nanoseconds_since_1970__i)) / ((double)(maximum_time__nanoseconds_since_1970__i - minimum_time__nanoseconds_since_1970__i)) * 56.0;
+  double end_position                            = ((double)(end_time__nanoseconds_since_1970__i   - minimum_time__nanoseconds_since_1970__i)) / ((double)(maximum_time__nanoseconds_since_1970__i - minimum_time__nanoseconds_since_1970__i)) * 56.0;
+  f2ptr  action_name                             = raw__timeline_event__cairo_action_name(cause, this);
+  s64    action_name__length                     = raw__string__length(cause, action_name);
+  u8*    action_name__str                        = (u8*)from_ptr(f2__malloc(action_name__length));
   raw__string__str_copy(cause, action_name, action_name__str);
   action_name__str[action_name__length] = 0;
   raw__cairo_context__save(cause, cairo_context);
@@ -189,8 +210,8 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
     double text_width  = raw__cairo_context__text_width(cause, cairo_context, 1, (char*)action_name__str);
     double event_width = (double)((int)(text_width + 1.5));
     f2ptr  result      = raw__cairo_context__render_rounded_text_box(cause, cairo_context,
-								     0, 0,                                    // x0, y0
-								     event_width, 1.5,                        // dx, dy
+								     start_position, 0,                       // x0, y0
+								     end_position - start_position, 1.5,      // dx, dy
 								     1,                                       // font size
 								     (char*)action_name__str,                 // text
 								     0.5,                                     // maximum corner radius
@@ -207,14 +228,15 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
   return nil;
 }
 
-f2ptr f2__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+f2ptr f2__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context, f2ptr timeline) {
   if ((! raw__timeline_event__is_type(cause, this)) ||
-      (! raw__cairo_context__is_type(cause, cairo_context))) {
+      (! raw__cairo_context__is_type(cause, cairo_context)) ||
+      (! raw__timeline__is_type(cause, timeline))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__timeline_event__cairo_render(cause, this, cairo_context);
+  return raw__timeline_event__cairo_render(cause, this, cairo_context, timeline);
 }
-export_cefunk2(timeline_event__cairo_render, this, cairo_context, 0, "Renders this timeline_event in the given cairo_context.");
+export_cefunk3(timeline_event__cairo_render, this, cairo_context, timeline, 0, "Renders this timeline_event in the given cairo_context.");
 
 
 double raw__timeline_event__cairo_minimum_width(f2ptr cause, f2ptr this, f2ptr cairo_context) {
@@ -341,8 +363,10 @@ f2ptr f2__timeline_event_type__new_aux(f2ptr cause) {
 
 // timeline
 
-def_ceframe1(timeline, timeline,
-	     timeline_event_set);
+def_ceframe3(timeline, timeline,
+	     timeline_event_set,
+	     minimum_time,
+	     maximum_time);
 
 
 f2ptr raw__timeline__new(f2ptr cause) {
@@ -452,6 +476,24 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
     }
   }
   raw__cairo_context__move_to(cause, cairo_context, 0, 0);
+  f2ptr minimum_time = raw__timeline__minimum_time(cause, this);
+  f2ptr maximum_time = raw__timeline__maximum_time(cause, this);
+  if ((minimum_time == nil) ||
+      (maximum_time == nil)) {
+    f2ptr timeline_event_set   = raw__timeline__timeline_event_set(cause, this);
+    set__iteration(cause, timeline_event_set, event,
+		   f2ptr start_time = raw__timeline_event__start_time(cause, event);
+		   f2ptr end_time   = raw__timeline_event__end_time(  cause, event);
+		   if ((minimum_time == nil) ||
+		       f2__is_less_than(cause, start_time, minimum_time)) {
+		     minimum_time = start_time;
+		   }
+		   if ((maximum_time == nil) ||
+		       f2__is_less_than(cause, end_time, maximum_time)) {
+		     maximum_time = end_time;
+		   }
+		   );
+  }
   f2ptr connected_sets = nil;
   // find connected sets of timeline_events
   {
@@ -532,7 +574,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 		       raw__cairo_context__save(         cause, cairo_context);
 		       raw__cairo_context__scale(        cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));
 		       raw__cairo_context__translate(    cause, cairo_context, 4, 4 + y_position);
-		       raw__timeline_event__cairo_render(cause, event, cairo_context);
+		       raw__timeline_event__cairo_render(cause, event, cairo_context, this);
 		       raw__cairo_context__restore(      cause, cairo_context);
 		       y_position += 2.0;
 		       );

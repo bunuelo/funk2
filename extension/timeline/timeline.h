@@ -32,7 +32,7 @@ def_header_ceframe7(timeline_event, name, start_time, end_time, contains_set, is
 
 // timeline
 
-def_header_ceframe1(timeline, timeline_event_set);
+def_header_ceframe3(timeline, timeline_event_set, minimum_time, maximum_time);
 
 
 

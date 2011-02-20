@@ -217,16 +217,16 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
     double text_width  = raw__cairo_context__text_width(cause, cairo_context, 1, (char*)action_name__str);
     double event_width = (double)((int)(text_width + 1.5));
     f2ptr  result      = raw__cairo_context__render_rounded_text_box(cause, cairo_context,
-								     start_position, 0,                       // x0, y0
-								     end_position - start_position, 1.5,      // dx, dy
-								     1,                                       // font size
-								     (char*)action_name__str,                 // text
-								     0.5,                                     // maximum corner radius
-								     30 / 255.0, 144 / 255.0, 255 / 255.0, 1, // background rgba
-								     0.2,                                     // outline width
-								     0, 0, 0, 1,                              // text rgba
-								     0, 0, 0, 1,                              // box outline rgba
-								     1, 1, 1, 1);                             // text outline rgba
+								     start_position, 0,                         // x0, y0
+								     end_position - start_position, 1.5,        // dx, dy
+								     1,                                         // font size
+								     (char*)action_name__str,                   // text
+								     0.5,                                       // maximum corner radius
+								     142 / 255.0, 200 / 255.0, 255 / 255.0, 1,  // background rgba
+								     0.2,                                       // outline width
+								     0, 0, 0, 1,                                // text rgba
+								     0, 0, 0, 1,                                // box outline rgba
+								     142 / 255.0, 200 / 255.0, 255 / 255.0, 1); // text outline rgba
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

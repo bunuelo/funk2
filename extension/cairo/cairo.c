@@ -1429,10 +1429,11 @@ f2ptr raw__cairo_image_surface__as__image(f2ptr cause, f2ptr this) {
       s64 x;
       for (x = 0; x < width; x ++) {
 	s64 cairo_pixel_index = cairo_y_index + (x << 2);
-	u8  alpha             = *(data + cairo_pixel_index + 0);
-	u8  red               = *(data + cairo_pixel_index + 1);
-	u8  green             = *(data + cairo_pixel_index + 2);
-	u8  blue              = *(data + cairo_pixel_index + 3);
+	u32 cairo_pixel = *((u32*)(data + cairo_pixel_index));
+	u8  alpha             = cairo_pixel >> 24;
+	u8  red               = cairo_pixel >> 16;
+	u8  green             = cairo_pixel >> 8;
+	u8  blue              = cairo_pixel;
 	s16 image_white = 255 - alpha;
 	s16 image_red   = image_white + red;
 	s16 image_green = image_white + green;

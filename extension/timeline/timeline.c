@@ -189,18 +189,25 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
   f2ptr  minimum_time                            = raw__timeline__minimum_time(cause, timeline);
   f2ptr  minimum_time__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, minimum_time);
   s64    minimum_time__nanoseconds_since_1970__i = f2integer__i(minimum_time__nanoseconds_since_1970, cause);
+  printf("\nminimum_time__nanoseconds_since_1970__i=" s64__fstr, minimum_time__nanoseconds_since_1970__i); fflush(stdout);
   f2ptr  maximum_time                            = raw__timeline__maximum_time(cause, timeline);
   f2ptr  maximum_time__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, maximum_time);
   s64    maximum_time__nanoseconds_since_1970__i = f2integer__i(maximum_time__nanoseconds_since_1970, cause);
+  printf("\nmaximum_time__nanoseconds_since_1970__i=" s64__fstr, maximum_time__nanoseconds_since_1970__i); fflush(stdout);
   f2ptr  start_time                              = raw__timeline_event__start_time(cause, this);
   f2ptr  start_time__nanoseconds_since_1970      = f2__time__nanoseconds_since_1970(cause, start_time);
   s64    start_time__nanoseconds_since_1970__i   = f2integer__i(start_time__nanoseconds_since_1970, cause);
+  printf("\nstart_time__nanoseconds_since_1970__i=" s64__fstr, start_time__nanoseconds_since_1970__i); fflush(stdout);
   f2ptr  end_time                                = raw__timeline_event__end_time(cause, this);
   f2ptr  end_time__nanoseconds_since_1970        = f2__time__nanoseconds_since_1970(cause, end_time);
   s64    end_time__nanoseconds_since_1970__i     = f2integer__i(end_time__nanoseconds_since_1970, cause);
+  printf("\nend_time__nanoseconds_since_1970__i=" s64__fstr, end_time__nanoseconds_since_1970__i); fflush(stdout);
   s64    total_nanoseconds                       = maximum_time__nanoseconds_since_1970__i - minimum_time__nanoseconds_since_1970__i;
+  printf("\ntotal_nanoseconds=" s64__fstr, total_nanoseconds); fflush(stdout);
   s64    start_nanoseconds                       = start_time__nanoseconds_since_1970__i   - minimum_time__nanoseconds_since_1970__i;
+  printf("\nstart_nanoseconds=" s64__fstr, start_nanoseconds); fflush(stdout);
   s64    end_nanoseconds                         = end_time__nanoseconds_since_1970__i     - minimum_time__nanoseconds_since_1970__i;
+  printf("\nend_nanoseconds=" s64__fstr, end_nanoseconds); fflush(stdout);
   if (total_nanoseconds == 0) {
     return f2larva__new(cause, 4444, nil);
   }

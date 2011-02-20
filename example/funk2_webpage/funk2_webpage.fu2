@@ -866,6 +866,7 @@
 	  [set this entry  [string-prog '<p>You can now export screen renderings to PDF, SVG, postscript (PS) or PNG files from within the Funk2 programming language by includinig the Cairo package (i.e. <tt>[require cairo]</tt>).'
 					'An example Cairo application can be seen in the <tt>cairo-test</tt> directory included in the <tt>example</tt> directory in the source code.'
 					'The cairo test example can be included and run by typing, <tt>[require cairo]</tt>, followed by, <tt>[cairo-test]</tt>, which should output a test file for each available file format.'
+					'See the <a href=../documentation/package/cairo/>Funk2 Cairo package documentation</a> for details about the Funk2 wrapper.'
 					'</p>']]
 	  this]
 	[let [[this [new funk2_post]]]

@@ -200,6 +200,8 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
   s64    end_time__nanoseconds_since_1970__i     = f2integer__i(end_time__nanoseconds_since_1970, cause);
   double start_position                          = ((double)(start_time__nanoseconds_since_1970__i - minimum_time__nanoseconds_since_1970__i)) / ((double)(maximum_time__nanoseconds_since_1970__i - minimum_time__nanoseconds_since_1970__i)) * 56.0;
   double end_position                            = ((double)(end_time__nanoseconds_since_1970__i   - minimum_time__nanoseconds_since_1970__i)) / ((double)(maximum_time__nanoseconds_since_1970__i - minimum_time__nanoseconds_since_1970__i)) * 56.0;
+  printf("\nstart_position=%f", start_position); fflush(stdout);
+  printf("\nend_position=%f",   end_position);   fflush(stdout);
   f2ptr  action_name                             = raw__timeline_event__cairo_action_name(cause, this);
   s64    action_name__length                     = raw__string__length(cause, action_name);
   u8*    action_name__str                        = (u8*)from_ptr(f2__malloc(action_name__length));
@@ -210,8 +212,8 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
     double text_width  = raw__cairo_context__text_width(cause, cairo_context, 1, (char*)action_name__str);
     double event_width = (double)((int)(text_width + 1.5));
     f2ptr  result      = raw__cairo_context__render_rounded_text_box(cause, cairo_context,
-								     0, 0,                       // x0, y0
-								     4, 1.5,      // dx, dy
+								     start_position, 0,                       // x0, y0
+								     end_position - start_position, 1.5,      // dx, dy
 								     1,                                       // font size
 								     (char*)action_name__str,                 // text
 								     0.5,                                     // maximum corner radius

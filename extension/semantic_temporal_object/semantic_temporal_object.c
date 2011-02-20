@@ -249,7 +249,7 @@ export_cefunk2(semantic_temporal_object__is_contained_by__remove, this, temporal
 
 
 f2ptr raw__semantic_temporal_object__absolute_time__lookup(f2ptr cause, f2ptr this, f2ptr temporal_object) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_time"), that);
+  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_time"), nil);
 }
 
 f2ptr f2__semantic_temporal_object__absolute_time__lookup(f2ptr cause, f2ptr this, f2ptr temporal_object) {

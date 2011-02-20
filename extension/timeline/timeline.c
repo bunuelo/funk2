@@ -232,7 +232,7 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
 								     (char*)action_name__str,                 // text
 								     0.5,                                     // maximum corner radius
 								     30 / 255.0, 144 / 255.0, 255 / 255.0, 1, // background rgba
-								     0.1,                                     // outline width
+								     0.2,                                     // outline width
 								     0, 0, 0, 1,                              // text rgba
 								     0, 0, 0, 1,                              // box outline rgba
 								     1, 1, 1, 1);                             // text outline rgba

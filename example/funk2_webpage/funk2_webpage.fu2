@@ -479,10 +479,12 @@
 
 
 [defunk funk2_funk_documentation [funk]
-  [let [[documentation [get funk documentation]]]
-    [if [is-type `string documentation]
-	[stringlist-intersperse [have documentation split '\n'] '<br>']
-      [exp-as-string documentation]]]]
+  [string-prog '<table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>'
+	       [let [[documentation [get funk documentation]]]
+		 [if [is-type `string documentation]
+		     [stringlist-intersperse [have documentation split '\n'] '<br>']
+		   [exp-as-string documentation]]]
+	       '</td></tr></table>']]
 
 [defunk funk2_object_documentation [posts examples type_name]
   [print [string-concat 'compiling ' [get type_name as-string] ' object documentation']]
@@ -495,8 +497,9 @@
 									 [print [string-concat '  key: ' [get key_name as-string]]]
 									 [let [[funk [get type type_var_value `get key_name nil]]]
 									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
-											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [funk2_funk_documentation funk] '<br>']
-											'&nbsp;'
+											'<p>'
+											[funk2_funk_documentation funk]
+											'</p>'
 											'</li>']]]
 								   [get type type_var-keys `get]]]
 					  '</ul>'
@@ -507,8 +510,9 @@
 									 [print [string-concat '  key: ' [get key_name as-string]]]
 									 [let [[funk [get type type_var_value `set key_name nil]]]
 									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
-											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [funk2_funk_documentation funk] '<br>']
-											'&nbsp;'
+											'<p>'
+											[funk2_funk_documentation funk]
+											'</p>'
 											'</li>']]]
 								   [get type type_var-keys `set]]]
 					  '</ul>'
@@ -519,8 +523,9 @@
 									 [print [string-concat '  key: ' [get key_name as-string]]]
 									 [let [[funk [get type type_var_value `execute key_name nil]]]
 									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
-											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [funk2_funk_documentation funk] '<br>']
-											'&nbsp;'
+											'<p>'
+											[funk2_funk_documentation funk]
+											'</p>'
 											'</li>']]]
 								   [get type type_var-keys `execute]]]
 					  '</ul>'

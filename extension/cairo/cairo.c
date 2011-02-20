@@ -1410,6 +1410,7 @@ export_cefunk1(cairo_image_surface__format, this, 0, "Returns the format of the 
 
 
 f2ptr raw__cairo_image_surface__as__image(f2ptr cause, f2ptr this) {
+#if defined(F2__CAIRO_SUPPORTED)
   f2ptr format = raw__cairo_image_surface__format(cause, this);
   if (! raw__eq(cause, format, new__symbol(cause, "ARGB32"))) {
     return f2larva__new(cause, 2132, nil);
@@ -1424,16 +1425,16 @@ f2ptr raw__cairo_image_surface__as__image(f2ptr cause, f2ptr this) {
     s64 y;
     for (y = 0; y < height; y ++) {
       s64 cairo_y_index = (y * stride);
-      s64 y_index       = (y * width);
+      s64 y_index       = (y * width) << 2;
       s64 x;
       for (x = 0; x < width; x ++) {
-	s64 cairo_pixel_index = (cairo_y_index + x) << 2;
+	s64 cairo_pixel_index = cairo_y_index + (x << 2);
 	u8  alpha             = *(data + cairo_pixel_index + 0);
 	u8  red               = *(data + cairo_pixel_index + 1);
 	u8  green             = *(data + cairo_pixel_index + 2);
 	u8  blue              = *(data + cairo_pixel_index + 3);
 	{
-	  s64 pixel_index = (y_index + x) << 2;
+	  s64 pixel_index = y_index + (x << 2);
 	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 0, red);
 	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 1, green);
 	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 2, blue);
@@ -1443,6 +1444,9 @@ f2ptr raw__cairo_image_surface__as__image(f2ptr cause, f2ptr this) {
     }
   }
   return raw__image__new(cause, f2integer__new(cause, width), f2integer__new(cause, height), rgba_data);
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
 }
 
 f2ptr f2__cairo_image_surface__as__image(f2ptr cause, f2ptr this) {

@@ -1451,7 +1451,7 @@ f2ptr raw__cairo_image_surface__as__image(f2ptr cause, f2ptr this) {
 	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 0, image_red);
 	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 1, image_green);
 	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 2, image_blue);
-	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 3, alpha);
+	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 3, 255);
 	}
       }
     }

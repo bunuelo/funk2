@@ -1433,7 +1433,7 @@ f2ptr raw__cairo_image_surface__as__image(f2ptr cause, f2ptr this) {
 	u8  red               = *(data + cairo_pixel_index + 1);
 	u8  green             = *(data + cairo_pixel_index + 2);
 	u8  blue              = *(data + cairo_pixel_index + 3);
-	s16 image_white = (255 * (255 - alpha));
+	s16 image_white = 255 - alpha;
 	s16 image_red   = image_white + red;
 	s16 image_green = image_white + green;
 	s16 image_blue  = image_white + blue;

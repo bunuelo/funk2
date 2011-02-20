@@ -94,6 +94,9 @@
 [deftypefunk isis_agent_body execute sense_world []
   sense_frame]
 
+[deftypefunk isis_agent_body get time []
+  [get [get this physical_world] time]]
+
 [deftypefunk isis_agent_body execute update_after_step_simulation []
   [let [[image [have this sense_funk2_retina_image]]]
     [have retina_image_sequence add_image_to_end image]
@@ -199,13 +202,15 @@
 		   ]]]]]]
 
 [deftypefunk isis_agent_body execute sense_perception []
-  [let [[retina_image           [get  this retina_image]]
+  [let [[time                   [get  this time]]
+	[retina_image           [get  this retina_image]]
 	[visual_objects         [have this sense_visual_objects]]
 	[left_hand_object_name  [have this sense_left_hand_object_name]]
 	[right_hand_object_name [have this sense_right_hand_object_name]]
 	[proprioceptual_frame   [have this sense_proprioceptual_frame]]]
     [if proprioceptual_frame
 	[new moral_compass_perception
+	     time
 	     retina_image
 	     visual_objects
 	     left_hand_object_name

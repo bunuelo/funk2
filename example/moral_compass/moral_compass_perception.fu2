@@ -18,16 +18,19 @@
  rights to redistribute these changes.'
 
 
-[deframe moral_compass_perception [frame] [retina_image
+[deframe moral_compass_perception [frame] [time
+					   retina_image
 					   visual_objects
 					   left_hand_object_name
 					   right_hand_object_name
 					   proprioceptual_frame]
-  [new [initial-retina_image
+  [new [initial-time
+	initial-retina_image
 	initial-visual_objects
 	initial-left_hand_object_name
 	initial-right_hand_object_name
 	initial-proprioceptual_frame]
+       [= time                   initial-time]
        [= retina_image           initial-retina_image]
        [= visual_objects         initial-visual_objects]
        [= left_hand_object_name  initial-left_hand_object_name]

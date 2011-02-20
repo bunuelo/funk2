@@ -21,6 +21,7 @@
 'physical_world'
 
 [deframe physical_world [frame] [time_step
+				 time
 				 [time_step_trigger [new fiber_trigger]]
 				 format_mutex
 				 agent_body_frame]
@@ -42,6 +43,7 @@
 
 [deftypefunk physical_world execute step_physical_world []
   [set this time_step [+ 1 [get this time_step]]]
+  [set this time      [time]]
   [have time_step_trigger trigger]]
 
 [deftypefunk physical_world execute format [:rest expressions]

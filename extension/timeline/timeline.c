@@ -586,7 +586,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 	s64    event_count   = f2integer__i(f2__set__key_count(cause, connected_set), cause);
 	f2ptr* event_array   = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * event_count));
 	{
-	  s64 index;
+	  s64 index = 0;
 	  set__iteration(cause, connected_set, event,
 			 if (index >= event_count) {
 			   return f2larva__new(cause, 222, nil);

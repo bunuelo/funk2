@@ -140,7 +140,15 @@ f2ptr raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this, doubl
 
 // timeline_event
 
-def_ceframe7(timeline, timeline_event, name, start_time, end_time, contains_set, is_contained_by_set, next_set, previous_set);
+def_ceframe7(timeline, timeline_event,
+	     name,
+	     start_time,
+	     end_time,
+	     contains_set,
+	     is_contained_by_set,
+	     next_set,
+	     previous_set,
+	     y_index);
 
 
 f2ptr raw__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time) {
@@ -212,12 +220,15 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
   u8*    action_name__str                        = (u8*)from_ptr(f2__malloc(action_name__length));
   raw__string__str_copy(cause, action_name, action_name__str);
   action_name__str[action_name__length] = 0;
+  f2ptr y_index    = raw__timeline_event__y_index(cause, this);
+  s64   y_index__i = f2integer__i(y_index, cause);
+  
   raw__cairo_context__save(cause, cairo_context);
   {
     double text_width  = raw__cairo_context__text_width(cause, cairo_context, 1, (char*)action_name__str);
-    double event_width = (double)((int)(text_width + 1.5));
+    //double event_width = (double)((int)(text_width + 1.5));
     f2ptr  result      = raw__cairo_context__render_rounded_text_box(cause, cairo_context,
-								     start_position, 0,                         // x0, y0
+								     start_position, y_index__i * 2.0,          // x0, y0
 								     end_position - start_position, 1.5,        // dx, dy
 								     1,                                         // font size
 								     (char*)action_name__str,                   // text
@@ -595,7 +606,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 			 index ++;
 			 );
 	}
-	{
+	{ // swap sort
 	  s64 i__index;
 	  for (i__index = 0; i__index < event_count; i__index ++) {
 	    f2ptr i = event_array[i__index];
@@ -618,6 +629,13 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 	  s64 index;
 	  for (index = 0; index < event_count; index ++) {
 	    f2ptr event = event_array[index];
+	    raw__timeline_event__y_index__set(cause, event, f2integer__new(cause, index));
+	  }
+	}
+	{
+	  s64 index;
+	  for (index = 0; index < event_count; index ++) {
+	    f2ptr event = event_array[index];
 	    //f2ptr extents = raw__ptypehash__lookup(cause, extents_event_hash, event);
 	    raw__cairo_context__save(cause, cairo_context);
 	    raw__cairo_context__scale(cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));
@@ -627,9 +645,8 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 	      return result;
 	    }
 	    raw__cairo_context__restore(cause, cairo_context);
-	    y_position += 2.0;
 	  }
-	  y_position += 1.0;
+	  y_position += (event_count * 2.0) + 1.0;
 	}
 	f2__free(to_ptr(event_array));
       }

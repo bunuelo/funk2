@@ -105,6 +105,8 @@ f2ptr     raw__cairo_context__close_path                (f2ptr cause, f2ptr this
 f2ptr      f2__cairo_context__close_path                (f2ptr cause, f2ptr this);
 f2ptr     raw__cairo_context__arc                       (f2ptr cause, f2ptr this, double xc, double yc, double radius, double angle1, double angle2);
 f2ptr      f2__cairo_context__arc                       (f2ptr cause, f2ptr this, f2ptr xc, f2ptr yc, f2ptr radius, f2ptr angle1, f2ptr angle2);
+f2ptr     raw__cairo_context__curve_to                  (f2ptr cause, f2ptr this, double x1, double y1, double x2, double y2, double x3, double y3);
+f2ptr      f2__cairo_context__curve_to                  (f2ptr cause, f2ptr this, f2ptr x1, f2ptr y1, f2ptr x2, f2ptr y2, f2ptr x3, f2ptr y3);
 f2ptr     raw__cairo_context__set_source_rgba           (f2ptr cause, f2ptr this, double red, double green, double blue, double alpha);
 f2ptr      f2__cairo_context__set_source_rgba           (f2ptr cause, f2ptr this, f2ptr red, f2ptr green, f2ptr blue, f2ptr alpha);
 f2ptr     raw__cairo_context__move_to                   (f2ptr cause, f2ptr this, double x, double y);

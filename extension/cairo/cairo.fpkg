@@ -20,8 +20,7 @@
 [defpackage cairo
   :packages [image]
    :sources ['cairo-core.fu2']
-    :documentation [string-prog 'Please see <a href=http://cairographics.org/>cairographics.org</a> for details about the Cairo library.'
-				'The following Funk2 documentation is included from the <tt>cairographics.org</tt> webpage for educational purposes only.'
+    :documentation [string-prog 'Please see <a href=http://cairographics.org/>cairographics.org</a> for details about the Cairo library.  The following Funk2 documentation is included from the <tt>cairographics.org</tt> webpage for educational purposes only.'
 				''
 				'Cairo is a 2D graphics library with support for multiple output devices. Currently supported output targets include the X Window System, Quartz, Win32, image buffers, PostScript, PDF, and SVG file output. Experimental backends include OpenGL, XCB, BeOS, OS/2, and DirectFB.'
 				''

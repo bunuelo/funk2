@@ -165,7 +165,6 @@ f2ptr raw__timeline_event__cairo_action_name(f2ptr cause, f2ptr this) {
     if (raw__string__is_type(cause, name)) {
       name_as_string = name;
     } else {
-      action_name__length = 0;
       f2ptr name_as_string = f2__exp__as__string(cause, name);
       if (raw__larva__is_type(cause, name_as_string)) {
 	return name_as_string;

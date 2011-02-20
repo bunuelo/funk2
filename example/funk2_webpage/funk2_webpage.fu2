@@ -556,11 +556,8 @@
 					  ''
 					  '<h2>Documentation</h2>'
 					  '<p>'
-					  [let [[documentation [get package documentation]]]
-					    [if [is-type `string documentation]
-						documentation
-					      [get documentation as-string]]]
-					  '</p>'
+					  [funk2_funk_documentation [get package documentation]]
+					  '</p><br>'
 					  ''
 					  '<h2>Objects Defined</h2>'
 					  '<ul>'

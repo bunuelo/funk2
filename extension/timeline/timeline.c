@@ -669,8 +669,8 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		  if (raw__timeline_event__overlaps(cause, event, o_event)) {
 		    f2ptr o_y_index    = raw__timeline_event__y_index(cause, o_event);
 		    s64   o_y_index__i = f2integer__i(o_y_index, cause);
-		    if (maximum_overlap_y_index < o_y_index) {
-		      maximum_overlap_y_index = o_y_index;
+		    if (maximum_overlap_y_index < o_y_index__i) {
+		      maximum_overlap_y_index = o_y_index__i;
 		    }
 		  }
 		}

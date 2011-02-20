@@ -657,9 +657,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 	{
 	  s64 index;
 	  for (index = 0; index < event_count; index ++) {
-	    f2ptr event      = event_array[index];
-	    f2ptr y_index    = raw__timeline_event__y_index(cause, event);
-	    s64   y_index__i = f2integer__i(y_index, cause);
+	    f2ptr event = event_array[index];
 	    {
 	      s64 maximum_overlap_y_index = 0;
 	      {

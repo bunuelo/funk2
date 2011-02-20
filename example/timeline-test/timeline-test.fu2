@@ -23,7 +23,7 @@
 	 [cairo_context [new cairo_context cairo_surface]]]
     [have cairo_context scale [get width as-double] [get height as-double]]
     [have cairo_context move_to 0.0 0.0]
-    [have timeline cairo_render cairo_context]
+    [have this cairo_render cairo_context]
     
     [let [[image [get cairo_surface as-image]]]
       [have cairo_context destroy]
@@ -34,7 +34,7 @@
 [defunk image-display [this]
   [let [[gtk_window [gtk-window-new]]
 	[gtk_image  [gtk-image-new_from_image this]]]
-    [set gtk_window title 'timeline-test']
+    [set gtk_window title 'image-display']
     [have gtk_window add gtk_image]
     [have gtk_window show_all]
     nil]]

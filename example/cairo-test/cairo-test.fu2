@@ -21,11 +21,6 @@
   [have context set_source_rgba 0.0 0.0 0.0 1.0]
   [have context paint]
   
-  [have context set_source_rgba 0.0 0.0 1.0 0.5]
-  [have context move_to 0.0 0.0]
-  [have context curve_to 36.0 0.0  36.0 72.0  72.0 72.0]
-  [have context stroke]
-  
   [have context set_source_rgba 1.0 1.0 1.0 1.0]
   [have context arc 36.0 36.0 35.0 0.0 [/ [* 360.0 pi] 180.0]]
   [have context stroke]
@@ -34,6 +29,13 @@
   [have context set_line_cap `round]
   [have context rel_line_to 34.0 0.0]
   [have context stroke]
+
+  [have context set_source_rgba 0.0 0.0 1.0 0.5]
+  [have context move_to 0.0 0.0]
+  [have context curve_to 36.0 0.0  36.0 72.0  72.0 72.0]
+  [have context stroke]
+  
+  [have context set_source_rgba 1.0 1.0 1.0 1.0]
   [have context move_to 36.0 35.0]
   [have context select_font_face 'Courier' `normal `normal]
   [have context set_font_size 1.0]

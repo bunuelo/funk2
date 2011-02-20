@@ -499,7 +499,7 @@
 									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
 											'<p>'
 											[funk2_funk_documentation funk]
-											'</p>'
+											'</p><br>'
 											'</li>']]]
 								   [get type type_var-keys `get]]]
 					  '</ul>'
@@ -512,7 +512,7 @@
 									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
 											'<p>'
 											[funk2_funk_documentation funk]
-											'</p>'
+											'</p><br>'
 											'</li>']]]
 								   [get type type_var-keys `set]]]
 					  '</ul>'
@@ -525,7 +525,7 @@
 									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
 											'<p>'
 											[funk2_funk_documentation funk]
-											'</p>'
+											'</p><br>'
 											'</li>']]]
 								   [get type type_var-keys `execute]]]
 					  '</ul>'

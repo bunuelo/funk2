@@ -198,8 +198,14 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
   f2ptr  end_time__nanoseconds_since_1970        = f2__time__nanoseconds_since_1970(cause, end_time);
   s64    start_time__nanoseconds_since_1970__i   = f2integer__i(start_time__nanoseconds_since_1970, cause);
   s64    end_time__nanoseconds_since_1970__i     = f2integer__i(end_time__nanoseconds_since_1970, cause);
-  double start_position                          = ((double)((start_time__nanoseconds_since_1970__i - minimum_time__nanoseconds_since_1970__i) * 56000ull / (maximum_time__nanoseconds_since_1970__i - minimum_time__nanoseconds_since_1970__i))) / 1000.0;
-  double end_position                            = ((double)((end_time__nanoseconds_since_1970__i   - minimum_time__nanoseconds_since_1970__i) * 56000ull / (maximum_time__nanoseconds_since_1970__i - minimum_time__nanoseconds_since_1970__i))) / 1000.0;
+  s64    total_nanoseconds                       = maximum_time__nanoseconds_since_1970__i - minimum_time__nanoseconds_since_1970__i;
+  s64    start_nanoseconds                       = start_time__nanoseconds_since_1970__i   - minimum_time__nanoseconds_since_1970__i;
+  s64    end_nanoseconds                         = end_time__nanoseconds_since_1970__i     - minimum_time__nanoseconds_since_1970__i;
+  if (total_nanoseconds == 0) {
+    return f2larva__new(cause, 4444, nil);
+  }
+  double start_position                          = ((double)(start_nanoseconds * 56000ull / total_nanoseconds)) / 1000.0;
+  double end_position                            = ((double)(end_nanoseconds   * 56000ull / total_nanoseconds)) / 1000.0;
   printf("\nstart_position=%f", start_position); fflush(stdout);
   printf("\nend_position=%f",   end_position);   fflush(stdout);
   f2ptr  action_name                             = raw__timeline_event__cairo_action_name(cause, this);

@@ -34,12 +34,12 @@
     [have timeline add_timeline_event timeline_event_e]
     [have timeline add_timeline_event timeline_event_f]
     
-    `[have timeline_event_a add_contains timeline_event_b]
-    `[have timeline_event_a add_contains timeline_event_c]
-    `[have timeline_event_b add_next     timeline_event_c]
-    `[have timeline_event_d add_contains timeline_event_e]
-    `[have timeline_event_d add_contains timeline_event_f]
-    `[have timeline_event_e add_next     timeline_event_f]
+    [have timeline_event_a add_contains timeline_event_b]
+    [have timeline_event_a add_contains timeline_event_c]
+    [have timeline_event_b add_next     timeline_event_c]
+    [have timeline_event_d add_contains timeline_event_e]
+    [have timeline_event_d add_contains timeline_event_f]
+    [have timeline_event_e add_next     timeline_event_f]
     
     [let* [[cairo_surface [new cairo_pdf_surface 'timeline-test.pdf' 72.0 72.0]]
 	   [cairo_context [new cairo_context cairo_surface]]]

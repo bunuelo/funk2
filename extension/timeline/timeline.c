@@ -371,7 +371,9 @@ def_ceframe3(timeline, timeline,
 
 f2ptr raw__timeline__new(f2ptr cause) {
   f2ptr timeline_event_set = f2__set__new(cause);
-  return f2timeline__new(cause, timeline_event_set);
+  f2ptr minimum_time       = nil;
+  f2ptr maximum_time       = nil;
+  return f2timeline__new(cause, timeline_event_set, minimum_time, maximum_time);
 }
 
 f2ptr f2__timeline__new(f2ptr cause) {

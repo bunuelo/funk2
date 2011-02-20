@@ -18,6 +18,28 @@
  rights to redistribute these changes.'
 
 
+[defunk timeline-as-image [this width height]
+  [let* [[cairo_surface [new cairo_image_surface `ARGB32 width height]]
+	 [cairo_context [new cairo_context cairo_surface]]]
+    [have cairo_context scale [get width as-double] [get height as-double]]
+    [have cairo_context move_to 0.0 0.0]
+    [have timeline cairo_render cairo_context]
+    
+    [let [[image [get cairo_surface as-image]]]
+      [have cairo_context destroy]
+      [have cairo_surface destroy]
+      image]]]
+
+
+[defunk image-display [this]
+  [let [[gtk_window [gtk-window-new]]
+	[gtk_image  [gtk-image-new_from_image this]]]
+    [set gtk_window title 'timeline-test']
+    [have gtk_window add gtk_image]
+    [have gtk_window show_all]
+    nil]]
+
+
 [defunk timeline-test []
   [let [[time_array [new array 10]]]
     [dotimes [i 10]
@@ -44,20 +66,10 @@
       [have timeline_event_d add_contains timeline_event_f]
       [have timeline_event_e add_next     timeline_event_f]
       
-      [let* [[cairo_surface [new cairo_image_surface `ARGB32 1024 1024]]
-	     [cairo_context [new cairo_context cairo_surface]]]
-	[have cairo_context scale 1024.0 1024.0]
-	[have cairo_context move_to 0.0 0.0]
-	[have timeline cairo_render cairo_context]
-	[let [[image [get cairo_surface as-image]]]
-	  [have cairo_context destroy]
-	  [have cairo_surface destroy]
-	  [let [[gtk_window [gtk-window-new]]
-		[gtk_image  [gtk-image-new_from_image image]]]
-	    [set gtk_window title 'timeline-test']
-	    [have gtk_window add gtk_image]
-	    [have gtk_window show_all]
-	    nil]]]]]]
+      [image-display [timeline-as-image timeline 1024 1024]]
+      
+      nil]]]
+
 
 [defunk timeline-retry []
   [require timeline-test]

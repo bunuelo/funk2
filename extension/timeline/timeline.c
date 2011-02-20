@@ -348,10 +348,10 @@ boolean_t raw__timeline_event__overlaps(f2ptr cause, f2ptr this, f2ptr event) {
   f2ptr end_time          = raw__timeline_event__end_time(  cause, this);
   f2ptr event__start_time = raw__timeline_event__start_time(cause, event);
   f2ptr event__end_time   = raw__timeline_event__end_time(  cause, event);
-  return (((f2__is_less_than(   cause, end_time,   event__start_time) != nil) &&
-	   (f2__is_greater_than(cause, start_time, event__start_time) != nil))   ||
-	  ((f2__is_less_than(   cause, end_time,   event__end_time) != nil) &&
-	   (f2__is_greater_than(cause, start_time, event__end_time) != nil)));
+  return (((f2__is_greater_than(cause, end_time,   event__start_time) != nil) &&
+	   (f2__is_less_than(   cause, start_time, event__start_time) != nil))   ||
+	  ((f2__is_greater_than(cause, end_time,   event__end_time)   != nil) &&
+	   (f2__is_less_than(   cause, start_time, event__end_time)   != nil)));
 }
 
 f2ptr f2__timeline_event__overlaps(f2ptr cause, f2ptr this, f2ptr event) {

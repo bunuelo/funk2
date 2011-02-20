@@ -826,7 +826,7 @@
 	  [set this title  'Fiber triggers added as efficient process control']
 	  [set this date   'February 19th, 2011']
 	  [set this author '<a href="#">Bo Morgan</a>']
-	  [set this entry  [string-prog '<p>Process triggers are a new Funk2 core object that allows for allowing multiple parallel processes to wait for a specific trigger signal object to be triggered by a controlling process.'
+	  [set this entry  [string-prog '<p>Process triggers are a new Funk2 core object that allows for multiple parallel processes to wait for a specific trigger signal object to be triggered by a controlling process.'
 					'The following is a simple example that defines a global trigger named <tt>my-trigger</tt>.'
 					'Next, we enter a <tt>dotimes</tt> loop that loops ten times and creates ten parallel <tt>fiber</tt>s (funk2 processes).'
 					'Each of these parallel <tt>fiber</tt>s enters an infinite loop that simply waits for our <tt>trigger</tt>, <tt>my-trigger</tt>, to be triggered.'

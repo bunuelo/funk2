@@ -279,9 +279,6 @@ f2ptr raw__timeline__new(f2ptr cause) {
 }
 
 f2ptr f2__timeline__new(f2ptr cause) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
   return raw__timeline__new(cause);
 }
 export_cefunk0(timeline__new, 0, "Returns a new timeline object.");

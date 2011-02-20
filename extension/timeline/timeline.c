@@ -161,7 +161,7 @@ export_cefunk3(timeline_event__new, name, start_time, end_time, 0, "Returns a ne
 f2ptr raw__timeline_event__cairo_action_name(f2ptr cause, f2ptr this) {
   f2ptr name = raw__timeline_event__name(cause, this);
   f2ptr name_as_string;
-  if (action_name != nil) {
+  if (name != nil) {
     if (raw__string__is_type(cause, name)) {
       name_as_string = name;
     } else {

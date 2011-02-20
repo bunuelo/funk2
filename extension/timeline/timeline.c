@@ -486,23 +486,27 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
     }
   }
   raw__cairo_context__move_to(cause, cairo_context, 0, 0);
-  f2ptr minimum_time = raw__timeline__minimum_time(cause, this);
-  f2ptr maximum_time = raw__timeline__maximum_time(cause, this);
-  if ((minimum_time == nil) ||
-      (maximum_time == nil)) {
-    f2ptr timeline_event_set   = raw__timeline__timeline_event_set(cause, this);
-    set__iteration(cause, timeline_event_set, event,
-		   f2ptr start_time = raw__timeline_event__start_time(cause, event);
-		   f2ptr end_time   = raw__timeline_event__end_time(  cause, event);
-		   if ((minimum_time == nil) ||
-		       f2__is_less_than(cause, start_time, minimum_time)) {
-		     minimum_time = start_time;
-		   }
-		   if ((maximum_time == nil) ||
-		       f2__is_greater_than(cause, end_time, maximum_time)) {
-		     maximum_time = end_time;
-		   }
-		   );
+  {
+    f2ptr minimum_time = raw__timeline__minimum_time(cause, this);
+    f2ptr maximum_time = raw__timeline__maximum_time(cause, this);
+    if ((minimum_time == nil) ||
+	(maximum_time == nil)) {
+      f2ptr timeline_event_set   = raw__timeline__timeline_event_set(cause, this);
+      set__iteration(cause, timeline_event_set, event,
+		     f2ptr start_time = raw__timeline_event__start_time(cause, event);
+		     f2ptr end_time   = raw__timeline_event__end_time(  cause, event);
+		     if ((minimum_time == nil) ||
+			 f2__is_less_than(cause, start_time, minimum_time)) {
+		       minimum_time = start_time;
+		     }
+		     if ((maximum_time == nil) ||
+			 f2__is_greater_than(cause, end_time, maximum_time)) {
+		       maximum_time = end_time;
+		     }
+		     );
+    }
+    raw__timeline__minimum_time__set(cause, this, minimum_time);
+    raw__timeline__minimum_time__set(cause, this, maximum_time);
   }
   f2ptr connected_sets = nil;
   // find connected sets of timeline_events

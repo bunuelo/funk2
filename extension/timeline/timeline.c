@@ -140,7 +140,7 @@ f2ptr raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this, doubl
 
 // timeline_event
 
-def_ceframe7(timeline, timeline_event,
+def_ceframe8(timeline, timeline_event,
 	     name,
 	     start_time,
 	     end_time,

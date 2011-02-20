@@ -27,7 +27,15 @@
 
 // timeline_event
 
-def_header_ceframe7(timeline_event, name, start_time, end_time, contains_set, is_contained_by_set, next_set, previous_set);
+def_header_ceframe8(timeline_event,
+		    name,
+		    start_time,
+		    end_time,
+		    contains_set,
+		    is_contained_by_set,
+		    next_set,
+		    previous_set,
+		    y_index);
 
 
 // timeline

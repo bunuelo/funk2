@@ -248,20 +248,6 @@ f2ptr f2__semantic_temporal_object__is_contained_by__remove(f2ptr cause, f2ptr t
 export_cefunk2(semantic_temporal_object__is_contained_by__remove, this, temporal_object, 0, "Removes the given temporal_object to no longer happen after this temporal_object.");
 
 
-f2ptr raw__semantic_temporal_object__contains__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_containment_object__containment__contains__lookup(cause, this, new__symbol(cause, "temporal"));
-}
-
-f2ptr f2__semantic_temporal_object__contains__lookup(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_temporal_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_temporal_object__contains__lookup(cause, this);
-}
-export_cefunk1(semantic_temporal_object__contains__lookup, this, 0, "Returns the set of containment_objects that happen after this containment_object, returns nil if no such set exists.");
-
-
-
 f2ptr raw__semantic_temporal_object__absolute_time__lookup(f2ptr cause, f2ptr this, f2ptr temporal_object) {
   return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_time"), that);
 }

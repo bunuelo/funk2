@@ -343,6 +343,27 @@ f2ptr f2__timeline_event__add_previous(f2ptr cause, f2ptr this, f2ptr event) {
 export_cefunk2(timeline_event__add_previous, this, event, 0, "");
 
 
+boolean_t raw__timeline_event__overlaps(f2ptr cause, f2ptr this, f2ptr event) {
+  f2ptr start_time        = raw__timeline_event__start_time(cause, this);
+  f2ptr end_time          = raw__timeline_event__end_time(  cause, this);
+  f2ptr event__start_time = raw__timeline_event__start_time(cause, event);
+  f2ptr event__end_time   = raw__timeline_event__end_time(  cause, event);
+  return (((f2__is_less_than(   cause, end_time,   event__start_time) != nil) &&
+	   (f2__is_greater_than(cause, start_time, event__start_time) != nil))   ||
+	  ((f2__is_less_than(   cause, end_time,   event__end_time) != nil) &&
+	   (f2__is_greater_than(cause, start_time, event__end_time) != nil)));
+}
+
+f2ptr f2__timeline_event__overlaps(f2ptr cause, f2ptr this, f2ptr event) {
+  if ((! raw__timeline_event__is_type(cause, this)) ||
+      (! raw__timeline_event__is_type(cause, event))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2bool__new(raw__timeline_event__overlaps(cause, this, event));
+}
+export_cefunk2(timeline_event__overlaps, this, event, 0, "");
+
+
 f2ptr raw__timeline_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -370,6 +391,7 @@ f2ptr f2__timeline_event_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_is_contained_by"),       f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__add_is_contained_by")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_next"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__add_next")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_previous"),              f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__add_previous")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "overlaps"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__overlaps")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__terminal_print_with_frame")));}
   return this;
 }
@@ -630,6 +652,31 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 	  for (index = 0; index < event_count; index ++) {
 	    f2ptr event = event_array[index];
 	    raw__timeline_event__y_index__set(cause, event, f2integer__new(cause, index));
+	  }
+	}
+	{
+	  s64 index;
+	  for (index = 0; index < event_count; index ++) {
+	    f2ptr event      = event_array[index];
+	    f2ptr y_index    = raw__timeline_event__y_index(cause, event);
+	    s64   y_index__i = f2integer__i(y_index, cause);
+	    while (y_index__i > 0) {
+	      s64 maximum_overlap_y_index = 0;
+	      {
+		s64 o_index;
+		for (o_index = index - 1; o_index >= 0; o_index --) {
+		  f2ptr o_event = event_array[o_index];
+		  if (raw__timeline_event__overlaps(cause, event, o_event)) {
+		    f2ptr o_y_index    = raw__timeline_event__y_index(cause, o_event);
+		    s64   o_y_index__i = f2integer__i(o_y_index, cause);
+		    if (maximum_overlap_y_index < o_y_index) {
+		      maximum_overlap_y_index = o_y_index;
+		    }
+		  }
+		}
+	      }
+	      raw__timelilne_event__y_index__set(cause, event, f2integer__new(cause, maximum_over_y_index + 1));
+	    }
 	  }
 	}
 	{

@@ -478,13 +478,15 @@
 
 
 
-[defunk funk2_funk_documentation [funk]
+[defunk funk2_documentation_format [documentation]
   [string-prog '<table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>'
-	       [let [[documentation [get funk documentation]]]
-		 [if [is-type `string documentation]
-		     [stringlist-intersperse [have documentation split '\n'] '<br>']
-		   [exp-as-string documentation]]]
+	       [if [is-type `string documentation]
+		   [stringlist-intersperse [have documentation split '\n'] '<br>']
+		 [exp-as-string documentation]]
 	       '</td></tr></table>']]
+
+[defunk funk2_funk_documentation [funk]
+  [funk2_documentation_format [get funk documentation]]]
 
 [defunk funk2_object_documentation [posts examples type_name]
   [print [string-concat 'compiling ' [get type_name as-string] ' object documentation']]
@@ -556,7 +558,7 @@
 					  ''
 					  '<h2>Documentation</h2>'
 					  '<p>'
-					  [funk2_funk_documentation [get package documentation]]
+					  [funk2_documentation_format [get package documentation]]
 					  '</p><br>'
 					  ''
 					  '<h2>Objects Defined</h2>'

@@ -23,8 +23,6 @@
 #define F2__EXTENSION__TIMELINE__H
 
 #include "../../c/funk2.h"
-#include "../semantic_knowledge_base/semantic_knowledge_base.h"
-#include "../semantic_event/semantic_event.h"
 #include "../cairo/cairo.h"
 
 // timeline_event

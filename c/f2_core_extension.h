@@ -83,6 +83,9 @@ struct funk2_object_type__core_extension_handler__slot_s {
 #define def_header_ceframe__new6(name, slot1, slot2, slot3, slot4, slot5, slot6) \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6);
 
+#define def_header_ceframe__new7(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot1, f2ptr slot2, f2ptr slot3, f2ptr slot4, f2ptr slot5, f2ptr slot6, f2ptr slot7);
+
 
 
 #define def_header_ceframe__common(name)				\
@@ -127,6 +130,10 @@ struct funk2_object_type__core_extension_handler__slot_s {
   def_header_ceframe__slot5(name, slot1, slot2, slot3, slot4, slot5)	\
   def_header_ceframe__slot(name, slot6)
 
+#define def_header_ceframe__slot7(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
+  def_header_ceframe__slot6(name, slot1, slot2, slot3, slot4, slot5, slot6) \
+  def_header_ceframe__slot(name, slot7)
+
 
 #define def_header_ceframe0(name)		\
   def_header_ceframe__new0(name)		\
@@ -162,6 +169,11 @@ struct funk2_object_type__core_extension_handler__slot_s {
   def_header_ceframe__new6(name, slot1, slot2, slot3, slot4, slot5, slot6) \
   def_header_ceframe__common(name)					\
   def_header_ceframe__slot6(name, slot1, slot2, slot3, slot4, slot5, slot6)
+
+#define def_header_ceframe7(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
+  def_header_ceframe__new7(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7) \
+  def_header_ceframe__common(name)					\
+  def_header_ceframe__slot7(name, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
 
 
 

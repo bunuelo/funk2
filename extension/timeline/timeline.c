@@ -210,8 +210,8 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
     double text_width  = raw__cairo_context__text_width(cause, cairo_context, 1, (char*)action_name__str);
     double event_width = (double)((int)(text_width + 1.5));
     f2ptr  result      = raw__cairo_context__render_rounded_text_box(cause, cairo_context,
-								     start_position, 0,                       // x0, y0
-								     end_position - start_position, 1.5,      // dx, dy
+								     0, 0,                       // x0, y0
+								     4, 1.5,      // dx, dy
 								     1,                                       // font size
 								     (char*)action_name__str,                 // text
 								     0.5,                                     // maximum corner radius

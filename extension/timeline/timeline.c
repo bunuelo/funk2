@@ -139,7 +139,7 @@ f2ptr raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this, doubl
 
 // timeline_event
 
-def_ceframe1(timeline, timeline_event, name, start_time, end_time, contains_set, is_contained_by_set);
+def_ceframe5(timeline, timeline_event, name, start_time, end_time, contains_set, is_contained_by_set);
 
 
 f2ptr raw__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time) {

@@ -597,6 +597,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
     }
   }
   raw__cairo_context__restore(cause, cairo_context);
+  return nil;
 }
 
 f2ptr f2__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {

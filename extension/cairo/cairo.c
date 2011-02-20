@@ -1433,11 +1433,24 @@ f2ptr raw__cairo_image_surface__as__image(f2ptr cause, f2ptr this) {
 	u8  red               = *(data + cairo_pixel_index + 1);
 	u8  green             = *(data + cairo_pixel_index + 2);
 	u8  blue              = *(data + cairo_pixel_index + 3);
+	s16 image_white = (255 * (255 - alpha));
+	s16 image_red   = image_white + red;
+	s16 image_green = image_white + green;
+	s16 image_blue  = image_white + blue;
+	if (image_red > 255) {
+	  image_red = 255;
+	}
+	if (image_green > 255) {
+	  image_green = 255;
+	}
+	if (image_blue > 255) {
+	  image_blue = 255;
+	}
 	{
 	  s64 pixel_index = y_index + (x << 2);
-	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 0, red);
-	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 1, green);
-	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 2, blue);
+	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 0, image_red);
+	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 1, image_green);
+	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 2, image_blue);
 	  raw__chunk__bit8__elt__set(cause, rgba_data, pixel_index + 3, alpha);
 	}
       }

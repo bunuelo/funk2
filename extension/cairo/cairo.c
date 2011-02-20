@@ -463,6 +463,61 @@ export_cefunk6(cairo_context__arc, this, xc, yc, radius, angle1, angle2, 0,
 
 
 
+f2ptr raw__cairo_context__curve_to(f2ptr cause, f2ptr this, double x1, double y1, double x2, double y2, double x3, double y3) {
+#if defined(F2__CAIRO_SUPPORTED)
+  cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
+  cairo_curve_to(cairo_context, x1, y1, x2, y2, x3, y3);
+  return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
+}
+
+f2ptr f2__cairo_context__curve_to(f2ptr cause, f2ptr this, f2ptr x1, f2ptr y1, f2ptr x2, f2ptr y2, f2ptr x3, f2ptr y3) {
+  if ((! raw__cairo_context__is_type(cause, this)) ||
+      (! raw__double__is_type(cause, x1)) ||
+      (! raw__double__is_type(cause, y1)) ||
+      (! raw__double__is_type(cause, x2)) ||
+      (! raw__double__is_type(cause, y2)) ||
+      (! raw__double__is_type(cause, x3)) ||
+      (! raw__double__is_type(cause, y3))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  double x1__d = f2double__d(x1, cause);
+  double y1__d = f2double__d(y1, cause);
+  double x2__d = f2double__d(x2, cause);
+  double y2__d = f2double__d(y2, cause);
+  double x3__d = f2double__d(x3, cause);
+  double y3__d = f2double__d(y3, cause);
+  return raw__cairo_context__curve_to(cause, this, x1__d, y1__d, x2__d, y2__d, x3__d, y3__d);
+}
+export_cefunk7(cairo_context__curve_to, this, x1, y1, x2, y2, x3, y3, 0,
+	       "Adds a cubic Bézier spline to the path from the current point to position (x3, y3) in user-space coordinates, using (x1, y1) and (x2, y2) as the control points. After this call the current point will be (x3, y3).\n"
+	       "\n"
+	       "If there is no current point before the call to cairo_curve_to() this function will behave as if preceded by a call to cairo_move_to(cr, x1, y1).\n"
+	       "\n"
+	       "cr :\n"
+	       "	a cairo context\n"
+	       "\n"
+	       "x1 :\n"
+	       "	the X coordinate of the first control point\n"
+	       "\n"
+	       "y1 :\n"
+	       "	the Y coordinate of the first control point\n"
+	       "\n"
+	       "x2 :\n"
+	       "	the X coordinate of the second control point\n"
+	       "\n"
+	       "y2 :\n"
+	       "	the Y coordinate of the second control point\n"
+	       "\n"
+	       "x3 :\n"
+	       "	the X coordinate of the end of the curve\n"
+	       "\n"
+	       "y3 :\n"
+	       "	the Y coordinate of the end of the curve");
+
+
 f2ptr raw__cairo_context__set_source_rgba(f2ptr cause, f2ptr this, double red, double green, double blue, double alpha) {
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_t* cairo_context = raw__cairo_context__as__cairo_t(cause, this);
@@ -1061,6 +1116,7 @@ f2ptr f2__cairo_context_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new_path"),              f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__new_path")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "close_path"),            f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__close_path")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "arc"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__arc")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "curve_to"),              f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__curve_to")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "set_source_rgba"),       f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__set_source_rgba")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "move_to"),               f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__move_to")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "line_to"),               f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo_context__line_to")));}

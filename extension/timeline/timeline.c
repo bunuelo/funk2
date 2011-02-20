@@ -503,11 +503,11 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		     f2ptr start_time = raw__timeline_event__start_time(cause, event);
 		     f2ptr end_time   = raw__timeline_event__end_time(  cause, event);
 		     if ((minimum_time == nil) ||
-			 f2__is_less_than(cause, start_time, minimum_time)) {
+			 f2__is_greater_than(cause, start_time, minimum_time)) {
 		       minimum_time = start_time;
 		     }
 		     if ((maximum_time == nil) ||
-			 f2__is_greater_than(cause, end_time, maximum_time)) {
+			 f2__is_less_than(cause, end_time, maximum_time)) {
 		       maximum_time = end_time;
 		     }
 		     );

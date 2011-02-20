@@ -675,7 +675,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		  }
 		}
 	      }
-	      raw__timeline_event__y_index__set(cause, event, f2integer__new(cause, maximum_over_y_index + 1));
+	      raw__timeline_event__y_index__set(cause, event, f2integer__new(cause, maximum_overlap_y_index + 1));
 	    }
 	  }
 	}

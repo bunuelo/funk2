@@ -139,66 +139,42 @@ f2ptr raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this, doubl
 
 // timeline_event
 
-def_ceframe0(timeline, timeline_event);
+def_ceframe1(timeline, timeline_event, name, start_time, end_time, contains_set, is_contained_by_set);
 
 
-f2ptr raw__timeline_event__new(f2ptr cause, f2ptr semantic_realm) {
-  f2ptr this = f2__semantic_event__new(cause, semantic_realm);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "timeline_event"));
-  return this;
+f2ptr raw__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time) {
+  f2ptr contains_set        = f2__set__new(cause);
+  f2ptr is_contained_by_set = f2__set__new(cause);
+  return f2timeline_event__new(cause, name, start_time, end_time, contains_set, is_contained_by_set);
 }
 
-f2ptr f2__timeline_event__new(f2ptr cause, f2ptr semantic_realm) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
+f2ptr f2__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time) {
+  if ((! raw__time__is_type(cause, start_time)) ||
+      (! raw__time__is_type(cause, end_time))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__timeline_event__new(cause, semantic_realm);
+  return raw__timeline_event__new(cause, name, start_time, end_time);
 }
-export_cefunk1(timeline_event__new, semantic_realm, 0, "Returns a new timeline_event object.");
+export_cefunk3(timeline_event__new, name, start_time, end_time, 0, "Returns a new timeline_event object.");
 
 
 f2ptr raw__timeline_event__cairo_action_name(f2ptr cause, f2ptr this) {
-  f2ptr action_name_set = raw__semantic_event__action_name__lookup(cause, this);
-  s64   action_name__length;
-  u8*   action_name__str;
-  if (action_name_set != nil) {
-    action_name__length = 0;
-    f2ptr action_name_as_strings = nil;
-    set__iteration(cause, action_name_set, action_name,
-		   f2ptr action_name_as_string = f2__exp__as__string(cause, action_name);
-		   if (raw__larva__is_type(cause, action_name_as_string)) {
-		     return action_name_as_string;
-		   }
-		   action_name__length += raw__string__length(cause, action_name_as_string);
-		   action_name__length += 2;
-		   action_name_as_strings = f2cons__new(cause, action_name_as_string, action_name_as_strings));
-    action_name__length -= 2;
-    action_name__str = (u8*)from_ptr(f2__malloc(action_name__length + 1));
-    {
-      s64   action_name__index = 0;
-      f2ptr iter               = action_name_as_strings;
-      while (iter != nil) {
-	f2ptr action_name_as_string = f2cons__car(iter, cause);
-	{
-	  raw__string__str_copy(cause, action_name_as_string, action_name__str + action_name__index);
-	  action_name__index += raw__string__length(cause, action_name_as_string);
-	  memcpy(action_name__str + action_name__index, ", ", 2);
-	  action_name__index += 2;
-	}
-	iter = f2cons__cdr(iter, cause);
+  f2ptr name = raw__timeline_event__name(cause, this);
+  f2ptr name_as_string;
+  if (action_name != nil) {
+    if (raw__string__is_type(cause, name)) {
+      name_as_string = name;
+    } else {
+      action_name__length = 0;
+      f2ptr name_as_string = f2__exp__as__string(cause, name);
+      if (raw__larva__is_type(cause, name_as_string)) {
+	return name_as_string;
       }
     }
-    action_name__str[action_name__length] = 0;
   } else {
-    char* default_name = "Event";
-    action_name__length = strlen(default_name);
-    action_name__str = (u8*)from_ptr(f2__malloc(action_name__length + 1));
-    memcpy(action_name__str, default_name, action_name__length);
-    action_name__str[action_name__length] = 0;
+    name_as_string = new__string(cause, "Event");
   }
-  f2ptr action_name = new__string(cause, (char*)action_name__str);
-  f2__free(to_ptr(action_name__str));
-  return action_name;
+  return name_as_string;
 }
 
 f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
@@ -281,7 +257,6 @@ export_cefunk2(timeline_event__terminal_print_with_frame, this, terminal_print_f
 
 f2ptr f2__timeline_event_type__new_aux(f2ptr cause) {
   f2ptr this = f2__timeline_event_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2list1__new(cause, new__symbol(cause, "semantic_event")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "cairo_render"),              f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__cairo_render")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__terminal_print_with_frame")));}
   return this;
@@ -299,21 +274,18 @@ def_ceframe1(timeline, timeline,
 	     timeline_event_set);
 
 
-f2ptr raw__timeline__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
+f2ptr raw__timeline__new(f2ptr cause) {
   f2ptr timeline_event_set = f2__set__new(cause);
-  f2ptr this               = f2__semantic_knowledge_base__new(cause, name, semantic_realm);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),               new__symbol(cause, "timeline"));
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "timeline_event_set"), timeline_event_set);
-  return this;
+  return f2timeline__new(cause, timeline_event_set);
 }
 
-f2ptr f2__timeline__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
+f2ptr f2__timeline__new(f2ptr cause) {
   if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__timeline__new(cause, name, semantic_realm);
+  return raw__timeline__new(cause);
 }
-export_cefunk2(timeline__new, name, semantic_realm, 0, "Returns a new timeline object.");
+export_cefunk0(timeline__new, 0, "Returns a new timeline object.");
 
 
 f2ptr raw__timeline__add_timeline_event(f2ptr cause, f2ptr this, f2ptr timeline_event) {
@@ -326,7 +298,7 @@ f2ptr raw__timeline__add_timeline_event(f2ptr cause, f2ptr this, f2ptr timeline_
 															 new__symbol(cause, "timeline_event"), timeline_event))));
   }
   raw__set__add(cause, timeline_event_set, timeline_event);
-  return raw__semantic_knowledge_base__add_semantic_frame(cause, this, timeline_event);
+  return nil;
 }
 
 f2ptr f2__timeline__add_timeline_event(f2ptr cause, f2ptr this, f2ptr timeline_event) {
@@ -348,8 +320,8 @@ f2ptr raw__timeline__remove_timeline_event(f2ptr cause, f2ptr this, f2ptr timeli
 															 new__symbol(cause, "this"),           this,
 															 new__symbol(cause, "timeline_event"), timeline_event))));
   }
-  raw__set__add(cause, timeline_event_set, timeline_event);
-  return raw__semantic_knowledge_base__remove_semantic_frame(cause, this, timeline_event);
+  raw__set__remove(cause, timeline_event_set, timeline_event);
+  return nil;
 }
 
 f2ptr f2__timeline__remove_timeline_event(f2ptr cause, f2ptr this, f2ptr timeline_event) {
@@ -379,8 +351,7 @@ export_cefunk2(timeline__contains_timeline_event, this, timeline_event, 0, "Retu
 
 f2ptr raw__timeline__timeline_events(f2ptr cause, f2ptr this) {
   f2ptr timeline_event_set = raw__timeline__timeline_event_set(cause, this);
-  f2ptr timeline_events    = raw__set__elements(cause, timeline_event_set);
-  return timeline_events;
+  return raw__set__elements(cause, timeline_event_set);
 }
 
 f2ptr f2__timeline__timeline_events(f2ptr cause, f2ptr this) {
@@ -391,64 +362,6 @@ f2ptr f2__timeline__timeline_events(f2ptr cause, f2ptr this) {
 }
 export_cefunk1(timeline__timeline_events, this, 0, "Returns a new list of the timeline_events contained within this timeline.");
 
-
-f2ptr raw__timeline_event_extents__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr width, f2ptr height, f2ptr minimum_width, f2ptr minimum_height) {
-  return f2__frame__new(cause, f2list12__new(cause,
-					     new__symbol(cause, "x"),              x,
-					     new__symbol(cause, "y"),              y,
-					     new__symbol(cause, "width"),          width,
-					     new__symbol(cause, "height"),         height,
-					     new__symbol(cause, "minimum_width"),  minimum_width,
-					     new__symbol(cause, "minimum_height"), minimum_height));
-}
-
-f2ptr raw__timeline_event_extents__x(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"), nil);
-}
-
-f2ptr raw__timeline_event_extents__x__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "x"), value);
-}
-
-f2ptr raw__timeline_event_extents__y(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y"), nil);
-}
-
-f2ptr raw__timeline_event_extents__y__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "y"), value);
-}
-
-f2ptr raw__timeline_event_extents__width(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"), nil);
-}
-
-f2ptr raw__timeline_event_extents__width__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "width"), value);
-}
-
-f2ptr raw__timeline_event_extents__height(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "height"), nil);
-}
-
-f2ptr raw__timeline_event_extents__height__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "height"), value);
-}
-
-f2ptr raw__timeline_event_extents__minimum_width(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "minimum_width"), nil);
-}
-
-f2ptr raw__timeline_event_extents__minimum_width__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "minimum_width"), value);
-}
-
-f2ptr raw__timeline_event_extents__minimum_height(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "minimum_height"), nil);
-}
-
-f2ptr raw__timeline_event_extents__minimum_height__set(f2ptr cause, f2ptr this, f2ptr value) {
-  return f2__frame__add_var_value(cause, this, new__symbol(cause, "minimum_height"), value);
-}
 
 void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   raw__cairo_context__save(cause, cairo_context);
@@ -492,6 +405,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 	      f2ptr expand_event = raw__set__an_arbitrary_element(cause, expansion_event_set);
 	      raw__ptypehash__add(cause, connected_set_event_hash, expand_event, connected_set);
 	      raw__set__add(      cause, connected_set,            expand_event);
+	      /*
 	      {
 		f2ptr next_set = raw__semantic_temporal_object__next__lookup(cause, expand_event);
 		if (next_set != nil) {
@@ -532,6 +446,7 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 				 );
 		}
 	      }
+	      */
 	      raw__set__remove(cause, expansion_event_set, expand_event);
 	    }
 	  }
@@ -555,83 +470,6 @@ void raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
 													      f2double__new(cause, minimum_width__d),
 													      f2double__new(cause, minimum_height__d)));
 		       );
-	/*
-	// calculate width and height
-	{
-	  f2ptr expansion_set = connected_set;
-	  while (! raw__set__is_empty(cause, expansion_set)) {
-	    f2ptr next_expansion_set = f2__set__new(cause);
-	    set__iteration(cause, expansion_set, event,
-			   f2ptr     contains_set           = raw__semantic_temporal_object__contains__lookup(cause, event);
-			   boolean_t not_enough_information = boolean__false;
-			   double    width__d  = 0;
-			   double    height__d = 0;
-			   if (contains_set != nil) {
-			     double maximum_path_width = 0;
-			     {
-			       f2ptr search_forward_path_event_hash  = f2__ptypehash__new(cause);
-			       f2ptr search_backward_path_event_hash = f2__ptypehash__new(cause);
-			       set__iteration(cause, contains_set, contains_event,
-					      f2ptr search_forward_set = f2__set__new(cause);
-					      raw__set__add(cause, search_forward_set, contains_event);
-					      while (! raw__set__is_empty(cause, search_forward_set)) {
-						f2ptr search_forward_event = raw__set__an_arbitrary_element(cause, search_forward_set);
-						{
-						  f2ptr search_forward_event__extents = raw__ptypehash__lookup(cause, extents_event_hash, search_forward_event);
-						  f2ptr search_forward_event__width   = raw__timeline_event_extents__width( cause, search_forward_event__extents);
-						  if (search_forward_event__width  != nil) {
-						    double search_forward_event__width__d  = f2double__d(search_forward_event__width,  cause);
-						    path__width__d += search_forward_event__width__d;
-						    f2ptr next_set = raw__semantic_temporal_object__next__lookup(cause, contains_event);
-						    
-						  } else {
-						    not_enough_information = boolean__true;
-						    // could break iteration to run faster
-						  }
-						  
-						}
-						raw__set__remove(cause, search_forward_set, next_event);
-					      }
-					      );
-			     }
-			     set__iteration(cause, contains_set, contains_event,
-					    f2ptr contains_event__extents = raw__ptypehash__lookup(cause, extents_event_hash, contains_event);
-					    f2ptr contains_event__width   = raw__timeline_event_extents__width( cause, contains_event__extents);
-					    f2ptr contains_event__height  = raw__timeline_event_extents__height(cause, contains_event__extents);
-					    if ((contains_event__width  != nil) &&
-						(contains_event__height != nil)) {
-					      double contains_event__width__d  = f2double__d(contains_event__width,  cause);
-					      double contains_event__height__d = f2double__d(contains_event__height, cause);
-					      width__d  += contains_event__width__d;
-					      height__d += contains_event__height__d;
-					    } else {
-					      not_enough_information = boolean__true;
-					      // could break iteration to run faster
-					    }
-					    );
-			   }
-			   if (not_enough_information) {
-			     raw__set__add(cause, next_expansion_set, event);
-			   } else {
-			     f2ptr  extents           = raw__ptypehash__lookup(cause, extents_event_hash, event);
-			     f2ptr  minimum_width     = raw__timeline_event_extents__minimum_width( cause, extents);
-			     f2ptr  minimum_height    = raw__timeline_event_extents__minimum_height(cause, extents);
-			     double minimum_width__d  = f2double__d(minimum_width,  cause);
-			     double minimum_height__d = f2double__d(minimum_height, cause);
-			     if (width__d < minimum_width__d) {
-			       width__d = minimum_width__d;
-			     }
-			     if (height__d < minimum_height__d) {
-			       height__d = minimum_height__d;
-			     }
-			     f2ptr width  = f2double__new(cause, width__d);  raw__timeline_event_extents__width__set( cause, extents, width);
-			     f2ptr height = f2double__new(cause, height__d); raw__timeline_event_extents__height__set(cause, extents, height);
-			   }
-			   );
-	    expansion_set = next_expansion_set;
-	  }
-	}
-	*/
 	set__iteration(cause, connected_set, event,
 		       //f2ptr extents = raw__ptypehash__lookup(cause, extents_event_hash, event);
 		       raw__cairo_context__save(         cause, cairo_context);
@@ -684,7 +522,6 @@ export_cefunk2(timeline__terminal_print_with_frame, this, terminal_print_frame, 
 
 f2ptr f2__timeline_type__new_aux(f2ptr cause) {
   f2ptr this = f2__timeline_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2list1__new(cause, new__symbol(cause, "semantic_knowledge_base")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_timeline_event"),        f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline__add_timeline_event")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove_timeline_event"),     f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline__remove_timeline_event")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "contains_timeline_event"),   f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline__contains_timeline_event")));}
@@ -704,18 +541,6 @@ f2ptr f2__timeline__core_extension__ping(f2ptr cause) {
 export_cefunk0(timeline__core_extension__ping, 0, "");
 
 f2ptr f2__timeline__core_extension__initialize(f2ptr cause) {
-  {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__core_extension__ping")), nil);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
-  {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__core_extension__ping")), nil);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
   {
     f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "cairo"), new__symbol(cause, "cairo__core_extension__ping")), nil);
     if (raw__larva__is_type(cause, result)) {

@@ -603,7 +603,9 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 	    for (j__index = i__index + 1; j__index < event_count; j__index ++) {
 	      f2ptr j = event_array[j__index];
 	      f2ptr j__contains_set = raw__timeline_event__contains_set(cause, j);
-	      if (raw__set__contains(cause, j__contains_set, i)) {
+	      f2ptr j__next_set     = raw__timeline_event__next_set(    cause, j);
+	      if (raw__set__contains(cause, j__contains_set, i) ||
+		  raw__set__contains(cause, j__next_set,     i)) {
 		event_array[i__index] = j;
 		event_array[j__index] = i;
 		i__index --;

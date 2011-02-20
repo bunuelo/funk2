@@ -596,6 +596,22 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 			 );
 	}
 	{
+	  s64 i;
+	  for (i__index = 0; i__index < event_count; i__index ++) {
+	    f2ptr i = event_array[i__index];
+	    for (j__index = i__index + 1; j__index < event_count; j__index ++) {
+	      f2ptr j = event_array[j__index];
+	      f2ptr j__contains_set = raw__timeline_event__contains_set(cause, j);
+	      if (raw__set__contains(cause, j__contains_set, i)) {
+		event_array[i__index] = j;
+		event_array[j__index] = i;
+		i__index --;
+		break;
+	      }
+	    }
+	  }
+	}
+	{
 	  s64 index;
 	  for (index = 0; index < event_count; index ++) {
 	    f2ptr event = event_array[index];

@@ -54,9 +54,9 @@
 	  [have cairo_surface destroy]
 	  [let [[gtk_window [gtk-window-new]]
 		[gtk_image  [gtk-image-new_from_image image]]]
-	    [set window title 'timeline-test']
-	    [have window add gtk_image]
-	    [have window show_all]
+	    [set gtk_window title 'timeline-test']
+	    [have gtk_window add gtk_image]
+	    [have gtk_window show_all]
 	    nil]]]]]]
 
 [defunk timeline-retry []

@@ -263,7 +263,7 @@ export_cefunk2(semantic_temporal_object__absolute_time__lookup, this, temporal_o
 
 
 f2ptr raw__semantic_temporal_object__absolute_time__add(f2ptr cause, f2ptr this, f2ptr temporal_object) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_time"), that);
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_time"));
 }
 
 f2ptr f2__semantic_temporal_object__absolute_time__add(f2ptr cause, f2ptr this, f2ptr temporal_object) {

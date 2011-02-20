@@ -156,7 +156,7 @@ f2ptr raw__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr 
   f2ptr is_contained_by_set = f2__set__new(cause);
   f2ptr next_set            = f2__set__new(cause);
   f2ptr previous_set        = f2__set__new(cause);
-  return f2timeline_event__new(cause, name, start_time, end_time, contains_set, is_contained_by_set, next_set, previous_set);
+  return f2timeline_event__new(cause, name, start_time, end_time, contains_set, is_contained_by_set, next_set, previous_set, nil);
 }
 
 f2ptr f2__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time) {

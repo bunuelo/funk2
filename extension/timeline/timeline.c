@@ -581,21 +581,38 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
     double y_position         = 0;
     f2ptr  connected_set_iter = connected_sets;
     while (connected_set_iter != nil) {
-      f2ptr connected_set = f2cons__car(connected_set_iter, cause);
+      f2ptr  connected_set = f2cons__car(connected_set_iter, cause);
       {
-	set__iteration(cause, connected_set, event,
-		       //f2ptr extents = raw__ptypehash__lookup(cause, extents_event_hash, event);
-		       raw__cairo_context__save(         cause, cairo_context);
-		       raw__cairo_context__scale(        cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));
-		       raw__cairo_context__translate(    cause, cairo_context, 4, 4 + y_position);
-		       f2ptr result = raw__timeline_event__cairo_render(cause, event, cairo_context, this);
-		       if (raw__larva__is_type(cause, result)) {
-			 return result;
-		       }
-		       raw__cairo_context__restore(      cause, cairo_context);
-		       y_position += 2.0;
-		       );
-	y_position += 1.0;
+	s64    event_count   = f2integer__i(f2__set__key_count(cause, connected_set), cause);
+	f2ptr* event_array   = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * event_count));
+	{
+	  s64 index;
+	  set__iteration(cause, connected_set, event,
+			 if (index >= event_count) {
+			   return f2larva__new(cause, 222, nil);
+			 }
+			 event_array[index] = event;
+			 index ++;
+			 );
+	}
+	{
+	  s64 index;
+	  for (index = 0; index < event_count; index ++) {
+	    f2ptr event = event_array[index];
+	    //f2ptr extents = raw__ptypehash__lookup(cause, extents_event_hash, event);
+	    raw__cairo_context__save(cause, cairo_context);
+	    raw__cairo_context__scale(cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));
+	    raw__cairo_context__translate(cause, cairo_context, 4, 4 + y_position);
+	    f2ptr result = raw__timeline_event__cairo_render(cause, event, cairo_context, this);
+	    if (raw__larva__is_type(cause, result)) {
+	      return result;
+	    }
+	    raw__cairo_context__restore(cause, cairo_context);
+	    y_position += 2.0;
+	  }
+	  y_position += 1.0;
+	}
+	f2__free(to_ptr(event_array));
       }
       connected_set_iter = f2cons__cdr(connected_set_iter, cause);
     }

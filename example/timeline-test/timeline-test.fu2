@@ -20,12 +20,12 @@
 
 [defunk timeline-test []
   [let [[timeline         [new timeline]]
-	[timeline_event_a [new timeline_event `a [time] [time]]]
-	[timeline_event_b [new timeline_event `b [time] [time]]]
-	[timeline_event_c [new timeline_event `c [time] [time]]]
-	[timeline_event_d [new timeline_event `d [time] [time]]]
-	[timeline_event_e [new timeline_event `e [time] [time]]]
-	[timeline_event_f [new timeline_event `f [time] [time]]]]
+	[timeline_event_a [new timeline_event `timeline_event-a      [time] [time]]]
+	[timeline_event_b [new timeline_event `timeline_event-bb     [time] [time]]]
+	[timeline_event_c [new timeline_event `timeline_event-ccc    [time] [time]]]
+	[timeline_event_d [new timeline_event `timeline_event-dddd   [time] [time]]]
+	[timeline_event_e [new timeline_event `timeline_event-eeeee  [time] [time]]]
+	[timeline_event_f [new timeline_event `timeline_event-ffffff [time] [time]]]]
     
     [have timeline add_timeline_event timeline_event_a]
     [have timeline add_timeline_event timeline_event_b]

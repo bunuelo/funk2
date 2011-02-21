@@ -427,17 +427,19 @@ export_cefunk0(timeline_connected_part__new, 0, "");
 
 def_ceframe4(timeline, timeline,
 	     timeline_event_set,
+	     positions_have_been_calculated,
 	     minimum_time,
 	     maximum_time,
 	     connected_part_array);
 
 
 f2ptr raw__timeline__new(f2ptr cause) {
-  f2ptr timeline_event_set   = f2__set__new(cause);
-  f2ptr minimum_time         = nil;
-  f2ptr maximum_time         = nil;
-  f2ptr connected_part_array = nil;
-  return f2timeline__new(cause, timeline_event_set, minimum_time, maximum_time, connected_part_array);
+  f2ptr timeline_event_set             = f2__set__new(cause);
+  f2ptr positions_have_been_calculated = nil;
+  f2ptr minimum_time                   = nil;
+  f2ptr maximum_time                   = nil;
+  f2ptr connected_part_array           = nil;
+  return f2timeline__new(cause, timeline_event_set, positions_have_been_calculated, minimum_time, maximum_time, connected_part_array);
 }
 
 f2ptr f2__timeline__new(f2ptr cause) {
@@ -725,15 +727,19 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
       }
     }
   }
+  raw__timeline__positions_have_been_calculated__set(cause, this, f2bool__new(boolean__true));
   return nil;
 }
 
 
 f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   {
-    f2ptr result = raw__timeline__calculate_positions(cause, this);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
+    f2ptr positions_have_been_calculated = raw__timeline__positions_have_been_calculated(cause, this);
+    if (positions_have_been_calculated == nil) {
+      f2ptr result = raw__timeline__calculate_positions(cause, this);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
     }
   }
   

@@ -824,7 +824,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		    }
 		  }
 		  {
-		    f2ptr next_set = raw__timeline_event__next_set(cause, expand_event);
+		    f2ptr next_set = raw__timeline_event__next_set(cause, event);
 		    if (next_set != nil) {
 		      set__iteration(cause, next_set, next_event,
 				     double next_event__start_position;

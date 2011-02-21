@@ -18,21 +18,24 @@
  rights to redistribute these changes.'
 
 
-[defunk timeline-as-image [this pixel_height]
+[defunk timeline-as-image [this pixel_width pixel_height]
   [have this calculate_positions]
   [let [[x_width  [get this x_width]]
 	[y_height [get this y_height]]]
-    [let [[pixel_width [get [/ [* pixel_height x_width] y_height] as-integer]]]
-      [let* [[cairo_surface [new cairo_image_surface `ARGB32 pixel_width pixel_height]]
-	     [cairo_context [new cairo_context cairo_surface]]]
-	[have cairo_context scale [get pixel_width as-double] [get pixel_height as-double]]
-	[have cairo_context move_to 0.0 0.0]
-	[have this cairo_render cairo_context]
-	
-	[let [[image [get cairo_surface as-image]]]
-	  [have cairo_context destroy]
-	  [have cairo_surface destroy]
-	  image]]]]]
+    [if [null pixel_width]
+	[= pixel_width  [get [/ [* pixel_height x_width] y_height] as-integer]]]
+    [if [null pixel_height]
+	[= pixel_height [get [/ [* pixel_width y_height] x_width] as-integer]]]
+    [let* [[cairo_surface [new cairo_image_surface `ARGB32 pixel_width pixel_height]]
+	   [cairo_context [new cairo_context cairo_surface]]]
+      [have cairo_context scale [get pixel_width as-double] [get pixel_height as-double]]
+      [have cairo_context move_to 0.0 0.0]
+      [have this cairo_render cairo_context]
+      
+      [let [[image [get cairo_surface as-image]]]
+	[have cairo_context destroy]
+	[have cairo_surface destroy]
+	image]]]]
 
 
 [defunk image-display [this]
@@ -46,8 +49,8 @@
     [have gtk_window show_all]
     nil]]
 
-[defunk timeline-display [this width]
-  [image-display [timeline-as-image this width]]]
+[defunk timeline-display [this width height]
+  [image-display [timeline-as-image this width height]]]
 
 
 
@@ -80,7 +83,7 @@
       [have e add_next     f]
       [have e add_contains g]
       
-      [timeline-display timeline 512]
+      [timeline-display timeline 1024 1024]
       
       timeline]]]
 

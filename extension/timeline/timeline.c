@@ -809,7 +809,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 	for (connected_part_index = 0; connected_part_index < connected_part_count; connected_part_index ++) {
 	  f2ptr connected_part = raw__array__elt(cause, connected_part_array, connected_part_index);
 	  {
-	    double y_position  = f2double__d(raw__timeline_connceted_part__y_position(cause, connected_part), cause);
+	    double y_position  = f2double__d(raw__timeline_connected_part__y_position(cause, connected_part), cause);
 	    f2ptr  event_array = raw__timeline_connected_part__sorted_event_array(cause, connected_part);
 	    s64    event_count = raw__array__length(cause, event_array);
 	    {

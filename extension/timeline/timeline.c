@@ -404,7 +404,7 @@ f2ptr f2__timeline_event_type__new_aux(f2ptr cause) {
 
 // timeline_connected_part
 
-def_ceframe2(timeline, timeline_connected_part,
+def_ceframe3(timeline, timeline_connected_part,
 	     event_set,
 	     sorted_event_array,
 	     maximum_y_index);

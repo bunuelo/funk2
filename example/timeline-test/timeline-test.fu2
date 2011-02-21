@@ -58,12 +58,12 @@
 	[let [[subimage [timeline-as-image-given_width this pixel_width]]]
 	  [let [[image [new image pixel_width pixel_height nil]]]
 	    [have image clear 255 255 255 255]
-	    [have subimage copy_rectangle_to 0 0 image 0 [/ [- pixel_height [get subimage height]] 2] [- [get image width] 1] [- [get image height] 1]]
+	    [have subimage copy_rectangle_to 0 0 image 0 [/ [- pixel_height [get subimage height]] 2] [get subimage width] [get subimage height]]
 	    image]]
       [let [[subimage [timeline-as-image-given_height this pixel_height]]]
 	[let [[image [new image pixel_width pixel_height nil]]]
 	  [have image clear 255 255 255 255]
-	  [have subimage copy_rectangle_to 0 0 image [/ [- pixel_width [get subimage width]] 2] 0 [- [get image width] 1] [- [get image height] 1]]
+	  [have subimage copy_rectangle_to 0 0 image [/ [- pixel_width [get subimage width]] 2] 0 [get subimage width] [get subimage height]]
 	  image]]]]]
 
 

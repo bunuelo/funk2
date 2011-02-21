@@ -477,11 +477,11 @@ def_ceframe13(timeline, timeline,
 
 f2ptr raw__timeline__new(f2ptr cause) {
   f2ptr timeline_event_set             = f2__set__new(cause);
-  f2ptr left_border                    = f2double__new(cause, 4.0);
-  f2ptr right_border                   = f2double__new(cause, 4.0);
-  f2ptr top_border                     = f2double__new(cause, 4.0);
-  f2ptr bottom_border                  = f2double__new(cause, 4.0);
-  f2ptr x_width                        = f2double__new(cause, 64.0);
+  f2ptr left_border                    = f2double__new(cause, 2.0);
+  f2ptr right_border                   = f2double__new(cause, 2.0);
+  f2ptr top_border                     = f2double__new(cause, 2.0);
+  f2ptr bottom_border                  = f2double__new(cause, 2.0);
+  f2ptr x_width                        = f2double__new(cause, 128.0);
   f2ptr y_event_distance               = f2double__new(cause, 4.0);
   f2ptr arrow_head_size                = f2double__new(cause, 0.33);
   f2ptr positions_have_been_calculated = nil;
@@ -824,7 +824,6 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
   double timeline__left_border   = f2double__d(raw__timeline__left_border(  cause, this), cause);
   double timeline__right_border  = f2double__d(raw__timeline__right_border( cause, this), cause);
   double timeline__top_border    = f2double__d(raw__timeline__top_border(   cause, this), cause);
-  double timeline__bottom_border = f2double__d(raw__timeline__bottom_border(cause, this), cause);
   double timeline__x_width       = f2double__d(raw__timeline__x_width(      cause, this), cause);
   double timeline__y_height      = f2double__d(raw__timeline__y_height(     cause, this), cause);
   

@@ -36,8 +36,8 @@
 	[gtk_scrolled_window [gtk-scrolled_window-new]]
 	[gtk_image           [gtk-image-new_from_image this]]]
     [set gtk_window title 'image-display']
-    [have gtk_window          add gtk_scrolled_window]
-    [have gtk_scrolled_window add gtk_image]
+    [have gtk_window          add               gtk_scrolled_window]
+    [have gtk_scrolled_window add_with_viewport gtk_image]
     [have gtk_window show_all]
     nil]]
 

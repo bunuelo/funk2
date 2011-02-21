@@ -49,8 +49,9 @@
 	  [b        [new timeline_event 'b'                     [get time_array elt 1] [get time_array elt 2]]]
 	  [c        [new timeline_event 'c'                     [get time_array elt 3] [get time_array elt 5]]]
 	  [d        [new timeline_event 'd: another long event' [get time_array elt 1] [get time_array elt 8]]]
-	  [e        [new timeline_event 'e'                     [get time_array elt 5] [get time_array elt 6]]]
-	  [f        [new timeline_event 'f: subevent'           [get time_array elt 7] [get time_array elt 8]]]]
+	  [e        [new timeline_event 'e'                     [get time_array elt 3] [get time_array elt 6]]]
+	  [f        [new timeline_event 'f: subevent'           [get time_array elt 7] [get time_array elt 8]]]
+	  [g        [new timeline_event 'g'                     [get time_array elt 4] [get time_array elt 5]]]]
       
       [have timeline add_timeline_event a]
       [have timeline add_timeline_event b]
@@ -58,6 +59,7 @@
       [have timeline add_timeline_event d]
       [have timeline add_timeline_event e]
       [have timeline add_timeline_event f]
+      [have timeline add_timeline_event g]
       
       [have a add_contains b]
       [have a add_contains c]
@@ -65,6 +67,7 @@
       [have d add_contains e]
       [have d add_contains f]
       [have e add_next     f]
+      [have e add_contains g]
       
       [image-display [timeline-as-image timeline 1024 1024]]
       

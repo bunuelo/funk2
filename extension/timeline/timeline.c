@@ -757,7 +757,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 	    }
 	    raw__timeline_connected_part__maximum_y_index__set(cause, connected_part, f2integer__new(cause, connected_part_max_y));
 	    raw__timeline_connected_part__y_position__set(     cause, connected_part, f2double__new(cause, y_position));
-	    double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, this));
+	    double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, this), cause);
 	    y_position += ((connected_part_max_y + 1) * y_event_distance) + 2.0;
 	  }
 	}

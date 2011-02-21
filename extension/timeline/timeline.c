@@ -947,11 +947,14 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 					 }
 				       }
 				       {
-					 double x0 = (end_position + next_event__start_position) / 2.0;
-					 double y0 = (top_position + bottom_position + next_event__top_position + next_event__bottom_position) / 4.0;
-					 double dx = 4.0;
-					 double dy = 1.0;
-					 f2ptr result = raw__cairo_context__render_rounded_text_box(cause, cairo_context, x0, y0, dx, dy, 1.0, "next",
+					 double font_size  = 0.75;
+					 char*  label_str  = "next";
+					 double text_width = raw__cairo_context__text_width(cause, cairo_context, font_size, label_str);
+					 double width      = text_width + 0.5;
+					 double height     = 1.0;
+					 double x0         = ((end_position + next_event__start_position - width) / 2.0);
+					 double y0         = (((top_position + bottom_position + next_event__top_position + next_event__bottom_position) / 2.0) - height) / 2.0;
+					 f2ptr result = raw__cairo_context__render_rounded_text_box(cause, cairo_context, x0, y0, width, height, font_size, label_str,
 												    0.5,                 // maximum_corner_radius
 												    1.0, 1.0, 1.0, 1.0,  // background_rgba
 												    0.1,

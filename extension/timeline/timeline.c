@@ -625,7 +625,8 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
       }
     }
     {
-      f2ptr* connected_set_array = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * connected_set_count));
+      f2ptr* connected_set_array       = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * connected_set_count));
+      s64*   connected_set_max_y_array = (s64*)  from_ptr(f2__malloc(sizeof(s64)   * connected_set_count));
       {
 	s64   connected_set_index = 0;
 	f2ptr connected_set_iter  = connected_sets;
@@ -682,7 +683,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		raw__timeline_event__y_index__set(cause, event, f2integer__new(cause, index));
 	      }
 	    }
-	    {
+	    { // move events up if possible
 	      s64 index;
 	      for (index = 0; index < event_count; index ++) {
 		f2ptr event = event_array[index];
@@ -705,6 +706,18 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		}
 	      }
 	    }
+	    connected_set_max_y_array[connected_set_index] = 0;
+	    {
+	      s64 index;
+	      for (index = 0; index < event_count; index ++) {
+		f2ptr event      = event_array[index];
+		f2ptr y_index    = raw__timeline_event__y_index(cause, event);
+		s64   y_index__i = f2integer__i(y_index, cause);
+		if (y_index__i > connected_set_max_y_array[connected_set_index]) {
+		  connected_set_max_y_array[connected_set_index] = y_index__i;
+		}
+	      }
+	    }
 	    {
 	      s64 index;
 	      for (index = 0; index < event_count; index ++) {
@@ -719,13 +732,14 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		}
 		raw__cairo_context__restore(cause, cairo_context);
 	      }
-	      y_position += (event_count * 2.0) + 1.0;
+	      y_position += (connected_set_max_y_array[connected_set_index] * 2.0) + 1.0;
 	    }
 	    f2__free(to_ptr(event_array));
 	  }
 	}
       }
       f2__free(to_ptr(connected_set_array));
+      f2__free(to_ptr(connected_set_max_y_array));
     }
   }
   raw__cairo_context__restore(cause, cairo_context);

@@ -40,7 +40,7 @@
     nil]]
 
 [defunk timeline-display [this width height]
-  [image-display [timeline-as-image timeline width height]]]
+  [image-display [timeline-as-image this width height]]]
 
 
 

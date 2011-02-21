@@ -224,7 +224,7 @@ f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timelin
   if ((top_position != NULL) || (bottom_position != NULL)) {
     f2ptr  y_index          = raw__timeline_event__y_index(cause, this);
     s64    y_index__i       = f2integer__i(y_index, cause);
-    double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, timeline));
+    double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, timeline), cause);
     if (top_position != NULL) {
       *top_position = y_index__i * y_event_distance;
     }

@@ -194,7 +194,7 @@ f2ptr raw__timeline_event__cairo_action_name(f2ptr cause, f2ptr this) {
   return name_as_string;
 }
 
-f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, double* start_position, double* end_position, double* top_position, double* bottom_position) {
+f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timeline, double* start_position, double* end_position, double* top_position, double* bottom_position) {
   if ((start_position != NULL) || (end_position != NULL)) {
     f2ptr  minimum_time                            = raw__timeline__minimum_time(cause, timeline);
     f2ptr  minimum_time__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, minimum_time);
@@ -240,7 +240,7 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
   double top_position    = 0.0;
   double bottom_position = 0.0;
   {
-    f2ptr result = raw__timeline_event__render_extents(cause, this, &start_position, &end_position, &top_position, &bottom_position);
+    f2ptr result = raw__timeline_event__render_extents(cause, this, timeline, &start_position, &end_position, &top_position, &bottom_position);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

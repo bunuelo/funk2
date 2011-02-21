@@ -216,10 +216,7 @@ f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timelin
     }
     double timeline__left_border   = f2double__d(raw__timeline__left_border(  cause, timeline), cause);
     double timeline__right_border  = f2double__d(raw__timeline__right_border( cause, timeline), cause);
-    double timeline__top_border    = f2double__d(raw__timeline__top_border(   cause, timeline), cause);
-    double timeline__bottom_border = f2double__d(raw__timeline__bottom_border(cause, timeline), cause);
     double timeline__x_width       = f2double__d(raw__timeline__x_width(      cause, timeline), cause);
-    double timeline__y_height      = f2double__d(raw__timeline__y_height(     cause, timeline), cause);
     double content_width           = timeline__x_width - timeline__left_border - timeline__right_border;
     if (start_position != NULL) {
       *start_position                              = start_nanoseconds * content_width / total_nanoseconds;

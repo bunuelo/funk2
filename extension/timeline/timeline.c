@@ -616,90 +616,116 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
   }
   {
     double y_position         = 0;
-    f2ptr  connected_set_iter = connected_sets;
-    while (connected_set_iter != nil) {
-      f2ptr  connected_set = f2cons__car(connected_set_iter, cause);
+    s64 connected_set_count = 0;
+    {
+      f2ptr connected_set_iter = connected_sets;
+      while (connected_set_iter != nil) {
+	connected_set_count ++;
+	connected_set_iter = f2cons__cdr(connected_set_iter, cause);
+      }
+    }
+    {
+      f2ptr* connected_set_array = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * connected_set_count));
       {
-	s64    event_count   = f2integer__i(f2__set__key_count(cause, connected_set), cause);
-	f2ptr* event_array   = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * event_count));
-	{
-	  s64 index = 0;
-	  set__iteration(cause, connected_set, event,
-			 if (index >= event_count) {
-			   return f2larva__new(cause, 222, nil);
-			 }
-			 event_array[index] = event;
-			 index ++;
-			 );
-	}
-	{ // swap sort
-	  s64 i__index;
-	  for (i__index = 0; i__index < event_count; i__index ++) {
-	    f2ptr i = event_array[i__index];
-	    s64 j__index;
-	    for (j__index = i__index + 1; j__index < event_count; j__index ++) {
-	      f2ptr j = event_array[j__index];
-	      f2ptr j__contains_set = raw__timeline_event__contains_set(cause, j);
-	      f2ptr j__next_set     = raw__timeline_event__next_set(    cause, j);
-	      if (raw__set__contains(cause, j__contains_set, i) ||
-		  raw__set__contains(cause, j__next_set,     i)) {
-		event_array[i__index] = j;
-		event_array[j__index] = i;
-		i__index --;
-		break;
-	      }
-	    }
+	s64   connected_set_index = 0;
+	f2ptr connected_set_iter  = connected_sets;
+	while (connected_set_iter != nil) {
+	  f2ptr connected_set = f2cons__car(connected_set_iter, cause);
+	  if (connected_set_index >= connected_set_count) {
+	    return f2larva__new(cause, 2223, nil);
 	  }
+	  connected_set_array[connected_set_index] = connected_set;
+	  connected_set_index ++;
+	  connected_set_iter = f2cons__cdr(connected_set_iter, cause);
 	}
-	{
-	  s64 index;
-	  for (index = 0; index < event_count; index ++) {
-	    f2ptr event = event_array[index];
-	    raw__timeline_event__y_index__set(cause, event, f2integer__new(cause, index));
-	  }
-	}
-	{
-	  s64 index;
-	  for (index = 0; index < event_count; index ++) {
-	    f2ptr event = event_array[index];
+      }
+      {
+	s64 connected_set_index;
+	for (connected_set_index = 0; connected_set_index < connected_set_count; connected_set_index ++) {
+	  f2ptr  connected_set = connected_set_array[connected_set_index];
+	  {
+	    s64    event_count   = f2integer__i(f2__set__key_count(cause, connected_set), cause);
+	    f2ptr* event_array   = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * event_count));
 	    {
-	      s64 maximum_overlap_y_index = -1;
-	      {
-		s64 o_index;
-		for (o_index = index - 1; o_index >= 0; o_index --) {
-		  f2ptr o_event = event_array[o_index];
-		  if (raw__timeline_event__overlaps(cause, event, o_event)) {
-		    f2ptr o_y_index    = raw__timeline_event__y_index(cause, o_event);
-		    s64   o_y_index__i = f2integer__i(o_y_index, cause);
-		    if (o_y_index__i > maximum_overlap_y_index) {
-		      maximum_overlap_y_index = o_y_index__i;
-		    }
+	      s64 index = 0;
+	      set__iteration(cause, connected_set, event,
+			     if (index >= event_count) {
+			       return f2larva__new(cause, 222, nil);
+			     }
+			     event_array[index] = event;
+			     index ++;
+			     );
+	    }
+	    { // swap sort
+	      s64 i__index;
+	      for (i__index = 0; i__index < event_count; i__index ++) {
+		f2ptr i = event_array[i__index];
+		s64 j__index;
+		for (j__index = i__index + 1; j__index < event_count; j__index ++) {
+		  f2ptr j = event_array[j__index];
+		  f2ptr j__contains_set = raw__timeline_event__contains_set(cause, j);
+		  f2ptr j__next_set     = raw__timeline_event__next_set(    cause, j);
+		  if (raw__set__contains(cause, j__contains_set, i) ||
+		      raw__set__contains(cause, j__next_set,     i)) {
+		    event_array[i__index] = j;
+		    event_array[j__index] = i;
+		    i__index --;
+		    break;
 		  }
 		}
 	      }
-	      raw__timeline_event__y_index__set(cause, event, f2integer__new(cause, maximum_overlap_y_index + 1));
 	    }
+	    {
+	      s64 index;
+	      for (index = 0; index < event_count; index ++) {
+		f2ptr event = event_array[index];
+		raw__timeline_event__y_index__set(cause, event, f2integer__new(cause, index));
+	      }
+	    }
+	    {
+	      s64 index;
+	      for (index = 0; index < event_count; index ++) {
+		f2ptr event = event_array[index];
+		{
+		  s64 maximum_overlap_y_index = -1;
+		  {
+		    s64 o_index;
+		    for (o_index = index - 1; o_index >= 0; o_index --) {
+		      f2ptr o_event = event_array[o_index];
+		      if (raw__timeline_event__overlaps(cause, event, o_event)) {
+			f2ptr o_y_index    = raw__timeline_event__y_index(cause, o_event);
+			s64   o_y_index__i = f2integer__i(o_y_index, cause);
+			if (o_y_index__i > maximum_overlap_y_index) {
+			  maximum_overlap_y_index = o_y_index__i;
+			}
+		      }
+		    }
+		  }
+		  raw__timeline_event__y_index__set(cause, event, f2integer__new(cause, maximum_overlap_y_index + 1));
+		}
+	      }
+	    }
+	    {
+	      s64 index;
+	      for (index = 0; index < event_count; index ++) {
+		f2ptr event = event_array[index];
+		//f2ptr extents = raw__ptypehash__lookup(cause, extents_event_hash, event);
+		raw__cairo_context__save(cause, cairo_context);
+		raw__cairo_context__scale(cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));
+		raw__cairo_context__translate(cause, cairo_context, 4, 4 + y_position);
+		f2ptr result = raw__timeline_event__cairo_render(cause, event, cairo_context, this);
+		if (raw__larva__is_type(cause, result)) {
+		  return result;
+		}
+		raw__cairo_context__restore(cause, cairo_context);
+	      }
+	      y_position += (event_count * 2.0) + 1.0;
+	    }
+	    f2__free(to_ptr(event_array));
 	  }
 	}
-	{
-	  s64 index;
-	  for (index = 0; index < event_count; index ++) {
-	    f2ptr event = event_array[index];
-	    //f2ptr extents = raw__ptypehash__lookup(cause, extents_event_hash, event);
-	    raw__cairo_context__save(cause, cairo_context);
-	    raw__cairo_context__scale(cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));
-	    raw__cairo_context__translate(cause, cairo_context, 4, 4 + y_position);
-	    f2ptr result = raw__timeline_event__cairo_render(cause, event, cairo_context, this);
-	    if (raw__larva__is_type(cause, result)) {
-	      return result;
-	    }
-	    raw__cairo_context__restore(cause, cairo_context);
-	  }
-	  y_position += (event_count * 2.0) + 1.0;
-	}
-	f2__free(to_ptr(event_array));
       }
-      connected_set_iter = f2cons__cdr(connected_set_iter, cause);
+      f2__free(to_ptr(connected_set_array));
     }
   }
   raw__cairo_context__restore(cause, cairo_context);

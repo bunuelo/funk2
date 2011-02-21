@@ -22,6 +22,8 @@
   [have this calculate_positions]
   [let [[x_width  [get this x_width]]
 	[y_height [get this y_height]]]
+    [if [and [null pixel_width] [null pixel_height]]
+	[= pixel_height 512]]
     [if [null pixel_width]
 	[= pixel_width  [get [/ [* pixel_height x_width] y_height] as-integer]]]
     [if [null pixel_height]

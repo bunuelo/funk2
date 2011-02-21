@@ -729,7 +729,12 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 
 
 f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
-  raw__timeline__calculate_positions(cause, this);
+  {
+    f2ptr result = raw__timeline__calculate_positions(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   
   raw__cairo_context__save(cause, cairo_context);
   raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);

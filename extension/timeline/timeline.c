@@ -862,11 +862,11 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 					 raw__cairo_context__stroke(cause, cairo_context);
 					 
 					 raw__cairo_context__move_to(cause, cairo_context, x3, y3);
-					 raw__cairo_context__line_to(cause, cairo_context, x3 - 0.25, y3 - 0.25);
+					 raw__cairo_context__line_to(cause, cairo_context, x3 - 0.33, y3 - 0.33);
 					 raw__cairo_context__stroke(cause, cairo_context);
 					 
 					 raw__cairo_context__move_to(cause, cairo_context, x3, y3);
-					 raw__cairo_context__line_to(cause, cairo_context, x3 - 0.25, y3 + 0.25);
+					 raw__cairo_context__line_to(cause, cairo_context, x3 - 0.33, y3 + 0.33);
 					 raw__cairo_context__stroke(cause, cairo_context);
 				       }
 				       );

@@ -423,17 +423,19 @@ export_cefunk0(timeline_connected_part__new, 0, "");
 
 // timeline
 
-def_ceframe3(timeline, timeline,
+def_ceframe4(timeline, timeline,
 	     timeline_event_set,
 	     minimum_time,
-	     maximum_time);
+	     maximum_time,
+	     connected_part_array);
 
 
 f2ptr raw__timeline__new(f2ptr cause) {
-  f2ptr timeline_event_set = f2__set__new(cause);
-  f2ptr minimum_time       = nil;
-  f2ptr maximum_time       = nil;
-  return f2timeline__new(cause, timeline_event_set, minimum_time, maximum_time);
+  f2ptr timeline_event_set   = f2__set__new(cause);
+  f2ptr minimum_time         = nil;
+  f2ptr maximum_time         = nil;
+  f2ptr connected_part_array = nil;
+  return f2timeline__new(cause, timeline_event_set, minimum_time, maximum_time, connected_part_array);
 }
 
 f2ptr f2__timeline__new(f2ptr cause) {

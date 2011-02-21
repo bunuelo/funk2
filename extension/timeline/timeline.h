@@ -40,15 +40,19 @@ def_header_ceframe8(timeline_event,
 
 // timeline
 
-def_header_ceframe3(timeline, timeline_event_set, minimum_time, maximum_time);
+def_header_ceframe4(timeline,
+		    timeline_event_set,
+		    minimum_time,
+		    maximum_time,
+		    connected_part_array);
 
 
 
 // **
 
-f2ptr f2__timeline__core_extension__ping(f2ptr cause);
+f2ptr f2__timeline__core_extension__ping      (f2ptr cause);
 f2ptr f2__timeline__core_extension__initialize(f2ptr cause);
-f2ptr f2__timeline__core_extension__destroy(f2ptr cause);
+f2ptr f2__timeline__core_extension__destroy   (f2ptr cause);
 
 #endif // F2__EXTENSION__TIMELINE__H
 

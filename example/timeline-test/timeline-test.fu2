@@ -71,7 +71,7 @@
       
       [image-display [timeline-as-image timeline 1024 1024]]
       
-      nil]]]
+      timeline]]]
 
 
 [defunk timeline-retry []

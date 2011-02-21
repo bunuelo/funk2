@@ -472,7 +472,7 @@ f2ptr raw__timeline__new(f2ptr cause) {
   f2ptr minimum_time                   = nil;
   f2ptr maximum_time                   = nil;
   f2ptr connected_part_array           = nil;
-  return f2timeline__new(cause, timeline_event_set, positions_have_been_calculated, minimum_time, maximum_time, connected_part_array);
+  return f2timeline__new(cause, timeline_event_set, y_event_distance, positions_have_been_calculated, minimum_time, maximum_time, connected_part_array);
 }
 
 f2ptr f2__timeline__new(f2ptr cause) {

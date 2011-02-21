@@ -788,6 +788,9 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 	  }
 	}
       }
+      double bottom_border = f2double__d(raw__timeline__bottom_border(cause, this), cause);
+      double y_height      = y_position + bottom_border;
+      raw__timeline__y_height__set(cause, this, f2double__new(cause, y_height));
     }
   }
   raw__timeline__positions_have_been_calculated__set(cause, this, f2bool__new(boolean__true));
@@ -811,6 +814,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
   double timeline__top_border    = f2double__d(raw__timeline__top_border(   cause, this), cause);
   double timeline__bottom_border = f2double__d(raw__timeline__bottom_border(cause, this), cause);
   double timeline__x_width       = f2double__d(raw__timeline__x_width(      cause, this), cause);
+  double timeline__y_height      = f2double__d(raw__timeline__y_height(     cause, this), cause);
   
   {
     raw__cairo_context__save(cause, cairo_context);
@@ -822,7 +826,6 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
     raw__cairo_context__rel_line_to(cause, cairo_context, -1,  0);
     raw__cairo_context__rel_line_to(cause, cairo_context,  0, -1);
     raw__cairo_context__stroke(cause, cairo_context);
-    /*
     { // draw grid
       s64 y;
       for (y = 0; y < (((int)(timeline__y_height + 0.5)) - 1); y ++) {
@@ -833,7 +836,6 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 	}
       }
     }
-    */
     raw__cairo_context__move_to(cause, cairo_context, 0, 0);
     { // draw edge lines
       double arrow_head_size      = f2double__d(raw__timeline__arrow_head_size(cause, this), cause);

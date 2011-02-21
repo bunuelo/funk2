@@ -119,7 +119,8 @@
       [have e add_next     f]
       [have e add_contains g]
       
-      [timeline-display timeline 16]
+      [image-display [timeline-as-image this 16]]
+      [image-display [timeline-as-constrained_image this 256 256]]
       
       timeline]]]
 

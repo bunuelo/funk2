@@ -822,9 +822,9 @@ f2ptr f2__timeline__core_extension__initialize(f2ptr cause) {
       return result;
     }
   }
-  f2__add_type(cause, new__symbol(cause, "timeline_event"),               f2__timeline_event_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "timeline_connected_event_set"), f2__timeline_connected_event_set_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "timeline"),                     f2__timeline_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "timeline_event"),          f2__timeline_event_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "timeline_connected_part"), f2__timeline_connected_part_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "timeline"),                f2__timeline_type__new_aux(cause));
   status("timeline initialized.");
   return nil;
 }

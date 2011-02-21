@@ -225,7 +225,7 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
   
   raw__cairo_context__save(cause, cairo_context);
   {
-    double text_width  = raw__cairo_context__text_width(cause, cairo_context, 1, (char*)action_name__str);
+    //double text_width  = raw__cairo_context__text_width(cause, cairo_context, 1, (char*)action_name__str);
     //double event_width = (double)((int)(text_width + 1.5));
     f2ptr  result      = raw__cairo_context__render_rounded_text_box(cause, cairo_context,
 								     start_position, y_index__i * 2.0,          // x0, y0
@@ -402,11 +402,22 @@ f2ptr f2__timeline_event_type__new_aux(f2ptr cause) {
 
 
 
-// timeline_connected_set
+// timeline_connected_part
 
-def_ceframe2(timeline, timeline_connected_event_set,
+def_ceframe2(timeline, timeline_connected_part,
 	     event_set,
 	     maximum_y_index);
+
+f2ptr raw__timeline_connected_part__new(f2ptr cause) {
+  f2ptr event_set       = f2__set__new(cause);
+  f2ptr maximum_y_index = nil;
+  return f2timeline_connected_part__new(cause, event_set, maximum_y_index);
+}
+
+f2ptr f2__timeline_connected_part__new(f2ptr cause) {
+  return raw__timeline_connected_part__new(cause);
+}
+export_cefunk0(timeline_connected_part__new, 0, "");
 
 
 
@@ -532,7 +543,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
     f2ptr maximum_time = raw__timeline__maximum_time(cause, this);
     if ((minimum_time == nil) ||
 	(maximum_time == nil)) {
-      f2ptr timeline_event_set   = raw__timeline__timeline_event_set(cause, this);
+      f2ptr timeline_event_set = raw__timeline__timeline_event_set(cause, this);
       set__iteration(cause, timeline_event_set, event,
 		     f2ptr start_time = raw__timeline_event__start_time(cause, event);
 		     f2ptr end_time   = raw__timeline_event__end_time(  cause, event);
@@ -549,27 +560,28 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
     raw__timeline__minimum_time__set(cause, this, minimum_time);
     raw__timeline__maximum_time__set(cause, this, maximum_time);
   }
-  f2ptr connected_sets = nil;
+  f2ptr connected_parts = nil;
   // find connected sets of timeline_events
   {
-    f2ptr timeline_event_set   = raw__timeline__timeline_event_set(cause, this);
-    f2ptr connected_set_event_hash = f2__ptypehash__new(cause);
+    f2ptr timeline_event_set        = raw__timeline__timeline_event_set(cause, this);
+    f2ptr connected_part_event_hash = f2__ptypehash__new(cause);
     {
       f2ptr event_set_elements = raw__set__elements(cause, timeline_event_set);
       {
 	f2ptr iter = event_set_elements;
 	while (iter != nil) {
 	  f2ptr event = f2cons__car(iter, cause);
-	  f2ptr connected_set = raw__ptypehash__lookup(cause, connected_set_event_hash, event);
-	  if (connected_set == nil) {
-	    connected_set  = f2__set__new(cause);
-	    connected_sets = f2cons__new(cause, connected_set, connected_sets);
+	  f2ptr connected_part = raw__ptypehash__lookup(cause, connected_part_event_hash, event);
+	  if (connected_part == nil) {
+	    connected_part  = f2__timeline_connected_part__new(cause);
+	    connected_parts = f2cons__new(cause, connected_part, connected_parts);
+	    f2ptr connected_set = raw__timeline_connected_part__event_set(cause, connected_part);
 	    f2ptr expansion_event_set = f2__set__new(cause);
 	    raw__set__add(cause, expansion_event_set, event);
 	    while (! raw__set__is_empty(cause, expansion_event_set)) {
 	      f2ptr expand_event = raw__set__an_arbitrary_element(cause, expansion_event_set);
-	      raw__ptypehash__add(cause, connected_set_event_hash, expand_event, connected_set);
-	      raw__set__add(      cause, connected_set,            expand_event);
+	      raw__ptypehash__add(cause, connected_part_event_hash, expand_event, connected_part);
+	      raw__set__add(      cause, connected_set, expand_event);
 	      {
 		f2ptr next_set = raw__timeline_event__next_set(cause, expand_event);
 		if (next_set != nil) {
@@ -620,34 +632,35 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
   }
   {
     double y_position         = 0;
-    s64 connected_set_count = 0;
+    s64 connected_part_count = 0;
     {
-      f2ptr connected_set_iter = connected_sets;
-      while (connected_set_iter != nil) {
-	connected_set_count ++;
-	connected_set_iter = f2cons__cdr(connected_set_iter, cause);
+      f2ptr connected_part_iter = connected_parts;
+      while (connected_part_iter != nil) {
+	connected_part_count ++;
+	connected_part_iter = f2cons__cdr(connected_part_iter, cause);
       }
     }
     {
-      f2ptr* connected_set_array       = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * connected_set_count));
-      s64*   connected_set_max_y_array = (s64*)  from_ptr(f2__malloc(sizeof(s64)   * connected_set_count));
+      f2ptr* connected_part_array       = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * connected_part_count));
+      s64*   connected_part_max_y_array = (s64*)  from_ptr(f2__malloc(sizeof(s64)   * connected_part_count));
       {
-	s64   connected_set_index = 0;
-	f2ptr connected_set_iter  = connected_sets;
-	while (connected_set_iter != nil) {
-	  f2ptr connected_set = f2cons__car(connected_set_iter, cause);
-	  if (connected_set_index >= connected_set_count) {
+	s64   connected_part_index = 0;
+	f2ptr connected_part_iter  = connected_parts;
+	while (connected_part_iter != nil) {
+	  f2ptr connected_part = f2cons__car(connected_part_iter, cause);
+	  if (connected_part_index >= connected_part_count) {
 	    return f2larva__new(cause, 2223, nil);
 	  }
-	  connected_set_array[connected_set_index] = connected_set;
-	  connected_set_index ++;
-	  connected_set_iter = f2cons__cdr(connected_set_iter, cause);
+	  connected_part_array[connected_part_index] = connected_part;
+	  connected_part_index ++;
+	  connected_part_iter = f2cons__cdr(connected_part_iter, cause);
 	}
       }
       {
-	s64 connected_set_index;
-	for (connected_set_index = 0; connected_set_index < connected_set_count; connected_set_index ++) {
-	  f2ptr  connected_set = connected_set_array[connected_set_index];
+	s64 connected_part_index;
+	for (connected_part_index = 0; connected_part_index < connected_part_count; connected_part_index ++) {
+	  f2ptr connected_part = connected_part_array[connected_part_index];
+	  f2ptr connected_set  = raw__timeline_connected_part__event_set(cause, connected_part);
 	  {
 	    s64    event_count   = f2integer__i(f2__set__key_count(cause, connected_set), cause);
 	    f2ptr* event_array   = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * event_count));
@@ -710,15 +723,15 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		}
 	      }
 	    }
-	    connected_set_max_y_array[connected_set_index] = 0;
+	    connected_part_max_y_array[connected_part_index] = 0;
 	    {
 	      s64 index;
 	      for (index = 0; index < event_count; index ++) {
 		f2ptr event      = event_array[index];
 		f2ptr y_index    = raw__timeline_event__y_index(cause, event);
 		s64   y_index__i = f2integer__i(y_index, cause);
-		if (y_index__i > connected_set_max_y_array[connected_set_index]) {
-		  connected_set_max_y_array[connected_set_index] = y_index__i;
+		if (y_index__i > connected_part_max_y_array[connected_part_index]) {
+		  connected_part_max_y_array[connected_part_index] = y_index__i;
 		}
 	      }
 	    }
@@ -736,14 +749,14 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		}
 		raw__cairo_context__restore(cause, cairo_context);
 	      }
-	      y_position += ((connected_set_max_y_array[connected_set_index] + 1) * 2.0) + 1.0;
+	      y_position += ((connected_part_max_y_array[connected_part_index] + 1) * 2.0) + 1.0;
 	    }
 	    f2__free(to_ptr(event_array));
 	  }
 	}
       }
-      f2__free(to_ptr(connected_set_array));
-      f2__free(to_ptr(connected_set_max_y_array));
+      f2__free(to_ptr(connected_part_array));
+      f2__free(to_ptr(connected_part_max_y_array));
     }
   }
   raw__cairo_context__restore(cause, cairo_context);

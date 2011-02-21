@@ -55,10 +55,10 @@
   [let [[x_width  [get this x_width]]
 	[y_height [get this y_height]]]
     [if [> [/ x_width y_height] [/ pixel_width pixel_height]]
-	[let [[subimage [timeline-as-image-given_width pixel_width]]]
+	[let [[subimage [timeline-as-image-given_width this pixel_width]]]
 	  subimage
 	  ]
-      [let [[subimage [timeline-as-image-given_height pixel_height]]]
+      [let [[subimage [timeline-as-image-given_height this pixel_height]]]
 	subimage]]]]
 
 

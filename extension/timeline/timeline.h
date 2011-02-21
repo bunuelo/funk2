@@ -40,14 +40,20 @@ def_header_ceframe8(timeline_event,
 
 // timeline
 
-def_header_ceframe7(timeline,
-		    timeline_event_set,
-		    y_event_distance,
-		    arrow_head_size,
-		    positions_have_been_calculated,
-		    minimum_time,
-		    maximum_time,
-		    connected_part_array);
+def_header_ceframe13(timeline,
+		     timeline_event_set,
+		     left_border,
+		     right_border,
+		     top_border,
+		     bottom_border,
+		     x_width,
+		     y_event_distance,
+		     arrow_head_size,
+		     positions_have_been_calculated,
+		     minimum_time,
+		     maximum_time,
+		     connected_part_array,
+		     y_height);
 
 
 

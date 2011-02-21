@@ -732,7 +732,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		}
 		raw__cairo_context__restore(cause, cairo_context);
 	      }
-	      y_position += (connected_set_max_y_array[connected_set_index] * 2.0) + 1.0;
+	      y_position += ((connected_set_max_y_array[connected_set_index] + 1) * 2.0) + 1.0;
 	    }
 	    f2__free(to_ptr(event_array));
 	  }

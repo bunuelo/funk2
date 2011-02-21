@@ -18,11 +18,11 @@
  rights to redistribute these changes.'
 
 
-[defunk timeline-as-image [this pixel_width]
+[defunk timeline-as-image [this pixel_height]
   [have this calculate_positions]
   [let [[x_width  [get this x_width]]
 	[y_height [get this y_height]]]
-    [let [[pixel_height [get [/ [* pixel_width y_height] x_width] as-integer]]]
+    [let [[pixel_width [get [/ [* pixel_height x_height] y_width] as-integer]]]
       [let* [[cairo_surface [new cairo_image_surface `ARGB32 pixel_width pixel_height]]
 	     [cairo_context [new cairo_context cairo_surface]]]
 	[have cairo_context scale [get pixel_width as-double] [get pixel_height as-double]]

@@ -769,41 +769,9 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
       }
     }
     raw__cairo_context__move_to(cause, cairo_context, 0, 0);
-    { // draw edges
-      f2ptr  connected_part_array = raw__timeline__connected_part_array(cause, this);
-      s64    connected_part_count = raw__array__length(cause, connected_part_array);
-      double y_position           = 0;
-      {
-	s64 connected_part_index;
-	for (connected_part_index = 0; connected_part_index < connected_part_count; connected_part_index ++) {
-	  f2ptr connected_part = raw__array__elt(cause, connected_part_array, connected_part_index);
-	  {
-	    f2ptr event_array = raw__timeline_connected_part__sorted_event_array(cause, connected_part);
-	    s64   event_count = raw__array__length(cause, event_array);
-	    {
-	      s64 index;
-	      for (index = 0; index < event_count; index ++) {
-		f2ptr event = raw__array__elt(cause, event_array, index);
-		raw__cairo_context__save(cause, cairo_context);
-		raw__cairo_context__scale(cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));
-		raw__cairo_context__translate(cause, cairo_context, 4, 4 + y_position);
-		f2ptr result = raw__timeline_event__cairo_render(cause, event, cairo_context, this);
-		if (raw__larva__is_type(cause, result)) {
-		  return result;
-		}
-		raw__cairo_context__restore(cause, cairo_context);
-	      }
-	      f2ptr maximum_y_index    = raw__timeline_connected_part__maximum_y_index(cause, connected_part);
-	      s64   maximum_y_index__i = f2integer__i(maximum_y_index, cause);
-	      y_position += ((maximum_y_index__i + 1) * 2.0) + 1.0;
-	    }
-	  }
-	}
-      }
-    }
     { // draw events
-      f2ptr  connected_part_array = raw__timeline__connected_part_array(cause, this);
-      s64    connected_part_count = raw__array__length(cause, connected_part_array);
+      f2ptr connected_part_array = raw__timeline__connected_part_array(cause, this);
+      s64   connected_part_count = raw__array__length(cause, connected_part_array);
       {
 	s64 connected_part_index;
 	for (connected_part_index = 0; connected_part_index < connected_part_count; connected_part_index ++) {

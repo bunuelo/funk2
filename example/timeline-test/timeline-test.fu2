@@ -80,7 +80,7 @@
       [have e add_next     f]
       [have e add_contains g]
       
-      [timeline-display timeline 1024]
+      [timeline-display timeline 512]
       
       timeline]]]
 

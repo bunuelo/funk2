@@ -50,7 +50,7 @@
 	  [have cairo_surface destroy]
 	  image]]]]]
 
-[defunk timeline-as-image [this pixel_width pixel_height]
+[defunk timeline-as-constrained_image [this pixel_width pixel_height]
   [have this calculate_positions]
   [let [[x_width  [get this x_width]]
 	[y_height [get this y_height]]]
@@ -66,6 +66,13 @@
 	  [have subimage copy_rectangle_to 0 0 image [/ [- pixel_width [get subimage width]] 2] 0 [get subimage width] [get subimage height]]
 	  image]]]]]
 
+
+[defunk timeline-as-image [this scale]
+  [have this calculate_positions]
+  [let [[x_width  [get this x_width]]
+	[y_height [get this y_height]]]
+    [let [[pixel_width [get [* x_width scale] as-integer]]]
+      [timeline-as-image-given_width pixel_width]]]]
 
 [defunk image-display [this]
   [let [[gtk_window          [gtk-window-new]]
@@ -112,7 +119,7 @@
       [have e add_next     f]
       [have e add_contains g]
       
-      [timeline-display timeline 2048 1024]
+      [timeline-display timeline 100]
       
       timeline]]]
 

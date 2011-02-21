@@ -832,7 +832,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
       for (y = 0; y < (((int)(timeline__y_height + 0.5)) - 1); y ++) {
 	s64 x;
 	for (x = 0; x < (((int)(timeline__x_width + 0.5)) - 1); x ++) {
-	  raw__cairo_context__arc(cause, cairo_context, x + 1.0, y + 1.0, 0.1, 0, 2 * cairo_pi);
+	  raw__cairo_context__arc(cause, cairo_context, x + 1.0, y + 1.0, 0.05, 0, 2 * cairo_pi);
 	  raw__cairo_context__fill(cause, cairo_context);
 	}
       }

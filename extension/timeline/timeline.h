@@ -40,8 +40,9 @@ def_header_ceframe8(timeline_event,
 
 // timeline
 
-def_header_ceframe5(timeline,
+def_header_ceframe6(timeline,
 		    timeline_event_set,
+		    y_event_distance,
 		    positions_have_been_calculated,
 		    minimum_time,
 		    maximum_time,

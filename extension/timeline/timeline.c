@@ -222,13 +222,14 @@ f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timelin
     }
   }
   if ((top_position != NULL) || (bottom_position != NULL)) {
-    f2ptr y_index    = raw__timeline_event__y_index(cause, this);
-    s64   y_index__i = f2integer__i(y_index, cause);
+    f2ptr  y_index          = raw__timeline_event__y_index(cause, this);
+    s64    y_index__i       = f2integer__i(y_index, cause);
+    double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, timeline));
     if (top_position != NULL) {
-      *top_position = y_index__i * 3.0;
+      *top_position = y_index__i * y_event_distance;
     }
     if (bottom_position != NULL) {
-      *bottom_position = (y_index__i * 3.0) + 1.5;
+      *bottom_position = (y_index__i * y_event_distance) + 1.5;
     }
   }
   return nil;
@@ -455,8 +456,9 @@ export_cefunk0(timeline_connected_part__new, 0, "");
 
 // timeline
 
-def_ceframe5(timeline, timeline,
+def_ceframe6(timeline, timeline,
 	     timeline_event_set,
+	     y_event_distance,
 	     positions_have_been_calculated,
 	     minimum_time,
 	     maximum_time,
@@ -465,6 +467,7 @@ def_ceframe5(timeline, timeline,
 
 f2ptr raw__timeline__new(f2ptr cause) {
   f2ptr timeline_event_set             = f2__set__new(cause);
+  f2ptr y_event_distance               = f2double__new(cause, 4.0);
   f2ptr positions_have_been_calculated = nil;
   f2ptr minimum_time                   = nil;
   f2ptr maximum_time                   = nil;
@@ -754,7 +757,8 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 	    }
 	    raw__timeline_connected_part__maximum_y_index__set(cause, connected_part, f2integer__new(cause, connected_part_max_y));
 	    raw__timeline_connected_part__y_position__set(     cause, connected_part, f2double__new(cause, y_position));
-	    y_position += ((connected_part_max_y + 1) * 3.0) + 2.0;
+	    double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, this));
+	    y_position += ((connected_part_max_y + 1) * y_event_distance) + 2.0;
 	  }
 	}
       }

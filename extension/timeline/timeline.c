@@ -456,25 +456,49 @@ export_cefunk0(timeline_connected_part__new, 0, "");
 
 // timeline
 
-def_ceframe7(timeline, timeline,
-	     timeline_event_set,
-	     y_event_distance,
-	     arrow_head_size,
-	     positions_have_been_calculated,
-	     minimum_time,
-	     maximum_time,
-	     connected_part_array);
-
+def_ceframe13(timeline, timeline,
+	      timeline_event_set,
+	      left_border,
+	      right_border,
+	      top_border,
+	      bottom_border,
+	      x_width,
+	      y_event_distance,
+	      arrow_head_size,
+	      positions_have_been_calculated,
+	      minimum_time,
+	      maximum_time,
+	      connected_part_array,
+	      y_height);
 
 f2ptr raw__timeline__new(f2ptr cause) {
   f2ptr timeline_event_set             = f2__set__new(cause);
+  f2ptr left_border                    = f2double__new(cause, 4.0);
+  f2ptr right_border                   = f2double__new(cause, 4.0);
+  f2ptr top_border                     = f2double__new(cause, 4.0);
+  f2ptr bottom_border                  = f2double__new(cause, 4.0);
+  f2ptr x_width                        = f2double__new(cause, 64.0);
   f2ptr y_event_distance               = f2double__new(cause, 4.0);
   f2ptr arrow_head_size                = f2double__new(cause, 0.33);
   f2ptr positions_have_been_calculated = nil;
   f2ptr minimum_time                   = nil;
   f2ptr maximum_time                   = nil;
   f2ptr connected_part_array           = nil;
-  return f2timeline__new(cause, timeline_event_set, y_event_distance, arrow_head_size, positions_have_been_calculated, minimum_time, maximum_time, connected_part_array);
+  f2ptr y_height                       = nil;
+  return f2timeline__new(cause,
+			 timeline_event_set,
+			 left_border,
+			 right_border,
+			 top_border,
+			 bottom_border,
+			 x_width,
+			 y_event_distance,
+			 arrow_head_size,
+			 positions_have_been_calculated,
+			 minimum_time,
+			 maximum_time,
+			 connected_part_array,
+			 maximum_y);
 }
 
 f2ptr f2__timeline__new(f2ptr cause) {

@@ -806,22 +806,28 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
     }
   }
   
+  double timeline__left_border   = f2double__d(raw__timeline__left_border(  cause, this), cause);
+  double timeline__right_border  = f2double__d(raw__timeline__right_border( cause, this), cause);
+  double timeline__top_border    = f2double__d(raw__timeline__top_border(   cause, this), cause);
+  double timeline__bottom_border = f2double__d(raw__timeline__bottom_border(cause, this), cause);
+  double timeline__x_width       = f2double__d(raw__timeline__x_width(      cause, this), cause);
+  
   {
     raw__cairo_context__save(cause, cairo_context);
     raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
-    raw__cairo_context__set_line_width(cause, cairo_context, 0.001);
+    raw__cairo_context__set_line_width(cause, cairo_context, timeline__x_width * 0.001 / 64.0);
     // box
     raw__cairo_context__rel_line_to(cause, cairo_context,  1,  0);
     raw__cairo_context__rel_line_to(cause, cairo_context,  0,  1);
     raw__cairo_context__rel_line_to(cause, cairo_context, -1,  0);
     raw__cairo_context__rel_line_to(cause, cairo_context,  0, -1);
     raw__cairo_context__stroke(cause, cairo_context);
-    {
+    { // draw grid
       s64 y;
-      for (y = 0; y < (64 - 1); y ++) {
+      for (y = 0; y < (((int)(timeline__x_height + 0.5)) - 1); y ++) {
 	s64 x;
-	for (x = 0; x < (64 - 1); x ++) {
-	  raw__cairo_context__arc(cause, cairo_context, (x + 1.0) / 64.0, (y + 1.0) / 64.0, 0.001, 0, 2 * cairo_pi);
+	for (x = 0; x < (((int)(timeline__x_width + 0.5)) - 1); x ++) {
+	  raw__cairo_context__arc(cause, cairo_context, (x + 1.0) / timeline__x_width, (y + 1.0) / timeline__y_width, timeline__x_width * 0.001 / 64.0, 0, 2 * cairo_pi);
 	  raw__cairo_context__fill(cause, cairo_context);
 	}
       }

@@ -72,7 +72,7 @@
   [let [[x_width  [get this x_width]]
 	[y_height [get this y_height]]]
     [let [[pixel_width [get [* x_width scale] as-integer]]]
-      [timeline-as-image-given_width pixel_width]]]]
+      [timeline-as-image-given_width this pixel_width]]]]
 
 [defunk image-display [this]
   [let [[gtk_window          [gtk-window-new]]

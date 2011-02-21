@@ -643,8 +643,8 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
       }
     }
     {
-      f2ptr* connected_part_array       = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * connected_part_count));
-      s64*   connected_part_max_y_array = (s64*)  from_ptr(f2__malloc(sizeof(s64)   * connected_part_count));
+      f2ptr connected_part_array = raw__array__new(cause, connected_part_count);
+      raw__timeline__connected_part_array__set(cause, this, connected_part_array);
       {
 	s64   connected_part_index = 0;
 	f2ptr connected_part_iter  = connected_parts;
@@ -653,7 +653,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 	  if (connected_part_index >= connected_part_count) {
 	    return f2larva__new(cause, 2223, nil);
 	  }
-	  connected_part_array[connected_part_index] = connected_part;
+	  raw__array__elt__set(cause, connected_part_array, connected_part_index, connected_part);
 	  connected_part_index ++;
 	  connected_part_iter = f2cons__cdr(connected_part_iter, cause);
 	}
@@ -661,7 +661,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
       {
 	s64 connected_part_index;
 	for (connected_part_index = 0; connected_part_index < connected_part_count; connected_part_index ++) {
-	  f2ptr connected_part = connected_part_array[connected_part_index];
+	  f2ptr connected_part = raw__array__elt(cause, connected_part_array, connected_part_index);
 	  f2ptr connected_set  = raw__timeline_connected_part__event_set(cause, connected_part);
 	  {
 	    s64    event_count   = f2integer__i(f2__set__key_count(cause, connected_set), cause);
@@ -725,18 +725,19 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		}
 	      }
 	    }
-	    connected_part_max_y_array[connected_part_index] = 0;
+	    s64 connected_part_max_y = 0;
 	    {
 	      s64 index;
 	      for (index = 0; index < event_count; index ++) {
 		f2ptr event      = event_array[index];
 		f2ptr y_index    = raw__timeline_event__y_index(cause, event);
 		s64   y_index__i = f2integer__i(y_index, cause);
-		if (y_index__i > connected_part_max_y_array[connected_part_index]) {
-		  connected_part_max_y_array[connected_part_index] = y_index__i;
+		if (y_index__i > connected_part_max_y) {
+		  connected_part_max_y = y_index__i;
 		}
 	      }
 	    }
+	    raw__timeline_connected_part__maximum_y_index__set(cause, connected_part, f2integer__new(cause, connected_part_max_y));
 	    {
 	      s64 index;
 	      for (index = 0; index < event_count; index ++) {
@@ -751,14 +752,14 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		}
 		raw__cairo_context__restore(cause, cairo_context);
 	      }
-	      y_position += ((connected_part_max_y_array[connected_part_index] + 1) * 2.0) + 1.0;
+	      f2ptr maximum_y_index    = raw__timeline_connected_part__maximum_y_index(cause, connected_part);
+	      s64   maximum_y_index__i = f2integer__i(maximum_y_index, cause);
+	      y_position += ((maximum_y_index__i + 1) * 2.0) + 1.0;
 	    }
 	    f2__free(to_ptr(event_array));
 	  }
 	}
       }
-      f2__free(to_ptr(connected_part_array));
-      f2__free(to_ptr(connected_part_max_y_array));
     }
   }
   raw__cairo_context__restore(cause, cairo_context);

@@ -643,6 +643,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 	  connected_part_iter = f2cons__cdr(connected_part_iter, cause);
 	}
       }
+      double y_position = 0;
       {
 	s64 connected_part_index;
 	for (connected_part_index = 0; connected_part_index < connected_part_count; connected_part_index ++) {
@@ -724,6 +725,8 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 	      }
 	    }
 	    raw__timeline_connected_part__maximum_y_index__set(cause, connected_part, f2integer__new(cause, connected_part_max_y));
+	    raw__timeline_connected_part__y_position__set(     cause, connected_part, f2double__new(cause, y_position));
+	    y_position += ((connected_part_max_y + 1) * 2.0) + 1.0;
 	  }
 	}
       }
@@ -801,14 +804,14 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
     { // draw events
       f2ptr  connected_part_array = raw__timeline__connected_part_array(cause, this);
       s64    connected_part_count = raw__array__length(cause, connected_part_array);
-      double y_position           = 0;
       {
 	s64 connected_part_index;
 	for (connected_part_index = 0; connected_part_index < connected_part_count; connected_part_index ++) {
 	  f2ptr connected_part = raw__array__elt(cause, connected_part_array, connected_part_index);
 	  {
-	    f2ptr event_array = raw__timeline_connected_part__sorted_event_array(cause, connected_part);
-	    s64   event_count = raw__array__length(cause, event_array);
+	    double y_position  = f2double__d(raw__timeline_connceted_part__y_position(cause, connected_part), cause);
+	    f2ptr  event_array = raw__timeline_connected_part__sorted_event_array(cause, connected_part);
+	    s64    event_count = raw__array__length(cause, event_array);
 	    {
 	      s64 index;
 	      for (index = 0; index < event_count; index ++) {
@@ -822,9 +825,6 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		}
 		raw__cairo_context__restore(cause, cairo_context);
 	      }
-	      f2ptr maximum_y_index    = raw__timeline_connected_part__maximum_y_index(cause, connected_part);
-	      s64   maximum_y_index__i = f2integer__i(maximum_y_index, cause);
-	      y_position += ((maximum_y_index__i + 1) * 2.0) + 1.0;
 	    }
 	  }
 	}

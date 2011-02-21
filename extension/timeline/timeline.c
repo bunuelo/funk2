@@ -725,6 +725,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
       }
     }
   }
+  return nil;
 }
 
 

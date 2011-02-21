@@ -38,7 +38,7 @@
     [set gtk_window title 'image-display']
     [have gtk_window          add               gtk_scrolled_window]
     [have gtk_scrolled_window add_with_viewport gtk_image]
-    [set  gtk_image size [get this width] [get this height]]
+    [set  gtk_window size [+ [get this width] 64] [+ [get this height] 64]]
     [have gtk_window show_all]
     nil]]
 

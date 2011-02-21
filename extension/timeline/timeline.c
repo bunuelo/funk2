@@ -425,7 +425,7 @@ export_cefunk0(timeline_connected_part__new, 0, "");
 
 // timeline
 
-def_ceframe4(timeline, timeline,
+def_ceframe5(timeline, timeline,
 	     timeline_event_set,
 	     positions_have_been_calculated,
 	     minimum_time,

@@ -521,27 +521,7 @@ f2ptr f2__timeline__timeline_events(f2ptr cause, f2ptr this) {
 export_cefunk1(timeline__timeline_events, this, 0, "Returns a new list of the timeline_events contained within this timeline.");
 
 
-f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
-  raw__cairo_context__save(cause, cairo_context);
-  raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
-  raw__cairo_context__set_line_width(cause, cairo_context, 0.001);
-  // box
-  raw__cairo_context__rel_line_to(cause, cairo_context,  1,  0);
-  raw__cairo_context__rel_line_to(cause, cairo_context,  0,  1);
-  raw__cairo_context__rel_line_to(cause, cairo_context, -1,  0);
-  raw__cairo_context__rel_line_to(cause, cairo_context,  0, -1);
-  raw__cairo_context__stroke(cause, cairo_context);
-  {
-    s64 y;
-    for (y = 0; y < (64 - 1); y ++) {
-      s64 x;
-      for (x = 0; x < (64 - 1); x ++) {
-	raw__cairo_context__arc(cause, cairo_context, (x + 1.0) / 64.0, (y + 1.0) / 64.0, 0.001, 0, 2 * cairo_pi);
-	raw__cairo_context__fill(cause, cairo_context);
-      }
-    }
-  }
-  raw__cairo_context__move_to(cause, cairo_context, 0, 0);
+f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
   {
     f2ptr minimum_time = raw__timeline__minimum_time(cause, this);
     f2ptr maximum_time = raw__timeline__maximum_time(cause, this);
@@ -745,6 +725,32 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
       }
     }
   }
+}
+
+
+f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+  raw__timeline__calculate_positions(cause, this);
+  
+  raw__cairo_context__save(cause, cairo_context);
+  raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
+  raw__cairo_context__set_line_width(cause, cairo_context, 0.001);
+  // box
+  raw__cairo_context__rel_line_to(cause, cairo_context,  1,  0);
+  raw__cairo_context__rel_line_to(cause, cairo_context,  0,  1);
+  raw__cairo_context__rel_line_to(cause, cairo_context, -1,  0);
+  raw__cairo_context__rel_line_to(cause, cairo_context,  0, -1);
+  raw__cairo_context__stroke(cause, cairo_context);
+  {
+    s64 y;
+    for (y = 0; y < (64 - 1); y ++) {
+      s64 x;
+      for (x = 0; x < (64 - 1); x ++) {
+	raw__cairo_context__arc(cause, cairo_context, (x + 1.0) / 64.0, (y + 1.0) / 64.0, 0.001, 0, 2 * cairo_pi);
+	raw__cairo_context__fill(cause, cairo_context);
+      }
+    }
+  }
+  raw__cairo_context__move_to(cause, cairo_context, 0, 0);
   {
     f2ptr  connected_part_array = raw__timeline__connected_part_array(cause, this);
     s64    connected_part_count = raw__array__length(cause, connected_part_array);
@@ -753,7 +759,6 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
       s64 connected_part_index;
       for (connected_part_index = 0; connected_part_index < connected_part_count; connected_part_index ++) {
 	f2ptr connected_part = raw__array__elt(cause, connected_part_array, connected_part_index);
-	f2ptr connected_set  = raw__timeline_connected_part__event_set(cause, connected_part);
 	{
 	  f2ptr event_array = raw__timeline_connected_part__sorted_event_array(cause, connected_part);
 	  s64   event_count = raw__array__length(cause, event_array);

@@ -39,6 +39,10 @@
     [have gtk_window show_all]
     nil]]
 
+[defunk timeline-display [this width height]
+  [image-display [timeline-as-image timeline width height]]]
+
+
 
 [defunk timeline-test []
   [let [[time_array [new array 10]]]
@@ -69,7 +73,7 @@
       [have e add_next     f]
       [have e add_contains g]
       
-      [image-display [timeline-as-image timeline 1024 1024]]
+      [timeline-display timeline 1024 1024]
       
       timeline]]]
 

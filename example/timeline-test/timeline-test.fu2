@@ -56,10 +56,15 @@
 	[y_height [get this y_height]]]
     [if [> [/ x_width y_height] [/ pixel_width pixel_height]]
 	[let [[subimage [timeline-as-image-given_width this pixel_width]]]
-	  subimage
-	  ]
+	  [let [[image [new image pixel_width pixel_height nil]]]
+	    [have image clear 255 255 255 255]
+	    [have subimage copy_rectangle_to 0 0 image 0 [/ [- pixel_height [get subimage height]] 2] [get image width] [get image height]]
+	    image]]
       [let [[subimage [timeline-as-image-given_height this pixel_height]]]
-	subimage]]]]
+	  [let [[image [new image pixel_width pixel_height nil]]]
+	    [have image clear 255 255 255 255]
+	    [have subimage copy_rectangle_to 0 0 image [/ [- pixel_width [get subimage width]] 2] 0 [get image width] [get image height]]
+	    image]]]]]
 
 
 [defunk image-display [this]

@@ -844,8 +844,16 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 				       
 				       raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
 				       raw__cairo_context__set_line_width( cause, cairo_context, 0.001);
-				       raw__cairo_context__move_to(        cause, cairo_context, end_position,               (top_position + bottom_position) / 2.0);
-				       raw__cairo_context__line_to(        cause, cairo_context, next_event__start_position, (next_event__top_position + next_event__bottom_position) / 2.0);
+				       double x0 = end_position;
+				       double y0 = (top_position + bottom_position) / 2.0;
+				       double x1 = (end_position + next_event__start_position) / 2.0;
+				       double y1 = y0;
+				       double x2 = x1;
+				       double y2 = (next_event__top_position + next_event__bottom_position) / 2.0;
+				       double x3 = next_event__start_position;
+				       double y3 = y2;
+				       raw__cairo_context__move_to( cause, cairo_context, x0, y0);
+				       raw__cairo_context__curve_to(cause, cairo_context, x1, y1, x2, y2, x3, y3);
 				       
 				       raw__cairo_context__restore(cause, cairo_context);
 				     }

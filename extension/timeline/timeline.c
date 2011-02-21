@@ -843,7 +843,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 				       raw__cairo_context__translate(cause, cairo_context, 4, 4 + y_position);
 				       
 				       raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
-				       raw__cairo_context__set_line_width( cause, cairo_context, 0.001);
+				       raw__cairo_context__set_line_width( cause, cairo_context, 0.0005);
 				       double x0 = end_position;
 				       double y0 = (top_position + bottom_position) / 2.0;
 				       double x1 = (end_position + next_event__start_position) / 2.0;

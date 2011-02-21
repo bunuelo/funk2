@@ -53,7 +53,7 @@
       [set time_array elt i [time]]]
     [let [[timeline [new timeline]]
 	  [a        [new timeline_event 'a: long event'         [get time_array elt 0] [get time_array elt 9]]]
-	  [b        [new timeline_event 'b'                     [get time_array elt 1] [get time_array elt 5]]]
+	  [b        [new timeline_event 'b'                     [get time_array elt 1] [get time_array elt 2]]]
 	  [c        [new timeline_event 'c'                     [get time_array elt 3] [get time_array elt 5]]]
 	  [d        [new timeline_event 'd: another long event' [get time_array elt 1] [get time_array elt 8]]]
 	  [e        [new timeline_event 'e'                     [get time_array elt 2] [get time_array elt 6]]]

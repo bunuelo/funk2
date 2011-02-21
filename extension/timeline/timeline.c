@@ -214,11 +214,18 @@ f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timelin
     if (total_nanoseconds == 0) {
       return f2larva__new(cause, 4444, nil);
     }
+    double timeline__left_border   = f2double__d(raw__timeline__left_border(  cause, timeline), cause);
+    double timeline__right_border  = f2double__d(raw__timeline__right_border( cause, timeline), cause);
+    double timeline__top_border    = f2double__d(raw__timeline__top_border(   cause, timeline), cause);
+    double timeline__bottom_border = f2double__d(raw__timeline__bottom_border(cause, timeline), cause);
+    double timeline__x_width       = f2double__d(raw__timeline__x_width(      cause, timeline), cause);
+    double timeline__y_height      = f2double__d(raw__timeline__y_height(     cause, timeline), cause);
+    double content_width           = timeline__x_width - timeline__left_border - timeline__right_border;
     if (start_position != NULL) {
-      *start_position                              = ((double)(start_nanoseconds * 56000ull / total_nanoseconds)) / 1000.0;
+      *start_position                              = start_nanoseconds * content_width / total_nanoseconds;
     }
     if (end_position != NULL) {
-      *end_position                                = ((double)(end_nanoseconds   * 56000ull / total_nanoseconds)) / 1000.0;
+      *end_position                                = end_nanoseconds   * content_width / total_nanoseconds;
     }
   }
   if ((top_position != NULL) || (bottom_position != NULL)) {
@@ -857,7 +864,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 	  {
 	    double y_position  = f2double__d(raw__timeline_connected_part__y_position(cause, connected_part), cause);
 	    raw__cairo_context__save(cause, cairo_context);
-	    raw__cairo_context__translate(cause, cairo_context, 4, 4 + y_position);
+	    raw__cairo_context__translate(cause, cairo_context, timeline__left_border, timeline__top_border + y_position);
 	    {
 	      f2ptr event_array = raw__timeline_connected_part__sorted_event_array(cause, connected_part);
 	      s64   event_count = raw__array__length(cause, event_array);
@@ -977,7 +984,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 	  {
 	    double y_position  = f2double__d(raw__timeline_connected_part__y_position(cause, connected_part), cause);
 	    raw__cairo_context__save(cause, cairo_context);
-	    raw__cairo_context__translate(cause, cairo_context, 4, 4 + y_position);
+	    raw__cairo_context__translate(cause, cairo_context, timeline__left_border, timeline__top_border + y_position);
 	    {
 	      f2ptr event_array = raw__timeline_connected_part__sorted_event_array(cause, connected_part);
 	      s64   event_count = raw__array__length(cause, event_array);
@@ -1093,7 +1100,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 	      for (index = 0; index < event_count; index ++) {
 		f2ptr event = raw__array__elt(cause, event_array, index);
 		raw__cairo_context__save(cause, cairo_context);
-		raw__cairo_context__translate(cause, cairo_context, 4, 4 + y_position);
+		raw__cairo_context__translate(cause, cairo_context, timeline__left_border, timeline__right_border + y_position);
 		f2ptr result = raw__timeline_event__cairo_render(cause, event, cairo_context, this);
 		if (raw__larva__is_type(cause, result)) {
 		  return result;

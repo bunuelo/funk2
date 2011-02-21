@@ -498,7 +498,7 @@ f2ptr raw__timeline__new(f2ptr cause) {
 			 minimum_time,
 			 maximum_time,
 			 connected_part_array,
-			 maximum_y);
+			 y_height);
 }
 
 f2ptr f2__timeline__new(f2ptr cause) {

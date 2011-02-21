@@ -812,14 +812,47 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 	      s64 index;
 	      for (index = 0; index < event_count; index ++) {
 		f2ptr event = raw__array__elt(cause, event_array, index);
-		raw__cairo_context__save(cause, cairo_context);
-		raw__cairo_context__scale(cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));
-		raw__cairo_context__translate(cause, cairo_context, 4, 4 + y_position);
-		f2ptr result = raw__timeline_event__cairo_render(cause, event, cairo_context, this);
-		if (raw__larva__is_type(cause, result)) {
-		  return result;
+		{
+		  double start_position;
+		  double end_position;
+		  double top_position;
+		  double bottom_position;
+		  {
+		    f2ptr result = raw__timeline_event__render_extents(cause, event, this, &start_position, &end_position, &top_position, &bottom_position);
+		    if (raw__larva__is_type(cause, result)) {
+		      return result;
+		    }
+		  }
+		  {
+		    f2ptr next_set = raw__timeline_event__next_set(cause, expand_event);
+		    if (next_set != nil) {
+		      set__iteration(cause, next_set, next_event,
+				     double next_event__start_position;
+				     double next_event__end_position;
+				     double next_event__top_position;
+				     double next_event__bottom_position;
+				     {
+				       f2ptr result = raw__timeline_event__render_extents(cause, next_event, this, &next_event__start_position, &next_event__end_position, &next_event__top_position, &next_event__bottom_position);
+				       if (raw__larva__is_type(cause, result)) {
+					 return result;
+				       }
+				     }
+				     {
+				       raw__cairo_context__save(cause, cairo_context);
+				       raw__cairo_context__scale(cause, cairo_context, (1.0 / 64.0), (1.0 / 64.0));
+				       raw__cairo_context__translate(cause, cairo_context, 4, 4 + y_position);
+				       
+				       raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
+				       raw__cairo_context__set_line_width( cause, cairo_context, 0.001);
+				       raw__cairo_context__move_to(        cause, cairo_context, end_position,               (top_position + bottom_position) / 2.0);
+				       raw__cairo_context__line_to(        cause, cairo_context, next_event__start_position, (next_event__top_position + next_event__bottom_position) / 2.0);
+				       
+				       raw__cairo_context__restore(cause, cairo_context);
+				     }
+]				     );
+		    }
+		  }
 		}
-		raw__cairo_context__restore(cause, cairo_context);
 	      }
 	    }
 	  }

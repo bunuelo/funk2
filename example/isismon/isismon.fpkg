@@ -17,15 +17,35 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage isismon
+[defpackage isismon_core
   :packages [isis_world_demo
 	     gtk
 	     image
 	     image_sequence
 	     semantic_frame_ball
 	     movie
-	     mindmon]
-   :sources ['isismon_builtin_reactive_physical_activator.fu2'
-	     'isismon_learned_reactive_physical_activator.fu2'
-	     'isismon.fu2']]
+	     mindmon]]
+
+[defpackage isismon_knowledge
+  :packages [isismon_core]
+   :sources ['isismon_knowledge.fu2']]
+
+[defpackage isismon_builtin_reactive_physical_activator
+  :packages [isismon_core]
+   :sources ['isismon_builtin_reactive_physical_activator.fu2']]
+
+[defpackage isismon_learned_reactive_physical_activator
+  :packages [isismon_core]
+   :sources ['isismon_learned_reactive_physical_activator.fu2']]
+
+[defpackage isismon_agent
+  :packages [isismon_core
+	     isismon_builtin_reactive_physical_activator
+	     isismon_learned_reactive_physical_activator
+	     isismon_knowledge]
+   :sources ['isismon_agent.fu2']]
+
+[defpackage isismon
+  :packages [isismon_agent]
+   :sources ['isismon.fu2']]
 

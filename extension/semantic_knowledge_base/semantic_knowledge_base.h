@@ -206,6 +206,8 @@ boolean_t raw__semantic_knowledge_base__recursively_add_semantic_frames_to_set(f
 f2ptr      f2__semantic_knowledge_base__recursively_add_semantic_frames_to_set(f2ptr cause, f2ptr this, f2ptr set, f2ptr maximum_size, f2ptr exact_size_place);
 boolean_t raw__semantic_knowledge_base__add_to_graph_with_node_ptypehash      (f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash, s64 maximum_size, s64 *exact_size);
 f2ptr      f2__semantic_knowledge_base__add_to_graph_with_node_ptypehash      (f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash, f2ptr maximum_size, f2ptr exact_size_place);
+f2ptr     raw__semantic_knowledge_base__semantic_frames                       (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_knowledge_base__semantic_frames                       (f2ptr cause, f2ptr this);
 
 f2ptr f2__semantic_knowledge_base_type__new(f2ptr cause);
 

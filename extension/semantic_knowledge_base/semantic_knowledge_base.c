@@ -1941,7 +1941,7 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
   return timeline;
 }
 
-f2__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
   if (! raw__semantic_knowledge_base__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }

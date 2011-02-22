@@ -83,6 +83,3 @@
 [defmetro semantic-is-type [type_name object]
   `[get ,object is_semantic_type ,type_name]]
 
-[deftypefunk semantic_knowledge_base get as-timeline []
-  [semantic_knowledge_base-as-timeline this]]
-

@@ -215,7 +215,7 @@ f2ptr f2__semantic_event_type__new(f2ptr cause) {
 
 
 f2ptr raw__semantic_events__as__timeline(f2ptr cause, f2ptr these) {
-  
+  return nil;
 }
 
 // **

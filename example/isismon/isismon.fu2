@@ -22,14 +22,17 @@
 				    
 				    isismon_agent
 				    
-				    knowledge_expanded
+				    knowledge_graph_expanded
 				    
 				    knowledge_vbox
 				    knowledge_button_label_hbox
 				    knowledge_graph_expansion_button
+				    knowledge_timeline_expansion_button
 				    knowledge_label
 				    knowledge_graph_view_button
+				    knowledge_timeline_view_button
 				    knowledge_graph_image
+				    knowledge_timeline_image
 				    ]
   [new [initial-isismon_agent
 	initial-knowledge_name]
@@ -45,22 +48,40 @@
        [= knowledge_graph_expansion_button [gtk-button-new_with_label '*']]
        [have knowledge_button_label_hbox pack_start knowledge_graph_expansion_button nil nil 0]
        
+       [= knowledge_timeline_expansion_button [gtk-button-new_with_label 'T']]
+       [have knowledge_button_label_hbox pack_start knowledge_timeline_expansion_button nil nil 0]
+       
        [= knowledge_label [gtk-label-new [format nil knowledge_name]]]
        [have knowledge_button_label_hbox pack_start knowledge_label t t 0]
        
-       [= knowledge_graph_view_button [gtk-button-new_with_label 'GView']]
+       [= knowledge_graph_view_button [gtk-button-new_with_label 'Graph']]
        [have knowledge_button_label_hbox pack_start knowledge_graph_view_button nil nil 0]
        [have knowledge_graph_view_button signal_connect 'clicked'
 	     [funk []
-		   [have this gview_knowledge]]
+		   [have this graph_view_knowledge]]
+	     nil]
+       
+       [= knowledge_timeline_view_button [gtk-button-new_with_label 'Time']]
+       [have knowledge_button_label_hbox pack_start knowledge_timeline_view_button nil nil 0]
+       [have knowledge_timeline_view_button signal_connect 'clicked'
+	     [funk []
+		   [have this time_view_knowledge]]
 	     nil]
        
        [= knowledge_graph_image [gtk-image-new_from_image [image-new_from_rgb_data 11 11 [new chunk [* 11 11 3]]]]]
        [have knowledge_vbox pack_start knowledge_graph_image nil nil 0]
        
+       [= knowledge_timeline_image [gtk-image-new_from_image [image-new_from_rgb_data 11 11 [new chunk [* 11 11 3]]]]]
+       [have knowledge_vbox pack_start knowledge_timeline_image nil nil 0]
+       
        [have knowledge_graph_expansion_button signal_connect 'clicked'
 	     [funk []
-		   [= knowledge_expanded [not knowledge_expanded]]]
+		   [= knowledge_graph_expanded [not knowledge_graph_expanded]]]
+	     nil]
+       
+       [have knowledge_timeline_expansion_button signal_connect 'clicked'
+	     [funk []
+		   [= knowledge_timeline_expanded [not knowledge_timeline_expanded]]]
 	     nil]
        
        ]]
@@ -69,7 +90,7 @@
   knowledge_vbox]
 
 [deftypefunk isismon_knowledge execute update_knowledge_graph_image []
-  [if knowledge_expanded
+  [if knowledge_graph_expanded
       [prog [set knowledge_graph_image image [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
 													       [get knowledge_base as-digraph_dot_code]]
 													 [conslist [get [get [get isismon_agent isis_agent] mind] semantic_knowledge_base knowledge_name]]]
@@ -78,10 +99,17 @@
 	    [have knowledge_graph_image show_all]]
     [have knowledge_graph_image hide_all]]]
 
-[deftypefunk isismon_knowledge execute update []
-  [have this update_knowledge_graph_image]]
+[deftypefunk isismon_knowledge execute update_knowledge_timeline_image []
+  [if knowledge_timeline_expanded
+      [prog []
+	    [have knowledge_timeline_image show_all]]
+    [have knowledge_timeline_image hide_all]]]
 
-[deftypefunk isismon_knowledge execute gview_knowledge []
+[deftypefunk isismon_knowledge execute update []
+  [have this update_knowledge_graph_image]
+  [have this update_knowledge_timeline_image]]
+
+[deftypefunk isismon_knowledge execute graph_view_knowledge []
   [terminal_format standard-terminal '\nIsisMon generating and displaying graph of ' [get isismon_agent name] '\'s ' knowledge_name ' semantic knowledge.']
   [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
 									  [get knowledge_base as-digraph_dot_code]]
@@ -89,6 +117,9 @@
 							    '\n']]]]
     [fiber [funk [] [dot_code-gview dot_code]] nil]]]
 
+[deftypefunk isismon_knowledge execute timeline_view_knowledge []
+  [terminal_format standard-terminal '\nIsisMon generating and displaying timeline of ' [get isismon_agent name] '\'s ' knowledge_name ' semantic knowledge.']
+  ]
 
 
 

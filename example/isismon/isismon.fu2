@@ -344,6 +344,7 @@
 				  play_button
 				  stop_button
 				  step_button
+				  update_button
 				  
 				  movie_gtk_image
 				  scale
@@ -353,6 +354,7 @@
 				  
 				  [simulation_playing           nil]
 				  [last_stepped_simulation_time nil]
+				  [need_update                  nil]
 				  ]
   [new [initial-isismon]
        [= isismon initial-isismon]
@@ -371,29 +373,39 @@
        [= controller_vbox  [gtk-vbox-new 2]]
        
        [= controller_button_hbox [gtk-hbox-new 2]]
-       [= play_button [gtk-button-new_with_label 'Play']]
-       [= stop_button [gtk-button-new_with_label 'Stop']]
-       [= step_button [gtk-button-new_with_label 'Step 1 Second']]
-       [have controller_button_hbox pack_start play_button nil nil 0]
-       [have controller_button_hbox pack_start stop_button nil nil 0]
-       [have controller_button_hbox pack_start step_button nil nil 0]
+       [= play_button   [gtk-button-new_with_label 'Play']]
+       [= stop_button   [gtk-button-new_with_label 'Stop']]
+       [= step_button   [gtk-button-new_with_label 'Step 1 Second']]
+       [= update_button [gtk-button-new_with_label 'Update']]
+       [have controller_button_hbox pack_start play_button   nil nil 0]
+       [have controller_button_hbox pack_start stop_button   nil nil 0]
+       [have controller_button_hbox pack_start step_button   nil nil 0]
+       [have controller_button_hbox pack_start update_button nil nil 0]
        [have controller_vbox pack_start controller_button_hbox nil nil 0]
        
        [have play_button signal_connect 'clicked'
 	     [funk []
 		   [terminal_format standard-terminal '\nIsisMon: Playing.']
-		   [= simulation_playing t]]
+		   [= simulation_playing t]
+		   [have [get this cycle_trigger] trigger]]
 	     nil]
        [have stop_button signal_connect 'clicked'
 	     [funk []
 		   [terminal_format standard-terminal '\nIsisMon: Stopped.']
-		   [= simulation_playing nil]]
+		   [= simulation_playing nil]
+		   [have [get this cycle_trigger] trigger]]
 	     nil]
        [have step_button signal_connect 'clicked'
 	     [funk []
 		   [let [[seconds 1.0]]
 		     [terminal_format standard-terminal '\nIsisMon: Stepping ' seconds ' seconds.']
-		     [have isis_world raw_step_simulation seconds]]]
+		     [have isis_world raw_step_simulation seconds]
+		     [have [get this cycle_trigger] trigger]]]
+	     nil]
+       [have update_button signal_connect 'clicked'
+	     [funk []
+		   [= need_update t]
+		   [have [get this cycle_trigger] trigger]]
 	     nil]
        
        [= entry_hbox [gtk-hbox-new 2]]
@@ -436,12 +448,15 @@
        
        [= initialized t]
        [have execute_mutex unlock]
+       
+       [have [get this cycle_trigger] trigger]
        ]]
 
 [deftypefunk isismon_project execute create_new_isis_world []
   [terminal_format standard-terminal '\nIsisMon Project creating new IsisWorld.']
   [let [[isis_world_server_hostname [get [get isismon preferences] isis_world_server_hostname]]]
-    [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]]]
+    [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]
+    [have [get this cycle_trigger] trigger]]]
 
 [defunk isismon_project-new_from_file [isismon filename]
   [terminal_format standard-terminal '\nIsisMon Project: Loading ' filename '.']
@@ -457,6 +472,7 @@
 	    [get isis_world agent_bodies]]
       [have [get this execute_mutex] unlock]
       [terminal_format standard-terminal '\n                 Load project complete.']
+      [have [get this cycle_trigger] trigger]
       this]]]
 
 [deftypefunk isismon_project execute save [filename]
@@ -464,13 +480,17 @@
   [have [get [get isis_world as-chunk] deflated] save filename]
   [terminal_format standard-terminal '\nIsisMon Project: Save project complete.']]
 
+[deftypefunk isismon_project get cycle_trigger []
+  [get isismon cycle_trigger]]
+
 [deftypefunk isismon_project get widget []
   vbox]
 
 [deftypefunk isismon_project execute add_agent [isismon_agent]
   [have agent_frame add [get isismon_agent name] isismon_agent]
   [have [get isismon_agent widget] show_all]
-  [have agent_hbox pack_start isismon_agent t t 0]]
+  [have agent_hbox pack_start isismon_agent t t 0]
+  [have [get this cycle_trigger] trigger]]
 
 [deftypefunk isismon_project execute update_agents []
   [mapc [funk [agent]
@@ -512,7 +532,8 @@
 			  [if [> movie_length 1]
 			      [set scale value [- movie_length 1]]]]
 			[= last_stepped_simulation_time [time]]]]]]]
-	[have this update]]]
+	[if needs_update
+	    [have this update]]]]
   [have execute_mutex unlock]]
 
 [deftypefunk isismon_project get overview_image_sequence []
@@ -626,6 +647,8 @@
 			  isismon_project
 			  
 			  preferences
+			  
+			  [cycle_trigger [new fiber_trigger]]
 			  ]
   [new []
        [have initialize_mutex lock]
@@ -688,6 +711,7 @@
 			     
 			     [have file_exit_menu_item signal_connect 'activate'
 				   [funk []
+					 [have [get this cycle_trigger] trigger]
 					 [= done t]]
 				   nil]
 			     
@@ -719,22 +743,26 @@
 			     
 			     [have project_new_ralph_agent_menu_item signal_connect 'activate'
 				   [funk []
-					 [have this create_new_agent `Ralph]]
+					 [have this create_new_agent `Ralph]
+					 [have [get this cycle_trigger] trigger]]
 				   nil]
 			     
 			     [have project_new_lauren_agent_menu_item signal_connect 'activate'
 				   [funk []
-					 [have this create_new_agent `Lauren]]
+					 [have this create_new_agent `Lauren]
+					 [have [get this cycle_trigger] trigger]]
 				   nil]
 			     
 			     [have project_new_macy_agent_menu_item signal_connect 'activate'
 				   [funk []
-					 [have this create_new_agent `Macy]]
+					 [have this create_new_agent `Macy]
+					 [have [get this cycle_trigger] trigger]]
 				   nil]
 			     
 			     [have project_open_agent_menu_item signal_connect 'activate'
 				   [funk []
-					 [new isismon_open_agent_dialog this]]
+					 [new isismon_open_agent_dialog this]
+					 [have [get this cycle_trigger] trigger]]
 				   nil]
 			     
 			     [= simulation_menu_item                             [gtk-menu_item-new 'Simulation']]
@@ -748,7 +776,8 @@
 			     
 			     [have simulation_run_initialization_sequence_menu_item signal_connect 'activate'
 				   [funk []
-					 [have isismon_project initialize_simulation]]
+					 [have isismon_project initialize_simulation]
+					 [have [get this cycle_trigger] trigger]]
 				   nil]
 			     
 			     [have simulation_view_initialization_events_menu_item signal_connect 'activate'
@@ -770,6 +799,7 @@
 			     [have initialize_mutex unlock]
 			     
 			     [while [not done]
+			       [wait-for-trigger cycle_trigger]
 			       [have this cycle]]
 			     [have window destroy]]
 		       nil]]
@@ -780,8 +810,7 @@
   [if [not [get window visible]]
       [= done t]]
   [if isismon_project
-      [have isismon_project cycle]]
-  [millisleep 100]]
+      [have isismon_project cycle]]]
 
 [deftypefunk isismon execute shrink_window []
   [set window size 1 1]]

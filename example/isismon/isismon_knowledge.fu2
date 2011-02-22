@@ -129,7 +129,7 @@
 [deftypefunk isismon_knowledge execute timeline_view_knowledge []
   [terminal_format standard-terminal '\nIsisMon generating and displaying timeline of ' [get isismon_agent name] '\'s ' knowledge_name ' semantic knowledge.']
   [let [[timeline [get [get this semantic_knowledge_base] as-timeline]]]
-    [set timeline x_width 100]
+    [set timeline x_width 100.0]
     [let [[image [timeline-as-image timeline 16]]]
       [let [[gtk_window          [gtk-window-new]]
 	    [gtk_scrolled_window [gtk-scrolled_window-new]]

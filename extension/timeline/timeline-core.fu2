@@ -82,7 +82,7 @@
 	  [have subimage copy_rectangle_to 0 0 image [/ [- pixel_width [get subimage width]] 2] 0 [get subimage width] [get subimage height]]
 	  image]]]]]
 
-[deftypefunk timeline get as-constrainted_image [pixel_width pixel_height]
+[deftypefunk timeline get as-constrained_image [pixel_width pixel_height]
   [timeline-as-constrained_image this pixel_width pixel_height]]
 
 

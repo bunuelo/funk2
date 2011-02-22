@@ -27,6 +27,3 @@
 [semantic_event-core_extension-ping]
 
 
-[deftypefunk semantic_knowledge_base get as-timeline []
-  [semantic_knowledge_base-as-timeline this]]
-

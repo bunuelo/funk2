@@ -22,6 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_KNOWLEDGE_BASE__H
 #define F2__EXTENSION__SEMANTIC_KNOWLEDGE_BASE__H
 
+#include "../timeline/timeline.h"
 
 // semantic_realm
 

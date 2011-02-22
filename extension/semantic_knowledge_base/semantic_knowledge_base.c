@@ -2249,6 +2249,12 @@ f2ptr f2__semantic_knowledge_base__core_extension__initialize(f2ptr cause) {
       return result;
     }
   }
+  {
+    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline__core_extension__ping")), nil);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   f2__add_type(cause, new__symbol(cause, "semantic_relationship_key"),     f2__semantic_relationship_key_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "semantic_realm"),                f2__semantic_realm_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "semantic_frame_event"),          f2__semantic_frame_event_type__new(cause));

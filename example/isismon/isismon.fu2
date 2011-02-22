@@ -42,7 +42,6 @@
        [= isismon_agent  initial-isismon_agent]
        [= knowledge_name initial-knowledge_name]
        
-       
        [= knowledge_vbox [gtk-vbox-new 0]]
        
        [= knowledge_button_label_hbox [gtk-hbox-new 0]]

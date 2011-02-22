@@ -256,6 +256,7 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 		if (raw__larva__is_type(cause, timeline_event)) {
 		  return timeline_event;
 		}
+		raw__timeline__add_timeline_event(cause, timeline, timeline_event);
 		raw__ptypehash__add(cause, timeline_event_semantic_event_hash, semantic_event, timeline_event);
 	      }
 	    }

@@ -110,7 +110,7 @@
 [deftypefunk isismon_knowledge execute update_knowledge_timeline_image []
   [if knowledge_timeline_expanded
       [prog [set knowledge_timeline_image image [let [[timeline [get [get this semantic_knowledge_base] as-timeline]]]
-						  [get timeline as-constrainted_image 320 240]]]
+						  [get timeline as-constrained_image 320 240]]]
 	    [have knowledge_timeline_image show_all]]
     [have knowledge_timeline_image hide_all]]]
 

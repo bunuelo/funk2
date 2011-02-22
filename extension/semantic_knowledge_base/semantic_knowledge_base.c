@@ -1865,6 +1865,92 @@ f2ptr f2__semantic_knowledge_base__new__event_stream_iterator(f2ptr cause, f2ptr
 export_cefunk1(semantic_knowledge_base__new__event_stream_iterator, this, 0, "Returns a new event_stream_iterator for this semantic_knowledge_base's trace_event_stream.");
 
 
+f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
+  f2ptr timeline = f2__timeline__new(cause);
+  {
+    f2ptr semantic_frames                    = raw__semantic_knowledge_base__semantic_frames(cause, this);
+    f2ptr timeline_event_semantic_event_hash = f2__ptypehash__new(cause);
+    {
+      f2ptr iter = semantic_frames;
+      while (iter != nil) {
+	f2ptr semantic_frame = f2cons__car(iter, cause);
+	{
+	  if (raw__semantic_event__is_type(cause, semantic_frame)) {
+	    f2ptr semantic_event = semantic_frame;
+	    {
+	      f2ptr timeline_event = f2__timeline_event__new(cause);
+	      f2ptr name = nil;
+	      {
+		f2ptr name_set = f2__semantic_event__action_name__lookup(cause, semantic_event);
+		if (name_set != nil) {
+		  name = f2__set__an_arbitrary_element(cause, name_set);
+		}
+		if (name == nil) {
+		  name = new__string(cause, "Semantic Event");
+		}
+	      }
+	      f2ptr absolute_start_time = nil;
+	      {
+		f2ptr absolute_start_time_set = raw__semantic_event__absolute_start_time__lookup(cause, semantic_event);
+		if (absolute_start_time_set != nil) {
+		  absolute_start_time = raw__set__an_arbitrary_element(cause, absolute_start_time_set);
+		}
+	      }
+	      f2ptr absolute_end_time = nil;
+	      {
+		f2ptr absolute_end_time_set = raw__semantic_event__absolute_end_time__lookup(cause, semantic_event);
+		if (absolute_end_time_set != nil) {
+		  absolute_end_time = raw__set__an_arbitrary_element(cause, absolute_end_time_set);
+		}
+	      }
+	      if ((absolute_start_time != nil) &&
+		  (absolute_end_time   != nil)) {
+		f2ptr timeline_event = f2__timeline_event__new(cause, name, absolute_start_time, absolute_end_time);
+		raw__ptypehash__add(cause, timeline_event_semantic_event_hash, semantic_event, timeline_event);
+	      }
+	    }
+	  }
+	}
+	iter = f2cons__cdr(iter, cause);
+      }
+    }
+    ptypehash__iteration(cause, timeline_event_semantic_event_hash, semantic_event, timeline_event,
+			 {
+			   f2ptr next_set = raw__semantic_temporal_object__next__lookup(cause, semantic_event);
+			   if (next_set != nil) {
+			     set__iteration(cause, next_set, next_semantic_event,
+					    if (raw__ptypehash__contains(cause, timeline_event_semantic_event_hash, next_semantic_event)) {
+					      f2ptr next_timeline_event = raw__ptypehash__lookup(cause, timeline_event_semantic_event_hash, next_semantic_event);
+					      raw__timeline_event__add_next(cause, timeline_event, next_timeline_event);
+					    }
+					    );
+			   }
+			 }
+			 {
+			   f2ptr contains_set = raw__semantic_temporal_object__contains__lookup(cause, semantic_event);
+			   if (contains_set != nil) {
+			     set__iteration(cause, contains_set, contains_semantic_event,
+					    if (raw__ptypehash__contains(cause, timeline_event_semantic_event_hash, contains_semantic_event)) {
+					      f2ptr contains_timeline_event = raw__ptypehash__lookup(cause, timeline_event_semantic_event_hash, contains_semantic_event);
+					      raw__timeline_event__add_contains(cause, timeline_event, contains_timeline_event);
+					    }
+					    );
+			   }
+			 }
+			 );
+  }
+  return timeline;
+}
+
+f2__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_knowledge_base__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_knowledge_base__as__timeline(cause, this);
+}
+export_cefunk1(semantic_knowledge_base__as__timeline, this, 0, "Returns a new timeline object representing this semantic_knowledge_base.");
+
+
 // semantic_knowledge_base lick funks
 
 f2ptr raw__semantic_knowledge_base__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
@@ -2128,6 +2214,7 @@ f2ptr f2__semantic_knowledge_base_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_to_graph_with_node_ptypehash"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__add_to_graph_with_node_ptypehash")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "as-digraph_dot_code"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__as__digraph_dot_code")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "new-event_stream_iterator"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__new__event_stream_iterator")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "as-timeline"),                                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__as__timeline")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "gather_lick_notes"),                            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__gather_lick_notes")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"),                                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__lick_to_chunk")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-unlick_with_notes"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__lick_chunk__unlick_with_notes")));}

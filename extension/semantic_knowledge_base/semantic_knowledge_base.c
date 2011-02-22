@@ -1878,7 +1878,6 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 	  if (raw__semantic_event__is_type(cause, semantic_frame)) {
 	    f2ptr semantic_event = semantic_frame;
 	    {
-	      f2ptr timeline_event = f2__timeline_event__new(cause);
 	      f2ptr name = nil;
 	      {
 		f2ptr name_set = f2__semantic_event__action_name__lookup(cause, semantic_event);

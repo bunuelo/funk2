@@ -861,12 +861,13 @@
 				  controller_frame
 				  controller_vbox
 				  controller_button_hbox
-				  step_size_hbox
+				  
+				  entry_hbox
 				  step_size_label
 				  step_size_entry
-				  step_delay_hbox
 				  step_delay_label
 				  step_delay_entry
+				  
 				  play_button
 				  stop_button
 				  step_button
@@ -922,21 +923,20 @@
 		     [have isis_world raw_step_simulation seconds]]]
 	     nil]
        
-       [= step_size_hbox  [gtk-hbox-new 2]]
+       [= entry_hbox [gtk-hbox-new 2]]
+       [have controller_vbox pack_start entry_hbox nil nil 0]
+       
        [= step_size_label [gtk-label-new 'Step Size: ']]
        [= step_size_entry [gtk-entry-new]]
-       [have step_size_hbox pack_start step_size_label nil nil 0]
-       [have step_size_hbox pack_start step_size_entry t t 0]
+       [have entry_hbox pack_start step_size_label nil nil 0]
+       [have entry_hbox pack_start step_size_entry t t 0]
        [set step_size_entry text '0.03']
-       [have controller_vbox pack_start step_size_hbox nil nil 0]
        
-       [= step_delay_hbox  [gtk-hbox-new 2]]
        [= step_delay_label [gtk-label-new 'Step Delay: ']]
        [= step_delay_entry [gtk-entry-new]]
-       [have step_delay_hbox pack_start step_delay_label nil nil 0]
-       [have step_delay_hbox pack_start step_delay_entry t t 0]
+       [have entry_hbox pack_start step_delay_label nil nil 0]
+       [have entry_hbox pack_start step_delay_entry t t 0]
        [set step_delay_entry text '0.0']
-       [have controller_vbox pack_start step_delay_hbox nil nil 0]
        
        [have controller_frame add controller_vbox nil nil 0]
        

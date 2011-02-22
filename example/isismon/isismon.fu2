@@ -32,6 +32,8 @@
 				    knowledge_label
 				    knowledge_graph_view_button
 				    knowledge_timeline_view_button
+				    
+				    knowledge_image_hbox
 				    knowledge_graph_image
 				    knowledge_timeline_image
 				    ]
@@ -69,11 +71,14 @@
 		   [have this timeline_view_knowledge]]
 	     nil]
        
+       [= knowledge_image_hbox [gtk-hbox-new 0]]
+       [have knowledge_vbox pack_start knowledge_image_hbox nil nil 0]
+       
        [= knowledge_graph_image [gtk-image-new_from_image [image-new_from_rgb_data 11 11 [new chunk [* 11 11 3]]]]]
-       [have knowledge_vbox pack_start knowledge_graph_image nil nil 0]
+       [have knowledge_image_hbox pack_start knowledge_graph_image nil nil 0]
        
        [= knowledge_timeline_image [gtk-image-new_from_image [image-new_from_rgb_data 11 11 [new chunk [* 11 11 3]]]]]
-       [have knowledge_vbox pack_start knowledge_timeline_image nil nil 0]
+       [have knowledge_image_hbox pack_start knowledge_timeline_image nil nil 0]
        
        [have knowledge_graph_expansion_button signal_connect 'clicked'
 	     [funk []

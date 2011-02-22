@@ -1180,13 +1180,19 @@ f2ptr f2__timeline__core_extension__initialize(f2ptr cause) {
       return result;
     }
   }
-  f2__add_type(cause, new__symbol(cause, "timeline_event"),          f2__timeline_event_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "timeline_connected_part"), f2__timeline_connected_part_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "timeline"),                f2__timeline_type__new_aux(cause));
   status("timeline initialized.");
   return nil;
 }
 export_cefunk0(timeline__core_extension__initialize, 0, "");
+
+f2ptr f2__timeline__core_extension__define_types(f2ptr cause) {
+  f2__add_type(cause, new__symbol(cause, "timeline_event"),          f2__timeline_event_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "timeline_connected_part"), f2__timeline_connected_part_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "timeline"),                f2__timeline_type__new_aux(cause));
+  status("timeline types defined.");
+  return nil;
+}
+export_cefunk0(timeline__core_extension__define_types, 0, "");
 
 f2ptr f2__timeline__core_extension__destroy(f2ptr cause) {
   status("timeline destroyed.");

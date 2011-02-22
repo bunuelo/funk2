@@ -19,11 +19,11 @@
 
 [defcore timeline 'extension/timeline/.libs/libf2e_timeline.so']
 
-[defcorefunk timeline-new_from_rgb_data         timeline timeline__new_from_rgb_data]
-[defcorefunk timeline-core_extension-ping       timeline timeline__core_extension__ping]
-[defcorefunk timeline-core_extension-initialize timeline timeline__core_extension__initialize]
+[defcorefunk timeline-core_extension-ping         timeline timeline__core_extension__ping]
+[defcorefunk timeline-core_extension-initialize   timeline timeline__core_extension__initialize]
+[defcorefunk timeline-core_extension-define_types timeline timeline__core_extension__define_types]
 
-[timeline-core_extension-ping]
+[timeline-core_extension-define_types]
 
 
 [defunk timeline-as-image-given_height [this pixel_height]

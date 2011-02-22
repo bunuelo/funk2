@@ -829,6 +829,9 @@
 				  step_size_hbox
 				  step_size_label
 				  step_size_entry
+				  step_delay_hbox
+				  step_delay_label
+				  step_delay_entry
 				  play_button
 				  stop_button
 				  step_button
@@ -861,7 +864,7 @@
        [= controller_button_hbox [gtk-hbox-new 2]]
        [= play_button [gtk-button-new_with_label 'Play']]
        [= stop_button [gtk-button-new_with_label 'Stop']]
-       [= step_button [gtk-button-new_with_label 'Step']]
+       [= step_button [gtk-button-new_with_label 'Step 1 Second']]
        [have controller_button_hbox pack_start play_button nil nil 0]
        [have controller_button_hbox pack_start stop_button nil nil 0]
        [have controller_button_hbox pack_start step_button nil nil 0]
@@ -891,6 +894,14 @@
        [have step_size_hbox pack_start step_size_entry t t 0]
        [set step_size_entry text '0.03']
        [have controller_vbox pack_start step_size_hbox nil nil 0]
+       
+       [= step_delay_hbox  [gtk-hbox-new 2]]
+       [= step_delay_label [gtk-label-new 'Step Delay: ']]
+       [= step_delay_entry [gtk-entry-new]]
+       [have step_delay_hbox pack_start step_delay_label nil nil 0]
+       [have step_delay_hbox pack_start step_delay_entry t t 0]
+       [set step_delay_entry text '0.0']
+       [have controller_vbox pack_start step_delay_hbox nil nil 0]
        
        [have controller_frame add controller_vbox nil nil 0]
        
@@ -968,10 +979,17 @@
   [have this update_agents]
   [have isismon shrink_window]]
 
+[deftypefunk isismon_project get step_delay_time []
+  [let [[step_delay_value [shelter [get [have [get step_delay_entry text] read] as-double]]]]
+    [if [not [is-type `double step_delay_value]]
+	[prog [set step_delay_entry '0.0']
+	      [= step_delay_value 0.0]]]
+    step_delay_value]]
+
 [deftypefunk isismon_project execute cycle []
   [have execute_mutex lock]
   [if initialized
-      [let [[time_to_wait_for_thinking 5]]
+      [let [[time_to_wait_for_thinking [get this step_delay_time]]]
 	[if [and simulation_playing [or [null last_stepped_simulation_time]
 					[> [/ [- [get [time] nanoseconds_since_1970] [get last_stepped_simulation_time nanoseconds_since_1970]] 1000000000.0] time_to_wait_for_thinking]]]
 	    [let [[step_size [have [get step_size_entry text] read]]]

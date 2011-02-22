@@ -183,8 +183,6 @@ f2ptr                     funk2_c__cause__new(f2ptr cause) {return raw__c_source
 
 f2ptr f2bool__new(uint raw_value) {return raw_value ? __funk2.globalenv.true__symbol : nil;}
 
-//FILE* stdtrace = NULL;
-
 void f2__globalenv__reinitialize_globalvars() {
   funk2_globalenv__reinit(&(__funk2.globalenv));
 }

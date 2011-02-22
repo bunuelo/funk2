@@ -31,7 +31,7 @@ typedef struct funk2_dptr_s funk2_dptr_t;
 
 #include "f2_garbage_collector.h"
 
-//#define F2__USE_TRACED_DPTRS
+#define F2__USE_TRACED_DPTRS
 
 // dptr
 

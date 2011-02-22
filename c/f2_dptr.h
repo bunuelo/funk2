@@ -31,36 +31,61 @@ typedef struct funk2_dptr_s funk2_dptr_t;
 
 #include "f2_garbage_collector.h"
 
+//#define F2__USE_TRACED_DPTRS
+
 // dptr
 
 struct funk2_dptr_s {
   f2ptr p;
+#if defined(F2__USE_TRACED_DPTRS)
   f2ptr tracing_on;
   f2ptr trace;
   f2ptr imagination_frame;
   f2ptr mutate_funks;
   f2ptr read_funks;
+#endif // F2__USE_TRACED_DPTRS
 } __attribute__((__packed__));
 
 #define funk2_dptr__gf2_p(this)                 ((this)->p)
-#define funk2_dptr__gf2_tracing_on(this)        ((this)->tracing_on)
-#define funk2_dptr__gf2_trace(this)             ((this)->trace)
-#define funk2_dptr__gf2_imagination_frame(this) ((this)->imagination_frame)
-#define funk2_dptr__gf2_mutate_funks(this)      ((this)->mutate_funks)
-#define funk2_dptr__gf2_read_funks(this)        ((this)->read_funks)
+#if defined(F2__USE_TRACED_DPTRS)
+#  define funk2_dptr__gf2_tracing_on(this)        ((this)->tracing_on)
+#  define funk2_dptr__gf2_trace(this)             ((this)->trace)
+#  define funk2_dptr__gf2_imagination_frame(this) ((this)->imagination_frame)
+#  define funk2_dptr__gf2_mutate_funks(this)      ((this)->mutate_funks)
+#  define funk2_dptr__gf2_read_funks(this)        ((this)->read_funks)
+#else
+#  define funk2_dptr__gf2_tracing_on(this)        nil
+#  define funk2_dptr__gf2_trace(this)             nil
+#  define funk2_dptr__gf2_imagination_frame(this) nil
+#  define funk2_dptr__gf2_mutate_funks(this)      nil
+#  define funk2_dptr__gf2_read_funks(this)        nil
+#endif // F2__USE_TRACED_DPTRS
 
 #define funk2_dptr__p(this)                              funk2_dptr__gf2_p(this)
 #define funk2_dptr__p__set(this, value)                 (funk2_dptr__gf2_p(this) = (value))
-#define funk2_dptr__tracing_on(this)                     funk2_dptr__gf2_tracing_on(this)
-#define funk2_dptr__tracing_on__set(this, value)        (funk2_dptr__gf2_tracing_on(this) = (value))
-#define funk2_dptr__trace(this)                          funk2_dptr__gf2_trace(this)
-#define funk2_dptr__trace__set(this, value)             (funk2_dptr__gf2_trace(this) = (value))
-#define funk2_dptr__imagination_frame(this)              funk2_dptr__gf2_imagination_frame(this)
-#define funk2_dptr__imagination_frame__set(this, value) (funk2_dptr__gf2_imagination_frame(this) = (value))
-#define funk2_dptr__mutate_funks(this)                   funk2_dptr__gf2_mutate_funks(this)
-#define funk2_dptr__mutate_funks__set(this, value)      (funk2_dptr__gf2_mutate_funks(this) = (value))
-#define funk2_dptr__read_funks(this)                     funk2_dptr__gf2_read_funks(this)
-#define funk2_dptr__read_funks__set(this, value)        (funk2_dptr__gf2_read_funks(this) = (value))
+#if defined(F2__USE_TRACED_DPTRS)
+#  define funk2_dptr__tracing_on(this)                     funk2_dptr__gf2_tracing_on(this)
+#  define funk2_dptr__tracing_on__set(this, value)        (funk2_dptr__gf2_tracing_on(this) = (value))
+#  define funk2_dptr__trace(this)                          funk2_dptr__gf2_trace(this)
+#  define funk2_dptr__trace__set(this, value)             (funk2_dptr__gf2_trace(this) = (value))
+#  define funk2_dptr__imagination_frame(this)              funk2_dptr__gf2_imagination_frame(this)
+#  define funk2_dptr__imagination_frame__set(this, value) (funk2_dptr__gf2_imagination_frame(this) = (value))
+#  define funk2_dptr__mutate_funks(this)                   funk2_dptr__gf2_mutate_funks(this)
+#  define funk2_dptr__mutate_funks__set(this, value)      (funk2_dptr__gf2_mutate_funks(this) = (value))
+#  define funk2_dptr__read_funks(this)                     funk2_dptr__gf2_read_funks(this)
+#  define funk2_dptr__read_funks__set(this, value)        (funk2_dptr__gf2_read_funks(this) = (value))
+#else
+#  define funk2_dptr__tracing_on(this)                     nil
+#  define funk2_dptr__tracing_on__set(this, value)         nil
+#  define funk2_dptr__trace(this)                          nil
+#  define funk2_dptr__trace__set(this, value)              nil
+#  define funk2_dptr__imagination_frame(this)              nil
+#  define funk2_dptr__imagination_frame__set(this, value)  nil
+#  define funk2_dptr__mutate_funks(this)                   nil
+#  define funk2_dptr__mutate_funks__set(this, value)       nil
+#  define funk2_dptr__read_funks(this)                     nil
+#  define funk2_dptr__read_funks__set(this, value)         nil
+#endif // F2__USE_TRACED_DPTRS
 
 void      funk2_dptr__init(funk2_dptr_t* dptr, f2ptr p, f2ptr tracing_on, f2ptr prev, f2ptr imagination_frame, f2ptr mutate_funks, f2ptr read_funks);
 boolean_t funk2_dptr__check_all_memory_pointers_valid_in_memory(funk2_dptr_t* this, funk2_memory_t* memory);

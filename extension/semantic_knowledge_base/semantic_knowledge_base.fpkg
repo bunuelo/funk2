@@ -20,8 +20,6 @@
 [defpackage semantic_knowledge_base
   :packages [equals_hash
 	     event_stream
-	     lick
-	     semantic_event
-	     timeline]
+	     lick]
    :sources ['semantic_knowledge_base-core.fu2']]
 

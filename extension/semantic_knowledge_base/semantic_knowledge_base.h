@@ -22,9 +22,6 @@
 #ifndef F2__EXTENSION__SEMANTIC_KNOWLEDGE_BASE__H
 #define F2__EXTENSION__SEMANTIC_KNOWLEDGE_BASE__H
 
-#include "../semantic_event/semantic_event.h"
-#include "../timeline/timeline.h"
-
 // semantic_realm
 
 f2ptr     raw__semantic_realm__new                               (f2ptr cause);

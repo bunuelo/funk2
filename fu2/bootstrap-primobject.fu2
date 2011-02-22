@@ -67,7 +67,7 @@
 	    parents]]
     [if [not type_inherits_from_frame]
 	[= parents [cons `frame parents]]]]
-  [print `[deframe ,type_name ,parents ,[mapcar &frametype-slotdef-name slot_name_value_pairs]]]
+  [print `[deframe ,type_name ,parents]]
   [let [[construct_funk_args nil]
 	[construct_funk_body nil]]
     [mapc [funk [property]

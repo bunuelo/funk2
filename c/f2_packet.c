@@ -4552,11 +4552,19 @@ void recv_packet__request__f2traced_array__new(funk2_node_t* funk2_node, pcs_req
     u64 i;
     for (i = 0; i < length; i ++) {
       f2ptr dptr__p                 = rf2_to_lf2(remote_dptr_array[i].p);
+#if defined(F2__USE_TRACED_DPTRS)
       f2ptr dptr__tracing_on        = rf2_to_lf2(remote_dptr_array[i].tracing_on);
       f2ptr dptr__trace             = rf2_to_lf2(remote_dptr_array[i].trace);
       f2ptr dptr__imagination_frame = rf2_to_lf2(remote_dptr_array[i].imagination_frame);
       f2ptr dptr__mutate_funks      = rf2_to_lf2(remote_dptr_array[i].mutate_funks);
       f2ptr dptr__read_funks        = rf2_to_lf2(remote_dptr_array[i].read_funks);
+#else
+      f2ptr dptr__tracing_on        = nil;
+      f2ptr dptr__trace             = nil;
+      f2ptr dptr__imagination_frame = nil;
+      f2ptr dptr__mutate_funks      = nil;
+      f2ptr dptr__read_funks        = nil;
+#endif // F2__USE_TRACED_DPTRS
       funk2_dptr__init(&(dptr_array[i]), dptr__p, dptr__tracing_on, dptr__trace, dptr__imagination_frame, dptr__mutate_funks, dptr__read_funks);
     }
   }

@@ -21,6 +21,7 @@
   :packages [equals_hash
 	     event_stream
 	     lick
+	     semantic_event
 	     timeline]
    :sources ['semantic_knowledge_base-core.fu2']]
 

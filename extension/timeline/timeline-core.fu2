@@ -24,3 +24,75 @@
 [defcorefunk timeline-core_extension-initialize timeline timeline__core_extension__initialize]
 
 [timeline-core_extension-ping]
+
+
+[defunk timeline-as-image-given_height [this pixel_height]
+  [have this calculate_positions]
+  [let [[x_width  [get this x_width]]
+	[y_height [get this y_height]]]
+    [let [[pixel_width  [get [/ [* pixel_height x_width] y_height] as-integer]]]
+      [let* [[cairo_surface [new cairo_image_surface `ARGB32 pixel_width pixel_height]]
+	     [cairo_context [new cairo_context cairo_surface]]]
+	[have cairo_context scale [get pixel_width as-double] [get pixel_height as-double]]
+	[have cairo_context move_to 0.0 0.0]
+	[have this cairo_render cairo_context]
+	
+	[let [[image [get cairo_surface as-image]]]
+	  [have cairo_context destroy]
+	  [have cairo_surface destroy]
+	  image]]]]]
+
+[deftypefunk timeline as-image-given_height [pixel_height]
+  [timeline-as-image-given_height this pixel_height]]
+
+
+[defunk timeline-as-image-given_width [this pixel_width]
+  [have this calculate_positions]
+  [let [[x_width  [get this x_width]]
+	[y_height [get this y_height]]]
+    [let [[pixel_height [get [/ [* pixel_width y_height] x_width] as-integer]]]
+      [let* [[cairo_surface [new cairo_image_surface `ARGB32 pixel_width pixel_height]]
+	     [cairo_context [new cairo_context cairo_surface]]]
+	[have cairo_context scale [get pixel_width as-double] [get pixel_height as-double]]
+	[have cairo_context move_to 0.0 0.0]
+	[have this cairo_render cairo_context]
+	
+	[let [[image [get cairo_surface as-image]]]
+	  [have cairo_context destroy]
+	  [have cairo_surface destroy]
+	  image]]]]]
+
+[deftypefunk timeline as-image-given_width [pixel_width]
+  [timeline-as-image-given_width this pixel_width]]
+
+
+[defunk timeline-as-constrained_image [this pixel_width pixel_height]
+  [have this calculate_positions]
+  [let [[x_width  [get this x_width]]
+	[y_height [get this y_height]]]
+    [if [> [/ x_width y_height] [/ pixel_width pixel_height]]
+	[let [[subimage [timeline-as-image-given_width this pixel_width]]]
+	  [let [[image [new image pixel_width pixel_height nil]]]
+	    [have image clear 255 255 255 255]
+	    [have subimage copy_rectangle_to 0 0 image 0 [/ [- pixel_height [get subimage height]] 2] [get subimage width] [get subimage height]]
+	    image]]
+      [let [[subimage [timeline-as-image-given_height this pixel_height]]]
+	[let [[image [new image pixel_width pixel_height nil]]]
+	  [have image clear 255 255 255 255]
+	  [have subimage copy_rectangle_to 0 0 image [/ [- pixel_width [get subimage width]] 2] 0 [get subimage width] [get subimage height]]
+	  image]]]]]
+
+[deftypefunk timeline as-constrainted_image [pixel_width pixel_height]
+  [timeline-as-constrained_image this pixel_width pixel_height]]
+
+
+[defunk timeline-as-image [this scale]
+  [have this calculate_positions]
+  [let [[x_width  [get this x_width]]
+	[y_height [get this y_height]]]
+    [let [[pixel_width [get [* x_width scale] as-integer]]]
+      [timeline-as-image-given_width this pixel_width]]]]
+
+[deftypefunk timeline as-image [scale]
+  [timeline-as-image this scale]]
+

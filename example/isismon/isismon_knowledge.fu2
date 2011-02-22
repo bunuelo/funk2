@@ -94,19 +94,23 @@
 [deftypefunk isismon_knowledge get widget []
   knowledge_vbox]
 
+[deftypefunk isismon_knowledge get semantic_knowledge_base []
+  [get [get [get isismon_agent isis_agent] mind] semantic_knowledge_base knowledge_name]]  
+
 [deftypefunk isismon_knowledge execute update_knowledge_graph_image []
   [if knowledge_graph_expanded
       [prog [set knowledge_graph_image image [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
-													       [get knowledge_base as-digraph_dot_code]]
-													 [conslist [get [get [get isismon_agent isis_agent] mind] semantic_knowledge_base knowledge_name]]]
-												 '\n']]]]
-					 [dot_code-as-image dot_code 320 240]]]
+														     [get knowledge_base as-digraph_dot_code]]
+													       [conslist [get this semantic_knowledge_base]]]
+												       '\n']]]]
+					       [dot_code-as-image dot_code 320 240]]]
 	    [have knowledge_graph_image show_all]]
     [have knowledge_graph_image hide_all]]]
 
 [deftypefunk isismon_knowledge execute update_knowledge_timeline_image []
   [if knowledge_timeline_expanded
-      [prog []
+      [prog [set knowledge_timeline_image image [let [[timeline [get [get this semantic_knowledge_base] as-timeline]]]
+						  [get timeline as-constrainted_image 320 240]]]
 	    [have knowledge_timeline_image show_all]]
     [have knowledge_timeline_image hide_all]]]
 

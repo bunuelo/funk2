@@ -18,6 +18,19 @@
  rights to redistribute these changes.'
 
 
+[defunk image-display [this]
+  [let [[gtk_window          [gtk-window-new]]
+	[gtk_scrolled_window [gtk-scrolled_window-new]]
+	[gtk_image           [gtk-image-new_from_image this]]]
+    [set gtk_window title 'image-display']
+    [have gtk_window          add               gtk_scrolled_window]
+    [have gtk_scrolled_window add_with_viewport gtk_image]
+    [set  gtk_window size [+ [get this width] 4] [+ [get this height] 4]]
+    [have gtk_window show_all]
+    nil]]
+
+
+
 [defunk timeline-as-image-given_height [this pixel_height]
   [have this calculate_positions]
   [let [[x_width  [get this x_width]]
@@ -73,22 +86,6 @@
 	[y_height [get this y_height]]]
     [let [[pixel_width [get [* x_width scale] as-integer]]]
       [timeline-as-image-given_width this pixel_width]]]]
-
-[defunk image-display [this]
-  [let [[gtk_window          [gtk-window-new]]
-	[gtk_scrolled_window [gtk-scrolled_window-new]]
-	[gtk_image           [gtk-image-new_from_image this]]]
-    [set gtk_window title 'image-display']
-    [have gtk_window          add               gtk_scrolled_window]
-    [have gtk_scrolled_window add_with_viewport gtk_image]
-    [set  gtk_window size [+ [get this width] 4] [+ [get this height] 4]]
-    [have gtk_window show_all]
-    nil]]
-
-[defunk timeline-display [this scale]
-  [image-display [timeline-as-image this scale]]]
-
-
 
 [defunk timeline-test []
   [let [[time_array [new array 10]]]

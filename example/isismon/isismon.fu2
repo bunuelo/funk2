@@ -532,7 +532,7 @@
 			  [if [> movie_length 1]
 			      [set scale value [- movie_length 1]]]]
 			[= last_stepped_simulation_time [time]]]]]]]
-	[if needs_update
+	[if need_update
 	    [have this update]]]]
   [have execute_mutex unlock]]
 
@@ -609,7 +609,6 @@
 	    [have isis_world destroy]
 	    [= initialized nil]]]
   [have execute_mutex unlock]]
-
 
 
 [deframe isismon [frame] [[initialize_mutex [new mutex]]
@@ -805,6 +804,10 @@
 		       nil]]
        [have initialize_mutex lock]
        nil]]
+
+[deftypefunk isismon get should_wait_before_next_cycle []
+  [and isismon_project
+       [get isismon_project simulation_playing]]]
 
 [deftypefunk isismon execute cycle []
   [if [not [get window visible]]

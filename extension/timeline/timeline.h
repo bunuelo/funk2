@@ -53,8 +53,6 @@ void      raw__timeline_event__add_next                 (f2ptr cause, f2ptr this
 f2ptr      f2__timeline_event__add_next                 (f2ptr cause, f2ptr this, f2ptr event);
 void      raw__timeline_event__add_previous             (f2ptr cause, f2ptr this, f2ptr event);
 f2ptr      f2__timeline_event__add_previous             (f2ptr cause, f2ptr this, f2ptr event);
-boolean_t raw__timeline_event__overlaps                 (f2ptr cause, f2ptr this, f2ptr event);
-f2ptr      f2__timeline_event__overlaps                 (f2ptr cause, f2ptr this, f2ptr event);
 f2ptr     raw__timeline_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 f2ptr      f2__timeline_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 
@@ -92,6 +90,8 @@ f2ptr     raw__timeline__calculate_positions      (f2ptr cause, f2ptr this);
 f2ptr      f2__timeline__calculate_positions      (f2ptr cause, f2ptr this);
 f2ptr     raw__timeline__cairo_render             (f2ptr cause, f2ptr this, f2ptr cairo_context);
 f2ptr      f2__timeline__cairo_render             (f2ptr cause, f2ptr this, f2ptr cairo_context);
+boolean_t raw__timeline__timeline_event__overlaps (f2ptr cause, f2ptr this, f2ptr event_a, f2ptr event_b);
+f2ptr      f2__timeline__timeline_event__overlaps (f2ptr cause, f2ptr this, f2ptr event_a, f2ptr event_b);
 f2ptr     raw__timeline__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 f2ptr      f2__timeline__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 

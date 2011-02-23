@@ -817,7 +817,6 @@
 					     [set [this-cause] critics nil]
 					     [= result [prog @codes]]]
 			 nil]]]
-     'This is a bad hack to deal with noisy values in [get fiber is_complete] or [get fiber paused].'
      [while [and [not [get fiber is_complete]]
 		 [or [not [get fiber paused]] [not [is-type `bug [get fiber value]]]]
 		 [global_scheduler-contains_active_fiber fiber]]
@@ -851,7 +850,6 @@
 						    [set [this-cause] critics nil]
 						    [= result [prog @codes]]]
 				nil]]]
-     'This is a bad hack to deal with noisy values in [get fiber is_complete] or [get fiber paused].'
      [while [and [not [get fiber is_complete]]
 		 [or [not [get fiber paused]] [not [is-type `bug [get fiber value]]]]
 		 [global_scheduler-contains_active_fiber fiber]]

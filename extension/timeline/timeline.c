@@ -160,16 +160,18 @@ f2ptr raw__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr 
 }
 
 f2ptr f2__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time) {
-  if ((! raw__time__is_type(cause, start_time)) ||
-      (! raw__time__is_type(cause, end_time))) {
+  if (((start_time != nil) && (! raw__time__is_type(cause, start_time))) ||
+      ((end_timme  != nil) && (! raw__time__is_type(cause, end_time)))) {
     return f2larva__new(cause, 1, nil);
   }
-  f2ptr is_less_than = f2__is_less_than(cause, start_time, end_time);
-  if (raw__larva__is_type(cause, is_less_than)) {
-    return is_less_than;
-  }
-  if (is_less_than == nil) {
-    return f2larva__new(cause, 1351, nil);
+  if ((start_time != nil) && (end_time != nil)) {
+    f2ptr is_less_than = f2__is_less_than(cause, start_time, end_time);
+    if (raw__larva__is_type(cause, is_less_than)) {
+      return is_less_than;
+    }
+    if (is_less_than == nil) {
+      return f2larva__new(cause, 1351, nil);
+    }
   }
   return raw__timeline_event__new(cause, name, start_time, end_time);
 }
@@ -203,9 +205,15 @@ f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timelin
     f2ptr  maximum_time__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, maximum_time);
     s64    maximum_time__nanoseconds_since_1970__i = f2integer__i(maximum_time__nanoseconds_since_1970, cause);
     f2ptr  start_time                              = raw__timeline_event__start_time(cause, this);
+    if (start_time == nil) {
+      start_time = minimum_time;
+    }
     f2ptr  start_time__nanoseconds_since_1970      = f2__time__nanoseconds_since_1970(cause, start_time);
     s64    start_time__nanoseconds_since_1970__i   = f2integer__i(start_time__nanoseconds_since_1970, cause);
     f2ptr  end_time                                = raw__timeline_event__end_time(cause, this);
+    if (end_time == nil) {
+      end_time = maximum_time;
+    }
     f2ptr  end_time__nanoseconds_since_1970        = f2__time__nanoseconds_since_1970(cause, end_time);
     s64    end_time__nanoseconds_since_1970__i     = f2integer__i(end_time__nanoseconds_since_1970, cause);
     s64    total_nanoseconds                       = maximum_time__nanoseconds_since_1970__i - minimum_time__nanoseconds_since_1970__i;

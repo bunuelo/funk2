@@ -36,7 +36,7 @@
 	  `[print fiber]
 	  `[print [get fiber cause_reg]]
 	  `[print [get fiber cause]]
-	  [ansi-stream-foreground [get standard-terminal stream] 10] [terminal_format standard-terminal '\nbug-> '] [ansi-stream-foreground [get standard-terminal stream] 15]
+	  [ansi-stream-foreground [get standard-terminal stream] terminal_repl-prompt_color] [terminal_format standard-terminal '\nbug-> '] [ansi-stream-reset [get standard-terminal stream]]
 	  [terminal_format standard-terminal bug]]
       [terminal_format standard-terminal '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
     [ansi-stream-reset [get standard-terminal stream]]]]

@@ -168,5 +168,12 @@
 #  include <libswscale/swscale.h>
 #endif // F2__LIBSWSCALE_SUPPORTED
 
+#ifdef F2__CAIRO_SUPPORTED
+#  include <cairo.h>
+#  include <cairo-svg.h>
+#  include <cairo-pdf.h>
+#  include <cairo-ps.h>
+#endif // F2__CAIRO_SUPPORTED
+
 #endif // F2__SYSTEM_HEADERS__H
 

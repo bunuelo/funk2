@@ -21,6 +21,18 @@
 
 #include "funk2.h"
 
+f2ptr f2__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2__object__get_1(cause, this, __funk2.number_globalvars.is_less_than__symbol, that);
+}
+def_pcfunk2(is_less_than, this, that, return f2__is_less_than(this_cause, this, that));
+
+
+f2ptr f2__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2__object__get_1(cause, this, __funk2.number_globalvars.is_greater_than__symbol, that);
+}
+def_pcfunk2(is_greater_than, this, that, return f2__is_greater_than(this_cause, this, that));
+
+
 f2ptr raw__number__as__double(f2ptr cause, f2ptr this) {
   return f2__object__get_0(cause, this, __funk2.number_globalvars.as__double__symbol);
 }
@@ -53,19 +65,9 @@ f2ptr f2__number__minus(f2ptr cause, f2ptr this, f2ptr that) {
   return f2__object__get_1(cause, this, __funk2.number_globalvars.minus__symbol, that);
 }
 
-f2ptr f2__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
-  return f2__object__get_1(cause, this, __funk2.number_globalvars.is_greater_than__symbol, that);
-}
-def_pcfunk2(is_greater_than, this, that, return f2__is_greater_than(this_cause, this, that));
-
 f2ptr f2__number__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
   return f2__is_greater_than(cause, this, that);
 }
-
-f2ptr f2__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
-  return f2__object__get_1(cause, this, __funk2.number_globalvars.is_less_than__symbol, that);
-}
-def_pcfunk2(is_less_than, this, that, return f2__is_less_than(this_cause, this, that));
 
 f2ptr f2__number__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
   return f2__is_less_than(cause, this, that);

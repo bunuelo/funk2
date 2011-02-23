@@ -75,7 +75,7 @@
 	      "print"
               "range"
 	      "save_memory_image" "second" "set-car" "set-cdr" "simple_length" "sleep" "sleep_for_nanoseconds" "slots"
-              "t" "third" "this-fiber" "thread-complete" "thread-value" "type" "terminal_format"
+              "t" "third" "this-fiber" "thread-complete" "thread-value" "time" "type" "terminal_format"
 	      "quit")
             'words)
            'font-lock-function-name-face)
@@ -107,9 +107,9 @@
 	      )
             'words)
            'font-lock-keyword-face)
+     ;;'("\\(:\\)\\([a-zA-Z0-9_]+\\)" . font-lock-type-face)
      ;;'("\\('[a-zA-Z0-9\n\t\\ _-~!@#$%^&*/()_+-={}]+'\\)" . font-lock-string-face)
      '("\\(&\\)\\([a-zA-Z0-9_]+\\)" . font-lock-function-name-face)
-     '("\\(:\\)\\([a-zA-Z0-9_]+\\)" . font-lock-type-face)
      '("\\([a-zA-Z0-9]+\\)\\([?]\\)" . font-lock-type-face)
      '("\\(\\\x\\)\\([a-fA-F0-9]+\\)" . font-lock-string-face)
      ;;'("\\([+-*/=<>]\\|[<>!]=\\)" . font-lock-function-name-face)

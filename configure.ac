@@ -84,6 +84,13 @@ PKG_CHECK_MODULES(LIBSWSCALE, libswscale, AC_DEFINE(F2__LIBSWSCALE_SUPPORTED, 1,
 AC_SUBST(LIBSWSCALE_CFLAGS)
 AC_SUBST(LIBSWSCALE_LIBS)
 
+PKG_CHECK_MODULES(CAIRO, cairo, AC_DEFINE(F2__CAIRO_SUPPORTED, 1, [Define if we have support for CAIRO]), [AC_MSG_NOTICE([
+*** CAIRO is not required to build Funk2, but the cairo development headers
+*** are not installed, so CAIRO support will not be compiled into Funk2.  The
+*** latest version of cairo is always available at http://www.cairographics.org])])
+AC_SUBST(CAIRO_CFLAGS)
+AC_SUBST(CAIRO_LIBS)
+
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

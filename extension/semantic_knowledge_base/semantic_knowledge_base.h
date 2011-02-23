@@ -22,7 +22,6 @@
 #ifndef F2__EXTENSION__SEMANTIC_KNOWLEDGE_BASE__H
 #define F2__EXTENSION__SEMANTIC_KNOWLEDGE_BASE__H
 
-
 // semantic_realm
 
 f2ptr     raw__semantic_realm__new                               (f2ptr cause);
@@ -193,6 +192,12 @@ f2ptr     raw__semantic_knowledge_base__add_semantic_frame                    (f
 f2ptr      f2__semantic_knowledge_base__add_semantic_frame                    (f2ptr cause, f2ptr this, f2ptr semantic_frame);
 f2ptr     raw__semantic_knowledge_base__add_trace_event                       (f2ptr cause, f2ptr this, f2ptr event);
 f2ptr      f2__semantic_knowledge_base__add_trace_event                       (f2ptr cause, f2ptr this, f2ptr event);
+f2ptr     raw__semantic_knowledge_base__remove_semantic_frame                 (f2ptr cause, f2ptr this, f2ptr semantic_frame);
+f2ptr      f2__semantic_knowledge_base__remove_semantic_frame                 (f2ptr cause, f2ptr this, f2ptr semantic_frame);
+boolean_t raw__semantic_knowledge_base__contains_semantic_frame               (f2ptr cause, f2ptr this, f2ptr semantic_frame);
+f2ptr      f2__semantic_knowledge_base__contains_semantic_frame               (f2ptr cause, f2ptr this, f2ptr semantic_frame);
+void      raw__semantic_knowledge_base__remove_all                            (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_knowledge_base__remove_all                            (f2ptr cause, f2ptr this);
 f2ptr     raw__semantic_knowledge_base__know_of_semantic_frame_value_addition (f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value);
 f2ptr      f2__semantic_knowledge_base__know_of_semantic_frame_value_addition (f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value);
 f2ptr     raw__semantic_knowledge_base__know_of_semantic_frame_value_removal  (f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value);
@@ -201,6 +206,8 @@ boolean_t raw__semantic_knowledge_base__recursively_add_semantic_frames_to_set(f
 f2ptr      f2__semantic_knowledge_base__recursively_add_semantic_frames_to_set(f2ptr cause, f2ptr this, f2ptr set, f2ptr maximum_size, f2ptr exact_size_place);
 boolean_t raw__semantic_knowledge_base__add_to_graph_with_node_ptypehash      (f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash, s64 maximum_size, s64 *exact_size);
 f2ptr      f2__semantic_knowledge_base__add_to_graph_with_node_ptypehash      (f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash, f2ptr maximum_size, f2ptr exact_size_place);
+f2ptr     raw__semantic_knowledge_base__semantic_frames                       (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_knowledge_base__semantic_frames                       (f2ptr cause, f2ptr this);
 
 f2ptr f2__semantic_knowledge_base_type__new(f2ptr cause);
 

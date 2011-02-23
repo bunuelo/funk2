@@ -18,6 +18,8 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_knowledge_base
-  :packages [equals_hash event_stream lick]
+  :packages [equals_hash
+	     event_stream
+	     lick]
    :sources ['semantic_knowledge_base-core.fu2']]
 

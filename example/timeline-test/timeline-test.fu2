@@ -1,0 +1,74 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+[defunk image-display [this]
+  [let [[gtk_window          [gtk-window-new]]
+	[gtk_scrolled_window [gtk-scrolled_window-new]]
+	[gtk_image           [gtk-image-new_from_image this]]]
+    [set gtk_window title 'image-display']
+    [have gtk_window          add               gtk_scrolled_window]
+    [have gtk_scrolled_window add_with_viewport gtk_image]
+    [set  gtk_window size [+ [get this width] 4] [+ [get this height] 4]]
+    [have gtk_window show_all]
+    nil]]
+
+
+
+[defunk timeline-test []
+  [let [[time_array [new array 10]]]
+    [dotimes [i 10]
+      [set time_array elt i [time]]]
+    [let [[timeline [new timeline]]
+	  [a        [new timeline_event 'a: long event'         [get time_array elt 0] [get time_array elt 9]]]
+	  [b        [new timeline_event 'b'                     [get time_array elt 1] [get time_array elt 2]]]
+	  [c        [new timeline_event 'c'                     [get time_array elt 3] [get time_array elt 5]]]
+	  [d        [new timeline_event 'd: another long event' [get time_array elt 1] [get time_array elt 8]]]
+	  [e        [new timeline_event 'e'                     [get time_array elt 2] [get time_array elt 6]]]
+	  [f        [new timeline_event 'f: subevent'           [get time_array elt 7] [get time_array elt 8]]]
+	  [g        [new timeline_event 'g'                     [get time_array elt 4] [get time_array elt 5]]]]
+      
+      [have timeline add_timeline_event a]
+      [have timeline add_timeline_event b]
+      [have timeline add_timeline_event c]
+      [have timeline add_timeline_event d]
+      [have timeline add_timeline_event e]
+      [have timeline add_timeline_event f]
+      [have timeline add_timeline_event g]
+      
+      [have a add_contains b]
+      [have a add_contains c]
+      [have b add_next     c]
+      [have d add_contains e]
+      [have d add_contains f]
+      [have e add_next     f]
+      [have e add_contains g]
+      
+      [image-display [timeline-as-image timeline 16]]
+      [image-display [timeline-as-constrained_image timeline 256 256]]
+      
+      timeline]]]
+
+
+[defunk timeline-retry []
+  [require timeline-test]
+  [global_core_extension_handler-unload_changed]
+  [timeline-test]]
+
+

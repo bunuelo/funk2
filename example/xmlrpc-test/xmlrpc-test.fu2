@@ -18,20 +18,23 @@
  rights to redistribute these changes.'
 
 
-'First, we require the xmlrpc package, which defines the xmlrpc_client
+[defunk xmlrpc-test []
+  
+  'First, we require the xmlrpc package, which defines the xmlrpc_client
 object.'
-
-[require xmlrpc]
-
-
-'Next, we create the xmlrpc_client object with the specified URL for
+  
+  [require xmlrpc]
+  
+  
+  'Next, we create the xmlrpc_client object with the specified URL for
 the xmlrpc server that we want to use.'
-
-[globalize client [new xmlrpc_client 'http://localhost:2222/RPC2']]
-
-
-'Finally, we call a sample function on the server.'
-
-[have client call `sample.add 1 2]
-
+  
+  [globalize client [new xmlrpc_client 'http://localhost:2222/RPC2']]
+  
+  
+  'Finally, we call a sample function on the server.'
+  
+  [have client call `sample.add 1 2]
+  
+  ]
 

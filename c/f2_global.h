@@ -65,7 +65,7 @@ typedef unsigned char boolean_t;
 
 #define error(fiber, str) {fputs("\n*** ", stderr); fputs(str, stderr); fputs(" ***\n", stderr); assert_failed(fiber, __FILE__, __LINE__, str); exit(-1);}
 
-// Single user 32 bit mode is only used for very old computers or those with very little (less than 1 gigabyte of usable disk space for a demo of the language).
+// Single user 32 bit mode is only used for very old computers or those with very little (less than 1 gigabyte of memory for a demo of the language).
 #ifdef F2__SINGLE_USER_32BIT_VERSION
     typedef                      u32 f2ptr;
 #   define f2ptr__fstr           X32__fstr

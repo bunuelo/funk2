@@ -43,6 +43,7 @@
        nil]]
 
 [deftypefunk translate_mental_knowledge_to_meta_mental_knowledge_resource execute execute_resource_raw_funk []
+  `[= debug t]
   [let [[mental_knowledge_iterator      [get [get this mind] knowledge_event_stream_iterator `mental_knowledge->meta_mental_knowledge]]
 	[meta_mental_sequence_knowledge [get [get this mind] semantic_knowledge_base `meta_mental_sequence_knowledge]]]
     [while t
@@ -70,6 +71,7 @@
 							[have this-resource think_to_self '\n  debug A5: translate mental->meta_mental add_semantic_frame semantic_resource_action_event cause_being_active: ' event]
 							
 							[let [[current_action_sequence [new semantic_event_sequence [get [get this mind] semantic_realm]]]]
+							  [semantic-add current_action_sequence absolute_start_time [time]]
 							  [have this-resource think_to_self '\n    *** debug A7: translate mental->meta_mental add_semantic_frame cause_being_active resource_semantic_frame current_action_sequence: ' current_action_sequence]
 							  [if agent
 							      [if [not [get meta_mental_sequence_knowledge contains_semantic_frame agent]]
@@ -93,7 +95,9 @@
 								  [have this-resource think_to_self '\n   *** debug A11: adding event to end of sequence: ' semantic_event]
 								  [have current_action_sequence        add_to_end         semantic_event]
 								  [have meta_mental_sequence_knowledge add_semantic_frame semantic_event]
-								  '  => add to action_sequence_cause_frame for the affected agent.']]]]]]
+								  '  => add to action_sequence_cause_frame for the affected agent.']]]
+							  [prog [have this-resource think_to_self '\n   debug A12: no agent defined, cannot add event to agent sequence: ' event]
+								]]]]
 					       ]]]
 					  ]
 				    ]]
@@ -115,6 +119,7 @@
 							[let [[current_action_sequence [semantic-get target current_action_sequence]]]
 							  [have this-resource think_to_self   '\n    *** debug R7: translate mental->meta_mental remove_semantic_frame cause_being_active resource action event cause_being_active current_action_sequence: ' current_action_sequence]
 							  
+							  [semantic-add current_action_sequence absolute_end_time [time]]
 							  [semantic-set target current_action_sequence nil]]]]
 					       ]]]
 					  ]

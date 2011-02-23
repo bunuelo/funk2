@@ -89,8 +89,8 @@ declare_object_type_18_slot(cause,
 
 // cause
 
-//#define cause__allocate_traced_arrays__default_value (nil)
-#define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
+#define cause__allocate_traced_arrays__default_value (nil)
+//#define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
 
 declare_primobject_18_slot(cause,
 			   fibers_mutex,

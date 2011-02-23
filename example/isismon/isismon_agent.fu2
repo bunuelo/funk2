@@ -1,0 +1,443 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+[deframe isismon_agent_resource_menu [frame] [isismon_agent_agency_menu
+					      resource
+					      
+					      resource_menu_item
+					      resource_menu
+					      
+					      debugging_mode_check_menu_item
+					      ]
+  [new [initial-isismon_agent_agency_menu initial-resource]
+       [= isismon_agent_agency_menu initial-isismon_agent_agency_menu]
+       [= resource                  initial-resource]
+       
+       [= resource_menu_item [gtk-menu_item-new [format nil [get resource name] ' Resource']]]
+       [= resource_menu      [gtk-menu-new]]
+       [set resource_menu_item submenu resource_menu]
+       
+       [= debugging_mode_check_menu_item [gtk-check_menu_item-new 'Debugging Mode']]
+       [have resource_menu append debugging_mode_check_menu_item]
+       
+       [have debugging_mode_check_menu_item signal_connect 'toggled'
+	     [funk []
+		   [set this debug_all [get debugging_mode_check_menu_item active]]]
+	     nil]
+       
+       ]]
+
+[deftypefunk isismon_agent_resource_menu get widget []
+  resource_menu_item]
+
+[deftypefunk isismon_agent_resource_menu set debug_all [debug]
+  [terminal_format standard-terminal '\n' [if debug 'Enabling' 'Disabling'] ' debugging mode for ' [get [get resource mind] name] '\'s ' [get resource name] ' resource.']
+  [set debugging_mode_check_menu_item active debug]
+  [set resource debug debug]]
+
+
+
+[deframe isismon_agent_agency_menu [frame] [isismon_agent_layer_menu
+					    agency
+					    
+					    agency_menu_item
+					    agency_menu
+					    
+					    enable_debugging_all_menu_item
+					    disable_debugging_all_menu_item
+					    
+					    isismon_resource_menus
+					    ]
+  [new [initial-isismon_agent_layer_menu initial-agency]
+       [= isismon_agent_layer_menu initial-isismon_agent_layer_menu]
+       [= agency                   initial-agency]
+       
+       [= agency_menu_item [gtk-menu_item-new [format nil [get agency name] ' Agency']]]
+       [= agency_menu      [gtk-menu-new]]
+       [set agency_menu_item submenu agency_menu]
+       
+       [= enable_debugging_all_menu_item [gtk-menu_item-new 'Enable Debugging All']]
+       [have agency_menu append enable_debugging_all_menu_item]
+       [have enable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all t]]
+	     nil]
+       
+       [= disable_debugging_all_menu_item [gtk-menu_item-new 'Disable Debugging All']]
+       [have agency_menu append disable_debugging_all_menu_item]
+       [have disable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all nil]]
+	     nil]
+       
+       [mapc [funk [resource]
+		   [let [[isismon_resource_menu [new isismon_agent_resource_menu this resource]]]
+		     [= isismon_resource_menus [cons isismon_resource_menu isismon_resource_menus]]
+		     [have agency_menu append isismon_resource_menu]]]
+	     [get agency resources]]
+       
+       ]]
+
+[deftypefunk isismon_agent_agency_menu get widget []
+  agency_menu_item]
+
+[deftypefunk isismon_agent_agency_menu set debug_all [debug]
+  [mapc [funk [isismon_resource_menu]
+	      [set isismon_resource_menu debug_all debug]]
+	isismon_resource_menus]]
+
+
+[deframe isismon_agent_layer_menu [frame] [isismon_agent_mind_menu
+					   layer
+					   
+					   layer_menu_item
+					   layer_menu
+					   
+					   enable_debugging_all_menu_item
+					   disable_debugging_all_menu_item
+					   
+					   isismon_agency_menus
+					   ]
+  [new [initial-isismon_agent_mind_menu initial-layer]
+       [= isismon_agent_mind_menu initial-isismon_agent_mind_menu]
+       [= layer                   initial-layer]
+       
+       [= layer_menu_item [gtk-menu_item-new [format nil [get layer name] ' Layer']]]
+       [= layer_menu      [gtk-menu-new]]
+       [set layer_menu_item submenu layer_menu]
+       
+       [= enable_debugging_all_menu_item [gtk-menu_item-new 'Enable Debugging All']]
+       [have layer_menu append enable_debugging_all_menu_item]
+       [have enable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all t]]
+	     nil]
+       
+       [= disable_debugging_all_menu_item [gtk-menu_item-new 'Disable Debugging All']]
+       [have layer_menu append disable_debugging_all_menu_item]
+       [have disable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all nil]]
+	     nil]
+       
+       [mapc [funk [agency]
+		   [let [[isismon_agency_menu [new isismon_agent_agency_menu this agency]]]
+		     [= isismon_agency_menus [cons isismon_agency_menu isismon_agency_menus]]
+		     [have layer_menu append isismon_agency_menu]]]
+	     [get layer agencies]]
+       ]]
+
+[deftypefunk isismon_agent_layer_menu get widget []
+  layer_menu_item]
+
+[deftypefunk isismon_agent_layer_menu set debug_all [debug]
+  [mapc [funk [isismon_agency_menu]
+	      [set isismon_agency_menu debug_all debug]]
+	isismon_agency_menus]]
+
+
+[deframe isismon_agent_mind_menu [frame] [isismon_agent
+					  
+					  mind_menu_item
+					  mind_menu
+					  
+					  enable_debugging_all_menu_item
+					  disable_debugging_all_menu_item
+					  
+					  isismon_layer_menus
+					  ]
+  [new [initial-isismon_agent]
+       [= isismon_agent initial-isismon_agent]
+       
+       [= mind_menu_item [gtk-menu_item-new 'Mind']]
+       [= mind_menu      [gtk-menu-new]]
+       [set mind_menu_item submenu mind_menu]
+       
+       [= enable_debugging_all_menu_item [gtk-menu_item-new 'Enable Debugging All']]
+       [have mind_menu append enable_debugging_all_menu_item]
+       [have enable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all t]]
+	     nil]
+       
+       [= disable_debugging_all_menu_item [gtk-menu_item-new 'Disable Debugging All']]
+       [have mind_menu append disable_debugging_all_menu_item]
+       [have disable_debugging_all_menu_item signal_connect 'activate'
+	     [funk []
+		   [set this debug_all nil]]
+	     nil]
+       
+       [fiber [funk []
+		    [mapc [funk [layer]
+				[let [[isismon_layer_menu [new isismon_agent_layer_menu this layer]]]
+				  [= isismon_layer_menus [cons isismon_layer_menu isismon_layer_menus]]
+				  [have [get isismon_layer_menu widget] show_all]
+				  [have mind_menu append isismon_layer_menu]]]
+			  [have [get [get [get isismon_agent isis_agent] mind] layers] sort [funk [x y] [< [get x index] [get y index]]]]]
+		    [have mind_menu_item show_all]]
+	      nil]
+       
+       nil]]
+
+[deftypefunk isismon_agent_mind_menu get widget []
+  mind_menu_item]
+				
+[deftypefunk isismon_agent_mind_menu set debug_all [debug]
+  [mapc [funk [isismon_layer_menu]
+	      [set isismon_layer_menu debug_all debug]]
+	isismon_layer_menus]]
+
+
+
+[deframe isismon_save_agent_dialog [frame] [isismon_agent
+					    isismon
+					    save_dialog]
+  [new [initial-isismon_agent]
+       [= isismon_agent initial-isismon_agent]
+       [= isismon       [get [get isismon_agent isismon_project] isismon]]
+       
+       [= save_dialog [gtk-file_chooser_dialog-new_for_file_save [get isismon window]]]
+       
+       [have save_dialog add_file_filter_pattern 'IsisMon Agent Files (*.isis-agent)' '*.isis-agent']
+       [have save_dialog add_file_filter_pattern 'All Files (*.*)'                    '*.*']
+       [set  save_dialog current_name 'Untitled Agent.isis-agent']
+       [set  save_dialog current_folder [get [get isismon preferences] agent_directory]]
+       [have save_dialog response_event-signal_connect
+	     [funk [event_frame]
+		   [let [[response_id [have event_frame lookup `response_id]]]
+		     [if [eq response_id GTK_RESPONSE_ACCEPT]
+			 [let [[filename [get save_dialog filename]]]
+			   [have save_dialog destroy]
+			   [have isismon_agent save filename]]
+		       [have save_dialog destroy]]]]
+	     nil]
+       [have save_dialog show_all]]]
+
+
+[deframe isismon_agent [frame] [isis_agent
+				
+				isismon_project
+				
+				frame
+				vbox
+				
+				menu_bar
+				file_menu_item
+				file_menu
+				file_save_agent_menu_item
+				tools_menu
+				tools_menu_item
+				tools_mindmon_menu_item
+				tools_builtin_reactive_physical_activator_menu_item
+				tools_learned_reactive_physical_activator_menu_item
+				view_menu
+				view_menu_item
+				view_sense_menu_item
+				view_visual_objects_menu_item
+				view_proprioceptual_frame_menu_item
+				isismon_agent_mind_menu
+				
+				entry
+				
+				other_agents_isismon_knowledge
+				meta_mental_sequence_isismon_knowledge
+				mental_knowledge_isismon_knowledge
+				meta_physical_isismon_knowledge
+				physical_isismon_knowledge
+				visual_isismon_knowledge
+				
+				]
+  [new [initial_isismon_project initial_isis_agent]
+       [= isismon_project initial_isismon_project]
+       [= isis_agent      initial_isis_agent]
+       
+       [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
+       [= vbox  [gtk-vbox-new 0]]
+       
+       [= menu_bar        [gtk-menu_bar-new]]
+       [have vbox pack_start menu_bar nil nil 0]
+       
+       [= file_menu_item            [gtk-menu_item-new 'File']]
+       [= file_menu                 [gtk-menu-new]]
+       [= file_save_agent_menu_item [gtk-menu_item-new 'Save Agent...']]
+       [have file_menu append file_save_agent_menu_item]
+       [set file_menu_item submenu file_menu]
+       [have menu_bar append file_menu_item]
+       
+       [have file_save_agent_menu_item signal_connect 'activate'
+	     [funk []
+		   [new isismon_save_agent_dialog this]]
+	     nil]
+       
+       [= tools_menu      [gtk-menu-new]]
+       [= tools_menu_item [gtk-menu_item-new 'Tools']]
+       [set tools_menu_item submenu tools_menu]
+       [have menu_bar append tools_menu_item]
+       
+       [= tools_mindmon_menu_item [gtk-menu_item-new 'MindMon']]
+       [have tools_mindmon_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\nLaunching MindMon to monitor ' [get this name] '\'s mind.']
+		   [mindmon [get isis_agent mind]]]
+	     nil]
+       [have tools_menu append tools_mindmon_menu_item]
+       
+       [= tools_builtin_reactive_physical_activator_menu_item [gtk-menu_item-new 'Built-in Reactive Physical Activator']]
+       [have tools_builtin_reactive_physical_activator_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\nLaunching built-in reactive physical activator for agent ' [get this name] '.']
+		   [new isismon_agent_builtin_reactive_physical_resource_activator this]]
+	     nil]
+       [have tools_menu append tools_builtin_reactive_physical_activator_menu_item]
+       
+       [= tools_learned_reactive_physical_activator_menu_item [gtk-menu_item-new 'Learned Reactive Physical Activator']]
+       [have tools_learned_reactive_physical_activator_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\nLaunching learned reactive physical activator for agent ' [get this name] '.']
+		   [new isismon_agent_learned_reactive_physical_resource_activator this]]
+	     nil]
+       [have tools_menu append tools_learned_reactive_physical_activator_menu_item]
+       
+       [= view_menu      [gtk-menu-new]]
+       [= view_menu_item [gtk-menu_item-new 'View']]
+       [set view_menu_item submenu view_menu]
+       [have menu_bar append view_menu_item]
+       
+       [= view_sense_menu_item [gtk-menu_item-new 'Sense']]
+       [have view_sense_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\n' [get this name] '\'s sensory information:'
+				    '\n  ' [have isis_agent sense_world]]]
+	     nil]
+       [have view_menu append view_sense_menu_item]
+
+
+       [= view_proprioceptual_frame_menu_item [gtk-menu_item-new 'Proprioceptual Frame']]
+       [have view_proprioceptual_frame_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\n' [get this name] '\'s proprioceptual frame:'
+				    '\n  ' [have [get [get isis_agent mind] perception] lookup `proprioceptual_frame]]]
+	     nil]
+       [have view_menu append view_proprioceptual_frame_menu_item]
+       
+       [= view_visual_objects_menu_item [gtk-menu_item-new 'Visual Objects']]
+       [have view_visual_objects_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\n' [get this name] '\'s visual objects:'
+				    '\n  ' [have [get [get isis_agent mind] perception] lookup `visual_objects]]]
+	     nil]
+       [have view_menu append view_visual_objects_menu_item]
+       
+       [= isismon_agent_mind_menu [new isismon_agent_mind_menu this]]
+       [have menu_bar append isismon_agent_mind_menu]
+       
+       
+       [= entry [gtk-entry-new]]
+       
+       [have entry key_press_event-signal_connect
+	     [funk [key_event]
+		   [let [[keyval [have key_event lookup `keyval]]]
+		     `[terminal_format standard-terminal '\nkey event: ' key_event]
+		     [if [eq keyval GDK_Return]
+			 [let [[text [get entry text]]]
+			   [set entry text '']
+			   [let [[strings [have text split ' ']]]
+			     [let [[reverse_symbols nil]]
+			       [mapc [funk [string]
+					   [if [not [equals string '']]
+					       [= reverse_symbols [cons [get string as-symbol] reverse_symbols]]]]
+				     strings]
+			       [let [[symbols [reverse reverse_symbols]]]
+				 [terminal_format standard-terminal '\nSending symbols, ' symbols ', through ' [get isis_agent name] '\'s neural plug.']
+				 [let [[activate_resource [get [get isis_agent mind] resource `builtin_reactive `neural_plug `activate_resource]]]
+				   [have activate_resource command `learned_reactive `language `speak_language [append `[I hear] symbols `[from nil]]]
+				   [have activate_resource command `learned_reactive `language `hear_language_from_agent nil symbols]
+				   ]]]]]]]]
+	     nil]
+       
+       [have vbox pack_start entry nil nil 0]
+       
+       [fiber [funk []
+		    [= other_agents_isismon_knowledge [new isismon_knowledge this `other_agents_knowledge]]
+		    [have vbox pack_start [get other_agents_isismon_knowledge widget] nil nil 0]
+		    
+		    [= meta_mental_sequence_isismon_knowledge [new isismon_knowledge this `meta_mental_sequence_knowledge]]
+		    [have vbox pack_start [get meta_mental_sequence_isismon_knowledge widget] nil nil 0]
+		    
+		    [= mental_knowledge_isismon_knowledge [new isismon_knowledge this `mental_knowledge]]
+		    [have vbox pack_start [get mental_knowledge_isismon_knowledge widget] nil nil 0]
+		    
+		    [= meta_physical_isismon_knowledge [new isismon_knowledge this `meta_physical_knowledge]]
+		    [have vbox pack_start [get meta_physical_isismon_knowledge widget] nil nil 0]
+		    
+		    [= physical_isismon_knowledge [new isismon_knowledge this `physical_knowledge]]
+		    [have vbox pack_start [get physical_isismon_knowledge widget] nil nil 0]
+		    
+		    [= visual_isismon_knowledge [new isismon_knowledge this `visual_knowledge]]
+		    [have vbox pack_start [get visual_isismon_knowledge widget] nil nil 0]
+		    
+		    [have [get this widget] show_all]
+		    ]
+	      nil]
+       
+       [have frame add vbox]
+       nil]]
+
+[defunk isismon_agent-new_from_name [isismon_project name]
+  [let [[moral_compass [new moral_compass]]]
+    [let [[isis_agent [new isis_agent_body [get isismon_project isis_world] moral_compass name]]]
+      [terminal_format standard-terminal '\nisismon_agent-new_from_name added mind to body.']
+      [have moral_compass activate_vital_resources]
+      [new isismon_agent isismon_project isis_agent]]]]
+
+[deftypefunk isismon_agent get name []
+  [get isis_agent name]]
+
+[deftypefunk isismon_agent get widget []
+  frame]
+
+[deftypefunk isismon_agent execute update_entry []
+  [let [[look_for_resource [get [get isis_agent mind] resource `learned_reactive `physical `look_for]]]
+    [set entry text [format nil 'look_for-current_object: \t' [have look_for_resource lookup `my_current_object]]]
+    ]]
+
+[deftypefunk isismon_agent execute update []
+  [if other_agents_isismon_knowledge         [have other_agents_isismon_knowledge         update]]
+  [if meta_mental_sequence_isismon_knowledge [have meta_mental_sequence_isismon_knowledge update]]
+  [if mental_knowledge_isismon_knowledge     [have mental_knowledge_isismon_knowledge     update]]
+  [if meta_physical_isismon_knowledge        [have meta_physical_isismon_knowledge        update]]
+  [if physical_isismon_knowledge             [have physical_isismon_knowledge             update]]
+  [if visual_isismon_knowledge               [have visual_isismon_knowledge               update]]
+  nil]
+
+[deftypefunk isismon_agent get retina_image_sequence []
+  [get isis_agent retina_image_sequence]]
+
+[deftypefunk isismon_agent execute save [filename]
+  [terminal_format standard-terminal '\nIsisMon Agent: Saving ' filename '.']
+  [have [get [get isis_agent as-chunk] deflated] save filename]
+  [terminal_format standard-terminal '\nIsisMon Agent: Save agent complete.']]
+
+[defunk isismon_agent-new_from_file [isismon_project filename]
+  [terminal_format standard-terminal '\nIsisMon Agent: Loading ' filename '.']
+  [let [[isis_agent_body [isis_agent_body-new_from_chunk [get isismon_project isis_world] [get [chunk-load filename] inflated]]]]
+    [let [[this [new isismon_agent isismon_project isis_agent_body]]]
+      [terminal_format standard-terminal '\nIsisMon Agent: Load agent complete.']
+      this]]]

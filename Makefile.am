@@ -147,8 +147,8 @@ debug_flags    = -g -pg -fstack-check -DDEBUG -DDEBUG_MEMORY=1 -DF2__PROCESSOR_M
 
 optimize_flags = 
 
-debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(debug_flags)
-release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(optimize_flags)
+debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(debug_flags)
+release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(optimize_flags)
 athena__cc_flags  = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
 #cc_flags = $(debug__cc_flags)
@@ -207,6 +207,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/causality/libf2e_causality.la \
+                  extension/cairo/libf2e_cairo.la \
                   extension/conceptnet/libf2e_conceptnet.la \
                   extension/event_stream/libf2e_event_stream.la \
                   extension/equals_hash/libf2e_equals_hash.la \
@@ -222,6 +223,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la \
                   extension/mindmon/libf2e_mindmon.la \
                   extension/movie/libf2e_movie.la \
+                  extension/propogator/libf2e_propogator.la \
                   extension/semantic_action_event/libf2e_semantic_action_event.la \
                   extension/semantic_agent/libf2e_semantic_agent.la \
                   extension/semantic_event_sequence/libf2e_semantic_event_sequence.la \
@@ -238,7 +240,8 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/semantic_resource/libf2e_semantic_resource.la \
                   extension/semantic_resource_action_event/libf2e_semantic_resource_action_event.la \
                   extension/semantic_temporal_object/libf2e_semantic_temporal_object.la \
-                  extension/semantic_visual_object/libf2e_semantic_visual_object.la
+                  extension/semantic_visual_object/libf2e_semantic_visual_object.la \
+                  extension/timeline/libf2e_timeline.la
 
 #bin_PROGRAMS    = bin/funk2-static
 
@@ -373,6 +376,7 @@ lib_libfunk2_la_SOURCES = \
   config_bit_num.h
 
 extension_causality_libf2e_causality_la_SOURCES                                           = extension/causality/causality.c
+extension_cairo_libf2e_cairo_la_SOURCES                                                   = extension/cairo/cairo.c
 extension_conceptnet_libf2e_conceptnet_la_SOURCES                                         = extension/conceptnet/conceptnet.c
 extension_event_stream_libf2e_event_stream_la_SOURCES                                     = extension/event_stream/event_stream.c
 extension_equals_hash_libf2e_equals_hash_la_SOURCES                                       = extension/equals_hash/equals_hash.c
@@ -388,6 +392,7 @@ extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_SOURCES   
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES     = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
 extension_mindmon_libf2e_mindmon_la_SOURCES                                               = extension/mindmon/mindmon.c
 extension_movie_libf2e_movie_la_SOURCES                                                   = extension/movie/movie.c
+extension_propogator_libf2e_propogator_la_SOURCES                                         = extension/propogator/propogator.c
 extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES                   = extension/semantic_action_event/semantic_action_event.c
 extension_semantic_agent_libf2e_semantic_agent_la_SOURCES                                 = extension/semantic_agent/semantic_agent.c
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES               = extension/semantic_event_sequence/semantic_event_sequence.c
@@ -405,6 +410,7 @@ extension_semantic_resource_libf2e_semantic_resource_la_SOURCES                 
 extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_SOURCES = extension/semantic_resource_action_event/semantic_resource_action_event.c
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES             = extension/semantic_temporal_object/semantic_temporal_object.c
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES                 = extension/semantic_visual_object/semantic_visual_object.c
+extension_timeline_libf2e_timeline_la_SOURCES                                             = extension/timeline/timeline.c
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 
@@ -425,46 +431,50 @@ FUNK2_LIBRARY_VERSION=0:0:0
 #              |           set to zero if current is incremented
 #              +- increment if interfaces have been added, removed or changed
 
-lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS) $(LIBAVCODEC_LIBS) $(LIBSWSCALE_LIBS) 
+lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS) $(LIBAVCODEC_LIBS) $(LIBSWSCALE_LIBS) $(CAIRO_LIBS) 
 lib_libfunk2_la_CFLAGS  = $(cc_flags)
 
 bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 all_core_extensions = \
-  $(extension_equals_hash_libf2e_equals_hash_la) \
-  $(extension_fibermon_libf2e_fibermon_la) \
-  $(extension_image_libf2e_image_la) \
-  $(extension_image_sequence_libf2e_image_sequence_la) \
-  $(extension_movie_libf2e_movie_la) \
+  $(extension_cairo_libf2e_cairo_la) \
+  $(extension_causality_libf2e_causality_la) \
   $(extension_conceptnet_libf2e_conceptnet_la) \
+  $(extension_equals_hash_libf2e_equals_hash_la) \
   $(extension_event_stream_libf2e_event_stream_la) \
+  $(extension_fibermon_libf2e_fibermon_la) \
   $(extension_forward_planner_libf2e_forward_planner_la) \
   $(extension_frame_ball_libf2e_frame_ball_la) \
   $(extension_graph_isomorphism_libf2e_graph_isomorphism_la) \
-  $(extension_semantic_action_event_libf2e_semantic_action_event_la) \
-  $(extension_semantic_agent_libf2e_semantic_agent_la) \
-  $(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la) \
-  $(extension_semantic_containment_object_libf2e_semantic_containment_object_la) \
-  $(extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la) \
-  $(extension_semantic_event_libf2e_semantic_event) \
-  $(extension_semantic_frame_ball_libf2e_semantic_frame_ball) \
+  $(extension_image_libf2e_image_la) \
+  $(extension_image_sequence_libf2e_image_sequence_la) \
   $(extension_lick_libf2e_lick_la) \
   $(extension_mentality_libf2e_mentality_la) \
   $(extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la) \
-  $(extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la) \
   $(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la) \
+  $(extension_mindmon_libf2e_mindmon_la) \
+  $(extension_movie_libf2e_movie_la) \
+  $(extension_propogator_libf2e_propogator_la) \
+  $(extension_semantic_action_event_libf2e_semantic_action_event_la) \
+  $(extension_semantic_agent_libf2e_semantic_agent_la) \
+  $(extension_semantic_containment_object_libf2e_semantic_containment_object_la) \
+  $(extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la) \
+  $(extension_semantic_event_libf2e_semantic_event) \
+  $(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la) \
+  $(extension_semantic_frame_ball_libf2e_semantic_frame_ball) \
+  $(extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la) \
   $(extension_semantic_ordered_object_libf2e_semantic_ordered_object_la) \
   $(extension_semantic_object_type_libf2e_semantic_object_type_la) \
   $(extension_semantic_object_libf2e_semantic_object_la) \
   $(extension_semantic_packable_object_libf2e_semantic_packable_object_la) \
   $(extension_semantic_physical_object_libf2e_semantic_physical_object_la) \
-  $(extension_semantic_visual_object_libf2e_semantic_visual_object_la) \
-  $(extension_mindmon_libf2e_mindmon_la) \
-  $(extension_causality_libf2e_causality_la) \
   $(extension_semantic_resource_libf2e_semantic_resource_la) \
   $(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la) \
-  $(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la)
+  $(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la) \
+  $(extension_semantic_visual_object_libf2e_semantic_visual_object_la) \
+  $(extension_timeline_libf2e_timeline_la)
+
 
 extension_equals_hash_libf2e_equals_hash_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_equals_hash_libf2e_equals_hash_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -481,6 +491,12 @@ extension_image_sequence_libf2e_image_sequence_la_CFLAGS  = $(lib_libfunk2_la_CF
 extension_movie_libf2e_movie_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_movie_libf2e_movie_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
+extension_cairo_libf2e_cairo_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_cairo_libf2e_cairo_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_causality_libf2e_causality_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_causality_libf2e_causality_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
 extension_conceptnet_libf2e_conceptnet_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_conceptnet_libf2e_conceptnet_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
@@ -495,6 +511,9 @@ extension_frame_ball_libf2e_frame_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_propogator_libf2e_propogator_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_propogator_libf2e_propogator_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_action_event_libf2e_semantic_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_action_event_libf2e_semantic_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -526,11 +545,14 @@ extension_mentality_libf2e_mentality_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_meta_semantic_frame_ball_libf2e_meta_semantic_frame_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
-
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_mindmon_libf2e_mindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_mindmon_libf2e_mindmon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -547,15 +569,6 @@ extension_semantic_packable_object_libf2e_semantic_packable_object_la_CFLAGS  = 
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_semantic_visual_object_libf2e_semantic_visual_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_semantic_visual_object_libf2e_semantic_visual_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
-
-extension_mindmon_libf2e_mindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_mindmon_libf2e_mindmon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
-
-extension_causality_libf2e_causality_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_causality_libf2e_causality_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
-
 extension_semantic_resource_libf2e_semantic_resource_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_resource_libf2e_semantic_resource_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
@@ -564,6 +577,13 @@ extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_l
 
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_visual_object_libf2e_semantic_visual_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_visual_object_libf2e_semantic_visual_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_timeline_libf2e_timeline_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_timeline_libf2e_timeline_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h
@@ -603,7 +623,7 @@ make-install-sh:
 	chmod a+x install-sh
 
 bin/funk2$(EXEEXT): lib/libfunk2.la $(all_core_extensions)
-	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) -Llib/.libs -lfunk2
+	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) -Llib/.libs -lfunk2
 
 install: install-am make-install-sh
 	./install-sh

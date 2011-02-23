@@ -36,6 +36,9 @@ typedef struct funk2_number_globalvars_s {
   f2ptr square_root__symbol;
 } funk2_number_globalvars_t;
 
+f2ptr f2__is_greater_than(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr f2__is_less_than(f2ptr cause, f2ptr this, f2ptr that);
+
 f2ptr  raw__number__as__double(f2ptr cause, f2ptr this);
 f2ptr   f2__number__as__double(f2ptr cause, f2ptr this);
 double raw__number__as__raw_double(f2ptr cause, f2ptr this);

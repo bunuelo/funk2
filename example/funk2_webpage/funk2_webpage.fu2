@@ -167,8 +167,77 @@
 	       '</table>'
 	       '</div>']]
 
+[defunk funk2_calendar_2010_february []
+  [string-prog '<div id="calendar_wrap">'
+	       '  <table summary="Calendar">'
+	       '  <caption>'
+	       '  February 2011'
+	       '  </caption>'
+	       '  <thead>'
+	       '    <tr>'
+	       '      <th abbr="Sunday"    scope="col" title="Sunday"   >S</th>'
+	       '      <th abbr="Monday"    scope="col" title="Monday"   >M</th>'
+	       '      <th abbr="Tuesday"   scope="col" title="Tuesday"  >T</th>'
+	       '      <th abbr="Wednesday" scope="col" title="Wednesday">W</th>'
+	       '      <th abbr="Thursday"  scope="col" title="Thursday" >T</th>'
+	       '      <th abbr="Friday"    scope="col" title="Friday"   >F</th>'
+	       '      <th abbr="Saturday"  scope="col" title="Saturday" >S</th>'
+	       '    </tr>'
+	       '  </thead>'
+	       '  <tfoot>'
+	       '    <tr>'
+	       '      <td abbr="February" colspan="3" id="prev"><a href="#" title="View posts for January 2011">&laquo; Jan</a></td>'
+	       '      <td class="pad">&nbsp;</td>'
+	       '      <td colspan="3" id="next">&nbsp;</td>'
+	       '    </tr>'
+	       '  </tfoot>'
+	       '  <tbody>'
+	       '    <tr>'
+	       '      <td class="pad" colspan="2">&nbsp;</td>'
+	       '      <td>1</td>'
+	       '      <td>2</td>'
+	       '      <td>3</td>'
+	       '      <td>4</td>'
+	       '      <td>5</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>6</td>'
+	       '      <td>7</td>'
+	       '      <td>8</td>'
+	       '      <td>9</td>'
+	       '      <td>10</td>'
+	       '      <td>11</td>'
+	       '      <td>12</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>13</td>'
+	       '      <td>14</td>'
+	       '      <td>15</td>'
+	       '      <td>16</td>'
+	       '      <td>17</td>'
+	       '      <td>18</td>'
+	       '      <td id="today">19</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>20</td>'
+	       '      <td>21</td>'
+	       '      <td>22</td>'
+	       '      <td>23</td>'
+	       '      <td>24</td>'
+	       '      <td>25</td>'
+	       '      <td>26</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>27</td>'
+	       '      <td>28</td>'
+	       '      <td class="pad" colspan="5">&nbsp;</td>'
+	       '    </tr>'
+	       '  </tbody>'
+	       '</table>'
+	       '</div>']]
+
 [defunk funk2_calendar []
-  [funk2_calendar_2010_december]]
+  [funk2_calendar_2010_february]]
 
 [defunk funk2_page [posts examples content]
   [string-prog '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
@@ -409,7 +478,15 @@
 
 
 
+[defunk funk2_documentation_format [documentation]
+  [string-prog '<table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>'
+	       [if [is-type `string documentation]
+		   [stringlist-intersperse [have documentation split '\n'] '<br>']
+		 [exp-as-string documentation]]
+	       '</td></tr></table>']]
 
+[defunk funk2_funk_documentation [funk]
+  [funk2_documentation_format [get funk documentation]]]
 
 [defunk funk2_object_documentation [posts examples type_name]
   [print [string-concat 'compiling ' [get type_name as-string] ' object documentation']]
@@ -422,8 +499,9 @@
 									 [print [string-concat '  key: ' [get key_name as-string]]]
 									 [let [[funk [get type type_var_value `get key_name nil]]]
 									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
-											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [exp-as-string [get funk documentation]] '<br>']
-											'&nbsp;'
+											'<p>'
+											[funk2_funk_documentation funk]
+											'</p><br>'
 											'</li>']]]
 								   [get type type_var-keys `get]]]
 					  '</ul>'
@@ -434,8 +512,9 @@
 									 [print [string-concat '  key: ' [get key_name as-string]]]
 									 [let [[funk [get type type_var_value `set key_name nil]]]
 									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
-											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [exp-as-string [get funk documentation]] '<br>']
-											'&nbsp;'
+											'<p>'
+											[funk2_funk_documentation funk]
+											'</p><br>'
 											'</li>']]]
 								   [get type type_var-keys `set]]]
 					  '</ul>'
@@ -446,8 +525,9 @@
 									 [print [string-concat '  key: ' [get key_name as-string]]]
 									 [let [[funk [get type type_var_value `execute key_name nil]]]
 									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
-											'&nbsp;&nbsp;&nbsp;&nbsp;' [string-concat [exp-as-string [get funk documentation]] '<br>']
-											'&nbsp;'
+											'<p>'
+											[funk2_funk_documentation funk]
+											'</p><br>'
 											'</li>']]]
 								   [get type type_var-keys `execute]]]
 					  '</ul>'
@@ -478,11 +558,8 @@
 					  ''
 					  '<h2>Documentation</h2>'
 					  '<p>'
-					  [let [[documentation [get package documentation]]]
-					    [if [is-type `string documentation]
-						documentation
-					      [get documentation as-string]]]
-					  '</p>'
+					  [funk2_documentation_format [get package documentation]]
+					  '</p><br>'
 					  ''
 					  '<h2>Objects Defined</h2>'
 					  '<ul>'
@@ -495,8 +572,9 @@
 
 [defunk funk2_documentation-all_packages-require []
   [mapc [funk [package_name]
-	      [print [format nil 'requiring ' package_name '.']]
-	      [require-package package_name]]
+	      [if [not [get [lookup-package package_name] loaded_all_dependencies_time]]
+		  [prog [print [format nil 'requiring ' package_name '.']]
+			[require-package package_name]]]]
 	[package_names]]]
 
 [defunk funk2_documentation-all_packages-save [root_dir posts examples]
@@ -557,7 +635,7 @@
 	      [funk2_documentation-content root_dir posts examples]]]
 
 [defunk compile_funk2_documentation [root_dir posts examples]
-  `[funk2_documentation-all_packages-require]
+  [funk2_documentation-all_packages-require]
   [let [[documentation [funk2_documentation root_dir posts examples]]]
     [shelter [mkdir [string-concat root_dir 'documentation']]]
     [have documentation save [string-concat root_dir 'documentation/index.html']]
@@ -684,6 +762,15 @@
     nil]]
 
 
+[defunk funk2_code_section [code]
+  [string-prog '<tt>'
+	       [have [have [have [have code replace_all '\n' '<br>\n']
+				 replace_all '-' '&#x2011;']
+			   replace_all '\t' '        ']
+		     replace_all ' ' '&nbsp;']
+	       '</tt>']]
+
+
 [defunk funk2_example [posts examples example]
   [let [[content [string-prog '<!-- start content -->'
 			      '<div id="content">'
@@ -691,12 +778,9 @@
 			      [stringlist-concat `['<h1 class="title">' ,[get example title] '</h1>']]
 			      [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get example date] ' by ' ,[get example author] '</small></p>']]
 			      '    <div class="entry">'
-			      '      <p><tt>'
-			      [have [have [have [have [get example entry] replace_all '\n' '<br>\n']
-						replace_all '-' '&#x2011;']
-					  replace_all '\t' '        ']
-				    replace_all ' ' '&nbsp;']
-			      '      </tt></p>'
+			      '      <p>'
+			      [funk2_code_section [get example entry]]
+			      '      </p>'
 			      [string-concat '<p class="links"><a href="/example/' [get example name] '.fu2" class="more">Download</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>']
 			      '    </div>'
 			      '  </div>'
@@ -739,11 +823,51 @@
 [defunk generate_all_posts []
   [list [let [[this [new funk2_post]]]
 	  [set this title  'Welcome to the official Funk2 Website!']
-	  [set this date   'October 14th, 2010']
+	  [set this date   'February 19th, 2011']
 	  [set this author '<a href="#">Bo Morgan</a>']
 	  [set this entry  [string-prog '<p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  '
 					'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
-					'The Funk2 project is currently supported as a core research effort of the <a href=http://mmp.mit.edu>Mind Machine Project</a>.</p>']]
+					'Funk2 is primary meant as a novel artificial intelligence research tool for developing massive heterogeneous AI systems.'
+					'We expect our novel ways of reflectively controlling massive parallel systems to be useful to many diverse fields of computational application and theoretical modelling.']]
+	  this]
+	[let [[this [new funk2_post]]]
+	  [set this title  'Fiber triggers added as efficient process control']
+	  [set this date   'February 19th, 2011']
+	  [set this author '<a href="#">Bo Morgan</a>']
+	  [set this entry  [string-prog '<p>Process triggers are a new Funk2 core object that allows for multiple parallel processes to wait for a specific trigger signal object to be triggered by a controlling process.'
+					'The following is a simple example that defines a global trigger named <tt>my-trigger</tt>.'
+					'Next, we enter a <tt>dotimes</tt> loop that loops ten times and creates ten parallel <tt>fiber</tt>s (funk2 processes).'
+					'Each of these parallel <tt>fiber</tt>s enters an infinite loop that simply waits for our <tt>trigger</tt>, <tt>my-trigger</tt>, to be triggered.'
+					'The last line triggers our <tt>trigger</tt> object, which allows all of our waiting processes to start running and they each end up printing a number from zero to nine.'
+					'</p>'
+					'<p>'
+					[funk2_code_section [string-prog '[globalize my-trigger [new fiber_trigger]]'
+									 ''
+									 '[dotimes [i 10]'
+									 '  [let [[j i]]'
+									 '    [fiber [funk []'
+									 '             [while t'
+									 '               [wait-for-trigger my-trigger]'
+									 '               [print j]]]]'
+									 '           nil]]'
+									 ''
+									 '[have my-trigger trigger]'
+									 ]]
+					'</p>'
+					'<p>'
+					'While a <tt>fiber</tt> process is waiting for a trigger, it is paused, which means that it takes no system CPU resources.'
+					'This allows us to easily allocate thousands of different parallel processes that are efficiently controlled in this way.'
+					'</p>']]
+	  this]
+	[let [[this [new funk2_post]]]
+	  [set this title  'Cairo support added for vector graphics rendering']
+	  [set this date   'February 19th, 2011']
+	  [set this author '<a href="#">Bo Morgan</a>']
+	  [set this entry  [string-prog '<p>You can now export screen renderings to PDF, SVG, postscript (PS) or PNG files from within the Funk2 programming language by includinig the Cairo package (i.e. <tt>[require cairo]</tt>).'
+					'An example Cairo application can be seen in the <tt>cairo-test</tt> directory included in the <tt>example</tt> directory in the source code.'
+					'The cairo test example can be included and run by typing, <tt>[require cairo]</tt>, followed by, <tt>[cairo-test]</tt>, which should output a test file for each available file format.'
+					'See the <a href=../documentation/package/cairo/>Funk2 Cairo package documentation</a> for details about the Funk2 wrapper.'
+					'</p>']]
 	  this]
 	[let [[this [new funk2_post]]]
 	  [set this title  'Natural language processing']
@@ -894,6 +1018,13 @@
 
 [defunk generate_all_examples []
   [list [let [[this [new funk2_example]]]
+	  [set this name   'cairo-test']
+	  [set this title  'Cairo Test']
+	  [set this date   'February 19th, 2011']
+	  [set this author 'Bo Morgan']
+	  [set this entry  [string-load 'example/cairo-test/cairo-test.fu2']]
+	  this]
+	[let [[this [new funk2_example]]]
 	  [set this name   'GTK_GUI']
 	  [set this title  'GTK graphical user interface']
 	  [set this date   'October 14th, 2010']

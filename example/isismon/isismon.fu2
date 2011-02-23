@@ -798,7 +798,8 @@
 			     [have initialize_mutex unlock]
 			     
 			     [while [not done]
-			       [wait-for-trigger cycle_trigger]
+			       [if [get this should_wait_before_next_cycle]
+				   [wait-for-trigger cycle_trigger]]
 			       [have this cycle]]
 			     [have window destroy]]
 		       nil]]

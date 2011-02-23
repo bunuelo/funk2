@@ -807,8 +807,8 @@
        nil]]
 
 [deftypefunk isismon get should_wait_before_next_cycle []
-  [and isismon_project
-       [get isismon_project simulation_playing]]]
+  [or [not isismon_project]
+      [not [get isismon_project simulation_playing]]]]
 
 [deftypefunk isismon execute cycle []
   [if [not [get window visible]]

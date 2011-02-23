@@ -161,7 +161,7 @@ f2ptr raw__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr 
 
 f2ptr f2__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time) {
   if (((start_time != nil) && (! raw__time__is_type(cause, start_time))) ||
-      ((end_timme  != nil) && (! raw__time__is_type(cause, end_time)))) {
+      ((end_time  != nil)  && (! raw__time__is_type(cause, end_time)))) {
     return f2larva__new(cause, 1, nil);
   }
   if ((start_time != nil) && (end_time != nil)) {

@@ -405,7 +405,7 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
 	return result;
       }
     } else if (end_time == nil) {
-      f2ptr  result = raw__cairo_context__render_rounded_text_box_with_broken_left(cause, cairo_context,
+      f2ptr  result = raw__cairo_context__render_rounded_text_box_with_broken_right(cause, cairo_context,
 										    start_position, top_position,                                  // x0, y0
 										    end_position - start_position, bottom_position - top_position, // dx, dy
 										    1,                                                             // font size

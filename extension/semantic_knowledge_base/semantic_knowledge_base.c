@@ -1853,7 +1853,9 @@ export_cefunk1(semantic_knowledge_base__as__digraph_dot_code, this, 0, "Compile 
 f2ptr raw__semantic_knowledge_base__new__event_stream_iterator(f2ptr cause, f2ptr this) {
   raw__semantic_knowledge_base__initialize_tracing(cause, this);
   f2ptr trace_event_stream = raw__semantic_knowledge_base__trace_event_stream(cause, this);
-  return raw__event_stream__new__iterator(cause, trace_event_stream);
+  f2ptr iterator = raw__event_stream__new__iterator(cause, trace_event_stream);
+  raw__forgetful_event_stream__add_important_iterator(cause, trace_event_stream, iterator);
+  return iterator;
 }
 
 f2ptr f2__semantic_knowledge_base__new__event_stream_iterator(f2ptr cause, f2ptr this) {

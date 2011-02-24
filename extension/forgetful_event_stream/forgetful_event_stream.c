@@ -22,7 +22,7 @@
 #include "forgetful_event_stream.h"
 
 f2ptr raw__forgetful_event_stream__new(f2ptr cause, f2ptr width) {
-  return f2__frame__new(cause, f2list8__new(cause,
+  return f2__frame__new(cause, f2list4__new(cause,
 					    new__symbol(cause, "type"),  new__symbol(cause, "forgetful_event_stream"),
 					    new__symbol(cause, "width"), width));
 }

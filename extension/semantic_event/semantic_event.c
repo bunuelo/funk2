@@ -250,15 +250,12 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 		  absolute_end_time = raw__set__an_arbitrary_element(cause, absolute_end_time_set);
 		}
 	      }
-	      if ((absolute_start_time != nil) &&
-		  (absolute_end_time   != nil)) {
-		f2ptr timeline_event = f2__timeline_event__new(cause, name, absolute_start_time, absolute_end_time);
-		if (raw__larva__is_type(cause, timeline_event)) {
-		  return timeline_event;
-		}
-		raw__timeline__add_timeline_event(cause, timeline, timeline_event);
-		raw__ptypehash__add(cause, timeline_event_semantic_event_hash, semantic_event, timeline_event);
+	      f2ptr timeline_event = f2__timeline_event__new(cause, name, absolute_start_time, absolute_end_time);
+	      if (raw__larva__is_type(cause, timeline_event)) {
+		return timeline_event;
 	      }
+	      raw__timeline__add_timeline_event(cause, timeline, timeline_event);
+	      raw__ptypehash__add(cause, timeline_event_semantic_event_hash, semantic_event, timeline_event);
 	    }
 	  }
 	}

@@ -65,7 +65,7 @@ void raw__cairo_context__render_outlined_rounded_box(f2ptr cause,
 						     double background_blue,
 						     double background_alpha) {
   double corner_radius = maximum_corner_radius;
-  raw__cairo_context__move_to(        cause, this, x0 + corner_radius, y0);
+  raw__cairo_context__move_to(        cause, this, x0, y0 + corner_radius);
   raw__cairo_context__arc(            cause, this, x0 + corner_radius, y0 + corner_radius, corner_radius, M_PI, 3 * M_PI / 2);
   raw__cairo_context__rel_line_to(    cause, this, dx - (corner_radius * 2), 0);
   raw__cairo_context__arc(            cause, this, x0 + dx - corner_radius, y0 + corner_radius, corner_radius, 3 * M_PI / 2, 2 * M_PI);
@@ -74,6 +74,75 @@ void raw__cairo_context__render_outlined_rounded_box(f2ptr cause,
   raw__cairo_context__rel_line_to(    cause, this, -(dx - (corner_radius * 2)), 0);
   raw__cairo_context__arc(            cause, this, x0 + corner_radius, y0 + dy - corner_radius, corner_radius, M_PI / 2, M_PI);
   raw__cairo_context__rel_line_to(    cause, this, 0, -(dy - (corner_radius * 2)));
+  raw__cairo_context__close_path(     cause, this);
+  
+  raw__cairo_context__set_line_width( cause, this, outline_width);
+  raw__cairo_context__set_source_rgba(cause, this, foreground_red, foreground_green, foreground_blue, foreground_alpha);
+  raw__cairo_context__stroke_preserve(cause, this);
+  raw__cairo_context__set_source_rgba(cause, this, background_red, background_green, background_blue, background_alpha);
+  raw__cairo_context__fill(           cause, this);
+}
+
+void raw__cairo_context__render_outlined_rounded_box_with_broken_right(f2ptr cause,
+								       f2ptr this,
+								       double x0,
+								       double y0,
+								       double dx,
+								       double dy,
+								       double maximum_corner_radius,
+								       double outline_width,
+								       double foreground_red,
+								       double foreground_green,
+								       double foreground_blue,
+								       double foreground_alpha,
+								       double background_red,
+								       double background_green,
+								       double background_blue,
+								       double background_alpha) {
+  double corner_radius = maximum_corner_radius;
+  raw__cairo_context__move_to(        cause, this, x0, y0 + corner_radius);
+  raw__cairo_context__arc(            cause, this, x0 + corner_radius, y0 + corner_radius, corner_radius, M_PI, 3 * M_PI / 2);
+  raw__cairo_context__rel_line_to(    cause, this, dx - corner_radius - (dy / 3), 0);
+  raw__cairo_context__rel_line_to(    cause, this,  (dy / 3), (dy / 3));
+  raw__cairo_context__rel_line_to(    cause, this, -(dy / 3), (dy / 3));
+  raw__cairo_context__rel_line_to(    cause, this,  (dy / 3), (dy / 3));
+  raw__cairo_context__rel_line_to(    cause, this, -(dx - corner_radius), 0);
+  raw__cairo_context__arc(            cause, this, x0 + corner_radius, y0 + dy - corner_radius, corner_radius, M_PI / 2, M_PI);
+  raw__cairo_context__rel_line_to(    cause, this, 0, -(dy - (corner_radius * 2)));
+  raw__cairo_context__close_path(     cause, this);
+  
+  raw__cairo_context__set_line_width( cause, this, outline_width);
+  raw__cairo_context__set_source_rgba(cause, this, foreground_red, foreground_green, foreground_blue, foreground_alpha);
+  raw__cairo_context__stroke_preserve(cause, this);
+  raw__cairo_context__set_source_rgba(cause, this, background_red, background_green, background_blue, background_alpha);
+  raw__cairo_context__fill(           cause, this);
+}
+
+void raw__cairo_context__render_outlined_rounded_box_with_broken_left(f2ptr cause,
+								      f2ptr this,
+								      double x0,
+								      double y0,
+								      double dx,
+								      double dy,
+								      double maximum_corner_radius,
+								      double outline_width,
+								      double foreground_red,
+								      double foreground_green,
+								      double foreground_blue,
+								      double foreground_alpha,
+								      double background_red,
+								      double background_green,
+								      double background_blue,
+								      double background_alpha) {
+  double corner_radius = maximum_corner_radius;
+  raw__cairo_context__move_to(        cause, this, x0, y0);
+  raw__cairo_context__rel_line_to(    cause, this, dx - corner_radius, 0);
+  raw__cairo_context__arc(            cause, this, x0 + dx - corner_radius, y0 + corner_radius, corner_radius, 3 * M_PI / 2, 2 * M_PI);
+  raw__cairo_context__rel_line_to(    cause, this, 0, dy - (corner_radius * 2));
+  raw__cairo_context__arc(            cause, this, x0 + dx - corner_radius, y0 + dy - corner_radius, corner_radius, 0, M_PI / 2);
+  raw__cairo_context__rel_line_to(    cause, this, -(dx - corner_radius - (dy / 3)), 0);
+  raw__cairo_context__rel_line_to(    cause, this, -(dy / 3), -(dy / 3));
+  raw__cairo_context__rel_line_to(    cause, this,  (dy / 3), -(dy / 3));
   raw__cairo_context__close_path(     cause, this);
   
   raw__cairo_context__set_line_width( cause, this, outline_width);
@@ -127,6 +196,40 @@ f2ptr raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this, doubl
 						  double box_outline_red, double box_outline_green, double box_outline_blue, double box_outline_alpha,
 						  double text_outline_red, double text_outline_green, double text_outline_blue, double text_outline_alpha) {
   raw__cairo_context__render_outlined_rounded_box(cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width, box_outline_red, box_outline_green, box_outline_blue, box_outline_alpha,  background_red, background_green, background_blue, background_alpha);
+  {
+    f2ptr result = raw__cairo_context__render_centered_outlined_text(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  text_outline_red, text_outline_green, text_outline_blue, text_outline_alpha);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  return nil;
+}
+
+f2ptr raw__cairo_context__render_rounded_text_box_with_broken_right(f2ptr cause, f2ptr this, double x0, double y0, double dx, double dy, double font_size, char* text,
+								    double maximum_corner_radius,
+								    double background_red, double background_green, double background_blue, double background_alpha,
+								    double outline_width,
+								    double text_red, double text_green, double text_blue, double text_alpha,
+								    double box_outline_red, double box_outline_green, double box_outline_blue, double box_outline_alpha,
+								    double text_outline_red, double text_outline_green, double text_outline_blue, double text_outline_alpha) {
+  raw__cairo_context__render_outlined_rounded_box_with_broken_right(cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width, box_outline_red, box_outline_green, box_outline_blue, box_outline_alpha,  background_red, background_green, background_blue, background_alpha);
+  {
+    f2ptr result = raw__cairo_context__render_centered_outlined_text(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  text_outline_red, text_outline_green, text_outline_blue, text_outline_alpha);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  return nil;
+}
+
+f2ptr raw__cairo_context__render_rounded_text_box_with_broken_left(f2ptr cause, f2ptr this, double x0, double y0, double dx, double dy, double font_size, char* text,
+								   double maximum_corner_radius,
+								   double background_red, double background_green, double background_blue, double background_alpha,
+								   double outline_width,
+								   double text_red, double text_green, double text_blue, double text_alpha,
+								   double box_outline_red, double box_outline_green, double box_outline_blue, double box_outline_alpha,
+								   double text_outline_red, double text_outline_green, double text_outline_blue, double text_outline_alpha) {
+  raw__cairo_context__render_outlined_rounded_box_with_broken_left(cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width, box_outline_red, box_outline_green, box_outline_blue, box_outline_alpha,  background_red, background_green, background_blue, background_alpha);
   {
     f2ptr result = raw__cairo_context__render_centered_outlined_text(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  text_outline_red, text_outline_green, text_outline_blue, text_outline_alpha);
     if (raw__larva__is_type(cause, result)) {
@@ -248,6 +351,8 @@ f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timelin
 }
 
 f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context, f2ptr timeline) {
+  f2ptr start_time = raw__timeline_event__start_time(cause, this);
+  f2ptr end_time   = raw__timeline_event__end_time(cause, this);
   double start_position  = 0.0;
   double end_position    = 0.0;
   double top_position    = 0.0;
@@ -268,19 +373,52 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
   {
     //double text_width  = raw__cairo_context__text_width(cause, cairo_context, 1, (char*)action_name__str);
     //double event_width = (double)((int)(text_width + 1.5));
-    f2ptr  result      = raw__cairo_context__render_rounded_text_box(cause, cairo_context,
-								     start_position, top_position,                                  // x0, y0
-								     end_position - start_position, bottom_position - top_position, // dx, dy
-								     1,                                                             // font size
-								     (char*)action_name__str,                                       // text
-								     0.5,                                                           // maximum corner radius
-								     142 / 255.0, 200 / 255.0, 255 / 255.0, 1,                      // background rgba
-								     0.2,                                                           // outline width
-								     0, 0, 0, 1,                                                    // text rgba
-								     0, 0, 0, 1,                                                    // box outline rgba
-								     142 / 255.0, 200 / 255.0, 255 / 255.0, 1);                     // text outline rgba
-    if (raw__larva__is_type(cause, result)) {
-      return result;
+    if ((start_time != nil) && (end_time != nil)) {
+      f2ptr  result = raw__cairo_context__render_rounded_text_box(cause, cairo_context,
+								  start_position, top_position,                                  // x0, y0
+								  end_position - start_position, bottom_position - top_position, // dx, dy
+								  1,                                                             // font size
+								  (char*)action_name__str,                                       // text
+								  0.5,                                                           // maximum corner radius
+								  142 / 255.0, 200 / 255.0, 255 / 255.0, 1,                      // background rgba
+								  0.2,                                                           // outline width
+								  0, 0, 0, 1,                                                    // text rgba
+								  0, 0, 0, 1,                                                    // box outline rgba
+								  142 / 255.0, 200 / 255.0, 255 / 255.0, 1);                     // text outline rgba
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    } else if (start_time == nil) {
+      f2ptr  result = raw__cairo_context__render_rounded_text_box_with_broken_left(cause, cairo_context,
+										   start_position, top_position,                                  // x0, y0
+										   end_position - start_position, bottom_position - top_position, // dx, dy
+										   1,                                                             // font size
+										   (char*)action_name__str,                                       // text
+										   0.5,                                                           // maximum corner radius
+										   142 / 255.0, 200 / 255.0, 255 / 255.0, 1,                      // background rgba
+										   0.2,                                                           // outline width
+										   0, 0, 0, 1,                                                    // text rgba
+										   0, 0, 0, 1,                                                    // box outline rgba
+										   142 / 255.0, 200 / 255.0, 255 / 255.0, 1);                     // text outline rgba
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    } else if (end_time == nil) {
+      f2ptr  result = raw__cairo_context__render_rounded_text_box_with_broken_right(cause, cairo_context,
+										    start_position, top_position,                                  // x0, y0
+										    end_position - start_position, bottom_position - top_position, // dx, dy
+										    1,                                                             // font size
+										    (char*)action_name__str,                                       // text
+										    0.5,                                                           // maximum corner radius
+										    142 / 255.0, 200 / 255.0, 255 / 255.0, 1,                      // background rgba
+										    0.2,                                                           // outline width
+										    0, 0, 0, 1,                                                    // text rgba
+										    0, 0, 0, 1,                                                    // box outline rgba
+										    142 / 255.0, 200 / 255.0, 255 / 255.0, 1);                     // text outline rgba
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    } else {
     }
   }
   f2__free(to_ptr(action_name__str));
@@ -384,31 +522,6 @@ f2ptr f2__timeline_event__add_previous(f2ptr cause, f2ptr this, f2ptr event) {
 export_cefunk2(timeline_event__add_previous, this, event, 0, "");
 
 
-boolean_t raw__timeline_event__overlaps(f2ptr cause, f2ptr this, f2ptr event) {
-  f2ptr start_time        = raw__timeline_event__start_time(cause, this);
-  f2ptr end_time          = raw__timeline_event__end_time(  cause, this);
-  f2ptr event__start_time = raw__timeline_event__start_time(cause, event);
-  f2ptr event__end_time   = raw__timeline_event__end_time(  cause, event);
-  return (((f2__is_greater_than(cause, end_time,          event__start_time) != nil) &&
-	   (f2__is_less_than(   cause, start_time,        event__start_time) != nil))   ||
-	  ((f2__is_greater_than(cause, end_time,          event__end_time)   != nil) &&
-	   (f2__is_less_than(   cause, start_time,        event__end_time)   != nil))   ||
-	  ((f2__is_greater_than(cause, event__end_time,   start_time)        != nil) &&
-	   (f2__is_less_than(   cause, event__start_time, start_time)        != nil))   ||
-	  ((f2__is_greater_than(cause, event__end_time,   end_time)          != nil) &&
-	   (f2__is_less_than(   cause, event__start_time, end_time)          != nil)));
-}
-
-f2ptr f2__timeline_event__overlaps(f2ptr cause, f2ptr this, f2ptr event) {
-  if ((! raw__timeline_event__is_type(cause, this)) ||
-      (! raw__timeline_event__is_type(cause, event))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return f2bool__new(raw__timeline_event__overlaps(cause, this, event));
-}
-export_cefunk2(timeline_event__overlaps, this, event, 0, "");
-
-
 f2ptr raw__timeline_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -436,7 +549,6 @@ f2ptr f2__timeline_event_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_is_contained_by"),       f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__add_is_contained_by")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_next"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__add_next")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_previous"),              f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__add_previous")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "overlaps"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__overlaps")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__terminal_print_with_frame")));}
   return this;
 }
@@ -604,15 +716,25 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
       set__iteration(cause, timeline_event_set, event,
 		     f2ptr start_time = raw__timeline_event__start_time(cause, event);
 		     f2ptr end_time   = raw__timeline_event__end_time(  cause, event);
-		     if ((minimum_time == nil) ||
-			 (f2__is_less_than(cause, start_time, minimum_time) != nil)) {
-		       minimum_time = start_time;
+		     if (start_time != nil) {
+		       if ((minimum_time == nil) ||
+			   (f2__is_less_than(cause, start_time, minimum_time) != nil)) {
+			 minimum_time = start_time;
+		       }
 		     }
-		     if ((maximum_time == nil) ||
-			 (f2__is_greater_than(cause, end_time, maximum_time) != nil)) {
-		       maximum_time = end_time;
+		     if (end_time != nil) {
+		       if ((maximum_time == nil) ||
+			   (f2__is_greater_than(cause, end_time, maximum_time) != nil)) {
+			 maximum_time = end_time;
+		       }
 		     }
 		     );
+    }
+    if (minimum_time == nil) {
+      minimum_time = f2__time(cause);
+    }
+    if (maximum_time == nil) {
+      maximum_time = f2__time(cause);
     }
     raw__timeline__minimum_time__set(cause, this, minimum_time);
     raw__timeline__maximum_time__set(cause, this, maximum_time);
@@ -768,7 +890,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 		    s64 o_index;
 		    for (o_index = index - 1; o_index >= 0; o_index --) {
 		      f2ptr o_event = raw__array__elt(cause, event_array, o_index);
-		      if (raw__timeline_event__overlaps(cause, event, o_event)) {
+		      if (raw__timeline__timeline_event__overlaps(cause, this, event, o_event)) {
 			f2ptr o_y_index    = raw__timeline_event__y_index(cause, o_event);
 			s64   o_y_index__i = f2integer__i(o_y_index, cause);
 			if (o_y_index__i > maximum_overlap_y_index) {
@@ -1139,6 +1261,46 @@ export_cefunk2(timeline__cairo_render, this, cairo_context, 0, "Renders this tim
 
 
 
+boolean_t raw__timeline__timeline_event__overlaps(f2ptr cause, f2ptr this, f2ptr event_a, f2ptr event_b) {
+  f2ptr minimum_time        = raw__timeline__minimum_time(cause, this);
+  f2ptr maximum_time        = raw__timeline__maximum_time(cause, this);
+  f2ptr event_a__start_time = raw__timeline_event__start_time(cause, event_a);
+  f2ptr event_a__end_time   = raw__timeline_event__end_time(  cause, event_a);
+  f2ptr event_b__start_time = raw__timeline_event__start_time(cause, event_b);
+  f2ptr event_b__end_time   = raw__timeline_event__end_time(  cause, event_b);
+  if (event_a__start_time == nil) {
+    event_a__start_time = minimum_time;
+  }
+  if (event_a__end_time == nil) {
+    event_a__end_time = maximum_time;
+  }
+  if (event_b__start_time == nil) {
+    event_b__start_time = minimum_time;
+  }
+  if (event_b__end_time == nil) {
+    event_b__end_time = maximum_time;
+  }
+  return (((f2__is_greater_than(cause, event_a__end_time,   event_b__start_time) != nil) &&
+	   (f2__is_less_than(   cause, event_a__start_time, event_b__start_time) != nil))   ||
+	  ((f2__is_greater_than(cause, event_a__end_time,   event_b__end_time)   != nil) &&
+	   (f2__is_less_than(   cause, event_a__start_time, event_b__end_time)   != nil))   ||
+	  ((f2__is_greater_than(cause, event_b__end_time,   event_a__start_time) != nil) &&
+	   (f2__is_less_than(   cause, event_b__start_time, event_a__start_time) != nil))   ||
+	  ((f2__is_greater_than(cause, event_b__end_time,   event_a__end_time)   != nil) &&
+	   (f2__is_less_than(   cause, event_b__start_time, event_a__end_time)   != nil)));
+}
+
+f2ptr f2__timeline__timeline_event__overlaps(f2ptr cause, f2ptr this, f2ptr event_a, f2ptr event_b) {
+  if ((! raw__timeline__is_type(cause, this)) ||
+      (! raw__timeline_event__is_type(cause, event_a)) ||
+      (! raw__timeline_event__is_type(cause, event_b))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2bool__new(raw__timeline__timeline_event__overlaps(cause, this, event_a, event_b));
+}
+export_cefunk3(timeline__timeline_event__overlaps, this, event_a, event_b, 0, "");
+
+
 f2ptr raw__timeline__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -1168,6 +1330,7 @@ f2ptr f2__timeline_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "timeline_events"),           f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline__timeline_events")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "calculate_positions"),       f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline__calculate_positions")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "cairo_render"),              f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline__cairo_render")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "timeline_event-overlaps"),   f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline__timeline_event__overlaps")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline__terminal_print_with_frame")));}
   return this;
 }

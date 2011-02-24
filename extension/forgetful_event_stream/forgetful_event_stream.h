@@ -24,18 +24,12 @@
 
 #include "../../c/funk2.h"
 
-f2ptr     raw__forgetful_event_stream__new       (f2ptr cause, f2ptr width);
-f2ptr      f2__forgetful_event_stream__new       (f2ptr cause, f2ptr width);
-boolean_t raw__forgetful_event_stream__is_type   (f2ptr cause, f2ptr thing);
-f2ptr      f2__forgetful_event_stream__is_type   (f2ptr cause, f2ptr thing);
-f2ptr     raw__forgetful_event_stream__type      (f2ptr cause, f2ptr this);
-f2ptr      f2__forgetful_event_stream__type      (f2ptr cause, f2ptr this);
-f2ptr     raw__forgetful_event_stream__width     (f2ptr cause, f2ptr this);
-f2ptr      f2__forgetful_event_stream__width     (f2ptr cause, f2ptr this);
-f2ptr     raw__forgetful_event_stream__width__set(f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__forgetful_event_stream__width__set(f2ptr cause, f2ptr this, f2ptr value);
+def_header_ceframe1(forgetful_event_stream, width);
 
-f2ptr f2__forgetful_event_stream_type__new(f2ptr cause);
+f2ptr raw__forgetful_event_stream__new(f2ptr cause, f2ptr width);
+f2ptr  f2__forgetful_event_stream__new(f2ptr cause, f2ptr width);
+
+f2ptr f2__forgetful_event_stream_type__new_aux(f2ptr cause);
 
 // **
 

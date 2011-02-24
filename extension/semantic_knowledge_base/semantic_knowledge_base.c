@@ -1881,6 +1881,39 @@ f2ptr f2__semantic_knowledge_base__semantic_frames(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_knowledge_base__semantic_frames, this, 0, "Returns a new conslist of semantic_frames in this semantic_knowledge_base.");
 
 
+f2ptr raw__semantic_knowledge_base__copy_differences_to(f2ptr cause, f2ptr this, f2ptr target) {
+  {
+    f2ptr target_semantic_frames = raw__semantic_knowledge_base__semantic_frames(cause, target);
+    {
+      f2ptr iter = target_semantic_frames;
+      while (iter != nil) {
+	f2ptr target__semantic_frame = f2cons__car(iter, cause);
+	if (! raw__semantic_knowledge_base__contains_semantic_frame(cause, this, target__semantic_frame)) {
+	  raw__semantic_knowledge_base__remove_semantic_frame(cause, target, target__semantic_frame);
+	}
+	iter = f2cons__cdr(iter, cause);
+      }
+    }
+  }
+  f2ptr semantic_frame_set = raw__semantic_knowledge_base__semantic_frame_set(cause, this);
+  set__iteration(cause, semantic_frame_set, semantic_frame,
+		 if (! raw__semantic_knowledge_base__contains_semantic_frame(cause, target, semantic_frame)) {
+		   raw__semantic_knowledge_base__add_semantic_frame(cause, target, semantic_frame);
+		 }
+		 );
+  return nil;
+}
+
+f2ptr f2__semantic_knowledge_base__copy_differences_to(f2ptr cause, f2ptr this, f2ptr target) {
+  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
+      (! raw__semantic_knowledge_base__is_type(cause, target))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_knowledge_base__copy_differences_to(cause, this, target);
+}
+export_cefunk2(semantic_knowledge_base__copy_differences_to, this, target, 0, "Makes the minimal number of changes to the target semantic_knowledge_base in order to make it a copy of this semantic_knowledge_base.");
+
+
 // semantic_knowledge_base lick funks
 
 f2ptr raw__semantic_knowledge_base__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
@@ -2146,6 +2179,7 @@ f2ptr f2__semantic_knowledge_base_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "new-event_stream_iterator"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__new__event_stream_iterator")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "semantic_frames"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__semantic_frames")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "as-timeline"),                                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"),          new__symbol(cause, "semantic_knowledge_base__as__timeline")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "copy_differences_to"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__copy_differences_to")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "gather_lick_notes"),                            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__gather_lick_notes")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"),                                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__lick_to_chunk")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-unlick_with_notes"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__lick_chunk__unlick_with_notes")));}

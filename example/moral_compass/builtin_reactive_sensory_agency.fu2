@@ -106,6 +106,7 @@
 				      actions]
 				]]]]]]
 	      visual_objects]
+	[have [get [get this mind] input_visual_knowledge] copy_differences_to [get [get this mind] visual_knowledge]]
 	]]]]
 
 

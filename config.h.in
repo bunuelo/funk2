@@ -8,6 +8,9 @@
 /* Define to 1 if using `alloca.c'. */
 #undef C_ALLOCA
 
+/* Define if we have support for CAIRO */
+#undef F2__CAIRO_SUPPORTED
+
 /* Define if we have support for GTHREAD */
 #undef F2__GTHREAD_SUPPORTED
 

@@ -764,6 +764,8 @@ acx_pthread_config
 XMKMF
 LIBOBJS
 ALLOCA
+CAIRO_LIBS
+CAIRO_CFLAGS
 LIBSWSCALE_LIBS
 LIBSWSCALE_CFLAGS
 LIBAVCODEC_LIBS
@@ -917,6 +919,8 @@ LIBAVCODEC_CFLAGS
 LIBAVCODEC_LIBS
 LIBSWSCALE_CFLAGS
 LIBSWSCALE_LIBS
+CAIRO_CFLAGS
+CAIRO_LIBS
 XMKMF
 CXX
 CXXFLAGS
@@ -1589,6 +1593,9 @@ Some influential environment variables:
               C compiler flags for LIBSWSCALE, overriding pkg-config
   LIBSWSCALE_LIBS
               linker flags for LIBSWSCALE, overriding pkg-config
+  CAIRO_CFLAGS
+              C compiler flags for CAIRO, overriding pkg-config
+  CAIRO_LIBS  linker flags for CAIRO, overriding pkg-config
   XMKMF       Path to xmkmf, Makefile generator for X Window System
   CXX         C++ compiler command
   CXXFLAGS    C++ compiler flags
@@ -4355,13 +4362,13 @@ if test "${lt_cv_nm_interface+set}" = set; then :
 else
   lt_cv_nm_interface="BSD nm"
   echo "int some_variable = 0;" > conftest.$ac_ext
-  (eval echo "\"\$as_me:4358: $ac_compile\"" >&5)
+  (eval echo "\"\$as_me:4365: $ac_compile\"" >&5)
   (eval "$ac_compile" 2>conftest.err)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:4361: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
+  (eval echo "\"\$as_me:4368: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
   (eval "$NM \"conftest.$ac_objext\"" 2>conftest.err > conftest.out)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:4364: output\"" >&5)
+  (eval echo "\"\$as_me:4371: output\"" >&5)
   cat conftest.out >&5
   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
     lt_cv_nm_interface="MS dumpbin"
@@ -5567,7 +5574,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 5570 "configure"' > conftest.$ac_ext
+  echo '#line 5577 "configure"' > conftest.$ac_ext
   if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_compile\""; } >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -7096,11 +7103,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7099: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7106: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7103: \$? = $ac_status" >&5
+   echo "$as_me:7110: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7435,11 +7442,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7438: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7445: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7442: \$? = $ac_status" >&5
+   echo "$as_me:7449: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7540,11 +7547,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7543: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7550: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:7547: \$? = $ac_status" >&5
+   echo "$as_me:7554: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -7595,11 +7602,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7598: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7605: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:7602: \$? = $ac_status" >&5
+   echo "$as_me:7609: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -9962,7 +9969,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 9965 "configure"
+#line 9972 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -10058,7 +10065,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 10061 "configure"
+#line 10068 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -11709,6 +11716,96 @@ else
 $as_echo "yes" >&6; }
 
 $as_echo "#define F2__LIBSWSCALE_SUPPORTED 1" >>confdefs.h
+
+fi
+
+
+
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for CAIRO" >&5
+$as_echo_n "checking for CAIRO... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$CAIRO_CFLAGS"; then
+        pkg_cv_CAIRO_CFLAGS="$CAIRO_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"cairo\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "cairo") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_CAIRO_CFLAGS=`$PKG_CONFIG --cflags "cairo" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$CAIRO_LIBS"; then
+        pkg_cv_CAIRO_LIBS="$CAIRO_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"cairo\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "cairo") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_CAIRO_LIBS=`$PKG_CONFIG --libs "cairo" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        CAIRO_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "cairo"`
+        else
+	        CAIRO_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "cairo"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$CAIRO_PKG_ERRORS" >&5
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+                { $as_echo "$as_me:${as_lineno-$LINENO}:
+*** CAIRO is not required to build Funk2, but the cairo development headers
+*** are not installed, so CAIRO support will not be compiled into Funk2.  The
+*** latest version of cairo is always available at http://www.cairographics.org" >&5
+$as_echo "$as_me:
+*** CAIRO is not required to build Funk2, but the cairo development headers
+*** are not installed, so CAIRO support will not be compiled into Funk2.  The
+*** latest version of cairo is always available at http://www.cairographics.org" >&6;}
+elif test $pkg_failed = untried; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}:
+*** CAIRO is not required to build Funk2, but the cairo development headers
+*** are not installed, so CAIRO support will not be compiled into Funk2.  The
+*** latest version of cairo is always available at http://www.cairographics.org" >&5
+$as_echo "$as_me:
+*** CAIRO is not required to build Funk2, but the cairo development headers
+*** are not installed, so CAIRO support will not be compiled into Funk2.  The
+*** latest version of cairo is always available at http://www.cairographics.org" >&6;}
+else
+	CAIRO_CFLAGS=$pkg_cv_CAIRO_CFLAGS
+	CAIRO_LIBS=$pkg_cv_CAIRO_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+$as_echo "#define F2__CAIRO_SUPPORTED 1" >>confdefs.h
 
 fi
 
@@ -16802,11 +16899,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16805: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16902: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:16809: \$? = $ac_status" >&5
+   echo "$as_me:16906: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -16901,11 +16998,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16904: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17001: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:16908: \$? = $ac_status" >&5
+   echo "$as_me:17005: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -16953,11 +17050,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16956: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17053: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:16960: \$? = $ac_status" >&5
+   echo "$as_me:17057: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized

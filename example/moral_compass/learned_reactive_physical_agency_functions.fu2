@@ -16,8 +16,11 @@
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
-
-
+'tried to fix center head vertically edge case
+test 0.1 time step
+test moving forward speed
+'
+[globalize step_factor 10]
 
 [globalize arm_length 5]
 
@@ -152,10 +155,10 @@
 			    [cond [[ > [- [get_neck_pitch mind] level_neck_pitch] slightly_looking_up]
 				   [prog [have this-resource think_to_self 'looking down, pitch = '[get_neck_pitch mind]]
 					[mind-wait_to_call mind learned_reactive physical look_down 1 
-							   [* [ abs [get_neck_pitch mind]] 33]]]]
+							   [* [ abs [get_neck_pitch mind]] step_factor]]]]
 				  [[ < [- [get_neck_pitch mind] level_neck_pitch] slightly_looking_down]
 				   [prog [have this-resource think_to_self 'looking up, pitch = ' [get_neck_pitch mind]]
-					 [mind-wait_to_call mind learned_reactive physical look_up 1  [* [ abs [get_neck_pitch mind]] 33]]
+					 [mind-wait_to_call mind learned_reactive physical look_up 1  [* [ abs [get_neck_pitch mind]] step_factor]]
 					 [adjust_neck]]]
 				  [t
 				   [have this-resource think_to_self 'pitch leveled']]]]]
@@ -173,7 +176,7 @@
 			    [if [> [get_neck_pitch mind] floor_pitch]
 				[prog [have this-resource think_to_self 'looking down, pitch = '[get_neck_pitch mind]]
 				      [mind-wait_to_call mind learned_reactive physical look_down 1 
-							 [* [abs [- [get_neck_pitch mind] floor_pitch ]] 33]]
+							 [* [abs [- [get_neck_pitch mind] floor_pitch ]] step_factor]]
 				      [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 				      [adjust_neck]]
 			      [have this-resource think_to_self 'already looking at floor']]]]
@@ -191,7 +194,7 @@
 			    [if [> [get_neck_pitch mind] sky_pitch]
 				[prog [have this-resource think_to_self 'looking up, pitch = '[get_neck_pitch mind]]
 				      [mind-wait_to_call mind learned_reactive physical look_up1 
-							 [* [abs [- [get_neck_pitch mind] sky_pitch ]] 33]]
+							 [* [abs [- [get_neck_pitch mind] sky_pitch ]] step_factor]]
 				      [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 				      [adjust_neck]]
 			      [have this-resource think_to_self 'already looking at sky']]]]
@@ -214,7 +217,7 @@
 					     [mind-wait_to_call mind learned_reactive physical look_right 1 [* 20 [abs [get_neck_roll mind]]]]
 					     [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 					     [adjust_neck [- patience 1]]]]
-				      [[ < [- [get_neck_pitch mind] 0] slightly_looking_right]
+				      [[ < get_neck_roll mind slightly_looking_right]
 				       [prog [print 'my head is facing the right']
 					     [mind-wait_to_call mind learned_reactive physical look_left 1 [* 20 [abs [get_neck_roll mind]]]]
 					     [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
@@ -225,9 +228,9 @@
 	       
 	      [adjust_neck 15]
 	      [cond [[ > [- init_diff 0] slightly_looking_left]
-		     [mind-wait_to_call mind learned_reactive physical turn_left 1 [* 33 init_diff]]]
+		     [mind-wait_to_call mind learned_reactive physical turn_left 1 [* step_factor init_diff]]]
 		    [[ < [- init_diff 0] slightly_looking_right]
-		     [mind-wait_to_call mind learned_reactive physical turn_right 1 [* 33 init_diff]]]
+		     [mind-wait_to_call mind learned_reactive physical turn_right 1 [* step_factor init_diff]]]
 		    [t
 		     [have this-resource think_to_self 'no need to turn']]]
 	      [set this achieved t]
@@ -304,6 +307,7 @@
 	 ]
     [have this-resource think_to_self 'center_body_on_object activated' desired_object]
     [labels[[look_up_and_down []
+			      [turn_left_and_right]
 			      [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			      [if [get_visual_objects mind]
 				  [if [lookup_visual_object [get_visual_objects mind] desired_object] 
@@ -311,13 +315,13 @@
 					    [distance                   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
 					[cond [[>  retina_position_vertical [+ 0.25 [/ distance 80]]]
 					       [prog [have this-resource think_to_self   'y too positive' retina_position_vertical]
-						     [mind-wait_to_call mind learned_reactive physical look_up 1 [+ 200.0 [* 300 retina_position_vertical]]]
+						     [mind-wait_to_call mind learned_reactive physical look_up 1 [+ 70.0 [* 100 retina_position_vertical]]]
 						     [have this-resource think_to_self   'i looked up']
 						     
 						     [look_up_and_down]]]
 					      [[< retina_position_vertical [- 0 [+ 0.25 [/ distance 80]]]]
 					       [prog [have this-resource think_to_self   'y too negative' retina_position_vertical]
-						     [mind-wait_to_call mind learned_reactive physical look_down 1 [+ 200.0 [- 0 [* 300 retina_position_vertical]]]]
+						     [mind-wait_to_call mind learned_reactive physical look_down 1 [+ 70.0 [- 0 [* 100 retina_position_vertical]]]]
 						     [have this-resource think_to_self 'i looked down']
 						     
 						     [look_up_and_down]]]
@@ -328,7 +332,7 @@
 				[have this-resource think_to_self   'my_object not in view']
 				]]
 	    [turn_left_and_right []
-				 [look_up_and_down]
+				 
 				  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 				  [if [get_visual_objects mind]
 				      [if [lookup_visual_object [get_visual_objects mind] desired_object] 
@@ -337,13 +341,13 @@
 						[distance                   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
 					    [cond [[>  retina_position_horizontal 0.35]
 						   [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
-							 [mind-wait_to_call mind learned_reactive physical turn_right 1 [+ 300.0 [* 100 retina_position_horizontal]]]
+							 [mind-wait_to_call mind learned_reactive physical turn_right 1 [+ 100.0 [* 30 retina_position_horizontal]]]
 							 [have this-resource think_to_self   'i turned right']
 							 
 							 [turn_left_and_right]]]
 						  [[< retina_position_horizontal [- 0 0.35]]
 						   [prog [have this-resource think_to_self   'x too negative' retina_position_horizontal]
-							 [mind-wait_to_call mind learned_reactive physical turn_left 1 [+ 300.0 [ - 0 [* 100 retina_position_horizontal]]]]							 
+							 [mind-wait_to_call mind learned_reactive physical turn_left 1 [+ 100.0 [ - 0 [* 30 retina_position_horizontal]]]]							 
 							 [have this-resource think_to_self 'i turned left']
 							 
 							 [turn_left_and_right]]]
@@ -356,8 +360,7 @@
 					  [mind-wait_to_call mind learned_reactive physical search_for desired_object]
 					  [turn_left_and_right]]]]
 	    ]
-	    [turn_left_and_right]]]
-  ]
+	    [look_up_and_down]]]]
 
 [deftypefunk center_head_on_resource execute center_head_on [desired_object]
   [let* [[body [get this body]]
@@ -366,6 +369,7 @@
 	 ]
     [have this-resource think_to_self 'center_head_on_object activated']
     [labels[ [look_up_and_down []
+			       [look_left_and_right]
 			       [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			       [if [get_visual_objects mind]
 				   [if [lookup_visual_object [get_visual_objects mind] desired_object] 
@@ -374,13 +378,13 @@
 					     [distance                   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
 					 [cond [[>  retina_position_vertical [+ 0.25 [/ distance 80]]]
 						[prog [have this-resource think_to_self   'y too positive' retina_position_vertical]
-						      [mind-wait_to_call mind learned_reactive physical look_up 1 [+ 300.0 [* 100 retina_position_vertical]]]
+						      [mind-wait_to_call mind learned_reactive physical look_up 1 [min 200.0 [* 200 retina_position_vertical]]]
 						      [have this-resource think_to_self   'i looked up']
 						      
 						      [look_up_and_down]]]
 					       [[< retina_position_vertical [- 0 [+ 0.25 [/ distance 80]]]]
 						[prog [have this-resource think_to_self   'y too negative' retina_position_vertical]
-						      [mind-wait_to_call mind learned_reactive physical look_down 1 [+ 300.0 [* 100 retina_position_vertical]]] 
+						      [mind-wait_to_call mind learned_reactive physical look_down 1 [min 200.0 [* 200 retina_position_vertical]]] 
 						      [have this-resource think_to_self 'i looked down']
 						      
 						      [look_up_and_down]]]
@@ -391,7 +395,7 @@
 				 [have this-resource think_to_self   'my_object not in view']]]
 	     [look_left_and_right []
 				  `[print 'here']
-				  [look_up_and_down]
+				  
 				  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 				  [if [get_visual_objects mind]
 				      [if [lookup_visual_object [get_visual_objects mind] desired_object] 
@@ -400,18 +404,18 @@
 						[distance                   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
 					    [cond [[>  retina_position_horizontal [max [/ 1.8 distance] 0.2]]
 						   [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
-							 [mind-wait_to_call mind learned_reactive physical look_right 1 [- 300.0 distance]]
+							 [mind-wait_to_call mind learned_reactive physical look_right 1 [- 100.0 distance]]
 							 [have this-resource think_to_self   'i looked right']
 							 
 							 [look_left_and_right]]]
 						  [[< retina_position_horizontal [- 0 0.4]]
-						   [prog [have this-resource think_to_self   'x too negative'  2 retina_position_horizontal]
-							 [mind-wait_to_call mind learned_reactive physical look_left 1 [- 300.0 distance]]
+						   [prog [have this-resource think_to_self   'x too negative'   retina_position_horizontal]
+							 [mind-wait_to_call mind learned_reactive physical look_left 1 [- 100.0 distance]]
 							 [have this-resource think_to_self 'i looked left']
 							 
 							 [look_left_and_right]]]
 						  [t
-						   [have this-resource think_to_self 'centered']]]
+						   [have this-resource think_to_self 'centered horizontally']]]
 					    ]
 					
 					[prog [have this-resource think_to_self   'no objects in view']
@@ -420,7 +424,7 @@
 				    [prog [have this-resource think_to_self   'my_object not in view']
 					  [mind-wait_to_call mind learned_reactive physical search_for desired_object]
 					  [look_left_and_right]]]]]
-	   [look_left_and_right]]]]
+	   [look_up_and_down]]]]
 
 
 '**********************Walk and Stand********************************'
@@ -442,7 +446,7 @@
 			       [prog [have this-resource think_to_self 'yes object, activating center on']
 				     [mind-wait_to_call mind learned_reactive physical center_body_on desired_object]
 				     [have this-resource think_to_self 'activating move_forward']
-				     [mind-wait_to_call mind learned_reactive physical move_forward 1 [* distance 10]]
+				     [mind-wait_to_call mind learned_reactive physical move_forward 1 [* distance 3]]
 				     [have this-resource think_to_self 'distance after walking: ' [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]
 				     [walk]]]]
 			 [prog [have this-resource think_to_self 'dont have desired object, activating search']
@@ -461,7 +465,6 @@
     `[mind-wait_to_call mind learned_reactive physical center_body_on object]   
 
 [deftypefunk stand_in_front_of_resource execute stand_in_front_of [object]
-  [set this achieved nil]
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]]
@@ -478,7 +481,7 @@
 					[print 'find_init_angle']
 					[let* [[c 	 [sqrt [- [+ [* init_distance init_distance] 
 							    25]
-							 [* [* [get orientation_diff degree_cosine] init_distance ] 10]]]]
+								  [* [* [get orientation_diff degree_cosine] init_distance ] 10]]]]
 					       [cos_beta [/ [- [+ [* init_distance init_distance]
 								  [* c c]]
 							       25]
@@ -491,23 +494,31 @@
 					  beta ]]
 	     [find_turning_speed        [init_angle]
 					[print 'find turning speed']
-					[* init_angle 33]]
+					[* init_angle step_factor]]
 	     [should_i_turn_right       [init_orientation]
 					[print 'should i turn right?']
 					[if [< init_orientation 0]
 					    t
 					  nil]]
+	     
 	     [should_i_move_forward     [current_neck_angle final_angle]
 					[print 'should i move forward?']
 					[if [< [abs current_neck_angle][abs final_angle]]
 					    t
-					  nil]]]
+					  nil]]
+	     [find_walking_speed        [alpha roll]
+					[let* [[dist  [* [/ [get alpha degree_sine] [get roll degree_sine]] 5]]
+					      [speed [min [* dist 5] 20]]]
+					  [format stdout 'dist'  dist 'alpha' alpha 'roll' roll]
+					  speed]]
+	     ]
+	    
 	    [print 'finished labeling']
 	    [let* [[init_orientation            [get_object_orientation mind object]]
 		   [init_orientation_difference [ - 180 [abs init_orientation]]]
 		   [init_distance               [get_object_distance mind object]]
 		   [init_angle                  [find_init_angle init_orientation_difference init_distance]]
-		   [init_speed                  [* 33 init_angle]]
+		   [init_speed                  [* step_factor init_angle]]
 		   [final_neck_angle            [+ init_orientation_difference init_angle]]
 		   [final_distance              [find_final_distance init_orientation_difference init_distance]]
 		   [init_turning_speed          [find_turning_speed init_angle]]
@@ -518,9 +529,9 @@
 	      [if [< [abs [- init_orientation 180]] 5]
 		  [if [< init_distance 5]
 		      [prog [print 'Its facing me, Im moving backward']
-			    [mind-wait_to_call mind learned_reactive physical move_backward 1 [* 33 [- 5 init_distance]]]]
+			    [mind-wait_to_call mind learned_reactive physical move_backward 1 [* step_factor [- 5 init_distance]]]]
 		    [prog [print 'Its facing me, Im moving forward']
-			  [mind-wait_to_call mind learned_reactive physical move_forward 1 [* 33 [- init_distance 5]]]]]
+			  [mind-wait_to_call mind learned_reactive physical move_forward 1 [* step_factor [- init_distance 5]]]]]
 		[if turn_right
 		    [prog [print 'I should turn right']
 			  [mind-wait_to_call mind learned_reactive physical turn_right 1 init_speed]
@@ -528,27 +539,29 @@
 		  [prog [print 'I should turn left']
 			[mind-wait_to_call mind learned_reactive physical turn_left 1 init_speed]
 			[mind-wait_to_call mind learned_reactive physical look_right 1 init_speed]]]]
-
+	      
 	      [let [[walking_speed 20]]
 		[while [> [abs [- [get_neck_roll mind] final_neck_angle]] 8]
 		  [print 'waiting for trigger']
 		  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
-		  [= walking_speed [abs [- [abs [get_neck_roll mind]] [abs final_neck_angle]]]]
+		  [= walking_speed [find_walking_speed [abs [- [abs [get_neck_roll mind]] [abs final_neck_angle]]] [abs [get_neck_roll mind]]]]
 		  [if [should_i_move_forward [get_neck_roll mind] final_neck_angle]
 		      [prog [print [get_neck_roll mind]]
 			    [mind-wait_to_call mind learned_reactive physical move_forward 1 walking_speed]
 			    [format stdout 'walking_speed' walking_speed]
+			    [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			    [mind-wait_to_call mind learned_reactive physical center_head_on object]]
 		    [prog [print [get_neck_roll mind]]
 			  [mind-wait_to_call mind learned_reactive physical move_backward 1 walking_speed]
 			  [format stdout 'walking_speed' walking_speed]
+			  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			  [mind-wait_to_call mind learned_reactive physical center_head_on object]]]]]
 	      
 	      [mind-wait_to_call mind learned_reactive physical center_head_on object]
 	      [mind-wait_to_call mind learned_reactive physical align_body_with_neck]
 	      [print 'exited while loop']
-	      ]]]
-  [set this achieved t]]
+	      
+  [set this achieved t]]]]]
 
 
 '***************************Look carefully for********************'
@@ -578,7 +591,7 @@
 				    [null [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type]]] 
 				[prog [have this think_to_self 'still no objects in view after looking up, preparing to level pitch and turn left']
 				      [mind-wait_to_call mind learned_reactive physical level_pitch]
-				      [mind-wait_to_call mind learned_reactive physical turn_left 1  600.0]
+				      [mind-wait_to_call mind learned_reactive physical turn_left 1  200.0]
 				      [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 				      [= patience [- patience 1]]]
 			      [= patience 0]]] 
@@ -588,6 +601,8 @@
 
 
 '*****************Look for vertically*******************************'
+
+
 [deftypefunk look_for_vertically_resource execute look_for_vertically [desired_object_type]
 
   [let* [[body  [get this body]]
@@ -609,12 +624,12 @@
 	       [if [null [get_visual_objects mind]]
 		   [prog 
 		    [have this-resource think_to_self  'no objects in view']
-		    [mind-wait_to_call mind learned_reactive physical look_down 1 500]
+		    [mind-wait_to_call mind learned_reactive physical look_down 1 150]
 		    [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 		    ]
 		 [if [null [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type]]
 		     [prog [have this-resource think_to_self 'i see these objects:' [get_visual_objects mind]]
-			   [mind-wait_to_call mind learned_reactive physical look_down 1 500]
+			   [mind-wait_to_call mind learned_reactive physical look_down 1 150]
 			   [print 'activated look_down']
 			   [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			   ]				]
@@ -627,11 +642,11 @@
 		[if [null [get_visual_objects mind]]
 		    [prog 
 		     [have this-resource think_to_self  'no objects in view']
-		     [mind-wait_to_call mind learned_reactive physical look_up 1 500]
+		     [mind-wait_to_call mind learned_reactive physical look_up 1 150]
 		     ]
 		  [if [null [visual_objects_contain_object_type [get_visual_objects mind] desired_object_type]]
 		      [prog [have this-resource think_to_self 'i see these objects:' [get_visual_objects mind]]
-			    [mind-wait_to_call mind learned_reactive physical look_up 1 500]
+			    [mind-wait_to_call mind learned_reactive physical look_up 1 150]
 			      [print 'activated look_up']
 			      [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			      
@@ -705,7 +720,7 @@
 	    [null [visual_objects_contain_object_type [get_visual_objects mind] `knife]]]
 	[prog 
 	 [mind-wait_to_call mind learned_reactive physical level_pitch]
-	 [mind-wait_to_call mind learned_reactive physical move_backward 1 35.0]]]
+	 [mind-wait_to_call mind learned_reactive physical move_backward 1 10.0]]]
     [mind-wait_to_call mind learned_reactive physical look_for `knife]   
 
     [wait-for-trigger [get [get mind resource `learned_reactive `physical `look_for] finished_trigger]]
@@ -744,15 +759,21 @@
 		   resource `look_for] lookup `my_current_object]]]
 
 '************************math***********************'
-[defunk min [x y]
+[defunk max [x y]
   [if [> x y]
-      y
-    x]]
+      x
+    y]]
+
+[defunk min [x y]
+  [if [< x y]
+      x
+    y]]
 
 [defunk abs [x]
   [if [< 0 x]
       x
     [- 0 x]]]
+
 [defunk calculate_turning_speed [angle]
   [/  [/ angle 0.0258] 0.03]]
 
@@ -771,7 +792,7 @@
 	[= blah [* [* [power a [/ [- b 1] 2]] [power a [/ [- b 1] 2]]] a]]]]
     blah]]
   
-[defunk degree_to_rad [x]
+[defunk degree_to_radian [x]
   [*[/ x 180] pi]]
 
 [defunk sine [x]

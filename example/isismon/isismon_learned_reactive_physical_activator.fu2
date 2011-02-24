@@ -102,6 +102,11 @@
 									     center_body_on_resource__target__label
 									     center_body_on_resource__target__entry
 
+									     center_head_on_resource__hbox
+									     center_head_on_resource__button
+									     center_head_on_resource__target__label
+									     center_head_on_resource__target__entry
+
 									     search_for_resource__hbox
 									     search_for_resource__button
 									     search_for_resource__target__label
@@ -465,6 +470,19 @@
        [have center_body_on_resource__button signal_connect 'clicked'
 	     [funk []
 		   [have this activate_resource `learned_reactive `physical `center_body_on [get [get  look_for_resource__target__entry text] as-symbol]]]
+	     nil]
+       
+     [= center_head_on_resource__hbox [gtk-hbox-new 2]]
+       [= center_head_on_resource__button [gtk-button-new_with_label 'center_head_on']]
+       [= center_head_on_resource__target__label [gtk-label-new 'Target: ']]
+       [= center_head_on_resource__target__entry [gtk-entry-new]]
+       [have center_head_on_resource__hbox pack_start center_head_on_resource__button nil nil 0]
+       [have center_head_on_resource__hbox pack_start center_head_on_resource__target__label nil nil 0]
+       [have center_head_on_resource__hbox pack_start center_head_on_resource__target__entry t t 0]
+       [have vbox pack_start center_head_on_resource__hbox nil nil 0]
+       [have center_head_on_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `learned_reactive `physical `center_head_on [get [get  look_for_resource__target__entry text] as-symbol]]]
 	     nil]
        
        

@@ -57,6 +57,8 @@ f2ptr raw__event_stream__last_not_after_or_at  (f2ptr cause, f2ptr this, f2ptr t
 f2ptr  f2__event_stream__last_not_after_or_at  (f2ptr cause, f2ptr this, f2ptr time);
 f2ptr raw__event_stream__new__iterator         (f2ptr cause, f2ptr this);
 f2ptr  f2__event_stream__new__iterator         (f2ptr cause, f2ptr this);
+f2ptr raw__event_stream__remove_all            (f2ptr cause, f2ptr this);
+f2ptr  f2__event_stream__remove_all            (f2ptr cause, f2ptr this);
 f2ptr raw__event_stream__remove_all_before_time(f2ptr cause, f2ptr this, f2ptr time);
 f2ptr  f2__event_stream__remove_all_before_time(f2ptr cause, f2ptr this, f2ptr time);
 

@@ -38,7 +38,28 @@ export_cefunk0(forgetful_event_stream__new, 0, "Returns a new forgetful_event_st
 
 
 f2ptr raw__forgetful_event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
-  return raw__event_stream__add(cause, this, event_stream_event);
+  raw__event_stream__add(cause, this, event_stream_event);
+  f2ptr important_iterator_set = raw__forgetful_event_stream__important_iterator_set(cause, this);
+  boolean_t minimum_important_index_nanoseconds_since_1970__initialized = boolean__false;
+  f2ptr     minimum_important_index_nanoseconds_since_1970;
+  s64       minimum_important_index_nanoseconds_since_1970__i;
+  set__iteration(cause, important_iterator_set, important_iterator,
+		 f2ptr index_time                            = raw__event_stream_iterator__index_time(cause, important_iterator);
+		 f2ptr index_time__nanoseconds_since_1970    = f2time__nanoseconds_since_1970(index_time, cause);
+		 s64   index_time__nanoseconds_since_1970__i = f2integer__i(index_time__nanoseconds_since_1970, cause);
+		 if ((! minimum_important_index_nanoseconds_since_1970__initialized) ||
+		     (index_time__nanoseconds_since_1970__i < minimum_important_index_nanoseconds_since_1970__i)) {
+		   minimum_important_index_nanoseconds_since_1970              = index_time__nanoseconds_since_1970;
+		   minimum_important_index_nanoseconds_since_1970__i           = index_time__nanoseconds_since_1970__i;
+		   minimum_important_index_nanoseconds_since_1970__initialized = boolean__true;
+		 }
+		 );
+  if (minimum_important_index_nanoseconds_since_1970__initialized) {
+    raw__event_stream__remove_all_before_time(cause, this, minimum_important_index_nanoseconds_since_1970);
+  } else {
+    raw__event_stream__remove_all(cause, this);
+  }
+  return nil;
 }
 
 f2ptr f2__forgetful_event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) {

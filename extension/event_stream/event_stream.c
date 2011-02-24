@@ -255,6 +255,28 @@ f2ptr f2__event_stream__new__iterator(f2ptr cause, f2ptr this) {
 export_cefunk1(event_stream__new__iterator, this, 0, "Returns a new event_stream_iterator set to point to the first event in the stream.");
 
 
+f2ptr raw__event_stream__remove_all(f2ptr cause, f2ptr this) {
+  boolean_t try_again = boolean__true;
+  while (try_again) {
+    try_again   = boolean__false;
+    f2ptr first = raw__event_stream__first(cause, this);
+    if (first != nil) {
+      raw__event_stream__remove(cause, this, first);
+      try_again = boolean__true;
+    }
+  }
+  return nil;
+}
+
+f2ptr f2__event_stream__remove_all(f2ptr cause, f2ptr this) {
+  if (! raw__event_stream__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__event_stream__remove_all(cause, this);
+}
+export_cefunk1(event_stream__remove_all, this, 0, "Removes all event_stream_events in this event_stream.");
+
+
 f2ptr raw__event_stream__remove_all_before_time(f2ptr cause, f2ptr this, f2ptr time) {
   s64 time__nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(time, cause), cause);
   boolean_t try_again = boolean__true;
@@ -391,6 +413,7 @@ f2ptr f2__event_stream_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "first_not_before"),                             f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__first_not_before")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "last_not_after_or_at"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__last_not_after_or_at")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "new-iterator"),                                 f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__new__iterator")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remove_all"),                                   f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__remove_all")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remove_all_before_time"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__remove_all_before_time")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "gather_lick_notes"),                            f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__gather_lick_notes")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lick_to_chunk"),                                f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__lick_to_chunk")));}

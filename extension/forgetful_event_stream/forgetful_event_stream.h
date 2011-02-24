@@ -23,6 +23,7 @@
 #define F2__EXTENSION__FORGETFUL_EVENT_STREAM__H
 
 #include "../../c/funk2.h"
+#include "../event_stream/event_stream.h"
 
 def_header_ceframe1(forgetful_event_stream, width);
 

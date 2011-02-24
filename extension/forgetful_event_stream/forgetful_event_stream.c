@@ -41,12 +41,12 @@ f2ptr raw__forgetful_event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stre
   raw__event_stream__add(cause, this, event_stream_event);
   f2ptr important_iterator_set = raw__forgetful_event_stream__important_iterator_set(cause, this);
   f2ptr     minimum_important_index_nanoseconds_since_1970    = nil;
-  s64       minimum_important_index_nanoseconds_since_1970__i;
+  s64       minimum_important_index_nanoseconds_since_1970__i = 0;
   set__iteration(cause, important_iterator_set, important_iterator,
 		 f2ptr index_time                            = raw__event_stream_iterator__index_time(cause, important_iterator);
 		 f2ptr index_time__nanoseconds_since_1970    = f2time__nanoseconds_since_1970(index_time, cause);
 		 s64   index_time__nanoseconds_since_1970__i = f2integer__i(index_time__nanoseconds_since_1970, cause);
-		 if ((! minimum_important_index_nanoseconds_since_1970 == nil) ||
+		 if ((minimum_important_index_nanoseconds_since_1970 == nil) ||
 		     (index_time__nanoseconds_since_1970__i < minimum_important_index_nanoseconds_since_1970__i)) {
 		   minimum_important_index_nanoseconds_since_1970    = index_time__nanoseconds_since_1970;
 		   minimum_important_index_nanoseconds_since_1970__i = index_time__nanoseconds_since_1970__i;

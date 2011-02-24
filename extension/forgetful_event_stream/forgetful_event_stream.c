@@ -37,6 +37,37 @@ f2ptr f2__forgetful_event_stream__new(f2ptr cause) {
 export_cefunk0(forgetful_event_stream__new, 0, "Returns a new forgetful_event_stream object.");
 
 
+f2ptr raw__forgetful_event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
+  raw__event_stream__add(cause, this, event_stream_event);
+}
+
+f2ptr f2__forgetful_event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
+  if ((! raw__forgetful_event_stream__is_type(cause, this)) ||
+      (! raw__event_stream_event__is_type(cause, event_stream_event))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__forgetful_event_stream__add(cause, this, event_stream_event);
+}
+export_cefunk2(forgetful_event_stream__add, this, event_stream_event, 0,
+	       "Adds an event_stream_event to a forgetful_event_stream iterator.\n"
+	       "Warning: The event will be forgotten if there is not an important iterator that still has to iterate through this event.");
+
+
+f2ptr raw__forgetful_event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
+  raw__event_stream__remove(cause, this, event_stream_event);
+}
+
+f2ptr f2__forgetful_event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
+  if ((! raw__forgetful_event_stream__is_type(cause, this)) ||
+      (! raw__event_stream_event__is_type(cause, event_stream_event))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__forgetful_event_stream__remove(cause, this, event_stream_event);
+}
+export_cefunk2(forgetful_event_stream__remove, this, event_stream_event, 0,
+	       "Removes an event_stream_event from a forgetful_event_stream iterator.");
+
+
 void raw__forgetful_event_stream__add_important_iterator(f2ptr cause, f2ptr this, f2ptr iterator) {
   f2ptr important_iterator_set = raw__forgetful_event_stream__important_iterator_set(cause, this);
   raw__set__add(cause, important_iterator_set, iterator);
@@ -74,6 +105,8 @@ export_cefunk2(forgetful_event_stream__remove_important_iterator, this, iterator
 f2ptr f2__forgetful_event_stream_type__new_aux(f2ptr cause) {
   f2ptr this = f2__forgetful_event_stream_type__new(cause);
   f2__primobject_type__parents__set(cause, this, f2list1__new(cause, new__symbol(cause, "event_stream")));
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_event_stream"), new__symbol(cause, "forgetful_event_stream__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_event_stream"), new__symbol(cause, "forgetful_event_stream__remove")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_important_iterator"),    f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_event_stream"), new__symbol(cause, "forgetful_event_stream__add_important_iterator")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove_important_iterator"), f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_event_stream"), new__symbol(cause, "forgetful_event_stream__remove_important_iterator")));}
   return this;

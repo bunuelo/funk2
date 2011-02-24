@@ -141,9 +141,9 @@ void raw__cairo_context__render_outlined_rounded_box_with_broken_left(f2ptr caus
   raw__cairo_context__arc(            cause, this, x0 + dx - corner_radius, y0 + corner_radius, corner_radius, 3 * M_PI / 2, 2 * M_PI);
   raw__cairo_context__rel_line_to(    cause, this, 0, dy - (corner_radius * 2));
   raw__cairo_context__arc(            cause, this, x0 + dx - corner_radius, y0 + dy - corner_radius, corner_radius, 0, M_PI / 2);
-  raw__cairo_context__rel_line_to(    cause, this, -(dx - corner_radius - (dy / 4)), 0);
-  raw__cairo_context__rel_line_to(    cause, this, -(dy / 4), -(dy / 4));
-  raw__cairo_context__rel_line_to(    cause, this,  (dy / 4), -(dy / 4));
+  raw__cairo_context__rel_line_to(    cause, this, -(dx - corner_radius - (dy / 3)), 0);
+  raw__cairo_context__rel_line_to(    cause, this, -(dy / 3), -(dy / 3));
+  raw__cairo_context__rel_line_to(    cause, this,  (dy / 3), -(dy / 3));
   raw__cairo_context__close_path(     cause, this);
   
   raw__cairo_context__set_line_width( cause, this, outline_width);

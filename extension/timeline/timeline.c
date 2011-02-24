@@ -168,7 +168,7 @@ void raw__cairo_context__render_outlined_box_with_broken_left_and_right(f2ptr ca
 									double background_green,
 									double background_blue,
 									double background_alpha) {
-  double corner_radius = maximum_corner_radius;
+  //double corner_radius = maximum_corner_radius;
   raw__cairo_context__move_to(        cause, this, x0, y0);
   raw__cairo_context__rel_line_to(    cause, this, dx - (dy / 3), 0);
   raw__cairo_context__rel_line_to(    cause, this,  (dy / 3), (dy / 3));

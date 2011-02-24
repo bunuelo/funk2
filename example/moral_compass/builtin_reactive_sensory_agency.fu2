@@ -46,7 +46,8 @@
        nil]]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute create_knowledge []
-  [new semantic_knowledge_base `visual_knowledge [get [get this mind] semantic_realm]]]
+  [new semantic_knowledge_base `input_visual_knowledge [get [get this mind] semantic_realm]]
+  [new semantic_knowledge_base `visual_knowledge       [get [get this mind] semantic_realm]]]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute connect_knowledge_reflection []
   nil]
@@ -57,14 +58,14 @@
     
     [let* [[perception     [get [get this mind] perception]]
 	   [visual_objects [get perception visual_objects]]]
-      [have [get [get this mind] visual_knowledge] remove_all]
+      [have [get [get this mind] input_visual_knowledge] remove_all]
       [let [[semantic_realm        [get [get this mind] semantic_realm]]
 	    [semantic_object_frame [frame]]]
 	[mapc [funk [object]
 		    [let [[semantic_visual_object [new semantic_visual_object semantic_realm]]
 			  [phenomenal_name        [get object phenomenal_name]]]
 		      [semantic-add semantic_visual_object visual_phenomenal_name phenomenal_name]
-		      [have [get [get this mind] visual_knowledge] add_semantic_frame semantic_visual_object]
+		      [have [get [get this mind] input_visual_knowledge] add_semantic_frame semantic_visual_object]
 		      [have semantic_object_frame add phenomenal_name semantic_visual_object]]]
 	      visual_objects]
 	[mapc [funk [visual_object]
@@ -97,7 +98,7 @@
 						  [argument_frame [get action argument_frame]]
 						  [result         [get action result]]]
 					      [let [[action_semantic_frame [new semantic_action_event [get [get this mind] semantic_realm]]]]
-						[have [get [get this mind] visual_knowledge] add_semantic_frame action_semantic_frame]
+						[have [get [get this mind] input_visual_knowledge] add_semantic_frame action_semantic_frame]
 						[semantic-add action_semantic_frame agent       semantic_object]
 						[semantic-add action_semantic_frame action_name action_name]
 						'should add argument frame for each action specifically.'

@@ -86,6 +86,7 @@
 [deftypefunk moral_compass get self_reflective_knowledge  [] [have [get this semantic_realm] lookup_semantic_knowledge_base `self_reflective_knowledge]]
 [deftypefunk moral_compass get self_conscious_knowledge   [] [have [get this semantic_realm] lookup_semantic_knowledge_base `self_conscious_knowledge]]
 [deftypefunk moral_compass get visual_knowledge           [] [have [get this semantic_realm] lookup_semantic_knowledge_base `visual_knowledge]]
+[deftypefunk moral_compass get input_visual_knowledge     [] [have [get this semantic_realm] lookup_semantic_knowledge_base `input_visual_knowledge]]
 [deftypefunk moral_compass get physical_knowledge         [] [have [get this semantic_realm] lookup_semantic_knowledge_base `physical_knowledge]]
 
 [deftypefunk moral_compass get objects []

@@ -38,7 +38,7 @@ export_cefunk0(forgetful_event_stream__new, 0, "Returns a new forgetful_event_st
 
 
 f2ptr raw__forgetful_event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
-  raw__event_stream__add(cause, this, event_stream_event);
+  return raw__event_stream__add(cause, this, event_stream_event);
 }
 
 f2ptr f2__forgetful_event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
@@ -54,7 +54,7 @@ export_cefunk2(forgetful_event_stream__add, this, event_stream_event, 0,
 
 
 f2ptr raw__forgetful_event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
-  raw__event_stream__remove(cause, this, event_stream_event);
+  return raw__event_stream__remove(cause, this, event_stream_event);
 }
 
 f2ptr f2__forgetful_event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event) {

@@ -19,7 +19,7 @@
 
 [defpackage semantic_knowledge_base
   :packages [equals_hash
-	     event_stream
+	     forgetful_event_stream
 	     lick]
    :sources ['semantic_knowledge_base-core.fu2']]
 

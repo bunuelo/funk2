@@ -280,7 +280,7 @@ f2ptr raw__cairo_context__render_text_box_with_broken_left_and_right(f2ptr cause
 								     double text_red, double text_green, double text_blue, double text_alpha,
 								     double box_outline_red, double box_outline_green, double box_outline_blue, double box_outline_alpha,
 								     double text_outline_red, double text_outline_green, double text_outline_blue, double text_outline_alpha) {
-  raw__cairo_context__render_outlined_box_with_broken_left(cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width, box_outline_red, box_outline_green, box_outline_blue, box_outline_alpha,  background_red, background_green, background_blue, background_alpha);
+  raw__cairo_context__render_outlined_box_with_broken_left_and_right(cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width, box_outline_red, box_outline_green, box_outline_blue, box_outline_alpha,  background_red, background_green, background_blue, background_alpha);
   {
     f2ptr result = raw__cairo_context__render_centered_outlined_text(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  text_outline_red, text_outline_green, text_outline_blue, text_outline_alpha);
     if (raw__larva__is_type(cause, result)) {

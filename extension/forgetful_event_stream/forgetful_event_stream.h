@@ -27,8 +27,12 @@
 
 def_header_ceframe1(forgetful_event_stream, important_iterator_set);
 
-f2ptr raw__forgetful_event_stream__new(f2ptr cause);
-f2ptr  f2__forgetful_event_stream__new(f2ptr cause);
+f2ptr raw__forgetful_event_stream__new                      (f2ptr cause);
+f2ptr  f2__forgetful_event_stream__new                      (f2ptr cause);
+void  raw__forgetful_event_stream__add_important_iterator   (f2ptr cause, f2ptr this, f2ptr iterator);
+f2ptr  f2__forgetful_event_stream__add_important_iterator   (f2ptr cause, f2ptr this, f2ptr iterator);
+void  raw__forgetful_event_stream__remove_important_iterator(f2ptr cause, f2ptr this, f2ptr iterator);
+f2ptr  f2__forgetful_event_stream__remove_important_iterator(f2ptr cause, f2ptr this, f2ptr iterator);
 
 f2ptr f2__forgetful_event_stream_type__new_aux(f2ptr cause);
 

@@ -323,7 +323,7 @@
        [= view_sense_menu_item [gtk-menu_item-new 'Sense']]
        [have view_sense_menu_item signal_connect 'activate'
 	     [funk []
-		   [terminal_format standard-terminal '\n' [get this name] '\'s sensory information:'
+		   [format stdout '\n' [get this name] '\'s sensory information:'
 				    '\n  ' [have isis_agent sense_world]]]
 	     nil]
        [have view_menu append view_sense_menu_item]
@@ -332,7 +332,7 @@
        [= view_proprioceptual_frame_menu_item [gtk-menu_item-new 'Proprioceptual Frame']]
        [have view_proprioceptual_frame_menu_item signal_connect 'activate'
 	     [funk []
-		   [terminal_format standard-terminal '\n' [get this name] '\'s proprioceptual frame:'
+		   [format stdout '\n' [get this name] '\'s proprioceptual frame:'
 				    '\n  ' [have [get [get isis_agent mind] perception] lookup `proprioceptual_frame]]]
 	     nil]
        [have view_menu append view_proprioceptual_frame_menu_item]
@@ -340,7 +340,7 @@
        [= view_visual_objects_menu_item [gtk-menu_item-new 'Visual Objects']]
        [have view_visual_objects_menu_item signal_connect 'activate'
 	     [funk []
-		   [terminal_format standard-terminal '\n' [get this name] '\'s visual objects:'
+		   [format stdout '\n' [get this name] '\'s visual objects:'
 				    '\n  ' [have [get [get isis_agent mind] perception] lookup `visual_objects]]]
 	     nil]
        [have view_menu append view_visual_objects_menu_item]

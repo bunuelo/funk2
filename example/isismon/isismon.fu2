@@ -415,7 +415,7 @@
        [= step_size_entry [gtk-entry-new]]
        [have entry_hbox pack_start step_size_label nil nil 0]
        [have entry_hbox pack_start step_size_entry t t 0]
-       [set step_size_entry text '0.03']
+       [set step_size_entry text '0.1']
        
        [= step_delay_label [gtk-label-new 'Step Delay: ']]
        [= step_delay_entry [gtk-entry-new]]

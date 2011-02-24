@@ -25,10 +25,10 @@
 #include "../../c/funk2.h"
 #include "../event_stream/event_stream.h"
 
-def_header_ceframe1(forgetful_event_stream, width);
+def_header_ceframe1(forgetful_event_stream, important_iterator_set);
 
-f2ptr raw__forgetful_event_stream__new(f2ptr cause, f2ptr width);
-f2ptr  f2__forgetful_event_stream__new(f2ptr cause, f2ptr width);
+f2ptr raw__forgetful_event_stream__new(f2ptr cause);
+f2ptr  f2__forgetful_event_stream__new(f2ptr cause);
 
 f2ptr f2__forgetful_event_stream_type__new_aux(f2ptr cause);
 

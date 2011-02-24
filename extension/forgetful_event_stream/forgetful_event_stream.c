@@ -21,19 +21,20 @@
 
 #include "forgetful_event_stream.h"
 
-def_ceframe1(forgetful_event_stream, forgetful_event_stream, width);
+def_ceframe1(forgetful_event_stream, forgetful_event_stream, important_iterator_set);
 
-f2ptr raw__forgetful_event_stream__new(f2ptr cause, f2ptr width) {
+f2ptr raw__forgetful_event_stream__new(f2ptr cause) {
   f2ptr this = f2__event_stream__new(cause);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),  new__symbol(cause, "forgetful_event_stream"));
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "width"), width);
+  f2ptr important_iterator_set = f2__set__new(cause);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),                   new__symbol(cause, "forgetful_event_stream"));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "important_iterator_set"), important_iterator_set);
   return this;
 }
 
-f2ptr f2__forgetful_event_stream__new(f2ptr cause, f2ptr width) {
-  return raw__forgetful_event_stream__new(cause, width);
+f2ptr f2__forgetful_event_stream__new(f2ptr cause) {
+  return raw__forgetful_event_stream__new(cause);
 }
-export_cefunk1(forgetful_event_stream__new, width, 0, "Returns a new forgetful_event_stream object.");
+export_cefunk1(forgetful_event_stream__new, 0, "Returns a new forgetful_event_stream object.");
 
 
 f2ptr f2__forgetful_event_stream_type__new_aux(f2ptr cause) {

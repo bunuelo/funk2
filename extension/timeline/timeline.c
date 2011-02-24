@@ -178,6 +178,7 @@ void raw__cairo_context__render_outlined_box_with_broken_left_and_right(f2ptr ca
   raw__cairo_context__rel_line_to(    cause, this, -(dy / 3), -(dy / 3));
   raw__cairo_context__rel_line_to(    cause, this,  (dy / 3), -(dy / 3));
   raw__cairo_context__rel_line_to(    cause, this, -(dy / 3), -(dy / 3));
+  raw__cairo_context__close_path(     cause, this);
   
   raw__cairo_context__set_line_width( cause, this, outline_width);
   raw__cairo_context__set_source_rgba(cause, this, foreground_red, foreground_green, foreground_blue, foreground_alpha);

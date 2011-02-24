@@ -328,10 +328,10 @@ export_cefunk5(image__clear, this, red, green, blue, alpha, 0, "Fills this entir
 
 f2ptr f2__image_type__new_aux(f2ptr cause) {
   f2ptr this = f2__image_type__new(cause);
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "write_reduction_image_part"), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__write_reduction_image_part")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "copy_rectangle_to"),          f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__copy_rectangle_to")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "fill_rectangle"),             f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__fill_rectangle")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "clear"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__clear")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "write_reduction_image_part"), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__write_reduction_image_part")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "copy_rectangle_to"),          f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__copy_rectangle_to")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "fill_rectangle"),             f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__fill_rectangle")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "clear"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__clear")));}
   return this;
 }
 

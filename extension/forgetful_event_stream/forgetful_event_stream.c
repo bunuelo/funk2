@@ -34,7 +34,7 @@ f2ptr raw__forgetful_event_stream__new(f2ptr cause) {
 f2ptr f2__forgetful_event_stream__new(f2ptr cause) {
   return raw__forgetful_event_stream__new(cause);
 }
-export_cefunk1(forgetful_event_stream__new, 0, "Returns a new forgetful_event_stream object.");
+export_cefunk0(forgetful_event_stream__new, 0, "Returns a new forgetful_event_stream object.");
 
 
 f2ptr f2__forgetful_event_stream_type__new_aux(f2ptr cause) {

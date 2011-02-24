@@ -1391,7 +1391,7 @@ export_cefunk1(semantic_knowledge_base__as__graph, this, 0, "Converts the semant
 
 void raw__semantic_knowledge_base__initialize_tracing(f2ptr cause, f2ptr this) {
   if (raw__semantic_knowledge_base__trace_event_stream(cause, this) == nil) {
-    f2ptr trace_event_stream = f2__event_stream__new(cause);
+    f2ptr trace_event_stream = f2__forgetful_event_stream__new(cause);
     raw__semantic_knowledge_base__trace_event_stream__set(cause, this, trace_event_stream);
   }
 }
@@ -1422,7 +1422,7 @@ f2ptr raw__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, 
     raw__semantic_knowledge_base__initialize_tracing(cause, this);
     f2ptr trace_event_stream = raw__semantic_knowledge_base__trace_event_stream(cause, this);
     f2ptr semantic_knowledge_base_event = raw__semantic_knowledge_base_event__new(cause, f2__time(cause), new__symbol(cause, "add_semantic_frame"), semantic_frame);
-    raw__event_stream__add(cause, trace_event_stream, semantic_knowledge_base_event);
+    raw__forgetful_event_stream__add(cause, trace_event_stream, semantic_knowledge_base_event);
     {
       f2ptr trace_callback_funks_frame   = raw__semantic_knowledge_base__trace_callback_funks_frame(cause, this);
       f2ptr add_semantic_frame_callbacks = f2__frame__lookup_var_value(cause, trace_callback_funks_frame, new__symbol(cause, "add_semantic_frame"), nil);
@@ -1480,7 +1480,7 @@ f2ptr raw__semantic_knowledge_base__remove_semantic_frame(f2ptr cause, f2ptr thi
     raw__semantic_knowledge_base__initialize_tracing(cause, this);
     f2ptr trace_event_stream = raw__semantic_knowledge_base__trace_event_stream(cause, this);
     f2ptr semantic_knowledge_base_event = raw__semantic_knowledge_base_event__new(cause, f2__time(cause), new__symbol(cause, "remove_semantic_frame"), semantic_frame);
-    raw__event_stream__add(cause, trace_event_stream, semantic_knowledge_base_event);
+    raw__forgetful_event_stream__add(cause, trace_event_stream, semantic_knowledge_base_event);
     {
       f2ptr trace_callback_funks_frame   = raw__semantic_knowledge_base__trace_callback_funks_frame(cause, this);
       f2ptr remove_semantic_frame_callbacks = f2__frame__lookup_var_value(cause, trace_callback_funks_frame, new__symbol(cause, "remove_semantic_frame"), nil);
@@ -1598,7 +1598,7 @@ export_cefunk3(semantic_knowledge_base__add_trace_callback_funk, this, trace_cal
 f2ptr raw__semantic_knowledge_base__add_trace_event(f2ptr cause, f2ptr this, f2ptr event) {
   raw__semantic_knowledge_base__initialize_tracing(cause, this);
   f2ptr trace_event_stream = raw__semantic_knowledge_base__trace_event_stream(cause, this);
-  raw__event_stream__add(cause, trace_event_stream, event);
+  raw__forgetful_event_stream__add(cause, trace_event_stream, event);
   return nil;
 }
 
@@ -2167,7 +2167,7 @@ f2ptr f2__semantic_knowledge_base__core_extension__initialize(f2ptr cause) {
     }
   }
   {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "event_stream"), new__symbol(cause, "event_stream__core_extension__ping")), nil);
+    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_event_stream"), new__symbol(cause, "forgetful_event_stream__core_extension__ping")), nil);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

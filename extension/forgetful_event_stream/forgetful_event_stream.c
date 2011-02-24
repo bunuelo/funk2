@@ -47,7 +47,8 @@ f2ptr f2__forgetful_event_stream__add_important_iterator(f2ptr cause, f2ptr this
       (! raw__event_stream_iterator__is_type(cause, iterator))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__forgetful_event_stream__add_important_iterator(cause, this, iterator);
+  raw__forgetful_event_stream__add_important_iterator(cause, this, iterator);
+  return nil;
 }
 export_cefunk2(forgetful_event_stream__add_important_iterator, this, iterator, 0,
 	       "Adds an important event_stream_iterator to this forgetful_event_stream.");
@@ -63,7 +64,8 @@ f2ptr f2__forgetful_event_stream__remove_important_iterator(f2ptr cause, f2ptr t
       (! raw__event_stream_iterator__is_type(cause, iterator))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__forgetful_event_stream__remove_important_iterator(cause, this, iterator);
+  raw__forgetful_event_stream__remove_important_iterator(cause, this, iterator);
+  return nil;
 }
 export_cefunk2(forgetful_event_stream__remove_important_iterator, this, iterator, 0,
 	       "Removes an important event_stream_iterator from this forgetful_event_stream.");

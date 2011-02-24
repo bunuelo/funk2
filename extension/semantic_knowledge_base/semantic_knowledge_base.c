@@ -23,7 +23,7 @@
 #include "semantic_knowledge_base.h"
 #include "../equals_hash/equals_hash.h"
 #include "../meta_semantic_knowledge_base/meta_semantic_knowledge_base.h"
-#include "../event_stream/event_stream.h"
+#include "../forgetful_event_stream/forgetful_event_stream.h"
 #include "../lick/lick.h"
 
 

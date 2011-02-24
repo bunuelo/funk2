@@ -119,6 +119,40 @@ void raw__cairo_context__render_outlined_rounded_box_with_broken_right(f2ptr cau
   raw__cairo_context__fill(           cause, this);
 }
 
+void raw__cairo_context__render_outlined_rounded_box_with_broken_left(f2ptr cause,
+								      f2ptr this,
+								      double x0,
+								      double y0,
+								      double dx,
+								      double dy,
+								      double maximum_corner_radius,
+								      double outline_width,
+								      double foreground_red,
+								      double foreground_green,
+								      double foreground_blue,
+								      double foreground_alpha,
+								      double background_red,
+								      double background_green,
+								      double background_blue,
+								      double background_alpha) {
+  double corner_radius = maximum_corner_radius;
+  raw__cairo_context__move_to(        cause, this, x0, y0);
+  raw__cairo_context__rel_line_to(    cause, this, dx - corner_radius, 0);
+  raw__cairo_context__arc(            cause, this, x0 + dx - corner_radius, y0 + corner_radius, corner_radius, 3 * M_PI / 2, 2 * M_PI);
+  raw__cairo_context__rel_line_to(    cause, this, 0, dy - (corner_radius * 2));
+  raw__cairo_context__arc(            cause, this, x0 + dx - corner_radius, y0 + dy - corner_radius, corner_radius, 0, M_PI / 2);
+  raw__cairo_context__rel_line_to(    cause, this, -(dx - corner_radius - (dy / 2)), 0);
+  raw__cairo_context__rel_line_to(    cause, this, -(dy / 2), -(dy /2));
+  raw__cairo_context__rel_line_to(    cause, this,  (dy / 2), -(dy /2));
+  raw__cairo_context__close_path(     cause, this);
+  
+  raw__cairo_context__set_line_width( cause, this, outline_width);
+  raw__cairo_context__set_source_rgba(cause, this, foreground_red, foreground_green, foreground_blue, foreground_alpha);
+  raw__cairo_context__stroke_preserve(cause, this);
+  raw__cairo_context__set_source_rgba(cause, this, background_red, background_green, background_blue, background_alpha);
+  raw__cairo_context__fill(           cause, this);
+}
+
 void raw__cairo_context__render_outlined_text(f2ptr cause, f2ptr this, double x0, double y0, double font_size, char* text, double outline_width, double red, double green, double blue, double alpha, double outline_red, double outline_green, double outline_blue, double outline_alpha) {
   raw__cairo_context__move_to(        cause, this, x0, y0 + (font_size * 0.75));
   raw__cairo_context__set_font_size(  cause, this, font_size);
@@ -180,6 +214,23 @@ f2ptr raw__cairo_context__render_rounded_text_box_with_broken_right(f2ptr cause,
 								    double box_outline_red, double box_outline_green, double box_outline_blue, double box_outline_alpha,
 								    double text_outline_red, double text_outline_green, double text_outline_blue, double text_outline_alpha) {
   raw__cairo_context__render_outlined_rounded_box_with_broken_right(cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width, box_outline_red, box_outline_green, box_outline_blue, box_outline_alpha,  background_red, background_green, background_blue, background_alpha);
+  {
+    f2ptr result = raw__cairo_context__render_centered_outlined_text(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  text_outline_red, text_outline_green, text_outline_blue, text_outline_alpha);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  return nil;
+}
+
+f2ptr raw__cairo_context__render_rounded_text_box_with_broken_left(f2ptr cause, f2ptr this, double x0, double y0, double dx, double dy, double font_size, char* text,
+								   double maximum_corner_radius,
+								   double background_red, double background_green, double background_blue, double background_alpha,
+								   double outline_width,
+								   double text_red, double text_green, double text_blue, double text_alpha,
+								   double box_outline_red, double box_outline_green, double box_outline_blue, double box_outline_alpha,
+								   double text_outline_red, double text_outline_green, double text_outline_blue, double text_outline_alpha) {
+  raw__cairo_context__render_outlined_rounded_box_with_broken_left(cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width, box_outline_red, box_outline_green, box_outline_blue, box_outline_alpha,  background_red, background_green, background_blue, background_alpha);
   {
     f2ptr result = raw__cairo_context__render_centered_outlined_text(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  text_outline_red, text_outline_green, text_outline_blue, text_outline_alpha);
     if (raw__larva__is_type(cause, result)) {
@@ -339,8 +390,22 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
 	return result;
       }
     } else if (start_time == nil) {
+      f2ptr  result = raw__cairo_context__render_rounded_text_box_with_broken_left(cause, cairo_context,
+										   start_position, top_position,                                  // x0, y0
+										   end_position - start_position, bottom_position - top_position, // dx, dy
+										   1,                                                             // font size
+										   (char*)action_name__str,                                       // text
+										   0.5,                                                           // maximum corner radius
+										   142 / 255.0, 200 / 255.0, 255 / 255.0, 1,                      // background rgba
+										   0.2,                                                           // outline width
+										   0, 0, 0, 1,                                                    // text rgba
+										   0, 0, 0, 1,                                                    // box outline rgba
+										   142 / 255.0, 200 / 255.0, 255 / 255.0, 1);                     // text outline rgba
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
     } else if (end_time == nil) {
-      f2ptr  result = raw__cairo_context__render_rounded_text_box_with_broken_right(cause, cairo_context,
+      f2ptr  result = raw__cairo_context__render_rounded_text_box_with_broken_left(cause, cairo_context,
 										    start_position, top_position,                                  // x0, y0
 										    end_position - start_position, bottom_position - top_position, // dx, dy
 										    1,                                                             // font size

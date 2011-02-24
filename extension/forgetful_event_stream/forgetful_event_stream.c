@@ -24,7 +24,10 @@
 def_ceframe1(forgetful_event_stream, forgetful_event_stream, width);
 
 f2ptr raw__forgetful_event_stream__new(f2ptr cause, f2ptr width) {
-  return f2forgetful_event_stream__new(cause, width);
+  f2ptr this = f2__event_stream__new(cause);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),  new__symbol(cause, "forgetful_event_stream"));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "width"), width);
+  return this;
 }
 
 f2ptr f2__forgetful_event_stream__new(f2ptr cause, f2ptr width) {
@@ -35,6 +38,7 @@ export_cefunk1(forgetful_event_stream__new, width, 0, "Returns a new forgetful_e
 
 f2ptr f2__forgetful_event_stream_type__new_aux(f2ptr cause) {
   f2ptr this = f2__forgetful_event_stream_type__new(cause);
+  f2__primobject_type__parents__set(cause, this, f2list1__new(cause, new__symbol(cause, "event_stream")));
   return this;
 }
 

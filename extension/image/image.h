@@ -22,36 +22,24 @@
 #ifndef F2__EXTENSION__IMAGE__H
 #define F2__EXTENSION__IMAGE__H
 
-f2ptr     raw__image__new(                       f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data);
-f2ptr      f2__image__new(                       f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data);
-f2ptr     raw__image__new_from_rgb_data(         f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data);
-f2ptr      f2__image__new_from_rgb_data(         f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data);
-boolean_t raw__image__is_type(                   f2ptr cause, f2ptr thing);
-f2ptr      f2__image__is_type(                   f2ptr cause, f2ptr thing);
-f2ptr     raw__image__type(                      f2ptr cause, f2ptr this);
-f2ptr      f2__image__type(                      f2ptr cause, f2ptr this);
-f2ptr     raw__image__width(                     f2ptr cause, f2ptr this);
-f2ptr      f2__image__width(                     f2ptr cause, f2ptr this);
-f2ptr     raw__image__width__set(                f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__image__width__set(                f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__image__height(                    f2ptr cause, f2ptr this);
-f2ptr      f2__image__height(                    f2ptr cause, f2ptr this);
-f2ptr     raw__image__height__set(               f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__image__height__set(               f2ptr cause, f2ptr this, f2ptr value);
-f2ptr     raw__image__rgba_data(                 f2ptr cause, f2ptr this);
-f2ptr      f2__image__rgba_data(                 f2ptr cause, f2ptr this);
-f2ptr     raw__image__rgba_data__set(            f2ptr cause, f2ptr this, f2ptr value);
-f2ptr      f2__image__rgba_data__set(            f2ptr cause, f2ptr this, f2ptr value);
+#include "../../c/funk2.h"
+
+def_header_ceframe3(image, width, height, rgba_data);
+
+f2ptr     raw__image__new                       (f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data);
+f2ptr      f2__image__new                       (f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data);
+f2ptr     raw__image__new_from_rgb_data         (f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data);
+f2ptr      f2__image__new_from_rgb_data         (f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data);
 f2ptr     raw__image__write_reduction_image_part(f2ptr cause, f2ptr this, f2ptr reduced_image, f2ptr reduction_factor, f2ptr x_offset, f2ptr y_offset);
 f2ptr      f2__image__write_reduction_image_part(f2ptr cause, f2ptr this, f2ptr reduced_image, f2ptr reduction_factor, f2ptr x_offset, f2ptr y_offset);
 
-f2ptr f2__image_type__new(f2ptr cause);
+f2ptr f2__image_type__new_aux(f2ptr cause);
 
 // **
 
-f2ptr f2__image__core_extension__ping(f2ptr cause);
+f2ptr f2__image__core_extension__ping      (f2ptr cause);
 f2ptr f2__image__core_extension__initialize(f2ptr cause);
-f2ptr f2__image__core_extension__destroy(f2ptr cause);
+f2ptr f2__image__core_extension__destroy   (f2ptr cause);
 
 #endif // F2__EXTENSION__IMAGE__H
 

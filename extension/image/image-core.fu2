@@ -19,8 +19,9 @@
 
 [defcore image 'extension/image/.libs/libf2e_image.so']
 
-[defcorefunk image-new_from_rgb_data         image image__new_from_rgb_data]
-[defcorefunk image-core_extension-ping       image image__core_extension__ping]
-[defcorefunk image-core_extension-initialize image image__core_extension__initialize]
+[defcorefunk image-new_from_rgb_data           image image__new_from_rgb_data]
+[defcorefunk image-core_extension-ping         image image__core_extension__ping]
+[defcorefunk image-core_extension-define_types image image__core_extension__define_types]
+[defcorefunk image-core_extension-initialize   image image__core_extension__initialize]
 
-[image-core_extension-ping]
+[image-core_extension-define_types]

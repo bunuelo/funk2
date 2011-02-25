@@ -42,11 +42,11 @@
        nil]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource get physical_phenomenon_semantic_frame [phenomenal_name]
-  [let [[phenomenon_semantic_frame [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame visual_phenomenal_name]]]
+  [let [[phenomenon_semantic_frame [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame phenomenal_name]]]
     [if [null phenomenon_semantic_frame]
 	[prog [= phenomenon_semantic_frame [new semantic_frame [get [get this mind] semantic_realm]]]
-	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame visual_phenomenal_name phenomenon_semantic_frame]
-	      [have phenomenon_semantic_frame add `property `physical_phenomenon `[physical ,visual_phenomenal_name]]]]
+	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame phenomenal_name phenomenon_semantic_frame]
+	      [have phenomenon_semantic_frame add `property `physical_phenomenon `[physical ,phenomenal_name]]]]
     phenomenon_semantic_frame]]
 
 

@@ -1521,7 +1521,7 @@ f2ptr raw__semantic_knowledge_base__remove_semantic_frame(f2ptr cause, f2ptr thi
 			    }
 			    f2ptr semantic_frame_event = raw__semantic_frame__remove_event__new(cause, semantic_frame, key_type, key, value);
 			    {
-			      f2ptr result = raw__semantic_knowledge_base__remove_trace_event(cause, this, semantic_frame_event);
+			      f2ptr result = raw__semantic_knowledge_base__add_trace_event(cause, this, semantic_frame_event);
 			      if (raw__larva__is_type(cause, result)) {
 				return result;
 			      }

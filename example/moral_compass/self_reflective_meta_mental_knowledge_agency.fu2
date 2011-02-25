@@ -72,9 +72,11 @@
 							
 							[let [[current_action_sequence [new semantic_event_sequence [get [get this mind] semantic_realm]]]]
 							  [semantic-add current_action_sequence absolute_start_time [time]]
-							  [let [[semantic_agent-name  [semantic-get [semantic-get semantic_frame agent]  name]]
-								[semantic_target-name [semantic-get [semantic-get semantic_frame target] name]]]
-							    [semantic-add current_action_sequence action_name [format nil semantic_target-name]]]
+							  [let [[semantic_agent  [semantic-get semantic_frame agent]]
+								[semantic_target [semantic-get semantic_frame target]]]
+							    [semantic-add current_action_sequence agent       semantic_agent]
+							    [semantic-add current_action_sequence target      semantic_target]
+							    [semantic-add current_action_sequence action_name `mental_sequence]]
 							  [have this-resource think_to_self '\n    *** debug A7: translate mental->meta_mental add_semantic_frame cause_being_active resource_semantic_frame current_action_sequence: ' current_action_sequence]
 							  [if agent
 							      [if [not [get meta_mental_sequence_knowledge contains_semantic_frame agent]]

@@ -1441,14 +1441,12 @@ f2ptr raw__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, 
       }
     }
   }
-  {
-    semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
-			      f2ptr result = raw__semantic_knowledge_base__know_of_semantic_frame_value_addition(cause, this, semantic_frame, key_type, key, value);
-			      if (raw__larva__is_type(cause, result)) {
-				return result;
-			      }
-			      );
-  }
+  semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
+			    f2ptr result = raw__semantic_knowledge_base__know_of_semantic_frame_value_addition(cause, this, semantic_frame, key_type, key, value);
+			    if (raw__larva__is_type(cause, result)) {
+			      return result;
+			    }
+			    );
   return nil;
 }
 
@@ -1471,7 +1469,7 @@ f2ptr raw__semantic_knowledge_base__remove_semantic_frame(f2ptr cause, f2ptr thi
 															 new__symbol(cause, "semantic_frame"), semantic_frame,
 															 new__symbol(cause, "this"),           this))));
   }
-  // tell the semantic frame that it does not belong to this semantic_knowledge_base anymore (so we can do not continue to receive change events)
+  // tell the semantic frame that it does not belong to this semantic_knowledge_base anymore (so we do not continue to receive change events)
   raw__semantic_frame__know_of_removal_from_semantic_knowledge_base(cause, semantic_frame, this);
   // remove the semantic frame from this knowledge base
   raw__set__remove(cause, semantic_frame_set, semantic_frame);
@@ -1499,14 +1497,12 @@ f2ptr raw__semantic_knowledge_base__remove_semantic_frame(f2ptr cause, f2ptr thi
       }
     }
   }
-  {
-    semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
-			      f2ptr result = raw__semantic_knowledge_base__know_of_semantic_frame_value_removal(cause, this, semantic_frame, key_type, key, value);
-			      if (raw__larva__is_type(cause, result)) {
-				return result;
-			      }
-			      );
-  }
+  semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
+			    f2ptr result = raw__semantic_knowledge_base__know_of_semantic_frame_value_removal(cause, this, semantic_frame, key_type, key, value);
+			    if (raw__larva__is_type(cause, result)) {
+			      return result;
+			    }
+			    );
   return nil;
 }
 

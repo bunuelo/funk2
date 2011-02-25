@@ -249,9 +249,9 @@ f2ptr f2__visual_object_semantic_frame_type__new(f2ptr cause);
 
 // **
 
-f2ptr f2__semantic_knowledge_base__core_extension__ping(f2ptr cause);
+f2ptr f2__semantic_knowledge_base__core_extension__ping      (f2ptr cause);
 f2ptr f2__semantic_knowledge_base__core_extension__initialize(f2ptr cause);
-f2ptr f2__semantic_knowledge_base__core_extension__destroy(f2ptr cause);
+f2ptr f2__semantic_knowledge_base__core_extension__destroy   (f2ptr cause);
 
 
 

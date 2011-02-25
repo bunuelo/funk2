@@ -46,7 +46,7 @@
     [while t
       [let [[event [have visual_knowledge_iterator wait_for_current]]]
 	[if [not [null event]]
-	    [prog `[terminal_format standard-terminal '\n  translate visual->physical visual event: ' event]
+	    [prog [have this-resource think_to_self 'translate visual->physical visual event: ' event]
 		  [let [[event_type [get event event_type]]]
 		    [cond [[and [is-type `semantic_knowledge_base_event event]
 				[eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]

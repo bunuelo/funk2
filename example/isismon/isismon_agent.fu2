@@ -394,6 +394,7 @@
 		    [have vbox pack_start [get visual_isismon_knowledge widget] nil nil 0]
 		    
 		    [have [get this widget] show_all]
+		    [have this update]
 		    ]
 	      nil]
        

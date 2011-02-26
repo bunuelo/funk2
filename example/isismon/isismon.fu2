@@ -533,7 +533,8 @@
 			      [set scale value [- movie_length 1]]]]
 			[= last_stepped_simulation_time [time]]]]]]]
 	[if need_update
-	    [have this update]]]]
+	    [have this update]
+	  [sleep 1]]]]
   [have execute_mutex unlock]]
 
 [deftypefunk isismon_project get overview_image_sequence []

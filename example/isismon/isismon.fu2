@@ -576,7 +576,7 @@
 			  [let [[retina_image_sequence [get isismon_agent retina_image_sequence]]]
 			    [if [< index [get retina_image_sequence length]]
 				[let [[retina_image [get retina_image_sequence elt index]]]
-				  [have retina_image copy_rectangle_to 0 0 image [+ 1 640 1] [+ 1 [* agent_index [+ 240 1]]] 320 240]]]]]
+				  [have retina_image copy_rectangle_to 0 0 image [+ 1 640 1] [+ 1 [* agent_index [+ 240 1]]] [get retina_image width] [get retina_image height]]]]]]
 			[= agent_index [+ agent_index 1]]]
 		  agent_names]]
 	  image]]]]]

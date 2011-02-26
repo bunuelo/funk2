@@ -18,6 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage forgetful_event_stream
-  :packages []
+  :packages [event_stream]
    :sources ['forgetful_event_stream-core.fu2']]
 

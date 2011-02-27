@@ -271,7 +271,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
   
   {
     raw__cairo_context__set_font_size(cause, this, font_size);
-    raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "normal"));
+    raw__cairo_context__select_font_face(cause, this, "sans-serif", new__symbol(cause, "normal"), new__symbol(cause, "normal"));
     double max_key_text_width   = 0;
     double max_value_text_width = 0;
     {
@@ -319,7 +319,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
     double space_between_key_and_value = 1.0;
     {
       raw__cairo_context__set_font_size(cause, this, font_size);
-      raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "normal"));
+      raw__cairo_context__select_font_face(cause, this, "sans-serif", new__symbol(cause, "normal"), new__symbol(cause, "normal"));
       s64 y_index = 0;
       if (has_cairo_type) {
 	y_index ++;

@@ -999,7 +999,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 	      for (index = 0; index < event_count; index ++) {
 		f2ptr event = raw__array__elt(cause, event_array, index);
 		{
-		  s64 maximum_overlap_y = 0;
+		  double maximum_overlap_y = 0;
 		  {
 		    s64 o_index;
 		    for (o_index = index - 1; o_index >= 0; o_index --) {

@@ -907,6 +907,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
       }
     }
   }
+  double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, this), cause);
   {
     s64 connected_part_count = 0;
     {
@@ -994,7 +995,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 		raw__timeline_event__y_start__set(cause, event, f2double__new(cause, y_start));
 		f2ptr  height    = raw__timeline_event__height(cause, event);
 		double height__d = f2double__d(height, cause);
-		y_start += height__d;
+		y_start += (height__d + y_event_distance);
 	      }
 	    }
 	    { // move events up if possible
@@ -1018,7 +1019,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 		      }
 		    }
 		  }
-		  raw__timeline_event__y_start__set(cause, event, f2double__new(cause, maximum_overlap_y));
+		  raw__timeline_event__y_start__set(cause, event, f2double__new(cause, maximum_overlap_y + y_event_distance));
 		}
 	      }
 	    }

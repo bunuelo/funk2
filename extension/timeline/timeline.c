@@ -425,8 +425,8 @@ f2ptr raw__timeline_event__cairo_render_frame(f2ptr cause, f2ptr this) {
       render_frame = user_render_frame;
     } else {
       render_frame = f2__frame__new(cause, f2list4__new(cause,
-							new__string(cause, "title"), new__symbol(cause, "Event"),
-							new__string(cause, "value"), user_render_frame));
+							new__string(cause, "cairo_render_type"), new__symbol(cause, "Event"),
+							new__string(cause, "value"),             user_render_frame));
     }
   }
   return render_frame;

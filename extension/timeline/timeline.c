@@ -280,7 +280,7 @@ f2ptr raw__cairo_context__render_frame_text_box(f2ptr cause, f2ptr this, f2ptr l
 }
 
 
-f2ptr raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this, f2ptr left_edge_type, f2ptr right_edge_type,
+f2ptr raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this,
 						double x0, double y0, double dx, double dy, double font_size,
 						char* text,
 						double maximum_corner_radius,

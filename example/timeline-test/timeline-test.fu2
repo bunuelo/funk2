@@ -61,7 +61,7 @@
       [have e add_contains g]
       
       [image-display [timeline-as-image timeline 16]]
-      [image-display [timeline-as-constrained_image timeline 256 256]]
+      `[image-display [timeline-as-constrained_image timeline 256 256]]
       
       timeline]]]
 

@@ -393,6 +393,8 @@ f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timelin
   if ((top_position != NULL) || (bottom_position != NULL)) {
     f2ptr  y_index          = raw__timeline_event__y_index(cause, this);
     s64    y_index__i       = f2integer__i(y_index, cause);
+    f2ptr  height           = raw__timeline_event__height(cause, this);
+    s64    height__i        = f2integer__i(height, cause);
     double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, timeline), cause);
     if (top_position != NULL) {
       *top_position = y_index__i * y_event_distance;
@@ -1041,7 +1043,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
       }
     }
     {
-      boolean_t draw_dot_grid = boolean__false;
+      boolean_t draw_dot_grid = boolean__true;
       if (draw_dot_grid) {
 	s64 y;
 	for (y = 0; y < (((int)(timeline__y_height + 0.5)) - 1); y ++) {

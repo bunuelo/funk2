@@ -36,7 +36,7 @@ def_header_ceframe9(timeline_event,
 		    is_contained_by_set,
 		    next_set,
 		    previous_set,
-		    y_index);
+		    y_start);
 
 f2ptr     raw__timeline_event__new                      (f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time);
 f2ptr      f2__timeline_event__new                      (f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time);

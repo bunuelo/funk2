@@ -23,6 +23,7 @@
 #define F2__EXTENSION__SEMANTIC_RESOURCE_ACTION_EVENT__H
 
 #include "../semantic_directed_action_event/semantic_directed_action_event.h"
+#include "../semantic_resource/semantic_resource.h"
 
 
 // **

@@ -311,7 +311,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
       double text_extents__width__d = f2double__d(text_extents__width, cause);
       double y0                     = cy - (font_size * frame__key_count / 2);
       double x0                     = cx - (text_extents__width__d / 2);
-      raw__cairo_context__render_outlined_text(cause, this, x0, y0, font_size, (char*)key_string_array[cairo_type_index], outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
+      raw__cairo_context__render_outlined_text(cause, this, x0, y0, font_size, (char*)value_string_array[cairo_type_index], outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
     }
     double space_between_key_and_value = 1.0;
     {

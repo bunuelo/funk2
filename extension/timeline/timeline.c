@@ -304,8 +304,9 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
       }
     }
     if (has_cairo_type) {
+      double title_font_size = font_size * 1.1;
       raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "bold"));
-      raw__cairo_context__set_font_size(cause, this, font_size * 2.0);
+      raw__cairo_context__set_font_size(cause, this, title_font_size);
       f2ptr text_extents = raw__cairo_context__text_extents(cause, this, (char*)value_string_array[cairo_type_index]);
       if (raw__larva__is_type(cause, text_extents)) {
 	return text_extents;
@@ -314,7 +315,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
       double text_extents__width__d = f2double__d(text_extents__width, cause);
       double y0                     = cy - (font_size * frame__key_count / 2);
       double x0                     = cx - (text_extents__width__d / 2);
-      raw__cairo_context__render_outlined_text(cause, this, x0, y0, 2.0 * font_size, (char*)value_string_array[cairo_type_index], outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
+      raw__cairo_context__render_outlined_text(cause, this, x0, y0, title_font_size, (char*)value_string_array[cairo_type_index], outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
     }
     double space_between_key_and_value = 1.0;
     {

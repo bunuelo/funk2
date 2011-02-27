@@ -1025,7 +1025,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 	      for (index = 0; index < event_count; index ++) {
 		f2ptr  event      = raw__array__elt(cause, event_array, index);
 		f2ptr  y_start    = raw__timeline_event__y_start(cause, event);
-		s64    y_start__i = f2double__d(y_start, cause);
+		double y_start__d = f2double__d(y_start, cause);
 		f2ptr  height     = raw__timeline_event__height(cause, event);
 		double height__d  = f2double__d(height, cause);
 		if (y_start__d + height__d > connected_part_max_y) {

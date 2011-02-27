@@ -437,6 +437,9 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
 							       0, 0, 0, 1,                                                    // text rgba
 							       0, 0, 0, 1,                                                    // box outline rgba
 							       142 / 255.0, 200 / 255.0, 255 / 255.0, 1);                     // text outline rgba
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
     }
   }
   raw__cairo_context__restore(cause, cairo_context);

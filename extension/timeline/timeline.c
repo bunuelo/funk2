@@ -230,10 +230,10 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 			value = nil;
 			frame__key_count ++;
 			);
-  u8** key_string_array   = (f2ptr*)from_ptr(f2__malloc(sizeof(u8*) * frame__key_count));
-  s64* key_length_array   = (f2ptr*)from_ptr(f2__malloc(sizeof(s64) * frame__key_count));
-  u8** value_string_array = (f2ptr*)from_ptr(f2__malloc(sizeof(u8*) * frame__key_count));
-  s64* value_length_array = (f2ptr*)from_ptr(f2__malloc(sizeof(s64) * frame__key_count));
+  u8** key_string_array   = (u8**)from_ptr(f2__malloc(sizeof(u8*) * frame__key_count));
+  s64* key_length_array   = (s64*)from_ptr(f2__malloc(sizeof(s64) * frame__key_count));
+  u8** value_string_array = (u8**)from_ptr(f2__malloc(sizeof(u8*) * frame__key_count));
+  s64* value_length_array = (s64*)from_ptr(f2__malloc(sizeof(s64) * frame__key_count));
   {
     s64 index = 0;
     frame__var__iteration(cause, frame, key, value,

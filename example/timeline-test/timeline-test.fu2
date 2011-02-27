@@ -36,7 +36,8 @@
     [dotimes [i 10]
       [set time_array elt i [time]]]
     [let [[timeline [new timeline]]
-	  [a        [new timeline_event [frame title 'a: long event']         [get time_array elt 0] [get time_array elt 9]]]
+	  [a        [new timeline_event [frame title 'a: long event'
+					       data  'data']                  [get time_array elt 0] [get time_array elt 9]]]
 	  [b        [new timeline_event [frame title 'b']                     [get time_array elt 1] [get time_array elt 2]]]
 	  [c        [new timeline_event [frame title 'c']                     [get time_array elt 3] [get time_array elt 5]]]
 	  [d        [new timeline_event [frame title     'd: another long event'

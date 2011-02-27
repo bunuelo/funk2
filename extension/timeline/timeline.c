@@ -400,7 +400,7 @@ f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timelin
       *top_position = y_index__i * y_event_distance;
     }
     if (bottom_position != NULL) {
-      *bottom_position = (y_index__i * y_event_distance) + 1.5;
+      *bottom_position = (y_index__i * y_event_distance) + height__i + 1.5;
     }
   }
   return nil;

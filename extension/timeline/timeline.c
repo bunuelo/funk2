@@ -672,7 +672,7 @@ f2ptr raw__timeline__new(f2ptr cause) {
   f2ptr right_border                   = f2double__new(cause, 2.0);
   f2ptr top_border                     = f2double__new(cause, 2.0);
   f2ptr bottom_border                  = f2double__new(cause, 2.0);
-  f2ptr x_width                        = f2double__new(cause, 128.0);
+  f2ptr x_width                        = f2double__new(cause, 100.0);
   f2ptr y_event_distance               = f2double__new(cause, 4.0);
   f2ptr arrow_head_size                = f2double__new(cause, 0.33);
   f2ptr positions_have_been_calculated = nil;

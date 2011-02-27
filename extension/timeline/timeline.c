@@ -1006,7 +1006,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 		      f2ptr o_event = raw__array__elt(cause, event_array, o_index);
 		      if (raw__timeline__timeline_event__overlaps(cause, this, event, o_event)) {
 			f2ptr  o_y_start    = raw__timeline_event__y_start(cause, o_event);
-			double o_y_start__d = f2double__i(o_y_start, cause);
+			double o_y_start__d = f2double__d(o_y_start, cause);
 			f2ptr  o_height     = raw__timeline_event__height(cause, o_event);
 			double o_height__d  = f2double__d(o_height, cause);
 			if (o_y_start__d + o_height__d > maximum_overlap_y) {

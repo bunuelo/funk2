@@ -416,22 +416,19 @@ f2ptr f2__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr e
 export_cefunk3(timeline_event__new, name, start_time, end_time, 0, "Returns a new timeline_event object.");
 
 
-f2ptr raw__timeline_event__cairo_action_name(f2ptr cause, f2ptr this) {
-  f2ptr name = raw__timeline_event__name(cause, this);
-  f2ptr name_as_string;
-  if (name != nil) {
-    if (raw__string__is_type(cause, name)) {
-      name_as_string = name;
+f2ptr raw__timeline_event__cairo_render_frame(f2ptr cause, f2ptr this) {
+  f2ptr render_frame = nil;
+  {
+    f2ptr user_render_frame = raw__timeline_event__render_frame(cause, this);
+    if (raw__frame__is_type(cause, user_render_frame)) {
+      render_frame = user_render_frame;
     } else {
-      name_as_string = f2__exp__as__string(cause, name);
-      if (raw__larva__is_type(cause, name_as_string)) {
-	return name_as_string;
-      }
+      render_frame = f2__frame__new(cause, f2list4__new(cause,
+							new__string(cause, "title"), new__symbol(cauuse, "Event"),
+							new__string(cause, "value"), user_render_frame));
     }
-  } else {
-    name_as_string = new__string(cause, "Event");
   }
-  return name_as_string;
+  return render_frame;
 }
 
 f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timeline, double* start_position, double* end_position, double* top_position, double* bottom_position) {
@@ -501,9 +498,7 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
       return result;
     }
   }
-  f2ptr action_name = raw__timeline_event__cairo_action_name(cause, this);
-  f2ptr frame       = f2__frame__new(cause, f2list2__new(cause,
-							 new__symbol(cause, "title"), action_name));
+  f2ptr render_frame = raw__timeline_event__cairo_render_frame(cause, this);
   raw__cairo_context__save(cause, cairo_context);
   {
     f2ptr left_edge_type = nil;
@@ -523,7 +518,7 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
 							       start_position, top_position,                                  // x0, y0
 							       end_position - start_position, bottom_position - top_position, // dx, dy
 							       1,                                                             // font size
-							       frame,                                                         // frame
+							       render_frame,                                                         // frame
 							       0.5,                                                           // maximum corner radius
 							       142 / 255.0, 200 / 255.0, 255 / 255.0, 1,                      // background rgba
 							       0.2,                                                           // outline width

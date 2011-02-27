@@ -217,7 +217,7 @@ test moving forward speed
 					     [mind-wait_to_call mind learned_reactive physical look_right 1 [* 20 [abs [get_neck_heading mind]]]]
 					     [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 					     [adjust_neck [- patience 1]]]]
-				      [[ < get_neck_heading mind slightly_looking_right]
+				      [[ < [get_neck_heading mind] slightly_looking_right]
 				       [prog [print 'my head is facing the right']
 					     [mind-wait_to_call mind learned_reactive physical look_left 1 [* 20 [abs [get_neck_heading mind]]]]
 					     [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]

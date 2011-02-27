@@ -186,6 +186,8 @@
        [= isismon_agent initial-isismon_agent]
        [= window [gtk-window-new]]
        [set window title [format nil 'isismon - agent learned reactive physical resource activator - ' [get [get isismon_agent isis_agent] name]]]
+       [set window transient_for [get isismon_agent window]]
+       [set window destroy_with_parent t]
        [= vbox [gtk-vbox-new 2]]
        
        [= menu_bar            [gtk-menu_bar-new]]

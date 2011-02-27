@@ -414,6 +414,9 @@
 [deftypefunk isismon_agent get widget []
   frame]
 
+[deftypefunk isismon_agent get window []
+  [get isismon_project window]]
+
 [deftypefunk isismon_agent execute update_entry []
   [let [[look_for_resource [get [get isis_agent mind] resource `learned_reactive `physical `look_for]]]
     [set entry text [format nil 'look_for-current_object: \t' [have look_for_resource lookup `my_current_object]]]

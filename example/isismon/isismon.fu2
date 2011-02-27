@@ -17,11 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-
-
-
-
-
 [deframe isismon_export_movie_dialog [frame] [isismon
 					      save_dialog]
   [new [initial-isismon]
@@ -485,6 +480,9 @@
 
 [deftypefunk isismon_project get widget []
   vbox]
+
+[deftypefunk isismon_project get window []
+  [get isismon window]]
 
 [deftypefunk isismon_project execute add_agent [isismon_agent]
   [have agent_frame add [get isismon_agent name] isismon_agent]

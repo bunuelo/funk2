@@ -280,6 +280,26 @@ f2ptr raw__cairo_context__render_frame_text_box(f2ptr cause, f2ptr this, f2ptr l
 }
 
 
+f2ptr raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this, f2ptr left_edge_type, f2ptr right_edge_type,
+						double x0, double y0, double dx, double dy, double font_size,
+						char* text,
+						double maximum_corner_radius,
+						double background_red, double background_green, double background_blue, double background_alpha,
+						double outline_width,
+						double text_red, double text_green, double text_blue, double text_alpha,
+						double box_outline_red, double box_outline_green, double box_outline_blue, double box_outline_alpha,
+						double text_outline_red, double text_outline_green, double text_outline_blue, double text_outline_alpha) {
+  raw__cairo_context__render_outlined_rounded_box(cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width, box_outline_red, box_outline_green, box_outline_blue, box_outline_alpha,  background_red, background_green, background_blue, background_alpha);
+  {
+    f2ptr result = raw__cairo_context__render_centered_outlined_text(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  text_outline_red, text_outline_green, text_outline_blue, text_outline_alpha);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  return nil;
+}
+
+
 
 // timeline_event
 

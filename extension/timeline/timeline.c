@@ -415,14 +415,14 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
   {
     f2ptr left_edge_type = nil;
     if (start_time != nil) {
-      left_edge_type = raw__symbol(cause, "rounded");
+      left_edge_type = new__symbol(cause, "rounded");
     } else {
-      left_edge_type = raw__symbol(cause, "broken");
+      left_edge_type = new__symbol(cause, "broken");
     }
     if (end_time != nil) {
-      right_edge_type = raw__symbol(cause, "rounded");
+      right_edge_type = new__symbol(cause, "rounded");
     } else {
-      right_edge_type = raw__symbol(cause, "broken");
+      right_edge_type = new__symbol(cause, "broken");
     }
     {
       f2ptr result = raw__cairo_context__render_frame_text_box(cause, cairo_context, left_edge_type, right_edge_type,

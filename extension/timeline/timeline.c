@@ -478,11 +478,9 @@ f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timelin
     if (top_position != NULL) {
       printf("\ny_double__d=%f", y_start__d); fflush(stdout);
       *top_position = y_start__d;
-      //*top_position = y_start__d * y_event_distance;
     }
     if (bottom_position != NULL) {
       *bottom_position = y_start__d + height__d;
-      //*bottom_position = (y_start__d * y_event_distance) + height__d;
     }
   }
   return nil;
@@ -699,7 +697,7 @@ f2ptr raw__timeline__new(f2ptr cause) {
   f2ptr top_border                     = f2double__new(cause, 2.0);
   f2ptr bottom_border                  = f2double__new(cause, 2.0);
   f2ptr x_width                        = f2double__new(cause, 100.0);
-  f2ptr y_event_distance               = f2double__new(cause, 4.0);
+  f2ptr y_event_distance               = f2double__new(cause, 2.5);
   f2ptr arrow_head_size                = f2double__new(cause, 0.33);
   f2ptr positions_have_been_calculated = nil;
   f2ptr minimum_time                   = nil;
@@ -1038,7 +1036,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 	    raw__timeline_connected_part__maximum_y__set(cause, connected_part, f2double__new(cause, connected_part_max_y));
 	    raw__timeline_connected_part__y_position__set(cause, connected_part, f2double__new(cause, y_position));
 	    double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, this), cause);
-	    y_position += (connected_part_max_y * y_event_distance) + 2.0;
+	    y_position += connected_part_max_y + y_event_distance;
 	  }
 	}
       }

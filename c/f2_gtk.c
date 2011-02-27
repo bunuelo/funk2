@@ -836,7 +836,7 @@ void funk2_gtk__window__resize(funk2_gtk_t* this, GtkWidget* window, s64 width, 
   }
 }
 
-void funk2_gtk__window__set_transient_for(funk2_gtk_t* this, GtkWidget* window, GtkWindow *parent) {
+void funk2_gtk__window__set_transient_for(funk2_gtk_t* this, GtkWidget* window, GtkWidget* parent) {
   {
     gdk_threads_enter();
     gtk_window_set_transient_for(GTK_WINDOW(window), GTK_WINDOW(parent));

@@ -27,7 +27,7 @@
     [have gtk_scrolled_window add_with_viewport gtk_image]
     [set  gtk_window size [+ [get this width] 4] [+ [get this height] 4]]
     [have gtk_window show_all]
-    nil]]
+    gtk_window]]
 
 
 
@@ -64,8 +64,10 @@
       [have e add_next     f]
       [have e add_contains g]
       
-      [image-display [timeline-as-image timeline 16]]
-      `[image-display [timeline-as-constrained_image timeline 256 256]]
+      [let [[big_image_window    [image-display [timeline-as-image timeline 16]]]
+	    [little_image_window [image-display [timeline-as-constrained_image timeline 256 256]]]]
+	[set little_image_window transient_for big_image_window]
+	[set little_image_window destroy_with_parent t]]
       
       timeline]]]
 

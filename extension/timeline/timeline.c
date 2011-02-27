@@ -508,11 +508,10 @@ f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timelin
     }
   }
   if ((top_position != NULL) || (bottom_position != NULL)) {
-    f2ptr  y_start          = raw__timeline_event__y_start(cause, this);
-    double y_start__d       = f2double__d(y_start, cause);
-    f2ptr  height           = raw__timeline_event__height(cause, this);
-    double height__d        = f2double__d(height, cause);
-    //double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, timeline), cause);
+    f2ptr  y_start    = raw__timeline_event__y_start(cause, this);
+    double y_start__d = f2double__d(y_start, cause);
+    f2ptr  height     = raw__timeline_event__height(cause, this);
+    double height__d  = f2double__d(height, cause);
     if (top_position != NULL) {
       *top_position = y_start__d;
     }
@@ -556,7 +555,7 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
 							       start_position, top_position,                                  // x0, y0
 							       end_position - start_position, bottom_position - top_position, // dx, dy
 							       1,                                                             // font size
-							       render_frame,                                                         // frame
+							       render_frame,                                                  // frame
 							       0.5,                                                           // maximum corner radius
 							       142 / 255.0, 200 / 255.0, 255 / 255.0, 1,                      // background rgba
 							       0.2,                                                           // outline width

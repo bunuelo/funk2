@@ -70,10 +70,12 @@
 [deftypefunk gtk_progress_bar set     pulse_step  [fraction]    [gtk-progress_bar-set_pulse_step  [get this widget] fraction]]
 
 'GtkWindow'
-[deftypefunk gtk_widget set     title        [title]        [gtk-window-set_title        [get this widget] title]]
-[deftypefunk gtk_widget set     default_size [width height] [gtk-window-set_default_size [get this widget] width height]]
-[deftypefunk gtk_widget set     size         [width height] [gtk-window-resize           [get this widget] width height]]
-[deftypefunk gtk_widget execute resize       [width height] [gtk-window-resize           [get this widget] width height]]
+[deftypefunk gtk_widget set     title               [title]        [gtk-window-set_title               [get this widget] title]]
+[deftypefunk gtk_widget set     default_size        [width height] [gtk-window-set_default_size        [get this widget] width height]]
+[deftypefunk gtk_widget set     size                [width height] [gtk-window-resize                  [get this widget] width height]]
+[deftypefunk gtk_widget execute resize              [width height] [gtk-window-resize                  [get this widget] width height]]
+[deftypefunk gtk_widget set     transient_for       [parent]       [gtk-window-set_transient_for       [get this widget] [get parent widget]]]
+[deftypefunk gtk_widget set     destroy_with_parent [setting]      [gtk-window-set_destroy_with_parent [get this widget] setting]]
 
 'GtkNotebook'
 [deftypefunk gtk_widget execute append_page  [child tab_label]          [gtk-notebook-append_page      [get this widget] [get child widget] [get tab_label widget]]]

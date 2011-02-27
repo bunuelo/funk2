@@ -675,7 +675,7 @@ export_cefunk0(timeline_connected_part__new, 0, "");
 
 // timeline
 
-def_ceframe13(timeline, timeline,
+def_ceframe14(timeline, timeline,
 	      timeline_event_set,
 	      left_border,
 	      right_border,
@@ -683,6 +683,7 @@ def_ceframe13(timeline, timeline,
 	      bottom_border,
 	      x_width,
 	      y_event_distance,
+	      y_connected_part_distance,
 	      arrow_head_size,
 	      positions_have_been_calculated,
 	      minimum_time,
@@ -698,6 +699,7 @@ f2ptr raw__timeline__new(f2ptr cause) {
   f2ptr bottom_border                  = f2double__new(cause, 2.0);
   f2ptr x_width                        = f2double__new(cause, 100.0);
   f2ptr y_event_distance               = f2double__new(cause, 2.5);
+  f2ptr y_connected_part_distance      = f2double__new(cause, 5.0);
   f2ptr arrow_head_size                = f2double__new(cause, 0.33);
   f2ptr positions_have_been_calculated = nil;
   f2ptr minimum_time                   = nil;
@@ -712,6 +714,7 @@ f2ptr raw__timeline__new(f2ptr cause) {
 			 bottom_border,
 			 x_width,
 			 y_event_distance,
+			 y_connected_part_distance,
 			 arrow_head_size,
 			 positions_have_been_calculated,
 			 minimum_time,
@@ -1035,8 +1038,8 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 	    }
 	    raw__timeline_connected_part__maximum_y__set(cause, connected_part, f2double__new(cause, connected_part_max_y));
 	    raw__timeline_connected_part__y_position__set(cause, connected_part, f2double__new(cause, y_position));
-	    double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, this), cause);
-	    y_position += connected_part_max_y + y_event_distance;
+	    double y_connected_part_distance = f2double__d(raw__timeline__y_connected_part_distance(cause, this), cause);
+	    y_position += connected_part_max_y + y_connected_part_distance;
 	  }
 	}
       }

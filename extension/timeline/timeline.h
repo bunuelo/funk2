@@ -62,7 +62,7 @@ f2ptr f2__timeline_event_type__new_aux(f2ptr cause);
 
 // timeline
 
-def_header_ceframe13(timeline,
+def_header_ceframe14(timeline,
 		     timeline_event_set,
 		     left_border,
 		     right_border,
@@ -70,6 +70,7 @@ def_header_ceframe13(timeline,
 		     bottom_border,
 		     x_width,
 		     y_event_distance,
+		     y_connected_part_distance,
 		     arrow_head_size,
 		     positions_have_been_calculated,
 		     minimum_time,

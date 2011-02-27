@@ -390,11 +390,11 @@ def_ceframe9(timeline, timeline_event,
 
 
 f2ptr raw__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time) {
-  f2ptr height              = f2integer__new(cause, 2);
   f2ptr contains_set        = f2__set__new(cause);
   f2ptr is_contained_by_set = f2__set__new(cause);
   f2ptr next_set            = f2__set__new(cause);
   f2ptr previous_set        = f2__set__new(cause);
+  f2ptr height              = nil;
   return f2timeline_event__new(cause, name, height, start_time, end_time, contains_set, is_contained_by_set, next_set, previous_set, nil);
 }
 
@@ -966,6 +966,20 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 		    break;
 		  }
 		}
+	      }
+	    }
+	    { // calculate event heights
+	      s64 index;
+	      for (index = 0; index < event_count; index ++) {
+		f2ptr event = raw__array__elt(cause, event_array, index);
+		f2ptr render_frame = raw__timeline_event__render_frame(cause, event);
+		s64 key_count = 0;
+		frame__var__iteration(cause, render_frame, key, value,
+				      key   = nil;
+				      value = nil;
+				      key_count ++;
+				      );
+		raw__timeline_event__height__set(cause, event, f2integer__new(cause, key_count));
 	      }
 	    }
 	    {

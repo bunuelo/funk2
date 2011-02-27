@@ -226,14 +226,12 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 	  if (raw__semantic_event__is_type(cause, semantic_frame)) {
 	    f2ptr semantic_event = semantic_frame;
 	    {
-	      f2ptr name = nil;
+	      f2ptr render_frame = f2__frame__new(cause, f2list2__new(cause,
+								      new__symbol(cause, "cairo_render_type"), new__symbol(cause, "semantic_event")));
 	      {
 		f2ptr name_set = f2__semantic_event__action_name__lookup(cause, semantic_event);
 		if (name_set != nil) {
-		  name = f2__set__an_arbitrary_element(cause, name_set);
-		}
-		if (name == nil) {
-		  name = new__string(cause, "Semantic Event");
+		  f2__frame__add(cause, new__symbol(cause, "name"), f2__set__an_arbitrary_element(cause, name_set));
 		}
 	      }
 	      f2ptr absolute_start_time = nil;

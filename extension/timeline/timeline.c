@@ -514,7 +514,6 @@ f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timelin
     double height__d        = f2double__d(height, cause);
     //double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, timeline), cause);
     if (top_position != NULL) {
-      printf("\ny_double__d=%f", y_start__d); fflush(stdout);
       *top_position = y_start__d;
     }
     if (bottom_position != NULL) {

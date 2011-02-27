@@ -386,7 +386,7 @@ def_ceframe9(timeline, timeline_event,
 	     is_contained_by_set,
 	     next_set,
 	     previous_set,
-	     y_index);
+	     y_start);
 
 
 f2ptr raw__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time) {
@@ -470,17 +470,17 @@ f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timelin
     }
   }
   if ((top_position != NULL) || (bottom_position != NULL)) {
-    f2ptr  y_index          = raw__timeline_event__y_index(cause, this);
-    s64    y_index__i       = f2integer__i(y_index, cause);
+    f2ptr  y_start          = raw__timeline_event__y_start(cause, this);
+    double y_start__d       = f2double__d(y_start, cause);
     f2ptr  height           = raw__timeline_event__height(cause, this);
     double height__d        = f2double__d(height, cause);
     double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, timeline), cause);
     if (top_position != NULL) {
-      printf("\ny_index__i=" s64__fstr, y_index__i); fflush(stdout);
-      *top_position = y_index__i * y_event_distance;
+      printf("\ny_double__d=%f", y_start__d); fflush(stdout);
+      *top_position = y_start__d * y_event_distance;
     }
     if (bottom_position != NULL) {
-      *bottom_position = (y_index__i * y_event_distance) + height__d;
+      *bottom_position = (y_start__d * y_event_distance) + height__d;
     }
   }
   return nil;
@@ -655,15 +655,15 @@ f2ptr f2__timeline_event_type__new_aux(f2ptr cause) {
 def_ceframe4(timeline, timeline_connected_part,
 	     event_set,
 	     sorted_event_array,
-	     maximum_y_index,
+	     maximum_y,
 	     y_position);
 
 f2ptr raw__timeline_connected_part__new(f2ptr cause) {
   f2ptr event_set          = f2__set__new(cause);
   f2ptr sorted_event_array = nil;
-  f2ptr maximum_y_index    = nil;
+  f2ptr maximum_y          = nil;
   f2ptr y_position         = nil;
-  return f2timeline_connected_part__new(cause, event_set, sorted_event_array, maximum_y_index, y_position);
+  return f2timeline_connected_part__new(cause, event_set, sorted_event_array, maximum_y, y_position);
 }
 
 f2ptr f2__timeline_connected_part__new(f2ptr cause) {
@@ -984,14 +984,14 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 	      }
 	    }
 	    {
-	      s64 y_index = 0;
-	      s64 index;
+	      double y_start = 0;
+	      s64    index;
 	      for (index = 0; index < event_count; index ++) {
 		f2ptr event = raw__array__elt(cause, event_array, index);
-		raw__timeline_event__y_index__set(cause, event, f2integer__new(cause, y_index));
+		raw__timeline_event__y_start__set(cause, event, f2double__new(cause, y_start));
 		f2ptr  height    = raw__timeline_event__height(cause, event);
 		double height__d = f2double__d(height, cause);
-		y_index += height__d;
+		y_start += height__d;
 	      }
 	    }
 	    { // move events up if possible
@@ -999,23 +999,23 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 	      for (index = 0; index < event_count; index ++) {
 		f2ptr event = raw__array__elt(cause, event_array, index);
 		{
-		  s64 maximum_overlap_y_index = 0;
+		  s64 maximum_overlap_y = 0;
 		  {
 		    s64 o_index;
 		    for (o_index = index - 1; o_index >= 0; o_index --) {
 		      f2ptr o_event = raw__array__elt(cause, event_array, o_index);
 		      if (raw__timeline__timeline_event__overlaps(cause, this, event, o_event)) {
-			f2ptr  o_y_index    = raw__timeline_event__y_index(cause, o_event);
-			s64    o_y_index__i = f2integer__i(o_y_index, cause);
+			f2ptr  o_y_start    = raw__timeline_event__y_start(cause, o_event);
+			double o_y_start__d = f2double__i(o_y_start, cause);
 			f2ptr  o_height     = raw__timeline_event__height(cause, o_event);
 			double o_height__d  = f2double__d(o_height, cause);
-			if (o_y_index__i + o_height__d > maximum_overlap_y_index) {
-			  maximum_overlap_y_index = o_y_index__i + o_height__d;
+			if (o_y_start__d + o_height__d > maximum_overlap_y) {
+			  maximum_overlap_y = o_y_start__d + o_height__d;
 			}
 		      }
 		    }
 		  }
-		  raw__timeline_event__y_index__set(cause, event, f2integer__new(cause, maximum_overlap_y_index));
+		  raw__timeline_event__y_start__set(cause, event, f2integer__new(cause, maximum_overlap_y));
 		}
 	      }
 	    }
@@ -1024,16 +1024,16 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 	      s64 index;
 	      for (index = 0; index < event_count; index ++) {
 		f2ptr  event      = raw__array__elt(cause, event_array, index);
-		f2ptr  y_index    = raw__timeline_event__y_index(cause, event);
-		s64    y_index__i = f2integer__i(y_index, cause);
+		f2ptr  y_start    = raw__timeline_event__y_start(cause, event);
+		s64    y_start__i = f2double__d(y_start, cause);
 		f2ptr  height     = raw__timeline_event__height(cause, event);
 		double height__d  = f2double__d(height, cause);
-		if (y_index__i + height__d > connected_part_max_y) {
-		  connected_part_max_y = y_index__i + height__d;
+		if (y_start__d + height__d > connected_part_max_y) {
+		  connected_part_max_y = y_start__d + height__d;
 		}
 	      }
 	    }
-	    raw__timeline_connected_part__maximum_y_index__set(cause, connected_part, f2integer__new(cause, connected_part_max_y));
+	    raw__timeline_connected_part__maximum_y__set(cause, connected_part, f2double__new(cause, connected_part_max_y));
 	    raw__timeline_connected_part__y_position__set(     cause, connected_part, f2double__new(cause, y_position));
 	    double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, this), cause);
 	    y_position += (connected_part_max_y * y_event_distance) + 2.0;

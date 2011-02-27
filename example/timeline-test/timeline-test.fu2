@@ -43,7 +43,8 @@
 					       data      'other data'
 					       more_data 'still']             [get time_array elt 1] [get time_array elt 8]]]
 	  [e        [new timeline_event [frame title 'e']                     [get time_array elt 2] [get time_array elt 6]]]
-	  [f        [new timeline_event [frame title 'f: subevent']           [get time_array elt 7] [get time_array elt 8]]]
+	  [f        [new timeline_event [frame title 'f: subevent'
+					       data  'data']                  [get time_array elt 7] [get time_array elt 8]]]
 	  [g        [new timeline_event [frame title 'g']                     [get time_array elt 4] [get time_array elt 5]]]]
       
       [have timeline add_timeline_event a]

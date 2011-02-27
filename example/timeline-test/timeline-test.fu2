@@ -39,7 +39,9 @@
 	  [a        [new timeline_event [frame title 'a: long event']         [get time_array elt 0] [get time_array elt 9]]]
 	  [b        [new timeline_event [frame title 'b']                     [get time_array elt 1] [get time_array elt 2]]]
 	  [c        [new timeline_event [frame title 'c']                     [get time_array elt 3] [get time_array elt 5]]]
-	  [d        [new timeline_event [frame title 'd: another long event'] [get time_array elt 1] [get time_array elt 8]]]
+	  [d        [new timeline_event [frame title     'd: another long event'
+					       data      'other data'
+					       more_data 'still']             [get time_array elt 1] [get time_array elt 8]]]
 	  [e        [new timeline_event [frame title 'e']                     [get time_array elt 2] [get time_array elt 6]]]
 	  [f        [new timeline_event [frame title 'f: subevent']           [get time_array elt 7] [get time_array elt 8]]]
 	  [g        [new timeline_event [frame title 'g']                     [get time_array elt 4] [get time_array elt 5]]]]

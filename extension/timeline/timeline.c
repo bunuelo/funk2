@@ -294,16 +294,17 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 	}
       }
     }
+    double space_between_key_and_value = 1.0;
     {
       s64 index;
       for (index = 0; index < frame__key_count; index ++) {
 	double y0 = cy - (font_size * frame__key_count / 2) + (index * font_size);
 	{
-	  double x0 = cx - ((max_key_text_width + max_value_text_width) / 2);
+	  double x0 = cx - ((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2);
 	  raw__cairo_context__render_outlined_text(cause, this, x0, y0, font_size, (char*)key_string_array[index], outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
 	}
 	{
-	  double x0 = cx - ((max_key_text_width + max_value_text_width) / 2) + max_key_text_width;
+	  double x0 = cx - ((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2) + max_key_text_width + space_between_key_and_value;
 	  raw__cairo_context__render_outlined_text(cause, this, x0, y0, font_size, (char*)value_string_array[index], outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
 	}
       }

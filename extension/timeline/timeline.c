@@ -972,9 +972,9 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 	      s64 index;
 	      for (index = 0; index < event_count; index ++) {
 		f2ptr event = raw__array__elt(cause, event_array, index);
-		f2ptr render_frame = raw__timeline_event__render_frame(cause, event);
+		f2ptr cairo_render_frame = raw__timeline_event__cairo_render_frame(cause, event);
 		s64 key_count = 0;
-		frame__var__iteration(cause, render_frame, key, value,
+		frame__var__iteration(cause, cairo_render_frame, key, value,
 				      key   = nil;
 				      value = nil;
 				      key_count ++;

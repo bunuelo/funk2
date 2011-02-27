@@ -51,6 +51,18 @@
 									     look_down_start_resource__degrees_per_second__entry
 									     look_down_stop_resource__hbox
 									     look_down_stop_resource__button
+									     look_left_start_resource__hbox
+									     look_left_start_resource__button
+									     look_left_start_resource__degrees_per_second__label
+									     look_left_start_resource__degrees_per_second__entry
+									     look_right_stop_resource__hbox
+									     look_right_stop_resource__button
+									     look_right_start_resource__hbox
+									     look_right_start_resource__button
+									     look_right_start_resource__degrees_per_second__label
+									     look_right_start_resource__degrees_per_second__entry
+									     look_right_stop_resource__hbox
+									     look_right_stop_resource__button
 									     move_forward_start_resource__hbox
 									     move_forward_start_resource__button
 									     move_forward_start_resource__meters_per_second__label
@@ -226,6 +238,64 @@
        [have look_down_stop_resource__button signal_connect 'clicked'
 	     [funk []
 		   [have this activate_resource `builtin_reactive `physical `look_down_stop]]
+	     nil]
+       
+       [let [[default_degrees_per_second_text '100.0']]
+	 [=    look_left_start_resource__hbox [gtk-hbox-new 2]]
+	 [=    look_left_start_resource__button [gtk-button-new_with_label 'Look Left - Start']]
+	 [=    look_left_start_resource__degrees_per_second__label [gtk-label-new 'deg/s: ']]
+	 [=    look_left_start_resource__degrees_per_second__entry [gtk-entry-new]]
+	 [set  look_left_start_resource__degrees_per_second__entry text default_degrees_per_second_text]
+	 [have look_left_start_resource__hbox pack_start look_left_start_resource__button nil nil 0]
+	 [have look_left_start_resource__hbox pack_start look_left_start_resource__degrees_per_second__label nil nil 0]
+	 [have look_left_start_resource__hbox pack_start look_left_start_resource__degrees_per_second__entry t t 0]
+	 [have vbox pack_start look_left_start_resource__hbox nil nil 0]
+	 [have look_left_start_resource__button signal_connect 'clicked'
+	       [funk []
+		     [let [[degrees_per_second [shelter [get [have [get look_left_start_resource__degrees_per_second__entry text] read] as-double]]]]
+		       [if [not [is-type `double degrees_per_second]]
+			   [prog [set look_left_start_resource__degrees_per_second__entry text default_degrees_per_second_text]
+				 [= degrees_per_second [have default_degrees_per_second_text read]]]]
+		       [have this activate_resource `builtin_reactive `physical `look_left_start degrees_per_second]]]
+	       nil]
+	 ]
+       
+       [= look_left_stop_resource__hbox [gtk-hbox-new 2]]
+       [= look_left_stop_resource__button [gtk-button-new_with_label 'Look Left - Stop']]
+       [have look_left_stop_resource__hbox pack_start look_left_stop_resource__button nil nil 0]
+       [have vbox pack_start look_left_stop_resource__hbox nil nil 0]
+       [have look_left_stop_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `look_left_stop]]
+	     nil]
+       
+       [let [[default_degrees_per_second_text '100.0']]
+	 [=    look_right_start_resource__hbox [gtk-hbox-new 2]]
+	 [=    look_right_start_resource__button [gtk-button-new_with_label 'Look Right - Start']]
+	 [=    look_right_start_resource__degrees_per_second__label [gtk-label-new 'deg/s: ']]
+	 [=    look_right_start_resource__degrees_per_second__entry [gtk-entry-new]]
+	 [set  look_right_start_resource__degrees_per_second__entry text default_degrees_per_second_text]
+	 [have look_right_start_resource__hbox pack_start look_right_start_resource__button nil nil 0]
+	 [have look_right_start_resource__hbox pack_start look_right_start_resource__degrees_per_second__label nil nil 0]
+	 [have look_right_start_resource__hbox pack_start look_right_start_resource__degrees_per_second__entry t t 0]
+	 [have vbox pack_start look_right_start_resource__hbox nil nil 0]
+	 [have look_right_start_resource__button signal_connect 'clicked'
+	       [funk []
+		     [let [[degrees_per_second [shelter [get [have [get look_right_start_resource__degrees_per_second__entry text] read] as-double]]]]
+		       [if [not [is-type `double degrees_per_second]]
+			   [prog [set look_right_start_resource__degrees_per_second__entry text default_degrees_per_second_text]
+				 [= degrees_per_second [have default_degrees_per_second_text read]]]]
+		       [have this activate_resource `builtin_reactive `physical `look_right_start degrees_per_second]]]
+	       nil]
+	 ]
+       
+       [= look_right_stop_resource__hbox [gtk-hbox-new 2]]
+       [= look_right_stop_resource__button [gtk-button-new_with_label 'Look Right - Stop']]
+       [have look_right_stop_resource__hbox pack_start look_right_stop_resource__button nil nil 0]
+       [have vbox pack_start look_right_stop_resource__hbox nil nil 0]
+       [have look_right_stop_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `look_right_stop]]
 	     nil]
        
        [let [[default_meters_per_second_text '4.0']]

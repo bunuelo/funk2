@@ -27,8 +27,9 @@
 
 // timeline_event
 
-def_header_ceframe8(timeline_event,
+def_header_ceframe9(timeline_event,
 		    name,
+		    height,
 		    start_time,
 		    end_time,
 		    contains_set,

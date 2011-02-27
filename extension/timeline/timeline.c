@@ -295,8 +295,9 @@ f2ptr raw__cairo_context__render_text_box_with_broken_left_and_right(f2ptr cause
 
 // timeline_event
 
-def_ceframe8(timeline, timeline_event,
+def_ceframe9(timeline, timeline_event,
 	     name,
+	     height,
 	     start_time,
 	     end_time,
 	     contains_set,
@@ -307,11 +308,12 @@ def_ceframe8(timeline, timeline_event,
 
 
 f2ptr raw__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time) {
+  f2ptr height              = f2integer__new(cause, 2);
   f2ptr contains_set        = f2__set__new(cause);
   f2ptr is_contained_by_set = f2__set__new(cause);
   f2ptr next_set            = f2__set__new(cause);
   f2ptr previous_set        = f2__set__new(cause);
-  return f2timeline_event__new(cause, name, start_time, end_time, contains_set, is_contained_by_set, next_set, previous_set, nil);
+  return f2timeline_event__new(cause, name, height, start_time, end_time, contains_set, is_contained_by_set, next_set, previous_set, nil);
 }
 
 f2ptr f2__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time) {

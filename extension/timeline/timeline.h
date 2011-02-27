@@ -28,7 +28,7 @@
 // timeline_event
 
 def_header_ceframe9(timeline_event,
-		    name,
+		    render_frame,
 		    height,
 		    start_time,
 		    end_time,

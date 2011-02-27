@@ -377,7 +377,7 @@ f2ptr raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this,
 // timeline_event
 
 def_ceframe9(timeline, timeline_event,
-	     name,
+	     render_frame,
 	     height,
 	     start_time,
 	     end_time,
@@ -543,20 +543,6 @@ f2ptr f2__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_cont
   return raw__timeline_event__cairo_render(cause, this, cairo_context, timeline);
 }
 export_cefunk3(timeline_event__cairo_render, this, cairo_context, timeline, 0, "Renders this timeline_event in the given cairo_context.");
-
-
-double raw__timeline_event__cairo_minimum_width(f2ptr cause, f2ptr this, f2ptr cairo_context) {
-  f2ptr action_name         = raw__timeline_event__cairo_action_name(cause, this);
-  s64   action_name__length = raw__string__length(cause, action_name);
-  u8*   action_name__str    = (u8*)from_ptr(f2__malloc(action_name__length));
-  raw__string__str_copy(cause, action_name, action_name__str);
-  action_name__str[action_name__length] = 0;
-  raw__cairo_context__save(cause, cairo_context);
-  double text_width  = raw__cairo_context__text_width(cause, cairo_context, 1, (char*)action_name__str);
-  double event_width = (double)((int)(text_width + 1.5));
-  f2__free(to_ptr(action_name__str));
-  return event_width;
-}
 
 
 double raw__timeline_event__cairo_minimum_height(f2ptr cause, f2ptr this, f2ptr cairo_context) {

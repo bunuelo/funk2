@@ -22,7 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_DIRECTED_ACTION_EVENT__H
 #define F2__EXTENSION__SEMANTIC_DIRECTED_ACTION_EVENT__H
 
-#include "../semantic_object/semantic_object.h"
+#include "../semantic_action_event/semantic_action_event.h"
 
 
 // **

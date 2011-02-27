@@ -22,9 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_RESOURCE_ACTION_EVENT__H
 #define F2__EXTENSION__SEMANTIC_RESOURCE_ACTION_EVENT__H
 
-#include "../../c/funk2.h"
-#include "../semantic_object/semantic_object.h"
-#include "../semantic_event/semantic_event.h"
+#include "../semantic_directed_action_event/semantic_directed_action_event.h"
 
 
 // **

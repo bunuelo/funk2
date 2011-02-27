@@ -225,7 +225,7 @@ f2ptr raw__cairo_context__render_centered_outlined_text(f2ptr cause, f2ptr this,
 
 f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this, double cx, double cy, double font_size, f2ptr frame, double outline_width, double red, double green, double blue, double alpha, double outline_red, double outline_green, double outline_blue, double outline_alpha) {
   s64 frame__key_count = 0;
-  frame__iteration(cause, frame, key, value,
+  frame__var__iteration(cause, frame, key, value,
 		   frame__key_count ++;
 		   );
   s64 frame__y_index = 0;

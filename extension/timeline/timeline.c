@@ -230,14 +230,20 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 			value = nil;
 			frame__key_count ++;
 			);
-  u8** key_string_array   = (u8**)from_ptr(f2__malloc(sizeof(u8*) * frame__key_count));
-  s64* key_length_array   = (s64*)from_ptr(f2__malloc(sizeof(s64) * frame__key_count));
-  u8** value_string_array = (u8**)from_ptr(f2__malloc(sizeof(u8*) * frame__key_count));
-  s64* value_length_array = (s64*)from_ptr(f2__malloc(sizeof(s64) * frame__key_count));
+  boolean_t has_cairo_type     = boolean__false;
+  s64       cairo_type_index   = 0;
+  u8**      key_string_array   = (u8**)from_ptr(f2__malloc(sizeof(u8*) * frame__key_count));
+  s64*      key_length_array   = (s64*)from_ptr(f2__malloc(sizeof(s64) * frame__key_count));
+  u8**      value_string_array = (u8**)from_ptr(f2__malloc(sizeof(u8*) * frame__key_count));
+  s64*      value_length_array = (s64*)from_ptr(f2__malloc(sizeof(s64) * frame__key_count));
   {
     s64 index = 0;
     frame__var__iteration(cause, frame, key, value,
 			  if (index < frame__key_count) {
+			    if (raw__eq(cause, key, new__symbol(cause, "cairo_render_type"))) {
+			      has_cairo_type   = boolean__true;
+			      cairo_type_index = index;
+			    }
 			    {
 			      f2ptr key__string = f2__exp__as__string(cause, key);
 			      if (raw__larva__is_type(cause, key__string)) {
@@ -270,42 +276,62 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
     {
       s64 index;
       for (index = 0; index < frame__key_count; index ++) {
-	{
-	  f2ptr text_extents = raw__cairo_context__text_extents(cause, this, (char*)key_string_array[index]);
-	  if (raw__larva__is_type(cause, text_extents)) {
-	    return text_extents;
+	if ((! has_cairo_type) || (index != cairo_type_index)) {
+	  {
+	    f2ptr text_extents = raw__cairo_context__text_extents(cause, this, (char*)key_string_array[index]);
+	    if (raw__larva__is_type(cause, text_extents)) {
+	      return text_extents;
+	    }
+	    f2ptr  text_extents__width    = raw__cairo_text_extents__width(cause, text_extents);
+	    double text_extents__width__d = f2double__d(text_extents__width, cause);
+	    if (text_extents__width__d > max_key_text_width) {
+	      max_key_text_width = text_extents__width__d;
+	    }
 	  }
-	  f2ptr  text_extents__width    = raw__cairo_text_extents__width(cause, text_extents);
-	  double text_extents__width__d = f2double__d(text_extents__width, cause);
-	  if (text_extents__width__d > max_key_text_width) {
-	    max_key_text_width = text_extents__width__d;
-	  }
-	}
-	{
-	  f2ptr text_extents = raw__cairo_context__text_extents(cause, this, (char*)value_string_array[index]);
-	  if (raw__larva__is_type(cause, text_extents)) {
-	    return text_extents;
-	  }
-	  f2ptr  text_extents__width    = raw__cairo_text_extents__width(cause, text_extents);
-	  double text_extents__width__d = f2double__d(text_extents__width, cause);
-	  if (text_extents__width__d > max_value_text_width) {
-	    max_value_text_width = text_extents__width__d;
+	  {
+	    f2ptr text_extents = raw__cairo_context__text_extents(cause, this, (char*)value_string_array[index]);
+	    if (raw__larva__is_type(cause, text_extents)) {
+	      return text_extents;
+	    }
+	    f2ptr  text_extents__width    = raw__cairo_text_extents__width(cause, text_extents);
+	    double text_extents__width__d = f2double__d(text_extents__width, cause);
+	    if (text_extents__width__d > max_value_text_width) {
+	      max_value_text_width = text_extents__width__d;
+	    }
 	  }
 	}
       }
     }
+    if (has_cairo_type) {
+      f2ptr text_extents = raw__cairo_context__text_extents(cause, this, (char*)value_string_array[cairo_type_index]);
+      if (raw__larva__is_type(cause, text_extents)) {
+	return text_extents;
+      }
+      f2ptr  text_extents__width    = raw__cairo_text_extents__width(cause, text_extents);
+      double text_extents__width__d = f2double__d(text_extents__width, cause);
+      double y0                     = cy - (font_size * frame__key_count / 2);
+      double x0                     = cx - (text_extents__width__d / 2);
+      raw__cairo_context__render_outlined_text(cause, this, x0, y0, font_size, (char*)key_string_array[cairo_type_index], outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
+    }
     double space_between_key_and_value = 1.0;
     {
+      s64 y_index = 0;
+      if (has_cairo_type) {
+	y_index ++;
+      }
       s64 index;
       for (index = 0; index < frame__key_count; index ++) {
-	double y0 = cy - (font_size * frame__key_count / 2) + (index * font_size);
-	{
-	  double x0 = cx - ((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2);
-	  raw__cairo_context__render_outlined_text(cause, this, x0, y0, font_size, (char*)key_string_array[index], outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
-	}
-	{
-	  double x0 = cx - ((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2) + max_key_text_width + space_between_key_and_value;
-	  raw__cairo_context__render_outlined_text(cause, this, x0, y0, font_size, (char*)value_string_array[index], outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
+	if ((! has_cairo_type) || (index != cairo_type_index)) {
+	  double y0 = cy - (font_size * frame__key_count / 2) + (y_index * font_size);
+	  {
+	    double x0 = cx - ((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2);
+	    raw__cairo_context__render_outlined_text(cause, this, x0, y0, font_size, (char*)key_string_array[index], outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
+	  }
+	  {
+	    double x0 = cx - ((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2) + max_key_text_width + space_between_key_and_value;
+	    raw__cairo_context__render_outlined_text(cause, this, x0, y0, font_size, (char*)value_string_array[index], outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
+	  }
+	  y_index ++;
 	}
       }
     }

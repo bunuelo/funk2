@@ -419,6 +419,7 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
     } else {
       left_edge_type = new__symbol(cause, "broken");
     }
+    f2ptr right_edge_type = nil;
     if (end_time != nil) {
       right_edge_type = new__symbol(cause, "rounded");
     } else {

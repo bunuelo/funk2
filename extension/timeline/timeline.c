@@ -963,13 +963,15 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 		      if (raw__timeline__timeline_event__overlaps(cause, this, event, o_event)) {
 			f2ptr o_y_index    = raw__timeline_event__y_index(cause, o_event);
 			s64   o_y_index__i = f2integer__i(o_y_index, cause);
-			if (o_y_index__i > maximum_overlap_y_index) {
-			  maximum_overlap_y_index = o_y_index__i;
+			f2ptr o_height     = raw__timeline_event__height(cause, o_event);
+			s64   o_height__i  = f2integer__i(o_height, cause);
+			if (o_y_index__i + o_height__i > maximum_overlap_y_index) {
+			  maximum_overlap_y_index = o_y_index__i + o_height__i;
 			}
 		      }
 		    }
 		  }
-		  raw__timeline_event__y_index__set(cause, event, f2integer__new(cause, maximum_overlap_y_index + 1));
+		  raw__timeline_event__y_index__set(cause, event, f2integer__new(cause, maximum_overlap_y_index));
 		}
 	      }
 	    }

@@ -1019,7 +1019,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 		}
 	      }
 	    }
-	    s64 connected_part_max_y = 0;
+	    double connected_part_max_y = 0;
 	    {
 	      s64 index;
 	      for (index = 0; index < event_count; index ++) {

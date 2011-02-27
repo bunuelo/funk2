@@ -55,8 +55,8 @@
 									     look_left_start_resource__button
 									     look_left_start_resource__degrees_per_second__label
 									     look_left_start_resource__degrees_per_second__entry
-									     look_right_stop_resource__hbox
-									     look_right_stop_resource__button
+									     look_left_stop_resource__hbox
+									     look_left_stop_resource__button
 									     look_right_start_resource__hbox
 									     look_right_start_resource__button
 									     look_right_start_resource__degrees_per_second__label

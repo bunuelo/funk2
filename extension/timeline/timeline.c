@@ -698,8 +698,8 @@ f2ptr raw__timeline__new(f2ptr cause) {
   f2ptr top_border                     = f2double__new(cause, 2.0);
   f2ptr bottom_border                  = f2double__new(cause, 2.0);
   f2ptr x_width                        = f2double__new(cause, 100.0);
-  f2ptr y_event_distance               = f2double__new(cause, 2.5);
-  f2ptr y_connected_part_distance      = f2double__new(cause, 3.5);
+  f2ptr y_event_distance               = f2double__new(cause, 3.5);
+  f2ptr y_connected_part_distance      = f2double__new(cause, 4.5);
   f2ptr arrow_head_size                = f2double__new(cause, 0.33);
   f2ptr positions_have_been_calculated = nil;
   f2ptr minimum_time                   = nil;
@@ -1013,13 +1013,13 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 			double o_y_start__d = f2double__d(o_y_start, cause);
 			f2ptr  o_height     = raw__timeline_event__height(cause, o_event);
 			double o_height__d  = f2double__d(o_height, cause);
-			if (o_y_start__d + o_height__d > maximum_overlap_y) {
-			  maximum_overlap_y = o_y_start__d + o_height__d;
+			if (o_y_start__d + o_height__d + y_event_distance > maximum_overlap_y) {
+			  maximum_overlap_y = o_y_start__d + o_height__d + y_event_distance;
 			}
 		      }
 		    }
 		  }
-		  raw__timeline_event__y_start__set(cause, event, f2double__new(cause, maximum_overlap_y + y_event_distance));
+		  raw__timeline_event__y_start__set(cause, event, f2double__new(cause, maximum_overlap_y));
 		}
 	      }
 	    }

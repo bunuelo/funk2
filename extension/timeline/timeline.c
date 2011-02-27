@@ -990,7 +990,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 		raw__timeline_event__y_index__set(cause, event, f2integer__new(cause, y_index));
 		f2ptr height    = raw__timeline_event__height(cause, event);
 		s64   height__i = f2integer__i(height, cause);
-		y_index += height__i;
+		y_index += height__i + 2;
 	      }
 	    }
 	    { // move events up if possible

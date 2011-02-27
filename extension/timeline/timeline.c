@@ -235,7 +235,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
   frame__title__string__str[frame__title__string__length] = 0;
   
   raw__cairo_context__set_font_size(cause, this, font_size);
-  f2ptr text_extents = raw__cairo_context__text_extents(cause, this, frame__title__string__str);
+  f2ptr text_extents = raw__cairo_context__text_extents(cause, this, (char*)frame__title__string__str);
   if (raw__larva__is_type(cause, text_extents)) {
     return text_extents;
   }

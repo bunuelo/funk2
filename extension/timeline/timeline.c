@@ -474,13 +474,15 @@ f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timelin
     double y_start__d       = f2double__d(y_start, cause);
     f2ptr  height           = raw__timeline_event__height(cause, this);
     double height__d        = f2double__d(height, cause);
-    double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, timeline), cause);
+    //double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, timeline), cause);
     if (top_position != NULL) {
       printf("\ny_double__d=%f", y_start__d); fflush(stdout);
-      *top_position = y_start__d * y_event_distance;
+      *top_position = y_start__d;
+      //*top_position = y_start__d * y_event_distance;
     }
     if (bottom_position != NULL) {
-      *bottom_position = (y_start__d * y_event_distance) + height__d;
+      *bottom_position = y_start__d + height__d;
+      //*bottom_position = (y_start__d * y_event_distance) + height__d;
     }
   }
   return nil;

@@ -231,7 +231,7 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 	      {
 		f2ptr name_set = f2__semantic_event__action_name__lookup(cause, semantic_event);
 		if (name_set != nil) {
-		  f2__frame__add(cause, new__symbol(cause, "name"), f2__set__an_arbitrary_element(cause, name_set));
+		  f2__frame__add_var_value(cause, new__symbol(cause, "name"), f2__set__an_arbitrary_element(cause, name_set));
 		}
 	      }
 	      f2ptr absolute_start_time = nil;

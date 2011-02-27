@@ -502,9 +502,8 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
     }
   }
   f2ptr action_name = raw__timeline_event__cairo_action_name(cause, this);
-  f2ptr frame       = f2__frame__new(cause, f2list4__new(cause,
-							 new__symbol(cause, "title"), action_name,
-							 new__symbol(cause, "this_is_a_test"), new__symbol(cause, "yessireeeeebob")));
+  f2ptr frame       = f2__frame__new(cause, f2list2__new(cause,
+							 new__symbol(cause, "title"), action_name));
   raw__cairo_context__save(cause, cairo_context);
   {
     f2ptr left_edge_type = nil;

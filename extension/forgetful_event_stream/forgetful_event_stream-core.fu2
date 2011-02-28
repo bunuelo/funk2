@@ -17,9 +17,12 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage semantic_knowledge_base
-  :packages [equals_hash
-	     forgetful_event_stream
-	     lick]
-   :sources ['semantic_knowledge_base-core.fu2']]
+[defcore forgetful_event_stream 'extension/forgetful_event_stream/.libs/libf2e_forgetful_event_stream.so']
+
+[defcorefunk forgetful_event_stream-new_from_rgb_data           forgetful_event_stream forgetful_event_stream__new_from_rgb_data]
+[defcorefunk forgetful_event_stream-core_extension-ping         forgetful_event_stream forgetful_event_stream__core_extension__ping]
+[defcorefunk forgetful_event_stream-core_extension-initialize   forgetful_event_stream forgetful_event_stream__core_extension__initialize]
+[defcorefunk forgetful_event_stream-core_extension-define_types forgetful_event_stream forgetful_event_stream__core_extension__define_types]
+
+[forgetful_event_stream-core_extension-define_types]
 

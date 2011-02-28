@@ -212,6 +212,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/event_stream/libf2e_event_stream.la \
                   extension/equals_hash/libf2e_equals_hash.la \
                   extension/fibermon/libf2e_fibermon.la \
+                  extension/forgetful_event_stream/libf2e_forgetful_event_stream.la \
                   extension/forward_planner/libf2e_forward_planner.la \
                   extension/frame_ball/libf2e_frame_ball.la \
                   extension/graph_isomorphism/libf2e_graph_isomorphism.la \
@@ -381,6 +382,7 @@ extension_conceptnet_libf2e_conceptnet_la_SOURCES                               
 extension_event_stream_libf2e_event_stream_la_SOURCES                                     = extension/event_stream/event_stream.c
 extension_equals_hash_libf2e_equals_hash_la_SOURCES                                       = extension/equals_hash/equals_hash.c
 extension_fibermon_libf2e_fibermon_la_SOURCES                                             = extension/fibermon/fibermon.c
+extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_SOURCES                 = extension/forgetful_event_stream/forgetful_event_stream.c
 extension_forward_planner_libf2e_forward_planner_la_SOURCES                               = extension/forward_planner/forward_planner.c
 extension_frame_ball_libf2e_frame_ball_la_SOURCES                                         = extension/frame_ball/frame_ball.c
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES                           = extension/graph_isomorphism/graph_isomorphism.c
@@ -444,6 +446,7 @@ all_core_extensions = \
   $(extension_equals_hash_libf2e_equals_hash_la) \
   $(extension_event_stream_libf2e_event_stream_la) \
   $(extension_fibermon_libf2e_fibermon_la) \
+  $(extension_forgetful_event_stream_libf2e_forgetful_event_stream_la) \
   $(extension_forward_planner_libf2e_forward_planner_la) \
   $(extension_frame_ball_libf2e_frame_ball_la) \
   $(extension_graph_isomorphism_libf2e_graph_isomorphism_la) \
@@ -502,6 +505,9 @@ extension_conceptnet_libf2e_conceptnet_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_event_stream_libf2e_event_stream_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_event_stream_libf2e_event_stream_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_forward_planner_libf2e_forward_planner_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_forward_planner_libf2e_forward_planner_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

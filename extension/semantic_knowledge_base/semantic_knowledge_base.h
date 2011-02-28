@@ -208,6 +208,8 @@ boolean_t raw__semantic_knowledge_base__add_to_graph_with_node_ptypehash      (f
 f2ptr      f2__semantic_knowledge_base__add_to_graph_with_node_ptypehash      (f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash, f2ptr maximum_size, f2ptr exact_size_place);
 f2ptr     raw__semantic_knowledge_base__semantic_frames                       (f2ptr cause, f2ptr this);
 f2ptr      f2__semantic_knowledge_base__semantic_frames                       (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_knowledge_base__copy_differences_to                   (f2ptr cause, f2ptr this, f2ptr target);
+f2ptr      f2__semantic_knowledge_base__copy_differences_to                   (f2ptr cause, f2ptr this, f2ptr target);
 
 f2ptr f2__semantic_knowledge_base_type__new(f2ptr cause);
 
@@ -247,9 +249,9 @@ f2ptr f2__visual_object_semantic_frame_type__new(f2ptr cause);
 
 // **
 
-f2ptr f2__semantic_knowledge_base__core_extension__ping(f2ptr cause);
+f2ptr f2__semantic_knowledge_base__core_extension__ping      (f2ptr cause);
 f2ptr f2__semantic_knowledge_base__core_extension__initialize(f2ptr cause);
-f2ptr f2__semantic_knowledge_base__core_extension__destroy(f2ptr cause);
+f2ptr f2__semantic_knowledge_base__core_extension__destroy   (f2ptr cause);
 
 
 

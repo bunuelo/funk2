@@ -115,6 +115,7 @@
 				  'extension/equals_hash/'
 				  'extension/event_stream/'
 				  'extension/fibermon/'
+				  'extension/forgetful_event_stream/'
 				  'extension/forward_planner/'
 				  'extension/frame_ball/'
 				  'extension/graph_isomorphism/'

@@ -545,14 +545,15 @@ void f2__package__initialize() {
   
   // package
   
-  initialize_primobject_7_slot(package,
+  initialize_primobject_8_slot(package,
 			       pathname,
 			       name,
 			       package_dependencies,
 			       source_dependencies,
 			       object_types_defined_set,
 			       loaded_all_dependencies_time,
-			       documentation);
+			       documentation,
+			       binary_dependencies);
   
   // pathname
   

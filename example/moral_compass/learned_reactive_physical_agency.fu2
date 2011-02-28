@@ -34,7 +34,7 @@
 '
 
 
-
+[globalize step_factor 10]
 [globalize level_neck_pitch 0]
 '**********basic resources*************'
 [deframe use_left_hand_resource [traced_resource] [[achieved nil]]
@@ -95,7 +95,7 @@
 			       [mind  [get body mind]]
 			       [name  [get body name]]
 			       [counter            0]]
-			  [have this-resource think_to_self 'Turning right is starting.speed:' speed ' degrees/sec']
+			  [have this-resource think_to_self 'Turning right is starting.speed:' speed ' degrees/sec;' [/ speed step_factor] 'degrees/step']
 			  [mind-wait_to_activate mind builtin_reactive physical turn_right_start speed]
 			  [while [< counter steps]
 			    [wait-for-trigger [get mind time_step_trigger]] 
@@ -116,7 +116,7 @@
 			       [name  [get body name]]
 			       [counter            0]]
 			  [print [type mind]]
-			  [have this-resource think_to_self 'Turning left is starting, speed: ' speed ' degrees/sec']
+			  [have this-resource think_to_self 'Turning left is starting, speed: ' speed ' degrees/sec' [/ speed step_factor] 'degrees/step']
 			  [mind-wait_to_call mind builtin_reactive physical turn_left_start speed]
 			  [while [< counter steps]
 			    [wait-for-trigger [get mind time_step_trigger]] 
@@ -137,7 +137,7 @@
 			       [mind  [get body mind]]
 			       [name  [get body name]]
 			       [counter            0]]
-			  [have this-resource think_to_self 'Looking down is starting, speed:' speed  ' degrees/sec']
+			  [have this-resource think_to_self 'Looking down is starting, speed:' speed  ' degrees/sec' [/ speed step_factor] 'degrees/step']
 			  [mind-wait_to_call mind builtin_reactive physical look_down_start speed]
 			  [while [< counter steps]
 			    [wait-for-trigger [get mind time_step_trigger]] 
@@ -156,7 +156,7 @@
 			       [mind  [get body mind]]
 			       [name  [get body name]]
 			       [counter            0]]
-			  [have this-resource think_to_self 'Looking up is starting, speed: ' speed ' degrees/sec' ]
+			  [have this-resource think_to_self 'Looking up is starting, speed: ' speed ' degrees/sec' [/ speed step_factor] 'degrees/step']
 			  [mind-wait_to_call mind builtin_reactive physical look_up_start speed]
 			  [while [< counter steps]
 			    [wait-for-trigger [get mind time_step_trigger]] 
@@ -463,7 +463,7 @@
 			    [while 
 				[> patience 0]
 			      [have this-resource think_to_self 'I still have patience']
-
+			      [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			      [if [null [get_visual_objects mind]]
 				  [prog 
 				   [have this-resource think_to_self  'no objects in view']
@@ -496,7 +496,7 @@
 				[> patience 0]
 			      [have this-resource think_to_self 'I still have' patience ' patience']
 			      [print 'here']
-
+			      [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			      [if [null [get_visual_objects mind]]
 				  [prog 
 				   [have this-resource think_to_self  'no objects in view']

@@ -122,6 +122,7 @@ export_cefunk2(semantic_resource_action_sequence__resource__remove, this, that, 
 
 
 f2ptr raw__semantic_resource_action_sequence__cairo_render_frame(f2ptr cause, f2ptr this) {
+  printf("\nraw__semantic_resource_action_sequence__cairo_render_frame: I'm here."); fflush(stdout);
   f2ptr render_frame = f2__frame__new(cause, f2list2__new(cause,
 							  new__symbol(cause, "cairo_render_type"), f2__object__type(cause, this)));
   {

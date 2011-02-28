@@ -277,9 +277,11 @@
 			    [let [[binary_pathname [pathname-concat [get package pathname] binary_dependency]]]
 			      [let [[stat [pathname-stat binary_pathname]]]
 				[let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
-				  [let [[binary_modified [> time_of_last_modification [get package loaded_all_dependencies_time]]]]
-				    [if binary_modified
-					[= loaded_a_dependency t]]]]]]]
+				  [let [[loaded_all_dependencies_time [get package loaded_all_dependencies_time]]]
+				    [let [[binary_modified [or [null loaded_all_dependencies_time]
+							       [get time_of_last_modification is_greater_than loaded_all_dependencies_time]]]]
+				      [if binary_modified
+					  [= loaded_a_dependency t]]]]]]]]
 		      [get package binary_dependencies]]
 		[set package loaded_all_dependencies_time [time]]]]]
     [or loaded_a_dependency

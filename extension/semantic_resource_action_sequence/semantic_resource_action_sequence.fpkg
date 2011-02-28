@@ -19,7 +19,7 @@
 
 [defpackage semantic_resource_action_sequence
   :documentation 'Basic knowledge for dealing with sequences of resource_action_events.'
-   :packages [semantic_event_sequence]
-    :sources ['semantic_resource_action_sequence-core.fu2']
-     :binaries ['.libs/libf2e_semantic_resource_action_sequence.so']]
+   :packages     [semantic_event_sequence]
+    :sources     ['semantic_resource_action_sequence-core.fu2']
+     :binaries   ['.libs/libf2e_semantic_resource_action_sequence.so']]
 

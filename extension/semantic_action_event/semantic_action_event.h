@@ -25,6 +25,23 @@
 #include "../semantic_event/semantic_event.h"
 
 
+// semantic_action_event
+
+f2ptr     raw__semantic_action_event__new          (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_action_event__new          (f2ptr cause, f2ptr semantic_realm);
+boolean_t raw__semantic_action_event__is_type      (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_action_event__is_type      (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_action_event__type         (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_action_event__type         (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_action_event__agent__lookup(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_action_event__agent__lookup(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_action_event__agent__add   (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_action_event__agent__add   (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_action_event__agent__remove(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_action_event__agent__remove(f2ptr cause, f2ptr this, f2ptr that);
+
+f2ptr f2__semantic_action_event_type__new(f2ptr cause);
+
 // **
 
 f2ptr f2__semantic_action_event__core_extension__ping      (f2ptr cause);

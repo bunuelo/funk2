@@ -27,7 +27,7 @@
     [have gtk_scrolled_window add_with_viewport gtk_image]
     [set  gtk_window size [+ [get this width] 4] [+ [get this height] 4]]
     [have gtk_window show_all]
-    nil]]
+    gtk_window]]
 
 
 
@@ -36,13 +36,17 @@
     [dotimes [i 10]
       [set time_array elt i [time]]]
     [let [[timeline [new timeline]]
-	  [a        [new timeline_event 'a: long event'         [get time_array elt 0] [get time_array elt 9]]]
-	  [b        [new timeline_event 'b'                     [get time_array elt 1] [get time_array elt 2]]]
-	  [c        [new timeline_event 'c'                     [get time_array elt 3] [get time_array elt 5]]]
-	  [d        [new timeline_event 'd: another long event' [get time_array elt 1] [get time_array elt 8]]]
-	  [e        [new timeline_event 'e'                     [get time_array elt 2] [get time_array elt 6]]]
-	  [f        [new timeline_event 'f: subevent'           [get time_array elt 7] [get time_array elt 8]]]
-	  [g        [new timeline_event 'g'                     [get time_array elt 4] [get time_array elt 5]]]]
+	  [a        [new timeline_event [frame cairo_render_type 'a: long event'
+					       data              'data']                  [get time_array elt 0] [get time_array elt 9]]]
+	  [b        [new timeline_event [frame cairo_render_type 'b']                     [get time_array elt 1] [get time_array elt 2]]]
+	  [c        [new timeline_event [frame cairo_render_type 'c']                     [get time_array elt 3] [get time_array elt 5]]]
+	  [d        [new timeline_event [frame cairo_render_type 'd: another long event'
+					       data              'other data'
+					       more_data         'still']                 [get time_array elt 1] [get time_array elt 8]]]
+	  [e        [new timeline_event [frame cairo_render_type 'e']                     [get time_array elt 2] [get time_array elt 6]]]
+	  [f        [new timeline_event [frame cairo_render_type 'f: subevent'
+					       data              'data']                  [get time_array elt 7] [get time_array elt 8]]]
+	  [g        [new timeline_event [frame cairo_render_type 'g']                     [get time_array elt 4] [get time_array elt 5]]]]
       
       [have timeline add_timeline_event a]
       [have timeline add_timeline_event b]
@@ -60,8 +64,10 @@
       [have e add_next     f]
       [have e add_contains g]
       
-      [image-display [timeline-as-image timeline 16]]
-      [image-display [timeline-as-constrained_image timeline 256 256]]
+      [let [[big_image_window    [image-display [timeline-as-image timeline 16]]]
+	    [little_image_window [image-display [timeline-as-constrained_image timeline 256 256]]]]
+	[set little_image_window transient_for big_image_window]
+	[set little_image_window destroy_with_parent t]]
       
       timeline]]]
 

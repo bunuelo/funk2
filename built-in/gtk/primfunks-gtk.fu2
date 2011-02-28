@@ -55,6 +55,8 @@
 [globalize-funk gtk-window-set_title                              &primfunk:gtk__window__set_title]
 [globalize-funk gtk-window-set_default_size                       &primfunk:gtk__window__set_default_size]
 [globalize-funk gtk-window-resize                                 &primfunk:gtk__window__resize]
+[globalize-funk gtk-window-set_transient_for                      &primfunk:gtk__window__set_transient_for]
+[globalize-funk gtk-window-set_destroy_with_parent                &primfunk:gtk__window__set_destroy_with_parent]
 [globalize-funk gtk-vbox-new                                      &primfunk:gtk__vbox__new]
 [globalize-funk gtk-hbox-new                                      &primfunk:gtk__hbox__new]
 [globalize-funk gtk-button-new_with_label                         &primfunk:gtk__button__new_with_label]

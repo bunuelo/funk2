@@ -17,7 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage timeline
-  :packages [math cairo]
-   :sources ['timeline-core.fu2']]
+[defcore semantic_resource_action_sequence 'extension/semantic_resource_action_sequence/.libs/libf2e_semantic_resource_action_sequence.so']
+
+[defcorefunk semantic_resource_action_sequence-core_extension-ping         semantic_resource_action_sequence semantic_resource_action_sequence__core_extension__ping]
+[defcorefunk semantic_resource_action_sequence-core_extension-initialize   semantic_resource_action_sequence semantic_resource_action_sequence__core_extension__initialize]
+[defcorefunk semantic_resource_action_sequence-core_extension-define_types semantic_resource_action_sequence semantic_resource_action_sequence__core_extension__define_types]
+
+[semantic_resource_action_sequence-core_extension-define_types]
 

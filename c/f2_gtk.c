@@ -836,6 +836,22 @@ void funk2_gtk__window__resize(funk2_gtk_t* this, GtkWidget* window, s64 width, 
   }
 }
 
+void funk2_gtk__window__set_transient_for(funk2_gtk_t* this, GtkWidget* window, GtkWidget* parent) {
+  {
+    gdk_threads_enter();
+    gtk_window_set_transient_for(GTK_WINDOW(window), GTK_WINDOW(parent));
+    gdk_threads_leave();
+  }
+}
+
+void funk2_gtk__window__set_destroy_with_parent(funk2_gtk_t* this, GtkWidget* window, boolean_t setting) {
+  {
+    gdk_threads_enter();
+    gtk_window_set_destroy_with_parent(GTK_WINDOW(window), setting ? TRUE : FALSE);
+    gdk_threads_leave();
+  }
+}
+
 
 // vbox
 
@@ -1948,6 +1964,54 @@ f2ptr f2__gtk__window__resize(f2ptr cause, f2ptr window, f2ptr width, f2ptr heig
   return raw__gtk__window__resize(cause, window, width, height);
 }
 def_pcfunk3(gtk__window__resize, window, width, height, return f2__gtk__window__resize(this_cause, window, width, height));
+
+
+f2ptr raw__gtk__window__set_transient_for(f2ptr cause, f2ptr window, f2ptr parent) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_window        = raw__gtk_widget__as__GtkWidget(cause, window);
+    GtkWidget* gtk_parent_window = raw__gtk_widget__as__GtkWidget(cause, parent);
+    funk2_gtk__window__set_transient_for(&(__funk2.gtk), gtk_window, gtk_parent_window);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__window__set_transient_for(f2ptr cause, f2ptr window, f2ptr parent) {
+  if ((! raw__gtk_widget__is_type(cause, window)) ||
+      (! raw__gtk_widget__is_type(cause, parent))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__window__set_transient_for(cause, window, parent);
+}
+def_pcfunk2(gtk__window__set_transient_for, window, parent, return f2__gtk__window__set_transient_for(this_cause, window, parent));
+
+
+f2ptr raw__gtk__window__set_destroy_with_parent(f2ptr cause, f2ptr window, f2ptr setting) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_window = raw__gtk_widget__as__GtkWidget(cause, window);
+    funk2_gtk__window__set_destroy_with_parent(&(__funk2.gtk), gtk_window, (setting != nil) ? boolean__true : boolean__false);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__window__set_destroy_with_parent(f2ptr cause, f2ptr window, f2ptr setting) {
+  if (! raw__gtk_widget__is_type(cause, window)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__gtk__window__set_destroy_with_parent(cause, window, setting);
+}
+def_pcfunk2(gtk__window__set_destroy_with_parent, window, setting, return f2__gtk__window__set_destroy_with_parent(this_cause, window, setting));
 
 
 // vbox
@@ -5262,21 +5326,40 @@ void f2__gtk__initialize() {
   // widget draw funks
   f2__primcfunk__init__8(gtk__widget__draw_arc,                     widget, filled, x, y, width, height, angle1, angle2,   "Draws an arc in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
   f2__primcfunk__init__6(gtk__widget__draw_rectangle,               widget, filled, x, y, width, height,                   "Draws a rectangle in a GtkWidget.  Only works with GtkWidgets that have a GdkWindow!");
-  f2__primcfunk__init__0(gtk__window__new,                                                                               "Returns a new window widget.");
+  f2__primcfunk__init__0(gtk__window__new,                                                                                 "Returns a new window widget.");
   f2__primcfunk__init__2(gtk__window__set_title,                    window, title,                                         "Sets the title of this gtk_window.");
   f2__primcfunk__init__3(gtk__window__set_default_size,             window, width, height,                                 "Sets the default width and height of this gtk_window.");
   f2__primcfunk__init__3(gtk__window__resize,                       window, width, height,                                 "Resizes the gtk_window.");
-  
+  f2__primcfunk__init__2(gtk__window__set_transient_for,            window, parent,
+			 "Dialog windows should be set transient for the main application window they were spawned from. This allows window managers to e.g. keep the dialog on top of the main window, or center the dialog over the main window. gtk_dialog_new_with_buttons() and other convenience functions in GTK+ will sometimes call gtk_window_set_transient_for() on your behalf.\n"
+			 "\n"
+			 "Passing NULL for parent unsets the current transient window.\n"
+			 "\n"
+			 "On Windows, this function puts the child window on top of the parent, much as the window manager would have done on X.\n"
+			 "\n"
+			 "window :\n"
+			 "	a GtkWindow\n"
+			 "\n"
+			 "parent :\n"
+			 "	parent window, or NULL. [allow-none]");
+  f2__primcfunk__init__2(gtk__window__set_destroy_with_parent,      window, setting,
+			 "If setting is TRUE, then destroying the transient parent of window will also destroy window itself. This is useful for dialogs that shouldn't persist beyond the lifetime of the main window they're associated with, for example.\n"
+			 "\n"
+			 "window :\n"
+			 "	a GtkWindow\n"
+			 "\n"
+			 "setting :\n"
+			 "	whether to destroy window with its transient parent");
   f2__primcfunk__init__1(gtk__vbox__new,                            spacing,                                               "Returns a new vbox widget with spacing.");
   f2__primcfunk__init__1(gtk__hbox__new,                            spacing,                                               "Returns a new hbox widget with spacing.");
   f2__primcfunk__init__1(gtk__button__new_with_label,               label,                                                 "Returns a new button widget with label.");
-  f2__primcfunk__init__0(gtk__scrolled_window__new,                                                                      "Returns a new scrolled_window widget.");
+  f2__primcfunk__init__0(gtk__scrolled_window__new,                                                                        "Returns a new scrolled_window widget.");
   f2__primcfunk__init__2(gtk__scrolled_window__add_with_viewport,   scrolled_window, child,                                "Adds a non-scrollable widget to a scroll window.");
   f2__primcfunk__init__3(gtk__scrolled_window__set_policy,          scrolled_window, hscrollbar_policy, vscrollbar_policy, "Sets the policy for the vertical and horizontal scrollbars of a scrolled window.  Valid policies are (1) `always, (2) `automatic, and (3) `never.");
 
   // text_view
   
-  f2__primcfunk__init__0(gtk__text_view__new,                                                                            "Returns a new text_view widget.");
+  f2__primcfunk__init__0(gtk__text_view__new,                                                                              "Returns a new text_view widget.");
   f2__primcfunk__init__1(gtk__text_view__get_buffer,                text_view,                                             "Returns the buffer widget of a text_view widget.");
   
   // gdk_pixbuf

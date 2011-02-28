@@ -27,15 +27,16 @@
 
 // timeline_event
 
-def_header_ceframe8(timeline_event,
-		    name,
+def_header_ceframe9(timeline_event,
+		    render_frame,
+		    height,
 		    start_time,
 		    end_time,
 		    contains_set,
 		    is_contained_by_set,
 		    next_set,
 		    previous_set,
-		    y_index);
+		    y_start);
 
 f2ptr     raw__timeline_event__new                      (f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time);
 f2ptr      f2__timeline_event__new                      (f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time);
@@ -61,7 +62,7 @@ f2ptr f2__timeline_event_type__new_aux(f2ptr cause);
 
 // timeline
 
-def_header_ceframe13(timeline,
+def_header_ceframe14(timeline,
 		     timeline_event_set,
 		     left_border,
 		     right_border,
@@ -69,6 +70,7 @@ def_header_ceframe13(timeline,
 		     bottom_border,
 		     x_width,
 		     y_event_distance,
+		     y_connected_part_distance,
 		     arrow_head_size,
 		     positions_have_been_calculated,
 		     minimum_time,

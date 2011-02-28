@@ -17,11 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-
-
-
-
-
 [deframe isismon_export_movie_dialog [frame] [isismon
 					      save_dialog]
   [new [initial-isismon]
@@ -486,6 +481,9 @@
 [deftypefunk isismon_project get widget []
   vbox]
 
+[deftypefunk isismon_project get window []
+  [get isismon window]]
+
 [deftypefunk isismon_project execute add_agent [isismon_agent]
   [have agent_frame add [get isismon_agent name] isismon_agent]
   [have [get isismon_agent widget] show_all]
@@ -498,6 +496,7 @@
 	[get agent_frame values]]]
 
 [deftypefunk isismon_project execute update []
+  [= need_update nil]
   [let [[movie_length [get this movie_length]]]
     [if [> movie_length 1]
 	[set scale range 0.0 [- movie_length 1]]]
@@ -533,7 +532,8 @@
 			      [set scale value [- movie_length 1]]]]
 			[= last_stepped_simulation_time [time]]]]]]]
 	[if need_update
-	    [have this update]]]]
+	    [have this update]
+	  [sleep 1]]]]
   [have execute_mutex unlock]]
 
 [deftypefunk isismon_project get overview_image_sequence []
@@ -552,33 +552,45 @@
     [let [[agent_count [if [null agent_names]
 			   0
 			 [length agent_names]]]]
-      [let [[image_width [+ 1 640 1 [if agent_names
-					320
-				      0] 1]]
-	    [image_height [+ 1 [if [> [* agent_count [+ 240 1]] [+ 480 1]]
-				   [* agent_count [+ 240 1]]
-				 [+ 480 1]]]]]
-	[if [!= [* [/ image_width 2] 2]
-		image_width]
-	    [= image_width [+ image_width 1]]]
-	[if [!= [* [/ image_height 2] 2]
+      [let [[max_retina_image_width  0]
+	    [max_retina_image_height 0]]
+	[mapc [funk [agent_name]
+		    [let [[isismon_agent [have agent_frame lookup agent_name]]]
+		      [let [[retina_image_sequence [get isismon_agent retina_image_sequence]]]
+			[if [< index [get retina_image_sequence length]]
+			    [let [[retina_image [get retina_image_sequence elt index]]]
+			      [let [[retina_image_width  [get retina_image width]]
+				    [retina_image_height [get retina_image height]]]
+				[if [> retina_image_width max_retina_image_width]
+				    [= max_retina_image_width retina_image_width]]
+				[if [> retina_image_height max_retina_image_height]
+				    [= max_retina_image_height retina_image_height]]]]]]]]
+	      agent_names]
+	[let [[image_width [+ 1 640 1 max_retina_image_width 1]]
+	      [image_height [+ 1 [if [> [* agent_count [+ max_retina_image_height 1]] [+ 480 1]]
+				     [* agent_count [+ max_retina_image_height 1]]
+				   [+ 480 1]]]]]
+	  [if [!= [* [/ image_width 2] 2]
+		  image_width]
+	      [= image_width [+ image_width 1]]]
+	  [if [!= [* [/ image_height 2] 2]
 		image_height]
-	    [= image_height [+ image_height 1]]]
-	[let [[image [new image image_width image_height nil]]]
-	  [have image clear 0 0 0 255]
-	  [let [[overview_image_sequence [get this overview_image_sequence]]]
-	    [let [[overview_image [get overview_image_sequence elt index]]]
-	      [have overview_image copy_rectangle_to 0 0 image 1 1 640 480]]]
-	  [let [[agent_index 0]]
-	    [mapc [funk [agent_name]
-			[let [[isismon_agent [have agent_frame lookup agent_name]]]
-			  [let [[retina_image_sequence [get isismon_agent retina_image_sequence]]]
-			    [if [< index [get retina_image_sequence length]]
-				[let [[retina_image [get retina_image_sequence elt index]]]
-				  [have retina_image copy_rectangle_to 0 0 image [+ 1 640 1] [+ 1 [* agent_index [+ 240 1]]] 320 240]]]]]
-			[= agent_index [+ agent_index 1]]]
-		  agent_names]]
-	  image]]]]]
+	      [= image_height [+ image_height 1]]]
+	  [let [[image [new image image_width image_height nil]]]
+	    [have image clear 0 0 0 255]
+	    [let [[overview_image_sequence [get this overview_image_sequence]]]
+	      [let [[overview_image [get overview_image_sequence elt index]]]
+		[have overview_image copy_rectangle_to 0 0 image 1 1 640 480]]]
+	    [let [[agent_index 0]]
+	      [mapc [funk [agent_name]
+			  [let [[isismon_agent [have agent_frame lookup agent_name]]]
+			    [let [[retina_image_sequence [get isismon_agent retina_image_sequence]]]
+			      [if [< index [get retina_image_sequence length]]
+				  [let [[retina_image [get retina_image_sequence elt index]]]
+				    [have retina_image copy_rectangle_to 0 0 image [+ 1 640 1] [+ 1 [* agent_index [+ max_retina_image_height 1]]] [get retina_image width] [get retina_image height]]]]]]
+			  [= agent_index [+ agent_index 1]]]
+		    agent_names]]
+	    image]]]]]]
 
 [deftypefunk isismon_project get new_movie []
   [let [[movie_length   [get this movie_length]]

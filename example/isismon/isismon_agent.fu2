@@ -324,24 +324,30 @@
        [have view_sense_menu_item signal_connect 'activate'
 	     [funk []
 		   [format stdout '\n' [get this name] '\'s sensory information:'
-				    '\n  ' [have isis_agent sense_world]]]
+			   '\n  ' [have isis_agent sense_world]]]
 	     nil]
        [have view_menu append view_sense_menu_item]
-
-
+       
+       
        [= view_proprioceptual_frame_menu_item [gtk-menu_item-new 'Proprioceptual Frame']]
        [have view_proprioceptual_frame_menu_item signal_connect 'activate'
 	     [funk []
-		   [format stdout '\n' [get this name] '\'s proprioceptual frame:'
-				    '\n  ' [have [get [get isis_agent mind] perception] lookup `proprioceptual_frame]]]
+		   [let [[perception [get [get isis_agent mind] perception]]]
+		     [if [null perception]
+			 [format stdout '\n' [get this name] '\'s has no perception']
+		       [format stdout '\n' [get this name] '\'s proprioceptual frame:'
+			       '\n  ' [have [get [get isis_agent mind] perception] lookup `proprioceptual_frame]]]]]
 	     nil]
        [have view_menu append view_proprioceptual_frame_menu_item]
        
        [= view_visual_objects_menu_item [gtk-menu_item-new 'Visual Objects']]
        [have view_visual_objects_menu_item signal_connect 'activate'
 	     [funk []
-		   [format stdout '\n' [get this name] '\'s visual objects:'
-				    '\n  ' [have [get [get isis_agent mind] perception] lookup `visual_objects]]]
+		   [let [[perception [get [get isis_agent mind] perception]]]
+		     [if [null perception]
+			 [format stdout '\n' [get this name] '\'s has no perception']
+		       [format stdout '\n' [get this name] '\'s visual objects:'
+			       '\n  ' [have perception lookup `visual_objects]]]]]
 	     nil]
        [have view_menu append view_visual_objects_menu_item]
        
@@ -394,6 +400,7 @@
 		    [have vbox pack_start [get visual_isismon_knowledge widget] nil nil 0]
 		    
 		    [have [get this widget] show_all]
+		    [have this update]
 		    ]
 	      nil]
        
@@ -412,6 +419,9 @@
 
 [deftypefunk isismon_agent get widget []
   frame]
+
+[deftypefunk isismon_agent get window []
+  [get isismon_project window]]
 
 [deftypefunk isismon_agent execute update_entry []
   [let [[look_for_resource [get [get isis_agent mind] resource `learned_reactive `physical `look_for]]]

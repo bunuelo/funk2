@@ -70,7 +70,7 @@
   [have this calculate_positions]
   [let [[x_width  [get this x_width]]
 	[y_height [get this y_height]]]
-    [if [> [/ x_width y_height] [/ pixel_width pixel_height]]
+    [if [> [/ x_width y_height] [/ [get pixel_width as-double] pixel_height]]
 	[let [[subimage [timeline-as-image-given_width this pixel_width]]]
 	  [let [[image [new image pixel_width pixel_height nil]]]
 	    [have image clear 255 255 255 255]

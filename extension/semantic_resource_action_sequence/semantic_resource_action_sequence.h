@@ -23,6 +23,7 @@
 #define F2__EXTENSION__SEMANTIC_RESOURCE_ACTION_SEQUENCE__H
 
 #include "../semantic_event_sequence/semantic_event_sequence.h"
+#include "../semantic_resource/semantic_resource.h"
 
 
 // semantic_resource_action_sequence

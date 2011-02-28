@@ -117,13 +117,13 @@ test moving forward speed
 	 [mind  [get body mind]]
 	 [name  [get body name]]
 	 [counter            0]]
-			  [have this-resource think_to_self 'Looking right is starting.speed:' speed ' degrees/sec']
-			  [mind-wait_to_activate mind builtin_reactive physical look_right_start speed]
-			  [while [< counter steps]
-			    [wait-for-trigger [get mind time_step_trigger]] 
-			    [= counter [+ counter 1]]
-			    ]
-			  [mind-wait_to_call mind builtin_reactive physical look_right_stop]]
+    [have this-resource think_to_self 'Looking right is starting.speed:' speed ' degrees/sec' [/ speed step_factor] 'degrees/step']
+    [mind-wait_to_activate mind builtin_reactive physical look_right_start speed]
+    [while [< counter steps]
+      [wait-for-trigger [get mind time_step_trigger]] 
+      [= counter [+ counter 1]]
+      ]
+    [mind-wait_to_call mind builtin_reactive physical look_right_stop]]
   [= achieved t]]
 
 [deftypefunk look_left_resource execute look_left [steps speed]
@@ -133,7 +133,7 @@ test moving forward speed
 	 [mind  [get body mind]]
 	 [name  [get body name]]
 	 [counter            0]]
-    [have this-resource think_to_self 'Looking left is starting.speed:' speed ' degrees/sec']
+    [have this-resource think_to_self 'Looking left is starting.speed:' speed ' degrees/sec' [/ speed step_factor] 'degrees/step']
   [mind-wait_to_activate mind builtin_reactive physical look_left_start speed]
   [while [< counter steps]
     [wait-for-trigger [get mind time_step_trigger]] 
@@ -367,7 +367,7 @@ test moving forward speed
 	 [mind  [get body mind]] 
 	 [name  [get body name]]
 	 ]
-    [have this-resource think_to_self 'center_head_on_object activated']
+    [have this-resource think_to_self 'center_head_on_object activated' desired_object]
     [labels[ [look_up_and_down []
 			       [look_left_and_right]
 			       [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
@@ -376,15 +376,17 @@ test moving forward speed
 				       [let [
 					     [retina_position_vertical   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `retina_position_vertical]]
 					     [distance                   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
-					 [cond [[>  retina_position_vertical [+ 0.25 [/ distance 80]]]
+					 [cond [[>  retina_position_vertical [+ 0.4 [/ 0.4 distance]]]
 						[prog [have this-resource think_to_self   'y too positive' retina_position_vertical]
+						      
 						      [mind-wait_to_call mind learned_reactive physical look_up 1 [min 200.0 [* 200 retina_position_vertical]]]
 						      [have this-resource think_to_self   'i looked up']
 						      
 						      [look_up_and_down]]]
-					       [[< retina_position_vertical [- 0 [+ 0.25 [/ distance 80]]]]
+					       [[< retina_position_vertical [- 0 [+ 0.4 [/ 0.4 distance]]]]
 						[prog [have this-resource think_to_self   'y too negative' retina_position_vertical]
-						      [mind-wait_to_call mind learned_reactive physical look_down 1 [min 200.0 [* 200 retina_position_vertical]]] 
+						      
+						      [mind-wait_to_call mind learned_reactive physical look_down 1 [min 200.0 [abs [* 200 retina_position_vertical]]]] 
 						      [have this-resource think_to_self 'i looked down']
 						      
 						      [look_up_and_down]]]
@@ -402,16 +404,18 @@ test moving forward speed
 					  [let [[retina_position_horizontal [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `retina_position_horizontal]]
 						[retina_position_vertical   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `retina_position_vertical]]
 						[distance                   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
-					    [cond [[>  retina_position_horizontal [max [/ 1.8 distance] 0.2]]
+					    [cond [[>  retina_position_horizontal [max [* 0.05  distance] 0.18]]
 						   [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
-							 [mind-wait_to_call mind learned_reactive physical look_right 1 [- 100.0 distance]]
-							 [have this-resource think_to_self   'i looked right']
+							 
+							 [mind-wait_to_call mind learned_reactive physical look_right 1 [abs [* step_factor [/ [* 100  retina_position_horizontal] distance]]]]
+							 [have this-resource think_to_self   'I looked right']
 							 
 							 [look_left_and_right]]]
-						  [[< retina_position_horizontal [- 0 0.4]]
+						  [[< retina_position_horizontal [min [- 0 [* 0.05  distance]][- 0 0.18]]]
 						   [prog [have this-resource think_to_self   'x too negative'   retina_position_horizontal]
-							 [mind-wait_to_call mind learned_reactive physical look_left 1 [- 100.0 distance]]
-							 [have this-resource think_to_self 'i looked left']
+							 
+							 [mind-wait_to_call mind learned_reactive physical look_left 1 [abs [* step_factor [/ [* 100  retina_position_horizontal] distance]]]]
+							 [have this-resource think_to_self 'I looked left']
 							 
 							 [look_left_and_right]]]
 						  [t
@@ -500,8 +504,11 @@ test moving forward speed
 					[if [< init_orientation 0]
 					    t
 					  nil]]
-	     
-	     [should_i_move_forward     [current_neck_angle final_angle]
+	     [should_i_move_forward   [init_angle]
+				      [if [> init_angle 90]
+					  nil
+					t]]
+	     [should_i_keep_going     [current_neck_angle final_angle]
 					[print 'should i move forward?']
 					[if [< [abs current_neck_angle][abs final_angle]]
 					    t
@@ -509,7 +516,7 @@ test moving forward speed
 	     [find_walking_speed        [alpha roll]
 					[let* [[dist  [* [/ [get alpha degree_sine] [get roll degree_sine]] 5]]
 					      [speed [min [* dist 5] 20]]]
-					  [format stdout 'dist'  dist 'alpha' alpha 'roll' roll]
+					  [format stdout 'dist'  dist 'alpha' alpha 'roll' roll ]
 					  speed]]
 	     ]
 	    

@@ -42,8 +42,6 @@
        [= vital t]
        nil]]
 
-[deftypefunk translate_mental_knowledge_to_meta_mental_knowledge_resource execute trace_ []
-
 [deftypefunk translate_mental_knowledge_to_meta_mental_knowledge_resource execute execute_resource_raw_funk []
   `[= debug t]
   [let [[mental_knowledge_iterator      [get [get this mind] knowledge_event_stream_iterator `mental_knowledge->meta_mental_knowledge]]

@@ -139,9 +139,15 @@ f2ptr raw__semantic_resource_action_sequence__cairo_render_frame(f2ptr cause, f2
 	f2ptr name_set = f2__semantic_resource__name__lookup(cause, resource);
 	if (name_set != nil) {
 	  resource_name = f2__set__an_arbitrary_element(cause, name_set);
+	} else {
+	  resource_name = new__symbol(cause, "resource_name-is-nil");
 	}
+      } else {
+	resource_name = new__symbol(cause, "resource-is-not-semantic_resource");
       }
       f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "resource"), resource_name);
+    } else {
+      f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "resource"), new__symbol(cause, "resource_set-is-nil"));
     }
   }
   return render_frame;

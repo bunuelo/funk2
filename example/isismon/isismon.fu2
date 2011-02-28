@@ -496,6 +496,7 @@
 	[get agent_frame values]]]
 
 [deftypefunk isismon_project execute update []
+  [= need_update nil]
   [let [[movie_length [get this movie_length]]]
     [if [> movie_length 1]
 	[set scale range 0.0 [- movie_length 1]]]

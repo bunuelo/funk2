@@ -160,7 +160,7 @@ f2ptr f2__semantic_resource_action_sequence__core_extension__define_types(f2ptr 
   status("semantic_resource_action_sequence types defines.");
   return nil;
 }
-export_cefunk0(semantic_resource_action_sequence__core_extension__initialize, 0, "");
+export_cefunk0(semantic_resource_action_sequence__core_extension__define_types, 0, "");
 
 f2ptr f2__semantic_resource_action_sequence__core_extension__destroy(f2ptr cause) {
   status("semantic_resource_action_sequence destroyed.");

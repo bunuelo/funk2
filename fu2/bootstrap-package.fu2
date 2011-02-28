@@ -142,6 +142,7 @@
 				  'extension/semantic_physical_object/'
 				  'extension/semantic_resource/'
 				  'extension/semantic_resource_action_event/'
+				  'extension/semantic_resource_action_sequence/'
 				  'extension/semantic_temporal_object/'
 				  'extension/semantic_visual_object/'
 				  'extension/timeline/'

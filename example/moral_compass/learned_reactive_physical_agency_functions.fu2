@@ -451,14 +451,9 @@ test moving forward speed
 				     [walk]]]]
 			 [prog [have this-resource think_to_self 'dont have desired object, activating search']
 			       [mind-wait_to_call mind learned_reactive physical search_for desired_object]
-			       'we don\'t need to wait for trigger here because wait to call already waits for resource to finish. -- bo'
-			       `[have this-resource think_to_self 'waiting for search to find desired object']
-			       `[wait-for-trigger [get [get mind resource `learned_reactive `physical `search_for] finished_trigger]]
 			       [walk]]]
 		     [prog [have this-resource think_to_self 'dont have objects, activating search']
 			   [mind-wait_to_call mind learned_reactive physical search_for desired_object]
-			   'we don\'t need to wait for trigger here because wait to call already waits for resource to finish. -- bo'
-			   `[wait-for-trigger [get [get mind resource `learned_reactive `physical `search_for] finished_trigger]]
 			   [walk]
 			   ]]]]
 	    [walk]]]]
@@ -671,9 +666,8 @@ test moving forward speed
 	[mind-wait_to_call mind learned_reactive physical hold_with_left_hand  `loaf]]
     [mind-wait_to_call mind learned_reactive physical look_for `table]
     [if [string-contains [get [get mind look_for-current_object] as-string] 'table']
-	[prog [mind-wait_to_call mind learned_reactive physical walk_directly_towards  
-				 [get mind look_for-current_object]]
-	      [wait-for-trigger [get [get mind resource `learned_reactive `physical `walk_directly_towards] finished_trigger]]]
+	[mind-wait_to_call mind learned_reactive physical walk_directly_towards  
+			   [get mind look_for-current_object]]
       [have this-resource think_to_self 'not doing anything because cannot find table']]
     [let [[loaf [get mind right_hand_object_name]]
 	  [table [get mind look_for-current_object]]]
@@ -694,17 +688,15 @@ test moving forward speed
 	 [name  [get body name]]]
     [if [null [string-contains [get [get_right_hand_object_name mind] as-string] 'loaf']]
 	[prog [mind-wait_to_call mind learned_reactive physical look_for_vertically `loaf]
-	      [wait-for-trigger [get [get mind resource `learned_reactive `physical `look_for_vertically] finished_trigger]]
 	      [mind-wait_to_call mind learned_reactive physical hold_with_right_hand  
-				     [have [get [get [get mind layer `learned_reactive] agency `physical] 
-						resource `look_for_vertically] lookup `my_current_object]]]]
-
+				 [have [get [get [get mind layer `learned_reactive] agency `physical] 
+					    resource `look_for_vertically] lookup `my_current_object]]]]
+    
     [if [null [string-contains [get [get_left_hand_object_name mind] as-string] 'butter']]
 	[prog [mind-wait_to_call mind learned_reactive physical look_for_vertically `butter]
-	      [wait-for-trigger [get [get mind resource `learned_reactive `physical `look_for_vertically] finished_trigger]]
 	      [mind-wait_to_call mind learned_reactive physical hold_with_left_hand 
-				     [have [get [get [get mind layer `learned_reactive] agency `physical] 
-						resource `look_for_vertically] lookup `my_current_object]]]]]]
+				 [have [get [get [get mind layer `learned_reactive] agency `physical] 
+					    resource `look_for_vertically] lookup `my_current_object]]]]]]
 
 
 [deftypefunk make_toast_resource execute make_toast []
@@ -717,26 +709,19 @@ test moving forward speed
     [if [null [and [string-contains [get [get_left_hand_object_name mind] as-string]'butter']
 		   [string-contains [get [get_right_hand_object_name mind] as-string] 'loaf']]]
 	[mind-wait_to_call mind learned_reactive physical pick_up_loaf_and_butter]]
-    [wait-for-trigger [get [get mind resource `learned_reactive `physical `pick_up_loaf_and_butter] finished_trigger]]
     [if [or [null [get_visual_objects mind]]
 	    [null [visual_objects_contain_object_type [get_visual_objects mind] `knife]]]
-	[prog 
-	 [mind-wait_to_call mind learned_reactive physical level_pitch]
-	 [mind-wait_to_call mind learned_reactive physical move_backward 1 10.0]]]
+	[prog [mind-wait_to_call mind learned_reactive physical level_pitch]
+	      [mind-wait_to_call mind learned_reactive physical move_backward 1 10.0]]]
     [mind-wait_to_call mind learned_reactive physical look_for `knife]   
-
-    [wait-for-trigger [get [get mind resource `learned_reactive `physical `look_for] finished_trigger]]
+    
     [mind-wait_to_call mind learned_reactive physical look_for `table]
-    [wait-for-trigger [get [get mind resource `learned_reactive `physical `look_for] finished_trigger]]
     [if [string-contains [get [get mind look_for-current_object] as-string] 'table']
-	[prog [mind-wait_to_call mind learned_reactive physical walk_directly_towards  
-				 [get mind look_for-current_object]]
-	      [wait-for-trigger [get [get mind resource `learned_reactive `physical `walk_directly_towards] finished_trigger]]
-	      ]
+	[mind-wait_to_call mind learned_reactive physical walk_directly_towards  
+			   [get mind look_for-current_object]]
       [have this-resource think_to_self 'not doing anything because cannot find table']]
     [mind-wait_to_call mind learned_reactive physical use_left_hand [get mind look_for-current_object] `put_on ]
     [mind-wait_to_call mind learned_reactive physical look_for `knife]    
-    [wait-for-trigger [get [get mind resource `learned_reactive `physical `look_for] finished_trigger]]
     [if [string-contains [get [get mind look_for-current_object] as-string] 'knife']
 	[mind-wait_to_call mind learned_reactive physical hold_with_left_hand `knife]
       [have this-resource think_to_self 'not doing anything because cannot find knife']]

@@ -451,12 +451,14 @@ test moving forward speed
 				     [walk]]]]
 			 [prog [have this-resource think_to_self 'dont have desired object, activating search']
 			       [mind-wait_to_call mind learned_reactive physical search_for desired_object]
-			       [have this-resource think_to_self 'waiting for search to find desired object']
-			       [wait-for-trigger [get [get mind resource `learned_reactive `physical `search_for] finished_trigger]]
+			       'we don\'t need to wait for trigger here because wait to call already waits for resource to finish. -- bo'
+			       `[have this-resource think_to_self 'waiting for search to find desired object']
+			       `[wait-for-trigger [get [get mind resource `learned_reactive `physical `search_for] finished_trigger]]
 			       [walk]]]
 		     [prog [have this-resource think_to_self 'dont have objects, activating search']
 			   [mind-wait_to_call mind learned_reactive physical search_for desired_object]
-			   [wait-for-trigger [get [get mind resource `learned_reactive `physical `search_for] finished_trigger]]
+			   'we don\'t need to wait for trigger here because wait to call already waits for resource to finish. -- bo'
+			   `[wait-for-trigger [get [get mind resource `learned_reactive `physical `search_for] finished_trigger]]
 			   [walk]
 			   ]]]]
 	    [walk]]]]

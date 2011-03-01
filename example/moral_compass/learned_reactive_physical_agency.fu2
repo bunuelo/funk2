@@ -411,18 +411,13 @@
 						       [init_turning_speed           nil]
 						       [turn_right                   nil]
 						       [current_distance             nil]
-						       [body                         nil]
-						       [mind                         nil]
-						       [name                         nil]]
+						      ]
   [new []
        [construct traced_resource `stand_in_front_of
 		  [funk [object]
-			[= body  [get this body]]
-			[= mind  [get body mind]]
-			[= name  [get body name]]
 			[have this-resource stand_in_front_of object]]]
-       nil]]
-  
+        nil]]
+
 '****************************Look carefully for************************************************************'
 
 [deframe look_carefully_for_resource [traced_resource] [[my_current_object nil]

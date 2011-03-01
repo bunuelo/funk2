@@ -27,9 +27,6 @@
 									     file_menu
 									     file_exit_menu_item
 
-									     globalize_isis_world__hbox
-									     globalize_isis_world__button
-
 									     turn_right_resource__hbox
 									     turn_right_resource__button
 									     turn_right_resource__target__label
@@ -201,16 +198,6 @@
        [have vbox pack_start menu_bar nil nil 0]
        
 
-       
-       [= globalize_isis_world__hbox [gtk-hbox-new 2]]
-       [= globalize_isis_world__button [gtk-button-new_with_label 'make toast']]
-       [have globalize_isis_world__hbox  pack_start globalize_isis_world__button nil nil 0]
-       [have vbox pack_start globalize_isis_world__hbox nil nil 0]
-       [have make_toast__button signal_connect 'clicked'
-	     [funk []
-		   
-		   [globalize_isis_world]]	
-	     nil]
        
        [= move_forward_resource__hbox [gtk-hbox-new 2]]
        [= move_forward_resource__button [gtk-button-new_with_label 'Move forward - ']]
@@ -481,7 +468,7 @@
        [have vbox pack_start center_body_on_resource__hbox nil nil 0]
        [have center_body_on_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `center_body_on [get [get  look_for_resource__target__entry text] as-symbol]]]
+		   [have this activate_resource `learned_reactive `physical `center_body_on [get [get  center_body_on_resource__target__entry text] as-symbol]]]
 	     nil]
        
      [= center_head_on_resource__hbox [gtk-hbox-new 2]]
@@ -494,7 +481,7 @@
        [have vbox pack_start center_head_on_resource__hbox nil nil 0]
        [have center_head_on_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `center_head_on [get [get  look_for_resource__target__entry text] as-symbol]]]
+		   [have this activate_resource `learned_reactive `physical `center_head_on [get [get  center_body_on_resource__target__entry text] as-symbol]]]
 	     nil]
        
        

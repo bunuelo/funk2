@@ -343,13 +343,13 @@ test moving forward speed
 					  [let [[retina_position_horizontal [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `retina_position_horizontal]]
 						[retina_position_vertical   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `retina_position_vertical]]
 						[distance                   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
-					    [cond [[>  retina_position_horizontal 0.20]
+					    [cond [[>  retina_position_horizontal 0.15]
 						   [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
 							 [mind-wait_to_call mind learned_reactive physical turn_right 1 [+ 100.0 [* 40 retina_position_horizontal]]]
 							 [have this-resource think_to_self   'i turned right']
 							 
 							 [turn_left_and_right]]]
-						  [[< retina_position_horizontal [- 0 0.20]]
+						  [[< retina_position_horizontal [- 0 0.15]]
 						   [prog [have this-resource think_to_self   'x too negative' retina_position_horizontal]
 							 [mind-wait_to_call mind learned_reactive physical turn_left 1 [+ 100.0 [ abs [* 40 retina_position_horizontal]]]]							 
 							 [have this-resource think_to_self 'i turned left']
@@ -468,6 +468,9 @@ test moving forward speed
 	    [walk]]]]
 
 [deftypefunk stand_in_front_of_resource execute  walk_forward_or_back [object]
+    [let* [[body  [get this body]]
+	   [mind  [get body mind]]
+	   [name  [get body name]]]
   [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
   [if [null [or [get_visual_objects mind] [lookup_visual_object [get_visual_objects mind] object]]]
       [have this think_to_self 'cannot see object anymore']
@@ -480,21 +483,24 @@ test moving forward speed
 		[prog [print 'Its facing me, Im moving forward']
 		      [mind-wait_to_call mind learned_reactive physical move_forward 1 [* step_factor [- init_distance 5]]]
 		      [walk_forward_or_back]]]
-	    [print 'at 5 meters away']]]]]
+	    [print 'at 5 meters away']]]]]]
 
 
 [deftypefunk stand_in_front_of_resource execute stand_in_front_of [object]
     [have this-resource think_to_self 'stand_in_front_of' object 'activated!']
-
-    [labels [[find_final_distance       [orientation_diff init_distance]
-					[print 'find_final_distance']
-					[let [[c 
-					       [get [- [+ [* init_distance init_distance] 
-							  25]
-						       [* [* [get [abs orientation_diff] degree_cosine] init_distance ] 10]] power 0.5]]
-					      ]
-					  c]]
-	     [find_init_angle           [orientation_diff init_distance]
+    [let* [[body  [get this body]]
+	   [mind  [get body mind]]
+	   [name  [get body name]]]
+      
+      [labels [[find_final_distance       [orientation_diff init_distance]
+					  [print 'find_final_distance']
+					  [let [[c 
+						 [get [- [+ [* init_distance init_distance] 
+							    25]
+							 [* [* [get [abs orientation_diff] degree_cosine] init_distance ] 10]] power 0.5]]
+						]
+					    c]]
+	       [find_init_angle           [orientation_diff init_distance]
 					[print 'find_init_angle']
 					[let* [[c 	 [sqrt [- [+ [* init_distance init_distance] 
 								     25]
@@ -612,7 +618,7 @@ test moving forward speed
 			      [= patience 0]]] 
 		      [= patience 0]]]
 	    [= patience 0]]]
-      [have this think_to_self 'finished looking carefully for']]]]
+      [have this think_to_self 'finished looking carefully for']]]]]
 
 
 '*****************Look for vertically*******************************'

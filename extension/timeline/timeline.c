@@ -356,7 +356,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
       double text_extents__width__d = f2double__d(text_extents__width, cause);
       double y0                     = cy - (title_font_size * frame__key_count / 2);
       double x0                     = cx - (text_extents__width__d / 2);
-      raw__cairo_context__render_text(cause, this, x0, y0, title_font_size, (char*)value_string_array[cairo_type_index], red, green, blue, alpha, outline_red);
+      raw__cairo_context__render_text(cause, this, x0, y0, title_font_size, (char*)value_string_array[cairo_type_index], red, green, blue, alpha);
     }
     double space_between_key_and_value = 1.0;
     {
@@ -374,7 +374,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 	    raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "bold"));
 	    raw__cairo_context__set_font_size(cause, this, font_size);
 	    double x0 = cx - ((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2);
-	    raw__cairo_context__render_text(cause, this, x0, y0, font_size, (char*)key_string_array[index], red, green, blue, alpha, outline_red);
+	    raw__cairo_context__render_text(cause, this, x0, y0, font_size, (char*)key_string_array[index], red, green, blue, alpha);
 	  }
 	  {
 	    raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "normal"));

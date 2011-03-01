@@ -79,7 +79,7 @@ export_cefunk1(semantic_resource_action_event__type, thing, 0, "Returns the spec
 
 
 f2ptr raw__semantic_resource_action_event__agent__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_action_event__lookup(cause, this);
+  return raw__semantic_action_event__agent__lookup(cause, this);
 }
 
 f2ptr f2__semantic_resource_action_event__agent__lookup(f2ptr cause, f2ptr this) {

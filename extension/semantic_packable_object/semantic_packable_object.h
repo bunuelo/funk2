@@ -38,9 +38,9 @@ f2ptr f2__semantic_packable_object_type__new(f2ptr cause);
 
 // **
 
-f2ptr f2__semantic_packable_object__core_extension__ping(f2ptr cause);
+f2ptr f2__semantic_packable_object__core_extension__ping      (f2ptr cause);
 f2ptr f2__semantic_packable_object__core_extension__initialize(f2ptr cause);
-f2ptr f2__semantic_packable_object__core_extension__destroy(f2ptr cause);
+f2ptr f2__semantic_packable_object__core_extension__destroy   (f2ptr cause);
 
 #endif // F2__EXTENSION__SEMANTIC_PACKABLE_OBJECT__H
 

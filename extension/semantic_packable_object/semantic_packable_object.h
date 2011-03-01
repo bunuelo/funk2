@@ -25,6 +25,16 @@
 #include "../semantic_ordered_object/semantic_ordered_object.h"
 #include "../semantic_containment_object/semantic_containment_object.h"
 
+// semantic_packable_object
+
+f2ptr     raw__semantic_packable_object__new    (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_packable_object__new    (f2ptr cause, f2ptr semantic_realm);
+boolean_t raw__semantic_packable_object__is_type(f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_packable_object__is_type(f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_packable_object__type   (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_packable_object__type   (f2ptr cause, f2ptr this);
+
+f2ptr f2__semantic_packable_object_type__new(f2ptr cause);
 
 // **
 

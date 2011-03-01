@@ -61,48 +61,47 @@
 				    [cond [[is-type `semantic_resource_action_event semantic_frame]
 					   
 					   [have this-resource think_to_self '\n  debug A3: translate mental->meta_mental add_semantic_frame semantic_resource_action_event: ' event]
-					   [let [[action_name_set [semantic-lookup semantic_frame action_name]]
-						 [agent           [semantic-get    semantic_frame agent]]
-						 [target          [semantic-get    semantic_frame target]]]
-					     [have this-resource think_to_self '\n  debug A4: translate mental->meta_mental add_semantic_frame semantic_resource_action_event action_name_set: ' action_name_set]
+					   [let [[action_name [semantic-get semantic_frame action_name]]
+						 [agent       [semantic-get semantic_frame agent]]
+						 [target      [semantic-get semantic_frame target]]]
+					     [have this-resource think_to_self '\n  debug A4: translate mental->meta_mental add_semantic_frame semantic_resource_action_event action_name: ' action_name]
 					     
-					     [if [not [null action_name_set]]
-						 [cond [[get action_name_set contains `cause_being_active]
-							[have this-resource think_to_self '\n  debug A5: translate mental->meta_mental add_semantic_frame semantic_resource_action_event cause_being_active: ' event]
-							
-							[let [[current_action_sequence [new semantic_resource_action_sequence [get [get this mind] semantic_realm]]]]
-							  [terminal_format standard-terminal '\n  agent: ' agent]
-							  [semantic-add current_action_sequence resource            agent]
-							  [semantic-add current_action_sequence absolute_start_time [time]]
-							  [semantic-add current_action_sequence absolute_end_time   [time]]
-							  [semantic-add current_action_sequence action_name         `event_sequence]
-							  [have this-resource think_to_self '\n    *** debug A7: translate mental->meta_mental add_semantic_frame cause_being_active resource_semantic_frame current_action_sequence: ' current_action_sequence]
-							  [if agent
-							      [if [not [get meta_mental_sequence_knowledge contains_semantic_frame agent]]
-								  [have meta_mental_sequence_knowledge add_semantic_frame agent]]]
-							  [if [not [get meta_mental_sequence_knowledge contains_semantic_frame target]]
-							      [have meta_mental_sequence_knowledge add_semantic_frame target]]
-							  [have meta_mental_sequence_knowledge add_semantic_frame current_action_sequence]
-							  [semantic-add target action_sequence         current_action_sequence]
-							  [semantic-set target current_action_sequence current_action_sequence]]]
-						       [t
-							[have this-resource think_to_self '\n  debug A8: translate mental->meta_mental add_semantic_frame semantic_resource_action_event *: ' event]
-							
-							[if agent
-							    [let [[current_action_sequence [semantic-get agent current_action_sequence]]]
-							      [if [null current_action_sequence]
-								  [prog [have this-resource think_to_self '\n  debug A10: current_action_sequence is nil, so not recording event:' event]
-									`[error funkname `translate_mental_knowledge_to_meta_mental_knowledge_resource-execute_resource_raw_funk
-										bug_type `current_action_sequence_is_nil
-										event    event]]
-								[let [[semantic_event [get event semantic_frame]]]
-								  [have this-resource think_to_self '\n   *** debug A11: adding event to end of sequence: ' semantic_event]
-								  [have current_action_sequence        add_to_end         semantic_event]
-								  [have meta_mental_sequence_knowledge add_semantic_frame semantic_event]
-								  '  => add to action_sequence_cause_frame for the affected agent.']]]
-							  [prog [have this-resource think_to_self '\n   debug A12: no agent defined, cannot add event to agent sequence: ' event]
-								]]]]
-					       ]]]
+					     [cond [[eq action_name `cause_being_active]
+						    [have this-resource think_to_self '\n  debug A5: translate mental->meta_mental add_semantic_frame semantic_resource_action_event cause_being_active: ' event]
+						    
+						    [let [[current_action_sequence [new semantic_resource_action_sequence [get [get this mind] semantic_realm]]]]
+						      [terminal_format standard-terminal '\n  agent: ' agent]
+						      [semantic-set current_action_sequence resource            agent]
+						      [semantic-set current_action_sequence absolute_start_time [time]]
+						      [semantic-set current_action_sequence absolute_end_time   [time]]
+						      [semantic-set current_action_sequence action_name         `event_sequence]
+						      [have this-resource think_to_self '\n    *** debug A7: translate mental->meta_mental add_semantic_frame cause_being_active resource_semantic_frame current_action_sequence: ' current_action_sequence]
+						      [if agent
+							  [if [not [get meta_mental_sequence_knowledge contains_semantic_frame agent]]
+							      [have meta_mental_sequence_knowledge add_semantic_frame agent]]]
+						      [if [not [get meta_mental_sequence_knowledge contains_semantic_frame target]]
+							  [have meta_mental_sequence_knowledge add_semantic_frame target]]
+						      [have meta_mental_sequence_knowledge add_semantic_frame current_action_sequence]
+						      [semantic-add target action_sequence         current_action_sequence]
+						      [semantic-set target current_action_sequence current_action_sequence]]]
+						   [t
+						    [have this-resource think_to_self '\n  debug A8: translate mental->meta_mental add_semantic_frame semantic_resource_action_event *: ' event]
+						    
+						    [if agent
+							[let [[current_action_sequence [semantic-get agent current_action_sequence]]]
+							  [if [null current_action_sequence]
+							      [prog [have this-resource think_to_self '\n  debug A10: current_action_sequence is nil, so not recording event:' event]
+								    `[error funkname `translate_mental_knowledge_to_meta_mental_knowledge_resource-execute_resource_raw_funk
+									    bug_type `current_action_sequence_is_nil
+									    event    event]]
+							    [let [[semantic_event [get event semantic_frame]]]
+							      [have this-resource think_to_self '\n   *** debug A11: adding event to end of sequence: ' semantic_event]
+							      [have current_action_sequence        add_to_end         semantic_event]
+							      [have meta_mental_sequence_knowledge add_semantic_frame semantic_event]
+							      '  => add to action_sequence_cause_frame for the affected agent.']]]
+						      [prog [have this-resource think_to_self '\n   debug A12: no agent defined, cannot add event to agent sequence: ' event]
+							    ]]]]
+					     ]]
 					  ]
 				    ]]
 				 [[eq event_type `remove_semantic_frame]
@@ -112,20 +111,19 @@
 				    [cond [[is-type `semantic_resource_action_event semantic_frame]
 					   
 					   [have this-resource think_to_self '\n  debug R3: translate mental->meta_mental remove_semantic_frame semantic_resource_action_event: ' event]
-					   [let [[action_name_set [semantic-lookup semantic_frame action_name]]
-						 [agent           [semantic-get    semantic_frame agent]]
-						 [target          [semantic-get    semantic_frame target]]]
-					     [if [not [null action_name_set]]
-						 [cond [[get action_name_set contains `cause_being_active]
-							
-							[have this-resource think_to_self '\n  debug R4: translate mental->meta_mental remove_semantic_frame semantic_resource_action_event cause_being_active: ' event]
-							
-							[let [[current_action_sequence [semantic-get target current_action_sequence]]]
-							  [have this-resource think_to_self   '\n    *** debug R7: translate mental->meta_mental remove_semantic_frame cause_being_active resource action event cause_being_active current_action_sequence: ' current_action_sequence]
-							  
-							  [semantic-add current_action_sequence absolute_end_time [time]]
-							  [semantic-set target current_action_sequence nil]]]]
-					       ]]]
+					   [let [[action_name [semantic-get semantic_frame action_name]]
+						 [agent       [semantic-get semantic_frame agent]]
+						 [target      [semantic-get semantic_frame target]]]
+					     [cond [[eq action_name `cause_being_active]
+						    
+						    [have this-resource think_to_self '\n  debug R4: translate mental->meta_mental remove_semantic_frame semantic_resource_action_event cause_being_active: ' event]
+						    
+						    [let [[current_action_sequence [semantic-get target current_action_sequence]]]
+						      [have this-resource think_to_self   '\n    *** debug R7: translate mental->meta_mental remove_semantic_frame cause_being_active resource action event cause_being_active current_action_sequence: ' current_action_sequence]
+						      
+						      [semantic-set current_action_sequence absolute_end_time [time]]
+						      [semantic-set target current_action_sequence nil]]]]
+					     ]]
 					  ]
 				    ]]]]
 			  [[is-type `semantic_frame_event event]

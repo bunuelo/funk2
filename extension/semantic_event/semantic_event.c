@@ -30,7 +30,10 @@ f2ptr raw__semantic_event__new(f2ptr cause, f2ptr semantic_realm) {
     return this;
   }
   raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_event"));
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "type"), new__symbol(cause, "name"), new__symbol(cause, "semantic_event"));
+  raw__semantic_frame__add( cause, this, new__symbol(cause, "type"),     new__symbol(cause, "name"), new__symbol(cause, "semantic_event"));
+  raw__semantic_frame__add( cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name"),         nil);
+  raw__semantic_frame__add( cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_start_time"), nil);
+  raw__semantic_frame__add( cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_end_time"),   nil);
   return this;
 }
 

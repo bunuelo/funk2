@@ -99,8 +99,8 @@
 						  [result         [get action result]]]
 					      [let [[action_semantic_frame [new semantic_action_event [get [get this mind] semantic_realm]]]]
 						[have [get [get this mind] input_visual_knowledge] add_semantic_frame action_semantic_frame]
-						[semantic-add action_semantic_frame agent       semantic_object]
-						[semantic-add action_semantic_frame action_name action_name]
+						[semantic-set action_semantic_frame agent       semantic_object]
+						[semantic-set action_semantic_frame action_name action_name]
 						'should add argument frame for each action specifically.'
 						]]]
 				      actions]

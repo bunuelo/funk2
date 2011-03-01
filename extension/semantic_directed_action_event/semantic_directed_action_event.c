@@ -30,7 +30,8 @@ f2ptr raw__semantic_directed_action_event__new(f2ptr cause, f2ptr semantic_realm
     return this;
   }
   raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_directed_action_event"));
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "type"), new__symbol(cause, "name"), new__symbol(cause, "semantic_directed_action_event"));
+  raw__semantic_frame__add( cause, this, new__symbol(cause, "type"),         new__symbol(cause, "name"),   new__symbol(cause, "semantic_directed_action_event"));
+  raw__semantic_frame__add( cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "target"), nil);
   return this;
 }
 

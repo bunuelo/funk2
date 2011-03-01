@@ -69,11 +69,10 @@
 					     [cond [[eq action_name `cause_being_active]
 						    [have this-resource think_to_self '\n  debug A5: translate mental->meta_mental add_semantic_frame semantic_resource_action_event cause_being_active: ' event]
 						    
-						    [let [[current_action_sequence [new semantic_resource_action_sequence [get [get this mind] semantic_realm] agent]]]
+						    [let [[current_action_sequence [new semantic_resource_action_sequence [get [get this mind] semantic_realm] `event_sequence agent]]]
 						      [terminal_format standard-terminal '\n  agent: ' agent]
 						      [semantic-set current_action_sequence absolute_start_time [time]]
 						      [semantic-set current_action_sequence absolute_end_time   [time]]
-						      [semantic-set current_action_sequence action_name         `event_sequence]
 						      [have this-resource think_to_self '\n    *** debug A7: translate mental->meta_mental add_semantic_frame cause_being_active resource_semantic_frame current_action_sequence: ' current_action_sequence]
 						      [if agent
 							  [if [not [get meta_mental_sequence_knowledge contains_semantic_frame agent]]

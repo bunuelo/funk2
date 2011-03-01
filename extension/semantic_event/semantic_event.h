@@ -26,8 +26,8 @@
 #include "../timeline/timeline.h"
 
 
-f2ptr     raw__semantic_event__new                        (f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_event__new                        (f2ptr cause, f2ptr semantic_realm);
+f2ptr     raw__semantic_event__new                        (f2ptr cause, f2ptr semantic_realm, f2ptr action_name);
+f2ptr      f2__semantic_event__new                        (f2ptr cause, f2ptr semantic_realm, f2ptr action_name);
 boolean_t raw__semantic_event__is_type                    (f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_event__is_type                    (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_event__type                       (f2ptr cause, f2ptr this);

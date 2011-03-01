@@ -24,26 +24,26 @@
 
 // semantic_event
 
-f2ptr raw__semantic_event__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name) {
   f2ptr this = f2__semantic_temporal_object__new(cause, semantic_realm);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
   raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_event"));
   raw__semantic_frame__add( cause, this, new__symbol(cause, "type"),     new__symbol(cause, "name"), new__symbol(cause, "semantic_event"));
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name"),         nil);
+  raw__semantic_frame__add( cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name"),         action_name);
   raw__semantic_frame__add( cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_start_time"), nil);
   raw__semantic_frame__add( cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_end_time"),   nil);
   return this;
 }
 
-f2ptr f2__semantic_event__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr f2__semantic_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name) {
   if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_event__new(cause, semantic_realm);
+  return raw__semantic_event__new(cause, semantic_realm, action_name);
 }
-export_cefunk1(semantic_event__new, semantic_realm, 0, "Returns a new semantic_event object.");
+export_cefunk2(semantic_event__new, semantic_realm, action_name, 0, "Returns a new semantic_event object.");
 
 
 boolean_t raw__semantic_event__is_type(f2ptr cause, f2ptr thing) {

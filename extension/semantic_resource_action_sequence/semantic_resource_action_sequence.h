@@ -28,8 +28,8 @@
 
 // semantic_resource_action_sequence
 
-f2ptr     raw__semantic_resource_action_sequence__new             (f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_resource_action_sequence__new             (f2ptr cause, f2ptr semantic_realm);
+f2ptr     raw__semantic_resource_action_sequence__new             (f2ptr cause, f2ptr semantic_realm, f2ptr resource);
+f2ptr      f2__semantic_resource_action_sequence__new             (f2ptr cause, f2ptr semantic_realm, f2ptr resource);
 boolean_t raw__semantic_resource_action_sequence__is_type         (f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_resource_action_sequence__is_type         (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_resource_action_sequence__type            (f2ptr cause, f2ptr this);

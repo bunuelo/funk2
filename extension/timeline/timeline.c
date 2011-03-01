@@ -215,6 +215,14 @@ void raw__cairo_context__render_outlined_text(f2ptr cause, f2ptr this, double x0
   raw__cairo_context__fill(           cause, this);
 }
 
+void raw__cairo_context__render_text(f2ptr cause, f2ptr this, double x0, double y0, double font_size, char* text, double red, double green, double blue, double alpha) {
+  raw__cairo_context__move_to(        cause, this, x0, y0 + (font_size * 0.75));
+  raw__cairo_context__set_font_size(  cause, this, font_size);
+  raw__cairo_context__text_path(      cause, this, text);
+  raw__cairo_context__set_source_rgba(cause, this, red, green, blue, alpha);
+  raw__cairo_context__fill(           cause, this);
+}
+
 double raw__cairo_context__text_width(f2ptr cause, f2ptr this, double font_size, char* text) {
   raw__cairo_context__set_font_size(cause, this, font_size);
   f2ptr text_extents = raw__cairo_context__text_extents(cause, this, text);
@@ -237,6 +245,20 @@ f2ptr raw__cairo_context__render_centered_outlined_text(f2ptr cause, f2ptr this,
   double x0 = cx - (text_extents__width__d / 2);
   double y0 = cy - (font_size              / 2);
   raw__cairo_context__render_outlined_text(cause, this, x0, y0, font_size, text, outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
+  return nil;
+}
+
+f2ptr raw__cairo_context__render_centered_text(f2ptr cause, f2ptr this, double cx, double cy, double font_size, char* text, double red, double green, double blue, double alpha) {
+  raw__cairo_context__set_font_size(cause, this, font_size);
+  f2ptr text_extents = raw__cairo_context__text_extents(cause, this, text);
+  if (raw__larva__is_type(cause, text_extents)) {
+    return text_extents;
+  }
+  f2ptr  text_extents__width    = raw__cairo_text_extents__width(cause, text_extents);
+  double text_extents__width__d = f2double__d(text_extents__width, cause);
+  double x0 = cx - (text_extents__width__d / 2);
+  double y0 = cy - (font_size              / 2);
+  raw__cairo_context__render_text(cause, this, x0, y0, font_size, text, red, green, blue, alpha);
   return nil;
 }
 
@@ -334,7 +356,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
       double text_extents__width__d = f2double__d(text_extents__width, cause);
       double y0                     = cy - (title_font_size * frame__key_count / 2);
       double x0                     = cx - (text_extents__width__d / 2);
-      raw__cairo_context__render_outlined_text(cause, this, x0, y0, title_font_size, (char*)value_string_array[cairo_type_index], outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
+      raw__cairo_context__render_text(cause, this, x0, y0, title_font_size, (char*)value_string_array[cairo_type_index], red, green, blue, alpha, outline_red);
     }
     double space_between_key_and_value = 1.0;
     {
@@ -352,13 +374,13 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 	    raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "bold"));
 	    raw__cairo_context__set_font_size(cause, this, font_size);
 	    double x0 = cx - ((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2);
-	    raw__cairo_context__render_outlined_text(cause, this, x0, y0, font_size, (char*)key_string_array[index], outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
+	    raw__cairo_context__render_text(cause, this, x0, y0, font_size, (char*)key_string_array[index], red, green, blue, alpha, outline_red);
 	  }
 	  {
 	    raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "normal"));
 	    raw__cairo_context__set_font_size(cause, this, font_size);
 	    double x0 = cx - ((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2) + max_key_text_width + space_between_key_and_value;
-	    raw__cairo_context__render_outlined_text(cause, this, x0, y0, font_size, (char*)value_string_array[index], outline_width, red, green, blue, alpha, outline_red, outline_green, outline_blue, outline_alpha);
+	    raw__cairo_context__render_text(cause, this, x0, y0, font_size, (char*)value_string_array[index], red, green, blue, alpha);
 	  }
 	  y_index ++;
 	}

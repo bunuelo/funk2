@@ -24,8 +24,8 @@
 
 // semantic_resource_action_event
 
-f2ptr raw__semantic_resource_action_event__new(f2ptr cause, f2ptr semantic_realm) {
-  f2ptr this = f2__semantic_directed_action_event__new(cause, semantic_realm);
+f2ptr raw__semantic_resource_action_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name, f2ptr agent, f2ptr target) {
+  f2ptr this = f2__semantic_directed_action_event__new(cause, semantic_realm, action_name, agent, target);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
@@ -34,13 +34,15 @@ f2ptr raw__semantic_resource_action_event__new(f2ptr cause, f2ptr semantic_realm
   return this;
 }
 
-f2ptr f2__semantic_resource_action_event__new(f2ptr cause, f2ptr semantic_realm) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
+f2ptr f2__semantic_resource_action_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name, f2ptr agent, f2ptr target) {
+  if ((! raw__semantic_realm__is_type(cause, semantic_realm)) ||
+      (! raw__semantic_resource__is_type(cause, agent)) ||
+      (! raw__semantic_resource__is_type(cause, target))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_resource_action_event__new(cause, semantic_realm);
+  return raw__semantic_resource_action_event__new(cause, semantic_realm, action_name, agent, target);
 }
-export_cefunk1(semantic_resource_action_event__new, semantic_realm, 0, "Returns a new semantic_resource_action_event object.");
+export_cefunk4(semantic_resource_action_event__new, semantic_realm, action_name, agent, target, 0, "Returns a new semantic_resource_action_event object.");
 
 
 boolean_t raw__semantic_resource_action_event__is_type(f2ptr cause, f2ptr thing) {

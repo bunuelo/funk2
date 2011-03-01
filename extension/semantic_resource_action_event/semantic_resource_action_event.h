@@ -25,11 +25,35 @@
 #include "../semantic_directed_action_event/semantic_directed_action_event.h"
 #include "../semantic_resource/semantic_resource.h"
 
+// semantic_resource_action_event
+
+f2ptr     raw__semantic_resource_action_event__new                   (f2ptr cause, f2ptr semantic_realm, f2ptr action_name, f2ptr agent, f2ptr target);
+f2ptr      f2__semantic_resource_action_event__new                   (f2ptr cause, f2ptr semantic_realm, f2ptr action_name, f2ptr agent, f2ptr target);
+boolean_t raw__semantic_resource_action_event__is_type               (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_resource_action_event__is_type               (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_resource_action_event__type                  (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_resource_action_event__type                  (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_resource_action_event__agent__lookup         (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_resource_action_event__agent__lookup         (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_resource_action_event__agent__add            (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_resource_action_event__agent__add            (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_resource_action_event__agent__remove         (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_resource_action_event__agent__remove         (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_resource_action_event__event_sequence__lookup(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_resource_action_event__event_sequence__lookup(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_resource_action_event__event_sequence__add   (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_resource_action_event__event_sequence__add   (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_resource_action_event__event_sequence__remove(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_resource_action_event__event_sequence__remove(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_resource_action_event__cairo_render_frame    (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_resource_action_event__cairo_render_frame    (f2ptr cause, f2ptr this);
+
+f2ptr f2__semantic_resource_action_event_type__new(f2ptr cause);
 
 // **
 
-f2ptr f2__semantic_resource_action_event__core_extension__ping(f2ptr cause);
+f2ptr f2__semantic_resource_action_event__core_extension__ping      (f2ptr cause);
 f2ptr f2__semantic_resource_action_event__core_extension__initialize(f2ptr cause);
-f2ptr f2__semantic_resource_action_event__core_extension__destroy(f2ptr cause);
+f2ptr f2__semantic_resource_action_event__core_extension__destroy   (f2ptr cause);
 
 #endif // F2__EXTENSION__SEMANTIC_RESOURCE_ACTION_EVENT__H

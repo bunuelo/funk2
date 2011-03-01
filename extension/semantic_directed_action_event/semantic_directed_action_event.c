@@ -39,9 +39,9 @@ f2ptr f2__semantic_directed_action_event__new(f2ptr cause, f2ptr semantic_realm,
   if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_directed_action_event__new(cause, semantic_realm);
+  return raw__semantic_directed_action_event__new(cause, semantic_realm, action_name, agent, target);
 }
-export_cefunk1(semantic_directed_action_event__new, semantic_realm, 0, "Returns a new semantic_directed_action_event object.");
+export_cefunk4(semantic_directed_action_event__new, semantic_realm, action_name, agent, target, 0, "Returns a new semantic_directed_action_event object.");
 
 
 boolean_t raw__semantic_directed_action_event__is_type(f2ptr cause, f2ptr thing) {

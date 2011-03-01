@@ -24,18 +24,18 @@
 
 // semantic_directed_action_event
 
-f2ptr raw__semantic_directed_action_event__new(f2ptr cause, f2ptr semantic_realm) {
-  f2ptr this = f2__semantic_action_event__new(cause, semantic_realm);
+f2ptr raw__semantic_directed_action_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name, f2ptr agent, f2ptr target) {
+  f2ptr this = f2__semantic_action_event__new(cause, semantic_realm, action_name, agent);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
   raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_directed_action_event"));
   raw__semantic_frame__add( cause, this, new__symbol(cause, "type"),         new__symbol(cause, "name"),   new__symbol(cause, "semantic_directed_action_event"));
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "target"), nil);
+  raw__semantic_frame__add( cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "target"), target);
   return this;
 }
 
-f2ptr f2__semantic_directed_action_event__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr f2__semantic_directed_action_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name, f2ptr agent, f2ptr target) {
   if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
     return f2larva__new(cause, 1, nil);
   }

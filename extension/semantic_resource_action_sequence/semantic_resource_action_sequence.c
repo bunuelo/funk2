@@ -41,9 +41,9 @@ f2ptr f2__semantic_resource_action_sequence__new(f2ptr cause, f2ptr semantic_rea
       (! raw__semantic_resource__is_type(cause, resource))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_resource_action_sequence__new(cause, semantic_realm, f2ptr action_name, resource);
+  return raw__semantic_resource_action_sequence__new(cause, semantic_realm, action_name, resource);
 }
-export_cefunk3(semantic_resource_action_sequence__new, semantic_realm, f2ptr action_name, resource, 0, "Given a semantic_resource, returns a new semantic_resource_action_sequence object.");
+export_cefunk3(semantic_resource_action_sequence__new, semantic_realm, action_name, resource, 0, "Given a semantic_resource, returns a new semantic_resource_action_sequence object.");
 
 
 boolean_t raw__semantic_resource_action_sequence__is_type(f2ptr cause, f2ptr thing) {

@@ -30,7 +30,7 @@ f2ptr raw__semantic_event__type_create(f2ptr cause, f2ptr this, f2ptr action_nam
     raw__semantic_frame__add(cause, this, new__symbol(cause, "type"), new__symbol(cause, "name"), new__symbol(cause, "semantic_event"));
   }
   {
-    f2ptr result = raw__semantic_temporal_object__type_create(cause, this, action_name);
+    f2ptr result = raw__semantic_temporal_object__type_create(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

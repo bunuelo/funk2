@@ -206,9 +206,8 @@
        [= globalize_isis_world__button [gtk-button-new_with_label 'make toast']]
        [have globalize_isis_world__hbox  pack_start globalize_isis_world__button nil nil 0]
        [have vbox pack_start globalize_isis_world__hbox nil nil 0]
-       [have make_toast__button signal_connect 'clicked'
+       [have globalize_isis_world__button signal_connect 'clicked'
 	     [funk []
-		   
 		   [globalize_isis_world]]	
 	     nil]
        

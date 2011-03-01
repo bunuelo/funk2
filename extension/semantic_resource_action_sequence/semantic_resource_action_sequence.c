@@ -123,7 +123,6 @@ export_cefunk2(semantic_resource_action_sequence__resource__remove, this, that, 
 
 
 f2ptr raw__semantic_resource_action_sequence__cairo_render_frame(f2ptr cause, f2ptr this) {
-  printf("\nraw__semantic_resource_action_sequence__cairo_render_frame: I'm here."); fflush(stdout);
   f2ptr render_frame = f2__frame__new(cause, f2list2__new(cause,
 							  new__symbol(cause, "cairo_render_type"), f2__object__type(cause, this)));
   {
@@ -141,16 +140,9 @@ f2ptr raw__semantic_resource_action_sequence__cairo_render_frame(f2ptr cause, f2
 	f2ptr name_set = f2__semantic_resource__name__lookup(cause, resource);
 	if (name_set != nil) {
 	  resource_name = f2__set__an_arbitrary_element(cause, name_set);
-	} else {
-	  resource_name = new__symbol(cause, "resource_name-is-nil");
 	}
-      } else {
-	f2__terminal_print(cause, resource_set);
-	resource_name = new__symbol(cause, "resource-is-not-semantic_resource");
       }
       f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "resource"), resource_name);
-    } else {
-      f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "resource"), new__symbol(cause, "resource_set-is-nil"));
     }
   }
   return render_frame;

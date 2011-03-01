@@ -351,6 +351,16 @@
 
 
 '**************************centering*****************************************************'
+[deframe center_body_horizontally_on_resource [traced_resource] []
+  [new []
+       [construct traced_resource `center_body_horizontally_on
+		  [funk [desired_object]
+			[have this center_body_horizontally_on desired_object]]]]]
+[deframe continuously_center_resource [traced_resource] []
+  [new []
+       [construct traced_resource `continuously_center
+		  [funk [desired_object]
+			[have this continuously_center desired_object]]]]]
 [deframe center_body_on_resource [traced_resource] []
   [new []
        [construct traced_resource `center_body_on
@@ -633,6 +643,8 @@
        [have this add_resource [new learned_open_fridge_resource]]
        [have this add_resource [new slice_toast_resource]]
        [have this add_resource [new center_body_on_resource]]
+       [have this add_resource [new continuously_center_resource]]
+       [have this add_resource [new center_body_horizontally_on_resource]]
        [have this add_resource [new center_head_on_resource]]
       `[have this add_resource [new walk_towards_resource]]
        [have this add_resource [new walk_directly_towards_resource]]

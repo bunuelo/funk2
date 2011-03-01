@@ -443,9 +443,15 @@ export_cefunk2(event_stream_iterator__new, event_stream, index_time, 0, "Returns
 
 
 f2ptr raw__event_stream_iterator__current(f2ptr cause, f2ptr this) {
-  f2ptr event_stream = raw__event_stream_iterator__event_stream(cause, this);
-  f2ptr index_time   = raw__event_stream_iterator__index_time(cause, this);
-  return raw__event_stream__first_not_before(cause, event_stream, index_time);
+  f2ptr event_stream       = raw__event_stream_iterator__event_stream(cause, this);
+  f2ptr index_time         = raw__event_stream_iterator__index_time(cause, this);
+  f2ptr event_stream_event = nil;
+  if (index_time == nil) {
+    event_stream_event = raw__event_stream__first(cause, event_stream);
+  } else {
+    event_stream_event = raw__event_stream__first_not_before(cause, event_stream, index_time);
+  }
+  return event_stream_event;
 }
 
 f2ptr f2__event_stream_iterator__current(f2ptr cause, f2ptr this) {
@@ -460,6 +466,13 @@ export_cefunk1(event_stream_iterator__current, event_stream, 0, "Returns the cur
 f2ptr raw__event_stream_iterator__next(f2ptr cause, f2ptr this) {
   f2ptr event_stream              = raw__event_stream_iterator__event_stream(cause, this);
   f2ptr index_time                = raw__event_stream_iterator__index_time(cause, this);
+  if (index_time == nil) {
+    f2ptr event_stream_event = raw__event_stream__first(cause, event_stream);
+    if (event_stream_event == nil) {
+      return nil;
+    }
+    index_time = raw__event_stream_event__time(cause, event_stream_event);
+  }
   f2ptr nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, index_time);
   f2ptr nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
   f2ptr slightly_greater_time     = f2__time__new(cause, f2integer__new(cause, nanoseconds_since_1970__i + 1));
@@ -479,6 +492,13 @@ export_cefunk1(event_stream_iterator__next, event_stream, 0, "Returns the next e
 f2ptr raw__event_stream_iterator__has__next(f2ptr cause, f2ptr this) {
   f2ptr event_stream              = raw__event_stream_iterator__event_stream(cause, this);
   f2ptr index_time                = raw__event_stream_iterator__index_time(cause, this);
+  if (index_time == nil) {
+    f2ptr event_stream_event = raw__event_stream__first(cause, event_stream);
+    if (event_stream_event == nil) {
+      return nil;
+    }
+    index_time = raw__event_stream_event__time(cause, event_stream_event);
+  }
   f2ptr nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, index_time);
   f2ptr nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
   f2ptr slightly_greater_time     = f2__time__new(cause, f2integer__new(cause, nanoseconds_since_1970__i + 1));

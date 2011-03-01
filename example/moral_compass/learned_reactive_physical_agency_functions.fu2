@@ -381,22 +381,14 @@ test moving forward speed
 				       [let [
 					     [retina_position_vertical   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `retina_position_vertical]]
 					     [distance                   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
-<<<<<<< .merge_file_BvtqGB
-					 [cond [[>  retina_position_vertical [+ 0.4 [/ 0.4 distance]]]
-=======
 					 [cond [[>  retina_position_vertical [+ 0.3 [/ 0.3 distance]]]
->>>>>>> .merge_file_imkuwG
 						[prog [have this-resource think_to_self   'y too positive' retina_position_vertical]
 						      
 						      [mind-wait_to_call mind learned_reactive physical look_up 1 [min 200.0 [* 200 retina_position_vertical]]]
 						      [have this-resource think_to_self   'i looked up']
 						      
 						      [look_up_and_down]]]
-<<<<<<< .merge_file_BvtqGB
-					       [[< retina_position_vertical [- 0 [+ 0.4 [/ 0.4 distance]]]]
-=======
 					       [[< retina_position_vertical [- 0 [+ 0.3 [/ 0.3 distance]]]]
->>>>>>> .merge_file_imkuwG
 						[prog [have this-resource think_to_self   'y too negative' retina_position_vertical]
 						      
 						      [mind-wait_to_call mind learned_reactive physical look_down 1 [min 200.0 [abs [* 200 retina_position_vertical]]]] 
@@ -417,19 +409,6 @@ test moving forward speed
 					  [let [[retina_position_horizontal [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `retina_position_horizontal]]
 						[retina_position_vertical   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `retina_position_vertical]]
 						[distance                   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
-<<<<<<< .merge_file_BvtqGB
-					    [cond [[>  retina_position_horizontal [max [* 0.05  distance] 0.18]]
-						   [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
-							 
-							 [mind-wait_to_call mind learned_reactive physical look_right 1 [abs [* step_factor [/ [* 100  retina_position_horizontal] distance]]]]
-							 [have this-resource think_to_self   'I looked right']
-							 
-							 [look_left_and_right]]]
-						  [[< retina_position_horizontal [min [- 0 [* 0.05  distance]][- 0 0.18]]]
-						   [prog [have this-resource think_to_self   'x too negative'   retina_position_horizontal]
-							 
-							 [mind-wait_to_call mind learned_reactive physical look_left 1 [abs [* step_factor [/ [* 100  retina_position_horizontal] distance]]]]
-=======
 					    [cond [[>  retina_position_horizontal [max [* 0.04  distance] 0.15]]
 						   [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
 							 
@@ -441,7 +420,6 @@ test moving forward speed
 						   [prog [have this-resource think_to_self   'x too negative'   retina_position_horizontal]
 							 
 							 [mind-wait_to_call mind learned_reactive physical look_left 1 [abs [* step_factor [/ [* 120  retina_position_horizontal] distance]]]]
->>>>>>> .merge_file_imkuwG
 							 [have this-resource think_to_self 'I looked left']
 							 
 							 [look_left_and_right]]]
@@ -534,15 +512,6 @@ test moving forward speed
 	     [should_i_turn_right       [init_orientation init_angle]
 					[print 'should i turn right?']
 					[if [< init_orientation 0]
-<<<<<<< .merge_file_BvtqGB
-					    t
-					  nil]]
-	     [should_i_move_forward   [init_angle]
-				      [if [> init_angle 90]
-					  nil
-					t]]
-	     [should_i_keep_going     [current_neck_angle final_angle]
-=======
 					    [if [< init_angle 90]
 						t
 					      nil]
@@ -550,24 +519,15 @@ test moving forward speed
 					      nil
 					    t]]]
 	     [should_i_move_forward     [current_neck_angle final_angle]
->>>>>>> .merge_file_imkuwG
 					[print 'should i move forward?']
 					[if [< [abs current_neck_angle][abs final_angle]]
 					    t
 					  nil]]
 	     [find_walking_speed        [alpha heading]
 					[let* [[dist  [* [/ [get alpha degree_sine] [get heading degree_sine]] 5]]
-<<<<<<< .merge_file_BvtqGB
-					      [speed [min [* dist 5] 20]]]
-					  [format stdout 'dist'  dist 'alpha' alpha 'heading' heading]
-					  speed]]
-	     ]
-	    
-=======
 					       [speed [min [* dist 4] 10]]]
 					  [format stdout 'dist'  dist 'alpha' alpha 'heading' heading]
 					  speed]]]
->>>>>>> .merge_file_imkuwG
 	    [print 'finished labeling']
 	    [mind-wait_to_call mind learned_reactive physical align_body_with_neck]
 	    [print 'hi']
@@ -584,37 +544,6 @@ test moving forward speed
 	    [= turn_right                  [should_i_turn_right init_orientation init_angle]]
 	    [= current_distance            nil]
 		   ]
-<<<<<<< .merge_file_BvtqGB
-	      [print 'finished setting values']
-	      [format stdout 'init_orientation' init_orientation 'init_diff' init_orientation_difference 'init_distance'  init_distance 'init_angle'  init_angle 'final_neck_angle'  final_neck_angle 'final distance' final_distance]
-	      [if [< [abs [- init_orientation 180]] 5]
-		  [if [< init_distance 5]
-		      [prog [print 'Its facing me, Im moving backward']
-			    [mind-wait_to_call mind learned_reactive physical move_backward 1 [* step_factor [- 5 init_distance]]]]
-		    [prog [print 'Its facing me, Im moving forward']
-			  [mind-wait_to_call mind learned_reactive physical move_forward 1 [* step_factor [- init_distance 5]]]]]
-		[if turn_right
-		    [prog [print 'I should turn right']
-			  [mind-wait_to_call mind learned_reactive physical turn_right 1 init_speed]
-			  [mind-wait_to_call mind learned_reactive physical look_left 1 init_speed]]
-		  [prog [print 'I should turn left']
-			[mind-wait_to_call mind learned_reactive physical turn_left 1 init_speed]
-			[mind-wait_to_call mind learned_reactive physical look_right 1 init_speed]]]]
-	      
-	      [let [[walking_speed 20]]
-		[while [> [abs [- [get_neck_heading mind] final_neck_angle]] 8]
-		  [print 'waiting for trigger']
-		  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
-		  [= walking_speed [find_walking_speed [abs [- [abs [get_neck_heading mind]] [abs final_neck_angle]]] [abs [get_neck_heading mind]]]]
-		  [if [should_i_move_forward [get_neck_heading mind] final_neck_angle]
-		      [prog [print [get_neck_heading mind]]
-			    [mind-wait_to_call mind learned_reactive physical move_forward 1 walking_speed]
-			    [format stdout 'walking_speed' walking_speed]
-			    [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
-			    [mind-wait_to_call mind learned_reactive physical center_head_on object]]
-		    [prog [print [get_neck_heading mind]]
-			  [mind-wait_to_call mind learned_reactive physical move_backward 1 walking_speed]
-=======
     [format stdout 'init_orientation' init_orientation 'init_diff' init_orientation_difference 'init_distance'  init_distance 'init_angle'  init_angle 'final_neck_angle'  final_neck_angle 'final distance' final_distance]
     
     [if [< [abs [- init_orientation 180]] 5]
@@ -634,7 +563,6 @@ test moving forward speed
 		[if [should_i_move_forward [get_neck_heading mind] final_neck_angle]
 		    [prog [print [get_neck_heading mind]]
 			  [mind-wait_to_call mind learned_reactive physical move_forward 1 walking_speed]
->>>>>>> .merge_file_imkuwG
 			  [format stdout 'walking_speed' walking_speed]
 			  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			  [mind-wait_to_call mind learned_reactive physical center_head_on object]]

@@ -186,12 +186,10 @@ def_pcfunk0(funk2__execution_nanoseconds, return f2__funk2__execution_nanosecond
 #endif // F2__CYGWIN
 
 time_t nanoseconds_since_1970__to_unix_time(u64 nanoseconds_since_1970) {
-  //return (nanoseconds_since_1970 / nanoseconds_per_second) - (4 * 60 * 60);
   return (nanoseconds_since_1970 / nanoseconds_per_second);
 }
 
 u64 unix_time__to_nanoseconds_since_1970(time_t unix_time) {
-  //return (((u64)unix_time) + (4 * 60 * 60)) * nanoseconds_per_second;
   return ((u64)unix_time) * nanoseconds_per_second;
 }
 

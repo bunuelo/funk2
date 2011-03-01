@@ -262,10 +262,10 @@
 		      [get package package_dependencies]]
 		[mapc [funk [binary_dependency]
 			    [let [[binary_pathname [pathname-concat [get package pathname] binary_dependency]]]
-			      [let [[stat [pathname-stat [print binary_pathname]]]]
+			      [let [[stat [pathname-stat binary_pathname]]]
 				[let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
 				  [let [[binary_modified [or [null loaded_all_dependencies_time]
-							     [> [print time_of_last_modification] [print loaded_all_dependencies_time]]]]]
+							     [> time_of_last_modification loaded_all_dependencies_time]]]]
 				    [if binary_modified
 					[= loaded_a_dependency t]]]]]]]
 		      [get package binary_dependencies]]

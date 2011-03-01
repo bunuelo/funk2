@@ -38,7 +38,7 @@ f2ptr raw__semantic_object__new(f2ptr cause, f2ptr semantic_realm) {
     return this;
   }
   {
-    f2ptr result = raw__semantic_object__create(cause, this);
+    f2ptr result = raw__semantic_object__type_create(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

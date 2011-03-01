@@ -25,8 +25,8 @@
 
 // semantic_event_sequence
 
-f2ptr raw__semantic_event_sequence__new(f2ptr cause, f2ptr semantic_realm) {
-  f2ptr this = f2__semantic_frame__new(cause, semantic_realm);
+f2ptr raw__semantic_event_sequence__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name) {
+  f2ptr this = f2__semantic_event__new(cause, semantic_realm, action_name);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
@@ -37,13 +37,13 @@ f2ptr raw__semantic_event_sequence__new(f2ptr cause, f2ptr semantic_realm) {
   return this;
 }
 
-f2ptr f2__semantic_event_sequence__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr f2__semantic_event_sequence__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name) {
   if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_event_sequence__new(cause, semantic_realm);
+  return raw__semantic_event_sequence__new(cause, semantic_realm, action_name);
 }
-export_cefunk1(semantic_event_sequence__new, semantic_realm, 0, "Returns a new semantic_event_sequence object.");
+export_cefunk2(semantic_event_sequence__new, semantic_realm, action_name, 0, "Returns a new semantic_event_sequence object.");
 
 
 boolean_t raw__semantic_event_sequence__is_type(f2ptr cause, f2ptr thing) {

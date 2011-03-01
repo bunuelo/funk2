@@ -24,13 +24,31 @@
 
 // semantic_temporal_object
 
+f2ptr raw__semantic_temporal_object__type_create(f2ptr cause, f2ptr this) {
+  if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_temporal_object"));
+    raw__semantic_frame__add( cause, this, new__symbol(cause, "type"), new__symbol(cause, "name"), new__symbol(cause, "semantic_temporal_object"));
+  }
+  {
+    f2ptr result = f2__semantic_packable_object__type_create(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  return this;
+}
+
 f2ptr raw__semantic_temporal_object__new(f2ptr cause, f2ptr semantic_realm) {
-  f2ptr this = f2__semantic_packable_object__new(cause, semantic_realm);
+  f2ptr this = f2__semantic_frame__new(cause, semantic_realm);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_temporal_object"));
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "type"), new__symbol(cause, "name"), new__symbol(cause, "semantic_temporal_object"));
+  {
+    f2ptr result = f2__semantic_temporal_object__type_create(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return this;
 }
 

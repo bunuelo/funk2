@@ -24,16 +24,34 @@
 
 // semantic_event
 
+f2ptr raw__semantic_event__type_create(f2ptr cause, f2ptr this, f2ptr action_name) {
+  if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_event"));
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "type"), new__symbol(cause, "name"), new__symbol(cause, "semantic_event"));
+  }
+  {
+    f2ptr result = raw__semantic_temporal_event__type_create(cause, this, action_name);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name"),         action_name);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_start_time"), nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_end_time"),   nil);
+  return this;
+}
+
 f2ptr raw__semantic_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name) {
-  f2ptr this = f2__semantic_temporal_object__new(cause, semantic_realm);
+  f2ptr this = f2__semantic_frame__new(cause, semantic_realm);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_event"));
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "type"),     new__symbol(cause, "name"), new__symbol(cause, "semantic_event"));
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name"),         action_name);
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_start_time"), nil);
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_end_time"),   nil);
+  {
+    f2ptr result = raw__semantic_event__type_create(cause, this, action_name);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return this;
 }
 

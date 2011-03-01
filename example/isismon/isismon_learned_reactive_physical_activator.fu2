@@ -26,7 +26,10 @@
 									     file_menu_item
 									     file_menu
 									     file_exit_menu_item
-									     
+
+									     globalize_isis_world__hbox
+									     globalize_isis_world__button
+
 									     turn_right_resource__hbox
 									     turn_right_resource__button
 									     turn_right_resource__target__label
@@ -144,7 +147,6 @@
 									     use_right_hand_resource__target__entry
 									     use_right_hand_resource__target__label2
 									     use_right_hand_resource__target__entry2
-									     
 
 									     use_left_hand_resource__hbox
 									     use_left_hand_resource__button
@@ -152,7 +154,6 @@
 									     use_left_hand_resource__target__entry
 									     use_left_hand_resource__target__label2
 									     use_left_hand_resource__target__entry2
-									     
 									     
 									     walk_directly_towards_resource__hbox
 									     walk_directly_towards_resource__button
@@ -169,11 +170,7 @@
 									     track_mother_resource__button
 									     track_mother_resource__target__label
 									     track_mother_resource__target__entry
-									     
-									     demo_hold__hbox
-									     demo_hold__button
-
-
+									  
 									     pick_up_loaf_and_butter__hbox
 									     pick_up_loaf_and_butter__button
 
@@ -202,7 +199,20 @@
        [have file_menu append file_exit_menu_item]
        [set file_menu_item submenu file_menu]
        [have vbox pack_start menu_bar nil nil 0]
- [= move_forward_resource__hbox [gtk-hbox-new 2]]
+       
+
+       
+       [= globalize_isis_world__hbox [gtk-hbox-new 2]]
+       [= globalize_isis_world__button [gtk-button-new_with_label 'make toast']]
+       [have globalize_isis_world__hbox  pack_start globalize_isis_world__button nil nil 0]
+       [have vbox pack_start globalize_isis_world__hbox nil nil 0]
+       [have make_toast__button signal_connect 'clicked'
+	     [funk []
+		   
+		   [globalize_isis_world]]	
+	     nil]
+       
+       [= move_forward_resource__hbox [gtk-hbox-new 2]]
        [= move_forward_resource__button [gtk-button-new_with_label 'Move forward - ']]
        [= move_forward_resource__target__label [gtk-label-new 'Step: ']]
        [= move_forward_resource__target__entry [gtk-entry-new]]
@@ -612,14 +622,7 @@
      nil]  
              
        
-       [= demo_hold__hbox [gtk-hbox-new 2]]
-       [= demo_hold__button [gtk-button-new_with_label 'demo - hold knife']]
-       [have demo_hold__hbox  pack_start demo_hold__button nil nil 0]
-       [have vbox pack_start demo_hold__hbox nil nil 0]
-       [have demo_hold__button signal_connect 'clicked'
-	     [funk []
-		   [demo_hold `knife]]
-	     nil]
+    
 
 
        [have window add vbox]

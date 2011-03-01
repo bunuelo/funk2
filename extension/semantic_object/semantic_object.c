@@ -25,7 +25,7 @@
 // semantic_object
 
 f2ptr raw__semantic_object__create(f2ptr cause, f2ptr this) {
-  if (! raw__frame__contains_var_value(cause, this, new__symbol(cause, "type"))) {
+  if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_object"));
     raw__semantic_frame__add( cause, this, new__symbol(cause, "type"), new__symbol(cause, "name"), new__symbol(cause, "semantic_object"));
   }

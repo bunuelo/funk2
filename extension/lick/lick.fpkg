@@ -18,6 +18,7 @@
  rights to redistribute these changes.'
 
 [defpackage lick
-  :packages []
-   :sources ['lick-core.fu2']]
+  :packages   []
+   :sources   ['lick-core.fu2']
+    :binaries ['.libs/libf2e_lick.so']]
 

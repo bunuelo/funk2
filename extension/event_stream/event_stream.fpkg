@@ -18,6 +18,7 @@
  rights to redistribute these changes.'
 
 [defpackage event_stream
-  :packages [lick]
-   :sources ['event_stream-core.fu2']]
+  :packages   [lick]
+   :sources   ['event_stream-core.fu2']
+    :binaries ['.libs/libf2e_event_stream.so']]
 

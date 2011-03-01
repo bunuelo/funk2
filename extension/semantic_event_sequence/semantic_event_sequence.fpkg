@@ -19,6 +19,7 @@
 
 [defpackage semantic_event_sequence
   :documentation 'Basic knowledge for dealing with events as sequences of semantic_events.  Good for thinking hierarchically about event containment and other ordering relationships.'
-   :packages [semantic_event]
-    :sources ['semantic_event_sequence-core.fu2']]
+   :packages     [semantic_event]
+    :sources     ['semantic_event_sequence-core.fu2']
+     :binaries   ['.libs/libf2e_semantic_event_sequence.so']]
 

@@ -18,5 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_frame_ball
-  :sources ['semantic_frame_ball-core.fu2']]
+  :sources   ['semantic_frame_ball-core.fu2']
+   :binaries ['.libs/libf2e_semantic_frame_ball.so']]
 

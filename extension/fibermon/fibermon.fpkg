@@ -18,9 +18,10 @@
  rights to redistribute these changes.'
 
 [defpackage fibermon
-  :packages [math number gtk]
-   :sources ['fibermon-core.fu2'
-	     'fibermon.fu2']]
+  :packages   [math number gtk]
+   :sources   ['fibermon-core.fu2'
+	       'fibermon.fu2']
+    :binaries ['.libs/libf2e_fibermon.so']]
 
 [defpackage fibermon1
   :packages [math number gtk]

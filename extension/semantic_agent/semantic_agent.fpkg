@@ -19,6 +19,7 @@
 
 [defpackage semantic_agent
   :documentation 'Basic physical knowledge for dealing with physical agents.'
-   :packages [semantic_physical_object]
-    :sources ['semantic_agent-core.fu2']]
+   :packages     [semantic_physical_object]
+    :sources     ['semantic_agent-core.fu2']
+     :binaries   ['.libs/libf2e_semantic_agent.so']]
 

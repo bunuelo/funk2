@@ -19,6 +19,7 @@
 
 [defpackage semantic_resource
   :documentation 'Basic knowledge for thinking about mental resources.'
-   :packages [semantic_knowledge_base]
-    :sources ['semantic_resource-core.fu2']]
+   :packages     [semantic_knowledge_base]
+    :sources     ['semantic_resource-core.fu2']
+     :binaries   ['.libs/libf2e_semantic_resource.so']]
 

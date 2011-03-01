@@ -18,6 +18,7 @@
  rights to redistribute these changes.'
 
  [defpackage forgetful_event_stream
-  :packages [event_stream]
-   :sources ['forgetful_event_stream-core.fu2']]
+  :packages   [event_stream]
+   :sources   ['forgetful_event_stream-core.fu2']
+    :binaries ['.libs/libf2e_forgetful_event_stream.so']]
 

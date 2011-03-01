@@ -19,6 +19,7 @@
 
 [defpackage semantic_containment_object
   :documentation 'Basic knowledge for dealing with hierarchical orderings of objects--useful for temporal and spatial thinking.'
-   :packages [semantic_object]
-    :sources ['semantic_containment_object-core.fu2']]
+   :packages     [semantic_object]
+    :sources     ['semantic_containment_object-core.fu2']
+     :binaries   ['.libs/libf2e_semantic_containment_object.so']]
 

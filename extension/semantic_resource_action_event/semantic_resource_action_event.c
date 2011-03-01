@@ -25,7 +25,7 @@
 // semantic_resource_action_event
 
 f2ptr raw__semantic_resource_action_event__new(f2ptr cause, f2ptr semantic_realm) {
-  f2ptr this = f2__semantic_frame__new(cause, semantic_realm);
+  f2ptr this = f2__semantic_directed_action_event__new(cause, semantic_realm);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }

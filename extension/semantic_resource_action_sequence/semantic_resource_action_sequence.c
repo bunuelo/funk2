@@ -144,6 +144,7 @@ f2ptr raw__semantic_resource_action_sequence__cairo_render_frame(f2ptr cause, f2
 	  resource_name = new__symbol(cause, "resource_name-is-nil");
 	}
       } else {
+	f2__print(cause, resource_set);
 	resource_name = new__symbol(cause, "resource-is-not-semantic_resource");
       }
       f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "resource"), resource_name);

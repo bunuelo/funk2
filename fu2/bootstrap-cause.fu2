@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2011 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,8 +15,7 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
 [defmetro funktracer_funk [:rest body] 
   `[funk [object_cause fiber bytecode funk args]
@@ -76,115 +74,4 @@
 
 [defunk print-safe [x]
   [print [what-to-print-safe x]]]
-
-[deframe critic [frame] [causes funk_funk endfunk_funk branch_funk value_funk]]
-
-[defmetro push-slot [x object slot]
-  `[let [[object ,object]]
-     [let [[push-seq [get object ,slot]]]
-       [set object ,slot [cons ,x push-seq]]]]]
-
-[deftypefunk critic execute activate []
-  [let [[funk [get this funk_funk]]]    [if funk [push-slot funk cause bytecode_funk_callbacks]]]
-  [let [[funk [get this endfunk_funk]]] [if funk [push-slot funk cause bytecode_endfunk_callbacks]]]
-  [let [[funk [get this branch_funk]]]  [if funk [push-slot funk cause bytecode_branch_callbacks]]]
-  [let [[funk [get this tracer_funk]]]  [if funk [push-slot funk cause bytecode_tracer_callbacks]]]
-  ]
-
-[defmetro remove-from-slot [x object slot]
-  [print 'critic should remove tracers, but does not.']
-  nil]
-
-[deftypefunk critic execute suppress []
-  [let [[cause [get this cause]]]
-    [let [[funk [get this funk_funk]]]    [if funk [remove-from-slot funk cause bytecode_funk_callbacks]]]
-    [let [[funk [get this endfunk_funk]]] [if funk [remove-from-slot funk cause bytecode_endfunk_callbacks]]]
-    [let [[funk [get this branch_funk]]]  [if funk [remove-from-slot funk cause bytecode_branch_callbacks]]]
-    [let [[funk [get this tracer_funk]]]  [if funk [remove-from-slot funk cause bytecode_tracer_callbacks]]]
-    ]]
-
-[deframe print_critic [critic] [stream]]
-
-`[deftypeconstruct print_critic [stream]
-  [set this stream stream]
-  [set this cause [this-cause]]
-  [set this funk_funk    [funktracer_funk    [print [list [get [time] nanoseconds_since_1970] `funktracer----: [get funk name] [get funk args] [mapcar &what-to-print-safe args]]]]]
-  [set this endfunk_funk [endfunktracer_funk [print [list [get [time] nanoseconds_since_1970] `endfunktracer-: [get funk name] [get funk args]         [what-to-print-safe value]]]]]
-  [set this branch_funk  [branchtracer_funk  [print [list [get [time] nanoseconds_since_1970] `branchtracer--: [what-to-print-safe value] [get bytecode command]]]]]
-  [set this tracer_funk  [valuetracer_funk   [print [list [get [time] nanoseconds_since_1970] `valuetracer---: [type value] [get bytecode command] [get bytecode arg0] [get bytecode arg1]]]]]
-  [have this activate [this-cause]]
-  this]
-
-[defunk start-tracers []
-  [funktracer    [print [list [get [time] nanoseconds_since_1970] `funktracer----: [get funk name] [get funk args] [mapcar &what-to-print-safe args]]]]
-  [endfunktracer [print [list [get [time] nanoseconds_since_1970] `endfunktracer-: [get funk name] [get funk args]         [what-to-print-safe value]]]]
-  [branchtracer  [print [list [get [time] nanoseconds_since_1970] `branchtracer--: [what-to-print-safe value] [get bytecode command]]]]
-  [valuetracer   [print [list [get [time] nanoseconds_since_1970] `valuetracer---: [type value] [get bytecode command] [get bytecode arg0] [get bytecode arg1]]]]
-  nil]
-
-[defmetro test-funktracer [:rest codes]
-  `[shelter [funktracer [print [list `arg-num: [length args] [get funk name]]]]
-	    @codes]]
-
-
-[defunk test-tracers []
-  [fiber &start-tracers nil]
-  []]
-
-[defunk funk_bytecode-callback [object_cause fiber bytecode funk funk_args]
-  ]
-
-[defunk branch_bytecode-callback [object_cause fiber bytecode program_counter branch_program_counter value]
-  ]
-
-[defunk tracer_bytecode-callback [object_cause fiber bytecode value]
-  ]
-
-[defunk endfunk_bytecode-callback [object_cause fiber bytecode value funk]
-  ]
-
-[defunk start-fast_tracers []
-  [let [[callbacks [get [this-cause] bytecode_funk_callbacks]]]
-    [set [this-cause] bytecode_funk_callbacks [cons [object-execute-funk [this-cause] `add_graph_event-funk]
-						    callbacks]]
-    ]
-  [let [[callbacks [get [this-cause] bytecode_endfunk_callbacks]]]
-    [set [this-cause] bytecode_endfunk_callbacks [cons [object-execute-funk [this-cause] `add_graph_event-endfunk]
-						       callbacks]]
-    nil]
-  [let [[callbacks [get [this-cause] bytecode_branch_callbacks]]]
-    [set [this-cause] bytecode_branch_callbacks [cons [object-execute-funk [this-cause] `add_graph_event-branch]
-						      callbacks]]
-    nil]
-  `[let [[callbacks [get [this-cause] complete_funk_callbacks]]]
-    [set [this-cause] complete_funk_callbacks [cons [object-execute-funk [this-cause] `add_graph_event-complete_funk]
-						    callbacks]]
-    nil]
-  `[let [[callbacks [get [this-cause] read_other_memory_callbacks]]]
-    [set [this-cause] read_other_memory_callbacks [cons [object-execute-funk [this-cause] `add_graph_event-read_other_memory]
-							callbacks]]
-    nil]
-  `[let [[callbacks [get [this-cause] write_other_memory_callbacks]]]
-    [set [this-cause] write_other_memory_callbacks [cons [object-execute-funk [this-cause] `add_graph_event-write_other_memory]
-							 callbacks]]
-    nil]
-  [globalize fast_tracer_graph [get [this-cause] event_graph]]
-  nil]
-
-[defunk test-fast_tracers []
-  [shelter [start-fast_tracers]
-	   [print [this-cause]]
-	   [print [get [this-cause] bytecode_funk_callbacks]]
-	   [print [get [this-cause] event_graph]]
-	   nil
-	   ]]
-
-[defunk tracer_graph-abstract [this]
-  [define a [get this node_map [funk [x] [shelter [get [have x lookup `funk] name]]]]]
-  [define b [get a without_self_loops]]
-  [define c [get b without_duplicate_edges]]
-  c]
-
-
-
 

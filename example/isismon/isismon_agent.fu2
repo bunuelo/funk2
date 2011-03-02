@@ -161,8 +161,8 @@
 	isismon_agency_menus]]
 
 [deftypefunk isismon_agent_layer_menu set sensitive_all [sensitive]
-  [set enable_debugging_all_menu_item  sensitive nil]
-  [set disable_debugging_all_menu_item sensitive nil]
+  [set enable_debugging_all_menu_item  sensitive sensitive]
+  [set disable_debugging_all_menu_item sensitive sensitive]
   [mapc [funk [isismon_agency_menu]
 	      [set isismon_agency_menu sensitive_all sensitive]]
 	isismon_agency_menus]]

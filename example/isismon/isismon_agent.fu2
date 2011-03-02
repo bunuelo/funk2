@@ -53,7 +53,6 @@
   [set resource debug debug]]
 
 
-
 [deframe isismon_agent_agency_menu [frame] [isismon_agent_layer_menu
 					    agency
 					    
@@ -79,6 +78,7 @@
 	     [funk []
 		   [set this debug_all t]]
 	     nil]
+       [set enable_debugging_all_menu_item sensitive nil]
        
        [= disable_debugging_all_menu_item [gtk-menu_item-new 'Disable Debugging All']]
        [have agency_menu append disable_debugging_all_menu_item]
@@ -86,6 +86,7 @@
 	     [funk []
 		   [set this debug_all nil]]
 	     nil]
+       [set disable_debugging_all_menu_item sensitive nil]
        
        [mapc [funk [resource]
 		   [let [[isismon_resource_menu [new isismon_agent_resource_menu this resource]]]
@@ -102,6 +103,11 @@
   [mapc [funk [isismon_resource_menu]
 	      [set isismon_resource_menu debug_all debug]]
 	isismon_resource_menus]]
+
+[deftypefunk isismon_agent_agency_menu set sensitive_all [sensitive]
+  [set enable_debugging_all_menu_item  sensitive sensitive]
+  [set disable_debugging_all_menu_item sensitive sensitive]]
+  
 
 
 [deframe isismon_agent_layer_menu [frame] [isismon_agent_mind_menu
@@ -129,6 +135,7 @@
 	     [funk []
 		   [set this debug_all t]]
 	     nil]
+       [set enable_debugging_all_menu_item sensitive nil]
        
        [= disable_debugging_all_menu_item [gtk-menu_item-new 'Disable Debugging All']]
        [have layer_menu append disable_debugging_all_menu_item]
@@ -136,6 +143,7 @@
 	     [funk []
 		   [set this debug_all nil]]
 	     nil]
+       [set disable_debugging_all_menu_item sensitive nil]
        
        [mapc [funk [agency]
 		   [let [[isismon_agency_menu [new isismon_agent_agency_menu this agency]]]
@@ -150,6 +158,11 @@
 [deftypefunk isismon_agent_layer_menu set debug_all [debug]
   [mapc [funk [isismon_agency_menu]
 	      [set isismon_agency_menu debug_all debug]]
+	isismon_agency_menus]]
+
+[deftypefunk isismon_agent_layer_menu set sensitive_all [sensitive]
+  [mapc [funk [isismon_agency_menu]
+	      [set isismon_agency_menu sensitive_all sensitive]]
 	isismon_agency_menus]]
 
 
@@ -176,6 +189,7 @@
 	     [funk []
 		   [set this debug_all t]]
 	     nil]
+       [set enable_debugging_all_menu_item sensitive nil]
        
        [= disable_debugging_all_menu_item [gtk-menu_item-new 'Disable Debugging All']]
        [have mind_menu append disable_debugging_all_menu_item]
@@ -183,7 +197,9 @@
 	     [funk []
 		   [set this debug_all nil]]
 	     nil]
+       [set disable_debugging_all_menu_item sensitive nil]
        
+       'We finish creating mind menu in parallel for quicker initial load appearance.'
        [fiber [funk []
 		    [mapc [funk [layer]
 				[let [[isismon_layer_menu [new isismon_agent_layer_menu this layer]]]
@@ -191,7 +207,9 @@
 				  [have [get isismon_layer_menu widget] show_all]
 				  [have mind_menu append isismon_layer_menu]]]
 			  [have [get [get [get isismon_agent isis_agent] mind] layers] sort [funk [x y] [< [get x index] [get y index]]]]]
-		    [have mind_menu_item show_all]]
+		    [have mind_menu_item show_all]
+		    [set this sensitive_all t]
+		    ]
 	      nil]
        
        nil]]
@@ -202,6 +220,11 @@
 [deftypefunk isismon_agent_mind_menu set debug_all [debug]
   [mapc [funk [isismon_layer_menu]
 	      [set isismon_layer_menu debug_all debug]]
+	isismon_layer_menus]]
+
+[deftypefunk isismon_agent_mind_menu set sensitive_all [sensitive]
+  [mapc [funk [isismon_layer_menu]
+	      [set isismon_layer_menu sensitive_all sensitive]]
 	isismon_layer_menus]]
 
 

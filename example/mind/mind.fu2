@@ -53,6 +53,9 @@
 [deftypefunk mind execute add_layer [layer]
   [if [get layer mind]
       [error bug_type `layer_is_already_part_of_a_mind layer layer mind this]]
+  [if [not [is-type `mental_layer layer]]
+      [error bug_type `type_error
+	     description 'layer should be type mental_layer.']]
   [set layer mind this]
   [have [get this layer_frame] add [get layer name] layer]]
 

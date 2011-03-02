@@ -31,6 +31,9 @@
 [deftypefunk agency execute add_resource [resource]
   [if [get resource agency]
       [error bug_type `resource_already_part_of_an_agency resource resource agency this]]
+  [if [not [is-type `resource resource]]
+      [error bug_type `type_error
+	     description 'resource should be type resource.']]
   [set resource agency this]
   [have resource_frame add [get resource name] resource]]
 

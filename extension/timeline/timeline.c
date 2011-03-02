@@ -1084,7 +1084,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 		    for (o_index = index - 1; o_index >= 0; o_index --) {
 		      f2ptr o_event = raw__array__elt(cause, event_array, o_index);
 		      f2ptr o_event__contains_set = raw__timeline_event__contains_set(cause, o_event);
-		      if (raw__set__contains(cause, contains_set, event) ||
+		      if (raw__set__contains(cause, o_event__contains_set, event) ||
 		          raw__timeline__timeline_event__overlaps(cause, this, event, o_event)) {
 			f2ptr  o_y_start    = raw__timeline_event__y_start(cause, o_event);
 			double o_y_start__d = f2double__d(o_y_start, cause);

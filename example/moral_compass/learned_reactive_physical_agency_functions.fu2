@@ -26,8 +26,6 @@ test moving forward speed
   [load 'example/moral_compass/learned_reactive_physical_agency_functions.fu2']]
 [globalize step_factor 10]
 
-[globalize arm_length 5]
-
 '**************** functions****************'
 
 [deftypefunk mind get look_for-current_object []

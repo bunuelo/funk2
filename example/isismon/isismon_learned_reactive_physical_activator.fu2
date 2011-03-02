@@ -200,7 +200,6 @@
        [set file_menu_item submenu file_menu]
        [have vbox pack_start menu_bar nil nil 0]
        
-
        
        [= globalize_isis_world__hbox [gtk-hbox-new 2]]
        [= globalize_isis_world__button [gtk-button-new_with_label 'make toast']]

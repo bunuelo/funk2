@@ -416,7 +416,7 @@
        [= step_delay_entry [gtk-entry-new]]
        [have entry_hbox pack_start step_delay_label nil nil 0]
        [have entry_hbox pack_start step_delay_entry t t 0]
-       [set step_delay_entry text '0.0']
+       [set step_delay_entry text '20.0']
        
        [have controller_frame add controller_vbox nil nil 0]
        

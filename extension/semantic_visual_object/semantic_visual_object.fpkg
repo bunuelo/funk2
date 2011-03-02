@@ -20,5 +20,6 @@
 [defpackage semantic_visual_object
   :documentation 'Basic visual knowledge for dealing with apparent relations between objects, such as size, containment and other semantic visual relationships.'
    :packages     [semantic_object]
-    :sources     ['semantic_visual_object-core.fu2']]
+    :sources     ['semantic_visual_object-core.fu2']
+     :binaries   ['.libs/libf2e_semantic_visual_object.so']]
 

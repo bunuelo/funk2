@@ -18,6 +18,59 @@
  rights to redistribute these changes.'
 
 
+[deframe isismon_define_object_dialog [frame] [[object        nil]
+					       [object_type   nil]
+					       [window        [gtk-window-new]]
+					       [vbox          [gtk-vbox-new 2]]
+					       [label         nil]
+					       [entry         [gtk-entry-new]]
+					       [hbox          [gtk-hbox-new 2]]
+					       [cancel_button [gtk-button-new_with_label 'Cancel']]
+					       [okay_button   [gtk-button-new_with_label 'Okay']]
+					       [done          nil]]
+  [new [define_object define_object_type]
+       [= object      define_object]
+       [= object_type define_object_type]
+       [= label       [gtk-label-new [format nil 'You have chosen to define this ' object_type '.\nPlease enter a global name for this ' object_type '.']]]
+       [set  window title 'IsisMon - define ' object_type ' dialog']
+       [have window connect_hide_on_delete]
+       [have window add vbox]
+       [have vbox pack_start label nil nil 0]
+       [have vbox pack_start entry nil nil 0]
+       [have vbox pack_start hbox  nil nil 0]
+       [have hbox pack_start cancel_button nil nil 0]
+       [have hbox pack_start okay_button   nil nil 0]
+       [have cancel_button signal_connect 'clicked'
+	     [funk []
+		   [= done t]]
+	     nil]
+       [have okay_button signal_connect 'clicked'
+	     [funk []
+		   [have this define_and_close]]
+	     nil]
+       [have entry key_press_event-signal_connect
+	     [funk [key_event]
+		   [let [[keyval [have key_event lookup `keyval]]]
+		     [if [eq keyval GDK_Return]
+			 [have this define_and_close]]]]
+	     nil]
+       
+       [have window show_all]
+       [fiber [funk []
+		    [while [and [get window visible] [not done]]
+		      [sleep 1]]
+		    [have window destroy]]
+	      nil]
+       ]]
+
+[deftypefunk isismon_define_object_dialog execute define_and_close []
+  [let [[object_name [get [get entry text] as-symbol]]]
+    [terminal_format standard-terminal '\nDefining ' object_type ' as ' object_name '.\n']
+    [eval `[globalize ,object_name ,object]]]
+  [= done t]]
+
+
+
 [deframe isismon_agent_resource_menu [frame] [isismon_agent_agency_menu
 					      resource
 					      
@@ -25,6 +78,8 @@
 					      resource_menu
 					      
 					      debugging_mode_check_menu_item
+					      print_to_terminal_menu_item
+					      define_globally_menu_item
 					      ]
   [new [initial-isismon_agent_agency_menu initial-resource]
        [= isismon_agent_agency_menu initial-isismon_agent_agency_menu]
@@ -42,6 +97,20 @@
 		   [set this debug_all [get debugging_mode_check_menu_item active]]]
 	     nil]
        
+       [= print_to_terminal_menu_item [gtk-menu_item-new 'Print to Terminal']]
+       [have print_to_terminal_menu_item signal_connect 'activate'
+	     [funk []
+		   [terminal_format standard-terminal '\n' resource]]
+	     nil]
+       [have resource_menu append print_to_terminal_menu_item]
+       
+       [= define_globally_menu_item [gtk-menu_item-new 'Define Globally']]
+       [have define_globally_menu_item signal_connect 'activate'
+	     [funk []
+		   [get isismon_define_object_dialog resource `resource]]
+	     nil]
+       [have resource_menu append define_globally_menu_item]
+       
        ]]
 
 [deftypefunk isismon_agent_resource_menu get widget []
@@ -51,7 +120,6 @@
   [terminal_format standard-terminal '\n' [if debug 'Enabling' 'Disabling'] ' debugging mode for ' [get [get resource mind] name] '\'s ' [get resource name] ' resource.']
   [set debugging_mode_check_menu_item active debug]
   [set resource debug debug]]
-
 
 
 [deframe isismon_agent_agency_menu [frame] [isismon_agent_layer_menu
@@ -102,6 +170,7 @@
   [mapc [funk [isismon_resource_menu]
 	      [set isismon_resource_menu debug_all debug]]
 	isismon_resource_menus]]
+
 
 
 [deframe isismon_agent_layer_menu [frame] [isismon_agent_mind_menu
@@ -184,6 +253,7 @@
 		   [set this debug_all nil]]
 	     nil]
        
+       'We finish creating mind menu in parallel for quicker initial load appearance.'
        [fiber [funk []
 		    [mapc [funk [layer]
 				[let [[isismon_layer_menu [new isismon_agent_layer_menu this layer]]]
@@ -191,7 +261,8 @@
 				  [have [get isismon_layer_menu widget] show_all]
 				  [have mind_menu append isismon_layer_menu]]]
 			  [have [get [get [get isismon_agent isis_agent] mind] layers] sort [funk [x y] [< [get x index] [get y index]]]]]
-		    [have mind_menu_item show_all]]
+		    [have mind_menu_item show_all]
+		    ]
 	      nil]
        
        nil]]

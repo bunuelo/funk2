@@ -27,6 +27,9 @@
 									     file_menu
 									     file_exit_menu_item
 
+									     globalize_isis_world__hbox
+									     globalize_isis_world__button
+
 									     turn_right_resource__hbox
 									     turn_right_resource__button
 									     turn_right_resource__target__label
@@ -199,6 +202,18 @@
        
 
        
+<<<<<<< .merge_file_RcMlaf
+=======
+       [= globalize_isis_world__hbox [gtk-hbox-new 2]]
+       [= globalize_isis_world__button [gtk-button-new_with_label 'make toast']]
+       [have globalize_isis_world__hbox  pack_start globalize_isis_world__button nil nil 0]
+       [have vbox pack_start globalize_isis_world__hbox nil nil 0]
+       [have globalize_isis_world__button signal_connect 'clicked'
+	     [funk []
+		   [globalize_isis_world]]	
+	     nil]
+       
+>>>>>>> .merge_file_hZijRe
        [= move_forward_resource__hbox [gtk-hbox-new 2]]
        [= move_forward_resource__button [gtk-button-new_with_label 'Move forward - ']]
        [= move_forward_resource__target__label [gtk-label-new 'Step: ']]

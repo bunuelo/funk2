@@ -18,6 +18,7 @@
  rights to redistribute these changes.'
 
 [defpackage meta_semantic_knowledge_base
-  :packages [semantic_knowledge_base]
-   :sources ['meta_semantic_knowledge_base-core.fu2']]
+  :packages   [semantic_knowledge_base]
+   :sources   ['meta_semantic_knowledge_base-core.fu2']
+    :binaries ['.libs/libf2e_meta_semantic_knowledge_base.so']]
 

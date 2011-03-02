@@ -19,6 +19,7 @@
 
 [defpackage semantic_resource_action_event
   :documentation 'Basic knowledge for dealing with mental resource interaction actions as events.'
-   :packages [semantic_directed_action_event]
-    :sources ['semantic_resource_action_event-core.fu2']]
+   :packages     [semantic_directed_action_event]
+    :sources     ['semantic_resource_action_event-core.fu2']
+     :binaries   ['.libs/libf2e_semantic_resource_action_event.so']]
 

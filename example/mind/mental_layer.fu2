@@ -42,6 +42,9 @@
 [deftypefunk mental_layer execute add_agency [agency]
   [if [get agency layer]
       [error bug_type `agency_is_already_part_of_a_mental_layer agency agency layer this]]
+  [if [not [is-type `agency agency]]
+      [error bug_type `type_error
+	     description 'agency should be type agency.']]
   [set agency layer this]
   [have agency_frame add [get agency name] agency]]
 

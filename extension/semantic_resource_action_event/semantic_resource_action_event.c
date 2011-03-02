@@ -24,8 +24,8 @@
 
 // semantic_resource_action_event
 
-f2ptr raw__semantic_resource_action_event__new(f2ptr cause, f2ptr semantic_realm) {
-  f2ptr this = f2__semantic_frame__new(cause, semantic_realm);
+f2ptr raw__semantic_resource_action_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name, f2ptr agent, f2ptr target) {
+  f2ptr this = f2__semantic_directed_action_event__new(cause, semantic_realm, action_name, agent, target);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
@@ -34,13 +34,15 @@ f2ptr raw__semantic_resource_action_event__new(f2ptr cause, f2ptr semantic_realm
   return this;
 }
 
-f2ptr f2__semantic_resource_action_event__new(f2ptr cause, f2ptr semantic_realm) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
+f2ptr f2__semantic_resource_action_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name, f2ptr agent, f2ptr target) {
+  if ((! raw__semantic_realm__is_type(cause, semantic_realm)) ||
+      (! raw__semantic_resource__is_type(cause, agent)) ||
+      (! raw__semantic_resource__is_type(cause, target))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_resource_action_event__new(cause, semantic_realm);
+  return raw__semantic_resource_action_event__new(cause, semantic_realm, action_name, agent, target);
 }
-export_cefunk1(semantic_resource_action_event__new, semantic_realm, 0, "Returns a new semantic_resource_action_event object.");
+export_cefunk4(semantic_resource_action_event__new, semantic_realm, action_name, agent, target, 0, "Returns a new semantic_resource_action_event object.");
 
 
 boolean_t raw__semantic_resource_action_event__is_type(f2ptr cause, f2ptr thing) {
@@ -76,6 +78,47 @@ f2ptr f2__semantic_resource_action_event__type(f2ptr cause, f2ptr this) {
   return raw__semantic_resource_action_event__type(cause, this);
 }
 export_cefunk1(semantic_resource_action_event__type, thing, 0, "Returns the specific type of object that this semantic_resource_action_event is.");
+
+
+f2ptr raw__semantic_resource_action_event__agent__lookup(f2ptr cause, f2ptr this) {
+  return raw__semantic_action_event__agent__lookup(cause, this);
+}
+
+f2ptr f2__semantic_resource_action_event__agent__lookup(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_resource_action_event__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_resource_action_event__agent__lookup(cause, this);
+}
+export_cefunk1(semantic_resource_action_event__agent__lookup, this, 0, "");
+
+
+f2ptr raw__semantic_resource_action_event__agent__add(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_action_event__agent__add(cause, this, that);
+}
+
+f2ptr f2__semantic_resource_action_event__agent__add(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__semantic_resource_action_event__is_type(cause, this)) ||
+      (! raw__semantic_resource__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_resource_action_event__agent__add(cause, this, that);
+}
+export_cefunk2(semantic_resource_action_event__agent__add, this, that, 0, "");
+
+
+f2ptr raw__semantic_resource_action_event__agent__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_action_event__agent__remove(cause, this, that);
+}
+
+f2ptr f2__semantic_resource_action_event__agent__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__semantic_resource_action_event__is_type(cause, this)) ||
+      (! raw__semantic_resource__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_resource_action_event__agent__remove(cause, this, that);
+}
+export_cefunk2(semantic_resource_action_event__agent__remove, this, that, 0, "");
 
 
 f2ptr raw__semantic_resource_action_event__event_sequence__lookup(f2ptr cause, f2ptr this) {
@@ -173,6 +216,9 @@ f2ptr f2__semantic_resource_action_event_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "new"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_action_event"), new__symbol(cause, "semantic_resource_action_event__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "is_type"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_action_event"), new__symbol(cause, "semantic_resource_action_event__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),             new__symbol(cause, "type"),               f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_action_event"), new__symbol(cause, "semantic_resource_action_event__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "agent"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_action_event"), new__symbol(cause, "semantic_resource_action_event__agent__lookup")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "agent"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_action_event"), new__symbol(cause, "semantic_resource_action_event__agent__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "agent"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_action_event"), new__symbol(cause, "semantic_resource_action_event__agent__remove")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "event_sequence"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_action_event"), new__symbol(cause, "semantic_resource_action_event__event_sequence__lookup")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "event_sequence"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_action_event"), new__symbol(cause, "semantic_resource_action_event__event_sequence__add")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "event_sequence"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_action_event"), new__symbol(cause, "semantic_resource_action_event__event_sequence__remove")));}

@@ -74,11 +74,15 @@
 	     nil]
        [have okay_button signal_connect 'clicked'
 	     [funk []
-		   [let [[object_name [get [get entry text] as-symbol]]]
-		     [terminal_format standard-terminal '\nDefining ' object_type ' as ' object_name '.\n']
-		     [eval `[globalize ,object_name ,object]]]
-		   [= done t]]
+		   [have this define_fiber_and_close]]
 	     nil]
+       [have entry key_press_event-signal_connect
+	     [funk [key_event]
+		   [let [[keyval [have key_event lookup `keyval]]]
+		     [if [eq keyval GDK_Return]
+			 [have this define_fiber_and_close]]]]
+	     nil]
+       
        [have window show_all]
        [fiber [funk []
 		    [while [and [get window visible] [not done]]
@@ -86,6 +90,13 @@
 		    [have window destroy]]
 	      nil]
        ]]
+
+[deftypefunk fibermon_define_object_dialog execute define_fiber_and_close []
+  [let [[object_name [get [get entry text] as-symbol]]]
+    [terminal_format standard-terminal '\nDefining ' object_type ' as ' object_name '.\n']
+    [eval `[globalize ,object_name ,object]]]
+  [= done t]]
+
 
 'fibermon_fiber'
 

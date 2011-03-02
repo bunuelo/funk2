@@ -426,7 +426,7 @@
        [construct traced_resource `stand_in_front_of
 		  [funk [object]
 			[have this-resource stand_in_front_of object]]]
-        nil]]
+       nil]]
 
 '****************************Look carefully for************************************************************'
 

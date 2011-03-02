@@ -24,22 +24,23 @@
 
 #include "../semantic_object/semantic_object.h"
 
-f2ptr     raw__semantic_containment_object__new(                                 f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_containment_object__new(                                 f2ptr cause, f2ptr semantic_realm);
-boolean_t raw__semantic_containment_object__is_type(                             f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_containment_object__is_type(                             f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_containment_object__type(                                f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_containment_object__type(                                f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_containment_object__containment__contains__lookup(       f2ptr cause, f2ptr this, f2ptr containment__type_name);
-f2ptr      f2__semantic_containment_object__containment__contains__lookup(       f2ptr cause, f2ptr this, f2ptr containment__type_name);
-f2ptr     raw__semantic_containment_object__containment__contains__add(          f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object);
-f2ptr      f2__semantic_containment_object__containment__contains__add(          f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object);
-f2ptr     raw__semantic_containment_object__containment__contains__remove(       f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object);
-f2ptr      f2__semantic_containment_object__containment__contains__remove(       f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object);
+f2ptr     raw__semantic_containment_object__type_create                         (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_containment_object__new                                 (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_containment_object__new                                 (f2ptr cause, f2ptr semantic_realm);
+boolean_t raw__semantic_containment_object__is_type                             (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_containment_object__is_type                             (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_containment_object__type                                (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_containment_object__type                                (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_containment_object__containment__contains__lookup       (f2ptr cause, f2ptr this, f2ptr containment__type_name);
+f2ptr      f2__semantic_containment_object__containment__contains__lookup       (f2ptr cause, f2ptr this, f2ptr containment__type_name);
+f2ptr     raw__semantic_containment_object__containment__contains__add          (f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object);
+f2ptr      f2__semantic_containment_object__containment__contains__add          (f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object);
+f2ptr     raw__semantic_containment_object__containment__contains__remove       (f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object);
+f2ptr      f2__semantic_containment_object__containment__contains__remove       (f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object);
 f2ptr     raw__semantic_containment_object__containment__is_contained_by__lookup(f2ptr cause, f2ptr this, f2ptr containment__type_name);
 f2ptr      f2__semantic_containment_object__containment__is_contained_by__lookup(f2ptr cause, f2ptr this, f2ptr containment__type_name);
-f2ptr     raw__semantic_containment_object__containment__is_contained_by__add(   f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object);
-f2ptr      f2__semantic_containment_object__containment__is_contained_by__add(   f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object);
+f2ptr     raw__semantic_containment_object__containment__is_contained_by__add   (f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object);
+f2ptr      f2__semantic_containment_object__containment__is_contained_by__add   (f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object);
 f2ptr     raw__semantic_containment_object__containment__is_contained_by__remove(f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object);
 f2ptr      f2__semantic_containment_object__containment__is_contained_by__remove(f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object);
 

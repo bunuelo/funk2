@@ -43,7 +43,7 @@ declare_object_type_1_slot(source,
 // package
 
 typedef struct funk2_object_type__package__slot_s funk2_object_type__package__slot_t;
-declare_object_type_7_slot(package,
+declare_object_type_8_slot(package,
 			   pathname,
 			   name,
 			   package_dependencies,
@@ -51,6 +51,7 @@ declare_object_type_7_slot(package,
 			   object_types_defined_set,
 			   loaded_all_dependencies_time,
 			   documentation,
+			   binary_dependencies,
 			   );
 
 #endif // F2__PACKAGE__TYPES__H
@@ -81,37 +82,38 @@ f2ptr f2source__primobject_type__new_aux(f2ptr cause);
 
 // package
 
-declare_primobject_7_slot(package,
+declare_primobject_8_slot(package,
 			  pathname,
 			  name,
 			  package_dependencies,
 			  source_dependencies,
 			  object_types_defined_set,
 			  loaded_all_dependencies_time,
-			  documentation);
+			  documentation,
+			  binary_dependencies);
 
-f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies, f2ptr documentation);
+f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies, f2ptr documentation, f2ptr binary_dependencies);
 
 f2ptr f2package__primobject_type__new_aux(f2ptr cause);
 
 
 f2ptr f2__current_working_directory(f2ptr cause);
 
-f2ptr     raw__pathname__concat(                         f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__pathname__concat(                         f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__pathnamelist__concat(                     f2ptr cause, f2ptr this);
-boolean_t raw__pathname__is_absolute(                    f2ptr cause, f2ptr this);
-f2ptr      f2__pathname__is_absolute(                    f2ptr cause, f2ptr this);
-f2ptr     raw__pathname__as__absolute_pathname(          f2ptr cause, f2ptr this);
-f2ptr      f2__pathname__as__absolute_pathname(          f2ptr cause, f2ptr this);
-f2ptr     raw__pathname__directory_pathname(             f2ptr cause, f2ptr this);
-f2ptr      f2__pathname__directory_pathname(             f2ptr cause, f2ptr this);
-f2ptr      f2__pathname__scan_for_filenames(             f2ptr cause, f2ptr pathname);
+f2ptr     raw__pathname__concat                         (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__pathname__concat                         (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__pathnamelist__concat                     (f2ptr cause, f2ptr this);
+boolean_t raw__pathname__is_absolute                    (f2ptr cause, f2ptr this);
+f2ptr      f2__pathname__is_absolute                    (f2ptr cause, f2ptr this);
+f2ptr     raw__pathname__as__absolute_pathname          (f2ptr cause, f2ptr this);
+f2ptr      f2__pathname__as__absolute_pathname          (f2ptr cause, f2ptr this);
+f2ptr     raw__pathname__directory_pathname             (f2ptr cause, f2ptr this);
+f2ptr      f2__pathname__directory_pathname             (f2ptr cause, f2ptr this);
+f2ptr      f2__pathname__scan_for_filenames             (f2ptr cause, f2ptr pathname);
 f2ptr      f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname, f2ptr extension);
-f2ptr     raw__pathname__stat(                           f2ptr cause, f2ptr this);
-f2ptr      f2__pathname__stat(                           f2ptr cause, f2ptr this);
-f2ptr     raw__getenv(                                   f2ptr cause, f2ptr environment_variable);
-f2ptr      f2__getenv(                                   f2ptr cause, f2ptr environment_variable);
+f2ptr     raw__pathname__stat                           (f2ptr cause, f2ptr this);
+f2ptr      f2__pathname__stat                           (f2ptr cause, f2ptr this);
+f2ptr     raw__getenv                                   (f2ptr cause, f2ptr environment_variable);
+f2ptr      f2__getenv                                   (f2ptr cause, f2ptr environment_variable);
 
 
 // **

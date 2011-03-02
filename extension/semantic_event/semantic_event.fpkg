@@ -19,8 +19,9 @@
 
 [defpackage semantic_event
   :documentation 'Basic knowledge for dealing with events in time.'
-   :packages [semantic_knowledge_base
-	      semantic_temporal_object
-	      timeline]
-    :sources ['semantic_event-core.fu2']]
+   :packages     [semantic_knowledge_base
+		  semantic_temporal_object
+		  timeline]
+    :sources     ['semantic_event-core.fu2']
+     :binaries   ['.libs/libf2e_semantic_event.so']]
 

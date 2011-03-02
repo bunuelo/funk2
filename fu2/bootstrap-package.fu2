@@ -173,7 +173,8 @@
 [defmetro defpackage [name :rest dependencies]
   [let [[package_dependencies nil]
 	[source_dependencies  nil]
-	[documentation        nil]]
+	[documentation        nil]
+	[binary_dependencies  nil]]
     [let [[iter dependencies]]
       [while iter
 	[let [[key   [car  iter]]
@@ -181,6 +182,7 @@
 	  [cond [[eq key `:packages]      [= package_dependencies value]]
 		[[eq key `:sources]       [= source_dependencies  value]]
 		[[eq key `:documentation] [= documentation        value]]
+		[[eq key `:binaries]      [= binary_dependencies  value]]
 		[t                        [error bug_type `unknown_package_dependency_key_type funkname `defpackage]]]]
 	[= iter [cddr iter]]]]
     `[have packages_frame add [quote ,name] [new package
@@ -190,7 +192,9 @@
 									  `[quote ,package_dependency]]
 								    package_dependencies]]
 						 [conslist @source_dependencies]
-						 ,documentation]]]]
+						 ,documentation
+						 [conslist @binary_dependencies]
+						 ]]]]
 
 [defunk package_names []
   [get packages_frame keys]]
@@ -256,6 +260,15 @@
 			      [if dependency_was_loaded
 				  [= loaded_a_dependency t]]]]
 		      [get package package_dependencies]]
+		[mapc [funk [binary_dependency]
+			    [let [[binary_pathname [pathname-concat [get package pathname] binary_dependency]]]
+			      [let [[stat [pathname-stat binary_pathname]]]
+				[let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
+				  [let [[binary_modified [or [null loaded_all_dependencies_time]
+							     [> time_of_last_modification loaded_all_dependencies_time]]]]
+				    [if binary_modified
+					[= loaded_a_dependency t]]]]]]]
+		      [get package binary_dependencies]]
 		[with-new-cause [cause-define cause-object_types_defined nil]
 				[mapc [funk [source_dependency]
 					    [let [[filename [pathname-concat [get package pathname] source_dependency]]]

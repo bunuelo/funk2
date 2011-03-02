@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2011 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,8 +15,7 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
 [deftypefunk integer get as-integer [] this]
 
@@ -28,5 +26,4 @@
 [deftypefunk float get as-double  [] [float-to_double  this]]
 
 [deftypefunk largeinteger get as-integer [] [get [get this as-double] as-integer]]
-
 

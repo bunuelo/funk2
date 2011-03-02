@@ -131,10 +131,6 @@
 												    [type-has_parent exp_frame_type_name [quote ,type_name]]]]]]]]
       [mapc [funk [slot_name_value_pair]
 		  [let [[slot_name [frametype-slotdef-name slot_name_value_pair]]]
-		    [if [primobject_type__lookup_slot_type_funk primobject_type `get slot_name]
-			[error bug_type  `deframe-redefining-slot
-			       type_name type_name
-			       slot_name slot_name]]
 		    [primobject_type-add_slot_type primobject_type `get slot_name
 						   [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-' [exp-as-string slot_name]]] as-symbol] [this]
 									      [frame-lookup_var_value this [quote ,slot_name] `get-slot-does-not-exist]]]]

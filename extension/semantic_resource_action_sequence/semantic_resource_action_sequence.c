@@ -171,6 +171,8 @@ f2ptr f2__semantic_resource_action_sequence_type__new(f2ptr cause) {
 
 
 
+
+
 // **
 
 f2ptr f2__semantic_resource_action_sequence__core_extension__ping(f2ptr cause) {

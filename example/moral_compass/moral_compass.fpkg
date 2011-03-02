@@ -69,7 +69,6 @@
 [defpackage learned_reactive_layer
   :packages [traced_mind
 	     learned_reactive_physical_agency
-	     learned_reactive_physical_agency_functions
 	     learned_reactive_sensory_agency
 	     learned_reactive_language_agency
 	     learned_reactive_physical_knowledge_agency
@@ -78,7 +77,8 @@
 
 [defpackage learned_reactive_physical_agency
   :packages [traced_mind]
-   :sources ['learned_reactive_physical_agency.fu2']]
+   :sources ['learned_reactive_physical_agency.fu2'
+	     'learned_reactive_physical_agency_functions.fu2']]
 
 [defpackage moral_compass_proprioceptual_object
   :packages [traced_mind]
@@ -93,7 +93,10 @@
    :sources ['moral_compass_visual_agent.fu2']]
 
 [defpackage moral_compass_perception
-  :packages [traced_mind moral_compass_proprioceptual_object moral_compass_visual_object moral_compass_visual_agent]
+  :packages [traced_mind
+	     moral_compass_proprioceptual_object
+	     moral_compass_visual_object
+	     moral_compass_visual_agent]
    :sources ['moral_compass_perception.fu2']]
 
 [defpackage learned_reactive_sensory_agency
@@ -107,10 +110,6 @@
 [defpackage learned_reactive_physical_knowledge_agency
   :packages [traced_mind]
    :sources ['learned_reactive_physical_knowledge_agency.fu2']]
-
-[defpackage learned_reactive_physical_agency_functions
-  :packages [learned_reactive_physical_agency]
-   :sources ['learned_reactive_physical_agency_functions.fu2']]
 
 
 'deliberative_layer'

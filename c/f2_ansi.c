@@ -406,7 +406,7 @@ f2ptr f2__ansi__stream__rectangle(f2ptr cause, f2ptr stream, f2ptr x0, f2ptr y0,
   assert_argument_type(integer, y0);
   assert_argument_type(integer, x1);
   assert_argument_type(integer, y1);
-  assert_argument_type(char,    background_char);
+  assert_argument_type(char,    ch);
   s64 raw_x0 = f2integer__i(x0, cause);
   s64 raw_y0 = f2integer__i(y0, cause);
   s64 raw_x1 = f2integer__i(x1, cause);

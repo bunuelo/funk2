@@ -42,9 +42,13 @@ f2ptr raw__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
   {
     f2ptr iter = this;
     while (iter) {
-      if (! raw__cons__is_type(cause, iter)) {return f2larva__new(cause, 1, nil);}
+      if (! raw__cons__is_type(cause, iter)) {
+	error(nil, "raw__stringlist__new_string_from_concatenation error: expected cons.");
+      }
       f2ptr str = f2cons__car(iter, cause);
-      if (! raw__string__is_type(cause, str)) {return f2larva__new(cause, 1, nil);}
+      if (! raw__string__is_type(cause, str)) {
+	error(nil, "raw__stringlist__new_string_from_concatenation error: expected string.");
+      }
       u64 str_length = f2string__length(str, cause);
       total_length += str_length;
       iter = f2cons__cdr(iter, cause);

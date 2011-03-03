@@ -19,6 +19,5 @@
  rights to redistribute these changes.
 '
 
-[deftypefunk fiber get     stack_trace       [] [fiber-stack_trace       this]]
 [deftypefunk fiber execute print_stack_trace [] [fiber-print_stack_trace this]]
 

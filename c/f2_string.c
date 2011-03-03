@@ -21,7 +21,7 @@
 
 #include "funk2.h"
 
-boolean_t raw__string_conslist__is_type(f2ptr cause, f2ptr object) {
+boolean_t raw__stringlist__is_type(f2ptr cause, f2ptr object) {
   f2ptr iter = object;
   while (iter != nil) {
     if (! raw__cons__is_type(cause, iter)) {
@@ -72,7 +72,7 @@ f2ptr raw__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
-  assert_argument_type(string_conslist, this);
+  assert_argument_type(stringlist, this);
   return raw__stringlist__new_string_from_concatenation(cause, this);
 }
 
@@ -123,8 +123,8 @@ f2ptr raw__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_st
 }
 
 f2ptr f2__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_string) {
-  assert_argument_type(string, this);
-  assert_argument_type(string, intersperse_string);
+  assert_argument_type(stringlist, this);
+  assert_argument_type(string,     intersperse_string);
   return raw__stringlist__intersperse(cause, this, intersperse_string);
 }
 def_pcfunk2(stringlist__intersperse, this, intersperse_string, return f2__stringlist__intersperse(this_cause, this, intersperse_string));

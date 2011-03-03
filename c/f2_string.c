@@ -21,7 +21,23 @@
 
 #include "funk2.h"
 
-f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
+boolean_t raw__string_conslist__is_type(f2ptr cause, f2ptr object) {
+  f2ptr iter = object;
+  while (iter != nil) {
+    if (! raw__cons__is_type(cause, iter)) {
+      return boolean__false;
+    }
+    f2ptr element = f2cons__car(iter, cause);
+    if (! raw__string__is_type(cause, element)) {
+      return boolean__false;
+    }
+    iter = f2cons__cdr(iter, cause);
+  }
+  return boolean__true;
+}
+
+
+f2ptr raw__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
   u64 total_length = 0;
   {
     f2ptr iter = this;
@@ -51,15 +67,17 @@ f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
   return new_string;
 }
 
+f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
+  assert_argument_type(string_conslist, this);
+  return raw__stringlist__new_string_from_concatenation(cause, this);
+}
+
 f2ptr f2__stringlist__concat(f2ptr cause, f2ptr this) {
   return f2__stringlist__new_string_from_concatenation(cause, this);
 }
 def_pcfunk1(stringlist__concat, this, return f2__stringlist__concat(this_cause, this));
 
-f2ptr f2__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_string) {
-  if (! raw__string__is_type(cause, intersperse_string)) {
-    return f2larva__new(cause, 1, nil);
-  }
+f2ptr raw__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_string) {
   u64 intersperse_string__length = f2string__length(intersperse_string, cause);
   u8* intersperse_string__str    = (u8*)from_ptr(f2__malloc(intersperse_string__length + 1));
   raw__string__str_copy(cause, intersperse_string, intersperse_string__str);
@@ -99,6 +117,12 @@ f2ptr f2__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_str
   f2__free(to_ptr(intersperse_string__str));
   return new_string;
 }
+
+f2ptr f2__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_string) {
+  assert_argument_type(string, this);
+  assert_argument_type(string, intersperse_string);
+  return raw__stringlist__intersperse(cause, this, intersperse_string);
+}
 def_pcfunk2(stringlist__intersperse, this, intersperse_string, return f2__stringlist__intersperse(this_cause, this, intersperse_string));
 
 f2ptr f2__stringlist__rawcode(f2ptr cause, f2ptr this) {
@@ -108,9 +132,7 @@ def_pcfunk1(stringlist__rawcode, this, return f2__stringlist__rawcode(this_cause
 
 
 f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash) {
-  if (! raw__ptypehash__is_type(cause, element_hash)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(ptypehash, element_hash);
   if (raw__array__is_type(cause, exp) && raw__ptypehash__contains(cause, element_hash, exp)) {
     return new__string(cause, "<>");
   }
@@ -319,18 +341,12 @@ f2ptr raw__string__as__symbol(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__string__as__symbol(f2ptr cause, f2ptr this) {
-  if (! raw__string__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, this);
   return raw__string__as__symbol(cause, this);
 }
 def_pcfunk1(string__as__symbol, this, return f2__string__as__symbol(this_cause, this));
 
-f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
-  if ((! raw__string__is_type(cause, this)) ||
-      (! raw__string__is_type(cause, filename))) {
-    return f2larva__new(cause, 1, nil);
-  }
+f2ptr raw__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
   int fd;
   {
     u64 filename__length = f2string__length(filename, cause);
@@ -372,12 +388,16 @@ f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
   close(fd);
   return result;
 }
+
+f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
+  assert_argument_type(string, this);
+  assert_argument_type(string, filename);
+  return raw__string__save(cause, this, filename);
+}
 def_pcfunk2(string__save, this, filename, return f2__string__save(this_cause, this, filename));
 
-f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
-  if (! raw__string__is_type(cause, filename)) {
-    return f2larva__new(cause, 1, nil);
-  }
+
+f2ptr raw__string__load(f2ptr cause, f2ptr filename) {
   int fd;
   {
     u64 filename__length = f2string__length(filename, cause);
@@ -417,6 +437,11 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
   f2__free(to_ptr(file__str));
   close(fd);
   return new_string;
+}
+
+f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
+  assert_argument_type(string, filename);
+  return raw__string__load(cause, filename);
 }
 def_pcfunk1(string__load, filename, return f2__string__load(this_cause, filename));
 
@@ -518,10 +543,8 @@ boolean_t raw__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
 }
 
 f2ptr f2__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
-  if ((! raw__string__is_type(cause, this)) ||
-      (! raw__string__is_type(cause, substring))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, this);
+  assert_argument_type(string, substring);
   return f2bool__new(raw__string__contains(cause, this, substring));
 }
 def_pcfunk2(string__contains, this, substring, return f2__string__contains(this_cause, this, substring));
@@ -555,11 +578,9 @@ f2ptr raw__string__substring(f2ptr cause, f2ptr this, s64 start_index, s64 end_i
 }
 
 f2ptr f2__string__substring(f2ptr cause, f2ptr this, f2ptr start_index, f2ptr end_index) {
-  if ((! raw__string__is_type(cause, this)) ||
-      (! raw__integer__is_type(cause, start_index)) ||
-      (! raw__integer__is_type(cause, end_index))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, this);
+  assert_argument_type(integer, start_index);
+  assert_argument_type(integer, end_index);
   s64 start_index__i = f2integer__i(start_index, cause);
   s64 end_index__i   = f2integer__i(end_index,   cause);
   return raw__string__substring(cause, this, start_index__i, end_index__i);
@@ -603,10 +624,8 @@ boolean_t raw__string__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
 }
 
 f2ptr f2__string__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__string__is_type(cause, this)) ||
-      (! raw__string__is_type(cause, this))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, this);
+  assert_argument_type(string, that);
   return f2bool__new(raw__string__is_less_than(cause, this, that));
 }
 def_pcfunk2(string__is_less_than, this, that, return f2__string__is_less_than(this_cause, this, that));
@@ -647,10 +666,8 @@ boolean_t raw__string__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
 }
 
 f2ptr f2__string__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__string__is_type(cause, this)) ||
-      (! raw__string__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, this);
+  assert_argument_type(string, that);
   return f2bool__new(raw__string__is_greater_than(cause, this, that));
 }
 def_pcfunk2(string__is_greater_than, this, that, return f2__string__is_greater_than(this_cause, this, that));

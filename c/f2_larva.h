@@ -22,7 +22,6 @@
 #ifndef F2__LARVA__H
 #define F2__LARVA__H
 
-
 #define assert_argument_type(correct_type, argument_value) {		\
     f2ptr temporary_argument_value = argument_value;			\
     if (! raw__##correct_type##__is_type(cause, argument_value, temporary_argument_value)) { \
@@ -30,6 +29,9 @@
 					      new__symbol(cause, #correct_type), new__symbol(cause, #argument_value), temporary_argument_value); \
     }									\
   }
+
+f2ptr f2__larva__invalid_argument_type__new(f2ptr cause, f2ptr source_filename, f2ptr source_line_number, f2ptr current_funktion_name,
+					    f2ptr correct_type, f2ptr argument_name, f2ptr argument_value);
 
 // **
 

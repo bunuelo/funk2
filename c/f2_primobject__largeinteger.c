@@ -534,7 +534,11 @@ f2ptr raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(f2ptr cau
   }
   u64 that__length = raw__array__length(cause, that);
   if (that__length == 0) {
-    return f2larva__new(cause, 53, nil); // divide by zero
+    return f2larva__new(cause, 531212, f2__bug__new(cause, f2integer__new(cause, 531212), f2__frame__new(cause, f2list8__new(cause,
+															     new__symbol(cause, "bug_type"),  new__symbol(cause, "divide_by_zero"),
+															     new__symbol(cause, "funkname"),  new__symbol(cause, "largeinteger-unsigned_array-divide-that_high_bit_assumed"),
+															     new__symbol(cause, "this"),      this,
+															     new__symbol(cause, "that"),      that))));
   }
   u64 this__u32_length = raw__largeinteger__unsigned_array__u32_digit_length(cause, this);
   u64 that__u32_length = raw__largeinteger__unsigned_array__u32_digit_length(cause, that);

@@ -568,8 +568,9 @@ def_pcfunk3(string__substring, this, start_index, end_index, return f2__string__
 
 
 boolean_t raw__string__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__string__is_type(cause, that)) {
-    return f2larva__new(cause, 53, nil);
+  if ((! raw__string__is_type(cause, this)) ||
+      (! raw__string__is_type(cause, this))) {
+    error(nil, "raw__string__is_greater_than error: either this or that is not of type string.");
   }
   int comparison;
   u64 this__length = raw__string__length(cause, this);
@@ -602,7 +603,8 @@ boolean_t raw__string__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
 }
 
 f2ptr f2__string__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__string__is_type(cause, this)) {
+  if ((! raw__string__is_type(cause, this)) ||
+      (! raw__string__is_type(cause, this))) {
     return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__string__is_less_than(cause, this, that));

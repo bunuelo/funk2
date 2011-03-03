@@ -287,6 +287,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_hash.c \
   c/f2_html.c \
   c/f2_knowledge.c \
+  c/f2_larva.c \
   c/f2_load.c \
   c/f2_malloc.c \
   c/f2_management_thread.c \

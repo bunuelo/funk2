@@ -1479,14 +1479,20 @@ boolean_t raw__timeline__timeline_event__overlaps(f2ptr cause, f2ptr this, f2ptr
   if (event_b__end_time == nil) {
     event_b__end_time = maximum_time;
   }
-  return (((f2__is_greater_than(cause, event_a__end_time,   event_b__start_time) != nil) &&
-	   (f2__is_less_than(   cause, event_a__start_time, event_b__start_time) != nil))   ||
-	  ((f2__is_greater_than(cause, event_a__end_time,   event_b__end_time)   != nil) &&
-	   (f2__is_less_than(   cause, event_a__start_time, event_b__end_time)   != nil))   ||
-	  ((f2__is_greater_than(cause, event_b__end_time,   event_a__start_time) != nil) &&
-	   (f2__is_less_than(   cause, event_b__start_time, event_a__start_time) != nil))   ||
-	  ((f2__is_greater_than(cause, event_b__end_time,   event_a__end_time)   != nil) &&
-	   (f2__is_less_than(   cause, event_b__start_time, event_a__end_time)   != nil)));
+  s64 event_a__start_time__nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(event_a__start_time, cause), cause);
+  s64 event_a__end_time__nanoseconds_since_1970   = f2integer__i(f2time__nanoseconds_since_1970(event_a__end_time,   cause), cause);
+  s64 event_b__start_time__nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(event_b__start_time, cause), cause);
+  s64 event_b__end_time__nanoseconds_since_1970   = f2integer__i(f2time__nanoseconds_since_1970(event_b__end_time,   cause), cause);
+  return ((event_a__start_time__nanoseconds_since_1970 == event_b__start_time__nanoseconds_since_1970)    ||
+	  (event_a__end_time__nanoseconds_since_1970   == event_b__end_time__nanoseconds_since_1970)      ||
+	  ((event_a__end_time__nanoseconds_since_1970   > event_b__start_time__nanoseconds_since_1970) &&
+	   (event_a__start_time__nanoseconds_since_1970 < event_b__start_time__nanoseconds_since_1970))   ||
+	  ((event_a__end_time__nanoseconds_since_1970   > event_b__end_time__nanoseconds_since_1970) &&
+	   (event_a__start_time__nanoseconds_since_1970 < event_b__end_time__nanoseconds_since_1970))   ||
+	  ((event_b__end_time__nanoseconds_since_1970   > event_a__start_time__nanoseconds_since_1970) &&
+	   (event_b__start_time__nanoseconds_since_1970 < event_a__start_time__nanoseconds_since_1970))   ||
+	  ((event_b__end_time__nanoseconds_since_1970   > event_a__end_time__nanoseconds_since_1970) &&
+	   (event_b__start_time__nanoseconds_since_1970 < event_a__end_time__nanoseconds_since_1970)));
 }
 
 f2ptr f2__timeline__timeline_event__overlaps(f2ptr cause, f2ptr this, f2ptr event_a, f2ptr event_b) {

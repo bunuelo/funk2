@@ -36,9 +36,8 @@ f2ptr f2__exp__documentation(f2ptr cause, f2ptr exp) {
 }
 
 f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
-  if (! raw__string__is_type(cause, find_string)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(environment, this);
+  assert_argument_type(string,      find_string);
   
   f2ptr match_frame = f2__frame__new(cause, nil);
   f2ptr frame       = f2environment__frame(this, cause);

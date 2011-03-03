@@ -209,13 +209,13 @@ f2ptr raw__semantic_event_sequence__update_absolute_start_and_end_times(f2ptr ca
       if (absolute_start_time != nil) {
 	if (f2__is_less_than(cause, semantic_event__absolute_end_time, absolute_start_time) != nil) {
 	  {
-	    f2ptr result = f2__semantic_event__absolute_end_time__remove(cause, this, absolute_start_time);
+	    f2ptr result = f2__semantic_event__absolute_start_time__remove(cause, this, absolute_start_time);
 	    if (raw__larva__is_type(cause, result)) {
 	      return result;
 	    }
 	  }
 	  {
-	    f2ptr result = f2__semantic_event__absolute_end_time__add(   cause, this, semantic_event__absolute_end_time);
+	    f2ptr result = f2__semantic_event__absolute_start_time__add(   cause, this, semantic_event__absolute_end_time);
 	    if (raw__larva__is_type(cause, result)) {
 	      return result;
 	    }
@@ -269,13 +269,13 @@ f2ptr raw__semantic_event_sequence__update_absolute_start_and_end_times(f2ptr ca
       if (absolute_end_time != nil) {
 	if (f2__is_greater_than(cause, semantic_event__absolute_start_time, absolute_end_time) != nil) {
 	  {
-	    f2ptr result = f2__semantic_event__absolute_start_time__remove(cause, this, absolute_end_time);
+	    f2ptr result = f2__semantic_event__absolute_end_time__remove(cause, this, absolute_end_time);
 	    if (raw__larva__is_type(cause, result)) {
 	      return result;
 	    }
 	  }
 	  {
-	    f2ptr result = f2__semantic_event__absolute_start_time__add(   cause, this, semantic_event__absolute_start_time);
+	    f2ptr result = f2__semantic_event__absolute_end_time__add(   cause, this, semantic_event__absolute_start_time);
 	    if (raw__larva__is_type(cause, result)) {
 	      return result;
 	    }

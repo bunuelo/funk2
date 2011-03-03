@@ -25,7 +25,7 @@
 #define assert_argument_type(correct_type, argument_value) {		\
     f2ptr temporary_argument_value = argument_value;			\
     if (! raw__##correct_type##__is_type(cause, temporary_argument_value)) { \
-      return f2__larva__invalid_argument_type__new(cause, new__string(cause, (char*)__FILE__), f2integer__new(cause, (char*)__LINE__), new__symbol(cause, (char*)__FUNCTION__), \
+      return f2__larva__invalid_argument_type__new(cause, new__string(cause, (char*)__FILE__), f2integer__new(cause, __LINE__), new__symbol(cause, (char*)__FUNCTION__), \
 						   new__symbol(cause, #correct_type), new__symbol(cause, #argument_value), temporary_argument_value); \
     }									\
   }

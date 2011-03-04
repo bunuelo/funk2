@@ -1427,10 +1427,9 @@ f2ptr f2__compile__rawcode_exp(f2ptr cause, f2ptr exp, f2ptr fiber, boolean_t pr
 }
 
 f2ptr f2__demetropolize__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f2ptr env, f2ptr exp) {
-  assert_argument_type(fiber, fiber);
-  
   release__assert(__funk2.compile.f2__demetropolize__special_symbol_exp__symbol != -1, nil, "__funk2.compile.f2__demetropolize__special_symbol_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __funk2.compile.f2__demetropolize__special_symbol_exp__symbol, f2cons__new(simple_cause, exp, nil));
+  assert_argument_type(fiber, fiber);
   
   f2ptr car = f2cons__car(exp, cause);
   if (raw__symbol__eq(cause, car, __funk2.globalenv.quote__symbol))                  {return f2cons__new(cause, nil, exp);}

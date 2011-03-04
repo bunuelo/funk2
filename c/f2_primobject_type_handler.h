@@ -132,7 +132,6 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__object_lattice_node__slot_t              primobject_type_object_lattice_node;
   funk2_object_type__hash__slot_t                             primobject_type_hash;
   funk2_object_type__cause__slot_t                            primobject_type_cause;
-  funk2_object_type__trans__slot_t                            primobject_type_trans;
   funk2_object_type__largeinteger__slot_t                     primobject_type_largeinteger;
   funk2_object_type__redblacktree__slot_t                     primobject_type_redblacktree;
   funk2_object_type__redblacktree_node__slot_t                primobject_type_redblacktree_node;

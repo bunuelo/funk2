@@ -252,7 +252,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_array.c \
   c/f2_ansi.c \
   c/f2_apropos.c \
-  c/f2_blocks_world.c \
   c/f2_buffered_file.c \
   c/f2_buffered_socket.c \
   c/f2_bug.c \

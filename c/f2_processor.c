@@ -403,6 +403,7 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
       break;
     } else if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
       execute_next_bytecodes__helper__found_larva_in_fiber(cause, fiber);
+      printf("found larva in fiber."); f2__print(cause, f2fiber__value(fiber, cause)); fflush(stdout);
       exit_reason = exit_reason__found_larva;
       break;
     } else if (f2fiber__is_complete(fiber, cause)) {

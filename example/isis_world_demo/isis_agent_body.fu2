@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 [deframe isis_agent_body [moral_agent_body] [says
-					     [arm_length 1.5]
+					     [arm_length 3]
 					     sense_frame
 					     [retina_image_sequence [new image_sequence nil]]]
   [new [physical_world moral_compass name]

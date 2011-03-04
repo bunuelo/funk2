@@ -4108,7 +4108,7 @@ f2ptr raw__simple_array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f
 
 f2ptr f2__simple_array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
   assert_argument_type(simple_array, this);
-  assert_argument_type(ptypehash,    node_ptypehash);
+  assert_argument_type(ptypehash,    node_hash);
   return raw__simple_array__equals_hash_value__loop_free(cause, this, node_hash);
 }
 def_pcfunk2(simple_array__equals_hash_value__loop_free, this, node_hash, return f2__simple_array__equals_hash_value__loop_free(this_cause, this, node_hash));

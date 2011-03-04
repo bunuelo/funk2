@@ -420,9 +420,7 @@ struct funk2_object_type__core_extension_handler__slot_s {
   }							\
   							\
   f2ptr f2__##name##__type(f2ptr cause, f2ptr this) {			\
-    if (! raw__##name##__is_type(cause, this)) {			\
-      return f2larva__new(cause, 1, nil);				\
-    }									\
+    assert_argument_type(name, this);					\
     return raw__##name##__type(cause, this);				\
   }									\
   export_cefunk1(name##__type, thing, 0, "Returns the specific type of object that this " #name " is.");
@@ -435,9 +433,7 @@ struct funk2_object_type__core_extension_handler__slot_s {
   }									\
   									\
   f2ptr f2__##name##__##slot(f2ptr cause, f2ptr this) {			\
-    if (! raw__##name##__is_type(cause, this)) {			\
-      return f2larva__new(cause, 1, nil);				\
-    }									\
+    assert_argument_type(name, this);					\
     return raw__##name##__##slot(cause, this);				\
   }									\
   export_cefunk1(name##__##slot, thing, 0, "Returns the " #slot " of the " #name "."); \
@@ -448,9 +444,7 @@ struct funk2_object_type__core_extension_handler__slot_s {
   }									\
   									\
   f2ptr f2__##name##__##slot##__set(f2ptr cause, f2ptr this, f2ptr value) { \
-    if (! raw__##name##__is_type(cause, this)) {			\
-      return f2larva__new(cause, 1, nil);				\
-    }									\
+    assert_argument_type(name, this);					\
     return raw__##name##__##slot##__set(cause, this, value);		\
   }									\
   export_cefunk2(name##__##slot##__set, thing, value, 0, "Sets the " #slot " of the " #name ".");

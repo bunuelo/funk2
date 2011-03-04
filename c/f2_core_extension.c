@@ -32,9 +32,7 @@ f2ptr raw__core_extension__new(f2ptr cause, f2ptr name, f2ptr filename) {
 }
 
 f2ptr f2__core_extension__new(f2ptr cause, f2ptr name, f2ptr filename) {
-  if (! raw__string__is_type(cause, filename)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, filename);
   return raw__core_extension__new(cause, name, filename);
 }
 def_pcfunk2(core_extension__new, name, filename, return f2__core_extension__new(this_cause, name, filename));
@@ -60,9 +58,7 @@ f2ptr raw__core_extension__initialize(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__core_extension__initialize(f2ptr cause, f2ptr this) {
-  if (! raw__core_extension__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(core_extension, this);
   return raw__core_extension__initialize(cause, this);
 }
 def_pcfunk1(core_extension__initialize, this, return f2__core_extension__initialize(this_cause, this));
@@ -88,9 +84,7 @@ f2ptr raw__core_extension__destroy(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__core_extension__destroy(f2ptr cause, f2ptr this) {
-  if (! raw__core_extension__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(core_extension, this);
   return raw__core_extension__destroy(cause, this);
 }
 def_pcfunk1(core_extension__destroy, this, return f2__core_extension__destroy(this_cause, this));
@@ -108,9 +102,7 @@ f2ptr raw__core_extension__assure_initialized(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__core_extension__assure_initialized(f2ptr cause, f2ptr this) {
-  if (! raw__core_extension__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(core_extension, this);
   return raw__core_extension__assure_initialized(cause, this);
 }
 def_pcfunk1(core_extension__assure_initialized, this, return f2__core_extension__assure_initialized(this_cause, this));
@@ -128,9 +120,7 @@ f2ptr raw__core_extension__assure_destroyed(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__core_extension__assure_destroyed(f2ptr cause, f2ptr this) {
-  if (! raw__core_extension__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(core_extension, this);
   return raw__core_extension__assure_destroyed(cause, this);
 }
 def_pcfunk1(core_extension__assure_destroyed, this, return f2__core_extension__assure_destroyed(this_cause, this));
@@ -147,9 +137,7 @@ f2ptr raw__core_extension__changed_on_disk(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__core_extension__changed_on_disk(f2ptr cause, f2ptr this) {
-  if (! raw__core_extension__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(core_extension, this);
   return raw__core_extension__changed_on_disk(cause, this);
 }
 def_pcfunk1(core_extension__changed_on_disk, this, return f2__core_extension__changed_on_disk(this_cause, this));
@@ -189,9 +177,8 @@ f2ptr raw__core_extension_handler__add_new_core_extension(f2ptr cause, f2ptr thi
 }
 
 f2ptr f2__core_extension_handler__add_new_core_extension(f2ptr cause, f2ptr this, f2ptr name, f2ptr filename) {
-  if (! raw__core_extension_handler__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(core_extension_handler, this);
+  assert_argument_type(string,                 filename);
   return raw__core_extension_handler__add_new_core_extension(cause, this, name, filename);
 }
 def_pcfunk3(core_extension_handler__add_new_core_extension, this, name, filename, return f2__core_extension_handler__add_new_core_extension(this_cause, this, name, filename));
@@ -203,9 +190,7 @@ f2ptr raw__core_extension_handler__lookup_core_extension(f2ptr cause, f2ptr this
 }
 
 f2ptr f2__core_extension_handler__lookup_core_extension(f2ptr cause, f2ptr this, f2ptr name) {
-  if (! raw__core_extension_handler__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(core_extension_handler, this);
   return raw__core_extension_handler__lookup_core_extension(cause, this, name);
 }
 def_pcfunk2(core_extension_handler__lookup_core_extension, this, name, return f2__core_extension_handler__lookup_core_extension(this_cause, this, name));
@@ -251,9 +236,7 @@ f2ptr raw__core_extension_handler__unload_changed(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__core_extension_handler__unload_changed(f2ptr cause, f2ptr this) {
-  if (! raw__core_extension_handler__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(core_extension_handler, this);
   return raw__core_extension_handler__unload_changed(cause, this);
 }
 def_pcfunk1(core_extension_handler__unload_changed, this, return f2__core_extension_handler__unload_changed(this_cause, this));
@@ -268,9 +251,7 @@ f2ptr raw__core_extension_handler__reset_to_boot_state(f2ptr cause, f2ptr this) 
 }
 
 f2ptr f2__core_extension_handler__reset_to_boot_state(f2ptr cause, f2ptr this) {
-  if (! raw__core_extension_handler__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(core_extension_handler, this);
   return raw__core_extension_handler__reset_to_boot_state(cause, this);
 }
 def_pcfunk1(core_extension_handler__reset_to_boot_state, this, return f2__core_extension_handler__reset_to_boot_state(this_cause, this));
@@ -288,6 +269,7 @@ f2ptr f2core_extension_handler__primobject_type__new_aux(f2ptr cause) {
 
 
 f2ptr f2__global_core_extension_handler__add_new_core_extension(f2ptr cause, f2ptr name, f2ptr filename) {
+  assert_argument_type(string, filename);
   f2ptr core_extension_handler = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-core_extension_handler-"));
   if (raw__larva__is_type(cause, core_extension_handler)) {
     return core_extension_handler;

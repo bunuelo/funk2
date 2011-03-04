@@ -1201,12 +1201,10 @@ void raw__glwindow__create(f2ptr cause, u8* title, s64 width, s64 height, s64 de
 }
 
 f2ptr f2__glwindow__create(f2ptr cause, f2ptr title, f2ptr width, f2ptr height, f2ptr depth, f2ptr fullscreen) {
-  if ((! raw__string__is_type(cause, title)) ||
-      (! raw__integer__is_type(cause, width)) ||
-      (! raw__integer__is_type(cause, height)) ||
-      (! raw__integer__is_type(cause, depth))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string,  title);
+  assert_argument_type(integer, width);
+  assert_argument_type(integer, height);
+  assert_argument_type(integer, depth);
   u64 title__length = f2string__length(title, cause);
   u8* title__str = (u8*)from_ptr(f2__malloc(title__length + 1));
   f2string__str_copy(title, cause, (u8*)title__str);
@@ -1260,10 +1258,8 @@ boolean_t raw__glwindow__load_texture(f2ptr cause, u8* name, u8* filename) {
 }
 
 f2ptr f2__glwindow__load_texture(f2ptr cause, f2ptr name, f2ptr filename) {
-  if ((! raw__symbol__is_type(cause, name)) ||
-      (! raw__string__is_type(cause, filename))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(symbol, name);
+  assert_argument_type(string, filename);
   u64 name__length = raw__symbol__length(cause, name);
   u8* name__str = alloca(name__length + 1);
   raw__symbol__str_copy(cause, name, name__str);
@@ -1288,9 +1284,7 @@ boolean_t raw__glwindow__texture_loaded_raw(f2ptr cause, u8* texture_name) {
 }
 
 f2ptr f2__glwindow__texture_loaded(f2ptr cause, f2ptr name) {
-  if (! raw__symbol__is_type(cause, name)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(symbol, name);
   u64 name__length = raw__symbol__length(cause, name);
   u8* name__str = alloca(name__length + 1);
   raw__symbol__str_copy(cause, name, name__str);

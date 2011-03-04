@@ -26,7 +26,6 @@
 #include "f2_ptypes.h"
 #include "f2_primfunks.h"
 #include "f2_object.h"
-#include "f2_blocks_world.h"
 
 typedef struct funk2_globalenv_s {
   
@@ -128,7 +127,6 @@ typedef struct funk2_globalenv_s {
   f2ptr terminal_print_with_frame__symbol;
   
   funk2_object_types_t object_type;
-  funk2_blocks_world_t blocks_world;
   
 } funk2_globalenv_t;
 

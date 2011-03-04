@@ -47,8 +47,8 @@ f2ptr raw__source_expression__terminal_print_with_frame(f2ptr cause, f2ptr this,
 }
 
 f2ptr f2__source_expression__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  assure_argument_type(source_expression,    this);
-  assure_argument_type(terminal_print_frame, terminal_print_frame);
+  assert_argument_type(source_expression,    this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__source_expression__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(source_expression__terminal_print_with_frame, this, terminal_print_frame, return f2__source_expression__terminal_print_with_frame(this_cause, this, terminal_print_frame));
@@ -86,7 +86,7 @@ f2ptr raw__source__eval(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__source__eval(f2ptr cause, f2ptr this) {
-  assure_argument_type(source_expression, this);
+  assert_argument_type(source_expression, this);
   return raw__source__eval(cause, this);
 }
 def_pcfunk1(source__eval, this, return f2__source__eval(this_cause, this));
@@ -158,8 +158,8 @@ f2ptr raw__pathname__concat(f2ptr cause, f2ptr this, f2ptr that) {
 }
 
 f2ptr f2__pathname__concat(f2ptr cause, f2ptr this, f2ptr that) {
-  assure_argument_type(string, this);
-  assure_argument_type(string, that);
+  assert_argument_type(string, this);
+  assert_argument_type(string, that);
   return raw__pathname__concat(cause, this, that);
 }
 def_pcfunk2(pathname__concat, this, that, return f2__pathname__concat(this_cause, this, that));
@@ -200,7 +200,7 @@ f2ptr raw__pathnamelist__concat(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__pathnamelist__concat(f2ptr cause, f2ptr this) {
-  assure_argument_type(pathnamelist, this);
+  assert_argument_type(pathnamelist, this);
   return raw__pathnamelist__concat(cause, this);
 }
 def_pcfunk1(pathnamelist__concat, this, return f2__pathnamelist__concat(this_cause, this));
@@ -215,7 +215,7 @@ boolean_t raw__pathname__is_absolute(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__pathname__is_absolute(f2ptr cause, f2ptr this) {
-  assure_argument_type(string, this);
+  assert_argument_type(string, this);
   return f2bool__new(raw__pathname__is_absolute(cause, this));
 }
 def_pcfunk1(pathname__is_absolute, this, return f2__pathname__is_absolute(this_cause, this));
@@ -228,7 +228,7 @@ f2ptr raw__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
-  assure_argument_type(string, this);
+  assert_argument_type(string, this);
   return raw__pathname__as__absolute_pathname(cause, this);
 }
 def_pcfunk1(pathname__as__absolute_pathname, this, return f2__pathname__as__absolute_pathname(this_cause, this));
@@ -249,13 +249,13 @@ f2ptr raw__pathname__directory_pathname(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__pathname__directory_pathname(f2ptr cause, f2ptr this) {
-  assure_argument_type(string, this);
+  assert_argument_type(string, this);
   return raw__pathname__directory_pathname(cause, this);
 }
 def_pcfunk1(pathname__directory_pathname, this, return f2__pathname__directory_pathname(this_cause, this));
 
 f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
-  assure_argument_type(string, this);
+  assert_argument_type(string, this);
   u64 pathname__length = raw__string__length(cause, pathname);
   u8* pathname__str    = (u8*)alloca(pathname__length + 1);
   raw__string__str_copy(cause, pathname, pathname__str);
@@ -298,7 +298,7 @@ f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
 def_pcfunk1(pathname__scan_for_filenames, pathname, return f2__pathname__scan_for_filenames(this_cause, pathname));
 
 f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname, f2ptr extension) {
-  assure_argument_type(string, this);
+  assert_argument_type(string, this);
   f2ptr filenames = f2__pathname__scan_for_filenames(cause, pathname);
   if (raw__larva__is_type(cause, filenames)) {
     return filenames;
@@ -379,7 +379,7 @@ f2ptr raw__pathname__stat(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__pathname__stat(f2ptr cause, f2ptr this) {
-  assure_argument_type(string, this);
+  assert_argument_type(string, this);
   return raw__pathname__stat(cause, this);
 }
 def_pcfunk1(pathname__stat, this, return f2__pathname__stat(this_cause, this));
@@ -414,7 +414,7 @@ f2ptr raw__pathname__exists(f2ptr cause, u8* filename) {
 }
 
 f2ptr f2__pathname__exists(f2ptr cause, f2ptr filename) {
-  assure_argument_type(string, filename);
+  assert_argument_type(string, filename);
   s64 filename__length = raw__string__length(cause, filename);
   u8* filename__string = (u8*)from_ptr(f2__malloc(filename__length + 1));
   raw__string__str_copy(cause, filename, filename__string);
@@ -462,8 +462,8 @@ f2ptr raw__pathname__rename(f2ptr cause, u8* old_filename, u8* new_filename) {
 }
 
 f2ptr f2__pathname__rename(f2ptr cause, f2ptr old_filename, f2ptr new_filename) {
-  assure_argument_type(string, old_filename);
-  assure_argument_type(string, new_filename);
+  assert_argument_type(string, old_filename);
+  assert_argument_type(string, new_filename);
   s64 old_filename__length = raw__string__length(cause, old_filename);
   u8* old_filename__string = (u8*)from_ptr(f2__malloc(old_filename__length + 1));
   raw__string__str_copy(cause, old_filename, old_filename__string);
@@ -497,7 +497,7 @@ f2ptr raw__getenv(f2ptr cause, f2ptr environment_variable) {
 }
 
 f2ptr f2__getenv(f2ptr cause, f2ptr environment_variable) {
-  assure_argument_type(string, environment_variable);
+  assert_argument_type(string, environment_variable);
   return raw__getenv(cause, environment_variable);
 }
 def_pcfunk1(getenv, environment_variable, return f2__getenv(this_cause, environment_variable));

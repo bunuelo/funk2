@@ -246,7 +246,7 @@ boolean_t funk2_management_thread__check_command_uid_finished(funk2_management_t
 
 u64  raw__management_thread__add_save_memory_image_command(u8* filename) {return funk2_management_thread__add_save_memory_image_command(&(__funk2.management_thread), filename);}
 f2ptr f2__management_thread__add_save_memory_image_command(f2ptr cause, f2ptr filename) {
-  assure_argument_type(string, filename);
+  assert_argument_type(string, filename);
   u64 filename__length = f2string__length(filename, cause);
   u8* raw_filename = (u8*)alloca(filename__length + 1);
   f2string__str_copy(filename, cause, raw_filename);
@@ -258,7 +258,7 @@ def_pcfunk1(management_thread__add_save_memory_image_command, filename, return f
 
 u64  raw__management_thread__add_load_memory_image_command(u8* filename) {return funk2_management_thread__add_load_memory_image_command(&(__funk2.management_thread), filename);}
 f2ptr f2__management_thread__add_load_memory_image_command(f2ptr cause, f2ptr filename) {
-  assure_argument_type(string, filename);
+  assert_argument_type(string, filename);
   u64 filename__length = f2string__length(filename, cause);
   u8* raw_filename = (u8*)alloca(filename__length + 1);
   f2string__str_copy(filename, cause, raw_filename);
@@ -270,7 +270,7 @@ def_pcfunk1(management_thread__add_load_memory_image_command, filename, return f
 
 u64  raw__management_thread__add_exit_command(s64 value) {return funk2_management_thread__add_exit_command(&(__funk2.management_thread), value);}
 f2ptr f2__management_thread__add_exit_command(f2ptr cause, f2ptr value) {
-  assure_argument_type(integer, value);
+  assert_argument_type(integer, value);
   f2ptr uid = f2integer__new(cause, raw__management_thread__add_exit_command(f2integer__i(value, cause)));
   return uid;
 }
@@ -278,8 +278,8 @@ def_pcfunk1(management_thread__add_exit_command, value, return f2__management_th
 
 boolean_t raw__management_thread__check_command_uid_finished(u64 uid, void* user_result) {return funk2_management_thread__check_command_uid_finished(&(__funk2.management_thread), uid, user_result);}
 f2ptr      f2__management_thread__check_command_uid_finished(f2ptr cause, f2ptr uid, f2ptr user_result_place) {
-  assure_argument_type(       integer, uid);
-  assure_argument_type_or_nil(place,   user_result_place);
+  assert_argument_type(       integer, uid);
+  assert_argument_type_or_nil(place,   user_result_place);
   u64 raw_uid = (u64)f2integer__i(uid, cause);
   boolean_t result      = boolean__false;
   boolean_t is_finished = raw__management_thread__check_command_uid_finished(raw_uid, &result);

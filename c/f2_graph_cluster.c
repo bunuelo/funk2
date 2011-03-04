@@ -97,9 +97,7 @@ f2ptr raw__graph__cluster(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__graph__cluster(f2ptr cause, f2ptr this) {
-  if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(graph, this);
   if (raw__graph__node_count(cause, this) < 2) {
     f2ptr bug_frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "graph_must_have_at_least_two_nodes"));

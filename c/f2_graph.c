@@ -682,14 +682,7 @@ f2ptr raw__graph_list__union(f2ptr cause, f2ptr this) {
   {
     f2ptr iter = this;
     while (iter) {
-      if ((! raw__cons__is_type(cause, iter)) &&
-	  (! raw__list__is_type(cause, iter))) {
-	return f2larva__new(cause, 563, nil);
-      }
       f2ptr graph = f2__first(cause, iter);
-      if (! raw__graph__is_type(cause, graph)) {
-	return f2larva__new(cause, 1, nil);
-      }
       {
 	{
 	  f2ptr node_set = f2__graph__node_set(cause, graph);

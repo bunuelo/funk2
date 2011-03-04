@@ -229,12 +229,10 @@ void raw__gdk_color__as__GdkColor(f2ptr cause, f2ptr this, GdkColor* color) {
 // color
 
 f2ptr f2__gdk__color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr blue) {
-  if ((! raw__integer__is_type(cause, pixel)) ||
-      (! raw__integer__is_type(cause, red)) ||
-      (! raw__integer__is_type(cause, green)) ||
-      (! raw__integer__is_type(cause, blue))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(integer, pixel);
+  assert_argument_type(integer, red);
+  assert_argument_type(integer, green);
+  assert_argument_type(integer, blue);
   s64 pixel__i = f2integer__i(pixel, cause);
   s64 red__i   = f2integer__i(red,   cause);
   s64 green__i = f2integer__i(green, cause);
@@ -1903,10 +1901,8 @@ f2ptr raw__gtk__window__set_title(f2ptr cause, f2ptr window, f2ptr title) {
 }
 
 f2ptr f2__gtk__window__set_title(f2ptr cause, f2ptr window, f2ptr title) {
-  if ((! raw__gtk_widget__is_type(cause, window)) ||
-      (! raw__string__is_type(cause, title))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, window);
+  assert_argument_type(string,     title);
   return raw__gtk__window__set_title(cause, window, title);
 }
 def_pcfunk2(gtk__window__set_title, window, title, return f2__gtk__window__set_title(this_cause, window, title));
@@ -1929,11 +1925,9 @@ f2ptr raw__gtk__window__set_default_size(f2ptr cause, f2ptr window, f2ptr width,
 }
 
 f2ptr f2__gtk__window__set_default_size(f2ptr cause, f2ptr window, f2ptr width, f2ptr height) {
-  if ((! raw__gtk_widget__is_type(cause, window)) ||
-      (! raw__integer__is_type(cause, width)) ||
-      (! raw__integer__is_type(cause, height))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, window);
+  assert_argument_type(integer,    width);
+  assert_argument_type(integer,    height);
   return raw__gtk__window__set_default_size(cause, window, width, height);
 }
 def_pcfunk3(gtk__window__set_default_size, window, width, height, return f2__gtk__window__set_default_size(this_cause, window, width, height));
@@ -1956,11 +1950,9 @@ f2ptr raw__gtk__window__resize(f2ptr cause, f2ptr window, f2ptr width, f2ptr hei
 }
 
 f2ptr f2__gtk__window__resize(f2ptr cause, f2ptr window, f2ptr width, f2ptr height) {
-  if ((! raw__gtk_widget__is_type(cause, window)) ||
-      (! raw__integer__is_type(cause, width)) ||
-      (! raw__integer__is_type(cause, height))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, window);
+  assert_argument_type(integer,    width);
+  assert_argument_type(integer,    height);
   return raw__gtk__window__resize(cause, window, width, height);
 }
 def_pcfunk3(gtk__window__resize, window, width, height, return f2__gtk__window__resize(this_cause, window, width, height));
@@ -1982,10 +1974,8 @@ f2ptr raw__gtk__window__set_transient_for(f2ptr cause, f2ptr window, f2ptr paren
 }
 
 f2ptr f2__gtk__window__set_transient_for(f2ptr cause, f2ptr window, f2ptr parent) {
-  if ((! raw__gtk_widget__is_type(cause, window)) ||
-      (! raw__gtk_widget__is_type(cause, parent))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, window);
+  assert_argument_type(gtk_widget, parent);
   return raw__gtk__window__set_transient_for(cause, window, parent);
 }
 def_pcfunk2(gtk__window__set_transient_for, window, parent, return f2__gtk__window__set_transient_for(this_cause, window, parent));
@@ -2006,9 +1996,7 @@ f2ptr raw__gtk__window__set_destroy_with_parent(f2ptr cause, f2ptr window, f2ptr
 }
 
 f2ptr f2__gtk__window__set_destroy_with_parent(f2ptr cause, f2ptr window, f2ptr setting) {
-  if (! raw__gtk_widget__is_type(cause, window)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, window);
   return raw__gtk__window__set_destroy_with_parent(cause, window, setting);
 }
 def_pcfunk2(gtk__window__set_destroy_with_parent, window, setting, return f2__gtk__window__set_destroy_with_parent(this_cause, window, setting));
@@ -2031,9 +2019,7 @@ f2ptr raw__gtk__vbox__new(f2ptr cause, f2ptr spacing) {
 }
 
 f2ptr f2__gtk__vbox__new(f2ptr cause, f2ptr spacing) {
-  if (! raw__integer__is_type(cause, spacing)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(integer, spacing);
   return raw__gtk__vbox__new(cause, spacing);
 }
 def_pcfunk1(gtk__vbox__new, spacing, return f2__gtk__vbox__new(this_cause, spacing));
@@ -2054,9 +2040,7 @@ f2ptr raw__gtk__hbox__new(f2ptr cause, f2ptr spacing) {
 }
 
 f2ptr f2__gtk__hbox__new(f2ptr cause, f2ptr spacing) {
-  if (! raw__integer__is_type(cause, spacing)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(integer, spacing);
   return raw__gtk__hbox__new(cause, spacing);
 }
 def_pcfunk1(gtk__hbox__new, spacing, return f2__gtk__hbox__new(this_cause, spacing));
@@ -2081,9 +2065,7 @@ f2ptr raw__gtk__button__new_with_label(f2ptr cause, f2ptr label) {
 }
 
 f2ptr f2__gtk__button__new_with_label(f2ptr cause, f2ptr label) {
-  if (! raw__string__is_type(cause, label)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, label);
   return raw__gtk__button__new_with_label(cause, label);
 }
 def_pcfunk1(gtk__button__new_with_label, label, return f2__gtk__button__new_with_label(this_cause, label));
@@ -2124,10 +2106,8 @@ f2ptr raw__gtk__scrolled_window__add_with_viewport(f2ptr cause, f2ptr scrolled_w
 }
 
 f2ptr f2__gtk__scrolled_window__add_with_viewport(f2ptr cause, f2ptr scrolled_window, f2ptr child) {
-  if ((! raw__gtk_widget__is_type(cause, scrolled_window)) ||
-      (! raw__gtk_widget__is_type(cause, child))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, scrolled_window);
+  assert_argument_type(gtk_widget, child);
   return raw__gtk__scrolled_window__add_with_viewport(cause, scrolled_window, child);
 }
 def_pcfunk2(gtk__scrolled_window__add_with_viewport, scrolled_window, child, return f2__gtk__scrolled_window__add_with_viewport(this_cause, scrolled_window, child));
@@ -2170,11 +2150,9 @@ f2ptr raw__gtk__scrolled_window__set_policy(f2ptr cause, f2ptr scrolled_window, 
 }
 
 f2ptr f2__gtk__scrolled_window__set_policy(f2ptr cause, f2ptr scrolled_window, f2ptr hscrollbar_policy, f2ptr vscrollbar_policy) {
-  if ((! raw__gtk_widget__is_type(cause, scrolled_window)) ||
-      (! raw__gtk_policy_type__is_type(cause, hscrollbar_policy)) ||
-      (! raw__gtk_policy_type__is_type(cause, vscrollbar_policy))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget,      scrolled_window);
+  assert_argument_type(gtk_policy_type, hscrollbar_policy);
+  assert_argument_type(gtk_policy_type, vscrollbar_policy);
   return raw__gtk__scrolled_window__set_policy(cause, scrolled_window, hscrollbar_policy, vscrollbar_policy);
 }
 def_pcfunk3(gtk__scrolled_window__set_policy, scrolled_window, hscrollbar_policy, vscrollbar_policy, return f2__gtk__scrolled_window__set_policy(this_cause, scrolled_window, hscrollbar_policy, vscrollbar_policy));
@@ -2217,9 +2195,7 @@ f2ptr raw__gtk__text_view__get_buffer(f2ptr cause, f2ptr widget) {
 }
 
 f2ptr f2__gtk__text_view__get_buffer(f2ptr cause, f2ptr widget) {
-  if (! raw__gtk_widget__is_type(cause, widget)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
   return raw__gtk__text_view__get_buffer(cause, widget);
 }
 def_pcfunk1(gtk__text_view__get_buffer, widget, return f2__gtk__text_view__get_buffer(this_cause, widget));
@@ -2252,11 +2228,9 @@ f2ptr raw__gtk__pixbuf__new_from_rgb_data(f2ptr cause, f2ptr width, f2ptr height
 }
 
 f2ptr f2__gtk__pixbuf__new_from_rgb_data(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data) {
-  if ((! raw__integer__is_type(cause, width)) ||
-      (! raw__integer__is_type(cause, height)) ||
-      (! raw__chunk__is_type(cause, rgb_data))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(integer, width);
+  assert_argument_type(integer, height);
+  assert_argument_type(chunk,   rgb_data);
   return raw__gtk__pixbuf__new_from_rgb_data(cause, width, height, rgb_data);
 }
 def_pcfunk3(gtk__pixbuf__new_from_rgb_data, width, height, rgb_data, return f2__gtk__pixbuf__new_from_rgb_data(this_cause, width, height, rgb_data));
@@ -2296,11 +2270,9 @@ f2ptr raw__gtk__pixbuf__new_from_rgba_data(f2ptr cause, f2ptr width, f2ptr heigh
 }
 
 f2ptr f2__gtk__pixbuf__new_from_rgba_data(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data) {
-  if ((! raw__integer__is_type(cause, width)) ||
-      (! raw__integer__is_type(cause, height)) ||
-      (! raw__chunk__is_type(cause, rgba_data))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(integer, width);
+  assert_argument_type(integer, height);
+  assert_argument_type(chunk,   rgba_data);
   return raw__gtk__pixbuf__new_from_rgba_data(cause, width, height, rgba_data);
 }
 def_pcfunk3(gtk__pixbuf__new_from_rgba_data, width, height, rgba_data, return f2__gtk__pixbuf__new_from_rgba_data(this_cause, width, height, rgba_data));
@@ -2342,9 +2314,7 @@ f2ptr raw__gtk__pixbuf__new_from_file(f2ptr cause, f2ptr filename) {
 }
 
 f2ptr f2__gtk__pixbuf__new_from_file(f2ptr cause, f2ptr filename) {
-  if (! raw__string__is_type(cause, filename)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, filename);
   return raw__gtk__pixbuf__new_from_file(cause, filename);
 }
 def_pcfunk1(gtk__pixbuf__new_from_file, filename, return f2__gtk__pixbuf__new_from_file(this_cause, filename));
@@ -2365,9 +2335,7 @@ f2ptr raw__gtk__pixbuf__get_width(f2ptr cause, f2ptr pixbuf) {
 }
 
 f2ptr f2__gtk__pixbuf__get_width(f2ptr cause, f2ptr pixbuf) {
-  if (! raw__gdk_pixbuf__is_type(cause, pixbuf)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gdk_pixbuf, pixbuf);
   return raw__gtk__pixbuf__get_width(cause, pixbuf);
 }
 def_pcfunk1(gtk__pixbuf__get_width, pixbuf, return f2__gtk__pixbuf__get_width(this_cause, pixbuf));
@@ -2388,9 +2356,7 @@ f2ptr raw__gtk__pixbuf__get_height(f2ptr cause, f2ptr pixbuf) {
 }
 
 f2ptr f2__gtk__pixbuf__get_height(f2ptr cause, f2ptr pixbuf) {
-  if (! raw__gdk_pixbuf__is_type(cause, pixbuf)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gdk_pixbuf, pixbuf);
   return raw__gtk__pixbuf__get_height(cause, pixbuf);
 }
 def_pcfunk1(gtk__pixbuf__get_height, pixbuf, return f2__gtk__pixbuf__get_height(this_cause, pixbuf));
@@ -2419,9 +2385,7 @@ f2ptr raw__gtk__pixbuf__get_rgba_pixel_data(f2ptr cause, f2ptr pixbuf) {
 }
 
 f2ptr f2__gtk__pixbuf__get_rgba_pixel_data(f2ptr cause, f2ptr pixbuf) {
-  if (! raw__gdk_pixbuf__is_type(cause, pixbuf)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gdk_pixbuf, pixbuf);
   return raw__gtk__pixbuf__get_rgba_pixel_data(cause, pixbuf);
 }
 def_pcfunk1(gtk__pixbuf__get_rgba_pixel_data, pixbuf, return f2__gtk__pixbuf__get_rgba_pixel_data(this_cause, pixbuf));
@@ -2450,9 +2414,7 @@ f2ptr raw__gtk__pixbuf__get_rgb_pixel_data(f2ptr cause, f2ptr pixbuf) {
 }
 
 f2ptr f2__gtk__pixbuf__get_rgb_pixel_data(f2ptr cause, f2ptr pixbuf) {
-  if (! raw__gdk_pixbuf__is_type(cause, pixbuf)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gdk_pixbuf, pixbuf);
   return raw__gtk__pixbuf__get_rgb_pixel_data(cause, pixbuf);
 }
 def_pcfunk1(gtk__pixbuf__get_rgb_pixel_data, pixbuf, return f2__gtk__pixbuf__get_rgb_pixel_data(this_cause, pixbuf));
@@ -2473,9 +2435,7 @@ f2ptr raw__gtk__pixbuf__unref(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__gtk__pixbuf__unref(f2ptr cause, f2ptr this) {
-  if (! raw__gdk_pixbuf__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gdk_pixbuf, this);
   return raw__gtk__pixbuf__unref(cause, this);
 }
 def_pcfunk1(gtk__pixbuf__unref, this, return f2__gtk__pixbuf__unref(this_cause, this));
@@ -2499,10 +2459,8 @@ f2ptr raw__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
 }
 
 f2ptr f2__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
-      (! raw__gtk_widget__is_type(cause, add_widget))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
+  assert_argument_type(gtk_widget, add_widget);
   return raw__gtk__container__add(cause, widget, add_widget);
 }
 def_pcfunk2(gtk__container__add, widget, add_widget, return f2__gtk__container__add(this_cause, widget, add_widget));
@@ -2524,10 +2482,8 @@ f2ptr raw__gtk__container__remove(f2ptr cause, f2ptr widget, f2ptr remove_widget
 }
 
 f2ptr f2__gtk__container__remove(f2ptr cause, f2ptr widget, f2ptr remove_widget) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
-      (! raw__gtk_widget__is_type(cause, remove_widget))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
+  assert_argument_type(gtk_widget, remove_widget);
   return raw__gtk__container__remove(cause, widget, remove_widget);
 }
 def_pcfunk2(gtk__container__remove, widget, remove_widget, return f2__gtk__container__remove(this_cause, widget, remove_widget));
@@ -2550,11 +2506,9 @@ f2ptr raw__gtk__expose_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr fu
 }
 
 f2ptr f2__gtk__expose_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
-      (! raw__funkable__is_type(cause, funk)) ||
-      (! raw__conslist__is_type(cause, args))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
+  assert_argument_type(funkable,   funk);
+  assert_argument_type(conslist,   args);
   return raw__gtk__expose_event__signal_connect(cause, widget, funk, args);
 }
 def_pcfunk3(gtk__expose_event__signal_connect, widget, funk, args, return f2__gtk__expose_event__signal_connect(this_cause, widget, funk, args));
@@ -2577,11 +2531,9 @@ f2ptr raw__gtk__key_press_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr
 }
 
 f2ptr f2__gtk__key_press_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
-      (! raw__funkable__is_type(  cause, funk)) ||
-      (! raw__conslist__is_type(  cause, args))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
+  assert_argument_type(funkable,   funk);
+  assert_argument_type(conslist,   args);
   return raw__gtk__key_press_event__signal_connect(cause, widget, funk, args);
 }
 def_pcfunk3(gtk__key_press_event__signal_connect, widget, funk, args, return f2__gtk__key_press_event__signal_connect(this_cause, widget, funk, args));
@@ -2604,11 +2556,9 @@ f2ptr raw__gtk__response_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr 
 }
 
 f2ptr f2__gtk__response_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
-      (! raw__funkable__is_type(  cause, funk)) ||
-      (! raw__conslist__is_type(  cause, args))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
+  assert_argument_type(funkable,   funk);
+  assert_argument_type(conslist,   args);
   return raw__gtk__response_event__signal_connect(cause, widget, funk, args);
 }
 def_pcfunk3(gtk__response_event__signal_connect, widget, funk, args, return f2__gtk__response_event__signal_connect(this_cause, widget, funk, args));
@@ -2631,11 +2581,9 @@ f2ptr raw__gtk__update_preview_event__signal_connect(f2ptr cause, f2ptr widget, 
 }
 
 f2ptr f2__gtk__update_preview_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
-      (! raw__funkable__is_type(  cause, funk)) ||
-      (! raw__conslist__is_type(  cause, args))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
+  assert_argument_type(funkable,   funk);
+  assert_argument_type(conslist,   args);
   return raw__gtk__update_preview_event__signal_connect(cause, widget, funk, args);
 }
 def_pcfunk3(gtk__update_preview_event__signal_connect, widget, funk, args, return f2__gtk__update_preview_event__signal_connect(this_cause, widget, funk, args));
@@ -2664,12 +2612,10 @@ f2ptr raw__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2p
 }
 
 f2ptr f2__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk, f2ptr args) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
-      (! raw__string__is_type(cause, signal_name)) ||
-      (! raw__funkable__is_type(cause, funk)) ||
-      (! raw__conslist__is_type(  cause, args))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
+  assert_argument_type(string,     signal_name);
+  assert_argument_type(funkable,   funk);
+  assert_argument_type(conslist,   args);
   return raw__gtk__signal_connect(cause, widget, signal_name, funk, args);
 }
 def_pcfunk4(gtk__signal_connect, widget, signal_name, funk, args, return f2__gtk__signal_connect(this_cause, widget, signal_name, funk, args));
@@ -2693,9 +2639,7 @@ f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
 }
 
 f2ptr f2__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
-  if (! raw__gtk_widget__is_type(cause, widget)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
   return raw__gtk__widget__show_all(cause, widget);
 }
 def_pcfunk1(gtk__widget__show_all, widget, return f2__gtk__widget__show_all(this_cause, widget));
@@ -2716,9 +2660,7 @@ f2ptr raw__gtk__widget__hide_all(f2ptr cause, f2ptr widget) {
 }
 
 f2ptr f2__gtk__widget__hide_all(f2ptr cause, f2ptr widget) {
-  if (! raw__gtk_widget__is_type(cause, widget)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
   return raw__gtk__widget__hide_all(cause, widget);
 }
 def_pcfunk1(gtk__widget__hide_all, widget, return f2__gtk__widget__hide_all(this_cause, widget));
@@ -2741,11 +2683,9 @@ f2ptr raw__gtk__widget__set_size_request(f2ptr cause, f2ptr widget, f2ptr width,
 }
 
 f2ptr f2__gtk__widget__set_size_request(f2ptr cause, f2ptr widget, f2ptr width, f2ptr height) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
-      (! raw__integer__is_type(cause, width)) ||
-      (! raw__integer__is_type(cause, height))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
+  assert_argument_type(integer,    width);
+  assert_argument_type(integer,    height);
   return raw__gtk__widget__set_size_request(cause, widget, width, height);
 }
 def_pcfunk3(gtk__widget__set_size_request, widget, width, height, return f2__gtk__widget__set_size_request(this_cause, widget, width, height));
@@ -2765,9 +2705,7 @@ f2ptr raw__gtk__widget__get_visible(f2ptr cause, f2ptr widget) {
 }
 
 f2ptr f2__gtk__widget__get_visible(f2ptr cause, f2ptr widget) {
-  if (! raw__gtk_widget__is_type(cause, widget)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
   return raw__gtk__widget__get_visible(cause, widget);
 }
 def_pcfunk1(gtk__widget__get_visible, widget, return f2__gtk__widget__get_visible(this_cause, widget));
@@ -2788,9 +2726,7 @@ f2ptr raw__gtk__widget__destroy(f2ptr cause, f2ptr widget) {
 }
 
 f2ptr f2__gtk__widget__destroy(f2ptr cause, f2ptr widget) {
-  if (! raw__gtk_widget__is_type(cause, widget)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
   return raw__gtk__widget__destroy(cause, widget);
 }
 def_pcfunk1(gtk__widget__destroy, widget, return f2__gtk__widget__destroy(this_cause, widget));
@@ -2811,9 +2747,7 @@ f2ptr raw__gtk__widget__connect_hide_on_delete(f2ptr cause, f2ptr widget) {
 }
 
 f2ptr f2__gtk__widget__connect_hide_on_delete(f2ptr cause, f2ptr widget) {
-  if (! raw__gtk_widget__is_type(cause, widget)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
   return raw__gtk__widget__connect_hide_on_delete(cause, widget);
 }
 def_pcfunk1(gtk__widget__connect_hide_on_delete, widget, return f2__gtk__widget__connect_hide_on_delete(this_cause, widget));
@@ -2861,11 +2795,9 @@ f2ptr raw__gtk__widget__modify_fg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr 
 }
 
 f2ptr f2__gtk__widget__modify_fg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr color) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
-      (! raw__gtk_state_type__is_type(cause, state)) ||
-      ((color != nil) && (! raw__gdk_color__is_type(cause, color)))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(       gtk_widget,     widget);
+  assert_argument_type(       gtk_state_type, state);
+  assert_argument_type_or_nil(gdk_color,      color);
   return raw__gtk__widget__modify_fg(cause, widget, state, color);
 }
 def_pcfunk3(gtk__widget__modify_fg, widget, state, color, return f2__gtk__widget__modify_fg(this_cause, widget, state, color));
@@ -2892,11 +2824,9 @@ f2ptr raw__gtk__widget__modify_bg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr 
 }
 
 f2ptr f2__gtk__widget__modify_bg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr color) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
-      (! raw__gtk_state_type__is_type(cause, state)) ||
-      ((color != nil) && (! raw__gdk_color__is_type(cause, color)))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(       gtk_widget,     widget);
+  assert_argument_type(       gtk_state_type, state);
+  assert_argument_type_or_nil(gdk_color,      color);
   return raw__gtk__widget__modify_bg(cause, widget, state, color);
 }
 def_pcfunk3(gtk__widget__modify_bg, widget, state, color, return f2__gtk__widget__modify_bg(this_cause, widget, state, color));
@@ -2917,9 +2847,7 @@ f2ptr raw__gtk__widget__set_sensitive(f2ptr cause, f2ptr widget, f2ptr sensitive
 }
 
 f2ptr f2__gtk__widget__set_sensitive(f2ptr cause, f2ptr widget, f2ptr sensitive) {
-  if (! raw__gtk_widget__is_type(cause, widget)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
   return raw__gtk__widget__set_sensitive(cause, widget, sensitive);
 }
 def_pcfunk2(gtk__widget__set_sensitive, widget, sensitive, return f2__gtk__widget__set_sensitive(this_cause, widget, sensitive));
@@ -2946,13 +2874,11 @@ f2ptr raw__gtk__widget__queue_draw_area(f2ptr cause, f2ptr widget, f2ptr x, f2pt
 }
 
 f2ptr f2__gtk__widget__queue_draw_area(f2ptr cause, f2ptr widget, f2ptr x, f2ptr y, f2ptr width, f2ptr height) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
-      (! raw__integer__is_type(cause, x)) ||
-      (! raw__integer__is_type(cause, y)) ||
-      (! raw__integer__is_type(cause, width)) ||
-      (! raw__integer__is_type(cause, height))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
+  assert_argument_type(integer,    x);
+  assert_argument_type(integer,    y);
+  assert_argument_type(integer,    width);
+  assert_argument_type(integer,    height);
   return raw__gtk__widget__queue_draw_area(cause, widget, x, y, width, height);
 }
 def_pcfunk5(gtk__widget__queue_draw_area, widget, x, y, width, height, return f2__gtk__widget__queue_draw_area(this_cause, widget, x, y, width, height));
@@ -3073,13 +2999,11 @@ f2ptr raw__gtk__widget__draw_rectangle(f2ptr cause, f2ptr widget, f2ptr filled, 
 }
 
 f2ptr f2__gtk__widget__draw_rectangle(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr x, f2ptr y, f2ptr width, f2ptr height) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
-      (! raw__integer__is_type(cause, x)) ||
-      (! raw__integer__is_type(cause, y)) ||
-      (! raw__integer__is_type(cause, width)) ||
-      (! raw__integer__is_type(cause, height))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
+  assert_argument_type(integer,    x);
+  assert_argument_type(integer,    y);
+  assert_argument_type(integer,    width);
+  assert_argument_type(integer,    height);
   return raw__gtk__widget__draw_rectangle(cause, widget, filled, x, y, width, height);
 }
 def_pcfunk6(gtk__widget__draw_rectangle, widget, filled, x, y, width, height, return f2__gtk__widget__draw_rectangle(this_cause, widget, filled, x, y, width, height));
@@ -3104,11 +3028,9 @@ f2ptr raw__gtk__misc__set_alignment(f2ptr cause, f2ptr misc, f2ptr xalign, f2ptr
 }
 
 f2ptr f2__gtk__misc__set_alignment(f2ptr cause, f2ptr misc, f2ptr xalign, f2ptr yalign) {
-  if ((! raw__gtk_widget__is_type(cause, misc)) ||
-      (! raw__double__is_type(cause, xalign)) ||
-      (! raw__double__is_type(cause, yalign))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, misc);
+  assert_argument_type(double,     xalign);
+  assert_argument_type(double,     yalign);
   return raw__gtk__misc__set_alignment(cause, misc, xalign, yalign);
 }
 def_pcfunk3(gtk__misc__set_alignment, misc, xalign, yalign, return f2__gtk__misc__set_alignment(this_cause, misc, xalign, yalign));
@@ -3133,11 +3055,9 @@ f2ptr raw__gtk__box__pack_start(f2ptr cause, f2ptr widget, f2ptr child_widget, f
 }
 
 f2ptr f2__gtk__box__pack_start(f2ptr cause, f2ptr box, f2ptr child_widget, f2ptr expand, f2ptr fill, f2ptr padding) {
-  if ((! raw__gtk_widget__is_type(cause, box)) ||
-      (! raw__gtk_widget__is_type(cause, child_widget)) ||
-      (! raw__integer__is_type(cause, padding))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, box);
+  assert_argument_type(gtk_widget, child_widget);
+  assert_argument_type(integer,    padding);
   return raw__gtk__box__pack_start(cause, box, child_widget, expand, fill, padding);
 }
 def_pcfunk5(gtk__box__pack_start, box, child_widget, expand, fill, padding, return f2__gtk__box__pack_start(this_cause, box, child_widget, expand, fill, padding));
@@ -3250,9 +3170,7 @@ f2ptr raw__gtk__text_buffer__get_start_iter(f2ptr cause, f2ptr text_buffer) {
 }
 
 f2ptr f2__gtk__text_buffer__get_start_iter(f2ptr cause, f2ptr text_buffer) {
-  if (! raw__gtk_text_buffer__is_type(cause, text_buffer)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_text_buffer, text_buffer);
   return raw__gtk__text_buffer__get_start_iter(cause, text_buffer);
 }
 def_pcfunk1(gtk__text_buffer__get_start_iter, text_buffer, return f2__gtk__text_buffer__get_start_iter(this_cause, text_buffer));
@@ -3279,10 +3197,8 @@ f2ptr raw__gtk__text_buffer__select_range(f2ptr cause, f2ptr text_buffer, f2ptr 
 }
 
 f2ptr f2__gtk__text_buffer__select_range(f2ptr cause, f2ptr text_buffer, f2ptr range) {
-  if ((! raw__gtk_text_buffer__is_type(cause, text_buffer)) ||
-      (! raw__gtk_text_range__is_type(cause, range))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_text_buffer, text_buffer);
+  assert_argument_type(gtk_text_range,  range);
   return raw__gtk__text_buffer__select_range(cause, text_buffer, range);
 }
 def_pcfunk2(gtk__text_buffer__select_range, text_buffer, range, return f2__gtk__text_buffer__select_range(this_cause, text_buffer, range));
@@ -3303,9 +3219,7 @@ f2ptr raw__gtk__text_buffer__get_text(f2ptr cause, f2ptr text_buffer) {
 }
 
 f2ptr f2__gtk__text_buffer__get_text(f2ptr cause, f2ptr text_buffer) {
-  if (! raw__gtk_text_buffer__is_type(cause, text_buffer)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_text_buffer, text_buffer);
   return raw__gtk__text_buffer__get_text(cause, text_buffer);
 }
 def_pcfunk1(gtk__text_buffer__get_text, text_buffer, return f2__gtk__text_buffer__get_text(this_cause, text_buffer));
@@ -3332,10 +3246,8 @@ f2ptr raw__gtk__text_buffer__set_text(f2ptr cause, f2ptr text_buffer, f2ptr text
 }
 
 f2ptr f2__gtk__text_buffer__set_text(f2ptr cause, f2ptr text_buffer, f2ptr text) {
-  if ((! raw__gtk_text_buffer__is_type(cause, text_buffer)) ||
-      (! raw__string__is_type(cause, text))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_text_buffer, text_buffer);
+  assert_argument_type(string,          text);
   return raw__gtk__text_buffer__set_text(cause, text_buffer, text);
 }
 def_pcfunk2(gtk__text_buffer__set_text, text_buffer, text, return f2__gtk__text_buffer__set_text(this_cause, text_buffer, text));
@@ -3368,10 +3280,8 @@ f2ptr raw__gtk__text_iter__forward_search(f2ptr cause, f2ptr text_iter, f2ptr te
 }
 
 f2ptr f2__gtk__text_iter__forward_search(f2ptr cause, f2ptr text_iter, f2ptr text) {
-  if ((! raw__gtk_text_iter__is_type(cause, text_iter)) ||
-      (! raw__string__is_type(cause, text))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_text_iter, text_iter);
+  assert_argument_type(string,        text);
   return raw__gtk__text_iter__forward_search(cause, text_iter, text);
 }
 def_pcfunk2(gtk__text_iter__forward_search, text_iter, text, return f2__gtk__text_iter__forward_search(this_cause, text_iter, text));
@@ -3395,10 +3305,8 @@ f2ptr raw__gtk__paned__pack1(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize
 }
 
 f2ptr f2__gtk__paned__pack1(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize, f2ptr shrink) {
-  if ((! inherits_from(cause, paned, gtk_widget)) ||
-      (! inherits_from(cause, child, gtk_widget))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, paned);
+  assert_argument_type(gtk_widget, child);
   return raw__gtk__paned__pack1(cause, paned, child, resize, shrink);
 }
 def_pcfunk4(gtk__paned__pack1, paned, child, resize, shrink, return f2__gtk__paned__pack1(this_cause, paned, child, resize, shrink));
@@ -3420,10 +3328,8 @@ f2ptr raw__gtk__paned__pack2(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize
 }
 
 f2ptr f2__gtk__paned__pack2(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize, f2ptr shrink) {
-  if ((! inherits_from(cause, paned, gtk_widget)) ||
-      (! inherits_from(cause, child, gtk_widget))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, paned);
+  assert_argument_type(gtk_widget, child);
   return raw__gtk__paned__pack2(cause, paned, child, resize, shrink);
 }
 def_pcfunk4(gtk__paned__pack2, paned, child, resize, shrink, return f2__gtk__paned__pack2(this_cause, paned, child, resize, shrink));
@@ -3447,10 +3353,8 @@ f2ptr raw__gtk__paned__set_position(f2ptr cause, f2ptr paned, f2ptr position) {
 }
 
 f2ptr f2__gtk__paned__set_position(f2ptr cause, f2ptr paned, f2ptr position) {
-  if ((! inherits_from(cause, paned,    gtk_widget)) ||
-      (! inherits_from(cause, position, integer))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, paned);
+  assert_argument_type(integer,    position);
   return raw__gtk__paned__set_position(cause, paned, position);
 }
 def_pcfunk2(gtk__paned__set_position, paned, position, return f2__gtk__paned__set_position(this_cause, paned, position));
@@ -3539,9 +3443,7 @@ f2ptr raw__gtk__progress_bar__set_fraction(f2ptr cause, f2ptr this, f2ptr fracti
 }
 
 f2ptr f2__gtk__progress_bar__set_fraction(f2ptr cause, f2ptr this, f2ptr fraction) {
-  if (! raw__gtk_progress_bar__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_progress_bar, this);
   return raw__gtk__progress_bar__set_fraction(cause, this, fraction);
 }
 def_pcfunk2(gtk__progress_bar__set_fraction, this, fraction, return f2__gtk__progress_bar__set_fraction(this_cause, this, fraction));
@@ -3568,10 +3470,8 @@ f2ptr raw__gtk__progress_bar__set_text(f2ptr cause, f2ptr this, f2ptr text) {
 }
 
 f2ptr f2__gtk__progress_bar__set_text(f2ptr cause, f2ptr this, f2ptr text) {
-  if ((! raw__gtk_progress_bar__is_type(cause, this)) ||
-      (! raw__string__is_type(cause, text))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_progress_bar, this);
+  assert_argument_type(string,           text);
   return raw__gtk__progress_bar__set_text(cause, this, text);
 }
 def_pcfunk2(gtk__progress_bar__set_text, this, text, return f2__gtk__progress_bar__set_text(this_cause, this, text));
@@ -3605,10 +3505,8 @@ f2ptr raw__gtk__progress_bar__set_orientation(f2ptr cause, f2ptr this, f2ptr ori
 }
 
 f2ptr f2__gtk__progress_bar__set_orientation(f2ptr cause, f2ptr this, f2ptr orientation) {
-  if ((! raw__gtk_progress_bar__is_type(cause, this)) ||
-      (! raw__symbol__is_type(cause, orientation))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_progress_bar, this);
+  assert_argument_type(symbol,           orientation);
   return raw__gtk__progress_bar__set_orientation(cause, this, orientation);
 }
 def_pcfunk2(gtk__progress_bar__set_orientation, this, orientation, return f2__gtk__progress_bar__set_orientation(this_cause, this, orientation));
@@ -3629,9 +3527,7 @@ f2ptr raw__gtk__progress_bar__pulse(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__gtk__progress_bar__pulse(f2ptr cause, f2ptr this) {
-  if (! raw__gtk_progress_bar__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_progress_bar, this);
   return raw__gtk__progress_bar__pulse(cause, this);
 }
 def_pcfunk1(gtk__progress_bar__pulse, this, return f2__gtk__progress_bar__pulse(this_cause, this));
@@ -3657,9 +3553,7 @@ f2ptr raw__gtk__progress_bar__set_pulse_step(f2ptr cause, f2ptr this, f2ptr frac
 }
 
 f2ptr f2__gtk__progress_bar__set_pulse_step(f2ptr cause, f2ptr this, f2ptr fraction) {
-  if (! raw__gtk_progress_bar__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_progress_bar, this);
   return raw__gtk__progress_bar__set_pulse_step(cause, this, fraction);
 }
 def_pcfunk2(gtk__progress_bar__set_pulse_step, this, fraction, return f2__gtk__progress_bar__set_pulse_step(this_cause, this, fraction));
@@ -3706,11 +3600,9 @@ f2ptr raw__gtk__notebook__append_page(f2ptr cause, f2ptr notebook, f2ptr child, 
 }
 
 f2ptr f2__gtk__notebook__append_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label) {
-  if ((! raw__gtk_widget__is_type(cause, notebook)) ||
-      (! raw__gtk_widget__is_type(cause, child)) ||
-      (! raw__gtk_widget__is_type(cause, tab_label))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, notebook);
+  assert_argument_type(gtk_widget, child);
+  assert_argument_type(gtk_widget, tab_label);
   return raw__gtk__notebook__append_page(cause, notebook, child, tab_label);
 }
 def_pcfunk3(gtk__notebook__append_page, notebook, child, tab_label, return f2__gtk__notebook__append_page(this_cause, notebook, child, tab_label));
@@ -3736,11 +3628,9 @@ f2ptr raw__gtk__notebook__prepend_page(f2ptr cause, f2ptr notebook, f2ptr child,
 }
 
 f2ptr f2__gtk__notebook__prepend_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label) {
-  if ((! raw__gtk_widget__is_type(cause, notebook)) ||
-      (! raw__gtk_widget__is_type(cause, child)) ||
-      (! raw__gtk_widget__is_type(cause, tab_label))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, notebook);
+  assert_argument_type(gtk_widget, child);
+  assert_argument_type(gtk_widget, tab_label);
   return raw__gtk__notebook__prepend_page(cause, notebook, child, tab_label);
 }
 def_pcfunk3(gtk__notebook__prepend_page, notebook, child, tab_label, return f2__gtk__notebook__prepend_page(this_cause, notebook, child, tab_label));
@@ -3767,12 +3657,9 @@ f2ptr raw__gtk__notebook__insert_page(f2ptr cause, f2ptr notebook, f2ptr child, 
 }
 
 f2ptr f2__gtk__notebook__insert_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label, f2ptr position) {
-  if ((! raw__gtk_widget__is_type(cause, notebook)) ||
-      (! raw__gtk_widget__is_type(cause, child)) ||
-      (! raw__gtk_widget__is_type(cause, tab_label)) ||
-      (! raw__integer__is_type(cause, position))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, notebook);
+  assert_argument_type(gtk_widget, child);
+  assert_argument_type(gtk_widget, tab_label);
   return raw__gtk__notebook__insert_page(cause, notebook, child, tab_label, position);
 }
 def_pcfunk4(gtk__notebook__insert_page, notebook, child, tab_label, position, return f2__gtk__notebook__insert_page(this_cause, notebook, child, tab_label, position));
@@ -3794,10 +3681,8 @@ f2ptr raw__gtk__notebook__remove_page(f2ptr cause, f2ptr notebook, f2ptr positio
 }
 
 f2ptr f2__gtk__notebook__remove_page(f2ptr cause, f2ptr notebook, f2ptr position) {
-  if ((! raw__gtk_widget__is_type(cause, notebook)) ||
-      (! raw__integer__is_type(cause, position))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, notebook);
+  assert_argument_type(integer,    position);
   return raw__gtk__notebook__remove_page(cause, notebook, position);
 }
 def_pcfunk2(gtk__notebook__remove_page, notebook, position, return f2__gtk__notebook__remove_page(this_cause, notebook, position));
@@ -3821,9 +3706,7 @@ f2ptr raw__gtk__notebook__get_current_page(f2ptr cause, f2ptr notebook) {
 }
 
 f2ptr f2__gtk__notebook__get_current_page(f2ptr cause, f2ptr notebook) {
-  if (! raw__gtk_widget__is_type(cause, notebook)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, notebook);
   return raw__gtk__notebook__get_current_page(cause, notebook);
 }
 def_pcfunk1(gtk__notebook__get_current_page, notebook, return f2__gtk__notebook__get_current_page(this_cause, notebook));
@@ -3844,9 +3727,7 @@ f2ptr raw__gtk__notebook__set_scrollable(f2ptr cause, f2ptr notebook, f2ptr scro
 }
 
 f2ptr f2__gtk__notebook__set_scrollable(f2ptr cause, f2ptr notebook, f2ptr scrollable) {
-  if (! raw__gtk_widget__is_type(cause, notebook)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, notebook);
   return raw__gtk__notebook__set_scrollable(cause, notebook, scrollable);
 }
 def_pcfunk2(gtk__notebook__set_scrollable, notebook, scrollable, return f2__gtk__notebook__set_scrollable(this_cause, notebook, scrollable));
@@ -3873,9 +3754,7 @@ f2ptr raw__gtk__label__new(f2ptr cause, f2ptr text) {
 }
 
 f2ptr f2__gtk__label__new(f2ptr cause, f2ptr text) {
-  if (! raw__string__is_type(cause, text)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, text);
   return raw__gtk__label__new(cause, text);
 }
 def_pcfunk1(gtk__label__new, text, return f2__gtk__label__new(this_cause, text));
@@ -3902,10 +3781,8 @@ f2ptr raw__gtk__label__set_text(f2ptr cause, f2ptr label, f2ptr text) {
 }
 
 f2ptr f2__gtk__label__set_text(f2ptr cause, f2ptr label, f2ptr text) {
-  if ((! raw__gtk_label__is_type(cause, label)) ||
-      (! raw__string__is_type(cause, text))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_label, label);
+  assert_argument_type(string,    text);
   return raw__gtk__label__set_text(cause, label, text);
 }
 def_pcfunk2(gtk__label__set_text, label, text, return f2__gtk__label__set_text(this_cause, label, text));
@@ -3926,9 +3803,7 @@ f2ptr raw__gtk__label__set_selectable(f2ptr cause, f2ptr label, f2ptr selectable
 }
 
 f2ptr f2__gtk__label__set_selectable(f2ptr cause, f2ptr label, f2ptr selectable) {
-  if (! raw__gtk_label__is_type(cause, label)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_label, label);
   return raw__gtk__label__set_selectable(cause, label, selectable);
 }
 def_pcfunk2(gtk__label__set_selectable, label, selectable, return f2__gtk__label__set_selectable(this_cause, label, selectable));
@@ -3977,12 +3852,10 @@ f2ptr raw__gtk__scale__new_with_range(f2ptr cause, f2ptr orientation, f2ptr min,
 }
 
 f2ptr f2__gtk__scale__new_with_range(f2ptr cause, f2ptr orientation, f2ptr min, f2ptr max, f2ptr step) {
-  if ((! raw__gtk_orientation__is_type(cause, orientation)) ||
-      (! raw__double__is_type(         cause, min)) ||
-      (! raw__double__is_type(         cause, max)) ||
-      (! raw__double__is_type(         cause, step))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_orientation, orientation);
+  assert_argument_type(double,          min);
+  assert_argument_type(double,          max);
+  assert_argument_type(double,          step);
   return raw__gtk__scale__new_with_range(cause, orientation, min, max, step);
 }
 def_pcfunk4(gtk__scale__new_with_range, orientation, min, max, step, return f2__gtk__scale__new_with_range(this_cause, orientation, min, max, step));
@@ -4007,10 +3880,8 @@ f2ptr raw__gtk__scale__set_digits(f2ptr cause, f2ptr this, f2ptr digits) {
 }
 
 f2ptr f2__gtk__scale__set_digits(f2ptr cause, f2ptr this, f2ptr digits) {
-  if ((! raw__gtk_scale__is_type(cause, this)) ||
-      (! raw__integer__is_type(cause, digits))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_scale, this);
+  assert_argument_type(integer,   digits);
   return raw__gtk__scale__set_digits(cause, this, digits);
 }
 def_pcfunk2(gtk__scale__set_digits, this, digits, return f2__gtk__scale__set_digits(this_cause, this, digits));
@@ -4043,9 +3914,7 @@ f2ptr raw__gtk__range__get_value(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__gtk__range__get_value(f2ptr cause, f2ptr this) {
-  if (! raw__gtk_range__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_range, this);
   return raw__gtk__range__get_value(cause, this);
 }
 def_pcfunk1(gtk__range__get_value, this, return f2__gtk__range__get_value(this_cause, this));
@@ -4067,10 +3936,8 @@ f2ptr raw__gtk__range__set_value(f2ptr cause, f2ptr this, f2ptr value) {
 }
 
 f2ptr f2__gtk__range__set_value(f2ptr cause, f2ptr this, f2ptr value) {
-  if ((! raw__gtk_range__is_type(cause, this)) ||
-      (! raw__double__is_type(cause, value))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_range, this);
+  assert_argument_type(double,    value);
   return raw__gtk__range__set_value(cause, this, value);
 }
 def_pcfunk2(gtk__range__set_value, this, value, return f2__gtk__range__set_value(this_cause, this, value));
@@ -4093,11 +3960,9 @@ f2ptr raw__gtk__range__set_range(f2ptr cause, f2ptr this, f2ptr min, f2ptr max) 
 }
 
 f2ptr f2__gtk__range__set_range(f2ptr cause, f2ptr this, f2ptr min, f2ptr max) {
-  if ((! raw__gtk_range__is_type(cause, this)) ||
-      (! raw__double__is_type(   cause, min)) ||
-      (! raw__double__is_type(   cause, max))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_range, this);
+  assert_argument_type(double,    min);
+  assert_argument_type(double,    max);
   return raw__gtk__range__set_range(cause, this, min, max);
 }
 def_pcfunk3(gtk__range__set_range, this, min, max, return f2__gtk__range__set_range(this_cause, this, min, max));
@@ -4120,11 +3985,9 @@ f2ptr raw__gtk__range__set_increments(f2ptr cause, f2ptr this, f2ptr step, f2ptr
 }
 
 f2ptr f2__gtk__range__set_increments(f2ptr cause, f2ptr this, f2ptr step, f2ptr page) {
-  if ((! raw__gtk_range__is_type(cause, this)) ||
-      (! raw__double__is_type(   cause, step)) ||
-      (! raw__double__is_type(   cause, page))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_range, this);
+  assert_argument_type(double,    step);
+  assert_argument_type(double,    page);
   return raw__gtk__range__set_increments(cause, this, step, page);
 }
 def_pcfunk3(gtk__range__set_increments, this, step, page, return f2__gtk__range__set_increments(this_cause, this, step, page));
@@ -4169,9 +4032,7 @@ f2ptr raw__gtk__entry__get_text(f2ptr cause, f2ptr entry) {
 }
 
 f2ptr f2__gtk__entry__get_text(f2ptr cause, f2ptr entry) {
-  if (! raw__gtk_entry__is_type(cause, entry)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_entry, entry);
   return raw__gtk__entry__get_text(cause, entry);
 }
 def_pcfunk1(gtk__entry__get_text, entry, return f2__gtk__entry__get_text(this_cause, entry));
@@ -4197,10 +4058,8 @@ f2ptr raw__gtk__entry__set_text(f2ptr cause, f2ptr entry, f2ptr text) {
 }
 
 f2ptr f2__gtk__entry__set_text(f2ptr cause, f2ptr entry, f2ptr text) {
-  if ((! raw__gtk_entry__is_type(cause, entry)) ||
-      (! raw__string__is_type(cause, text))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_entry, entry);
+  assert_argument_type(string,    text);
   return raw__gtk__entry__set_text(cause, entry, text);
 }
 def_pcfunk2(gtk__entry__set_text, entry, text, return f2__gtk__entry__set_text(this_cause, entry, text));
@@ -4223,9 +4082,7 @@ f2ptr raw__gtk__image__new_from_pixbuf(f2ptr cause, f2ptr pixbuf) {
 }
 
 f2ptr f2__gtk__image__new_from_pixbuf(f2ptr cause, f2ptr pixbuf) {
-  if (! raw__gdk_pixbuf__is_type(cause, pixbuf)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gdk_pixbuf, pixbuf);
   return raw__gtk__image__new_from_pixbuf(cause, pixbuf);
 }
 def_pcfunk1(gtk__image__new_from_pixbuf, pixbuf, return f2__gtk__image__new_from_pixbuf(this_cause, pixbuf));
@@ -4247,10 +4104,8 @@ f2ptr raw__gtk__image__set_from_pixbuf(f2ptr cause, f2ptr image, f2ptr pixbuf) {
 }
 
 f2ptr f2__gtk__image__set_from_pixbuf(f2ptr cause, f2ptr image, f2ptr pixbuf) {
-  if ((! raw__gtk_image__is_type( cause, image)) ||
-      (! raw__gdk_pixbuf__is_type(cause, pixbuf))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_image,  image);
+  assert_argument_type(gdk_pixbuf, pixbuf);
   return raw__gtk__image__set_from_pixbuf(cause, image, pixbuf);
 }
 def_pcfunk2(gtk__image__set_from_pixbuf, image, pixbuf, return f2__gtk__image__set_from_pixbuf(this_cause, image, pixbuf));
@@ -4295,10 +4150,8 @@ f2ptr raw__gtk__table__new(f2ptr cause, f2ptr rows, f2ptr columns, f2ptr homogen
 }
 
 f2ptr f2__gtk__table__new(f2ptr cause, f2ptr rows, f2ptr columns, f2ptr homogenous) {
-  if ((! raw__integer__is_type(cause, rows)) ||
-      (! raw__integer__is_type(cause, columns))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(integer, rows);
+  assert_argument_type(integer, columns);
   return raw__gtk__table__new(cause, rows, columns, homogenous);
 }
 def_pcfunk3(gtk__table__new, rows, columns, homogenous, return f2__gtk__table__new(this_cause, rows, columns, homogenous));
@@ -4326,16 +4179,14 @@ f2ptr raw__gtk__table__attach(f2ptr cause, f2ptr table, f2ptr child, f2ptr left_
 }
 
 f2ptr f2__gtk__table__attach(f2ptr cause, f2ptr table, f2ptr child, f2ptr left_attach, f2ptr right_attach, f2ptr top_attach, f2ptr bottom_attach, f2ptr xpadding, f2ptr ypadding) {
-  if ((! raw__gtk_widget__is_type(cause, table)) ||
-      (! raw__gtk_widget__is_type(cause, child)) ||
-      (! raw__integer__is_type(cause, left_attach)) ||
-      (! raw__integer__is_type(cause, right_attach)) ||
-      (! raw__integer__is_type(cause, top_attach)) ||
-      (! raw__integer__is_type(cause, bottom_attach)) ||
-      (! raw__integer__is_type(cause, xpadding)) ||
-      (! raw__integer__is_type(cause, ypadding))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, table);
+  assert_argument_type(gtk_widget, child);
+  assert_argument_type(integer,    left_attach);
+  assert_argument_type(integer,    right_attach);
+  assert_argument_type(integer,    top_attach);
+  assert_argument_type(integer,    bottom_attach);
+  assert_argument_type(integer,    xpadding);
+  assert_argument_type(integer,    ypadding);
   return raw__gtk__table__attach(cause, table, child, left_attach, right_attach, top_attach, bottom_attach, xpadding, ypadding);
 }
 def_pcfunk8(gtk__table__attach, table, child, left_attach, right_attach, top_attach, bottom_attach, xpadding, ypadding, return f2__gtk__table__attach(this_cause, table, child, left_attach, right_attach, top_attach, bottom_attach, xpadding, ypadding));
@@ -4369,9 +4220,7 @@ f2ptr raw__gtk__frame__new(f2ptr cause, f2ptr label) {
 }
 
 f2ptr f2__gtk__frame__new(f2ptr cause, f2ptr label) {
-  if (label && (! raw__string__is_type(cause, label))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type_or_nil(string, label);
   return raw__gtk__frame__new(cause, label);
 }
 def_pcfunk1(gtk__frame__new, label, return f2__gtk__frame__new(this_cause, label));
@@ -4414,10 +4263,8 @@ f2ptr raw__gtk__menu_bar__append(f2ptr cause, f2ptr menu_bar, f2ptr append_widge
 }
 
 f2ptr f2__gtk__menu_bar__append(f2ptr cause, f2ptr menu_bar, f2ptr append_widget) {
-  if ((! raw__gtk_menu_bar__is_type(cause, menu_bar)) ||
-      (! raw__gtk_widget__is_type(cause, append_widget))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_menu_bar, menu_bar);
+  assert_argument_type(gtk_widget,   append_widget);
   return raw__gtk__menu_bar__append(cause, menu_bar, append_widget);
 }
 def_pcfunk2(gtk__menu_bar__append, menu_bar, append_widget, return f2__gtk__menu_bar__append(this_cause, menu_bar, append_widget));
@@ -4446,9 +4293,7 @@ f2ptr raw__gtk__menu_item__new(f2ptr cause, f2ptr label) {
 }
 
 f2ptr f2__gtk__menu_item__new(f2ptr cause, f2ptr label) {
-  if (! raw__string__is_type(cause, label)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, label);
   return raw__gtk__menu_item__new(cause, label);
 }
 def_pcfunk1(gtk__menu_item__new, label, return f2__gtk__menu_item__new(this_cause, label));
@@ -4470,10 +4315,8 @@ f2ptr raw__gtk__menu_item__set_submenu(f2ptr cause, f2ptr widget, f2ptr submenu)
 }
 
 f2ptr f2__gtk__menu_item__set_submenu(f2ptr cause, f2ptr widget, f2ptr submenu) {
-  if ((! raw__gtk_widget__is_type(cause, widget)) ||
-      (! raw__gtk_widget__is_type(cause, submenu))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
+  assert_argument_type(gtk_widget, submenu);
   return raw__gtk__menu_item__set_submenu(cause, widget, submenu);
 }
 def_pcfunk2(gtk__menu_item__set_submenu, widget, submenu, return f2__gtk__menu_item__set_submenu(this_cause, widget, submenu));
@@ -4502,9 +4345,7 @@ f2ptr raw__gtk__check_menu_item__new(f2ptr cause, f2ptr label) {
 }
 
 f2ptr f2__gtk__check_menu_item__new(f2ptr cause, f2ptr label) {
-  if (! raw__string__is_type(cause, label)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, label);
   return raw__gtk__check_menu_item__new(cause, label);
 }
 def_pcfunk1(gtk__check_menu_item__new, label, return f2__gtk__check_menu_item__new(this_cause, label));
@@ -4524,9 +4365,7 @@ f2ptr raw__gtk__check_menu_item__get_active(f2ptr cause, f2ptr widget) {
 }
 
 f2ptr f2__gtk__check_menu_item__get_active(f2ptr cause, f2ptr widget) {
-  if (! raw__gtk_widget__is_type(cause, widget)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
   return raw__gtk__check_menu_item__get_active(cause, widget);
 }
 def_pcfunk1(gtk__check_menu_item__get_active, widget, return f2__gtk__check_menu_item__get_active(this_cause, widget));
@@ -4547,9 +4386,7 @@ f2ptr raw__gtk__check_menu_item__set_active(f2ptr cause, f2ptr widget, f2ptr act
 }
 
 f2ptr f2__gtk__check_menu_item__set_active(f2ptr cause, f2ptr widget, f2ptr active) {
-  if (! raw__gtk_widget__is_type(cause, widget)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_widget, widget);
   return raw__gtk__check_menu_item__set_active(cause, widget, active);
 }
 def_pcfunk2(gtk__check_menu_item__set_active, widget, active, return f2__gtk__check_menu_item__set_active(this_cause, widget, active));
@@ -4592,10 +4429,8 @@ f2ptr raw__gtk__menu__append(f2ptr cause, f2ptr menu, f2ptr append_widget) {
 }
 
 f2ptr f2__gtk__menu__append(f2ptr cause, f2ptr menu, f2ptr append_widget) {
-  if ((! raw__gtk_menu__is_type(cause, menu)) ||
-      (! raw__gtk_widget__is_type(cause, append_widget))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_menu,   menu);
+  assert_argument_type(gtk_widget, append_widget);
   return raw__gtk__menu__append(cause, menu, append_widget);
 }
 def_pcfunk2(gtk__menu__append, menu, append_widget, return f2__gtk__menu__append(this_cause, menu, append_widget));
@@ -4623,9 +4458,7 @@ f2ptr raw__gtk__file_chooser_dialog__new_for_file_open(f2ptr cause, f2ptr parent
 }
 
 f2ptr f2__gtk__file_chooser_dialog__new_for_file_open(f2ptr cause, f2ptr parent_window) {
-  if ((parent_window != nil) && (! raw__gtk_widget__is_type(cause, parent_window))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type_or_nil(gtk_widget, parent_window);
   return raw__gtk__file_chooser_dialog__new_for_file_open(cause, parent_window);
 }
 def_pcfunk1(gtk__file_chooser_dialog__new_for_file_open, parent_window, return f2__gtk__file_chooser_dialog__new_for_file_open(this_cause, parent_window));
@@ -4651,9 +4484,7 @@ f2ptr raw__gtk__file_chooser_dialog__new_for_folder_select(f2ptr cause, f2ptr pa
 }
 
 f2ptr f2__gtk__file_chooser_dialog__new_for_folder_select(f2ptr cause, f2ptr parent_window) {
-  if ((parent_window != nil) && (! raw__gtk_widget__is_type(cause, parent_window))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type_or_nil(gtk_widget, parent_window);
   return raw__gtk__file_chooser_dialog__new_for_folder_select(cause, parent_window);
 }
 def_pcfunk1(gtk__file_chooser_dialog__new_for_folder_select, parent_window, return f2__gtk__file_chooser_dialog__new_for_folder_select(this_cause, parent_window));
@@ -4679,9 +4510,7 @@ f2ptr raw__gtk__file_chooser_dialog__new_for_file_save(f2ptr cause, f2ptr parent
 }
 
 f2ptr f2__gtk__file_chooser_dialog__new_for_file_save(f2ptr cause, f2ptr parent_window) {
-  if ((parent_window != nil) && (! raw__gtk_widget__is_type(cause, parent_window))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type_or_nil(gtk_widget, parent_window);
   return raw__gtk__file_chooser_dialog__new_for_file_save(cause, parent_window);
 }
 def_pcfunk1(gtk__file_chooser_dialog__new_for_file_save, parent_window, return f2__gtk__file_chooser_dialog__new_for_file_save(this_cause, parent_window));
@@ -4707,10 +4536,8 @@ f2ptr raw__gtk__file_chooser_dialog__set_current_folder(f2ptr cause, f2ptr this,
 }
 
 f2ptr f2__gtk__file_chooser_dialog__set_current_folder(f2ptr cause, f2ptr this, f2ptr filename) {
-  if ((! raw__gtk_file_chooser_dialog__is_type(cause, this)) ||
-      (! raw__string__is_type(cause, filename))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_file_chooser_dialog, this);
+  assert_argument_type(string,                  filename);
   return raw__gtk__file_chooser_dialog__set_current_folder(cause, this, filename);
 }
 def_pcfunk2(gtk__file_chooser_dialog__set_current_folder, this, filename, return f2__gtk__file_chooser_dialog__set_current_folder(this_cause, this, filename));
@@ -4736,10 +4563,8 @@ f2ptr raw__gtk__file_chooser_dialog__set_current_name(f2ptr cause, f2ptr this, f
 }
 
 f2ptr f2__gtk__file_chooser_dialog__set_current_name(f2ptr cause, f2ptr this, f2ptr current_name) {
-  if ((! raw__gtk_file_chooser_dialog__is_type(cause, this)) ||
-      (! raw__string__is_type(cause, current_name))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_file_chooser_dialog, this);
+  assert_argument_type(string,                  current_name);
   return raw__gtk__file_chooser_dialog__set_current_name(cause, this, current_name);
 }
 def_pcfunk2(gtk__file_chooser_dialog__set_current_name, this, current_name, return f2__gtk__file_chooser_dialog__set_current_name(this_cause, this, current_name));
@@ -4765,10 +4590,8 @@ f2ptr raw__gtk__file_chooser_dialog__set_filename(f2ptr cause, f2ptr this, f2ptr
 }
 
 f2ptr f2__gtk__file_chooser_dialog__set_filename(f2ptr cause, f2ptr this, f2ptr filename) {
-  if ((! raw__gtk_file_chooser_dialog__is_type(cause, this)) ||
-      (! raw__string__is_type(cause, filename))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_file_chooser_dialog, this);
+  assert_argument_type(string,                  filename);
   return raw__gtk__file_chooser_dialog__set_filename(cause, this, filename);
 }
 def_pcfunk2(gtk__file_chooser_dialog__set_filename, this, filename, return f2__gtk__file_chooser_dialog__set_filename(this_cause, this, filename));
@@ -4788,9 +4611,7 @@ f2ptr raw__gtk__file_chooser_dialog__get_filenames(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__gtk__file_chooser_dialog__get_filenames(f2ptr cause, f2ptr this) {
-  if (! raw__gtk_file_chooser_dialog__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_file_chooser_dialog, this);
   return raw__gtk__file_chooser_dialog__get_filenames(cause, this);
 }
 def_pcfunk1(gtk__file_chooser_dialog__get_filenames, this, return f2__gtk__file_chooser_dialog__get_filenames(this_cause, this));
@@ -4811,9 +4632,7 @@ f2ptr raw__gtk__file_chooser_dialog__set_select_multiple(f2ptr cause, f2ptr this
 }
 
 f2ptr f2__gtk__file_chooser_dialog__set_select_multiple(f2ptr cause, f2ptr this, f2ptr select_multiple) {
-  if (! raw__gtk_file_chooser_dialog__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_file_chooser_dialog, this);
   return raw__gtk__file_chooser_dialog__set_select_multiple(cause, this, select_multiple);
 }
 def_pcfunk2(gtk__file_chooser_dialog__set_select_multiple, this, select_multiple, return f2__gtk__file_chooser_dialog__set_select_multiple(this_cause, this, select_multiple));
@@ -4844,11 +4663,9 @@ f2ptr raw__gtk__file_chooser_dialog__add_file_filter_pattern(f2ptr cause, f2ptr 
 }
 
 f2ptr f2__gtk__file_chooser_dialog__add_file_filter_pattern(f2ptr cause, f2ptr this, f2ptr name, f2ptr pattern) {
-  if ((! raw__gtk_file_chooser_dialog__is_type(cause, this)) ||
-      (! raw__string__is_type(cause, name)) ||
-      (! raw__string__is_type(cause, pattern))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_file_chooser_dialog, this);
+  assert_argument_type(string,                  name);
+  assert_argument_type(string,                  pattern);
   return raw__gtk__file_chooser_dialog__add_file_filter_pattern(cause, this, name, pattern);
 }
 def_pcfunk3(gtk__file_chooser_dialog__add_file_filter_pattern, this, name, pattern, return f2__gtk__file_chooser_dialog__add_file_filter_pattern(this_cause, this, name, pattern));
@@ -4870,10 +4687,8 @@ f2ptr raw__gtk__file_chooser_dialog__set_preview_widget(f2ptr cause, f2ptr this,
 }
 
 f2ptr f2__gtk__file_chooser_dialog__set_preview_widget(f2ptr cause, f2ptr this, f2ptr widget) {
-  if ((! raw__gtk_file_chooser_dialog__is_type(cause, this)) ||
-      (! raw__gtk_widget__is_type(cause, widget))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_file_chooser_dialog, this);
+  assert_argument_type(gtk_widget,              widget);
   return raw__gtk__file_chooser_dialog__set_preview_widget(cause, this, widget);
 }
 def_pcfunk2(gtk__file_chooser_dialog__set_preview_widget, this, widget, return f2__gtk__file_chooser_dialog__set_preview_widget(this_cause, this, widget));
@@ -4894,9 +4709,7 @@ f2ptr raw__gtk__file_chooser_dialog__set_preview_widget_active(f2ptr cause, f2pt
 }
 
 f2ptr f2__gtk__file_chooser_dialog__set_preview_widget_active(f2ptr cause, f2ptr this, f2ptr preview_widget_active) {
-  if (! raw__gtk_file_chooser_dialog__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_file_chooser_dialog, this);
   return raw__gtk__file_chooser_dialog__set_preview_widget_active(cause, this, preview_widget_active);
 }
 def_pcfunk2(gtk__file_chooser_dialog__set_preview_widget_active, this, preview_widget_active, return f2__gtk__file_chooser_dialog__set_preview_widget_active(this_cause, this, preview_widget_active));
@@ -4924,9 +4737,7 @@ f2ptr raw__gtk__file_chooser_dialog__get_preview_filename(f2ptr cause, f2ptr thi
 }
 
 f2ptr f2__gtk__file_chooser_dialog__get_preview_filename(f2ptr cause, f2ptr this) {
-  if (! raw__gtk_file_chooser_dialog__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(gtk_file_chooser_dialog, this);
   return raw__gtk__file_chooser_dialog__get_preview_filename(cause, this);
 }
 def_pcfunk1(gtk__file_chooser_dialog__get_preview_filename, this, return f2__gtk__file_chooser_dialog__get_preview_filename(this_cause, this));
@@ -4945,9 +4756,7 @@ f2ptr raw__gtk__gdk_keyval_to_unicode(f2ptr cause, f2ptr keyval) {
 }
 
 f2ptr f2__gtk__gdk_keyval_to_unicode(f2ptr cause, f2ptr keyval) {
-  if (! raw__integer__is_type(cause, keyval)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(integer, keyval);
   return raw__gtk__gdk_keyval_to_unicode(cause, keyval);
 }
 def_pcfunk1(gtk__gdk_keyval_to_unicode, keyval, return f2__gtk__gdk_keyval_to_unicode(this_cause, keyval));

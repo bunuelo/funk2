@@ -220,10 +220,8 @@ f2ptr raw__graph_edit_sequence__terminal_print_with_frame(f2ptr cause, f2ptr thi
 }
 
 f2ptr f2__graph_edit_sequence__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((! raw__graph_edit_sequence__is_type(cause, this)) &&
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(graph_edit_sequence,  this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__graph_edit_sequence__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(graph_edit_sequence__terminal_print_with_frame, this, terminal_print_frame, return f2__graph_edit_sequence__terminal_print_with_frame(this_cause, this, terminal_print_frame));
@@ -506,10 +504,9 @@ f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f
 }
 
 f2ptr f2__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph, f2ptr cost_function) {
-  if ((! raw__graph_decomposition_lattice__is_type(cause, this)) ||
-      (! raw__graph__is_type(cause, graph))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(       graph_decomposition_lattice, this);
+  assert_argument_type(       graph,                       graph);
+  assert_argument_type_or_nil(funkable,                    cost_function);
   return raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(cause, this, graph, cost_function);
 }
 def_pcfunk3(graph_decomposition_lattice__error_correcting_subgraph_isomorphisms, this, graph, cost_function, return f2__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(this_cause, this, graph, cost_function));

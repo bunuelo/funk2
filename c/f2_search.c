@@ -33,12 +33,10 @@ f2ptr f2__search_node__heuristic_value(f2ptr cause, f2ptr this) {return raw__arr
 
 
 f2ptr f2__search(f2ptr fiber, f2ptr cause, f2ptr start_states, f2ptr expand_funk, f2ptr beam_width, f2ptr heuristic_funk) {
-  if ((! raw__cons__is_type(    cause, start_states)) ||
-      (! raw__funkable__is_type(cause, expand_funk)) ||
-      (! raw__integer__is_type( cause, beam_width)) ||
-      (! raw__funkable__is_type(cause, heuristic_funk))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(conslist, start_states);
+  assert_argument_type(funkable, expand_funk);
+  assert_argument_type(integer,  beam_width);
+  assert_argument_type(funkable, heuristic_funk);
   s64   search_nodes__count = 0;
   f2ptr search_nodes        = nil;
   {

@@ -423,33 +423,6 @@ f2ptr f2__frame__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(frame__part_not_contained_by, this, that, return f2__frame__part_not_contained_by(this_cause, this, that));
 
-void raw__frame__as__simple_graph__map_funk(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
-  f2ptr this      = raw__array__elt(cause, aux_data, 0);
-  f2ptr graph     = raw__array__elt(cause, aux_data, 1);
-  f2ptr var_value = f2__frame__lookup_var_value(cause, this, slot_name, __funk2.primobject__frame.type_variable_not_defined__symbol);
-  f2__simple_graph__add_edge(cause, graph, slot_name, this, var_value);
-}
-
-f2ptr raw__frame__as__simple_graph(f2ptr cause, f2ptr this) {
-  f2ptr graph    = f2__simple_graph__new(cause);
-  f2ptr aux_data = raw__array__new(cause, 2);
-  raw__array__elt__set(cause, aux_data, 0, this);
-  raw__array__elt__set(cause, aux_data, 1, graph);
-  f2ptr result = raw__frame__type_var__mapc_keys(cause, this, __funk2.primobject__frame.variable__symbol, raw__frame__as__simple_graph__map_funk, aux_data);
-  if (raw__larva__is_type(cause, result)) {
-    return result;
-  }
-  f2__simple_graph__make_rooted(cause, graph, this);
-  return graph;
-}
-
-f2ptr f2__frame__as__simple_graph(f2ptr cause, f2ptr this) {
-  assert_argument_type(frame, this);
-  return raw__frame__as__simple_graph(cause, this);
-}
-def_pcfunk1(frame__as__simple_graph, this, return f2__frame__as__simple_graph(this_cause, this));
-
-
 f2ptr raw__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash) {
   f2ptr this_node = f2__ptypehash__lookup(cause, node_ptypehash, this);
   if (this_node == nil) {
@@ -848,7 +821,6 @@ f2ptr f2frame__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.equals_hash_value__loop_free__funk);}
   {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.equals_hash_value__funk);}
   {char* slot_name = "part_not_contained_by";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.part_not_contained_by__funk);}
-  {char* slot_name = "as-simple_graph";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.as__simple_graph__funk);}
   {char* slot_name = "add_to_graph_with_ptypehash"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.add_to_graph_with_ptypehash__funk);}
   {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.terminal_print_with_frame__funk);}
   return this;
@@ -919,8 +891,6 @@ void f2__primobject_frame__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(frame__equals_hash_value, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.equals_hash_value__funk = never_gc(cfunk);}
   {char* symbol_str = "part_not_contained_by"; __funk2.globalenv.object_type.primobject.primobject_type_frame.part_not_contained_by__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__part_not_contained_by, this, that, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.part_not_contained_by__funk = never_gc(cfunk);}
-  {char* symbol_str = "as-simple_graph"; __funk2.globalenv.object_type.primobject.primobject_type_frame.as__simple_graph__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(frame__as__simple_graph, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.as__simple_graph__funk = never_gc(cfunk);}
   {char* symbol_str = "add_to_graph_with_ptypehash"; __funk2.globalenv.object_type.primobject.primobject_type_frame.add_to_graph_with_ptypehash__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(frame__add_to_graph_with_ptypehash, this, graph, node_ptypehash, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.add_to_graph_with_ptypehash__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_frame.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

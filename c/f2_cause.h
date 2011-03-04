@@ -27,7 +27,7 @@
 // cause
 
 typedef struct funk2_object_type__cause__slot_s funk2_object_type__cause__slot_t;
-declare_object_type_18_slot(cause,
+declare_object_type_15_slot(cause,
 			    fibers_mutex,
 			    fibers,
 			    frame,
@@ -42,9 +42,6 @@ declare_object_type_18_slot(cause,
 			    complete_funk_callbacks,
 			    read_other_memory_callbacks,
 			    write_other_memory_callbacks,
-			    event_graph_mutex,
-			    event_graph,
-			    event_graph_last_event,
 			    critics,
 			    
 			    f2ptr type_var_defined__symbol;
@@ -63,18 +60,6 @@ declare_object_type_18_slot(cause,
 			    f2ptr lookup__funk;
 			    f2ptr lookup__funk__symbol;
 			    f2ptr lookup__funk__funk;
-			    f2ptr add_graph_event__funk__symbol;
-			    f2ptr add_graph_event__funk__funk;
-			    f2ptr add_graph_event__endfunk__symbol;
-			    f2ptr add_graph_event__endfunk__funk;
-			    f2ptr add_graph_event__branch__symbol;
-			    f2ptr add_graph_event__branch__funk;
-			    f2ptr add_graph_event__complete_funk__symbol;
-			    f2ptr add_graph_event__complete_funk__funk;
-			    f2ptr add_graph_event__read_other_memory__symbol;
-			    f2ptr add_graph_event__read_other_memory__funk;
-			    f2ptr add_graph_event__write_other_memory__symbol;
-			    f2ptr add_graph_event__write_other_memory__funk;
 			    f2ptr terminal_print_with_frame__symbol;
 			    f2ptr terminal_print_with_frame__funk;
 			    );
@@ -92,7 +77,7 @@ declare_object_type_18_slot(cause,
 #define cause__allocate_traced_arrays__default_value (nil)
 //#define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
 
-declare_primobject_18_slot(cause,
+declare_primobject_15_slot(cause,
 			   fibers_mutex,
 			   fibers,
 			   frame,
@@ -107,9 +92,6 @@ declare_primobject_18_slot(cause,
 			   complete_funk_callbacks,
 			   read_other_memory_callbacks,
 			   write_other_memory_callbacks,
-			   event_graph_mutex,
-			   event_graph,
-			   event_graph_last_event,
 			   critics
 			   );
 

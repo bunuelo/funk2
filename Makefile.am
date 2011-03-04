@@ -354,7 +354,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_serialize.c \
   c/f2_set.c \
   c/f2_signal.c \
-  c/f2_simple_graph.c \
   c/f2_socket.c \
   c/f2_socket_client.c \
   c/f2_socket_server.c \

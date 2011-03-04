@@ -38,7 +38,6 @@
 #include "f2_object_lattice.h"
 #include "f2_primobject__hash.h"
 #include "f2_cause.h"
-#include "f2_simple_graph.h"
 #include "f2_perception_lattice.h"
 #include "f2_primobject__largeinteger.h"
 #include "f2_primobject__redblacktree.h"
@@ -133,14 +132,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__object_lattice_node__slot_t              primobject_type_object_lattice_node;
   funk2_object_type__hash__slot_t                             primobject_type_hash;
   funk2_object_type__cause__slot_t                            primobject_type_cause;
-  funk2_object_type__simple_graph_node__slot_t                primobject_type_simple_graph_node;
-  funk2_object_type__simple_graph_edge__slot_t                primobject_type_simple_graph_edge;
-  funk2_object_type__simple_graph_edge_type__slot_t           primobject_type_simple_graph_edge_type;
-  funk2_object_type__simple_graph__slot_t                     primobject_type_simple_graph;
   funk2_object_type__trans__slot_t                            primobject_type_trans;
-  funk2_object_type__simple_graph_variable__slot_t            primobject_type_simple_graph_variable;
-  funk2_object_type__simple_graph_map__slot_t                 primobject_type_simple_graph_map;
-  funk2_object_type__pattern_simple_graph__slot_t             primobject_type_pattern_simple_graph;
   funk2_object_type__largeinteger__slot_t                     primobject_type_largeinteger;
   funk2_object_type__redblacktree__slot_t                     primobject_type_redblacktree;
   funk2_object_type__redblacktree_node__slot_t                primobject_type_redblacktree_node;

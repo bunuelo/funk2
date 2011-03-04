@@ -367,9 +367,7 @@ s64 raw__char__decimal_digit_value(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__char__decimal_digit_value(f2ptr cause, f2ptr this) {
-  if (! raw__char__is_decimal_digit(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(char, this);
   return f2integer__new(cause, raw__char__decimal_digit_value(cause, this));
 }
 
@@ -391,9 +389,7 @@ s64 raw__char__hex_digit_value(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__char__hex_digit_value(f2ptr cause, f2ptr this) {
-  if (! raw__char__is_hex_digit(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(char, this);
   return f2integer__new(cause, raw__char__hex_digit_value(cause, this));
 }
 
@@ -1010,15 +1006,7 @@ f2ptr f2__stream__try_read_symbol(f2ptr cause, f2ptr stream) {
 
 
 f2ptr f2__stream__try_read(f2ptr cause, f2ptr stream) {
-  if (stream == nil) {
-    printf("\nraw__read: stream is nil."); fflush(stdout);
-    return f2larva__new(cause, 1, nil);
-  }
-  if (! raw__stream__is_type(cause, stream)) {
-    printf("\nraw__read: stream is not stream."); fflush(stdout);
-    f2__print(cause, stream);
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(stream, stream);
   
   f2ptr begin_rewind_length = f2stream__rewind_length(stream, cause);
   if (! raw__integer__is_type(cause, begin_rewind_length)) {

@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deftypefunk simple_graph get as-dot_code [] [simple_graph-as-dot_code this]]
-
 [defunk safe-system [command]
   [if [!= 0 [system command]]
       [error `system [frame command command]]]]
@@ -57,9 +55,6 @@
 	  temp_image]]]]]
 
 
-[deftypefunk simple_graph execute gview []
-  [dot_code-gview [get this as-dot_code]]]
-
 [deftypefunk graph execute gview []
   [dot_code-gview [get this as-dot_code]]]
 
@@ -68,68 +63,5 @@
 
 [deftypefunk frame execute gview       [] [have [get this as-graph] gview]]
 [deftypefunk frame get     as-dot_code [] [get  [get this as-graph] as-dot_code]]
-
-
-[defunk simple_graph-test_gview []
-  [let [[this [new simple_graph]]]
-    [have this add_edge `contains `the-bucket `the-mud]
-    [have this add_edge `are-made-dirty-by `my-clothes `the-mud]
-    [have this gview]]]
-
-`[[[[
-    [graphviz-node_color '#0000CC']
-				    [graphviz-edge_color '#0000CC']
-				    [graphviz-node 'i_deliberative' 'I\\n(deliberative)']
-				    [graphviz-box_node 'i_deliberative_want_the_bucket_contains_the_mud' 'want\\n(deliberative)']
-				    [graphviz-edge_tail_head 'crow' 'none']
-				    [graphviz-edge 'i_deliberative' 'i_deliberative_want_the_bucket_contains_the_mud']
-				    [graphviz-edge_tail_head 'none' 'normal']
-				    [graphviz-edge 'i_deliberative_want_the_bucket_contains_the_mud' 'the_bucket_contains_the_mud']
-				    [graphviz-box_node 'i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud' 'avoid\\n(deliberative)']
-				    [graphviz-edge_tail_head 'crow' 'none']
-				    [graphviz-edge 'i_deliberative' 'i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud']
-				    [graphviz-edge_tail_head 'none' 'normal']
-				    [graphviz-edge 'i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud' 'my_clothes_are_made_dirty_by_the_mud']
-				    [graphviz-node_color '#008800']
-				    [graphviz-edge_color '#008800']
-				    [graphviz-node 'i_reflective' 'I\\n(reflective)']
-				    [graphviz-box_node 'i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud' 'focus-on\\n(reflective)']
-				    [graphviz-edge_tail_head 'crow' 'none']
-				    [graphviz-edge 'i_reflective' 'i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud']
-				    [graphviz-edge_tail_head 'none' 'normal']
-				    [graphviz-edge 'i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud' 'i_deliberative_want_the_bucket_contains_the_mud']
-				    [graphviz-box_node 'i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud' 'ignore\\n(reflective)']
-				    [graphviz-edge_tail_head 'crow' 'none']
-				    [graphviz-edge 'i_reflective' 'i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud']
-				    [graphviz-edge_tail_head 'none' 'normal']
-				    [graphviz-edge 'i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud' 'i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud']
-				    [graphviz-node_color '#CC0000']
-				    [graphviz-edge_color '#CC0000']
-				    [graphviz-node 'i_self_reflective' 'I\\n(self-reflective)']
-				    [graphviz-box_node 'i_self_reflective_would_i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud' 'would\\n(self-reflective)']
-				    [graphviz-edge_tail_head 'crow' 'none']
-				    [graphviz-edge 'i_self_reflective' 'i_self_reflective_would_i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud']
-				    [graphviz-edge_tail_head 'none' 'normal']
-				    [graphviz-edge 'i_self_reflective_would_i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud' 'i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud']
-				    [graphviz-box_node 'i_self_reflective_would_i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud' 'would\\n(self-reflective)']
-				    [graphviz-edge_tail_head 'crow' 'none']
-				    [graphviz-edge 'i_self_reflective' 'i_self_reflective_would_i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud']
-				    [graphviz-edge_tail_head 'none' 'normal']
-				    [graphviz-edge 'i_self_reflective_would_i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud' 'i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud']
-				    [graphviz-node_color '#CC00CC']
-				    [graphviz-edge_color '#CC00CC']
-				    [graphviz-node 'my_mother_self_conscious' 'my-mother\\n(self-conscious)']
-				    [graphviz-box_node 'my_mother_self_conscious_praises_i_self_reflective_would_i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud' 'praises\\n(self-conscious)']
-				    [graphviz-edge_tail_head 'crow' 'none']
-				    [graphviz-edge 'my_mother_self_conscious' 'my_mother_self_conscious_praises_i_self_reflective_would_i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud']
-				    [graphviz-edge_tail_head 'none' 'normal']
-				    [graphviz-edge 'my_mother_self_conscious_praises_i_self_reflective_would_i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud' 'i_self_reflective_would_i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud']
-				    [graphviz-box_node 'my_mother_self_conscious_scolds_i_self_reflective_would_i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud' 'scolds\\n(self-conscious)']
-				    [graphviz-edge_tail_head 'crow' 'none']
-				    [graphviz-edge 'my_mother_self_conscious' 'my_mother_self_conscious_scolds_i_self_reflective_would_i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud']
-				    [graphviz-edge_tail_head 'none' 'normal']
-				    [graphviz-edge 'my_mother_self_conscious_scolds_i_self_reflective_would_i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud' 'i_self_reflective_would_i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud']
-				    ]]
-    ]]
 
 

@@ -227,13 +227,13 @@ export_cefunk0(frame_ball__core_extension__ping, 0, "");
 
 f2ptr f2__frame_ball__core_extension__initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "frame_ball"), f2__frame_ball_type__new(cause));
-  printf("\nframe_ball initialized."); fflush(stdout);
+  status("frame_ball initialized.");
   return nil;
 }
 export_cefunk0(frame_ball__core_extension__initialize, 0, "");
 
 f2ptr f2__frame_ball__core_extension__destroy(f2ptr cause) {
-  printf("\nframe_ball destroyed."); fflush(stdout);
+  status("frame_ball destroyed.");
   return nil;
 }
 export_cefunk0(frame_ball__core_extension__destroy, 0, "");

@@ -298,7 +298,8 @@ f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
 def_pcfunk1(pathname__scan_for_filenames, pathname, return f2__pathname__scan_for_filenames(this_cause, pathname));
 
 f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname, f2ptr extension) {
-  assert_argument_type(string, this);
+  assert_argument_type(string, pathname);
+  assert_argument_type(string, extension);
   f2ptr filenames = f2__pathname__scan_for_filenames(cause, pathname);
   if (raw__larva__is_type(cause, filenames)) {
     return filenames;

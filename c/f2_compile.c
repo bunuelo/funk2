@@ -1502,10 +1502,10 @@ f2ptr f2__demetropolize_once(f2ptr simple_cause, f2ptr fiber, f2ptr env, f2ptr e
 }
 
 f2ptr f2__demetropolize_full__with_status(f2ptr simple_cause, f2ptr fiber, f2ptr env, f2ptr exp) {
-  assert_argument_type(fiber, fiber);
-  
   release__assert(__funk2.compile.f2__demetropolize_full__symbol != -1, nil, "__funk2.compile.f2__demetropolize_full__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __funk2.compile.f2__demetropolize_full__symbol, f2cons__new(simple_cause, exp, nil));
+  assert_argument_type(fiber, fiber);
+  
   if (raw__cons__is_type(cause, exp)) {
     f2ptr values = nil;
     {

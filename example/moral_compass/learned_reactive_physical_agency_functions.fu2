@@ -765,7 +765,7 @@ test moving forward speed
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]
-	 [loaf_and_butter_trigger]
+	 [loaf_and_butter_trigger]]
     [print [get_left_hand_object_name mind]]
     [print [get_right_hand_object_name mind]]
     [if [null [and [string-contains [get [get_left_hand_object_name mind] as-string]'butter']
@@ -788,7 +788,7 @@ test moving forward speed
 	[mind-wait_to_call mind learned_reactive physical hold_with_left_hand `knife]
       [have this-resource think_to_self 'not doing anything because cannot find knife']]
     [mind-wait_to_call mind learned_reactive physical slice_toast]
-    ]]]
+    ]]
 
 
 '*******************demo**********************************************'

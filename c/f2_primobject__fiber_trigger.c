@@ -40,9 +40,7 @@ f2ptr raw__fiber_trigger__trigger(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__fiber_trigger__trigger(f2ptr cause, f2ptr this) {
-  if (! raw__fiber_trigger__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber_trigger, this);
   return raw__fiber_trigger__trigger(cause, this);
 }
 def_pcfunk1(fiber_trigger__trigger, this, return f2__fiber_trigger__trigger(this_cause, this));
@@ -68,7 +66,7 @@ f2ptr f2__fiber_trigger_hash(f2ptr cause) {
     }
   } else {
     if (! raw__ptypehash__is_type(cause, fiber_trigger_hash)) {
-      return f2larva__new(cause, 1, nil);
+      return f2larva__new(cause, 23251, nil);
     }
   }
   return fiber_trigger_hash;
@@ -90,10 +88,8 @@ f2ptr raw__fiber_trigger_hash__add(f2ptr cause, f2ptr trigger, f2ptr fiber) {
 }
 
 f2ptr f2__fiber_trigger_hash__add(f2ptr cause, f2ptr trigger, f2ptr fiber) {
-  if ((! raw__fiber_trigger__is_type(cause, trigger)) ||
-      (! raw__fiber__is_type(cause, fiber))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber_trigger, trigger);
+  assert_argument_type(fiber,         fiber);
   return raw__fiber_trigger_hash__add(cause, trigger, fiber);
 }
 def_pcfunk2(fiber_trigger_hash__add, trigger, fiber, return f2__fiber_trigger_hash__add(this_cause, trigger, fiber));
@@ -108,7 +104,7 @@ f2ptr raw__fiber_trigger_hash__unpause_trigger_fibers(f2ptr cause, f2ptr trigger
   if (fiber_set != nil) {
     set__iteration(cause, fiber_set, fiber,
 		   if (! raw__fiber__is_type(cause, fiber)) {
-		     return f2larva__new(cause, 1, nil);
+		     return f2larva__new(cause, 11315, nil);
 		   }
 		   f2__global_scheduler__add_fiber(cause, fiber));
     raw__ptypehash__add(cause, fiber_trigger_hash, trigger, nil);

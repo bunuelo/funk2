@@ -44,10 +44,8 @@ f2ptr raw__environment__new(f2ptr cause, f2ptr frame, f2ptr parent_env, f2ptr de
 }
 
 f2ptr f2__environment__new(f2ptr cause, f2ptr frame, f2ptr parent_env, f2ptr desc) {
-  if ((! raw__frame__is_type(cause, frame)) ||
-      (parent_env && (! raw__environment__is_type(cause, parent_env)))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(       frame,       frame);
+  assert_argument_type_or_nil(environment, parent_env);
   return raw__environment__new(cause, frame, parent_env, desc);
 }
 def_pcfunk3(environment__new, frame, parent_env, desc, return f2__environment__new(this_cause, frame, parent_env, desc));
@@ -134,10 +132,8 @@ f2ptr raw__environment__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr
 }
 
 f2ptr f2__environment__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((! raw__environment__is_type(cause, this)) &&
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(environment,          this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__environment__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(environment__terminal_print_with_frame, this, terminal_print_frame, return f2__environment__terminal_print_with_frame(this_cause, this, terminal_print_frame));

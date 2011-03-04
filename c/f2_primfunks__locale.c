@@ -45,16 +45,10 @@ f2ptr raw__setlocale(f2ptr cause, int category, char* locale_str) {
 }
 
 f2ptr f2__setlocale(f2ptr cause, f2ptr category, f2ptr locale) {
-  if (! raw__integer__is_type(cause, category)) {
-    status("f2__setlocale error: category must be integer.");
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(       integer, category);
+  assert_argument_type_or_nil(string,  locale);
   char* locale_str = NULL;
   if (locale != nil) {
-    if (! raw__string__is_type(cause, locale)) {
-      status("f2__setlocale error: locale must be either nil or string.");
-      return f2larva__new(cause, 1, nil);
-    }
     int   locale_str__length = f2string__length(locale, cause);
     locale_str               = alloca(locale_str__length + 1); f2string__str_copy(locale, cause, (u8*)locale_str); locale_str[locale_str__length] = 0;
   }

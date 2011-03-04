@@ -162,10 +162,8 @@ f2ptr raw__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
 }
 
 f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
-  if ((! raw__cause__is_type(cause, this)) ||
-      (! raw__fiber__is_type(cause, fiber))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
+  assert_argument_type(fiber, fiber);
   return raw__cause__add_fiber(cause, this, fiber);
 }
 
@@ -221,10 +219,8 @@ f2ptr raw__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
 }
 
 f2ptr f2__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
-  if ((! raw__cause__is_type(cause, this)) ||
-      (! raw__fiber__is_type(cause, fiber))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
+  assert_argument_type(fiber, fiber);
   return raw__cause__remove_fiber(cause, this, fiber);
 }
 
@@ -263,9 +259,7 @@ f2ptr raw__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2p
 }
 
 f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
-  if (! raw__cause__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   return raw__cause__lookup_type_var_value(cause, this, type, var);
 }
 
@@ -283,9 +277,7 @@ boolean_t raw__cause__type_var_defined(f2ptr cause, f2ptr this, f2ptr type, f2pt
 }
 
 f2ptr f2__cause__type_var_defined(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
-  if (! raw__cause__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   return f2bool__new(raw__cause__type_var_defined(cause, this, type, var));
 }
 def_pcfunk3(cause__type_var_defined, this, type, var, return f2__cause__type_var_defined(this_cause, this, type, var));
@@ -296,9 +288,7 @@ boolean_t raw__cause__var_defined(f2ptr cause, f2ptr this, f2ptr var) {
 }
 
 f2ptr f2__cause__var_defined(f2ptr cause, f2ptr this, f2ptr var) {
-  if (! raw__cause__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   return f2bool__new(raw__cause__var_defined(cause, this, var));
 }
 def_pcfunk2(cause__var_defined, this, var, return f2__cause__var_defined(this_cause, this, var));
@@ -322,9 +312,7 @@ f2ptr raw__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr
 }
 
 f2ptr f2__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
-  if (! raw__cause__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   return raw__cause__type_var_value__set(cause, this, type, var, value);
 }
 def_pcfunk4(cause__type_var_value__set, this, type, var, value, return f2__cause__type_var_value__set(this_cause, this, type, var, value));
@@ -335,9 +323,7 @@ f2ptr raw__cause__var_value__set(f2ptr cause, f2ptr this, f2ptr var, f2ptr value
 }
 
 f2ptr f2__cause__var_value__set(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
-  if (! raw__cause__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   return raw__cause__var_value__set(cause, this, var, value);
 }
 def_pcfunk3(cause__var_value__set, this, var, value, return f2__cause__var_value__set(this_cause, this, var, value));
@@ -360,9 +346,7 @@ void raw__cause__define_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var,
 }
 
 f2ptr f2__cause__define_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
-  if (! raw__cause__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   raw__cause__define_type_var(cause, this, type, var, value);
   return nil;
 }
@@ -373,9 +357,7 @@ void raw__cause__define(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
 }
 
 f2ptr f2__cause__define(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
-  if (! raw__cause__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   raw__cause__define_type_var(cause, this, __funk2.primobject__frame.variable__symbol, var, value);
   return nil;
 }
@@ -387,9 +369,7 @@ void raw__cause__define__funk(f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr valu
 }
 
 f2ptr f2__cause__define__funk(f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value) {
-  if (! raw__cause__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   raw__cause__define__funk(cause, this, funkvar, value);
   return nil;
 }
@@ -405,9 +385,7 @@ f2ptr raw__cause__lookup(f2ptr cause, f2ptr this, f2ptr var) {
 }
 
 f2ptr f2__cause__lookup(f2ptr cause, f2ptr this, f2ptr var) {
-  if (! raw__cause__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   return raw__cause__lookup(cause, this, var);
 }
 def_pcfunk2(cause__lookup, this, var, return f2__cause__lookup(this_cause, this, var));
@@ -447,9 +425,7 @@ f2ptr f2__cause(f2ptr cause) {
 def_pcfunk0(cause, return f2__cause(this_cause));
 
 f2ptr f2__cause__get_event_graph__thread_unsafe(f2ptr cause, f2ptr this) {
-  if (this == nil) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   f2ptr event_graph = f2__cause__event_graph(cause, this);
   if (event_graph == nil) {
     event_graph = f2__simple_graph__new(cause);
@@ -459,12 +435,7 @@ f2ptr f2__cause__get_event_graph__thread_unsafe(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__cause__add_graph_event__funk(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr funk, f2ptr args) {
-  if (this == nil) {
-    return nil;
-  }
-  if (! raw__cause__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
   {
@@ -485,12 +456,7 @@ f2ptr f2__cause__add_graph_event__funk(f2ptr cause, f2ptr this, f2ptr fiber, f2p
 def_pcfunk5(cause__add_graph_event__funk, this, fiber, bytecode, funk, args, return f2__cause__add_graph_event__funk(this_cause, this, fiber, bytecode, funk, args));
 
 f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr value, f2ptr funk) {
-  if (this == nil) {
-    return nil;
-  }
-  if (! raw__cause__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   boolean_t complete_funk__occurred = boolean__false;
   f2ptr     complete_funk__funk;
   f2ptr     complete_funk__args;
@@ -580,12 +546,7 @@ f2ptr f2__cause__add_graph_event__endfunk(f2ptr cause, f2ptr this, f2ptr fiber, 
 def_pcfunk5(cause__add_graph_event__endfunk, this, fiber, bytecode, value, funk, return f2__cause__add_graph_event__endfunk(this_cause, this, fiber, bytecode, value, funk));
 
 f2ptr f2__cause__add_graph_event__branch(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr program_counter, f2ptr branch_program_counter, f2ptr value) {
-  if (this == nil) {
-    return nil;
-  }
-  if (! raw__cause__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
   {
@@ -607,12 +568,7 @@ f2ptr f2__cause__add_graph_event__branch(f2ptr cause, f2ptr this, f2ptr fiber, f
 def_pcfunk6(cause__add_graph_event__branch, this, fiber, bytecode, program_counter, branch_program_counter, value, return f2__cause__add_graph_event__branch(this_cause, this, fiber, bytecode, program_counter, branch_program_counter, value));
 
 f2ptr f2__cause__add_graph_event__complete_funk(f2ptr cause, f2ptr this, f2ptr funk, f2ptr args, f2ptr value, f2ptr first_subevent, f2ptr last_subevent) {
-  if (this == nil) {
-    return nil;
-  }
-  if (! raw__cause__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   //printf("\ncomplete_funk");
   //f2__print(cause, funk);
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
@@ -655,12 +611,7 @@ f2ptr f2__cause__add_graph_event__complete_funk(f2ptr cause, f2ptr this, f2ptr f
 def_pcfunk6(cause__add_graph_event__complete_funk, this, funk, args, value, first_subevent, last_subevent, return f2__cause__add_graph_event__complete_funk(this_cause, this, funk, args, value, first_subevent, last_subevent));
 
 f2ptr f2__cause__add_graph_event__read_other_memory(f2ptr cause, f2ptr this, f2ptr object, f2ptr slot_name) {
-  if (this == nil) {
-    return nil;
-  }
-  if (! raw__cause__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
   {
@@ -679,12 +630,7 @@ f2ptr f2__cause__add_graph_event__read_other_memory(f2ptr cause, f2ptr this, f2p
 def_pcfunk3(cause__add_graph_event__read_other_memory, this, array, index, return f2__cause__add_graph_event__read_other_memory(this_cause, this, array, index));
 
 f2ptr f2__cause__add_graph_event__write_other_memory(f2ptr cause, f2ptr this, f2ptr object, f2ptr slot_name, f2ptr old_value) {
-  if (this == nil) {
-    return nil;
-  }
-  if (! raw__cause__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause, this);
   f2ptr event_graph_mutex = f2__cause__event_graph_mutex(cause, this);
   raw__mutex__lock(cause, event_graph_mutex);
   {
@@ -719,10 +665,8 @@ f2ptr raw__cause__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 }
 
 f2ptr f2__cause__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((! raw__cause__is_type(cause, this)) &&
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(cause,                this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__cause__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(cause__terminal_print_with_frame, this, terminal_print_frame, return f2__cause__terminal_print_with_frame(this_cause, this, terminal_print_frame));

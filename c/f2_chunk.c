@@ -65,19 +65,15 @@ f2ptr raw__chunk__save(f2ptr cause, f2ptr this, f2ptr filename) {
 }
 
 f2ptr f2__chunk__save(f2ptr cause, f2ptr this, f2ptr filename) {
-  if ((! raw__chunk__is_type(cause, this)) ||
-      (! raw__string__is_type(cause, filename))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(chunk,  this);
+  assert_argument_type(string, filename);
   return raw__chunk__save(cause, this, filename);
 }
 def_pcfunk2(chunk__save, this, filename, return f2__chunk__save(this_cause, this, filename));
 
 
 f2ptr f2__chunk__load(f2ptr cause, f2ptr filename) {
-  if (! raw__string__is_type(cause, filename)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, filename);
   int fd;
   {
     u64 filename__length = f2string__length(filename, cause);

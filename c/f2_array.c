@@ -623,7 +623,7 @@ void f2__array__initialize() {
   // array
   
   //f2__funktional_primcfunk__init__1(array__is_type,                     exp, "(cfunk defined in f2_array.c)");
-  f2__primcfunk__init__1(           array__new_1d,                      length, "(cfunk defined in f2_array.c)");
+  //f2__primcfunk__init__1(           array__new_1d,                      length, "(cfunk defined in f2_array.c)");
   f2__primcfunk__init__0_and_rest(  array,                              elts, "(cfunk defined in f2_array.c)");
   //f2__funktional_primcfunk__init__1(array__length,                      this, "(cfunk defined in f2_array.c)");
   //f2__primcfunk__init__1(           array__hash_value,                  this, "(cfunk defined in f2_array.c)");

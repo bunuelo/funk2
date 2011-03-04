@@ -130,7 +130,7 @@ f2ptr raw__core_extension_funk__cfunk(f2ptr cause, f2ptr this) {
     cfunk = f2__core_extension_funk__cfunk__cached(cause, this);
   } else {
     {
-      f2ptr pointer = f2__core_extension_funk__pointer(cause, this);
+      f2ptr pointer = raw__core_extension_funk__pointer(cause, this);
       if (raw__larva__is_type(cause, pointer)) {
 	return f2larva__new(cause, 325, f2__bug__new(cause, f2integer__new(cause, 325), f2__frame__new(cause, f2list8__new(cause,
 															   new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_pointer"),

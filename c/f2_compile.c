@@ -207,9 +207,6 @@ f2ptr f2__compile__funk__optimize_body_bytecodes(f2ptr cause, f2ptr funk, f2ptr 
 	}
 	if (! var_is_funk_arg) {
 	  f2ptr var_assignment_cons = f2__environment__lookup_type_var_assignment_cons(cause, f2funk__env(funk, cause), __funk2.primobject__frame.variable__symbol, var);
-	  if (raw__larva__is_type(cause, var_assignment_cons)) {
-	    return var_assignment_cons;
-	  }
 	  if (raw__cons__is_type(cause, var_assignment_cons)) {
 	    f2ptr replacement_bcs = f2__compile__array_elt(cause, var_assignment_cons, f2integer__new(cause, defarray_slot__index_var(cons__cdr)));
 	    //printf("\nf2__compile__funk__optimize_body_bytecodes: could optimize var lookup!");
@@ -228,9 +225,6 @@ f2ptr f2__compile__funk__optimize_body_bytecodes(f2ptr cause, f2ptr funk, f2ptr 
 	}
       } else if (raw__symbol__eq(cause, type, __funk2.primobject__frame.funk_variable__symbol)) {
 	f2ptr funkvar_assignment_cons = f2__environment__lookup_type_var_assignment_cons(cause, f2funk__env(funk, cause), __funk2.primobject__frame.funk_variable__symbol, var);
-	if (raw__larva__is_type(cause, funkvar_assignment_cons)) {
-	  return funkvar_assignment_cons;
-	}
 	if (raw__cons__is_type(cause, funkvar_assignment_cons)) {
 	  f2ptr replacement_bcs = f2__compile__array_elt(cause, funkvar_assignment_cons, f2integer__new(cause, defarray_slot__index_var(cons__cdr)));
 	  //printf("\nf2__compile__funk__optimize_body_bytecodes: could optimize funkvar lookup!");
@@ -884,9 +878,6 @@ f2ptr f2__compile__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boo
   
   f2ptr funkvar = f2cons__car(exps, cause);
   f2ptr funkvar_value = f2__fiber__lookup_type_variable_value(cause, fiber, __funk2.primobject__frame.funk_variable__symbol, funkvar);
-  if (raw__larva__is_type(cause, funkvar_value)) {
-    return funkvar_value;
-  }
   if (raw__metrocfunk__is_type(cause, funkvar_value)) {
     f2ptr metro_expansion_result = f2__metrocfunk__apply(cause, funkvar_value, fiber, f2cons__cdr(exps, cause));
     if (raw__larva__is_type(cause, metro_expansion_result)) {

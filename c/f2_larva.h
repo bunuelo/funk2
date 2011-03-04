@@ -30,6 +30,14 @@
     }									\
   }
 
+#define assert_argument_type_or_nil(correct_type, argument_value) {	\
+    f2ptr temporary_argument_value = argument_value;			\
+    if ((temporary_argument_value != nil) && (! raw__##correct_type##__is_type(cause, temporary_argument_value))) { \
+      return f2__larva__invalid_argument_type__new(cause, new__string(cause, (char*)__FILE__), f2integer__new(cause, __LINE__), new__symbol(cause, (char*)__FUNCTION__), \
+						   f2list2__new(cause, nil, new__symbol(cause, #correct_type)), new__symbol(cause, #argument_value), temporary_argument_value); \
+    }									\
+  }
+
 f2ptr f2__larva__invalid_argument_type__new(f2ptr cause, f2ptr source_filename, f2ptr source_line_number, f2ptr current_funktion_name,
 					    f2ptr correct_type, f2ptr argument_name, f2ptr argument_value);
 

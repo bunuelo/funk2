@@ -117,28 +117,33 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
 
 def_pcfunk4(fiber__new, parent_fiber, parent_env, cfunkable, cfunkable_args, return raw__fiber__new(this_cause, parent_fiber, parent_env, cfunkable, cfunkable_args));
 
-f2ptr f2__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time) {
-  if (! raw__time__is_type(cause, until_time)) {
-    return f2larva__new(cause, 1, nil);
-  }
+
+f2ptr raw__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time) {
   f2fiber__sleep_until_time__set(this, cause, until_time);
+  return nil;
+}
+
+f2ptr f2__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time) {
+  assert_argument_type(fiber, this);
+  assert_argument_type(time,  until_time);
+  raw__fiber__sleep_until_time__set(cause, this, until_time);
   return nil;
 }
 def_pcfunk2(fiber__do_sleep_until_time, this, until_time, return f2__fiber__do_sleep_until_time(this_cause, this, until_time));
 
+f2ptr raw__fiber__sleep_for_nanoseconds(f2ptr cause, f2ptr this, s64 nanoseconds) {
+  return f2__fiber__do_sleep_until_time(cause, this, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970() + nanoseconds)));
+}
+
 f2ptr f2__fiber__sleep_for_nanoseconds(f2ptr cause, f2ptr this, f2ptr nanoseconds) {
-  if (! raw__integer__is_type(cause, nanoseconds)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  s64 nanoseconds__i = f2integer__i(nanoseconds, cause);
-  return f2__fiber__do_sleep_until_time(cause, this, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970() + nanoseconds__i)));
+  assert_argument_type(fiber,   this);
+  assert_argument_type(integer, nanoseconds);
+  return raw__fiber__sleep_for_nanoseconds(cause, this, f2integer__i(nanoseconds, cause));
 }
 def_pcfunk2(fiber__sleep_for_nanoseconds, this, nanoseconds, return f2__fiber__sleep_for_nanoseconds(this_cause, this, nanoseconds));
 
 boolean_t raw__fiber__is_complete(f2ptr cause, f2ptr this) {
-  if (! raw__fiber__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber, this);
   boolean_t is_complete;
   f2ptr     execute_mutex = f2fiber__execute_mutex(this, cause);
   if (! raw__mutex__trylock(cause, execute_mutex)) { // successful lock
@@ -162,9 +167,7 @@ void raw__fiber__quit(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__fiber__quit(f2ptr cause, f2ptr this) {
-  if (! raw__fiber__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber, this);
   raw__fiber__quit(cause, this);
   return nil;
 }
@@ -286,9 +289,7 @@ f2ptr raw__fiber__stack_trace(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__fiber__stack_trace(f2ptr cause, f2ptr this) {
-  if (! raw__fiber__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber, this);
   return raw__fiber__stack_trace(cause, this);
 }
 def_pcfunk1(fiber__stack_trace, this, return f2__fiber__stack_trace(this_cause, this));
@@ -303,9 +304,7 @@ f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
-  if (! raw__fiber__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber, this);
   return raw__fiber__print_stack_trace(cause, this);
 }
 def_pcfunk1(fiber__print_stack_trace, this, return f2__fiber__print_stack_trace(this_cause, this));
@@ -336,10 +335,8 @@ f2ptr raw__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 }
 
 f2ptr f2__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((! raw__fiber__is_type(cause, this)) &&
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber,                this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__fiber__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(fiber__terminal_print_with_frame, this, terminal_print_frame, return f2__fiber__terminal_print_with_frame(this_cause, this, terminal_print_frame));
@@ -374,9 +371,7 @@ f2ptr raw__fiber_stack_trace__as__string(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__fiber_stack_trace__as__string(f2ptr cause, f2ptr this) {
-  if (! raw__fiber_stack_trace__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber_stack_trace, this);
   return raw__fiber_stack_trace__as__string(cause, this);
 }
 def_pcfunk1(fiber_stack_trace__as__string, this, return f2__fiber_stack_trace__as__string(this_cause, this));
@@ -411,9 +406,7 @@ f2ptr raw__fiber_stack_trace__next(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__fiber_stack_trace__next(f2ptr cause, f2ptr this) {
-  if (! raw__fiber_stack_trace__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber_stack_trace, this);
   return raw__fiber_stack_trace__next(cause, this);
 }
 def_pcfunk1(fiber_stack_trace__next, this, return f2__fiber_stack_trace__next(this_cause, this));
@@ -471,9 +464,7 @@ f2ptr raw__fiber_stack_trace__first(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__fiber_stack_trace__first(f2ptr cause, f2ptr this) {
-  if (! raw__fiber_stack_trace__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber_stack_trace, this);
   return raw__fiber_stack_trace__first(cause, this);
 }
 def_pcfunk1(fiber_stack_trace__first, this, return f2__fiber_stack_trace__first(this_cause, this));
@@ -498,9 +489,7 @@ f2ptr raw__fiber_stack_trace__print(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__fiber_stack_trace__print(f2ptr cause, f2ptr this) {
-  if (! raw__fiber_stack_trace__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber_stack_trace, this);
   return raw__fiber_stack_trace__print(cause, this);
 }
 def_pcfunk1(fiber_stack_trace__print, this, return f2__fiber_stack_trace__print(this_cause, this));
@@ -529,9 +518,7 @@ f2ptr raw__fiber_stack_trace__as__printable(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__fiber_stack_trace__as__printable(f2ptr cause, f2ptr this) {
-  if (! raw__fiber_stack_trace__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber_stack_trace, this);
   return raw__fiber_stack_trace__as__printable(cause, this);
 }
 def_pcfunk1(fiber_stack_trace__as__printable, this, return f2__fiber_stack_trace__as__printable(this_cause, this));
@@ -557,9 +544,7 @@ f2ptr raw__fiber_stack_trace__blocks(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__fiber_stack_trace__blocks(f2ptr cause, f2ptr this) {
-  if (! raw__fiber_stack_trace__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber_stack_trace, this);
   return raw__fiber_stack_trace__blocks(cause, this);
 }
 def_pcfunk1(fiber_stack_trace__blocks, this, return f2__fiber_stack_trace__blocks(this_cause, this));
@@ -578,10 +563,8 @@ f2ptr raw__fiber_stack_trace__terminal_print_with_frame(f2ptr cause, f2ptr this,
 }
 
 f2ptr f2__fiber_stack_trace__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((! raw__fiber_stack_trace__is_type(cause, this)) &&
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber_stack_trace,    this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__fiber_stack_trace__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(fiber_stack_trace__terminal_print_with_frame, this, terminal_print_frame, return f2__fiber_stack_trace__terminal_print_with_frame(this_cause, this, terminal_print_frame));
@@ -624,9 +607,7 @@ f2ptr raw__fiber_stack_trace_block__funk_name(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__fiber_stack_trace_block__funk_name(f2ptr cause, f2ptr this) {
-  if (! raw__fiber_stack_trace_block__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber_stack_trace_block, this);
   return raw__fiber_stack_trace_block__funk_name(cause, this);
 }
 def_pcfunk1(fiber_stack_trace_block__funk_name, this, return f2__fiber_stack_trace_block__funk_name(this_cause, this));
@@ -637,9 +618,7 @@ f2ptr raw__fiber_stack_trace_block__as__string(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__fiber_stack_trace_block__as__string(f2ptr cause, f2ptr this) {
-  if (! raw__fiber_stack_trace_block__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber_stack_trace_block, this);
   return raw__fiber_stack_trace_block__as__string(cause, this);
 }
 def_pcfunk1(fiber_stack_trace_block__as__string, this, return f2__fiber_stack_trace_block__as__string(this_cause, this));
@@ -651,9 +630,7 @@ f2ptr raw__fiber_stack_trace_block__printable_argument_frame(f2ptr cause, f2ptr 
 }
 
 f2ptr f2__fiber_stack_trace_block__printable_argument_frame(f2ptr cause, f2ptr this) {
-  if (! raw__fiber_stack_trace_block__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber_stack_trace_block, this);
   return raw__fiber_stack_trace_block__printable_argument_frame(cause, this);
 }
 def_pcfunk1(fiber_stack_trace_block__printable_argument_frame, this, return f2__fiber_stack_trace_block__printable_argument_frame(this_cause, this));
@@ -665,9 +642,7 @@ f2ptr raw__fiber_stack_trace_block__print(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__fiber_stack_trace_block__print(f2ptr cause, f2ptr this) {
-  if (! raw__fiber_stack_trace_block__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber_stack_trace_block, this);
   return raw__fiber_stack_trace_block__print(cause, this);
 }
 def_pcfunk1(fiber_stack_trace_block__print, this, return f2__fiber_stack_trace_block__print(this_cause, this));
@@ -680,9 +655,7 @@ f2ptr raw__fiber_stack_trace_block__as__printable(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__fiber_stack_trace_block__as__printable(f2ptr cause, f2ptr this) {
-  if (! raw__fiber_stack_trace_block__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber_stack_trace_block, this);
   return raw__fiber_stack_trace_block__as__printable(cause, this);
 }
 def_pcfunk1(fiber_stack_trace_block__as__printable, this, return f2__fiber_stack_trace_block__as__printable(this_cause, this));
@@ -702,10 +675,8 @@ f2ptr raw__fiber_stack_trace_block__terminal_print_with_frame(f2ptr cause, f2ptr
 }
 
 f2ptr f2__fiber_stack_trace_block__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((! raw__fiber_stack_trace_block__is_type(cause, this)) &&
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber_stack_trace_block, this);
+  assert_argument_type(terminal_print_frame,    terminal_print_frame);
   return raw__fiber_stack_trace_block__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(fiber_stack_trace_block__terminal_print_with_frame, this, terminal_print_frame, return f2__fiber_stack_trace_block__terminal_print_with_frame(this_cause, this, terminal_print_frame));

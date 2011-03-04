@@ -67,10 +67,8 @@ f2ptr raw__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
 }
 
 f2ptr f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
-  if ((! raw__string__is_type(cause, filename)) ||
-      (flag && (! raw__integer__is_type(cause, flag)))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(       string, filename);
+  assert_argument_type_or_nil(integer, flag);
   return raw__dlfcn__dlopen(cause, filename, flag);
 }
 def_pcfunk2(dlfcn__dlopen, filename, flag, return f2__dlfcn__dlopen(this_cause, filename, flag));
@@ -102,10 +100,8 @@ ptr raw__dlfcn__dlsym(ptr handle, u8* symbol) {
 }
 
 f2ptr f2__dlfcn__dlsym(f2ptr cause, f2ptr handle, f2ptr symbol) {
-  if ((! raw__pointer__is_type(cause, handle)) ||
-      (! raw__symbol__is_type(cause, symbol))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(pointer, handle);
+  assert_argument_type(symbol,  symbol);
   ptr raw_handle = f2pointer__p(handle, cause);
   int symbol__length = f2symbol__length(symbol, cause);
   u8* raw_symbol = (u8*)alloca(symbol__length + 1);
@@ -129,9 +125,7 @@ int raw__dlfcn__dlclose(ptr handle) {
 }
 
 f2ptr f2__dlfcn__dlclose(f2ptr cause, f2ptr handle) {
-  if (! raw__pointer__is_type(cause, handle)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(pointer, handle);
   ptr raw_handle = f2pointer__p(handle, cause);
   return f2integer__new(cause, raw__dlfcn__dlclose(raw_handle));
 }
@@ -240,10 +234,8 @@ f2ptr raw__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr fl
 }
 
 f2ptr f2__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr flag) {
-  if ((! raw__string__is_type(cause, filename)) ||
-      (flag && (! raw__integer__is_type(cause, flag)))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(       string, filename);
+  assert_argument_type_or_nil(integer, flag);
   return raw__dlfcn_dynamic_library__new_open(cause, filename, flag);
 }
 def_pcfunk2(dlfcn_dynamic_library__new_open, filename, flag, return f2__dlfcn_dynamic_library__new_open(this_cause, filename, flag));
@@ -261,10 +253,8 @@ f2ptr raw__dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr this, f2ptr s
 }
 
 f2ptr f2__dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr this, f2ptr symbol) {
-  if ((! raw__dlfcn_dynamic_library__is_type(cause, this)) ||
-      (! raw__symbol__is_type(cause, symbol))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(dlfcn_dynamic_library, this);
+  assert_argument_type(symbol,                symbol);
   return raw__dlfcn_dynamic_library__lookup_symbol(cause, this, symbol);
 }
 def_pcfunk2(dlfcn_dynamic_library__lookup_symbol, this, symbol, return f2__dlfcn_dynamic_library__lookup_symbol(this_cause, this, symbol));
@@ -276,9 +266,7 @@ f2ptr raw__dlfcn_dynamic_library__close(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__dlfcn_dynamic_library__close(f2ptr cause, f2ptr this) {
-  if (! raw__dlfcn_dynamic_library__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(dlfcn_dynamic_library, this);
   return raw__dlfcn_dynamic_library__close(cause, this);
 }
 def_pcfunk1(dlfcn_dynamic_library__close, this, return f2__dlfcn_dynamic_library__close(this_cause, this));
@@ -304,9 +292,7 @@ f2ptr raw__dlfcn_dynamic_library__changed_on_disk(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__dlfcn_dynamic_library__changed_on_disk(f2ptr cause, f2ptr this) {
-  if (! raw__dlfcn_dynamic_library__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(dlfcn_dynamic_library, this);
   return raw__dlfcn_dynamic_library__changed_on_disk(cause, this);
 }
 def_pcfunk1(dlfcn_dynamic_library__changed_on_disk, this, return f2__dlfcn_dynamic_library__changed_on_disk(this_cause, this));
@@ -355,10 +341,8 @@ f2ptr raw__dlfcn_dynamic_library_handler__dynamic_library(f2ptr cause, f2ptr thi
 }
 
 f2ptr f2__dlfcn_dynamic_library_handler__dynamic_library(f2ptr cause, f2ptr this, f2ptr filename) {
-  if ((! raw__dlfcn_dynamic_library_handler__is_type(cause, this)) ||
-      (! raw__string__is_type(cause, filename))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(dlfcn_dynamic_library, this);
+  assert_argument_type(string,                filename);
   return raw__dlfcn_dynamic_library_handler__dynamic_library(cause, this, filename);
 }
 def_pcfunk2(dlfcn_dynamic_library_handler__dynamic_library, this, filename, return f2__dlfcn_dynamic_library_handler__dynamic_library(this_cause, this, filename));
@@ -413,10 +397,8 @@ f2ptr raw__dlfcn_dynamic_library_handler__unload_dynamic_library(f2ptr cause, f2
 }
 
 f2ptr f2__dlfcn_dynamic_library_handler__unload_dynamic_library(f2ptr cause, f2ptr this, f2ptr filename) {
-  if ((! raw__dlfcn_dynamic_library_handler__is_type(cause, this)) ||
-      (! raw__string__is_type(cause, filename))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(dlfcn_dynamic_library_handler, this);
+  assert_argument_type(string,                        filename);
   return raw__dlfcn_dynamic_library_handler__unload_dynamic_library(cause, this, filename);
 }
 def_pcfunk2(dlfcn_dynamic_library_handler__unload_dynamic_library, this, filename, return f2__dlfcn_dynamic_library_handler__unload_dynamic_library(this_cause, this, filename));
@@ -454,9 +436,7 @@ f2ptr raw__dlfcn_dynamic_library_handler__unload_changed(f2ptr cause, f2ptr this
 }
 
 f2ptr f2__dlfcn_dynamic_library_handler__unload_changed(f2ptr cause, f2ptr this) {
-  if (! raw__dlfcn_dynamic_library_handler__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(dlfcn_dynamic_library_handler, this);
   return raw__dlfcn_dynamic_library_handler__unload_changed(cause, this);
 }
 def_pcfunk1(dlfcn_dynamic_library_handler__unload_changed, this, return f2__dlfcn_dynamic_library_handler__unload_changed(this_cause, this));
@@ -474,6 +454,7 @@ f2ptr f2dlfcn_dynamic_library_handler__primobject_type__new_aux(f2ptr cause) {
 // global_dlfcn_dynamic_library
 
 f2ptr f2__global_dlfcn_dynamic_library(f2ptr cause, f2ptr filename) {
+  assert_argument_type(string, filename);
   f2ptr dlfcn_dynamic_library_handler = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"));
   if (raw__larva__is_type(cause, dlfcn_dynamic_library_handler)) {
     return dlfcn_dynamic_library_handler;
@@ -497,6 +478,7 @@ def_pcfunk2(global_dlfcn_dynamic_library__lookup_symbol, filename, symbol, retur
 
 
 f2ptr f2__global_dlfcn_dynamic_library__unload_dynamic_library(f2ptr cause, f2ptr filename) {
+  assert_argument_type(string, filename);
   f2ptr dlfcn_dynamic_library_handler = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"));
   if (raw__larva__is_type(cause, dlfcn_dynamic_library_handler)) {
     return dlfcn_dynamic_library_handler;

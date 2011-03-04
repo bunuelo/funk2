@@ -24,6 +24,8 @@
 
 #include "f2_primfunks.h"
 
+boolean_t raw__stringlist__is_type(f2ptr cause, f2ptr object);
+
 f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this);
 f2ptr f2__stringlist__concat                       (f2ptr cause, f2ptr this);
 f2ptr f2__stringlist__intersperse                  (f2ptr cause, f2ptr this, f2ptr intersperse_string);

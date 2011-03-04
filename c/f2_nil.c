@@ -25,10 +25,12 @@ f2ptr raw__nil__as__string(f2ptr cause, f2ptr this) {
   return new__string(cause, "[]");
 }
 
+boolean_t raw__nil__is_type(f2ptr cause, f2ptr this) {
+  return (this == nil);
+}
+
 f2ptr f2__nil__as__string(f2ptr cause, f2ptr this) {
-  if (this != nil) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assure_argument_type(nil, this);
   return raw__nil__as__string(cause, this);
 }
 def_pcfunk1(nil__as__string, this, return f2__nil__as__string(this_cause, this));
@@ -47,10 +49,8 @@ f2ptr raw__nil__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 }
 
 f2ptr f2__nil__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((this != nil) ||
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assure_argument_type(nil,                  this);
+  assure_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__nil__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(nil__terminal_print_with_frame, this, terminal_print_frame, return f2__nil__terminal_print_with_frame(this_cause, this, terminal_print_frame));

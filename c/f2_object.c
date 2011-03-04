@@ -448,9 +448,7 @@ boolean_t raw__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name) {
 }
 
 f2ptr f2__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name) {
-  if (! raw__symbol__is_type(cause, type_name)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assure_argument_type(symbol, type_name);
   return f2bool__new(raw__object__inherits_from(cause, this, type_name));
 }
 def_pcfunk2(object__inherits_from, this, type_name, return f2__object__inherits_from(this_cause, this, type_name));

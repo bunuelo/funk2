@@ -126,7 +126,7 @@ f2ptr raw__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time)
 f2ptr f2__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time) {
   assert_argument_type(fiber, this);
   assert_argument_type(time,  until_time);
-  raw__fiber__sleep_until_time__set(cause, this, until_time);
+  raw__fiber__do_sleep_until_time__set(cause, this, until_time);
   return nil;
 }
 def_pcfunk2(fiber__do_sleep_until_time, this, until_time, return f2__fiber__do_sleep_until_time(this_cause, this, until_time));

@@ -1592,7 +1592,6 @@ f2ptr      f2__metrocfunk__apply(f2ptr cause, f2ptr metrocfunk, f2ptr fiber, f2p
 u64       raw__random(u64 max_value);
 f2ptr      f2__random(f2ptr cause, f2ptr max_value);
 f2ptr      f2__array__new(f2ptr cause, u64 length);
-f2ptr      f2__array__new_1d(f2ptr cause, f2ptr length, f2ptr and_rest);
 f2ptr      f2__array(f2ptr cause, f2ptr and_rest);
 f2ptr      f2__chunk_copy(f2ptr cause, f2ptr init);
 f2ptr      f2__chunk__read_8bit(f2ptr cause, f2ptr chunk, f2ptr offset);

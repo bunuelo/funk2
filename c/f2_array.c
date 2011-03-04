@@ -51,37 +51,26 @@ def_pcfunk1(array__is_type, x, return f2__array__is_type(this_cause, x));
 f2ptr f2__array__type(f2ptr cause, f2ptr this) {return new__symbol(cause, "array");}
 def_pcfunk1(array__type, this, return f2__array__type(this_cause, this));
 
-f2ptr f2__array__new_1d(f2ptr cause, f2ptr length, f2ptr and_rest) {
-  if ((! length) || (! raw__integer__is_type(cause, length))) {
-    printf("\n[array_1d length &opt init] error: length must be integer.");
-    return f2larva__new(cause, 1, nil);
-    //return f2__argument_type_check_failure__exception__new(cause, nil);
-  }
-  int raw_length = f2integer__i(length, cause);
-  f2ptr init = nil;
-  //printf ("\nand_rest: "); fflush(stdout); f2__print(simple_fiber, and_rest); fflush(stdout);
-  if (and_rest) {
-    init = f2cons__car(and_rest, cause);
-    if (!init || !raw__array__is_type(cause, init)) {
-      printf("\n[array length :rest init] error: init must be array (or not included)."); fflush(stdout);
-      return f2larva__new(cause, 1, nil);
-      //return f2__argument_type_check_failure__exception__new(cause, nil);
-    }
-    if (raw__array__length(init, cause) < raw_length) {
-      printf("\n[array length :rest init] error: init must be longer or equal in length to length."); fflush(stdout);
-      return f2larva__new(cause, 1, nil);
-      //return f2__argument_type_check_failure__exception__new(cause, nil);
-    }
-  }
-  if (init) {return raw__array__new_copy(cause, raw_length, init);}
-  else      {return raw__array__new(cause, raw_length);}
-}
-def_pcfunk1_and_rest(array__new_1d, length, and_rest, return f2__array__new_1d(this_cause, length, and_rest));
-
 f2ptr f2__array__new(f2ptr cause, f2ptr lengths) {
   return f2__array__new_multidimensional(cause, lengths);
 }
 def_pcfunk0_and_rest(array__new, lengths, return f2__array__new(this_cause, lengths));
+
+
+boolean_t raw__integerlist__is_type(f2ptr cause, f2ptr object) {
+  f2ptr iter = object;
+  while (iter != nil) {
+    if (! raw__cons__is_type(cause, iter)) {
+      return boolean__false;
+    }
+    f2ptr element = f2cons__car(iter, cause);
+    if (! raw__integer__is_type(cause, element)) {
+      return boolean__false;
+    }
+    iter = f2cons__cdr(iter, cause);
+  }
+  return boolean__true;
+}
 
 f2ptr raw__array__new_multidimensional(f2ptr cause, f2ptr lengths) {
   f2ptr length       = f2cons__car(lengths, cause);
@@ -98,17 +87,7 @@ f2ptr raw__array__new_multidimensional(f2ptr cause, f2ptr lengths) {
 }
 
 f2ptr f2__array__new_multidimensional(f2ptr cause, f2ptr lengths) {
-  f2ptr iter = lengths;
-  while (iter) {
-    if (! raw__cons__is_type(cause, iter)) {
-      return f2larva__new(cause, 1, nil);
-    }
-    f2ptr length = f2cons__car(iter, cause);
-    if (! raw__integer__is_type(cause, length)) {
-      return f2larva__new(cause, 1, nil);
-    }
-    iter = f2cons__cdr(iter, cause);
-  }
+  assert_argument_type(integerlist, lengths);
   return raw__array__new_multidimensional(cause, lengths);
 }
 
@@ -139,10 +118,10 @@ u64 raw__array__length(f2ptr cause, f2ptr x) {
   else if (raw__traced_array__is_type(cause, x)) {return f2traced_array__length(x, cause);}
   else {error(nil, "raw__array__length: invalid type"); return 0;}
 }
+
 f2ptr f2__array__length(f2ptr cause, f2ptr x) {
-  if      (raw__simple_array__is_type(cause, x)) {return f2__simple_array__length(cause, x);}
-  else if (raw__traced_array__is_type(cause, x)) {return f2__traced_array__length(cause, x);}
-  else {return f2larva__new(cause, 1, nil);}
+  assert_argument_type(array, x);
+  return f2integer__new(cause, raw__array__length(cause, x));
 }
 def_pcfunk1(array__length, x, return f2__array__length(this_cause, x));
 
@@ -163,9 +142,8 @@ u64 raw__array__eq_hash_value(f2ptr cause, f2ptr this) {
   else {error(nil, "raw__array__length: invalid type"); return 0;}
 }
 f2ptr f2__array__eq_hash_value(f2ptr cause, f2ptr this) {
-  if      (raw__simple_array__is_type(cause, this)) {return f2__simple_array__eq_hash_value(cause, this);}
-  else if (raw__traced_array__is_type(cause, this)) {return f2__traced_array__eq_hash_value(cause, this);}
-  else {return f2larva__new(cause, 1, nil);}
+  assert_argument_type(array, this);
+  return f2integer__new(cause, raw__array__eq_hash_value(cause, this));
 }
 def_pcfunk1(array__eq_hash_value, this, return f2__array__eq_hash_value(this_cause, this));
 
@@ -191,9 +169,7 @@ boolean_t raw__array__equals(f2ptr cause, f2ptr this, f2ptr that) {
 }
 
 f2ptr f2__array__equals(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__array__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(array, this);
   return f2bool__new(raw__array__equals(cause, this, that));
 }
 def_pcfunk2(array__equals, this, that, return f2__array__equals(this_cause, this, that));
@@ -234,10 +210,8 @@ f2ptr raw__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr no
 }
 
 f2ptr f2__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
-  if ((! raw__array__is_type(cause, this)) ||
-      (! raw__ptypehash__is_type(cause, node_hash))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(array,     this);
+  assert_argument_type(ptypehash, node_hash);
   return raw__array__equals_hash_value__loop_free(cause, this, node_hash);
 }
 def_pcfunk2(array__equals_hash_value__loop_free, this, node_hash, return f2__array__equals_hash_value__loop_free(this_cause, this, node_hash));
@@ -249,9 +223,7 @@ f2ptr raw__array__equals_hash_value(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__array__equals_hash_value(f2ptr cause, f2ptr this) {
-  if (! raw__array__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(array, this);
   return raw__array__equals_hash_value(cause, this);
 }
 def_pcfunk1(array__equals_hash_value, this, return f2__array__equals_hash_value(this_cause, this));
@@ -271,11 +243,12 @@ f2ptr raw__array__elt(f2ptr cause, f2ptr this, u64 index) {
     }
     return f2traced_array__elt(this, index, cause);
   } else {
-    return f2larva__new(cause, 1, nil);
+    error(nil, "raw__array__elt error: this is invalid type.");
   }
 }
 f2ptr f2__array__elt(f2ptr cause, f2ptr this, f2ptr index) {
-  if (! raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1, nil);}
+  assert_argument_type(array,   this);
+  assert_argument_type(integer, index);
   return raw__array__elt(cause, this, f2integer__i(index, cause));
 }
 def_pcfunk2(array__elt, x, y, return f2__array__elt(this_cause, x, y));
@@ -292,10 +265,14 @@ f2ptr raw__array__elt__trace_depth(f2ptr cause, f2ptr this, u64 index, int trace
 f2ptr raw__array__elt__set(f2ptr cause, f2ptr this, u64 index, f2ptr value) {
   if      (raw__simple_array__is_type(cause, this)) {f2simple_array__elt__set(this, index, cause, value); return nil;}
   else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__set(this, index, cause, value); return nil;}
-  else {return f2larva__new(cause, 1, nil);}
+  else {
+    error(nil, "raw__array__elt__set error: this is invalid type.");
+  }
 }
+
 f2ptr f2__array__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1, nil);}
+  assert_argument_type(array, this);
+  assert_argument_type(integer, index);
   return raw__array__elt__set(cause, this, f2integer__i(index, cause), value);
 }
 def_pcfunk3(array__elt__set, x, y, z, return f2__array__elt__set(this_cause, x, y, z));
@@ -312,43 +289,60 @@ f2ptr raw__array__elt__set__trace_depth(f2ptr cause, f2ptr this, u64 index, f2pt
 f2ptr raw__array__elt__tracing_on(f2ptr cause, f2ptr this, u64 index) {
   if      (raw__simple_array__is_type(cause, this)) {return nil;}
   else if (raw__traced_array__is_type(cause, this)) {return f2traced_array__elt__tracing_on(this, index, cause);}
-  else {return f2larva__new(cause, 1, nil);}
+  else {
+    error(nil, "raw__array__elt__tracing_on error: this is invalid type.");
+  }
 }
+
 f2ptr f2__array__elt__tracing_on(f2ptr cause, f2ptr this, f2ptr index) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1, nil);}
+  assert_argument_type(array,   this);
+  assert_argument_type(integer, index);
   return raw__array__elt__tracing_on(cause, this, f2integer__i(index, cause));
 }
 def_pcfunk2(array__elt__tracing_on, x, y, return f2__array__elt__tracing_on(this_cause, x, y));
 
 f2ptr raw__array__elt__tracing_on__set(f2ptr cause, f2ptr this, u64 index, f2ptr value) {
-  if      (raw__simple_array__is_type(cause, this)) {return f2larva__new(cause, 1, nil);}
+  if (raw__simple_array__is_type(cause, this)) {return nil;}
   else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__tracing_on__set(this, index, cause, value); return nil;}
-  else {return f2larva__new(cause, 1, nil);}
+  else {
+    error(nil, "raw__array__elt__tracing_on__set error: invalid type (2).");
+  }
 }
+
 f2ptr f2__array__elt__tracing_on__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1, nil);}
+  assert_argument_type(array,   this);
+  assert_argument_type(integer, index);
   return raw__array__elt__tracing_on__set(cause, this, f2integer__i(index, cause), value);
 }
 def_pcfunk3(array__elt__tracing_on__set, x, y, z, return f2__array__elt__tracing_on__set(this_cause, x, y, z));
 
+
 f2ptr raw__array__elt__trace(f2ptr cause, f2ptr this, u64 index) {
   if      (raw__simple_array__is_type(cause, this)) {return nil;}
   else if (raw__traced_array__is_type(cause, this)) {return f2traced_array__elt__trace(this, index, cause);}
-  else {return f2larva__new(cause, 1, nil);}
+  else {
+    error(nil, "raw__array__elt__trace error: this is invalid type.");
+  }
 }
+
 f2ptr f2__array__elt__trace(f2ptr cause, f2ptr this, f2ptr index) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1, nil);}
+  assert_argument_type(array,   this);
+  assert_argument_type(integer, index);
   return raw__array__elt__trace(cause, this, f2integer__i(index, cause));
 }
 def_pcfunk2(array__elt__trace, x, y, return f2__array__elt__trace(this_cause, x, y));
 
 f2ptr raw__array__elt__trace__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if      (raw__simple_array__is_type(cause, this)) {return f2larva__new(cause, 1, nil);}
+  if      (raw__simple_array__is_type(cause, this)) {return nil;}
   else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__trace__set(this, index, cause, value); return nil;}
-  else {return f2larva__new(cause, 1, nil);}
+  else {
+    error(nil, "raw__array__elt__trace__set error: this is invalid type (2).");
+  }
 }
+
 f2ptr f2__array__elt__trace__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1, nil);}
+  assert_argument_type(array,   this);
+  assert_argument_type(integer, index);
   return raw__array__elt__trace__set(cause, this, f2integer__i(index, cause), value);
 }
 def_pcfunk3(array__elt__trace__set, x, y, z, return f2__array__elt__trace__set(this_cause, x, y, z));
@@ -357,21 +351,29 @@ def_pcfunk3(array__elt__trace__set, x, y, z, return f2__array__elt__trace__set(t
 f2ptr raw__array__elt__imagination_frame(f2ptr cause, f2ptr this, u64 index) {
   if      (raw__simple_array__is_type(cause, this)) {return nil;}
   else if (raw__traced_array__is_type(cause, this)) {return f2traced_array__elt__imagination_frame(this, index, cause);}
-  else {return f2larva__new(cause, 1, nil);}
+  else {
+    error(nil, "raw__array__elt__imagination_frame error: this is invalid type.");
+  }
 }
+
 f2ptr f2__array__elt__imagination_frame(f2ptr cause, f2ptr this, f2ptr index) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1, nil);}
+  assert_argument_type(array,   this);
+  assert_argument_type(integer, index);
   return raw__array__elt__imagination_frame(cause, this, f2integer__i(index, cause));
 }
 def_pcfunk2(array__elt__imagination_frame, x, y, return f2__array__elt__imagination_frame(this_cause, x, y));
 
 f2ptr raw__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if      (raw__simple_array__is_type(cause, this)) {return f2larva__new(cause, 1, nil);}
+  if      (raw__simple_array__is_type(cause, this)) {return nil;}
   else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__imagination_frame__set(this, index, cause, value); return nil;}
-  else {return f2larva__new(cause, 1, nil);}
+  else {
+    error(nil, "raw__array__elt__imagination_frame__set error: this is invalid type (2).");
+  }
 }
+
 f2ptr f2__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1, nil);}
+  assert_argument_type(array,   this);
+  assert_argument_type(integer, index);
   return raw__array__elt__imagination_frame__set(cause, this, f2integer__i(index, cause), value);
 }
 def_pcfunk3(array__elt__imagination_frame__set, x, y, z, return f2__array__elt__imagination_frame__set(this_cause, x, y, z));
@@ -380,21 +382,28 @@ def_pcfunk3(array__elt__imagination_frame__set, x, y, z, return f2__array__elt__
 f2ptr raw__array__elt__mutate_funks(f2ptr cause, f2ptr this, u64 index) {
   if      (raw__simple_array__is_type(cause, this)) {return nil;}
   else if (raw__traced_array__is_type(cause, this)) {return f2traced_array__elt__mutate_funks(this, index, cause);}
-  else {return f2larva__new(cause, 1, nil);}
+  else {
+    error(nil, "raw__array__elt__mutate_funks error: this is invalid type.");
+  }
 }
+
 f2ptr f2__array__elt__mutate_funks(f2ptr cause, f2ptr this, f2ptr index) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1, nil);}
+  assert_argument_type(array,   this);
+  assert_argument_type(integer, index);
   return raw__array__elt__mutate_funks(cause, this, f2integer__i(index, cause));
 }
 def_pcfunk2(array__elt__mutate_funks, x, y, return f2__array__elt__mutate_funks(this_cause, x, y));
 
 f2ptr raw__array__elt__mutate_funks__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if      (raw__simple_array__is_type(cause, this)) {return f2larva__new(cause, 1, nil);}
+  if      (raw__simple_array__is_type(cause, this)) {return nil;}
   else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__mutate_funks__set(this, index, cause, value); return nil;}
-  else {return f2larva__new(cause, 1, nil);}
+  else {
+    error(nil, "raw__array__elt__mutate_funks__set error: this is invalid type.");
+  }
 }
 f2ptr f2__array__elt__mutate_funks__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1, nil);}
+  assert_argument_type(array,   this);
+  assert_argument_type(integer, index);
   return raw__array__elt__mutate_funks__set(cause, this, f2integer__i(index, cause), value);
 }
 def_pcfunk3(array__elt__mutate_funks__set, x, y, z, return f2__array__elt__mutate_funks__set(this_cause, x, y, z));
@@ -403,21 +412,27 @@ def_pcfunk3(array__elt__mutate_funks__set, x, y, z, return f2__array__elt__mutat
 f2ptr raw__array__elt__read_funks(f2ptr cause, f2ptr this, u64 index) {
   if      (raw__simple_array__is_type(cause, this)) {return nil;}
   else if (raw__traced_array__is_type(cause, this)) {return f2traced_array__elt__read_funks(this, index, cause);}
-  else {return f2larva__new(cause, 1, nil);}
+  else {
+    error(nil, "raw__array__elt__read_funks error: this is invalid type.");
+  }
 }
 f2ptr f2__array__elt__read_funks(f2ptr cause, f2ptr this, f2ptr index) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1, nil);}
+  assert_argument_type(array,   this);
+  assert_argument_type(integer, index);
   return raw__array__elt__read_funks(cause, this, f2integer__i(index, cause));
 }
 def_pcfunk2(array__elt__read_funks, x, y, return f2__array__elt__read_funks(this_cause, x, y));
 
 f2ptr raw__array__elt__read_funks__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if      (raw__simple_array__is_type(cause, this)) {return f2larva__new(cause, 1, nil);}
+  if      (raw__simple_array__is_type(cause, this)) {return nil;}
   else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__read_funks__set(this, index, cause, value); return nil;}
-  else {return f2larva__new(cause, 1, nil);}
+  else {
+    error(nil, "raw__array__elt__read_funks__set error: this is invalid type.");
+  }
 }
 f2ptr f2__array__elt__read_funks__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1, nil);}
+  assert_argument_type(array,   this);
+  assert_argument_type(integer, index);
   return raw__array__elt__read_funks__set(cause, this, f2integer__i(index, cause), value);
 }
 def_pcfunk3(array__elt__read_funks__set, x, y, z, return f2__array__elt__read_funks__set(this_cause, x, y, z));
@@ -434,9 +449,7 @@ f2ptr raw__array__as__conslist(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__array__as__conslist(f2ptr cause, f2ptr this) {
-  if (! raw__array__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(array, this);
   return raw__array__as__conslist(cause, this);
 }
 def_pcfunk1(array__as__conslist, this, return f2__array__as__conslist(this_cause, this));
@@ -558,10 +571,8 @@ f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 }
 
 f2ptr f2__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((! raw__array__is_type(cause, this)) ||
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(array,                this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__array__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(array__terminal_print_with_frame, this, terminal_print_frame, return f2__array__terminal_print_with_frame(this_cause, this, terminal_print_frame));

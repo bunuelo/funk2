@@ -653,7 +653,7 @@ void raw__parse_tree_node__insert_after(f2ptr cause, f2ptr this, f2ptr node) {
 }
 
 f2ptr f2__parse_tree_node__insert_after(f2ptr cause, f2ptr this, f2ptr node) {
-  assure_argument_type(parse_tree_node, this);
+  assert_argument_type(parse_tree_node, this);
   raw__parse_tree_node__insert_after(cause, this, node);
   return nil;
 }
@@ -671,7 +671,7 @@ void raw__parse_tree_node__insert_below_no_children(f2ptr cause, f2ptr this, f2p
 }
 
 f2ptr f2__parse_tree_node__insert_below_no_children(f2ptr cause, f2ptr this, f2ptr node) {
-  assure_argument_type(parse_tree_node, this);
+  assert_argument_type(parse_tree_node, this);
   raw__parse_tree_node__insert_below_no_children(cause, this, node);
   return nil;
 }
@@ -688,8 +688,8 @@ void raw__parse_tree_node__add_child(f2ptr cause, f2ptr this, f2ptr node) {
 }
 
 f2ptr f2__parse_tree_node__add_child(f2ptr cause, f2ptr this, f2ptr node) {
-  assure_argument_type(parse_tree_node, this);
-  assure_argument_type(parse_tree_node, node);
+  assert_argument_type(parse_tree_node, this);
+  assert_argument_type(parse_tree_node, node);
   raw__parse_tree_node__add_child(cause, this, node);
   return nil;
 }
@@ -712,8 +712,8 @@ f2ptr raw__parse_tree_node__child_of_type_node(f2ptr cause, f2ptr this, f2ptr ty
 }
 
 f2ptr f2__parse_tree_node__child_of_type_node(f2ptr cause, f2ptr this, f2ptr type) {
-  assure_argument_type(parse_tree_node, this);
-  assure_argument_type(symbol,          type);
+  assert_argument_type(parse_tree_node, this);
+  assert_argument_type(symbol,          type);
   return raw__parse_tree_node__child_of_type_node(cause, this, type);
 }
 def_pcfunk2(parse_tree_node__child_of_type_node, this, type, return f2__parse_tree_node__child_of_type_node(this_cause, this, type));
@@ -738,8 +738,8 @@ f2ptr raw__parse_tree_node__containing_type_node(f2ptr cause, f2ptr this, f2ptr 
 }
 
 f2ptr f2__parse_tree_node__containing_type_node(f2ptr cause, f2ptr this, f2ptr type) {
-  assure_argument_type(parse_tree_node, this);
-  assure_argument_type(symbol,          type);
+  assert_argument_type(parse_tree_node, this);
+  assert_argument_type(symbol,          type);
   return raw__parse_tree_node__containing_type_node(cause, this, type);
 }
 def_pcfunk2(parse_tree_node__containing_type_node, this, type, return f2__parse_tree_node__containing_type_node(this_cause, this, type));
@@ -776,8 +776,8 @@ f2ptr raw__parse_tree_node__containing_type_with_true_property_node(f2ptr cause,
 }
 
 f2ptr f2__parse_tree_node__containing_type_with_true_property_node(f2ptr cause, f2ptr this, f2ptr type, f2ptr property) {
-  assure_argument_type(parse_tree_node, this);
-  assure_argument_type(symbol,          type);
+  assert_argument_type(parse_tree_node, this);
+  assert_argument_type(symbol,          type);
   return raw__parse_tree_node__containing_type_with_true_property_node(cause, this, type, property);
 }
 def_pcfunk3(parse_tree_node__containing_type_with_true_property_node, this, type, property, return f2__parse_tree_node__containing_type_with_true_property_node(this_cause, this, type, property));
@@ -821,9 +821,9 @@ f2ptr raw__parse_tree_node__containing_type_with_true_property__set(f2ptr cause,
 }
 
 f2ptr f2__parse_tree_node__containing_type_with_true_property__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr property, f2ptr value) {
-  assure_argument_type(parse_tree_node, this);
-  assure_argument_type(symbol,          type);
-  assure_argument_type(symbol,          property);
+  assert_argument_type(parse_tree_node, this);
+  assert_argument_type(symbol,          type);
+  assert_argument_type(symbol,          property);
   return raw__parse_tree_node__containing_type_with_true_property__set(cause, this, type, property, value);
 }
 def_pcfunk4(parse_tree_node__containing_type_with_true_property__set, this, type, property, value, return f2__parse_tree_node__containing_type_with_true_property__set(this_cause, this, type, property, value));
@@ -870,7 +870,7 @@ f2ptr raw__parse_tree__new_copy(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__parse_tree__new_copy(f2ptr cause, f2ptr this) {
-  assure_argument_type(parse_tree, this);
+  assert_argument_type(parse_tree, this);
   return raw__parse_tree__new_copy(cause, this);
 }
 def_pcfunk1(parse_tree__new_copy, this, return f2__parse_tree__new_copy(this_cause, this));

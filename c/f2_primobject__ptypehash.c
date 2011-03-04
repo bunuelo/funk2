@@ -112,9 +112,7 @@ f2ptr raw__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
 }
 
 f2ptr f2__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
-  if (! raw__ptypehash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(ptypehash, this);
   return raw__ptypehash__add(cause, this, key, value);
 }
 def_pcfunk3(ptypehash__add, this, slot_name, value, return f2__ptypehash__add(this_cause, this, slot_name, value));
@@ -163,9 +161,7 @@ boolean_t raw__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
 }
 
 f2ptr f2__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
-  if (! raw__ptypehash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(ptypehash, this);
   return f2bool__new(raw__ptypehash__remove(cause, this, key));
 }
 def_pcfunk2(ptypehash__remove, this, key, return f2__ptypehash__remove(this_cause, this, key));
@@ -177,10 +173,8 @@ void raw__ptypehash__copy_from(f2ptr cause, f2ptr this, f2ptr that) {
 }
 
 f2ptr f2__ptypehash__copy_from(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__ptypehash__is_type(cause, this)) ||
-      (! raw__ptypehash__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(ptypehash, this);
+  assert_argument_type(ptypehash, that);
   raw__ptypehash__copy_from(cause, this, that);
   return nil;
 }
@@ -214,9 +208,7 @@ f2ptr raw__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
 }
 
 f2ptr f2__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
-  if (! raw__ptypehash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(ptypehash, this);
   return raw__ptypehash__lookup_keyvalue_pair(cause, this, key);
 }
 
@@ -231,9 +223,7 @@ f2ptr raw__ptypehash__lookup(f2ptr cause, f2ptr this, f2ptr key) {
 }
 
 f2ptr f2__ptypehash__lookup(f2ptr cause, f2ptr this, f2ptr key) {
-  if (! raw__ptypehash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(ptypehash, this);
   return raw__ptypehash__lookup(cause, this, key);
 }
 def_pcfunk2(ptypehash__lookup, this, slot_name, return f2__ptypehash__lookup(this_cause, this, slot_name));
@@ -247,9 +237,7 @@ boolean_t raw__ptypehash__contains(f2ptr cause, f2ptr this, f2ptr key) {
 }
 
 f2ptr f2__ptypehash__contains(f2ptr cause, f2ptr this, f2ptr key) {
-  if (! raw__ptypehash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(ptypehash, this);
   return raw__ptypehash__contains(cause, this, key);
 }
 def_pcfunk2(ptypehash__contains, this, key, return f2__ptypehash__contains(this_cause, this, key));
@@ -275,9 +263,7 @@ f2ptr raw__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this) {
-  if (! raw__ptypehash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(ptypehash, this);
   return raw__ptypehash__an_arbitrary_keyvalue_pair(cause, this);
 }
 def_pcfunk1(ptypehash__an_arbitrary_keyvalue_pair, this, return f2__ptypehash__an_arbitrary_keyvalue_pair(this_cause, this));
@@ -293,9 +279,7 @@ f2ptr raw__ptypehash__an_arbitrary_key(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__ptypehash__an_arbitrary_key(f2ptr cause, f2ptr this) {
-  if (! raw__ptypehash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(ptypehash, this);
   return raw__ptypehash__an_arbitrary_key(cause, this);
 }
 def_pcfunk1(ptypehash__an_arbitrary_key, this, return f2__ptypehash__an_arbitrary_key(this_cause, this));
@@ -311,9 +295,7 @@ f2ptr raw__ptypehash__an_arbitrary_value(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__ptypehash__an_arbitrary_value(f2ptr cause, f2ptr this) {
-  if (! raw__ptypehash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(ptypehash, this);
   return raw__ptypehash__an_arbitrary_value(cause, this);
 }
 def_pcfunk1(ptypehash__an_arbitrary_value, this, return f2__ptypehash__an_arbitrary_value(this_cause, this));
@@ -326,9 +308,7 @@ f2ptr raw__ptypehash__copy(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__ptypehash__copy(f2ptr cause, f2ptr this) {
-  if (! raw__ptypehash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(ptypehash, this);
   return raw__ptypehash__copy(cause, this);
 }
 def_pcfunk1(ptypehash__copy, this, return f2__ptypehash__copy(this_cause, this));
@@ -367,9 +347,7 @@ boolean_t raw__ptypehash__is_empty(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__ptypehash__is_empty(f2ptr cause, f2ptr this) {
-  if (! raw__ptypehash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(ptypehash, this);
   return f2bool__new(raw__ptypehash__is_empty(cause, this));
 }
 def_pcfunk1(ptypehash__is_empty, this, return f2__ptypehash__is_empty(this_cause, this));
@@ -383,9 +361,7 @@ f2ptr raw__ptypehash__as__frame(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__ptypehash__as__frame(f2ptr cause, f2ptr this) {
-  if (! raw__ptypehash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(ptypehash, this);
   return raw__ptypehash__as__frame(cause, this);
 }
 def_pcfunk1(ptypehash__as__frame, this, return f2__ptypehash__as__frame(this_cause, this));
@@ -403,10 +379,8 @@ f2ptr raw__ptypehash__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr t
 }
 
 f2ptr f2__ptypehash__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((! raw__ptypehash__is_type(cause, this)) &&
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(ptypehash,            this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__ptypehash__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(ptypehash__terminal_print_with_frame, this, terminal_print_frame, return f2__ptypehash__terminal_print_with_frame(this_cause, this, terminal_print_frame));

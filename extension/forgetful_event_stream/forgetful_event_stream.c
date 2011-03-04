@@ -57,10 +57,12 @@ f2ptr raw__forgetful_event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stre
 		   }
 		 }
 		 );
-  if (minimum_important_index_nanoseconds_since_1970 != nil) {
-    raw__event_stream__remove_all_before_time(cause, this, minimum_important_index_nanoseconds_since_1970);
-  } else {
-    raw__event_stream__remove_all(cause, this);
+  if (! keep_all_events) {
+    if (minimum_important_index_nanoseconds_since_1970 != nil) {
+      raw__event_stream__remove_all_before_time(cause, this, minimum_important_index_nanoseconds_since_1970);
+    } else {
+      raw__event_stream__remove_all(cause, this);
+    }
   }
   return nil;
 }

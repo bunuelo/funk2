@@ -92,9 +92,7 @@ f2ptr raw__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
 }
 
 f2ptr f2__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__list__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(list, this);
   return raw__list__equals(cause, this, that);
 }
 def_pcfunk2(list__equals, this, that, return f2__list__equals(this_cause, this, that));
@@ -105,10 +103,8 @@ f2ptr raw__list__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr nod
 }
 
 f2ptr f2__list__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
-  if ((! raw__list__is_type(cause, this)) ||
-      (! raw__ptypehash__is_type(cause, node_hash))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(list,      this);
+  assert_argument_type(ptypehash, node_hash);
   return raw__list__equals_hash_value__loop_free(cause, this, node_hash);
 }
 def_pcfunk2(list__equals_hash_value__loop_free, this, node_hash, return f2__list__equals_hash_value__loop_free(this_cause, this, node_hash));
@@ -119,9 +115,7 @@ f2ptr raw__list__equals_hash_value(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__list__equals_hash_value(f2ptr cause, f2ptr this) {
-  if (! raw__list__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(list, this);
   return raw__list__equals_hash_value(cause, this);
 }
 def_pcfunk1(list__equals_hash_value, this, return f2__list__equals_hash_value(this_cause, this));
@@ -132,10 +126,8 @@ f2ptr raw__list__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
 }
 
 f2ptr f2__list__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((! raw__list__is_type(cause, this)) &&
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(list,                 this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__list__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(list__terminal_print_with_frame, this, terminal_print_frame, return f2__list__terminal_print_with_frame(this_cause, this, terminal_print_frame));

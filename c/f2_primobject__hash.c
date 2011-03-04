@@ -143,9 +143,7 @@ f2ptr raw__hash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
 }
 
 f2ptr f2__hash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
-  if (! raw__hash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(hash, this);
   return raw__hash__add(cause, this, key, value);
 }
 def_pcfunk3(hash__add, this, slot_name, value, return f2__hash__add(this_cause, this, slot_name, value));
@@ -195,9 +193,7 @@ boolean_t raw__hash__remove(f2ptr cause, f2ptr this, f2ptr key) {
 }
 
 f2ptr f2__hash__remove(f2ptr cause, f2ptr this, f2ptr key) {
-  if (! raw__hash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(hash, this);
   return f2bool__new(raw__hash__remove(cause, this, key));
 }
 def_pcfunk2(hash__remove, this, key, return f2__hash__remove(this_cause, this, key));
@@ -237,9 +233,7 @@ boolean_t raw__hash__contains(f2ptr cause, f2ptr this, f2ptr key) {
 }
 
 f2ptr f2__hash__contains(f2ptr cause, f2ptr this, f2ptr key) {
-  if (! raw__hash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(hash, this);
   return raw__hash__contains(cause, this, key);
 }
 def_pcfunk2(hash__contains, this, key, return f2__hash__contains(this_cause, this, key));
@@ -256,9 +250,7 @@ f2ptr raw__hash__lookup(f2ptr cause, f2ptr this, f2ptr key) {
 }
 
 f2ptr f2__hash__lookup(f2ptr cause, f2ptr this, f2ptr key) {
-  if (! raw__hash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(hash, this);
   return raw__hash__lookup(cause, this, key);
 }
 def_pcfunk2(hash__lookup, this, slot_name, return f2__hash__lookup(this_cause, this, slot_name));
@@ -302,17 +294,13 @@ boolean_t raw__hash__equals(f2ptr cause, f2ptr this, f2ptr that) {
 }
 
 f2ptr f2__hash__equals(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__hash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(hash, this);
   return f2bool__new(raw__hash__equals(cause, this, that));
 }
 def_pcfunk2(hash__equals, this, that, return f2__hash__equals(this_cause, this, that));
 
 f2ptr f2__hash__equals_hash_value(f2ptr cause, f2ptr this) {
-  if (! raw__hash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(hash, this);
   u64 hash_value = 1;
   hash__iteration(cause, this, key, value,
 		  f2ptr key__equals_hash_value   = f2__object__equals_hash_value(cause, key);
@@ -339,9 +327,7 @@ f2ptr raw__hash__as__frame(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__hash__as__frame(f2ptr cause, f2ptr this) {
-  if (! raw__hash__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(hash, this);
   return raw__hash__as__frame(cause, this);
 }
 def_pcfunk1(hash__as__frame, this, return f2__hash__as__frame(this_cause, this));

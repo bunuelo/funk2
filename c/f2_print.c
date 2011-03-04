@@ -1277,22 +1277,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    {f2__write_pretty__slot_key_and_value("index",           15, cause, fiber, stream, f2stream__index(exp, cause), f2stream__index__tracing_on(exp, cause), f2stream__index__trace(exp, cause), f2stream__index__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    */
-	  } else if (f2primobject__is__semantic_graph(exp, cause)) {
-	    int subexp_size[2];
-	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("relations",    15, cause, fiber, stream, f2semantic_graph__relations(exp, cause), f2semantic_graph__relations__tracing_on(exp, cause), f2semantic_graph__relations__trace(exp, cause), f2semantic_graph__relations__imagination_frame(exp, cause),
-						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is__semantic_relation(exp, cause)) {
-	    int subexp_size[2];
-	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("type",            15, cause, fiber, stream, f2semantic_relation__type(exp, cause), f2semantic_relation__type__tracing_on(exp, cause), f2semantic_relation__type__trace(exp, cause), f2semantic_relation__type__imagination_frame(exp, cause),
-						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("left_concept",    15, cause, fiber, stream, f2semantic_relation__left_concept(exp, cause), f2semantic_relation__left_concept__tracing_on(exp, cause), f2semantic_relation__left_concept__trace(exp, cause), f2semantic_relation__left_concept__imagination_frame(exp, cause),
-						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("right_concept", 15, cause, fiber, stream, f2semantic_relation__right_concept(exp, cause), f2semantic_relation__right_concept__tracing_on(exp, cause), f2semantic_relation__right_concept__trace(exp, cause), f2semantic_relation__right_concept__imagination_frame(exp, cause),
-						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	  } else if (f2primobject__is__time(exp, cause)) {
 	    int subexp_size[2];
 	    //if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  

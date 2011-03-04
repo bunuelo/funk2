@@ -25,7 +25,8 @@ void assert_failed(f2ptr fiber, char* filename, int line_num, char* str) {
   status("*** %s:%d> assertion failed, '%s' ***", filename, line_num, str);
   fprintf(stderr, "\n*** %s:%d> assertion failed, '%s' ***\n", filename, line_num, str);
   kill(getpid(), SIGSTOP);
-  exit(-1);
+  while (boolean__true);
+  //exit(-1);
 }
 
 size_t total_bytes_allocated = 0;

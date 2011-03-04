@@ -102,9 +102,7 @@ f2ptr raw__scheduler__active_fibers(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__scheduler__active_fibers(f2ptr cause, f2ptr this) {
-  if (! raw__scheduler__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(scheduler, this);
   return raw__scheduler__active_fibers(cause, this);
 }
 def_pcfunk1(scheduler__active_fibers, this, return f2__scheduler__active_fibers(this_cause, this));
@@ -129,9 +127,7 @@ f2ptr raw__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr this) {
-  if (! raw__scheduler__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(scheduler, this);
   return raw__scheduler__processor_with_fewest_fibers(cause, this);
 }
 def_pcfunk1(scheduler__processor_with_fewest_fibers, this, return f2__scheduler__processor_with_fewest_fibers(this_cause, this));
@@ -143,10 +139,8 @@ f2ptr raw__scheduler__add_fiber_to_least_used_processor(f2ptr cause, f2ptr this,
 }
 
 f2ptr f2__scheduler__add_fiber_to_least_used_processor(f2ptr cause, f2ptr this, f2ptr fiber) {
-  if ((! raw__scheduler__is_type(cause, this)) ||
-      (! raw__fiber__is_type(cause, fiber))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(scheduler, this);
+  assert_argument_type(fiber,     fiber);
   return raw__scheduler__add_fiber_to_least_used_processor(cause, this, fiber);
 }
 def_pcfunk2(scheduler__add_fiber_to_least_used_processor, this, fiber, return f2__scheduler__add_fiber_to_least_used_processor(this_cause, this, fiber));
@@ -165,10 +159,8 @@ f2ptr raw__scheduler__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr t
 }
 
 f2ptr f2__scheduler__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((! raw__scheduler__is_type(cause, this)) &&
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(scheduler,            this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__scheduler__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(scheduler__terminal_print_with_frame, this, terminal_print_frame, return f2__scheduler__terminal_print_with_frame(this_cause, this, terminal_print_frame));
@@ -207,9 +199,7 @@ f2ptr raw__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
 }
 
 f2ptr f2__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
-  if (! raw__fiber__is_type(cause, fiber)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber, fiber);
   return raw__global_scheduler__add_fiber_serial(cause, fiber);
 }
 def_pcfunk1(global_scheduler__add_fiber_serial, fiber, return f2__global_scheduler__add_fiber_serial(this_cause, fiber));
@@ -220,9 +210,7 @@ f2ptr raw__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
 }
 
 f2ptr f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
-  if (! raw__fiber__is_type(cause, fiber)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber, fiber);
   return raw__global_scheduler__add_fiber_parallel(cause, fiber);
 }
 def_pcfunk1(global_scheduler__add_fiber_parallel, fiber, return f2__global_scheduler__add_fiber_parallel(this_cause, fiber));
@@ -233,9 +221,7 @@ f2ptr raw__global_scheduler__add_fiber(f2ptr cause, f2ptr fiber) {
 }
 
 f2ptr f2__global_scheduler__add_fiber(f2ptr cause, f2ptr fiber) {
-  if (! raw__fiber__is_type(cause, fiber)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber, fiber);
   return raw__global_scheduler__add_fiber(cause, fiber);
 }
 def_pcfunk1(global_scheduler__add_fiber, fiber, return f2__global_scheduler__add_fiber(this_cause, fiber));
@@ -259,9 +245,7 @@ f2ptr raw__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
 }
 
 f2ptr f2__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
-  if (! raw__fiber__is_type(cause, fiber)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber, fiber);
   return raw__global_scheduler__remove_fiber(cause, fiber);
 }
 def_pcfunk1(global_scheduler__remove_fiber, fiber, return f2__global_scheduler__remove_fiber(this_cause, fiber));
@@ -284,9 +268,7 @@ void raw__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
 }
 
 f2ptr f2__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
-  if (! raw__fiber__is_type(cause, fiber)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber, fiber);
   raw__global_scheduler__complete_fiber(cause, fiber);
   return nil;
 }
@@ -305,9 +287,7 @@ f2ptr raw__global_scheduler__processor_thread_current_fiber(int pool_index) {
 }
 
 f2ptr f2__global_scheduler__processor_thread_current_fiber(f2ptr cause, f2ptr pool_index) {
-  if (! raw__integer__is_type(cause, pool_index)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(integer, pool_index);
   s64 pool_index__i = f2integer__i(pool_index, cause);
   if ((pool_index__i < 0) || (pool_index >= memory_pool_num)) {
     return f2larva__new(cause, 22, nil);
@@ -339,9 +319,7 @@ boolean_t raw__global_scheduler__contains_active_fiber(f2ptr cause, f2ptr fiber)
 }
 
 f2ptr f2__global_scheduler__contains_active_fiber(f2ptr cause, f2ptr fiber) {
-  if (! raw__fiber__is_type(cause, fiber)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(fiber, fiber);
   return f2bool__new(raw__global_scheduler__contains_active_fiber(cause, fiber));
 }
 def_pcfunk1(global_scheduler__contains_active_fiber, fiber, return f2__global_scheduler__contains_active_fiber(this_cause, fiber));

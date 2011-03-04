@@ -255,7 +255,7 @@ f2ptr f2__pathname__directory_pathname(f2ptr cause, f2ptr this) {
 def_pcfunk1(pathname__directory_pathname, this, return f2__pathname__directory_pathname(this_cause, this));
 
 f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
-  assert_argument_type(string, this);
+  assert_argument_type(string, pathname);
   u64 pathname__length = raw__string__length(cause, pathname);
   u8* pathname__str    = (u8*)alloca(pathname__length + 1);
   raw__string__str_copy(cause, pathname, pathname__str);

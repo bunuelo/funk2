@@ -192,7 +192,6 @@ typedef struct funk2_s {
   funk2_object_t                      object;
   funk2_number_globalvars_t           number_globalvars;
   funk2_surrogate_parent_t            surrogate_parent;
-  funk2_simple_graph_t                simple_graph;
   funk2_xmlrpc_t                      xmlrpc;
   funk2_trace_t                       trace;
 #if defined(F2__GTK__SUPPORTED)

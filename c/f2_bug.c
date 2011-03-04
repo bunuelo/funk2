@@ -34,9 +34,7 @@ f2ptr raw__bug__new_from_larva(f2ptr cause, f2ptr larva) {
 }
 
 f2ptr f2__bug__new_from_larva(f2ptr cause, f2ptr larva) {
-  if (! raw__larva__is_type(cause, larva)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(larva, larva);
   return raw__bug__new_from_larva(cause, larva);
 }
 
@@ -75,9 +73,7 @@ f2ptr raw__bug__pretty_print(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__bug__pretty_print(f2ptr cause, f2ptr this) {
-  if (! raw__bug__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(bug, this);
   return raw__bug__pretty_print(cause, this);
 }
 def_pcfunk1(bug__pretty_print, this, return f2__bug__pretty_print(this_cause, this));
@@ -97,10 +93,8 @@ f2ptr raw__bug__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 }
 
 f2ptr f2__bug__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((! raw__bug__is_type(cause, this)) &&
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(bug,                  this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__bug__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(bug__terminal_print_with_frame, this, terminal_print_frame, return f2__bug__terminal_print_with_frame(this_cause, this, terminal_print_frame));

@@ -106,7 +106,8 @@
 [memory-assert_valid]
 
 [globalize -first_cause- [this-cause]]
-[frame-add_var_value [primfunk:cause__frame [this-cause]] `standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 256 t nil t 4000000000]]
+`[frame-add_var_value [primfunk:cause__frame [this-cause]] `standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 256 t nil t 4000000000]]
+[frame-add_var_value [primfunk:cause__frame [this-cause]] `standard-terminal [terminal_print_frame-new stdout 0 [termios-width] 1000 1000 t nil t 60000000000]]
 [frame-add_var_value [primfunk:cause__frame [this-cause]] `standard-input    stdin]
 
 [define -current_env_name- `global-environment]

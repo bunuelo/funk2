@@ -44,10 +44,8 @@ f2ptr raw__partial_order_node__terminal_print_with_frame(f2ptr cause, f2ptr this
 }
 
 f2ptr f2__partial_order_node__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((! raw__partial_order_node__is_type(cause, this)) &&
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(partial_order_node,   this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__partial_order_node__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(partial_order_node__terminal_print_with_frame, this, terminal_print_frame, return f2__partial_order_node__terminal_print_with_frame(this_cause, this, terminal_print_frame));

@@ -32,12 +32,10 @@ f2ptr f2__primobject_type__new(f2ptr cause, f2ptr parents) {
 def_pcfunk1(primobject_type__new, parents, return f2__primobject_type__new(this_cause, parents));
 
 f2ptr f2__primobject_type__add_slot_type(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name, f2ptr funkable) {
-  if ((! raw__frame__is_type(   cause, this)) ||
-      (! raw__symbol__is_type(  cause, slot_type)) ||
-      (! raw__symbol__is_type(  cause, slot_name)) ||
-      (! raw__funkable__is_type(cause, funkable))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(frame,    this);
+  assert_argument_type(symbol,   slot_type);
+  assert_argument_type(symbol,   slot_name);
+  assert_argument_type(funkable, funkable);
   f2__frame__add_type_var_value(cause, this, slot_type, slot_name, funkable);
   return nil;
 }
@@ -46,11 +44,9 @@ def_pcfunk4(primobject_type__add_slot_type, this, slot_type, slot_name, funkable
 // lookup slot type
 
 f2ptr f2__primobject_type__lookup_slot_type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
-  if ((! raw__frame__is_type(cause, this)) ||
-      (! raw__symbol__is_type(cause, slot_type)) ||
-      (! raw__symbol__is_type(cause, slot_name))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(frame,  this);
+  assert_argument_type(symbol, slot_type);
+  assert_argument_type(symbol, slot_name);
   f2ptr this_binding = f2__frame__lookup_type_var_value(cause, this, slot_type, slot_name, nil);
   if (! this_binding) {
     f2ptr parents      = f2__frame__lookup_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, new__symbol(cause, "parents"), nil);
@@ -71,23 +67,19 @@ def_pcfunk3(primobject_type__lookup_slot_type_funk, this, slot_type, slot_name, 
 // scan slot names
 
 f2ptr raw__primobject_type__type_funk__mapc_keys(f2ptr cause, f2ptr this, f2ptr type_name, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data) {
+  assert_argument_type_or_nil(frame,  this);
+  assert_argument_type(       symbol, type_name);
   if (! this) {
     return nil;
-  }
-  if ((! raw__frame__is_type( cause, this)) ||
-      (! raw__symbol__is_type(cause, type_name))) {
-    return f2larva__new(cause, 1, nil);
   }
   return raw__frame__type_var__mapc_keys(cause, this, type_name, map_funk, aux_data);
 }
 
 f2ptr f2__primobject_type__type_funk__keys(f2ptr cause, f2ptr this, f2ptr type_name) {
+  assert_argument_type_or_nil(frame,  this);
+  assert_argument_type(       symbol, type_name);
   if (! this) {
     return nil;
-  }
-  if ((! raw__frame__is_type( cause, this)) ||
-      (! raw__symbol__is_type(cause, type_name))) {
-    return f2larva__new(cause, 1, nil);
   }
   return f2__frame__type_var__keys(cause, this, type_name);
 }

@@ -104,9 +104,7 @@ f2ptr raw__set__add(f2ptr cause, f2ptr this, f2ptr key) {
 }
 
 f2ptr f2__set__add(f2ptr cause, f2ptr this, f2ptr key) {
-  if (! raw__set__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(set, this);
   return raw__set__add(cause, this, key);
 }
 def_pcfunk2(set__add, this, element, return f2__set__add(this_cause, this, element));
@@ -153,9 +151,7 @@ boolean_t raw__set__remove(f2ptr cause, f2ptr this, f2ptr key) {
 }
 
 f2ptr f2__set__remove(f2ptr cause, f2ptr this, f2ptr key) {
-  if (! raw__set__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(set, this);
   return f2bool__new(raw__set__remove(cause, this, key));
 }
 def_pcfunk2(set__remove, this, key, return f2__set__remove(this_cause, this, key));
@@ -168,10 +164,8 @@ f2ptr raw__set__copy_from(f2ptr cause, f2ptr this, f2ptr that) {
 }
 
 f2ptr f2__set__copy_from(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__set__is_type(cause, this)) ||
-      (! raw__set__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(set, this);
+  assert_argument_type(set, that);
   return raw__set__copy_from(cause, this, that);
 }
 def_pcfunk2(set__copy_from, this, that, return f2__set__copy_from(this_cause, this, that));
@@ -184,9 +178,7 @@ f2ptr raw__set__copy(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__set__copy(f2ptr cause, f2ptr this) {
-  if (! raw__set__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(set, this);
   return raw__set__copy(cause, this);
 }
 def_pcfunk1(set__copy, this, return f2__set__copy(this_cause, this));
@@ -212,9 +204,7 @@ f2ptr raw__set__an_arbitrary_element(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__set__an_arbitrary_element(f2ptr cause, f2ptr this) {
-  if (! raw__set__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(set, this);
   return raw__set__an_arbitrary_element(cause, this);
 }
 def_pcfunk1(set__an_arbitrary_element, this, return f2__set__an_arbitrary_element(this_cause, this));
@@ -244,9 +234,7 @@ f2ptr raw__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
 }
 
 f2ptr f2__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
-  if (! raw__set__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(set, this);
   return raw__set__lookup(cause, this, key);
 }
 def_pcfunk2(set__lookup, this, element, return f2__set__lookup(this_cause, this, element));
@@ -276,9 +264,7 @@ boolean_t raw__set__contains(f2ptr cause, f2ptr this, f2ptr key) {
 }
 
 f2ptr f2__set__contains(f2ptr cause, f2ptr this, f2ptr key) {
-  if (! raw__set__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(set, this);
   return f2bool__new(raw__set__contains(cause, this, key));
 }
 def_pcfunk2(set__contains, this, key, return f2__set__contains(this_cause, this, key));
@@ -293,9 +279,7 @@ f2ptr raw__set__elements(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__set__elements(f2ptr cause, f2ptr this) {
-  if (! raw__set__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(set, this);
   return raw__set__elements(cause, this);
 }
 def_pcfunk1(set__elements, this, return f2__set__elements(this_cause, this));
@@ -310,9 +294,7 @@ boolean_t raw__set__is_empty(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__set__is_empty(f2ptr cause, f2ptr this) {
-  if (! raw__set__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(set, this);
   return f2bool__new(raw__set__is_empty(cause, this));
 }
 def_pcfunk1(set__is_empty, this, return f2__set__is_empty(this_cause, this));
@@ -331,10 +313,8 @@ f2ptr raw__set__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 }
 
 f2ptr f2__set__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((! raw__set__is_type(cause, this)) &&
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(set,                  this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__set__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(set__terminal_print_with_frame, this, terminal_print_frame, return f2__set__terminal_print_with_frame(this_cause, this, terminal_print_frame));

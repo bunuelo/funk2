@@ -172,7 +172,7 @@ boolean_t raw__pathnamelist__is_type(f2ptr cause, f2ptr object) {
 	(! raw__list__is_type(cause, iter))) {
       return boolean__false;
     }
-    f2ptr element = f2__first(cause, element);
+    f2ptr element = f2__first(cause, iter);
     if (! raw__string__is_type(cause, element)) {
       return boolean__false;
     }

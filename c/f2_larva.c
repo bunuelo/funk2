@@ -23,13 +23,14 @@
 
 
 f2ptr f2__larva__invalid_argument_type__new(f2ptr cause, f2ptr source_filename, f2ptr source_line_number, f2ptr funktion_name,
-					    f2ptr correct_type, f2ptr argument_name, f2ptr argument_value) {
+					    f2ptr correct_type, f2ptr actual_type, f2ptr argument_name, f2ptr argument_value) {
   return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), f2__frame__new(cause, f2list14__new(cause,
 														  new__symbol(cause, "bug_type"),           new__symbol(cause, "invalid_argument_type"),
 														  new__symbol(cause, "source_filename"),    source_filename,
 														  new__symbol(cause, "source_line_number"), source_line_number,
 														  new__symbol(cause, "funktion_name"),      funktion_name,
 														  new__symbol(cause, "correct_type"),       correct_type,
+														  new__symbol(cause, "actual_type"),        actual_type,
 														  new__symbol(cause, "argument_name"),      argument_name,
 														  new__symbol(cause, "argument_value"),     argument_value))));
 }

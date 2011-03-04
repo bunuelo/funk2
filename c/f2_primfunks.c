@@ -21,7 +21,9 @@
 
 #include "funk2.h"
 
-f2ptr f2__argument_type_check_failure__larva__new(f2ptr cause, f2ptr value) {return f2larva__new(cause, 1, nil);}
+f2ptr f2__argument_type_check_failure__larva__new(f2ptr cause, f2ptr value) {
+  return f2larva__new(cause, 1235222, nil);
+}
 
 f2ptr f2__argument_number_check_failure__larva__new(f2ptr cause, f2ptr funk_symbol, int correct_arg_num, f2ptr args) {
   f2ptr bug_frame = f2__frame__new(cause, nil);
@@ -116,9 +118,7 @@ f2ptr raw__system__memorypool__total_global_memory(f2ptr cause, s64 index) {
 }
 
 f2ptr f2__system__memorypool__total_global_memory(f2ptr cause, f2ptr index) {
-  if (! raw__integer__is_type(cause, index)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(integer, index);
   s64 index__i = f2integer__i(index, cause);
   return raw__system__memorypool__total_global_memory(cause, index__i);
 }
@@ -133,9 +133,7 @@ f2ptr raw__system__memorypool__total_free_memory(f2ptr cause, s64 index) {
 }
 
 f2ptr f2__system__memorypool__total_free_memory(f2ptr cause, f2ptr index) {
-  if (! raw__integer__is_type(cause, index)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(integer, index);
   s64 index__i = f2integer__i(index, cause);
   return raw__system__memorypool__total_free_memory(cause, index__i);
 }
@@ -297,10 +295,8 @@ void raw__mutex__lock_both(f2ptr cause, f2ptr this, f2ptr that) {
 
 // avoids race conditions
 f2ptr f2__mutex__lock_both(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__mutex__is_type(cause, this)) ||
-      (! raw__mutex__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(mutex, this);
+  assert_argument_type(mutex, that);
   raw__mutex__lock_both(cause, this, that);
   return nil;
 }
@@ -326,7 +322,7 @@ f2ptr f2__string__new_raw_c_string(f2ptr cause, f2ptr x) {
 def_pcfunk1(string__new_raw_c_string, x, return f2__string__new_raw_c_string(this_cause, x));
 
 f2ptr f2__string__new_from_raw_c_string(f2ptr cause, f2ptr x) {
-  if (!raw__pointer__is_type(cause, x)) {return f2larva__new(cause, 1, nil);}
+  assert_argument_type(pointer, x);
   char* str = (char*)from_ptr(f2pointer__p(x, cause));
   return f2string__new(cause, strlen(str), (u8*)str);
 }
@@ -371,9 +367,7 @@ f2ptr raw__conslist__new(f2ptr cause, f2ptr conslist) {
 }
 
 f2ptr f2__conslist__new(f2ptr cause, f2ptr conslist) {
-  if (! raw__conslist__is_type(cause, conslist)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(conslist, conslist);
   return raw__conslist__new(cause, conslist);
 }
 def_pcfunk0_and_rest(conslist, conslist, return f2__conslist__new(this_cause, conslist));
@@ -384,9 +378,6 @@ f2ptr raw__conslist__as__array(f2ptr cause, f2ptr this) {
   {
     f2ptr iter = this;
     while (iter) {
-      if (! raw__cons__is_type(cause, iter)) {
-	return f2larva__new(cause, 1, nil);
-      }
       length ++;
       iter = f2cons__cdr(iter, cause);
     }
@@ -406,17 +397,14 @@ f2ptr raw__conslist__as__array(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__conslist__as__array(f2ptr cause, f2ptr this) {
-  if (! raw__conslist__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(conslist, this);
   return raw__conslist__as__array(cause, this);
 }
 def_pcfunk1(conslist__as__array, this, return f2__conslist__as__array(this_cause, this));
 
 f2ptr f2__conslist__first_n(f2ptr cause, f2ptr this, f2ptr n) {
-  if (! raw__integer__is_type(cause, n)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(conslist, this);
+  assert_argument_type(integer,  n);
   s64 raw_n = f2integer__i(n, cause);
   s64 index = 0;
   f2ptr new_seq  = nil;
@@ -486,11 +474,7 @@ def_pcfunk1(sleep_for_nanoseconds_without_yield, nanoseconds, return f2__sleep_f
 // chunk
 
 f2ptr f2__chunk(f2ptr cause, f2ptr length) {
-  if ((! length) || (! raw__integer__is_type(cause, length))) {
-    printf("\n[chunk length] error: length must be integer.");
-    return f2larva__new(cause, 1, nil);
-    //return f2__argument_type_check_failure__exception__new(cause, nil);
-  }
+  assert_argument_type(integer, length);
   int raw_length = f2integer__i(length, cause);
   return f2chunk__new(cause, raw_length, NULL);
 }
@@ -582,14 +566,15 @@ boolean_t raw__funkable__is_type(f2ptr cause, f2ptr exp) {
 		  raw__core_extension_funk__is_type(cause, exp)));
 }
 
-// returns larva on error
 f2ptr raw__funkable__env(f2ptr cause, f2ptr funkable) {
   if      (raw__funk__is_type(               cause, funkable)) {return f2funk__env( funkable, cause);}
   else if (raw__metro__is_type(              cause, funkable)) {return f2metro__env(funkable, cause);}
   else if (raw__cfunk__is_type(              cause, funkable)) {return nil;}
   else if (raw__metrocfunk__is_type(         cause, funkable)) {return nil;}
   else if (raw__core_extension_funk__is_type(cause, funkable)) {return nil;}
-  return f2larva__new(cause, 1, nil);
+  error(nil, "raw__funkable__env error: funkable is invalid type.");
+  // we should never get here.
+  return nil;
 }
 
 void debug__f2fiber__funk__unfunkable_error() {
@@ -730,6 +715,15 @@ f2ptr f2__simple_length(f2ptr cause, f2ptr seq) {
 }
 def_pcfunk1(simple_length, seq, return f2__simple_length(this_cause, seq));
 
+
+// this funktion is deprecated; use object-get accessors at this point.
+boolean_t raw__eltable_object__is_type(f2ptr cause, f2ptr this) {
+  return (raw__array__is_type(cause, this) ||
+	  raw__chunk__is_type(cause, this) ||
+	  raw__conslist__is_type(cause, this));
+}
+
+// this funktion is deprecated; use object-get accessors at this point.
 f2ptr raw__elt(f2ptr cause, f2ptr this, int raw_index) {
   if (! this) {
     printf ("\nseq_elt error: this argument is nil (must be cons, array, or chunk)."); fflush(stdout);
@@ -780,31 +774,36 @@ f2ptr raw__elt(f2ptr cause, f2ptr this, int raw_index) {
   }
 }
 
+// this funktion is deprecated; use object-get accessors at this point.
 f2ptr f2__elt(f2ptr cause, f2ptr this, f2ptr index) {
-  if ((! index) || (! raw__integer__is_type(cause, index))) {
-    printf ("\nf2__elt error: index argument must be integer."); fflush(stdout);
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(eltable_object, this);
+  assert_argument_type(integer,        index);
   int raw_index = f2integer__i(index, cause);
   return raw__elt(cause, this, raw_index);
 }
 
-f2ptr f2__reverse(f2ptr cause, f2ptr this) {
+f2ptr raw__conslist__reverse(f2ptr cause, f2ptr this) {
   if (this == nil) {
     return this;
   }
-  if (raw__cons__is_type(cause, this)) {
-    f2ptr new_seq = nil;
-    f2ptr iter    = this;
-    while (iter) {
-      f2ptr exp = f2__cons__car(cause, iter);
-      new_seq   = f2cons__new(cause, exp, new_seq);
-      iter      = f2__cons__cdr(cause, iter);
-    }
-    return new_seq;
-  } else {
-    return f2larva__new(cause, 1, nil);
+  f2ptr new_seq = nil;
+  f2ptr iter    = this;
+  while (iter != nil) {
+    f2ptr exp = f2cons__car(iter, cause);
+    new_seq   = f2cons__new(cause, exp, new_seq);
+    iter      = f2cons__cdr(iter, cause);
   }
+  return new_seq;
+}
+
+f2ptr f2__conslist__reverse(f2ptr cause, f2ptr this) {
+  assert_argument_type(conslist, this);
+  return raw__conslist__reverse(cause, this);
+}
+
+// this funktion is deprecated; use conslist__reverse or object-get accessors instead.
+f2ptr f2__reverse(f2ptr cause, f2ptr this) {
+  return f2__conslist__reverse(cause, this);
 }
 def_pcfunk1(reverse, this, return f2__reverse(this_cause, this));
 
@@ -824,12 +823,7 @@ def_pcfunk1(write, x, return f2__write(this_cause, simple_fiber, x));
 def_pcfunk2(fwrite, fptr, x, return f2__fwrite(this_cause, simple_fiber, fptr, x));
 
 f2ptr f2__format(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {
-  if (! raw__stream__is_type(cause, stream)) {
-    printf("\nraw__format error: stream must be stream.");
-    f2__fiber__print(cause, fiber, stream);
-    return f2larva__new(cause, 1, nil);
-    //return nil;
-  }
+  assert_argument_type(stream, stream);
   if (! exp) {
     f2__fwrite__raw_char(cause, stream, '[', NULL, nil);
     f2__fwrite__raw_char(cause, stream, ']', NULL, nil);
@@ -844,12 +838,7 @@ f2ptr f2__format(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {
 def_pcfunk2(exp__format, fptr, x, return f2__format(this_cause, simple_fiber, fptr, x));
 
 f2ptr f2__format__html(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {
-  if (! raw__stream__is_type(cause, stream)) {
-    printf("\nraw__format error: stream must be stream.");
-    f2__fiber__print(cause, fiber, stream);
-    return f2larva__new(cause, 1, nil);
-    //return nil;
-  }
+  assert_argument_type(stream, stream);
   if (! exp) {
     f2__fwrite__raw_char(cause, stream, '[', NULL, __funk2.globalenv.true__symbol);
     f2__fwrite__raw_char(cause, stream, ']', NULL, __funk2.globalenv.true__symbol);
@@ -898,23 +887,19 @@ f2ptr raw__mkdir(f2ptr cause, f2ptr directory_name) {
 }
 
 f2ptr f2__mkdir(f2ptr cause, f2ptr directory_name) {
-  if (! raw__string__is_type(cause, directory_name)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, directory_name);
   return raw__mkdir(cause, directory_name);
 }
 def_pcfunk1(mkdir, directory_name, return f2__mkdir(this_cause, directory_name));
 
+// this funktion is deprecated; use object-set mutators instead.
 f2ptr f2__seq_elt__set(f2ptr this, f2ptr index, f2ptr cause, f2ptr value) {
-  if (!this || !index || ! raw__integer__is_type(cause, index)) {
-    printf("\nseq_elt-set error: argument type check failure."); fflush(stdout);
-    return f2larva__new(cause, 1, nil);
-    //return f2__argument_type_check_failure__exception__new(cause, this);
-  }
+  assert_argument_type(eltable_object, this);
+  assert_argument_type(integer,        index);
   int raw_index = f2integer__i(index, cause);
   if (raw_index < 0) {
     printf("\nseq_elt-set error: index out of range."); fflush(stdout);
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 2, nil);
     //return f2__argument_type_check_failure__exception__new(cause, index);
   }
   switch (f2ptype__raw(this, cause)) {
@@ -1044,10 +1029,8 @@ f2ptr f2__contains(f2ptr cause, f2ptr this, f2ptr element) {
 def_pcfunk2(contains, this, element, return f2__contains(this_cause, this, element));
 
 f2ptr f2__fopen(f2ptr cause, f2ptr filename, f2ptr mode) {
-  if (!raw__string__is_type(cause, filename) || !raw__string__is_type(cause, mode)) {
-    error(nil, "fopen error: filename and mode must both be strings.");
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, filename);
+  assert_argument_type(string, mode);
   int filename_length = f2string__length(filename, cause);
   char* filename_str = (char*)from_ptr(f2__malloc(filename_length + 1));
   f2string__str_copy(filename, cause, (u8*)filename_str);
@@ -1064,11 +1047,7 @@ f2ptr f2__fopen(f2ptr cause, f2ptr filename, f2ptr mode) {
 def_pcfunk2(fopen, filename, mode, return f2__fopen(this_cause, filename, mode));
 
 f2ptr f2__fclose(f2ptr cause, f2ptr fptr) {
-  if ((! fptr) || (! raw__pointer__is_type(cause, fptr))) {
-    printf("\nfclose error: fptr must be pointer.");
-    return f2larva__new(cause, 1, nil);
-    return nil;
-  }
+  assert_argument_type(pointer, fptr);
   return f2integer__new(cause, fclose((FILE*)from_ptr(f2pointer__p(fptr, cause))));
 }
 def_pcfunk1(fclose, fptr, return f2__fclose(this_cause, fptr));
@@ -1091,20 +1070,14 @@ u64 raw__random(u64 max_value) {
 }
 
 f2ptr f2__random(f2ptr cause, f2ptr max_value) {
-  if ((! max_value) || (! raw__integer__is_type(cause, max_value))) {
-    printf("\n[random max_value] error: max_value must be integer.");
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(integer, max_value);
   int raw_max_value = f2integer__i(max_value, cause);
   return f2integer__new(cause, raw__random(raw_max_value));
 }
 def_pcfunk1(random, max_value, return f2__random(this_cause, max_value));
 
 f2ptr f2__chunk_copy(f2ptr cause, f2ptr init) {
-  if ((! init) || (! raw__chunk__is_type(cause, init))) {
-    printf("\n[chunk-copy init] error: init must be chunk.");
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(chunk, init);
   return f2chunk__new_copy(cause, init);
 }
 def_pcfunk1(chunk__copy, init, return f2__chunk_copy(this_cause, init));
@@ -1152,11 +1125,9 @@ def_pcfunk0(this__env,    return f2fiber__env(simple_fiber, this_cause));
 def_pcfunk0(this__args,   return simple_args);
 
 f2ptr f2__exps_demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp) {
-  if (!exp) {return nil;}
-  if (!raw__cons__is_type(cause, exp)) {
-    printf("\nexps-demetropolize_full error: exp type must be list.");
-    return f2larva__new(cause, 1, nil);
-    //return f2__argument_type_check_failure__exception__new(cause, exp);
+  assert_argument_type_or_nil(cons, exp);
+  if (exp == nil) {
+    return nil;
   }
   f2ptr demetropolize_result = f2__demetropolize_full__with_status(cause, fiber, env, f2cons__car(exp, cause));
   if (raw__larva__is_type(cause, demetropolize_result)) {
@@ -1185,9 +1156,9 @@ f2ptr f2__lookup_funkvar(f2ptr cause, f2ptr env, f2ptr funkvar, f2ptr undefined_
 def_pcfunk2(lookup_funkvar, funkvar, undefined_value, return f2__lookup_funkvar(this_cause, simple_env, funkvar, undefined_value));
 
 f2ptr f2__jump_to_chunk(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp, f2ptr args) {
-  if((! exp)) {
+  if(exp == nil) {
     printf("\njump-to-pointer error: exp is nil."); 
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 12356, nil);
     //return f2__argument_type_check_failure__exception__new(cause, exp);
   }
   switch(f2ptype__raw(exp, cause)) {
@@ -1199,7 +1170,7 @@ f2ptr f2__jump_to_chunk(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp, f2ptr ar
     return f2chunk__cfunk_jump(exp, cause, fiber, env, args);
   default:
     printf("\njump-to-pointer error: exp must be pointer or chunk.");
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 1135, nil);
     //return f2__argument_type_check_failure__exception__new(cause, exp);
   }
 }
@@ -1208,7 +1179,7 @@ def_pcfunk2(jump_to_chunk, p, args, return f2__jump_to_chunk(this_cause, simple_
 f2ptr f2__coerce_to_int(f2ptr cause, f2ptr exp) {
   if(! exp) {
     printf("\ncoerce-to-int error: exp is nil.");
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 151515, nil);
     //return f2__argument_type_check_failure__exception__new(cause, exp);
   }
   switch(f2ptype__raw(exp, cause)) {
@@ -1216,7 +1187,7 @@ f2ptr f2__coerce_to_int(f2ptr cause, f2ptr exp) {
   case ptype_pointer: return f2integer__new(cause, (long)f2pointer__p(exp, cause));
   default:
     printf("\ncoerce-to-int error: exp must be integer or pointer.");
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 13512, nil);
     //return f2__argument_type_check_failure__exception__new(cause, exp);
   }
 }
@@ -1381,10 +1352,10 @@ void raw__send_request_register_peer(f2ptr cause, computer_id_t computer_id, nod
 }
 
 f2ptr f2__send_request_register_peer(f2ptr cause, f2ptr computer_id, f2ptr node_id, f2ptr ip_addr, f2ptr port_num) {
-  if (! raw__integer__is_type(cause, computer_id)) {printf("\nf2__send_request_register_peer error: computer_id must be integer."); return f2larva__new(cause, 1, nil);}
-  if (! raw__pointer__is_type(cause, node_id))     {printf("\nf2__send_request_register_peer error: node_id must be pointer.");     return f2larva__new(cause, 1, nil);}
-  if (! raw__array__is_type(  cause, ip_addr))     {printf("\nf2__send_request_register_peer error: ip_addr must be array.");       return f2larva__new(cause, 1, nil);}
-  if (! raw__integer__is_type(cause, port_num))    {printf("\nf2__send_request_register_peer error: port_num must be integer.");    return f2larva__new(cause, 1, nil);}
+  assert_argument_type(integer, computer_id);
+  assert_argument_type(pointer, node_id);
+  assert_argument_type(array,   ip_addr);
+  assert_argument_type(integer, port_num);
   u8 u8_ip_addr[4];
   u8_ip_addr[0] = f2integer__i(raw__array__elt(cause, ip_addr, 0), cause);
   u8_ip_addr[1] = f2integer__i(raw__array__elt(cause, ip_addr, 1), cause);
@@ -1396,15 +1367,14 @@ f2ptr f2__send_request_register_peer(f2ptr cause, f2ptr computer_id, f2ptr node_
 def_pcfunk4(send_request_register_peer, computer_id, node_id, ip_addr, port_num, return f2__send_request_register_peer(this_cause, computer_id, node_id, ip_addr, port_num););
 
 f2ptr f2__larva(f2ptr cause, f2ptr type, f2ptr bug) {
-  if (! raw__integer__is_type(cause, type)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(       integer, type);
+  assert_argument_type_or_nil(bug, bug);
   u32 raw_type = f2integer__i(type, cause);
   return f2larva__new(cause, raw_type, bug);
 }
 def_pcfunk2(larva, type, bug, return f2__larva(this_cause, type, bug));
 
-f2ptr f2__funkable__env(f2ptr cause, f2ptr this) {
+f2ptr raw__funkable__env(f2ptr cause, f2ptr this) {
   if (raw__cfunk__is_type(cause, this)) {
     return f2cfunk__env(this, cause);
   } else if (raw__funk__is_type(cause, this)) {
@@ -1413,12 +1383,17 @@ f2ptr f2__funkable__env(f2ptr cause, f2ptr this) {
     return f2metro__env(this, cause);
   } else if (raw__core_extension_funk__is_type(cause, this)) {
     return raw__core_extension_funk__env(cause, this);
-  } else {
-    return f2larva__new(cause, 1, nil);
   }
+  error(nil, "raw__funkable__env error: this is invalid type.");
 }
 
-f2ptr f2__funkable__name(f2ptr cause, f2ptr this) {
+f2ptr f2__funkable__env(f2ptr cause, f2ptr this) {
+  assert_argument_type(funkable, this);
+  return raw__funkable__env(cause, this);
+}
+
+
+f2ptr raw__funkable__name(f2ptr cause, f2ptr this) {
   if (raw__cfunk__is_type(cause, this)) {
     return f2cfunk__name(this, cause);
   } else if (raw__funk__is_type(cause, this)) {
@@ -1427,12 +1402,17 @@ f2ptr f2__funkable__name(f2ptr cause, f2ptr this) {
     return f2metro__name(this, cause);
   } else if (raw__core_extension_funk__is_type(cause, this)) {
     return raw__core_extension_funk__name(cause, this);
-  } else {
-    return f2larva__new(cause, 1, nil);
   }
+  error(nil, "raw__funkable__name error: this is invalid type.");
 }
 
-f2ptr f2__funkable__args(f2ptr cause, f2ptr this) {
+f2ptr f2__funkable__name(f2ptr cause, f2ptr this) {
+  assert_argument_type(funkable, this);
+  return raw__funkable__name(cause, this);
+}
+
+
+f2ptr raw__funkable__args(f2ptr cause, f2ptr this) {
   if (raw__cfunk__is_type(cause, this)) {
     return f2cfunk__args(this, cause);
   } else if (raw__funk__is_type(cause, this)) {
@@ -1441,11 +1421,17 @@ f2ptr f2__funkable__args(f2ptr cause, f2ptr this) {
     return f2metro__args(this, cause);
   } else if (raw__core_extension_funk__is_type(cause, this)) {
     return raw__core_extension_funk__args(cause, this);
-  } else {
-    return f2larva__new(cause, 1, nil);
   }
+  error(nil, "raw__funkable__args error: this is invalid type.");
 }
 
+f2ptr f2__funkable__args(f2ptr cause, f2ptr this) {
+  assert_argument_type(funkable, this);
+  return raw__funkable__args(cause, this);
+}
+
+
+// this interface is deprecated.
 // abstract sequence getters and setters (first, next, prev)
 
 f2ptr f2__first(f2ptr cause, f2ptr exp) {
@@ -1525,6 +1511,7 @@ f2ptr raw__str_copy(f2ptr cause, f2ptr object, u8* str) {
   return f2larva__new(cause, 1, nil);
 }
 
+// deprecated.
 f2ptr f2__colonize(f2ptr cause, f2ptr exp) {
   if ((! raw__string__is_type(cause, exp)) &&
       (! raw__symbol__is_type(cause, exp))) {
@@ -1539,6 +1526,7 @@ f2ptr f2__colonize(f2ptr cause, f2ptr exp) {
   return colonized;
 }
 def_pcfunk1(colonize, exp, return f2__colonize(this_cause, exp));
+
 
 u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   if (! exp) {
@@ -1638,9 +1626,7 @@ f2ptr raw__string__read(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__string__read(f2ptr cause, f2ptr this) {
-  if (! raw__string__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, this);
   return raw__string__read(cause, this);
 }
 

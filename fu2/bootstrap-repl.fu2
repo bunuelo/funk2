@@ -83,7 +83,6 @@
 [primfunk:load 'fu2/primfunks-ptypes.fu2']
 [primfunk:load 'fu2/primfunks-scheduler.fu2']
 [primfunk:load 'fu2/primfunks-search.fu2']
-[primfunk:load 'fu2/primfunks-semantic_graph.fu2']
 [primfunk:load 'fu2/primfunks-serialize.fu2']
 [primfunk:load 'fu2/primfunks-set.fu2']
 [primfunk:load 'fu2/primfunks-socket.fu2']

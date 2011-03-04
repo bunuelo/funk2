@@ -566,17 +566,6 @@ boolean_t raw__funkable__is_type(f2ptr cause, f2ptr exp) {
 		  raw__core_extension_funk__is_type(cause, exp)));
 }
 
-f2ptr raw__funkable__env(f2ptr cause, f2ptr funkable) {
-  if      (raw__funk__is_type(               cause, funkable)) {return f2funk__env( funkable, cause);}
-  else if (raw__metro__is_type(              cause, funkable)) {return f2metro__env(funkable, cause);}
-  else if (raw__cfunk__is_type(              cause, funkable)) {return nil;}
-  else if (raw__metrocfunk__is_type(         cause, funkable)) {return nil;}
-  else if (raw__core_extension_funk__is_type(cause, funkable)) {return nil;}
-  error(nil, "raw__funkable__env error: funkable is invalid type.");
-  // we should never get here.
-  return nil;
-}
-
 void debug__f2fiber__funk__unfunkable_error() {
   status("debug__f2fiber__funk__unfunkable_error here.");
 }
@@ -1374,17 +1363,15 @@ f2ptr f2__larva(f2ptr cause, f2ptr type, f2ptr bug) {
 }
 def_pcfunk2(larva, type, bug, return f2__larva(this_cause, type, bug));
 
-f2ptr raw__funkable__env(f2ptr cause, f2ptr this) {
-  if (raw__cfunk__is_type(cause, this)) {
-    return f2cfunk__env(this, cause);
-  } else if (raw__funk__is_type(cause, this)) {
-    return f2funk__env(this, cause);
-  } else if (raw__metro__is_type(cause, this)) {
-    return f2metro__env(this, cause);
-  } else if (raw__core_extension_funk__is_type(cause, this)) {
-    return raw__core_extension_funk__env(cause, this);
-  }
-  error(nil, "raw__funkable__env error: this is invalid type.");
+f2ptr raw__funkable__env(f2ptr cause, f2ptr funkable) {
+  if      (raw__funk__is_type(               cause, funkable)) {return f2funk__env( funkable, cause);}
+  else if (raw__metro__is_type(              cause, funkable)) {return f2metro__env(funkable, cause);}
+  else if (raw__cfunk__is_type(              cause, funkable)) {return nil;}
+  else if (raw__metrocfunk__is_type(         cause, funkable)) {return nil;}
+  else if (raw__core_extension_funk__is_type(cause, funkable)) {return nil;}
+  error(nil, "raw__funkable__env error: funkable is invalid type.");
+  // we should never get here.
+  return nil;
 }
 
 f2ptr f2__funkable__env(f2ptr cause, f2ptr this) {

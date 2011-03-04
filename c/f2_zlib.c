@@ -134,9 +134,7 @@ f2ptr raw__string__deflate(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__string__deflate(f2ptr cause, f2ptr this) {
-  if (! raw__string__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, this);
   return raw__string__deflate(cause, this);
 }
 def_pcfunk1(string__deflate, this, return f2__string__deflate(this_cause, this));
@@ -167,9 +165,7 @@ f2ptr raw__chunk__deflate(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__chunk__deflate(f2ptr cause, f2ptr this) {
-  if (! raw__chunk__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(chunk, this);
   return raw__chunk__deflate(cause, this);
 }
 def_pcfunk1(chunk__deflate, this, return f2__chunk__deflate(this_cause, this));
@@ -285,9 +281,7 @@ f2ptr raw__string__inflate(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__string__inflate(f2ptr cause, f2ptr this) {
-  if (! raw__string__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, this);
   return raw__string__inflate(cause, this);
 }
 def_pcfunk1(string__inflate, this, return f2__string__inflate(this_cause, this));
@@ -318,9 +312,7 @@ f2ptr raw__chunk__inflate(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__chunk__inflate(f2ptr cause, f2ptr this) {
-  if (! raw__chunk__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(chunk, this);
   return raw__chunk__inflate(cause, this);
 }
 def_pcfunk1(chunk__inflate, this, return f2__chunk__inflate(this_cause, this));

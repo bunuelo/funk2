@@ -257,9 +257,7 @@ void raw__surrogate_parent__start_system_command(f2ptr cause, u8* command) {
 }
 
 f2ptr f2__surrogate_parent__start_system_command(f2ptr cause, f2ptr command) {
-  if (! raw__string__is_type(cause, command)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, command);
   u64 command__length = raw__string__length(cause, command);
   u8* command__str    = alloca(command__length + 1);
   raw__string__str_copy(cause, command, command__str);

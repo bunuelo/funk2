@@ -52,14 +52,12 @@ def_frame_object__global__25_slot(terminal_print_frame,
 				  print_as_frame_hash);
 
 f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_distance, f2ptr max_x, f2ptr max_height, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes, f2ptr resize_to_fit, f2ptr max_nanoseconds_for_resize) {
-  if ((! raw__stream__is_type(cause, stream)) ||
-      (! raw__integer__is_type(cause, indent_distance)) ||
-      (! raw__integer__is_type(cause, max_x)) ||
-      (! raw__integer__is_type(cause, max_height)) ||
-      (! raw__integer__is_type(cause, max_size)) ||
-      (! raw__integer__is_type(cause, max_nanoseconds_for_resize))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(stream,  stream);
+  assert_argument_type(integer, indent_distance);
+  assert_argument_type(integer, max_x);
+  assert_argument_type(integer, max_height);
+  assert_argument_type(integer, max_size);
+  assert_argument_type(integer, max_nanoseconds_for_resize);
   f2ptr mutex                         = f2__mutex__new(cause);
   f2ptr testing                       = nil;
   f2ptr testing_max_x_constraint      = nil;
@@ -140,9 +138,7 @@ f2ptr raw__terminal_print_frame__new_copy(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__terminal_print_frame__new_copy(f2ptr cause, f2ptr this) {
-  if (! raw__terminal_print_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(terminal_print_frame, this);
   return raw__terminal_print_frame__new_copy(cause, this);
 }
 def_pcfunk1(terminal_print_frame__new_copy, this, return f2__terminal_print_frame__new_copy(this_cause, this));
@@ -212,10 +208,8 @@ void raw__terminal_print_frame__write_color__thread_unsafe(f2ptr cause, f2ptr th
 }
 
 f2ptr f2__terminal_print_frame__write_color__thread_unsafe(f2ptr cause, f2ptr this, f2ptr color) {
-  if ((! raw__terminal_print_frame__is_type(cause, this)) ||
-      (! raw__integer__is_type(cause, color))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(terminal_print_frame, this);
+  assert_argument_type(integer,              color);
   s64 color__i = f2integer__i(color, cause);
   if (color__i < 0 || color__i > 15) {
     return f2larva__new(cause, 2, nil);
@@ -368,10 +362,8 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 }
 
 f2ptr f2__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr this, f2ptr string) {
-  if ((! raw__terminal_print_frame__is_type(cause, this)) ||
-      (! raw__string__is_type(cause, string))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(terminal_print_frame, this);
+  assert_argument_type(string,               string);
   u64 string__length = f2string__length(string, cause);
   u8* string__str    = (u8*)alloca(string__length);
   raw__string__str_copy(cause, string, string__str);
@@ -450,9 +442,7 @@ f2ptr raw__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe
 }
 
 f2ptr f2__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(f2ptr cause, f2ptr this, f2ptr expression) {
-  if (! raw__terminal_print_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(terminal_print_frame, this);
   return raw__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(cause, this, expression);
 }
 def_pcfunk2(terminal_print_frame__can_print_expression_on_one_line__thread_unsafe, this, expression, return f2__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(this_cause, this, expression));
@@ -533,9 +523,7 @@ f2ptr raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height
 }
 
 f2ptr f2__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe(f2ptr cause, f2ptr this, f2ptr expression) {
-  if (! raw__terminal_print_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(terminal_print_frame, this);
   return raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe(cause, this, expression);
 }
 def_pcfunk2(terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe, this, expression, return f2__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe(this_cause, this, expression));
@@ -614,9 +602,7 @@ f2ptr raw__terminal_print_frame__expression_x_offset__thread_unsafe(f2ptr cause,
 }
 
 f2ptr f2__terminal_print_frame__expression_x_offset__thread_unsafe(f2ptr cause, f2ptr this, f2ptr expression) {
-  if (! raw__terminal_print_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(terminal_print_frame, this);
   return raw__terminal_print_frame__expression_x_offset__thread_unsafe(cause, this, expression);
 }
 def_pcfunk2(terminal_print_frame__expression_x_offset__thread_unsafe, this, expression, return f2__terminal_print_frame__expression_x_offset__thread_unsafe(this_cause, this, expression));
@@ -640,10 +626,8 @@ void raw__terminal_print_frame__prepare_for_printing__thread_unsafe(f2ptr cause,
 }
 
 f2ptr f2__terminal_print_frame__prepare_for_printing__thread_unsafe(f2ptr cause, f2ptr this, f2ptr max_x, f2ptr additional_height) {
-  if (((max_x             != nil) && (! raw__integer__is_type(cause, max_x))) ||
-      ((additional_height != nil) && (! raw__integer__is_type(cause, additional_height)))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type_or_nil(integer, max_x);
+  assert_argument_type_or_nil(integer, additional_height);
   raw__terminal_print_frame__prepare_for_printing__thread_unsafe(cause, this, max_x, additional_height);
   return nil;
 }
@@ -820,9 +804,7 @@ f2ptr raw__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this
 }
 
 f2ptr f2__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if (! raw__terminal_print_frame__is_type(cause, terminal_print_frame)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__exp__terminal_print_with_frame__thread_unsafe(cause, this, terminal_print_frame);
 }
 def_pcfunk2(exp__terminal_print_with_frame__thread_unsafe, this, terminal_print_frame, return f2__exp__terminal_print_with_frame__thread_unsafe(this_cause, this, terminal_print_frame));
@@ -847,12 +829,12 @@ f2ptr f2__terminal_print(f2ptr cause, f2ptr exp) {
   }
   f2ptr standard_terminal_print_frame = raw__cause__lookup(cause, cause, new__symbol(cause, "standard-terminal"));
   if (! raw__terminal_print_frame__is_type(cause, standard_terminal_print_frame)) {
-    return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), f2__frame__new(cause, f2list10__new(cause,
-														    new__symbol(cause, "bug_type"),           new__symbol(cause, "wrong_type"),
-														    new__symbol(cause, "funkname"),           new__symbol(cause, "terminal_print"),
-														    new__symbol(cause, "source_filename"),    new__string(cause, __FILE__),
-														    new__symbol(cause, "source_line_number"), f2integer__new(cause, __LINE__),
-														    new__symbol(cause, "standard-terminal"),  standard_terminal_print_frame))));
+    return f2larva__new(cause, 1252642, f2__bug__new(cause, f2integer__new(cause, 1), f2__frame__new(cause, f2list10__new(cause,
+															  new__symbol(cause, "bug_type"),           new__symbol(cause, "wrong_type"),
+															  new__symbol(cause, "funkname"),           new__symbol(cause, "terminal_print"),
+															  new__symbol(cause, "source_filename"),    new__string(cause, __FILE__),
+															  new__symbol(cause, "source_line_number"), f2integer__new(cause, __LINE__),
+															  new__symbol(cause, "standard-terminal"),  standard_terminal_print_frame))));
   }
   // how to make this thread safe?
   // we need to mutex somehow.

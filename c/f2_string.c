@@ -89,9 +89,13 @@ f2ptr raw__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_st
   {
     f2ptr iter = this;
     while (iter) {
-      if (! raw__cons__is_type(cause, iter)) {return f2larva__new(cause, 1, nil);}
+      if (! raw__cons__is_type(cause, iter)) {
+	error(nil, "raw__stringlist__intersperse error: iter is not cons.");
+      }
       f2ptr str = f2cons__car(iter, cause);
-      if (! raw__string__is_type(cause, str)) {return f2larva__new(cause, 1, nil);}
+      if (! raw__string__is_type(cause, str)) {
+	error(nil, "raw__stringlist__intersperse error: str is not string.");
+      }
       u64 str_length = f2string__length(str, cause);
       total_length += str_length;
       iter = f2cons__cdr(iter, cause);
@@ -146,8 +150,8 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
   }
   ptype_t ptype = f2ptype__raw(exp, cause);
   switch(ptype) {
-  case ptype_free_memory:     return f2larva__new(cause, 1, nil);
-  case ptype_newly_allocated: return f2larva__new(cause, 1, nil);
+  case ptype_free_memory:     return f2larva__new(cause, 32551, nil);
+  case ptype_newly_allocated: return f2larva__new(cause, 53241, nil);
   case ptype_integer: {
     u8 temp_str[1024];
     snprintf((char*)temp_str, 1024, s64__fstr, f2integer__i(exp, cause));
@@ -327,7 +331,7 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
     return f2string__new(cause, strlen((char*)temp_str), temp_str);
   } break;
   }
-  return f2larva__new(cause, 1, nil);
+  return f2larva__new(cause, 23511, nil);
 }
 
 f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
@@ -451,10 +455,8 @@ def_pcfunk1(string__load, filename, return f2__string__load(this_cause, filename
 
 
 f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
-  if ((! raw__string__is_type(cause, this)) ||
-      (! raw__string__is_type(cause, token))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(string, this);
+  assert_argument_type(string, token);
   s64 this__length  = raw__string__length(cause, this);
   s64 token__length = raw__string__length(cause, token);
   if (token__length == 0) {

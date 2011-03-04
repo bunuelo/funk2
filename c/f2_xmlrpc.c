@@ -210,7 +210,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
   xmlrpc_type type = xmlrpc_value_type(value);
   switch(type) {
   case XMLRPC_TYPE_DEAD:    // not a value
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 352521, nil);
   case XMLRPC_TYPE_NIL:     // empty value, eg NULL
     return nil;
   case XMLRPC_TYPE_BASE64: { // base64 value, eg binary data
@@ -308,7 +308,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
   case XMLRPC_TYPE_C_PTR:
     return f2larva__new(cause, 12, nil);
   }
-  return f2larva__new(cause, 1, nil);
+  return f2larva__new(cause, 153261, nil);
 }
 
 boolean_t funk2_xmlrpc__apply(funk2_xmlrpc_t* this, u8* url, u8* funkname, xmlrpc_value* arguments, xmlrpc_value** result, char** fault_string, int* fault_code) {
@@ -574,9 +574,7 @@ boolean_t raw__xmlrpc__create_new_server(u64 port_num) {
 }
 
 f2ptr f2__xmlrpc__create_new_server(f2ptr cause, f2ptr port_num) {
-  if (! raw__integer__is_type(cause, port_num)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(integer, port_num);
   u64 port_num__i = f2integer__i(port_num, cause);
   return f2bool__new(raw__xmlrpc__create_new_server(port_num__i));
 }
@@ -584,9 +582,10 @@ def_pcfunk1(xmlrpc__create_new_server, port_num, return f2__xmlrpc__create_new_s
 
 
 f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments) {
-  if ((! raw__string__is_type(cause, url)) ||
-      ((! raw__string__is_type(cause, funkname)) && (! raw__symbol__is_type(cause, funkname)))) {
-    return f2larva__new(cause, 1, nil);
+  assert_argument_type(string, url);
+  if ((! raw__string__is_type(cause, funkname)) &&
+      (! raw__symbol__is_type(cause, funkname))) {
+    return f2larva__new(cause, 124626, nil);
   }
 #if defined(F2__XMLRPC_SUPPORTED)
   return raw__xmlrpc__apply(cause, url, funkname, arguments);

@@ -192,7 +192,7 @@ f2ptr f2__object__semantic__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args)
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
   }
-  return value;
+  return current_value;
 }
 export_cefunk2_and_rest(object__semantic__get, this, slot, args, 0, "");
 
@@ -215,7 +215,7 @@ f2ptr f2__object__semantic__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args)
 															  new__symbol(cause, "suberror"), current_value))));
   }
   f2__object__semantic__remove(cause, this, slot, f2cons__new(cause, current_value, nil));
-  f2__object__semantic__add(cause, this, slot, args);
+  return f2__object__semantic__add(cause, this, slot, args);
 }
 export_cefunk2_and_rest(object__semantic__set, this, slot, args, 0, "");
 

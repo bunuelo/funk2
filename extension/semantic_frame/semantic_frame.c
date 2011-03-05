@@ -891,12 +891,26 @@ f2ptr f2__semantic_frame__core_extension__ping(f2ptr cause) {
 export_cefunk0(semantic_frame__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_frame__core_extension__initialize(f2ptr cause) {
+  {
+    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_realm"), new__symbol(cause, "semantic_realm__core_extension__ping")), nil);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_relationship_key"), new__symbol(cause, "semantic_relationship_key__core_extension__ping")), nil);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   status("semantic_frame initialized.");
   return nil;
 }
 export_cefunk0(semantic_frame__core_extension__initialize, 0, "");
 
 f2ptr f2__semantic_frame__core_extension__define_types(f2ptr cause) {
+  f2__add_type(cause, new__symbol(cause, "semantic_frame_event"), f2__semantic_frame_event_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "semantic_frame"),       f2__semantic_frame_type__new_aux(cause));
   status("semantic_frame defined types.");
   return nil;
 }

@@ -22,6 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_FRAME__H
 #define F2__EXTENSION__SEMANTIC_FRAME__H
 
+#include "../../c/funk2.h"
 
 
 

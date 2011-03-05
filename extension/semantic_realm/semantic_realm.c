@@ -24,7 +24,7 @@
 
 // semantic_realm
 
-def_ceframe4(semantic_knowledge_base, semantic_realm, semantic_hash, meta_relationship_hash, semantic_knowledge_base_frame, semantic_frame_phenomenon_hash);
+def_ceframe4(semantic_realm, semantic_realm, semantic_hash, meta_relationship_hash, semantic_knowledge_base_frame, semantic_frame_phenomenon_hash);
 
 f2ptr raw__semantic_realm__new(f2ptr cause) {
   f2ptr semantic_hash                  = f2__equals_hash__new(cause);

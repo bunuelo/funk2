@@ -378,7 +378,7 @@ f2ptr f2__semantic_frame_event_type__new(f2ptr cause) {
 
 // semantic_frame
 
-def_ceframe6(semantic_knowledge_base, semantic_frame, semantic_realm, trace_add, trace_remove, trace_event_stream, semantic_knowledge_base_set, frame);
+def_ceframe6(semantic_frame, semantic_frame, semantic_realm, trace_add, trace_remove, trace_event_stream, semantic_knowledge_base_set, frame);
 
 f2ptr raw__semantic_frame__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {

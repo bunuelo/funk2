@@ -24,7 +24,7 @@
 
 // semantic_relationship_key
 
-def_ceframe4(semantic_knowledge_base, semantic_relationship_key,
+def_ceframe4(semantic_relationship_key, semantic_relationship_key,
 	     source,
 	     key_type,
 	     key,

@@ -778,7 +778,7 @@ f2ptr raw__semantic_frame__type_create(f2ptr cause, f2ptr this, f2ptr semantic_r
 f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr semantic_realm) {
   f2ptr this = f2__frame__new(cause, nil);
   {
-    f2ptr result = raw__semantic_frame__type_create(cause, semantic_realm);
+    f2ptr result = raw__semantic_frame__type_create(cause, this, semantic_realm);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

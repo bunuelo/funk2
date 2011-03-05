@@ -27,6 +27,7 @@
 
 // semantic_event_sequence
 
+f2ptr     raw__semantic_event_sequence__type_create        (f2ptr cause, f2ptr this, f2ptr action_name);
 f2ptr     raw__semantic_event_sequence__new                (f2ptr cause, f2ptr semantic_realm, f2ptr action_name);
 f2ptr      f2__semantic_event_sequence__new                (f2ptr cause, f2ptr semantic_realm, f2ptr action_name);
 boolean_t raw__semantic_event_sequence__is_type            (f2ptr cause, f2ptr thing);

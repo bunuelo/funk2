@@ -188,24 +188,24 @@ f2ptr raw__semantic_event_sequence__update_absolute_start_and_end_times(f2ptr ca
   if (this__absolute_start_time != nil) {
     if (semantic_event__absolute_end_time != nil) {
       if (f2__is_less_than(cause, semantic_event__absolute_end_time, this__absolute_start_time) != nil) {
-	f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_start_time"), f2cons__new(cause, semantic_event__absolute_end_time));
+	f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_start_time"), f2cons__new(cause, semantic_event__absolute_end_time, nil));
       }
     }
     if (semantic_event__absolute_start_time != nil) {
       if (f2__is_less_than(cause, semantic_event__absolute_start_time, this__absolute_start_time) != nil) {
-	f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_start_time"), f2cons__new(cause, semantic_event__absolute_start_time));
+	f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_start_time"), f2cons__new(cause, semantic_event__absolute_start_time, nil));
       }
     }
   }
   if (this__absolute_end_time != nil) {
     if (semantic_event__absolute_start_time != nil) {
       if (f2__is_greater_than(cause, semantic_event__absolute_start_time, this__absolute_end_time) != nil) {
-	f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_end_time"), f2cons__new(cause, semantic_event__absolute_start_time));
+	f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_end_time"), f2cons__new(cause, semantic_event__absolute_start_time, nil));
       }
     }
     if (semantic_event__absolute_end_time != nil) {
       if (f2__is_greater_than(cause, semantic_event__absolute_end_time, this__absolute_end_time) != nil) {
-	f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_end_time"), f2cons__new(cause, semantic_event__absolute_end_time));
+	f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_end_time"), f2cons__new(cause, semantic_event__absolute_end_time, nil));
       }
     }
   }

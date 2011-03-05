@@ -19,8 +19,9 @@
 
 [defcore semantic_realm 'extension/semantic_realm/.libs/libf2e_semantic_realm.so']
 
-[defcorefunk semantic_realm-core_extension-ping       semantic_realm semantic_realm__core_extension__ping]
-[defcorefunk semantic_realm-core_extension-initialize semantic_realm semantic_realm__core_extension__initialize]
+[defcorefunk semantic_realm-core_extension-ping         semantic_realm semantic_realm__core_extension__ping]
+[defcorefunk semantic_realm-core_extension-initialize   semantic_realm semantic_realm__core_extension__initialize]
+[defcorefunk semantic_realm-core_extension-define_types semantic_realm semantic_realm__core_extension__define_types]
 
 
 [semantic_realm-core_extension-define_types]

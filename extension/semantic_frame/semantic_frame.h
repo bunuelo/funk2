@@ -40,6 +40,10 @@ f2ptr f2__object__semantic__add          (f2ptr cause, f2ptr this, f2ptr slot, f
 f2ptr f2__object__semantic__add__apply   (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
 f2ptr f2__object__semantic__remove       (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
 f2ptr f2__object__semantic__remove__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
+f2ptr f2__object__semantic__get          (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
+f2ptr f2__object__semantic__get__apply   (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
+f2ptr f2__object__semantic__set          (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
+f2ptr f2__object__semantic__set__apply   (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
 
 
 // semantic_frame_event

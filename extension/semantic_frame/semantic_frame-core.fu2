@@ -29,6 +29,10 @@
 [defcorefunk object-semantic-add-apply    semantic_frame object__semantic__add__apply]
 [defcorefunk object-semantic-remove       semantic_frame object__semantic__remove]
 [defcorefunk object-semantic-remove-apply semantic_frame object__semantic__remove__apply]
+[defcorefunk object-semantic-get          semantic_frame object__semantic__get]
+[defcorefunk object-semantic-get-apply    semantic_frame object__semantic__get__apply]
+[defcorefunk object-semantic-set          semantic_frame object__semantic__set]
+[defcorefunk object-semantic-set-apply    semantic_frame object__semantic__set__apply]
 
 [semantic_frame-core_extension-define_types]
 
@@ -39,8 +43,12 @@
 [defmetro semantic-add-apply    [this slot_name       args] `[object-semantic-add-apply    ,this [quote ,slot_name] ,args]]
 [defmetro semantic-remove       [this slot_name :rest args] `[object-semantic-remove       ,this [quote ,slot_name] @args]]
 [defmetro semantic-remove-apply [this slot_name       args] `[object-semantic-remove-apply ,this [quote ,slot_name] ,args]]
+[defmetro semantic-get          [this slot_name :rest args] `[object-semantic-get          ,this [quote ,slot_name] @args]]
+[defmetro semantic-get-apply    [this slot_name       args] `[object-semantic-get-apply    ,this [quote ,slot_name] ,args]]
+[defmetro semantic-set          [this slot_name :rest args] `[object-semantic-set          ,this [quote ,slot_name] @args]]
+[defmetro semantic-set-apply    [this slot_name       args] `[object-semantic-set-apply    ,this [quote ,slot_name] ,args]]
 
-[defmetro semantic-get-apply [this slot_name args]
+`[defmetro semantic-get-apply [this slot_name args]
   `[let* [[this      ,this]
 	  [value_set [semantic-lookup-apply this ,slot_name ,args]]]
      [if [null value_set]
@@ -58,10 +66,10 @@
 		    bug_type  `too_many_values_in_value_set_defined_for_this_slot_name]
 	   [first values]]]]]]
 
-[defmetro semantic-get [this slot_name :rest args]
+`[defmetro semantic-get [this slot_name :rest args]
   `[semantic-get-apply ,this ,slot_name [conslist @args]]]
 
-[defmetro semantic-set-apply [this slot_name args]
+`[defmetro semantic-set-apply [this slot_name args]
   `[let [[this ,this]
 	 [args ,args]]
      [let [[value_set [semantic-lookup this ,slot_name]]]
@@ -85,10 +93,10 @@
 	       [semantic-add-apply this ,slot_name args]
 	       nil]]]]]]]
 
-[defmetro semantic-set [this slot_name :rest args]
+`[defmetro semantic-set [this slot_name :rest args]
   `[semantic-set-apply ,this ,slot_name [conslist @args]]]
 
 
-[defmetro semantic-is-type [type_name object]
+`[defmetro semantic-is-type [type_name object]
   `[get ,object is_semantic_type ,type_name]]
 

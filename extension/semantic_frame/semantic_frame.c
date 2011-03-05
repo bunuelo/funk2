@@ -166,6 +166,65 @@ f2ptr f2__object__semantic__remove__apply(f2ptr cause, f2ptr this, f2ptr slot, f
 export_cefunk3(object__semantic__remove__apply, this, slot, args, 0, "");
 
 
+f2ptr f2__object__semantic__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  f2ptr     value_set           = f2__object__semantic__lookup__apply(cause, this, slot, args);
+  boolean_t found_current_value = boolean__false;
+  f2ptr     current_value       = nil;
+  if (value_set != nil) {
+    set__iteration(cause, value_set, value,
+		   if (found_current_value) {
+		     return f2larva__new(cause, 2347, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list10__new(cause,
+																	   new__symbol(cause, "bug_type"), new__symbol(cause, "object_has_more_than_one_value_in_slot"),
+																	   new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-get"),
+																	   new__symbol(cause, "this"),     this,
+																	   new__symbol(cause, "slot"),     slot,
+																	   new__symbol(cause, "args"),     args))));
+		   }
+		   current_value = value;
+		   found_current_value = boolean__true;
+		   );
+  }
+  if (! found_current_value) {
+    return f2larva__new(cause, 2347, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list10__new(cause,
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_slot_value"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-get"),
+															  new__symbol(cause, "this"),     this,
+															  new__symbol(cause, "slot"),     slot,
+															  new__symbol(cause, "args"),     args))));
+  }
+  return value;
+}
+export_cefunk2_and_rest(object__semantic__get, this, slot, args, 0, "");
+
+f2ptr f2__object__semantic__get__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__get(cause, this, slot, args);
+}
+export_cefunk3(object__semantic__get__apply, this, slot, args, 0, "");
+
+
+// not thread safe.
+f2ptr f2__object__semantic__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  f2ptr current_value = f2__object__semantic__get(cause, this, slot, nil);
+  if (raw__larva__is_type(cause, current_value)) {
+    return f2larva__new(cause, 2347, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list12__new(cause,
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "error_encountered_while_getting_current_value"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-set"),
+															  new__symbol(cause, "this"),     this,
+															  new__symbol(cause, "slot"),     slot,
+															  new__symbol(cause, "args"),     args,
+															  new__symbol(cause, "suberror"), current_value))));
+  }
+  f2__object__semantic__remove(cause, this, slot, f2cons__new(cause, current_value, nil));
+  f2__object__semantic__add(cause, this, slot, args);
+}
+export_cefunk2_and_rest(object__semantic__set, this, slot, args, 0, "");
+
+f2ptr f2__object__semantic__set__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__set(cause, this, slot, args);
+}
+export_cefunk3(object__semantic__set__apply, this, slot, args, 0, "");
+
+
 
 
 // semantic_frame_event

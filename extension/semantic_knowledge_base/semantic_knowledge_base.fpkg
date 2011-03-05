@@ -20,7 +20,8 @@
 [defpackage semantic_knowledge_base
   :packages   [equals_hash
 	       forgetful_event_stream
-	       lick]
+	       lick
+	       semantic_frame]
    :sources   ['semantic_knowledge_base-core.fu2']
     :binaries ['.libs/libf2e_semantic_knowledge_base.so']]
 

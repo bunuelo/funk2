@@ -132,6 +132,7 @@
 				  'extension/semantic_event/'
 				  'extension/semantic_agent/'
 				  'extension/semantic_event_sequence/'
+				  'extension/semantic_frame/'
 				  'extension/semantic_frame_ball/'
 				  'extension/semantic_knowledge_base/'
 				  'extension/semantic_object_type/'

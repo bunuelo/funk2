@@ -26,7 +26,7 @@
 
 // semantic_temporal_object
 
-f2ptr     raw__semantic_temporal_object__type_create            (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_temporal_object__type_create            (f2ptr cause, f2ptr this, f2ptr semantic_realm);
 f2ptr     raw__semantic_temporal_object__new                    (f2ptr cause, f2ptr semantic_realm);
 f2ptr      f2__semantic_temporal_object__new                    (f2ptr cause, f2ptr semantic_realm);
 boolean_t raw__semantic_temporal_object__is_type                (f2ptr cause, f2ptr thing);

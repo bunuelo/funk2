@@ -753,7 +753,10 @@ f2ptr f2__semantic_frame_event_type__new(f2ptr cause) {
 
 def_ceframe6(semantic_knowledge_base, semantic_frame, semantic_realm, trace_add, trace_remove, trace_event_stream, semantic_knowledge_base_set, frame);
 
-f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_frame__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
+  if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_frame"));
+  }
   f2ptr trace_event_stream          = nil;
   f2ptr trace_add                   = nil;
   f2ptr trace_remove                = nil;
@@ -763,7 +766,24 @@ f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr semantic_realm) {
     trace_add    = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_add"));
     trace_remove = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_remove"));
   }
-  return f2semantic_frame__new(cause, semantic_realm, trace_add, trace_remove, trace_event_stream, semantic_knowledge_base_set, frame);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_realm"),              semantic_realm);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_add"),                   trace_add);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_remove"),                trace_remove);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_event_stream"),          trace_event_stream);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_knowledge_base_set"), semantic_knowledge_base_set);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "frame"),                       frame);
+  return this;
+}
+
+f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr semantic_realm) {
+  f2ptr this = f2__frame__new(cause, nil);
+  {
+    f2ptr result = raw__semantic_frame__type_create(cause, semantic_realm);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  return this;
 }
 
 

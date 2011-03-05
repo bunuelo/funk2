@@ -25,13 +25,12 @@
 
 // semantic_resource_action_sequence
 
-f2ptr raw__semantic_resource_action_sequence__type_create(f2ptr cause, f2ptr this, f2ptr action_name, f2ptr resource) {
+f2ptr raw__semantic_resource_action_sequence__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr action_name, f2ptr resource) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_resource_action_sequence"));
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "type"), new__symbol(cause, "name"), new__symbol(cause, "semantic_resource_action_sequence"));
   }
   {
-    f2ptr result = raw__semantic_event_sequence__type_create(cause, this, action_name);
+    f2ptr result = raw__semantic_event_sequence__type_create(cause, this, semantic_realm, action_name);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -41,12 +40,12 @@ f2ptr raw__semantic_resource_action_sequence__type_create(f2ptr cause, f2ptr thi
 }
 
 f2ptr raw__semantic_resource_action_sequence__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name, f2ptr resource) {
-  f2ptr this = f2__semantic_frame__new(cause, semantic_realm);
+  f2ptr this = f2__frame__new(cause, nil);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
   {
-    f2ptr result = raw__semantic_resource_action_sequence__type_create(cause, this, action_name, resource);
+    f2ptr result = raw__semantic_resource_action_sequence__type_create(cause, this, semantic_realm, action_name, resource);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

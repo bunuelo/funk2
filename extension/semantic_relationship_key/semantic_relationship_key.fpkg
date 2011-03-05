@@ -17,12 +17,10 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage semantic_knowledge_base
+[defpackage semantic_relationship_key
   :packages   [equals_hash
 	       forgetful_event_stream
-	       lick
-	       semantic_relationship_key
-	       semantic_frame]
-   :sources   ['semantic_knowledge_base-core.fu2']
-    :binaries ['.libs/libf2e_semantic_knowledge_base.so']]
+	       lick]
+   :sources   ['semantic_relationship_key-core.fu2']
+    :binaries ['.libs/libf2e_semantic_relationship_key.so']]
 

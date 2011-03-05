@@ -23,6 +23,7 @@
 #define F2__EXTENSION__SEMANTIC_KNOWLEDGE_BASE__H
 
 #include "../../c/funk2.h"
+#include "../semantic_relationship_key/semantic_relationship_key.h"
 #include "../semantic_frame/semantic_frame.h"
 #include "../equals_hash/equals_hash.h"
 #include "../meta_semantic_knowledge_base/meta_semantic_knowledge_base.h"

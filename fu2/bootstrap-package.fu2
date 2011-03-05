@@ -141,6 +141,7 @@
 				  'extension/semantic_packable_object/'
 				  'extension/semantic_physical_object/'
 				  'extension/semantic_realm/'
+				  'extension/semantic_relationship_key/'
 				  'extension/semantic_resource/'
 				  'extension/semantic_resource_action_event/'
 				  'extension/semantic_resource_action_sequence/'

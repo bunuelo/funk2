@@ -23,6 +23,12 @@
 [defcorefunk semantic_frame-core_extension-initialize   semantic_frame semantic_frame__core_extension__initialize]
 [defcorefunk semantic_frame-core_extension-define_types semantic_frame semantic_frame__core_extension__define_types]
 
+[defcorefunk object-semantic-lookup       semantic_frame object__semantic__lookup]
+[defcorefunk object-semantic-lookup-apply semantic_frame object__semantic__lookup__apply]
+[defcorefunk object-semantic-add          semantic_frame object__semantic__add]
+[defcorefunk object-semantic-add-apply    semantic_frame object__semantic__add__apply]
+[defcorefunk object-semantic-remove       semantic_frame object__semantic__remove]
+[defcorefunk object-semantic-remove-apply semantic_frame object__semantic__remove__apply]
 
 [semantic_frame-core_extension-define_types]
 

@@ -24,6 +24,7 @@
 
 #include "../../c/funk2.h"
 #include "../semantic_relationship_key/semantic_relationship_key.h"
+#include "../semantic_knowledge_base/semantic_knowledge_base.h"
 #include "../semantic_frame/semantic_frame.h"
 #include "../semantic_realm/semantic_realm.h"
 #include "../equals_hash/equals_hash.h"

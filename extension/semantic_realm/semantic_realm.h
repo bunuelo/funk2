@@ -23,6 +23,45 @@
 #define F2__EXTENSION__SEMANTIC_REALM__H
 
 #include "../../c/funk2.h"
+#include "../semantic_relationship_key/semantic_relationship_key.h"
+#include "../semantic_frame/semantic_frame.h"
+#include "../equals_hash/equals_hash.h"
+#include "../meta_semantic_knowledge_base/meta_semantic_knowledge_base.h"
+#include "../forgetful_event_stream/forgetful_event_stream.h"
+#include "../lick/lick.h"
+
+// semantic_realm
+
+def_header_ceframe4(semantic_realm,
+		    semantic_hash,
+		    meta_relationship_hash,
+		    semantic_knowledge_base_frame,
+		    semantic_frame_phenomenon_hash);
+
+f2ptr raw__semantic_realm__new                               (f2ptr cause);
+f2ptr  f2__semantic_realm__new                               (f2ptr cause);
+f2ptr raw__semantic_realm__lookup_object_key                 (f2ptr cause, f2ptr this, f2ptr object);
+f2ptr  f2__semantic_realm__lookup_object_key                 (f2ptr cause, f2ptr this, f2ptr object);
+f2ptr raw__semantic_realm__add_object_key                    (f2ptr cause, f2ptr this, f2ptr object);
+f2ptr  f2__semantic_realm__add_object_key                    (f2ptr cause, f2ptr this, f2ptr object);
+f2ptr raw__semantic_realm__object_key                        (f2ptr cause, f2ptr this, f2ptr object);
+f2ptr  f2__semantic_realm__object_key                        (f2ptr cause, f2ptr this, f2ptr object);
+f2ptr raw__semantic_realm__key_count                         (f2ptr cause, f2ptr this);
+f2ptr  f2__semantic_realm__key_count                         (f2ptr cause, f2ptr this);
+f2ptr raw__semantic_realm__lookup_or_create_meta_relationship(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value);
+f2ptr  f2__semantic_realm__lookup_or_create_meta_relationship(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value);
+f2ptr raw__semantic_realm__add_semantic_knowledge_base       (f2ptr cause, f2ptr this, f2ptr semantic_knowledge_base);
+f2ptr  f2__semantic_realm__add_semantic_knowledge_base       (f2ptr cause, f2ptr this, f2ptr semantic_knowledge_base);
+f2ptr raw__semantic_realm__lookup_semantic_knowledge_base    (f2ptr cause, f2ptr this, f2ptr name);
+f2ptr  f2__semantic_realm__lookup_semantic_knowledge_base    (f2ptr cause, f2ptr this, f2ptr name);
+f2ptr raw__semantic_realm__add_phenomenon_semantic_frame     (f2ptr cause, f2ptr this, f2ptr phenomenon, f2ptr semantic_frame);
+f2ptr  f2__semantic_realm__add_phenomenon_semantic_frame     (f2ptr cause, f2ptr this, f2ptr phenomenon, f2ptr semantic_frame);
+f2ptr raw__semantic_realm__lookup_phenomenon_semantic_frame  (f2ptr cause, f2ptr this, f2ptr phenomenon);
+f2ptr  f2__semantic_realm__lookup_phenomenon_semantic_frame  (f2ptr cause, f2ptr this, f2ptr phenomenon);
+f2ptr raw__semantic_realm__terminal_print_with_frame         (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr  f2__semantic_realm__terminal_print_with_frame         (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+
+f2ptr f2__semantic_realm_type__new_aux(f2ptr cause);
 
 
 

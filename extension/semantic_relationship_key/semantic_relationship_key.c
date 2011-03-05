@@ -158,10 +158,10 @@ export_cefunk2(semantic_relationship_key__terminal_print_with_frame, this, termi
 
 f2ptr f2__semantic_relationship_key_type__new_aux(f2ptr cause) {
   f2ptr this = f2__semantic_relationship_key_type__new(cause);
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "equals_hash_value-loop_free"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__equals_hash_value__loop_free")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "equals_hash_value"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__equals_hash_value")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "equals"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__equals")));}
-  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_relationship_key__terminal_print_with_frame")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "equals_hash_value-loop_free"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_relationship_key"), new__symbol(cause, "semantic_relationship_key__equals_hash_value__loop_free")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "equals_hash_value"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_relationship_key"), new__symbol(cause, "semantic_relationship_key__equals_hash_value")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "equals"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_relationship_key"), new__symbol(cause, "semantic_relationship_key__equals")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_relationship_key"), new__symbol(cause, "semantic_relationship_key__terminal_print_with_frame")));}
   return this;
 }
 

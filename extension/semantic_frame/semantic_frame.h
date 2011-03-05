@@ -24,6 +24,12 @@
 
 #include "../../c/funk2.h"
 
+f2ptr f2__object__semantic__lookup       (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
+f2ptr f2__object__semantic__lookup__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
+f2ptr f2__object__semantic__add          (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
+f2ptr f2__object__semantic__add__apply   (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
+f2ptr f2__object__semantic__remove       (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
+f2ptr f2__object__semantic__remove__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
 
 
 // **

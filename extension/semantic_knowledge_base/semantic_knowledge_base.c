@@ -757,21 +757,25 @@ f2ptr raw__semantic_frame__type_create(f2ptr cause, f2ptr this, f2ptr semantic_r
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_frame"));
   }
-  f2ptr trace_event_stream          = nil;
-  f2ptr trace_add                   = nil;
-  f2ptr trace_remove                = nil;
-  f2ptr semantic_knowledge_base_set = f2__set__new(cause);
-  f2ptr frame                       = f2__frame__new(cause, nil);
-  if (cause != nil) {
-    trace_add    = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_add"));
-    trace_remove = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_remove"));
+  // avoid multiply defining the variables in the case of multiple inheritance.
+  // this must be checked in all types that are multiply inherited.
+  if (! raw__frame__contains_var(cause, this, new__symbol(cause, "semantic_realm"))) {
+    f2ptr trace_event_stream          = nil;
+    f2ptr trace_add                   = nil;
+    f2ptr trace_remove                = nil;
+    f2ptr semantic_knowledge_base_set = f2__set__new(cause);
+    f2ptr frame                       = f2__frame__new(cause, nil);
+    if (cause != nil) {
+      trace_add    = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_add"));
+      trace_remove = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_remove"));
+    }
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_realm"),              semantic_realm);
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_add"),                   trace_add);
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_remove"),                trace_remove);
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_event_stream"),          trace_event_stream);
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_knowledge_base_set"), semantic_knowledge_base_set);
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "frame"),                       frame);
   }
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_realm"),              semantic_realm);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_add"),                   trace_add);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_remove"),                trace_remove);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_event_stream"),          trace_event_stream);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_knowledge_base_set"), semantic_knowledge_base_set);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "frame"),                       frame);
   return this;
 }
 

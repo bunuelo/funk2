@@ -110,7 +110,7 @@ f2ptr f2__semantic_frame_event_redblacktree_type__new(f2ptr cause);
 
 f2ptr     raw__semantic_frame_event__time_value                       (f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
 f2ptr     raw__semantic_frame_event__compare_value                    (f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
-f2ptr     raw__semantic_frame__type_create                            (f2ptr cause, f2ptr semantic_realm);
+f2ptr     raw__semantic_frame__type_create                            (f2ptr cause, f2ptr this, f2ptr semantic_realm);
 f2ptr     raw__semantic_frame__new                                    (f2ptr cause, f2ptr semantic_realm);
 f2ptr      f2__semantic_frame__new                                    (f2ptr cause, f2ptr semantic_realm);
 boolean_t raw__semantic_frame__is_type                                (f2ptr cause, f2ptr thing);

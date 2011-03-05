@@ -128,8 +128,10 @@ f2ptr      f2__semantic_frame__frame__set                                  (f2pt
 void      raw__semantic_frame__initialize_tracing                          (f2ptr cause, f2ptr this);
 f2ptr     raw__semantic_frame__add                                         (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
 f2ptr      f2__semantic_frame__add                                         (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
+f2ptr     raw__semantic_frame__add_event__new                              (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
 f2ptr     raw__semantic_frame__remove                                      (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
 f2ptr      f2__semantic_frame__remove                                      (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
+f2ptr     raw__semantic_frame__remove_event__new                           (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
 f2ptr     raw__semantic_frame__lookup                                      (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
 f2ptr      f2__semantic_frame__lookup                                      (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
 f2ptr     raw__semantic_frame__lookup_single_value                         (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);

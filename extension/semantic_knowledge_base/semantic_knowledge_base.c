@@ -859,11 +859,14 @@ f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
     return key__object_key;
   }
   f2ptr value_set = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
-  if (value_set == nil) {
-    return f2larva__new(cause, 53, nil);
-  }
-  if (! raw__set__remove(cause, value_set, value)) {
-    return f2larva__new(cause, 53, nil);
+  if ((value_set == nil) || (! raw__set__remove(cause, value_set, value))) {
+    return f2larva__new(cause, 53, f2__bug__new(cause, f2integer__new(cause, 53), f2__frame__new(cause, f2list12__new(cause,
+														      new__symbol(cause, "bug_type"),      new__symbol(cause, "value_does_not_exist_in_semantic_frame"),
+														      new__symbol(cause, "funktion_name"), new__symbol(cause, "semantic_frame-remove"),
+														      new__symbol(cause, "this"),          this,
+														      new__symbol(cause, "key_type"),      key_type,
+														      new__symbol(cause, "key"),           key,
+														      new__symbol(cause, "value"),         value))));
   }
   {
     f2ptr semantic_knowledge_base_set = raw__semantic_frame__semantic_knowledge_base_set(cause, this);

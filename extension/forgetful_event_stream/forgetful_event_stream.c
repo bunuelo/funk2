@@ -48,9 +48,6 @@ f2ptr raw__forgetful_event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stre
 		 if (index_time == nil) {
 		   keep_all_events = boolean__true;
 		 } else {
-		   if (! raw__time__is_type(cause, index_time)) {
-		     error(nil, "raw__forgetful_event_stream__add: index_time is not time.");
-		   }
 		   f2ptr index_time__nanoseconds_since_1970    = f2time__nanoseconds_since_1970(index_time, cause);
 		   s64   index_time__nanoseconds_since_1970__i = f2integer__i(index_time__nanoseconds_since_1970, cause);
 		   if ((minimum_important_index_time == nil) ||

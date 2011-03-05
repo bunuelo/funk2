@@ -39,9 +39,9 @@ export_cefunk0(forgetful_event_stream__new, 0, "Returns a new forgetful_event_st
 
 f2ptr raw__forgetful_event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
   raw__event_stream__add(cause, this, event_stream_event);
-  boolean_t keep_all_events = boolean__false;
-  f2ptr     important_iterator_set = raw__forgetful_event_stream__important_iterator_set(cause, this);
-  f2ptr     minimum_important_index_nanoseconds_since_1970    = nil;
+  boolean_t keep_all_events                                   = boolean__false;
+  f2ptr     important_iterator_set                            = raw__forgetful_event_stream__important_iterator_set(cause, this);
+  f2ptr     minimum_important_index_time                      = nil;
   s64       minimum_important_index_nanoseconds_since_1970__i = 0;
   set__iteration(cause, important_iterator_set, important_iterator,
 		 f2ptr index_time = raw__event_stream_iterator__index_time(cause, important_iterator);
@@ -53,17 +53,16 @@ f2ptr raw__forgetful_event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stre
 		   }
 		   f2ptr index_time__nanoseconds_since_1970    = f2time__nanoseconds_since_1970(index_time, cause);
 		   s64   index_time__nanoseconds_since_1970__i = f2integer__i(index_time__nanoseconds_since_1970, cause);
-		   if ((minimum_important_index_nanoseconds_since_1970 == nil) ||
+		   if ((minimum_important_index_time == nil) ||
 		       (index_time__nanoseconds_since_1970__i < minimum_important_index_nanoseconds_since_1970__i)) {
-		     minimum_important_index_nanoseconds_since_1970    = index_time__nanoseconds_since_1970;
+		     minimum_important_index_time                      = index_time;
 		     minimum_important_index_nanoseconds_since_1970__i = index_time__nanoseconds_since_1970__i;
 		   }
 		 }
 		 );
   if (! keep_all_events) {
-    if (minimum_important_index_nanoseconds_since_1970 != nil) {
-      f2__print(cause, minimum_important_index_nanoseconds_since_1970);
-      raw__event_stream__remove_all_before_time(cause, this, minimum_important_index_nanoseconds_since_1970);
+    if (minimum_important_index_time != nil) {
+      raw__event_stream__remove_all_before_time(cause, this, minimum_important_index_time);
     } else {
       raw__event_stream__remove_all(cause, this);
     }

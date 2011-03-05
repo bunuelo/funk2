@@ -45,7 +45,7 @@
 [deftypefunk translate_mental_knowledge_to_meta_mental_knowledge_resource execute execute_resource_raw_funk []
   `[= debug t]
   [let [[mental_knowledge_iterator      [get [get this mind] knowledge_event_stream_iterator `mental_knowledge->meta_mental_knowledge]]
-	[meta_mental_sequence_knowledge [get [get this mind] semantic_knowledge_base `meta_mental_sequence_knowledge]]]
+	[meta_mental_sequence_knowledge [get [get this mind] semantic_knowledge_base         `meta_mental_sequence_knowledge]]]
     [while t
       [let [[event [have mental_knowledge_iterator wait_for_current]]]
 	[if [not [null event]]

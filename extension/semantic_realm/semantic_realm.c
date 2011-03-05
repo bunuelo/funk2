@@ -19,19 +19,33 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__EXTENSION__SEMANTIC_FRAME__H
-#define F2__EXTENSION__SEMANTIC_FRAME__H
-
-#include "../../c/funk2.h"
+#include "semantic_realm.h"
 
 
 
 // **
 
-f2ptr f2__semantic_frame__core_extension__ping        (f2ptr cause);
-f2ptr f2__semantic_frame__core_extension__initialize  (f2ptr cause);
-f2ptr f2__semantic_frame__core_extension__define_types(f2ptr cause);
-f2ptr f2__semantic_frame__core_extension__destroy     (f2ptr cause);
+f2ptr f2__semantic_realm__core_extension__ping(f2ptr cause) {
+  return nil;
+}
+export_cefunk0(semantic_realm__core_extension__ping, 0, "");
 
-#endif // F2__EXTENSION__SEMANTIC_FRAME__H
+f2ptr f2__semantic_realm__core_extension__initialize(f2ptr cause) {
+  status("semantic_realm initialized.");
+  return nil;
+}
+export_cefunk0(semantic_realm__core_extension__initialize, 0, "");
+
+f2ptr f2__semantic_realm__core_extension__define_types(f2ptr cause) {
+  status("semantic_realm defined types.");
+  return nil;
+}
+export_cefunk0(semantic_realm__core_extension__define_types, 0, "");
+
+f2ptr f2__semantic_realm__core_extension__destroy(f2ptr cause) {
+  status("semantic_realm destroyed.");
+  return nil;
+}
+export_cefunk0(semantic_realm__core_extension__destroy, 0, "");
+
 

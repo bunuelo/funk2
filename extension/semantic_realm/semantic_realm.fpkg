@@ -17,11 +17,10 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore semantic_frame 'extension/semantic_frame/.libs/libf2e_semantic_frame.so']
-
-[defcorefunk semantic_frame-core_extension-ping       semantic_frame semantic_frame__core_extension__ping]
-[defcorefunk semantic_frame-core_extension-initialize semantic_frame semantic_frame__core_extension__initialize]
-
-
-[semantic_frame-core_extension-define_types]
+[defpackage semantic_realm
+  :packages   [equals_hash
+	       forgetful_event_stream
+	       lick]
+   :sources   ['semantic_realm-core.fu2']
+    :binaries ['.libs/libf2e_semantic_realm.so']]
 

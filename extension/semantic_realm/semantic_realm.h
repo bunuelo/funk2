@@ -19,8 +19,8 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__EXTENSION__SEMANTIC_FRAME__H
-#define F2__EXTENSION__SEMANTIC_FRAME__H
+#ifndef F2__EXTENSION__SEMANTIC_REALM__H
+#define F2__EXTENSION__SEMANTIC_REALM__H
 
 #include "../../c/funk2.h"
 
@@ -28,10 +28,10 @@
 
 // **
 
-f2ptr f2__semantic_frame__core_extension__ping        (f2ptr cause);
-f2ptr f2__semantic_frame__core_extension__initialize  (f2ptr cause);
-f2ptr f2__semantic_frame__core_extension__define_types(f2ptr cause);
-f2ptr f2__semantic_frame__core_extension__destroy     (f2ptr cause);
+f2ptr f2__semantic_realm__core_extension__ping        (f2ptr cause);
+f2ptr f2__semantic_realm__core_extension__initialize  (f2ptr cause);
+f2ptr f2__semantic_realm__core_extension__define_types(f2ptr cause);
+f2ptr f2__semantic_realm__core_extension__destroy     (f2ptr cause);
 
-#endif // F2__EXTENSION__SEMANTIC_FRAME__H
+#endif // F2__EXTENSION__SEMANTIC_REALM__H
 

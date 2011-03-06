@@ -34,9 +34,12 @@ f2ptr raw__semantic_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_r
       return result;
     }
   }
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name"),         action_name);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_start_time"), nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_end_time"),   nil);
+  // avoids redefining in cases of multiple inheritance.
+  if (raw__semantic_frame__lookup(cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name")) == nil) {
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name"),         action_name);
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_start_time"), nil);
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_end_time"),   nil);
+  }
   return this;
 }
 

@@ -242,7 +242,6 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/semantic_resource/libf2e_semantic_resource.la \
                   extension/semantic_resource_action_event/libf2e_semantic_resource_action_event.la \
                   extension/semantic_resource_action_sequence/libf2e_semantic_resource_action_sequence.la \
-                  extension/semantic_resource_action_sequence_action/libf2e_semantic_resource_action_sequence_action.la \
                   extension/semantic_temporal_object/libf2e_semantic_temporal_object.la \
                   extension/semantic_visual_object/libf2e_semantic_visual_object.la \
                   extension/timeline/libf2e_timeline.la
@@ -377,46 +376,45 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
-extension_causality_libf2e_causality_la_SOURCES                                                               = extension/causality/causality.c
-extension_cairo_libf2e_cairo_la_SOURCES                                                                       = extension/cairo/cairo.c
-extension_conceptnet_libf2e_conceptnet_la_SOURCES                                                             = extension/conceptnet/conceptnet.c
-extension_event_stream_libf2e_event_stream_la_SOURCES                                                         = extension/event_stream/event_stream.c
-extension_equals_hash_libf2e_equals_hash_la_SOURCES                                                           = extension/equals_hash/equals_hash.c
-extension_fibermon_libf2e_fibermon_la_SOURCES                                                                 = extension/fibermon/fibermon.c
-extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_SOURCES                                     = extension/forgetful_event_stream/forgetful_event_stream.c
-extension_forward_planner_libf2e_forward_planner_la_SOURCES                                                   = extension/forward_planner/forward_planner.c
-extension_frame_ball_libf2e_frame_ball_la_SOURCES                                                             = extension/frame_ball/frame_ball.c
-extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES                                               = extension/graph_isomorphism/graph_isomorphism.c
-extension_image_libf2e_image_la_SOURCES                                                                       = extension/image/image.c
-extension_image_sequence_libf2e_image_sequence_la_SOURCES                                                     = extension/image_sequence/image_sequence.c
-extension_lick_libf2e_lick_la_SOURCES                                                                         = extension/lick/lick.c
-extension_mentality_libf2e_mentality_la_SOURCES                                                               = extension/mentality/mentality.c
-extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES                         = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
-extension_mindmon_libf2e_mindmon_la_SOURCES                                                                   = extension/mindmon/mindmon.c
-extension_movie_libf2e_movie_la_SOURCES                                                                       = extension/movie/movie.c
-extension_propogator_libf2e_propogator_la_SOURCES                                                             = extension/propogator/propogator.c
-extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES                                       = extension/semantic_action_event/semantic_action_event.c
-extension_semantic_agent_libf2e_semantic_agent_la_SOURCES                                                     = extension/semantic_agent/semantic_agent.c
-extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES                                   = extension/semantic_event_sequence/semantic_event_sequence.c
-extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES                           = extension/semantic_containment_object/semantic_containment_object.c
-extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES                     = extension/semantic_directed_action_event/semantic_directed_action_event.c
-extension_semantic_event_libf2e_semantic_event_la_SOURCES                                                     = extension/semantic_event/semantic_event.c
-extension_semantic_frame_libf2e_semantic_frame_la_SOURCES                                                     = extension/semantic_frame/semantic_frame.c
-extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES                                   = extension/semantic_knowledge_base/semantic_knowledge_base.c
-extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_SOURCES                                   = extension/semantic_ordered_object/semantic_ordered_object.c
-extension_semantic_object_type_libf2e_semantic_object_type_la_SOURCES                                         = extension/semantic_object_type/semantic_object_type.c
-extension_semantic_object_libf2e_semantic_object_la_SOURCES                                                   = extension/semantic_object/semantic_object.c
-extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES                                 = extension/semantic_packable_object/semantic_packable_object.c
-extension_semantic_physical_object_libf2e_semantic_physical_object_la_SOURCES                                 = extension/semantic_physical_object/semantic_physical_object.c
-extension_semantic_realm_libf2e_semantic_realm_la_SOURCES                                                     = extension/semantic_realm/semantic_realm.c
-extension_semantic_relationship_key_libf2e_semantic_relationship_key_la_SOURCES                               = extension/semantic_relationship_key/semantic_relationship_key.c
-extension_semantic_resource_libf2e_semantic_resource_la_SOURCES                                               = extension/semantic_resource/semantic_resource.c
-extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_SOURCES                     = extension/semantic_resource_action_event/semantic_resource_action_event.c
-extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_SOURCES               = extension/semantic_resource_action_sequence/semantic_resource_action_sequence.c
-extension_semantic_resource_action_sequence_action_libf2e_semantic_resource_action_sequence_action_la_SOURCES = extension/semantic_resource_action_sequence_action/semantic_resource_action_sequence_action.c
-extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES                                 = extension/semantic_temporal_object/semantic_temporal_object.c
-extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES                                     = extension/semantic_visual_object/semantic_visual_object.c
-extension_timeline_libf2e_timeline_la_SOURCES                                                                 = extension/timeline/timeline.c
+extension_causality_libf2e_causality_la_SOURCES                                                 = extension/causality/causality.c
+extension_cairo_libf2e_cairo_la_SOURCES                                                         = extension/cairo/cairo.c
+extension_conceptnet_libf2e_conceptnet_la_SOURCES                                               = extension/conceptnet/conceptnet.c
+extension_event_stream_libf2e_event_stream_la_SOURCES                                           = extension/event_stream/event_stream.c
+extension_equals_hash_libf2e_equals_hash_la_SOURCES                                             = extension/equals_hash/equals_hash.c
+extension_fibermon_libf2e_fibermon_la_SOURCES                                                   = extension/fibermon/fibermon.c
+extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_SOURCES                       = extension/forgetful_event_stream/forgetful_event_stream.c
+extension_forward_planner_libf2e_forward_planner_la_SOURCES                                     = extension/forward_planner/forward_planner.c
+extension_frame_ball_libf2e_frame_ball_la_SOURCES                                               = extension/frame_ball/frame_ball.c
+extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES                                 = extension/graph_isomorphism/graph_isomorphism.c
+extension_image_libf2e_image_la_SOURCES                                                         = extension/image/image.c
+extension_image_sequence_libf2e_image_sequence_la_SOURCES                                       = extension/image_sequence/image_sequence.c
+extension_lick_libf2e_lick_la_SOURCES                                                           = extension/lick/lick.c
+extension_mentality_libf2e_mentality_la_SOURCES                                                 = extension/mentality/mentality.c
+extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES           = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
+extension_mindmon_libf2e_mindmon_la_SOURCES                                                     = extension/mindmon/mindmon.c
+extension_movie_libf2e_movie_la_SOURCES                                                         = extension/movie/movie.c
+extension_propogator_libf2e_propogator_la_SOURCES                                               = extension/propogator/propogator.c
+extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES                         = extension/semantic_action_event/semantic_action_event.c
+extension_semantic_agent_libf2e_semantic_agent_la_SOURCES                                       = extension/semantic_agent/semantic_agent.c
+extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES                     = extension/semantic_event_sequence/semantic_event_sequence.c
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES             = extension/semantic_containment_object/semantic_containment_object.c
+extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES       = extension/semantic_directed_action_event/semantic_directed_action_event.c
+extension_semantic_event_libf2e_semantic_event_la_SOURCES                                       = extension/semantic_event/semantic_event.c
+extension_semantic_frame_libf2e_semantic_frame_la_SOURCES                                       = extension/semantic_frame/semantic_frame.c
+extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES                     = extension/semantic_knowledge_base/semantic_knowledge_base.c
+extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_SOURCES                     = extension/semantic_ordered_object/semantic_ordered_object.c
+extension_semantic_object_type_libf2e_semantic_object_type_la_SOURCES                           = extension/semantic_object_type/semantic_object_type.c
+extension_semantic_object_libf2e_semantic_object_la_SOURCES                                     = extension/semantic_object/semantic_object.c
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES                   = extension/semantic_packable_object/semantic_packable_object.c
+extension_semantic_physical_object_libf2e_semantic_physical_object_la_SOURCES                   = extension/semantic_physical_object/semantic_physical_object.c
+extension_semantic_realm_libf2e_semantic_realm_la_SOURCES                                       = extension/semantic_realm/semantic_realm.c
+extension_semantic_relationship_key_libf2e_semantic_relationship_key_la_SOURCES                 = extension/semantic_relationship_key/semantic_relationship_key.c
+extension_semantic_resource_libf2e_semantic_resource_la_SOURCES                                 = extension/semantic_resource/semantic_resource.c
+extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_SOURCES       = extension/semantic_resource_action_event/semantic_resource_action_event.c
+extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_SOURCES = extension/semantic_resource_action_sequence/semantic_resource_action_sequence.c
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES                   = extension/semantic_temporal_object/semantic_temporal_object.c
+extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES                       = extension/semantic_visual_object/semantic_visual_object.c
+extension_timeline_libf2e_timeline_la_SOURCES                                                   = extension/timeline/timeline.c
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 
@@ -480,7 +478,6 @@ all_core_extensions = \
   $(extension_semantic_resource_libf2e_semantic_resource_la) \
   $(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la) \
   $(extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la) \
-  $(extension_semantic_resource_action_sequence_action_libf2e_semantic_resource_action_sequence_action_la) \
   $(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la) \
   $(extension_semantic_visual_object_libf2e_semantic_visual_object_la) \
   $(extension_timeline_libf2e_timeline_la)
@@ -593,9 +590,6 @@ extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_l
 
 extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
-
-extension_semantic_resource_action_sequence_action_libf2e_semantic_resource_action_sequence_action_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_semantic_resource_action_sequence_action_libf2e_semantic_resource_action_sequence_action_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

@@ -22,7 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_RESOURCE_ACTION_SEQUENCE_ACTION__H
 #define F2__EXTENSION__SEMANTIC_RESOURCE_ACTION_SEQUENCE_ACTION__H
 
-#include "../semantic_event_sequence/semantic_resource_action_sequence_action.h"
+#include "../semantic_resource_action_sequence/semantic_resource_action_sequence.h"
 
 
 // semantic_resource_action_sequence_action

@@ -113,17 +113,17 @@ f2ptr raw__semantic_resource_action_sequence__cairo_render_frame(f2ptr cause, f2
     }
   }
   {
-    f2ptr resource_set = f2__semantic_action_event__agent__lookup(cause, this);
-    if (resource_set != nil) {
-      f2ptr resource = f2__set__an_arbitrary_element(cause, resource_set);
-      f2ptr resource_name = nil;
-      if (raw__semantic_resource__is_type(cause, resource)) {
-	f2ptr name_set = f2__semantic_resource__name__lookup(cause, resource);
+    f2ptr agent_set = f2__semantic_action_event__agent__lookup(cause, this);
+    if (agent_set != nil) {
+      f2ptr agent = f2__set__an_arbitrary_element(cause, agent_set);
+      f2ptr agent_name = nil;
+      if (raw__semantic_resource__is_type(cause, agent)) {
+	f2ptr name_set = f2__semantic_resource__name__lookup(cause, agent);
 	if (name_set != nil) {
-	  resource_name = f2__set__an_arbitrary_element(cause, name_set);
+	  agent_name = f2__set__an_arbitrary_element(cause, name_set);
 	}
       }
-      f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "agent"), resource_name);
+      f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "agent"), agent_name);
     }
   }
   return render_frame;

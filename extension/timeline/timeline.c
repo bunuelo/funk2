@@ -909,6 +909,13 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
     if (maximum_time == nil) {
       maximum_time = f2__time(cause);
     }
+    {
+      s64 minimum_time__nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(minimum_time, cause), cause);
+      s64 maximum_time__nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(maximum_time, cause), cause);
+      if (minimum_time__nanoseconds_since_1970 == maximum_time__nanoseconds_since_1970) {
+	maximum_time = f2__time__new(cause, f2integer__new(cause, minimum_time__nanoseconds_since_1970 + 1));
+      }
+    }
     raw__timeline__minimum_time__set(cause, this, minimum_time);
     raw__timeline__maximum_time__set(cause, this, maximum_time);
   }

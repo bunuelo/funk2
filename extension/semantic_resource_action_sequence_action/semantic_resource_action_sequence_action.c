@@ -30,12 +30,11 @@ f2ptr raw__semantic_resource_action_sequence_action__type_create(f2ptr cause, f2
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_resource_action_sequence_action"));
   }
   {
-    f2ptr result = raw__semantic_event_sequence__type_create(cause, this, semantic_realm, action_name);
+    f2ptr result = raw__semantic_resource_action_sequence__type_create(cause, this, semantic_realm, action_name, resource);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "resource"), resource);
   return this;
 }
 
@@ -108,7 +107,7 @@ f2ptr raw__semantic_resource_action_sequence_action__cairo_render_frame(f2ptr ca
     }
   }
   {
-    f2ptr resource_set = f2__semantic_resource_action_sequence_action__resource__lookup(cause, this);
+    f2ptr resource_set = f2__semantic_resource_action_sequence__resource__lookup(cause, this);
     if (resource_set != nil) {
       f2ptr resource = f2__set__an_arbitrary_element(cause, resource_set);
       f2ptr resource_name = nil;
@@ -134,7 +133,7 @@ export_cefunk1(semantic_resource_action_sequence_action__cairo_render_frame, thi
 
 
 f2ptr f2__semantic_resource_action_sequence_action_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_event_sequence")));
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_resource_action_sequence")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_action_sequence_action"), new__symbol(cause, "semantic_resource_action_sequence_action__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_action_sequence_action"), new__symbol(cause, "semantic_resource_action_sequence_action__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),               f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_action_sequence_action"), new__symbol(cause, "semantic_resource_action_sequence_action__type")));}

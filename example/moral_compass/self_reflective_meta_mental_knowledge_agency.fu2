@@ -74,6 +74,7 @@
 											`event_sequence
 											target]]]
 						      [semantic-set current_action_sequence absolute_start_time [time]]
+						      [semantic-set current_action_sequence absolute_end_time   [time]]
 						      [have this-resource think_to_self '\n    *** debug A7: translate mental->meta_mental add_semantic_frame cause_being_active resource_semantic_frame current_action_sequence: ' current_action_sequence]
 						      [if agent
 							  [if [not [get meta_mental_sequence_knowledge contains_semantic_frame agent]]
@@ -120,7 +121,6 @@
 						    [let [[current_action_sequence [semantic-get target current_action_sequence]]]
 						      [have this-resource think_to_self   '\n    *** debug R7: translate mental->meta_mental remove_semantic_frame cause_being_active resource action event cause_being_active current_action_sequence: ' current_action_sequence]
 						      
-						      [semantic-set current_action_sequence absolute_end_time [time]]
 						      [semantic-set target current_action_sequence nil]]]]
 					     ]]
 					  ]

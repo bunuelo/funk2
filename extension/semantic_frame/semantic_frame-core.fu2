@@ -48,6 +48,12 @@
 [defmetro semantic-set          [this slot_name :rest args] `[object-semantic-set          ,this [quote ,slot_name] @args]]
 [defmetro semantic-set-apply    [this slot_name       args] `[object-semantic-set-apply    ,this [quote ,slot_name] ,args]]
 
+[defmetro semantic-is-type [type_name object]
+  `[get ,object is_semantic_type ,type_name]]
+
+
+
+
 `[defmetro semantic-get-apply [this slot_name args]
   `[let* [[this      ,this]
 	  [value_set [semantic-lookup-apply this ,slot_name ,args]]]
@@ -96,7 +102,4 @@
 `[defmetro semantic-set [this slot_name :rest args]
   `[semantic-set-apply ,this ,slot_name [conslist @args]]]
 
-
-`[defmetro semantic-is-type [type_name object]
-  `[get ,object is_semantic_type ,type_name]]
 

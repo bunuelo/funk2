@@ -181,38 +181,42 @@ export_cefunk2(semantic_event_sequence__last_event__remove, this, that, 0, "");
 
 
 f2ptr raw__semantic_event_sequence__update_absolute_start_and_end_times_with_time(f2ptr cause, f2ptr this, f2ptr time) {
-  f2ptr this__absolute_start_time = f2__object__semantic__get(cause, this, new__symbol(cause, "absolute_start_time"), nil);
-  if (raw__larva__is_type(cause, this__absolute_start_time)) {
-    return this__absolute_start_time;
+  f2ptr absolute_start_time = f2__object__semantic__get(cause, this, new__symbol(cause, "absolute_start_time"), nil);
+  if (raw__larva__is_type(cause, absolute_start_time)) {
+    return absolute_start_time;
   }
-  f2ptr this__absolute_end_time = f2__object__semantic__get(cause, this, new__symbol(cause, "absolute_end_time"), nil);
-  if (raw__larva__is_type(cause, this__absolute_end_time)) {
-    return this__absolute_end_time;
+  f2ptr absolute_end_time = f2__object__semantic__get(cause, this, new__symbol(cause, "absolute_end_time"), nil);
+  if (raw__larva__is_type(cause, absolute_end_time)) {
+    return absolute_end_time;
   }
-  if ((this__absolute_start_time == nil) ||
-      (f2__is_less_than(cause, time, this__absolute_start_time) != nil)) {
+  if ((absolute_start_time == nil) ||
+      (f2__is_less_than(cause, time, absolute_start_time) != nil)) {
     f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_start_time"), f2cons__new(cause, time, nil));
   }
-  if ((this__absolute_end_time == nil) ||
-      (f2__is_greater_than(cause, time, this__absolute_end_time) != nil)) {
+  if ((absolute_end_time == nil) ||
+      (f2__is_greater_than(cause, time, absolute_end_time) != nil)) {
     f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_end_time"), f2cons__new(cause, time, nil));
   }
   return nil;
 }
 
 f2ptr raw__semantic_event_sequence__update_absolute_start_and_end_times(f2ptr cause, f2ptr this, f2ptr semantic_event) {
-  f2ptr semantic_event__absolute_start_time = f2__object__semantic__get(cause, semantic_event, new__symbol(cause, "absolute_start_time"), nil);
-  f2ptr semantic_event__absolute_end_time   = f2__object__semantic__get(cause, semantic_event, new__symbol(cause, "absolute_end_time"),   nil);
-  if (semantic_event__absolute_end_time != nil) {
-    f2ptr result = raw__semantic_event_sequence__update_absolute_start_and_end_times_with_time(cause, this, semantic_event__absolute_end_time);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
+  {
+    f2ptr semantic_event__absolute_start_time = f2__object__semantic__get(cause, semantic_event, new__symbol(cause, "absolute_start_time"), nil);
+    if (semantic_event__absolute_start_time != nil) {
+      f2ptr result = raw__semantic_event_sequence__update_absolute_start_and_end_times_with_time(cause, this, semantic_event__absolute_start_time);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
     }
   }
-  if (semantic_event__absolute_start_time != nil) {
-    f2ptr result = raw__semantic_event_sequence__update_absolute_start_and_end_times_with_time(cause, this, semantic_event__absolute_start_time);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
+  {
+    f2ptr semantic_event__absolute_end_time = f2__object__semantic__get(cause, semantic_event, new__symbol(cause, "absolute_end_time"), nil);
+    if (semantic_event__absolute_end_time != nil) {
+      f2ptr result = raw__semantic_event_sequence__update_absolute_start_and_end_times_with_time(cause, this, semantic_event__absolute_end_time);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
     }
   }
   return nil;

@@ -1299,11 +1299,11 @@ f2ptr raw__cairo_surface__write_to_png(f2ptr cause, f2ptr this, f2ptr filename) 
     case CAIRO_STATUS_WRITE_ERROR:           cairo_status = new__symbol(cause, "CAIRO_STATUS_WRITE_ERROR");           break;
     default:                                 cairo_status = new__symbol(cause, "unknown_cairo_status");               break;
     }
-    return f2larva__new(cause, 1351, f2__bug__new(cause, f2integer__new(cause, 1351), f2__frame__new(cause, f2list8__new(cause,
-															 new__symbol(cause, "bug_type"),     new__symbol(cause, "error_writing_cairo_surface_to_png_file"),
-															 new__symbol(cause, "cairo_status"), cairo_status,
-															 new__symbol(cause, "this"),         this,
-															 new__symbol(cause, "filename"),     filename))));
+    return f2larva__new(cause, 85689, f2__bug__new(cause, f2integer__new(cause, 1351), f2__frame__new(cause, f2list8__new(cause,
+															  new__symbol(cause, "bug_type"),     new__symbol(cause, "error_writing_cairo_surface_to_png_file"),
+															  new__symbol(cause, "cairo_status"), cairo_status,
+															  new__symbol(cause, "this"),         this,
+															  new__symbol(cause, "filename"),     filename))));
   }
   return nil;
 }

@@ -481,11 +481,11 @@ f2ptr f2__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr e
     return f2larva__new(cause, 1, nil);
   }
   if ((start_time != nil) && (end_time != nil)) {
-    f2ptr is_less_than = f2__is_less_than(cause, start_time, end_time);
-    if (raw__larva__is_type(cause, is_less_than)) {
-      return is_less_than;
+    f2ptr is_greater_than = f2__is_greater_than(cause, start_time, end_time);
+    if (raw__larva__is_type(cause, is_greater_than)) {
+      return is_greater_than;
     }
-    if (is_less_than == nil) {
+    if (is_greater_than != nil) {
       return f2larva__new(cause, 1351, nil);
     }
   }

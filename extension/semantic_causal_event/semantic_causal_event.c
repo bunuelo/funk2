@@ -119,22 +119,10 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 	  if (raw__semantic_causal_event__is_type(cause, semantic_frame)) {
 	    f2ptr semantic_causal_event = semantic_frame;
 	    {
-	      f2ptr render_frame = f2__object__get(cause, semantic_causal_event, new__symbol(cause, "cairo_render_frame"), nil);
-	      f2ptr absolute_start_time = nil;
-	      {
-		f2ptr absolute_start_time_set = raw__semantic_causal_event__absolute_start_time__lookup(cause, semantic_causal_event);
-		if (absolute_start_time_set != nil) {
-		  absolute_start_time = raw__set__an_arbitrary_element(cause, absolute_start_time_set);
-		}
-	      }
-	      f2ptr absolute_end_time = nil;
-	      {
-		f2ptr absolute_end_time_set = raw__semantic_causal_event__absolute_end_time__lookup(cause, semantic_causal_event);
-		if (absolute_end_time_set != nil) {
-		  absolute_end_time = raw__set__an_arbitrary_element(cause, absolute_end_time_set);
-		}
-	      }
-	      f2ptr timeline_event = f2__timeline_event__new(cause, render_frame, absolute_start_time, absolute_end_time);
+	      f2ptr render_frame        = f2__object__get(cause, semantic_causal_event, new__symbol(cause, "cairo_render_frame"), nil);
+	      f2ptr absolute_start_time = f2__object__semantic__get(cause, semantic_causal_event, new__symbol(cause, "absolute_start_time"), nil);
+	      f2ptr absolute_end_time   = f2__object__semantic__get(cause, semantic_causal_event, new__symbol(cause, "absolute_end_time"),   nil);
+	      f2ptr timeline_event      = f2__timeline_event__new(cause, render_frame, absolute_start_time, absolute_end_time);
 	      if (raw__larva__is_type(cause, timeline_event)) {
 		return timeline_event;
 	      }

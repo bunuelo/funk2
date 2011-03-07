@@ -231,7 +231,7 @@ f2ptr raw__semantic_event_sequence__update_absolute_start_and_end_times_with_end
 f2ptr raw__semantic_event_sequence__update_absolute_start_and_end_times(f2ptr cause, f2ptr this, f2ptr semantic_event) {
   {
     f2ptr semantic_event__absolute_start_time = f2__object__semantic__get(cause, semantic_event, new__symbol(cause, "absolute_start_time"), nil);
-    if (semantic_event__absolute_start_time != nil) {
+    {
       f2ptr result = raw__semantic_event_sequence__update_absolute_start_and_end_times_with_start_time(cause, this, semantic_event__absolute_start_time);
       if (raw__larva__is_type(cause, result)) {
 	return result;
@@ -240,7 +240,7 @@ f2ptr raw__semantic_event_sequence__update_absolute_start_and_end_times(f2ptr ca
   }
   {
     f2ptr semantic_event__absolute_end_time = f2__object__semantic__get(cause, semantic_event, new__symbol(cause, "absolute_end_time"), nil);
-    if (semantic_event__absolute_end_time != nil) {
+    {
       f2ptr result = raw__semantic_event_sequence__update_absolute_start_and_end_times_with_end_time(cause, this, semantic_event__absolute_end_time);
       if (raw__larva__is_type(cause, result)) {
 	return result;

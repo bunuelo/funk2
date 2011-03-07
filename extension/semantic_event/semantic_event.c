@@ -258,84 +258,6 @@ f2ptr f2__semantic_event_type__new(f2ptr cause) {
 
 
 
-f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
-  f2ptr timeline = f2__timeline__new(cause);
-  {
-    f2ptr semantic_frames                    = raw__semantic_knowledge_base__semantic_frames(cause, this);
-    f2ptr timeline_event_semantic_event_hash = f2__ptypehash__new(cause);
-    {
-      f2ptr iter = semantic_frames;
-      while (iter != nil) {
-	f2ptr semantic_frame = f2cons__car(iter, cause);
-	{
-	  if (raw__semantic_event__is_type(cause, semantic_frame)) {
-	    f2ptr semantic_event = semantic_frame;
-	    {
-	      f2ptr render_frame = f2__object__get(cause, semantic_event, new__symbol(cause, "cairo_render_frame"), nil);
-	      f2ptr absolute_start_time = nil;
-	      {
-		f2ptr absolute_start_time_set = raw__semantic_event__absolute_start_time__lookup(cause, semantic_event);
-		if (absolute_start_time_set != nil) {
-		  absolute_start_time = raw__set__an_arbitrary_element(cause, absolute_start_time_set);
-		}
-	      }
-	      f2ptr absolute_end_time = nil;
-	      {
-		f2ptr absolute_end_time_set = raw__semantic_event__absolute_end_time__lookup(cause, semantic_event);
-		if (absolute_end_time_set != nil) {
-		  absolute_end_time = raw__set__an_arbitrary_element(cause, absolute_end_time_set);
-		}
-	      }
-	      f2ptr timeline_event = f2__timeline_event__new(cause, render_frame, absolute_start_time, absolute_end_time);
-	      if (raw__larva__is_type(cause, timeline_event)) {
-		return timeline_event;
-	      }
-	      raw__timeline__add_timeline_event(cause, timeline, timeline_event);
-	      raw__ptypehash__add(cause, timeline_event_semantic_event_hash, semantic_event, timeline_event);
-	    }
-	  }
-	}
-	iter = f2cons__cdr(iter, cause);
-      }
-    }
-    ptypehash__iteration(cause, timeline_event_semantic_event_hash, semantic_event, timeline_event,
-			 {
-			   f2ptr next_set = raw__semantic_temporal_object__next__lookup(cause, semantic_event);
-			   if (next_set != nil) {
-			     set__iteration(cause, next_set, next_semantic_event,
-					    if (raw__ptypehash__contains(cause, timeline_event_semantic_event_hash, next_semantic_event)) {
-					      f2ptr next_timeline_event = raw__ptypehash__lookup(cause, timeline_event_semantic_event_hash, next_semantic_event);
-					      raw__timeline_event__add_next(cause, timeline_event, next_timeline_event);
-					    }
-					    );
-			   }
-			 }
-			 {
-			   f2ptr contains_set = raw__semantic_temporal_object__contains__lookup(cause, semantic_event);
-			   if (contains_set != nil) {
-			     set__iteration(cause, contains_set, contains_semantic_event,
-					    if (raw__ptypehash__contains(cause, timeline_event_semantic_event_hash, contains_semantic_event)) {
-					      f2ptr contains_timeline_event = raw__ptypehash__lookup(cause, timeline_event_semantic_event_hash, contains_semantic_event);
-					      raw__timeline_event__add_contains(cause, timeline_event, contains_timeline_event);
-					    }
-					    );
-			   }
-			 }
-			 );
-  }
-  return timeline;
-}
-
-f2ptr f2__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_knowledge_base__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_knowledge_base__as__timeline(cause, this);
-}
-export_cefunk1(semantic_knowledge_base__as__timeline, this, 0, "Returns a new timeline object representing this semantic_knowledge_base.");
-
-
-
 // **
 
 f2ptr f2__semantic_event__core_extension__ping(f2ptr cause) {
@@ -362,11 +284,17 @@ f2ptr f2__semantic_event__core_extension__initialize(f2ptr cause) {
       return result;
     }
   }
-  f2__add_type(cause, new__symbol(cause, "semantic_event"), f2__semantic_event_type__new(cause));
   status("semantic_event initialized.");
   return nil;
 }
 export_cefunk0(semantic_event__core_extension__initialize, 0, "");
+
+f2ptr f2__semantic_event__core_extension__define_types(f2ptr cause) {
+  f2__add_type(cause, new__symbol(cause, "semantic_event"), f2__semantic_event_type__new(cause));
+  status("semantic_event define types.");
+  return nil;
+}
+export_cefunk0(semantic_event__core_extension__define_types, 0, "");
 
 f2ptr f2__semantic_event__core_extension__destroy(f2ptr cause) {
   status("semantic_event destroyed.");

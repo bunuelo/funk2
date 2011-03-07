@@ -185,14 +185,19 @@ f2ptr f2__semantic_causal_event__core_extension__ping(f2ptr cause) {
 }
 export_cefunk0(semantic_causal_event__core_extension__ping, 0, "");
 
+boolean_t __semantic_causal_event__core_extension__is_initialized = boolean__false;
 f2ptr f2__semantic_causal_event__core_extension__initialize(f2ptr cause) {
-  {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__core_extension__ping")), nil);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
+  if (! __semantic_causal_event__core_extension__is_initialized) {
+    {
+      f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__core_extension__ping")), nil);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
     }
+    status("semantic_causal_event initialized.");
+  } else {
+    status("semantic_causal_event already initialized.");
   }
-  status("semantic_causal_event initialized.");
   return nil;
 }
 export_cefunk0(semantic_causal_event__core_extension__initialize, 0, "");

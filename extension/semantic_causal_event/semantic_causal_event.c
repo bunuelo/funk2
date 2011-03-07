@@ -194,6 +194,7 @@ f2ptr f2__semantic_causal_event__core_extension__initialize(f2ptr cause) {
 	return result;
       }
     }
+    __semantic_causal_event__core_extension__is_initialized = boolean__true;
     status("semantic_causal_event initialized.");
   } else {
     status("semantic_causal_event already initialized.");

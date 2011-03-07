@@ -22,6 +22,7 @@
 	       forgetful_event_stream
 	       lick
 	       semantic_realm
+	       semantic_causal_event
 	       semantic_relationship_key
 	       semantic_frame]
    :sources   ['semantic_knowledge_base-core.fu2']

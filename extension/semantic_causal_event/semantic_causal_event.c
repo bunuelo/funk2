@@ -34,6 +34,12 @@ f2ptr raw__semantic_causal_event__type_create(f2ptr cause, f2ptr this, f2ptr sem
       return result;
     }
   }
+  {
+    f2ptr result = raw__semantic_causal_object__type_create(cause, this, semantic_realm);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return this;
 }
 
@@ -96,7 +102,9 @@ export_cefunk1(semantic_causal_event__type, thing, 0, "Returns the specific type
 
 
 f2ptr f2__semantic_causal_event_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_event")));
+  f2ptr this = f2__primobject_type__new(cause, f2list2__new(cause,
+							    new__symbol(cause, "semantic_event"),
+							    new__symbol(cause, "semantic_causal_object")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__type")));}
@@ -206,6 +214,12 @@ f2ptr f2__semantic_causal_event__core_extension__initialize(f2ptr cause) {
     __semantic_causal_event__core_extension__is_initialized = boolean__true;
     {
       f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__core_extension__ping")), nil);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+    {
+      f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_object"), new__symbol(cause, "semantic_causal_object__core_extension__ping")), nil);
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }

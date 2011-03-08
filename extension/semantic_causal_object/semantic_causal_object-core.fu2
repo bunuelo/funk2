@@ -1,0 +1,56 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[defcore semantic_causal_object 'extension/semantic_causal_object/.libs/libf2e_semantic_causal_object.so']
+
+[defcorefunk semantic_causal_object-core_extension-ping       semantic_causal_object semantic_causal_object__core_extension__ping]
+[defcorefunk semantic_causal_object-core_extension-initialize semantic_causal_object semantic_causal_object__core_extension__initialize]
+
+[defcorefunk object-semantic-causal-causes-lookup       semantic_causal_object object__semantic__causal__causes__lookup]
+[defcorefunk object-semantic-causal-causes-lookup-apply semantic_causal_object object__semantic__causal__causes__lookup__apply]
+[defcorefunk object-semantic-causal-causes-add          semantic_causal_object object__semantic__causal__causes__add]
+[defcorefunk object-semantic-causal-causes-add-apply    semantic_causal_object object__semantic__causal__causes__add__apply]
+[defcorefunk object-semantic-causal-causes-remove       semantic_causal_object object__semantic__causal__causes__remove]
+[defcorefunk object-semantic-causal-causes-remove-apply semantic_causal_object object__semantic__causal__causes__remove__apply]
+
+[defcorefunk object-semantic-causal-is_caused_by-lookup       semantic_causal_object object__semantic__causal__is_caused_by__lookup]
+[defcorefunk object-semantic-causal-is_caused_by-lookup-apply semantic_causal_object object__semantic__causal__is_caused_by__lookup__apply]
+[defcorefunk object-semantic-causal-is_caused_by-add          semantic_causal_object object__semantic__causal__is_caused_by__add]
+[defcorefunk object-semantic-causal-is_caused_by-add-apply    semantic_causal_object object__semantic__causal__is_caused_by__add__apply]
+[defcorefunk object-semantic-causal-is_caused_by-remove       semantic_causal_object object__semantic__causal__is_caused_by__remove]
+[defcorefunk object-semantic-causal-is_caused_by-remove-apply semantic_causal_object object__semantic__causal__is_caused_by__remove__apply]
+
+[semantic_causal_object-core_extension-ping]
+
+
+[defmetro semantic-causal-causes-lookup       [this slot_name :rest args] `[object-semantic-causal-causes-lookup       ,this [quote ,slot_name] @args]]
+[defmetro semantic-causal-causes-lookup-apply [this slot_name       args] `[object-semantic-causal-causes-lookup-apply ,this [quote ,slot_name] ,args]]
+[defmetro semantic-causal-causes-add          [this slot_name :rest args] `[object-semantic-causal-causes-add          ,this [quote ,slot_name] @args]]
+[defmetro semantic-causal-causes-add-apply    [this slot_name       args] `[object-semantic-causal-causes-add-apply    ,this [quote ,slot_name] ,args]]
+[defmetro semantic-causal-causes-remove       [this slot_name :rest args] `[object-semantic-causal-causes-remove       ,this [quote ,slot_name] @args]]
+[defmetro semantic-causal-causes-remove-apply [this slot_name       args] `[object-semantic-causal-causes-remove-apply ,this [quote ,slot_name] ,args]]
+
+[defmetro semantic-causal-is_caused_by-lookup       [this slot_name :rest args] `[object-semantic-causal-is_caused_by-lookup       ,this [quote ,slot_name] @args]]
+[defmetro semantic-causal-is_caused_by-lookup-apply [this slot_name       args] `[object-semantic-causal-is_caused_by-lookup-apply ,this [quote ,slot_name] ,args]]
+[defmetro semantic-causal-is_caused_by-add          [this slot_name :rest args] `[object-semantic-causal-is_caused_by-add          ,this [quote ,slot_name] @args]]
+[defmetro semantic-causal-is_caused_by-add-apply    [this slot_name       args] `[object-semantic-causal-is_caused_by-add-apply    ,this [quote ,slot_name] ,args]]
+[defmetro semantic-causal-is_caused_by-remove       [this slot_name :rest args] `[object-semantic-causal-is_caused_by-remove       ,this [quote ,slot_name] @args]]
+[defmetro semantic-causal-is_caused_by-remove-apply [this slot_name       args] `[object-semantic-causal-is_caused_by-remove-apply ,this [quote ,slot_name] ,args]]
+
+

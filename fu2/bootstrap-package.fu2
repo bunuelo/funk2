@@ -235,7 +235,7 @@
   [let [[load_if_modified_before_time [time]]]
     [let [[package [lookup-package name]]]
       [mapc [funk [package_dependency]
-		  [package-load_if_modified_before package_dependency load_if_modified_before_time]]
+		  [package-load_if_modified_before package_dependency load_if_modified_before_time nil]]
 	    [get package package_dependencies]]
       [with-new-cause [cause-define cause-object_types_defined nil]
 		      [mapc [funk [source_dependency]
@@ -298,7 +298,7 @@
     [global_core_extension_handler-unload_changed]
     [global_dlfcn_dynamic_library-unload_changed]
     [mapc [funk [name]
-		[package-load_if_modified_before name load_if_modified_before_time]]
+		[package-load_if_modified_before name load_if_modified_before_time nil]]
 	  names]]]
 
 [defmetro require [:rest names]

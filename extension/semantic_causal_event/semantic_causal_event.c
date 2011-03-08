@@ -109,22 +109,22 @@ f2ptr f2__semantic_causal_event_type__new(f2ptr cause) {
 f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
   f2ptr timeline = f2__timeline__new(cause);
   {
-    f2ptr semantic_frames                           = raw__semantic_knowledge_base__semantic_frames(cause, this);
-    f2ptr timeline_event_semantic_causal_event_hash = f2__ptypehash__new(cause);
+    f2ptr semantic_frames                    = raw__semantic_knowledge_base__semantic_frames(cause, this);
+    f2ptr timeline_event_semantic_event_hash = f2__ptypehash__new(cause);
     {
       f2ptr iter = semantic_frames;
       while (iter != nil) {
 	f2ptr semantic_frame = f2cons__car(iter, cause);
 	{
-	  if (raw__semantic_causal_event__is_type(cause, semantic_frame)) {
-	    f2ptr semantic_causal_event = semantic_frame;
+	  if (raw__semantic_event__is_type(cause, semantic_frame)) {
+	    f2ptr semantic_event = semantic_frame;
 	    {
-	      f2ptr render_frame        = f2__object__get(cause, semantic_causal_event, new__symbol(cause, "cairo_render_frame"), nil);
-	      f2ptr absolute_start_time = f2__object__semantic__get(cause, semantic_causal_event, new__symbol(cause, "absolute_start_time"), nil);
+	      f2ptr render_frame        = f2__object__get(cause, semantic_event, new__symbol(cause, "cairo_render_frame"), nil);
+	      f2ptr absolute_start_time = f2__object__semantic__get(cause, semantic_event, new__symbol(cause, "absolute_start_time"), nil);
 	      if (raw__larva__is_type(cause, absolute_start_time)) {
 		return absolute_start_time;
 	      }
-	      f2ptr absolute_end_time = f2__object__semantic__get(cause, semantic_causal_event, new__symbol(cause, "absolute_end_time"),   nil);
+	      f2ptr absolute_end_time = f2__object__semantic__get(cause, semantic_event, new__symbol(cause, "absolute_end_time"),   nil);
 	      if (raw__larva__is_type(cause, absolute_end_time)) {
 		return absolute_end_time;
 	      }
@@ -133,31 +133,31 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 		return timeline_event;
 	      }
 	      raw__timeline__add_timeline_event(cause, timeline, timeline_event);
-	      raw__ptypehash__add(cause, timeline_event_semantic_causal_event_hash, semantic_causal_event, timeline_event);
+	      raw__ptypehash__add(cause, timeline_event_semantic_event_hash, semantic_event, timeline_event);
 	    }
 	  }
 	}
 	iter = f2cons__cdr(iter, cause);
       }
     }
-    ptypehash__iteration(cause, timeline_event_semantic_causal_event_hash, semantic_causal_event, timeline_event,
+    ptypehash__iteration(cause, timeline_event_semantic_event_hash, semantic_event, timeline_event,
 			 {
-			   f2ptr next_set = raw__semantic_temporal_object__next__lookup(cause, semantic_causal_event);
+			   f2ptr next_set = raw__semantic_temporal_object__next__lookup(cause, semantic_event);
 			   if (next_set != nil) {
-			     set__iteration(cause, next_set, next_semantic_causal_event,
-					    if (raw__ptypehash__contains(cause, timeline_event_semantic_causal_event_hash, next_semantic_causal_event)) {
-					      f2ptr next_timeline_event = raw__ptypehash__lookup(cause, timeline_event_semantic_causal_event_hash, next_semantic_causal_event);
+			     set__iteration(cause, next_set, next_semantic_event,
+					    if (raw__ptypehash__contains(cause, timeline_event_semantic_event_hash, next_semantic_event)) {
+					      f2ptr next_timeline_event = raw__ptypehash__lookup(cause, timeline_event_semantic_event_hash, next_semantic_event);
 					      raw__timeline_event__add_next(cause, timeline_event, next_timeline_event);
 					    }
 					    );
 			   }
 			 }
 			 {
-			   f2ptr contains_set = raw__semantic_temporal_object__contains__lookup(cause, semantic_causal_event);
+			   f2ptr contains_set = raw__semantic_temporal_object__contains__lookup(cause, semantic_event);
 			   if (contains_set != nil) {
-			     set__iteration(cause, contains_set, contains_semantic_causal_event,
-					    if (raw__ptypehash__contains(cause, timeline_event_semantic_causal_event_hash, contains_semantic_causal_event)) {
-					      f2ptr contains_timeline_event = raw__ptypehash__lookup(cause, timeline_event_semantic_causal_event_hash, contains_semantic_causal_event);
+			     set__iteration(cause, contains_set, contains_semantic_event,
+					    if (raw__ptypehash__contains(cause, timeline_event_semantic_event_hash, contains_semantic_event)) {
+					      f2ptr contains_timeline_event = raw__ptypehash__lookup(cause, timeline_event_semantic_event_hash, contains_semantic_event);
 					      raw__timeline_event__add_contains(cause, timeline_event, contains_timeline_event);
 					    }
 					    );

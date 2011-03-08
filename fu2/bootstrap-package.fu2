@@ -131,6 +131,7 @@
 				  'extension/semantic_event/'
 				  'extension/semantic_agent/'
 				  'extension/semantic_causal_event/'
+				  'extension/semantic_causal_object/'
 				  'extension/semantic_event_sequence/'
 				  'extension/semantic_frame/'
 				  'extension/semantic_knowledge_base/'

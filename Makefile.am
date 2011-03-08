@@ -228,6 +228,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/semantic_agent/libf2e_semantic_agent.la \
                   extension/semantic_causal_event/libf2e_semantic_causal_event.la \
                   extension/semantic_event_sequence/libf2e_semantic_event_sequence.la \
+                  extension/semantic_causal_object/libf2e_semantic_causal_object.la \
                   extension/semantic_containment_object/libf2e_semantic_containment_object.la \
                   extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.la \
                   extension/semantic_event/libf2e_semantic_event.la \
@@ -399,6 +400,7 @@ extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES         
 extension_semantic_agent_libf2e_semantic_agent_la_SOURCES                                       = extension/semantic_agent/semantic_agent.c
 extension_semantic_causal_event_libf2e_semantic_causal_event_la_SOURCES                         = extension/semantic_causal_event/semantic_causal_event.c
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES                     = extension/semantic_event_sequence/semantic_event_sequence.c
+extension_semantic_causal_object_libf2e_semantic_causal_object_la_SOURCES                       = extension/semantic_causal_object/semantic_causal_object.c
 extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES             = extension/semantic_containment_object/semantic_containment_object.c
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES       = extension/semantic_directed_action_event/semantic_directed_action_event.c
 extension_semantic_event_libf2e_semantic_event_la_SOURCES                                       = extension/semantic_event/semantic_event.c
@@ -464,6 +466,7 @@ all_core_extensions = \
   $(extension_propogator_libf2e_propogator_la) \
   $(extension_semantic_action_event_libf2e_semantic_action_event_la) \
   $(extension_semantic_agent_libf2e_semantic_agent_la) \
+  $(extension_semantic_causal_object_libf2e_semantic_causal_object_la) \
   $(extension_semantic_containment_object_libf2e_semantic_containment_object_la) \
   $(extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la) \
   $(extension_semantic_event_libf2e_semantic_event) \
@@ -551,6 +554,9 @@ extension_semantic_causal_event_libf2e_semantic_causal_event_la_CFLAGS  = $(lib_
 
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_causal_object_libf2e_semantic_causal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_causal_object_libf2e_semantic_causal_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_containment_object_libf2e_semantic_containment_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_containment_object_libf2e_semantic_containment_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

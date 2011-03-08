@@ -142,7 +142,7 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
     }
     ptypehash__iteration(cause, timeline_event_semantic_event_hash, semantic_event, timeline_event,
 			 {
-			   f2ptr next_set = raw__semantic_temporal_object__next__lookup(cause, semantic_event);
+			   f2ptr next_set = f2__object__semantic__lookup(cause, semantic_event, new__symbol(cause, "next"), nil);
 			   if (next_set != nil) {
 			     set__iteration(cause, next_set, next_semantic_event,
 					    if (raw__ptypehash__contains(cause, timeline_event_semantic_event_hash, next_semantic_event)) {
@@ -153,7 +153,7 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 			   }
 			 }
 			 {
-			   f2ptr contains_set = raw__semantic_temporal_object__contains__lookup(cause, semantic_event);
+			   f2ptr contains_set = f2__object__semantic__lookup(cause, semantic_event, new__symbol(cause, "contains"), nil);
 			   if (contains_set != nil) {
 			     set__iteration(cause, contains_set, contains_semantic_event,
 					    if (raw__ptypehash__contains(cause, timeline_event_semantic_event_hash, contains_semantic_event)) {
@@ -163,6 +163,21 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 					    );
 			   }
 			 }
+			 /*
+			 if (raw__semantic_causal_event__is_type(cause, semantic_event)) {
+			   f2ptr semantic_causal_event = semantic_event;
+			   
+			   f2ptr causes_set = f2__object__semantic__lookup(cause, semantic_event, new__symbol(cause, "causes"), nil);
+			   if (causes_set != nil) {
+			     set__iteration(cause, causes_set, causes_semantic_event,
+					    if (raw__ptypehash__contains(cause, timeline_event_semantic_event_hash, causes_semantic_event)) {
+					      f2ptr causes_timeline_event = raw__ptypehash__lookup(cause, timeline_event_semantic_event_hash, causes_semantic_event);
+					      raw__timeline_event__add_causes(cause, timeline_event, causes_timeline_event);
+					    }
+					    );
+			   }
+			 }
+			 */
 			 );
   }
   return timeline;

@@ -170,13 +170,21 @@ f2ptr f2__semantic_object__core_extension__ping(f2ptr cause) {
 }
 export_cefunk0(semantic_object__core_extension__ping, 0, "");
 
+boolean_t __semantic_object__core_extension__is_initialized = boolean__false;
 f2ptr f2__semantic_object__core_extension__initialize(f2ptr cause) {
-  f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__core_extension__ping")), nil);
-  if (raw__larva__is_type(cause, result)) {
-    return result;
+  if (! __semantic_object__core_extension__is_initialized) {
+    __semantic_object__core_extension__is_initialized = boolean__true;
+    {
+      f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__core_extension__ping")), nil);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+    f2__add_type(cause, new__symbol(cause, "semantic_object"), f2__semantic_object_type__new(cause));
+    status("semantic_object initialized.");
+  } else {
+    status("semantic_object already initialized.");
   }
-  f2__add_type(cause, new__symbol(cause, "semantic_object"), f2__semantic_object_type__new(cause));
-  status("semantic_object initialized.");
   return nil;
 }
 export_cefunk0(semantic_object__core_extension__initialize, 0, "");

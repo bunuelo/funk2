@@ -19,9 +19,10 @@
 
 [defcore semantic_knowledge_base 'extension/semantic_knowledge_base/.libs/libf2e_semantic_knowledge_base.so']
 
-[defcorefunk semantic_knowledge_base-core_extension-ping       semantic_knowledge_base semantic_knowledge_base__core_extension__ping]
-[defcorefunk semantic_knowledge_base-core_extension-initialize semantic_knowledge_base semantic_knowledge_base__core_extension__initialize]
+[defcorefunk semantic_knowledge_base-core_extension-ping         semantic_knowledge_base semantic_knowledge_base__core_extension__ping]
+[defcorefunk semantic_knowledge_base-core_extension-initialize   semantic_knowledge_base semantic_knowledge_base__core_extension__initialize]
+[defcorefunk semantic_knowledge_base-core_extension-define_types semantic_knowledge_base semantic_knowledge_base__core_extension__define_types]
 
-[semantic_knowledge_base-core_extension-ping]
+[semantic_knowledge_base-core_extension-define_types]
 
 

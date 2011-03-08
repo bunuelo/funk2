@@ -23,6 +23,7 @@
 #define F2__EXTENSION__SEMANTIC_CAUSAL_EVENT__H
 
 #include "../semantic_event/semantic_event.h"
+#include "../semantic_causal_object/semantic_causal_object.h"
 #include "../timeline/timeline.h"
 
 

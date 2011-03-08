@@ -22,7 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_ACTION_EVENT__H
 #define F2__EXTENSION__SEMANTIC_ACTION_EVENT__H
 
-#include "../semantic_event/semantic_event.h"
+#include "../semantic_causal_event/semantic_causal_event.h"
 
 
 // semantic_action_event
@@ -45,8 +45,9 @@ f2ptr f2__semantic_action_event_type__new(f2ptr cause);
 
 // **
 
-f2ptr f2__semantic_action_event__core_extension__ping      (f2ptr cause);
-f2ptr f2__semantic_action_event__core_extension__initialize(f2ptr cause);
-f2ptr f2__semantic_action_event__core_extension__destroy   (f2ptr cause);
+f2ptr f2__semantic_action_event__core_extension__ping        (f2ptr cause);
+f2ptr f2__semantic_action_event__core_extension__initialize  (f2ptr cause);
+f2ptr f2__semantic_action_event__core_extension__define_types(f2ptr cause);
+f2ptr f2__semantic_action_event__core_extension__destroy     (f2ptr cause);
 
 #endif // F2__EXTENSION__SEMANTIC_ACTION_EVENT__H

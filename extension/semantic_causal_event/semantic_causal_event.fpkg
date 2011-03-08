@@ -20,6 +20,7 @@
 [defpackage semantic_causal_event
   :documentation 'Basic knowledge for dealing with events in time.'
    :packages     [semantic_event
+		  semantic_causal_object
 		  timeline]
     :sources     ['semantic_causal_event-core.fu2']
      :binaries   ['.libs/libf2e_semantic_causal_event.so']]

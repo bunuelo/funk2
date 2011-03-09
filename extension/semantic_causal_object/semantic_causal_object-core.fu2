@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore semantic_causal_object 'extension/semantic_causal_object/.libs/libf2e_semantic_causal_object.so']
-
 [defcorefunk semantic_causal_object-core_extension-ping       semantic_causal_object semantic_causal_object__core_extension__ping]
 [defcorefunk semantic_causal_object-core_extension-initialize semantic_causal_object semantic_causal_object__core_extension__initialize]
 
@@ -36,7 +34,7 @@
 [defcorefunk object-semantic-causal-is_caused_by-remove       semantic_causal_object object__semantic__causal__is_caused_by__remove]
 [defcorefunk object-semantic-causal-is_caused_by-remove-apply semantic_causal_object object__semantic__causal__is_caused_by__remove__apply]
 
-[semantic_causal_object-core_extension-ping]
+[semantic_causal_object-core_extension-define_types]
 
 
 [defmetro semantic-causal-causes-lookup       [this slot_name :rest args] `[object-semantic-causal-causes-lookup       ,this [quote ,slot_name] @args]]

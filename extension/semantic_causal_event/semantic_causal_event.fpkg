@@ -25,3 +25,5 @@
     :sources     ['semantic_causal_event-core.fu2']
      :binaries   ['.libs/libf2e_semantic_causal_event.so']]
 
+[defcore semantic_causal_event 'extension/semantic_causal_event/.libs/libf2e_semantic_causal_event.so']
+

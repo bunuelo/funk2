@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore semantic_event 'extension/semantic_event/.libs/libf2e_semantic_event.so']
-
 [defcorefunk semantic_event-core_extension-ping         semantic_event semantic_event__core_extension__ping]
 [defcorefunk semantic_event-core_extension-initialize   semantic_event semantic_event__core_extension__initialize]
 [defcorefunk semantic_event-core_extension-define_types semantic_event semantic_event__core_extension__define_types]

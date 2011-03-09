@@ -19,8 +19,9 @@
 
 [defpackage semantic_causal_object
   :documentation 'Basic knowledge for dealing with causal orderings of objects--useful for thinking about responsibility for knowledge.'
-   :packages     [semantic_object
-		  semantic_knowledge_base]
+   :packages     [semantic_object]
     :sources     ['semantic_causal_object-core.fu2']
      :binaries   ['.libs/libf2e_semantic_causal_object.so']]
+
+[defcore semantic_causal_object 'extension/semantic_causal_object/.libs/libf2e_semantic_causal_object.so']
 

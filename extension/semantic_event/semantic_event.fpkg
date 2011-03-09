@@ -24,3 +24,5 @@
     :sources     ['semantic_event-core.fu2']
      :binaries   ['.libs/libf2e_semantic_event.so']]
 
+[defcore semantic_event 'extension/semantic_event/.libs/libf2e_semantic_event.so']
+

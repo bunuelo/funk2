@@ -138,9 +138,9 @@ f2ptr f2__semantic_causal_event__causes__remove(f2ptr cause, f2ptr this, f2ptr c
       (! raw__semantic_causal_event__is_type(cause, causal_event))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_causal_event__causes__remove(cause, this, causal_object);
+  return raw__semantic_causal_event__causes__remove(cause, this, causal_event);
 }
-export_cefunk2(semantic_causal_event__causes__remove, this, causal_object, 0, "Removes the given causal_event from the set of causes for this causal_event.");
+export_cefunk2(semantic_causal_event__causes__remove, this, causal_event, 0, "Removes the given causal_event from the set of causes for this causal_event.");
 
 
 f2ptr raw__semantic_causal_event__is_caused_by__lookup(f2ptr cause, f2ptr this) {

@@ -264,7 +264,7 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 			 if (raw__semantic_causal_event__is_type(cause, semantic_event)) {
 			   f2ptr semantic_causal_event = semantic_event;
 			   
-			   f2ptr causes_set = f2__object__semantic__lookup(cause, semantic_event, new__symbol(cause, "causes"), nil);
+			   f2ptr causes_set = f2__object__semantic__lookup(cause, semantic_causal_event, new__symbol(cause, "causes"), nil);
 			   if (raw__larva__is_type(cause, causes_set)) {
 			     return causes_set;
 			   }

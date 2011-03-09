@@ -24,3 +24,5 @@
    :sources   ['semantic_realm-core.fu2']
     :binaries ['.libs/libf2e_semantic_realm.so']]
 
+[defcore semantic_realm 'extension/semantic_realm/.libs/libf2e_semantic_realm.so']
+

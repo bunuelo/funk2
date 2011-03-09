@@ -23,3 +23,5 @@
     :sources     ['semantic_object-core.fu2']
      :binaries   ['.libs/libf2e_semantic_object.so']]
 
+[defcore semantic_object 'extension/semantic_object/.libs/libf2e_semantic_object.so']
+

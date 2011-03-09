@@ -19,8 +19,9 @@
 
 [defcore semantic_ordered_object 'extension/semantic_ordered_object/.libs/libf2e_semantic_ordered_object.so']
 
-[defcorefunk semantic_ordered_object-core_extension-ping       semantic_ordered_object semantic_ordered_object__core_extension__ping]
-[defcorefunk semantic_ordered_object-core_extension-initialize semantic_ordered_object semantic_ordered_object__core_extension__initialize]
+[defcorefunk semantic_ordered_object-core_extension-ping         semantic_ordered_object semantic_ordered_object__core_extension__ping]
+[defcorefunk semantic_ordered_object-core_extension-initialize   semantic_ordered_object semantic_ordered_object__core_extension__initialize]
+[defcorefunk semantic_ordered_object-core_extension-define_types semantic_ordered_object semantic_ordered_object__core_extension__define_types]
 
 [defcorefunk object-semantic-ordered-next-lookup       semantic_ordered_object object__semantic__ordered__next__lookup]
 [defcorefunk object-semantic-ordered-next-lookup-apply semantic_ordered_object object__semantic__ordered__next__lookup__apply]
@@ -36,7 +37,7 @@
 [defcorefunk object-semantic-ordered-previous-remove       semantic_ordered_object object__semantic__ordered__previous__remove]
 [defcorefunk object-semantic-ordered-previous-remove-apply semantic_ordered_object object__semantic__ordered__previous__remove__apply]
 
-[semantic_ordered_object-core_extension-ping]
+[semantic_ordered_object-core_extension-define_types]
 
 
 [defmetro semantic-ordered-next-lookup       [this slot_name :rest args] `[object-semantic-ordered-next-lookup       ,this [quote ,slot_name] @args]]

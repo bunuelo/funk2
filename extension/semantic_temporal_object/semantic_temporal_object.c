@@ -345,11 +345,17 @@ f2ptr f2__semantic_temporal_object__core_extension__initialize(f2ptr cause) {
       return result;
     }
   }
-  f2__add_type(cause, new__symbol(cause, "semantic_temporal_object"), f2__semantic_temporal_object_type__new(cause));
   status("semantic_temporal_object initialized.");
   return nil;
 }
 export_cefunk0(semantic_temporal_object__core_extension__initialize, 0, "");
+
+f2ptr f2__semantic_temporal_object__core_extension__define_types(f2ptr cause) {
+  f2__add_type(cause, new__symbol(cause, "semantic_temporal_object"), f2__semantic_temporal_object_type__new(cause));
+  status("semantic_temporal_object types defined.");
+  return nil;
+}
+export_cefunk0(semantic_temporal_object__core_extension__define_types, 0, "");
 
 f2ptr f2__semantic_temporal_object__core_extension__destroy(f2ptr cause) {
   status("semantic_temporal_object destroyed.");

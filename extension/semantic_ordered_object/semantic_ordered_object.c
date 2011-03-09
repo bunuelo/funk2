@@ -489,11 +489,17 @@ f2ptr f2__semantic_ordered_object__core_extension__initialize(f2ptr cause) {
   if (raw__larva__is_type(cause, result)) {
     return result;
   }
-  f2__add_type(cause, new__symbol(cause, "semantic_ordered_object"), f2__semantic_ordered_object_type__new(cause));
   status("semantic_ordered_object initialized.");
   return nil;
 }
 export_cefunk0(semantic_ordered_object__core_extension__initialize, 0, "");
+
+f2ptr f2__semantic_ordered_object__core_extension__define_types(f2ptr cause) {
+  f2__add_type(cause, new__symbol(cause, "semantic_ordered_object"), f2__semantic_ordered_object_type__new(cause));
+  status("semantic_ordered_object types defined.");
+  return nil;
+}
+export_cefunk0(semantic_ordered_object__core_extension__define_types, 0, "");
 
 f2ptr f2__semantic_ordered_object__core_extension__destroy(f2ptr cause) {
   status("semantic_ordered_object destroyed.");

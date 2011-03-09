@@ -23,3 +23,5 @@
     :sources     ['semantic_containment_object-core.fu2']
      :binaries   ['.libs/libf2e_semantic_containment_object.so']]
 
+[defcore semantic_containment_object 'extension/semantic_containment_object/.libs/libf2e_semantic_containment_object.so']
+

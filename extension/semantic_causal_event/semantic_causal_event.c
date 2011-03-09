@@ -271,8 +271,8 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 			   if (causes_set != nil) {
 			     set__iteration(cause, causes_set, causes_semantic_event,
 					    if (raw__ptypehash__contains(cause, timeline_event_semantic_event_hash, causes_semantic_event)) {
-					      //f2ptr causes_timeline_event = raw__ptypehash__lookup(cause, timeline_event_semantic_event_hash, causes_semantic_event);
-					      //raw__timeline_event__add_causes(cause, timeline_event, causes_timeline_event);
+					      f2ptr causes_timeline_event = raw__ptypehash__lookup(cause, timeline_event_semantic_event_hash, causes_semantic_event);
+					      raw__timeline_event__add_causes(cause, timeline_event, causes_timeline_event);
 					    }
 					    );
 			   }

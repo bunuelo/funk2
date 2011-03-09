@@ -365,18 +365,21 @@ export_cefunk2(semantic_causal_object__causal__causes__lookup, this, causal__typ
 
 
 f2ptr raw__semantic_causal_object__causal__causes__add(f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object) {
+  printf("\nraw__semantic_causal_object__causal__causes__add: here 1."); fflush(stdout);
   {
     f2ptr result = raw__semantic_frame__add(cause, this, new__symbol(cause, "causal-causes"), causal__type_name, causal_object);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
+  printf("\nraw__semantic_causal_object__causal__causes__add: here 2."); fflush(stdout);
   {
     f2ptr result = raw__semantic_frame__add(cause, causal_object, new__symbol(cause, "causal-is_caused_by"), causal__type_name, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
+  printf("\nraw__semantic_causal_object__causal__causes__add: here 3."); fflush(stdout);
   return nil;
 }
 

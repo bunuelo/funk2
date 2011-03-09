@@ -116,6 +116,7 @@ export_cefunk1(semantic_causal_event__causes__lookup, this, 0, "Returns the set 
 
 
 f2ptr raw__semantic_causal_event__causes__add(f2ptr cause, f2ptr this, f2ptr causal_event) {
+  printf("\nraw__semantic_causal_event__causes__add: here."); fflush(stdout);
   return raw__semantic_causal_object__causal__causes__add(cause, this, new__symbol(cause, "event"), causal_event);
 }
 

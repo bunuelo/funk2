@@ -692,6 +692,39 @@ f2ptr f2__timeline_event__add_previous(f2ptr cause, f2ptr this, f2ptr event) {
 export_cefunk2(timeline_event__add_previous, this, event, 0, "");
 
 
+void raw__timeline_event__add_causes(f2ptr cause, f2ptr this, f2ptr event) {
+  f2ptr causes_set = raw__timeline_event__causes_set(cause, this);
+  raw__set__add(cause, causes_set, event);
+  f2ptr event__is_contained_by_set = raw__timeline_event__is_contained_by_set(cause, event);
+  raw__set__add(cause, event__is_contained_by_set, this);
+}
+
+f2ptr f2__timeline_event__add_causes(f2ptr cause, f2ptr this, f2ptr event) {
+  if ((! raw__timeline_event__is_type(cause, this)) ||
+      (! raw__timeline_event__is_type(cause, event))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__timeline_event__add_causes(cause, this, event);
+  return nil;
+}
+export_cefunk2(timeline_event__add_causes, this, event, 0, "");
+
+
+void raw__timeline_event__add_is_caused_by(f2ptr cause, f2ptr this, f2ptr event) {
+  raw__timeline_event__add_causes(cause, event, this);
+}
+
+f2ptr f2__timeline_event__add_is_caused_by(f2ptr cause, f2ptr this, f2ptr event) {
+  if ((! raw__timeline_event__is_type(cause, this)) ||
+      (! raw__timeline_event__is_type(cause, event))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  raw__timeline_event__add_is_caused_by(cause, this, event);
+  return nil;
+}
+export_cefunk2(timeline_event__add_is_caused_by, this, event, 0, "");
+
+
 f2ptr raw__timeline_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -719,6 +752,8 @@ f2ptr f2__timeline_event_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_is_contained_by"),       f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__add_is_contained_by")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_next"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__add_next")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_previous"),              f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__add_previous")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_causes"),                f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__add_causes")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_is_caused_by"),          f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__add_is_caused_by")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline_event__terminal_print_with_frame")));}
   return this;
 }

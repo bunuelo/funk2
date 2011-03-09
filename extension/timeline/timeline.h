@@ -54,6 +54,10 @@ void      raw__timeline_event__add_next                 (f2ptr cause, f2ptr this
 f2ptr      f2__timeline_event__add_next                 (f2ptr cause, f2ptr this, f2ptr event);
 void      raw__timeline_event__add_previous             (f2ptr cause, f2ptr this, f2ptr event);
 f2ptr      f2__timeline_event__add_previous             (f2ptr cause, f2ptr this, f2ptr event);
+void      raw__timeline_event__add_causes               (f2ptr cause, f2ptr this, f2ptr event);
+f2ptr      f2__timeline_event__add_causes               (f2ptr cause, f2ptr this, f2ptr event);
+void      raw__timeline_event__add_is_caused_by         (f2ptr cause, f2ptr this, f2ptr event);
+f2ptr      f2__timeline_event__add_is_caused_by         (f2ptr cause, f2ptr this, f2ptr event);
 f2ptr     raw__timeline_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 f2ptr      f2__timeline_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 

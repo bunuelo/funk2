@@ -1020,6 +1020,26 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 				 );
 		}
 	      }
+	      {
+		f2ptr causes_set = raw__timeline_event__causes_set(cause, expand_event);
+		if (causes_set != nil) {
+		  set__iteration(cause, causes_set, expansion_event,
+				 if (! raw__set__contains(cause, connected_set, expansion_event)) {
+				   raw__set__add(cause, expansion_event_set, expansion_event);
+				 }
+				 );
+		}
+	      }
+	      {
+		f2ptr is_caused_by_set = raw__timeline_event__is_caused_by_set(cause, expand_event);
+		if (is_caused_by_set != nil) {
+		  set__iteration(cause, is_caused_by_set, expansion_event,
+				 if (! raw__set__contains(cause, connected_set, expansion_event)) {
+				   raw__set__add(cause, expansion_event_set, expansion_event);
+				 }
+				 );
+		}
+	      }
 	      raw__set__remove(cause, expansion_event_set, expand_event);
 	    }
 	  }
@@ -1083,8 +1103,10 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 		  f2ptr j = raw__array__elt(cause, event_array, j__index);
 		  f2ptr j__contains_set = raw__timeline_event__contains_set(cause, j);
 		  f2ptr j__next_set     = raw__timeline_event__next_set(    cause, j);
+		  f2ptr j__causes_set   = raw__timeline_event__causes_set(  cause, j);
 		  if (raw__set__contains(cause, j__contains_set, i) ||
-		      raw__set__contains(cause, j__next_set,     i)) {
+		      raw__set__contains(cause, j__next_set,     i) ||
+		      raw__set__contains(cause, j__causes_set,   i)) {
 		    raw__array__elt__set(cause, event_array, i__index, j);
 		    raw__array__elt__set(cause, event_array, j__index, i);
 		    i__index --;
@@ -1130,7 +1152,9 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 		    for (o_index = index - 1; o_index >= 0; o_index --) {
 		      f2ptr o_event = raw__array__elt(cause, event_array, o_index);
 		      f2ptr o_event__contains_set = raw__timeline_event__contains_set(cause, o_event);
+		      f2ptr o_event__causes_set   = raw__timeline_event__causes_set(  cause, o_event);
 		      if (raw__set__contains(cause, o_event__contains_set, event) ||
+		          raw__set__contains(cause, o_event__causes_set,   event) ||
 		          raw__timeline__timeline_event__overlaps(cause, this, event, o_event)) {
 			f2ptr  o_y_start    = raw__timeline_event__y_start(cause, o_event);
 			double o_y_start__d = f2double__d(o_y_start, cause);
@@ -1196,11 +1220,11 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
     }
   }
   
-  double timeline__left_border   = f2double__d(raw__timeline__left_border(  cause, this), cause);
-  double timeline__right_border  = f2double__d(raw__timeline__right_border( cause, this), cause);
-  double timeline__top_border    = f2double__d(raw__timeline__top_border(   cause, this), cause);
-  double timeline__x_width       = f2double__d(raw__timeline__x_width(      cause, this), cause);
-  double timeline__y_height      = f2double__d(raw__timeline__y_height(     cause, this), cause);
+  double timeline__left_border  = f2double__d(raw__timeline__left_border( cause, this), cause);
+  double timeline__right_border = f2double__d(raw__timeline__right_border(cause, this), cause);
+  double timeline__top_border   = f2double__d(raw__timeline__top_border(  cause, this), cause);
+  double timeline__x_width      = f2double__d(raw__timeline__x_width(     cause, this), cause);
+  double timeline__y_height     = f2double__d(raw__timeline__y_height(    cause, this), cause);
   
   {
     raw__cairo_context__save(cause, cairo_context);
@@ -1343,6 +1367,47 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 				       );
 		      }
 		    }
+		    {
+		      f2ptr causes_set = raw__timeline_event__causes_set(cause, event);
+		      if (causes_set != nil) {
+			set__iteration(cause, causes_set, causes_event,
+				       double causes_event__start_position;
+				       double causes_event__end_position;
+				       double causes_event__top_position;
+				       double causes_event__bottom_position;
+				       {
+					 f2ptr result = raw__timeline_event__render_extents(cause, causes_event, this, &causes_event__start_position, &causes_event__end_position, &causes_event__top_position, &causes_event__bottom_position);
+					 if (raw__larva__is_type(cause, result)) {
+					   return result;
+					 }
+				       }
+				       {
+					 double x0 = (start_position + end_position) / 2.0;
+					 double y0 = bottom_position;
+					 double x1 = x0;
+					 double y1 = (bottom_position + causes_event__top_position) / 2.0;
+					 double x2 = (causes_event__start_position + causes_event__end_position) / 2.0;
+					 double y2 = y1;
+					 double x3 = x2;
+					 double y3 = causes_event__top_position;
+					 raw__cairo_context__move_to( cause, cairo_context, x0, y0);
+					 raw__cairo_context__curve_to(cause, cairo_context, x1, y1, x2, y2, x3, y3);
+					 
+					 raw__cairo_context__set_source_rgba(cause, cairo_context, 0, 0, 0, 1);
+					 raw__cairo_context__set_line_width( cause, cairo_context, 0.1);
+					 raw__cairo_context__stroke(cause, cairo_context);
+					 
+					 raw__cairo_context__move_to(cause, cairo_context, x3, y3);
+					 raw__cairo_context__line_to(cause, cairo_context, x3 - arrow_head_size, y3 - arrow_head_size);
+					 raw__cairo_context__stroke(cause, cairo_context);
+					 
+					 raw__cairo_context__move_to(cause, cairo_context, x3, y3);
+					 raw__cairo_context__line_to(cause, cairo_context, x3 + arrow_head_size, y3 - arrow_head_size);
+					 raw__cairo_context__stroke(cause, cairo_context);
+				       }
+				       );
+		      }
+		    }
 		  }
 		}
 	      }
@@ -1434,6 +1499,42 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 				       {
 					 double font_size  = 0.75;
 					 char*  label_str  = "contains";
+					 double text_width = raw__cairo_context__text_width(cause, cairo_context, font_size, label_str);
+					 double width      = text_width + 0.5;
+					 double height     = 1.0;
+					 double x0         = (((start_position + end_position + contains_event__start_position + contains_event__end_position) / 2.0) - width) / 2.0;
+					 double y0         = ((bottom_position + contains_event__top_position - height) / 2.0);
+					 f2ptr result = raw__cairo_context__render_rounded_text_box(cause, cairo_context, x0, y0, width, height, font_size, label_str,
+												    0.5,                 // maximum_corner_radius
+												    1.0, 1.0, 1.0, 1.0,  // background_rgba
+												    0.1,
+												    0.0, 0.0, 0.0, 1.0,  // text_rgba
+												    0.0, 0.0, 0.0, 1.0,  // box_outline_rgba
+												    1.0, 1.0, 1.0, 1.0); // text_outline_rgba
+					 if (raw__larva__is_type(cause, result)) {
+					   return result;
+					 }
+				       }
+				       );
+		      }
+		    }
+		    {
+		      f2ptr causes_set = raw__timeline_event__causes_set(cause, event);
+		      if (causes_set != nil) {
+			set__iteration(cause, causes_set, causes_event,
+				       double causes_event__start_position;
+				       double causes_event__end_position;
+				       double causes_event__top_position;
+				       double causes_event__bottom_position;
+				       {
+					 f2ptr result = raw__timeline_event__render_extents(cause, causes_event, this, &causes_event__start_position, &causes_event__end_position, &causes_event__top_position, &causes_event__bottom_position);
+					 if (raw__larva__is_type(cause, result)) {
+					   return result;
+					 }
+				       }
+				       {
+					 double font_size  = 0.75;
+					 char*  label_str  = "causes";
 					 double text_width = raw__cairo_context__text_width(cause, cairo_context, font_size, label_str);
 					 double width      = text_width + 0.5;
 					 double height     = 1.0;

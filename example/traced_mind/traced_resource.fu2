@@ -36,7 +36,9 @@
 					       action_name
 					       agent
 					       target]]]
-      [semantic-add semantic_resource_action_event causes cause-resource_action_event]
+      [let [[cause_event [cause-lookup cause-resource_action_event]]]
+	[if cause_event
+	    [semantic-add semantic_resource_action_event causes cause_event]]]
       [semantic-set semantic_resource_action_event absolute_start_time [time]]
       [have [get [get this mind] semantic_knowledge_base `mental_knowledge] add_semantic_frame semantic_resource_action_event]
       semantic_resource_action_event]]]

@@ -27,14 +27,25 @@
 #include "../timeline/timeline.h"
 
 
-f2ptr     raw__semantic_causal_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr action_name);
-f2ptr     raw__semantic_causal_event__new        (f2ptr cause, f2ptr semantic_realm, f2ptr action_name);
-f2ptr      f2__semantic_causal_event__new        (f2ptr cause, f2ptr semantic_realm, f2ptr action_name);
-boolean_t raw__semantic_causal_event__is_type    (f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_causal_event__is_type    (f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_causal_event__type       (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_causal_event__type       (f2ptr cause, f2ptr this);
-
+f2ptr     raw__semantic_causal_event__type_create         (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr action_name);
+f2ptr     raw__semantic_causal_event__new                 (f2ptr cause, f2ptr semantic_realm, f2ptr action_name);
+f2ptr      f2__semantic_causal_event__new                 (f2ptr cause, f2ptr semantic_realm, f2ptr action_name);
+boolean_t raw__semantic_causal_event__is_type             (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_causal_event__is_type             (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_causal_event__type                (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_causal_event__type                (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_causal_event__causes__lookup      (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_causal_event__causes__lookup      (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_causal_event__causes__add         (f2ptr cause, f2ptr this, f2ptr causal_event);
+f2ptr      f2__semantic_causal_event__causes__add         (f2ptr cause, f2ptr this, f2ptr causal_event);
+f2ptr     raw__semantic_causal_event__causes__remove      (f2ptr cause, f2ptr this, f2ptr causal_event);
+f2ptr      f2__semantic_causal_event__causes__remove      (f2ptr cause, f2ptr this, f2ptr causal_event);
+f2ptr     raw__semantic_causal_event__is_caused_by__lookup(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_causal_event__is_caused_by__lookup(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_causal_event__is_caused_by__add   (f2ptr cause, f2ptr this, f2ptr causal_event);
+f2ptr      f2__semantic_causal_event__is_caused_by__add   (f2ptr cause, f2ptr this, f2ptr causal_event);
+f2ptr     raw__semantic_causal_event__is_caused_by__remove(f2ptr cause, f2ptr this, f2ptr causal_event);
+f2ptr      f2__semantic_causal_event__is_caused_by__remove(f2ptr cause, f2ptr this, f2ptr causal_event);
 
 // **
 

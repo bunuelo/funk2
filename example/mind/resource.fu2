@@ -27,6 +27,7 @@
 			   active_mutex
 			   active
 			   active_cause_resource
+			   active_cause_event
 			   active_funk
 			   active_args
 			   result
@@ -158,6 +159,7 @@
 	  [if [not active]
 	      [prog [=   active                t]
 		    [=   active_cause_resource [cause-lookup cause-resource]]
+		    [=   active_cause_event    [cause-lookup cause-resource_action_event]]
 		    [=   active_args           args]
 		    [resume                    fiber]
 		    [=   successful_activation t]]]
@@ -179,6 +181,7 @@
 	    [if [not active]
 		[prog [=   active                t]
 		      [=   active_cause_resource [cause-lookup cause-resource]]
+		      [=   active_cause_event    [cause-lookup cause-resource_action_event]]
 		      [=   active_args           args]
 		      [resume                    fiber]
 		      [=   successful_activation t]
@@ -209,6 +212,7 @@
 	  [prog [= active                nil]
 		[= active_args           nil]
 		[= active_cause_resource nil]
+		[= active_cause_event    nil]
 		[= result                nil]
 		[= finished              nil]
 		[= keep_looping          nil]

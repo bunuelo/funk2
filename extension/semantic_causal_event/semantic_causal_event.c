@@ -103,7 +103,7 @@ export_cefunk1(semantic_causal_event__type, thing, 0, "Returns the specific type
 
 
 f2ptr raw__semantic_causal_event__causes__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_causal_event__causal__causes__lookup(cause, this, new__symbol(cause, "event"));
+  return raw__semantic_causal_object__causal__causes__lookup(cause, this, new__symbol(cause, "event"));
 }
 
 f2ptr f2__semantic_causal_event__causes__lookup(f2ptr cause, f2ptr this) {
@@ -116,7 +116,7 @@ export_cefunk1(semantic_causal_event__causes__lookup, this, 0, "Returns the set 
 
 
 f2ptr raw__semantic_causal_event__causes__add(f2ptr cause, f2ptr this, f2ptr causal_event) {
-  return raw__semantic_causal_event__causal__causes__add(cause, this, new__symbol(cause, "event"), causal_event);
+  return raw__semantic_causal_object__causal__causes__add(cause, this, new__symbol(cause, "event"), causal_event);
 }
 
 f2ptr f2__semantic_causal_event__causes__add(f2ptr cause, f2ptr this, f2ptr causal_event) {
@@ -130,7 +130,7 @@ export_cefunk2(semantic_causal_event__causes__add, this, causal_object, 0, "Adds
 
 
 f2ptr raw__semantic_causal_event__causes__remove(f2ptr cause, f2ptr this, f2ptr causal_event) {
-  return raw__semantic_causal_event__causal__causes__remove(cause, this, new__symbol(cause, "event"), causal_event);
+  return raw__semantic_causal_object__causal__causes__remove(cause, this, new__symbol(cause, "event"), causal_event);
 }
 
 f2ptr f2__semantic_causal_event__causes__remove(f2ptr cause, f2ptr this, f2ptr causal_event) {
@@ -144,7 +144,7 @@ export_cefunk2(semantic_causal_event__causes__remove, this, causal_object, 0, "R
 
 
 f2ptr raw__semantic_causal_event__is_caused_by__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_causal_event__causal__is_caused_by__lookup(cause, this, new__symbol(cause, "event"));
+  return raw__semantic_causal_object__causal__is_caused_by__lookup(cause, this, new__symbol(cause, "event"));
 }
 
 f2ptr f2__semantic_causal_event__is_caused_by__lookup(f2ptr cause, f2ptr this) {
@@ -157,7 +157,7 @@ export_cefunk1(semantic_causal_event__is_caused_by__lookup, this, 0, "Returns th
 
 
 f2ptr raw__semantic_causal_event__is_caused_by__add(f2ptr cause, f2ptr this, f2ptr causal_event) {
-  return raw__semantic_causal_event__causal__is_caused_by__add(cause, this, new__symbol(cause, "event"), causal_event);
+  return raw__semantic_causal_object__causal__is_caused_by__add(cause, this, new__symbol(cause, "event"), causal_event);
 }
 
 f2ptr f2__semantic_causal_event__is_caused_by__add(f2ptr cause, f2ptr this, f2ptr causal_event) {
@@ -171,7 +171,7 @@ export_cefunk2(semantic_causal_event__is_caused_by__add, this, causal_event, 0, 
 
 
 f2ptr raw__semantic_causal_event__is_caused_by__remove(f2ptr cause, f2ptr this, f2ptr causal_event) {
-  return raw__semantic_causal_event__causal__is_caused_by__remove(cause, this, new__symbol(cause, "event"), causal_event);
+  return raw__semantic_causal_object__causal__is_caused_by__remove(cause, this, new__symbol(cause, "event"), causal_event);
 }
 
 f2ptr f2__semantic_causal_event__is_caused_by__remove(f2ptr cause, f2ptr this, f2ptr causal_event) {

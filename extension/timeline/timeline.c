@@ -473,8 +473,10 @@ f2ptr raw__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr 
   f2ptr is_contained_by_set = f2__set__new(cause);
   f2ptr next_set            = f2__set__new(cause);
   f2ptr previous_set        = f2__set__new(cause);
+  f2ptr causes_set          = f2__set__new(cause);
+  f2ptr is_caused_by_set    = f2__set__new(cause);
   f2ptr height              = nil;
-  return f2timeline_event__new(cause, name, height, start_time, end_time, contains_set, is_contained_by_set, next_set, previous_set, nil);
+  return f2timeline_event__new(cause, name, height, start_time, end_time, contains_set, is_contained_by_set, next_set, previous_set, causes_set, is_caused_by_set, nil);
 }
 
 f2ptr f2__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time) {
@@ -697,8 +699,8 @@ export_cefunk2(timeline_event__add_previous, this, event, 0, "");
 void raw__timeline_event__add_causes(f2ptr cause, f2ptr this, f2ptr event) {
   f2ptr causes_set = raw__timeline_event__causes_set(cause, this);
   raw__set__add(cause, causes_set, event);
-  f2ptr event__is_contained_by_set = raw__timeline_event__is_contained_by_set(cause, event);
-  raw__set__add(cause, event__is_contained_by_set, this);
+  f2ptr event__is_caused_by_set = raw__timeline_event__is_caused_by_set(cause, event);
+  raw__set__add(cause, event__is_caused_by_set, this);
 }
 
 f2ptr f2__timeline_event__add_causes(f2ptr cause, f2ptr this, f2ptr event) {

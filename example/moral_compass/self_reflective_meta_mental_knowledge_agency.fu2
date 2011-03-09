@@ -73,6 +73,11 @@
 											[get [get this mind] semantic_realm]
 											`event_sequence
 											target]]]
+						      [let [[causes_set [semantic-lookup semantic_frame causes]]]
+							[if [not [null causes_set]]
+							    [mapc [funk [cause]
+									[semantic-add current_action_sequence causes cause]]
+								  [get causes_set elements]]]]
 						      [have this-resource think_to_self '\n    *** debug A7: translate mental->meta_mental add_semantic_frame cause_being_active resource_semantic_frame current_action_sequence: ' current_action_sequence]
 						      [if agent
 							  [if [not [get meta_mental_sequence_knowledge contains_semantic_frame agent]]

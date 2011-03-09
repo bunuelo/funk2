@@ -38,7 +38,7 @@
 					       target]]]
       [if active_cause_event
 	  [prog [terminal_format standard-terminal '\nadding active_cause_event.']
-		[semantic-add semantic_resource_action_event causes active_cause_event]]]
+		[semantic-add semantic_resource_action_event is_caused_by active_cause_event]]]
       [semantic-set semantic_resource_action_event absolute_start_time [time]]
       [have [get [get this mind] semantic_knowledge_base `mental_knowledge] add_semantic_frame semantic_resource_action_event]
       semantic_resource_action_event]]]

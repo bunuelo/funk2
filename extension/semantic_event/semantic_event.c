@@ -280,13 +280,6 @@ f2ptr f2__semantic_event__core_extension__initialize(f2ptr cause) {
       return result;
     }
   }
-  {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline__core_extension__ping")), nil);
-    if (raw__larva__is_type(cause, result)) {
-      status("semantic_event: failed to ping timeline.");
-      return result;
-    }
-  }
   status("semantic_event initialized.");
   return nil;
 }

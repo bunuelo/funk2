@@ -23,3 +23,5 @@
     :sources     ['semantic_ordered_object-core.fu2']
      :binaries   ['.libs/libf2e_semantic_ordered_object.so']]
 
+[defcore semantic_ordered_object 'extension/semantic_ordered_object/.libs/libf2e_semantic_ordered_object.so']
+

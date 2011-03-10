@@ -22,3 +22,5 @@
    :sources   ['semantic_relationship_key-core.fu2']
     :binaries ['.libs/libf2e_semantic_relationship_key.so']]
 
+[defcore semantic_relationship_key 'extension/semantic_relationship_key/.libs/libf2e_semantic_relationship_key.so']
+

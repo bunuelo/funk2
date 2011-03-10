@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore semantic_frame 'extension/semantic_frame/.libs/libf2e_semantic_frame.so']
-
 [defcorefunk semantic_frame-core_extension-ping         semantic_frame semantic_frame__core_extension__ping]
 [defcorefunk semantic_frame-core_extension-initialize   semantic_frame semantic_frame__core_extension__initialize]
 [defcorefunk semantic_frame-core_extension-define_types semantic_frame semantic_frame__core_extension__define_types]
@@ -50,56 +48,4 @@
 
 [defmetro semantic-is-type [type_name object]
   `[get ,object is_semantic_type ,type_name]]
-
-
-
-
-`[defmetro semantic-get-apply [this slot_name args]
-  `[let* [[this      ,this]
-	  [value_set [semantic-lookup-apply this ,slot_name ,args]]]
-     [if [null value_set]
-	 [error this      this
-		slot_name [quote ,slot_name]
-		args      [quote ,args]
-		funkname  `semantic-get
-		bug_type  `no_value_set_defined_for_this_slot_name]
-       [let [[values [get value_set elements]]]
-	 [if [!= 1 [length values]]
-	     [error this      this
-		    slot_name [quote ,slot_name]
-		    args      [quote ,args]
-		    funkname  `semantic-get
-		    bug_type  `too_many_values_in_value_set_defined_for_this_slot_name]
-	   [first values]]]]]]
-
-`[defmetro semantic-get [this slot_name :rest args]
-  `[semantic-get-apply ,this ,slot_name [conslist @args]]]
-
-`[defmetro semantic-set-apply [this slot_name args]
-  `[let [[this ,this]
-	 [args ,args]]
-     [let [[value_set [semantic-lookup this ,slot_name]]]
-       [if [null value_set]
-	   [error this      this
-		  slot_name [quote ,slot_name]
-		  args      [quote ,args]
-		  funkname  `semantic-set
-		  bug_type  `no_value_set_defined_for_this_slot_name]
-	 [let [[values [get value_set elements]]]
-	   [if [!= 1 [length values]]
-	       [error this        this
-		      slot_name   [quote ,slot_name]
-		      args        [quote ,args]
-		      funkname    `semantic-set
-		      bug_type    `expected_exactly_one_value_in_value_set_defined_for_this_slot_name
-		      value_count [length values]
-		      ]
-	     [let [[value [first values]]]
-	       [semantic-remove    this ,slot_name value]
-	       [semantic-add-apply this ,slot_name args]
-	       nil]]]]]]]
-
-`[defmetro semantic-set [this slot_name :rest args]
-  `[semantic-set-apply ,this ,slot_name [conslist @args]]]
-
 

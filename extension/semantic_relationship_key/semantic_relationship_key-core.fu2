@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore semantic_relationship_key 'extension/semantic_relationship_key/.libs/libf2e_semantic_relationship_key.so']
-
 [defcorefunk semantic_relationship_key-core_extension-ping         semantic_relationship_key semantic_relationship_key__core_extension__ping]
 [defcorefunk semantic_relationship_key-core_extension-initialize   semantic_relationship_key semantic_relationship_key__core_extension__initialize]
 [defcorefunk semantic_relationship_key-core_extension-define_types semantic_relationship_key semantic_relationship_key__core_extension__define_types]

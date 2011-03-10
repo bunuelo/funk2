@@ -23,3 +23,5 @@
    :sources   ['semantic_frame-core.fu2']
     :binaries ['.libs/libf2e_semantic_frame.so']]
 
+[defcore semantic_frame 'extension/semantic_frame/.libs/libf2e_semantic_frame.so']
+

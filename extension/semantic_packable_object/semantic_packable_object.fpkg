@@ -24,3 +24,5 @@
     :sources     ['semantic_packable_object-core.fu2']
      :binaries   ['.libs/libf2e_semantic_packable_object.so']]
 
+[defcore semantic_packable_object 'extension/semantic_packable_object/.libs/libf2e_semantic_packable_object.so']
+

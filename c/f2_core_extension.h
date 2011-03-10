@@ -735,7 +735,7 @@ struct funk2_object_type__core_extension_handler__slot_s {
 #define core_extension__ping(this_core_extension_name, core_extension_name) {	\
     f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, #core_extension_name), new__symbol(cause, #core_extension_name "__core_extension__ping")), nil); \
     if (raw__larva__is_type(cause, result)) {				\
-      status(#this_core_extension ": failed to ping " #core_extension_name "."); \
+      status(#this_core_extension_name ": failed to ping " #core_extension_name "."); \
       return result;							\
     }									\
   }

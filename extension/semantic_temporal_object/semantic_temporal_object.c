@@ -339,12 +339,7 @@ f2ptr f2__semantic_temporal_object__core_extension__ping(f2ptr cause) {
 export_cefunk0(semantic_temporal_object__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_temporal_object__core_extension__initialize(f2ptr cause) {
-  {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_packable_object"), new__symbol(cause, "semantic_packable_object__core_extension__ping")), nil);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  core_extension__ping(semantic_temporal_object, semantic_packable_object);
   status("semantic_temporal_object initialized.");
   return nil;
 }

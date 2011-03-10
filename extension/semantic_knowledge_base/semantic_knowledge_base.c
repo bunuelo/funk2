@@ -1012,55 +1012,13 @@ boolean_t __semantic_knowledge_base__core_extension__is_initialized = boolean__f
 f2ptr f2__semantic_knowledge_base__core_extension__initialize(f2ptr cause) {
   if (! __semantic_knowledge_base__core_extension__is_initialized) {
     __semantic_knowledge_base__core_extension__is_initialized = boolean__true;
-    {
-      f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__core_extension__ping")), nil);
-      if (raw__larva__is_type(cause, result)) {
-	status("semantic_knowledge_base: failed to ping equals_hash.");
-	return result;
-      }
-    }
-    {
-      f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_event_stream"), new__symbol(cause, "forgetful_event_stream__core_extension__ping")), nil);
-      if (raw__larva__is_type(cause, result)) {
-	status("semantic_knowledge_base: failed to ping forgetful_event_stream.");
-	return result;
-      }
-    }
-    {
-      f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__core_extension__ping")), nil);
-      if (raw__larva__is_type(cause, result)) {
-	status("semantic_knowledge_base: failed to ping lick.");
-	return result;
-      }
-    }
-    {
-      f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_realm"), new__symbol(cause, "semantic_realm__core_extension__ping")), nil);
-      if (raw__larva__is_type(cause, result)) {
-	status("semantic_knowledge_base: failed to ping semantic_realm.");
-	return result;
-      }
-    }
-    {
-      f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__core_extension__ping")), nil);
-      if (raw__larva__is_type(cause, result)) {
-	status("semantic_knowledge_base: failed to ping semantic_causal_event.");
-	return result;
-      }
-    }
-    {
-      f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_relationship_key"), new__symbol(cause, "semantic_relationship_key__core_extension__ping")), nil);
-      if (raw__larva__is_type(cause, result)) {
-	status("semantic_knowledge_base: failed to ping semantic_relationship_key.");
-	return result;
-      }
-    }
-    {
-      f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__core_extension__ping")), nil);
-      if (raw__larva__is_type(cause, result)) {
-	status("semantic_knowledge_base: failed to ping semantic_frame.");
-	return result;
-      }
-    }
+    core_extension__ping(semantic_knowledge_base, equals_hash);
+    core_extension__ping(semantic_knowledge_base, forgetful_event_stream);
+    core_extension__ping(semantic_knowledge_base, lick);
+    core_extension__ping(semantic_knowledge_base, semantic_realm);
+    core_extension__ping(semantic_knowledge_base, semantic_causal_event);
+    core_extension__ping(semantic_knowledge_base, semantic_relationship_key);
+    core_extension__ping(semantic_knowledge_base, semantic_frame);
     status("semantic_knowledge_base initialized.");
   } else {
     status("semantic_knowledge_base already initialized.");

@@ -256,24 +256,9 @@ f2ptr f2__semantic_realm__core_extension__ping(f2ptr cause) {
 export_cefunk0(semantic_realm__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_realm__core_extension__initialize(f2ptr cause) {
-  {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__core_extension__ping")), nil);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
-  {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_event_stream"), new__symbol(cause, "forgetful_event_stream__core_extension__ping")), nil);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
-  {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "lick__core_extension__ping")), nil);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  core_extension__ping(semantic_realm, equals_hash);
+  core_extension__ping(semantic_realm, forgetful_event_stream);
+  core_extension__ping(semantic_realm, lick);
   status("semantic_realm initialized.");
   return nil;
 }

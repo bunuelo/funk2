@@ -303,27 +303,9 @@ boolean_t __semantic_causal_event__core_extension__is_initialized = boolean__fal
 f2ptr f2__semantic_causal_event__core_extension__initialize(f2ptr cause) {
   if (! __semantic_causal_event__core_extension__is_initialized) {
     __semantic_causal_event__core_extension__is_initialized = boolean__true;
-    {
-      f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__core_extension__ping")), nil);
-      if (raw__larva__is_type(cause, result)) {
-	status("semantic_causal_event: failed to ping semantic_event.");
-	return result;
-      }
-    }
-    {
-      f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_object"), new__symbol(cause, "semantic_causal_object__core_extension__ping")), nil);
-      if (raw__larva__is_type(cause, result)) {
-	status("semantic_causal_event: failed to ping semantic_causal_object.");
-	return result;
-      }
-    }
-    {
-      f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "timeline"), new__symbol(cause, "timeline__core_extension__ping")), nil);
-      if (raw__larva__is_type(cause, result)) {
-	status("semantic_causal_event: failed to ping timeline.");
-	return result;
-      }
-    }
+    core_extension__ping(semantic_causal_event, semantic_event);
+    core_extension__ping(semantic_causal_event, semantic_causal_object);
+    core_extension__ping(semantic_causal_event, timeline);
     status("semantic_causal_event initialized.");
   } else {
     status("semantic_causal_event already initialized.");

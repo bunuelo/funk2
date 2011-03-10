@@ -174,13 +174,7 @@ boolean_t __semantic_object__core_extension__is_initialized = boolean__false;
 f2ptr f2__semantic_object__core_extension__initialize(f2ptr cause) {
   if (! __semantic_object__core_extension__is_initialized) {
     __semantic_object__core_extension__is_initialized = boolean__true;
-    {
-      f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base__core_extension__ping")), nil);
-      if (raw__larva__is_type(cause, result)) {
-	status("semantic_object: failed to ping semantic_knowledge_base.");
-	return result;
-      }
-    }
+    core_extension__ping(semantic_object, semantic_knowledge_base);
     status("semantic_object initialized.");
   } else {
     status("semantic_object already initialized.");

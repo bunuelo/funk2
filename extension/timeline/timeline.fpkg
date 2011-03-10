@@ -22,3 +22,5 @@
    :sources   ['timeline-core.fu2']
     :binaries ['.libs/libf2e_timeline.so']]
 
+[defcore timeline 'extension/timeline/.libs/libf2e_timeline.so']
+

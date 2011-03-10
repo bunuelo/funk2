@@ -1951,6 +1951,13 @@ f2ptr f2__cairo__core_extension__ping(f2ptr cause) {
 export_cefunk0(cairo__core_extension__ping, 0, "");
 
 f2ptr f2__cairo__core_extension__initialize(f2ptr cause) {
+  core_extension__ping(cairo, image);
+  status("cairo initialized.");
+  return nil;
+}
+export_cefunk0(cairo__core_extension__initialize, 0, "");
+
+f2ptr f2__cairo__core_extension__define_types(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "cairo_object"),        f2__cairo_object_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "cairo_context"),       f2__cairo_context_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "cairo_surface"),       f2__cairo_surface_type__new(cause));
@@ -1958,16 +1965,10 @@ f2ptr f2__cairo__core_extension__initialize(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "cairo_svg_surface"),   f2__cairo_svg_surface_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "cairo_pdf_surface"),   f2__cairo_pdf_surface_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "cairo_ps_surface"),    f2__cairo_ps_surface_type__new(cause));
-  {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "image"), new__symbol(cause, "image__core_extension__ping")), nil);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
-  status("cairo initialized.");
+  status("cairo types defined.");
   return nil;
 }
-export_cefunk0(cairo__core_extension__initialize, 0, "");
+export_cefunk0(cairo__core_extension__define_types, 0, "");
 
 f2ptr f2__cairo__core_extension__destroy(f2ptr cause) {
   status("cairo destroyed.");

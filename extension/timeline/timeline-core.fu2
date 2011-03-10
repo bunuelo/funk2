@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore timeline 'extension/timeline/.libs/libf2e_timeline.so']
-
 [defcorefunk timeline-core_extension-ping         timeline timeline__core_extension__ping]
 [defcorefunk timeline-core_extension-initialize   timeline timeline__core_extension__initialize]
 [defcorefunk timeline-core_extension-define_types timeline timeline__core_extension__define_types]

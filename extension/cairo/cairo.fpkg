@@ -33,3 +33,5 @@
     :sources     ['cairo-core.fu2']
      :binaries   ['.libs/libf2e_cairo.so']]
 
+[defcore cairo 'extension/cairo/.libs/libf2e_cairo.so']
+

@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore cairo 'extension/cairo/.libs/libf2e_cairo.so']
-
 [defcorefunk cairo-core_extension-ping       cairo cairo__core_extension__ping]
 [defcorefunk cairo-core_extension-initialize cairo cairo__core_extension__initialize]
 

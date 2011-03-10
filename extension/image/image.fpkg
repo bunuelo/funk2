@@ -22,3 +22,5 @@
    :sources   ['image-core.fu2']
     :binaries ['.libs/libf2e_image.so']]
 
+[defcore image 'extension/image/.libs/libf2e_image.so']
+

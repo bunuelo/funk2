@@ -110,10 +110,18 @@
 			  [[is-type `semantic_frame_event event]
 			   
 			   [cond [[eq event_type `add]
-				  [let [[key_type [get event key_type]]
-					[key      [get event key]]]
-				    
-				    ]]]]
+				  [let [[semantic_frame [get event semantic_frame]]
+					[key_type       [get event key_type]]
+					[key            [get event key]]
+					[value          [get event value]]]
+				    [cond [[is-type `semantic_event semantic_frame]
+					   [let [[semantic_event semantic_frame]]
+					     [cond [[and [eq `property key_type] [eq `absolute_end_time key]]
+						    [have this think_to_self '\n  found added absolute_end_time update!']
+						    ]
+						   ]]]
+					  ]]]
+				 ]]
 			  ]]]]
 	[have mental_knowledge_iterator increment]]]]]
 

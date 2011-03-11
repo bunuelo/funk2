@@ -213,7 +213,7 @@ f2ptr raw__semantic_event_sequence__update_parent_container_start_and_end_times_
   if (raw__larva__is_type(cause, absolute_end_time)) {
     return absolute_end_time;
   }
-  if (time == nil) {
+  if (child_end_time == nil) {
     f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_end_time"), f2cons__new(cause, nil, nil));
   } else {
     if ((absolute_start_time == nil) ||

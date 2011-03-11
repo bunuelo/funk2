@@ -250,6 +250,13 @@ f2ptr raw__semantic_event_sequence__update_absolute_start_and_end_times(f2ptr ca
   return nil;
 }
 
+f2ptr f2__semantic_event_sequence__update_absolute_start_and_end_times(f2ptr cause, f2ptr this, f2ptr semantic_event) {
+  assert_argument_type(semantic_event_sequence, this);
+  assert_argument_type(semantic_event,          semantic_event);
+  return raw__semantic_event_sequence__update_absolute_start_and_end_times(cause, this, semantic_event);
+}
+export_cefunk2(semantic_event_sequence__update_absolute_start_and_end_times, this, semantic_event, 0, "");
+
 
 f2ptr raw__semantic_event_sequence__add_to_end(f2ptr cause, f2ptr this, f2ptr semantic_event) {
   f2ptr last_event_set = raw__semantic_event_sequence__last_event__lookup(cause, this);

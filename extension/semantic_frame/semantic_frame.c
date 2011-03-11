@@ -202,7 +202,7 @@ f2ptr f2__object__semantic__get__apply(f2ptr cause, f2ptr this, f2ptr slot, f2pt
 export_cefunk3(object__semantic__get__apply, this, slot, args, 0, "");
 
 
-// not thread safe.
+// not thread safe.  (need mutexes at each semantic_slot)
 f2ptr f2__object__semantic__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   f2ptr current_value = f2__object__semantic__get(cause, this, slot, nil);
   if (raw__larva__is_type(cause, current_value)) {

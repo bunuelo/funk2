@@ -44,14 +44,14 @@
 
 [deftypefunk traced_resource execute finish_wrapped_active_funk [semantic_resource_action_event]
   [if active_cause_resource
-      [prog [let [[absolute_end_time [time]]]
-	      [semantic-set semantic_resource_action_event absolute_end_time absolute_end_time]
-	      [let [[is_contained_by_set [semantic-lookup semantic_resource_action_event is_contained_by]]]
-		[if is_contained_by_set
-		    [mapc [funk [containing_event]
-				[if [is-type `semantic_event_sequence]
-				    [have containing_event update_absolute_start_and_end_times absolute_end_time]]]
-			  [get is_contained_by_set elements]]]]]
+      [prog [semantic-set semantic_resource_action_event absolute_end_time [time]]
+	    [let [[is_contained_by_set [semantic-lookup semantic_resource_action_event is_contained_by]]]
+	      [if is_contained_by_set
+		  [mapc [funk [containing_event]
+			      [if [is-type `semantic_event_sequence]
+				  [prog [terminal_print standard-terminal '\nupdate_absolute_start_and_end_times: here.']
+					[have containing_event update_absolute_start_and_end_times semantic_resource_action_event]]]]
+			[get is_contained_by_set elements]]]]
 	    [have [get [get this mind] semantic_knowledge_base `mental_knowledge] remove_semantic_frame semantic_resource_action_event]]]]
 
 [deftypefunk traced_resource get wrapped_active_funk [active_funk]

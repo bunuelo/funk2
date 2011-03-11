@@ -122,7 +122,7 @@
 							  [mapc [funk [containing_event]
 								      [if [is-type `semantic_event_sequence containing_event]
 									  [prog [have this think_to_self '\n  updating start and end times of containing sequence.']
-										[have containing_event update_parent_container_absolute_start_and_end_times semantic_event]]]]
+										[have containing_event update_parent_container_start_and_end_times semantic_event]]]]
 								[get is_contained_by_set elements]]]]
 						    [let [[contains_set [semantic-lookup semantic_event contains]]]
 						      [if contains_set

@@ -55,7 +55,6 @@
 			   [cond [[eq event_type `add_semantic_frame]
 				  
 				  [let [[semantic_frame [get event semantic_frame]]]
-				    [have this-resource think_to_self '\n  debug A2: translate mental->meta_mental add_semantic_frame resource action event semantic_frame: ' semantic_frame]
 				    [cond [[is-type `semantic_resource_action_event semantic_frame]
 					   
 					   [let [[action_name [semantic-get semantic_frame action_name]]
@@ -118,7 +117,13 @@
 					   [let [[semantic_event semantic_frame]]
 					     [cond [[and [eq `property key_type] [eq `absolute_end_time key]]
 						    [have this think_to_self '\n  found added absolute_end_time update!']
-						    ]
+						    [let [[is_contained_by_set [semantic-lookup semantic_event is_contained_by]]]
+						      [if is_contained_by_set
+							  [mapc [funk [containing_event]
+								      [if [is-type `semantic_event_sequence containing_event]
+									  [prog [have this think_to_self '\n  updating start and end times of containing sequence.']
+										[have containing_event update_absolute_start_and_end_times semantic_event]]]]
+								[get is_contained_by_set elements]]]]]
 						   ]]]
 					  ]]]
 				 ]]

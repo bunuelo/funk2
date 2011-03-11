@@ -277,6 +277,63 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 					    );
 			   }
 			 }
+			 // if event has no start or end times, try to use parent info to place correctly.
+			 if ((raw__timeline_event__start_time(cause, timeline_event) == nil) &&
+			     (raw__timeline_event__end_time(  cause, timeline_event) == nil)) {
+			   s64 nanoseconds__example_count = 0;
+			   s64 nanoseconds__sum = 0;
+			   {
+			     f2ptr is_contained_by_set = f2__object__semantic__lookup(cause, semantic_event, new__symbol(cause, "is_contained_by"), nil);
+			     if (is_contained_by_set != nil) {
+			       set__iteration(cause, is_contained_by_set, is_contained_by_semantic_event,
+					      if (raw__ptypehash__contains(cause, timeline_event_semantic_event_hash, is_contained_by_semantic_event)) {
+						f2ptr is_contained_by_timeline_event = raw__ptypehash__lookup(cause, timeline_event_semantic_event_hash, is_contained_by_semantic_event);
+						f2ptr is_contained_by_timeline_event__start_time = raw__timeline_event__start_time(cause, is_contained_by_timeline_event);
+						f2ptr is_contained_by_timeline_event__end_time   = raw__timeline_event__end_time(cause, is_contained_by_timeline_event);
+						if (is_contained_by_timeline_event__start_time != nil) {
+						  nanoseconds__example_count ++;
+						  nanoseconds__sum           += f2integer__i(f2time__nanoseconds_since_1970(is_contained_by_timeline_event__start_time, cause), cause);
+						}
+						if (is_contained_by_timeline_event__end_time != nil) {
+						  nanoseconds__example_count ++;
+						  nanoseconds__sum           += f2integer__i(f2time__nanoseconds_since_1970(is_contained_by_timeline_event__end_time, cause), cause);
+						}
+					      }
+					      );
+			     }
+			   }
+			   if (raw__semantic_causal_event__is_type(cause, semantic_event)) {
+			     f2ptr semantic_causal_event = semantic_event;
+			     
+			     f2ptr is_caused_by_set = f2__object__semantic__lookup(cause, semantic_causal_event, new__symbol(cause, "is_caused_by"), nil);
+			     if (raw__larva__is_type(cause, is_caused_by_set)) {
+			       return is_caused_by_set;
+			     }
+			     if (is_caused_by_set != nil) {
+			       set__iteration(cause, is_caused_by_set, is_caused_by_semantic_event,
+					      if (raw__ptypehash__contains(cause, timeline_event_semantic_event_hash, is_caused_by_semantic_event)) {
+						f2ptr is_caused_by_timeline_event = raw__ptypehash__lookup(cause, timeline_event_semantic_event_hash, is_caused_by_semantic_event);
+						
+						f2ptr is_caused_by_timeline_event__start_time = raw__timeline_event__start_time(cause, is_caused_by_timeline_event);
+						f2ptr is_caused_by_timeline_event__end_time   = raw__timeline_event__end_time(cause, is_caused_by_timeline_event);
+						if (is_caused_by_timeline_event__start_time != nil) {
+						  nanoseconds__example_count ++;
+						  nanoseconds__sum           += f2integer__i(f2time__nanoseconds_since_1970(is_caused_by_timeline_event__start_time, cause), cause);
+						}
+						if (is_caused_by_timeline_event__end_time != nil) {
+						  nanoseconds__example_count ++;
+						  nanoseconds__sum           += f2integer__i(f2time__nanoseconds_since_1970(is_caused_by_timeline_event__end_time, cause), cause);
+						}
+					      }
+					      );
+			     }
+			   }
+			   if (nanoseconds__example_count != 0) {
+			     s64 average_nanoseconds_since_1970 = nanoseconds__sum / nanoseconds__example_count;
+			     raw__timeline_event__start_time__set(cause, timeline_event, f2__time__new(cause, f2integer__new(cause, average_nanoseconds_since_1970)));
+			     raw__timeline_event__end_time__set(  cause, timeline_event, f2__time__new(cause, f2integer__new(cause, average_nanoseconds_since_1970 + 1)));
+			   }
+			 }
 			 );
   }
   return timeline;

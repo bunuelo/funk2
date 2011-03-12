@@ -61,23 +61,25 @@
 						 [agent       [semantic-get semantic_frame agent]]
 						 [target      [semantic-get semantic_frame target]]]
 					     [cond [[eq action_name `cause_being_active]
-						    [let [[current_action_sequence [new semantic_resource_action_sequence
-											[get [get this mind] semantic_realm]
-											`event_sequence
-											target]]]
-						      [let [[causes_set [semantic-lookup semantic_frame is_caused_by]]]
-							[if [not [null causes_set]]
-							    [mapc [funk [cause]
-									[semantic-add current_action_sequence is_caused_by cause]]
-								  [get causes_set elements]]]]
-						      [if agent
-							  [if [not [get meta_mental_sequence_knowledge contains_semantic_frame agent]]
-							      [have meta_mental_sequence_knowledge add_semantic_frame agent]]]
-						      [if [not [get meta_mental_sequence_knowledge contains_semantic_frame target]]
-							  [have meta_mental_sequence_knowledge add_semantic_frame target]]
-						      [have meta_mental_sequence_knowledge add_semantic_frame current_action_sequence]
-						      [semantic-add target action_sequence         current_action_sequence]
-						      [semantic-set target current_action_sequence current_action_sequence]]]
+						    [let [[absolute_start_time [semantic-get semantic_frame absolute_start_time]]]
+						      [let [[current_action_sequence [new semantic_resource_action_sequence
+											  [get [get this mind] semantic_realm]
+											  `event_sequence
+											  target]]]
+							[semantic-set current_action_sequence absolute_start_time]
+							[let [[causes_set [semantic-lookup semantic_frame is_caused_by]]]
+							  [if [not [null causes_set]]
+							      [mapc [funk [cause]
+									  [semantic-add current_action_sequence is_caused_by cause]]
+								    [get causes_set elements]]]]
+							[if agent
+							    [if [not [get meta_mental_sequence_knowledge contains_semantic_frame agent]]
+								[have meta_mental_sequence_knowledge add_semantic_frame agent]]]
+							[if [not [get meta_mental_sequence_knowledge contains_semantic_frame target]]
+							    [have meta_mental_sequence_knowledge add_semantic_frame target]]
+							[have meta_mental_sequence_knowledge add_semantic_frame current_action_sequence]
+							[semantic-add target action_sequence         current_action_sequence]
+							[semantic-set target current_action_sequence current_action_sequence]]]]
 						   [t
 						    [if agent
 							[let [[current_action_sequence [semantic-get agent current_action_sequence]]]

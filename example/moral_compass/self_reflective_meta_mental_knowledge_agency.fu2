@@ -117,7 +117,7 @@
 					   [let [[semantic_event semantic_frame]]
 					     [cond [[and [eq `property key_type] [eq `absolute_end_time key]]
 						    [have this think_to_self '\n  found added absolute_end_time update!']
-						    [let [[is_contained_by_set [semantic-lookup semantic_event is_contained_by]]]
+						    `[let [[is_contained_by_set [semantic-lookup semantic_event is_contained_by]]]
 						      [if is_contained_by_set
 							  [mapc [funk [containing_event]
 								      [if [is-type `semantic_event_sequence containing_event]

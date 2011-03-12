@@ -25,7 +25,7 @@
 // hash
 
 typedef struct funk2_object_type__hash__slot_s funk2_object_type__hash__slot_t;
-declare_object_type_6_slot(hash, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk,
+declare_object_type_6_slot(hash, write_cmutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk,
 			   f2ptr slot_names__symbol;
 			   f2ptr slot_names__funk;
 			   f2ptr add__symbol;
@@ -51,7 +51,7 @@ declare_object_type_6_slot(hash, write_mutex, key_count, bin_num_power, bin_arra
 
 // hash
 
-declare_primobject_6_slot(hash, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
+declare_primobject_6_slot(hash, write_cmutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
 
 f2ptr      f2__hash                      (f2ptr cause);
 f2ptr     raw__hash__new                 (f2ptr cause, s64 bin_num_power, f2ptr hash_value_funk, f2ptr equals_funk);

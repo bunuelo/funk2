@@ -419,9 +419,9 @@
 	  exps]]]
 
 [defunk terminal_format [terminal_print_frame :rest exps]
-  [have [get terminal_print_frame mutex] lock]
+  [have [get terminal_print_frame cmutex] lock]
   [let [[result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]
-    [have [get terminal_print_frame mutex] unlock]
+    [have [get terminal_print_frame cmutex] unlock]
     result]]
 
 [defmetro parlet [varpairs :rest body]
@@ -672,9 +672,9 @@
   x]
 
 [defunk terminal_write [terminal_print_frame x]
-  [have [get terminal_print_frame mutex] lock]
+  [have [get terminal_print_frame cmutex] lock]
   [let [[result [terminal_write-thread_unsafe terminal_print_frame x]]]
-    [have [get terminal_print_frame mutex] unlock]
+    [have [get terminal_print_frame cmutex] unlock]
     result]]
 
 [defunk terminal_print-thread_unsafe [terminal_print_frame x]
@@ -684,9 +684,9 @@
   x]
 
 [defunk terminal_print [terminal_print_frame x]
-  [have [get terminal_print_frame mutex] lock]
+  [have [get terminal_print_frame cmutex] lock]
   [let [[result [terminal_print-thread_unsafe terminal_print_frame x]]]
-    [have [get terminal_print_frame mutex] unlock]
+    [have [get terminal_print_frame cmutex] unlock]
     result]]
 
 [defunk print [x]
@@ -704,19 +704,19 @@
 [defunk demetropolize1 [x]
   [cdr [demetropolize_once x]]]
 
-[defmetro mutexprog [mutex :rest body]
-  `[let [[mutexprog-mutex ,mutex]]
-     [mutex-lock   mutexprog-mutex]
+[defmetro cmutexprog [cmutex :rest body]
+  `[let [[cmutexprog-cmutex ,cmutex]]
+     [cmutex-lock   cmutexprog-cmutex]
      [prog @body]
-     [mutex-unlock mutexprog-mutex]]]
+     [cmutex-unlock cmutexprog-cmutex]]]
 
-[defmetro defmutexfunk [mutex name args :rest body]
-  `[defunk ,name ,args [mutexprog ,mutex @body]]]
+[defmetro defcmutexfunk [cmutex name args :rest body]
+  `[defunk ,name ,args [cmutexprog ,cmutex @body]]]
 
-[defmetro defunks-mutex [mutex :rest funkdefs] 
-  `[let [[defunks_mutex-mutex ,mutex]]
+[defmetro defunks-cmutex [cmutex :rest funkdefs] 
+  `[let [[defunks_cmutex-cmutex ,cmutex]]
      @[mapcar [funk [funkdef]
-		    `[defmutexfunk defunks_mutex-mutex @funkdef]]]]]
+		    `[defcmutexfunk defunks_cmutex-cmutex @funkdef]]]]]
 
 [defmetro rest [exp]
   `[cdr ,exp]]

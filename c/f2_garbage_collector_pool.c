@@ -34,19 +34,19 @@ void funk2_garbage_collector_block_header__destroy(funk2_garbage_collector_block
 // garbage_collector_mutation_buffer
 
 void funk2_garbage_collector_mutation_buffer__init(funk2_garbage_collector_mutation_buffer_t* this) {
-  funk2_processor_mutex__init(&(this->mutex));
+  funk2_processor_mutex__init(&(this->cmutex));
   this->count        = 0;
   this->alloc_length = 1024 * 1024;
   this->data         = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
 }
 
 void funk2_garbage_collector_mutation_buffer__destroy(funk2_garbage_collector_mutation_buffer_t* this) {
-  funk2_processor_mutex__destroy(&(this->mutex));
+  funk2_processor_mutex__destroy(&(this->cmutex));
   free(this->data);
 }
 
 void funk2_garbage_collector_mutation_buffer__know_of_mutation(funk2_garbage_collector_mutation_buffer_t* this, f2ptr exp) {
-  funk2_processor_mutex__user_lock(&(this->mutex));
+  funk2_processor_mutex__user_lock(&(this->cmutex));
   if (this->count == this->alloc_length) {
     u64    old_alloc_length = this->alloc_length;
     f2ptr* old_data         = this->data;
@@ -58,17 +58,17 @@ void funk2_garbage_collector_mutation_buffer__know_of_mutation(funk2_garbage_col
   }
   this->data[this->count] = exp;
   this->count ++;
-  funk2_processor_mutex__unlock(&(this->mutex));
+  funk2_processor_mutex__unlock(&(this->cmutex));
 }
 
 void funk2_garbage_collector_mutation_buffer__flush_mutation_knowledge_to_gc_pool(funk2_garbage_collector_mutation_buffer_t* this, funk2_garbage_collector_pool_t* pool) {
-  funk2_processor_mutex__lock(&(this->mutex));
+  funk2_processor_mutex__lock(&(this->cmutex));
   u64 i;
   for (i = 0; i < this->count; i ++) {
     funk2_garbage_collector_pool__know_of_used_exp_self_mutation(pool, this->data[i]);
   }
   this->count = 0;
-  funk2_processor_mutex__unlock(&(this->mutex));
+  funk2_processor_mutex__unlock(&(this->cmutex));
 }
 
 void funk2_garbage_collector_mutation_buffer__save_to_stream(funk2_garbage_collector_mutation_buffer_t* this, int fd) {
@@ -95,19 +95,19 @@ void funk2_garbage_collector_mutation_buffer__load_from_stream(funk2_garbage_col
 // garbage_collector_no_more_references_buffer
 
 void funk2_garbage_collector_no_more_references_buffer__init(funk2_garbage_collector_no_more_references_buffer_t* this) {
-  funk2_processor_mutex__init(&(this->mutex));
+  funk2_processor_mutex__init(&(this->cmutex));
   this->count        = 0;
   this->alloc_length = 1024 * 1024;
   this->data         = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
 }
 
 void funk2_garbage_collector_no_more_references_buffer__destroy(funk2_garbage_collector_no_more_references_buffer_t* this) {
-  funk2_processor_mutex__destroy(&(this->mutex));
+  funk2_processor_mutex__destroy(&(this->cmutex));
   free(this->data);
 }
 
 void funk2_garbage_collector_no_more_references_buffer__know_of_no_more_references(funk2_garbage_collector_no_more_references_buffer_t* this, f2ptr exp) {
-  funk2_processor_mutex__user_lock(&(this->mutex));
+  funk2_processor_mutex__user_lock(&(this->cmutex));
   if (this->count == this->alloc_length) {
     u64    old_alloc_length = this->alloc_length;
     f2ptr* old_data         = this->data;
@@ -119,17 +119,17 @@ void funk2_garbage_collector_no_more_references_buffer__know_of_no_more_referenc
   }
   this->data[this->count] = exp;
   this->count ++;
-  funk2_processor_mutex__unlock(&(this->mutex));
+  funk2_processor_mutex__unlock(&(this->cmutex));
 }
 
 void funk2_garbage_collector_no_more_references_buffer__flush_no_more_references_knowledge_to_gc_pool(funk2_garbage_collector_no_more_references_buffer_t* this, funk2_garbage_collector_pool_t* pool) {
-  funk2_processor_mutex__lock(&(this->mutex));
+  funk2_processor_mutex__lock(&(this->cmutex));
   u64 i;
   for (i = 0; i < this->count; i ++) {
     funk2_garbage_collector_pool__know_of_used_exp_self_no_more_references(pool, this->data[i]);
   }
   this->count = 0;
-  funk2_processor_mutex__unlock(&(this->mutex));
+  funk2_processor_mutex__unlock(&(this->cmutex));
 }
 
 void funk2_garbage_collector_no_more_references_buffer__save_to_stream(funk2_garbage_collector_no_more_references_buffer_t* this, int fd) {
@@ -156,19 +156,19 @@ void funk2_garbage_collector_no_more_references_buffer__load_from_stream(funk2_g
 // garbage_collector_protected_f2ptr_buffer
 
 void funk2_garbage_collector_protected_f2ptr_buffer__init(funk2_garbage_collector_protected_f2ptr_buffer_t* this) {
-  funk2_processor_mutex__init(&(this->mutex));
+  funk2_processor_mutex__init(&(this->cmutex));
   this->count        = 0;
   this->alloc_length = 1024 * 1024;
   this->data         = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
 }
 
 void funk2_garbage_collector_protected_f2ptr_buffer__destroy(funk2_garbage_collector_protected_f2ptr_buffer_t* this) {
-  funk2_processor_mutex__destroy(&(this->mutex));
+  funk2_processor_mutex__destroy(&(this->cmutex));
   free(this->data);
 }
 
 void funk2_garbage_collector_protected_f2ptr_buffer__know_of_protected_f2ptr(funk2_garbage_collector_protected_f2ptr_buffer_t* this, f2ptr exp) {
-  funk2_processor_mutex__user_lock(&(this->mutex));
+  funk2_processor_mutex__user_lock(&(this->cmutex));
   if (this->count == this->alloc_length) {
     u64    old_alloc_length = this->alloc_length;
     f2ptr* old_data         = this->data;
@@ -180,17 +180,17 @@ void funk2_garbage_collector_protected_f2ptr_buffer__know_of_protected_f2ptr(fun
   }
   this->data[this->count] = exp;
   this->count ++;
-  funk2_processor_mutex__unlock(&(this->mutex));
+  funk2_processor_mutex__unlock(&(this->cmutex));
 }
 
 void funk2_garbage_collector_protected_f2ptr_buffer__flush_protected_f2ptr_knowledge_to_gc_pool(funk2_garbage_collector_protected_f2ptr_buffer_t* this, funk2_garbage_collector_pool_t* pool) {
-  funk2_processor_mutex__lock(&(this->mutex));
+  funk2_processor_mutex__lock(&(this->cmutex));
   u64 i;
   for (i = 0; i < this->count; i ++) {
     funk2_garbage_collector_pool__know_of_used_exp_self_protected_f2ptr(pool, this->data[i]);
   }
   this->count = 0;
-  funk2_processor_mutex__unlock(&(this->mutex));
+  funk2_processor_mutex__unlock(&(this->cmutex));
 }
 
 void funk2_garbage_collector_protected_f2ptr_buffer__save_to_stream(funk2_garbage_collector_protected_f2ptr_buffer_t* this, int fd) {
@@ -320,7 +320,7 @@ void funk2_garbage_collector_pool__remove_unused_exp(funk2_garbage_collector_poo
 void funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector_pool_t* this, f2ptr exp, funk2_tricolor_t to_tricolor) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
   funk2_tricolor_t from_tricolor = block->gc.tricolor;
-  // not processor_thread safe, but don't need to mutex because this is only ever done by the one processor thread that owns this pool.
+  // not processor_thread safe, but don't need to cmutex because this is only ever done by the one processor thread that owns this pool.
   funk2_tricolor_set__change_element_color(&(this->tricolor_set), exp, from_tricolor, to_tricolor);
   block->gc.tricolor = to_tricolor;
 }
@@ -451,17 +451,17 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
   }
   switch(block->ptype) {
   case ptype_free_memory: error(nil, "block of type free_memory in garbage collector.");
-  case ptype_integer:         return;
-  case ptype_double:          return;
-  case ptype_float:           return;
-  case ptype_pointer:         return;
-  case ptype_gfunkptr:        return;
-  case ptype_scheduler_mutex: return;
-  case ptype_mutex:           return;
-  case ptype_char:            return;
-  case ptype_string:          return;
-  case ptype_symbol:          return;
-  case ptype_chunk:           return;
+  case ptype_integer:          return;
+  case ptype_double:           return;
+  case ptype_float:            return;
+  case ptype_pointer:          return;
+  case ptype_gfunkptr:         return;
+  case ptype_scheduler_cmutex: return;
+  case ptype_cmutex:           return;
+  case ptype_char:             return;
+  case ptype_string:           return;
+  case ptype_symbol:           return;
+  case ptype_chunk:            return;
   case ptype_simple_array: {
     s64 i;
     f2ptr* iter = (f2ptr*)((ptype_simple_array_block_t*)block)->f2ptr_data;

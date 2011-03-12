@@ -25,7 +25,7 @@
 // cause
 
 def_primobject_15_slot(cause,
-		       fibers_mutex,
+		       fibers_cmutex,
 		       fibers,
 		       frame,
 		       allocate_traced_arrays,
@@ -54,11 +54,11 @@ f2ptr f2__cause__new(f2ptr cause,
 		     f2ptr read_other_memory_callbacks,
 		     f2ptr write_other_memory_callbacks,
 		     f2ptr critics) {
-  f2ptr fibers_mutex = f2mutex__new(cause);
+  f2ptr fibers_cmutex = f2cmutex__new(cause);
   f2ptr fibers       = nil;
   f2ptr frame        = f2__frame__new(cause, nil);
   f2ptr this         = f2cause__new(cause,
-				    fibers_mutex,
+				    fibers_cmutex,
 				    fibers,
 				    frame,
 				    allocate_traced_arrays,
@@ -124,18 +124,18 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
 }
 
 f2ptr raw__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
-  f2ptr     fibers_mutex    = f2cause__fibers_mutex(   this,  cause);
-  f2ptr     cause_reg_mutex = f2fiber__cause_reg_mutex(fiber, cause);
+  f2ptr     fibers_cmutex    = f2cause__fibers_cmutex(   this,  cause);
+  f2ptr     cause_reg_cmutex = f2fiber__cause_reg_cmutex(fiber, cause);
   boolean_t both_locked     = boolean__false;
   while (! both_locked) {
     both_locked = boolean__true;
-    boolean_t fibers_mutex__failed_lock    = f2mutex__trylock(fibers_mutex,    cause);
-    boolean_t cause_reg_mutex__failed_lock = f2mutex__trylock(cause_reg_mutex, cause);
-    if (fibers_mutex__failed_lock)    {both_locked = boolean__false;}
-    if (cause_reg_mutex__failed_lock) {both_locked = boolean__false;}
+    boolean_t fibers_cmutex__failed_lock    = f2cmutex__trylock(fibers_cmutex,    cause);
+    boolean_t cause_reg_cmutex__failed_lock = f2cmutex__trylock(cause_reg_cmutex, cause);
+    if (fibers_cmutex__failed_lock)    {both_locked = boolean__false;}
+    if (cause_reg_cmutex__failed_lock) {both_locked = boolean__false;}
     if (! both_locked) {
-      if (! fibers_mutex__failed_lock)    {f2mutex__unlock(fibers_mutex,    cause);}
-      if (! cause_reg_mutex__failed_lock) {f2mutex__unlock(cause_reg_mutex, cause);}
+      if (! fibers_cmutex__failed_lock)    {f2cmutex__unlock(fibers_cmutex,    cause);}
+      if (! cause_reg_cmutex__failed_lock) {f2cmutex__unlock(cause_reg_cmutex, cause);}
       f2__this__fiber__yield(cause);
     }
   }
@@ -147,8 +147,8 @@ f2ptr raw__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   } else {
     result = f2larva__new(cause, 827152, nil);
   }
-  f2mutex__unlock(fibers_mutex,    cause);
-  f2mutex__unlock(cause_reg_mutex, cause);
+  f2cmutex__unlock(fibers_cmutex,    cause);
+  f2cmutex__unlock(cause_reg_cmutex, cause);
   return result;
 }
 
@@ -160,18 +160,18 @@ f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
 
 
 f2ptr raw__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
-  f2ptr     fibers_mutex    = f2cause__fibers_mutex(   this,  cause);
-  f2ptr     cause_reg_mutex = f2fiber__cause_reg_mutex(fiber, cause);
+  f2ptr     fibers_cmutex    = f2cause__fibers_cmutex(   this,  cause);
+  f2ptr     cause_reg_cmutex = f2fiber__cause_reg_cmutex(fiber, cause);
   boolean_t both_locked     = boolean__false;
   while (! both_locked) {
     both_locked = boolean__true;
-    boolean_t fibers_mutex__failed_lock    = f2mutex__trylock(fibers_mutex,    cause);
-    boolean_t cause_reg_mutex__failed_lock = f2mutex__trylock(cause_reg_mutex, cause);
-    if (fibers_mutex__failed_lock)    {both_locked = boolean__false;}
-    if (cause_reg_mutex__failed_lock) {both_locked = boolean__false;}
+    boolean_t fibers_cmutex__failed_lock    = f2cmutex__trylock(fibers_cmutex,    cause);
+    boolean_t cause_reg_cmutex__failed_lock = f2cmutex__trylock(cause_reg_cmutex, cause);
+    if (fibers_cmutex__failed_lock)    {both_locked = boolean__false;}
+    if (cause_reg_cmutex__failed_lock) {both_locked = boolean__false;}
     if (! both_locked) {
-      if (! fibers_mutex__failed_lock)    {f2mutex__unlock(fibers_mutex,    cause);}
-      if (! cause_reg_mutex__failed_lock) {f2mutex__unlock(cause_reg_mutex, cause);}
+      if (! fibers_cmutex__failed_lock)    {f2cmutex__unlock(fibers_cmutex,    cause);}
+      if (! cause_reg_cmutex__failed_lock) {f2cmutex__unlock(cause_reg_cmutex, cause);}
       f2__this__fiber__yield(cause);
     }
   }
@@ -204,8 +204,8 @@ f2ptr raw__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   } else {
     result = f2larva__new(cause, 827154, nil);
   }
-  f2mutex__unlock(fibers_mutex,    cause);
-  f2mutex__unlock(cause_reg_mutex, cause);
+  f2cmutex__unlock(fibers_cmutex,    cause);
+  f2cmutex__unlock(cause_reg_cmutex, cause);
   return result;
 }
 
@@ -470,7 +470,7 @@ void f2__cause__initialize() {
   // cause
   
   initialize_primobject_15_slot(cause,
-				fibers_mutex,
+				fibers_cmutex,
 				fibers,
 				frame,
 				allocate_traced_arrays,

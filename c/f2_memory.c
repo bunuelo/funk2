@@ -59,12 +59,12 @@ void funk2_memory__handle(funk2_memory_t* this) {
 void funk2_memory__print_gc_stats(funk2_memory_t* this) {
   int pool_index;
   for(pool_index = 0; pool_index < memory_pool_num; pool_index++) {
-    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_cmutex__lock(&(this->pool[pool_index]));
     status("pool[%d].total_global_memory  = " f2size_t__fstr, pool_index, this->pool[pool_index].total_global_memory);
     status("pool[%d].total_free_memory()  = " f2size_t__fstr, pool_index, funk2_memorypool__total_free_memory(&(__funk2.memory.pool[pool_index])));
     status("pool[%d].total_used_memory()  = " f2size_t__fstr, pool_index, funk2_memorypool__total_used_memory(&(__funk2.memory.pool[pool_index])));
     status("pool[%d].next_unique_block_id = %u", pool_index, this->pool[pool_index].next_unique_block_id);
-    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_cmutex__unlock(&(this->pool[pool_index]));
   }
 }
 
@@ -339,7 +339,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byt
 void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_environment) {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_cmutex__lock(&(this->pool[pool_index]));
   }
   
   if (__funk2.memory.global_environment_f2ptr) {
@@ -361,7 +361,7 @@ void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_en
   }
   
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_cmutex__unlock(&(this->pool[pool_index]));
   }
 }
 
@@ -369,11 +369,11 @@ f2ptr funk2_memory__global_environment(funk2_memory_t* this) {
   f2ptr retval;
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_cmutex__lock(&(this->pool[pool_index]));
   }
   retval = __funk2.memory.global_environment_f2ptr;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_cmutex__unlock(&(this->pool[pool_index]));
   }
   return retval;
 }
@@ -385,7 +385,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   funk2_memory__print_gc_stats(this);
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_cmutex__lock(&(this->pool[pool_index]));
   }
   // note: we do not collect garbage here.
   int fd = open(filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -410,7 +410,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   }
   close(fd);
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_cmutex__unlock(&(this->pool[pool_index]));
   }
   funk2_memory__debug_memory_test(this, 0);
   funk2_memory__print_gc_stats(this);
@@ -432,9 +432,9 @@ f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
   error(nil, "funk2_memory__ptr_to_f2ptr__slow error: p is not in any memory pool.");
 }
 
-// precondition: each and every memory pool's global_memory_mutex is locked!
+// precondition: each and every memory pool's global_memory_cmutex is locked!
 void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
-  // each and every pool's global_memory_mutex is locked (we need to return that way).
+  // each and every pool's global_memory_cmutex is locked (we need to return that way).
   //
   // note: all memory being locked allows us to assume that we are the
   //       only pthread executing.
@@ -474,11 +474,11 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   
   funk2_memory__debug_memory_test(this, 0);
   
-  // temporarily unlocks all memory mutexes
+  // temporarily unlocks all memory cmutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_cmutex__unlock(&(this->pool[pool_index]));
   }
-  // temporary period of all memory mutexes locked
+  // temporary period of all memory cmutexes locked
   {
     funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
     
@@ -492,18 +492,18 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
 	  f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(this, to_ptr(block));
 	  funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
 	} break;
-	case ptype_scheduler_mutex: {
-	  ptype_scheduler_mutex_block_t* scheduler_mutex_block = (ptype_scheduler_mutex_block_t*)block;
-	  funk2_processor_mutex__init(scheduler_mutex_block->m);
-	  if (scheduler_mutex_block->locked_state) {
-	    funk2_processor_mutex__lock(scheduler_mutex_block->m);
+	case ptype_scheduler_cmutex: {
+	  ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
+	  funk2_processor_mutex__init(scheduler_cmutex_block->m);
+	  if (scheduler_cmutex_block->locked_state) {
+	    funk2_processor_mutex__lock(scheduler_cmutex_block->m);
 	  }
 	} break;
-	case ptype_mutex: {
-	  ptype_mutex_block_t* mutex_block = (ptype_mutex_block_t*)block;
-	  funk2_processor_mutex__init(mutex_block->m);
-	  if (mutex_block->locked_state) {
-	    funk2_processor_mutex__lock(mutex_block->m);
+	case ptype_cmutex: {
+	  ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
+	  funk2_processor_mutex__init(cmutex_block->m);
+	  if (cmutex_block->locked_state) {
+	    funk2_processor_mutex__lock(cmutex_block->m);
 	  }
 	} break;
 	default:
@@ -515,9 +515,9 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
     
     funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
   }
-  // end temporary unlocking of all memory mutexes
+  // end temporary unlocking of all memory cmutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_cmutex__lock(&(this->pool[pool_index]));
   }
   
   funk2_memory__debug_memory_test(this, 0);
@@ -535,7 +535,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
   
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_cmutex__lock(&(this->pool[pool_index]));
   }
   
   
@@ -597,7 +597,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
   }
   
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_cmutex__unlock(&(this->pool[pool_index]));
   }
   funk2_memory__debug_memory_test(this, 0);
   funk2_memory__print_gc_stats(this);
@@ -624,7 +624,7 @@ void funk2_memory__memory_test(funk2_memory_t* this) {
 
 f2ptr f2__memory__assert_valid(f2ptr cause) {
   f2ptr return_result = nil;
-  funk2_processor_mutex__lock(&(__funk2.garbage_collector.do_collection_mutex));
+  funk2_processor_mutex__lock(&(__funk2.garbage_collector.do_collection_cmutex));
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     f2ptr result = raw__memorypool__assert_valid(cause, pool_index);
@@ -634,7 +634,7 @@ f2ptr f2__memory__assert_valid(f2ptr cause) {
     }
   }
  f2__memory__assert_valid__return_goto:
-  funk2_processor_mutex__unlock(&(__funk2.garbage_collector.do_collection_mutex));
+  funk2_processor_mutex__unlock(&(__funk2.garbage_collector.do_collection_cmutex));
   return return_result;
 }
 

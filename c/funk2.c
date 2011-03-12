@@ -62,7 +62,7 @@ void f2__initialize() {
   f2__primobject_doublelinklist__initialize();
   f2__primobject__stream__initialize();
   f2__primobject__text_buffer__initialize();
-  f2__primobject__traced_mutex__initialize();
+  f2__primobject__traced_cmutex__initialize();
   f2__primobject__fiber_trigger__initialize();
   f2__primcfunks__initialize();
   f2__array__initialize();
@@ -145,7 +145,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   this->exit_now = boolean__false;
   this->node_id  = raw__nanoseconds_since_1970() * u64_large_prime;
   this->event_id = 0;
-  funk2_processor_mutex__init(&(this->event_id_mutex));
+  funk2_processor_mutex__init(&(this->event_id_cmutex));
   
   funk2_surrogate_parent__init(&(this->surrogate_parent));
   
@@ -383,7 +383,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_xxf86vm__destroy(&(this->xxf86vm));
   funk2_xlib__destroy(&(this->xlib));
   funk2_glwindow__destroy(&(this->glwindow));
-  funk2_processor_mutex__destroy(&(this->event_id_mutex));
+  funk2_processor_mutex__destroy(&(this->event_id_cmutex));
   funk2_cpu__destroy(&(this->cpu));
   funk2_surrogate_parent__destroy(&(this->surrogate_parent));
   funk2_xmlrpc__destroy(&(this->xmlrpc));

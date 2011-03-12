@@ -17,18 +17,18 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe isis_world_client [frame] [call_mutex xmlrpc_client]
+[deframe isis_world_client [frame] [call_cmutex xmlrpc_client]
   [new [xmlrpc_hostname]
-       [set this call_mutex [new mutex]]
+       [set this call_cmutex [new cmutex]]
        [let [[xmlrpc_url [string-concat 'http://' xmlrpc_hostname ':8001/RPC2']]]
 	 [set this xmlrpc_client [new xmlrpc_client xmlrpc_url]]]
        this]]
 
 [deftypefunk isis_world_client execute call [command args_frame]
-  [let [[call_mutex [get this call_mutex]]]
-    [have call_mutex lock]
+  [let [[call_cmutex [get this call_cmutex]]]
+    [have call_cmutex lock]
     [let [[result [have-apply [get this xmlrpc_client] call `[do ,command ,args_frame]]]]
-      [have call_mutex unlock]
+      [have call_cmutex unlock]
       result]]]
 
 'isis_world specific funks below.'

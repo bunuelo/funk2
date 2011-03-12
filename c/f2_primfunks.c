@@ -274,17 +274,17 @@ def_pcfunk2(pointer__subtract, x, y, return f2__pointer__subtract(this_cause, x,
 f2ptr f2__gfunkptr__new_from_pointer(f2ptr cause, f2ptr x) {f2ptr f2p = (f2ptr)((unsigned long)f2pointer__p(x, cause)); return f2gfunkptr__new(cause, __f2ptr__computer_id(f2p), __f2ptr__pool_index(f2p), __f2ptr__pool_address(f2p));}
 def_pcfunk1(gfunkptr__new_from_pointer, x, return f2__gfunkptr__new_from_pointer(this_cause, x));
 
-// mutex
+// cmutex
 
 // avoids race conditions
-void raw__mutex__lock_both(f2ptr cause, f2ptr this, f2ptr that) {
+void raw__cmutex__lock_both(f2ptr cause, f2ptr this, f2ptr that) {
   boolean_t both_locked = boolean__false;
   while (! both_locked) {
-    if (f2mutex__trylock(this, cause) == 0) {
-      if (f2mutex__trylock(that, cause) == 0) {
+    if (f2cmutex__trylock(this, cause) == 0) {
+      if (f2cmutex__trylock(that, cause) == 0) {
 	both_locked = boolean__true;
       } else {
-	f2mutex__unlock(this, cause);
+	f2cmutex__unlock(this, cause);
       }
     }
     if (! both_locked) {
@@ -294,10 +294,10 @@ void raw__mutex__lock_both(f2ptr cause, f2ptr this, f2ptr that) {
 }
 
 // avoids race conditions
-f2ptr f2__mutex__lock_both(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(mutex, this);
-  assert_argument_type(mutex, that);
-  raw__mutex__lock_both(cause, this, that);
+f2ptr f2__cmutex__lock_both(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(cmutex, this);
+  assert_argument_type(cmutex, that);
+  raw__cmutex__lock_both(cause, this, that);
   return nil;
 }
 
@@ -986,9 +986,9 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
     return boolean__false;
   case ptype_gfunkptr:
     return (f2gfunkptr__gfunkptr(x, cause) == f2gfunkptr__gfunkptr(y, cause));
-  case ptype_scheduler_mutex:
+  case ptype_scheduler_cmutex:
     return boolean__false;
-  case ptype_mutex:
+  case ptype_cmutex:
     return boolean__false;
   case ptype_larva:
     return (f2larva__larva_type(x, cause) == f2larva__larva_type(y, cause));
@@ -1299,7 +1299,7 @@ def_pcfunk0(system__gethostname,
 // funk2_node_handler
 
 f2ptr f2__funk2_node_handler__know_of_node(f2ptr cause, f2ptr hostname, f2ptr port_num) {
-  // note that this is not mutexed!
+  // note that this is not cmutexed!
   if (! raw__string__is_type(cause, hostname)) {
     status("funk2_node_handler__know_of_node error: hostname must be a string.");
     return -1;
@@ -1526,8 +1526,8 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   case ptype_float:           return raw__float__eq_hash_value(          cause, exp);
   case ptype_pointer:         return raw__pointer__eq_hash_value(        cause, exp);
   case ptype_gfunkptr:        return raw__gfunkptr__eq_hash_value(       cause, exp);
-  case ptype_scheduler_mutex: return raw__scheduler_mutex__eq_hash_value(cause, exp);
-  case ptype_mutex:           return raw__mutex__eq_hash_value(          cause, exp);
+  case ptype_scheduler_cmutex: return raw__scheduler_cmutex__eq_hash_value(cause, exp);
+  case ptype_cmutex:           return raw__cmutex__eq_hash_value(          cause, exp);
   case ptype_char:            return raw__char__eq_hash_value(           cause, exp);
   case ptype_string:          return raw__string__eq_hash_value(         cause, exp);
   case ptype_symbol:          return raw__symbol__eq_hash_value(         cause, exp);
@@ -1578,8 +1578,8 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
   case ptype_float:           return raw__float__equals(          cause, x, y);
   case ptype_pointer:         return raw__pointer__equals(        cause, x, y);
   case ptype_gfunkptr:        return raw__gfunkptr__equals(       cause, x, y);
-  case ptype_scheduler_mutex: return raw__scheduler_mutex__equals(cause, x, y);
-  case ptype_mutex:           return raw__mutex__equals(          cause, x, y);
+  case ptype_scheduler_cmutex: return raw__scheduler_cmutex__equals(cause, x, y);
+  case ptype_cmutex:           return raw__cmutex__equals(          cause, x, y);
   case ptype_char:            return raw__char__equals(           cause, x, y);
   case ptype_string:          return raw__string__equals(         cause, x, y);
   case ptype_symbol:          return raw__symbol__equals(         cause, x, y);
@@ -1667,7 +1667,7 @@ void f2__primcfunks__initialize() {
   
   f2__primcfunk__init__1(           gfunkptr__new_from_pointer, pointer, "");
   
-  // mutex
+  // cmutex
   
   // string
   

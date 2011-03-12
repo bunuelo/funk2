@@ -22,20 +22,20 @@
 #include "funk2.h"
 
 void funk2_primobject_type_handler__init(funk2_primobject_type_handler_t* this) {
-  funk2_processor_mutex__init(&(this->type_hash_mutex));
+  funk2_processor_mutex__init(&(this->type_hash_cmutex));
   this->type_hash = nil;
 }
 
 void funk2_primobject_type_handler__destroy(funk2_primobject_type_handler_t* this) {
-  funk2_processor_mutex__destroy(&(this->type_hash_mutex));
+  funk2_processor_mutex__destroy(&(this->type_hash_cmutex));
 }
 
 void funk2_primobject_type_handler__reset_type_hash(funk2_primobject_type_handler_t* this, f2ptr cause) {
-  funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
+  funk2_processor_mutex__user_lock(&(this->type_hash_cmutex));
   f2ptr new_type_hash = raw__ptypehash__new(cause, 5);
   this->type_hash = new_type_hash;
   environment__add_var_value(cause, global_environment(), new__symbol(cause, "type_hash"), new_type_hash);
-  funk2_processor_mutex__unlock(&(this->type_hash_mutex));
+  funk2_processor_mutex__unlock(&(this->type_hash_cmutex));
 }
 
 void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name, f2ptr type) {
@@ -48,7 +48,7 @@ void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* th
     error(nil, "add_type warning: tried to add a new type with a name that is not of type symbol.");
   }
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
-  funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
+  funk2_processor_mutex__user_lock(&(this->type_hash_cmutex));
   if (cause != nil) {
     if (! raw__cause__is_type(cause, cause)) {
       error(nil, "funk2_primobject_type_handler__add_type error: cause is not cause.");
@@ -60,7 +60,7 @@ void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* th
     }
   }
   f2__ptypehash__add(cause, this->type_hash, type_name, type);
-  funk2_processor_mutex__unlock(&(this->type_hash_mutex));
+  funk2_processor_mutex__unlock(&(this->type_hash_cmutex));
 }
 
 f2ptr f2__add_type(f2ptr cause, f2ptr type_name, f2ptr type) {
@@ -74,11 +74,11 @@ def_pcfunk2(add_type, type_name, type, return f2__add_type(this_cause, type_name
 f2ptr funk2_primobject_type_handler__types(funk2_primobject_type_handler_t* this, f2ptr cause) {
   f2ptr types = nil;
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
-  funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
+  funk2_processor_mutex__user_lock(&(this->type_hash_cmutex));
   ptypehash__value__iteration(cause, this->type_hash, value,
 			      types = f2cons__new(cause, value, types);
 			      );
-  funk2_processor_mutex__unlock(&(this->type_hash_mutex));
+  funk2_processor_mutex__unlock(&(this->type_hash_cmutex));
   return types;
 }
 
@@ -91,11 +91,11 @@ def_pcfunk0(system__types, return f2__system__types(this_cause));
 f2ptr funk2_primobject_type_handler__type_names(funk2_primobject_type_handler_t* this, f2ptr cause) {
   f2ptr type_names = nil;
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
-  funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
+  funk2_processor_mutex__user_lock(&(this->type_hash_cmutex));
   ptypehash__key__iteration(cause, this->type_hash, key,
 			    type_names = f2cons__new(cause, key, type_names);
 			    );
-  funk2_processor_mutex__unlock(&(this->type_hash_mutex));
+  funk2_processor_mutex__unlock(&(this->type_hash_cmutex));
   return type_names;
 }
 
@@ -107,9 +107,9 @@ def_pcfunk0(system__type_names, return f2__system__type_names(this_cause));
 
 f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name) {
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
-  funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
+  funk2_processor_mutex__user_lock(&(this->type_hash_cmutex));
   f2ptr result = f2__ptypehash__lookup(cause, this->type_hash, type_name);
-  funk2_processor_mutex__unlock(&(this->type_hash_mutex));
+  funk2_processor_mutex__unlock(&(this->type_hash_cmutex));
   return result;
 }
 
@@ -136,8 +136,8 @@ void funk2_primobject_type_handler__add_builtin_ptype_primobjects(funk2_primobje
   {char* type_name = "float";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),           f2float__primobject_type__new(cause));}
   {char* type_name = "pointer";         funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),         f2pointer__primobject_type__new(cause));}
   {char* type_name = "gfunkptr";        funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),        f2gfunkptr__primobject_type__new(cause));}
-  {char* type_name = "scheduler_mutex"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2scheduler_mutex__primobject_type__new(cause));}
-  {char* type_name = "mutex";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),           f2mutex__primobject_type__new(cause));}
+  {char* type_name = "scheduler_cmutex"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2scheduler_cmutex__primobject_type__new(cause));}
+  {char* type_name = "cmutex";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),           f2cmutex__primobject_type__new(cause));}
   {char* type_name = "char";            funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),            f2char__primobject_type__new(cause));}
   {char* type_name = "string";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2string__primobject_type__new_aux(cause));}
   {char* type_name = "symbol";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2symbol__primobject_type__new(cause));}
@@ -205,7 +205,7 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "graph_decomposition_lattice_node"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2graph_decomposition_lattice_node__primobject_type__new_aux(cause));}
   {char* type_name = "graph_decomposition_lattice";      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),      f2graph_decomposition_lattice__primobject_type__new_aux(cause));}
   {char* type_name = "graph_edit_sequence";              funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),              f2graph_edit_sequence__primobject_type__new_aux(cause));}
-  {char* type_name = "traced_mutex";                     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                     f2traced_mutex__primobject_type__new_aux(cause));}
+  {char* type_name = "traced_cmutex";                     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                     f2traced_cmutex__primobject_type__new_aux(cause));}
   {char* type_name = "fiber_stack_trace";                funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                f2fiber_stack_trace__primobject_type__new_aux(cause));}
   {char* type_name = "fiber_stack_trace_block";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2fiber_stack_trace_block__primobject_type__new_aux(cause));}
   {char* type_name = "partial_order_node";               funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),               f2partial_order_node__primobject_type__new_aux(cause));}

@@ -321,7 +321,7 @@
 [deframe isismon_project [frame] [isismon
 				  
 				  initialized
-				  execute_mutex
+				  execute_cmutex
 				  
 				  isis_world
 				  
@@ -354,8 +354,8 @@
   [new [initial-isismon]
        [= isismon initial-isismon]
        
-       [= execute_mutex [new traced_mutex]]
-       [have execute_mutex lock]
+       [= execute_cmutex [new traced_cmutex]]
+       [have execute_cmutex lock]
        
        [= isis_world nil]
        
@@ -442,7 +442,7 @@
        [have vbox pack_start agent_hbox nil nil 0]
        
        [= initialized t]
-       [have execute_mutex unlock]
+       [have execute_cmutex unlock]
        
        [have [get this cycle_trigger] trigger]
        ]]
@@ -457,7 +457,7 @@
   [terminal_format standard-terminal '\nIsisMon Project: Loading ' filename '.']
   [let [[isis_world [isis_world-new_from_chunk [get [chunk-load filename] inflated]]]]
     [let [[this [new isismon_project isismon]]]
-      [have [get this execute_mutex] lock]
+      [have [get this execute_cmutex] lock]
       [set this isis_world isis_world]
       [mapc [funk [agent_body]
 		  [terminal_format standard-terminal '\n                 Initializing agent, ' [get agent_body name] '.']
@@ -465,7 +465,7 @@
 		    [have moral_compass activate_vital_resources]]
 		  [have this add_agent [new isismon_agent this agent_body]]]
 	    [get isis_world agent_bodies]]
-      [have [get this execute_mutex] unlock]
+      [have [get this execute_cmutex] unlock]
       [terminal_format standard-terminal '\n                 Load project complete.']
       [have [get this cycle_trigger] trigger]
       this]]]
@@ -514,7 +514,7 @@
     step_delay_value]]
 
 [deftypefunk isismon_project execute cycle []
-  [have execute_mutex lock]
+  [have execute_cmutex lock]
   [if initialized
       [let [[time_to_wait_for_thinking [get this step_delay_time]]]
 	[if [and simulation_playing [or [null last_stepped_simulation_time]
@@ -534,7 +534,7 @@
 	[if need_update
 	    [have this update]
 	  [sleep 1]]]]
-  [have execute_mutex unlock]]
+  [have execute_cmutex unlock]]
 
 [deftypefunk isismon_project get overview_image_sequence []
   [if isis_world
@@ -615,15 +615,15 @@
 	[get [get isis_world initialize_events] leaves]]]
 
 [deftypefunk isismon_project execute close []
-  [have execute_mutex lock]
+  [have execute_cmutex lock]
   [if initialized
       [prog [terminal_format standard-terminal '\nIsisMon Project Closing.']
 	    [have isis_world destroy]
 	    [= initialized nil]]]
-  [have execute_mutex unlock]]
+  [have execute_cmutex unlock]]
 
 
-[deframe isismon [frame] [[initialize_mutex [new mutex]]
+[deframe isismon [frame] [[initialize_cmutex [new cmutex]]
 			  [done             nil]
 			  fiber
 			  
@@ -662,7 +662,7 @@
 			  [cycle_trigger [new fiber_trigger]]
 			  ]
   [new []
-       [have initialize_mutex lock]
+       [have initialize_cmutex lock]
        [= fiber [fiber [funk []
 			     [have this load_preferences]
 			     
@@ -807,7 +807,7 @@
 			     
 			     [have window show_all]
 			     
-			     [have initialize_mutex unlock]
+			     [have initialize_cmutex unlock]
 			     
 			     [while [not done]
 			       [if [get this should_wait_before_next_cycle]
@@ -815,7 +815,7 @@
 			       [have this cycle]]
 			     [have window destroy]]
 		       nil]]
-       [have initialize_mutex lock]
+       [have initialize_cmutex lock]
        nil]]
 
 [deftypefunk isismon get should_wait_before_next_cycle []

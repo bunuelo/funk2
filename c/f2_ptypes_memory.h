@@ -25,7 +25,7 @@
 // *** Abstraction Barrier Warning: Memory Manager (memory.c) and Primitive Type (ptype.c) Access Only ***
 //
 // These definitions are only used in the funk memory manager and the ptypes implementations themselves.
-// These definitions are not thread safe because they allow unmutexed access to the raw memory objects (which may change locations due to gc in other processor threads).
+// These definitions are not thread safe because they allow uncmutexed access to the raw memory objects (which may change locations due to gc in other processor threads).
 // Outside of the memory manager, the safely abstracted f2ptr interfaces provided in ptypes.h should be used.
 
 #include "f2_global.h"
@@ -128,40 +128,40 @@ ptype_gfunkptr_block_t* ptype_gfunkptr_block__new(int pool_index, f2ptr cause, c
 #define __pure__f2gfunkptr__pool_address(this)                                                        __f2ptr__pool_address(__pure__f2gfunkptr__gfunkptr(this))
 
 
-// scheduler_mutex
+// scheduler_cmutex
 
-struct ptype_scheduler_mutex_block_s {
+struct ptype_scheduler_cmutex_block_s {
   ptype_block_t           ptype;
   boolean_t               locked_state; // this state is persistent between boots.
   funk2_processor_mutex_t m[1];         // this state is reinitialized at each boot.
 } __attribute__((__packed__));
-typedef struct ptype_scheduler_mutex_block_s ptype_scheduler_mutex_block_t;
+typedef struct ptype_scheduler_cmutex_block_s ptype_scheduler_cmutex_block_t;
 
-ptype_scheduler_mutex_block_t* ptype_scheduler_mutex_block__new(int pool_index, f2ptr cause);
-funk2_processor_mutex_t*       ptype_scheduler_mutex__m(f2ptr this, f2ptr cause);
+ptype_scheduler_cmutex_block_t* ptype_scheduler_cmutex_block__new(int pool_index, f2ptr cause);
+funk2_processor_mutex_t*       ptype_scheduler_cmutex__m(f2ptr this, f2ptr cause);
 
-#define __pure__f2scheduler_mutex__new(pool_index, cause)         ptype_scheduler_mutex__new(pool_index, cause)
-#define __pure__f2scheduler_mutex__locked_state(this)             (((ptype_scheduler_mutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state)
-#define __pure__f2scheduler_mutex__locked_state__set(this, value) (((ptype_scheduler_mutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state = (value))
-#define __pure__f2scheduler_mutex__m(this)                        (((ptype_scheduler_mutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)
+#define __pure__f2scheduler_cmutex__new(pool_index, cause)         ptype_scheduler_cmutex__new(pool_index, cause)
+#define __pure__f2scheduler_cmutex__locked_state(this)             (((ptype_scheduler_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state)
+#define __pure__f2scheduler_cmutex__locked_state__set(this, value) (((ptype_scheduler_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state = (value))
+#define __pure__f2scheduler_cmutex__m(this)                        (((ptype_scheduler_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)
 
 
-// mutex
+// cmutex
 
-struct ptype_mutex_block_s {
+struct ptype_cmutex_block_s {
   ptype_block_t           ptype;
   boolean_t               locked_state; // this state is persistent between boots.
   funk2_processor_mutex_t m[1];         // this state is reinitialized at each boot.
 } __attribute__((__packed__));
-typedef struct ptype_mutex_block_s ptype_mutex_block_t;
+typedef struct ptype_cmutex_block_s ptype_cmutex_block_t;
 
-ptype_mutex_block_t*     ptype_mutex_block__new(int pool_index, f2ptr cause);
-funk2_processor_mutex_t* ptype_mutex__m(f2ptr this, f2ptr cause);
+ptype_cmutex_block_t*     ptype_cmutex_block__new(int pool_index, f2ptr cause);
+funk2_processor_mutex_t* ptype_cmutex__m(f2ptr this, f2ptr cause);
 
-#define __pure__f2mutex__new(pool_index, cause)         ptype_mutex__new(pool_index, cause)
-#define __pure__f2mutex__locked_state(this)             (((ptype_mutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state)
-#define __pure__f2mutex__locked_state__set(this, value) (((ptype_mutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state = (value))
-#define __pure__f2mutex__m(this)                        (((ptype_mutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)
+#define __pure__f2cmutex__new(pool_index, cause)         ptype_cmutex__new(pool_index, cause)
+#define __pure__f2cmutex__locked_state(this)             (((ptype_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state)
+#define __pure__f2cmutex__locked_state__set(this, value) (((ptype_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state = (value))
+#define __pure__f2cmutex__m(this)                        (((ptype_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)
 
 
 // character

@@ -23,11 +23,11 @@
 [deframe physical_world [frame] [time_step
 				 time
 				 [time_step_trigger [new fiber_trigger]]
-				 format_mutex
+				 format_cmutex
 				 agent_body_frame]
   [new []
        [set this time_step        0]
-       [set this format_mutex     [new mutex]]
+       [set this format_cmutex     [new cmutex]]
        [set this agent_body_frame [frame]]
        this]]
 
@@ -47,10 +47,10 @@
   [have time_step_trigger trigger]]
 
 [deftypefunk physical_world execute format [:rest expressions]
-  [let [[format_mutex [get this format_mutex]]]
-    [have format_mutex lock]
+  [let [[format_cmutex [get this format_cmutex]]]
+    [have format_cmutex lock]
     [apply &format [cons stdout expressions]]
-    [have format_mutex unlock]]]
+    [have format_cmutex unlock]]]
 
 [deftypefunk physical_world get agent_bodies []
   [get [get this agent_body_frame] values]]

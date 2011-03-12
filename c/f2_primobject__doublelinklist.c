@@ -23,10 +23,10 @@
 
 // doublelinklist
 
-def_primobject_3_slot(doublelinklist, write_mutex, length, cons_cells);
+def_primobject_3_slot(doublelinklist, write_cmutex, length, cons_cells);
 
 f2ptr f2__doublelinklist__new(f2ptr cause, f2ptr elements) {
-  return f2doublelinklist__new(cause, f2mutex__new(cause), f2__simple_length(cause, elements), elements);
+  return f2doublelinklist__new(cause, f2cmutex__new(cause), f2__simple_length(cause, elements), elements);
 }
 def_pcfunk0_and_rest(doublelinklist__new, elements, return f2__doublelinklist__new(this_cause, elements));
 
@@ -46,33 +46,33 @@ f2ptr f2__doublelinklist__cdr(f2ptr cause, f2ptr this) {
   if (cons_cells == nil || length__i == 0) {
     return f2larva__new(cause, 44, nil);
   }
-  return f2doublelinklist__new(cause, f2mutex__new(cause), f2integer__new(cause, length__i - 1), f2cons__cdr(cons_cells, cause));
+  return f2doublelinklist__new(cause, f2cmutex__new(cause), f2integer__new(cause, length__i - 1), f2cons__cdr(cons_cells, cause));
 }
 def_pcfunk1(doublelinklist__cdr, this, return f2__doublelinklist__cdr(this_cause, this));
 
 f2ptr f2__doublelinklist__add(f2ptr cause, f2ptr this, f2ptr element) {
-  f2mutex__lock(f2doublelinklist__write_mutex(this, cause), cause);
+  f2cmutex__lock(f2doublelinklist__write_cmutex(this, cause), cause);
   f2doublelinklist__cons_cells__set(this, cause, f2cons__new(cause, element, f2doublelinklist__cons_cells(this, cause)));
   f2ptr length = f2doublelinklist__length(this, cause);
   s64 length__i = f2integer__i(length, cause);
   f2doublelinklist__length__set(this, cause, f2integer__new(cause, length__i + 1));
-  f2mutex__unlock(f2doublelinklist__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2doublelinklist__write_cmutex(this, cause), cause);
   return nil;
 }
 def_pcfunk2(doublelinklist__add, this, element, return f2__doublelinklist__add(this_cause, this, element));
 
 f2ptr f2__doublelinklist__lookup(f2ptr cause, f2ptr this, f2ptr element) {
-  f2mutex__lock(f2doublelinklist__write_mutex(this, cause), cause);
+  f2cmutex__lock(f2doublelinklist__write_cmutex(this, cause), cause);
   f2ptr iter = f2doublelinklist__cons_cells(this, cause);
   while (iter) {
     f2ptr iter__element = f2cons__car(iter, cause);
     if (raw__eq(cause, element, iter__element)) {
-      f2mutex__unlock(f2doublelinklist__write_mutex(this, cause), cause);
+      f2cmutex__unlock(f2doublelinklist__write_cmutex(this, cause), cause);
       return iter__element;
     }
     iter = f2cons__cdr(iter, cause);
   }
-  f2mutex__unlock(f2doublelinklist__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2doublelinklist__write_cmutex(this, cause), cause);
   return nil;
 }
 def_pcfunk2(doublelinklist__lookup, this, element, return f2__doublelinklist__lookup(this_cause, this, element));
@@ -102,7 +102,7 @@ void f2__primobject_doublelinklist__initialize() {
   
   // doublelinklist
   
-  initialize_primobject_3_slot(doublelinklist, write_mutex, length, cons_cells);
+  initialize_primobject_3_slot(doublelinklist, write_cmutex, length, cons_cells);
   
   {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_doublelinklist.add__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(doublelinklist__add, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_doublelinklist.add__funk = never_gc(cfunk);}

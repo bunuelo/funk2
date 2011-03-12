@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2011 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,8 +15,7 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
 [defmetro thought-define_slot [this slot value]
   `[let [[thought-slot_value ,value]
@@ -225,7 +223,7 @@
   [define parent_types [list thought_process:ptype]]
   [define child_types  nil]]
 
-[defthought thought_process:ptype_mutex
+[defthought thought_process:ptype_cmutex
   [define parent_types [list thought_process:ptype]]
   [define child_types  nil]]
 
@@ -275,7 +273,7 @@
 	  [[double?     exp] [ptype-thought exp thought_process:ptype_double]]
 	  [[float?      exp] [ptype-thought exp thought_process:ptype_float]]
 	  [[pointer?    exp] [ptype-thought exp thought_process:ptype_pointer]]
-	  [[mutex?      exp] [ptype-thought exp thought_process:ptype_mutex]]
+	  [[cmutex?      exp] [ptype-thought exp thought_process:ptype_cmutex]]
 	  [[string?     exp] [ptype-thought exp thought_process:ptype_string]]
 	  [[symbol?     exp] [ptype-thought exp thought_process:ptype_symbol]]
 	  [[chunk?      exp] [ptype-thought exp thought_process:ptype_chunk]]

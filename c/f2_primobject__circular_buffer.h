@@ -25,7 +25,7 @@
 // circular_buffer
 
 typedef struct funk2_object_type__circular_buffer__slot_s funk2_object_type__circular_buffer__slot_t;
-declare_object_type_4_slot(circular_buffer, access_mutex, start, end, bin_array,
+declare_object_type_4_slot(circular_buffer, access_cmutex, start, end, bin_array,
 			   f2ptr pop__symbol;
 			   f2ptr pop__funk;
 			   f2ptr add__symbol;
@@ -43,7 +43,7 @@ declare_object_type_4_slot(circular_buffer, access_mutex, start, end, bin_array,
 
 // circular_buffer
 
-declare_primobject_4_slot(circular_buffer, access_mutex, start, end, bin_array);
+declare_primobject_4_slot(circular_buffer, access_cmutex, start, end, bin_array);
 
 f2ptr raw__circular_buffer__new_empty(f2ptr cause, u64 length);
 f2ptr f2__circular_buffer__new(f2ptr cause);

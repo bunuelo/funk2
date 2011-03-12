@@ -25,7 +25,7 @@
 // terminal_print_frame
 
 def_frame_object__global__25_slot(terminal_print_frame,
-				  mutex,
+				  cmutex,
 				  testing,
 				  testing_max_x_constraint,
 				  testing_max_height_constraint,
@@ -58,7 +58,7 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
   assert_argument_type(integer, max_height);
   assert_argument_type(integer, max_size);
   assert_argument_type(integer, max_nanoseconds_for_resize);
-  f2ptr mutex                         = f2__mutex__new(cause);
+  f2ptr cmutex                         = f2__cmutex__new(cause);
   f2ptr testing                       = nil;
   f2ptr testing_max_x_constraint      = nil;
   f2ptr testing_max_height_constraint = nil;
@@ -75,7 +75,7 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
   f2ptr failed_max_size_constraint    = f2bool__new(boolean__false);
   f2ptr print_as_frame_hash           = f2__ptypehash__new(cause);
   return f2terminal_print_frame__new(cause,
-				     mutex,
+				     cmutex,
 				     testing,
 				     testing_max_x_constraint,
 				     testing_max_height_constraint,
@@ -106,11 +106,11 @@ def_pcfunk9(terminal_print_frame__new, stream, indent_distance, max_x, max_heigh
 
 
 f2ptr raw__terminal_print_frame__new_copy(f2ptr cause, f2ptr this) {
-  f2ptr mutex                = f2__mutex__new(cause);
+  f2ptr cmutex                = f2__cmutex__new(cause);
   f2ptr already_printed_hash = f2__ptypehash__new(cause);
   f2ptr print_as_frame_hash  = f2__ptypehash__new(cause);
   return f2terminal_print_frame__new(cause,
-				     mutex,
+				     cmutex,
 				     f2__terminal_print_frame__testing(                      cause, this),
 				     f2__terminal_print_frame__testing_max_x_constraint(     cause, this),
 				     f2__terminal_print_frame__testing_max_height_constraint(cause, this),
@@ -837,7 +837,7 @@ f2ptr f2__terminal_print(f2ptr cause, f2ptr exp) {
 															  new__symbol(cause, "standard-terminal"),  standard_terminal_print_frame))));
   }
   // how to make this thread safe?
-  // we need to mutex somehow.
+  // we need to cmutex somehow.
   return f2__exp__terminal_print_with_frame__thread_unsafe(cause, exp, standard_terminal_print_frame);
 }
 
@@ -881,7 +881,7 @@ void f2__terminal_print__initialize() {
   // terminal_print_frame
   
   init_frame_object__25_slot(terminal_print_frame,
-			     mutex,
+			     cmutex,
 			     testing,
 			     testing_max_x_constraint,
 			     testing_max_height_constraint,

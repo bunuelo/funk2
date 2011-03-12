@@ -164,7 +164,7 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  1), 0), new__string(cause, "keep_undead"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  2), 0), new__string(cause, "is_zombie"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  3), 0), new__string(cause, "is_complete"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  4), 0), new__string(cause, "execute_mutex"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  4), 0), new__string(cause, "execute_cmutex"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  5), 0), new__string(cause, "paused"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  6), 0), new__string(cause, "last executed"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  7), 0), new__string(cause, "sleep until"));
@@ -212,7 +212,7 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  1), 1), (f2fiber__keep_undead(this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  2), 1), (f2fiber__is_zombie(  this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  3), 1), raw__fiber__is_complete(cause, this__fiber) ? new__string(cause, "Yes") : new__string(cause, "No"));
-    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  4), 1), raw__mutex__is_locked(cause, f2fiber__execute_mutex(this__fiber, cause)) ? new__string(cause, "Locked") : new__string(cause, "Unlocked"));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  4), 1), raw__cmutex__is_locked(cause, f2fiber__execute_cmutex(this__fiber, cause)) ? new__string(cause, "Locked") : new__string(cause, "Unlocked"));
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  5), 1), (f2fiber__paused(     this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  6), 1), f2__exp__as__string(cause, (f2fiber__last_executed_time(this__fiber, cause) != nil) ? f2bool__new(boolean__true) : nil));
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  7), 1), f2__exp__as__string(cause, (f2fiber__sleep_until_time(  this__fiber, cause) != nil) ? f2bool__new(boolean__true) : nil));
@@ -231,7 +231,7 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
     f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), f2__gdk__rgb_color__new(cause, f2double__new(cause, 0.5), f2double__new(cause, 0.5), f2double__new(cause, 0.5)));
   } else if ((this__bytecodes_per_second != nil) &&
 	     (f2__number__is_numerically_equal_to(cause, this__bytecodes_per_second, f2integer__new(cause, 0)) != nil) &&
-	     raw__mutex__is_locked(cause, f2__fiber__execute_mutex(cause, this__fiber))) {
+	     raw__cmutex__is_locked(cause, f2__fiber__execute_cmutex(cause, this__fiber))) {
     // paint menu_bar if fiber has locked-up since last redraw.
     f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), f2__gdk__rgb_color__new(cause, f2double__new(cause, 1.0), f2double__new(cause, 0.75), f2double__new(cause, 0.75)));
   } else if ((this__bytecodes_per_second != nil) &&

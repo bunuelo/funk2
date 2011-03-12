@@ -25,7 +25,7 @@
 // doublelinklist
 
 typedef struct funk2_object_type__doublelinklist__slot_s funk2_object_type__doublelinklist__slot_t;
-declare_object_type_3_slot(doublelinklist, write_mutex, length, cons_cells,
+declare_object_type_3_slot(doublelinklist, write_cmutex, length, cons_cells,
 			   f2ptr add__symbol;
 			   f2ptr add__funk;
 			   f2ptr lookup__symbol;
@@ -45,7 +45,7 @@ declare_object_type_3_slot(doublelinklist, write_mutex, length, cons_cells,
 
 // doublelinklist
 
-declare_primobject_3_slot(doublelinklist, write_mutex, length, cons_cells);
+declare_primobject_3_slot(doublelinklist, write_cmutex, length, cons_cells);
 
 f2ptr f2__doublelinklist__new   (f2ptr cause, f2ptr elements);
 f2ptr f2__doublelinklist__add   (f2ptr cause, f2ptr this, f2ptr element);

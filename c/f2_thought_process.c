@@ -64,8 +64,8 @@ f2ptr f2__determine_real_thought_process_types(f2ptr cause, f2ptr exp) {
     case ptype_float:           return f2cons__new(cause, __funk2.thought_process.ptype_float__symbol,           nil);
     case ptype_pointer:         return f2cons__new(cause, __funk2.thought_process.ptype_pointer__symbol,         nil);
     case ptype_gfunkptr:        return f2cons__new(cause, __funk2.thought_process.ptype_gfunkptr__symbol,        nil);
-    case ptype_scheduler_mutex: return f2cons__new(cause, __funk2.thought_process.ptype_scheduler_mutex__symbol, nil);
-    case ptype_mutex:           return f2cons__new(cause, __funk2.thought_process.ptype_mutex__symbol,           nil);
+    case ptype_scheduler_cmutex: return f2cons__new(cause, __funk2.thought_process.ptype_scheduler_cmutex__symbol, nil);
+    case ptype_cmutex:           return f2cons__new(cause, __funk2.thought_process.ptype_cmutex__symbol,           nil);
     case ptype_char:            return f2cons__new(cause, __funk2.thought_process.ptype_char__symbol,            nil);
     case ptype_string:          return f2cons__new(cause, __funk2.thought_process.ptype_string__symbol,          nil);
     case ptype_symbol:          return f2cons__new(cause, __funk2.thought_process.ptype_symbol__symbol,          nil);
@@ -230,8 +230,8 @@ void funk2_thought_process__init(funk2_thought_process_t* this) {
   this->ptype_float__symbol                      = -1;
   this->ptype_pointer__symbol                    = -1;
   this->ptype_gfunkptr__symbol                   = -1;
-  this->ptype_scheduler_mutex__symbol            = -1;
-  this->ptype_mutex__symbol                      = -1;
+  this->ptype_scheduler_cmutex__symbol            = -1;
+  this->ptype_cmutex__symbol                      = -1;
   this->ptype_char__symbol                       = -1;
   this->ptype_string__symbol                     = -1;
   this->ptype_symbol__symbol                     = -1;
@@ -324,8 +324,8 @@ void f2__thought_process__reinitialize_globalvars() {
   __funk2.thought_process.ptype_float__symbol                      = f2symbol__new(cause, strlen("thought_process:ptype_float"),               (u8*)"thought_process:ptype_float");
   __funk2.thought_process.ptype_pointer__symbol                    = f2symbol__new(cause, strlen("thought_process:ptype_pointer"),             (u8*)"thought_process:ptype_pointer");
   __funk2.thought_process.ptype_gfunkptr__symbol                   = f2symbol__new(cause, strlen("thought_process:ptype_gfunkptr"),            (u8*)"thought_process:ptype_gfunkptr");
-  __funk2.thought_process.ptype_scheduler_mutex__symbol            = f2symbol__new(cause, strlen("thought_process:ptype_scheduler_mutex"),     (u8*)"thought_process:ptype_scheduler_mutex");
-  __funk2.thought_process.ptype_mutex__symbol                      = f2symbol__new(cause, strlen("thought_process:ptype_mutex"),               (u8*)"thought_process:ptype_mutex");
+  __funk2.thought_process.ptype_scheduler_cmutex__symbol            = f2symbol__new(cause, strlen("thought_process:ptype_scheduler_cmutex"),     (u8*)"thought_process:ptype_scheduler_cmutex");
+  __funk2.thought_process.ptype_cmutex__symbol                      = f2symbol__new(cause, strlen("thought_process:ptype_cmutex"),               (u8*)"thought_process:ptype_cmutex");
   __funk2.thought_process.ptype_char__symbol                       = f2symbol__new(cause, strlen("thought_process:ptype_char"),                (u8*)"thought_process:ptype_char");
   __funk2.thought_process.ptype_string__symbol                     = f2symbol__new(cause, strlen("thought_process:ptype_string"),              (u8*)"thought_process:ptype_string");
   __funk2.thought_process.ptype_symbol__symbol                     = f2symbol__new(cause, strlen("thought_process:ptype_symbol"),              (u8*)"thought_process:ptype_symbol");
@@ -358,8 +358,8 @@ void f2__thought_process__initialize() {
   environment__add_var_value(cause, global_environment(), __funk2.thought_process.ptype_float__symbol,                      nil);
   environment__add_var_value(cause, global_environment(), __funk2.thought_process.ptype_pointer__symbol,                    nil);
   environment__add_var_value(cause, global_environment(), __funk2.thought_process.ptype_gfunkptr__symbol,                   nil);
-  environment__add_var_value(cause, global_environment(), __funk2.thought_process.ptype_scheduler_mutex__symbol,            nil);
-  environment__add_var_value(cause, global_environment(), __funk2.thought_process.ptype_mutex__symbol,                      nil);
+  environment__add_var_value(cause, global_environment(), __funk2.thought_process.ptype_scheduler_cmutex__symbol,           nil);
+  environment__add_var_value(cause, global_environment(), __funk2.thought_process.ptype_cmutex__symbol,                     nil);
   environment__add_var_value(cause, global_environment(), __funk2.thought_process.ptype_char__symbol,                       nil);
   environment__add_var_value(cause, global_environment(), __funk2.thought_process.ptype_string__symbol,                     nil);
   environment__add_var_value(cause, global_environment(), __funk2.thought_process.ptype_symbol__symbol,                     nil);

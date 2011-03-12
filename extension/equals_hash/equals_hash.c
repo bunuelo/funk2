@@ -310,7 +310,7 @@ f2ptr raw__equals_hash__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_ch
   f2ptr key_count__lick_note     = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 0));
   f2ptr bin_num_power__lick_note = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 8));
   f2ptr bin_array__lick_note     = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 16));
-  f2ptr hash                     = f2hash__new(cause, f2__mutex__new(cause), key_count__lick_note, bin_num_power__lick_note, bin_array__lick_note, raw__equals_hash__hash_value_funk(cause), raw__equals_hash__equals_funk(cause));
+  f2ptr hash                     = f2hash__new(cause, f2__cmutex__new(cause), key_count__lick_note, bin_num_power__lick_note, bin_array__lick_note, raw__equals_hash__hash_value_funk(cause), raw__equals_hash__equals_funk(cause));
   f2ptr equals_hash              = raw__equals_hash__new(cause, hash);
   return equals_hash;
 }

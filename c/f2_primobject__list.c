@@ -23,10 +23,10 @@
 
 // list
 
-def_primobject_3_slot(list, write_mutex, length, cons_cells);
+def_primobject_3_slot(list, write_cmutex, length, cons_cells);
 
 f2ptr f2__list__new(f2ptr cause, f2ptr elements) {
-  return f2list__new(cause, f2mutex__new(cause), f2__simple_length(cause, elements), elements);
+  return f2list__new(cause, f2cmutex__new(cause), f2__simple_length(cause, elements), elements);
 }
 def_pcfunk0_and_rest(list__new, elements, return f2__list__new(this_cause, elements));
 
@@ -48,7 +48,7 @@ f2ptr f2__list__cdr(f2ptr cause, f2ptr this) {
   }
   f2ptr new_cons_cells = f2cons__cdr(cons_cells, cause);
   if (new_cons_cells) {
-    return f2list__new(cause, f2mutex__new(cause), f2integer__new(cause, length__i - 1), new_cons_cells);
+    return f2list__new(cause, f2cmutex__new(cause), f2integer__new(cause, length__i - 1), new_cons_cells);
   } else {
     return nil;
   }
@@ -56,28 +56,28 @@ f2ptr f2__list__cdr(f2ptr cause, f2ptr this) {
 def_pcfunk1(list__cdr, this, return f2__list__cdr(this_cause, this));
 
 f2ptr f2__list__add(f2ptr cause, f2ptr this, f2ptr element) {
-  f2mutex__lock(f2list__write_mutex(this, cause), cause);
+  f2cmutex__lock(f2list__write_cmutex(this, cause), cause);
   f2list__cons_cells__set(this, cause, f2cons__new(cause, element, f2list__cons_cells(this, cause)));
   f2ptr length = f2list__length(this, cause);
   s64 length__i = f2integer__i(length, cause);
   f2list__length__set(this, cause, f2integer__new(cause, length__i + 1));
-  f2mutex__unlock(f2list__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2list__write_cmutex(this, cause), cause);
   return nil;
 }
 def_pcfunk2(list__add, this, element, return f2__list__add(this_cause, this, element));
 
 f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element) {
-  f2mutex__lock(f2list__write_mutex(this, cause), cause);
+  f2cmutex__lock(f2list__write_cmutex(this, cause), cause);
   f2ptr iter = f2list__cons_cells(this, cause);
   while (iter) {
     f2ptr iter__element = f2cons__car(iter, cause);
     if (raw__eq(cause, element, iter__element)) {
-      f2mutex__unlock(f2list__write_mutex(this, cause), cause);
+      f2cmutex__unlock(f2list__write_cmutex(this, cause), cause);
       return iter__element;
     }
     iter = f2cons__cdr(iter, cause);
   }
-  f2mutex__unlock(f2list__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2list__write_cmutex(this, cause), cause);
   return nil;
 }
 def_pcfunk2(list__lookup, this, element, return f2__list__lookup(this_cause, this, element));
@@ -162,7 +162,7 @@ void f2__primobject_list__initialize() {
   
   // list
   
-  initialize_primobject_3_slot(list, write_mutex, length, cons_cells);
+  initialize_primobject_3_slot(list, write_cmutex, length, cons_cells);
   
   {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_list.add__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(list__add, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.add__funk = never_gc(cfunk);}

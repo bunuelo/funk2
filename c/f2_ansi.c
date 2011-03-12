@@ -28,10 +28,10 @@ f2ptr f2__ansi__stream__begin_command(f2ptr cause, f2ptr stream) {
 def_pcfunk1(ansi__stream__begin_command, stream, return f2__ansi__stream__begin_command(this_cause, stream));
 
 void raw__ansi__stream__print_code(f2ptr cause, f2ptr stream, int code) {
-  f2__mutex__lock(cause, f2__stream__mutex(cause, stream));
+  f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
   f2__ansi__stream__begin_command(cause, stream);
   raw__stream__writef(cause, stream, "%dm", code);
-  f2__mutex__unlock(cause, f2__stream__mutex(cause, stream));
+  f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
 }
 
 f2ptr f2__ansi__stream__print_code(f2ptr cause, f2ptr stream, f2ptr code) {
@@ -250,50 +250,50 @@ def_pcfunk1(ansi__stream__default_background, stream, return f2__ansi__stream__d
 
 f2ptr f2__ansi__stream__clear_screen(f2ptr cause, f2ptr stream) {
   assert_argument_type(stream, stream);
-  f2__mutex__lock(cause, f2__stream__mutex(cause, stream));
+  f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
   f2__ansi__stream__begin_command(cause, stream);
   raw__stream__writef(cause, stream, "2J");
-  f2__mutex__unlock(cause, f2__stream__mutex(cause, stream));
+  f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
   return nil;
 }
 def_pcfunk1(ansi__stream__clear_screen, stream, return f2__ansi__stream__clear_screen(this_cause, stream));
 
 f2ptr f2__ansi__stream__clear_keyboard_leds(f2ptr cause, f2ptr stream) {
   assert_argument_type(stream, stream);
-  f2__mutex__lock(cause, f2__stream__mutex(cause, stream));
+  f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
   f2__ansi__stream__begin_command(cause, stream);
   raw__stream__writef(cause, stream, "0q");
-  f2__mutex__unlock(cause, f2__stream__mutex(cause, stream));
+  f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
   return nil;
 }
 def_pcfunk1(ansi__stream__clear_keyboard_leds, stream, return f2__ansi__stream__clear_keyboard_leds(this_cause, stream));
 
 f2ptr f2__ansi__stream__set_scroll_lock_led(f2ptr cause, f2ptr stream) {
   assert_argument_type(stream, stream);
-  f2__mutex__lock(cause, f2__stream__mutex(cause, stream));
+  f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
   f2__ansi__stream__begin_command(cause, stream);
   raw__stream__writef(cause, stream, "1q");
-  f2__mutex__unlock(cause, f2__stream__mutex(cause, stream));
+  f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
   return nil;
 }
 def_pcfunk1(ansi__stream__set_scroll_lock_led, stream, return f2__ansi__stream__set_scroll_lock_led(this_cause, stream));
 
 f2ptr f2__ansi__stream__set_num_lock_led(f2ptr cause, f2ptr stream) {
   assert_argument_type(stream, stream);
-  f2__mutex__lock(cause, f2__stream__mutex(cause, stream));
+  f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
   f2__ansi__stream__begin_command(cause, stream);
   raw__stream__writef(cause, stream, "2q");
-  f2__mutex__unlock(cause, f2__stream__mutex(cause, stream));
+  f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
   return nil;
 }
 def_pcfunk1(ansi__stream__set_num_lock_led, stream, return f2__ansi__stream__set_num_lock_led(this_cause, stream));
 
 f2ptr f2__ansi__stream__set_caps_lock_led(f2ptr cause, f2ptr stream) {
   assert_argument_type(stream, stream);
-  f2__mutex__lock(cause, f2__stream__mutex(cause, stream));
+  f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
   f2__ansi__stream__begin_command(cause, stream);
   raw__stream__writef(cause, stream, "3q");
-  f2__mutex__unlock(cause, f2__stream__mutex(cause, stream));
+  f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
   return nil;
 }
 def_pcfunk1(ansi__stream__set_caps_lock_led, stream, return f2__ansi__stream__set_caps_lock_led(this_cause, stream));
@@ -302,10 +302,10 @@ void raw__ansi__stream__move_cursor(f2ptr cause, f2ptr stream, int x, int y) {
   if (x < 0 || y < 0) {
     return;
   }
-  f2__mutex__lock(cause, f2__stream__mutex(cause, stream));
+  f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
   f2__ansi__stream__begin_command(cause, stream);
   raw__stream__writef(cause, stream, "%d;%dH", y, x);
-  f2__mutex__unlock(cause, f2__stream__mutex(cause, stream));
+  f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
 }
 
 f2ptr f2__ansi__stream__move_cursor(f2ptr cause, f2ptr stream, f2ptr x, f2ptr y) {

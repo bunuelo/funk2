@@ -62,7 +62,7 @@ def_pcfunk1(primobject__dynamic_slots, this, return f2__primobject__dynamic_slot
 f2ptr f2__primobject__dynamic_slots__set(f2ptr cause, f2ptr this, f2ptr value) {return f2primobject__dynamic_slots__set(this, cause, value);}
 def_pcfunk2(primobject__dynamic_slots__set, this, value, return f2__primobject__dynamic_slots__set(this_cause, this, value));
 
-// not thread safe (use appropriately, it would create too much of a slowdown to create a new mutex for every primitive object)
+// not thread safe (use appropriately, it would create too much of a slowdown to create a new cmutex for every primitive object)
 f2ptr f2__primobject__create_new_dynamic_slots_frame(f2ptr cause, f2ptr this) {
   f2ptr dynamic_slots = f2__frame__new(cause, nil);
   f2primobject__dynamic_slots__set(this, cause, dynamic_slots);

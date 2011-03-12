@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2011 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,14 +15,13 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
 
 [let [[funk_hosts `['simonetti.media.mit.edu'
 		    'rct.media.mit.edu']]]
   
-  [defunks-mutex [mutex]
+  [defunks-cmutex [cmutex]
     [integer:funk_hosts-add [name] [= funk_hosts [cons name funk_hosts]]]
     [integer:funk_hosts     []     funk_hosts]]]
 
@@ -34,7 +32,7 @@
 	 [= is_on t]]
   [label grid-shutdown []
 	 [= is_on nil]]
-  [defunks-mutex [mutex]
+  [defunks-cmutex [cmutex]
     [internet:grid-is_on    [] is_on]
     [internet:grid-turn_on  [] [if [not is_on] [grid-startup]]]
     [internet:grid-turn_off [] [if      is_on  [grid-shutdown]]]

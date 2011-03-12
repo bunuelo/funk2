@@ -19,7 +19,7 @@
 
 
 [deframe isis_world [physical_world] [[initialize_events [new redblacktree [funk [event] [have event lookup `time]] &<]]
-				      [step_mutex [new traced_mutex]]
+				      [step_cmutex [new traced_cmutex]]
 				      client
 				      sense_agent_frame
 				      [overview_image_sequence [new image_sequence nil]]]
@@ -105,7 +105,7 @@
     [millisleep 100]]]
 
 [deftypefunk isis_world execute step_simulation [seconds]
-  [have step_mutex lock]
+  [have step_cmutex lock]
   [let [[maximum_tick_size 0.15]]
     [let [[tick [if [> seconds maximum_tick_size]
 		    maximum_tick_size
@@ -116,10 +116,10 @@
 	  [have this update_after_step_simulation]
 	  [= subseconds [+ subseconds tick]]]]]]
   [have this step_physical_world]
-  [have step_mutex unlock]]
+  [have step_cmutex unlock]]
 
 [deftypefunk isis_world get simulator_is_stepping []
-  [get step_mutex is_locked]]
+  [get step_cmutex is_locked]]
 
 [deftypefunk isis_world execute normal_step []
   [have this step_simulation 0.15]]

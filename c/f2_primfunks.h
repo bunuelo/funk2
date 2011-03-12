@@ -1486,10 +1486,10 @@ f2ptr f2__float__to_double(f2ptr cause, f2ptr x);
 
 f2ptr f2__gfunkptr__new_from_pointer(f2ptr cause, f2ptr x);
 
-// mutex
+// cmutex
 
-void  raw__mutex__lock_both(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr  f2__mutex__lock_both(f2ptr cause, f2ptr this, f2ptr that);
+void  raw__cmutex__lock_both(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr  f2__cmutex__lock_both(f2ptr cause, f2ptr this, f2ptr that);
 
 // char
 

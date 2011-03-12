@@ -24,7 +24,7 @@
 
 // set
 
-def_primobject_4_slot(set, write_mutex, key_count, bin_num_power, bin_array);
+def_primobject_4_slot(set, write_cmutex, key_count, bin_num_power, bin_array);
 
 boolean_t raw__set__valid(f2ptr cause, f2ptr this) {
   if (! raw__set__is_type(cause, this)) {return 0;}
@@ -40,7 +40,7 @@ boolean_t raw__set__valid(f2ptr cause, f2ptr this) {
 
 f2ptr raw__set__new(f2ptr cause, s64 bin_num_power) {
   f2ptr bin_array = raw__array__new(cause, 1ll << bin_num_power);
-  f2ptr this = f2set__new(cause, f2mutex__new(cause), f2integer__new(cause, 0), f2integer__new(cause, bin_num_power), bin_array);
+  f2ptr this = f2set__new(cause, f2cmutex__new(cause), f2integer__new(cause, 0), f2integer__new(cause, bin_num_power), bin_array);
   debug__assert(raw__set__valid(cause, this), nil, "raw__set__new assert failed: f2__set__valid(this)");
   return this;
 }
@@ -73,7 +73,7 @@ void f2__set__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
 
 f2ptr raw__set__add(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__add assert failed: f2__set__valid(this)");
-  f2mutex__lock(f2set__write_mutex(this, cause), cause);
+  f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
   f2ptr bin_num_power      = f2set__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2set__bin_array(this, cause);
@@ -85,7 +85,7 @@ f2ptr raw__set__add(f2ptr cause, f2ptr this, f2ptr key) {
   while(key_iter) {
     f2ptr iter__key = f2cons__car(key_iter,  cause);
     if (raw__eq(cause, key, iter__key)) {
-      f2mutex__unlock(f2set__write_mutex(this, cause), cause);
+      f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
       return f2bool__new(boolean__true);
     }
     key_iter = f2cons__cdr(key_iter, cause);
@@ -99,7 +99,7 @@ f2ptr raw__set__add(f2ptr cause, f2ptr this, f2ptr key) {
   if (key_count__i >= (1ll << bin_num_power__i)) {
     f2__set__double_size__thread_unsafe(cause, this);
   }
-  f2mutex__unlock(f2set__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
   return nil;
 }
 
@@ -112,7 +112,7 @@ def_pcfunk2(set__add, this, element, return f2__set__add(this_cause, this, eleme
 boolean_t raw__set__remove(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__remove assert failed: f2__set__valid(this)");
   boolean_t key_was_removed = boolean__false;
-  f2mutex__lock(f2set__write_mutex(this, cause), cause);
+  f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
   {
     f2ptr bin_num_power    = f2set__bin_num_power(this, cause);
     u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
@@ -146,7 +146,7 @@ boolean_t raw__set__remove(f2ptr cause, f2ptr this, f2ptr key) {
       }
     }
   }
-  f2mutex__unlock(f2set__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
   return key_was_removed;
 }
 
@@ -185,7 +185,7 @@ def_pcfunk1(set__copy, this, return f2__set__copy(this_cause, this));
 
 
 f2ptr raw__set__an_arbitrary_element(f2ptr cause, f2ptr this) {
-  f2mutex__lock(f2set__write_mutex(this, cause), cause);
+  f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
   {
     f2ptr bin_array         = f2__set__bin_array(cause, this);
     u64   bin_array__length = raw__array__length(cause, bin_array);
@@ -194,12 +194,12 @@ f2ptr raw__set__an_arbitrary_element(f2ptr cause, f2ptr this) {
       f2ptr key_iter = raw__array__elt(cause, bin_array, index);
       if (key_iter) {
 	f2ptr key = f2cons__car(key_iter, cause);
-	f2mutex__unlock(f2set__write_mutex(this, cause), cause);
+	f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
 	return key;
       }
     }
   }
-  f2mutex__unlock(f2set__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
   return nil;
 }
 
@@ -212,7 +212,7 @@ def_pcfunk1(set__an_arbitrary_element, this, return f2__set__an_arbitrary_elemen
 
 f2ptr raw__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__lookup assert failed: f2__set__valid(this)");
-  f2mutex__lock(f2set__write_mutex(this, cause), cause);
+  f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
   f2ptr bin_num_power      = f2set__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2set__bin_array(this, cause);
@@ -224,12 +224,12 @@ f2ptr raw__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
   while(key_iter) {
     f2ptr iter__key = f2cons__car(key_iter, cause);
     if (raw__eq(cause, key, iter__key)) {
-      f2mutex__unlock(f2set__write_mutex(this, cause), cause);
+      f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
       return iter__key;
     }
     key_iter = f2cons__cdr(key_iter, cause);
   }
-  f2mutex__unlock(f2set__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
   return nil;
 }
 
@@ -242,7 +242,7 @@ def_pcfunk2(set__lookup, this, element, return f2__set__lookup(this_cause, this,
 
 boolean_t raw__set__contains(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__contains assert failed: f2__set__valid(this)");
-  f2mutex__lock(f2set__write_mutex(this, cause), cause);
+  f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
   f2ptr bin_num_power      = f2set__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2set__bin_array(this, cause);
@@ -254,12 +254,12 @@ boolean_t raw__set__contains(f2ptr cause, f2ptr this, f2ptr key) {
   while(key_iter) {
     f2ptr iter__key = f2cons__car(key_iter, cause);
     if (raw__eq(cause, key, iter__key)) {
-      f2mutex__unlock(f2set__write_mutex(this, cause), cause);
+      f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
       return boolean__true;
     }
     key_iter = f2cons__cdr(key_iter, cause);
   }
-  f2mutex__unlock(f2set__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
   return boolean__false;
 }
 
@@ -351,7 +351,7 @@ void f2__primobject_set__initialize() {
   
   // set
   
-  initialize_primobject_4_slot(set, write_mutex, key_count, bin_num_power, bin_array);
+  initialize_primobject_4_slot(set, write_cmutex, key_count, bin_num_power, bin_array);
   
   {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_set.add__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__add, this, element, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_set.add__funk = never_gc(cfunk);}

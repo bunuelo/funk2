@@ -31,7 +31,7 @@
 #include "f2_primobject__list.h"
 #include "f2_primobject__doublelinklist.h"
 #include "f2_primobject__circular_buffer.h"
-#include "f2_primobject__traced_mutex.h"
+#include "f2_primobject__traced_cmutex.h"
 #include "f2_bug.h"
 #include "f2_physical_objects.h"
 #include "f2_agent.h"
@@ -57,7 +57,7 @@
 #include "f2_core_extension.h"
 
 typedef struct funk2_primobject_type_handler_s {
-  funk2_processor_mutex_t type_hash_mutex;
+  funk2_processor_mutex_t type_hash_cmutex;
   f2ptr                   type_hash;
 } funk2_primobject_type_handler_t;
 
@@ -145,7 +145,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__graph_decomposition_lattice_node__slot_t primobject_type_graph_decomposition_lattice_node;
   funk2_object_type__graph_decomposition_lattice__slot_t      primobject_type_graph_decomposition_lattice;
   funk2_object_type__graph_edit_sequence__slot_t              primobject_type_graph_edit_sequence;
-  funk2_object_type__traced_mutex__slot_t                     primobject_type_traced_mutex;
+  funk2_object_type__traced_cmutex__slot_t                    primobject_type_traced_cmutex;
   funk2_object_type__fiber_stack_trace__slot_t                primobject_type_fiber_stack_trace;
   funk2_object_type__fiber_stack_trace_block__slot_t          primobject_type_fiber_stack_trace_block;
   funk2_object_type__partial_order_node__slot_t               primobject_type_partial_order_node;

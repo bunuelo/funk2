@@ -22,9 +22,9 @@
 
 [deframe resource [frame] [name
 			   agency
-			   fiber_starting_mutex
+			   fiber_starting_cmutex
 			   fiber
-			   active_mutex
+			   active_cmutex
 			   active
 			   active_cause_resource
 			   active_cause_event
@@ -35,15 +35,15 @@
 			   done
 			   trace_story
 			   think_story
-			   resource_initializing_mutex
+			   resource_initializing_cmutex
 			   [initialized       nil]
 			   [vital             nil]
 			   [debug             nil]
 			   [activated_trigger [new fiber_trigger]]
 			   [finished_trigger  [new fiber_trigger]]]
   [new [initial-name initial-active_funk]
-       [= resource_initializing_mutex [new traced_mutex]] [have resource_initializing_mutex lock]
-       [= fiber_starting_mutex        [new traced_mutex]] [have fiber_starting_mutex        lock]
+       [= resource_initializing_cmutex [new traced_cmutex]] [have resource_initializing_cmutex lock]
+       [= fiber_starting_cmutex        [new traced_cmutex]] [have fiber_starting_cmutex        lock]
        [= fiber                       [fiber [funk []
 						   [cause-enable_reactive_critics [this-cause]]
 						   
@@ -56,7 +56,7 @@
 						   [= name         initial-name]
 						   [= agency       nil]  'We set this when the resource is added to an agency.'
 						   [= active_funk  initial-active_funk]
-						   [= active_mutex [new traced_mutex]]
+						   [= active_cmutex [new traced_cmutex]]
 						   [= trace_story  [new story]]
 						   [= think_story  [new story]]
 						   [cause-define cause-name     `resource]
@@ -66,9 +66,9 @@
 						   [cause-define mind-name      nil]
 						   [cause-define cause-resource this]
 						   [cause-define this-resource  this]
-						   [have resource_initializing_mutex lock]
-						   [have resource_initializing_mutex unlock]
-						   [have fiber_starting_mutex unlock]
+						   [have resource_initializing_cmutex lock]
+						   [have resource_initializing_cmutex unlock]
+						   [have fiber_starting_cmutex unlock]
 						   [let [[waiting_to_be_added_to_mind t]]
 						     [while waiting_to_be_added_to_mind
 						       [sleep 1]
@@ -86,16 +86,16 @@
 						   [= initialized t]
 						   [have this think_to_self 'Resource Initialized.']
 						   [while [not done]
-						     [have active_mutex lock]
+						     [have active_cmutex lock]
 						     [if [not active]
-							 [let [[locked_mutex [new traced_mutex]]]
-							   [have locked_mutex lock]
+							 [let [[locked_cmutex [new traced_cmutex]]]
+							   [have locked_cmutex lock]
 							   [fiber [funk []
 									[global_scheduler-remove_fiber fiber]
-									[have active_mutex unlock]
-									[have locked_mutex unlock]]
+									[have active_cmutex unlock]
+									[have locked_cmutex unlock]]
 								  nil]
-							   [have locked_mutex lock]
+							   [have locked_cmutex lock]
 							   [yield]]
 						       [prog [if active_funk
 								 [prog [have activated_trigger trigger]
@@ -104,13 +104,13 @@
 							       [format stdout '\nresource warning: active_funk is nil (name = ' name ').\n']]
 							     [= active   nil]
 							     [= finished t]
-							     [have active_mutex unlock]]]
+							     [have active_cmutex unlock]]]
 						     ]
 						   [have this think_to_self 'Resource Done.']]
 					     nil]]
-       [have resource_initializing_mutex unlock]
-       [have fiber_starting_mutex lock]
-       [have fiber_starting_mutex unlock]
+       [have resource_initializing_cmutex unlock]
+       [have fiber_starting_cmutex lock]
+       [have fiber_starting_cmutex unlock]
        this]]
 
 [defmetro resource [name args :rest body]
@@ -155,7 +155,7 @@
 
 [deftypefunk resource execute activate [:rest args]
   [let [[successful_activation nil]]
-    [prog [have active_mutex lock]
+    [prog [have active_cmutex lock]
 	  [if [not active]
 	      [prog [=   active                t]
 		    [=   active_cause_resource [cause-lookup cause-resource]]
@@ -163,7 +163,7 @@
 		    [=   active_args           args]
 		    [resume                    fiber]
 		    [=   successful_activation t]]]
-	  [have active_mutex unlock]]
+	  [have active_cmutex unlock]]
     [if successful_activation
 	[prog [if [cause-lookup cause-resource]
 		  [prog [have this           add_new_trace_story_event [get cause-resource name] `activate [frame direct_object `me]]
@@ -177,7 +177,7 @@
   [let [[successful_activation nil]
 	[finished_notice       nil]]
     [while [not successful_activation]
-      [prog [have active_mutex lock]
+      [prog [have active_cmutex lock]
 	    [if [not active]
 		[prog [=   active                t]
 		      [=   active_cause_resource [cause-lookup cause-resource]]
@@ -185,13 +185,13 @@
 		      [=   active_args           args]
 		      [resume                    fiber]
 		      [=   successful_activation t]
-		      [have active_mutex unlock]]
-	      [let [[wait_mutex [new mutex]]]
-		[have wait_mutex lock]
+		      [have active_cmutex unlock]]
+	      [let [[wait_cmutex [new cmutex]]]
+		[have wait_cmutex lock]
 		[fiber [funk []
-			     [have wait_mutex lock]
+			     [have wait_cmutex lock]
 			     [sleep 100]
-			     [have active_mutex unlock]]
+			     [have active_cmutex unlock]]
 		       nil]
 		[wait-for-trigger finished_trigger]]]]
       [if successful_activation
@@ -207,7 +207,7 @@
   [let [[keep_looping  t]
 	[return_result nil]]
     [while keep_looping
-      [have active_mutex lock]
+      [have active_cmutex lock]
       [if finished
 	  [prog [= active                nil]
 		[= active_args           nil]
@@ -217,13 +217,13 @@
 		[= finished              nil]
 		[= keep_looping          nil]
 		[= return_result result]
-		[have active_mutex unlock]]
-	[let [[wait_mutex [new mutex]]]
-	  [have wait_mutex lock]
+		[have active_cmutex unlock]]
+	[let [[wait_cmutex [new cmutex]]]
+	  [have wait_cmutex lock]
 	  [fiber [funk []
-		       [have wait_mutex lock]
+		       [have wait_cmutex lock]
 		       [sleep 100]
-		       [have active_mutex unlock]]
+		       [have active_cmutex unlock]]
 		 nil]
 	  [wait-for-trigger finished_trigger]]]]
     return_result]]

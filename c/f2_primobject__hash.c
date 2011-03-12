@@ -23,7 +23,7 @@
 
 // hash
 
-def_primobject_6_slot(hash, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
+def_primobject_6_slot(hash, write_cmutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
 
 boolean_t raw__hash__valid(f2ptr cause, f2ptr this) {
   if (! raw__hash__is_type(cause, this)) {return boolean__false;}
@@ -39,7 +39,7 @@ boolean_t raw__hash__valid(f2ptr cause, f2ptr this) {
 
 f2ptr raw__hash__new(f2ptr cause, s64 bin_num_power, f2ptr hash_value_funk, f2ptr equals_funk) {
   f2ptr bin_array = raw__array__new(cause, 1ll << bin_num_power);
-  f2ptr this = f2hash__new(cause, f2mutex__new(cause), f2integer__new(cause, 0), f2integer__new(cause, bin_num_power), bin_array, hash_value_funk, equals_funk);
+  f2ptr this = f2hash__new(cause, f2cmutex__new(cause), f2integer__new(cause, 0), f2integer__new(cause, bin_num_power), bin_array, hash_value_funk, equals_funk);
   debug__assert(raw__hash__valid(cause, this), nil, "raw__hash__new assert failed: f2__hash__valid(this)");
   return this;
 }
@@ -104,7 +104,7 @@ boolean_t raw__hash__equals_apply(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr ob
 
 f2ptr raw__hash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   debug__assert(raw__hash__valid(cause, this), nil, "f2__hash__add assert failed: f2__hash__valid(this)");
-  f2mutex__lock(f2hash__write_mutex(this, cause), cause);
+  f2cmutex__lock(f2hash__write_cmutex(this, cause), cause);
   f2ptr fiber              = f2__this__fiber(cause);
   f2ptr bin_num_power      = f2hash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
@@ -138,7 +138,7 @@ f2ptr raw__hash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   } else {
     f2cons__cdr__set(keyvalue_pair, cause, value);
   }
-  f2mutex__unlock(f2hash__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2hash__write_cmutex(this, cause), cause);
   return nil;
 }
 
@@ -152,7 +152,7 @@ def_pcfunk3(hash__add, this, slot_name, value, return f2__hash__add(this_cause, 
 boolean_t raw__hash__remove(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__hash__valid(cause, this), nil, "f2__hash__add assert failed: f2__hash__valid(this)");
   boolean_t key_was_removed = boolean__false;
-  f2mutex__lock(f2hash__write_mutex(this, cause), cause);
+  f2cmutex__lock(f2hash__write_cmutex(this, cause), cause);
   {
     f2ptr fiber            = f2__this__fiber(cause);
     f2ptr bin_num_power    = f2hash__bin_num_power(this, cause);
@@ -188,7 +188,7 @@ boolean_t raw__hash__remove(f2ptr cause, f2ptr this, f2ptr key) {
       }
     }
   }
-  f2mutex__unlock(f2hash__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2hash__write_cmutex(this, cause), cause);
   return key_was_removed;
 }
 
@@ -201,7 +201,7 @@ def_pcfunk2(hash__remove, this, key, return f2__hash__remove(this_cause, this, k
 
 f2ptr f2__hash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__hash__valid(cause, this), nil, "f2__hash__lookup_keyvalue_pair assert failed: f2__hash__valid(this)");
-  f2mutex__lock(f2hash__write_mutex(this, cause), cause);
+  f2cmutex__lock(f2hash__write_cmutex(this, cause), cause);
   f2ptr fiber              = f2__this__fiber(cause);
   f2ptr bin_num_power      = f2hash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
@@ -215,12 +215,12 @@ f2ptr f2__hash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
     f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
     f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
     if (raw__hash__equals_apply(cause, fiber, this, key, keyvalue_pair__key)) {
-      f2mutex__unlock(f2hash__write_mutex(this, cause), cause);
+      f2cmutex__unlock(f2hash__write_cmutex(this, cause), cause);
       return keyvalue_pair;
     }
     keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
   }
-  f2mutex__unlock(f2hash__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2hash__write_cmutex(this, cause), cause);
   return nil;
 }
 
@@ -360,7 +360,7 @@ void f2__primobject_hash__initialize() {
   
   // hash
   
-  initialize_primobject_6_slot(hash, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
+  initialize_primobject_6_slot(hash, write_cmutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_hash.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(hash__new, this, hash_value_funk, equals_funk, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hash.new__funk = never_gc(cfunk);}

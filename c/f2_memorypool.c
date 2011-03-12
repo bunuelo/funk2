@@ -24,7 +24,7 @@
 // funk2_memorypool
 
 void funk2_memorypool__init(funk2_memorypool_t* this) {
-  funk2_processor_mutex__init(&(this->global_memory_allocate_cmutex));
+  funk2_processor_mutex__init(&(this->global_memory_allocate_mutex));
   this->should_enlarge_memory_now            = boolean__false;
   this->total_allocated_memory_since_last_gc = 0;
   this->next_unique_block_id                 = 0;

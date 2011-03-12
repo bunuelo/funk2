@@ -339,7 +339,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byt
 void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_environment) {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_cmutex__lock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
   
   if (__funk2.memory.global_environment_f2ptr) {
@@ -361,7 +361,7 @@ void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_en
   }
   
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_cmutex__unlock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
 }
 

@@ -66,7 +66,7 @@
 											  [get [get this mind] semantic_realm]
 											  `event_sequence
 											  target]]]
-							[semantic-set current_action_sequence absolute_start_time]
+							[semantic-set current_action_sequence absolute_start_time absolute_start_time]
 							[let [[causes_set [semantic-lookup semantic_frame is_caused_by]]]
 							  [if [not [null causes_set]]
 							      [mapc [funk [cause]

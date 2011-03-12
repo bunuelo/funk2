@@ -25,32 +25,39 @@
 #include "../semantic_temporal_object/semantic_temporal_object.h"
 
 
-f2ptr     raw__semantic_event__type_create                (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr action_name);
-f2ptr     raw__semantic_event__new                        (f2ptr cause, f2ptr semantic_realm, f2ptr action_name);
-f2ptr      f2__semantic_event__new                        (f2ptr cause, f2ptr semantic_realm, f2ptr action_name);
-boolean_t raw__semantic_event__is_type                    (f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_event__is_type                    (f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_event__type                       (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_event__type                       (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_event__action_name__lookup        (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_event__action_name__lookup        (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_event__action_name__add           (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_event__action_name__add           (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__semantic_event__action_name__remove        (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_event__action_name__remove        (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__semantic_event__absolute_start_time__lookup(f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_event__absolute_start_time__lookup(f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_event__absolute_start_time__add   (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_event__absolute_start_time__add   (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__semantic_event__absolute_start_time__remove(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_event__absolute_start_time__remove(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__semantic_event__absolute_end_time__lookup  (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_event__absolute_end_time__lookup  (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_event__absolute_end_time__add     (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_event__absolute_end_time__add     (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__semantic_event__absolute_end_time__remove  (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_event__absolute_end_time__remove  (f2ptr cause, f2ptr this, f2ptr that);
-
+f2ptr     raw__semantic_event__type_create                                                      (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr action_name);
+f2ptr     raw__semantic_event__new                                                              (f2ptr cause, f2ptr semantic_realm, f2ptr action_name);
+f2ptr      f2__semantic_event__new                                                              (f2ptr cause, f2ptr semantic_realm, f2ptr action_name);
+boolean_t raw__semantic_event__is_type                                                          (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_event__is_type                                                          (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_event__type                                                             (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_event__type                                                             (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_event__action_name__lookup                                              (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_event__action_name__lookup                                              (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_event__action_name__add                                                 (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_event__action_name__add                                                 (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_event__action_name__remove                                              (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_event__action_name__remove                                              (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_event__absolute_start_time__lookup                                      (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_event__absolute_start_time__lookup                                      (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_event__absolute_start_time__add                                         (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_event__absolute_start_time__add                                         (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_event__absolute_start_time__remove                                      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_event__absolute_start_time__remove                                      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_event__absolute_end_time__lookup                                        (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_event__absolute_end_time__lookup                                        (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_event__absolute_end_time__add                                           (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_event__absolute_end_time__add                                           (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_event__absolute_end_time__remove                                        (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_event__absolute_end_time__remove                                        (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_event__update_parent_container_start_and_end_times_with_child_start_time(f2ptr cause, f2ptr this, f2ptr child_start_time);
+f2ptr     raw__semantic_event__update_parent_container_start_and_end_times_with_child_end_time  (f2ptr cause, f2ptr this, f2ptr child_end_time);
+f2ptr     raw__semantic_event__update_parent_container_start_and_end_times_with_child_event     (f2ptr cause, f2ptr this, f2ptr child_semantic_event);
+f2ptr      f2__semantic_event__update_parent_container_start_and_end_times_with_child_event     (f2ptr cause, f2ptr this, f2ptr child_semantic_event);
+f2ptr     raw__semantic_event__update_child_container_start_and_end_times_with_parent_start_time(f2ptr cause, f2ptr this, f2ptr parent_start_time);
+f2ptr     raw__semantic_event__update_child_container_start_and_end_times_with_parent_end_time  (f2ptr cause, f2ptr this, f2ptr parent_end_time);
+f2ptr     raw__semantic_event__update_child_container_start_and_end_times_with_parent_event     (f2ptr cause, f2ptr this, f2ptr parent_semantic_event);
+f2ptr      f2__semantic_event__update_child_container_start_and_end_times_with_parent_event     (f2ptr cause, f2ptr this, f2ptr parent_semantic_event);
 
 // **
 

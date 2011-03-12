@@ -209,7 +209,7 @@ f2ptr raw__semantic_event_sequence__add_to_end(f2ptr cause, f2ptr this, f2ptr se
   }
   raw__semantic_temporal_object__contains__add(cause, this, semantic_event);
   {
-    f2ptr result = raw__semantic_event_sequence__update_parent_container_start_and_end_times_with_child_event(cause, this, semantic_event);
+    f2ptr result = raw__semantic_event__update_parent_container_start_and_end_times_with_child_event(cause, this, semantic_event);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -250,7 +250,7 @@ f2ptr raw__semantic_event_sequence__add_to_beginning(f2ptr cause, f2ptr this, f2
   }
   raw__semantic_temporal_object__contains__add(cause, this, semantic_event);
   {
-    f2ptr result = raw__semantic_event_sequence__update_parent_container_start_and_end_times_with_child_event(cause, this, semantic_event);
+    f2ptr result = raw__semantic_event__update_parent_container_start_and_end_times_with_child_event(cause, this, semantic_event);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

@@ -369,11 +369,11 @@ f2ptr funk2_memory__global_environment(funk2_memory_t* this) {
   f2ptr retval;
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_cmutex__lock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
   retval = __funk2.memory.global_environment_f2ptr;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_cmutex__unlock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
   return retval;
 }
@@ -385,7 +385,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   funk2_memory__print_gc_stats(this);
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_cmutex__lock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
   // note: we do not collect garbage here.
   int fd = open(filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -410,7 +410,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   }
   close(fd);
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_cmutex__unlock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
   funk2_memory__debug_memory_test(this, 0);
   funk2_memory__print_gc_stats(this);
@@ -432,9 +432,9 @@ f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
   error(nil, "funk2_memory__ptr_to_f2ptr__slow error: p is not in any memory pool.");
 }
 
-// precondition: each and every memory pool's global_memory_cmutex is locked!
+// precondition: each and every memory pool's global_memory_mutex is locked!
 void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
-  // each and every pool's global_memory_cmutex is locked (we need to return that way).
+  // each and every pool's global_memory_mutex is locked (we need to return that way).
   //
   // note: all memory being locked allows us to assume that we are the
   //       only pthread executing.
@@ -476,7 +476,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   
   // temporarily unlocks all memory cmutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_cmutex__unlock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
   // temporary period of all memory cmutexes locked
   {
@@ -517,7 +517,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   }
   // end temporary unlocking of all memory cmutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_cmutex__lock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
   
   funk2_memory__debug_memory_test(this, 0);
@@ -535,7 +535,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
   
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_cmutex__lock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
   
   
@@ -597,7 +597,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
   }
   
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_cmutex__unlock(&(this->pool[pool_index]));
+    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
   funk2_memory__debug_memory_test(this, 0);
   funk2_memory__print_gc_stats(this);

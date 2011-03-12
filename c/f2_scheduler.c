@@ -27,7 +27,7 @@ void funk2_operating_system__init(funk2_operating_system_t* this) {
   {
     int index;
     for (index = 0; index < memory_pool_num; index++) {
-      funk2_processor_mutex__init(&(this->current_fiber_stack__cmutex[index]));
+      funk2_processor_mutex__init(&(this->current_fiber_stack__mutex[index]));
       this->current_fiber_stack[index] = NULL;
     }
   }
@@ -37,7 +37,7 @@ void funk2_operating_system__destroy(funk2_operating_system_t* this) {
   {
     int index;
     for (index = 0; index < memory_pool_num; index++) {
-      funk2_processor_mutex__destroy(&(this->current_fiber_stack__cmutex[index]));
+      funk2_processor_mutex__destroy(&(this->current_fiber_stack__mutex[index]));
       {
 	funk2_operating_system_current_fiber_cons_t* iter = this->current_fiber_stack[index];
 	while (iter) {
@@ -53,21 +53,21 @@ void funk2_operating_system__destroy(funk2_operating_system_t* this) {
 void funk2_operating_system__push_current_fiber(funk2_operating_system_t* this, u64 pool_index, f2ptr current_fiber) {
   funk2_operating_system_current_fiber_cons_t* cons = (funk2_operating_system_current_fiber_cons_t*)from_ptr(f2__malloc(sizeof(funk2_operating_system_current_fiber_cons_t)));
   cons->current_fiber = current_fiber;
-  funk2_processor_mutex__lock(&(this->current_fiber_stack__cmutex[pool_index]));
+  funk2_processor_mutex__lock(&(this->current_fiber_stack__mutex[pool_index]));
   cons->next                            = this->current_fiber_stack[pool_index];
   this->current_fiber_stack[pool_index] = cons;
-  funk2_processor_mutex__unlock(&(this->current_fiber_stack__cmutex[pool_index]));
+  funk2_processor_mutex__unlock(&(this->current_fiber_stack__mutex[pool_index]));
 }
 
 f2ptr funk2_operating_system__pop_current_fiber(funk2_operating_system_t* this, u64 pool_index) {
-  funk2_processor_mutex__lock(&(this->current_fiber_stack__cmutex[pool_index]));
+  funk2_processor_mutex__lock(&(this->current_fiber_stack__mutex[pool_index]));
   funk2_operating_system_current_fiber_cons_t* cons  = this->current_fiber_stack[pool_index];
   if (cons == NULL) {
     error(nil, "funk2_operating_system__pop_current_fiber error: current_fiber_stack is NULL.");
   }
   f2ptr current_fiber                   = cons->current_fiber;
   this->current_fiber_stack[pool_index] = cons->next;
-  funk2_processor_mutex__unlock(&(this->current_fiber_stack__cmutex[pool_index]));
+  funk2_processor_mutex__unlock(&(this->current_fiber_stack__mutex[pool_index]));
   f2__free(to_ptr(cons));
   return current_fiber;
 }
@@ -276,13 +276,13 @@ def_pcfunk1(global_scheduler__complete_fiber, fiber, return f2__global_scheduler
 
 
 f2ptr raw__global_scheduler__processor_thread_current_fiber(int pool_index) {
-  funk2_processor_mutex__lock(&(__funk2.operating_system.current_fiber_stack__cmutex[pool_index]));
+  funk2_processor_mutex__lock(&(__funk2.operating_system.current_fiber_stack__mutex[pool_index]));
   funk2_operating_system_current_fiber_cons_t* cons  = __funk2.operating_system.current_fiber_stack[pool_index];
   if (cons == NULL) {
     error(nil, "f2__scheduler__processor_thread_current_fiber: this->current_fiber_stack[pool_index]=NULL");
   }
   f2ptr current_fiber = cons->current_fiber;
-  funk2_processor_mutex__unlock(&(__funk2.operating_system.current_fiber_stack__cmutex[pool_index]));
+  funk2_processor_mutex__unlock(&(__funk2.operating_system.current_fiber_stack__mutex[pool_index]));
   return current_fiber;
 }
 

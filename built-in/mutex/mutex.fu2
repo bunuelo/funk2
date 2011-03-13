@@ -23,11 +23,14 @@
   [have traced_cmutex trylock]]
 
 [deftypefunk mutex execute lock []
-  [while [have traced_mutex trylock]
+  [while [have traced_cmutex trylock]
     [millisleep 100]]]
 
 [deftypefunk mutex execute unlock []
-  [have traced_mutex unlock]]
+  [have traced_cmutex unlock]]
+
+[deftypefunk mutex get is_locked []
+  [get traced_cmutex is_locked]]
 
 
   

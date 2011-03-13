@@ -93,11 +93,11 @@
 	       '	padding: 0;'
 	       '}'
 	       ''
-	       '#mmp_logo_header {'
+	       '#media_lab_logo_header {'
 	       '	width: 256px;'
 	       '	margin: 0 auto;'
 	       '	height: 193px;'
-	       '	background: url(images/mmp_logo_header.jpg) right top;'
+	       '	background: url(images/media_lab_logo_header.jpg) right top;'
 	       '	padding: 0;'
 	       '}'
 	       ''
@@ -669,7 +669,7 @@
 	       '	'
 	       '    </div>'
 	       '  </td><td>'
-	       '    <div id="mmp_logo_header">'
+	       '    <div id="media_lab_logo_header">'
 	       '    </div>'
 	       '  </td></tr></table>'
 	       '</div>'
@@ -1181,7 +1181,7 @@
   [let [[image_names `['img01.jpg'
 		       'img02.jpg'
 		       'em_two_logo_header.jpg'
-		       'mmp_logo_header.jpg']]]
+		       'media_lab_logo_header.jpg']]]
     [mapc [funk [image_name]
 		[system [string-concat 'cp -f example/em_two_webpage/images/' image_name ' ' root_dir 'images/']]]
 	  image_names]]

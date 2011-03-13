@@ -77,7 +77,7 @@
 	       '	padding: 0;'
 	       '}'
 	       ''
-	       '#funk2_logo_header {'
+	       '#em_two_logo_header {'
 	       '	width: 193px;'
 	       '	margin: 0 auto;'
 	       '	height: 193px;'

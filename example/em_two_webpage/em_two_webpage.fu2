@@ -81,7 +81,7 @@
 	       '	width: 193px;'
 	       '	margin: 0 auto;'
 	       '	height: 193px;'
-	       '	background: url(images/funk2_logo_header.jpg) left top;'
+	       '	background: url(images/em_two_logo_header.jpg) left top;'
 	       '	padding: 0;'
 	       '}'
 	       ''
@@ -1209,9 +1209,21 @@
 [defunk em_two-generate_all_examples []
   `[]]
 
+[defunk compile_em_two_images [root_dir]
+  [shelter [mkdir [string-concat root_dir 'images/']]]
+  [let [[image_names `['img01.jpg'
+		       'img02.jpg'
+		       'em_two_logo_header.jpg'
+		       'mmp_logo_header.jpg']]]
+    [mapc [funk [image_name]
+		[system [string-concat 'cp -f example/em_two_webpage/images/' image_name ' ' root_dir 'images/']]]
+	  image_names]]
+  nil]
+
 [defunk compile_em_two_webpage [root_dir posts examples]
   [shelter [mkdir root_dir]]
   [print 'compiling em_two default.css']   [compile_em_two_default_css   root_dir]
+  [print 'compiling em_two images']        [compile_em_two_images        root_dir]
   [print 'compiling em_two about']         [compile_em_two_about         root_dir posts examples]
   [print 'compiling em_two news']          [compile_em_two_news          root_dir posts examples]
   [print 'compiling em_two documentation'] [compile_em_two_documentation root_dir posts examples]
@@ -1222,13 +1234,15 @@
   [print 'compiling em_two applications']  [compile_em_two_applications  root_dir posts examples]
   [print 'compiling em_two examples']      [compile_em_two_examples      root_dir posts examples]
   [print 'done compiling']
-  nil]]
+  nil]
 
 [let [[root_dir '/home/neptune/Desktop/www/em-two/']
       [posts    [em_two-generate_all_posts]]
       [examples [em_two-generate_all_examples]]]
   
   [defunk em_two-webpage-save       [] [compile_em_two_webpage       root_dir posts examples]]
+  [defunk em_two_default_css-save   [] [compile_em_two_default_css   root_dir]]
+  [defunk em_two-images-save        [] [compile_em_two_images        root_dir]]
   [defunk em_two_about-save         [] [compile_em_two_about         root_dir posts examples]]
   [defunk em_two_news-save          [] [compile_em_two_news          root_dir posts examples]]
   [defunk em_two_documentation-save [] [compile_em_two_documentation root_dir posts examples]]

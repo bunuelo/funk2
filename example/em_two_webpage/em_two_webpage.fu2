@@ -662,8 +662,6 @@
 	       '			<li><a href="/news">News</a></li>'
 	       '			<li><a href="/documentation">Documentation</a></li>'
 	       '			<li><a href="/download">Download</a></li>'
-	       '			<li><a href="/community">Community</a></li>'
-	       '			<li><a href="/support">Support</a></li>'
 	       '			<li><a href="/development">Development</a></li>'
 	       '			<li><a href="/applications">Applications</a></li>'
 	       '		</ul>'
@@ -1086,38 +1084,6 @@
     nil]]
 
 
-[defunk em_two_community-content []
-  [string-prog '<h1>Community</h1>'
-	       ''
-	       'Coming soon!']]
-
-[defunk em_two_community [posts examples]
-  [em_two_page posts examples
-	      [em_two_community-content]]]
-
-[defunk compile_em_two_community [root_dir posts examples]
-  [let [[community [em_two_community posts examples]]]
-    [shelter [mkdir [string-concat root_dir 'community']]]
-    [have community save [string-concat root_dir 'community/index.html']]
-    nil]]
-
-
-[defunk em_two_support-content []
-  [string-prog '<h1>Support Moral Compass</h1>'
-	       ''
-	       'Coming soon!']]
-
-[defunk em_two_support [posts examples]
-  [em_two_page posts examples
-	      [em_two_support-content]]]
-
-[defunk compile_em_two_support [root_dir posts examples]
-  [let [[support [em_two_support posts examples]]]
-    [shelter [mkdir [string-concat root_dir 'support']]]
-    [have support save [string-concat root_dir 'support/index.html']]
-    nil]]
-
-
 [defunk em_two_development-content []
   [string-prog '<h1>Development</h1>'
 	       ''
@@ -1228,8 +1194,6 @@
   [print 'compiling em_two news']          [compile_em_two_news          root_dir posts examples]
   [print 'compiling em_two documentation'] [compile_em_two_documentation root_dir posts examples]
   [print 'compiling em_two download']      [compile_em_two_download      root_dir posts examples]
-  [print 'compiling em_two community']     [compile_em_two_community     root_dir posts examples]
-  [print 'compiling em_two support']       [compile_em_two_support       root_dir posts examples]
   [print 'compiling em_two development']   [compile_em_two_development   root_dir posts examples]
   [print 'compiling em_two applications']  [compile_em_two_applications  root_dir posts examples]
   [print 'compiling em_two examples']      [compile_em_two_examples      root_dir posts examples]
@@ -1247,8 +1211,6 @@
   [defunk em_two_news-save          [] [compile_em_two_news          root_dir posts examples]]
   [defunk em_two_documentation-save [] [compile_em_two_documentation root_dir posts examples]]
   [defunk em_two_download-save      [] [compile_em_two_download      root_dir posts examples]]
-  [defunk em_two_community-save     [] [compile_em_two_community     root_dir posts examples]]
-  [defunk em_two_support-save       [] [compile_em_two_support       root_dir posts examples]]
   [defunk em_two_development-save   [] [compile_em_two_development   root_dir posts examples]]
   [defunk em_two_applications-save  [] [compile_em_two_applications  root_dir posts examples]]
   [defunk em_two_examples-save      [] [compile_em_two_examples      root_dir posts examples]]

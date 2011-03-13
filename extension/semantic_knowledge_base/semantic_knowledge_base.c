@@ -156,7 +156,7 @@ f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_r
   if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
     return f2larva__new(cause, 1, nil);
   }
-  f2ptr trace_event_stream          = nil;
+  f2ptr trace_event_stream          = f2__forgetful_event_stream__new(cause);
   f2ptr trace_add_semantic_frame    = nil;
   f2ptr trace_remove_semantic_frame = nil;
   if (cause != nil) {
@@ -188,14 +188,6 @@ f2ptr f2__semantic_knowledge_base__as__graph(f2ptr cause, f2ptr this) {
   return raw__semantic_knowledge_base__as__graph(cause, this);
 }
 export_cefunk1(semantic_knowledge_base__as__graph, this, 0, "Converts the semantic_knowledge_base to a graph.");
-
-
-void raw__semantic_knowledge_base__initialize_tracing(f2ptr cause, f2ptr this) {
-  if (raw__semantic_knowledge_base__trace_event_stream(cause, this) == nil) {
-    f2ptr trace_event_stream = f2__forgetful_event_stream__new(cause);
-    raw__semantic_knowledge_base__trace_event_stream__set(cause, this, trace_event_stream);
-  }
-}
 
 
 f2ptr raw__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {

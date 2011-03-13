@@ -235,7 +235,7 @@ test moving forward speed
 		     [mind-wait_to_call mind learned_reactive physical turn_right 1 [* step_factor init_diff]]]
 		    [t
 		     [have this-resource think_to_self 'no need to turn']]]
-	      [set this achieved t]
+	      
 	      [have this-resource think_to_self 'finished']]]]]
 
 [deftypefunk learned_open_fridge_resource execute learned_open_fridge []
@@ -262,7 +262,7 @@ test moving forward speed
 			      [prog 
 			       [mind-wait_to_call mind learned_reactive physical walk_directly_towards fridge]
 			       [mind-wait_to_call mind builtin_reactive physical open_fridge]]]
-			    [set this achieved t]
+			    
 			    ]]]
 
 [deftypefunk slice_toast_resource execute slice_toast []
@@ -296,7 +296,7 @@ test moving forward speed
 	[mind-wait_to_call mind learned_reactive physical use_right_hand toaster `turn_on]
 	[mind-wait_to_call mind learned_reactive physical use_right_hand toaster `turn_off]]
       [mind-wait_to_call mind learned_reactive physical hold_with_right_hand loaf ]
-      [set this achieved t]
+      
       ]]]
 
 '***************************Centering************************************'
@@ -315,15 +315,15 @@ test moving forward speed
 					  [let [[retina_position_horizontal [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `retina_position_horizontal]]
 						[retina_position_vertical   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `retina_position_vertical]]
 						[distance                   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
-					    [cond [[>  retina_position_horizontal 0.10]
+					    [cond [[>  retina_position_horizontal 0.06]
 						   [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
-							 [mind-wait_to_call mind learned_reactive physical turn_right 1 [+ 100.0 [* 40 retina_position_horizontal]]]
+							 [mind-wait_to_call mind learned_reactive physical turn_right 1 [+ 50.0 [* 400 retina_position_horizontal]]]
 							 [have this-resource think_to_self   'i turned right']
 							 
 							 [turn_left_and_right]]]
-						  [[< retina_position_horizontal [- 0 0.10]]
+						  [[< retina_position_horizontal [- 0 0.06]]
 						   [prog [have this-resource think_to_self   'x too negative' retina_position_horizontal]
-							 [mind-wait_to_call mind learned_reactive physical turn_left 1 [+ 100.0 [ abs [* 40 retina_position_horizontal]]]]							 
+							 [mind-wait_to_call mind learned_reactive physical turn_left 1 [+ 50.0 [ abs [* 400 retina_position_horizontal]]]]							 
 							 [have this-resource think_to_self 'i turned left']
 							 
 							 [turn_left_and_right]]]
@@ -380,13 +380,13 @@ test moving forward speed
 						[distance                   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
 					    [cond [[>  retina_position_horizontal 0.10]
 						   [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
-							 [mind-wait_to_call mind learned_reactive physical turn_right 1 [+ 100.0 [* 40 retina_position_horizontal]]]
+							 [mind-wait_to_call mind learned_reactive physical turn_right 1 [+ 50.0 [* 400 retina_position_horizontal]]]
 							 [have this-resource think_to_self   'i turned right']
 							 
 							 [turn_left_and_right]]]
 						  [[< retina_position_horizontal [- 0 0.10]]
 						   [prog [have this-resource think_to_self   'x too negative' retina_position_horizontal]
-							 [mind-wait_to_call mind learned_reactive physical turn_left 1 [+ 100.0 [ abs [* 40 retina_position_horizontal]]]]							 
+							 [mind-wait_to_call mind learned_reactive physical turn_left 1 [+ 50.0 [ abs [* 400 retina_position_horizontal]]]]							 
 							 [have this-resource think_to_self 'i turned left']
 							 
 							 [turn_left_and_right]]]
@@ -444,14 +444,14 @@ test moving forward speed
 					  [let [[retina_position_horizontal [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `retina_position_horizontal]]
 						[retina_position_vertical   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `retina_position_vertical]]
 						[distance                   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
-					    [cond [[>  retina_position_horizontal [max [* 0.03  distance] 0.10]]
+					    [cond [[>  retina_position_horizontal [max [* 0.03  distance] 0.05]]
 						   [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
 							 
 							 [mind-wait_to_call mind learned_reactive physical look_right 1 [abs [* step_factor [/ [* 120  retina_position_horizontal] distance]]]]
 							 [have this-resource think_to_self   'I looked right']
 							 
 							 [look_left_and_right]]]
-						  [[< retina_position_horizontal [min [- 0 [* 0.03  distance]][- 0 0.10]]]
+						  [[< retina_position_horizontal [min [- 0 [* 0.03  distance]][- 0 0.05]]]
 						   [prog [have this-resource think_to_self   'x too negative'   retina_position_horizontal]
 							 
 							 [mind-wait_to_call mind learned_reactive physical look_left 1 [abs [* step_factor [/ [* 120  retina_position_horizontal] distance]]]]
@@ -514,10 +514,10 @@ test moving forward speed
 		[if [< current_distance 5]
 		    [prog [print 'Its facing me, Im moving backward']
 			  [mind-wait_to_call mind learned_reactive physical move_backward 1 [* step_factor [- 5 init_distance]]]
-			  [walk_forward_or_back]]
+			  [have this-resource walk_forward_or_back object]]
 		  [prog [print 'Its facing me, Im moving forward']
 			[mind-wait_to_call mind learned_reactive physical move_forward 1 [* step_factor [- init_distance 5]]]
-			[walk_forward_or_back]]]
+			[have this-resoure walk_forward_or_back object]]]
 	      [print 'at 5 meters away']]]]]]
 
 
@@ -620,7 +620,7 @@ test moving forward speed
 		      [mind-wait_to_call mind learned_reactive physical align_body_with_neck]
 		      [print 'exited while loop']]]]]
       
-      [set this achieved t]]
+      ]
 
     
 '***************************Look carefully for********************'

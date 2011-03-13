@@ -1,0 +1,839 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[deframe em_two_post    [frame] [title date author entry]]
+[deframe em_two_example [frame] [name title date author entry]]
+
+[defunk em_two_calendar_2010_october []
+  [string-prog '<div id="calendar_wrap">'
+	       '  <table summary="Calendar">'
+	       '  <caption>'
+	       '  October 2010'
+	       '  </caption>'
+	       '  <thead>'
+	       '    <tr>'
+	       '      <th abbr="Sunday" scope="col" title="Sunday">S</th>'
+	       '      <th abbr="Monday" scope="col" title="Monday">M</th>'
+	       '      <th abbr="Tuesday" scope="col" title="Tuesday">T</th>'
+	       '      <th abbr="Wednesday" scope="col" title="Wednesday">W</th>'
+	       '      <th abbr="Thursday" scope="col" title="Thursday">T</th>'
+	       '      <th abbr="Friday" scope="col" title="Friday">F</th>'
+	       '      <th abbr="Saturday" scope="col" title="Saturday">S</th>'
+	       '    </tr>'
+	       '  </thead>'
+	       '  <tfoot>'
+	       '    <tr>'
+	       '      <td abbr="October" colspan="3" id="prev"><a href="#" title="View posts for September 2010">&laquo; Sep</a></td>'
+	       '      <td class="pad">&nbsp;</td>'
+	       '      <td colspan="3" id="next">&nbsp;</td>'
+	       '    </tr>'
+	       '  </tfoot>'
+	       '  <tbody>'
+	       '    <tr>'
+	       '      <td class="pad" colspan="5">&nbsp;</td>'
+	       '      <td>1</td>'
+	       '      <td>2</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>3</td>'
+	       '      <td>4</td>'
+	       '      <td>5</td>'
+	       '      <td>6</td>'
+	       '      <td>7</td>'
+	       '      <td>8</td>'
+	       '      <td>9</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>10</td>'
+	       '      <td>11</td>'
+	       '      <td>12</td>'
+	       '      <td>13</td>'
+	       '      <td id="today">14</td>'
+	       '      <td>15</td>'
+	       '      <td>16</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>17</td>'
+	       '      <td>18</td>'
+	       '      <td>19</td>'
+	       '      <td>20</td>'
+	       '      <td>21</td>'
+	       '      <td>22</td>'
+	       '      <td>23</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>24</td>'
+	       '      <td>25</td>'
+	       '      <td>26</td>'
+	       '      <td>27</td>'
+	       '      <td>28</td>'
+	       '      <td>29</td>'
+	       '      <td>30</td>'
+	       '      <td class="pad" colspan="4">&nbsp;</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>31</td>'
+	       '      <td class="pad" colspan="6">&nbsp;</td>'
+	       '    </tr>'
+	       '  </tbody>'
+	       '</table>'
+	       '</div>']]
+
+[defunk em_two_calendar_2010_december []
+  [string-prog '<div id="calendar_wrap">'
+	       '  <table summary="Calendar">'
+	       '  <caption>'
+	       '  December 2010'
+	       '  </caption>'
+	       '  <thead>'
+	       '    <tr>'
+	       '      <th abbr="Sunday" scope="col" title="Sunday">S</th>'
+	       '      <th abbr="Monday" scope="col" title="Monday">M</th>'
+	       '      <th abbr="Tuesday" scope="col" title="Tuesday">T</th>'
+	       '      <th abbr="Wednesday" scope="col" title="Wednesday">W</th>'
+	       '      <th abbr="Thursday" scope="col" title="Thursday">T</th>'
+	       '      <th abbr="Friday" scope="col" title="Friday">F</th>'
+	       '      <th abbr="Saturday" scope="col" title="Saturday">S</th>'
+	       '    </tr>'
+	       '  </thead>'
+	       '  <tfoot>'
+	       '    <tr>'
+	       '      <td abbr="December" colspan="3" id="prev"><a href="#" title="View posts for November 2010">&laquo; Nov</a></td>'
+	       '      <td class="pad">&nbsp;</td>'
+	       '      <td colspan="3" id="next">&nbsp;</td>'
+	       '    </tr>'
+	       '  </tfoot>'
+	       '  <tbody>'
+	       '    <tr>'
+	       '      <td class="pad" colspan="3">&nbsp;</td>'
+	       '      <td>1</td>'
+	       '      <td>2</td>'
+	       '      <td>3</td>'
+	       '      <td>4</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>5</td>'
+	       '      <td>6</td>'
+	       '      <td>7</td>'
+	       '      <td>8</td>'
+	       '      <td>9</td>'
+	       '      <td id="today">10</td>'
+	       '      <td>11</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>12</td>'
+	       '      <td>13</td>'
+	       '      <td>14</td>'
+	       '      <td>15</td>'
+	       '      <td>16</td>'
+	       '      <td>17</td>'
+	       '      <td>18</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>19</td>'
+	       '      <td>20</td>'
+	       '      <td>21</td>'
+	       '      <td>22</td>'
+	       '      <td>23</td>'
+	       '      <td>24</td>'
+	       '      <td>25</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>26</td>'
+	       '      <td>27</td>'
+	       '      <td>28</td>'
+	       '      <td>29</td>'
+	       '      <td>30</td>'
+	       '      <td>31</td>'
+	       '      <td class="pad" colspan="3">&nbsp;</td>'
+	       '    </tr>'
+	       '  </tbody>'
+	       '</table>'
+	       '</div>']]
+
+[defunk em_two_calendar_2010_february []
+  [string-prog '<div id="calendar_wrap">'
+	       '  <table summary="Calendar">'
+	       '  <caption>'
+	       '  February 2011'
+	       '  </caption>'
+	       '  <thead>'
+	       '    <tr>'
+	       '      <th abbr="Sunday"    scope="col" title="Sunday"   >S</th>'
+	       '      <th abbr="Monday"    scope="col" title="Monday"   >M</th>'
+	       '      <th abbr="Tuesday"   scope="col" title="Tuesday"  >T</th>'
+	       '      <th abbr="Wednesday" scope="col" title="Wednesday">W</th>'
+	       '      <th abbr="Thursday"  scope="col" title="Thursday" >T</th>'
+	       '      <th abbr="Friday"    scope="col" title="Friday"   >F</th>'
+	       '      <th abbr="Saturday"  scope="col" title="Saturday" >S</th>'
+	       '    </tr>'
+	       '  </thead>'
+	       '  <tfoot>'
+	       '    <tr>'
+	       '      <td abbr="February" colspan="3" id="prev"><a href="#" title="View posts for January 2011">&laquo; Jan</a></td>'
+	       '      <td class="pad">&nbsp;</td>'
+	       '      <td colspan="3" id="next">&nbsp;</td>'
+	       '    </tr>'
+	       '  </tfoot>'
+	       '  <tbody>'
+	       '    <tr>'
+	       '      <td class="pad" colspan="2">&nbsp;</td>'
+	       '      <td>1</td>'
+	       '      <td>2</td>'
+	       '      <td>3</td>'
+	       '      <td>4</td>'
+	       '      <td>5</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>6</td>'
+	       '      <td>7</td>'
+	       '      <td>8</td>'
+	       '      <td>9</td>'
+	       '      <td>10</td>'
+	       '      <td>11</td>'
+	       '      <td>12</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>13</td>'
+	       '      <td>14</td>'
+	       '      <td>15</td>'
+	       '      <td>16</td>'
+	       '      <td>17</td>'
+	       '      <td>18</td>'
+	       '      <td id="today">19</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>20</td>'
+	       '      <td>21</td>'
+	       '      <td>22</td>'
+	       '      <td>23</td>'
+	       '      <td>24</td>'
+	       '      <td>25</td>'
+	       '      <td>26</td>'
+	       '    </tr>'
+	       '    <tr>'
+	       '      <td>27</td>'
+	       '      <td>28</td>'
+	       '      <td class="pad" colspan="5">&nbsp;</td>'
+	       '    </tr>'
+	       '  </tbody>'
+	       '</table>'
+	       '</div>']]
+
+[defunk em_two_calendar []
+  [em_two_calendar_2010_february]]
+
+[defunk em_two_page [posts examples content]
+  [string-prog '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
+	       '<html xmlns="http://www.w3.org/1999/xhtml">'
+	       '<head>'
+	       '<meta http-equiv="content-type" content="text/html; charset=utf-8" />'
+	       '<title>Moral Compass: Cognitive Architecture for Social Commonsense Reasoning</title>'
+	       '<meta name="keywords" content="" />'
+	       '<meta name="Em_two" content="" />'
+	       '<link href="/default.css" rel="stylesheet" type="text/css" media="screen" />'
+	       '</head>'	       '<body>'
+	       '<div id="header">'
+	       '  <table border=0 cellspacing=0 cellpadding=0><tr><td>'
+	       '    <div id="em_two_logo_header">'
+	       '    </div>'
+	       '  </td><td>'
+	       '    <div id="center_header">'
+	       '        <div id="logo">'
+	       '	  <h1><a href="#">Moral&nbsp;Compass</a></h1>'
+	       '	  <p>Cognitive Architecture for Social Commonsense Reasoning</p>'
+	       '	</div>'
+	       '	<div id="menu">'
+	       '		<ul id="main">'
+	       '			<li><a href="/about">About</a></li>'
+	       '			<li><a href="/news">News</a></li>'
+	       '			<li><a href="/documentation">Documentation</a></li>'
+	       '			<li><a href="/download">Download</a></li>'
+	       '			<li><a href="/community">Community</a></li>'
+	       '			<li><a href="/support">Support</a></li>'
+	       '			<li><a href="/development">Development</a></li>'
+	       '			<li><a href="/applications">Applications</a></li>'
+	       '		</ul>'
+	       '	</div>'
+	       '	'
+	       '    </div>'
+	       '  </td><td>'
+	       '    <div id="mmp_logo_header">'
+	       '    </div>'
+	       '  </td></tr></table>'
+	       '</div>'
+	       '<!-- end header -->'
+	       '<div id="wrapper">'
+	       '	<!-- start page -->'
+	       '	<div id="page">'
+	       '		<div id="sidebar1" class="sidebar">'
+	       '			<ul>'
+	       '				<li>'
+	       '					<h2>Recent Updates</h2>'
+	       '					<ul>'
+	       [stringlist-prog [let [[index 0]]
+				  [mapcar [funk [post]
+						[= index [+ index 1]]
+						[string-concat '<li><a href="/#post' [exp-as-string index] '">' [get post title] '</a></li>']]
+					  posts]]]
+	       '					</ul>'
+	       '				</li>'
+	       '				<li>'
+	       '					<h2>Example Applications</h2>'
+	       '					<ul>'
+	       [stringlist-prog [mapcar [funk [example]
+					      [string-concat '<li><a href="/example/' [get example name] '">' [get example title] '</a></li>']]
+					examples]]
+	       '					</ul>'
+	       '				</li>'
+	       '				<li>'
+	       '					<h2>Categories</h2>'
+	       '					<ul>'
+	       '						<li><a href="#">Moral Reasoning</a></li>'
+	       '						<li><a href="#">Social Reasoning</a></li>'
+	       '						<li><a href="#">Reflective Reasoning</a></li>'
+	       '						<li><a href="#">Commonsense Reasoning</a></li>'
+	       '					</ul>'
+	       '				</li>'
+	       '				<li>'
+	       '					<h2>Archives</h2>'
+	       '					<ul>'
+	       '						<li><a href="#">May</a> (0)</li>'
+	       '						<li><a href="#">April</a> (0)</li>'
+	       '						<li><a href="#">March</a> (0)</li>'
+	       '						<li><a href="#">February</a> (0)</li>'
+	       '						<li><a href="#">January</a> (0)</li>'
+	       '					</ul>'
+	       '				</li>'
+	       '			</ul>'
+	       '		</div>'
+	       '<!-- start content -->'
+	       '<div id="content">'
+	       content
+	       '</div>'
+	       '<!-- end content -->'
+	       '		<!-- start sidebars -->'
+	       '		<div id="sidebar2" class="sidebar">'
+	       '			<ul>'
+	       '				<li>'
+	       '					<form id="searchform" method="get" action="#">'
+	       '						<div>'
+	       '							<h2>Site Search</h2>'
+	       '							<input type="text" name="s" id="s" size="15" value="" />'
+	       '							<br />'
+	       '							<input type="submit" value="Search" id="x" />'
+	       '						</div>'
+	       '					</form>'
+	       '				</li>'
+	       '				<li>'
+	       '					<h2>Tags</h2>'
+	       '					<p class="tag"><a href="#">reflection</a> <a href="#">mind</a> <a href="#">consciousness</a> <a href="#">debug</a> <a href="#">language</a> <a href="#">control</a> <a href="#">learn</a> <a href="#">cognitive model</a></p></li>'
+	       '				<li>'
+	       '					<h2>Calendar</h2>'
+	       [em_two_calendar]
+	       '				</li>'
+	       [prog '				<li>'
+		     '					<h2>Categories</h2>'
+		     '					<ul>'
+		     '						<li><a href="#">Aliquam libero</a></li>'
+		     '						<li><a href="#">Consectetuer adipiscing elit</a></li>'
+		     '						<li><a href="#">Metus aliquam pellentesque</a></li>'
+		     '						<li><a href="#">Suspendisse iaculis mauris</a></li>'
+		     '						<li><a href="#">Urnanet non molestie semper</a></li>'
+		     '						<li><a href="#">Proin gravida orci porttitor</a></li>'
+		     '						<li><a href="#">Aliquam libero</a></li>'
+		     '						<li><a href="#">Consectetuer adipiscing elit</a></li>'
+		     '						<li><a href="#">Metus aliquam pellentesque</a></li>'
+		     '						<li><a href="#">Urnanet non molestie semper</a></li>'
+		     '						<li><a href="#">Proin gravida orci porttitor</a></li>'
+		     '						<li><a href="#">Aliquam libero</a></li>'
+		     '						<li><a href="#">Consectetuer adipiscing elit</a></li>'
+		     '						<li><a href="#">Metus aliquam pellentesque</a></li>'
+		     '						<li><a href="#">Suspendisse iaculis mauris</a></li>'
+		     '						<li><a href="#">Urnanet non molestie semper</a></li>'
+		     '						<li><a href="#">Proin gravida orci porttitor</a></li>'
+		     '					</ul>'
+		     '				</li>'
+		     '']
+	       '			</ul>'
+	       '		</div>'
+	       '		<!-- end sidebars -->'
+	       '		<div style="clear: both;">&nbsp;</div>'
+	       '	</div>'
+	       '	<!-- end page -->'
+	       '</div>'
+	       '<div id="footer">'
+	       '	<p>&copy;2009 All Rights Reserved. &nbsp;&bull;&nbsp; Design by <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.</p>'
+	       '</div>'
+	       '</body>'
+	       '</html>']]
+  
+
+
+[defunk em_two_about-content []
+  [string-prog '<h1>About</h1>'
+	       ''
+	       'Coming soon!']]
+
+[defunk em_two_about [posts examples]
+  [em_two_page posts examples
+	      [em_two_about-content]]]
+
+[defunk compile_em_two_about [root_dir posts examples]
+  [let [[about [em_two_about posts examples]]]
+    [shelter [mkdir  [string-concat root_dir 'about']]]
+    [have about save [string-concat root_dir 'about/index.html']]
+    nil]]
+
+
+
+
+
+
+[defunk em_two_news-content [posts]
+  [string-prog [stringlist-prog [let [[index 0]]
+				  [mapcar [funk [post]
+						[= index [+ index 1]]
+						[string-prog '<div class="post">'
+							     [stringlist-concat `['<h1 class="title"><a name=post' ,[exp-as-string index] '>' ,[get post title] '</a></h1>']]
+							     [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get post date] ' by ' ,[get post author] '</small></p>']]
+							     '  <div class="entry">'
+							     [get post entry]
+							     '	<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
+							     '  </div>'
+							     '</div>']]
+					  posts]]]
+	       ]]
+
+[defunk em_two_news [posts examples]
+  [em_two_page posts examples
+	      [em_two_news-content posts]]]
+
+[defunk compile_em_two_news [root_dir posts examples]
+  [let [[news [em_two_news posts examples]]]
+    [have news save [string-concat root_dir 'index.html']]
+    [shelter [mkdir [string-concat root_dir 'news']]]
+    [have news save [string-concat root_dir 'news/index.html']]
+    nil]]
+
+
+
+
+
+[defunk em_two_documentation_format [documentation]
+  [string-prog '<table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>'
+	       [if [is-type `string documentation]
+		   [stringlist-intersperse [have documentation split '\n'] '<br>']
+		 [exp-as-string documentation]]
+	       '</td></tr></table>']]
+
+[defunk em_two_funk_documentation [funk]
+  [em_two_documentation_format [get funk documentation]]]
+
+[defunk em_two_object_documentation [posts examples type_name]
+  [print [string-concat 'compiling ' [get type_name as-string] ' object documentation']]
+  [em_two_page posts examples
+	      [string-prog [string-concat '<h1><tt>' [get type_name as-string] '</tt> Object Documentation</h1>']
+			   [let [[type [lookup_type type_name]]]
+			     [string-prog '<h2><tt>get</tt> interface</h2>'
+					  '<ul>'
+					  [stringlist-prog [mapcar [funk [key_name]
+									 [print [string-concat '  key: ' [get key_name as-string]]]
+									 [let [[funk [get type type_var_value `get key_name nil]]]
+									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
+											'<p>'
+											[em_two_funk_documentation funk]
+											'</p><br>'
+											'</li>']]]
+								   [get type type_var-keys `get]]]
+					  '</ul>'
+					  ''
+					  '<h2><tt>set</tt> interface</h2>'
+					  '<ul>'
+					  [stringlist-prog [mapcar [funk [key_name]
+									 [print [string-concat '  key: ' [get key_name as-string]]]
+									 [let [[funk [get type type_var_value `set key_name nil]]]
+									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
+											'<p>'
+											[em_two_funk_documentation funk]
+											'</p><br>'
+											'</li>']]]
+								   [get type type_var-keys `set]]]
+					  '</ul>'
+					  ''
+					  '<h2><tt>execute</tt> interface</h2>'
+					  '<ul>'
+					  [stringlist-prog [mapcar [funk [key_name]
+									 [print [string-concat '  key: ' [get key_name as-string]]]
+									 [let [[funk [get type type_var_value `execute key_name nil]]]
+									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
+											'<p>'
+											[em_two_funk_documentation funk]
+											'</p><br>'
+											'</li>']]]
+								   [get type type_var-keys `execute]]]
+					  '</ul>'
+					  ]]
+			   ''
+			   ]]]
+
+[defunk em_two_documentation-all_objects-save [root_dir posts examples]
+  [mapc [funk [type_name]
+	      [let [[type_name_string     [get type_name as-string]]
+		    [object_documentation [em_two_object_documentation posts examples type_name]]]
+		[shelter [mkdir [string-concat root_dir 'documentation/object/' type_name_string]]]
+		[have object_documentation save [string-concat root_dir 'documentation/object/' type_name_string '/index.html']]]]
+	[system-type_names]]]
+
+[defunk em_two_package_documentation [posts examples package_name]
+  [print [string-concat 'compiling ' [get package_name as-string] ' package documentation']]
+  [em_two_page posts examples
+	      [string-prog [string-concat '<h1><tt>' [get package_name as-string] '</tt> Package Documentation</h1>']
+			   [let [[package [lookup-package package_name]]]
+			     [string-prog '<h2>Package Dependencies</h2>'
+					  '<ul>'
+					  [stringlist-prog [mapcar [funk [package_dependency]
+									 [print [string-concat '  package dependency: ' [get package_dependency as-string]]]
+									 [string-prog [string-concat '<li><a href=../' [get package_dependency as-string] '><tt>' [get package_dependency as-string] '</tt></a></li>']]]
+								   [get package package_dependencies]]]
+					  '</ul>'
+					  ''
+					  '<h2>Documentation</h2>'
+					  '<p>'
+					  [em_two_documentation_format [get package documentation]]
+					  '</p><br>'
+					  ''
+					  '<h2>Objects Defined</h2>'
+					  '<ul>'
+					  [stringlist-prog [mapcar [funk [object_type_defined]
+									 [print [string-concat '  object type defined: ' [get object_type_defined as-string]]]
+									 [string-prog [string-concat '<li><a href=../../object/' [get object_type_defined as-string] '><tt>' [get object_type_defined as-string] '</tt></a></li>']]]
+								   [get [get package object_types_defined_set] elements]]]
+					  '</ul>'
+					  ]]]]]
+
+[defunk em_two_documentation-all_packages []
+  `[movie
+    isis_visual_object
+    deliberative_execution_agency
+    builtin_reactive_neural_plug_agency
+    forgetful_event_stream
+    semantic_resource_action_event
+    isis_world_demo
+    isismon_knowledge
+    semantic_object_type
+    semantic_temporal_object
+    isis_world_client
+    traced_resource
+    mental_layer
+    self_conscious_layer
+    moral_compass_perception
+    semantic_causal_object
+    semantic_knowledge_base
+    graph_isomorphism
+    semantic_action_event
+    image_sequence
+    meta_semantic_knowledge_base
+    deliberative_layer
+    conceptnet
+    mind
+    self_conscious_imprimer_agency
+    image
+    agent_body
+    graph_match_error_correcting
+    divisi2
+    isismon_learned_reactive_physical_activator
+    semantic_ordered_object
+    graph_cluster 
+    learned_reactive_physical_knowledge_agency
+    semantic_resource
+    semantic_resource_action_sequence
+    graph_match
+    learned_reactive_language_agency
+    learned_reactive_physical_agency
+    isismon
+    semantic_event_sequence
+    self_reflective_layer
+    moral_agent_body
+    moral_compass
+    timeline
+    moral_compass_visual_agent
+    moral_compass_visual_object
+    reflective_credit_assignment_agency
+    semantic_packable_object
+    self_reflective_meta_mental_knowledge_agency
+    isis_visual_agent
+    event_stream
+    isismon_agent
+    isismon_core
+    mindmon
+    semantic_physical_object
+    traced_mind
+    moral_compass_proprioceptual_object
+    agency
+    builtin_reactive_physical_agency
+    semantic_event
+    semantic_agent
+    semantic_frame
+    semantic_object
+    semantic_realm
+    reflective_layer
+    deliberative_meta_physical_knowledge_agency
+    semantic_containment_object 
+    semantic_relationship_key
+    builtin_reactive_sensory_agency
+    semantic_visual_object
+    resource
+    semantic_directed_action_event
+    semantic_causal_event
+    self_reflective_other_agents_knowledge_agency
+    learned_reactive_layer 
+    isismon_builtin_reactive_physical_activator
+    learned_reactive_sensory_agency
+    builtin_reactive_layer
+    physical_world
+    propogator]]
+
+[defunk em_two_documentation-all_packages-require []
+  [mapc [funk [package_name]
+	      [if [not [get [lookup-package package_name] loaded_all_dependencies_time]]
+		  [prog [print [format nil 'requiring ' package_name '.']]
+			[require-package package_name]]]]
+	[em_two_documentation-all_packages]]]
+
+[defunk em_two_documentation-all_packages-save [root_dir posts examples]
+  [shelter [mkdir [string-concat root_dir 'documentation/package']]]
+  [mapc [funk [package_name]
+	      [let [[package_name_string   [get package_name as-string]]
+		    [package_documentation [em_two_package_documentation posts examples package_name]]]
+		[shelter [mkdir [string-concat root_dir 'documentation/package/' package_name_string]]]
+		[have package_documentation save [string-concat root_dir 'documentation/package/' package_name_string '/index.html']]]]
+	[em_two_documentation-all_packages]]]
+
+[defunk em_two_documentation-content [root_dir posts examples]
+  [shelter [mkdir [string-concat root_dir 'documentation']]]
+  [shelter [mkdir [string-concat root_dir 'documentation/object']]]
+  [string-prog '<h1>Documentation</h1>'
+	       ''
+	       '<h2>Packages</h2>'
+	       ''
+	       '<ul>'
+	       [stringlist-prog [mapcar [funk [package_name_string]
+					      [string-concat '<li><a href="/documentation/package/' package_name_string '"><strong>' package_name_string '</strong></a></li>']]
+					[have [mapcar [funk [package_name]
+							    [get package_name as-string]]
+						      [em_two_documentation-all_packages]]
+					      sort &>]]]
+	       '</ul>'
+	       '<h2>All Object Types</h2>'
+	       ''
+	       '<ul>'
+	       [stringlist-prog [mapcar [funk [type_name_string]
+					      [string-concat '<li><a href="/documentation/object/' type_name_string '"><strong>' type_name_string '</strong></a></li>']]
+					[have [mapcar [funk [type_name]
+							    [get type_name as-string]]
+						      [system-type_names]]
+					      sort &>]]]
+	       '</ul>'
+	       '']]
+
+[defunk em_two_documentation [root_dir posts examples]
+  [em_two_page posts examples
+	      [em_two_documentation-content root_dir posts examples]]]
+
+[defunk compile_em_two_documentation [root_dir posts examples]
+  [em_two_documentation-all_packages-require]
+  [let [[documentation [em_two_documentation root_dir posts examples]]]
+    [shelter [mkdir [string-concat root_dir 'documentation']]]
+    [have documentation save [string-concat root_dir 'documentation/index.html']]
+    [em_two_documentation-all_packages-save root_dir posts examples]
+    [em_two_documentation-all_objects-save  root_dir posts examples]
+    nil]]
+
+
+[defunk em_two_download-content []
+  [string-prog '<h1>Download</h1>'
+	       ''
+	       'Coming soon!']]
+
+[defunk em_two_download [posts examples]
+  [em_two_page posts examples
+	      [em_two_download-content]]]
+
+[defunk compile_em_two_download [root_dir posts examples]
+  [let [[download [em_two_download posts examples]]]
+    [shelter [mkdir     [string-concat root_dir 'download']]]
+    [have download save [string-concat root_dir 'download/index.html']]
+    nil]]
+
+
+[defunk em_two_community-content []
+  [string-prog '<h1>Community</h1>'
+	       ''
+	       'Coming soon!']]
+
+[defunk em_two_community [posts examples]
+  [em_two_page posts examples
+	      [em_two_community-content]]]
+
+[defunk compile_em_two_community [root_dir posts examples]
+  [let [[community [em_two_community posts examples]]]
+    [shelter [mkdir [string-concat root_dir 'community']]]
+    [have community save [string-concat root_dir 'community/index.html']]
+    nil]]
+
+
+[defunk em_two_support-content []
+  [string-prog '<h1>Support Moral Compass</h1>'
+	       ''
+	       'Coming soon!']]
+
+[defunk em_two_support [posts examples]
+  [em_two_page posts examples
+	      [em_two_support-content]]]
+
+[defunk compile_em_two_support [root_dir posts examples]
+  [let [[support [em_two_support posts examples]]]
+    [shelter [mkdir [string-concat root_dir 'support']]]
+    [have support save [string-concat root_dir 'support/index.html']]
+    nil]]
+
+
+[defunk em_two_development-content []
+  [string-prog '<h1>Development</h1>'
+	       ''
+	       'Coming soon!']]
+
+[defunk em_two_development [posts examples]
+  [em_two_page posts examples
+	      [em_two_development-content]]]
+
+[defunk compile_em_two_development [root_dir posts examples]
+  [let [[development [em_two_development posts examples]]]
+    [shelter [mkdir [string-concat root_dir 'development']]]
+    [have development save [string-concat root_dir 'development/index.html']]
+    nil]]
+
+
+[defunk em_two_applications-content []
+  [string-prog '<h1>Applications</h1>'
+	       ''
+	       'Coming soon!']]
+
+[defunk em_two_applications [posts examples]
+  [em_two_page posts examples
+	      [em_two_applications-content]]]
+
+[defunk compile_em_two_applications [root_dir posts examples]
+  [let [[applications [em_two_applications posts examples]]]
+    [shelter [mkdir [string-concat root_dir 'applications']]]
+    [have applications save [string-concat root_dir 'applications/index.html']]
+    nil]]
+
+
+[defunk em_two_code_section [code]
+  [string-prog '<tt>'
+	       [have [have [have [have code replace_all '\n' '<br>\n']
+				 replace_all '-' '&#x2011;']
+			   replace_all '\t' '        ']
+		     replace_all ' ' '&nbsp;']
+	       '</tt>']]
+
+
+[defunk em_two_example [posts examples example]
+  [let [[content [string-prog '<!-- start content -->'
+			      '<div id="content">'
+			      '  <div class="post">'
+			      [stringlist-concat `['<h1 class="title">' ,[get example title] '</h1>']]
+			      [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get example date] ' by ' ,[get example author] '</small></p>']]
+			      '    <div class="entry">'
+			      '      <p>'
+			      [em_two_code_section [get example entry]]
+			      '      </p>'
+			      [string-concat '<p class="links"><a href="/example/' [get example name] '.fu2" class="more">Download</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>']
+			      '    </div>'
+			      '  </div>'
+			      '</div>'
+			      '<!-- end content -->']]]
+    [em_two_page posts examples content]]]
+
+[defunk compile_em_two_example [root_dir posts examples example]
+  [let [[example_html_code [em_two_example posts examples example]]]
+    [shelter [mkdir [string-concat root_dir 'example']]]
+    [shelter [mkdir [string-concat root_dir 'example/' [get example name]]]]
+    [have [string-prog [string-concat '\'' [get example title] '\'']
+		       [string-concat '\'This example Em_two code was downloaded from http://www.em-two.net/example/' [get example name] '.fu2\'']
+		       ''
+		       [get example entry]]
+	  save [string-concat root_dir 'example/' [get example name] '.fu2']]
+    [have example_html_code   save [string-concat root_dir 'example/' [get example name] '/index.html']]
+    nil]]
+
+[defunk compile_em_two_examples [root_dir posts examples]
+  [mapc [funk [example]
+	      [print [string-concat 'compiling example ' [get example name]]]
+	      [compile_em_two_example root_dir posts examples example]]
+	examples]
+  nil]
+
+[defunk em_two-generate_all_posts []
+  [list [let [[this [new em_two_post]]]
+	  [set this title  'Welcome to the official Moral Compass Website!']
+	  [set this date   'March 13th, 2011']
+	  [set this author '<a href="#">Bo Morgan</a>']
+	  [set this entry  [string-prog '<p><strong>Moral Compass</strong> is a free, open, cognitive architecture designed for social commonsense reasoning algorithms.  '
+					'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
+					'Moral Compass is primarily meant as a cognitive science research tool for testing hypothesis for social reasoning, including cooperative and non-cooperative behavior.']]
+	  this]
+	]]
+
+[defunk em_two-generate_all_examples []
+  [list ]]
+
+[defunk compile_em_two_webpage [root_dir posts examples]
+  [print 'compiling em_two about']         [compile_em_two_about         root_dir posts examples]
+  [print 'compiling em_two news']          [compile_em_two_news          root_dir posts examples]
+  [print 'compiling em_two documentation'] [compile_em_two_documentation root_dir posts examples]
+  [print 'compiling em_two download']      [compile_em_two_download      root_dir posts examples]
+  [print 'compiling em_two community']     [compile_em_two_community     root_dir posts examples]
+  [print 'compiling em_two support']       [compile_em_two_support       root_dir posts examples]
+  [print 'compiling em_two development']   [compile_em_two_development   root_dir posts examples]
+  [print 'compiling em_two applications']  [compile_em_two_applications  root_dir posts examples]
+  [print 'compiling em_two examples']      [compile_em_two_examples      root_dir posts examples]
+  [print 'done compiling']
+  nil]]
+
+[let [[root_dir '/home/neptune/Desktop/www/em-two/']
+      [posts    [em_two-generate_all_posts]]
+      [examples [em_two-generate_all_examples]]]
+  
+  [defunk em_two-webpage-save       [] [compile_em_two_webpage       root_dir posts examples]]
+  [defunk em_two_about-save         [] [compile_em_two_about         root_dir posts examples]]
+  [defunk em_two_news-save          [] [compile_em_two_news          root_dir posts examples]]
+  [defunk em_two_documentation-save [] [compile_em_two_documentation root_dir posts examples]]
+  [defunk em_two_download-save      [] [compile_em_two_download      root_dir posts examples]]
+  [defunk em_two_community-save     [] [compile_em_two_community     root_dir posts examples]]
+  [defunk em_two_support-save       [] [compile_em_two_support       root_dir posts examples]]
+  [defunk em_two_development-save   [] [compile_em_two_development   root_dir posts examples]]
+  [defunk em_two_applications-save  [] [compile_em_two_applications  root_dir posts examples]]
+  [defunk em_two_examples-save      [] [compile_em_two_examples      root_dir posts examples]]
+  
+  ]
+
+

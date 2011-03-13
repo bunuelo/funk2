@@ -793,18 +793,18 @@
   nil]
 
 [defunk em_two-generate_all_posts []
-  [list [let [[this [new em_two_post]]]
-	  [set this title  'Welcome to the official Moral Compass Website!']
-	  [set this date   'March 13th, 2011']
-	  [set this author '<a href="#">Bo Morgan</a>']
-	  [set this entry  [string-prog '<p><strong>Moral Compass</strong> is a free, open, cognitive architecture designed for social commonsense reasoning algorithms.  '
-					'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
-					'Moral Compass is primarily meant as a cognitive science research tool for testing hypothesis for social reasoning, including cooperative and non-cooperative behavior.']]
-	  this]
-	]]
+  `[,[let [[this [new em_two_post]]]
+       [set this title  'Welcome to the official Moral Compass Website!']
+       [set this date   'March 13th, 2011']
+       [set this author '<a href="#">Bo Morgan</a>']
+       [set this entry  [string-prog '<p><strong>Moral Compass</strong> is a free, open, cognitive architecture designed for social commonsense reasoning algorithms.  '
+				     'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
+				     'Moral Compass is primarily meant as a cognitive science research tool for testing hypothesis for social reasoning, including cooperative and non-cooperative behavior.']]
+       this]
+    ]]
 
 [defunk em_two-generate_all_examples []
-  [list ]]
+  `[]]
 
 [defunk compile_em_two_webpage [root_dir posts examples]
   [print 'compiling em_two about']         [compile_em_two_about         root_dir posts examples]

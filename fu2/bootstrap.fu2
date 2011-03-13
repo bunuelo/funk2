@@ -54,6 +54,7 @@
   [reload_all_package_definitions]
   [eval `[prog [require number]
 	       [require ansi]
+	       [require mutex]
 	       
 	       [defunk load_all_core_packages []
 		 [require utilities]

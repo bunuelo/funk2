@@ -103,6 +103,7 @@
 				  'built-in/object_lattice/'
 				  'built-in/number/'
 				  'built-in/math/'
+				  'built-in/mutex/'
 				  'built-in/graphviz/'
 				  'built-in/xmlrpc/'
 				  'built-in/graph_match_error_correcting/'

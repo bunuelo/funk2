@@ -807,6 +807,7 @@
   `[]]
 
 [defunk compile_em_two_webpage [root_dir posts examples]
+  [shelter [mkdir root_dir]]
   [print 'compiling em_two about']         [compile_em_two_about         root_dir posts examples]
   [print 'compiling em_two news']          [compile_em_two_news          root_dir posts examples]
   [print 'compiling em_two documentation'] [compile_em_two_documentation root_dir posts examples]

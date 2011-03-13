@@ -1177,6 +1177,7 @@
 
 [defunk compile_em_two_images [root_dir]
   [shelter [mkdir [string-concat root_dir 'images/']]]
+  [system [string-concat 'cp -f example/em_two_webpage/images/favicon.ico ' root_dir]]
   [let [[image_names `['img01.jpg'
 		       'img02.jpg'
 		       'em_two_logo_header.jpg'

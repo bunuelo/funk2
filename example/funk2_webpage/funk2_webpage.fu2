@@ -412,7 +412,7 @@
 		       [string-concat '\'This example Funk2 code was downloaded from http://www.funk2.org/example/' [get example name] '.fu2\'']
 		       ''
 		       [get example entry]]
-	  save [string-concat root_dir 'example/' [get example name] '.fu2']]
+	  save [string-concat [get context root_dir] 'example/' [get example name] '.fu2']]
     [have example_html_code save [string-concat [get context root_dir] 'example/' [get example name] '/index.html']]
     nil]]
 

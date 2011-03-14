@@ -163,7 +163,7 @@
 [defunk funk2_documentation-all_objects-save [context]
   [mapc [funk [type_name]
 	      [let [[type_name_string     [get type_name as-string]]
-		    [object_documentation [funk2_object_documentation context]]]
+		    [object_documentation [funk2_object_documentation context type_name]]]
 		[shelter [mkdir [string-concat [get context root_dir] 'documentation/object/' type_name_string]]]
 		[have object_documentation save [string-concat [get context root_dir] 'documentation/object/' type_name_string '/index.html']]]]
 	[system-type_names]]]

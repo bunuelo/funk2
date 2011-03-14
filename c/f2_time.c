@@ -408,6 +408,7 @@ f2ptr f2time__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__time__reinitialize_globalvars() {
+  __time__symbol = new__symbol(cause, "time");
 }
 
 void f2__time__initialize() {

@@ -870,7 +870,6 @@ void f2__primobjects__reinitialize_globalvars() {
   __bytecode__symbol         = new__symbol(cause, "bytecode");
   __transframe__symbol       = new__symbol(cause, "transframe");
   __bug__symbol              = new__symbol(cause, "bug");
-  __time__symbol             = new__symbol(cause, "time");
   __size_2d__symbol          = new__symbol(cause, "size_2d");
   __event__symbol            = new__symbol(cause, "event");
   __bytecode_event__symbol   = new__symbol(cause, "bytecode_event");

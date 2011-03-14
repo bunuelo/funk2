@@ -420,7 +420,7 @@
   [mapc [funk [example]
 	      [print [string-concat 'compiling example ' [get example name]]]
 	      [compile_funk2_example context example]]
-	examples]
+	[get context examples]]
   nil]
 
 [defunk generate_all_posts []

@@ -678,15 +678,88 @@ f2ptr f2__string__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(string__is_greater_than, this, that, return f2__string__is_greater_than(this_cause, this, that));
 
+
+f2ptr raw__string__lowercase(f2ptr cause, f2ptr this) {
+  s64 this__length = raw__string__length(cause, this);
+  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
+  raw__string__str_copy(cause, this, this__str);
+  this__str[this__length] = 0;
+  
+  s64 new_string__length = this__length;
+  u8* new_string__str    = (u8*)from_ptr(f2__malloc(new_string__length + 1));
+  {
+    s64 index;
+    for (index = 0; index < this__length; index ++) {
+      u8 ch     = this__str[index];
+      u8 new_ch = 0;
+      if (ch >= 'A' && ch <= 'Z') {
+	new_ch = ch - 'A' + 'a';
+      } else {
+	new_ch = ch;
+      }
+      new_string__str[index] = new_ch;
+    }
+  }
+  new_string__str[new_string__length] = 0;
+  f2ptr new_string = new__string(cause, new_string__str);
+  f2__free(to_ptr(this__str));
+  f2__free(to_ptr(new_string__str));
+  return new_string;
+}
+
+f2ptr f2__string__lowercase(f2ptr cause, f2ptr this) {
+  assert_argument_type(string, this);
+  return raw__string__lowercase(cause, this);
+}
+def_pcfunk1(string__lowercase, this, return f2__string__lowercase(this_cause, this));
+
+
+f2ptr raw__string__uppercase(f2ptr cause, f2ptr this) {
+  s64 this__length = raw__string__length(cause, this);
+  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
+  raw__string__str_copy(cause, this, this__str);
+  this__str[this__length] = 0;
+  
+  s64 new_string__length = this__length;
+  u8* new_string__str    = (u8*)from_ptr(f2__malloc(new_string__length + 1));
+  {
+    s64 index;
+    for (index = 0; index < this__length; index ++) {
+      u8 ch     = this__str[index];
+      u8 new_ch = 0;
+      if (ch >= 'a' && ch <= 'z') {
+	new_ch = ch - 'a' + 'A';
+      } else {
+	new_ch = ch;
+      }
+      new_string__str[index] = new_ch;
+    }
+  }
+  new_string__str[new_string__length] = 0;
+  f2ptr new_string = new__string(cause, new_string__str);
+  f2__free(to_ptr(this__str));
+  f2__free(to_ptr(new_string__str));
+  return new_string;
+}
+
+f2ptr f2__string__uppercase(f2ptr cause, f2ptr this) {
+  assert_argument_type(string, this);
+  return raw__string__uppercase(cause, this);
+}
+def_pcfunk1(string__uppercase, this, return f2__string__uppercase(this_cause, this));
+
+
 f2ptr f2string__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2string__primobject_type__new(cause);
-  {char* slot_name = "as-symbol";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__funk);}
-  {char* slot_name = "save";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.save__funk);}
-  {char* slot_name = "split";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.split__funk);}
-  {char* slot_name = "contains";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.contains__funk);}
-  {char* slot_name = "substring";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.substring__funk);}
-  {char* slot_name = "is_less_than";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.is_less_than__funk);}
-  {char* slot_name = "is_greater_than"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__funk);}
+  {char* slot_name = "as-symbol";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__funk);}
+  {char* slot_name = "save";            f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.save__funk);}
+  {char* slot_name = "split";           f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.split__funk);}
+  {char* slot_name = "contains";        f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.contains__funk);}
+  {char* slot_name = "substring";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.substring__funk);}
+  {char* slot_name = "is_less_than";    f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.is_less_than__funk);}
+  {char* slot_name = "is_greater_than"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__funk);}
+  {char* slot_name = "lowercase";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.lowercase__funk);}
+  {char* slot_name = "uppercase";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.uppercase__funk);}
   return this;
 }
 
@@ -725,6 +798,10 @@ void f2__string__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__is_less_than, this, that, cfunk, 1, "returns true when this string is_less_than that string."); __funk2.globalenv.object_type.ptype.ptype_string.is_less_than__funk = never_gc(cfunk);}
   {char* str = "is_greater_than"; __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__is_greater_than, this, that, cfunk, 1, "returns true when this string is_greater_than that string."); __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__funk = never_gc(cfunk);}
+  {char* str = "lowercase"; __funk2.globalenv.object_type.ptype.ptype_string.lowercase__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__lowercase, this, that, cfunk, 1, "returns a new string that represents the lowercased version of this string."); __funk2.globalenv.object_type.ptype.ptype_string.lowercase__funk = never_gc(cfunk);}
+  {char* str = "uppercase"; __funk2.globalenv.object_type.ptype.ptype_string.uppercase__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__uppercase, this, that, cfunk, 1, "returns a new string that represents the uppercased version of this string."); __funk2.globalenv.object_type.ptype.ptype_string.uppercase__funk = never_gc(cfunk);}
   
 }
 

@@ -907,6 +907,10 @@ typedef struct funk2_object_type__string__slot_s {
   f2ptr is_less_than__funk;
   f2ptr is_greater_than__symbol;
   f2ptr is_greater_than__funk;
+  f2ptr lowercase__symbol;
+  f2ptr lowercase__funk;
+  f2ptr uppercase__symbol;
+  f2ptr uppercase__funk;
 } funk2_object_type__string__slot_t;
 
 // symbol

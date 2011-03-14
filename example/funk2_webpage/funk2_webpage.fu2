@@ -323,54 +323,6 @@
     nil]]
 
 
-[defunk funk2_community-content []
-  [string-prog '<h1>Community</h1>'
-	       ''
-	       'Coming soon!']]
-
-[defunk funk2_community [context]
-  [htmldoc_page context
-		[funk2_community-content]]]
-
-[defunk compile_funk2_community [context]
-  [let [[community [funk2_community context]]]
-    [shelter [mkdir [string-concat [get context root_dir] 'community']]]
-    [have community save [string-concat [get context root_dir] 'community/index.html']]
-    nil]]
-
-
-[defunk funk2_support-content []
-  [string-prog '<h1>Support Funk2</h1>'
-	       ''
-	       'Coming soon!']]
-
-[defunk funk2_support [context]
-  [htmldoc_page context
-		[funk2_support-content]]]
-
-[defunk compile_funk2_support [context]
-  [let [[support [funk2_support context]]]
-    [shelter [mkdir [string-concat [get context root_dir] 'support']]]
-    [have support save [string-concat [get context root_dir] 'support/index.html']]
-    nil]]
-
-
-[defunk funk2_development-content []
-  [string-prog '<h1>Development</h1>'
-	       ''
-	       'Coming soon!']]
-
-[defunk funk2_development [context]
-  [htmldoc_page context
-		[funk2_development-content]]]
-
-[defunk compile_funk2_development [context]
-  [let [[development [funk2_development context]]]
-    [shelter [mkdir [string-concat [get context root_dir] 'development']]]
-    [have development save [string-concat [get context root_dir] 'development/index.html']]
-    nil]]
-
-
 [defunk funk2_applications-content []
   [string-prog '<h1>Applications</h1>'
 	       ''
@@ -688,27 +640,26 @@
   [print 'compiling funk2 news']          [compile_funk2_news          context]
   [print 'compiling funk2 documentation'] [compile_funk2_documentation context]
   [print 'compiling funk2 download']      [compile_funk2_download      context]
-  [print 'compiling funk2 community']     [compile_funk2_community     context]
-  [print 'compiling funk2 support']       [compile_funk2_support       context]
-  [print 'compiling funk2 development']   [compile_funk2_development   context]
   [print 'compiling funk2 applications']  [compile_funk2_applications  context]
   [print 'compiling funk2 examples']      [compile_funk2_examples      context]
   [print 'done compiling']
   nil]]
 
 [let [[context [new htmldoc_context '/home/neptune/Desktop/www/funk2/']]]
-  [set context title 'Funk2 Programming Language -- Official Website']
-  [set context posts    [generate_all_posts]]
-  [set context examples [generate_all_examples]]
+  [set  context title    'Funk2 Programming Language -- Official Website']
+  [set  context posts    [generate_all_posts]]
+  [set  context examples [generate_all_examples]]
+  [have context add_tab  [new htmldoc_tab `About         &funk2_about]]
+  [have context add_tab  [new htmldoc_tab `News          &funk2_news]]
+  [have context add_tab  [new htmldoc_tab `Documentation &funk2_documentation]]
+  [have context add_tab  [new htmldoc_tab `Download      &funk2_download]]
+  [have context add_tab  [new htmldoc_tab `Applications  &funk2_applications]]
   
   [defunk webpage-save             [] [compile_funk2_webpage       context]]
   [defunk funk2_about-save         [] [compile_funk2_about         context]]
   [defunk funk2_news-save          [] [compile_funk2_news          context]]
   [defunk funk2_documentation-save [] [compile_funk2_documentation context]]
   [defunk funk2_download-save      [] [compile_funk2_download      context]]
-  [defunk funk2_community-save     [] [compile_funk2_community     context]]
-  [defunk funk2_support-save       [] [compile_funk2_support       context]]
-  [defunk funk2_development-save   [] [compile_funk2_development   context]]
   [defunk funk2_applications-save  [] [compile_funk2_applications  context]]
   [defunk funk2_examples-save      [] [compile_funk2_examples      context]]
   

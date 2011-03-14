@@ -20,9 +20,27 @@
 [deframe htmldoc_post    [frame] [title date author entry]]
 [deframe htmldoc_example [frame] [name title date author entry]]
 
-[deframe htmldoc_context [frame] [root_dir title posts examples]
+[deframe htmldoc_tab [frame] [name generator_funk]
+  [new [initial-name initial-generator_funk]
+       [= name           initial-name]
+       [= generator_funk initial-generator_funk]]]
+
+[deftypefunk htmldoc_tab get name_as_string []
+  [get name as-string]]
+
+[deftypefunk htmldoc_tab get name_as_lowercase_string []
+  [get [get name as-string] lowercase]]
+
+[deframe htmldoc_context [frame] [root_dir
+				  title
+				  posts
+				  examples
+				  tabs]
   [new [initial-root_dir]
        [= root_dir initial-root_dir]]]
+
+[deftypefunk htmldoc_context add_tab [tab]
+  [= tabs [append tabs [conslist tab]]]]
 
 [defunk htmldoc_calendar_2010_october []
   [string-prog '<div id="calendar_wrap">'
@@ -265,14 +283,9 @@
 	       '	</div>'
 	       '	<div id="menu">'
 	       '		<ul id="main">'
-	       '			<li><a href="/about">About</a></li>'
-	       '			<li><a href="/news">News</a></li>'
-	       '			<li><a href="/documentation">Documentation</a></li>'
-	       '			<li><a href="/download">Download</a></li>'
-	       '			<li><a href="/community">Community</a></li>'
-	       '			<li><a href="/support">Support</a></li>'
-	       '			<li><a href="/development">Development</a></li>'
-	       '			<li><a href="/applications">Applications</a></li>'
+	       [stringlist-prog [mapcar [funk [tab]
+					      [string-concat '<li><a href="/' [get tab lowercase_name_as_string] '">' [get tab name_as_string] '</a></li>']]
+					[get context tabs]]]
 	       '		</ul>'
 	       '	</div>'
 	       '	'

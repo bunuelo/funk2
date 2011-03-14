@@ -283,8 +283,103 @@
 	       '</table>'
 	       '</div>']]
 
+[defunk htmldoc_current_calendar []
+  [let [[current_time [time]]]
+    [let [[month_string [get current_time month_name]]
+	  [year_string  [get [get current_time years] as-string]]
+	  [day_index    [- [get current_time days] 1]]]
+      [let [[starting_sunday [- [% [- [+ day_index 7] [get current_time day_of_week]] 7] 7]]]
+	[labels [[day_table_label [index]
+				  [if [and [>= index 0] [<= index 30]]
+				      [if [== index day_index]
+					  [string-concat '<td id="today">' [get [+ index 1] as-string] '</td>']
+					[string-concat '<td>' [get [+ index 1] as-string] '</td>']]
+				    '<td class="pad" colspan="1">&nbsp;</td>']]]
+		[string-prog '<div id="calendar_wrap">'
+			     '  <table summary="Calendar">'
+			     '  <caption>'
+			     [string-concat '  ' month_string ' ' year_string]
+			     '  </caption>'
+			     '  <thead>'
+			     '    <tr>'
+			     '      <th abbr="Sunday"    scope="col" title="Sunday"   >S</th>'
+			     '      <th abbr="Monday"    scope="col" title="Monday"   >M</th>'
+			     '      <th abbr="Tuesday"   scope="col" title="Tuesday"  >T</th>'
+			     '      <th abbr="Wednesday" scope="col" title="Wednesday">W</th>'
+			     '      <th abbr="Thursday"  scope="col" title="Thursday" >T</th>'
+			     '      <th abbr="Friday"    scope="col" title="Friday"   >F</th>'
+			     '      <th abbr="Saturday"  scope="col" title="Saturday" >S</th>'
+			     '    </tr>'
+			     '  </thead>'
+			     '  <tfoot>'
+			     '    <tr>'
+			     [string-concat '      <td abbr="' month_string '" colspan="3" id="prev"></td>']
+			     '      <td class="pad">&nbsp;</td>'
+			     '      <td colspan="3" id="next">&nbsp;</td>'
+			     '    </tr>'
+			     '  </tfoot>'
+			     '  <tbody>'
+			     '    <tr>'
+			     [day_table_label [+ starting_sunday 0]]
+			     [day_table_label [+ starting_sunday 1]]
+			     [day_table_label [+ starting_sunday 2]]
+			     [day_table_label [+ starting_sunday 3]]
+			     [day_table_label [+ starting_sunday 4]]
+			     [day_table_label [+ starting_sunday 5]]
+			     [day_table_label [+ starting_sunday 6]]
+			     '    </tr>'
+			     '    <tr>'
+			     [day_table_label [+ starting_sunday 7]]
+			     [day_table_label [+ starting_sunday 8]]
+			     [day_table_label [+ starting_sunday 9]]
+			     [day_table_label [+ starting_sunday 10]]
+			     [day_table_label [+ starting_sunday 11]]
+			     [day_table_label [+ starting_sunday 12]]
+			     [day_table_label [+ starting_sunday 13]]
+			     '    </tr>'
+			     '    <tr>'
+			     [day_table_label [+ starting_sunday 14]]
+			     [day_table_label [+ starting_sunday 15]]
+			     [day_table_label [+ starting_sunday 16]]
+			     [day_table_label [+ starting_sunday 17]]
+			     [day_table_label [+ starting_sunday 18]]
+			     [day_table_label [+ starting_sunday 19]]
+			     [day_table_label [+ starting_sunday 20]]
+			     '    </tr>'
+			     '    <tr>'
+			     [day_table_label [+ starting_sunday 21]]
+			     [day_table_label [+ starting_sunday 22]]
+			     [day_table_label [+ starting_sunday 23]]
+			     [day_table_label [+ starting_sunday 24]]
+			     [day_table_label [+ starting_sunday 25]]
+			     [day_table_label [+ starting_sunday 26]]
+			     [day_table_label [+ starting_sunday 27]]
+			     '    </tr>'
+			     '    <tr>'
+			     [day_table_label [+ starting_sunday 28]]
+			     [day_table_label [+ starting_sunday 29]]
+			     [day_table_label [+ starting_sunday 30]]
+			     [day_table_label [+ starting_sunday 31]]
+			     [day_table_label [+ starting_sunday 32]]
+			     [day_table_label [+ starting_sunday 33]]
+			     [day_table_label [+ starting_sunday 34]]
+			     '    </tr>'
+			     '    <tr>'
+			     [day_table_label [+ starting_sunday 35]]
+			     [day_table_label [+ starting_sunday 36]]
+			     [day_table_label [+ starting_sunday 37]]
+			     [day_table_label [+ starting_sunday 38]]
+			     [day_table_label [+ starting_sunday 39]]
+			     [day_table_label [+ starting_sunday 40]]
+			     [day_table_label [+ starting_sunday 41]]
+			     '    </tr>'
+			     '  </tbody>'
+			     '</table>'
+			     '</div>']]]]]]
+
+
 [defunk htmldoc_calendar []
-  [htmldoc_calendar_2010_february]]
+  [htmldoc_current_calendar]]
 
 [defunk htmldoc_page [context content]
   [string-prog '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'

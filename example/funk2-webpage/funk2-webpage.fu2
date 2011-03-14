@@ -66,12 +66,6 @@
   [htmldoc_page context
 		[funk2_about-content]]]
 
-[defunk compile_funk2_about [context]
-  [let [[about [funk2_about context]]]
-    [shelter [mkdir  [string-concat [get context root_dir] 'about']]]
-    [have about save [string-concat [get context root_dir] 'about/index.html']]
-    nil]]
-
 
 [defunk funk2_news-content [context]
   [string-prog [stringlist-prog [let [[index 0]]
@@ -91,16 +85,6 @@
 [defunk funk2_news [context]
   [htmldoc_page context
 		[funk2_news-content context]]]
-
-[defunk compile_funk2_news [context]
-  [let [[news [funk2_news context]]]
-    [have news save [string-concat [get context root_dir] 'index.html']]
-    [shelter [mkdir [string-concat [get context root_dir] 'news']]]
-    [have news save [string-concat [get context root_dir] 'news/index.html']]
-    nil]]
-
-
-
 
 
 [defunk funk2_documentation_format [documentation]
@@ -259,15 +243,6 @@
   [htmldoc_page context
 		[funk2_documentation-content context]]]
 
-[defunk compile_funk2_documentation [context]
-  [funk2_documentation-all_packages-require]
-  [let [[documentation [funk2_documentation context]]]
-    [shelter [mkdir [string-concat [get context root_dir] 'documentation']]]
-    [have documentation save [string-concat [get context root_dir] 'documentation/index.html']]
-    [funk2_documentation-all_packages-save context]
-    [funk2_documentation-all_objects-save  context]
-    nil]]
-
 
 [defunk funk2_download-content []
   [string-prog '<h1>Download</h1>'
@@ -316,11 +291,6 @@
   [htmldoc_page context
 		[funk2_download-content]]]
 
-[defunk compile_funk2_download [context]
-  [let [[download [funk2_download context]]]
-    [shelter [mkdir     [string-concat [get context root_dir] 'download']]]
-    [have download save [string-concat [get context root_dir] 'download/index.html']]
-    nil]]
 
 
 [defunk funk2_applications-content []
@@ -332,11 +302,6 @@
   [htmldoc_page context
 		[funk2_applications-content]]]
 
-[defunk compile_funk2_applications [context]
-  [let [[applications [funk2_applications context]]]
-    [shelter [mkdir [string-concat [get context root_dir] 'applications']]]
-    [have applications save [string-concat [get context root_dir] 'applications/index.html']]
-    nil]]
 
 
 [defunk funk2_example [context example]
@@ -368,12 +333,7 @@
     [have example_html_code save [string-concat [get context root_dir] 'example/' [get example name] '/index.html']]
     nil]]
 
-[defunk compile_funk2_examples [context]
-  [mapc [funk [example]
-	      [print [string-concat 'compiling example ' [get example name]]]
-	      [compile_funk2_example context example]]
-	[get context examples]]
-  nil]
+
 
 [defunk generate_all_posts []
   [list [let [[this [new htmldoc_post]]]
@@ -635,12 +595,29 @@
 	  this]
 	]]
 
+
+
+[defunk compile_funk2_root_page [context]
+  [have [htmldoc_redirect_page 'news/'] save [string-concat [get context root_dir] 'index.html']]]
+
+
+[defunk compile_funk2_documentation [context]
+  [funk2_documentation-all_packages-require]
+  [funk2_documentation-all_packages-save context]
+  [funk2_documentation-all_objects-save  context]
+  nil]
+
+[defunk compile_funk2_examples [context]
+  [mapc [funk [example]
+	      [print [string-concat 'compiling example ' [get example name]]]
+	      [compile_funk2_example context example]]
+	[get context examples]]
+  nil]
+
 [defunk compile_funk2_webpage [context]
-  [print 'compiling funk2 about']         [compile_funk2_about         context]
-  [print 'compiling funk2 news']          [compile_funk2_news          context]
+  [print 'compiling funk2 root page']     [compile_funk2_root_page     context]
+  [print 'compiling funk2 tabs']          [have context compile_tabs]
   [print 'compiling funk2 documentation'] [compile_funk2_documentation context]
-  [print 'compiling funk2 download']      [compile_funk2_download      context]
-  [print 'compiling funk2 applications']  [compile_funk2_applications  context]
   [print 'compiling funk2 examples']      [compile_funk2_examples      context]
   [print 'done compiling']
   nil]]
@@ -655,13 +632,13 @@
   [have context add_tab  [new htmldoc_tab `Download      &funk2_download]]
   [have context add_tab  [new htmldoc_tab `Applications  &funk2_applications]]
   
-  [defunk webpage-save             [] [compile_funk2_webpage       context]]
-  [defunk funk2_about-save         [] [compile_funk2_about         context]]
-  [defunk funk2_news-save          [] [compile_funk2_news          context]]
-  [defunk funk2_documentation-save [] [compile_funk2_documentation context]]
-  [defunk funk2_download-save      [] [compile_funk2_download      context]]
-  [defunk funk2_applications-save  [] [compile_funk2_applications  context]]
-  [defunk funk2_examples-save      [] [compile_funk2_examples      context]]
+  [defunk webpage-save             []                                                         [compile_funk2_webpage       context]]
+  [defunk funk2_about-save         [] [have [get context tab `About]         compile context]]
+  [defunk funk2_news-save          [] [have [get context tab `News]          compile context]]
+  [defunk funk2_documentation-save [] [have [get context tab `Documentation] compile context] [compile_funk2_documentation context]]
+  [defunk funk2_download-save      [] [have [get context tab `Download]      compile context]]
+  [defunk funk2_applications-save  [] [have [get context tab `Applications]  compile context]]
+  [defunk funk2_examples-save      []                                                         [compile_funk2_examples      context]]
   
   ]
 

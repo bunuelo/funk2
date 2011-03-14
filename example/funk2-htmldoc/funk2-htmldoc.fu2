@@ -31,6 +31,13 @@
 [deftypefunk htmldoc_tab get name_as_lowercase_string []
   [get [get name as-string] lowercase]]
 
+[deftypefunk htmldoc_tab execute compile [context]
+  [let [[body_html [funkall [get this generator_funk] context]]]
+    [shelter [mkdir      [string-concat [get context root_dir] [get this name_as_lowercase_string]]]]
+    [have body_html save [string-concat [get context root_dir] [get this name_as_lowercase_string] '/index.html']]
+    nil]]
+
+
 [deframe htmldoc_context [frame] [root_dir
 				  title
 				  posts
@@ -41,6 +48,24 @@
 
 [deftypefunk htmldoc_context execute add_tab [tab]
   [= tabs [append tabs [conslist tab]]]]
+
+[deftypefunk htmldoc_context execute compile_tabs []
+  [mapc [funk [tab]
+	      [terminal_format standard-terminal '\nhtmldoc compiling ' [get tab name] ' tab.']
+	      [have tab compile this]]
+	tabs]]
+
+[deftypefunk htmldoc_context get tab [name]
+  [let [[requested_tab nil]]
+    [mapc [funk [tab]
+		[if [eq name [get tab name]]
+		    [= requested_tab tab]]]
+	  tabs]
+    [if [null requested_tab]
+	[error bug_type `htmldoc_context_could_not_find_tab
+	       tab_name name
+	       this     this]
+      requested_tab]]]
 
 [defunk htmldoc_calendar_2010_october []
   [string-prog '<div id="calendar_wrap">'
@@ -404,6 +429,16 @@
 	       '</body>'
 	       '</html>']]
   
+
+
+[defunk htmldoc_redirect_page [redirect_url]
+  [string-prog '<html>'
+	       '<head>'
+	       [string-concat '<meta http-equiv="refresh" content="0;url=' redirect_url '">']
+	       '</head>'
+	       '<body>'
+	       '</body>'
+	       '</html>']]
 
 
 [defunk htmldoc_code_section [code]

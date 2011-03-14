@@ -701,7 +701,7 @@ f2ptr raw__string__lowercase(f2ptr cause, f2ptr this) {
     }
   }
   new_string__str[new_string__length] = 0;
-  f2ptr new_string = new__string(cause, new_string__str);
+  f2ptr new_string = f2string__new(cause, new_string__length, new_string__str);
   f2__free(to_ptr(this__str));
   f2__free(to_ptr(new_string__str));
   return new_string;
@@ -736,7 +736,7 @@ f2ptr raw__string__uppercase(f2ptr cause, f2ptr this) {
     }
   }
   new_string__str[new_string__length] = 0;
-  f2ptr new_string = new__string(cause, new_string__str);
+  f2ptr new_string = f2string__new(cause, new_string__length, new_string__str);
   f2__free(to_ptr(this__str));
   f2__free(to_ptr(new_string__str));
   return new_string;

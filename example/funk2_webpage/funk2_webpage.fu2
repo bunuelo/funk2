@@ -66,10 +66,10 @@
   [htmldoc_page context
 		[funk2_about-content]]]
 
-[defunk compile_funk2_about [root_dir posts examples]
-  [let [[about [funk2_about posts examples]]]
-    [shelter [mkdir  [string-concat root_dir 'about']]]
-    [have about save [string-concat root_dir 'about/index.html']]
+[defunk compile_funk2_about [context]
+  [let [[about [funk2_about context]]]
+    [shelter [mkdir  [string-concat [get context root_dir] 'about']]]
+    [have about save [string-concat [get context root_dir] 'about/index.html']]
     nil]]
 
 
@@ -92,11 +92,11 @@
   [htmldoc_page context
 		[funk2_news-content context]]]
 
-[defunk compile_funk2_news [root_dir posts examples]
-  [let [[news [funk2_news posts examples]]]
-    [have news save [string-concat root_dir 'index.html']]
-    [shelter [mkdir [string-concat root_dir 'news']]]
-    [have news save [string-concat root_dir 'news/index.html']]
+[defunk compile_funk2_news [context]
+  [let [[news [funk2_news context]]]
+    [have news save [string-concat [get context root_dir] 'index.html']]
+    [shelter [mkdir [string-concat [get context root_dir] 'news']]]
+    [have news save [string-concat [get context root_dir] 'news/index.html']]
     nil]]
 
 

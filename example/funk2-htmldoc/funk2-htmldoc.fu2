@@ -284,7 +284,7 @@
 	       '	<div id="menu">'
 	       '		<ul id="main">'
 	       [stringlist-prog [mapcar [funk [tab]
-					      [string-concat '<li><a href="/' [get tab lowercase_name_as_string] '">' [get tab name_as_string] '</a></li>']]
+					      [string-concat '<li><a href="/' [get tab name_as_lowercase_string] '">' [get tab name_as_string] '</a></li>']]
 					[get context tabs]]]
 	       '		</ul>'
 	       '	</div>'

@@ -304,7 +304,7 @@
 				 [[== months 12] 31]]]
 	    [starting_sunday [- [% [- [+ day_index 7] [get current_time day_of_week]] 7] 7]]]
 	[labels [[day_table_label [index]
-				  [if [and [>= index 0] [<= index days_in_month]]
+				  [if [and [>= index 0] [< index days_in_month]]
 				      [if [== index day_index]
 					  [string-concat '<td id="today">' [get [+ index 1] as-string] '</td>']
 					[string-concat '<td>' [get [+ index 1] as-string] '</td>']]

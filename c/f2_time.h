@@ -82,6 +82,8 @@ declare_object_type_1_slot(time, nanoseconds_since_1970,
 			   f2ptr is_greater_than__funk;
 			   f2ptr is_numerically_equal_to__symbol;
 			   f2ptr is_numerically_equal_to__funk;
+			   f2ptr abbreviated_weekday_name__symbol;
+			   f2ptr abbreviated_weekday_name__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );

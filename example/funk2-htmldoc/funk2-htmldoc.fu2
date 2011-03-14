@@ -39,7 +39,7 @@
   [new [initial-root_dir]
        [= root_dir initial-root_dir]]]
 
-[deftypefunk htmldoc_context add_tab [tab]
+[deftypefunk htmldoc_context execute add_tab [tab]
   [= tabs [append tabs [conslist tab]]]]
 
 [defunk htmldoc_calendar_2010_october []

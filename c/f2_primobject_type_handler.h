@@ -23,6 +23,7 @@
 #define F2__PRIMOBJECT_TYPE_HANDLER__H
 
 #include "f2_primobjects.h"
+#include "f2_time.h"
 #include "f2_fiber.h"
 #include "f2_primobject__fiber_trigger.h"
 #include "f2_primobject__stream.h"

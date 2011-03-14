@@ -408,6 +408,7 @@ f2ptr f2time__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__time__reinitialize_globalvars() {
+  f2ptr cause = nil;
   __time__symbol = new__symbol(cause, "time");
 }
 
@@ -415,6 +416,8 @@ void f2__time__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "time", "", &f2__time__reinitialize_globalvars);
   
   f2__time__reinitialize_globalvars();
+  
+  f2ptr cause = nil;
   
   f2__primcfunk__init__0(nanoseconds_since_1970, "");
 
